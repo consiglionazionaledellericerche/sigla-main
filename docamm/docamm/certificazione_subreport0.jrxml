@@ -1,0 +1,1293 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="certificazione_subreport0"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="585"
+		 columnSpacing="0"
+		 leftMargin="5"
+		 rightMargin="5"
+		 topMargin="5"
+		 bottomMargin="5"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<style 
+		name="TNR10"
+		isDefault="false"
+		fontName="Times New Roman"
+		pdfFontName="Times-Roman"
+	>
+	</style>
+	<style 
+		name="TNR10B"
+		isDefault="false"
+		fontName="Times New Roman"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	>
+	</style>
+	<style 
+		name="TNR16B"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="16"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	>
+	</style>
+	<style 
+		name="TNR12"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="12"
+		pdfFontName="Times-Roman"
+	>
+	</style>
+	<style 
+		name="TNR8B"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="8"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	>
+	</style>
+	<style 
+		name="TNR8"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="8"
+		pdfFontName="Times-Roman"
+	>
+	</style>
+
+	<parameter name="DIR_IMAGE" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="esercizio" isForPrompting="false" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new Integer(2006)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[select * from VPG_CERTIFICAZIONE
+order by chiave,tipo,sequenza,esercizio,ti_certificazione,cd_anag]]></queryString>
+
+	<field name="ID" class="java.math.BigDecimal"/>
+	<field name="CHIAVE" class="java.lang.String"/>
+	<field name="TIPO" class="java.lang.String"/>
+	<field name="SEQUENZA" class="java.math.BigDecimal"/>
+	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
+	<field name="TI_CERTIFICAZIONE" class="java.lang.String"/>
+	<field name="CD_ANAG" class="java.math.BigDecimal"/>
+	<field name="NOTA" class="java.lang.String"/>
+	<field name="DS_CERTIFICAZIONE" class="java.lang.String"/>
+	<field name="NOME" class="java.lang.String"/>
+	<field name="COGNOME" class="java.lang.String"/>
+	<field name="RAGIONE_SOCIALE" class="java.lang.String"/>
+	<field name="VIA_NUM_FISCALE" class="java.lang.String"/>
+	<field name="CAP_COMUNE_FISCALE" class="java.lang.String"/>
+	<field name="FRAZIONE_FISCALE" class="java.lang.String"/>
+	<field name="DS_COMUNE_FISCALE" class="java.lang.String"/>
+	<field name="DS_PROVINCIA_FISCALE" class="java.lang.String"/>
+	<field name="CD_PROVINCIA_FISCALE" class="java.lang.String"/>
+	<field name="DS_NAZIONE_FISCALE" class="java.lang.String"/>
+	<field name="DT_NASCITA" class="java.sql.Timestamp"/>
+	<field name="DS_COMUNE_NASCITA" class="java.lang.String"/>
+	<field name="DS_PROVINCIA_NASCITA" class="java.lang.String"/>
+	<field name="CD_PROVINCIA_NASCITA" class="java.lang.String"/>
+	<field name="DS_NAZIONE_NASCITA" class="java.lang.String"/>
+	<field name="CODICE_FISCALE" class="java.lang.String"/>
+	<field name="PARTITA_IVA" class="java.lang.String"/>
+	<field name="CD_TI_COMPENSO" class="java.lang.String"/>
+	<field name="DS_TI_COMPENSO" class="java.lang.String"/>
+	<field name="IM_LORDO" class="java.math.BigDecimal"/>
+	<field name="IM_NON_SOGG_RIT" class="java.math.BigDecimal"/>
+	<field name="IMPONIBILE_FI" class="java.math.BigDecimal"/>
+	<field name="IMPONIBILE_PR" class="java.math.BigDecimal"/>
+	<field name="ALIQUOTA" class="java.math.BigDecimal"/>
+	<field name="IM_RITENUTE" class="java.math.BigDecimal"/>
+	<field name="IM_NON_SOGG_CORI" class="java.math.BigDecimal"/>
+	<field name="IM_CONTRIBUTI" class="java.math.BigDecimal"/>
+	<field name="IM_NETTO" class="java.math.BigDecimal"/>
+
+	<variable name="IM_LORDO_TOT" class="java.math.BigDecimal" resetType="Group" resetGroup="G2_TIPO_A" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_LORDO}]]></variableExpression>
+	</variable>
+	<variable name="IM_NON_RIT_TOT" class="java.math.BigDecimal" resetType="Group" resetGroup="G2_TIPO_A" calculation="Sum">
+		<variableExpression><![CDATA[($F{IMPONIBILE_FI}.compareTo(new BigDecimal(0))==0?new BigDecimal(0):$F{IM_NON_SOGG_RIT})]]></variableExpression>
+	</variable>
+	<variable name="IM_RIT_TOT" class="java.math.BigDecimal" resetType="Group" resetGroup="G2_TIPO_A" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPONIBILE_FI}]]></variableExpression>
+	</variable>
+	<variable name="IM_RIT_APP_TOT" class="java.math.BigDecimal" resetType="Group" resetGroup="G2_TIPO_A" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_RITENUTE}]]></variableExpression>
+	</variable>
+	<variable name="IM_NON_SOG_TOT" class="java.math.BigDecimal" resetType="Group" resetGroup="G2_TIPO_A" calculation="Sum">
+		<variableExpression><![CDATA[($F{IMPONIBILE_PR}.compareTo(new BigDecimal(0))==0?new BigDecimal(0):$F{IM_NON_SOGG_CORI})]]></variableExpression>
+	</variable>
+	<variable name="IM_SOG_TOT" class="java.math.BigDecimal" resetType="Group" resetGroup="G2_TIPO_A" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPONIBILE_PR}]]></variableExpression>
+	</variable>
+	<variable name="IM_CON_TOT" class="java.math.BigDecimal" resetType="Group" resetGroup="G2_TIPO_A" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_CONTRIBUTI}]]></variableExpression>
+	</variable>
+	<variable name="IM_NET_TOT" class="java.math.BigDecimal" resetType="Group" resetGroup="G2_TIPO_A" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_NETTO}]]></variableExpression>
+	</variable>
+
+		<group  name="G1_CHIAVE_A" isStartNewPage="true" >
+			<groupExpression><![CDATA[$F{CHIAVE}]]></groupExpression>
+			<groupHeader>
+			<band height="205"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						style="TNR10"
+						x="173"
+						y="46"
+						width="219"
+						height="29"
+						key="staticText-1"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[PIAZZALE ALDO MORO, 7 - ROMA
+CF. 80054330586]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="298"
+						y="108"
+						width="287"
+						height="14"
+						key="textField-1"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Left">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{RAGIONE_SOCIALE}==null?$F{COGNOME}+ " "+$F{NOME}:
+$F{RAGIONE_SOCIALE})]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="298"
+						y="121"
+						width="287"
+						height="14"
+						key="textField"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{VIA_NUM_FISCALE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="298"
+						y="134"
+						width="287"
+						height="14"
+						key="textField-2"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{FRAZIONE_FISCALE}==null?($F{CAP_COMUNE_FISCALE}==null?"":$F{CAP_COMUNE_FISCALE}):
+$F{FRAZIONE_FISCALE}+" "+($F{CAP_COMUNE_FISCALE}==null?"":$F{CAP_COMUNE_FISCALE}))+" - "+
+($F{DS_COMUNE_FISCALE}!=null?$F{DS_COMUNE_FISCALE}:" ")+($F{CD_PROVINCIA_FISCALE}!=null?" ("+$F{CD_PROVINCIA_FISCALE}+")":"")]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="298"
+						y="147"
+						width="287"
+						height="14"
+						key="textField-4"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DS_NAZIONE_FISCALE}]]></textFieldExpression>
+				</textField>
+				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1"
+						y="0"
+						width="497"
+						height="40"
+						key="image-1"/>
+					<box></box>
+					<graphicElement stretchType="NoStretch"/>
+					<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+				</image>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="G1_CHIAVE_B" isReprintHeaderOnEachPage="true" >
+			<groupExpression><![CDATA[$F{CHIAVE}]]></groupExpression>
+			<groupHeader>
+			<band height="52"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10B"
+						x="0"
+						y="3"
+						width="585"
+						height="14"
+						key="textField-5"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{TI_CERTIFICAZIONE}.compareTo("RA")==0?"CERTIFICAZIONE DEI COMPENSI E DELLE PROVVIGIONI ASSOGGETTATI A RITENUTA D'ACCONTO":
+$F{TI_CERTIFICAZIONE}.compareTo("RC")==0?"CERTIFICAZIONE DEI CONTRIBUTI ASSOGGETTATI A RITENUTA D'ACCONTO":
+$F{TI_CERTIFICAZIONE}.compareTo("PR")==0?"CERTIFICAZIONE DEI COMPENSI ASSOGGETTATI A RITENUTA  PREVIDENZIALE":
+"CERTIFICAZIONE DEI COMPENSI ASSOGGETTATI A RITENUTA  A TITOLO D'IMPOSTA")]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						style="TNR10B"
+						x="0"
+						y="29"
+						width="585"
+						height="14"
+						key="staticText-2"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[(Art.7 bis DPR 29 settembre 1973 n. 600 sostituito nel testo dal D.Lgs. 2 settembre 1997 n. 314)]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="49"
+						width="565"
+						height="0"
+						key="line-1"
+						stretchType="RelativeToTallestObject"/>
+					<graphicElement stretchType="RelativeToTallestObject"/>
+				</line>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="88"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="0"
+						y="18"
+						width="567"
+						height="18"
+						key="subreport-1"
+						stretchType="RelativeToBandHeight"/>
+					<subreportParameter  name="DIR_IMAGE">
+						<subreportParameterExpression><![CDATA[$P{DIR_IMAGE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="esercizio">
+						<subreportParameterExpression><![CDATA[$P{esercizio}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="SUBREPORT_DIR">
+						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR}+"certificazione_firme.jasper"]]></subreportExpression>
+				</subreport>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8"
+						x="0"
+						y="70"
+						width="567"
+						height="14"
+						key="textField"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{NOTA}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="G2_TIPO_A" isReprintHeaderOnEachPage="true" >
+			<groupExpression><![CDATA[$F{TIPO}]]></groupExpression>
+			<groupHeader>
+			<band height="85"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean($F{TIPO}.compareTo("B")==0)]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8"
+						x="0"
+						y="4"
+						width="562"
+						height="30"
+						key="textField-6"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["PER GLI ADEMPIMENTI PREVISTI DALLE VIGENTI NORME TRIBUTARIE, SI ATTESTA CHE NEL CORSO DELL'ANNO "+$F{ESERCIZIO}+", SONO STATI CORRISPOSTI I SEGUENTI "+
+($F{TI_CERTIFICAZIONE}.compareTo("PR")==0?"COMPENSI ASSOGGETTATI A RITENUTA PREVIDENZIALE":
+$F{TI_CERTIFICAZIONE}.compareTo("TI")==0?"COMPENSI ASSOGGETTATI A RITENUTA A TITOLO D'IMPOSTA":
+$F{TI_CERTIFICAZIONE}.compareTo("CC")==0?"COMPENSI ASSOGGETTATI A RITENUTA A TITOLO D'IMPOSTA":
+$F{TI_CERTIFICAZIONE}.compareTo("RA")==0?"COMPENSI ASSOGGETTATI A RITENUTA D'ACCONTO":
+"CONTRIBUTI ASSOGGETTATI A RITENUTA D'ACCONTO")]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="38"
+						width="565"
+						height="0"
+						key="line-2"
+						stretchType="RelativeToTallestObject"/>
+					<graphicElement stretchType="RelativeToTallestObject"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="80"
+						width="565"
+						height="0"
+						key="line-3"
+						stretchType="RelativeToTallestObject"/>
+					<graphicElement stretchType="RelativeToTallestObject"/>
+				</line>
+				<staticText>
+					<reportElement
+						style="TNR8B"
+						x="0"
+						y="44"
+						width="112"
+						height="14"
+						key="staticText-3"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Descrizione compenso]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR8B"
+						x="115"
+						y="44"
+						width="49"
+						height="26"
+						key="staticText-4"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[Importo 
+Lordo ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR8B"
+						x="166"
+						y="44"
+						width="49"
+						height="35"
+						key="staticText-5"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[Importo non 
+soggetto a 
+ritenuta ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR8B"
+						x="217"
+						y="44"
+						width="49"
+						height="35"
+						key="staticText-6"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[Importo 
+soggetto a 
+ritenuta ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR8B"
+						x="269"
+						y="44"
+						width="36"
+						height="26"
+						key="staticText-7"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[% 
+Rit ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR8B"
+						x="307"
+						y="44"
+						width="49"
+						height="35"
+						key="staticText-8"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[Importo 
+Ritenute 
+applicate ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR8B"
+						x="359"
+						y="44"
+						width="49"
+						height="35"
+						key="staticText-9"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[Importo non 
+Soggetto a 
+Contributo ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR8B"
+						x="411"
+						y="44"
+						width="49"
+						height="35"
+						key="staticText-10"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[Importo 
+Soggetto a 
+Contributo ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR8B"
+						x="463"
+						y="44"
+						width="49"
+						height="35"
+						key="staticText-11"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[Importo 
+Contributi 
+trattenuti ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR8B"
+						x="514"
+						y="44"
+						width="49"
+						height="35"
+						key="staticText-12"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[Importo 
+netto ]]></text>
+				</staticText>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="17"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean($F{TIPO}.compareTo("B")==0)]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8B"
+						x="116"
+						y="3"
+						width="49"
+						height="14"
+						key="textField-22"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{IM_LORDO_TOT}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8B"
+						x="167"
+						y="3"
+						width="49"
+						height="14"
+						key="textField-23"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{IM_NON_RIT_TOT}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8B"
+						x="218"
+						y="3"
+						width="49"
+						height="14"
+						key="textField-24"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{IM_RIT_TOT}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8B"
+						x="308"
+						y="3"
+						width="49"
+						height="14"
+						key="textField-25"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{IM_RIT_APP_TOT}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8B"
+						x="360"
+						y="3"
+						width="49"
+						height="14"
+						key="textField-26"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{IM_NON_SOG_TOT}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8B"
+						x="412"
+						y="3"
+						width="49"
+						height="14"
+						key="textField-27"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{IM_SOG_TOT}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8B"
+						x="464"
+						y="3"
+						width="49"
+						height="14"
+						key="textField-28"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{IM_CON_TOT}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8B"
+						x="515"
+						y="3"
+						width="49"
+						height="14"
+						key="textField-29"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{IM_NET_TOT}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						style="TNR8B"
+						x="59"
+						y="3"
+						width="49"
+						height="14"
+						key="staticText-19"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[Totali ]]></text>
+				</staticText>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="D1" isReprintHeaderOnEachPage="true" >
+			<groupExpression><![CDATA["DUMMY"]]></groupExpression>
+			<groupHeader>
+			<band height="45"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean($F{TIPO}.compareTo("A")==0)]]></printWhenExpression>
+				<staticText>
+					<reportElement
+						style="TNR8"
+						x="1"
+						y="3"
+						width="49"
+						height="14"
+						key="staticText-13"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Percipiente:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR8"
+						x="52"
+						y="3"
+						width="100"
+						height="14"
+						key="staticText-14"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Cognome / Nome / Denomin.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR8"
+						x="52"
+						y="24"
+						width="100"
+						height="14"
+						key="staticText-15"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Comune e data di nascita]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8"
+						x="157"
+						y="3"
+						width="410"
+						height="14"
+						key="textField-7"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{COGNOME}==null?"":$F{COGNOME})+($F{NOME}==null?"":" "+$F{NOME})+($F{RAGIONE_SOCIALE}==null?"":" "+$F{RAGIONE_SOCIALE})]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8"
+						x="157"
+						y="24"
+						width="410"
+						height="14"
+						key="textField-8"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{DS_COMUNE_NASCITA}==null?"":$F{DS_COMUNE_NASCITA}+",")+
+($F{DS_PROVINCIA_NASCITA}==null?"":" "+$F{DS_PROVINCIA_NASCITA})+
+($F{CD_PROVINCIA_NASCITA}==null?"":" ("+$F{CD_PROVINCIA_NASCITA}+") ")+
+($F{DS_NAZIONE_NASCITA}==null?"":$F{DS_NAZIONE_NASCITA})+(
+$F{DT_NASCITA}==null?"":" - "+(new SimpleDateFormat("dd/MM/yyyy")).format($F{DT_NASCITA}))]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="D2" isReprintHeaderOnEachPage="true" >
+			<groupExpression><![CDATA["DUMMY"]]></groupExpression>
+			<groupHeader>
+			<band height="27"  isSplitAllowed="false" >
+				<printWhenExpression><![CDATA[new Boolean($F{TIPO}.compareTo("A")==0)]]></printWhenExpression>
+				<staticText>
+					<reportElement
+						style="TNR8"
+						x="52"
+						y="3"
+						width="100"
+						height="14"
+						key="staticText-16"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Codice fiscale / Partita Iva]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8"
+						x="157"
+						y="3"
+						width="410"
+						height="14"
+						key="textField-9"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{CODICE_FISCALE}==null?"":$F{CODICE_FISCALE})+($F{PARTITA_IVA}==null?"":" "+$F{PARTITA_IVA})]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="D3" isReprintHeaderOnEachPage="true" >
+			<groupExpression><![CDATA["DUMMY"]]></groupExpression>
+			<groupHeader>
+			<band height="25"  isSplitAllowed="false" >
+				<printWhenExpression><![CDATA[new Boolean($F{TIPO}.compareTo("A")==0)]]></printWhenExpression>
+				<staticText>
+					<reportElement
+						style="TNR8"
+						x="52"
+						y="3"
+						width="100"
+						height="14"
+						key="staticText-17"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Comune di Residenza Anag.]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8"
+						x="157"
+						y="3"
+						width="410"
+						height="14"
+						key="textField-10"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{CAP_COMUNE_FISCALE}==null?"":$F{CAP_COMUNE_FISCALE})+($F{FRAZIONE_FISCALE}==null?"":" "+$F{FRAZIONE_FISCALE})+
+($F{DS_COMUNE_FISCALE}==null?"":" "+$F{DS_COMUNE_FISCALE})+($F{DS_PROVINCIA_FISCALE}==null?"":" "+$F{DS_PROVINCIA_FISCALE})+
+($F{CD_PROVINCIA_FISCALE}==null?"":" ("+$F{DS_PROVINCIA_FISCALE}+") ")+($F{DS_NAZIONE_FISCALE}==null?"":" "+$F{DS_NAZIONE_FISCALE})]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="seq" >
+			<groupExpression><![CDATA[$F{SEQUENZA}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="D4" isReprintHeaderOnEachPage="true" >
+			<groupExpression><![CDATA["DUMMY"]]></groupExpression>
+			<groupHeader>
+			<band height="24"  isSplitAllowed="false" >
+				<printWhenExpression><![CDATA[new Boolean($F{TIPO}.compareTo("A")==0)]]></printWhenExpression>
+				<staticText>
+					<reportElement
+						style="TNR8"
+						x="52"
+						y="3"
+						width="100"
+						height="14"
+						key="staticText-18"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Indirizzo]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8"
+						x="157"
+						y="3"
+						width="410"
+						height="14"
+						key="textField-11"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{VIA_NUM_FISCALE}==null?"":$F{VIA_NUM_FISCALE})]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="D5" >
+			<groupExpression><![CDATA["DUMMY"]]></groupExpression>
+			<groupHeader>
+			<band height="19"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean($F{TIPO}.compareTo("B")==0)]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8"
+						x="0"
+						y="3"
+						width="112"
+						height="14"
+						key="textField-12"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DS_TI_COMPENSO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8"
+						x="116"
+						y="3"
+						width="49"
+						height="14"
+						key="textField-13"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{IM_LORDO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8"
+						x="167"
+						y="3"
+						width="49"
+						height="14"
+						key="textField-14"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[($F{IMPONIBILE_FI}.compareTo(new BigDecimal(0))==0?new BigDecimal(0):$F{IM_NON_SOGG_RIT})]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,## %" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8"
+						x="270"
+						y="3"
+						width="36"
+						height="14"
+						key="textField-15"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{ALIQUOTA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8"
+						x="308"
+						y="3"
+						width="49"
+						height="14"
+						key="textField-16"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{IM_RITENUTE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8"
+						x="360"
+						y="3"
+						width="49"
+						height="14"
+						key="textField-17"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[($F{IMPONIBILE_PR}.compareTo(new BigDecimal(0))==0?new BigDecimal(0):$F{IM_NON_SOGG_CORI})]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8"
+						x="412"
+						y="3"
+						width="49"
+						height="14"
+						key="textField-18"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{IMPONIBILE_PR}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8"
+						x="464"
+						y="3"
+						width="49"
+						height="14"
+						key="textField-19"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{IM_CONTRIBUTI}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8"
+						x="515"
+						y="3"
+						width="49"
+						height="14"
+						key="textField-20"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{IM_NETTO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8"
+						x="218"
+						y="3"
+						width="49"
+						height="14"
+						key="textField-21"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{IMPONIBILE_FI}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

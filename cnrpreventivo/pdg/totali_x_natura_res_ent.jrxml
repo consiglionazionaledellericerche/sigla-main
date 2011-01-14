@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="totali_x_natura_res_ent"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="842"
+		 pageHeight="595"
+		 columnWidth="842"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<style 
+		name="TNR9"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="9"
+		pdfFontName="Times-Roman"
+	/>
+	<style 
+		name="TNR9G"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="9"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	/>
+	<style 
+		name="TNR8G"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="8"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	/>
+
+	<parameter name="esercizio" isForPrompting="false" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new Integer("2007")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cds" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["043"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="uo" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["043.002"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cdr" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["043.002.000"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="etr_spe" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["E"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[".\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="commessa" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[SELECT * FROM V_SIT_GAE_RESIDUI_ENTRATA
+WHERE ESERCIZIO = $P{esercizio}
+  AND CDS = $P{cds}
+  AND UO = $P{uo}
+  AND CD_CENTRO_RESPONSABILITA = $P{cdr}
+AND CD_COMMESSA = $P{commessa}
+ORDER BY  cd_natura asc]]></queryString>
+
+	<field name="ESERCIZIO" class="java.lang.Integer"/>
+	<field name="CDS" class="java.lang.String"/>
+	<field name="UO" class="java.lang.String"/>
+	<field name="CD_CENTRO_RESPONSABILITA" class="java.lang.String"/>
+	<field name="DS_CDR" class="java.lang.String"/>
+	<field name="CD_LINEA_ATTIVITA" class="java.lang.String"/>
+	<field name="DS_LINEA_ATTIVITA" class="java.lang.String"/>
+	<field name="CD_NATURA" class="java.lang.String"/>
+	<field name="CD_PROGETTO" class="java.lang.String"/>
+	<field name="DS_PROGETTO" class="java.lang.String"/>
+	<field name="CD_COMMESSA" class="java.lang.String"/>
+	<field name="DS_COMMESSA" class="java.lang.String"/>
+	<field name="CD_MODULO" class="java.lang.String"/>
+	<field name="DS_MODULO" class="java.lang.String"/>
+	<field name="TI_APPARTENENZA" class="java.lang.String"/>
+	<field name="TI_GESTIONE" class="java.lang.String"/>
+	<field name="CD_ELEMENTO_VOCE" class="java.lang.String"/>
+	<field name="CD_VOCE" class="java.lang.String"/>
+	<field name="DS_ELEMENTO_VOCE" class="java.lang.String"/>
+	<field name="ESERCIZIO_RES" class="java.math.BigDecimal"/>
+	<field name="RES_PRO_INI" class="java.math.BigDecimal"/>
+	<field name="VAR_RES_PRO_PIU" class="java.math.BigDecimal"/>
+	<field name="VAR_RES_PRO_MENO" class="java.math.BigDecimal"/>
+	<field name="TOTALE" class="java.math.BigDecimal"/>
+	<field name="LIQUIDATO_PRO" class="java.math.BigDecimal"/>
+	<field name="INCASSATO_PRO" class="java.math.BigDecimal"/>
+	<field name="DA_INCASSARE" class="java.math.BigDecimal"/>
+
+	<variable name="SUM_RES_PRO_INI_NATURA" class="java.math.BigDecimal" resetType="Group" resetGroup="CD_NATURA" calculation="Sum">
+		<variableExpression><![CDATA[$F{RES_PRO_INI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_RES_PRO_PIU_NATURA" class="java.math.BigDecimal" resetType="Group" resetGroup="CD_NATURA" calculation="Sum">
+		<variableExpression><![CDATA[$F{VAR_RES_PRO_PIU}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TOTALE_NATURA" class="java.math.BigDecimal" resetType="Group" resetGroup="CD_NATURA" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTALE}]]></variableExpression>
+	</variable>
+	<variable name="SUM_LIQUIDATO_PRO_NATURA" class="java.math.BigDecimal" resetType="Group" resetGroup="CD_NATURA" calculation="Sum">
+		<variableExpression><![CDATA[$F{LIQUIDATO_PRO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_INCASSATO_PRO_NATURA" class="java.math.BigDecimal" resetType="Group" resetGroup="CD_NATURA" calculation="Sum">
+		<variableExpression><![CDATA[$F{INCASSATO_PRO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DA_INCASSARE_NATURA" class="java.math.BigDecimal" resetType="Group" resetGroup="CD_NATURA" calculation="Sum">
+		<variableExpression><![CDATA[$F{DA_INCASSARE}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_RES_PRO_MENO_NATURA" class="java.math.BigDecimal" resetType="Group" resetGroup="CD_NATURA" calculation="Sum">
+		<variableExpression><![CDATA[$F{VAR_RES_PRO_MENO}]]></variableExpression>
+	</variable>
+
+		<group  name="CD_NATURA" >
+			<groupExpression><![CDATA[$F{CD_NATURA}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="22"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR9G"
+						x="0"
+						y="4"
+						width="313"
+						height="13"
+						key="textField-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Totale Commessa "+$P{commessa}+" Natura "+$F{CD_NATURA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8G"
+						x="324"
+						y="4"
+						width="65"
+						height="13"
+						key="textField-2"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" isStyledText="true">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_RES_PRO_INI_NATURA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8G"
+						x="392"
+						y="4"
+						width="65"
+						height="13"
+						key="textField-3"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" isStyledText="true">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_RES_PRO_PIU_NATURA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8G"
+						x="460"
+						y="4"
+						width="65"
+						height="13"
+						key="textField-4"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" isStyledText="true">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_RES_PRO_MENO_NATURA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8G"
+						x="528"
+						y="4"
+						width="65"
+						height="13"
+						key="textField-5"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" isStyledText="true">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_TOTALE_NATURA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8G"
+						x="596"
+						y="4"
+						width="65"
+						height="13"
+						key="textField-6"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" isStyledText="true">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_LIQUIDATO_PRO_NATURA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8G"
+						x="664"
+						y="4"
+						width="65"
+						height="13"
+						key="textField-7"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" isStyledText="true">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_INCASSATO_PRO_NATURA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8G"
+						x="732"
+						y="4"
+						width="65"
+						height="13"
+						key="textField-8"/>
+					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" isStyledText="true">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_INCASSARE_NATURA}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

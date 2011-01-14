@@ -1,0 +1,1143 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="Rendiconto_finanziario_gestionale_Parte_Entrate_subreport0"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="1190"
+		 pageHeight="842"
+		 columnWidth="1190"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<style 
+		name="TNR6"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="6"
+		pdfFontName="Times-Roman"
+	/>
+	<style 
+		name="TNRG6"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="6"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	/>
+	<style 
+		name="TNRG8"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="8"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	/>
+	<style 
+		name="TNRG8ITALIC"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="8"
+		isBold="true"
+		isItalic="true"
+		pdfFontName="Times-BoldItalic"
+	/>
+	<style 
+		name="TNRG7ITALIC"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="7"
+		isBold="true"
+		isItalic="true"
+		pdfFontName="Times-BoldItalic"
+	/>
+	<style 
+		name="TNRG7"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="7"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	/>
+
+	<parameter name="esercizio" isForPrompting="true" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new Integer("2006")]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[Select * From
+CONFIGURAZIONE_CNR
+Where Esercizio = $P{esercizio}
+  And cd_unita_funzionale = '*'
+  And cd_chiave_primaria = 'RENDICONTO_FINANZIARIO'
+  And (cd_chiave_secondaria = 'AVANZO_AMMINISTRAZIONE' OR
+       cd_chiave_secondaria = 'FONDO_INIZIALE_CASSA')
+Order By cd_chiave_secondaria]]></queryString>
+
+	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
+	<field name="CD_UNITA_FUNZIONALE" class="java.lang.String"/>
+	<field name="CD_CHIAVE_PRIMARIA" class="java.lang.String"/>
+	<field name="CD_CHIAVE_SECONDARIA" class="java.lang.String"/>
+	<field name="VAL01" class="java.lang.String"/>
+	<field name="VAL02" class="java.lang.String"/>
+	<field name="VAL03" class="java.lang.String"/>
+	<field name="VAL04" class="java.lang.String"/>
+	<field name="IM01" class="java.math.BigDecimal"/>
+	<field name="IM02" class="java.math.BigDecimal"/>
+	<field name="DT01" class="java.sql.Timestamp"/>
+	<field name="DT02" class="java.sql.Timestamp"/>
+	<field name="DACR" class="java.sql.Timestamp"/>
+	<field name="UTCR" class="java.lang.String"/>
+	<field name="DUVA" class="java.sql.Timestamp"/>
+	<field name="UTUV" class="java.lang.String"/>
+	<field name="PG_VER_REC" class="java.math.BigDecimal"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="21"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG8"
+						x="52"
+						y="2"
+						width="156"
+						height="9"
+						key="textField-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[( $F{CD_CHIAVE_SECONDARIA}.equals("AVANZO_AMMINISTRAZIONE") ? "Avanzo di amministrazione" : "Fondo iniziale di cassa" )]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="0"
+						width="0"
+						height="21"
+						key="line-1"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="208"
+						y="0"
+						width="0"
+						height="21"
+						key="line-2"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="209"
+						y="0"
+						width="48"
+						height="21"
+						key="staticText-1"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="257"
+						y="0"
+						width="48"
+						height="21"
+						key="staticText-2"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="305"
+						y="0"
+						width="48"
+						height="21"
+						key="staticText-3"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="353"
+						y="0"
+						width="48"
+						height="21"
+						key="staticText-4"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="401"
+						y="0"
+						width="48"
+						height="21"
+						key="staticText-5"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="449"
+						y="0"
+						width="48"
+						height="21"
+						key="staticText-6"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="497"
+						y="0"
+						width="48"
+						height="21"
+						key="staticText-7"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="545"
+						y="0"
+						width="48"
+						height="21"
+						key="staticText-8"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="593"
+						y="0"
+						width="48"
+						height="21"
+						key="staticText-9"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="641"
+						y="0"
+						width="48"
+						height="21"
+						key="staticText-10"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="689"
+						y="0"
+						width="48"
+						height="21"
+						key="staticText-11"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="737"
+						y="0"
+						width="48"
+						height="21"
+						key="staticText-12"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="785"
+						y="0"
+						width="48"
+						height="21"
+						key="staticText-13"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="833"
+						y="0"
+						width="48"
+						height="21"
+						key="staticText-14"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="881"
+						y="0"
+						width="48"
+						height="21"
+						key="staticText-15"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="929"
+						y="0"
+						width="48"
+						height="21"
+						key="staticText-16"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="978"
+						y="0"
+						width="48"
+						height="21"
+						key="staticText-17"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="1026"
+						y="0"
+						width="48"
+						height="21"
+						key="staticText-18"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="1074"
+						y="0"
+						width="48"
+						height="21"
+						key="staticText-19"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="1122"
+						y="0"
+						width="48"
+						height="21"
+						key="staticText-20"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="1170"
+						y="0"
+						width="0"
+						height="21"
+						key="line-3"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="209"
+						y="2"
+						width="47"
+						height="13"
+						key="textField-3"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{VAL01}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="257"
+						y="2"
+						width="47"
+						height="13"
+						key="textField-4"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{VAL02}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						style="TNR6"
+						x="305"
+						y="2"
+						width="47"
+						height="13"
+						key="staticText-21"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[---]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="353"
+						y="2"
+						width="47"
+						height="13"
+						key="textField-5"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{VAL03}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						style="TNR6"
+						x="401"
+						y="2"
+						width="47"
+						height="13"
+						key="staticText-22"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[---]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR6"
+						x="449"
+						y="2"
+						width="47"
+						height="13"
+						key="staticText-23"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[---]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="497"
+						y="2"
+						width="47"
+						height="13"
+						key="textField-6"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{VAL04}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						style="TNR6"
+						x="545"
+						y="2"
+						width="47"
+						height="13"
+						key="staticText-24"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[---]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR6"
+						x="593"
+						y="2"
+						width="47"
+						height="13"
+						key="staticText-25"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[---]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR6"
+						x="641"
+						y="2"
+						width="47"
+						height="13"
+						key="staticText-26"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[---]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR6"
+						x="689"
+						y="2"
+						width="47"
+						height="13"
+						key="staticText-27"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[---]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR6"
+						x="737"
+						y="2"
+						width="47"
+						height="13"
+						key="staticText-28"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[---]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR6"
+						x="785"
+						y="2"
+						width="47"
+						height="13"
+						key="staticText-29"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[---]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR6"
+						x="833"
+						y="2"
+						width="47"
+						height="13"
+						key="staticText-30"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[---]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR6"
+						x="1122"
+						y="2"
+						width="47"
+						height="13"
+						key="staticText-31"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[---]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR6"
+						x="1074"
+						y="2"
+						width="47"
+						height="13"
+						key="staticText-32"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[---]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR6"
+						x="1026"
+						y="2"
+						width="47"
+						height="13"
+						key="staticText-33"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[---]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="978"
+						y="2"
+						width="47"
+						height="13"
+						key="textField-7"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[( $F{IM02}==null ? "---" : new DecimalFormat("#,##0.00").format($F{IM02}) )]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="930"
+						y="2"
+						width="47"
+						height="13"
+						key="textField-8"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[( $F{IM01}==null ? "---" : new DecimalFormat("#,##0.00").format($F{IM01}) )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						style="TNR6"
+						x="881"
+						y="2"
+						width="47"
+						height="13"
+						key="staticText-34"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[---]]></text>
+				</staticText>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="7"  isSplitAllowed="true" >
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="0"
+						width="1171"
+						height="0"
+						key="line-4"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="1170"
+						y="0"
+						width="0"
+						height="7"
+						key="line-5"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="208"
+						y="0"
+						width="0"
+						height="7"
+						key="line-25"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="0"
+						width="0"
+						height="7"
+						key="line-26"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="257"
+						y="0"
+						width="48"
+						height="7"
+						key="staticText-35"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="305"
+						y="0"
+						width="48"
+						height="7"
+						key="staticText-36"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="353"
+						y="0"
+						width="48"
+						height="7"
+						key="staticText-37"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="401"
+						y="0"
+						width="48"
+						height="7"
+						key="staticText-38"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="449"
+						y="0"
+						width="48"
+						height="7"
+						key="staticText-39"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="497"
+						y="0"
+						width="48"
+						height="7"
+						key="staticText-40"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="545"
+						y="0"
+						width="48"
+						height="7"
+						key="staticText-41"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="593"
+						y="0"
+						width="48"
+						height="7"
+						key="staticText-42"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="641"
+						y="0"
+						width="48"
+						height="7"
+						key="staticText-43"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="689"
+						y="0"
+						width="48"
+						height="7"
+						key="staticText-44"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="737"
+						y="0"
+						width="48"
+						height="7"
+						key="staticText-45"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="785"
+						y="0"
+						width="48"
+						height="7"
+						key="staticText-46"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="833"
+						y="0"
+						width="48"
+						height="7"
+						key="staticText-47"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="881"
+						y="0"
+						width="48"
+						height="7"
+						key="staticText-48"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="929"
+						y="0"
+						width="48"
+						height="7"
+						key="staticText-49"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="978"
+						y="0"
+						width="48"
+						height="7"
+						key="staticText-50"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="1026"
+						y="0"
+						width="48"
+						height="7"
+						key="staticText-51"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="1074"
+						y="0"
+						width="48"
+						height="7"
+						key="staticText-52"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRG6"
+						x="1122"
+						y="0"
+						width="48"
+						height="7"
+						key="staticText-53"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

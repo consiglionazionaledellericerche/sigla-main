@@ -1,0 +1,2222 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="rendfinspesecds"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="842"
+		 pageHeight="595"
+		 columnWidth="782"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<style 
+		name="TNR8"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="8"
+		pdfFontName="Times-Roman"
+	/>
+	<style 
+		name="TNR10B"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="10"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	/>
+	<style 
+		name="TNR16B"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="16"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	/>
+	<style 
+		name="TNR8B"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="8"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	/>
+	<style 
+		name="TNR10"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="10"
+		pdfFontName="Times-Roman"
+	/>
+	<style 
+		name="TNR12"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="12"
+		pdfFontName="Times-Roman"
+	/>
+	<style 
+		name="TNR12B"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="12"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	/>
+
+	<parameter name="DIR_IMAGE" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cds" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["075"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="esercizio" isForPrompting="false" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new Integer(2006)]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[select * from
+   PRT_REND_FIN_SPESE_CDS,
+   PRT_FC_FINALE
+WHERE
+   PRT_REND_FIN_SPESE_CDS.ESERCIZIO =PRT_FC_FINALE.ESERCIZIO and
+   PRT_REND_FIN_SPESE_CDS.CDS = PRT_FC_FINALE.CDS and
+   PRT_REND_FIN_SPESE_CDS.ESERCIZIO = $P{esercizio} and
+   PRT_REND_FIN_SPESE_CDS.CDS = $P{cds} 
+ORDER BY PARTE,TITOLO,SEZIONE,RUBRICA]]></queryString>
+
+	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
+	<field name="CDS" class="java.lang.String"/>
+	<field name="PARTE" class="java.lang.String"/>
+	<field name="DS_PARTE" class="java.lang.String"/>
+	<field name="TITOLO" class="java.lang.String"/>
+	<field name="DS_TITOLO" class="java.lang.String"/>
+	<field name="SEZIONE" class="java.lang.String"/>
+	<field name="DS_SEZIONE" class="java.lang.String"/>
+	<field name="RUBRICA" class="java.lang.String"/>
+	<field name="DS_RUBRICA" class="java.lang.String"/>
+	<field name="CAPITOLO" class="java.lang.String"/>
+	<field name="DS_CAPITOLO" class="java.lang.String"/>
+	<field name="INIZIALE" class="java.math.BigDecimal"/>
+	<field name="VAR_PIU" class="java.math.BigDecimal"/>
+	<field name="VAR_MENO" class="java.math.BigDecimal"/>
+	<field name="ASSESTATO" class="java.math.BigDecimal"/>
+	<field name="PAGAMENTI" class="java.math.BigDecimal"/>
+	<field name="IN_PIU" class="java.math.BigDecimal"/>
+	<field name="IN_MENO" class="java.math.BigDecimal"/>
+	<field name="RISCOSSIONI" class="java.math.BigDecimal"/>
+	<field name="FC_INIZIALE" class="java.math.BigDecimal"/>
+	<field name="FC_FINALE" class="java.math.BigDecimal"/>
+
+	<variable name="tot_ini_rub" class="java.math.BigDecimal" resetType="Group" resetGroup="RUBRICA" calculation="Sum">
+		<variableExpression><![CDATA[$F{INIZIALE}]]></variableExpression>
+	</variable>
+	<variable name="tot_ini_sez" class="java.math.BigDecimal" resetType="Group" resetGroup="SEZIONE" calculation="Sum">
+		<variableExpression><![CDATA[$F{INIZIALE}]]></variableExpression>
+	</variable>
+	<variable name="tot_ini_tit" class="java.math.BigDecimal" resetType="Group" resetGroup="TITOLO" calculation="Sum">
+		<variableExpression><![CDATA[$F{INIZIALE}]]></variableExpression>
+	</variable>
+	<variable name="tot_ini_par" class="java.math.BigDecimal" resetType="Group" resetGroup="PARTE" calculation="Sum">
+		<variableExpression><![CDATA[$F{INIZIALE}]]></variableExpression>
+	</variable>
+	<variable name="tot_ini" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{INIZIALE}]]></variableExpression>
+	</variable>
+	<variable name="tot_var+_rub" class="java.math.BigDecimal" resetType="Group" resetGroup="RUBRICA" calculation="Sum">
+		<variableExpression><![CDATA[$F{VAR_PIU}]]></variableExpression>
+	</variable>
+	<variable name="tot_var+_sez" class="java.math.BigDecimal" resetType="Group" resetGroup="SEZIONE" calculation="Sum">
+		<variableExpression><![CDATA[$F{VAR_PIU}]]></variableExpression>
+	</variable>
+	<variable name="tot_var+_tit" class="java.math.BigDecimal" resetType="Group" resetGroup="TITOLO" calculation="Sum">
+		<variableExpression><![CDATA[$F{VAR_PIU}]]></variableExpression>
+	</variable>
+	<variable name="tot_var+_par" class="java.math.BigDecimal" resetType="Group" resetGroup="PARTE" calculation="Sum">
+		<variableExpression><![CDATA[$F{VAR_PIU}]]></variableExpression>
+	</variable>
+	<variable name="tot_var+" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{VAR_PIU}]]></variableExpression>
+	</variable>
+	<variable name="tot_var-_rub" class="java.math.BigDecimal" resetType="Group" resetGroup="RUBRICA" calculation="Sum">
+		<variableExpression><![CDATA[$F{VAR_MENO}]]></variableExpression>
+	</variable>
+	<variable name="tot_var-_sez" class="java.math.BigDecimal" resetType="Group" resetGroup="SEZIONE" calculation="Sum">
+		<variableExpression><![CDATA[$F{VAR_MENO}]]></variableExpression>
+	</variable>
+	<variable name="tot_var-_tit" class="java.math.BigDecimal" resetType="Group" resetGroup="TITOLO" calculation="Sum">
+		<variableExpression><![CDATA[$F{VAR_MENO}]]></variableExpression>
+	</variable>
+	<variable name="tot_var-_par" class="java.math.BigDecimal" resetType="Group" resetGroup="PARTE" calculation="Sum">
+		<variableExpression><![CDATA[$F{VAR_MENO}]]></variableExpression>
+	</variable>
+	<variable name="tot_var-" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{VAR_MENO}]]></variableExpression>
+	</variable>
+	<variable name="tot_ass_rub" class="java.math.BigDecimal" resetType="Group" resetGroup="RUBRICA" calculation="Sum">
+		<variableExpression><![CDATA[$F{ASSESTATO}]]></variableExpression>
+	</variable>
+	<variable name="tot_ass_sez" class="java.math.BigDecimal" resetType="Group" resetGroup="SEZIONE" calculation="Sum">
+		<variableExpression><![CDATA[$F{ASSESTATO}]]></variableExpression>
+	</variable>
+	<variable name="tot_ass_tit" class="java.math.BigDecimal" resetType="Group" resetGroup="TITOLO" calculation="Sum">
+		<variableExpression><![CDATA[$F{ASSESTATO}]]></variableExpression>
+	</variable>
+	<variable name="tot_ass_par" class="java.math.BigDecimal" resetType="Group" resetGroup="PARTE" calculation="Sum">
+		<variableExpression><![CDATA[$F{ASSESTATO}]]></variableExpression>
+	</variable>
+	<variable name="tot_ass" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{ASSESTATO}]]></variableExpression>
+	</variable>
+	<variable name="tot_pag_rub" class="java.math.BigDecimal" resetType="Group" resetGroup="RUBRICA" calculation="Sum">
+		<variableExpression><![CDATA[$F{PAGAMENTI}]]></variableExpression>
+	</variable>
+	<variable name="tot_pag_sez" class="java.math.BigDecimal" resetType="Group" resetGroup="SEZIONE" calculation="Sum">
+		<variableExpression><![CDATA[$F{PAGAMENTI}]]></variableExpression>
+	</variable>
+	<variable name="tot_pag_tit" class="java.math.BigDecimal" resetType="Group" resetGroup="TITOLO" calculation="Sum">
+		<variableExpression><![CDATA[$F{PAGAMENTI}]]></variableExpression>
+	</variable>
+	<variable name="tot_pag_par" class="java.math.BigDecimal" resetType="Group" resetGroup="PARTE" calculation="Sum">
+		<variableExpression><![CDATA[$F{PAGAMENTI}]]></variableExpression>
+	</variable>
+	<variable name="tot_pag" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{PAGAMENTI}]]></variableExpression>
+	</variable>
+	<variable name="tot_dif+_rub" class="java.math.BigDecimal" resetType="Group" resetGroup="RUBRICA" calculation="Sum">
+		<variableExpression><![CDATA[($F{IN_PIU}.compareTo($F{IN_PIU}.abs())!=0?new BigDecimal(0):$F{IN_PIU})]]></variableExpression>
+	</variable>
+	<variable name="tot_dif+_sez" class="java.math.BigDecimal" resetType="Group" resetGroup="SEZIONE" calculation="Sum">
+		<variableExpression><![CDATA[($F{IN_PIU}.compareTo($F{IN_PIU}.abs())!=0?new BigDecimal(0):$F{IN_PIU})]]></variableExpression>
+	</variable>
+	<variable name="tot_dif+_tit" class="java.math.BigDecimal" resetType="Group" resetGroup="TITOLO" calculation="Sum">
+		<variableExpression><![CDATA[($F{IN_PIU}.compareTo($F{IN_PIU}.abs())!=0?new BigDecimal(0):$F{IN_PIU})]]></variableExpression>
+	</variable>
+	<variable name="tot_dif+_par" class="java.math.BigDecimal" resetType="Group" resetGroup="PARTE" calculation="Sum">
+		<variableExpression><![CDATA[($F{IN_PIU}.compareTo($F{IN_PIU}.abs())!=0?new BigDecimal(0):$F{IN_PIU})]]></variableExpression>
+	</variable>
+	<variable name="tot_dif+" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[($F{IN_PIU}.compareTo($F{IN_PIU}.abs())!=0?new BigDecimal(0):$F{IN_PIU})]]></variableExpression>
+	</variable>
+	<variable name="tot_dif-_rub" class="java.math.BigDecimal" resetType="Group" resetGroup="RUBRICA" calculation="Sum">
+		<variableExpression><![CDATA[($F{IN_MENO}.compareTo($F{IN_MENO}.abs())!=0?new BigDecimal(0):$F{IN_MENO})]]></variableExpression>
+	</variable>
+	<variable name="tot_dif-_sez" class="java.math.BigDecimal" resetType="Group" resetGroup="SEZIONE" calculation="Sum">
+		<variableExpression><![CDATA[($F{IN_MENO}.compareTo($F{IN_MENO}.abs())!=0?new BigDecimal(0):$F{IN_MENO})]]></variableExpression>
+	</variable>
+	<variable name="tot_dif-_tit" class="java.math.BigDecimal" resetType="Group" resetGroup="TITOLO" calculation="Sum">
+		<variableExpression><![CDATA[($F{IN_MENO}.compareTo($F{IN_MENO}.abs())!=0?new BigDecimal(0):$F{IN_MENO})]]></variableExpression>
+	</variable>
+	<variable name="tot_dif-_par" class="java.math.BigDecimal" resetType="Group" resetGroup="PARTE" calculation="Sum">
+		<variableExpression><![CDATA[($F{IN_MENO}.compareTo($F{IN_MENO}.abs())!=0?new BigDecimal(0):$F{IN_MENO})]]></variableExpression>
+	</variable>
+	<variable name="tot_dif-" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[($F{IN_MENO}.compareTo($F{IN_MENO}.abs())!=0?new BigDecimal(0):$F{IN_MENO})]]></variableExpression>
+	</variable>
+
+		<group  name="PARTE" >
+			<groupExpression><![CDATA[$F{PARTE}]]></groupExpression>
+			<groupHeader>
+			<band height="18"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10B"
+						x="2"
+						y="2"
+						width="280"
+						height="14"
+						key="textField-6"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["PARTE "+$F{PARTE}+" - "+$F{DS_PARTE}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="285"
+						y="0"
+						width="0"
+						height="18"
+						key="line-17"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="0"
+						width="0"
+						height="18"
+						key="line-21"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="780"
+						y="0"
+						width="0"
+						height="18"
+						key="line-22"
+						stretchType="RelativeToBandHeight"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="20"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10B"
+						x="2"
+						y="2"
+						width="280"
+						height="14"
+						key="textField-42"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Totale Parte "+$F{PARTE}+" "]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="0"
+						width="0"
+						height="20"
+						key="line-73"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="780"
+						y="0"
+						width="0"
+						height="18"
+						key="line-74"
+						stretchType="RelativeToBandHeight"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="285"
+						y="0"
+						width="0"
+						height="20"
+						key="line-75"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="349"
+						y="0"
+						width="0"
+						height="20"
+						key="line-76"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="420"
+						y="0"
+						width="0"
+						height="20"
+						key="line-77"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="780"
+						y="0"
+						width="0"
+						height="20"
+						key="line-78"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="711"
+						y="0"
+						width="0"
+						height="20"
+						key="line-79"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="636"
+						y="0"
+						width="0"
+						height="20"
+						key="line-80"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="563"
+						y="0"
+						width="0"
+						height="20"
+						key="line-81"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="490"
+						y="0"
+						width="0"
+						height="20"
+						key="line-82"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="288"
+						y="2"
+						width="60"
+						height="14"
+						key="textField-43"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_ini_par}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="354"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-44"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_var+_par}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="423"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-45"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_var-_par}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="494"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-46"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_ass_par}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="567"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-47"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_pag_par}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="645"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-48"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_dif+_par}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="713"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-49"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_dif-_par}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="TITOLO" >
+			<groupExpression><![CDATA[$F{TITOLO}]]></groupExpression>
+			<groupHeader>
+			<band height="18"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean($F{PARTE}.compareTo("2")!=0)]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10B"
+						x="2"
+						y="2"
+						width="280"
+						height="14"
+						key="textField-7"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["TITOLO "+$F{TITOLO}.substring(($F{TITOLO}.length())-1,$F{TITOLO}.length())+" - "+$F{DS_TITOLO}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="285"
+						y="0"
+						width="0"
+						height="18"
+						key="line-18"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="0"
+						width="0"
+						height="18"
+						key="line-23"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="780"
+						y="0"
+						width="0"
+						height="18"
+						key="line-24"
+						stretchType="RelativeToBandHeight"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="20"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean($F{PARTE}.compareTo("2")!=0)]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10B"
+						x="2"
+						y="2"
+						width="280"
+						height="14"
+						key="textField-34"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Totale Titolo "+$F{TITOLO}.substring(($F{TITOLO}.length())-1,$F{TITOLO}.length())+" "]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="0"
+						width="0"
+						height="20"
+						key="line-62"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="780"
+						y="0"
+						width="0"
+						height="18"
+						key="line-63"
+						stretchType="RelativeToBandHeight"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="285"
+						y="0"
+						width="0"
+						height="20"
+						key="line-64"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="349"
+						y="0"
+						width="0"
+						height="20"
+						key="line-65"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="420"
+						y="0"
+						width="0"
+						height="20"
+						key="line-66"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="780"
+						y="0"
+						width="0"
+						height="20"
+						key="line-67"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="711"
+						y="0"
+						width="0"
+						height="20"
+						key="line-68"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="636"
+						y="0"
+						width="0"
+						height="20"
+						key="line-69"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="563"
+						y="0"
+						width="0"
+						height="20"
+						key="line-70"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="490"
+						y="0"
+						width="0"
+						height="20"
+						key="line-71"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="288"
+						y="2"
+						width="60"
+						height="14"
+						key="textField-35"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_ini_tit}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="354"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-36"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_var+_tit}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="423"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-37"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_var-_tit}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="494"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-38"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_ass_tit}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="567"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-39"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_pag_tit}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="645"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-40"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_dif+_tit}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="713"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-41"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_dif-_tit}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="SEZIONE" >
+			<groupExpression><![CDATA[$F{SEZIONE}]]></groupExpression>
+			<groupHeader>
+			<band height="18"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean($F{PARTE}.compareTo("2")!=0)]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10B"
+						x="2"
+						y="2"
+						width="280"
+						height="14"
+						key="textField-8"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Sezione "+$F{SEZIONE}.substring(($F{SEZIONE}.length())-1,$F{SEZIONE}.length())+" - "+$F{DS_SEZIONE}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="285"
+						y="0"
+						width="0"
+						height="18"
+						key="line-19"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="0"
+						width="0"
+						height="18"
+						key="line-25"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="780"
+						y="0"
+						width="0"
+						height="18"
+						key="line-26"
+						stretchType="RelativeToBandHeight"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="20"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean($F{PARTE}.compareTo("2")!=0)]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10B"
+						x="2"
+						y="2"
+						width="280"
+						height="14"
+						key="textField-26"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Totale Sezione "+$F{SEZIONE}.substring(($F{SEZIONE}.length())-1,$F{SEZIONE}.length())+" "]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="0"
+						width="0"
+						height="20"
+						key="line-51"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="780"
+						y="0"
+						width="0"
+						height="18"
+						key="line-52"
+						stretchType="RelativeToBandHeight"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="285"
+						y="0"
+						width="0"
+						height="20"
+						key="line-53"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="349"
+						y="0"
+						width="0"
+						height="20"
+						key="line-54"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="420"
+						y="0"
+						width="0"
+						height="20"
+						key="line-55"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="780"
+						y="0"
+						width="0"
+						height="20"
+						key="line-56"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="711"
+						y="0"
+						width="0"
+						height="20"
+						key="line-57"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="636"
+						y="0"
+						width="0"
+						height="20"
+						key="line-58"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="563"
+						y="0"
+						width="0"
+						height="20"
+						key="line-59"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="490"
+						y="0"
+						width="0"
+						height="20"
+						key="line-60"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="288"
+						y="2"
+						width="60"
+						height="14"
+						key="textField-27"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_ini_sez}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="354"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-28"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_var+_sez}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="423"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-29"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_var-_sez}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="494"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-30"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_ass_sez}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="567"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-31"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_pag_sez}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="645"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-32"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_dif+_sez}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="713"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-33"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_dif-_sez}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="RUBRICA" >
+			<groupExpression><![CDATA[$F{RUBRICA}]]></groupExpression>
+			<groupHeader>
+			<band height="18"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean($F{PARTE}.compareTo("2")!=0)]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10B"
+						x="2"
+						y="2"
+						width="280"
+						height="14"
+						key="textField-9"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Rubrica "+$F{RUBRICA}.substring(($F{RUBRICA}.length())-7,$F{RUBRICA}.length())+" - "+$F{DS_RUBRICA}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="285"
+						y="0"
+						width="0"
+						height="18"
+						key="line-20"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="0"
+						width="0"
+						height="18"
+						key="line-27"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="780"
+						y="0"
+						width="0"
+						height="18"
+						key="line-28"
+						stretchType="RelativeToBandHeight"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="20"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean($F{PARTE}.compareTo("2")!=0)]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10B"
+						x="2"
+						y="2"
+						width="280"
+						height="14"
+						key="textField-18"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Totale Rubrica "+$F{RUBRICA}.substring(($F{RUBRICA}.length())-7,$F{RUBRICA}.length())+" "]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="0"
+						width="0"
+						height="20"
+						key="line-40"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="780"
+						y="0"
+						width="0"
+						height="18"
+						key="line-41"
+						stretchType="RelativeToBandHeight"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="285"
+						y="0"
+						width="0"
+						height="20"
+						key="line-42"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="349"
+						y="0"
+						width="0"
+						height="20"
+						key="line-43"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="420"
+						y="0"
+						width="0"
+						height="20"
+						key="line-44"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="780"
+						y="0"
+						width="0"
+						height="20"
+						key="line-45"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="711"
+						y="0"
+						width="0"
+						height="20"
+						key="line-46"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="636"
+						y="0"
+						width="0"
+						height="20"
+						key="line-47"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="563"
+						y="0"
+						width="0"
+						height="20"
+						key="line-48"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="490"
+						y="0"
+						width="0"
+						height="20"
+						key="line-49"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="288"
+						y="2"
+						width="60"
+						height="14"
+						key="textField-19"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_ini_rub}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="354"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-20"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_var+_rub}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="423"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-21"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_var-_rub}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="494"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-22"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_ass_rub}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="567"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-23"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_pag_rub}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="645"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-24"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_dif+_rub}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="713"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-25"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_dif-_rub}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="137"  isSplitAllowed="true" >
+				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1"
+						y="2"
+						width="497"
+						height="40"
+						key="image-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<graphicElement stretchType="NoStretch"/>
+					<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+				</image>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR16B"
+						x="0"
+						y="46"
+						width="782"
+						height="23"
+						key="textField-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["RENDICONTO FINANZIARIO CDS "+ $P{cds}+ " SPESE"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR12B"
+						x="0"
+						y="69"
+						width="782"
+						height="16"
+						key="textField-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["ESERCIZIO "+ $P{esercizio}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="91"
+						width="780"
+						height="0"
+						key="line-1"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="1"
+						y="108"
+						width="562"
+						height="0"
+						key="line-3"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<staticText>
+					<reportElement
+						style="TNR10B"
+						x="1"
+						y="93"
+						width="282"
+						height="14"
+						key="staticText-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[CAPITOLO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR10B"
+						x="288"
+						y="93"
+						width="277"
+						height="14"
+						key="staticText-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[PREVISIONE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR10B"
+						x="566"
+						y="93"
+						width="70"
+						height="14"
+						key="staticText-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[PAGAMENTI]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR10B"
+						x="635"
+						y="95"
+						width="145"
+						height="38"
+						key="staticText-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[DIFFERENZE RISPETTO
+ALLA PREVISIONE
+in +          in -]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="136"
+						width="780"
+						height="0"
+						key="line-4"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="0"
+						y="91"
+						width="0"
+						height="45"
+						key="line-5"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="563"
+						y="91"
+						width="0"
+						height="45"
+						key="line-6"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="96"
+						y="108"
+						width="0"
+						height="28"
+						key="line-7"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="285"
+						y="91"
+						width="0"
+						height="45"
+						key="line-8"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="349"
+						y="108"
+						width="0"
+						height="28"
+						key="line-9"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<staticText>
+					<reportElement
+						style="TNR10B"
+						x="350"
+						y="110"
+						width="140"
+						height="26"
+						key="staticText-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[Variazioni
+ in +            in -]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR10B"
+						x="492"
+						y="110"
+						width="70"
+						height="14"
+						key="staticText-6"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[Assestato]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR10B"
+						x="291"
+						y="110"
+						width="50"
+						height="14"
+						key="staticText-7"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[Iniziali]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR10B"
+						x="6"
+						y="110"
+						width="87"
+						height="14"
+						key="staticText-8"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[Numero]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR10B"
+						x="99"
+						y="110"
+						width="182"
+						height="14"
+						key="staticText-9"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left">
+						<font/>
+					</textElement>
+				<text><![CDATA[Descrizione]]></text>
+				</staticText>
+				<line direction="BottomUp">
+					<reportElement
+						x="490"
+						y="108"
+						width="0"
+						height="28"
+						key="line-10"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="350"
+						y="122"
+						width="140"
+						height="0"
+						key="line-11"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="420"
+						y="123"
+						width="0"
+						height="13"
+						key="line-12"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="636"
+						y="91"
+						width="0"
+						height="45"
+						key="line-13"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="780"
+						y="91"
+						width="0"
+						height="45"
+						key="line-14"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="635"
+						y="118"
+						width="145"
+						height="0"
+						key="line-15"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="711"
+						y="119"
+						width="0"
+						height="18"
+						key="line-16"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="20"  isSplitAllowed="true" >
+				<line direction="BottomUp">
+					<reportElement
+						x="0"
+						y="0"
+						width="0"
+						height="20"
+						key="line-29"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="96"
+						y="0"
+						width="0"
+						height="20"
+						key="line-30"
+						stretchType="RelativeToBandHeight"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="285"
+						y="0"
+						width="0"
+						height="20"
+						key="line-31"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="349"
+						y="0"
+						width="0"
+						height="20"
+						key="line-32"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="420"
+						y="0"
+						width="0"
+						height="20"
+						key="line-33"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="780"
+						y="0"
+						width="0"
+						height="20"
+						key="line-34"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="711"
+						y="0"
+						width="0"
+						height="20"
+						key="line-35"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="636"
+						y="0"
+						width="0"
+						height="20"
+						key="line-36"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="563"
+						y="0"
+						width="0"
+						height="20"
+						key="line-37"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="490"
+						y="0"
+						width="0"
+						height="20"
+						key="line-38"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="2"
+						y="2"
+						width="92"
+						height="14"
+						key="textField-10"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="100"
+						y="2"
+						width="184"
+						height="14"
+						key="textField-11"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DS_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="288"
+						y="2"
+						width="60"
+						height="14"
+						key="textField"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{INIZIALE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="354"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-12"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{VAR_PIU}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="423"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-13"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{VAR_MENO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="494"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-14"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{ASSESTATO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="567"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-15"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{PAGAMENTI}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="645"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-16"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[($F{IN_PIU}.compareTo($F{IN_PIU}.abs())!=0?new BigDecimal(0):$F{IN_PIU})]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="713"
+						y="2"
+						width="65"
+						height="14"
+						key="textField-17"
+						stretchType="RelativeToBandHeight"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[($F{IN_MENO}.compareTo($F{IN_MENO}.abs())!=0?new BigDecimal(0):$F{IN_MENO})]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="21"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="4"
+						y="3"
+						width="103"
+						height="17"
+						key="textField-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="681"
+						y="4"
+						width="73"
+						height="17"
+						key="textField-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Pagina " + $V{PAGE_NUMBER} + " di "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="754"
+						y="4"
+						width="25"
+						height="17"
+						key="textField-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="40"  isSplitAllowed="true" >
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="0"
+						width="0"
+						height="37"
+						key="line-84"
+						stretchType="RelativeToBandHeight"/>
+					<graphicElement stretchType="RelativeToBandHeight" pen="2Point"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="780"
+						y="0"
+						width="0"
+						height="18"
+						key="line-85"
+						stretchType="RelativeToBandHeight"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="285"
+						y="0"
+						width="0"
+						height="37"
+						key="line-86"
+						stretchType="RelativeToBandHeight"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						x="780"
+						y="0"
+						width="0"
+						height="37"
+						key="line-89"
+						stretchType="RelativeToBandHeight"/>
+					<graphicElement stretchType="RelativeToBandHeight" pen="2Point"/>
+				</line>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10B"
+						x="288"
+						y="3"
+						width="60"
+						height="14"
+						key="textField-51"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_ini}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10B"
+						x="354"
+						y="3"
+						width="65"
+						height="14"
+						key="textField-52"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_var+}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10B"
+						x="423"
+						y="3"
+						width="65"
+						height="14"
+						key="textField-53"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_var-}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10B"
+						x="494"
+						y="3"
+						width="65"
+						height="14"
+						key="textField-54"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_ass}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10B"
+						x="567"
+						y="3"
+						width="65"
+						height="14"
+						key="textField-55"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_pag}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10B"
+						x="645"
+						y="3"
+						width="65"
+						height="14"
+						key="textField-56"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_dif+}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10B"
+						x="713"
+						y="3"
+						width="65"
+						height="14"
+						key="textField-57"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_dif-}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="37"
+						width="780"
+						height="0"
+						key="line-94"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight" pen="2Point"/>
+				</line>
+				<staticText>
+					<reportElement
+						style="TNR12B"
+						x="4"
+						y="3"
+						width="261"
+						height="14"
+						key="staticText-10"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left">
+						<font pdfFontName="Times-BoldItalic" isItalic="true"/>
+					</textElement>
+				<text><![CDATA[Totale Generale delle Spese]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR12B"
+						x="4"
+						y="21"
+						width="261"
+						height="14"
+						key="staticText-11"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left">
+						<font pdfFontName="Times-Bold" isItalic="false"/>
+					</textElement>
+				<text><![CDATA[FONDO DI CASSA FINALE]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR12B"
+						x="540"
+						y="21"
+						width="92"
+						height="14"
+						key="textField-58"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{FC_FINALE}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="0"
+						width="780"
+						height="0"
+						key="line-95"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToBandHeight" pen="2Point"/>
+				</line>
+			</band>
+		</summary>
+</jasperReport>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="certificazione_data"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="311"
+		 pageHeight="842"
+		 columnWidth="311"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<style 
+		name="TNR10"
+		isDefault="false"
+		fontName="Times New Roman"
+		pdfFontName="Times-Roman"
+	>
+	</style>
+
+	<parameter name="esercizio" isForPrompting="false" class="java.lang.Integer"/>
+	<queryString><![CDATA[SELECT
+     *
+FROM
+     firme
+WHERE
+     esercizio = $P{esercizio}]]></queryString>
+
+	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
+	<field name="TIPO" class="java.lang.String"/>
+	<field name="FIRMA1" class="java.lang.String"/>
+	<field name="FIRMA2" class="java.lang.String"/>
+	<field name="FIRMA3" class="java.lang.String"/>
+	<field name="FIRMA4" class="java.lang.String"/>
+	<field name="DACR" class="java.sql.Timestamp"/>
+	<field name="UTCR" class="java.lang.String"/>
+	<field name="DUVA" class="java.sql.Timestamp"/>
+	<field name="UTUV" class="java.lang.String"/>
+	<field name="PG_VER_REC" class="java.math.BigDecimal"/>
+	<field name="DT_STAMPA" class="java.util.Date"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="13"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="5"
+						y="1"
+						width="77"
+						height="12"
+						key="textField-1"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[($F{DT_STAMPA}==null? new java.util.Date():
+($F{DT_STAMPA}.before( new java.util.Date() )?$F{DT_STAMPA}:null))]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

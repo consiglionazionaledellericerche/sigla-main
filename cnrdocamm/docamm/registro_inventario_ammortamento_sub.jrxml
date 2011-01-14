@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="registro_inventario_ammortamento_sub"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="535"
+		 pageHeight="802"
+		 columnWidth="535"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<style 
+		name="TNR10"
+		isDefault="false"
+		fontName="Times New Roman"
+		pdfFontName="Times-Roman"
+	/>
+	<style 
+		name="TNR10BOLD"
+		isDefault="false"
+		fontName="Times New Roman"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	/>
+
+	<parameter name="cds" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[new String("043")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="uo" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[new String("*")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data_a" isForPrompting="false" class="java.util.Date">
+		<defaultValueExpression ><![CDATA[new SimpleDateFormat("yyyy/MM/dd").parse("1970/01/01")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="categoria" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[new String("*")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="gruppo" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[new String("*")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="da_codice_bene" isForPrompting="false" class="java.lang.Long">
+		<defaultValueExpression ><![CDATA[new Long("0")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="a_codice_bene" isForPrompting="false" class="java.lang.Long">
+		<defaultValueExpression ><![CDATA[new Long("9999999999")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ds_tipo_carico_scarico" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[new String("*")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tipo" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[new String("*")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data_da" isForPrompting="false" class="java.util.Date">
+		<defaultValueExpression ><![CDATA[new SimpleDateFormat("yyyy/MM/dd").parse("1970/01/01")]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[SELECT * From TMP_STAMPA_REGISTRO_INV_QUOTE,tipo_carico_scarico
+Where NVL(data_registrazione, $P{data_a}) between $P{data_da} and $P{data_a}
+  And esercizio_carico_bene <= to_number(to_char($P{data_a},'YYYY'))
+  And (esercizio_amm = to_number(to_char($P{data_a},'YYYY')) or
+	esercizio_amm = 9999)
+  And (ESERCIZIO_COMP = ESERCIZIO_AMM)
+  AND (VALORE_AMMORTIZZATO>=0)
+  And categoria like Decode($P{categoria},'*','%',$P{categoria})
+  and tipo_carico_scarico.ti_documento = 'C' 
+  and tipo_carico_scarico.cd_tipo_carico_scarico =  TMP_STAMPA_REGISTRO_INV_QUOTE.cd_tipo_carico_scarico 
+and tipo like Decode($P{tipo},'*','%',$P{tipo})
+Order By Categoria ASC]]></queryString>
+
+	<field name="CD_UNITA_ORGANIZZATIVA" class="java.lang.String"/>
+	<field name="CD_CDS" class="java.lang.String"/>
+	<field name="ESERCIZIO_CARICO_BENE" class="java.math.BigDecimal"/>
+	<field name="ETICHETTA" class="java.lang.String"/>
+	<field name="CATEGORIA" class="java.lang.String"/>
+	<field name="CD_CATEGORIA_GRUPPO" class="java.lang.String"/>
+	<field name="CD_ASSEGNATARIO" class="java.math.BigDecimal"/>
+	<field name="DATA_REGISTRAZIONE" class="java.sql.Timestamp"/>
+	<field name="CD_TIPO_CARICO_SCARICO" class="java.lang.String"/>
+	<field name="DS_TIPO_CARICO_SCARICO" class="java.lang.String"/>
+	<field name="VALORE_AMMORTIZZATO" class="java.math.BigDecimal"/>
+	<field name="IMPONIBILE_AMMORTAMENTO" class="java.math.BigDecimal"/>
+	<field name="ESERCIZIO_AMM" class="java.lang.Integer"/>
+	<field name="NUMERO_ANNI" class="java.math.BigDecimal"/>
+	<field name="PERC_AMMORTAMENTO" class="java.math.BigDecimal"/>
+	<field name="PERC_PRIMO_ANNO" class="java.math.BigDecimal"/>
+	<field name="PERC_SUCCESSIVI" class="java.math.BigDecimal"/>
+	<field name="NR_INVENTARIO" class="java.math.BigDecimal"/>
+	<field name="FL_AMMORTAMENTO" class="java.lang.String"/>
+	<field name="TIPO" class="java.lang.String"/>
+	<field name="ESERCIZIO_COMP" class="java.lang.Integer"/>
+
+	<variable name="SUM_TOT_QUOTE" class="java.math.BigDecimal" resetType="Group" resetGroup="CATEGORIA" calculation="Sum">
+		<variableExpression><![CDATA[$F{VALORE_AMMORTIZZATO}]]></variableExpression>
+	</variable>
+
+		<group  name="CATEGORIA" >
+			<groupExpression><![CDATA[$F{CATEGORIA}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="18"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10BOLD"
+						x="0"
+						y="0"
+						width="105"
+						height="15"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_TOT_QUOTE}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="16"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						style="TNR10BOLD"
+						x="0"
+						y="0"
+						width="105"
+						height="15"
+						key="staticText-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[Quota ammortamento]]></text>
+				</staticText>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

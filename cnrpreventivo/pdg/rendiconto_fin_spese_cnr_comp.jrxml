@@ -1,0 +1,4319 @@
+<?xml version="1.0" encoding="ISO-8859-1"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="rendiconto_fin_spese_cnr_comp"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="842"
+		 pageHeight="595"
+		 columnWidth="782"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="ISO-8859-1" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<style 
+		name="TNR6"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="6"
+		pdfFontName="Times-Roman"
+	>
+	</style>
+	<style 
+		name="TNRG6"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="6"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	>
+	</style>
+	<style 
+		name="TNRG8"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="8"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	>
+	</style>
+	<style 
+		name="TNRG8ITALIC"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="8"
+		isBold="true"
+		isItalic="true"
+		pdfFontName="Times-BoldItalic"
+	>
+	</style>
+	<style 
+		name="TNRG7ITALIC"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="7"
+		isBold="true"
+		isItalic="true"
+		pdfFontName="Times-BoldItalic"
+	>
+	</style>
+	<style 
+		name="TNRG7"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="7"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	>
+	</style>
+	<style 
+		name="TNR16"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="16"
+		pdfFontName="Times-Roman"
+	>
+	</style>
+	<style 
+		name="TNR7"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="7"
+		pdfFontName="Times-Roman"
+	>
+	</style>
+
+	<parameter name="esercizio" isForPrompting="false" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new Integer("2006")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="stampaArticolo" isForPrompting="true" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[Livello di stampa del report:
+(FALSE) Capitolo
+(TRUE) Articolo]]></parameterDescription>
+		<defaultValueExpression ><![CDATA[Boolean.TRUE]]></defaultValueExpression>
+	</parameter>
+	<parameter name="stampadataepagina" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[new String("Y")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cds" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[new String("")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="all" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[new String("*")]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[SELECT 
+    PRT_AVANZO_DISAVANZO.TIPO AVANZO_TIPO, 
+     nvl(PRT_AVANZO_DISAVANZO.DS_VOCE_AVANZO_DISAVANZO,' ') AVANZO_DISAVANZO_DS, 
+    nvl(PRT_AVANZO_DISAVANZO.INIZIALE,0) AVANZO_INIZIALE, 
+    nvl(PRT_AVANZO_DISAVANZO.VAR_PIU,0) AVANZO_VAR_PIU, 
+    nvl(PRT_AVANZO_DISAVANZO.VAR_MENO,0) AVANZO_VAR_MENO, 
+nvl(PRT_AVANZO_DISAVANZO.ASSESTATO,0) AVANZO_ASSESTATO, 
+    PRT_REND_FIN_SPESE_ART_CNR.ESER,
+    PRT_REND_FIN_SPESE_ART_CNR.PARTE, PRT_REND_FIN_SPESE_ART_CNR.DS_PARTE, 
+    PRT_REND_FIN_SPESE_ART_CNR.TITOLO, PRT_REND_FIN_SPESE_ART_CNR.DS_TITOLO, 
+    PRT_REND_FIN_SPESE_ART_CNR.CATEGORIA, PRT_REND_FIN_SPESE_ART_CNR.DS_CATEGORIA, 
+    PRT_REND_FIN_SPESE_ART_CNR.SEZIONE, PRT_REND_FIN_SPESE_ART_CNR.DS_SEZIONE,
+    PRT_REND_FIN_SPESE_ART_CNR.CAPITOLO, PRT_REND_FIN_SPESE_ART_CNR.DS_CAPITOLO, 
+    PRT_REND_FIN_SPESE_ART_CNR.ARTICOLO, PRT_REND_FIN_SPESE_ART_CNR.DS_ARTICOLO, 
+    PRT_REND_FIN_SPESE_ART_CNR.INIZIALE, PRT_REND_FIN_SPESE_ART_CNR.VAR_PIU, 
+    PRT_REND_FIN_SPESE_ART_CNR.VAR_MENO, PRT_REND_FIN_SPESE_ART_CNR.ASSESTATO, 
+    PRT_REND_FIN_SPESE_ART_CNR.IMPEGNATO, PRT_REND_FIN_SPESE_ART_CNR.ACCREDITAMENTI, 
+    PRT_REND_FIN_SPESE_ART_CNR.REGOLARIZZATI, 
+    PRT_REND_FIN_SPESE_ART_CNR.DA_ACCRED, PRT_REND_FIN_SPESE_ART_CNR.IN_MENO, 
+    PRT_REND_FIN_SPESE_ART_CNR.IN_PIU, PRT_REND_FIN_SPESE_ART_CNR.CDS_OR, 
+    (select sum(IM_CASSA_INIZIALE) from esercizio
+    where   PRT_REND_FIN_SPESE_ART_CNR.ESER = ESERCIZIO.ESERCIZIO ) im_cassa_iniziale
+FROM
+    PRT_AVANZO_DISAVANZO,
+    PRT_REND_FIN_SPESE_ART_CNR
+WHERE
+    $P{cds} =  $P{all} AND
+    PRT_AVANZO_DISAVANZO.ESER(+) = PRT_REND_FIN_SPESE_ART_CNR.ESER AND
+    PRT_AVANZO_DISAVANZO.CDS (+)= PRT_REND_FIN_SPESE_ART_CNR.CDS AND 
+    PRT_REND_FIN_SPESE_ART_CNR.ESER = $P{esercizio} AND
+    PRT_AVANZO_DISAVANZO.TIPO(+) = 'D_C'
+UNION
+SELECT 
+    PRT_AVANZO_DISAVANZO.TIPO, 
+    nvl(PRT_AVANZO_DISAVANZO.DS_VOCE_AVANZO_DISAVANZO,' '), 
+    nvl(PRT_AVANZO_DISAVANZO.INIZIALE,0) iNIZIALE, 
+    nvl(PRT_AVANZO_DISAVANZO.VAR_PIU,0) VAR_PIU, 
+    nvl(PRT_AVANZO_DISAVANZO.VAR_MENO,0) VAR_MENO, 
+nvl(PRT_AVANZO_DISAVANZO.ASSESTATO,0) ASSESTATO, 
+    PRT_REND_FI_S_ART_CNR_XCDS.ESER, 
+    PRT_REND_FI_S_ART_CNR_XCDS.PARTE, PRT_REND_FI_S_ART_CNR_XCDS.DS_PARTE,
+    PRT_REND_FI_S_ART_CNR_XCDS.TITOLO, PRT_REND_FI_S_ART_CNR_XCDS.DS_TITOLO, 
+    PRT_REND_FI_S_ART_CNR_XCDS.CATEGORIA, PRT_REND_FI_S_ART_CNR_XCDS.DS_CATEGORIA, 
+    PRT_REND_FI_S_ART_CNR_XCDS.SEZIONE, PRT_REND_FI_S_ART_CNR_XCDS.DS_SEZIONE, 
+    PRT_REND_FI_S_ART_CNR_XCDS.CAPITOLO, PRT_REND_FI_S_ART_CNR_XCDS.DS_CAPITOLO,
+    PRT_REND_FI_S_ART_CNR_XCDS.ARTICOLO, PRT_REND_FI_S_ART_CNR_XCDS.DS_ARTICOLO, 
+    PRT_REND_FI_S_ART_CNR_XCDS.INIZIALE, PRT_REND_FI_S_ART_CNR_XCDS.VAR_PIU, 
+    PRT_REND_FI_S_ART_CNR_XCDS.VAR_MENO, PRT_REND_FI_S_ART_CNR_XCDS.ASSESTATO, 
+    PRT_REND_FI_S_ART_CNR_XCDS.IMPEGNATO, PRT_REND_FI_S_ART_CNR_XCDS.ACCREDITAMENTI, 
+    PRT_REND_FI_S_ART_CNR_XCDS.REGOLARIZZATI, 
+    PRT_REND_FI_S_ART_CNR_XCDS.DA_ACCRED, PRT_REND_FI_S_ART_CNR_XCDS.IN_MENO, 
+    PRT_REND_FI_S_ART_CNR_XCDS.IN_PIU, PRT_REND_FI_S_ART_CNR_XCDS.CDS_OR, 
+    ESERCIZIO.IM_CASSA_INIZIALE
+FROM
+    PRT_AVANZO_DISAVANZO PRT_AVANZO_DISAVANZO,
+    PRT_REND_FI_S_ART_CNR_XCDS PRT_REND_FI_S_ART_CNR_XCDS,
+    ESERCIZIO ESERCIZIO
+WHERE
+    $P{cds} !=  $P{all} AND
+    PRT_AVANZO_DISAVANZO.ESER(+)= PRT_REND_FI_S_ART_CNR_XCDS.ESER AND
+    PRT_AVANZO_DISAVANZO.CDS(+) = PRT_REND_FI_S_ART_CNR_XCDS.CDS_OR AND
+    PRT_REND_FI_S_ART_CNR_XCDS.CDS_OR = ESERCIZIO.CD_CDS AND
+    PRT_REND_FI_S_ART_CNR_XCDS.ESER = ESERCIZIO.ESERCIZIO AND
+    PRT_REND_FI_S_ART_CNR_XCDS.ESER = $P{esercizio} AND
+    PRT_REND_FI_S_ART_CNR_XCDS.CDS_OR = $P{cds} AND
+    PRT_AVANZO_DISAVANZO.TIPO (+)= 'D_D'
+ORDER BY
+    ESER ASC,
+    PARTE ASC,
+    TITOLO ASC,
+    CATEGORIA ASC,
+    SEZIONE ASC,
+    CAPITOLO ASC,
+    ARTICOLO ASC]]></queryString>
+
+	<field name="AVANZO_TIPO" class="java.lang.String"/>
+	<field name="AVANZO_DISAVANZO_DS" class="java.lang.String"/>
+	<field name="AVANZO_INIZIALE" class="java.math.BigDecimal"/>
+	<field name="AVANZO_VAR_PIU" class="java.math.BigDecimal"/>
+	<field name="AVANZO_VAR_MENO" class="java.math.BigDecimal"/>
+	<field name="AVANZO_ASSESTATO" class="java.math.BigDecimal"/>
+	<field name="ESER" class="java.math.BigDecimal"/>
+	<field name="PARTE" class="java.lang.String"/>
+	<field name="DS_PARTE" class="java.lang.String"/>
+	<field name="TITOLO" class="java.lang.String"/>
+	<field name="DS_TITOLO" class="java.lang.String"/>
+	<field name="CATEGORIA" class="java.lang.String"/>
+	<field name="DS_CATEGORIA" class="java.lang.String"/>
+	<field name="SEZIONE" class="java.lang.String"/>
+	<field name="DS_SEZIONE" class="java.lang.String"/>
+	<field name="CAPITOLO" class="java.lang.String"/>
+	<field name="DS_CAPITOLO" class="java.lang.String"/>
+	<field name="ARTICOLO" class="java.lang.String"/>
+	<field name="DS_ARTICOLO" class="java.lang.String"/>
+	<field name="INIZIALE" class="java.math.BigDecimal"/>
+	<field name="VAR_PIU" class="java.math.BigDecimal"/>
+	<field name="VAR_MENO" class="java.math.BigDecimal"/>
+	<field name="ASSESTATO" class="java.math.BigDecimal"/>
+	<field name="IMPEGNATO" class="java.math.BigDecimal"/>
+	<field name="ACCREDITAMENTI" class="java.math.BigDecimal"/>
+	<field name="REGOLARIZZATI" class="java.math.BigDecimal"/>
+	<field name="DA_ACCRED" class="java.math.BigDecimal"/>
+	<field name="IN_MENO" class="java.math.BigDecimal"/>
+	<field name="IN_PIU" class="java.math.BigDecimal"/>
+	<field name="CDS_OR" class="java.lang.String"/>
+	<field name="IM_CASSA_INIZIALE" class="java.math.BigDecimal"/>
+
+	<variable name="SUM_INIZIALE_CAPITOLO" class="java.math.BigDecimal" resetType="Group" resetGroup="Capitolo2" calculation="Sum">
+		<variableExpression><![CDATA[$F{INIZIALE}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_PIU_CAPITOLO" class="java.math.BigDecimal" resetType="Group" resetGroup="Capitolo2" calculation="Sum">
+		<variableExpression><![CDATA[$F{VAR_PIU}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_MENO_CAPITOLO" class="java.math.BigDecimal" resetType="Group" resetGroup="Capitolo2" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_VAR_MENO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_CAPITOLO" class="java.math.BigDecimal" resetType="Group" resetGroup="Capitolo2" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_ASSESTATO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPEGNATO_CAPITOLO" class="java.math.BigDecimal" resetType="Group" resetGroup="Capitolo2" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_IMPEGNATO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ACCREDITAMENTI_CAPITOLO" class="java.math.BigDecimal" resetType="Group" resetGroup="Capitolo2" calculation="Sum">
+		<variableExpression><![CDATA[$F{ACCREDITAMENTI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_REGOLARIZZATI_CAPITOLO" class="java.math.BigDecimal" resetType="Group" resetGroup="Capitolo2" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_REGOLARIZZATI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DA_ACCRED_CAPITOLO" class="java.math.BigDecimal" resetType="Group" resetGroup="Capitolo2" calculation="Sum">
+		<variableExpression><![CDATA[$F{DA_ACCRED}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IN_PIU_CAPITOLO" class="java.math.BigDecimal" resetType="Group" resetGroup="Capitolo2" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_IN_PIU}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IN_MENO_CAPITOLO" class="java.math.BigDecimal" resetType="Group" resetGroup="Capitolo2" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_IN_MENO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_INIZIALE_SEZIONE" class="java.math.BigDecimal" resetType="Group" resetGroup="Sezione" calculation="Sum">
+		<variableExpression><![CDATA[$F{INIZIALE}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_PIU_SEZIONE" class="java.math.BigDecimal" resetType="Group" resetGroup="Sezione" calculation="Sum">
+		<variableExpression><![CDATA[$F{VAR_PIU}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_MENO_SEZIONE" class="java.math.BigDecimal" resetType="Group" resetGroup="Sezione" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_VAR_MENO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_SEZIONE" class="java.math.BigDecimal" resetType="Group" resetGroup="Sezione" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_ASSESTATO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPEGNATO_SEZIONE" class="java.math.BigDecimal" resetType="Group" resetGroup="Sezione" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_IMPEGNATO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ACCREDITAMENTI_SEZIONE" class="java.math.BigDecimal" resetType="Group" resetGroup="Sezione" calculation="Sum">
+		<variableExpression><![CDATA[$F{ACCREDITAMENTI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_REGOLARIZZATI_SEZIONE" class="java.math.BigDecimal" resetType="Group" resetGroup="Sezione" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_REGOLARIZZATI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DA_ACCRED_SEZIONE" class="java.math.BigDecimal" resetType="Group" resetGroup="Sezione" calculation="Sum">
+		<variableExpression><![CDATA[$F{DA_ACCRED}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IN_PIU_SEZIONE" class="java.math.BigDecimal" resetType="Group" resetGroup="Sezione" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_IN_PIU}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IN_MENO_SEZIONE" class="java.math.BigDecimal" resetType="Group" resetGroup="Sezione" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_IN_MENO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_INIZIALE_CATEGORIA" class="java.math.BigDecimal" resetType="Group" resetGroup="Categoria" calculation="Sum">
+		<variableExpression><![CDATA[$F{INIZIALE}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_PIU_CATEGORIA" class="java.math.BigDecimal" resetType="Group" resetGroup="Categoria" calculation="Sum">
+		<variableExpression><![CDATA[$F{VAR_PIU}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_MENO_CATEGORIA" class="java.math.BigDecimal" resetType="Group" resetGroup="Categoria" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_VAR_MENO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_CATEGORIA" class="java.math.BigDecimal" resetType="Group" resetGroup="Categoria" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_ASSESTATO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPEGNATO_CATEGORIA" class="java.math.BigDecimal" resetType="Group" resetGroup="Categoria" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_IMPEGNATO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ACCREDITAMENTI_CATEGORIA" class="java.math.BigDecimal" resetType="Group" resetGroup="Categoria" calculation="Sum">
+		<variableExpression><![CDATA[$F{ACCREDITAMENTI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_REGOLARIZZATI_CATEGORIA" class="java.math.BigDecimal" resetType="Group" resetGroup="Categoria" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_REGOLARIZZATI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DA_ACCRED_CATEGORIA" class="java.math.BigDecimal" resetType="Group" resetGroup="Categoria" calculation="Sum">
+		<variableExpression><![CDATA[$F{DA_ACCRED}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IN_PIU_CATEGORIA" class="java.math.BigDecimal" resetType="Group" resetGroup="Categoria" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_IN_PIU}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IN_MENO_CATEGORIA" class="java.math.BigDecimal" resetType="Group" resetGroup="Categoria" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_IN_MENO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_INIZIALE_TITOLO" class="java.math.BigDecimal" resetType="Group" resetGroup="Titolo" calculation="Sum">
+		<variableExpression><![CDATA[$F{INIZIALE}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_PIU_TITOLO" class="java.math.BigDecimal" resetType="Group" resetGroup="Titolo" calculation="Sum">
+		<variableExpression><![CDATA[$F{VAR_PIU}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_MENO_TITOLO" class="java.math.BigDecimal" resetType="Group" resetGroup="Titolo" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_VAR_MENO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_TITOLO" class="java.math.BigDecimal" resetType="Group" resetGroup="Titolo" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_ASSESTATO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPEGNATO_TITOLO" class="java.math.BigDecimal" resetType="Group" resetGroup="Titolo" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_IMPEGNATO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ACCREDITAMENTI_TITOLO" class="java.math.BigDecimal" resetType="Group" resetGroup="Titolo" calculation="Sum">
+		<variableExpression><![CDATA[$F{ACCREDITAMENTI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_REGOLARIZZATI_TITOLO" class="java.math.BigDecimal" resetType="Group" resetGroup="Titolo" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_REGOLARIZZATI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DA_ACCRED_TITOLO" class="java.math.BigDecimal" resetType="Group" resetGroup="Titolo" calculation="Sum">
+		<variableExpression><![CDATA[$F{DA_ACCRED}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IN_PIU_TITOLO" class="java.math.BigDecimal" resetType="Group" resetGroup="Titolo" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_IN_PIU}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IN_MENO_TITOLO" class="java.math.BigDecimal" resetType="Group" resetGroup="Titolo" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_IN_MENO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_INIZIALE_PARTE" class="java.math.BigDecimal" resetType="Group" resetGroup="Parte" calculation="Sum">
+		<variableExpression><![CDATA[$F{INIZIALE}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_PIU_PARTE" class="java.math.BigDecimal" resetType="Group" resetGroup="Parte" calculation="Sum">
+		<variableExpression><![CDATA[$F{VAR_PIU}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_MENO_PARTE" class="java.math.BigDecimal" resetType="Group" resetGroup="Parte" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_VAR_MENO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_PARTE" class="java.math.BigDecimal" resetType="Group" resetGroup="Parte" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_ASSESTATO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPEGNATO_PARTE" class="java.math.BigDecimal" resetType="Group" resetGroup="Parte" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_IMPEGNATO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ACCREDITAMENTI_PARTE" class="java.math.BigDecimal" resetType="Group" resetGroup="Parte" calculation="Sum">
+		<variableExpression><![CDATA[$F{ACCREDITAMENTI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_REGOLARIZZATI_PARTE" class="java.math.BigDecimal" resetType="Group" resetGroup="Parte" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_REGOLARIZZATI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DA_ACCRED_PARTE" class="java.math.BigDecimal" resetType="Group" resetGroup="Parte" calculation="Sum">
+		<variableExpression><![CDATA[$F{DA_ACCRED}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IN_PIU_PARTE" class="java.math.BigDecimal" resetType="Group" resetGroup="Parte" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_IN_PIU}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IN_MENO_PARTE" class="java.math.BigDecimal" resetType="Group" resetGroup="Parte" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_IN_MENO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_INIZIALE_TOTALE" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{INIZIALE}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_PIU_TOTALE" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{VAR_PIU}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VAR_MENO_TOTALE" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_VAR_MENO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_TOTALE" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_ASSESTATO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPEGNATO_TOTALE" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_IMPEGNATO}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ACCREDITAMENTI_TOTALE" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{ACCREDITAMENTI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_REGOLARIZZATI_TOTALE" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_REGOLARIZZATI}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DA_ACCRED_TOTALE" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{DA_ACCRED}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IN_PIU_TOTALE" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_IN_PIU}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IN_MENO_TOTALE" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$V{V_IN_MENO}]]></variableExpression>
+	</variable>
+	<variable name="V_IN_PIU" class="java.math.BigDecimal" resetType="None" calculation="Nothing">
+		<variableExpression><![CDATA[$F{IN_PIU}.compareTo( new BigDecimal(0) )==-1?new BigDecimal(0):$F{IN_PIU}]]></variableExpression>
+	</variable>
+	<variable name="V_IN_MENO" class="java.math.BigDecimal" resetType="None" calculation="Nothing">
+		<variableExpression><![CDATA[$F{IN_MENO}.compareTo( new BigDecimal(0) )==-1?new BigDecimal(0):$F{IN_MENO}]]></variableExpression>
+	</variable>
+	<variable name="V_VAR_MENO" class="java.math.BigDecimal" resetType="None" calculation="Nothing">
+		<variableExpression><![CDATA[$F{VAR_MENO}.add( $F{REGOLARIZZATI} )]]></variableExpression>
+	</variable>
+	<variable name="V_REGOLARIZZATI" class="java.math.BigDecimal" resetType="None" calculation="Nothing">
+		<variableExpression><![CDATA[$F{REGOLARIZZATI}.negate()]]></variableExpression>
+	</variable>
+	<variable name="V_ASSESTATO" class="java.math.BigDecimal" resetType="None" calculation="Nothing">
+		<variableExpression><![CDATA[$F{ASSESTATO}.subtract( $F{REGOLARIZZATI} )]]></variableExpression>
+	</variable>
+	<variable name="V_IMPEGNATO" class="java.math.BigDecimal" resetType="None" calculation="Nothing">
+		<variableExpression><![CDATA[$F{IMPEGNATO}.subtract( $F{REGOLARIZZATI} )]]></variableExpression>
+	</variable>
+
+		<group  name="Parte" >
+			<groupExpression><![CDATA[$F{PARTE}]]></groupExpression>
+			<groupHeader>
+			<band height="34"  isSplitAllowed="true" >
+				<elementGroup><!--  Start: 1 !-->
+				<elementGroup><!--  Start: 1.2 !-->
+				<elementGroup><!--  Start: 2.3 !-->
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG7"
+						x="0"
+						y="0"
+						width="162"
+						height="10"
+						key="textField-2"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						printWhenGroupChanges="Parte"
+						isPrintWhenDetailOverflows="true"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="7" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["PARTE "+$F{PARTE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG7"
+						x="0"
+						y="10"
+						width="162"
+						height="24"
+						key="textField-7"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						printWhenGroupChanges="Parte"
+						isPrintWhenDetailOverflows="true"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="7" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DS_PARTE}]]></textFieldExpression>
+				</textField>
+				</elementGroup><!-- End 1.2.3 !-->
+				</elementGroup><!-- End 1.2 !-->
+				</elementGroup><!-- End 1 !-->
+				<staticText>
+					<reportElement
+						x="162"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-33"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="224"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-35"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="286"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-47"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="348"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-48"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="410"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-53"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="472"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-58"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="534"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-63"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="596"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-68"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="658"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-73"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="720"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-78"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="22"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Parte"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="720"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-87"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IN_MENO_PARTE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Parte"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="658"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-86"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IN_PIU_PARTE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Parte"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="596"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-85"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_ACCRED_PARTE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Parte"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="534"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-84"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_REGOLARIZZATI_PARTE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Parte"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="472"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-83"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_ACCREDITAMENTI_PARTE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Parte"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="410"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-82"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IMPEGNATO_PARTE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Parte"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="286"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-80"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_MENO_PARTE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Parte"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="224"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-79"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_PIU_PARTE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG8"
+						x="0"
+						y="0"
+						width="162"
+						height="22"
+						key="textField-23"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						printWhenGroupChanges="Parte"
+						isPrintWhenDetailOverflows="true"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["TOTALE PARTE "+$F{PARTE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Parte"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="162"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-78"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_INIZIALE_PARTE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Parte"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="348"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-81"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_ASSESTATO_PARTE}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="Titolo" >
+			<groupExpression><![CDATA[$F{TITOLO}]]></groupExpression>
+			<groupHeader>
+			<band height="34"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean(!$F{PARTE}.equals( "2" ))]]></printWhenExpression>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG7"
+						x="0"
+						y="0"
+						width="162"
+						height="10"
+						key="textField-8"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						printWhenGroupChanges="Titolo"
+						isPrintWhenDetailOverflows="true"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="7" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["TITOLO " + $F{TITOLO}.substring($F{TITOLO}.length()-2)]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG7"
+						x="0"
+						y="10"
+						width="162"
+						height="24"
+						key="textField-9"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						printWhenGroupChanges="Titolo"
+						isPrintWhenDetailOverflows="true"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="7" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DS_TITOLO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="162"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-34"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="224"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-39"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="286"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-43"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="348"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-49"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="410"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-54"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="472"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-59"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="534"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-64"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="596"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-69"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="658"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-74"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="720"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-79"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="22"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean(!$F{PARTE}.equals( "2" ))]]></printWhenExpression>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Titolo"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="720"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-77"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IN_MENO_TITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Titolo"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="658"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-76"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IN_PIU_TITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Titolo"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="596"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-75"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_ACCRED_TITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Titolo"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="534"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-74"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_REGOLARIZZATI_TITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Titolo"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="472"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-73"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_ACCREDITAMENTI_TITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Titolo"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="410"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-72"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IMPEGNATO_TITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Titolo"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="286"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-70"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_MENO_TITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Titolo"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="224"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-69"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_PIU_TITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG8"
+						x="0"
+						y="0"
+						width="162"
+						height="22"
+						key="textField-22"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						printWhenGroupChanges="Titolo"
+						isPrintWhenDetailOverflows="true"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["TOTALE TITOLO "+$F{TITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Titolo"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="162"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-68"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_INIZIALE_TITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Titolo"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="348"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-71"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_ASSESTATO_TITOLO}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="Categoria" >
+			<groupExpression><![CDATA[$F{CATEGORIA}]]></groupExpression>
+			<groupHeader>
+			<band height="34"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean(!$F{PARTE}.equals( "2" ))]]></printWhenExpression>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG7"
+						x="0"
+						y="0"
+						width="162"
+						height="10"
+						key="textField-10"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						printWhenGroupChanges="Categoria"
+						isPrintWhenDetailOverflows="true"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="7" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["CATEGORIA " + $F{CATEGORIA}.substring($F{CATEGORIA}.length()-1)]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG7"
+						x="0"
+						y="10"
+						width="162"
+						height="24"
+						key="textField-11"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						printWhenGroupChanges="Categoria"
+						isPrintWhenDetailOverflows="true"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="7" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DS_CATEGORIA}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="162"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-36"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="224"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-42"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="286"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-46"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="348"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-50"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="410"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-55"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="472"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-60"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="534"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-65"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="596"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-70"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="658"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-75"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="720"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-80"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="22"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean(!$F{PARTE}.equals( "2" ))]]></printWhenExpression>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Categoria"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="720"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-67"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IN_MENO_CATEGORIA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Categoria"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="658"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-66"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IN_PIU_CATEGORIA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Categoria"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="596"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-65"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_ACCRED_CATEGORIA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Categoria"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="534"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-64"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_REGOLARIZZATI_CATEGORIA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Categoria"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="472"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-63"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_ACCREDITAMENTI_CATEGORIA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Categoria"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="410"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-62"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IMPEGNATO_CATEGORIA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Categoria"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="286"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-60"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_MENO_CATEGORIA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Categoria"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="224"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-59"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_PIU_CATEGORIA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG8"
+						x="0"
+						y="0"
+						width="162"
+						height="22"
+						key="textField-21"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						printWhenGroupChanges="Categoria"
+						isPrintWhenDetailOverflows="true"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["TOTALE CATEGORIA "+$F{CATEGORIA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Categoria"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="162"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-58"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_INIZIALE_CATEGORIA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Categoria"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="348"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-61"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_ASSESTATO_CATEGORIA}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="Sezione" >
+			<groupExpression><![CDATA[$F{SEZIONE}]]></groupExpression>
+			<groupHeader>
+			<band height="34"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean(!$F{PARTE}.equals( "2" ))]]></printWhenExpression>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG7"
+						x="0"
+						y="0"
+						width="162"
+						height="10"
+						key="textField-12"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						printWhenGroupChanges="Sezione"
+						isPrintWhenDetailOverflows="true"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="7" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["SEZIONE "+$F{SEZIONE}.substring($F{SEZIONE}.length()-2)]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG7"
+						x="0"
+						y="10"
+						width="162"
+						height="24"
+						key="textField-13"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						printWhenGroupChanges="Sezione"
+						isPrintWhenDetailOverflows="true"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="7" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DS_SEZIONE}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="162"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-37"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="224"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-41"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="286"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-45"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="348"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-51"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="410"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-56"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="472"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-61"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="534"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-66"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="596"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-71"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="658"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-76"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="720"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-81"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="22"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean(!$F{PARTE}.equals( "2" ))
+]]></printWhenExpression>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Sezione"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="720"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-57"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4" bottomPadding="2">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IN_MENO_SEZIONE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Sezione"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="658"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-56"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4" bottomPadding="2">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IN_PIU_SEZIONE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Sezione"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="596"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-55"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4" bottomPadding="2">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_ACCRED_SEZIONE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Sezione"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="534"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-54"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4" bottomPadding="2">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_REGOLARIZZATI_SEZIONE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Sezione"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="472"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-53"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4" bottomPadding="2">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_ACCREDITAMENTI_SEZIONE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Sezione"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="410"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-52"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4" bottomPadding="2">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IMPEGNATO_SEZIONE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Sezione"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="286"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-50"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4" bottomPadding="2">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_MENO_SEZIONE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Sezione"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="224"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-49"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4" bottomPadding="2">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_PIU_SEZIONE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG8"
+						x="0"
+						y="0"
+						width="162"
+						height="22"
+						key="textField-20"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						printWhenGroupChanges="Sezione"
+						isPrintWhenDetailOverflows="true"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["TOTALE SEZIONE "+$F{SEZIONE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Sezione"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="162"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-48"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4" bottomPadding="2">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_INIZIALE_SEZIONE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Sezione"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="348"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-51"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4" bottomPadding="2">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_ASSESTATO_SEZIONE}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="Capitolo" >
+			<groupExpression><![CDATA[$F{CAPITOLO}]]></groupExpression>
+			<groupHeader>
+			<band height="34"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean($P{stampaArticolo}.booleanValue()&&!$F{PARTE}.equals( "2" ))
+]]></printWhenExpression>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG7"
+						x="0"
+						y="0"
+						width="162"
+						height="10"
+						key="textField-14"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						printWhenGroupChanges="Capitolo"
+						isPrintWhenDetailOverflows="true"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="7" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["CAPITOLO " + $F{CAPITOLO}.substring($F{CAPITOLO}.length()-3)]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG7"
+						x="0"
+						y="10"
+						width="162"
+						height="24"
+						key="textField-15"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						printWhenGroupChanges="Capitolo"
+						isPrintWhenDetailOverflows="true"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="7" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DS_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="162"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-38"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="224"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-40"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="286"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-44"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="348"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-52"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="410"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-57"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="472"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-62"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="534"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-67"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="596"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-72"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="658"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-77"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="720"
+						y="0"
+						width="62"
+						height="34"
+						key="staticText-82"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="22"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean($P{stampaArticolo}.booleanValue()&&!$F{PARTE}.equals( "2" ))
+]]></printWhenExpression>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Capitolo2"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="720"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-47"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IN_MENO_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Capitolo2"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="658"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-46"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IN_PIU_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Capitolo2"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="596"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-45"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_ACCRED_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Capitolo2"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="534"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-44"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_REGOLARIZZATI_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Capitolo2"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="472"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-43"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_ACCREDITAMENTI_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Capitolo2"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="410"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-42"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IMPEGNATO_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Capitolo2"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="286"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-40"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_MENO_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Capitolo2"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="224"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-39"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_PIU_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG8"
+						x="0"
+						y="0"
+						width="162"
+						height="22"
+						key="textField-19"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						printWhenGroupChanges="Capitolo"
+						isPrintWhenDetailOverflows="true"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["TOTALE CAPITOLO "+$F{CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Capitolo2"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="162"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-38"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6" isBold="false"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_INIZIALE_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Capitolo2"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="348"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-41"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_ASSESTATO_CAPITOLO}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="Capitolo2" >
+			<groupExpression><![CDATA[$F{CAPITOLO}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="22"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean(!$P{stampaArticolo}.booleanValue()||$F{PARTE}.equals( "2" ))
+]]></printWhenExpression>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Capitolo2"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="720"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-97"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IN_MENO_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Capitolo2"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="658"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-96"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IN_PIU_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Capitolo2"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="596"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-95"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_ACCRED_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Capitolo2"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="534"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-94"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_REGOLARIZZATI_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Capitolo2"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="472"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-93"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_ACCREDITAMENTI_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Capitolo2"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="410"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-92"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IMPEGNATO_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Capitolo2"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="286"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-90"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_MENO_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Capitolo2"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="224"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-89"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_PIU_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG6"
+						x="55"
+						y="0"
+						width="107"
+						height="22"
+						key="textField-24"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle" rotation="None" lineSpacing="Single">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="6" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DS_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG6"
+						x="0"
+						y="0"
+						width="55"
+						height="22"
+						key="textField-25"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="6" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Capitolo2"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="162"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-88"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_INIZIALE_CAPITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Capitolo2"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="348"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-91"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_ASSESTATO_CAPITOLO}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="63"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR16"
+						x="126"
+						y="0"
+						width="530"
+						height="40"
+						key="textField-1"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="16"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["RENDICONTO FINANZIARIO CNR - ESERCIZIO "+$P{esercizio}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="126"
+						y="40"
+						width="530"
+						height="20"
+						key="staticText-1"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="16"/>
+					</textElement>
+				<text><![CDATA[Parte Spese]]></text>
+				</staticText>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="87"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="40"
+						y="17"
+						width="122"
+						height="39"
+						key="staticText-4"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[DESCRIZIONE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="20"
+						y="37"
+						width="0"
+						height="0"
+						key="staticText-2"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font size="16"/>
+					</textElement>
+				<text><![CDATA[Static text]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="17"
+						width="40"
+						height="39"
+						key="staticText-3"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[NUMERO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="0"
+						width="162"
+						height="17"
+						key="staticText-5"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[CAPITOLO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="162"
+						y="27"
+						width="62"
+						height="29"
+						key="staticText-6"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[INIZIALE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="224"
+						y="42"
+						width="62"
+						height="14"
+						key="staticText-7"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[IN +]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="286"
+						y="42"
+						width="62"
+						height="14"
+						key="staticText-8"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[IN -]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="348"
+						y="27"
+						width="62"
+						height="29"
+						key="staticText-9"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[DEFINITIVA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="224"
+						y="27"
+						width="124"
+						height="15"
+						key="staticText-10"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[VARIAZIONI]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="162"
+						y="17"
+						width="248"
+						height="10"
+						key="staticText-11"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[PREVISIONE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="162"
+						y="0"
+						width="620"
+						height="17"
+						key="staticText-12"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[GESTIONE DI COMPETENZA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="410"
+						y="17"
+						width="62"
+						height="39"
+						key="staticText-13"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[ASSEGNATO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="472"
+						y="17"
+						width="62"
+						height="39"
+						key="staticText-14"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[ACCREDITATO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="534"
+						y="17"
+						width="62"
+						height="39"
+						key="staticText-15"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[REGOLARIZZATI]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="596"
+						y="17"
+						width="62"
+						height="39"
+						key="staticText-16"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[RIMASTO DA ACCREDITARE 
+= ( 7 - 8 - 9 )]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="658"
+						y="27"
+						width="62"
+						height="29"
+						key="staticText-17"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[IN + 
+= ( 7 - 6 )]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="720"
+						y="27"
+						width="62"
+						height="29"
+						key="staticText-18"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[IN -
+= ( 6 - 7 )]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="658"
+						y="17"
+						width="124"
+						height="10"
+						key="staticText-19"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[DIFFERENZE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="56"
+						width="40"
+						height="9"
+						key="staticText-20"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[1]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="40"
+						y="56"
+						width="122"
+						height="9"
+						key="staticText-21"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[2]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="162"
+						y="56"
+						width="62"
+						height="9"
+						key="staticText-22"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[3]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="224"
+						y="56"
+						width="62"
+						height="9"
+						key="staticText-23"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[4]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="286"
+						y="56"
+						width="62"
+						height="9"
+						key="staticText-24"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[5]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="348"
+						y="56"
+						width="62"
+						height="9"
+						key="staticText-25"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[6]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="410"
+						y="56"
+						width="62"
+						height="9"
+						key="staticText-26"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[7]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="472"
+						y="56"
+						width="62"
+						height="9"
+						key="staticText-27"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[8]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="534"
+						y="56"
+						width="62"
+						height="9"
+						key="staticText-28"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[9]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="596"
+						y="56"
+						width="62"
+						height="9"
+						key="staticText-29"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[10]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="658"
+						y="56"
+						width="62"
+						height="9"
+						key="staticText-30"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[11]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="720"
+						y="56"
+						width="62"
+						height="9"
+						key="staticText-31"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[12]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="162"
+						y="65"
+						width="62"
+						height="22"
+						key="textField-110"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.compareTo( new Integer(1) )==0)]]></printWhenExpression>
+						</reportElement>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" isStyledText="true">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{AVANZO_INIZIALE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="224"
+						y="65"
+						width="62"
+						height="22"
+						key="textField-111"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.compareTo( new Integer(1) )==0)]]></printWhenExpression>
+						</reportElement>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{AVANZO_VAR_PIU}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="286"
+						y="65"
+						width="62"
+						height="22"
+						key="textField-112"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.compareTo( new Integer(1) )==0)]]></printWhenExpression>
+						</reportElement>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{AVANZO_VAR_MENO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="348"
+						y="65"
+						width="62"
+						height="22"
+						key="textField-113"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.compareTo( new Integer(1) )==0)]]></printWhenExpression>
+						</reportElement>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{AVANZO_ASSESTATO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="410"
+						y="65"
+						width="62"
+						height="22"
+						key="textField-114"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.compareTo( new Integer(1) )==0)]]></printWhenExpression>
+						</reportElement>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{AVANZO_ASSESTATO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="472"
+						y="65"
+						width="62"
+						height="22"
+						key="textField-115"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.compareTo( new Integer(1) )==0)]]></printWhenExpression>
+						</reportElement>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$P{cds}.equals("")?$F{AVANZO_ASSESTATO}:$F{IM_CASSA_INIZIALE}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						style="TNR6"
+						x="534"
+						y="65"
+						width="62"
+						height="22"
+						key="staticText-85"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.compareTo( new Integer(1) )==0)]]></printWhenExpression>
+						</reportElement>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[---]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR6"
+						x="596"
+						y="65"
+						width="62"
+						height="22"
+						key="staticText-86"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.compareTo( new Integer(1) )==0)]]></printWhenExpression>
+						</reportElement>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[---]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR6"
+						x="658"
+						y="65"
+						width="62"
+						height="22"
+						key="staticText-87"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.compareTo( new Integer(1) )==0)]]></printWhenExpression>
+						</reportElement>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[---]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR6"
+						x="720"
+						y="65"
+						width="62"
+						height="22"
+						key="staticText-88"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.compareTo( new Integer(1) )==0)]]></printWhenExpression>
+						</reportElement>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6"/>
+					</textElement>
+				<text><![CDATA[---]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG6"
+						x="0"
+						y="65"
+						width="162"
+						height="22"
+						key="textField-119"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.compareTo( new Integer(1) )==0)]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="6" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{AVANZO_DISAVANZO_DS}.equals(" ")?"Fondo Cassa Iniziale":$F{AVANZO_DISAVANZO_DS})]]></textFieldExpression>
+				</textField>
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="22"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean($P{stampaArticolo}.booleanValue()&&!$F{PARTE}.equals( "2" ))
+]]></printWhenExpression>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="720"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-37"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{V_IN_MENO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="658"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-36"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{V_IN_PIU}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="596"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-35"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{DA_ACCRED}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="534"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-34"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{V_REGOLARIZZATI}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="472"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-33"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{ACCREDITAMENTI}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="410"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-32"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{V_IMPEGNATO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="286"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-30"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{V_VAR_MENO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG6"
+						x="0"
+						y="0"
+						width="55"
+						height="22"
+						key="textField-16"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="6" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ARTICOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG6"
+						x="55"
+						y="0"
+						width="107"
+						height="22"
+						key="textField-17"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="6" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DS_ARTICOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="162"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-26"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" isStyledText="true">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{INIZIALE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="224"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-29"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{VAR_PIU}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR6"
+						x="348"
+						y="0"
+						width="62"
+						height="22"
+						key="textField-31"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Roman" size="6" isBold="false" isItalic="false"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{V_ASSESTATO}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="22"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean($P{stampadataepagina}.equals(new String("Y")))]]></printWhenExpression>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG8"
+						x="627"
+						y="6"
+						width="100"
+						height="13"
+						key="textField-116"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Pagina " + $V{PAGE_NUMBER} + " di "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG8"
+						x="727"
+						y="6"
+						width="55"
+						height="13"
+						key="textField-117"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG8"
+						x="0"
+						y="6"
+						width="161"
+						height="13"
+						key="textField-118"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Data di stampa "+ new SimpleDateFormat("dd/MM/yyyy HH.mm.ss").format(new java.util.Date())]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="22"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Parte"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG6"
+						mode="Opaque"
+						x="720"
+						y="0"
+						width="62"
+						height="22"
+						backcolor="#CCCCCC"
+						key="textField-108"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="6" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IN_MENO_TOTALE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Parte"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG6"
+						mode="Opaque"
+						x="658"
+						y="0"
+						width="62"
+						height="22"
+						backcolor="#CCCCCC"
+						key="textField-107"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="6" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IN_PIU_TOTALE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Parte"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG6"
+						mode="Opaque"
+						x="596"
+						y="0"
+						width="62"
+						height="22"
+						backcolor="#CCCCCC"
+						key="textField-106"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="6" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_ACCRED_TOTALE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Parte"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG6"
+						mode="Opaque"
+						x="534"
+						y="0"
+						width="62"
+						height="22"
+						backcolor="#CCCCCC"
+						key="textField-105"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="6" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_REGOLARIZZATI_TOTALE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Parte"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG6"
+						mode="Opaque"
+						x="472"
+						y="0"
+						width="62"
+						height="22"
+						backcolor="#CCCCCC"
+						key="textField-104"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="6" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_ACCREDITAMENTI_TOTALE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Parte"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG6"
+						mode="Opaque"
+						x="410"
+						y="0"
+						width="62"
+						height="22"
+						backcolor="#CCCCCC"
+						key="textField-103"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="6" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_IMPEGNATO_TOTALE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Parte"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG6"
+						mode="Opaque"
+						x="286"
+						y="0"
+						width="62"
+						height="22"
+						backcolor="#CCCCCC"
+						key="textField-101"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="6" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_MENO_TOTALE}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="162"
+						y="0"
+						width="0"
+						height="22"
+						key="line-21"
+						stretchType="RelativeToBandHeight"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="162"
+						y="0"
+						width="0"
+						height="22"
+						backcolor="#CCCCCC"
+						key="line-155"
+						stretchType="RelativeToBandHeight"/>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Parte"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG6"
+						mode="Opaque"
+						x="162"
+						y="0"
+						width="62"
+						height="22"
+						backcolor="#CCCCCC"
+						key="textField-99"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="6" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_INIZIALE_TOTALE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Parte"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG6"
+						mode="Opaque"
+						x="224"
+						y="0"
+						width="62"
+						height="22"
+						backcolor="#CCCCCC"
+						key="textField-100"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="6" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_PIU_TOTALE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="false" evaluationTime="Group" evaluationGroup="Parte"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG6"
+						mode="Opaque"
+						x="348"
+						y="0"
+						width="62"
+						height="22"
+						backcolor="#CCCCCC"
+						key="textField-102"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="6" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_ASSESTATO_TOTALE}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						style="TNRG8"
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="162"
+						height="22"
+						backcolor="#CCCCCC"
+						key="staticText-83"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[TOTALE GENERALE DELLE SPESE]]></text>
+				</staticText>
+			</band>
+		</summary>
+</jasperReport>

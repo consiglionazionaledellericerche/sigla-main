@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="registro_inventario_categoria_sub"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="535"
+		 pageHeight="802"
+		 columnWidth="535"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<style 
+		name="TNR10"
+		isDefault="false"
+		fontName="Times New Roman"
+		pdfFontName="Times-Roman"
+	>
+	</style>
+	<style 
+		name="TNR10BOLD"
+		isDefault="false"
+		fontName="Times New Roman"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	>
+	</style>
+
+	<parameter name="cds" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[new String("*")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="uo" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[new String("*")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data_a" isForPrompting="false" class="java.util.Date">
+		<defaultValueExpression ><![CDATA[new SimpleDateFormat("yyyy/MM/dd").parse("1970/01/01")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="categoria" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[new String("*")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="gruppo" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[new String("*")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="da_codice_bene" isForPrompting="false" class="java.lang.Long">
+		<defaultValueExpression ><![CDATA[new Long("1075050")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="a_codice_bene" isForPrompting="false" class="java.lang.Long">
+		<defaultValueExpression ><![CDATA[new Long("1075050")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ds_tipo_carico_scarico" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[new String("*")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tipo" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[new String("*")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data_da" isForPrompting="false" class="java.util.Date">
+		<defaultValueExpression ><![CDATA[new SimpleDateFormat("yyyy/MM/dd").parse("1970/01/01")]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[SELECT * From PRT_STAMPA_REGISTRO_INVENTARIO
+Where cd_cds like Decode($P{cds},'*','%',$P{cds})
+  And cd_unita_organizzativa like Decode($P{uo},'*','%',$P{uo})
+  And data_registrazione between $P{data_da} and $P{data_a}
+  And categoria like Decode($P{categoria},'*','%',$P{categoria})
+  And cd_categoria_gruppo like Decode($P{gruppo},'*','%',$P{gruppo})
+  And nr_inventario >= to_number($P{da_codice_bene})
+  And nr_inventario <= to_number($P{a_codice_bene})
+  And cd_tipo_carico_scarico like Decode($P{ds_tipo_carico_scarico},'*','%',$P{ds_tipo_carico_scarico})
+  And tipo like Decode($P{tipo},'*','%',$P{tipo})
+  And esercizio_carico_bene <= to_number(to_char($P{data_a},'YYYY'))
+Order By Categoria ASC]]></queryString>
+
+	<field name="CD_UNITA_ORGANIZZATIVA" class="java.lang.String"/>
+	<field name="CD_CDS" class="java.lang.String"/>
+	<field name="ESERCIZIO_CARICO_BENE" class="java.math.BigDecimal"/>
+	<field name="ETICHETTA" class="java.lang.String"/>
+	<field name="DS_BENE" class="java.lang.String"/>
+	<field name="VALORE_INIZIALE" class="java.math.BigDecimal"/>
+	<field name="CATEGORIA" class="java.lang.String"/>
+	<field name="CD_CATEGORIA_GRUPPO" class="java.lang.String"/>
+	<field name="DS_CATEGORIA" class="java.lang.String"/>
+	<field name="DS_CATEGORIA_GRUPPO" class="java.lang.String"/>
+	<field name="DS_UBICAZIONE_BENE" class="java.lang.String"/>
+	<field name="CD_ASSEGNATARIO" class="java.math.BigDecimal"/>
+	<field name="DENOMINAZIONE_SEDE" class="java.lang.String"/>
+	<field name="DATA_REGISTRAZIONE" class="java.sql.Timestamp"/>
+	<field name="CD_TIPO_CARICO_SCARICO" class="java.lang.String"/>
+	<field name="DS_TIPO_CARICO_SCARICO" class="java.lang.String"/>
+	<field name="VARIAZIONE_PIU" class="java.math.BigDecimal"/>
+	<field name="VARIAZIONE_MENO" class="java.math.BigDecimal"/>
+	<field name="QUANTITA" class="java.math.BigDecimal"/>
+	<field name="VALORE_UNITARIO" class="java.math.BigDecimal"/>
+	<field name="IMPONIBILE_AMMORTAMENTO" class="java.math.BigDecimal"/>
+	<field name="VALORE_AMMORTIZZATO" class="java.math.BigDecimal"/>
+	<field name="NUMERO_ANNI" class="java.math.BigDecimal"/>
+	<field name="PERC_AMMORTAMENTO" class="java.math.BigDecimal"/>
+	<field name="PERC_PRIMO_ANNO" class="java.math.BigDecimal"/>
+	<field name="PERC_SUCCESSIVI" class="java.math.BigDecimal"/>
+	<field name="NR_INVENTARIO" class="java.math.BigDecimal"/>
+	<field name="TIPO" class="java.lang.String"/>
+	<field name="FL_AMMORTAMENTO" class="java.lang.String"/>
+
+	<variable name="SUM_VALBENE" class="java.math.BigDecimal" resetType="Group" resetGroup="CATEGORIA" calculation="Sum">
+		<variableExpression><![CDATA[$F{VALORE_INIZIALE}.add($F{VARIAZIONE_PIU}).subtract($F{VARIAZIONE_MENO})]]></variableExpression>
+	</variable>
+
+		<group  name="CATEGORIA" >
+			<groupExpression><![CDATA[$F{CATEGORIA}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="18"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						style="TNR10BOLD"
+						x="0"
+						y="1"
+						width="51"
+						height="15"
+						key="staticText-3"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Left">
+						<font/>
+					</textElement>
+				<text><![CDATA[Categoria]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10BOLD"
+						x="53"
+						y="1"
+						width="39"
+						height="15"
+						key="textField"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{CATEGORIA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10BOLD"
+						x="93"
+						y="1"
+						width="207"
+						height="15"
+						key="textField"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DS_CATEGORIA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10BOLD"
+						x="302"
+						y="1"
+						width="105"
+						height="15"
+						key="textField"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{SUM_VALBENE}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="16"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						style="TNR10BOLD"
+						x="302"
+						y="0"
+						width="105"
+						height="15"
+						key="staticText-2"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[Valori per Categoria]]></text>
+				</staticText>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

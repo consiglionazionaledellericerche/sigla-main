@@ -1,0 +1,987 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="stampa_variazioni_pdg_riepilogo_subreport0"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="802"
+		 pageHeight="535"
+		 columnWidth="802"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<style 
+		name="TNRGC14"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="14"
+		isBold="true"
+		isItalic="true"
+		pdfFontName="Times-BoldItalic"
+	/>
+	<style 
+		name="TNR8"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="8"
+		pdfFontName="Times-Roman"
+	/>
+	<style 
+		name="TNR10"
+		isDefault="false"
+		fontName="Times New Roman"
+		pdfFontName="Times-Roman"
+	/>
+	<style 
+		name="TNRC10"
+		isDefault="false"
+		fontName="Times New Roman"
+		isItalic="true"
+		pdfFontName="Times-Italic"
+	/>
+	<style 
+		name="TNRG10"
+		isDefault="false"
+		fontName="Times New Roman"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	/>
+	<style 
+		name="TNRGC12"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="12"
+		isBold="true"
+		isItalic="true"
+		pdfFontName="Times-BoldItalic"
+	/>
+
+	<parameter name="Esercizio" isForPrompting="false" class="java.lang.Integer"/>
+	<parameter name="CDS" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="UO" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="Stato" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="DIR_IMAGE" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Pg" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[select * from vpg_pdg_variazione_det 
+order by tipo desc,
+pg_variazione_pdg,
+ti_gestione,
+id_dipartimento,
+titolo,
+categoria]]></queryString>
+
+	<field name="ID" class="java.math.BigDecimal"/>
+	<field name="CHIAVE" class="java.lang.String"/>
+	<field name="TIPO" class="java.lang.String"/>
+	<field name="SEQUENZA" class="java.math.BigDecimal"/>
+	<field name="ESERCIZIO" class="java.lang.Integer"/>
+	<field name="PG_VARIAZIONE_PDG" class="java.lang.Integer"/>
+	<field name="DS_VARIAZIONE_PDG" class="java.lang.String"/>
+	<field name="CD_CDR_PROPONENTE" class="java.lang.String"/>
+	<field name="DS_CDR_PROPONENTE" class="java.lang.String"/>
+	<field name="CD_CDR" class="java.lang.String"/>
+	<field name="DS_CDR" class="java.lang.String"/>
+	<field name="TI_GESTIONE" class="java.lang.String"/>
+	<field name="TITOLO" class="java.lang.String"/>
+	<field name="DS_TITOLO" class="java.lang.String"/>
+	<field name="CATEGORIA" class="java.lang.String"/>
+	<field name="DS_CATEGORIA" class="java.lang.String"/>
+	<field name="STATO" class="java.lang.String"/>
+	<field name="VARIAZIONE" class="java.math.BigDecimal"/>
+	<field name="ASSESTATO_ENTRATA" class="java.math.BigDecimal"/>
+	<field name="ASSESTATO_SPESA" class="java.math.BigDecimal"/>
+	<field name="ID_DIPARTIMENTO" class="java.math.BigDecimal"/>
+	<field name="CD_DIPARTIMENTO" class="java.lang.String"/>
+	<field name="DS_DIPARTIMENTO" class="java.lang.String"/>
+
+
+		<group  name="Tipo" >
+			<groupExpression><![CDATA[$F{TIPO}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean ($F{TI_GESTIONE}!=null&&$F{TIPO}.equals("A"))]]></printWhenExpression>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="Gestione" isReprintHeaderOnEachPage="true" >
+			<groupExpression><![CDATA[$F{TI_GESTIONE}]]></groupExpression>
+			<groupHeader>
+			<band height="32"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean ($F{TI_GESTIONE}!=null&&$F{TIPO}.equals("A"))]]></printWhenExpression>
+				<staticText>
+					<reportElement
+						style="TNRC10"
+						x="465"
+						y="13"
+						width="107"
+						height="13"
+						key="staticText-8"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						isRemoveLineWhenBlank="true"
+						isPrintInFirstWholeBand="true"
+						printWhenGroupChanges="Gestione">
+							<printWhenExpression><![CDATA[new Boolean (!$F{TI_GESTIONE}.equals(null)&$F{TIPO}.equals("A"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[Stanziamento Attuale]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRC10"
+						x="591"
+						y="13"
+						width="83"
+						height="13"
+						key="staticText-9"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						isRemoveLineWhenBlank="true"
+						isPrintInFirstWholeBand="true"
+						printWhenGroupChanges="Gestione">
+							<printWhenExpression><![CDATA[new Boolean (!$F{TI_GESTIONE}.equals(null)&$F{TIPO}.equals("A"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[Variazione]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRC10"
+						x="695"
+						y="13"
+						width="78"
+						height="13"
+						key="staticText-10"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						isRemoveLineWhenBlank="true"
+						isPrintInFirstWholeBand="true"
+						printWhenGroupChanges="Gestione">
+							<printWhenExpression><![CDATA[new Boolean (!$F{TI_GESTIONE}.equals(null)&$F{TIPO}.equals("A"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[Assestato]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="true" evaluationTime="Group" evaluationGroup="Gestione"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRC10"
+						x="11"
+						y="13"
+						width="183"
+						height="13"
+						key="textField-1"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						isRemoveLineWhenBlank="true"
+						isPrintInFirstWholeBand="true"
+						printWhenGroupChanges="Gestione">
+							<printWhenExpression><![CDATA[new Boolean (!$F{TI_GESTIONE}.equals(null)&$F{TIPO}.equals("A"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{TI_GESTIONE}.equals("S")?"Spese":
+ ($F{TI_GESTIONE}.equals("E")?"Entrate":
+null))]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="5"
+						y="29"
+						width="784"
+						height="0"
+						key="line-3"
+						stretchType="RelativeToBandHeight"
+						positionType="Float">
+							<printWhenExpression><![CDATA[new Boolean (!$F{TI_GESTIONE}.equals(null)&$F{TIPO}.equals("A"))]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="5"
+						y="9"
+						width="784"
+						height="0"
+						key="line-7"
+						stretchType="RelativeToBandHeight"
+						positionType="Float">
+							<printWhenExpression><![CDATA[new Boolean (!$F{TI_GESTIONE}.equals(null)&$F{TIPO}.equals("A"))]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="details1" >
+			<groupExpression><![CDATA[$V{REPORT_COUNT}]]></groupExpression>
+			<groupHeader>
+			<band height="20"  isSplitAllowed="false" >
+				<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("I"))]]></printWhenExpression>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="15"
+						y="1"
+						width="39"
+						height="13"
+						key="textField"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("I"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{ESERCIZIO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="60"
+						y="1"
+						width="319"
+						height="13"
+						key="textField"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("I"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{CD_CDR_PROPONENTE}+ " "+$F{DS_CDR_PROPONENTE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="384"
+						y="1"
+						width="38"
+						height="13"
+						key="textField"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("I"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{PG_VARIAZIONE_PDG}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="424"
+						y="1"
+						width="257"
+						height="13"
+						key="textField"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("I"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DS_VARIAZIONE_PDG}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="693"
+						y="1"
+						width="87"
+						height="13"
+						key="textField"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("I"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{STATO}.equals("PRP")?"Proposta Provvisoria":
+  ($F{STATO}.equals("PRD")?"Proposta Definitiva":
+    ($F{STATO}.equals("APP")?"Approvata":
+($F{STATO}.equals("ANN")?"Annullata":
+($F{STATO}.equals("RES")?"Respinta":
+($F{STATO}.equals("*")?"Tutti":
+$F{STATO}.equals("APF")?"Approvata formale":null))))))]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="26"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("TOT"))]]></printWhenExpression>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG10"
+						x="4"
+						y="2"
+						width="104"
+						height="14"
+						key="textField-10"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("TOT"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{TI_GESTIONE}.equals("S")?"Totale Spese":
+ ($F{TI_GESTIONE}.equals("E")?"Totale Entrate":
+null))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG10"
+						x="477"
+						y="2"
+						width="95"
+						height="13"
+						key="textField-11"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintWhenDetailOverflows="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("TOT"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[($F{TI_GESTIONE}.equals("S")?$F{ASSESTATO_SPESA}:
+ ($F{TI_GESTIONE}.equals("E")?$F{ASSESTATO_ENTRATA}:
+new BigDecimal(0)))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG10"
+						x="579"
+						y="2"
+						width="95"
+						height="13"
+						key="textField-12"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintWhenDetailOverflows="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("TOT"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{VARIAZIONE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG10"
+						x="678"
+						y="2"
+						width="95"
+						height="13"
+						key="textField-13"
+						stretchType="RelativeToBandHeight"
+						positionType="Float">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("TOT"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[($F{TI_GESTIONE}.equals("S")? ($F{ASSESTATO_SPESA}.add($F{VARIAZIONE})):
+ ($F{TI_GESTIONE}.equals("E")?($F{ASSESTATO_ENTRATA}.add($F{VARIAZIONE})):
+new BigDecimal(0)))]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="details2" >
+			<groupExpression><![CDATA[$V{REPORT_COUNT}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="26"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("DIP"))]]></printWhenExpression>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG10"
+						x="4"
+						y="2"
+						width="363"
+						height="13"
+						key="textField-15"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("DIP"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="10" isBold="true" isItalic="false" isUnderline="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Totale UPB "+$F{CD_DIPARTIMENTO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG10"
+						x="477"
+						y="2"
+						width="95"
+						height="13"
+						key="textField-5"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintWhenDetailOverflows="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("DIP"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[($F{TI_GESTIONE}.equals("S")?$F{ASSESTATO_SPESA}:
+ ($F{TI_GESTIONE}.equals("E")?$F{ASSESTATO_ENTRATA}:
+new BigDecimal(0)))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG10"
+						x="579"
+						y="2"
+						width="95"
+						height="13"
+						key="textField-7"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintWhenDetailOverflows="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("DIP"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{VARIAZIONE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG10"
+						x="678"
+						y="2"
+						width="95"
+						height="13"
+						key="textField-9"
+						stretchType="RelativeToBandHeight"
+						positionType="Float">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("DIP"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[($F{TI_GESTIONE}.equals("S")? ($F{ASSESTATO_SPESA}.add($F{VARIAZIONE})):
+ ($F{TI_GESTIONE}.equals("E")?($F{ASSESTATO_ENTRATA}.add($F{VARIAZIONE})):
+new BigDecimal(0)))]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="details3" >
+			<groupExpression><![CDATA[$V{REPORT_COUNT}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="19"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("TIT"))]]></printWhenExpression>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG10"
+						x="19"
+						y="3"
+						width="347"
+						height="13"
+						key="textField-14"
+						stretchType="RelativeToBandHeight"
+						positionType="Float">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("TIT"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="10" isBold="true" isItalic="false" isUnderline="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Totale Titolo "+$F{TITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG10"
+						x="477"
+						y="3"
+						width="95"
+						height="13"
+						key="textField-4"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintWhenDetailOverflows="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("TIT"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[($F{TI_GESTIONE}.equals("S")?$F{ASSESTATO_SPESA}:
+ ($F{TI_GESTIONE}.equals("E")?$F{ASSESTATO_ENTRATA}:
+new BigDecimal(0)))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG10"
+						x="579"
+						y="3"
+						width="95"
+						height="13"
+						key="textField-6"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintWhenDetailOverflows="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("TIT"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{VARIAZIONE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNRG10"
+						x="678"
+						y="3"
+						width="95"
+						height="13"
+						key="textField-8"
+						stretchType="RelativeToBandHeight"
+						positionType="Float">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("TIT"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[($F{TI_GESTIONE}.equals("S")? ($F{ASSESTATO_SPESA}.add($F{VARIAZIONE})):
+ ($F{TI_GESTIONE}.equals("E")?($F{ASSESTATO_ENTRATA}.add($F{VARIAZIONE})):
+new BigDecimal(0)))]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="477"
+						y="1"
+						width="95"
+						height="0"
+						key="line-9"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="579"
+						y="1"
+						width="95"
+						height="0"
+						key="line-10"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="678"
+						y="1"
+						width="95"
+						height="0"
+						key="line-11"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="85"  isSplitAllowed="true" >
+				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="8"
+						y="11"
+						width="531"
+						height="41"
+						key="image-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<graphicElement stretchType="NoStretch"/>
+					<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement
+						style="TNRGC14"
+						x="0"
+						y="66"
+						width="802"
+						height="19"
+						key="staticText-11"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+				<text><![CDATA[Stampa Riepilogo Variazioni]]></text>
+				</staticText>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="22"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean($F{CHIAVE}.equals("I"))]]></printWhenExpression>
+				<staticText>
+					<reportElement
+						style="TNRC10"
+						x="15"
+						y="3"
+						width="39"
+						height="12"
+						key="staticText-1"
+						stretchType="RelativeToBandHeight"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($F{CHIAVE}.equals("I"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Esercizio]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRC10"
+						x="60"
+						y="3"
+						width="103"
+						height="12"
+						key="staticText-2"
+						stretchType="RelativeToBandHeight"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($F{CHIAVE}.equals("I"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[CdR Proponente]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRC10"
+						x="384"
+						y="3"
+						width="79"
+						height="12"
+						key="staticText-3"
+						stretchType="RelativeToBandHeight"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($F{CHIAVE}.equals("I"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Variazione]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRC10"
+						x="737"
+						y="3"
+						width="42"
+						height="12"
+						key="staticText-4"
+						stretchType="RelativeToBandHeight"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean($F{CHIAVE}.equals("I"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Stato]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="4"
+						y="17"
+						width="784"
+						height="0"
+						key="line-4"
+						stretchType="RelativeToBandHeight"
+						positionType="Float">
+							<printWhenExpression><![CDATA[new Boolean($F{CHIAVE}.equals("I"))]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="4"
+						y="1"
+						width="784"
+						height="0"
+						key="line-8"
+						stretchType="RelativeToBandHeight"
+						positionType="Float">
+							<printWhenExpression><![CDATA[new Boolean($F{CHIAVE}.equals("I"))]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="RelativeToBandHeight"/>
+				</line>
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="56"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("Dettagli"))]]></printWhenExpression>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="477"
+						y="40"
+						width="95"
+						height="13"
+						key="textField"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintWhenDetailOverflows="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("Dettagli"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[($F{TI_GESTIONE}.equals("S")?$F{ASSESTATO_SPESA}:
+ ($F{TI_GESTIONE}.equals("E")?$F{ASSESTATO_ENTRATA}:
+new BigDecimal(0)))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="579"
+						y="40"
+						width="95"
+						height="13"
+						key="textField"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintWhenDetailOverflows="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("Dettagli"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{VARIAZIONE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="70"
+						y="4"
+						width="399"
+						height="14"
+						key="textField"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("Dettagli"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{CD_DIPARTIMENTO}+" - "+$F{DS_DIPARTIMENTO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="85"
+						y="22"
+						width="385"
+						height="14"
+						key="textField"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("Dettagli"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{TITOLO}+" - "+$F{DS_TITOLO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="103"
+						y="40"
+						width="367"
+						height="13"
+						key="textField"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("Dettagli"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{CATEGORIA}+" - "+$F{DS_CATEGORIA}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						style="TNRC10"
+						x="35"
+						y="4"
+						width="32"
+						height="14"
+						key="staticText-5"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("Dettagli"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[UPB]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRC10"
+						x="42"
+						y="22"
+						width="35"
+						height="14"
+						key="staticText-6"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("Dettagli"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Titolo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNRC10"
+						x="46"
+						y="40"
+						width="48"
+						height="13"
+						key="staticText-7"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isRemoveLineWhenBlank="true">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("Dettagli"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Categoria]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="678"
+						y="40"
+						width="95"
+						height="13"
+						key="textField-3"
+						stretchType="RelativeToBandHeight"
+						positionType="Float">
+							<printWhenExpression><![CDATA[new Boolean ($F{CHIAVE}.equals("Dettagli"))]]></printWhenExpression>
+						</reportElement>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[($F{TI_GESTIONE}.equals("S")? ($F{ASSESTATO_SPESA}.add($F{VARIAZIONE})):
+ ($F{TI_GESTIONE}.equals("E")?($F{ASSESTATO_ENTRATA}.add($F{VARIAZIONE})):
+new BigDecimal(0)))]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

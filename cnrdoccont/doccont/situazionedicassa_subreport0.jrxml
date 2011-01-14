@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="situazionedicassa_subreport0"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="595"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<style 
+		name="TNR10"
+		isDefault="false"
+		isStyledText="false"
+		fontName="Times New Roman"
+		pdfFontName="Times-Roman"
+	/>
+	<style 
+		name="TNR10BOLD"
+		isDefault="true"
+		fontName="Times New Roman"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	/>
+	<style 
+		name="TNR9"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="9"
+		pdfFontName="Times-Roman"
+	/>
+	<style 
+		name="FONT_DESCRIZIONE"
+		isDefault="false"
+		fontName="Times New Roman"
+		pdfFontName="Times-Roman"
+	>
+
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($F{FL_TOTALE} != null && $F{FL_TOTALE}.equals("C"))]]></conditionExpression>
+			<style 
+				name="FONT_DESCRIZIONE"
+				isDefault="false"
+				fontName="Times New Roman"
+				fontSize="8"
+				isItalic="true"
+				pdfFontName="Times-Italic"
+			/>
+		</conditionalStyle>
+			<conditionalStyle>
+				<conditionExpression><![CDATA[new Boolean($F{FL_TOTALE} != null && $F{FL_TOTALE}.equals("S"))]]></conditionExpression>
+				<style 
+					name="FONT_DESCRIZIONE"
+					isDefault="false"
+					fontName="Times New Roman"
+					isBold="true"
+					pdfFontName="Times-Bold"
+				/>
+			</conditionalStyle>
+	</style>
+
+	<parameter name="inEs" isForPrompting="false" class="java.lang.Integer"/>
+	<parameter name="CDS" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="uo" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="EM_INV_RIS" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="DA_DATA" isForPrompting="false" class="java.util.Date"/>
+	<parameter name="A_DATA" isForPrompting="false" class="java.util.Date"/>
+	<parameter name="DIR_IMAGE" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[select * from PRT_VPG_SIT_CASSA
+Order by SEQUENZA,ORDINE]]></queryString>
+
+	<field name="ID" class="java.math.BigDecimal"/>
+	<field name="CHIAVE" class="java.lang.String"/>
+	<field name="TIPO" class="java.lang.String"/>
+	<field name="SEQUENZA" class="java.math.BigDecimal"/>
+	<field name="ORDINE" class="java.math.BigDecimal"/>
+	<field name="CDS" class="java.lang.String"/>
+	<field name="DESCRIZIONE" class="java.lang.String"/>
+	<field name="IMPORTO_PARZ" class="java.math.BigDecimal"/>
+	<field name="TOTALE" class="java.math.BigDecimal"/>
+	<field name="FL_TOTALE" class="java.lang.String"/>
+	<field name="SEGNO" class="java.lang.String"/>
+
+
+		<group  name="CDS" isStartNewPage="true" isReprintHeaderOnEachPage="true" >
+			<groupExpression><![CDATA[($P{CDS}.equals("999")?$F{CDS}:$P{CDS})]]></groupExpression>
+			<groupHeader>
+			<band height="71"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="3"
+						y="19"
+						width="349"
+						height="15"
+						key="textField-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($P{uo}.equals("*")?"UO: Tutte":"UO: "+$P{uo})]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="3"
+						y="35"
+						width="349"
+						height="15"
+						key="textField-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($P{EM_INV_RIS}.equals("E")?"Da data di emissione: "+(new SimpleDateFormat("dd/MM/yyyy")).format($P{DA_DATA}):
+ $P{EM_INV_RIS}.equals("I")?"Da data di invio: "+(new SimpleDateFormat("dd/MM/yyyy")).format($P{DA_DATA}):
+  "Da data di riscontro: "+(new SimpleDateFormat("dd/MM/yyyy")).format($P{DA_DATA}))]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						style="TNR10BOLD"
+						x="428"
+						y="51"
+						width="67"
+						height="13"
+						key="staticText-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[Parziale]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						style="TNR10BOLD"
+						x="513"
+						y="51"
+						width="67"
+						height="13"
+						key="staticText-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<text><![CDATA[Totale]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						style="TNR10BOLD"
+						x="3"
+						y="69"
+						width="577"
+						height="1"
+						key="line-3"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="3"
+						y="3"
+						width="349"
+						height="15"
+						key="textField-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($P{CDS}.equals("999")?$F{DESCRIZIONE}:"CdS: "+$P{CDS})]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="3"
+						y="51"
+						width="349"
+						height="15"
+						key="textField-6"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($P{EM_INV_RIS}.equals("E")?"A data di emissione: "+(new SimpleDateFormat("dd/MM/yyyy")).format($P{A_DATA}):
+ $P{EM_INV_RIS}.equals("I")?"A data di invio: "+(new SimpleDateFormat("dd/MM/yyyy")).format($P{A_DATA}):
+  "A data di riscontro: "+(new SimpleDateFormat("dd/MM/yyyy")).format($P{A_DATA}))]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="71"  isSplitAllowed="true" >
+				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="497"
+						height="40"
+						key="image-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<graphicElement stretchType="NoStretch"/>
+					<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+				</image>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="2"
+						y="44"
+						width="589"
+						height="25"
+						key="textField-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="18" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($P{EM_INV_RIS}.equals("E")?"Situazione di Cassa  -  EMESSO":
+ $P{EM_INV_RIS}.equals("I")?"Situazione di Cassa  -  INVIATO":
+  "Situazione di Cassa  -  RISCONTRATO")]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="16"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean(($F{FL_TOTALE} != null && $F{FL_TOTALE}.equals("S")) 
+  ||($F{FL_TOTALE} != null && $F{FL_TOTALE}.equals("C"))?!($F{TIPO}.equals("C"))?true:false:true)
+]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="FONT_DESCRIZIONE"
+						x="3"
+						y="0"
+						width="423"
+						height="15"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" leftPadding="2" rightBorder="None" rightBorderColor="#000000" rightPadding="2" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement isStyledText="true">
+						<font fontName="Times New Roman" size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DESCRIZIONE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR9"
+						x="428"
+						y="0"
+						width="67"
+						height="15"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" leftPadding="2" rightBorder="None" rightBorderColor="#000000" rightPadding="2" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" isStyledText="true">
+						<font fontName="Times New Roman" size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{IMPORTO_PARZ}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="513"
+						y="0"
+						width="67"
+						height="15"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" leftPadding="2" rightBorder="None" rightBorderColor="#000000" rightPadding="2" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="10" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{TOTALE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR10"
+						x="497"
+						y="0"
+						width="13"
+						height="15"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement isStyledText="true">
+						<font pdfFontName="Times-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SEGNO}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="7"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

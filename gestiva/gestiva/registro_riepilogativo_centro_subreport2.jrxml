@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="registro_riepilogativo_centro_subreport2"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="802"
+		 pageHeight="535"
+		 columnWidth="802"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<style 
+		name="TNR10"
+		isDefault="false"
+		fontName="Times New Roman"
+		pdfFontName="Times-Roman"
+	>
+	</style>
+	<style 
+		name="TNR8BOLD"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="8"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	>
+	</style>
+	<style 
+		name="TNR9BOLD"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="9"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	>
+	</style>
+	<style 
+		name="TNR10BOLD"
+		isDefault="false"
+		fontName="Times New Roman"
+		isBold="true"
+		pdfFontName="Times-Bold"
+	>
+	</style>
+	<style 
+		name="TNR9"
+		isDefault="false"
+		fontName="Times New Roman"
+		fontSize="9"
+		pdfFontName="Times-Roman"
+	>
+	</style>
+
+	<parameter name="idReport" isForPrompting="false" class="java.lang.Integer">
+		<defaultValueExpression ><![CDATA[new Integer(250543)]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[SELECT DISTINCT ID_REPORT, GRUPPO, TIPOLOGIA_RIGA, SEQUENZA, CD_CDS, CD_UO, DS_UO, STATO_REGISTRO, CD_IVA, 
+                DESCRIZIONE_RIGA, IMPONIBILE, IVA, IVA_INDETRAIBILE,
+                IVA_ESIGIBILE, TOTALE, PROGRESSIVO_UO, ESERCIZIO_RIF,
+                RAGIONE_SOCIALE_ENTE, PARTITA_IVA_ENTE, ACQUISTI_VENDITE
+FROM VP_STM_RIEPILOGATIVO_CENTRO
+WHERE ID_REPORT = $P{idReport}
+AND GRUPPO = 'C'
+ORDER BY ACQUISTI_VENDITE ASC,
+         GRUPPO ASC,
+         SEQUENZA ASC]]></queryString>
+
+	<field name="ID_REPORT" class="java.math.BigDecimal"/>
+	<field name="GRUPPO" class="java.lang.String"/>
+	<field name="TIPOLOGIA_RIGA" class="java.lang.String"/>
+	<field name="SEQUENZA" class="java.math.BigDecimal"/>
+	<field name="CD_CDS" class="java.lang.String"/>
+	<field name="CD_UO" class="java.lang.String"/>
+	<field name="DS_UO" class="java.lang.String"/>
+	<field name="STATO_REGISTRO" class="java.lang.String"/>
+	<field name="CD_IVA" class="java.lang.String"/>
+	<field name="DESCRIZIONE_RIGA" class="java.lang.String"/>
+	<field name="IMPONIBILE" class="java.math.BigDecimal"/>
+	<field name="IVA" class="java.math.BigDecimal"/>
+	<field name="IVA_INDETRAIBILE" class="java.math.BigDecimal"/>
+	<field name="IVA_ESIGIBILE" class="java.math.BigDecimal"/>
+	<field name="TOTALE" class="java.math.BigDecimal"/>
+	<field name="PROGRESSIVO_UO" class="java.lang.String"/>
+	<field name="ESERCIZIO_RIF" class="java.math.BigDecimal"/>
+	<field name="RAGIONE_SOCIALE_ENTE" class="java.lang.String"/>
+	<field name="PARTITA_IVA_ENTE" class="java.lang.String"/>
+	<field name="ACQUISTI_VENDITE" class="java.lang.String"/>
+
+	<variable name="ImportoAcquistiVendite" class="java.math.BigDecimal" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$F{ACQUISTI_VENDITE}.equals("A") ? $F{IVA_INDETRAIBILE} : $F{IVA_ESIGIBILE}]]></variableExpression>
+	</variable>
+
+		<group  name="DETT" >
+			<groupExpression><![CDATA[$V{REPORT_COUNT}]]></groupExpression>
+			<groupHeader>
+			<band height="15"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && $F{TIPOLOGIA_RIGA}.equals("D"))]]></printWhenExpression>
+				<rectangle>
+					<reportElement
+						x="1"
+						y="0"
+						width="776"
+						height="15"
+						key="rectangle-1">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && $F{TIPOLOGIA_RIGA}.equals("D"))]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</rectangle>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR9"
+						x="67"
+						y="1"
+						width="50"
+						height="12"
+						key="textField-1">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && $F{TIPOLOGIA_RIGA}.equals("D"))]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{CD_IVA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR9"
+						x="124"
+						y="1"
+						width="270"
+						height="12"
+						key="textField-2">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && $F{TIPOLOGIA_RIGA}.equals("D"))]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DESCRIZIONE_RIGA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8BOLD"
+						x="399"
+						y="1"
+						width="75"
+						height="12"
+						key="textField-3">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && $F{TIPOLOGIA_RIGA}.equals("D"))]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{IMPONIBILE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8BOLD"
+						x="480"
+						y="1"
+						width="75"
+						height="12"
+						key="textField-4">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && $F{TIPOLOGIA_RIGA}.equals("D"))]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{IVA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8BOLD"
+						x="701"
+						y="1"
+						width="75"
+						height="12"
+						key="textField-5">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && $F{TIPOLOGIA_RIGA}.equals("D"))]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{TOTALE}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="61"
+						y="0"
+						width="0"
+						height="15"
+						key="line-1">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && $F{TIPOLOGIA_RIGA}.equals("D"))]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="121"
+						y="0"
+						width="0"
+						height="15"
+						key="line-2">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && $F{TIPOLOGIA_RIGA}.equals("D"))]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="397"
+						y="0"
+						width="0"
+						height="15"
+						key="line-3">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && $F{TIPOLOGIA_RIGA}.equals("D"))]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="477"
+						y="0"
+						width="0"
+						height="15"
+						key="line-4">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && $F{TIPOLOGIA_RIGA}.equals("D"))]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="556"
+						y="0"
+						width="0"
+						height="15"
+						key="line-5">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && $F{TIPOLOGIA_RIGA}.equals("D"))]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="696"
+						y="0"
+						width="0"
+						height="15"
+						key="line-6">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && $F{TIPOLOGIA_RIGA}.equals("D"))]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8BOLD"
+						x="559"
+						y="1"
+						width="60"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-12">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && $F{TIPOLOGIA_RIGA}.equals("D"))]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font pdfFontName="Times-Bold" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{IVA_INDETRAIBILE}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="623"
+						y="0"
+						width="0"
+						height="15"
+						key="line-14">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && $F{TIPOLOGIA_RIGA}.equals("D"))]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8BOLD"
+						x="628"
+						y="1"
+						width="60"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-15">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && $F{TIPOLOGIA_RIGA}.equals("D"))]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font pdfFontName="Times-Bold" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{IVA_ESIGIBILE}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="26"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && 
+             ($F{TIPOLOGIA_RIGA}.equals("P") || 
+              $F{TIPOLOGIA_RIGA}.equals("T") ) )]]></printWhenExpression>
+				<rectangle>
+					<reportElement
+						x="1"
+						y="6"
+						width="776"
+						height="8"
+						key="rectangle-2">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && 
+             ($F{TIPOLOGIA_RIGA}.equals("P") || 
+              $F{TIPOLOGIA_RIGA}.equals("T") ) )]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</rectangle>
+				<rectangle>
+					<reportElement
+						x="1"
+						y="6"
+						width="776"
+						height="15"
+						key="rectangle-3">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && 
+             ($F{TIPOLOGIA_RIGA}.equals("P") || 
+              $F{TIPOLOGIA_RIGA}.equals("T") ) )]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</rectangle>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR9BOLD"
+						x="67"
+						y="7"
+						width="50"
+						height="12"
+						key="textField-6">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && 
+             ($F{TIPOLOGIA_RIGA}.equals("P") || 
+              $F{TIPOLOGIA_RIGA}.equals("T") ) )]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{CD_IVA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR9BOLD"
+						x="124"
+						y="7"
+						width="270"
+						height="12"
+						key="textField-7">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && 
+             ($F{TIPOLOGIA_RIGA}.equals("P") || 
+              $F{TIPOLOGIA_RIGA}.equals("T") ) )]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DESCRIZIONE_RIGA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8BOLD"
+						x="399"
+						y="7"
+						width="75"
+						height="12"
+						key="textField-8">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && 
+             ($F{TIPOLOGIA_RIGA}.equals("P") || 
+              $F{TIPOLOGIA_RIGA}.equals("T") ) )]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{IMPONIBILE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8BOLD"
+						x="480"
+						y="7"
+						width="75"
+						height="12"
+						key="textField-9">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && 
+             ($F{TIPOLOGIA_RIGA}.equals("P") || 
+              $F{TIPOLOGIA_RIGA}.equals("T") ) )]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{IVA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8BOLD"
+						x="701"
+						y="7"
+						width="75"
+						height="12"
+						key="textField-10">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && 
+             ($F{TIPOLOGIA_RIGA}.equals("P") || 
+              $F{TIPOLOGIA_RIGA}.equals("T") ) )]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{TOTALE}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="61"
+						y="6"
+						width="0"
+						height="15"
+						key="line-7">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && 
+             ($F{TIPOLOGIA_RIGA}.equals("P") || 
+              $F{TIPOLOGIA_RIGA}.equals("T") ) )]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="121"
+						y="6"
+						width="0"
+						height="15"
+						key="line-8">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && 
+             ($F{TIPOLOGIA_RIGA}.equals("P") || 
+              $F{TIPOLOGIA_RIGA}.equals("T") ) )]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="397"
+						y="6"
+						width="0"
+						height="15"
+						key="line-9">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && 
+             ($F{TIPOLOGIA_RIGA}.equals("P") || 
+              $F{TIPOLOGIA_RIGA}.equals("T") ) )]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="477"
+						y="6"
+						width="0"
+						height="15"
+						key="line-10">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && 
+             ($F{TIPOLOGIA_RIGA}.equals("P") || 
+              $F{TIPOLOGIA_RIGA}.equals("T") ) )]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="556"
+						y="6"
+						width="0"
+						height="15"
+						key="line-11">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && 
+             ($F{TIPOLOGIA_RIGA}.equals("P") || 
+              $F{TIPOLOGIA_RIGA}.equals("T") ) )]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="696"
+						y="6"
+						width="0"
+						height="15"
+						key="line-12">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && 
+             ($F{TIPOLOGIA_RIGA}.equals("P") || 
+              $F{TIPOLOGIA_RIGA}.equals("T") ) )]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<rectangle>
+					<reportElement
+						x="1"
+						y="0"
+						width="776"
+						height="6"
+						key="rectangle-4">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && 
+             ($F{TIPOLOGIA_RIGA}.equals("P") || 
+              $F{TIPOLOGIA_RIGA}.equals("T") ) )]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</rectangle>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8BOLD"
+						x="559"
+						y="7"
+						width="60"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-13">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && 
+             ($F{TIPOLOGIA_RIGA}.equals("P") || 
+              $F{TIPOLOGIA_RIGA}.equals("T") ) )]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font pdfFontName="Times-Bold" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[ $F{IVA_INDETRAIBILE}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="623"
+						y="6"
+						width="0"
+						height="15"
+						key="line-13">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && 
+             ($F{TIPOLOGIA_RIGA}.equals("P") || 
+              $F{TIPOLOGIA_RIGA}.equals("T") ) )]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						style="TNR8BOLD"
+						x="628"
+						y="7"
+						width="60"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-14">
+							<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("C") && 
+             ($F{TIPOLOGIA_RIGA}.equals("P") || 
+              $F{TIPOLOGIA_RIGA}.equals("T") ) )]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font pdfFontName="Times-Bold" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{IVA_ESIGIBILE}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>
