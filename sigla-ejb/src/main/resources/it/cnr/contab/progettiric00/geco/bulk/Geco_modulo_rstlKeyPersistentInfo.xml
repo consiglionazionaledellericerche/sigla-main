@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.progettiric00.geco.bulk.Geco_modulo_rstlKey">
+	<defaultColumnMap
+		tableName="modulo_rstl">
+		<columnMapping
+			columnName="id_mod"
+			propertyName="id_mod"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="esercizio"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="fase"
+			propertyName="fase"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="id_mod"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="fase"
+		partOfOid="true" />
+</SQLPersistentInfo>

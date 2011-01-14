@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.logs.bulk.Batch_proceduraKey" >
+	<defaultColumnMap
+		tableName="BATCH_PROCEDURA" >
+		<columnMapping
+			columnName="CD_PROCEDURA"
+			propertyName="cd_procedura"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_procedura"
+		partOfOid="true" />
+</SQLPersistentInfo>

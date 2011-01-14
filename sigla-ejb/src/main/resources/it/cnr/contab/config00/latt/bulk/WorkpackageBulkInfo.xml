@@ -1,0 +1,481 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Gruppo di Azioni Elementari"
+          longDescription="Gruppo di Azioni Elementari">
+
+	<fieldProperty
+		name="gruppo_linea_attivita"
+		property="gruppo_linea_attivita"
+		label="Macrolinea di attivita'"
+		inputType="SEARCHTOOL"
+		formName="default"
+		readonlyPropertyOnEdit="linea_attivita_sistema"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_gruppo_linea_attivita"
+		property="gruppo_linea_attivita.cd_gruppo_linea_attivita"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice Gruppo GAE" />
+	<fieldProperty
+		name="esercizio_inizio"
+		property="esercizio_inizio"
+		inputType="TEXT"
+		inputSize="4"
+		label="Esercizio di creazione"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="funzione"
+		property="funzione"
+		printProperty="cd_ds_funzione"
+		optionsProperty="funzioni"
+		inputType="SELECT"
+		label="Funzione"
+		readonlyPropertyOnEdit="ROFunzione"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_funzione"
+		property="funzione.cd_funzione"
+		label="Codice funzione"
+		inputType="TEXT"
+		inputSize="6" />
+	<fieldProperty
+		name="natura"
+		property="natura"
+		printProperty="cd_ds_natura"
+		optionsProperty="nature"
+		inputType="SELECT"
+		label="Natura"
+		readonlyPropertyOnEdit="RONatura"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_natura"
+		property="natura.cd_natura"
+		label="Codice natura"
+		inputType="TEXT"
+		inputSize="6" />
+	<fieldProperty
+		name="denominazione"
+		property="denominazione"
+		maxLength="300"
+		cols="80"
+		rows="3"
+		inputType="TEXTAREA"
+		label="Denominazione"
+		enabledOnSearch="true"
+		readonlyPropertyOnEdit="RODenominazione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_cdr_linea"
+		property="cd_centro_responsabilita"
+		maxLength="30"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice CDR"
+		caseSensitiveSearch="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		maxLength="8"
+		inputSize="8"
+		inputType="TEXT"
+		label="Codice GAE"
+		caseSensitiveSearch="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_linea_attivita7"
+		property="cd_linea_attivita"
+		maxLength="7"
+		inputSize="8"
+		inputType="TEXT"
+		label="Codice"
+		caseSensitiveSearch="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="centro_responsabilita"
+		property="centro_responsabilita"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Centro di responsabilita"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		 name="cd_centro_responsabilita"
+		property="centro_responsabilita.cd_centro_responsabilita"
+		maxLength="30"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice CDR"/>
+	<fieldProperty
+		name="tipo_linea_attivita"
+		property="tipo_linea_attivita"
+		inputType="SEARCHTOOL"
+		label="Tipo GAE/GAE comune"
+		formName="searchtool"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="cd_tipo_linea_attivita"
+		property="tipo_linea_attivita.cd_tipo_linea_attivita"
+		maxLength="10"
+		inputSize="6"
+		inputType="TEXT"
+		label="Tipo GAE/GAE comune" />
+	<fieldProperty
+		name="ds_linea_attivita"
+		property="ds_linea_attivita"
+		maxLength="300"
+		cols="80"
+		rows="3"
+		inputType="TEXTAREA"
+		label="Descrizione"
+		caseSensitiveSearch="false"
+		readonlyPropertyOnEdit="RODescrizione"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="esercizio_fine"
+		property="esercizio_fine"
+		label="Esercizio di terminazione"
+		inputType="TEXT"
+		maxLength="4"
+		inputSize="4"
+		readonlyPropertyOnEdit="ROEsercizio_fine"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="insieme_la"
+		property="insieme_la"
+		label="Insieme"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		completeOnSave="false" />
+	<fieldProperty
+		name="cd_insieme_la"
+		property="cd_insieme_la"
+		label="Insieme"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		label="Gestione"
+		inputType="RADIOGROUP"
+		keysProperty="ti_gestioneKeys"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		layout="HORIZONTAL" />
+	<fieldProperty
+		name="cd_progetto_padre"
+		property="progettopadre.cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Codice Commessa"
+		readonlyProperty="ROprogetto"		
+		caseSensitiveSearch="false"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"		
+		enabledOnEdit="true"/>		
+	<fieldProperty
+		name="ds_progetto_padre"
+		property="progettopadre.ds_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		enabledOnEdit="true"		
+		caseSensitiveSearch="false"/>		
+	/***************************************************************
+	 **  Search tool utilizzato per la ricerca del progetto padre **
+	 ***************************************************************/
+		
+	<fieldProperty
+		name="find_nodo_padre"
+		property="progetto"
+		inputType="SEARCHTOOL"
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"
+		label="Commessa"/>
+	<fieldProperty
+		name="find_nodo_progettopadre"
+		property="progettopadre"
+		inputType="SEARCHTOOL"
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"
+		label="Progetto"/>
+	<fieldProperty
+		name="cd_progetto"
+		property="progetto.cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		readonlyProperty="ROprogetto"
+		label="Codice Modulo di Attivita'"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"		
+		enabledOnEdit="true"/>		
+	<fieldProperty
+		name="ds_progetto"
+		property="progetto.ds_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		enabledOnEdit="true"		
+		caseSensitiveSearch="false"/>		
+		
+	<fieldProperty
+		name="crea_modulo"
+		property="progetto"
+		inputType="CRUDTOOL"
+		CRUDBusinessProcessName="ModuloAttivitaBP"
+		/>
+
+	/*********************************************************/
+    <fieldProperty
+		name="cd_responsabile_terzo"
+		property="responsabile.cd_terzo"
+		inputType="TEXT"
+		maxLength="8"
+		inputSize="8"		
+		enabledOnSearch="true"
+		label="Responsabile" />
+	<fieldProperty
+		name="responsabile"
+		property="responsabile"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Responsabile"
+		nullable="false" />
+	<fieldProperty
+		name="fl_limite_ass_obblig"
+		property="fl_limite_ass_obblig"
+		label="Controllo limite assunzione Impegni"
+		enabledOnEdit="false"		
+		enabledOnInsert="false"		
+		inputType="CHECKBOX"
+		/>
+		
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_linea_attivita"
+			inputType="TEXT" />
+		<formFieldProperty
+			name="denominazione"
+			inputType="TEXT"
+			inputSize="20" />
+	</form>
+
+	<form
+		name="searchtool_x_var_stanz_res" >
+		<formFieldProperty
+			name="cd_linea_attivita"
+			inputType="TEXT"
+			inputSize="30" />
+		<formFieldProperty
+			name="denominazione"
+			inputType="TEXT"
+			inputSize="50" />
+	</form>
+
+	<form
+		name="searchtool_denominazione" >
+		<formFieldProperty
+			name="cd_linea_attivita"
+			inputType="TEXT" />
+		<formFieldProperty
+			name="denominazione"
+			inputType="TEXT"
+			inputSize="30" />
+	</form>
+		
+	<form
+		name="searchtool_x_residui" >
+		<formFieldProperty
+			name="cd_linea_attivita"
+			inputType="TEXT" />
+		<formFieldProperty
+			name="denominazione"
+			inputType="TEXT"
+			inputSize="30" />
+	</form>
+
+	<formFieldProperty
+		name="esercizio_inizio" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="cd_linea_attivita7" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="tipo_linea_attivita" />
+	<formFieldProperty
+		name="centro_responsabilita"
+		readonlyProperty="ROCentro_responsabilita" />
+	<formFieldProperty
+		name="insieme_la" />
+	<formFieldProperty
+		name="funzione" />
+	<formFieldProperty
+		name="natura" />
+	<formFieldProperty
+		name="gruppo_linea_attivita" />
+	<formFieldProperty
+		name="denominazione" />
+	<formFieldProperty
+		name="ds_linea_attivita" />
+	<formFieldProperty
+		name="esercizio_fine" />
+	<formFieldProperty
+		name="ti_gestione"
+		command="doCambiaGestione" />
+	<formFieldProperty
+		name="find_nodo_padre" />
+	<formFieldProperty
+		name="find_nodo_progettopadre" />
+	<formFieldProperty
+		name="cd_progetto" />		
+	<formFieldProperty
+		name="ds_progetto" />		
+	<formFieldProperty
+		name="cd_progetto_padre" />		
+	<formFieldProperty
+		name="ds_progetto_padre" />
+	<formFieldProperty
+		name="cd_responsabile_terzo" />
+	<formFieldProperty
+		name="responsabile" />				
+	<formFieldProperty
+		name="crea_modulo" />
+	<formFieldProperty
+		name="fl_limite_ass_obblig"/>
+				
+	<columnFieldProperty
+		name="cd_linea_attivita"
+		label="Cod." />
+	<columnFieldProperty
+		name="cd_progetto" />		
+	<columnFieldProperty
+		name="cd_progetto_padre" />		
+	<columnFieldProperty
+		name="cd_centro_responsabilita"
+		label="CDR" />
+	<columnFieldProperty
+		name="cd_gruppo_linea_attivita"
+		label="Macrolinea" />
+	<columnFieldProperty
+		name="ds_linea_attivita"
+		label="Descrizione" />
+	<columnFieldProperty
+		name="cd_tipo_linea_attivita"
+		label="Tipo" />
+	<columnFieldProperty
+		name="cd_funzione"
+		label="Funzione" />
+	<columnFieldProperty
+		name="cd_natura"
+		label="Natura" />
+	<columnFieldProperty
+		name="denominazione" />
+	<columnFieldProperty
+		name="esercizio_fine" />
+	<columnFieldProperty
+		name="cd_insieme_la" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_responsabile_terzo" />		
+	<columnFieldProperty
+		name="fl_limite_ass_obblig"/>
+
+	<columnSet name="columnSetPerAccertamento">
+		<columnFieldProperty name="cd_centro_responsabilita" label="CDR" />	
+		<columnFieldProperty name="cd_progetto" label="Mod. Attivita'" />		
+		<columnFieldProperty name="cd_linea_attivita" label="Cod." />
+		<columnFieldProperty name="denominazione" />
+		<columnFieldProperty name="cd_tipo_linea_attivita" label="Tipo" />
+		<columnFieldProperty name="cd_natura" label="Natura" />
+		<columnFieldProperty name="esercizio_fine" />
+		<columnFieldProperty name="cd_insieme_la" />
+	</columnSet>				
+
+	<columnSet name="csCommessaWorkpackageDisponibili">
+		<columnFieldProperty name="cd_linea_attivita" label="Cod." />
+		<columnFieldProperty name="cd_progetto" label="Modulo di Attivita'" />
+		<columnFieldProperty name="cd_centro_responsabilita" label="CDR" />
+		<columnFieldProperty name="ds_linea_attivita" label="Descrizione" />
+		<columnFieldProperty name="cd_tipo_linea_attivita" label="Tipo" />
+	</columnSet>				
+
+	<columnSet name="csCommessaWorkpackageCollegati">
+		<columnFieldProperty name="cd_linea_attivita" label="Cod." />
+		<columnFieldProperty name="cd_centro_responsabilita" label="CDR" />
+		<columnFieldProperty name="ds_linea_attivita" label="Descrizione" />
+		<columnFieldProperty name="cd_tipo_linea_attivita" label="Tipo" />
+	</columnSet>				
+
+	<freeSearchSet name="freeSearchSetPerCompenso">
+		<findFieldProperty name="cd_gruppo_linea_attivita" />
+		<findFieldProperty name="denominazione" />
+		<findFieldProperty name="cd_linea_attivita" />
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_tipo_linea_attivita" />
+		<findFieldProperty name="ds_linea_attivita" />
+		<findFieldProperty name="cd_funzione" />
+		<findFieldProperty name="cd_natura" />
+		<findFieldProperty name="esercizio_fine" />
+		<findFieldProperty name="cd_insieme_la" />
+	</freeSearchSet>				
+
+	<findFieldProperty
+		name="cd_gruppo_linea_attivita" />
+	<findFieldProperty
+		name="cd_progetto" />		
+	<findFieldProperty
+		name="cd_progetto_padre" />		
+	<findFieldProperty
+		name="esercizio_inizio" />
+	<findFieldProperty
+		name="denominazione" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="cd_tipo_linea_attivita" />
+	<findFieldProperty
+		name="ds_linea_attivita" />
+	<findFieldProperty
+		name="cd_funzione" />
+	<findFieldProperty
+		name="cd_natura" />
+	<findFieldProperty
+		name="esercizio_fine" />
+	<findFieldProperty
+		name="cd_insieme_la" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_responsabile_terzo" />		
+	<findFieldProperty
+		name="fl_limite_ass_obblig"/>
+		
+</bulkInfo>

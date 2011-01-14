@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_imp_pag_per_tipoBulk"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_imp_pag_per_tipoHome">
+	<defaultColumnMap
+		tableName="V_IMP_PAG_PER_TIPO">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />		
+		<columnMapping
+			columnName="VOCE"
+			propertyName="voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DESCRIZIONE"
+			propertyName="descrizione"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />						
+		<columnMapping
+			columnName="IMPEGNATO"
+			propertyName="impegnato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="PAGATO"
+			propertyName="pagato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="voce" />
+	<persistentProperty
+		name="descrizione" />
+	<persistentProperty
+		name="tipo" />
+	<persistentProperty
+		name="impegnato" />
+	<persistentProperty
+		name="pagato" />
+</SQLPersistentInfo>

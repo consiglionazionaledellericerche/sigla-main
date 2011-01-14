@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00Key" >
+	<defaultColumnMap
+		tableName="EXT_CASSIERE00" >
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_REC"
+			propertyName="pg_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="NOME_FILE"
+			propertyName="nome_file"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_rec"
+		partOfOid="true" />
+	<persistentProperty
+		name="nome_file"
+		partOfOid="true" />
+</SQLPersistentInfo>

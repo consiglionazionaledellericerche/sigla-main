@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription = "Categoria Economica/Finanziaria" longDescription = "Categoria Economica-Finanziaria">
+	<fieldProperty
+		name="cd_capoconto_fin"
+		property="cd_capoconto_fin"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice"
+		enabledOnEdit="false"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="ds_capoconto_fin"
+		property="ds_capoconto_fin"
+		maxLength="300"
+		inputSize="60"
+		inputType="TEXT"
+		label="Descrizione"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true"/>
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+		    inputSize="10"
+			name="cd_capoconto_fin"
+			label="Categoria Economica/Finanziaria"/>
+		<formFieldProperty
+		    inputSize="40"
+			name="ds_capoconto_fin" 
+			label="Descrizione Categoria Economica/Finanziaria"/>
+	</form>
+		
+	<formFieldProperty
+		name="cd_capoconto_fin" />
+	<formFieldProperty
+		name="ds_capoconto_fin" />
+
+	<columnFieldProperty
+		name="cd_capoconto_fin" />
+	<columnFieldProperty
+		name="ds_capoconto_fin" />
+
+	<findFieldProperty
+		name="cd_capoconto_fin" />
+	<findFieldProperty
+		name="ds_capoconto_fin" />
+
+</bulkInfo>

@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="cd_cds"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_pgiro"
+		property="fl_pgiro"
+		inputType="CHECKBOX"
+		label="fl_pgiro" />
+	<fieldProperty
+		name="cd_uo_origine"
+		property="cd_uo_origine"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="cd_uo_origine"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="cd_unita_organizzativa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_associato_doc_contabile"
+		property="im_associato_doc_contabile"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		label="im_associato_doc_contabile" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="esercizio_originale"
+		property="esercizio_originale"
+		inputType="ROTEXT"
+		label="Esercizio Impegno" />
+	<fieldProperty
+		name="pg_obbligazione"
+		property="pg_obbligazione"
+		inputType="ROTEXT"
+		label="Impegno" />
+	<fieldProperty
+		name="pg_obbligazione_scadenzario"
+		property="pg_obbligazione_scadenzario"
+		inputType="ROTEXT"
+		label="pg_obbligazione_scadenzario" />
+	<fieldProperty
+		name="cd_cds_origine"
+		property="cd_cds_origine"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="cd_cds_origine"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_associato_doc_amm"
+		property="im_associato_doc_amm"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		label="im_associato_doc_amm" />
+	<fieldProperty
+		name="cd_tipo_documento_cont"
+		property="cd_tipo_documento_cont"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="cd_tipo_documento_cont"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_scadenza"
+		property="im_scadenza"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		label="Importo Iniziale" />
+	<fieldProperty
+		name="im_disponibile"
+		property="im_disponibile"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		label="Importo Disponibile" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		maxLength="8"
+		inputType="TEXT"
+		inputSize="8"
+		label="Creditore" 
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_scadenza"
+		property="dt_scadenza"
+		inputType="ROTEXT"
+		formatName="date_short"
+		label="Scadenza" />
+	<fieldProperty
+		name="im_da_trasferire"
+		property="im_da_trasferire"
+		label="Importo da pagare"
+		inputType="TEXT"
+		maxLength="13"
+		inputSize="20"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="priorita"
+		property="priorita"
+		label="Priorita"
+		inputType="SELECT"
+		inputSize="8"
+		keysProperty="prioritaKeys"
+		enabledOnSearch="false"	/>
+	<fieldProperty
+		name="ti_competenza_residuo"
+		property="ti_competenza_residuo"
+		label="Comp./Residuo"
+		inputType="ROTEXT"
+		inputSize="1"
+		enabledOnSearch="false"	/>
+		
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="fl_pgiro" />
+	<formFieldProperty
+		name="cd_uo_origine" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="im_associato_doc_contabile" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="esercizio_originale" />
+	<formFieldProperty
+		name="pg_obbligazione" />
+	<formFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<formFieldProperty
+		name="cd_cds_origine" />
+	<formFieldProperty
+		name="im_associato_doc_amm" />
+	<formFieldProperty
+		name="cd_tipo_documento_cont" />
+	<formFieldProperty
+		name="im_scadenza" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="dt_scadenza" />
+	<formFieldProperty
+		name="priorita"/>
+	<formFieldProperty
+		name="im_da_trasferire"/>
+	<formFieldProperty
+		name="im_disposnibile"/>
+	<formFieldProperty
+		name="ti_competenza_residuo"/>
+
+	<columnFieldProperty
+		name="esercizio_originale" />
+	<columnFieldProperty
+		name="pg_obbligazione" />
+	<columnFieldProperty
+		name="ti_competenza_residuo"
+		columnStyle="text-align: center"/>			
+	<columnFieldProperty
+		name="im_scadenza"/>
+	<columnFieldProperty
+		name="im_disponibile"/>			
+		
+	<columnSet
+		name="impegni">
+		<columnFieldProperty
+			name="esercizio_originale" />
+		<columnFieldProperty
+			name="pg_obbligazione" />
+		<columnFieldProperty
+			name="dt_scadenza" />
+		<columnFieldProperty
+			name="ti_competenza_residuo"
+			columnStyle="text-align: center"/>			
+		<columnFieldProperty
+			name="im_disponibile"/>			
+	</columnSet>
+	<columnSet
+		name="impegni_man">
+		<columnFieldProperty
+			name="esercizio_originale" />
+		<columnFieldProperty
+			name="pg_obbligazione" />
+		<columnFieldProperty
+			name="dt_scadenza" />
+		<columnFieldProperty
+			name="ti_competenza_residuo"
+			columnStyle="text-align: center"/>			
+		<columnFieldProperty
+			name="im_disponibile"/>			
+		<columnFieldProperty
+			name="im_da_trasferire"/>
+	</columnSet>
+	<columnSet
+		name="impegni_auto">
+		<columnFieldProperty
+			name="dt_scadenza" />
+		<columnFieldProperty
+			name="ti_competenza_residuo" 
+			columnStyle="text-align: center"/>						
+		<columnFieldProperty
+			name="im_disponibile"/>			
+		<columnFieldProperty
+			name="im_scadenza"/>
+		<columnFieldProperty
+			name="priorita"/>
+	</columnSet>
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="fl_pgiro" />
+	<findFieldProperty
+		name="cd_uo_origine" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="im_associato_doc_contabile" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="esercizio_originale" />
+	<findFieldProperty
+		name="pg_obbligazione" />
+	<findFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<findFieldProperty
+		name="cd_cds_origine" />
+	<findFieldProperty
+		name="im_associato_doc_amm" />
+	<findFieldProperty
+		name="cd_tipo_documento_cont" />
+	<findFieldProperty
+		name="im_scadenza" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="dt_scadenza" />
+
+</bulkInfo>

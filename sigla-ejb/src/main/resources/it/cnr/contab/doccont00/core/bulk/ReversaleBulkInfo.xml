@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="dt_trasmissione"
+		property="dt_trasmissione"
+		inputType="TEXT"
+		inputSize="8"
+		formatName="date_short"
+		label="Data Trasmissione"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="dt_ritrasmissione"
+		property="dt_ritrasmissione"
+		inputType="TEXT"
+		inputSize="8"
+		formatName="date_short"
+		label="Data Ritrasmissione"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_cds"
+		property="cds.cd_unita_organizzativa"
+		inputType="ROTEXT"
+		maxLength="30"
+		inputSize="8"
+		label="Cds"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_cds"
+		property="cds.ds_unita_organizzativa"
+		inputType="ROTEXT"
+		label=""
+		inputSize="50"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="unita_organizzativa"
+		property="unita_organizzativa"
+		inputType="SELECT"
+		optionsProperty="unita_organizzativaOptions"
+		readonlyProperty="ROUnitaOrganizzativa"
+		printProperty="ds_estesa"
+		nullable="false"
+		inputSize="40"
+		label="Unit&#224; organizzativa"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		enabledOnEdit="true"				
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="unita_organizzativa.cd_unita_organizzativa"
+		inputType="TEXT"
+		maxLength="30"
+		inputSize="8"
+		label="Unit&#224; organizzativa"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_unita_organizzativa"
+		property="unita_organizzativa.ds_unita_organizzativa"
+		label=""
+		inputType="ROTEXT"
+		inputSize="50"
+		enabledOnSearch="true" 
+		/>
+	<fieldProperty
+		name="stato"
+		property="stato"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		keysProperty="statoKeys"
+		label="Stato"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="stato_trasmissione"
+		property="stato_trasmissione"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		keysProperty="stato_trasmissioneKeys"
+		label="Stato trasmissione"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_tipo_documento_cont"
+		property="cd_tipo_documento_cont"
+		enabledOnFreeSearch="false"		
+		label="Tipo documento contabile" />		
+	<fieldProperty
+		name="ti_reversale"
+		property="ti_reversale"
+		maxLength="1"
+		inputSize="1"
+		inputType="RADIOGROUP"
+		label="Tipo"
+		keysProperty = "tipoReversaleKeys"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_uo_origine"
+		property="cd_uo_origine"
+		inputType="TEXT"
+		enabledOnFreeSearch="false"
+		label="UO origine"/>
+	<fieldProperty
+		name="im_reversale"
+		property="im_reversale"
+		inputType="ROTEXT"
+		label="Importo"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio"
+		maxLength="4"
+		inputSize="4"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"/>
+	<fieldProperty
+		name="dt_annullamento"
+		property="dt_annullamento"
+		inputType="TEXT"
+		label="dt_annullamento" />
+	<fieldProperty
+		name="dt_emissione"
+		property="dt_emissione"
+		inputType="TEXT"
+		inputSize="8"
+		formatName="date_short"
+		label="Data contab."
+		enabledOnEdit="false"
+		enabledOnInsert="true"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="im_incassato"
+		property="im_incassato"
+		inputType="ROTEXT"
+		label="Importo Riscontrato"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="pg_reversale"
+		property="pg_reversale"
+		inputType="TEXT"
+		label="Numero Reversale"
+		maxLength="10"
+		inputSize="10"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_cds_origine"
+		property="cd_cds_origine"
+		inputType="TEXT"
+		label="CdS origine"
+		caseSensitiveSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="ti_competenza_residuo"
+		property="ti_competenza_residuo"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		keysProperty="competenzaResiduoKeys"		
+		label="Competenza/Residuo"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"				
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_reversale"
+		property="ds_reversale"
+		maxLength="300"
+		inputSize="70"
+		inputType="TEXT"
+		label="Causale di incasso"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="terzo_cd_terzo"
+		property="reversale_terzo.terzo.cd_terzo"
+		inputType="ROTEXT"
+		label="Debitore"				
+		/>
+	<fieldProperty
+		name="terzo_ds_terzo"
+		property="reversale_terzo.terzo.denominazione_sede"
+		inputType="ROTEXT"
+		/>
+	<fieldProperty
+		name="im_tot_reversale"
+		property="im_reversale"
+		inputType="ROTEXT"
+		label="Importo Reversale"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="im_residuo_reversale"
+		property="im_residuo_reversale"
+		label="Importo residuo"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="false"
+		/>
+	<fieldProperty
+		name="im_associato_siope"
+		property="im_associato_siope"
+		inputType="TEXT"
+		label="Importo Associato"
+		formatName = "it.cnr.contab.util.EuroFormat"/>
+	<fieldProperty
+		name="im_da_associare_siope"
+		property="im_da_associare_siope"
+		inputType="TEXT"
+		label="Importo da Associare"
+		formatName = "it.cnr.contab.util.EuroFormat"/>
+
+	<formFieldProperty
+		name="dt_trasmissione" />
+	<formFieldProperty
+		name="dt_ritrasmissione" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="ds_cds" />
+	<formFieldProperty
+		name="unita_organizzativa" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="ds_unita_organizzativa" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="stato_trasmissione" />
+	<formFieldProperty
+		name="im_incassato" />
+	<formFieldProperty
+		name="ds_reversale" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="dt_annullamento" />
+	<formFieldProperty
+		name="dt_emissione" />
+	<formFieldProperty
+		name="ti_reversale" />
+	<formFieldProperty
+		name="pg_reversale" />
+	<formFieldProperty
+		name="ti_competenza_residuo" />
+	<formFieldProperty
+		name="im_reversale" />
+	<formFieldProperty
+		name="cd_cds_origine" />
+	<formFieldProperty
+		name="terzo_cd_terzo"/>
+	<formFieldProperty
+		name="terzo_ds_terzo"/>
+	<formFieldProperty
+		name="im_tot_reversale"/>
+	<formFieldProperty
+		name="im_residuo_reversale"/>
+	<formFieldProperty
+		name="im_associato_siope" />
+	<formFieldProperty
+		name="im_da_associare_siope" />
+	
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_cds"
+		inputType="TEXT"/>
+	<columnFieldProperty
+		name="cd_unita_organizzativa"
+		inputType="TEXT" />
+	<columnFieldProperty
+		name="cd_cds_origine"/>
+	<columnFieldProperty
+		name="cd_uo_origine"/>
+	<columnFieldProperty
+		name="pg_reversale" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="stato_trasmissione" />
+	<columnFieldProperty
+		name="dt_emissione"
+		inputType="TEXT" />
+	<columnFieldProperty
+		name="im_reversale" />
+	<columnFieldProperty
+		name="im_incassato" />
+	<columnFieldProperty
+		name="ds_reversale" />
+	<columnFieldProperty
+		name="dt_trasmissione"/>
+	
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_cds"
+		inputType="TEXT"/>
+	<findFieldProperty
+		name="cd_unita_organizzativa"/>
+	<findFieldProperty
+		name="pg_reversale" />
+	<findFieldProperty
+		name="ds_reversale" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="stato_trasmissione" />
+	<findFieldProperty
+		name="dt_emissione"
+		inputType="TEXT" />
+	<findFieldProperty
+		name="im_reversale"
+		inputType="TEXT"/>
+	<findFieldProperty
+		name="im_incassato"
+		inputType="TEXT"/>
+	<findFieldProperty
+		name="cd_uo_origine" />
+	<findFieldProperty
+		name="cd_cds_origine" />
+	<findFieldProperty
+		name="cd_tipo_documento_cont"/>
+	<findFieldProperty
+		name="ti_reversale"
+		inputType="SELECT"/>
+	<findFieldProperty
+		name="dt_trasmissione"/>
+	<findFieldProperty
+		name="dt_ritrasmissione"/>
+	<findFieldProperty
+		name="ti_competenza_residuo" />
+		
+		
+
+</bulkInfo>

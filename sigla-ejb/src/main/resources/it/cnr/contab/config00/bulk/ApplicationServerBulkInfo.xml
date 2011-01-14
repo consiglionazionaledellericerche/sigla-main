@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Rappresenta l'anagrafico dei server su cui viene eseguito SIGLA"
+	longDescription="Rappresenta l'anagrafico dei server su cui viene eseguito SIGLA">
+	<fieldProperty
+		name="hostname"
+		property="hostname"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="2000"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="hostname" />
+	<fieldProperty
+		name="attivo"
+		property="attivo"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="attivo" />
+	<fieldProperty
+		name="sessionId"
+		property="sessionId"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="session_id" />
+	<fieldProperty
+		name="login"
+		property="login"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="login" />
+	<fieldProperty
+		name="httpPort"
+		property="httpPort"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		label="http_port" />
+	<fieldProperty
+		name="ipAddress"
+		property="ipAddress"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		enabledOnEdit="false"
+		label="ip_address" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="hostname" />
+		<formFieldProperty
+			name="sessionId" />
+	</form>
+	<formFieldProperty
+		name="hostname" />
+	<formFieldProperty
+		name="attivo" />
+	<formFieldProperty
+		name="sessionId" />
+	<formFieldProperty
+		name="login" />
+	<formFieldProperty
+		name="httpPort" />
+	<formFieldProperty
+		name="ipAddress" />
+	<findFieldProperty
+		name="hostname" />
+	<findFieldProperty
+		name="attivo" />
+	<findFieldProperty
+		name="sessionId" />
+	<findFieldProperty
+		name="login" />
+	<findFieldProperty
+		name="httpPort" />
+	<findFieldProperty
+		name="ipAddress" />
+	<columnFieldProperty
+		name="hostname" />
+	<columnFieldProperty
+		name="attivo" />
+	<columnFieldProperty
+		name="sessionId" />
+	<columnFieldProperty
+		name="login" />
+	<columnFieldProperty
+		name="httpPort" />
+	<columnFieldProperty
+		name="ipAddress" />
+</bulkInfo>

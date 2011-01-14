@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.logs.bulk.Batch_log_tstaBase"
+	keyClassName="it.cnr.contab.logs.bulk.Batch_log_tstaKey"
+	homeClassName="it.cnr.contab.logs.bulk.Batch_log_tstaHome" >
+	<defaultColumnMap
+		tableName="BATCH_LOG_TSTA" >
+		<columnMapping
+			columnName="FL_ERRORI"
+			propertyName="fl_errori"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_LOG"
+			propertyName="ds_log"
+			sqlTypeName="VARCHAR"
+			columnSize="1000" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_JOB"
+			propertyName="pg_job"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="NOTE"
+			propertyName="note"
+			sqlTypeName="VARCHAR"
+			columnSize="4000" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_BATCH"
+			propertyName="pg_batch"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="fl_errori" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="ds_log" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_job" />
+	<persistentProperty
+		name="note" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_batch" />
+</SQLPersistentInfo>

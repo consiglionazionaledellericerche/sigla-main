@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo>
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio finaziario" />
+	<fieldProperty
+		name="pg_variazione"
+		property="pg_variazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo della Variazione" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS in scrivania" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CdR Proponente" />
+	<fieldProperty
+		name="esercizio_res"
+		property="esercizio_res"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Residuo" />
+	<fieldProperty
+		name="dt_apertura"
+		property="dt_apertura"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Apertura Variazione" />
+	<fieldProperty
+		name="ds_delibera"
+		property="ds_delibera"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione della delibera di Variazione" />
+	<fieldProperty
+		name="ds_variazione"
+		property="ds_variazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1000"
+		label="Descrizione della Variazione" />
+	<fieldProperty
+		name="dt_chiusura"
+		property="dt_chiusura"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Chiusura Variazione" />
+	<fieldProperty
+		name="dt_approvazione"
+		property="dt_approvazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Approvazione Variazione" />
+	<fieldProperty
+		name="dt_annullamento"
+		property="dt_annullamento"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Annullamento Variazione" />
+	<fieldProperty
+		name="ds_aggiuntiva"
+		property="ds_aggiuntiva"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione Aggiuntiva" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="Stato della Variazione valori possibili:" />
+	<fieldProperty
+		name="tipologia"
+		property="tipologia"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Tipologia della Variazione, valori disponibili:" />
+	<fieldProperty
+		name="tipologia_fin"
+		property="tipologia_fin"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="Tipologia finanziaria della Variazione, valori disponibili:" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_variazione" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="esercizio_res" />
+	<formFieldProperty
+		name="dt_apertura" />
+	<formFieldProperty
+		name="ds_delibera" />
+	<formFieldProperty
+		name="ds_variazione" />
+	<formFieldProperty
+		name="dt_chiusura" />
+	<formFieldProperty
+		name="dt_approvazione" />
+	<formFieldProperty
+		name="dt_annullamento" />
+	<formFieldProperty
+		name="ds_aggiuntiva" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="tipologia" />
+	<formFieldProperty
+		name="tipologia_fin" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_variazione" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="esercizio_res" />
+	<findFieldProperty
+		name="dt_apertura" />
+	<findFieldProperty
+		name="ds_delibera" />
+	<findFieldProperty
+		name="ds_variazione" />
+	<findFieldProperty
+		name="dt_chiusura" />
+	<findFieldProperty
+		name="dt_approvazione" />
+	<findFieldProperty
+		name="dt_annullamento" />
+	<findFieldProperty
+		name="ds_aggiuntiva" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="tipologia" />
+	<findFieldProperty
+		name="tipologia_fin" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_variazione" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="esercizio_res" />
+	<columnFieldProperty
+		name="dt_apertura" />
+	<columnFieldProperty
+		name="ds_delibera" />
+	<columnFieldProperty
+		name="ds_variazione" />
+	<columnFieldProperty
+		name="dt_chiusura" />
+	<columnFieldProperty
+		name="dt_approvazione" />
+	<columnFieldProperty
+		name="dt_annullamento" />
+	<columnFieldProperty
+		name="ds_aggiuntiva" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="tipologia" />
+	<columnFieldProperty
+		name="tipologia_fin" />
+</bulkInfo>

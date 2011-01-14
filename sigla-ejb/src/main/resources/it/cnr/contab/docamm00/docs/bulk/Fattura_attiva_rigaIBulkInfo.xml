@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="im_totale_storni"
+		property="im_totale_storni"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="false"
+		label="Importo storni" />
+		
+	<fieldProperty
+		name="im_totale_addebiti"
+		property="im_totale_addebiti"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="false"
+		label="Importo addebiti" />
+
+	<fieldProperty
+		name="saldo"
+		property="saldo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="true"
+		readonlyProperty="ROdetail"
+		label="Saldo" />
+	
+	<fieldProperty
+		name="im_riga_sdoppia"
+		property="im_riga_sdoppia"
+		inputType="TEXT"
+		maxLength="15"
+		inputSize="15"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="true"
+		enabledOnView="true"
+		nullable="false"
+		label="Nuovo Totale" />	
+
+	<formFieldProperty
+		name="im_totale_storni" />
+	<formFieldProperty
+		name="im_totale_addebiti" />
+	<formFieldProperty
+		name="saldo" />
+	<formFieldProperty 
+	    name="im_riga_sdoppia"
+		command="doConfirmSdoppiaDettaglio"/>		
+
+	<columnFieldProperty
+		name="im_totale_storni" />
+	<columnFieldProperty
+		name="im_totale_addebiti" />
+	<columnFieldProperty
+		name="saldo" />
+
+	<columnSet
+		name="righiSet">
+		<columnFieldProperty
+		  name="cd_bene_servizio" />
+		<columnFieldProperty
+			name="ds_riga_fattura"
+			/>
+		<columnFieldProperty
+			name="quantita"
+			/>
+		<columnFieldProperty
+			name="prezzo_unitario"
+			/>
+		<columnFieldProperty
+			name="im_imponibile"
+			/>
+		<columnFieldProperty
+			name="im_iva"
+			/>
+		<columnFieldProperty
+			name="im_totale_storni" />
+		<columnFieldProperty
+			name="im_totale_addebiti" />
+		<columnFieldProperty
+			name="saldo" />
+		<columnFieldProperty
+			name="stato_cofi"
+			/>
+		<columnFieldProperty
+			name="ti_associato_manrev" />
+	</columnSet>
+</bulkInfo>

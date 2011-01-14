@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_gruppo_cr"
+		property="cd_gruppo_cr"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Gruppo CORI" />
+	<fieldProperty
+		name="cd_regione"
+		property="cd_regione"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Regione" />
+	<fieldProperty
+		name="pg_comune"
+		property="pg_comune"
+		inputType="TEXT"
+		label="Comune" />
+	<fieldProperty
+		name="pg_gruppo_centro"
+		property="pg_gruppo_centro"
+		inputType="TEXT"
+		label="Progressivo" />		
+	<fieldProperty
+		name="stato"
+		property="stato"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Stato" />
+	<fieldProperty
+		name="cd_cds_obb_accentr"
+		property="cd_cds_obb_accentr"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CDS Impegno" />
+	<fieldProperty
+		name="esercizio_obb_accentr"
+		property="esercizio_obb_accentr"
+		inputType="TEXT"
+		label="Esercizio Impegno" />		
+	<fieldProperty
+		name="esercizio_ori_obb_accentr"
+		property="esercizio_ori_obb_accentr"
+		inputType="TEXT"
+		label="Es. Impegno" />		
+	<fieldProperty
+		name="pg_obb_accentr"
+		property="pg_obb_accentr"
+		inputType="TEXT"
+		label="Impegno" />
+	<fieldProperty
+		name="da_esercizio_precedente"
+		property="da_esercizio_precedente"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Da Es.Prec." />
+<!-- 
+<fieldProperty
+		name="button_ribalta"
+		property="button_ribalta"
+		inputType="BUTTON"
+		img="img/edit16.gif"
+		readonlyProperty="enabledRibalta"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		enabledOnView="true"
+		style="align: center;"
+		label="Ribalta"
+		href="javascript:submitForm('doRibalta()')" />		 -->				
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_gruppo_cr" />
+	<formFieldProperty
+		name="cd_regione" />
+	<formFieldProperty
+		name="pg_comune" />
+	<formFieldProperty
+		name="pg_gruppo_centro" />		
+	<formFieldProperty
+		name="stato" />								
+	<formFieldProperty
+		name="cd_cds_obb_accentr" />
+	<formFieldProperty
+		name="esercizio_obb_accentr" />
+	<formFieldProperty
+		name="esercizio_ori_obb_accentr" />
+	<formFieldProperty
+		name="pg_obb_accentr" />
+	<formFieldProperty
+		name="da_esercizio_precedente" />
+<!-- 	<formFieldProperty
+		name="button_ribalta" />		   -->
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_gruppo_cr" />
+	<columnFieldProperty
+		name="cd_regione" />
+	<columnFieldProperty
+		name="pg_comune" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="cd_cds_obb_accentr" />
+	<columnFieldProperty
+		name="esercizio_obb_accentr" />
+	<columnFieldProperty
+		name="esercizio_ori_obb_accentr" />
+	<columnFieldProperty
+		name="pg_obb_accentr" />
+	<columnFieldProperty
+		name="da_esercizio_precedente" />
+<!-- 	<columnFieldProperty
+		name="button_ribalta"
+		columnStyle="background: #F5F5DC" />  -->
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_gruppo_cr" />
+	<findFieldProperty
+		name="cd_regione" />
+	<findFieldProperty
+		name="pg_comune" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="cd_cds_obb_accentr" />
+	<findFieldProperty
+		name="esercizio_obb_accentr" />
+	<findFieldProperty
+		name="esercizio_ori_obb_accentr" />
+	<findFieldProperty
+		name="pg_obb_accentr" />
+	<findFieldProperty
+		name="da_esercizio_precedente" />
+
+</bulkInfo>

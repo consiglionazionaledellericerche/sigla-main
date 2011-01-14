@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+
+	<fieldProperty
+		name="natura"
+		property="natura"
+		printProperty="cd_ds_natura"
+		optionsProperty="nature"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="Natura" />
+
+	<fieldProperty
+		name="elemento_voce"
+		property="elemento_voce"
+		printProperty="ds_elemento_voce"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="Voce del piano entrata" />
+
+	<fieldProperty
+		name="cd_elemento_voce"
+		enabledOnSearch="true"
+		inputType="TEXT"
+		property="elemento_voce.cd_elemento_voce"
+		label="Codice Voce"/>
+
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="elemento_voce.ds_elemento_voce"
+		inputType="TEXT"
+		label="Codice Voce"/>
+
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		enabledOnSearch="true"
+		label="Codice Cdr"
+	/>
+	<fieldProperty
+		name="cd_natura"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		property="natura.cd_natura"
+		label="Codice natura"/>
+	<fieldProperty
+		name="ds_natura"
+		property="natura.ds_natura"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		label="Descrizione natura"/>
+
+	<fieldProperty
+		name="im_rb_rse"
+		property="im_rb_rse"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Ricavi senza entrate (B)" />
+	<fieldProperty
+		name="im_rg_a3_entrate"
+		property="im_rg_a3_entrate"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Entrate (G)" />
+	<fieldProperty
+		name="im_re_a2_entrate"
+		property="im_re_a2_entrate"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Entrate (E)" />
+	<fieldProperty
+		name="im_rd_a2_ricavi"
+		property="im_rd_a2_ricavi"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Ricavi (D)" />
+	<fieldProperty
+		name="im_ra_rce"
+		property="im_ra_rce"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Ricavi con entrate (A)" />
+	<fieldProperty
+		name="im_rf_a3_ricavi"
+		property="im_rf_a3_ricavi"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Ricavi (F)" />
+	<fieldProperty
+		name="im_rc_esr"
+		property="im_rc_esr"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Entrate senza ricavi (C)" />
+
+	<formFieldProperty
+		name="natura" />
+	<formFieldProperty
+		name="elemento_voce" />  
+		
+	<formFieldProperty
+		name="im_rg_a3_entrate" />
+	<formFieldProperty
+		name="im_rf_a3_ricavi" />
+	<formFieldProperty
+		name="im_re_a2_entrate" />		
+	<formFieldProperty
+		name="im_rd_a2_ricavi" /> 
+	<formFieldProperty
+		name="im_rc_esr" />		
+	<formFieldProperty
+		name="im_rb_rse" />		
+	<formFieldProperty
+		name="im_ra_rce" />		
+
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="elemento_voce" />
+	<columnFieldProperty
+		name="cd_natura" />
+	<columnFieldProperty
+		name="ds_natura" />
+		
+	<findFieldProperty
+	 name="cd_natura"/>
+	<findFieldProperty
+ 	 name="cd_elemento_voce" />
+	
+</bulkInfo>

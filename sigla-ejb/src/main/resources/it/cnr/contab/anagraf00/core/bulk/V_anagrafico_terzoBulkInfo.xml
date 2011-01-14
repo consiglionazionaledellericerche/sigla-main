@@ -1,0 +1,844 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_comune_sede"
+		property="pg_comune_sede"
+		inputType="TEXT"
+		label="pg_comune_sede" />
+	<fieldProperty
+		name="cap_comune_fiscale"
+		property="cap_comune_fiscale"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="cap_comune_fiscale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_provincia_sede"
+		property="ds_provincia_sede"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="ds_provincia_sede"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="via_fiscale"
+		property="via_fiscale"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="via_fiscale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="partita_iva"
+		property="partita_iva"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Partita iva"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="nome"
+		property="nome"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Nome           "
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_nazione_fiscale"
+		property="pg_nazione_fiscale"
+		inputType="TEXT"
+		label="pg_nazione_fiscale" />
+	<fieldProperty
+		name="ds_comune_nascita"
+		property="ds_comune_nascita"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="ds_comune_nascita"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_entita_fisica"
+		property="ti_entita_fisica"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_entita_fisica"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="60"
+		inputSize="60"
+		inputType="TEXT"
+		label="cd_unita_organizzativa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_canc"
+		property="dt_canc"
+		inputType="TEXT"
+		label="dt_canc" />
+	<fieldProperty
+		name="fl_fatturazione_differita"
+		property="fl_fatturazione_differita"
+		inputType="CHECKBOX"
+		label="fl_fatturazione_differita" />
+	<fieldProperty
+		name="cd_anag"
+		property="cd_anag"
+		inputType="TEXT"
+		label="Codice anag" />
+	<fieldProperty
+		name="denominazione_sede"
+		property="denominazione_sede"
+		maxLength="200"
+		inputSize="200"
+		inputType="TEXT"
+		label="denominazione_sede"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_fine_rapporto"
+		property="dt_fine_rapporto"
+		inputType="TEXT"
+		label="dt_fine_rapporto" />
+	<fieldProperty
+		name="pg_nazione_nazionalita"
+		property="pg_nazione_nazionalita"
+		inputType="TEXT"
+		label="pg_nazione_nazionalita" />
+	<fieldProperty
+		name="ds_comune_sede"
+		property="ds_comune_sede"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="ds_comune_sede"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_rapp_legale"
+		property="pg_rapp_legale"
+		inputType="TEXT"
+		label="pg_rapp_legale" />
+	<fieldProperty
+		name="fl_soggetto_iva"
+		property="fl_soggetto_iva"
+		inputType="CHECKBOX"
+		label="fl_soggetto_iva" />
+	<fieldProperty
+		name="numero_civico_sede"
+		property="numero_civico_sede"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		label="numero_civico_sede"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_entita"
+		property="ti_entita"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_entita"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="sede_inail"
+		property="sede_inail"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="sede_inail"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_precedente"
+		property="cd_precedente"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Codice Preced."
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_comune_fiscale"
+		property="ds_comune_fiscale"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="ds_comune_fiscale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="id_fiscale_estero"
+		property="id_fiscale_estero"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="id_fiscale_estero"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="codice_fiscale_caf"
+		property="codice_fiscale_caf"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="codice_fiscale_caf"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_terzo"
+		property="ti_terzo"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_terzo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_provincia_sede"
+		property="cd_provincia_sede"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_provincia_sede"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="denominazione_caf"
+		property="denominazione_caf"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="denominazione_caf"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="conto_numerario_debito"
+		property="conto_numerario_debito"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="conto_numerario_debito"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="causale_fine_rapporto"
+		property="causale_fine_rapporto"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="causale_fine_rapporto"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_provincia_nascita"
+		property="ds_provincia_nascita"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="ds_provincia_nascita"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="frazione_sede"
+		property="frazione_sede"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="frazione_sede"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="frazione_fiscale"
+		property="frazione_fiscale"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="frazione_fiscale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ragione_sociale"
+		property="ragione_sociale"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="Ragione sociale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_entita_giuridica"
+		property="ti_entita_giuridica"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_entita_giuridica"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="altra_ass_previd_inps"
+		property="altra_ass_previd_inps"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		label="altra_ass_previd_inps"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="num_iscriz_cciaa"
+		property="num_iscriz_cciaa"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="num_iscriz_cciaa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_classific_anag"
+		property="cd_classific_anag"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_classific_anag"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		label="Codice terzo" />
+	<fieldProperty
+		name="cd_ente_appartenenza"
+		property="cd_ente_appartenenza"
+		inputType="TEXT"
+		label="cd_ente_appartenenza" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Codice fiscale                 "
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="matricola_inail"
+		property="matricola_inail"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="matricola_inail"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="aliquota_fiscale"
+		property="aliquota_fiscale"
+		inputType="TEXT"
+		label="aliquota_fiscale" />
+	<fieldProperty
+		name="cd_provincia_fiscale"
+		property="cd_provincia_fiscale"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_provincia_fiscale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_antimafia"
+		property="dt_antimafia"
+		inputType="TEXT"
+		label="dt_antimafia" />
+	<fieldProperty
+		name="cd_attivita_inps"
+		property="cd_attivita_inps"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		label="cd_attivita_inps"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Cognome               "
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="conto_numerario_credito"
+		property="conto_numerario_credito"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="conto_numerario_credito"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_provincia_nascita"
+		property="cd_provincia_nascita"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_provincia_nascita"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="nome_unita_organizzativa"
+		property="nome_unita_organizzativa"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="nome_unita_organizzativa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_provincia_fiscale"
+		property="ds_provincia_fiscale"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="ds_provincia_fiscale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="num_civico_fiscale"
+		property="num_civico_fiscale"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="num_civico_fiscale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_comune_fiscale"
+		property="pg_comune_fiscale"
+		inputType="TEXT"
+		label="pg_comune_fiscale" />
+	<fieldProperty
+		name="ti_sesso"
+		property="ti_sesso"
+		maxLength="-1"
+		inputSize="1"
+		label="Sesso"
+		caseSensitiveSearch="false" 
+		keysProperty="ti_sessoKeys"
+		inputType="SELECT" />
+	<fieldProperty
+		name="via_sede"
+		property="via_sede"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="via_sede"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_italiano_estero"
+		property="ti_italiano_estero"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_italiano_estero"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_comune_nascita"
+		property="pg_comune_nascita"
+		inputType="TEXT"
+		label="pg_comune_nascita" />
+	<fieldProperty
+		name="fl_occasionale"
+		property="fl_occasionale"
+		inputType="CHECKBOX"
+		label="fl_occasionale" />
+	<fieldProperty
+		name="dt_nascita"
+		property="dt_nascita"
+		inputType="TEXT"
+		label="Data nascita" 
+		formatName="date_short"	/>
+	<fieldProperty
+		name="note"
+		property="note"
+		maxLength="300"
+		inputSize="300"
+		inputType="TEXT"
+		label="note"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="num_iscriz_albo"
+		property="num_iscriz_albo"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="num_iscriz_albo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cap_comune_sede"
+		property="cap_comune_sede"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		label="cap_comune_sede"
+		caseSensitiveSearch="false" />
+
+	<formFieldProperty
+		name="pg_comune_sede" />
+	<formFieldProperty
+		name="cap_comune_fiscale" />
+	<formFieldProperty
+		name="ds_provincia_sede" />
+	<formFieldProperty
+		name="via_fiscale" />
+	<formFieldProperty
+		name="partita_iva" />
+	<formFieldProperty
+		name="nome" />
+	<formFieldProperty
+		name="pg_nazione_fiscale" />
+	<formFieldProperty
+		name="ds_comune_nascita" />
+	<formFieldProperty
+		name="ti_entita_fisica" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="dt_canc" />
+	<formFieldProperty
+		name="fl_fatturazione_differita" />
+	<formFieldProperty
+		name="cd_anag" />
+	<formFieldProperty
+		name="denominazione_sede" />
+	<formFieldProperty
+		name="dt_fine_rapporto" />
+	<formFieldProperty
+		name="pg_nazione_nazionalita" />
+	<formFieldProperty
+		name="ds_comune_sede" />
+	<formFieldProperty
+		name="pg_rapp_legale" />
+	<formFieldProperty
+		name="fl_soggetto_iva" />
+	<formFieldProperty
+		name="numero_civico_sede" />
+	<formFieldProperty
+		name="ti_entita" />
+	<formFieldProperty
+		name="sede_inail" />
+	<formFieldProperty
+		name="cd_precedente" />
+	<formFieldProperty
+		name="ds_comune_fiscale" />
+	<formFieldProperty
+		name="id_fiscale_estero" />
+	<formFieldProperty
+		name="codice_fiscale_caf" />
+	<formFieldProperty
+		name="ti_terzo" />
+	<formFieldProperty
+		name="cd_provincia_sede" />
+	<formFieldProperty
+		name="denominazione_caf" />
+	<formFieldProperty
+		name="conto_numerario_debito" />
+	<formFieldProperty
+		name="causale_fine_rapporto" />
+	<formFieldProperty
+		name="ds_provincia_nascita" />
+	<formFieldProperty
+		name="frazione_sede" />
+	<formFieldProperty
+		name="frazione_fiscale" />
+	<formFieldProperty
+		name="ragione_sociale" />
+	<formFieldProperty
+		name="ti_entita_giuridica" />
+	<formFieldProperty
+		name="altra_ass_previd_inps" />
+	<formFieldProperty
+		name="num_iscriz_cciaa" />
+	<formFieldProperty
+		name="cd_classific_anag" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="cd_ente_appartenenza" />
+	<formFieldProperty
+		name="codice_fiscale" />
+	<formFieldProperty
+		name="matricola_inail" />
+	<formFieldProperty
+		name="aliquota_fiscale" />
+	<formFieldProperty
+		name="cd_provincia_fiscale" />
+	<formFieldProperty
+		name="dt_antimafia" />
+	<formFieldProperty
+		name="cd_attivita_inps" />
+	<formFieldProperty
+		name="cognome" />
+	<formFieldProperty
+		name="conto_numerario_credito" />
+	<formFieldProperty
+		name="cd_provincia_nascita" />
+	<formFieldProperty
+		name="nome_unita_organizzativa" />
+	<formFieldProperty
+		name="ds_provincia_fiscale" />
+	<formFieldProperty
+		name="num_civico_fiscale" />
+	<formFieldProperty
+		name="pg_comune_fiscale" />
+	<formFieldProperty
+		name="ti_sesso" />
+	<formFieldProperty
+		name="via_sede" />
+	<formFieldProperty
+		name="ti_italiano_estero" />
+	<formFieldProperty
+		name="pg_comune_nascita" />
+	<formFieldProperty
+		name="fl_occasionale" />
+	<formFieldProperty
+		name="dt_nascita" />
+	<formFieldProperty
+		name="note" />
+	<formFieldProperty
+		name="num_iscriz_albo" />
+	<formFieldProperty
+		name="cap_comune_sede" />
+<!--  INIZIO COMMENTO
+	<columnFieldProperty
+		name="pg_comune_sede" />
+	<columnFieldProperty
+		name="cap_comune_fiscale" />
+	<columnFieldProperty
+		name="ds_provincia_sede" />
+	<columnFieldProperty
+		name="via_fiscale" />
+	<columnFieldProperty
+		name="partita_iva" />
+	<columnFieldProperty
+		name="nome" />
+	<columnFieldProperty
+		name="pg_nazione_fiscale" />
+	<columnFieldProperty
+		name="ds_comune_nascita" />
+	<columnFieldProperty
+		name="ti_entita_fisica" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="dt_canc" />
+	<columnFieldProperty
+		name="fl_fatturazione_differita" />
+	<columnFieldProperty
+		name="cd_anag" />
+	<columnFieldProperty
+		name="denominazione_sede" />
+	<columnFieldProperty
+		name="dt_fine_rapporto" />
+	<columnFieldProperty
+		name="pg_nazione_nazionalita" />
+	<columnFieldProperty
+		name="ds_comune_sede" />
+	<columnFieldProperty
+		name="pg_rapp_legale" />
+	<columnFieldProperty
+		name="fl_soggetto_iva" />
+	<columnFieldProperty
+		name="numero_civico_sede" />
+	<columnFieldProperty
+		name="ti_entita" />
+	<columnFieldProperty
+		name="sede_inail" />
+	<columnFieldProperty
+		name="cd_precedente" />
+	<columnFieldProperty
+		name="ds_comune_fiscale" />
+	<columnFieldProperty
+		name="id_fiscale_estero" />
+	<columnFieldProperty
+		name="codice_fiscale_caf" />
+	<columnFieldProperty
+		name="ti_terzo" />
+	<columnFieldProperty
+		name="cd_provincia_sede" />
+	<columnFieldProperty
+		name="denominazione_caf" />
+	<columnFieldProperty
+		name="conto_numerario_debito" />
+	<columnFieldProperty
+		name="causale_fine_rapporto" />
+	<columnFieldProperty
+		name="ds_provincia_nascita" />
+	<columnFieldProperty
+		name="frazione_sede" />
+	<columnFieldProperty
+		name="frazione_fiscale" />
+	<columnFieldProperty
+		name="ragione_sociale" />
+	<columnFieldProperty
+		name="ti_entita_giuridica" />
+	<columnFieldProperty
+		name="altra_ass_previd_inps" />
+	<columnFieldProperty
+		name="num_iscriz_cciaa" />
+	<columnFieldProperty
+		name="cd_classific_anag" />
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="cd_ente_appartenenza" />
+	<columnFieldProperty
+		name="codice_fiscale" />
+	<columnFieldProperty
+		name="matricola_inail" />
+	<columnFieldProperty
+		name="aliquota_fiscale" />
+	<columnFieldProperty
+		name="cd_provincia_fiscale" />
+	<columnFieldProperty
+		name="dt_antimafia" />
+	<columnFieldProperty
+		name="cd_attivita_inps" />
+	<columnFieldProperty
+		name="cognome" />
+	<columnFieldProperty
+		name="conto_numerario_credito" />
+	<columnFieldProperty
+		name="cd_provincia_nascita" />
+	<columnFieldProperty
+		name="nome_unita_organizzativa" />
+	<columnFieldProperty
+		name="ds_provincia_fiscale" />
+	<columnFieldProperty
+		name="num_civico_fiscale" />
+	<columnFieldProperty
+		name="pg_comune_fiscale" />
+	<columnFieldProperty
+		name="ti_sesso" />
+	<columnFieldProperty
+		name="via_sede" />
+	<columnFieldProperty
+		name="ti_italiano_estero" />
+	<columnFieldProperty
+		name="pg_comune_nascita" />
+	<columnFieldProperty
+		name="fl_occasionale" />
+	<columnFieldProperty
+		name="dt_nascita" />
+	<columnFieldProperty
+		name="note" />
+	<columnFieldProperty
+		name="num_iscriz_albo" />
+	<columnFieldProperty
+		name="cap_comune_sede" />
+
+	<findFieldProperty
+		name="pg_comune_sede" />
+	<findFieldProperty
+		name="cap_comune_fiscale" />
+	<findFieldProperty
+		name="ds_provincia_sede" />
+	<findFieldProperty
+		name="via_fiscale" />
+	<findFieldProperty
+		name="partita_iva" />
+	<findFieldProperty
+		name="nome" />
+	<findFieldProperty
+		name="pg_nazione_fiscale" />
+	<findFieldProperty
+		name="ds_comune_nascita" />
+	<findFieldProperty
+		name="ti_entita_fisica" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="dt_canc" />
+	<findFieldProperty
+		name="fl_fatturazione_differita" />
+	<findFieldProperty
+		name="cd_anag" />
+	<findFieldProperty
+		name="denominazione_sede" />
+	<findFieldProperty
+		name="dt_fine_rapporto" />
+	<findFieldProperty
+		name="pg_nazione_nazionalita" />
+	<findFieldProperty
+		name="ds_comune_sede" />
+	<findFieldProperty
+		name="pg_rapp_legale" />
+	<findFieldProperty
+		name="fl_soggetto_iva" />
+	<findFieldProperty
+		name="numero_civico_sede" />
+	<findFieldProperty
+		name="ti_entita" />
+	<findFieldProperty
+		name="sede_inail" />
+	<findFieldProperty
+		name="cd_precedente" />
+	<findFieldProperty
+		name="ds_comune_fiscale" />
+	<findFieldProperty
+		name="id_fiscale_estero" />
+	<findFieldProperty
+		name="codice_fiscale_caf" />
+	<findFieldProperty
+		name="ti_terzo" />
+	<findFieldProperty
+		name="cd_provincia_sede" />
+	<findFieldProperty
+		name="denominazione_caf" />
+	<findFieldProperty
+		name="conto_numerario_debito" />
+	<findFieldProperty
+		name="causale_fine_rapporto" />
+	<findFieldProperty
+		name="ds_provincia_nascita" />
+	<findFieldProperty
+		name="frazione_sede" />
+	<findFieldProperty
+		name="frazione_fiscale" />
+	<findFieldProperty
+		name="ragione_sociale" />
+	<findFieldProperty
+		name="ti_entita_giuridica" />
+	<findFieldProperty
+		name="altra_ass_previd_inps" />
+	<findFieldProperty
+		name="num_iscriz_cciaa" />
+	<findFieldProperty
+		name="cd_classific_anag" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="cd_ente_appartenenza" />
+	<findFieldProperty
+		name="codice_fiscale" />
+	<findFieldProperty
+		name="matricola_inail" />
+	<findFieldProperty
+		name="aliquota_fiscale" />
+	<findFieldProperty
+		name="cd_provincia_fiscale" />
+	<findFieldProperty
+		name="dt_antimafia" />
+	<findFieldProperty
+		name="cd_attivita_inps" />
+	<findFieldProperty
+		name="cognome" />
+	<findFieldProperty
+		name="conto_numerario_credito" />
+	<findFieldProperty
+		name="cd_provincia_nascita" />
+	<findFieldProperty
+		name="nome_unita_organizzativa" />
+	<findFieldProperty
+		name="ds_provincia_fiscale" />
+	<findFieldProperty
+		name="num_civico_fiscale" />
+	<findFieldProperty
+		name="pg_comune_fiscale" />
+	<findFieldProperty
+		name="ti_sesso" />
+	<findFieldProperty
+		name="via_sede" />
+	<findFieldProperty
+		name="ti_italiano_estero" />
+	<findFieldProperty
+		name="pg_comune_nascita" />
+	<findFieldProperty
+		name="fl_occasionale" />
+	<findFieldProperty
+		name="dt_nascita" />
+	<findFieldProperty
+		name="note" />
+	<findFieldProperty
+		name="num_iscriz_albo" />
+	<findFieldProperty
+		name="cap_comune_sede" />
+FINE COMMENTO -->
+
+</bulkInfo>

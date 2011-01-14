@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoKey" >
+	<defaultColumnMap
+		tableName="MISSIONE_TIPO_PASTO" >
+		<columnMapping
+			columnName="PG_RIF_INQUADRAMENTO"
+			propertyName="pg_rif_inquadramento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="DT_INIZIO_VALIDITA"
+			propertyName="dt_inizio_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TI_AREA_GEOGRAFICA"
+			propertyName="ti_area_geografica"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_NAZIONE"
+			propertyName="pg_nazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_TI_PASTO"
+			propertyName="cd_ti_pasto"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_rif_inquadramento"
+		partOfOid="true" />
+	<persistentProperty
+		name="dt_inizio_validita"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_area_geografica"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_nazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_ti_pasto"
+		partOfOid="true" />
+</SQLPersistentInfo>

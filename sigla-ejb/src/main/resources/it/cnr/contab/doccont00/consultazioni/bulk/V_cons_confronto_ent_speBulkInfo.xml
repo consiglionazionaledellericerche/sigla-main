@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cds"
+		property="cds"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="4000"
+		label="CDS" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CdR" />
+	<fieldProperty
+		name="ds_cdr"
+		property="ds_cdr"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione CdR" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Linea di Attivita" />
+	<fieldProperty
+		name="denominazione"
+		property="denominazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Denominazione" />
+	<fieldProperty
+		name="cd_natura"
+		property="cd_natura"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Natura" />
+	<fieldProperty
+		name="cd_modulo"
+		property="cd_modulo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Modulo" />
+	<fieldProperty
+		name="ds_modulo"
+		property="ds_modulo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="433"
+		label="Descrizione Modulo" />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Appartenenza" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Gestione" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Elemento Voce" />
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="ds_elemento_voce"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Descrizione Elemento Voce" />
+	<fieldProperty
+		name="im_stanz_iniziale_a1"
+		property="im_stanz_iniziale_a1"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Stanziamento Iniziale" />
+	<fieldProperty
+		name="variazioni_piu"
+		property="variazioni_piu"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni Positive" />
+	<fieldProperty
+		name="variazioni_meno"
+		property="variazioni_meno"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni Negative" />
+	<fieldProperty
+		name="assestato_comp"
+		property="assestato_comp"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato" />
+	<fieldProperty
+		name="assestato_comp_etr"
+		property="assestato_comp_etr"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato" />
+	<fieldProperty
+		name="assestato_comp_spe"
+		property="assestato_comp_spe"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato" />
+	<fieldProperty
+		name="im_obbl_acc_comp"
+		property="im_obbl_acc_comp"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Accertato" />
+	<fieldProperty
+		name="im_obbl_acc_comp_etr"
+		property="im_obbl_acc_comp_etr"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Accertato" />
+	<fieldProperty
+		name="im_obbl_acc_comp_spe"
+		property="im_obbl_acc_comp_spe"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Impegnato" />
+	<fieldProperty
+		name="im_ass_doc_amm_spe"
+		property="im_ass_doc_amm_spe"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Associato a Doc. Amm." />
+	<fieldProperty
+		name="im_ass_doc_amm_etr"
+		property="im_ass_doc_amm_etr"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Associato a Doc. Amm." />
+	<fieldProperty
+		name="im_ass_doc_amm"
+		property="im_ass_doc_amm"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Associato a Doc. Amm." />
+	<fieldProperty
+		name="im_mandati_reversali_pro"
+		property="im_mandati_reversali_pro"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Riscosso/Pagato" />
+	<fieldProperty
+		name="im_mandati_reversali_pro_etr"
+		property="im_mandati_reversali_pro_etr"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Riscosso" />
+	<fieldProperty
+		name="im_mandati_reversali_pro_spe"
+		property="im_mandati_reversali_pro_spe"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Pagato" />
+	<fieldProperty
+		name="tratt_econ_int"
+		property="tratt_econ_int"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Fonti Interne" />
+	<fieldProperty
+		name="tratt_econ_est"
+		property="tratt_econ_est"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Fonti Esterne" />
+		
+		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cds" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="ds_cdr" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="denominazione" />
+	<formFieldProperty
+		name="cd_natura" />
+	<formFieldProperty
+		name="cd_modulo" />
+	<formFieldProperty
+		name="ds_modulo" />
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="ds_elemento_voce" />
+	<formFieldProperty
+		name="im_stanz_iniziale_a1" />
+	<formFieldProperty
+		name="variazioni_piu" />
+	<formFieldProperty
+		name="variazioni_meno" />
+	<formFieldProperty
+		name="assestato_comp" />
+	<formFieldProperty
+		name="assestato_comp_etr" />
+	<formFieldProperty
+		name="assestato_comp_spe" />
+	<formFieldProperty
+		name="im_obbl_acc_comp" />
+	<formFieldProperty
+		name="im_obbl_acc_comp_etr" />
+	<formFieldProperty
+		name="im_obbl_acc_comp_spe" />
+	<formFieldProperty
+		name="im_ass_doc_amm_spe" />
+	<formFieldProperty
+		name="im_ass_doc_amm_etr" />
+	<formFieldProperty
+		name="im_ass_doc_amm" />
+	<formFieldProperty
+		name="im_mandati_reversali_pro" />
+	<formFieldProperty
+		name="im_mandati_reversali_pro_etr" />
+	<formFieldProperty
+		name="im_mandati_reversali_pro_spe" />
+	<formFieldProperty
+		name="tratt_econ_int" />
+	<formFieldProperty
+		name="tratt_econ_est" />
+		
+		
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cds" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="ds_cdr" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="denominazione" />
+	<findFieldProperty
+		name="cd_natura" />
+	<findFieldProperty
+		name="cd_modulo" />
+	<findFieldProperty
+		name="ds_modulo" />
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="ds_elemento_voce" />
+	<findFieldProperty
+		name="im_stanz_iniziale_a1" />
+	<findFieldProperty
+		name="variazioni_piu" />
+	<findFieldProperty
+		name="variazioni_meno" />
+	<findFieldProperty
+		name="assestato_comp" />
+	<findFieldProperty
+		name="assestato_comp_etr" />
+	<findFieldProperty
+		name="assestato_comp_spe" />
+	<findFieldProperty
+		name="im_obbl_acc_comp" />
+	<findFieldProperty
+		name="im_obbl_acc_comp_etr" />
+	<findFieldProperty
+		name="im_obbl_acc_comp_spe" />
+	<findFieldProperty
+		name="im_ass_doc_amm_spe" />
+	<findFieldProperty
+		name="im_ass_doc_amm_etr" />
+	<findFieldProperty
+		name="im_ass_doc_amm" />
+	<findFieldProperty
+		name="im_mandati_reversali_pro" />
+	<findFieldProperty
+		name="im_mandati_reversali_pro_etr" />
+	<findFieldProperty
+		name="im_mandati_reversali_pro_spe" />
+	<findFieldProperty
+		name="tratt_econ_int" />
+	<findFieldProperty
+		name="tratt_econ_est" />
+		
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cds" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="ds_cdr" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="denominazione" />
+	<columnFieldProperty
+		name="cd_natura" />
+	<columnFieldProperty
+		name="cd_modulo" />
+	<columnFieldProperty
+		name="ds_modulo" />
+	<columnFieldProperty
+		name="ti_appartenenza" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="ds_elemento_voce" />
+	<columnFieldProperty
+		name="im_stanz_iniziale_a1" />
+	<columnFieldProperty
+		name="variazioni_piu" />
+	<columnFieldProperty
+		name="variazioni_meno" />
+	<columnFieldProperty
+		name="assestato_comp" />
+	<columnFieldProperty
+		name="assestato_comp_etr" />
+	<columnFieldProperty
+		name="assestato_comp_spe" />
+	<columnFieldProperty
+		name="im_obbl_acc_comp" />
+	<columnFieldProperty
+		name="im_obbl_acc_comp_etr" />
+	<columnFieldProperty
+		name="im_obbl_acc_comp_spe" />
+	<columnFieldProperty
+		name="im_ass_doc_amm_spe" />
+	<columnFieldProperty
+		name="im_ass_doc_amm_etr" />
+	<columnFieldProperty
+		name="im_ass_doc_amm" />
+	<columnFieldProperty
+		name="im_mandati_reversali_pro" />
+	<columnFieldProperty
+		name="im_mandati_reversali_pro_etr" />
+	<columnFieldProperty
+		name="im_mandati_reversali_pro_spe" />
+	<columnFieldProperty
+		name="tratt_econ_int" />
+	<columnFieldProperty
+		name="tratt_econ_est" />
+		
+		
+	<columnSet name="BASE">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cds" />
+			<columnFieldProperty name="assestato_comp_etr" headerLabel="Entrate"/>
+			<columnFieldProperty name="im_obbl_acc_comp_etr" headerLabel="Entrate"/>
+			<columnFieldProperty name="im_ass_doc_amm_etr" headerLabel="Entrate"/>
+			<columnFieldProperty name="im_mandati_reversali_pro_etr" headerLabel="Entrate"/>
+			<columnFieldProperty name="assestato_comp_spe" headerLabel="Spese"/>
+			<columnFieldProperty name="im_obbl_acc_comp_spe" headerLabel="Spese"/>
+			<columnFieldProperty name="im_ass_doc_amm_spe" headerLabel="Spese"/>
+			<columnFieldProperty name="im_mandati_reversali_pro_spe" headerLabel="Spese"/>
+			<columnFieldProperty name="tratt_econ_int" headerLabel="Gest. Acc. Tratt. Economico"/>
+			<columnFieldProperty name="tratt_econ_est" headerLabel="Gest. Acc. Tratt. Economico"/>
+	</columnSet>
+			
+	<columnSet name="BASEMOD">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cds" />
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="assestato_comp_etr" headerLabel="Entrate"/>
+			<columnFieldProperty name="im_obbl_acc_comp_etr" headerLabel="Entrate"/>
+			<columnFieldProperty name="im_ass_doc_amm_etr" headerLabel="Entrate"/>
+			<columnFieldProperty name="im_mandati_reversali_pro_etr" headerLabel="Entrate"/>
+			<columnFieldProperty name="assestato_comp_spe" headerLabel="Spese"/>
+			<columnFieldProperty name="im_obbl_acc_comp_spe" headerLabel="Spese"/>
+			<columnFieldProperty name="im_ass_doc_amm_spe" headerLabel="Spese"/>
+			<columnFieldProperty name="im_mandati_reversali_pro_spe" headerLabel="Spese"/>
+			<columnFieldProperty name="tratt_econ_int" headerLabel="Gest. Acc. Tratt. Economico"/>
+			<columnFieldProperty name="tratt_econ_est" headerLabel="Gest. Acc. Tratt. Economico"/>
+	</columnSet>
+	
+	<columnSet name="BASEMODGAE">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cds" />
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="ti_gestione" />
+			<columnFieldProperty name="cd_centro_responsabilita" />
+			<columnFieldProperty name="cd_linea_attivita" />
+			<columnFieldProperty name="cd_natura" />
+			<columnFieldProperty name="assestato_comp"/>
+			<columnFieldProperty name="im_obbl_acc_comp"/>
+			<columnFieldProperty name="im_ass_doc_amm"/>
+			<columnFieldProperty name="im_mandati_reversali_pro"/>
+			<columnFieldProperty name="tratt_econ_int" headerLabel="Gest. Acc. Tratt. Economico"/>
+			<columnFieldProperty name="tratt_econ_est" headerLabel="Gest. Acc. Tratt. Economico"/>
+	</columnSet>
+	
+	<columnSet name="BASEMODGAEVOCE">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cds" />
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="ti_gestione" />
+			<columnFieldProperty name="cd_centro_responsabilita" />
+			<columnFieldProperty name="cd_linea_attivita" />
+			<columnFieldProperty name="cd_natura" />
+			<columnFieldProperty name="cd_elemento_voce" />
+			<columnFieldProperty name="assestato_comp"/>
+			<columnFieldProperty name="im_obbl_acc_comp"/>
+			<columnFieldProperty name="im_ass_doc_amm"/>
+			<columnFieldProperty name="im_mandati_reversali_pro"/>
+			<columnFieldProperty name="tratt_econ_int" headerLabel="Gest. Acc. Tratt. Economico"/>
+			<columnFieldProperty name="tratt_econ_est" headerLabel="Gest. Acc. Tratt. Economico"/>
+	</columnSet>
+	
+	
+	<freeSearchSet name="BASE">
+			<findFieldProperty name="esercizio" />		
+			<findFieldProperty name="cds" />
+			<findFieldProperty name="assestato_comp_etr"/>
+			<findFieldProperty name="im_obbl_acc_comp_etr"/>
+			<findFieldProperty name="im_ass_doc_amm_etr"/>
+			<findFieldProperty name="im_mandati_reversali_pro_etr"/>
+			<findFieldProperty name="assestato_comp_spe"/>
+			<findFieldProperty name="im_obbl_acc_comp_spe"/>
+			<findFieldProperty name="im_ass_doc_amm_spe"/>
+			<findFieldProperty name="im_mandati_reversali_pro_spe"/>
+			<findFieldProperty name="tratt_econ_int"/>
+			<findFieldProperty name="tratt_econ_est"/>
+	</freeSearchSet>
+	
+	<freeSearchSet name="BASEMOD">	
+			<findFieldProperty name="esercizio" />		
+			<findFieldProperty name="cds" />
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="assestato_comp_etr"/>
+			<findFieldProperty name="im_obbl_acc_comp_etr"/>
+			<findFieldProperty name="im_ass_doc_amm_etr"/>
+			<findFieldProperty name="im_mandati_reversali_pro_etr"/>
+			<findFieldProperty name="assestato_comp_spe"/>
+			<findFieldProperty name="im_obbl_acc_comp_spe"/>
+			<findFieldProperty name="im_ass_doc_amm_spe"/>
+			<findFieldProperty name="im_mandati_reversali_pro_spe"/>
+			<findFieldProperty name="tratt_econ_int"/>
+			<findFieldProperty name="tratt_econ_est"/>
+	</freeSearchSet>
+	
+	<freeSearchSet name="BASEMODGAE">
+			<findFieldProperty name="esercizio" />			
+			<findFieldProperty name="cds" />
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="ti_gestione" />
+			<findFieldProperty name="cd_centro_responsabilita" />
+			<findFieldProperty name="cd_linea_attivita" />
+			<findFieldProperty name="cd_natura" />
+			<findFieldProperty name="assestato_comp"/>
+			<findFieldProperty name="im_obbl_acc_comp"/>
+			<findFieldProperty name="im_ass_doc_amm"/>
+			<findFieldProperty name="im_mandati_reversali_pro"/>
+			<findFieldProperty name="tratt_econ_int"/>
+			<findFieldProperty name="tratt_econ_est"/>
+	</freeSearchSet>
+	
+	<freeSearchSet name="BASEMODGAEVOCE">
+			<findFieldProperty name="esercizio" />			
+			<findFieldProperty name="cds" />
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="ti_gestione" />
+			<findFieldProperty name="cd_centro_responsabilita" />
+			<findFieldProperty name="cd_linea_attivita" />
+			<findFieldProperty name="cd_natura" />
+			<findFieldProperty name="cd_elemento_voce" />
+			<findFieldProperty name="assestato_comp"/>
+			<findFieldProperty name="im_obbl_acc_comp"/>
+			<findFieldProperty name="im_ass_doc_amm"/>
+			<findFieldProperty name="im_mandati_reversali_pro"/>
+			<findFieldProperty name="tratt_econ_int"/>
+			<findFieldProperty name="tratt_econ_est"/>
+	</freeSearchSet>
+	
+</bulkInfo>

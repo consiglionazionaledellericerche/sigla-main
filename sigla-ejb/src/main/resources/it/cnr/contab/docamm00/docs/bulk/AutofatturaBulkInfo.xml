@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds" />
+	<fieldProperty
+		name="protocollo_iva"
+		property="protocollo_iva"
+		inputType="TEXT"
+		label="protocollo_iva" />
+	<fieldProperty
+		name="stato_cofi"
+		property="stato_cofi"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="stato_cofi"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_uo_origine"
+		property="cd_uo_origine"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_uo_origine"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_san_marino_senza_iva"
+		property="fl_san_marino_senza_iva"
+		inputType="CHECKBOX"
+		label="fl_san_marino_senza_iva" />
+	<fieldProperty
+		name="fl_san_marino_con_iva"
+		property="fl_san_marino_con_iva"
+		inputType="CHECKBOX"
+		label="fl_san_marino_con_iva" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_unita_organizzativa" />
+	<fieldProperty
+		name="cd_tipo_sezionale"
+		property="cd_tipo_sezionale"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_tipo_sezionale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_uo_ft_passiva"
+		property="cd_uo_ft_passiva"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_uo_ft_passiva"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="ti_istituz_commerc"
+		property="ti_istituz_commerc"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_istituz_commerc"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_fattura_passiva"
+		property="pg_fattura_passiva"
+		inputType="TEXT"
+		label="pg_fattura_passiva" />
+	<fieldProperty
+		name="cd_cds_ft_passiva"
+		property="cd_cds_ft_passiva"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds_ft_passiva"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_cds_origine"
+		property="cd_cds_origine"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds_origine"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_autofattura"
+		property="pg_autofattura"
+		inputType="TEXT"
+		label="pg_autofattura" />
+	<fieldProperty
+		name="fl_intra_ue"
+		property="fl_intra_ue"
+		inputType="CHECKBOX"
+		label="fl_intra_ue" />
+	<fieldProperty
+		name="fl_extra_ue"
+		property="fl_extra_ue"
+		inputType="CHECKBOX"
+		label="fl_extra_ue" />
+	<fieldProperty
+		name="protocollo_iva_generale"
+		property="protocollo_iva_generale"
+		inputType="TEXT"
+		label="protocollo_iva_generale" />
+	<fieldProperty
+		name="data_esigibilita_iva"
+		property="data_esigibilita_iva"
+		inputType="TEXT"
+		label="data_esigibilita_iva" />
+	<fieldProperty
+		name="fl_liquidazione_differita"
+		property="fl_liquidazione_differita"
+		inputType="CHECKBOX"
+		label="fl_liquidazione_differita" />
+	<fieldProperty
+		name="fl_autofattura"
+		property="fl_autofattura"
+		inputType="CHECKBOX"
+		label="fl_autofattura" />
+	<fieldProperty
+		name="stato_coge"
+		property="stato_coge"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="stato_coge"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_registrazione"
+		property="dt_registrazione"
+		inputType="TEXT"
+		label="dt_registrazione" />
+	<fieldProperty
+		name="ti_fattura"
+		property="ti_fattura"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_fattura"
+		caseSensitiveSearch="false" />
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="protocollo_iva" />
+	<formFieldProperty
+		name="stato_cofi" />
+	<formFieldProperty
+		name="cd_uo_origine" />
+	<formFieldProperty
+		name="fl_san_marino_senza_iva" />
+	<formFieldProperty
+		name="fl_san_marino_con_iva" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_tipo_sezionale" />
+	<formFieldProperty
+		name="cd_uo_ft_passiva" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="ti_istituz_commerc" />
+	<formFieldProperty
+		name="pg_fattura_passiva" />
+	<formFieldProperty
+		name="cd_cds_ft_passiva" />
+	<formFieldProperty
+		name="cd_cds_origine" />
+	<formFieldProperty
+		name="pg_autofattura" />
+	<formFieldProperty
+		name="fl_intra_ue" />
+	<formFieldProperty
+		name="fl_extra_ue" />
+	<formFieldProperty
+		name="protocollo_iva_generale" />
+	<formFieldProperty
+		name="data_esigibilita_iva" />
+	<formFieldProperty
+		name="fl_liquidazione_differita" />
+	<formFieldProperty
+		name="fl_autofattura" />
+	<formFieldProperty
+		name="stato_coge" />
+	<formFieldProperty
+		name="dt_registrazione" />
+	<formFieldProperty
+		name="ti_fattura" />
+
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="protocollo_iva" />
+	<columnFieldProperty
+		name="stato_cofi" />
+	<columnFieldProperty
+		name="cd_uo_origine" />
+	<columnFieldProperty
+		name="fl_san_marino_senza_iva" />
+	<columnFieldProperty
+		name="fl_san_marino_con_iva" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="cd_tipo_sezionale" />
+	<columnFieldProperty
+		name="cd_uo_ft_passiva" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="ti_istituz_commerc" />
+	<columnFieldProperty
+		name="pg_fattura_passiva" />
+	<columnFieldProperty
+		name="cd_cds_ft_passiva" />
+	<columnFieldProperty
+		name="cd_cds_origine" />
+	<columnFieldProperty
+		name="pg_autofattura" />
+	<columnFieldProperty
+		name="fl_intra_ue" />
+	<columnFieldProperty
+		name="fl_extra_ue" />
+	<columnFieldProperty
+		name="protocollo_iva_generale" />
+	<columnFieldProperty
+		name="data_esigibilita_iva" />
+	<columnFieldProperty
+		name="fl_liquidazione_differita" />
+	<columnFieldProperty
+		name="fl_autofattura" />
+	<columnFieldProperty
+		name="stato_coge" />
+	<columnFieldProperty
+		name="dt_registrazione" />
+	<columnFieldProperty
+		name="ti_fattura" />
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="protocollo_iva" />
+	<findFieldProperty
+		name="stato_cofi" />
+	<findFieldProperty
+		name="cd_uo_origine" />
+	<findFieldProperty
+		name="fl_san_marino_senza_iva" />
+	<findFieldProperty
+		name="fl_san_marino_con_iva" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="cd_tipo_sezionale" />
+	<findFieldProperty
+		name="cd_uo_ft_passiva" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="ti_istituz_commerc" />
+	<findFieldProperty
+		name="pg_fattura_passiva" />
+	<findFieldProperty
+		name="cd_cds_ft_passiva" />
+	<findFieldProperty
+		name="cd_cds_origine" />
+	<findFieldProperty
+		name="pg_autofattura" />
+	<findFieldProperty
+		name="fl_intra_ue" />
+	<findFieldProperty
+		name="fl_extra_ue" />
+	<findFieldProperty
+		name="protocollo_iva_generale" />
+	<findFieldProperty
+		name="data_esigibilita_iva" />
+	<findFieldProperty
+		name="fl_liquidazione_differita" />
+	<findFieldProperty
+		name="fl_autofattura" />
+	<findFieldProperty
+		name="stato_coge" />
+	<findFieldProperty
+		name="dt_registrazione" />
+	<findFieldProperty
+		name="ti_fattura" />
+
+</bulkInfo>

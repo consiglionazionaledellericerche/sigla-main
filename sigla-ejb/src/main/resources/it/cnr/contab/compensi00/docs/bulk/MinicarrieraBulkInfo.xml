@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputSize="30"
+		inputType="ROTEXT"
+		enabledOnFreeSearch = "false"
+		label="CDS" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputSize="30"
+		inputType="ROTEXT"
+		enabledOnFreeSearch = "false"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_minicarriera"
+		property="pg_minicarriera"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Nr. Minicarriera" />
+	<fieldProperty
+		name="pgMinicarrieraPos"
+		property="pgMinicarrieraPos"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "false"
+		label="Nr. Minicarriera" />
+	<fieldProperty
+		name="dt_registrazione"
+		property="dt_registrazione"
+		formatName="date_short"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="RODtRegistrazione"
+		readonlyPropertyOnEdit="ROField"
+		command="doOnDtRegistrazioneChange"
+		enabledOnInsert = "true"
+		enabledOnEdit = "false"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Data Registrazione" />
+	<fieldProperty
+		name="ds_minicarriera"
+		property="ds_minicarriera"
+		maxLength="300"
+		inputSize="80"
+		cols="80"
+		rows="2"
+		inputType="TEXTAREA"
+		readonlyPropertyOnEdit="ROField"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+
+/****************** PERCIPIENTE ********************/
+	<fieldProperty
+		name="find_percipiente"
+		property="percipiente"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROPercipiente"
+		completeOnSave = "false"
+		label="Percipiente" />
+	<fieldProperty
+		name="crea_percipiente"
+		property="percipiente"
+		inputType="CRUDTOOL"
+		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP" />
+	<fieldProperty
+		name="cd_terzo"
+		property="percipiente.cd_terzo"
+		label="Codice perc."
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROPercipienteAnag"
+		maxLength="8"
+		inputSize="8"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="cd_precedente"
+		property="percipiente.cd_terzo_precedente"
+		maxLength="20"
+		inputSize="6"
+		inputType="TEXT"
+		label="Codice precedente"
+		readonlyProperty="ROPercipienteAnag"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
+
+/*********************************************/
+	<fieldProperty
+		name="ti_anagrafico"
+		property="ti_anagrafico"
+		keysProperty="ti_anagraficoKeys"
+		inputType="RADIOGROUP"
+		layout="HORIZONTAL"	
+		readonlyProperty="ROPercipienteAnag"
+		label="Tipo Anagrafico" />
+	<fieldProperty
+		name="ti_anagraficoForSearch"
+		property="ti_anagraficoForSearch"
+		keysProperty="ti_anagraficoKeysForSearch"
+		inputType="RADIOGROUP"
+		layout="HORIZONTAL"	
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Tipo Anagrafico" />
+	<fieldProperty
+		name="ragione_sociale"
+		property="ragione_sociale"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		readonlyPropertyOnInsert="ROPercipienteAnag"
+		readonlyPropertyOnEdit="ROPercipienteAnag"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Ragione Sociale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="nome"
+		property="nome"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		readonlyPropertyOnInsert="ROPercipienteAnag"
+		readonlyPropertyOnEdit="ROPercipienteAnag"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Nome"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		readonlyPropertyOnInsert="ROPercipienteAnag"
+		readonlyPropertyOnEdit="ROPercipienteAnag"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Cognome"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		readonlyPropertyOnInsert="ROPercipienteAnag"
+		readonlyPropertyOnEdit="ROPercipienteAnag"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Codice Fiscale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="partita_iva"
+		property="partita_iva"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		readonlyPropertyOnInsert="ROPercipienteAnag"
+		readonlyPropertyOnEdit="ROPercipienteAnag"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Partita Iva"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="indirizzoPercipiente"
+		property="indirizzoPercipiente"
+		maxLength="62"
+		inputSize="62"
+		inputType="ROTEXT"
+		label="Via/P.za" />
+	<fieldProperty
+		name="via_fiscale"
+		property="percipiente.terzo.via_sede"
+		inputSize="55"
+		inputType="ROTEXT"
+		label="Via/P.za" />
+	<fieldProperty
+		name="num_civico"
+		property="percipiente.terzo.numero_civico_sede"
+		inputSize="5"
+		inputType="ROTEXT"
+		label="Numero" />
+	<fieldProperty
+		name="ds_comune"
+		property="percipiente.terzo.comune_sede.ds_comune"
+		inputSize="20"
+		inputType="ROTEXT"
+		label="Comune" />
+	<fieldProperty
+		name="ds_provincia"
+		property="percipiente.terzo.comune_sede.provincia.ds_provincia"
+		inputSize="20"
+		inputType="ROTEXT"
+		label="Provincia" />
+/**************************************************/
+/********************** BANCHE ********************/
+	<fieldProperty
+		name="termini_pagamento"
+		property="termini_pagamento"
+		printProperty="cd_ds_termini_pagamento"
+		optionsProperty="termini"
+		readonlyPropertyOnInsert="ROPercipiente"
+		readonlyPropertyOnEdit="ROPercipiente"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		inputType="SELECT"
+		label="Term. pagamento" />
+
+	<fieldProperty
+		name="modalita_pagamento"
+		property="modalita_pagamento"
+		printProperty="cd_ds_modalita_pagamento"
+		optionsProperty="modalita"
+		inputType="SELECT"
+		nullable="false"
+		readonlyPropertyOnInsert="ROPercipiente"
+		readonlyPropertyOnEdit="ROPercipiente"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Mod. pagamento" />
+	<fieldProperty
+		name="listaBanche"
+		property="banca"
+		inputType="BUTTON"
+		img="img/find16.gif"
+		readonlyProperty="abledToInsertBank"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Conto/i ..."
+		href="javascript:submitForm('doSearch(main.listaBanche)')" />
+	<fieldProperty
+		name="contoA"
+		property="banca"
+		inputType="FORM"
+		formName="A"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoP"
+		property="banca"
+		inputType="FORM"
+		formName="P"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoB"
+		property="banca"
+		inputType="FORM"
+		formName="BdocAmm"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoQ"
+		property="banca"
+		inputType="FORM"
+		formName="Q"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoN"
+		property="banca"
+		inputType="FORM"
+		formName="N"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+/**************************************************/
+	<fieldProperty
+		name="ti_istituz_commerc"
+		property="ti_istituz_commerc"
+		inputType="SELECT"
+		readonlyProperty="ROTi_istituz_commerc"
+		label="Tipo compenso"
+		nullable="false"
+		enabledOnSearch="true"
+		keysProperty="ti_istituz_commercKeys" />
+	<fieldProperty
+		name="ti_istituz_commercSearch"
+		property="ti_istituz_commerc"
+		inputType="SELECT"
+		label="Tipo compenso"
+		nullable="true"
+		enabledOnSearch="true"
+		keysProperty="ti_istituz_commercKeys" />
+	<fieldProperty
+		name="tipo_rapporto"
+		property="tipo_rapporto"
+		printProperty="ds_tipo_rapporto"
+		optionsProperty="tipiRapporto"
+		inputType="SELECT"
+		readonlyPropertyOnInsert="ROPercipiente"
+		readonlyPropertyOnEdit="ROPercipiente"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		nullable="false"
+		label="Tipo Rapporto" />
+	<fieldProperty
+		name="tipo_trattamento"
+		property="tipo_trattamento"
+		printProperty="ds_ti_trattamento"
+		optionsProperty="tipiTrattamento"
+		inputType="SELECT"
+		readonlyPropertyOnInsert="ROPercipiente"
+		readonlyPropertyOnEdit="ROPercipiente"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		nullable="false"
+		label="Tipo Trattamento" />
+	<fieldProperty
+		name="incarichi_repertorio"
+		property="incarichi_repertorio"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Incarico"/>		
+	<fieldProperty
+		name="fl_tassazione_separata"
+		property="fl_tassazione_separata"
+		inputType="CHECKBOX"
+		readonlyProperty="ROFl_tassazione_separata"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Tassazione separata" />
+	<fieldProperty
+		name="fl_escludi_qvaria_deduzione"
+		property="fl_escludi_qvaria_deduzione"
+		inputType="CHECKBOX"
+		readonlyProperty="ROFl_escludi_qvaria_deduzione"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Escludi quota variabile deduz. Irpef" />
+	<fieldProperty
+		name="imponibile_irpef_eseprec1"
+		property="imponibile_irpef_eseprec1"
+		inputType="TEXT"
+		nullable="false"
+		maxLength="22"
+		inputSize="24"
+		readonlyProperty="ROImportiIrpef"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnSearch = "false"
+		enabledOnFreeSearch = "false"
+		label="Imponibile Irpef 1" />
+	<fieldProperty
+		name="imponibile_irpef_eseprec2"
+		property="imponibile_irpef_eseprec2"
+		inputType="TEXT"
+		nullable="false"
+		maxLength="22"
+		inputSize="24"
+		readonlyProperty="ROImportiIrpef"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnSearch = "false"
+		enabledOnFreeSearch = "false"
+		label="Imponibile Irpef 2" />
+	<fieldProperty
+		name="aliquota_irpef_media"
+		property="aliquota_irpef_media"
+		inputType="ROTEXT"
+		maxLength="11"
+		inputSize="12"
+		formatName="it.cnr.contab.util.Constrained6DescimalPercentFormat"
+		readonlyProperty="ROImportiIrpef"
+		enabledOnSearch = "false"
+		enabledOnFreeSearch = "false"
+		label="Aliquota media" />
+
+/* ************************************************** */
+
+
+
+
+		
+	<fieldProperty
+		name="pg_minicarriera_ori"
+		property="pg_minicarriera_ori"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="N. minicarriera origine" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		keysProperty="statoKeys"
+		maxLength="1"
+		inputSize="10"
+		inputType="SELECT"
+		readonlyPropertyOnEdit="ROField"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="true"
+		label="Stato"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_cds_minicarriera_ori"
+		property="cd_cds_minicarriera_ori"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds_minicarriera_ori"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="stato_ass_compenso"
+		property="stato_ass_compenso"
+		keysProperty="stato_ass_compensoKeys"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		label="Ass. compenso"
+		readonlyPropertyOnEdit="ROField"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_tipo_rapporto"
+		property="cd_tipo_rapporto"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice Tipo Rapporto"
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="cd_uo_minicarriera_ori"
+		property="cd_uo_minicarriera_ori"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_uo_minicarriera_ori"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_anticipo_posticipo"
+		property="ti_anticipo_posticipo"
+		keysProperty="ti_anticipo_posticipoKeys"
+		readonlyProperty="ROTiAnticipoPosticipo"
+		maxLength="1"
+		inputSize="1"
+		inputType="RADIOGROUP"
+		layout="HORIZONTAL"
+		nullable="false"
+		caseSensitiveSearch="false"
+		label="Anticipo/Posticipo" />
+	<fieldProperty
+		name="numero_rate"
+		property="numero_rate"
+		inputType="TEXT"
+		nullable="false"
+		readonlyPropertyOnEdit="RONumeroRate"
+		label="Numero rate" />
+	<fieldProperty
+		name="mesi_anticipo_posticipo"
+		property="mesi_anticipo_posticipo"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROMesiAnticipoPosticipo"
+		label="Mesi ant./post." />
+	<fieldProperty
+		name="cd_trattamento"
+		property="cd_trattamento"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice trattamento"
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="im_totale_minicarriera"
+		property="im_totale_minicarriera"
+		inputType="TEXT"
+		nullable="false"
+		readonlyPropertyOnEdit="ROImporto"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Importo totale" />
+	<fieldProperty
+		name="cd_modalita_pag"
+		property="cd_modalita_pag"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice Modalita di Pag."
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_termini_pag"
+		property="cd_termini_pag"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice Termine di Pag."
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio_minicarriera_ori"
+		property="esercizio_minicarriera_ori"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Esercizio minic. origine" />
+	<fieldProperty
+		name="pg_banca"
+		property="pg_banca"
+		inputType="TEXT"
+		label="Conto" />
+	<fieldProperty
+		name="dt_inizio_minicarriera"
+		property="dt_inizio_minicarriera"
+		formatName="date_short"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		readonlyPropertyOnEdit="RODtInizioFineValidita"
+		command="doOnDtInizioValiditaChange"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Data inizio" />
+	<fieldProperty
+		name="dt_fine_minicarriera"
+		property="dt_fine_minicarriera"
+		formatName="date_short"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		readonlyPropertyOnEdit="RODtInizioFineValidita"
+		command="doOnDtFineValiditaChange"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Data fine" />
+	<fieldProperty
+		name="dt_sospensione"
+		property="dt_sospensione"
+		formatName="date_short"
+		inputSize="10"
+		inputType="TEXT"
+		command="doOnDtSospesaChange"
+		enabledOnInsert = "false"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Data sospensione" />
+	<fieldProperty
+		name="dt_ripristino"
+		property="dt_ripristino"
+		formatName="date_short"
+		inputSize="10"
+		inputType="TEXT"
+		command="doOnDtRipristinataChange"
+		enabledOnInsert = "false"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Data ripristino" />
+	<fieldProperty
+		name="dt_rinnovo"
+		property="dt_rinnovo"
+		formatName="date_short"
+		inputSize="10"
+		inputType="TEXT"
+		command="doOnDtRinnovataChange"
+		enabledOnInsert = "false"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Data rinnovo" />
+	<fieldProperty
+		name="dt_cessazione"
+		property="dt_cessazione"
+		formatName="date_short"
+		inputSize="10"
+		inputType="TEXT"
+		command="doOnDtCessataChange"
+		enabledOnInsert = "false"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Data cessazione" />
+	
+	<formFieldProperty name="pg_minicarriera_ori" />
+	<formFieldProperty name="dt_sospensione"
+		readonlyProperty="RODtSospensione" />
+	<formFieldProperty name="cd_cds" />
+	<formFieldProperty name="cd_unita_organizzativa" />
+	<formFieldProperty name="stato" />
+	<formFieldProperty name="stato_ass_compenso" />
+	<formFieldProperty name="cd_tipo_rapporto" />
+	<formFieldProperty name="dt_fine_minicarriera" />
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="ds_minicarriera" />
+	<formFieldProperty name="pg_minicarriera" />
+	<formFieldProperty name="cd_uo_minicarriera_ori" />
+	<formFieldProperty name="ti_anticipo_posticipo" />
+	<formFieldProperty name="numero_rate" />
+	<formFieldProperty name="mesi_anticipo_posticipo" />
+	<formFieldProperty name="dt_ripristino"
+		readonlyProperty="RODtRipristino" />
+	<formFieldProperty name="ti_anagrafico" />
+	<formFieldProperty name="ti_anagraficoForSearch" />
+	<formFieldProperty name="find_percipiente" />
+	<formFieldProperty name="crea_percipiente" />
+	<formFieldProperty name="cd_terzo" />
+	<formFieldProperty name="cd_precedente" />
+	<formFieldProperty name="ragione_sociale" />
+	<formFieldProperty name="nome" />
+	<formFieldProperty name="cognome" />
+	<formFieldProperty name="codice_fiscale" />
+	<formFieldProperty name="partita_iva" />
+	<formFieldProperty name="indirizzoTerzo" />
+	<formFieldProperty name="via_fiscale" />
+	<formFieldProperty name="num_civico" />
+	<formFieldProperty name="ds_comune" />
+	<formFieldProperty name="ds_provincia" />
+	<formFieldProperty name="cd_trattamento" />
+	<formFieldProperty name="ti_istituz_commerc" />
+	<formFieldProperty name="ti_istituz_commercSearch" />
+	<formFieldProperty name="im_totale_minicarriera" />
+	<formFieldProperty name="cd_modalita_pag" />
+	<formFieldProperty name="cd_termini_pag" />
+	<formFieldProperty name="dt_registrazione" />
+	<formFieldProperty name="esercizio_minicarriera_ori" />
+	<formFieldProperty name="dt_rinnovo" 
+		readonlyProperty="RODtRinnovo" />
+	<formFieldProperty name="pg_banca" />
+	<formFieldProperty name="dt_cessazione"
+		readonlyProperty="RODtCessazione" />
+	<formFieldProperty name="dt_inizio_minicarriera" />
+	<formFieldProperty name="contoA" />
+	<formFieldProperty name="contoB" />
+	<formFieldProperty name="contoP" />
+	<formFieldProperty name="contoQ" />
+	<formFieldProperty name="contoN" />
+	<formFieldProperty name="modalita_pagamento" />
+	<formFieldProperty name="termini_pagamento" />
+	<formFieldProperty name="banca" />
+	<formFieldProperty name="tipo_rapporto" />
+	<formFieldProperty name="tipo_trattamento" />
+	<formFieldProperty name="incarichi_repertorio" />	
+	<formFieldProperty name="fl_tassazione_separata" />
+	<formFieldProperty name="fl_escludi_qvaria_deduzione" />
+	<formFieldProperty name="imponibile_irpef_eseprec1" />
+	<formFieldProperty name="imponibile_irpef_eseprec2" />
+	<formFieldProperty name="aliquota_irpef_media" />
+	<formFieldProperty name="minicarriera_origine" />
+	<formFieldProperty name="listaBanche" />
+	<formFieldProperty name="pgMinicarrieraPos" />
+
+	<columnFieldProperty
+		name="pg_minicarriera" />
+	<columnFieldProperty
+		name="ds_minicarriera" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="dt_registrazione" />
+	<columnFieldProperty
+		name="dt_inizio_minicarriera" />
+	<columnFieldProperty
+		name="dt_fine_minicarriera" />
+	<columnFieldProperty
+		name="dt_sospensione" />
+	<columnFieldProperty
+		name="dt_ripristino" />
+	<columnFieldProperty
+		name="dt_rinnovo" />
+	<columnFieldProperty
+		name="dt_cessazione" />
+	<columnFieldProperty
+		name="ti_anagrafico" />
+	<columnFieldProperty
+		name="ragione_sociale" />
+	<columnFieldProperty
+		name="cognome" />
+	<columnFieldProperty
+		name="nome" />
+	<columnFieldProperty
+		name="im_totale_minicarriera" />
+	<columnFieldProperty
+		name="numero_rate" />
+	<columnFieldProperty
+		name="pg_minicarriera_ori" />
+	<columnFieldProperty
+		name="esercizio_minicarriera_ori" />
+
+	<findFieldProperty
+		name="pg_minicarriera_ori" />
+	<findFieldProperty
+		name="dt_sospensione" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="partita_iva" />
+	<findFieldProperty
+		name="nome" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="stato_ass_compenso" />
+	<findFieldProperty
+		name="cd_tipo_rapporto" />
+	<findFieldProperty
+		name="dt_fine_minicarriera" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="ds_minicarriera" />
+	<findFieldProperty
+		name="pg_minicarriera" />
+	<findFieldProperty
+		name="ti_anticipo_posticipo" />
+	<findFieldProperty
+		name="numero_rate" />
+	<findFieldProperty
+		name="mesi_anticipo_posticipo" />
+	<findFieldProperty
+		name="ragione_sociale" />
+	<findFieldProperty
+		name="dt_ripristino" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="cd_precedente" />
+	<findFieldProperty
+		name="ti_anagraficoForSearch" />
+	<findFieldProperty
+		name="cd_trattamento" />
+	<findFieldProperty
+		name="ti_istituz_commercSearch" />
+	<findFieldProperty 
+		name="fl_tassazione_separata" />
+	<findFieldProperty
+		name="fl_escludi_qvaria_deduzione" />
+	<findFieldProperty
+		name="codice_fiscale" />
+	<findFieldProperty
+		name="im_totale_minicarriera" />
+	<findFieldProperty
+		name="cd_modalita_pag" />
+	<findFieldProperty
+		name="cd_termini_pag" />
+	<findFieldProperty
+		name="cognome" />
+	<findFieldProperty
+		name="dt_registrazione" />
+	<findFieldProperty
+		name="esercizio_minicarriera_ori" />
+	<findFieldProperty
+		name="dt_rinnovo" />
+	<findFieldProperty
+		name="pg_banca" />
+	<findFieldProperty
+		name="dt_cessazione" />
+	<findFieldProperty
+		name="dt_inizio_minicarriera" />
+	<findFieldProperty 
+		name="pgMinicarrieraPos" />
+
+</bulkInfo>

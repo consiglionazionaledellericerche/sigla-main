@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_incaricoBulk"
+	homeClassName="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_incaricoHome">
+	<defaultColumnMap
+		tableName="TIPO_INCARICO">
+		<columnMapping
+			columnName="CD_TIPO_RAPPORTO"
+			propertyName="tipoRapporto.cd_tipo_rapporto" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipoRapporto" />
+</SQLPersistentInfo>

@@ -1,0 +1,23 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.Pagamento_esternoBulk"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.Pagamento_esternoHome" >
+	<defaultColumnMap
+		tableName="PAGAMENTO_ESTERNO" >
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="anagrafico.cd_anag" />
+		<columnMapping
+			columnName="CD_TIPO_RAPPORTO"
+			propertyName="tipo_rapporto.cd_tipo_rapporto"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+			
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="anagrafico" />
+	<persistentProperty
+		name="tipo_rapporto" />
+	
+</SQLPersistentInfo>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.preventvar00.consultazioni.bulk.V_cons_var_bilancioBase"
+	homeClassName="it.cnr.contab.preventvar00.consultazioni.bulk.V_cons_var_bilancioHome">
+	<defaultColumnMap
+		tableName="V_CONS_VAR_BILANCIO">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VARIAZIONE"
+			propertyName="pg_variazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_VARIAZIONE"
+			propertyName="ds_variazione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_DELIBERA"
+			propertyName="ds_delibera"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_VARIAZIONE"
+			propertyName="ti_variazione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CAUSALE_VAR_BILANCIO"
+			propertyName="cd_causale_var_bilancio"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CAUSALE_VAR_BILANCIO"
+			propertyName="ds_causale_var_bilancio"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_IMPORTI"
+			propertyName="esercizio_importi"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_PDG_VARIAZIONE"
+			propertyName="esercizio_pdg_variazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_VARIAZIONE_PDG"
+			propertyName="pg_variazione_pdg"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_VAR_STANZ_RES"
+			propertyName="esercizio_var_stanz_res"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_VAR_STANZ_RES"
+			propertyName="pg_var_stanz_res"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="cd_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_VARIAZIONE"
+			propertyName="im_variazione"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="ti_appartenenza" />
+	<persistentProperty
+		name="pg_variazione" />
+	<persistentProperty
+		name="ds_variazione" />
+	<persistentProperty
+		name="ds_delibera" />
+	<persistentProperty
+		name="ti_variazione" />
+	<persistentProperty
+		name="cd_causale_var_bilancio" />
+	<persistentProperty
+		name="ds_causale_var_bilancio" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="esercizio_importi" />
+	<persistentProperty
+		name="esercizio_pdg_variazione" />
+	<persistentProperty
+		name="pg_variazione_pdg" />
+	<persistentProperty
+		name="esercizio_var_stanz_res" />
+	<persistentProperty
+		name="pg_var_stanz_res" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="cd_voce" />
+	<persistentProperty
+		name="im_variazione" />
+</SQLPersistentInfo>

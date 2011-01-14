@@ -1,0 +1,65 @@
+package it.cnr.contab.doccont00.core.bulk;
+
+/**
+ * Insert the type's description here.
+ * Creation date: (15/01/2003 10:01:16)
+ * @author: Simonetta Costa
+ */
+public class Stampa_giornale_mandatiHome extends MandatoHome {
+/**
+ * Stampa_giornale_mandatiHome constructor comment.
+ * @param clazz java.lang.Class
+ * @param conn java.sql.Connection
+ */
+public Stampa_giornale_mandatiHome(Class clazz, java.sql.Connection conn) {
+	super(clazz, conn);
+}
+/**
+ * Stampa_giornale_mandatiHome constructor comment.
+ * @param clazz java.lang.Class
+ * @param conn java.sql.Connection
+ * @param persistentCache it.cnr.jada.persistency.PersistentCache
+ */
+public Stampa_giornale_mandatiHome(Class clazz, java.sql.Connection conn, it.cnr.jada.persistency.PersistentCache persistentCache) {
+	super(clazz, conn, persistentCache);
+}
+/**
+ * Stampa_giornale_mandatiHome constructor comment.
+ * @param conn java.sql.Connection
+ */
+public Stampa_giornale_mandatiHome(java.sql.Connection conn) {
+	this(Stampa_giornale_mandatiBulk.class,conn);
+}
+/**
+ * Stampa_giornale_mandatiHome constructor comment.
+ * @param conn java.sql.Connection
+ * @param persistentCache it.cnr.jada.persistency.PersistentCache
+ */
+public Stampa_giornale_mandatiHome(java.sql.Connection conn, it.cnr.jada.persistency.PersistentCache persistentCache) {
+	super(Stampa_giornale_mandatiBulk.class,conn, persistentCache);
+}
+/**
+ * <!-- @TODO: da completare -->
+ * 
+ *
+ * @param mandato	
+ * @return 
+ * @throws PersistencyException	
+ * @throws IntrospectionException	
+ */
+public java.util.Collection findMandato_riga(it.cnr.jada.UserContext userContext,MandatoBulk mandato) throws it.cnr.jada.persistency.PersistencyException, it.cnr.jada.persistency.IntrospectionException {
+	return null;
+}
+/**
+ * <!-- @TODO: da completare -->
+ * 
+ *
+ * @param mandato	
+ * @return 
+ * @throws PersistencyException	
+ * @throws IntrospectionException	
+ */
+public Mandato_terzoBulk findMandato_terzo(it.cnr.jada.UserContext userContext,MandatoBulk mandato) throws it.cnr.jada.persistency.PersistencyException, it.cnr.jada.persistency.IntrospectionException {
+	return null;
+}
+}

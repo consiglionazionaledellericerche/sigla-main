@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio" />
+	<formFieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="ROTEXT" 
+		label="CDS" />
+	<formFieldProperty
+		name="esercizio_fattura"
+		property="esercizio_fattura"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		label="Esercizio Fattura" />
+
+	<fieldProperty
+		name="findUOForPrint"
+		property="uoForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="cdUOForPrint"
+		property="uoForPrint.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROUoForPrint"
+		label="Codice UO" />
+	<fieldProperty
+		name="dsUOForPrint"
+		property="uoForPrint.ds_unita_organizzativa"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione UO" />
+
+	<fieldProperty
+		name="findTerzo"
+		property="terzo"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		label="Terzo" />
+	<fieldProperty
+		name="cd_terzo"
+		property="terzo.cd_terzo"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROTerzo"
+		label="Codice Terzo" />
+	<fieldProperty
+		name="ds_terzo"
+		property="terzo.denominazione_sede"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione Terzo" />
+		
+	<fieldProperty
+		name="cdUOCRForPrint"
+		property="cdUOCRForPrint"/>
+		
+	<fieldProperty
+		name="cdTerzoForPrint"
+		property="cdTerzoForPrint"/>
+
+	<fieldProperty
+		name="dt_emissione_from"
+		property="dt_emissione_from"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		label="Da Data Emissione"/>
+	<fieldProperty
+		name="dt_emissione_to"
+		property="dt_emissione_to"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		label="A Data Emissione" />
+		
+	<fieldProperty
+		name="dt_registrazione_from"
+		property="dt_registrazione_from"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		label="Da Data Registrazione"/>
+	<fieldProperty
+		name="dt_registrazione_to"
+		property="dt_registrazione_to"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		label="A Data Registrazione" />
+		
+	<fieldProperty
+		name="dt_inizio_comp_from"
+		property="dt_inizio_comp_from"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		label="Da Data Inizio Comp. Econ."/>
+	<fieldProperty
+		name="dt_inizio_comp_to"
+		property="dt_inizio_comp_to"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		label="A Data Inizio Comp. Econ." />
+		
+	<fieldProperty
+		name="dt_fine_comp_from"
+		property="dt_fine_comp_from"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		label="Da Data Fine Comp. Econ."/>
+	<fieldProperty
+		name="dt_fine_comp_to"
+		property="dt_fine_comp_to"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		label="A Data Fine Comp. Econ." />
+		
+	<fieldProperty
+		name="pgInizio"
+		property="pgInizio"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		label="Da Progressivo Fattura" />
+	<fieldProperty
+		name="pgFine"
+		property="pgFine"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		label="A Progressivo Fattura" />
+		
+			
+	<fieldProperty
+		name="dt_emissione_fromForPrint"
+		property="dt_emissione_fromForPrint"/>	
+	<fieldProperty
+		name="dt_emissione_toForPrint"
+		property="dt_emissione_toForPrint"/>
+	<fieldProperty
+		name="dt_registrazione_fromForPrint"
+		property="dt_registrazione_fromForPrint"/>	
+	<fieldProperty
+		name="dt_registrazione_toForPrint"
+		property="dt_registrazione_toForPrint"/>	
+	<fieldProperty
+		name="pgInizioForPrint"
+		property="pgInizioForPrint"/>	
+	<fieldProperty
+		name="pgFineForPrint"
+		property="pgFineForPrint"/>	
+	<fieldProperty
+		name="dt_inizio_comp_fromForPrint"
+		property="dt_inizio_comp_fromForPrint"/>	
+	<fieldProperty
+		name="dt_inizio_comp_toForPrint"
+		property="dt_inizio_comp_toForPrint"/>	
+	<fieldProperty
+		name="dt_fine_comp_fromForPrint"
+		property="dt_fine_comp_fromForPrint"/>	
+	<fieldProperty
+		name="dt_fine_comp_toForPrint"
+		property="dt_fine_comp_toForPrint"/>		
+	<fieldProperty
+		name="esercizio_fatturaForPrint"
+		property="esercizio_fatturaForPrint"/>	
+		
+		
+		
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="cd_cds" />
+	<formFieldProperty name="esercizio_fattura" />
+	<formFieldProperty name="findUOForPrint" />
+	<formFieldProperty name="cdUOForPrint" />
+	<formFieldProperty name="dsUOForPrint" />
+	<formFieldProperty name="findTerzo" />
+	<formFieldProperty name="cd_terzo" />
+	<formFieldProperty name="ds_terzo" />
+	<formFieldProperty name="cdUOCRForPrint" />
+	<formFieldProperty name="dt_emissione_to" />
+	<formFieldProperty name="dt_emissione_from" />
+	<formFieldProperty name="dt_registrazione_from" />
+	<formFieldProperty name="dt_registrazione_to" />
+	<formFieldProperty name="dt_inizio_comp_from" />
+	<formFieldProperty name="dt_inizio_comp_to" />
+	<formFieldProperty name="dt_fine_comp_from" />
+	<formFieldProperty name="dt_fine_comp_to" />
+	<formFieldProperty name="pgInizio" />//
+	<formFieldProperty name="pgFine" />//
+
+
+		<printFieldProperty 
+			name="pgFine"
+			parameterPosition="4"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="dataInizio"
+			parameterPosition="5"
+			parameterType="DATE" />
+	
+	<printForm
+		name="/cnrdocamm/docamm/elencofattureattivepercliente.rpt">
+		<printFieldProperty 
+			name="cdTerzoForPrint"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="dt_emissione_fromForPrint"
+			parameterPosition="1"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="dt_emissione_toForPrint"
+			parameterPosition="2"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="dt_registrazione_fromForPrint"
+			parameterPosition="3"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="dt_registrazione_toForPrint"
+			parameterPosition="4"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="pgInizioForPrint"
+			parameterPosition="5"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="pgFineForPrint"
+			parameterPosition="6"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="dt_inizio_comp_fromForPrint"
+			parameterPosition="7"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="dt_inizio_comp_toForPrint"
+			parameterPosition="8"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="dt_fine_comp_fromForPrint"
+			parameterPosition="9"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="dt_fine_comp_toForPrint"
+			parameterPosition="10"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="esercizio_fatturaForPrint"
+			parameterPosition="11"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="12"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="13"
+			parameterType="STRING" />
+	</printForm>
+	<printForm
+		name="/cnrdocamm/docamm/elencofattureattivepercliente.jasper">
+		<printFieldProperty 
+			name="cdTerzoForPrint"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="terzo"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="dt_emissione_fromForPrint"
+			parameterPosition="1"
+			parameterType="DATE"
+			paramNameJR="da_data_em"
+			paramTypeJR="java.util.Date" />
+		<printFieldProperty 
+			name="dt_emissione_toForPrint"
+			parameterPosition="2"
+			parameterType="DATE" 
+			paramNameJR="a_data_em"
+			paramTypeJR="java.util.Date" />
+		<printFieldProperty 
+			name="dt_registrazione_fromForPrint"
+			parameterPosition="3"
+			parameterType="DATE" 
+			paramNameJR="da_data_re"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty 
+			name="dt_registrazione_toForPrint"
+			parameterPosition="4"
+			parameterType="DATE" 
+			paramNameJR="a_data_re"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty 
+			name="pgInizioForPrint"
+			parameterPosition="5"
+			parameterType="STRING"
+			paramNameJR="da_pg"
+			paramTypeJR="java.lang.Long"/> 
+		<printFieldProperty 
+			name="pgFineForPrint"
+			parameterPosition="6"
+			parameterType="STRING" 
+			paramNameJR="a_pg"
+			paramTypeJR="java.lang.Long"/> 
+		<printFieldProperty 
+			name="dt_inizio_comp_fromForPrint"
+			parameterPosition="7"
+			parameterType="DATE" 
+			paramNameJR="da_data_in_co"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty 
+			name="dt_inizio_comp_toForPrint"
+			parameterPosition="8"
+			parameterType="DATE" 
+			paramNameJR="a_data_in_co"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty 
+			name="dt_fine_comp_fromForPrint"
+			parameterPosition="9"
+			parameterType="DATE" 
+			paramNameJR="da_data_fi_co"
+			paramTypeJR="java.util.Date"/>			
+		<printFieldProperty 
+			name="dt_fine_comp_toForPrint"
+			parameterPosition="10"
+			parameterType="DATE" 
+			paramNameJR="a_data_fi_co"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty 
+			name="esercizio_fatturaForPrint"
+			parameterPosition="11"
+			parameterType="STRING"
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer"/>
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="12"
+			parameterType="STRING" 
+			paramNameJR="cds"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="13"
+			parameterType="STRING"
+			paramNameJR="uo"
+			paramTypeJR="java.lang.String"/>
+	</printForm>
+	<printForm
+		name="/cnrdocamm/docamm/elencofatturefornitori.rpt">
+		<printFieldProperty 
+			name="cdTerzoForPrint"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="dt_emissione_fromForPrint"
+			parameterPosition="1"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="dt_emissione_toForPrint"
+			parameterPosition="2"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="dt_registrazione_fromForPrint"
+			parameterPosition="3"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="dt_registrazione_toForPrint"
+			parameterPosition="4"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="pgInizioForPrint"
+			parameterPosition="5"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="pgFineForPrint"
+			parameterPosition="6"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="dt_inizio_comp_fromForPrint"
+			parameterPosition="7"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="dt_inizio_comp_toForPrint"
+			parameterPosition="8"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="dt_fine_comp_fromForPrint"
+			parameterPosition="9"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="dt_fine_comp_toForPrint"
+			parameterPosition="10"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="esercizio_fatturaForPrint"
+			parameterPosition="11"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="12"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="13"
+			parameterType="STRING" />
+	</printForm>
+	<printForm
+		name="/cnrdocamm/docamm/elencofatturefornitori.jasper">
+		<printFieldProperty 
+			name="cdTerzoForPrint"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="terzo"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="dt_emissione_fromForPrint"
+			parameterPosition="1"
+			parameterType="DATE"
+			paramNameJR="da_data_em"
+			paramTypeJR="java.util.Date" />
+		<printFieldProperty 
+			name="dt_emissione_toForPrint"
+			parameterPosition="2"
+			parameterType="DATE" 
+			paramNameJR="a_data_em"
+			paramTypeJR="java.util.Date" />
+		<printFieldProperty 
+			name="dt_registrazione_fromForPrint"
+			parameterPosition="3"
+			parameterType="DATE" 
+			paramNameJR="da_data_re"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty 
+			name="dt_registrazione_toForPrint"
+			parameterPosition="4"
+			parameterType="DATE" 
+			paramNameJR="a_data_re"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty 
+			name="pgInizioForPrint"
+			parameterPosition="5"
+			parameterType="STRING"
+			paramNameJR="da_pg"
+			paramTypeJR="java.lang.Long"/> 
+		<printFieldProperty 
+			name="pgFineForPrint"
+			parameterPosition="6"
+			parameterType="STRING" 
+			paramNameJR="a_pg"
+			paramTypeJR="java.lang.Long"/> 
+		<printFieldProperty 
+			name="dt_inizio_comp_fromForPrint"
+			parameterPosition="7"
+			parameterType="DATE" 
+			paramNameJR="da_data_in_co"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty 
+			name="dt_inizio_comp_toForPrint"
+			parameterPosition="8"
+			parameterType="DATE" 
+			paramNameJR="a_data_in_co"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty 
+			name="dt_fine_comp_fromForPrint"
+			parameterPosition="9"
+			parameterType="DATE" 
+			paramNameJR="da_data_fi_co"
+			paramTypeJR="java.util.Date"/>			
+		<printFieldProperty 
+			name="dt_fine_comp_toForPrint"
+			parameterPosition="10"
+			parameterType="DATE" 
+			paramNameJR="a_data_fi_co"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty 
+			name="esercizio_fatturaForPrint"
+			parameterPosition="11"
+			parameterType="STRING"
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer"/>
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="12"
+			parameterType="STRING" 
+			paramNameJR="cds"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="13"
+			parameterType="STRING"
+			paramNameJR="uo"
+			paramTypeJR="java.lang.String"/>
+	</printForm>
+</bulkInfo>

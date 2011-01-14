@@ -1,0 +1,807 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+/**************** TESTATA ****************************/
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Cds" 
+		/>
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Unita organizzativa" 
+		/>
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"					
+		/>
+	<fieldProperty
+		name="pg_anticipo"
+		property="pg_anticipo"
+		inputType="TEXT"
+		label="N. anticipo"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"		
+		/>
+	<fieldProperty
+		name="ds_anticipo"
+		property="ds_anticipo"
+		maxLength="300"
+		inputSize="50"
+		inputType="TEXT"
+		label="Descrizione"
+		caseSensitiveSearch="false"
+		readonlyProperty="ROPerChiusura"				
+		/>		
+	<fieldProperty
+		name="dt_registrazione"
+		property="dt_registrazione"
+		inputType="TEXT"
+		formatName="date_short"		
+		label="Data registrazione"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		readonlyProperty="ROPerChiusura"		
+		/>
+	<fieldProperty
+		name="dt_cancellazione"
+		property="dt_cancellazione"
+		inputType="ROTEXT"
+		formatName="date_short"				
+		label="Data cancellazione" 
+		/>
+	<fieldProperty
+		name="fl_associato_missione"
+		property="fl_associato_missione"
+		inputType="CHECKBOX"
+		label="Associato a missione" 
+		/>			
+/****************** inizio ANAGRAFICO **************************/
+	<fieldProperty
+		name="ti_anagrafico"
+		property="ti_anagrafico"
+		keysProperty="ti_anagraficoKeys"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"	
+		label="Tipo Anagrafico"
+		readonlyProperty="ROFindTerzo"				
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"		
+		/>
+	<fieldProperty
+		name="find_terzo"
+		property="v_terzo"
+		readonlyProperty="ROFindTerzo"		
+		inputType="SEARCHTOOL"
+		label="Codice Terzo"		
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		label="Codice"
+		inputType="TEXT"
+		maxLength="8"
+		inputSize="8"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"		
+		nullable="false"		
+		/>
+	<fieldProperty
+		name="cd_precedente"
+		property="v_terzo.cd_terzo_precedente"
+		maxLength="20"
+		inputSize="6"
+		inputType="TEXT"
+		label="Codice precedente"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" 				
+		/>				
+	<fieldProperty
+		name="nome"
+		property="nome"
+		inputSize="15"
+		inputType="TEXT"
+		label="Nome"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"		
+		/>
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Cognome"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"		
+		/>
+	<fieldProperty
+		name="via_fiscale"
+		property="v_terzo.terzo.via_sede"
+		maxLength="20"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Via/P.za"
+		/>
+	<fieldProperty
+		name="num_civico"
+		property="v_terzo.terzo.numero_civico_sede"
+		maxLength="10"
+		inputSize="5"
+		inputType="ROTEXT"
+		label="Numero"
+		/>
+	<fieldProperty
+		name="ds_comune"
+		property="v_terzo.terzo.comune_sede.ds_comune"
+		maxLength="100"
+		inputSize="20"
+		inputType="ROTEXT"
+		label="Comune"
+		/>
+	<fieldProperty
+		name="ds_provincia"
+		property="v_terzo.terzo.comune_sede.provincia.ds_provincia"
+		maxLength="100"
+		inputSize="20"
+		inputType="ROTEXT"
+		label="Provincia"
+		/>		
+	<fieldProperty
+		name="ragione_sociale"
+		property="ragione_sociale"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="Ragione sociale"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"		
+		/>		
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Cod. fiscale"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"		
+		/>
+	<fieldProperty
+		name="partita_iva"
+		property="partita_iva"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Partita IVA"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"		
+		/>		
+	<fieldProperty
+		name="modalita_pagamento"
+		property="modalita_pagamento"
+		printProperty="cd_ds_modalita_pagamento"
+		optionsProperty="modalita"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"		
+		label="Mod. pagamento"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"				
+		nullable="false"
+		readonlyProperty="ROPerChiusura"				
+		/>
+	<fieldProperty
+		name="termini_pagamento"
+		property="termini_pagamento"
+		printProperty="cd_ds_termini_pagamento"
+		optionsProperty="termini"		
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		label="Term. pagamento"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		readonlyProperty="ROPerChiusura"				
+		/>
+	<fieldProperty
+		name="listabanche"
+		property="banca"
+		inputType="BUTTON"
+		img="img/find16.gif"
+		readonlyProperty="abledToInsertBank"
+		label="Conto/i d'appoggio"
+		href="javascript:submitForm('doSearch(main.listabanche)')" 
+		/>
+	<fieldProperty
+		name="contoA"
+		property="banca"
+		inputType="FORM"
+		formName="A"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" 
+		/>
+	<fieldProperty
+		name="contoP"
+		property="banca"
+		inputType="FORM"
+		formName="P"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" 
+		/>
+	<fieldProperty
+		name="contoB"
+		property="banca"
+		inputType="FORM"
+		formName="BdocAmm"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" 
+		/>
+	<fieldProperty
+		name="contoQ"
+		property="banca"
+		inputType="FORM"
+		formName="Q"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" 
+		/>	
+	<fieldProperty
+		name="contoN"
+		property="banca"
+		inputType="FORM"
+		formName="N"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+				
+/****************** inizio Tab. importo + stati registrazione + fondo + obbligazione + missione**************************/
+	<fieldProperty
+		name="im_anticipo_divisa"
+		property="im_anticipo_divisa"
+		inputType="TEXT"
+		maxLength="16"
+		inputSize="16"		
+		formatName = "it.cnr.contab.util.EuroFormat"						
+		label="Importo anticipo"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		readonlyProperty="ROPerChiusura"				
+		/>
+	<fieldProperty
+		name="im_anticipo"
+		property="im_anticipo"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"								
+		label="Importo Euro"
+		readonlyProperty="ROPerChiusura"				
+		/>				
+	<fieldProperty
+		name="find_divisa"
+		property="divisa"
+		label="Valuta"
+		inputType="SEARCHTOOL"
+		/>		
+	<fieldProperty
+		name="cd_divisa"
+		property="divisa.cd_divisa"
+		readonlyProperty="RODivisa"		
+		label="Valuta"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="ds_divisa"
+		property="divisa.ds_divisa"
+		label=""
+		inputSize="20"
+		inputType="ROTEXT" 
+		/>
+	<fieldProperty
+		name="cambio"
+		property="cambio"
+		inputType="TEXT"
+		label="Cambio"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="esercizio_ori_obbligazione"
+		property="esercizio_ori_obbligazione"
+		label="Es. Impegno"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"				
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"														
+		/>						
+	<fieldProperty
+		name="pg_obbligazione"
+		property="pg_obbligazione"
+		label="N. Impegno"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"				
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"														
+		/>						
+	<fieldProperty
+		name="pg_obbligazione_scadenzario"
+		property="pg_obbligazione_scadenzario"
+		label="N. scadenza"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"				
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"												
+		/>
+	<fieldProperty
+		name="ds_scadenza_obbligazione"
+		property="scadenza_obbligazione.ds_scadenza"
+		label="Descrizione"
+		inputSize="20"
+		inputType="ROTEXT" 
+		/>
+	<fieldProperty
+		name="dt_scadenza"
+		property="scadenza_obbligazione.dt_scadenza"
+		inputType="ROTEXT"
+		formatName="date_short"				
+		label="Data"
+		/>
+	<fieldProperty
+		name="im_scadenza"
+		property="scadenza_obbligazione.im_scadenza"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"				
+		label="Importo"
+		/>								
+	<fieldProperty
+		name="esercizio_obbligazione"
+		property="esercizio_obbligazione"
+		inputType="TEXT"
+		label="Esercizio"
+		enabledOnInsert="false"
+		enabledOnEdit="false"				
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"												
+		/>		
+	<fieldProperty
+		name="cd_cds_obbligazione"
+		property="cd_cds_obbligazione"
+		inputType="TEXT"
+		label="Cds"
+		enabledOnInsert="false"
+		enabledOnEdit="false"				
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"												
+		/>
+	<fieldProperty
+		name="stato_cofi"
+		property="stato_cofi"
+		keysProperty="stato_cofiKeys"
+		label="Stato Co.Fi."		
+		maxLength="1"
+		inputSize="10"
+		inputType="SELECT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		caseSensitiveSearch="false" 
+		/>
+	<fieldProperty
+		name="stato_cofiForSearch"
+		property="stato_cofi"
+		keysProperty="stato_cofiKeysForSearch"
+		inputType="SELECT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="true"
+		label="Stato Co.Fi." 
+		/>		
+	<fieldProperty
+		name="ti_associato_manrev"
+		property="ti_associato_manrev"
+		keysProperty="ti_associato_manrevKeys"
+		maxLength="1"
+		inputSize="10"
+		inputType="SELECT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Associazione man/rev"
+		caseSensitiveSearch="false" 
+		/>
+	<fieldProperty
+		name="ti_associato_manrevForSearch"
+		property="ti_associato_manrev"
+		keysProperty="ti_associato_manrevKeys"
+		inputType="SELECT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="true"
+		label="Associazione man/rev" 
+		/>				
+	<fieldProperty
+		name="dt_pagamento_fondo_eco"
+		property="dt_pagamento_fondo_eco"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"
+		label="Data pagam. fondo econ."
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"		
+		/>
+	<fieldProperty
+		name="stato_pagamento_fondo_eco"
+		property="stato_pagamento_fondo_eco"
+		maxLength="1"
+		inputSize="10"
+		inputType="SELECT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		nullable="false"
+		readonlyProperty="ROStato_pagamento_fondo_eco"
+		keysProperty="stato_pagamento_fondo_ecoKeys"
+		label="Fondo economale"
+		caseSensitiveSearch="false" 
+		/>
+	<fieldProperty
+		name="stato_pagamento_fondo_ecoForSearch"
+		property="stato_pagamento_fondo_eco"
+		maxLength="1"
+		inputSize="20"
+		inputType="SELECT"
+		nullable="true"
+		keysProperty="stato_pagamento_fondo_ecoKeysForSearch"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Fondo economale"
+		caseSensitiveSearch="false" 
+		/>
+	<fieldProperty
+		name="cd_cds_missione"
+		property="missione.cd_cds"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Cds" 
+		/>
+	<fieldProperty
+		name="cd_uo_missione"
+		property="missione.cd_unita_organizzativa"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Unita Organizzativa" 
+		/>
+	<fieldProperty
+		name="esercizio_missione"
+		property="missione.esercizio"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Esercizio" 
+		/>
+	<fieldProperty
+		name="pg_missione"
+		property="missione.pg_missione"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="N. missione" 
+		/>
+	
+/****************** inizio Tab. RIMBORSO **************************/
+	<fieldProperty
+		name="rimborso_pg_rimborso"
+		property="rimborso.pg_rimborso"
+		inputType="ROTEXT"
+		label="Nr.Rimborso"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="rimborso_dt_registrazione"
+		property="rimborso.dt_registrazione"
+		inputType="ROTEXT"
+		label="Data Registrazione"
+		formatName="date_short"				
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="rimborso_ds_rimborso"
+		property="rimborso.ds_rimborso"
+		inputType="ROTEXT"
+		label="Descrizione"
+		inputSize="80"		
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="rimborso_im_rimborso"
+		property="rimborso.im_rimborso"
+		inputType="ROTEXT"
+		label="Importo"
+		formatName = "it.cnr.contab.util.EuroFormat"								
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="find_latt"
+		property="lattPerRimborso"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="false"
+		readonlyProperty="ROFind_latt"
+		label="GAE"
+		/>
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="lattPerRimborso.cd_linea_attivita"
+		inputType="TEXT"
+		enabledOnSearch="false"
+		readonlyProperty="ROCd_linea_attivita"
+		inputSize="6"
+		/>
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="lattPerRimborso.cd_centro_responsabilita"
+		inputType="TEXT"
+		enabledOnSearch="false"
+		readonlyProperty="ROCd_centro_responsabilita"
+		inputSize="11"		
+		/>
+	<fieldProperty
+		name="ds_linea_attivita"
+		property="lattPerRimborso.denominazione"
+		inputType="ROTEXT"
+		enabledOnSearch="false"
+		inputSize="60"				
+		/>
+	<fieldProperty
+		name="rimborso_cd_cds_accertamento"
+		property="rimborso.cd_cds_accertamento"
+		inputType="ROTEXT"
+		enabledOnSearch="false"
+		label="Cds Accertamento"
+		inputSize="3"				
+		/>
+	<fieldProperty
+		name="rimborso_esercizio_accertamento"
+		property="rimborso.esercizio_accertamento"
+		inputType="ROTEXT"
+		enabledOnSearch="false"
+		label="Esercizio Accertamento"
+		inputSize="4"				
+		/>
+	<fieldProperty
+		name="rimborso_esercizio_ori_accertamento"
+		property="rimborso.esercizio_ori_accertamento"
+		inputType="ROTEXT"
+		enabledOnSearch="false"
+		label="Esercizio Originale Accertamento"
+		inputSize="4"				
+		/>
+	<fieldProperty
+		name="rimborso_pg_accertamento"
+		property="rimborso.pg_accertamento"
+		inputType="ROTEXT"
+		enabledOnSearch="false"
+		label="Nr.Accertamento"
+		inputSize="8"				
+		/>
+
+/******************************************************************/
+
+	<fieldProperty
+		name="cd_uo_origine"
+		property="cd_uo_origine"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Unita origine"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_cds_origine"
+		property="cd_cds_origine"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Cds origine"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="stato_coan"
+		property="stato_coan"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Stato Co.An."
+		caseSensitiveSearch="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"		
+		/>
+	<fieldProperty
+		name="stato_coge"
+		property="stato_coge"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Stato Co.Ge."
+		caseSensitiveSearch="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"		
+		/>
+
+	<formFieldProperty name="cd_cds" />
+	<formFieldProperty name="cd_unita_organizzativa" />	
+	<formFieldProperty name="esercizio" />	
+	<formFieldProperty name="pg_anticipo" />
+	<formFieldProperty name="ds_anticipo" />
+	<formFieldProperty name="dt_registrazione"  command="doOnDataRegistrazioneChange"/>
+	<formFieldProperty name="dt_cancellazione" />
+	<formFieldProperty name="fl_associato_missione" />	
+	<formFieldProperty name="ti_anagrafico" />
+	<formFieldProperty name="find_terzo" />
+	<formFieldProperty name="cd_terzo" readonlyProperty="ROTerzo"/>
+	<formFieldProperty name="cd_precedente"/>		
+	<formFieldProperty name="nome" />
+	<formFieldProperty name="cognome" />	
+	<formFieldProperty name="via_fiscale" />
+	<formFieldProperty name="num_civico" />		
+	<formFieldProperty name="ds_comune" />
+	<formFieldProperty name="ds_provincia" />
+	<formFieldProperty name="ragione_sociale" />
+	<formFieldProperty name="codice_fiscale" />
+	<formFieldProperty name="partita_iva" />
+	<formFieldProperty name="termini_pagamento" />
+	<formFieldProperty name="modalita_pagamento" />
+	<formFieldProperty name="listabanche" />
+	<formFieldProperty name="contoA" />
+	<formFieldProperty name="contoB" />
+	<formFieldProperty name="contoP" />
+	<formFieldProperty name="contoQ" />
+	<formFieldProperty name="contoN"/>
+	<formFieldProperty name="im_anticipo_divisa" command="doOnImportoAnticipoChange"/>	
+	<formFieldProperty name="im_anticipo" />
+	<formFieldProperty name="find_divisa" />	
+	<formFieldProperty name="cd_divisa" />
+	<formFieldProperty name="ds_divisa" />	
+	<formFieldProperty name="cambio" />
+	<formFieldProperty name="pg_obbligazione_scadenzario" />
+	<formFieldProperty name="ds_scadenza_obbligazione" />
+	<formFieldProperty name="dt_scadenza" />
+	<formFieldProperty name="im_scadenza" />	
+	<formFieldProperty name="esercizio_ori_obbligazione" />	
+	<formFieldProperty name="pg_obbligazione" />	
+	<formFieldProperty name="esercizio_obbligazione" />
+	<formFieldProperty name="cd_cds_obbligazione" />
+	<formFieldProperty name="stato_cofi" />
+	<formFieldProperty name="stato_cofiForSearch" />	
+	<formFieldProperty name="ti_associato_manrev" />
+	<formFieldProperty name="ti_associato_manrevForSearch" />		
+	<formFieldProperty name="dt_pagamento_fondo_eco" />
+	<formFieldProperty name="stato_pagamento_fondo_eco" />
+	<formFieldProperty name="stato_pagamento_fondo_ecoForSearch" />
+	
+	<formFieldProperty name="cd_cds_missione" />
+	<formFieldProperty name="cd_uo_missione" />
+	<formFieldProperty name="esercizio_missione" />		
+	<formFieldProperty name="pg_missione" />	
+		
+	<formFieldProperty name="rimborso_pg_rimborso" />
+	<formFieldProperty name="rimborso_dt_registrazione" />
+	<formFieldProperty name="rimborso_ds_rimborso" />
+	<formFieldProperty name="rimborso_im_rimborso" />
+	<formFieldProperty name="find_latt" />
+	<formFieldProperty name="cd_linea_attivita" />
+	<formFieldProperty name="cd_centro_responsabilita" />
+	<formFieldProperty name="ds_linea_attivita" />
+	<formFieldProperty name="rimborso_cd_cds_accertamento" />
+	<formFieldProperty name="rimborso_esercizio_accertamento" />
+	<formFieldProperty name="rimborso_esercizio_ori_accertamento" />
+	<formFieldProperty name="rimborso_pg_accertamento" />	
+
+	<formFieldProperty name="cd_uo_origine" />
+	<formFieldProperty name="cd_cds_origine" />
+	<formFieldProperty name="stato_coan" />
+	<formFieldProperty name="stato_coge" />
+
+	<columnFieldProperty name="pg_anticipo" />
+	<columnFieldProperty name="ds_anticipo" />	
+	<columnFieldProperty name="esercizio" />	
+	<columnFieldProperty name="cd_cds" />
+	<columnFieldProperty name="cd_cds_origine" label = "Cds origine"/>
+	<columnFieldProperty name="cd_unita_organizzativa" />
+	<columnFieldProperty name="cd_uo_origine" label="UO origine"/>
+	<columnFieldProperty name="dt_registrazione" />	
+	<columnFieldProperty name="ti_anagrafico" />	
+	<columnFieldProperty name="cd_terzo" />
+	<columnFieldProperty name="nome" />
+	<columnFieldProperty name="cognome" />	
+	<columnFieldProperty name="im_anticipo_divisa" />
+	<columnFieldProperty name="dt_cancellazione" />
+	<columnFieldProperty name="fl_associato_missione" />	
+	<columnFieldProperty name="stato_cofi" />
+	<columnFieldProperty name="stato_coge" />	
+	<columnFieldProperty name="stato_coan" />
+	<columnFieldProperty name="ti_associato_manrev" />	
+	<columnFieldProperty name="dt_pagamento_fondo_eco" />
+	<columnFieldProperty name="stato_pagamento_fondo_eco" />
+
+	<findFieldProperty name="esercizio" />	
+	<findFieldProperty name="pg_anticipo" />
+	<findFieldProperty name="ds_anticipo" />
+	<findFieldProperty name="dt_registrazione" />
+	<findFieldProperty name="ti_anagrafico" />	
+	<findFieldProperty name="cd_terzo" label="Cod. terzo"/>
+	<findFieldProperty name="cd_precedente" />	
+	<findFieldProperty name="cognome" />
+	<findFieldProperty name="nome" />
+	<findFieldProperty name="ragione_sociale" />
+	<findFieldProperty name="partita_iva" />
+	<findFieldProperty name="codice_fiscale" />	
+	<findFieldProperty name="im_anticipo_divisa" />
+	<findFieldProperty name="fl_associato_missione" />		
+	<findFieldProperty name="stato_cofiForSearch" />
+	<findFieldProperty name="stato_coan" />
+	<findFieldProperty name="stato_coge" />
+	<findFieldProperty name="dt_pagamento_fondo_eco" />	
+	<findFieldProperty name="stato_pagamento_fondo_ecoForSearch" />	
+	<findFieldProperty name="ti_associato_manrevForSearch" />	
+	<findFieldProperty name="esercizio_ori_obbligazione" label="Es. impegno" />
+	<findFieldProperty name="pg_obbligazione" />
+	<findFieldProperty name="pg_obbligazione_scadenzario" />
+	<findFieldProperty name="esercizio_obbligazione" label="Esercizio impegno" />
+	<findFieldProperty name="cd_cds_obbligazione" label="Cds impegno"/>
+
+</bulkInfo>

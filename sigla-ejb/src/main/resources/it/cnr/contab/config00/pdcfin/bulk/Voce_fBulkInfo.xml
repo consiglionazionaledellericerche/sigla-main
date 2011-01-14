@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Voce finanziaria">
+	<fieldProperty
+		name="cd_sezione_capitolo"
+		property="cd_sezione_capitolo"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Codice Titolo-Sezione-Capitolo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Appartenenza CNR-CDS" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Codice Centro di Spesa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_voce"
+		property="ds_voce"
+		maxLength="200"
+		inputSize="200"
+		inputType="TEXT"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="livello"
+		property="livello"
+		inputType="TEXT"
+		label="Livello" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Codice Unità Organizzativa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_funzione"
+		property="cd_funzione"
+		maxLength="2"
+		inputSize="2"
+		inputType="TEXT"
+		label="Codice Sezione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_parte"
+		property="cd_parte"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Codice Parte (solo spese)"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_categoria"
+		property="cd_categoria"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Codice Categoria (solo CNR)"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Codice Centro Responsabilità"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_proprio_voce"
+		property="cd_proprio_voce"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Codice proprio capitolo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_voce_padre"
+		property="cd_voce_padre"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Codice capitolo padre"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_titolo_capitolo"
+		property="cd_titolo_capitolo"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Codice titolo-capitolo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_natura"
+		property="cd_natura"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Codice Natura"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Gestione Entrate-Spese" />
+	<fieldProperty
+		name="ti_voce"
+		property="ti_voce"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Tipologia del Capitolo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_mastrino"
+		property="fl_mastrino"
+		inputType="CHECKBOX"
+		label="Mastrino" />
+	<fieldProperty
+		name="cd_voce"
+		property="cd_voce"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Capitolo" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Codice elemento voce"/>
+
+    <form name="searchtool">
+		<formFieldProperty
+			name="cd_voce" />
+		<formFieldProperty
+			name="ds_voce"
+			inputSize="50" />
+	</form>    
+	<formFieldProperty
+		name="cd_sezione_capitolo" />
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="ds_voce" />
+	<formFieldProperty
+		name="livello" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_funzione" />
+	<formFieldProperty
+		name="cd_parte" />
+	<formFieldProperty
+		name="cd_categoria" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="cd_proprio_voce" />
+	<formFieldProperty
+		name="cd_voce_padre" />
+	<formFieldProperty
+		name="cd_titolo_capitolo" />
+	<formFieldProperty
+		name="cd_natura" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="ti_voce" />
+	<formFieldProperty
+		name="fl_mastrino" />
+	<formFieldProperty
+		name="cd_voce" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+
+	<columnFieldProperty
+		name="cd_voce"
+		columnStyle="width:140px; text-align:left"/>
+	<!-- <columnFieldProperty
+		name="cd_funzione"
+		columnStyle="padding-left:10px"/>
+	 -->	
+	<columnFieldProperty
+		name="ds_voce" />
+
+	<findFieldProperty
+		name="cd_sezione_capitolo" />
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="ds_voce" />
+	<findFieldProperty
+		name="livello" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_funzione" />
+	<findFieldProperty
+		name="cd_parte" />
+	<findFieldProperty
+		name="cd_categoria" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="cd_proprio_voce" />
+	<findFieldProperty
+		name="cd_voce_padre" />
+	<findFieldProperty
+		name="cd_titolo_capitolo" />
+	<findFieldProperty
+		name="cd_natura" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="ti_voce" />
+	<findFieldProperty
+		name="fl_mastrino" />
+	<findFieldProperty
+		name="cd_voce" />
+
+<columnSet
+	name="impegno">
+		
+	<columnFieldProperty
+		name="esercizio"
+		/>
+	<columnFieldProperty
+		name="cd_voce"
+		label = "Codice"
+		/>
+	<columnFieldProperty
+		name="ds_voce"
+		/>
+	<columnFieldProperty
+		name="cd_voce_padre"
+		/>
+</columnSet>	
+
+</bulkInfo>

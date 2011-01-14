@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_classificazione_montanti"
+		property="pg_classificazione_montanti"
+		inputType="TEXT"
+		label="pg_classificazione_montanti" />
+	<fieldProperty
+		name="precisione"
+		property="precisione"
+		inputType="TEXT"
+		label="precisione" />
+	<fieldProperty
+		name="calcolo_imponibile"
+		property="calcolo_imponibile"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="calcolo_imponibile"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_uso_in_lordizza"
+		property="fl_uso_in_lordizza"
+		inputType="CHECKBOX"
+		label="fl_uso_in_lordizza" />
+	<fieldProperty
+		name="dt_ini_val_tratt_cori"
+		property="dt_ini_val_tratt_cori"
+		inputType="TEXT"
+		label="dt_ini_val_tratt_cori" />
+	<fieldProperty
+		name="segno"
+		property="segno"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="segno"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_ini_val_trattamento"
+		property="dt_ini_val_trattamento"
+		inputType="TEXT"
+		label="dt_ini_val_trattamento" />
+	<fieldProperty
+		name="fl_irpef_annualizzata"
+		property="fl_irpef_annualizzata"
+		inputType="CHECKBOX"
+		label="fl_irpef_annualizzata" />
+	<fieldProperty
+		name="dt_fin_val_tratt_cori"
+		property="dt_fin_val_tratt_cori"
+		inputType="TEXT"
+		label="dt_fin_val_tratt_cori" />
+	<fieldProperty
+		name="fl_detrazioni_familiari"
+		property="fl_detrazioni_familiari"
+		inputType="CHECKBOX"
+		label="fl_detrazioni_familiari" />
+	<fieldProperty
+		name="ti_cassa_competenza"
+		property="ti_cassa_competenza"
+		maxLength="2"
+		inputSize="2"
+		inputType="TEXT"
+		label="ti_cassa_competenza"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_fin_val_tipo_cori"
+		property="dt_fin_val_tipo_cori"
+		inputType="TEXT"
+		label="dt_fin_val_tipo_cori" />
+	<fieldProperty
+		name="cd_cori"
+		property="cd_cori"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_cori"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_ini_val_tipo_cori"
+		property="dt_ini_val_tipo_cori"
+		inputType="TEXT"
+		label="dt_ini_val_tipo_cori" />
+	<fieldProperty
+		name="ti_anagrafico"
+		property="ti_anagrafico"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_anagrafico"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_trattamento"
+		property="cd_trattamento"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_trattamento"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_scrivi_montanti"
+		property="fl_scrivi_montanti"
+		inputType="CHECKBOX"
+		label="fl_scrivi_montanti" />
+	<fieldProperty
+		name="fl_tassazione_separata"
+		property="fl_tassazione_separata"
+		inputType="CHECKBOX"
+		label="fl_tassazione_separata" />
+	<fieldProperty
+		name="id_riga"
+		property="id_riga"
+		maxLength="3"
+		inputSize="3"
+		inputType="TEXT"
+		label="id_riga"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_fin_val_trattamento"
+		property="dt_fin_val_trattamento"
+		inputType="TEXT"
+		label="dt_fin_val_trattamento" />
+	<fieldProperty
+		name="cd_classificazione_cori"
+		property="cd_classificazione_cori"
+		maxLength="2"
+		inputSize="2"
+		inputType="TEXT"
+		label="cd_classificazione_cori"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_detrazioni_dipendente"
+		property="fl_detrazioni_dipendente"
+		inputType="CHECKBOX"
+		label="fl_detrazioni_dipendente" />
+
+	<formFieldProperty
+		name="pg_classificazione_montanti" />
+	<formFieldProperty
+		name="precisione" />
+	<formFieldProperty
+		name="calcolo_imponibile" />
+	<formFieldProperty
+		name="fl_uso_in_lordizza" />
+	<formFieldProperty
+		name="dt_ini_val_tratt_cori" />
+	<formFieldProperty
+		name="segno" />
+	<formFieldProperty
+		name="dt_ini_val_trattamento" />
+	<formFieldProperty
+		name="fl_irpef_annualizzata" />
+	<formFieldProperty
+		name="dt_fin_val_tratt_cori" />
+	<formFieldProperty
+		name="fl_detrazioni_familiari" />
+	<formFieldProperty
+		name="ti_cassa_competenza" />
+	<formFieldProperty
+		name="dt_fin_val_tipo_cori" />
+	<formFieldProperty
+		name="cd_cori" />
+	<formFieldProperty
+		name="dt_ini_val_tipo_cori" />
+	<formFieldProperty
+		name="ti_anagrafico" />
+	<formFieldProperty
+		name="cd_trattamento" />
+	<formFieldProperty
+		name="fl_scrivi_montanti" />
+	<formFieldProperty
+		name="fl_tassazione_separata" />
+	<formFieldProperty
+		name="id_riga" />
+	<formFieldProperty
+		name="dt_fin_val_trattamento" />
+	<formFieldProperty
+		name="cd_classificazione_cori" />
+	<formFieldProperty
+		name="fl_detrazioni_dipendente" />
+
+	<columnFieldProperty
+		name="pg_classificazione_montanti" />
+	<columnFieldProperty
+		name="precisione" />
+	<columnFieldProperty
+		name="calcolo_imponibile" />
+	<columnFieldProperty
+		name="fl_uso_in_lordizza" />
+	<columnFieldProperty
+		name="dt_ini_val_tratt_cori" />
+	<columnFieldProperty
+		name="segno" />
+	<columnFieldProperty
+		name="dt_ini_val_trattamento" />
+	<columnFieldProperty
+		name="fl_irpef_annualizzata" />
+	<columnFieldProperty
+		name="dt_fin_val_tratt_cori" />
+	<columnFieldProperty
+		name="fl_detrazioni_familiari" />
+	<columnFieldProperty
+		name="ti_cassa_competenza" />
+	<columnFieldProperty
+		name="dt_fin_val_tipo_cori" />
+	<columnFieldProperty
+		name="cd_cori" />
+	<columnFieldProperty
+		name="dt_ini_val_tipo_cori" />
+	<columnFieldProperty
+		name="ti_anagrafico" />
+	<columnFieldProperty
+		name="cd_trattamento" />
+	<columnFieldProperty
+		name="fl_scrivi_montanti" />
+	<columnFieldProperty
+		name="fl_tassazione_separata" />
+	<columnFieldProperty
+		name="id_riga" />
+	<columnFieldProperty
+		name="dt_fin_val_trattamento" />
+	<columnFieldProperty
+		name="cd_classificazione_cori" />
+	<columnFieldProperty
+		name="fl_detrazioni_dipendente" />
+
+	<findFieldProperty
+		name="pg_classificazione_montanti" />
+	<findFieldProperty
+		name="precisione" />
+	<findFieldProperty
+		name="calcolo_imponibile" />
+	<findFieldProperty
+		name="fl_uso_in_lordizza" />
+	<findFieldProperty
+		name="dt_ini_val_tratt_cori" />
+	<findFieldProperty
+		name="segno" />
+	<findFieldProperty
+		name="dt_ini_val_trattamento" />
+	<findFieldProperty
+		name="fl_irpef_annualizzata" />
+	<findFieldProperty
+		name="dt_fin_val_tratt_cori" />
+	<findFieldProperty
+		name="fl_detrazioni_familiari" />
+	<findFieldProperty
+		name="ti_cassa_competenza" />
+	<findFieldProperty
+		name="dt_fin_val_tipo_cori" />
+	<findFieldProperty
+		name="cd_cori" />
+	<findFieldProperty
+		name="dt_ini_val_tipo_cori" />
+	<findFieldProperty
+		name="ti_anagrafico" />
+	<findFieldProperty
+		name="cd_trattamento" />
+	<findFieldProperty
+		name="fl_scrivi_montanti" />
+	<findFieldProperty
+		name="fl_tassazione_separata" />
+	<findFieldProperty
+		name="id_riga" />
+	<findFieldProperty
+		name="dt_fin_val_trattamento" />
+	<findFieldProperty
+		name="cd_classificazione_cori" />
+	<findFieldProperty
+		name="fl_detrazioni_dipendente" />
+
+</bulkInfo>

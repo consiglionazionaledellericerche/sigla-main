@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="fl_imputazione_manuale"
+		property="fl_imputazione_manuale"
+		inputType="CHECKBOX"
+		label="Imputazione manuale" />
+	<fieldProperty
+		name="cd_modalita_pag"
+		property="modalita_pagamento"
+		maxLength="10"
+		inputSize="10"
+		inputType="SELECT"
+		optionsProperty="modalita_pagamentoOptions"
+		printProperty="cd_modalita_pag"
+		label="Modalita pag."
+		nullable="false"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="banca"
+		property="banca"
+		inputType="SELECT"
+		optionsProperty="bancaOptions"
+		printProperty="ds_estesa"
+		label="Coordinate"
+		nullable="false"/>
+	<fieldProperty
+		name="im_righe_mandato"
+		property="im_righe_mandato"
+		inputType="ROTEXT"
+		label="Importo Mandato"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		enabledOnInsert="false"/>
+	<fieldProperty
+		name="ti_istituz_commerc"
+		property="modelloDocumento.ti_istituz_commerc"
+		inputType="SELECT"
+		label="Tipo Documento"
+		nullable="false"
+		enabledOnSearch="false"
+		keysProperty="ti_istituz_commercKeys" />
+	<fieldProperty
+		name="dt_a_competenza_coge"
+		property="modelloDocumento.dt_a_competenza_coge"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		label="Competenza al" />		
+	<fieldProperty
+		name="dt_da_competenza_coge"
+		property="modelloDocumento.dt_da_competenza_coge"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		label="Competenza dal" />
+	<fieldProperty
+		name="cd_creditore"
+		property="mandato_terzo.terzo.cd_terzo"
+		inputType="ROTEXT"
+		label="Creditore"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="ds_creditore"
+		property="mandato_terzo.terzo.denominazione_sede"
+		inputType="ROTEXT"
+		label="Descrizione"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="ti_impegni"
+		property="ti_impegni"
+		inputType="SELECT"
+		label="Tipo Impegni"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		keysProperty="tipoImpegniKeys" />
+		
+	<formFieldProperty
+		name="im_righe_mandato" />
+	<formFieldProperty
+		name="cd_modalita_pag" />
+	<formFieldProperty
+		name="banca" />
+	<formFieldProperty
+		name="fl_imputazione_manuale" />
+	<formFieldProperty
+		name="ti_istituz_commerc" />
+	<formFieldProperty
+		name="dt_da_competenza_coge" />		
+	<formFieldProperty
+		name="dt_a_competenza_coge" />		
+	<formFieldProperty
+		name="cd_creditore" />		
+	<formFieldProperty
+		name="ds_creditore" />		
+	<formFieldProperty
+		name="cd_terzo" />		
+	<formFieldProperty
+		name="denominazione_sede" />		
+	<formFieldProperty
+		name="ti_impegni" />		
+</bulkInfo>

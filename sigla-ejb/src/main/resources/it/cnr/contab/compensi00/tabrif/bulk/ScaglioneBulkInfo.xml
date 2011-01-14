@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+/* *********** CO/RI *********** */
+	<fieldProperty
+		name="find_contributo_ritenuta"
+		property="contributo_ritenuta"
+		label="Contributo Ritenuta"		
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="cd_contributo_ritenuta"
+		property="contributo_ritenuta.cd_contributo_ritenuta"
+		label="Contributo Ritenuta"
+		readonlyProperty="ROContributo_ritenuta"		
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="ds_contributo_ritenuta"
+		property="contributo_ritenuta.ds_contributo_ritenuta"
+		label="Descrizione"
+		inputSize="50"
+		inputType="ROTEXT" />
+/* *********** ***** *********** */
+/* *********** REGIONE *********** */
+	<fieldProperty
+		name="find_regione"
+		property="regione"
+		label="Regione"		
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="cd_regione"
+		property="regione.cd_regione"
+		label="Regione"
+		readonlyProperty="RORegione"		
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="ds_regione"
+		property="regione.ds_regione"
+		label="Descrizione"
+		inputSize="50"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="fl_addreg_aliqmax"
+		property="regione.fl_addreg_aliqmax"
+		label="Applica aliquota massima"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputType="CHECKBOX" />	
+/* *********** ******* *********** */
+/* ********** PROVINCIA ********** */
+	<fieldProperty
+		name="find_provincia"
+		property="provincia"
+		label="Provincia"		
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="cd_provincia"
+		property="provincia.cd_provincia"
+		label="Provincia"
+		readonlyProperty="ROProvincia"		
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="ds_provincia"
+		property="provincia.ds_provincia"
+		label="Descrizione"
+		inputSize="50"
+		inputType="ROTEXT" />
+/* ********** ********* ********** */
+/* *********** COMUNE *********** */
+	<fieldProperty
+		name="find_comune"
+		property="comune"
+		label="Comune"		
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="pg_comune"
+		property="comune.pg_comune"
+		label="Comune"
+		readonlyProperty="ROComune"		
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="ds_comune"
+		property="comune.ds_comune"
+		label="Descrizione"
+		inputSize="50"
+		inputType="ROTEXT" />
+/* *********** ****** *********** */
+	<fieldProperty
+		name="ti_anagrafico"
+		property="ti_anagrafico"
+		keysProperty="ti_anagraficoKeys"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"	
+		label="Tipo Anagrafico"			
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="ti_ente_percipiente"
+		property="ti_ente_percipiente"
+		keysProperty="ti_entePercipienteKeys"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"	
+		label="Tipo Ente Percipiente"			
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="base_calcolo"
+		property="base_calcolo"
+		inputType="TEXT"
+		label="Base Calcolo"
+		style="text-align: right"
+		nullable="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="im_inferiore"
+		property="im_inferiore"
+		formatName = "it.cnr.contab.util.EuroFormat"								
+		inputType="TEXT"
+		label="Importo Inferiore"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="im_superiore"
+		property="im_superiore"
+		formatName = "it.cnr.contab.util.EuroFormat"								
+		inputType="TEXT"
+		nullable="false"
+		label="Importo Superiore"
+		enabledOnEdit = "false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="aliquota"
+		property="aliquota"
+		formatName = "it.cnr.contab.util.Importo6CifreFormat"										
+		inputType="TEXT"
+		nullable="false"
+		label="Aliquota"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_inizio_validita"
+		formatName="date_short"
+		inputType="TEXT"
+		nullable="false"
+		label="Inizio Validita"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		inputType="TEXT"
+		formatName="date_short"								
+		label="Fine Validita"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="dataFineValidita"
+		property="dataFineValidita"
+		inputType="TEXT"
+		formatName="date_short"								
+		label="Fine Validita"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+		
+	<formFieldProperty name="cd_contributo_ritenuta" />
+	<formFieldProperty name="find_contributo_ritenuta" />
+	<formFieldProperty name="ds_contributo_ritenuta" />			
+	<formFieldProperty name="pg_comune" />
+	<formFieldProperty name="find_comune" />
+	<formFieldProperty name="ds_comune" />		
+	<formFieldProperty name="dt_fine_validita" />
+	<formFieldProperty name="dataFineValidita" />
+	<formFieldProperty name="base_calcolo" />
+	<formFieldProperty name="cd_regione" />
+	<formFieldProperty name="find_regione" />
+	<formFieldProperty name="ds_regione" />		
+	<formFieldProperty name="fl_addreg_aliqmax" />		
+	<formFieldProperty name="cd_provincia" />
+	<formFieldProperty name="find_provincia" />
+	<formFieldProperty name="ds_provincia" />		
+	<formFieldProperty name="ti_anagrafico" />
+	<formFieldProperty name="im_inferiore" />
+	<formFieldProperty name="ti_ente_percipiente" />
+	<formFieldProperty name="im_superiore" />
+	<formFieldProperty name="dt_inizio_validita" />
+	<formFieldProperty name="aliquota" />
+
+	<columnFieldProperty name="cd_contributo_ritenuta" />		
+	<columnFieldProperty name="cd_regione" />
+	<columnFieldProperty name="cd_provincia" />
+	<columnFieldProperty name="pg_comune" />
+	<columnFieldProperty name="ti_anagrafico" />
+	<columnFieldProperty name="ti_ente_percipiente" />
+	<columnFieldProperty name="im_inferiore" />
+	<columnFieldProperty name="im_superiore" />
+	<columnFieldProperty name="base_calcolo" />
+	<columnFieldProperty name="aliquota" />
+	<columnFieldProperty name="dt_inizio_validita" />
+	<columnFieldProperty name="dataFineValidita" />
+
+	<columnSet name="scaglioneCori">
+		<columnFieldProperty name="cd_contributo_ritenuta" />		
+		<columnFieldProperty name="im_inferiore" />
+		<columnFieldProperty name="im_superiore" />
+		<columnFieldProperty name="aliquota" />
+		<columnFieldProperty name="base_calcolo" />
+		<columnFieldProperty name="dt_inizio_validita" />
+		<columnFieldProperty name="dataFineValidita" />
+	</columnSet>
+
+
+	<findFieldProperty name="cd_contributo_ritenuta" />		
+	<findFieldProperty name="pg_comune" />
+	<findFieldProperty name="dt_fine_validita" />
+	<findFieldProperty name="base_calcolo" />
+	<findFieldProperty name="cd_regione" />
+	<findFieldProperty name="cd_provincia" />
+	<findFieldProperty name="ti_anagrafico" />
+	<findFieldProperty name="im_inferiore" />
+	<findFieldProperty name="ti_ente_percipiente" />
+	<findFieldProperty name="im_superiore" />
+	<findFieldProperty name="dt_inizio_validita" />
+	<findFieldProperty name="aliquota" />
+
+</bulkInfo>

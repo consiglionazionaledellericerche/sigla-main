@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg01.consultazioni.bulk.V_cons_pdgp_pdgg_etrBulk"
+	homeClassName="it.cnr.contab.pdg01.consultazioni.bulk.V_cons_pdgp_pdgg_etrHome">
+	<defaultColumnMap
+		tableName="V_CONS_PDGP_PDGG_ETR">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_CDR"
+			propertyName="ds_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="pg_progetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="ds_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="cd_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="ID_CLASSIFICAZIONE"
+			propertyName="id_classificazione"
+			sqlTypeName="DECIMAL"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE"
+			propertyName="cd_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="34"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_AREA"
+			propertyName="cd_cds_area"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_DETTAGLIO"
+			propertyName="pg_dettaglio"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_DETTAGLIO"
+			propertyName="ds_dettaglio"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ENTRATA_TOT_PDGP"
+			propertyName="im_entrata_tot_pdgp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ENTRATA_PDGP"
+			propertyName="im_entrata_pdgp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ENTRATA_PDGG"
+			propertyName="im_entrata_pdgg"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_INCASSI_PDGG"
+			propertyName="im_incassi_pdgg"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ENTRATA_DA_RIP"
+			propertyName="im_entrata_da_rip"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_centro_responsabilita" />
+	<persistentProperty
+		name="ds_cdr" />
+	<persistentProperty
+		name="pg_progetto" />
+	<persistentProperty
+		name="cd_progetto" />
+	<persistentProperty
+		name="ds_progetto" />
+	<persistentProperty
+		name="cd_natura" />
+	<persistentProperty
+		name="id_classificazione" />
+	<persistentProperty
+		name="cd_classificazione" />
+	<persistentProperty
+		name="ds_classificazione" />
+	<persistentProperty
+		name="cd_cds_area" />
+	<persistentProperty
+		name="pg_dettaglio" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="ds_dettaglio" />
+	<persistentProperty
+		name="im_entrata_tot_pdgp" />
+	<persistentProperty
+		name="im_entrata_pdgp" />
+	<persistentProperty
+		name="im_entrata_pdgg" />
+	<persistentProperty
+		name="im_incassi_pdgg" />
+	<persistentProperty
+		name="im_entrata_da_rip" />
+</SQLPersistentInfo>

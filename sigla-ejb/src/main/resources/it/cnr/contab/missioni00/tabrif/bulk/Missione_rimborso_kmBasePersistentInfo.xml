@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.tabrif.bulk.Missione_rimborso_kmBase"
+	keyClassName="it.cnr.contab.missioni00.tabrif.bulk.Missione_rimborso_kmKey"
+	homeClassName="it.cnr.contab.missioni00.tabrif.bulk.Missione_rimborso_kmHome" >
+	<defaultColumnMap
+		tableName="MISSIONE_RIMBORSO_KM" >
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dt_cancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_FINE_VALIDITA"
+			propertyName="dt_fine_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="INDENNITA_CHILOMETRICA"
+			propertyName="indennita_chilometrica"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_cancellazione" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="dt_fine_validita" />
+	<persistentProperty
+		name="indennita_chilometrica" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

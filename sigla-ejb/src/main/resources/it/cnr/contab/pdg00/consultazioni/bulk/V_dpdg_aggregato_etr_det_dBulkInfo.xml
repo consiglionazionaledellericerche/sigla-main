@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Discrepanze tra PdG Aggregato e PdG (Entrata)"
+          longDescription="Discrepanze PdG (Entrata)" >
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDR" />
+	<fieldProperty
+		name="cd_natura"
+		property="cd_natura"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Natura" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Elemento Voce" />
+	<fieldProperty
+		name="im_ra_rce"
+		property="im_ra_rce"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="Ricavi con entrate (A)" />
+	<fieldProperty
+		name="im_rb_rse"
+		property="im_rb_rse"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="Ricavi senza entrate (B)" />
+	<fieldProperty
+		name="im_rc_esr"
+		property="im_rc_esr"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="Entrate senza ricavi (C)" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="cd_natura" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="im_ra_rce" />
+	<findFieldProperty
+		name="im_rb_rse" />
+	<findFieldProperty
+		name="im_rc_esr" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="cd_natura" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="im_ra_rce" />
+	<columnFieldProperty
+		name="im_rb_rse" />
+	<columnFieldProperty
+		name="im_rc_esr" />
+</bulkInfo>

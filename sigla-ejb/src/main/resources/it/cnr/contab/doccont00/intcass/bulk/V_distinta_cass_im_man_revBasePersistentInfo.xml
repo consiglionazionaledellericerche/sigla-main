@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.intcass.bulk.V_distinta_cass_im_man_revBase"
+	homeClassName="it.cnr.contab.doccont00.intcass.bulk.V_distinta_cass_im_man_revHome" >
+	<defaultColumnMap
+		tableName="V_DISTINTA_CASS_IM_MAN_REV" >
+		<columnMapping
+			columnName="DT_INVIO"
+			propertyName="dt_invio"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="PG_DISTINTA"
+			propertyName="pg_distinta"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_MANDATI_ANNULLATI"
+			propertyName="im_mandati_annullati"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_REVERSALI"
+			propertyName="im_reversali"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="IM_REVERSALI_ANNULLATE"
+			propertyName="im_reversali_annullate"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="DT_EMISSIONE"
+			propertyName="dt_emissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="IM_MANDATI"
+			propertyName="im_mandati"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="PG_DISTINTA_DEF"
+			propertyName="pg_distinta_def"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_invio" />
+	<persistentProperty
+		name="pg_distinta" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="im_mandati_annullati" />
+	<persistentProperty
+		name="im_reversali" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="im_reversali_annullate" />
+	<persistentProperty
+		name="dt_emissione" />
+	<persistentProperty
+		name="im_mandati" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="pg_distinta_def" />
+</SQLPersistentInfo>

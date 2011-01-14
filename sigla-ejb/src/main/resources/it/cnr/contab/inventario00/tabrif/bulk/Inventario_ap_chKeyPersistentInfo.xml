@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.tabrif.bulk.Inventario_ap_chKey" >
+	<defaultColumnMap
+		tableName="INVENTARIO_AP_CH" >
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="pg_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="DT_APERTURA"
+			propertyName="dt_apertura"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_inventario"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="dt_apertura"
+		partOfOid="true" />
+</SQLPersistentInfo>

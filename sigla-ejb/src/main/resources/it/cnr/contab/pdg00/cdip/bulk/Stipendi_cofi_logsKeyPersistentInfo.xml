@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofi_logsKey" >
+	<defaultColumnMap
+		tableName="STIPENDI_COFI_LOGS" >
+		<columnMapping
+			columnName="MESE"
+			propertyName="mese"
+			sqlTypeName="DECIMAL"
+			columnSize="2"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_ESECUZIONE"
+			propertyName="pg_esecuzione"
+			sqlTypeName="DECIMAL"
+			columnSize="12"
+			nullable="false"
+			primary="true" />			
+	</defaultColumnMap>
+	<persistentProperty
+		name="mese"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_esecuzione"
+		partOfOid="true" />		
+</SQLPersistentInfo>

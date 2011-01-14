@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiere_detBulk" >
+	<defaultColumnMap
+		tableName="DISTINTA_CASSIERE_DET" >
+		<columnMapping
+			columnName="PG_DISTINTA"
+			propertyName="distinta.pg_distinta"/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="distinta.esercizio" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="distinta.unita_organizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="distinta.cds.cd_unita_organizzativa"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="distinta"
+		partOfOid="true" />
+</SQLPersistentInfo>

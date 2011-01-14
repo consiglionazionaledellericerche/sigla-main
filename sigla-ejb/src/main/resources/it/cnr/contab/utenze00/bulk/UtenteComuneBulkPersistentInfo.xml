@@ -1,0 +1,36 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.UtenteComuneBulk"
+	homeClassName="it.cnr.contab.utenze00.bulk.UtenteComuneHome" >
+	<defaultColumnMap
+		tableName="UTENTE" >
+		<columnMapping
+			columnName="CD_UTENTE_TEMPL"
+			propertyName="template.cd_utente"
+		  />
+		<columnMapping
+			columnName="CD_CDR"
+			propertyName="cdr.cd_centro_responsabilita"
+			/>
+		<columnMapping
+			columnName="CD_DIPARTIMENTO"
+			propertyName="dipartimento.cd_dipartimento"
+			/>			
+		<columnMapping
+			columnName="CD_RUOLO_SUPERVISORE"
+			propertyName="ruolo_supervisore.cd_ruolo"
+			/>
+	</defaultColumnMap>
+	<columnMap 
+		name="V_UTENTE_CDR"
+		tableName="V_UTENTE_CDR"
+		extends="default" />
+	
+	<persistentProperty
+		name="template" />
+	<persistentProperty
+		name="dipartimento" />
+	<persistentProperty
+		name="cdr" />		
+	<persistentProperty
+		name="ruolo_supervisore" />		
+</SQLPersistentInfo>

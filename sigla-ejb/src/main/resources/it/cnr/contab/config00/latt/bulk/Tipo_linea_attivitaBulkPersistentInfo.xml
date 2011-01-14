@@ -1,0 +1,20 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.latt.bulk.Tipo_linea_attivitaBulk"
+	homeClassName="it.cnr.contab.config00.latt.bulk.Tipo_linea_attivitaHome" >
+	<defaultColumnMap
+		tableName="TIPO_LINEA_ATTIVITA" >
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="natura.cd_natura"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="CD_FUNZIONE"
+			propertyName="funzione.cd_funzione"
+			fetchOnly="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="natura" />
+	<persistentProperty
+		name="funzione" />
+
+</SQLPersistentInfo>

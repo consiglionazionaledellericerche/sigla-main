@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.docs.bulk.Contributo_ritenutaBase"
+	keyClassName="it.cnr.contab.compensi00.docs.bulk.Contributo_ritenutaKey"
+	homeClassName="it.cnr.contab.compensi00.docs.bulk.Contributo_ritenutaHome" >
+	<defaultColumnMap
+		tableName="CONTRIBUTO_RITENUTA" >
+		<columnMapping
+			columnName="ALIQUOTA"
+			propertyName="aliquota"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			columnScale="6" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="esercizio_ori_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="IMPONIBILE"
+			propertyName="imponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ACCERTAMENTO"
+			propertyName="esercizio_ori_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="pg_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="IM_DEDUZIONE_IRPEF"
+			propertyName="im_deduzione_irpef"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_DEDUZIONE_FAMILY"
+			propertyName="im_deduzione_family"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />			
+		<columnMapping
+			columnName="PG_ACCERTAMENTO_SCADENZARIO"
+			propertyName="pg_accertamento_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_CDS_ACCERTAMENTO"
+			propertyName="cd_cds_accertamento"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="BASE_CALCOLO"
+			propertyName="base_calcolo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPONIBILE_LORDO"
+			propertyName="imponibile_lordo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="MONTANTE"
+			propertyName="montante"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_OBBLIGAZIONE"
+			propertyName="cd_cds_obbligazione"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="STATO_COFI_CR"
+			propertyName="stato_cofi_cr"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_ACCERTAMENTO"
+			propertyName="esercizio_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="DT_INI_VALIDITA"
+			propertyName="dt_ini_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="AMMONTARE_LORDO"
+			propertyName="ammontare_lordo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="AMMONTARE"
+			propertyName="ammontare"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="esercizio_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="IM_CORI_SOSPESO"
+			propertyName="im_cori_sospeso"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />			
+	</defaultColumnMap>
+	<persistentProperty
+		name="aliquota" />
+	<persistentProperty
+		name="esercizio_ori_obbligazione" />
+	<persistentProperty
+		name="pg_obbligazione" />
+	<persistentProperty
+		name="imponibile" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="esercizio_ori_accertamento" />
+	<persistentProperty
+		name="pg_accertamento" />
+	<persistentProperty
+		name="im_deduzione_irpef" />
+	<persistentProperty
+		name="im_deduzione_family" />		
+	<persistentProperty
+		name="pg_accertamento_scadenzario" />
+	<persistentProperty
+		name="cd_cds_accertamento" />
+	<persistentProperty
+		name="base_calcolo" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="imponibile_lordo" />
+	<persistentProperty
+		name="montante" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="cd_cds_obbligazione" />
+	<persistentProperty
+		name="pg_obbligazione_scadenzario" />
+	<persistentProperty
+		name="stato_cofi_cr" />
+	<persistentProperty
+		name="esercizio_accertamento" />
+	<persistentProperty
+		name="dt_ini_validita" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="ammontare_lordo" />
+	<persistentProperty
+		name="ammontare" />
+	<persistentProperty
+		name="esercizio_obbligazione" />
+	<persistentProperty
+		name="im_cori_sospeso" />		
+</SQLPersistentInfo>

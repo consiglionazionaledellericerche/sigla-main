@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk"
+	homeClassName="it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome">
+	<defaultColumnMap
+		tableName="VOCE_F_SALDI_CDR_LINEA">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="cd_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+	</defaultColumnMap>
+	
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_centro_responsabilita"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_appartenenza"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_gestione"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_voce"
+		partOfOid="true" />
+</SQLPersistentInfo>

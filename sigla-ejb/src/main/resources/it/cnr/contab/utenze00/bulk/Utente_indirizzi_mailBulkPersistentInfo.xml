@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk"
+	homeClassName="it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome">
+	<defaultColumnMap
+		tableName="UTENTE_INDIRIZZI_MAIL">
+		<columnMapping
+			columnName="CD_UTENTE"
+			propertyName="utente.cd_utente"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="utente"
+		partOfOid="true" />
+</SQLPersistentInfo>

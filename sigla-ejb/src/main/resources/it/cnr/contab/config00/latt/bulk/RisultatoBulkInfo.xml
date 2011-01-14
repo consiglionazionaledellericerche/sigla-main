@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_risultato"
+		property="pg_risultato"
+		inputType="TEXT"
+		label="pg_risultato" />
+	<fieldProperty
+		name="cd_tipo_risultato"
+		property="cd_tipo_risultato"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Tipo risultato"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="tipo_risultato"
+		property="tipo_risultato"
+		inputType="SEARCHTOOL"
+		formName="SEARCHTOOL"
+		label="Tipo risultato"
+		nullable="false" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_linea_attivita" />
+	<fieldProperty
+		name="ds_risultato"
+		property="ds_risultato"
+		cols="80"
+		rows="8"
+		inputType="TEXTAREA"
+		label="Descrizione"
+		caseSensitiveSearch="false"
+		nullable="false" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_centro_responsabilita" />
+	<fieldProperty
+		name="quantita"
+		property="quantita"
+		inputType="TEXT"
+		label="Quantità"
+		nullable="false" />
+
+	<formFieldProperty
+		name="tipo_risultato" />
+	<formFieldProperty
+		name="ds_risultato" />
+	<formFieldProperty
+		name="quantita" />
+
+	<columnFieldProperty
+		name="cd_tipo_risultato" />
+	<columnFieldProperty
+		name="ds_risultato" />
+	<columnFieldProperty
+		name="quantita" />
+
+</bulkInfo>

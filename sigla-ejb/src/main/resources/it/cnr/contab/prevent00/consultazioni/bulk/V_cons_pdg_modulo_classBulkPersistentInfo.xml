@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent00.consultazioni.bulk.V_cons_pdg_modulo_classBulk"
+	homeClassName="it.cnr.contab.prevent00.consultazioni.bulk.V_cons_pdg_modulo_classHome">
+	<defaultColumnMap
+		tableName="V_CONS_PDG_MODULO_CLASS">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"/>
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_CDR"
+			propertyName="ds_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="ID_CLASSIFICAZIONE"
+			propertyName="id_classificazione"
+			sqlTypeName="DECIMAL"
+			columnSize="7"
+			nullable="false"/>
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE"
+			propertyName="cd_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="34"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="34"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="ds_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO_RIPARTITO"
+			propertyName="importo_ripartito"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_centro_responsabilita" />
+	<persistentProperty
+		name="ds_cdr" />
+	<persistentProperty
+		name="id_classificazione" />
+	<persistentProperty
+		name="cd_classificazione" />
+	<persistentProperty
+		name="ds_classificazione" />
+	<persistentProperty
+		name="cd_progetto" />
+	<persistentProperty
+		name="ds_progetto" />
+	<persistentProperty
+		name="importo_ripartito" />
+</SQLPersistentInfo>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.intcass.bulk.V_sospeso_rev_accertBase"
+	homeClassName="it.cnr.contab.doccont00.intcass.bulk.V_sospeso_rev_accertHome" >
+	<defaultColumnMap
+		tableName="V_SOSPESO_REV_ACCERT" >
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="pg_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ACCERTAMENTO"
+			propertyName="esercizio_ori_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ACCERTAMENTO"
+			propertyName="im_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="cd_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_ORIGINE"
+			propertyName="cd_uo_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_SOSPESO"
+			propertyName="cd_sospeso"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_REVERSALE"
+			propertyName="pg_reversale"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ASSOCIATO"
+			propertyName="im_associato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_ENTRATA_SPESA"
+			propertyName="ti_entrata_spesa"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_SOSPESO_RISCONTRO"
+			propertyName="ti_sospeso_riscontro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_SOSPESO"
+			propertyName="im_sospeso"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_REVERSALE"
+			propertyName="im_reversale"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />	
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_accertamento" />
+	<persistentProperty
+		name="esercizio_ori_accertamento" />
+	<persistentProperty
+		name="im_accertamento" />
+	<persistentProperty
+		name="cd_voce" />
+	<persistentProperty
+		name="cd_uo_origine" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_sospeso" />
+	<persistentProperty
+		name="pg_reversale" />
+	<persistentProperty
+		name="im_associato" />
+	<persistentProperty
+		name="ti_entrata_spesa" />
+	<persistentProperty
+		name="ti_sospeso_riscontro" />
+	<persistentProperty
+		name="im_sospeso" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="im_reversale" />	
+</SQLPersistentInfo>

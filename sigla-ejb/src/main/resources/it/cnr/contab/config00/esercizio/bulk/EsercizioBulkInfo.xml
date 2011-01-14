@@ -1,0 +1,86 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="st_apertura_chiusura"
+		property="st_apertura_chiusura"
+		maxLength="1"
+		inputSize="1"
+		inputType="RADIOGROUP"
+		label="Stato"
+		keysProperty="statoKeys"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		maxLength="4"
+		inputSize="4"
+		inputType="TEXT"
+		label="Esercizio"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_esercizio"
+		property="ds_esercizio"
+		maxLength="100"
+		rows="3"
+		cols="40"
+		inputType="TEXTAREA"
+		label="Descrizione"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="ROTEXT"
+		maxLength="30"
+		inputSize="8"
+		label="Cds"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_cds"
+		property="ds_cds"
+		inputType="ROTEXT"
+		label=""
+		inputSize="20"
+		enabledOnSearch="true"/>
+
+
+	<formFieldProperty
+		name="st_apertura_chiusura" 
+		readonlyProperty="ROSt_apertura_chiusura"
+			/>
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="ds_esercizio" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="ds_cds" />
+
+	<columnFieldProperty
+		name="st_apertura_chiusura" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="ds_esercizio" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="ds_cds" />
+
+	<findFieldProperty
+		name="st_apertura_chiusura"
+		inputType="SELECT"/>
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="ds_esercizio" />
+	<findFieldProperty
+		name="cd_cds" />
+
+</bulkInfo>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.sto.bulk.CdrBase"
+	keyClassName="it.cnr.contab.config00.sto.bulk.CdrKey"
+	homeClassName="it.cnr.contab.config00.sto.bulk.CdrHome" >
+	<defaultColumnMap
+		tableName="CDR" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_RESPONSABILE"
+			propertyName="cd_responsabile"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="CD_CDR_AFFERENZA"
+			propertyName="cd_cdr_afferenza"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_PROPRIO_CDR"
+			propertyName="cd_proprio_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_CDR"
+			propertyName="ds_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_INIZIO"
+			propertyName="esercizio_inizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="LIVELLO"
+			propertyName="livello"
+			sqlTypeName="DECIMAL"
+			columnSize="2"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_FINE"
+			propertyName="esercizio_fine"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="INDIRIZZO"
+			propertyName="indirizzo"
+			sqlTypeName="VARCHAR"
+			columnSize="200" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="cd_responsabile" />
+	<persistentProperty
+		name="cd_cdr_afferenza" />
+	<persistentProperty
+		name="cd_proprio_cdr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="ds_cdr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="esercizio_inizio" />
+	<persistentProperty
+		name="livello" />
+	<persistentProperty
+		name="esercizio_fine" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="indirizzo" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

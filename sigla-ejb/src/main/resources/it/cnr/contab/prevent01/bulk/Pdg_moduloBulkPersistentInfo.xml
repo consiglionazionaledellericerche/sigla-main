@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent01.bulk.Pdg_moduloBulk"
+	homeClassName="it.cnr.contab.prevent01.bulk.Pdg_moduloHome">
+	<defaultColumnMap
+		tableName="PDG_MODULO">
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cdr.cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="progetto.pg_progetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			fetchOnly="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdr"
+		partOfOid="true" />
+	<persistentProperty
+		name="progetto"
+		partOfOid="true" />
+</SQLPersistentInfo>

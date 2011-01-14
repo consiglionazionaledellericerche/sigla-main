@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.docs.bulk.V_ass_inv_bene_fatturaBulk"
+	homeClassName="it.cnr.contab.inventario00.docs.bulk.V_ass_inv_bene_fatturaHome">
+	<defaultColumnMap
+		tableName="V_ASS_INV_BENE_FATTURA">
+	</defaultColumnMap>
+</SQLPersistentInfo>

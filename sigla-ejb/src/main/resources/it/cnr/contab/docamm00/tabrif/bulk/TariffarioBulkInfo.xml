@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="dt_ini_validita"
+		property="dt_ini_validita"
+		formatName="date_short"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		enabledOnInsert="true"
+		label="Inizio validità" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		formatName="date_short"
+		inputType="ROTEXT"
+		maxLength="10"
+		inputSize="10"
+		label="Fine validità" />
+	<fieldProperty
+		name="dataFineValidita"
+		property="dataFineValidita"
+		formatName="date_short"
+		inputType="ROTEXT"
+		maxLength="10"
+		inputSize="10"
+		label="Fine validità" />
+	<fieldProperty
+		name="im_tariffario"
+		property="im_tariffario"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="15"
+		nullable="false"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Prezzo unitario" />
+/* ****************** IVA **************** */
+	<fieldProperty
+		name="voce_iva"
+		property="voce_iva"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Voce IVA" />
+	<fieldProperty
+		name="cd_voce_iva"
+		property="voce_iva.cd_voce_iva" 
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROCd_voce_iva"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		enabledOnFreeSearch="true"
+		label="Codice voce IVA" />
+	<fieldProperty
+		name="ds_voce_iva"
+		property="voce_iva.ds_voce_iva"
+		maxLength="100"
+		inputSize="50"
+		inputType="ROTEXT"
+		label="Descrizione voce IVA" />
+
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Unità organizzativa"
+		nullable="false"
+		enabledOnSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="true"
+		enabledOnFreeSearch="false"/>
+	<fieldProperty
+		name="cd_tariffario"
+		property="cd_tariffario"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		enabledOnInsert="true"
+		nullable="false"		
+		label="Codice" />
+	<fieldProperty
+		name="unita_misura"
+		property="unita_misura"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Unità di misura"
+		nullable="false"		
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_tariffario"
+		property="ds_tariffario"
+		maxLength="100"
+		inputSize="60"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		caseSensitiveSearch="false"
+		label="Descrizione" />
+
+	<formFieldProperty name="natura" />
+	<formFieldProperty name="dt_ini_validita" />
+	<formFieldProperty name="voce_iva" />
+	<formFieldProperty name="cd_voce_iva" />
+	<formFieldProperty name="ds_voce_iva" />
+	<formFieldProperty name="cd_unita_organizzativa" />
+	<formFieldProperty name="cd_tariffario" />
+	<formFieldProperty name="dt_fine_validita" />
+	<formFieldProperty name="im_tariffario" />
+	<formFieldProperty name="unita_misura" />
+	<formFieldProperty name="ds_tariffario" />
+	<formFieldProperty name="dataFineValidita" />
+
+	<columnFieldProperty name="cd_unita_organizzativa" />
+	<columnFieldProperty name="cd_tariffario" />
+	<columnFieldProperty name="ds_tariffario" />
+	<columnFieldProperty name="cd_voce_iva" />
+	<columnFieldProperty name="im_tariffario" />
+	<columnFieldProperty name="unita_misura" />
+	<columnFieldProperty name="dt_ini_validita" />
+	<columnFieldProperty name="dataFineValidita" />
+	
+	<findFieldProperty name="dt_ini_validita" />
+	<findFieldProperty name="cd_unita_organizzativa" />		
+	<findFieldProperty name="cd_tariffario" />
+	<findFieldProperty name="ds_tariffario" />
+	<findFieldProperty name="unita_misura" />
+	<findFieldProperty name="cd_voce_iva" />
+		
+</bulkInfo>

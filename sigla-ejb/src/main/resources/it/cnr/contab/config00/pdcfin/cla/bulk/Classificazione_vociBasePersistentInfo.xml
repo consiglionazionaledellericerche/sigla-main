@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBase"
+	keyClassName="it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociKey"
+	homeClassName="it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociHome">
+	<defaultColumnMap
+		tableName="CLASSIFICAZIONE_VOCI">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LIVELLO3"
+			propertyName="cd_livello3"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LIVELLO4"
+			propertyName="cd_livello4"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LIVELLO5"
+			propertyName="cd_livello5"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LIVELLO6"
+			propertyName="cd_livello6"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LIVELLO7"
+			propertyName="cd_livello7"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="ID_CLASS_PADRE"
+			propertyName="id_class_padre"
+			sqlTypeName="DECIMAL"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="FL_MASTRINO"
+			propertyName="fl_mastrino"
+			sqlTypeName="CHAR"
+            converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"			
+			columnSize="1"
+			nullable="false" />			
+		<columnMapping
+			columnName="FL_CLASS_SAC"
+			propertyName="fl_class_sac"
+			sqlTypeName="CHAR"
+            converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"			
+			columnSize="1"
+			nullable="false" />			
+		<columnMapping
+			columnName="FL_SOLO_GESTIONE"
+			propertyName="fl_solo_gestione"
+			sqlTypeName="CHAR"
+            converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"			
+			columnSize="1"
+			nullable="false" />			
+		<columnMapping
+			columnName="FL_PIANO_RIPARTO"
+			propertyName="fl_piano_riparto"
+			sqlTypeName="CHAR"
+            converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"			
+			columnSize="1"
+			nullable="false" />			
+		<columnMapping
+			columnName="FL_ACCENTRATO"
+			propertyName="fl_accentrato"
+			sqlTypeName="CHAR"
+            converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"			
+			columnSize="1"
+			nullable="false" />			
+		<columnMapping
+			columnName="FL_DECENTRATO"
+			propertyName="fl_decentrato"
+			sqlTypeName="CHAR"
+            converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"			
+			columnSize="1"
+			nullable="false" />			
+		<columnMapping
+			columnName="FL_ESTERNA_DA_QUADRARE_SAC"
+			propertyName="fl_esterna_da_quadrare_sac"
+			sqlTypeName="CHAR"
+            converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"			
+			columnSize="1"
+			nullable="false" />			
+		<columnMapping
+			columnName="CDR_ACCENTRATORE"
+			propertyName="cdr_accentratore"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="ds_classificazione" />
+	<persistentProperty
+		name="cd_livello1" />
+	<persistentProperty
+		name="cd_livello2" />
+	<persistentProperty
+		name="cd_livello3" />
+	<persistentProperty
+		name="cd_livello4" />
+	<persistentProperty
+		name="cd_livello5" />
+	<persistentProperty
+		name="cd_livello6" />
+	<persistentProperty
+		name="cd_livello7" />
+	<persistentProperty
+		name="id_class_padre" />
+	<persistentProperty
+		name="fl_mastrino" />
+	<persistentProperty
+		name="fl_class_sac" />
+	<persistentProperty
+		name="fl_solo_gestione" />
+	<persistentProperty
+		name="fl_accentrato" />
+	<persistentProperty
+		name="fl_piano_riparto" />
+	<persistentProperty
+		name="fl_decentrato" />
+	<persistentProperty
+		name="fl_esterna_da_quadrare_sac" />
+	<persistentProperty
+		name="cdr_accentratore" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk"
+	homeClassName="it.cnr.contab.pdg00.bulk.Pdg_variazioneHome">
+	<defaultColumnMap
+		tableName="PDG_VARIAZIONE">
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="centro_responsabilita.cd_centro_responsabilita"/>			
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="elemento_voce.esercizio" 
+			fetchOnly="true" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="elemento_voce.ti_appartenenza" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="elemento_voce.ti_gestione" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="elemento_voce.cd_elemento_voce" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="tipo_variazione.esercizio" 
+			fetchOnly="true" />
+		<columnMapping
+			columnName="TIPOLOGIA"
+			propertyName="tipo_variazione.cd_tipo_variazione" />
+	</defaultColumnMap>
+	
+	<persistentProperty
+		name="centro_responsabilita" />	
+	<persistentProperty
+		name="elemento_voce" />	
+	<persistentProperty
+		name="tipo_variazione" />	
+	
+	<columnMap
+		name="VP_PDG_VARIAZIONE"
+		extends="default"
+		tableName="VP_PDG_VARIAZIONE" >
+		<columnMapping
+			columnName="DS_CDR"
+			propertyName="ds_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false"/>		 		
+	</columnMap> 
+	
+	<persistentProperty
+		name="ds_cdr" />	
+ 
+</SQLPersistentInfo>

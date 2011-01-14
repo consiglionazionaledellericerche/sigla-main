@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo persistentClassName="it.cnr.contab.config00.latt.bulk.WorkpackageBase" keyClassName="it.cnr.contab.config00.latt.bulk.WorkpackageKey" homeClassName="it.cnr.contab.config00.latt.bulk.WorkpackageHome">
+	<defaultColumnMap tableName="LINEA_ATTIVITA">
+		<columnMapping columnName="PG_VER_REC" propertyName="pg_ver_rec" sqlTypeName="DECIMAL" columnSize="22" nullable="false"/>
+		<columnMapping columnName="CD_NATURA" propertyName="cd_natura" sqlTypeName="VARCHAR" columnSize="1" nullable="false"/>
+		<columnMapping columnName="DENOMINAZIONE" propertyName="denominazione" sqlTypeName="VARCHAR" columnSize="300"/>
+		<columnMapping columnName="TI_GESTIONE" propertyName="ti_gestione" sqlTypeName="CHAR" columnSize="1" nullable="false"/>
+		<columnMapping columnName="UTCR" propertyName="utcr" sqlTypeName="VARCHAR" columnSize="20" nullable="false"/>
+		<columnMapping columnName="DS_LINEA_ATTIVITA" propertyName="ds_linea_attivita" sqlTypeName="VARCHAR" columnSize="300"/>
+		<columnMapping columnName="CD_GRUPPO_LINEA_ATTIVITA" propertyName="cd_gruppo_linea_attivita" sqlTypeName="VARCHAR" columnSize="10"/>
+		<columnMapping columnName="DACR" propertyName="dacr" sqlTypeName="TIMESTAMP" columnSize="7" nullable="false"/>
+		<columnMapping columnName="DUVA" propertyName="duva" sqlTypeName="TIMESTAMP" columnSize="7" nullable="false"/>
+		<columnMapping columnName="CD_CDR_COLLEGATO" propertyName="cd_cdr_collegato" sqlTypeName="VARCHAR" columnSize="30"/>
+		<columnMapping columnName="ESERCIZIO_INIZIO" propertyName="esercizio_inizio" sqlTypeName="DECIMAL" columnSize="4" nullable="false"/>
+		<columnMapping columnName="CD_LA_COLLEGATO" propertyName="cd_la_collegato" sqlTypeName="VARCHAR" columnSize="10"/>
+		<columnMapping columnName="CD_INSIEME_LA" propertyName="cd_insieme_la" sqlTypeName="VARCHAR" columnSize="10"/>
+		<columnMapping columnName="ESERCIZIO_FINE" propertyName="esercizio_fine" sqlTypeName="DECIMAL" columnSize="4" nullable="false"/>
+		<columnMapping columnName="CD_FUNZIONE" propertyName="cd_funzione" sqlTypeName="VARCHAR" columnSize="2"/>
+		<columnMapping columnName="CD_TIPO_LINEA_ATTIVITA" propertyName="cd_tipo_linea_attivita" sqlTypeName="VARCHAR" columnSize="10"/>
+		<columnMapping columnName="UTUV" propertyName="utuv" sqlTypeName="VARCHAR" columnSize="20" nullable="false"/>
+		<columnMapping columnName="PG_PROGETTO" propertyName="pg_progetto" sqlTypeName="DECIMAL" columnSize="10" nullable="true"/>
+		<columnMapping columnName="CD_RESPONSABILE_TERZO" propertyName="cd_responsabile_terzo" sqlTypeName="DECIMAL" columnSize="8" nullable="true"/>			
+		<columnMapping
+			columnName="FL_LIMITE_ASS_OBBLIG"
+			propertyName="fl_limite_ass_obblig"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+			
+	</defaultColumnMap>
+	<persistentProperty name="pg_ver_rec"/>
+	<persistentProperty name="cd_natura"/>
+	<persistentProperty name="denominazione"/>
+	<persistentProperty name="ti_gestione"/>
+	<persistentProperty name="utcr"/>
+	<persistentProperty name="ds_linea_attivita"/>
+	<persistentProperty name="cd_gruppo_linea_attivita"/>
+	<persistentProperty name="dacr"/>
+	<persistentProperty name="duva"/>
+	<persistentProperty name="cd_cdr_collegato"/>
+	<persistentProperty name="esercizio_inizio"/>
+	<persistentProperty name="cd_la_collegato"/>
+	<persistentProperty name="cd_insieme_la"/>
+	<persistentProperty name="esercizio_fine"/>
+	<persistentProperty name="cd_funzione"/>
+	<persistentProperty name="cd_tipo_linea_attivita"/>
+	<persistentProperty name="utuv"/>
+	<persistentProperty name="pg_progetto"/>
+	<persistentProperty name="cd_responsabile_terzo"/>				
+	<persistentProperty name="fl_limite_ass_obblig"/>				
+	
+</SQLPersistentInfo>

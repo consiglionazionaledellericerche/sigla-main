@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Ass_tipo_cori_evBulk"
+	homeClassName="it.cnr.contab.compensi00.tabrif.bulk.Ass_tipo_cori_evHome">
+	<defaultColumnMap
+		tableName="ASS_TIPO_CORI_EV">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="elemento_voce.esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="elemento_voce.ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="elemento_voce.ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="elemento_voce.cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="45" />
+		<columnMapping
+			columnName="CD_CONTRIBUTO_RITENUTA"
+			propertyName="contributo_ritenuta.cd_contributo_ritenuta" />								
+	</defaultColumnMap>
+	<persistentProperty
+		name="elemento_voce.esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="elemento_voce.ti_appartenenza"
+		partOfOid="true" />
+	<persistentProperty
+		name="elemento_voce.ti_gestione"
+		partOfOid="true" />
+	<persistentProperty
+		name="elemento_voce.cd_elemento_voce"
+		partOfOid="false" />		
+	<persistentProperty
+		name="contributo_ritenuta.cd_contributo_ritenuta"
+		partOfOid="true" />
+		
+</SQLPersistentInfo>

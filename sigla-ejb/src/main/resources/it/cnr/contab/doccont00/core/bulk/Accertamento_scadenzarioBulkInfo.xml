@@ -1,0 +1,237 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="fl_aggiorna_scad_successiva"
+		property="fl_aggiorna_scad_successiva"
+		label="Aggiorna scadenza successiva"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_cds"
+		property="accertamento.cds.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Cds" />
+	<fieldProperty
+		name="ds_scadenza"
+		property="ds_scadenza"
+		label="Descrizione"
+		inputType="TEXT"
+		maxLength="300"
+		inputSize="50"
+		enabledOnSearch="true"
+		nullable="false"		
+		/>
+	<fieldProperty
+		name="dt_scadenza_incasso"
+		property="dt_scadenza_incasso"
+		label="Data scadenza"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnSearch="true"
+		nullable="false"		
+		/>
+	<fieldProperty
+		name="im_scadenza"
+		property="im_scadenza"
+		label="Importo scadenza"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"	
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false"		
+		/>
+	<fieldProperty
+		name="esercizio"
+		property="accertamento.esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="esercizio_originale"
+		property="accertamento.esercizio_originale"
+		inputType="TEXT"
+		label="Es. Accertamento" />
+	<fieldProperty
+		name="pg_accertamento"
+		property="accertamento.pg_accertamento"
+		inputType="TEXT"
+		label="N. accertamento" />
+	<fieldProperty
+		name="importo_disponibile"
+		property="importoDisponibile"
+		inputType="TEXT"
+		label="Importo Disponibile"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		/>
+	<fieldProperty
+		name="im_associato_doc_amm"
+		property="im_associato_doc_amm"
+		inputType="TEXT"
+		label="Importo associato doc amm" />
+	<fieldProperty
+		name="dt_scadenza_emissione_fattura"
+		property="dt_scadenza_emissione_fattura"
+		inputType="TEXT"
+		label="Data scadenza emissione fattura" />
+	<fieldProperty
+		name="pg_accertamento_scadenzario"
+		property="pg_accertamento_scadenzario"
+		inputType="TEXT"
+		label="N. scadenzario" />
+	<fieldProperty
+		name="esercizio_reversale"
+		property="esercizio_reversale"
+		label="Esercizio reversale"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="pg_reversale"
+		property="pg_reversale"
+		label="Nr. reversale"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="esercizio_doc_attivo"
+		property="esercizio_doc_attivo"
+		label="Esercizio doc. attivo"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="pg_doc_attivo"
+		property="pg_doc_attivo"
+		label="Nr. doc. attivo"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="cd_tipo_documento_amm"
+		property="cd_tipo_documento_amm"
+		label="Tipo doc. attivo"
+		keysProperty= "tipoDocumentoKeys"		
+		inputType="TEXT"
+		/>		
+	<fieldProperty
+		name="im_associato_doc_contabile"
+		property="im_associato_doc_contabile"
+		inputType="TEXT"
+		label="im_associato_doc_contabile" 
+		/>
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="im_associato_doc_amm" />
+	<formFieldProperty
+		name="ds_scadenza" />
+	<formFieldProperty
+		name="dt_scadenza_incasso" />
+	<formFieldProperty
+		name="im_scadenza" />
+	<formFieldProperty
+		name="dt_scadenza_emissione_fattura" />
+	<formFieldProperty
+		name="fl_aggiorna_scad_successiva" />
+	<formFieldProperty
+		name="importo_disponibile"
+		/>
+
+	<columnFieldProperty
+		name="esercizio"
+		/>
+	<columnFieldProperty
+		name="cd_cds"
+		/>
+	<columnFieldProperty
+		name="esercizio_originale"
+		/>
+	<columnFieldProperty
+		name="pg_accertamento"
+		/>
+	<columnFieldProperty
+		name="dt_scadenza_incasso"
+		/>
+	<columnFieldProperty
+		name="im_scadenza"
+		columnStyle="width:80px; text-align: right; padding-right:20px"
+		/>
+	<columnFieldProperty
+		name="importo_disponibile"
+		columnStyle="width:80px; text-align: right; padding-right:20px"
+		/>
+	<columnFieldProperty
+		name="ds_scadenza"
+		/>
+	<columnFieldProperty
+		name="cd_terzo"
+		label="Beneficiario"
+		property="accertamento.cd_terzo"
+		/>
+
+	<columnSet name="accertamento">
+		<columnFieldProperty name="dt_scadenza_incasso"/>
+		<columnFieldProperty name="ds_scadenza"/>
+		<columnFieldProperty name="im_scadenza" columnStyle="width:80px; text-align: right; padding-right:20px"/>
+		<columnFieldProperty name="esercizio_reversale"/>
+		<columnFieldProperty name="pg_reversale"/>
+		<columnFieldProperty name="esercizio_doc_attivo"/>		
+		<columnFieldProperty name="cd_tipo_documento_amm"/>
+		<columnFieldProperty name="pg_doc_attivo"/>
+	</columnSet>
+
+	<columnSet
+		name="regolarizzazione">
+	<columnFieldProperty
+		name="pg_accertamento_scadenzario"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="dt_scadenza_incasso"
+		inputType="ROTEXT"
+		columnStyle="width:80px"/>
+	<columnFieldProperty
+		name="im_scadenza"
+		inputType="ROTEXT"
+		columnStyle="text-align: right"/>
+	<columnFieldProperty
+		name="im_associato_doc_amm"
+		inputType="ROTEXT"
+		headerLabel="IMPORTO ASSOCIATO"
+		label="Documento Amministrativo"
+		formatName = "it.cnr.contab.util.EuroFormat"	
+		columnStyle="text-align: right"/>
+	<columnFieldProperty
+		name="im_associato_doc_contabile"
+		inputType="ROTEXT"
+		headerLabel="IMPORTO ASSOCIATO"
+		label="Documento Contabile"
+		formatName = "it.cnr.contab.util.EuroFormat"	
+		columnStyle="text-align: right"/>
+	</columnSet>	
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="esercizio_originale" />
+	<findFieldProperty
+		name="pg_accertamento" />
+	<findFieldProperty
+		name="im_associato_doc_amm" />
+	<findFieldProperty
+		name="ds_scadenza" />
+	<findFieldProperty
+		name="dt_scadenza_incasso" />
+	<findFieldProperty
+		name="im_scadenza" />
+	<findFieldProperty
+		name="dt_scadenza_emissione_fattura" />
+
+</bulkInfo>

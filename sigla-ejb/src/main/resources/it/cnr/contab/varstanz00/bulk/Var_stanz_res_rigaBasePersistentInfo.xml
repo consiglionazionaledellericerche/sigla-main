@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBase"
+	keyClassName="it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaKey"
+	homeClassName="it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaHome">
+	<defaultColumnMap
+		tableName="VAR_STANZ_RES_RIGA">
+		<columnMapping
+			columnName="ESERCIZIO_VOCE"
+			propertyName="esercizio_voce"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_RES"
+			propertyName="esercizio_res"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDR"
+			propertyName="cd_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="cd_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_VARIAZIONE"
+			propertyName="im_variazione"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio_voce" />
+	<persistentProperty
+		name="esercizio_res" />
+	<persistentProperty
+		name="cd_cdr" />
+	<persistentProperty
+		name="cd_linea_attivita" />
+	<persistentProperty
+		name="ti_appartenenza" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="cd_voce" />
+	<persistentProperty
+		name="im_variazione" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

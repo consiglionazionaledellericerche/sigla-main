@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.varstanz00.bulk.Var_stanz_resBase"
+	keyClassName="it.cnr.contab.varstanz00.bulk.Var_stanz_resKey"
+	homeClassName="it.cnr.contab.varstanz00.bulk.Var_stanz_resHome">
+	<defaultColumnMap
+		tableName="VAR_STANZ_RES">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_RES"
+			propertyName="esercizio_residuo"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"/>			
+		<columnMapping
+			columnName="DT_APERTURA"
+			propertyName="dt_apertura"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_DELIBERA"
+			propertyName="ds_delibera"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_VARIAZIONE"
+			propertyName="ds_variazione"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_CHIUSURA"
+			propertyName="dt_chiusura"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_APPROVAZIONE"
+			propertyName="dt_approvazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_ANNULLAMENTO"
+			propertyName="dt_annullamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_AGGIUNTIVA"
+			propertyName="ds_aggiuntiva"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="TIPOLOGIA"
+			propertyName="tipologia"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="TIPOLOGIA_FIN"
+			propertyName="tipologia_fin"
+			sqlTypeName="VARCHAR"
+			columnSize="3"/>
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="cd_centro_responsabilita" />
+	<persistentProperty
+		name="esercizio_residuo" />		
+	<persistentProperty
+		name="dt_apertura" />
+	<persistentProperty
+		name="ds_delibera" />
+	<persistentProperty
+		name="ds_variazione" />
+	<persistentProperty
+		name="dt_chiusura" />
+	<persistentProperty
+		name="dt_approvazione" />
+	<persistentProperty
+		name="dt_annullamento" />
+	<persistentProperty
+		name="ds_aggiuntiva" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="tipologia" />
+	<persistentProperty
+		name="tipologia_fin" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

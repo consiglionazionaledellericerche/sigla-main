@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk"
+	homeClassName="it.cnr.contab.inventario01.bulk.Buono_carico_scaricoHome">
+	<defaultColumnMap
+		tableName="BUONO_CARICO_SCARICO">
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="inventario.pg_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_TIPO_CARICO_SCARICO"
+			propertyName="tipoMovimento.cd_tipo_carico_scarico"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="inventario"
+		partOfOid="true" />
+	<persistentProperty
+		name="tipoMovimento"
+		partOfOid="false" />
+</SQLPersistentInfo>

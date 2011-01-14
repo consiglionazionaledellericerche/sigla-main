@@ -1,0 +1,278 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Annotazione di Spesa sul bilancio Ente">
+
+	<fieldProperty
+		name="cd_tipo_documento_cont"
+		property="cd_tipo_documento_cont"
+		inputType="SELECT"
+		keysProperty="competenzaResiduoKeys"		
+		label="Competenza/Residuo"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"				
+		caseSensitiveSearch="false" />		
+		/>
+	<fieldProperty
+		name="im_obbligazione"
+		property="im_obbligazione"
+		label="Importo"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="unita_organizzativa"
+		property="unita_organizzativa"
+		inputType="SELECT"
+		optionsProperty="unitaOrganizzativaOptions"
+		printProperty="ds_estesa"
+		nullable="false"
+		inputSize="40"
+		label="Unit&#224; organizzativa"
+		enabledOnSearch="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"				
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="esercizio_competenza"
+		property="esercizio_competenza"
+		label="Esercizio"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="5"
+		enabledOnFreeSearch="false"
+		/>
+	<fieldProperty
+		name="dt_scadenza"
+		property="dt_scadenza"
+		label="Data scadenza"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="esercizio_mandato"
+		property="esercizio_mandato"
+		label="Esercizio mandato"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"
+		/>
+	<fieldProperty
+		name="pg_mandato"
+		property="pg_mandato"
+		label="Nr. mandato"
+		inputType="ROTEXT"
+		/>
+	<fieldProperty
+		name="esercizio_doc_passivo"
+		property="esercizio_doc_passivo"
+		label="Esercizio doc. passivo"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"
+		/>
+	<fieldProperty
+		name="pg_doc_passivo"
+		property="pg_doc_passivo"
+		label="Nr. doc. passivo"
+		inputType="ROTEXT"
+		/>
+	<fieldProperty
+		name="cd_tipo_documento_amm"
+		property="cd_tipo_documento_amm"
+		label="Tipo doc. passivo"
+		keysProperty= "tipoDocumentoKeys"
+		inputType="ROTEXT"
+		/>
+	<fieldProperty
+		name="find_elemento_voce"
+		property="elemento_voce"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		completeOnSave="true"
+		label="Voce del Piano"
+		columnSet="impegno"
+		/>
+	<fieldProperty
+		name="find_voce"
+		property="voce_f"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		completeOnSave="true"
+		label="Voce del Piano"
+		columnSet="impegno"
+		/>
+	<fieldProperty
+		name="cd_voce"
+		property="voce_f.cd_voce"
+		label="Voce del piano"
+		inputType="TEXT"
+		readonlyProperty="ROVoce_f"
+		maxLength="20"
+		inputSize="10"
+		enabledOnSearch="true"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="ds_voce"
+		property="voce_f.ds_voce"
+		label=""
+		inputType="ROTEXT"
+		inputSize="60"
+		/>
+	<fieldProperty
+		name="esercizio_originale"
+		property="esercizio_originale"
+		label="Es. Impegno"
+		inputType="TEXT"
+		maxLength="4"
+		inputSize="4"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		/>		
+	<fieldProperty
+		name="pg_obbligazione"
+		property="pg_obbligazione"
+		label="Numero Progressivo"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		/>		
+	<fieldProperty
+		name="dt_cancellazione"
+		property="dt_cancellazione"
+		label="Data Cancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_cds_origine"
+		property="cd_cds_origine"
+		label="CdS origine"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="cd_uo_origine"
+		property="cd_uo_origine"
+		inputType="TEXT"
+		label="UO origine"
+		/>
+		
+	<formFieldProperty
+		name="cd_tipo_documento_cont"/>	
+	<formFieldProperty
+		name="im_obbligazione"/>	
+	<formFieldProperty
+		name="unita_organizzativa"
+		/>
+	<formFieldProperty
+		name="esercizio_competenza"
+		/>
+	<formFieldProperty
+		name="dt_scadenza"
+		/>
+	<formFieldProperty
+		name="esercizio_mandato"
+		/>
+	<formFieldProperty
+		name="pg_mandato"
+		/>
+	<formFieldProperty
+		name="esercizio_doc_passivo"
+		/>
+	<formFieldProperty
+		name="pg_doc_passivo"
+		/>
+	<formFieldProperty
+		name="cd_tipo_documento_amm"
+		/>
+	<formFieldProperty
+		name="cd_terzo"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		/>
+	<formFieldProperty
+		name="find_creditore"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		/>
+	<formFieldProperty
+		name="find_elemento_voce"
+		/>
+	<formFieldProperty
+		name="find_voce"
+		/>
+	<formFieldProperty
+		name="cd_voce"
+		/>
+	<formFieldProperty
+		name="ds_voce"
+		/>
+	<formFieldProperty
+		name="esercizio_originale"
+		/>
+	<formFieldProperty
+		name="pg_obbligazione"
+		/>
+	<formFieldProperty
+		name="dt_cancellazione"
+		/>
+
+	<columnFieldProperty
+		name="esercizio_competenza"
+		label="Esercizio"/>
+	<columnFieldProperty
+		name="cd_cds_origine"
+		/>
+	<columnFieldProperty
+		name="cd_uo_origine"
+		/>	
+	<columnFieldProperty
+		name="esercizio_originale"/>
+	<columnFieldProperty
+		name="pg_obbligazione"/>
+	<columnFieldProperty
+		name="im_obbligazione"
+		columnStyle="width:130px; text-align: right; padding-right:5px"/>
+	<columnFieldProperty
+		name="dt_cancellazione"/>
+
+	<findFieldProperty
+		name="cd_cds_origine"
+		/>
+	<findFieldProperty
+		name="cd_uo_origine"
+		/>
+	<findFieldProperty
+		name="im_obbligazione"/>	
+	<findFieldProperty
+		name="esercizio_competenza"
+		/>
+	<findFieldProperty
+		name="esercizio_originale"
+		/>
+	<findFieldProperty
+		name="pg_obbligazione"
+		/>
+	<findFieldProperty
+		name="dt_cancellazione"
+		/>		
+
+</bulkInfo>

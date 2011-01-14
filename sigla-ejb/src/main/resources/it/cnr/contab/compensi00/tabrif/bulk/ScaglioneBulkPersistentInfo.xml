@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.ScaglioneBulk"
+	homeClassName="it.cnr.contab.compensi00.tabrif.bulk.ScaglioneHome" >
+	<defaultColumnMap
+		tableName="SCAGLIONE" >
+
+		<columnMapping
+			columnName="CD_PROVINCIA"
+			propertyName="provincia.cd_provincia" />
+		<columnMapping
+			columnName="CD_REGIONE"
+			propertyName="regione.cd_regione" />
+		<columnMapping
+			columnName="PG_COMUNE"
+			propertyName="comune.pg_comune" />
+		<columnMapping
+			columnName="CD_CONTRIBUTO_RITENUTA"
+			propertyName="contributo_ritenuta.cd_contributo_ritenuta" />								
+	</defaultColumnMap>
+	
+	<persistentProperty
+		name="cd_contributo_ritenuta"
+		partOfOid="true" />
+	<persistentProperty
+		name="provincia"
+		partOfOid="true" />		
+	<persistentProperty
+		name="regione"
+		partOfOid="true" />
+	<persistentProperty
+		name="comune"
+		partOfOid="true" />				
+		
+</SQLPersistentInfo>

@@ -1,0 +1,209 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="pg_comune"
+		property="pg_comune"
+		maxLength="10"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Progr."
+		/>
+	<fieldProperty
+		name="ds_comune"
+		property="ds_comune"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false"
+		label="Descrizione"
+		/>
+	<fieldProperty
+		name="ti_italiano_estero"
+		property="ti_italiano_estero"
+		keysProperty="ti_italiano_esteroKeys"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"	
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Italiano/Estero"
+		/>
+	<fieldProperty
+		name="cd_comune"
+		property="cd_comune"
+		maxLength="10"
+		inputSize="20"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice ISTAT"
+		/>
+	<fieldProperty
+		name="cd_catastale"
+		property="cd_catastale"
+		maxLength="10"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice catastale"
+		/>
+	<fieldProperty
+		name="cd_cap"
+		property="cd_cap"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="CAP"
+		/>
+/*********************************/
+/*********** NAZIONE *************/
+/*********************************/
+	<fieldProperty
+		name="pg_nazione"
+		property="pg_nazione"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Progr. nazione" />
+	<fieldProperty
+		name="ds_nazione"
+		property="nazione.ds_nazione"
+		inputSize="70"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		label="Descr. nazione" />
+	<fieldProperty
+		name="find_nazione"
+		property="nazione"
+		inputType="SEARCHTOOL"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Nazione" />
+/* *********** ******* *********** */
+/* ********** PROVINCIA ********** */
+/* *********** ******* *********** */
+	<fieldProperty
+		name="cd_provincia"
+		property="cd_provincia"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice provincia" />
+	<fieldProperty
+		name="ds_provincia"
+		property="provincia.ds_provincia"
+		inputSize="70"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		label="Descr. provincia"
+		/>
+	<fieldProperty
+		name="find_provincia"
+		property="provincia"
+		inputType="SEARCHTOOL"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Provincia" />
+	<fieldProperty
+		name="dt_canc"
+		property="dt_canc"
+		inputType="TEXT"
+		formatName="date_short"								
+		label="Data cancellazione"
+		enabledOnSearch="true"
+		enabledOnEdit="true" />	
+/* *********** ******* *********** */
+
+	<form name="searchtool" >
+		<formFieldProperty
+			name="ds_comune"
+			inputSize="30"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true" />
+	</form>
+	
+	<formFieldProperty name="pg_comune" />
+	<formFieldProperty name="ds_comune" />
+	<formFieldProperty name="ti_italiano_estero" />
+	<formFieldProperty name="cd_comune" />
+	<formFieldProperty name="cd_catastale" />
+	<formFieldProperty name="cd_cap" />
+	<formFieldProperty
+		name="pg_nazione"
+		readonlyProperty="ROPgNazione" />
+	<formFieldProperty
+		name="ds_nazione"
+		readonlyProperty="ROPgNazione" />
+	<formFieldProperty name="find_nazione" />
+	<formFieldProperty
+		name="cd_provincia"
+		readonlyProperty="ROCdProvincia" />
+	<formFieldProperty
+		name="ds_provincia"
+		readonlyProperty="ROCdProvincia" />
+	<formFieldProperty name="find_provincia" />
+	<formFieldProperty name="dt_canc" />
+	<columnFieldProperty name="pg_comune" />
+	<columnFieldProperty name="ds_comune" />
+	<columnFieldProperty name="ti_italiano_estero" />
+	<columnFieldProperty name="cd_comune" />
+	<columnFieldProperty name="cd_catastale" />
+	<columnFieldProperty name="cd_cap" />
+	<columnFieldProperty
+		name = "ds_nazione"
+		label = "Nazione" />
+	<columnFieldProperty
+		name="cd_provincia"
+		label="Provincia"/>
+	<findFieldProperty name="pg_comune" />
+	<findFieldProperty name="ds_comune" />
+	<findFieldProperty name="ti_italiano_estero" />
+	<findFieldProperty name="cd_comune" />
+	<findFieldProperty name="cd_catastale" />
+	<findFieldProperty name="cd_cap" />
+	<findFieldProperty name="pg_nazione" />
+	<findFieldProperty name="cd_provincia" />
+</bulkInfo>

@@ -1,0 +1,5 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Stampa_giornale_mandatiBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Stampa_giornale_mandatiHome" >
+
+</SQLPersistentInfo>

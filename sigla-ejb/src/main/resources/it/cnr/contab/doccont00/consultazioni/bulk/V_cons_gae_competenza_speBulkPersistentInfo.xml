@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_competenza_speBulk"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_competenza_speHome">
+		<defaultColumnMap
+		tableName="V_CONS_GAE_COMPETENZA_SPE">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_DIPARTIMENTO"
+			propertyName="cd_dipartimento"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="pg_progetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="ds_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_COMMESSA"
+			propertyName="pg_commessa"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_COMMESSA"
+			propertyName="cd_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_COMMESSA"
+			propertyName="ds_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_MODULO"
+			propertyName="pg_modulo"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_LINEA_ATTIVITA"
+			propertyName="ds_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="ds_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_STANZ_INIZIALE_A1"
+			propertyName="im_stanz_iniziale_a1"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_VARIAZIONE_PDG"
+			propertyName="pg_variazione_pdg"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_VARIAZIONE"
+			propertyName="ds_variazione"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONI_PIU"
+			propertyName="variazioni_piu"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONI_MENO"
+			propertyName="variazioni_meno"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_OBB"
+			propertyName="cd_cds_obb"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_SCADENZA"
+			propertyName="ds_scadenza"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPEGNI_COMP"
+			propertyName="impegni_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_MAN"
+			propertyName="cd_cds_man"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pg_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MANDATO"
+			propertyName="ds_mandato"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="MANDATI_COMP"
+			propertyName="mandati_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_NATURA"
+			propertyName="ds_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />		
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_dipartimento" />
+	<persistentProperty
+		name="pg_progetto" />
+	<persistentProperty
+		name="cd_progetto" />
+	<persistentProperty
+		name="ds_progetto" />
+	<persistentProperty
+		name="pg_commessa" />
+	<persistentProperty
+		name="cd_commessa" />
+	<persistentProperty
+		name="ds_commessa" />
+	<persistentProperty
+		name="pg_modulo" />
+	<persistentProperty
+		name="cd_modulo" />
+	<persistentProperty
+		name="ds_modulo" />
+	<persistentProperty
+		name="cd_centro_responsabilita" />
+	<persistentProperty
+		name="cd_linea_attivita" />
+	<persistentProperty
+		name="ds_linea_attivita" />
+	<persistentProperty
+		name="ti_appartenenza" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="cd_elemento_voce" />
+	<persistentProperty
+		name="ds_elemento_voce" />
+	<persistentProperty
+		name="im_stanz_iniziale_a1" />
+	<persistentProperty
+		name="pg_variazione_pdg" />
+	<persistentProperty
+		name="ds_variazione" />
+	<persistentProperty
+		name="variazioni_piu" />
+	<persistentProperty
+		name="variazioni_meno" />
+	<persistentProperty
+		name="cd_cds_obb" />
+	<persistentProperty
+		name="pg_obbligazione" />
+	<persistentProperty
+		name="pg_obbligazione_scadenzario" />
+	<persistentProperty
+		name="ds_scadenza" />
+	<persistentProperty
+		name="impegni_comp" />
+	<persistentProperty
+		name="cd_cds_man" />
+	<persistentProperty
+		name="pg_mandato" />
+	<persistentProperty
+		name="ds_mandato" />
+	<persistentProperty
+		name="mandati_comp" />	
+	<persistentProperty
+		name="assestato" />
+	<persistentProperty
+		name="disponibile" />		
+	<persistentProperty
+		name="da_pagare" />	
+	<persistentProperty
+		name="ds_natura" />	 	
+	<columnMap 
+		name="BASELIN"
+		tableName="V_CONS_GAE_COMPETENZA_SPE">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_DIPARTIMENTO"
+			propertyName="cd_dipartimento"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_COMMESSA"
+			propertyName="cd_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+			<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />		
+		<columnMapping
+			columnName="DS_NATURA"
+			propertyName="ds_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />	
+		</columnMap>			
+	<columnMap 
+		name="SPELIN"
+		tableName="V_CONS_GAE_COMPETENZA_SPE"
+		extends="BASELIN" >
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="ds_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_COMMESSA"
+			propertyName="ds_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_LINEA_ATTIVITA"
+			propertyName="ds_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_STANZ_INIZIALE_A1"
+			propertyName="im_stanz_iniziale_a1"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		<columnMapping
+			columnName="VARIAZIONI_PIU"
+			propertyName="variazioni_piu"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONI_MENO"
+			propertyName="variazioni_meno"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		<columnMapping
+			columnName="IMPEGNI_COMP"
+			propertyName="impegni_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="MANDATI_COMP"
+			propertyName="mandati_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />		
+		<columnMapping
+			columnName="ASSESTATO"
+			propertyName="assestato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		<columnMapping
+			columnName="DISPONIBILE"
+			propertyName="disponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DA_PAGARE"
+			propertyName="da_pagare"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />		
+		</columnMap>	
+		<columnMap 
+			name="BASELINVOC"
+			tableName="V_CONS_GAE_COMPETENZA_SPE"
+			extends="BASELIN" >
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		</columnMap>	
+		<columnMap 
+			name="SPELINVOC"
+			tableName="V_CONS_GAE_COMPETENZA_SPE"
+			extends="BASELINVOC" >
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="ds_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_COMMESSA"
+			propertyName="ds_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_LINEA_ATTIVITA"
+			propertyName="ds_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_STANZ_INIZIALE_A1"
+			propertyName="im_stanz_iniziale_a1"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		<columnMapping
+			columnName="VARIAZIONI_PIU"
+			propertyName="variazioni_piu"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONI_MENO"
+			propertyName="variazioni_meno"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		<columnMapping
+			columnName="IMPEGNI_COMP"
+			propertyName="impegni_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="MANDATI_COMP"
+			propertyName="mandati_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />		
+		<columnMapping
+			columnName="ASSESTATO"
+			propertyName="assestato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		<columnMapping
+			columnName="DISPONIBILE"
+			propertyName="disponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DA_PAGARE"
+			propertyName="da_pagare"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />			
+		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="ds_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		</columnMap>		
+		
+		<columnMap 
+			name="SPELINVOCVARP"
+			tableName="V_CONS_GAE_COMPETENZA_SPE"
+			extends="BASELINVOC" >
+		<columnMapping
+			columnName="PG_VARIAZIONE_PDG"
+			propertyName="pg_variazione_pdg"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_VARIAZIONE"
+			propertyName="ds_variazione"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONI_PIU"
+			propertyName="variazioni_piu"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		</columnMap>	
+		<columnMap 
+			name="SPELINVOCVARM"
+			tableName="V_CONS_GAE_COMPETENZA_SPE"
+			extends="BASELINVOC" >
+		<columnMapping
+			columnName="PG_VARIAZIONE_PDG"
+			propertyName="pg_variazione_pdg"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_VARIAZIONE"
+			propertyName="ds_variazione"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONI_MENO"
+			propertyName="variazioni_meno"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		</columnMap>		
+		<columnMap 
+			name="SPELINVOCIMP"
+			tableName="V_CONS_GAE_COMPETENZA_SPE"
+			extends="BASELINVOC">
+		<columnMapping
+			columnName="CD_CDS_OBB"
+			propertyName="cd_cds_obb"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_SCADENZA"
+			propertyName="ds_scadenza"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPEGNI_COMP"
+			propertyName="impegni_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		<columnMapping
+			columnName="MANDATI_COMP"
+			propertyName="mandati_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />			
+		<columnMapping
+			columnName="DA_PAGARE"
+			propertyName="da_pagare"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />			
+		</columnMap>		
+		<columnMap 
+			name="SPELINVOCMAN"
+			tableName="V_CONS_GAE_COMPETENZA_SPE"
+			extends="BASELINVOC">
+		<columnMapping
+			columnName="CD_CDS_MAN"
+			propertyName="cd_cds_man"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pg_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MANDATO"
+			propertyName="ds_mandato"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="MANDATI_COMP"
+			propertyName="mandati_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		</columnMap>	
+		<columnMap 
+			name="SPELINVOCIMPMAN"
+			tableName="V_CONS_GAE_COMPETENZA_SPE"
+			extends="BASELINVOC" >
+		<columnMapping
+			columnName="CD_CDS_OBB"
+			propertyName="cd_cds_obb"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_SCADENZA"
+			propertyName="ds_scadenza"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_CDS_MAN"
+			propertyName="cd_cds_man"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pg_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MANDATO"
+			propertyName="ds_mandato"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="MANDATI_COMP"
+			propertyName="mandati_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		</columnMap>				
+</SQLPersistentInfo>

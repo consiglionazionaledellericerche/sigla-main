@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.bulk.V_incarichi_da_assegnareBulk"
+	homeClassName="it.cnr.contab.incarichi00.bulk.V_incarichi_da_assegnareHome">
+	<defaultColumnMap
+		tableName="V_INCARICHI_DA_ASSEGNARE">
+		<columnMapping
+			columnName="ESERCIZIO_LIMITE"
+			propertyName="esercizio_limite"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_PROCEDURA"
+			propertyName="pg_procedura"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_REPERTORIO"
+			propertyName="esercizio_repertorio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_REPERTORIO"
+			propertyName="pg_repertorio"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PUBBLICAZIONE"
+			propertyName="dt_pubblicazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_FINE_PUBBLICAZIONE"
+			propertyName="dt_fine_pubblicazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_SCADENZA"
+			propertyName="dt_scadenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_LIMITE"
+			propertyName="cd_tipo_limite"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_INCARICHI"
+			propertyName="im_incarichi"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio_limite" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="pg_procedura" />
+	<persistentProperty
+		name="esercizio_repertorio" />
+	<persistentProperty
+		name="pg_repertorio" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="dt_pubblicazione" />
+	<persistentProperty
+		name="dt_fine_pubblicazione" />
+	<persistentProperty
+		name="dt_scadenza" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="cd_tipo_limite" />
+	<persistentProperty
+		name="im_incarichi" />
+</SQLPersistentInfo>

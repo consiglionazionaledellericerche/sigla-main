@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoKey" >
+	<defaultColumnMap
+		tableName="RIF_INQUADRAMENTO" >
+		<columnMapping
+			columnName="PG_RIF_INQUADRAMENTO"
+			propertyName="pg_rif_inquadramento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_rif_inquadramento"
+		partOfOid="true" />
+</SQLPersistentInfo>

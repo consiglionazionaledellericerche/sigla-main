@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.preventvar00.bulk.Var_bilancio_detBulk"
+	keyClassName="it.cnr.contab.preventvar00.bulk.Var_bilancio_detKey"
+	homeClassName="it.cnr.contab.preventvar00.bulk.Var_bilancio_detHome" >
+
+	<defaultColumnMap tableName="VAR_BILANCIO_DET" >
+
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="varBilancio.bilancio.cd_cds" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="varBilancio.bilancio.esercizio" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="varBilancio.bilancio.ti_appartenenza" />
+		<columnMapping
+			columnName="PG_VARIAZIONE"
+			propertyName="varBilancio.pg_variazione" />
+			
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="voceFSaldi.esercizio"
+			fetchOnly="true" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="voceFSaldi.ti_appartenenza"
+			fetchOnly="true" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="voceFSaldi.ti_gestione" />
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="voceFSaldi.cd_voce" />
+
+	</defaultColumnMap>
+		
+	<persistentProperty
+		name="varBilancio" />
+
+</SQLPersistentInfo>

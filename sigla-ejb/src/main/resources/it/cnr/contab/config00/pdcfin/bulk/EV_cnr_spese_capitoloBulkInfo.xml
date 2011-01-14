@@ -1,0 +1,49 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="find_titolo_padre"
+		property="titolo_padre"
+		optionsProperty="titolo_padre"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="false"
+		/>
+	<fieldProperty
+		name="cd_titolo_padre"
+		property="titolo_padre.cd_elemento_voce"
+		label="Titolo"
+		inputType="TEXT"
+		maxLength="30"
+		inputSize="6"
+		enabledOnSearch="false"
+		readonlyProperty="ROTitolo_padre"
+		/>
+	<fieldProperty
+		name="ds_titolo_padre"
+		property="titolo_padre.ds_elemento_voce"
+		label=""
+		inputType="ROTEXT"
+		/>
+
+	<formFieldProperty
+		name="find_titolo_padre"
+		/>
+	<formFieldProperty
+		name="cd_titolo_padre"
+		/>
+	<formFieldProperty
+		name="ds_titolo_padre"
+		/>
+
+	<columnFieldProperty
+		name="cd_elemento_padre"
+		label="Sezione"
+		/>
+	<findFieldProperty
+		name="cd_elemento_padre"
+		label="Sezione"
+		/>
+
+
+</bulkInfo>

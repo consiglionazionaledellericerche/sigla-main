@@ -1,0 +1,90 @@
+<action-mappings>
+
+	<action
+		path="/StampaRendicontoFinanziarioCDSEnAction" actionClass="it.cnr.contab.reports.action.OfflineReportPrintAction">
+	</action>
+
+	<action
+		path="/StampaRendicontoFinanziarioCDSSpAction" actionClass="it.cnr.contab.reports.action.OfflineReportPrintAction">
+	</action>
+
+	<action
+		path="/StampaRendicontoFinanziarioSACSpAction" actionClass="it.cnr.contab.reports.action.OfflineReportPrintAction">
+	</action>
+
+	<action
+		path="/StampaRendFinanziarioCNRAction" actionClass="it.cnr.contab.pdg00.action.StampaRendFinanziarioCNRAction">
+	</action>
+
+	<action
+		path="/StampaStatoPatrimRiclassAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+
+	<action
+		path="/StampaContoEconomRiclassAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+	
+	<businessProcess
+      name="RendicontoFinanziarioCDSEntrateBP" className="it.cnr.contab.pdg00.bp.StampaRendicontoFinanziarioBP">
+	    <forward name="default" path="/breports/offline_print_report.jsp"/>
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+		<init-param name="defaultAction" value="StampaRendicontoFinanziarioCDSEnAction"/>
+	    <init-param name="reportName" value="/cnrpreventivo/pdg/rendfinentratecds.jasper" />
+	    <init-param name="reportType" value="CDS_E" />
+    </businessProcess>
+
+	<businessProcess
+      name="RendicontoFinanziarioCDSSpeseBP" className="it.cnr.contab.pdg00.bp.StampaRendicontoFinanziarioBP">
+	    <forward name="default" path="/breports/offline_print_report.jsp"/>
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+		<init-param name="defaultAction" value="StampaRendicontoFinanziarioCDSSpAction"/>
+	    <init-param name="reportName" value="/cnrpreventivo/pdg/rendfinspesecds.jasper" />
+	    <init-param name="reportType" value="CDS_S" />
+    </businessProcess>
+
+	<businessProcess
+      name="RendicontoFinanziarioSACSpeseBP" className="it.cnr.contab.pdg00.bp.StampaRendicontoFinanziarioBP">
+	    <forward name="default" path="/breports/offline_print_report.jsp"/>
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+		<init-param name="defaultAction" value="StampaRendicontoFinanziarioSACSpAction"/>
+	    <init-param name="reportName" value="/cnrpreventivo/pdg/rendfinspesecdsSAC.jasper" />
+	    <init-param name="reportType" value="SAC_S" />
+    </businessProcess>
+
+	<businessProcess
+      name="StampaRendFinanziarioCNRBP" className="it.cnr.contab.pdg00.bp.StampaRendFinanziarioCNRBP">
+	    <forward name="default" path="/pdg00/stampa_rend_fin_cnr.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.StampaRendFinCNRVBulk" />
+		<init-param name="defaultAction" value="StampaRendFinanziarioCNRAction"/>
+	    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession" />
+    </businessProcess>
+
+	<businessProcess
+      name="StampaRendFinanziarioCNRperCdsBP" className="it.cnr.contab.pdg00.bp.StampaRendFinanziarioCNRperCdsBP">
+	    <forward name="default" path="/pdg00/stampa_rend_fin_cnrcds.jsp"/>
+   		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.StampaRendFinCNRVBulk" />
+		<init-param name="defaultAction" value="StampaRendFinanziarioCNRAction"/>		
+	    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession" />
+    </businessProcess>
+
+	<businessProcess
+      name="StampaStatoPatrimRiclassBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+	    <forward name="default" path="/pdg00/stampa_stato_patrim_riclassificato.jsp"/>
+	   	<init-param name="printbp" value="OfflineReportPrintBP"/>	
+   		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Stampa_vpg_stato_patrim_riclassVBulk" />
+		<init-param name="defaultAction" value="StampaStatoPatrimRiclassAction"/>		
+	    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession" />
+	    <init-param name="reportName" value="/cnrpreventivo/pdg/statopatrimonialericlassificato.jasper" />
+    </businessProcess>
+
+	<businessProcess
+      name="StampaContoEconomRiclassBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+	    <forward name="default" path="/pdg00/stampa_conto_econom_riclassificato.jsp"/>
+	   	<init-param name="printbp" value="OfflineReportPrintBP"/>	
+   		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Stampa_vpg_conto_econom_riclassVBulk" />
+		<init-param name="defaultAction" value="StampaContoEconomRiclassAction"/>		
+	    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession" />
+	    <init-param name="reportName" value="/cnrpreventivo/pdg/contoeconomicoriclassificato.jasper" />
+    </businessProcess>
+	
+</action-mappings>

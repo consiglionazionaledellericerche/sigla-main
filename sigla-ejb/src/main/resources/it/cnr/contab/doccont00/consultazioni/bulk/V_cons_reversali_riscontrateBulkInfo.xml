@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="dt_registrazione"
+		property="dt_registrazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Registrazione" />
+	<fieldProperty
+		name="cd_sospeso"
+		property="cd_sospeso"
+		inputType="TEXT"
+		inputSize="24"
+		maxLength="24"
+		label="Sospeso" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="UO" />
+	<fieldProperty
+		name="pg_reversale"
+		property="pg_reversale"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Prog. Reversale" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Cds" />
+	<fieldProperty
+		name="im_sospeso"
+		property="im_sospeso"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Sospeso" />
+	<fieldProperty
+		name="im_associato"
+		property="im_associato"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Associato" />
+		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_cds" />	
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="pg_reversale" />	
+	<formFieldProperty
+		name="cd_sospeso" />	
+	<formFieldProperty
+		name="dt_registrazione" />
+	<formFieldProperty
+		name="im_sospeso" />
+	<formFieldProperty
+		name="im_associato" />
+		
+	<findFieldProperty
+		name="cd_cds" />	
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="pg_reversale" />	
+	<findFieldProperty
+		name="cd_sospeso" />	
+	<findFieldProperty
+		name="dt_registrazione" />
+	<findFieldProperty
+		name="im_sospeso" />
+	<findFieldProperty
+		name="im_associato" />			
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_cds" />	
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="pg_reversale" />	
+	<columnFieldProperty
+		name="cd_sospeso" />	
+	<columnFieldProperty
+		name="dt_registrazione" />
+	<columnFieldProperty
+		name="im_sospeso" />
+	<columnFieldProperty
+		name="im_associato" />			
+</bulkInfo>

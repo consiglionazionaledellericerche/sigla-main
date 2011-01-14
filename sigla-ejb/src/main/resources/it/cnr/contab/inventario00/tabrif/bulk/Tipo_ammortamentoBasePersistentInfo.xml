@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.tabrif.bulk.Tipo_ammortamentoBase"
+	keyClassName="it.cnr.contab.inventario00.tabrif.bulk.Tipo_ammortamentoKey"
+	homeClassName="it.cnr.contab.inventario00.tabrif.bulk.Tipo_ammortamentoHome" >
+	<defaultColumnMap
+		tableName="TIPO_AMMORTAMENTO" >
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dt_cancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PERC_SUCCESSIVI"
+			propertyName="perc_successivi"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PERC_PRIMO_ANNO"
+			propertyName="perc_primo_anno"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="NUMERO_ANNI"
+			propertyName="numero_anni"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_TIPO_AMMORTAMENTO"
+			propertyName="ds_tipo_ammortamento"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_cancellazione" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="perc_successivi" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="perc_primo_anno" />
+	<persistentProperty
+		name="numero_anni" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="ds_tipo_ammortamento" />
+</SQLPersistentInfo>

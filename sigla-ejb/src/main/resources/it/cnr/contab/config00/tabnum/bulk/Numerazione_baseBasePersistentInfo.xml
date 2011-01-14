@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.tabnum.bulk.Numerazione_baseBase"
+	keyClassName="it.cnr.contab.config00.tabnum.bulk.Numerazione_baseKey"
+	homeClassName="it.cnr.contab.config00.tabnum.bulk.Numerazione_baseHome" >
+	<defaultColumnMap
+		tableName="NUMERAZIONE_BASE" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CORRENTE"
+			propertyName="cd_corrente"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_MASSIMO"
+			propertyName="cd_massimo"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_INIZIALE"
+			propertyName="cd_iniziale"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="cd_corrente" />
+	<persistentProperty
+		name="cd_massimo" />
+	<persistentProperty
+		name="cd_iniziale" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

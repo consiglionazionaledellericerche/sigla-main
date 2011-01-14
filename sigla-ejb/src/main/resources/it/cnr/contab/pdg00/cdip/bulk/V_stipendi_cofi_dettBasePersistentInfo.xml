@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.cdip.bulk.V_stipendi_cofi_dettBase"
+	homeClassName="it.cnr.contab.pdg00.cdip.bulk.V_stipendi_cofi_dettHome">
+	<defaultColumnMap
+		tableName="V_STIPENDI_COFI_DETT">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="MESE"
+			propertyName="mese"
+			sqlTypeName="DECIMAL"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_FLUSSO"
+			propertyName="tipo_flusso"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="ENTRATA_SPESA"
+			propertyName="entrata_spesa"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="mese" />
+	<persistentProperty
+		name="tipo_flusso" />
+	<persistentProperty
+		name="entrata_spesa" />
+</SQLPersistentInfo>

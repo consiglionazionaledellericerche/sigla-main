@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Cds" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="UO" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="im_commissioni"
+		property="im_commissioni"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		nullable="false"
+		label="Commissioni" />
+	<fieldProperty
+		name="im_pagamento"
+		property="im_pagamento"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		nullable="false"
+		label="Importo" />
+	<fieldProperty
+		name="pg_lettera"
+		property="pg_lettera"
+		inputType="TEXT"
+		label="N. lettera" />
+	<fieldProperty
+		name="dt_registrazione"
+		property="dt_registrazione"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"
+		nullable="false"
+		label="Data registrazione" />
+	<fieldProperty
+		name="cd_sospeso"
+		property="sospeso.cd_sospeso_padre"
+		inputType="TEXT"
+		maxLength="24"
+		inputSize="10"
+		readonlyProperty="ROSospeso"
+		label="N. sospeso"
+		nullable="false"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio_sospeso"
+		property="sospeso.esercizio"
+		inputType="ROTEXT"
+		label="Esercizio sospeso" />
+	<fieldProperty
+		name="cd_cds_sospeso"
+		property="sospeso.cd_cds"
+		inputType="ROTEXT"
+		label="Cds sospeso" />
+	<fieldProperty
+		name="ti_entrata_spesa"
+		property="sospeso.ti_entrata_spesa"
+		keysProperty="tipo_sospesoKeys"
+		inputType="ROTEXT"
+		label="Tipo sospeso" />
+	<fieldProperty
+		name="sospeso"
+		property="sospeso"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROSospesoSearchTool"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		completeOnSave="false"
+		label="Sospeso"/>
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="im_commissioni" />
+	<formFieldProperty
+		name="im_pagamento" />
+	<formFieldProperty
+		name="pg_lettera" />
+	<formFieldProperty
+		name="dt_registrazione" />
+	<formFieldProperty
+		name="cd_sospeso" />
+	<formFieldProperty
+		name="esercizio_sospeso" />
+	<formFieldProperty
+		name="cd_cds_sospeso" />
+	<formFieldProperty
+		name="ti_entrata_spesa" />
+	<formFieldProperty
+		name="sospeso" />
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="im_commissioni" />
+	<columnFieldProperty
+		name="im_pagamento" />
+	<columnFieldProperty
+		name="pg_lettera" />
+	<columnFieldProperty
+		name="dt_registrazione" />
+	<columnFieldProperty
+		name="cd_sospeso" />
+	<columnFieldProperty
+		name="esercizio_sospeso" />
+	<columnFieldProperty
+		name="cd_cds_sospeso" />
+	<columnFieldProperty
+		name="ti_entrata_spesa" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="im_commissioni" />
+	<findFieldProperty
+		name="im_pagamento" />
+	<findFieldProperty
+		name="pg_lettera" />
+	<findFieldProperty
+		name="dt_registrazione" />
+	<findFieldProperty
+		name="cd_sospeso" />
+	<findFieldProperty
+		name="esercizio_sospeso" />
+	<findFieldProperty
+		name="cd_cds_sospeso" />
+	<findFieldProperty
+		name="ti_entrata_spesa" />
+	<findFieldProperty
+		name="sospeso" />
+
+</bulkInfo>

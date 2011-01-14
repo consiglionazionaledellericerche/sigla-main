@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		maxLength="4"
+		inputSize="5"
+		inputType="TEXT"
+		label="Esercizio"
+		enabledOnInsert="false"
+      	enabledOnEdit="false"
+		enabledOnSearch="false" 
+		enabledOnFreeSearch="false"		
+		nullable="false" />
+	<fieldProperty
+		name="codice_cla_s"
+		property="codice_cla_s"
+		maxLength="20"
+		inputSize="25"
+		inputType="TEXT"
+		label="Codice Classificazione"
+		caseSensitiveSearch="false"	
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"			
+		nullable="false" />
+	<fieldProperty
+		name="descrizione"
+		property="descrizione"
+		maxLength="400"
+		inputSize="50"
+		inputType="TEXTAREA"
+		cols="100"
+		rows="5"		
+		label="Descrizione"
+		caseSensitiveSearch="false"
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="fl_mastrino"
+		property="fl_mastrino"
+		inputType="CHECKBOX"
+		inputSize="1"		
+		label="Mastrino" 
+		nullable="false"/>
+	/********************************************************
+	* Searchtool per la ricerca della classificazione padre *
+	*********************************************************/
+	<fieldProperty
+		name="find_classificazione_spese"
+		property="classificazione_spese"
+		inputType="SEARCHTOOL"
+		label="Classificazione padre"
+		caseSensitiveSearch="false"		
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"		
+		nullable="true" />
+					
+	<fieldProperty
+		name="esercizio_padre"
+		property="classificazione_spese.esercizio"
+		maxLength="4"
+		inputSize="5"
+		inputType="ROTEXT"
+		label="Esercizio padre"
+		readonlyProperty="ROClassificazione_spese"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"	
+		nullable="true" />
+	<fieldProperty
+		name="codice_cla_s_padre"
+		property="classificazione_spese.codice_cla_s"
+		maxLength="20"
+		inputSize="25"
+		inputType="TEXT"
+		label="Classificazione Padre"
+		readonlyProperty="ROClassificazione_spese"		
+		caseSensitiveSearch="false"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"		
+		enabledOnEdit="true" />
+				
+ 	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="esercizio_padre"
+			inputType="TEXT" />
+		<formFieldProperty
+			name="codice_cla_s_padre"
+			inputType="TEXT"/>
+	</form>
+
+	/********************************************************
+	* Searchtool per la ricerca della classificazione       *
+	*********************************************************/
+ 	<form
+		name="searchtoolbase" >
+		<formFieldProperty
+		    inputSize="10"
+			name="codice_cla_s"
+			label="Classificazione Spese"/>
+		<formFieldProperty
+		    inputSize="40"
+			name="descrizione"
+    		inputType="TEXT"
+			label="Descrizione Classificazione Spese"/>
+	</form>
+
+	 <formFieldProperty
+		name="esercizio" />
+	 <formFieldProperty
+		name="codice_cla_s" />		
+	 <formFieldProperty
+		name="descrizione" />
+	 <formFieldProperty
+		name="esercizio_padre"/>	
+	 <formFieldProperty
+		name="codice_cla_s_padre"/>			
+	 <formFieldProperty
+		name="fl_mastrino"/>
+	 <formFieldProperty
+		name="find_classificazione_spese" />
+		
+	
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="codice_cla_s" />								
+	<columnFieldProperty
+		name="descrizione" />
+	<columnFieldProperty
+		name="esercizio_padre" />
+	<columnFieldProperty
+		name="codice_cla_s_padre" />				
+	<columnFieldProperty
+		name="fl_mastrino" />
+								
+	
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="codice_cla_s" />	
+	<findFieldProperty
+		name="descrizione" />
+	<findFieldProperty
+		name="esercizio_padre" />
+	<findFieldProperty
+		name="codice_cla_s_padre" />											
+	<findFieldProperty
+		name="fl_mastrino" /> 
+		
+</bulkInfo>

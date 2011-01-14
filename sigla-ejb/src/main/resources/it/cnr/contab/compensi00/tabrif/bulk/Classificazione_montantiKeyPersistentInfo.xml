@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Classificazione_montantiKey" >
+	<defaultColumnMap
+		tableName="CLASSIFICAZIONE_MONTANTI" >
+		<columnMapping
+			columnName="PG_CLASSIFICAZIONE_MONTANTI"
+			propertyName="pg_classificazione_montanti"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_classificazione_montanti"
+		partOfOid="true" />
+</SQLPersistentInfo>

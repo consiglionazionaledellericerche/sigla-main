@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.esercizio.bulk.EsercizioBase"
+	keyClassName="it.cnr.contab.config00.esercizio.bulk.EsercizioKey"
+	homeClassName="it.cnr.contab.config00.esercizio.bulk.EsercizioHome" >
+	<defaultColumnMap
+		tableName="ESERCIZIO" >
+		<columnMapping
+			columnName="ST_APERTURA_CHIUSURA"
+			propertyName="st_apertura_chiusura"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_CASSA_INIZIALE"
+			propertyName="im_cassa_iniziale"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_ESERCIZIO"
+			propertyName="ds_esercizio"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="st_apertura_chiusura" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="im_cassa_iniziale" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="ds_esercizio" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

@@ -1,0 +1,52 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.AnagraficoHome" >
+	<defaultColumnMap
+		tableName="ANAGRAFICO" >
+		<columnMapping
+			columnName="PG_COMUNE_FISCALE"
+			propertyName="comune_fiscale.pg_comune" />
+		<columnMapping
+			columnName="PG_NAZIONE_FISCALE"
+			propertyName="comune_fiscale.nazione.pg_nazione" />
+		<columnMapping
+			columnName="PG_COMUNE_NASCITA"
+			propertyName="comune_nascita.pg_comune" />
+		<columnMapping
+			columnName="PG_NAZIONE_NAZIONALITA"
+			propertyName="nazionalita.pg_nazione" />
+		<columnMapping
+			columnName="CD_CLASSIFIC_ANAG"
+			propertyName="classificazione_anag.cd_classific_anag" />
+		<columnMapping
+			columnName="CD_ENTE_APPARTENENZA"
+			propertyName="cd_ente_app.cd_anag" />
+		<columnMapping
+			columnName="CD_ATTIVITA_INPS"
+			propertyName="attivitaInps.cd_attivita_inps" />
+		<columnMapping
+			columnName="ALTRA_ASS_PREVID_INPS"
+			propertyName="altraAssPrevidInps.altra_ass_previd_inps" />
+		<columnMapping
+			columnName="PG_TIPOLOGIA"
+			propertyName="tipologia_istat.pg_tipologia" />
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="comune_fiscale" />
+	<persistentProperty
+		name="comune_nascita" />
+	<persistentProperty
+		name="nazionalita" />
+	<persistentProperty
+		name="classificazione_anag" />
+	<persistentProperty
+		name="cd_ente_app" />
+	<persistentProperty
+		name="attivitaInps" />
+	<persistentProperty
+		name="altraAssPrevidInps" />
+	<persistentProperty
+		name="tipologia_istat" />
+	
+</SQLPersistentInfo>

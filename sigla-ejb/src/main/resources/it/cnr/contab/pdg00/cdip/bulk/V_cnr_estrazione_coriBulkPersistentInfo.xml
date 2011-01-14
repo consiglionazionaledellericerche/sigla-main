@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.cdip.bulk.V_cnr_estrazione_coriBulk"
+	homeClassName="it.cnr.contab.pdg00.cdip.bulk.V_cnr_estrazione_coriHome">
+	<defaultColumnMap
+		tableName="V_CNR_ESTRAZIONE_CORI">
+	</defaultColumnMap>
+	<columnMap 
+	   name="DISTINCT_MESE"
+	   tableName="V_CNR_ESTRAZIONE_CORI">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="MESE"
+			propertyName="mese"
+			sqlTypeName="DECIMAL"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_ESTRAZIONE"
+			propertyName="dt_estrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+	</columnMap>
+	
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="mese" />
+	<persistentProperty
+		name="dt_estrazione" />
+</SQLPersistentInfo>

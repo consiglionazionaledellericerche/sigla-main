@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.RapportoBase"
+	keyClassName="it.cnr.contab.anagraf00.core.bulk.RapportoKey"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.RapportoHome" >
+	<defaultColumnMap
+		tableName="RAPPORTO" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CAUSALE_FINE_RAPPORTO"
+			propertyName="causale_fine_rapporto"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_FIN_VALIDITA"
+			propertyName="dt_fin_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="MATRICOLA_DIPENDENTE"
+			propertyName="matricola_dipendente"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_ENTE_PREV_STI"
+			propertyName="cd_ente_prev_sti"
+			sqlTypeName="VARCHAR"
+			columnSize="2" />	
+		<columnMapping
+			columnName="CD_RAPP_IMPIEGO_STI"
+			propertyName="cd_rapp_impiego_sti"
+			sqlTypeName="VARCHAR"
+			columnSize="2" />					
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="causale_fine_rapporto" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="dt_fin_validita" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="matricola_dipendente" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="cd_ente_prev_sti" />
+	<persistentProperty
+		name="cd_rapp_impiego_sti" />		
+</SQLPersistentInfo>

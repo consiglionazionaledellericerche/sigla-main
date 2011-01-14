@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Totale documenti contabili per Commessa e Contratto"
+          longDescription="Totali per Commessa-Contratto">
+	<fieldProperty
+		name="cd_commessa"
+		property="cd_commessa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice commessa" />
+	<fieldProperty
+		name="ds_commessa"
+		property="ds_commessa"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="400"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Descrizione commessa" />
+	<fieldProperty
+		name="cd_progetto"
+		property="cd_progetto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice progetto" />
+	<fieldProperty
+		name="ds_progetto"
+		property="ds_progetto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="400"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Descrizione progetto" />
+	<fieldProperty
+		name="esercizio_contratto_padre"
+		property="esercizio_contratto_padre"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Esercizio contratto di riferimento" />
+	<fieldProperty
+		name="pg_contratto_padre"
+		property="pg_contratto_padre"
+		inputType="TEXT"
+		inputSize="9"
+		maxLength="9"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Progressivo contratto di riferimento" />
+	<fieldProperty
+		name="esercizio_contratto"
+		property="esercizio_contratto"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Esercizio contratto" />
+	<fieldProperty
+		name="pg_contratto"
+		property="pg_contratto"
+		inputType="TEXT"
+		inputSize="9"
+		maxLength="9"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Progressivo contratto" />
+	<fieldProperty
+		name="oggetto_contratto"
+		property="oggetto_contratto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="500"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Oggetto del contratto" />
+	<fieldProperty
+		name="totale_entrate"
+		property="totale_entrate"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Totale accertamenti" />
+	<fieldProperty
+		name="totale_spese"
+		property="totale_spese"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Totale obbligazioni" />
+	<formFieldProperty
+		name="cd_commessa" />
+	<formFieldProperty
+		name="ds_commessa" />
+	<formFieldProperty
+		name="cd_progetto" />
+	<formFieldProperty
+		name="ds_progetto" />
+	<formFieldProperty
+		name="esercizio_contratto_padre" />
+	<formFieldProperty
+		name="pg_contratto_padre" />
+	<formFieldProperty
+		name="esercizio_contratto" />
+	<formFieldProperty
+		name="pg_contratto" />
+	<formFieldProperty
+		name="oggetto_contratto" />
+	<formFieldProperty
+		name="totale_entrate" />
+	<formFieldProperty
+		name="totale_spese" />		
+	<findFieldProperty
+		name="cd_commessa" />
+	<findFieldProperty
+		name="ds_commessa" />
+	<findFieldProperty
+		name="cd_progetto" />
+	<findFieldProperty
+		name="ds_progetto" />
+	<findFieldProperty
+		name="esercizio_contratto_padre" />
+	<findFieldProperty
+		name="pg_contratto_padre" />
+	<findFieldProperty
+		name="esercizio_contratto" />
+	<findFieldProperty
+		name="pg_contratto" />
+	<findFieldProperty
+		name="oggetto_contratto" />
+	<findFieldProperty
+		name="totale_entrate" />
+	<findFieldProperty
+		name="totale_spese" />
+	<columnFieldProperty
+		name="cd_commessa" />
+	<columnFieldProperty
+		name="ds_commessa" />
+	<columnFieldProperty
+		name="cd_progetto" />
+	<columnFieldProperty
+		name="ds_progetto" />
+	<columnFieldProperty
+		name="esercizio_contratto_padre" />
+	<columnFieldProperty
+		name="pg_contratto_padre" />
+	<columnFieldProperty
+		name="esercizio_contratto" />
+	<columnFieldProperty
+		name="pg_contratto" />
+	<columnFieldProperty
+		name="oggetto_contratto" />
+	<columnFieldProperty
+		name="totale_entrate" />
+	<columnFieldProperty
+		name="totale_spese" />
+    <columnSet 
+        name="Commessa">
+	<columnFieldProperty
+		name="cd_commessa" />
+	<columnFieldProperty
+		name="ds_commessa" />
+	<columnFieldProperty
+		name="cd_progetto" />
+	<columnFieldProperty
+		name="ds_progetto" />
+	<columnFieldProperty
+		name="totale_entrate" />
+	<columnFieldProperty
+		name="totale_spese" />        
+    </columnSet>    
+    <columnSet 
+        name="Commessa_contratto">
+	<columnFieldProperty
+		name="cd_commessa" />
+	<columnFieldProperty
+		name="ds_commessa" />
+	<columnFieldProperty
+		name="cd_progetto" />		
+	<columnFieldProperty
+		name="ds_progetto" />
+	<columnFieldProperty
+		name="esercizio_contratto" />
+	<columnFieldProperty
+		name="pg_contratto" />
+	<columnFieldProperty
+		name="oggetto_contratto" />		
+	<columnFieldProperty
+		name="totale_entrate" />
+	<columnFieldProperty
+		name="totale_spese" />        
+    </columnSet>    
+    
+    
+</bulkInfo>

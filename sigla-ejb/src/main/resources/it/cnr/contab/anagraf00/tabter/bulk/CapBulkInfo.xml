@@ -1,0 +1,66 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_cap"
+		property="cd_cap"
+		maxLength="5"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="CAP" />
+/* *************** ****** *************** */
+/* *************** COMUNE *************** */
+/* *************** ****** *************** */
+	<fieldProperty
+		name="pg_comune"
+		property="pg_comune"
+		readonlyProperty="ROComune"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice" />
+	<fieldProperty
+		name="ds_comune"
+		property="comune.ds_comune"
+		readonlyProperty="ROComune"
+		inputSize="70"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="find_comune"
+		property="comune"
+		inputType="SEARCHTOOL"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Comune/Citt&#224;" />
+
+	<formFieldProperty name="cd_cap" />
+	<formFieldProperty name="pg_comune" />
+	<formFieldProperty name="ds_comune" />
+	<formFieldProperty name="find_comune" />
+
+	<columnFieldProperty name="cd_cap" />
+	<columnFieldProperty name="ds_comune" />
+
+	<findFieldProperty name="cd_cap" />
+	<findFieldProperty name="pg_comune" />
+
+</bulkInfo>

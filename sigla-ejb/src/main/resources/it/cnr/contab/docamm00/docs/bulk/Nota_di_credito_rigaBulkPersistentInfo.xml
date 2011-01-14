@@ -1,0 +1,89 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk"
+	homeClassName="it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaHome" >
+
+	<defaultColumnMap
+		tableName="FATTURA_PASSIVA_RIGA" >		
+
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="notaDiCredito.esercizio" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="notaDiCredito.cd_cds" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="notaDiCredito.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_FATTURA_PASSIVA"
+			propertyName="notaDiCredito.pg_fattura_passiva" />	
+
+
+		<columnMapping
+			columnName="ESERCIZIO_ASSNCNA_FIN"
+			propertyName="riga_fattura_associata.fattura_passivaI.esercizio" />
+		<columnMapping
+			columnName="CD_CDS_ASSNCNA_FIN"
+			propertyName="riga_fattura_associata.fattura_passivaI.cd_cds" />
+		<columnMapping
+			columnName="CD_UO_ASSNCNA_FIN"
+			propertyName="riga_fattura_associata.fattura_passivaI.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_FATTURA_ASSNCNA_FIN"
+			propertyName="riga_fattura_associata.fattura_passivaI.pg_fattura_passiva" />	
+		<columnMapping
+			columnName="PG_RIGA_ASSNCNA_FIN"
+			propertyName="riga_fattura_associata.progressivo_riga" />	
+
+
+		<columnMapping
+			columnName="ESERCIZIO_ASSNCNA_ECO"
+			propertyName="riga_fattura_origine.fattura_passivaI.esercizio" />
+		<columnMapping
+			columnName="CD_CDS_ASSNCNA_ECO"
+			propertyName="riga_fattura_origine.fattura_passivaI.cd_cds" />
+		<columnMapping
+			columnName="CD_UO_ASSNCNA_ECO"
+			propertyName="riga_fattura_origine.fattura_passivaI.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_FATTURA_ASSNCNA_ECO"
+			propertyName="riga_fattura_origine.fattura_passivaI.pg_fattura_passiva" />	
+		<columnMapping
+			columnName="PG_RIGA_ASSNCNA_ECO"
+			propertyName="riga_fattura_origine.progressivo_riga" />	
+
+			
+		<columnMapping
+			columnName="CD_CDS_ACCERTAMENTO"
+			propertyName="accertamento_scadenzario.accertamento.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_ACCERTAMENTO"
+			propertyName="accertamento_scadenzario.accertamento.esercizio" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ACCERTAMENTO"
+			propertyName="accertamento_scadenzario.accertamento.esercizio_originale" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="accertamento_scadenzario.accertamento.pg_accertamento" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO_SCADENZARIO"
+			propertyName="accertamento_scadenzario.pg_accertamento_scadenzario" />
+	</defaultColumnMap>		
+
+	<persistentProperty
+		name="notaDiCredito"
+		partOfOid="true"/>
+
+	<fetchPolicy
+		name="testata">
+		<exclude pattern="notaDiCredito.*" />
+	</fetchPolicy>
+
+	<persistentProperty
+		name="riga_fattura_origine" />
+	<persistentProperty
+		name="riga_fattura_associata" />
+	<persistentProperty
+		name="accertamento_scadenzario" />
+
+</SQLPersistentInfo>

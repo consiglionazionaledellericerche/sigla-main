@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.docs.bulk.AnticipoBulk"
+	homeClassName="it.cnr.contab.missioni00.docs.bulk.AnticipoHome" >
+	
+	<defaultColumnMap tableName="ANTICIPO">		
+
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="modalita_pagamento.cd_modalita_pag" />
+	
+		<columnMapping
+			columnName="CD_TERMINI_PAG"
+			propertyName="termini_pagamento.cd_termini_pag" />
+			
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="banca.pg_banca" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="banca.cd_terzo"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="banca.terzo.cd_terzo"
+			fetchOnly="true"/>
+
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="divisa.cd_divisa" />
+
+		<columnMapping
+			columnName="CD_CDS_OBBLIGAZIONE"
+			propertyName="scadenza_obbligazione.obbligazione.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="scadenza_obbligazione.obbligazione.cds.esercizio"
+			fetchOnly="true" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="scadenza_obbligazione.obbligazione.esercizio" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="scadenza_obbligazione.obbligazione.esercizio_originale" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="scadenza_obbligazione.obbligazione.pg_obbligazione" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="scadenza_obbligazione.pg_obbligazione_scadenzario" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="lattPerRimborso.cd_linea_attivita" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="lattPerRimborso.centro_responsabilita.cd_centro_responsabilita" />
+			
+			
+	</defaultColumnMap>		
+
+	<persistentProperty
+		name="modalita_pagamento" />
+	<persistentProperty
+		name="termini_pagamento" />
+	<persistentProperty
+		name="banca" />
+	<persistentProperty
+		name="divisa" />
+	<persistentProperty
+		name="scadenza_obbligazione" />
+	<persistentProperty
+		name="lattPerRimborso" />
+		
+		
+</SQLPersistentInfo>

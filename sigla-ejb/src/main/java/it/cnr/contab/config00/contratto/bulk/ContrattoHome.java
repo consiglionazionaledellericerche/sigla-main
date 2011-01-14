@@ -1,0 +1,296 @@
+/*
+* Creted by Generator 1.0
+* Date 09/04/2005
+*/
+package it.cnr.contab.config00.contratto.bulk;
+import java.sql.SQLException;
+import java.util.List;
+
+import it.cnr.contab.utenze00.bulk.*;
+import it.cnr.contab.config00.sto.bulk.*;
+import it.cnr.contab.config00.bulk.*;
+import it.cnr.contab.config00.blob.bulk.*;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.utenze00.bp.*;
+import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.PersistentHome;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.SQLUnion;
+public class ContrattoHome extends BulkHome {
+	public ContrattoHome(java.sql.Connection conn) {
+		super(ContrattoBulk.class, conn);
+	}
+	public ContrattoHome(java.sql.Connection conn, PersistentCache persistentCache) {
+		super(ContrattoBulk.class, conn, persistentCache);
+	}
+	public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,OggettoBulk contratto) throws PersistencyException,ApplicationException {
+		if (((ContrattoBulk)contratto).getPg_contratto() == null && ((ContrattoBulk)contratto).getStato().equals(ContrattoBulk.STATO_PROVVISORIO)){
+			try {
+				it.cnr.contab.config00.tabnum.ejb.Numerazione_baseComponentSession numerazione =
+					(it.cnr.contab.config00.tabnum.ejb.Numerazione_baseComponentSession)
+						it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_TABNUM_EJB_Numerazione_baseComponentSession",
+																		it.cnr.contab.config00.tabnum.ejb.Numerazione_baseComponentSession.class);
+				((ContrattoBulk)contratto).setPg_contratto(
+	                 numerazione.creaNuovoProgressivo(userContext,CNRUserContext.getEsercizio(userContext), "CONTRATTO", "PG_CONTRATTO_PROVVISORIO", CNRUserContext.getUser(userContext))
+				);
+			}catch(it.cnr.jada.bulk.BusyResourceException e) {
+				throw new ApplicationException(e);
+			}catch(Throwable e) {
+				throw new PersistencyException(e);
+			}
+		}
+	}
+	/**
+	 * Recupera tutti i dati nella tabella ASS_CONTRATTO_UO relativi alla testata in uso.
+	 *
+	 * @param testata La testata in uso.
+	 *
+	 * @return java.util.Collection Collezione di oggetti <code>Ass_contratto_uoBulk</code>
+	 */
+
+	public java.util.Collection findAssociazioneUO(ContrattoBulk testata) throws IntrospectionException, PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(Ass_contratto_uoBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,testata.getEsercizio());
+		sql.addSQLClause("AND","PG_CONTRATTO",sql.EQUALS,testata.getPg_contratto());
+		sql.addOrderBy("CD_UNITA_ORGANIZZATIVA");
+		return dettHome.fetchAll(sql);
+	}
+	/**
+	 * Recupera tutte le Uo disponibili ad essere associate
+	 *
+	 * @param testata La testata in uso.
+	 *
+	 * @return java.util.Collection Collezione di oggetti <code>Ass_contratto_uoBulk</code>
+	 */
+
+	public java.util.Collection findAssociazioneUODisponibili(ContrattoBulk testata) throws IntrospectionException, PersistencyException {	
+		PersistentHome dettHome = getHomeCache().getHome(Unita_organizzativaBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		if (!testata.getAssociazioneUO().isEmpty()){
+			SQLBuilder sqlEx = getHomeCache().getHome(Ass_contratto_uoBulk.class).createSQLBuilder();
+			sqlEx.addSQLClause("AND","ESERCIZIO",sql.EQUALS,testata.getEsercizio());
+			sqlEx.addSQLClause("AND","STATO_CONTRATTO",sql.EQUALS,testata.getStato());
+			sqlEx.addSQLClause("AND","PG_CONTRATTO",sql.EQUALS,testata.getPg_contratto());
+			sqlEx.addSQLJoin("UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA","ASS_CONTRATTO_UO.CD_UNITA_ORGANIZZATIVA");
+			sql.addSQLNotExistsClause("AND",sqlEx);
+		}
+		sql.addOrderBy("CD_UNITA_ORGANIZZATIVA");
+		return dettHome.fetchAll(sql);
+	}
+	
+	/**
+	 * @author mspasiano
+	 * 
+	 * @param tipo_contratto
+	 * @return true se esiste un contratto valido per il tipo passato, false altrimenti
+	 * @throws IntrospectionException
+	 * @throws PersistencyException
+	 * @throws SQLException
+	 */
+	public boolean existsContrattoValidoForTipo(Tipo_contrattoBulk tipo_contratto) throws IntrospectionException, PersistencyException, SQLException {
+		SQLBuilder sql = createSQLBuilder();
+		sql.addSQLClause("AND","STATO",sql.EQUALS,ContrattoBulk.STATO_DEFINITIVO);
+		sql.addSQLClause("AND","CD_TIPO_CONTRATTO",sql.EQUALS,tipo_contratto.getCd_tipo_contratto());
+		return sql.executeExistsQuery(getConnection());
+	}
+	/**
+	 * @author mspasiano
+	 * 
+	 * @param tipo_atto_amministrativo
+	 * @return true se esiste un contratto valido per il tipo_atto passato, false altrimenti
+	 * @throws IntrospectionException
+	 * @throws PersistencyException
+	 * @throws SQLException
+	 */
+	public boolean existsContrattoValidoForProvvedimento(Tipo_atto_amministrativoBulk tipo_atto_amministrativo) throws IntrospectionException, PersistencyException, SQLException {
+		SQLBuilder sql = createSQLBuilder();
+		sql.addSQLClause("AND","STATO",sql.EQUALS,ContrattoBulk.STATO_DEFINITIVO);
+		sql.openParenthesis("AND");
+		  sql.addSQLClause("AND","CD_TIPO_ATTO",sql.EQUALS,tipo_atto_amministrativo.getCd_tipo_atto());
+		  sql.addSQLClause("OR","CD_TIPO_ATTO_ANN",sql.EQUALS,tipo_atto_amministrativo.getCd_tipo_atto());
+		sql.closeParenthesis();  
+		return sql.executeExistsQuery(getConnection());
+	}
+	/**
+	 * @author mspasiano
+	 * 
+	 * @param tipo_organo
+	 * @return true se esiste un contratto valido per il tipo_organo passato, false altrimenti
+	 * @throws IntrospectionException
+	 * @throws PersistencyException
+	 * @throws SQLException
+	 */
+	public boolean existsContrattoValidoForOrgano(OrganoBulk tipo_organo) throws IntrospectionException, PersistencyException, SQLException {
+		SQLBuilder sql = createSQLBuilder();
+		sql.addSQLClause("AND","STATO",sql.EQUALS,ContrattoBulk.STATO_DEFINITIVO);
+		sql.openParenthesis("AND");
+		  sql.addSQLClause("AND","CD_ORGANO",sql.EQUALS,tipo_organo.getCd_organo());
+		  sql.addSQLClause("OR","CD_ORGANO_ANN",sql.EQUALS,tipo_organo.getCd_organo());
+		sql.closeParenthesis();  
+		return sql.executeExistsQuery(getConnection());
+	}
+	/**
+	 * @author mspasiano
+	 * 
+	 * @param proc_amm
+	 * @return
+	 * @throws IntrospectionException
+	 * @throws PersistencyException
+	 * @throws SQLException
+	 */
+	public boolean existsContrattoValidoForProcedure_amministrative(Procedure_amministrativeBulk proc_amm) throws IntrospectionException, PersistencyException, SQLException {
+		SQLBuilder sql = createSQLBuilder();
+		sql.addSQLClause("AND","STATO",sql.EQUALS,ContrattoBulk.STATO_DEFINITIVO);
+	    sql.addSQLClause("AND","CD_PROC_AMM",sql.EQUALS,proc_amm.getCd_proc_amm());
+		return sql.executeExistsQuery(getConnection());
+	}	
+	/**
+	 * @author mspasiano
+	 * 
+	 * @param contratto
+	 * @return true se esiste un documento contabile associato, false altrimenti
+	 * @throws IntrospectionException
+	 * @throws PersistencyException
+	 * @throws SQLException
+	 */
+	public boolean existsDocContForContratto(ContrattoBulk contratto) throws IntrospectionException, PersistencyException, SQLException {
+		PersistentHome dettHomeAcc = getHomeCache().getHome(AccertamentoBulk.class);
+		SQLBuilder sqlAcc = dettHomeAcc.createSQLBuilder();	
+		sqlAcc.resetColumns();
+		sqlAcc.addColumn("PG_CONTRATTO");	
+		sqlAcc.addSQLClause("AND","ESERCIZIO_CONTRATTO",SQLBuilder.EQUALS,contratto.getEsercizio());
+		sqlAcc.addSQLClause("AND","STATO_CONTRATTO",SQLBuilder.EQUALS,contratto.getStato());
+		sqlAcc.addSQLClause("AND","PG_CONTRATTO",SQLBuilder.EQUALS,contratto.getPg_contratto());
+
+		PersistentHome dettHomeObb = getHomeCache().getHome(ObbligazioneBulk.class);
+		SQLBuilder sqlObb = dettHomeObb.createSQLBuilder();
+		sqlObb.resetColumns();
+		sqlObb.addColumn("PG_CONTRATTO");			
+		sqlObb.addSQLClause("AND","ESERCIZIO_CONTRATTO",SQLBuilder.EQUALS,contratto.getEsercizio());
+		sqlObb.addSQLClause("AND","STATO_CONTRATTO",SQLBuilder.EQUALS,contratto.getStato());
+		sqlObb.addSQLClause("AND","PG_CONTRATTO",SQLBuilder.EQUALS,contratto.getPg_contratto());
+	
+		SQLUnion union = sqlObb.union(sqlAcc,true);
+		return union.executeExistsQuery(getConnection());
+	}
+	/**
+	 * Recupera tutti gli accertamenti legati al contratto
+	 *
+	 */
+	public SQLBuilder findAccertamenti(it.cnr.jada.UserContext userContext, ContrattoBulk contratto) throws IntrospectionException, PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(AccertamentoBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.addSQLClause("AND","ESERCIZIO_CONTRATTO",sql.EQUALS,contratto.getEsercizio());
+		sql.addSQLClause("AND","STATO_CONTRATTO",SQLBuilder.EQUALS,contratto.getStato());
+		sql.addSQLClause("AND","PG_CONTRATTO",sql.EQUALS,contratto.getPg_contratto());
+		return sql;
+	}
+	/**
+	 * Recupera tutte le obbligazioni legate al contratto
+	 *
+	 */
+	public SQLBuilder findObbligazioni(it.cnr.jada.UserContext userContext, ContrattoBulk contratto) throws IntrospectionException, PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(ObbligazioneBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.addSQLClause("AND","ESERCIZIO_CONTRATTO",sql.EQUALS,contratto.getEsercizio());
+		sql.addSQLClause("AND","STATO_CONTRATTO",SQLBuilder.EQUALS,contratto.getStato());
+		sql.addSQLClause("AND","PG_CONTRATTO",sql.EQUALS,contratto.getPg_contratto());
+		return sql;
+	}
+
+	/**
+	 * Recupera il totale degli accertamenti legati al contratto
+	 *
+	 * @param esercizio del contratto
+	 * @param progressivo del contratto
+	 *
+	 * @return java.math.BigDecimal
+	 */
+
+	public SQLBuilder calcolaTotAccertamenti(it.cnr.jada.UserContext userContext,ContrattoBulk contratto) throws IntrospectionException, PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(AccertamentoBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.resetColumns();
+		sql.addColumn("SUM(IM_ACCERTAMENTO) TOTALE");
+		sql.addSQLClause("AND","ESERCIZIO_CONTRATTO",sql.EQUALS,contratto.getEsercizio());
+		sql.addSQLClause("AND","STATO_CONTRATTO",SQLBuilder.EQUALS,contratto.getStato());
+		sql.addSQLClause("AND","PG_CONTRATTO",sql.EQUALS,contratto.getPg_contratto());
+		sql.addSQLJoin("ESERCIZIO","ESERCIZIO_ORIGINALE");
+		return sql;
+	}
+	/**
+	 * Recupera il totale degli accertamenti legati ai contratti del contratto di riferimento
+	 *
+	 * @param contratto_padre
+	 *
+	 * @return java.math.BigDecimal
+	 */
+
+	public SQLBuilder calcolaTotAccertamentiPadre(it.cnr.jada.UserContext userContext,ContrattoBulk contratto_padre) throws IntrospectionException, PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(AccertamentoBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.resetColumns();
+		sql.addColumn("SUM(ACCERTAMENTO.IM_ACCERTAMENTO) TOTALE");
+		sql.addTableToHeader("CONTRATTO");
+		sql.addSQLJoin("ACCERTAMENTO.ESERCIZIO_CONTRATTO","CONTRATTO.ESERCIZIO");
+		sql.addSQLJoin("ACCERTAMENTO.STATO_CONTRATTO","CONTRATTO.STATO");
+		sql.addSQLJoin("ACCERTAMENTO.PG_CONTRATTO","CONTRATTO.PG_CONTRATTO");
+		sql.addSQLJoin("ACCERTAMENTO.ESERCIZIO","ACCERTAMENTO.ESERCIZIO_ORIGINALE");
+		sql.addSQLClause("AND","CONTRATTO.ESERCIZIO_PADRE",SQLBuilder.EQUALS,contratto_padre.getEsercizio());
+		sql.addSQLClause("AND","CONTRATTO.STATO_PADRE",SQLBuilder.EQUALS,contratto_padre.getStato());
+		sql.addSQLClause("AND","CONTRATTO.PG_CONTRATTO_PADRE",SQLBuilder.EQUALS,contratto_padre.getPg_contratto());
+		return sql;
+	}
+	
+	/**
+	 * Recupera il totale deglle Obbligazioni legati al contratto
+	 *
+	 * @param esercizio del contratto
+	 * @param progressivo del contratto
+	 *
+	 * @return java.math.BigDecimal
+	 */
+
+	public SQLBuilder calcolaTotObbligazioni(it.cnr.jada.UserContext userContext,ContrattoBulk contratto) throws IntrospectionException, PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(ObbligazioneBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.resetColumns();
+		sql.addColumn("SUM(IM_OBBLIGAZIONE) TOTALE ");
+		sql.addSQLClause("AND","ESERCIZIO_CONTRATTO",sql.EQUALS,contratto.getEsercizio());
+		sql.addSQLClause("AND","STATO_CONTRATTO",SQLBuilder.EQUALS,contratto.getStato());
+		sql.addSQLClause("AND","PG_CONTRATTO",sql.EQUALS,contratto.getPg_contratto());
+		sql.addSQLJoin("ESERCIZIO","ESERCIZIO_ORIGINALE");		
+		return sql;
+	}
+	/**
+	 * Recupera il totale deglle Obbligazioni legate ai contratti del contratto di riferimento
+	 *
+	 * @param contratto_padre
+	 *
+	 * @return java.math.BigDecimal
+	 */
+
+	public SQLBuilder calcolaTotObbligazioniPadre(it.cnr.jada.UserContext userContext,ContrattoBulk contratto_padre) throws IntrospectionException, PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(ObbligazioneBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.resetColumns();
+		sql.addColumn("SUM(OBBLIGAZIONE.IM_OBBLIGAZIONE) TOTALE");
+		sql.addTableToHeader("CONTRATTO");
+		sql.addSQLJoin("OBBLIGAZIONE.ESERCIZIO_CONTRATTO","CONTRATTO.ESERCIZIO");
+		sql.addSQLJoin("OBBLIGAZIONE.STATO_CONTRATTO","CONTRATTO.STATO");
+		sql.addSQLJoin("OBBLIGAZIONE.PG_CONTRATTO","CONTRATTO.PG_CONTRATTO");
+		sql.addSQLJoin("OBBLIGAZIONE.ESERCIZIO","OBBLIGAZIONE.ESERCIZIO_ORIGINALE");
+		sql.addSQLClause("AND","CONTRATTO.ESERCIZIO_PADRE",SQLBuilder.EQUALS,contratto_padre.getEsercizio());
+		sql.addSQLClause("AND","CONTRATTO.STATO_PADRE",SQLBuilder.EQUALS,contratto_padre.getStato());
+		sql.addSQLClause("AND","CONTRATTO.PG_CONTRATTO_PADRE",SQLBuilder.EQUALS,contratto_padre.getPg_contratto());
+		return sql;
+	}
+	
+}

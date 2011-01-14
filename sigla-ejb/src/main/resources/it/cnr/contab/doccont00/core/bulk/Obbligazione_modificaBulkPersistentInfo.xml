@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaHome">
+	<defaultColumnMap
+		tableName="OBBLIGAZIONE_MODIFICA">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="obbligazione.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="obbligazione.esercizio"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE"
+			propertyName="obbligazione.esercizio_originale" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="obbligazione.pg_obbligazione" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cds"
+		partOfOid= "true"/>
+	<persistentProperty
+		name="obbligazione" />
+</SQLPersistentInfo>

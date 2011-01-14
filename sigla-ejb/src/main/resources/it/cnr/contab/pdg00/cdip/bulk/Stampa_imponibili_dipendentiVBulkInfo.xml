@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<formFieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="ROTEXT" 
+		label="CDS" />
+		
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio" />
+
+	<fieldProperty
+		name="findUOForPrint"
+		property="uoForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="cdUOForPrint"
+		property="uoForPrint.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROCdUoForPrint"
+		label="Codice UO" />
+	<fieldProperty
+		name="dsUOForPrint"
+		property="uoForPrint.ds_unita_organizzativa"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione UO" />
+		
+	<fieldProperty
+		name="cdUOCRForPrint"
+		property="cdUOCRForPrint"/>
+		
+	
+	<formFieldProperty name="cd_cds" />
+	<formFieldProperty name="findUOForPrint" />
+	<formFieldProperty
+		name="cdUOForPrint"
+		nullable="false" />
+	<formFieldProperty name="dsUOForPrint" />
+	<formFieldProperty name="cdUOCRForPrint" />
+
+
+
+<form
+		name="/cnrpreventivo/pdg/impdip.rpt">
+		<formFieldProperty 
+			name="cd_cds"
+			inputType="ROTEXT" />
+		<formFieldProperty 
+			name="esercizio"
+			inputType="ROTEXT" />
+		<formFieldProperty 
+			name="cdUOForPrint" />
+	</form>
+
+	<printForm
+		name="/cnrpreventivo/pdg/impdip.rpt">
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="1"
+			parameterType="STRING" />
+	</printForm>		
+<printForm
+		name="/cnrpreventivo/pdg/impdip.jasper">
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="0"
+			parameterType="STRING" 
+			paramNameJR="uo"
+			paramTypeJR="java.lang.String"
+			/>
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="1"
+			parameterType="STRING" 
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer"/>
+	</printForm>		
+</bulkInfo>

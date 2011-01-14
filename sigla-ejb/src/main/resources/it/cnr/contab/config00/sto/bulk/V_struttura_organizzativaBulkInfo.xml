@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio di riferimento" />
+	<fieldProperty
+		name="cd_root"
+		property="cd_root"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice Struttura Organizzativa" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Centro di Spesa" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Unita' Organizzativa" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Centro di Responsabilita'" />
+	<fieldProperty
+		name="cd_cdr_afferenza"
+		property="cd_cdr_afferenza"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDR di afferenza" />
+	<fieldProperty
+		name="cd_tipo_unita"
+		property="cd_tipo_unita"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Tipo Unita' Organizzativa" />
+	<fieldProperty
+		name="cd_tipo_livello"
+		property="cd_tipo_livello"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="Tipo livello Struttura Organizzativa" />
+	<fieldProperty
+		name="fl_uo_cds"
+		property="fl_uo_cds"
+		inputType="CHECKBOX"
+		label="UO principale del CDS" />
+	<fieldProperty
+		name="fl_cdr_uo"
+		property="fl_cdr_uo"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="CDR principale della UO" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_root" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="cd_cdr_afferenza" />
+	<formFieldProperty
+		name="cd_tipo_unita" />
+	<formFieldProperty
+		name="cd_tipo_livello" />
+	<formFieldProperty
+		name="fl_uo_cds" />
+	<formFieldProperty
+		name="fl_cdr_uo" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_root" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="cd_cdr_afferenza" />
+	<findFieldProperty
+		name="cd_tipo_unita" />
+	<findFieldProperty
+		name="cd_tipo_livello" />
+	<findFieldProperty
+		name="fl_uo_cds" />
+	<findFieldProperty
+		name="fl_cdr_uo" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_root" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="cd_cdr_afferenza" />
+	<columnFieldProperty
+		name="cd_tipo_unita" />
+	<columnFieldProperty
+		name="cd_tipo_livello" />
+	<columnFieldProperty
+		name="fl_uo_cds" />
+	<columnFieldProperty
+		name="fl_cdr_uo" />
+</bulkInfo>

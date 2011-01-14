@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.geco.bulk.Geco_dipartimento_sacKey">
+	<defaultColumnMap
+		tableName="dipartimento_sac">
+		<columnMapping
+			columnName="cod_dip"
+			propertyName="cod_dip"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cod_dip"
+		partOfOid="true" />
+</SQLPersistentInfo>

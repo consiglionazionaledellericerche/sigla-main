@@ -1,0 +1,124 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk"
+	homeClassName="it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detHome" >
+
+	<defaultColumnMap
+		tableName="PDG_PREVENTIVO_ETR_DET" >
+		
+		<!-- Mappatura chiave primaria di centro_responsabilita -->
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="centro_responsabilita.cd_centro_responsabilita"
+			fetchOnly="false" />
+
+		<!-- Mappatura chiave primaria di linea_attivita -->
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="linea_attivita.centro_responsabilita.cd_centro_responsabilita"
+			fetchOnly="true" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="linea_attivita.cd_linea_attivita"
+			fetchOnly="false" />
+
+		<!-- Mappatura chiave primaria di elemento_voce-->
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="elemento_voce.esercizio"
+			fetchOnly="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="elemento_voce.cd_elemento_voce"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="elemento_voce.ti_gestione"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="elemento_voce.ti_appartenenza"
+			fetchOnly="false" />
+
+		<!-- Mappatura chiave primaria di linea_attivita_clgs -->
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA_CLGS"
+			propertyName="linea_attivita_clgs.centro_responsabilita.cd_centro_responsabilita"
+			fetchOnly="true" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA_CLGS"
+			propertyName="linea_attivita_clgs.cd_linea_attivita"
+			fetchOnly="false" />
+
+		<!-- Mappatura chiave primaria di centro_responsabilita_clgs -->
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA_CLGS"
+			propertyName="centro_responsabilita_clgs.cd_centro_responsabilita"
+			fetchOnly="false" />
+
+		<!-- Mappatura chiave primaria di elemento_voce_clgs-->
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="elemento_voce_clgs.esercizio"
+			fetchOnly="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE_CLGS"
+			propertyName="elemento_voce_clgs.cd_elemento_voce"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="TI_GESTIONE_CLGS"
+			propertyName="elemento_voce_clgs.ti_gestione"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="TI_APPARTENENZA_CLGS"
+			propertyName="elemento_voce_clgs.ti_appartenenza"
+			fetchOnly="false" />
+
+		<!-- Mappatura chiave primaria di natura -->
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="natura.cd_natura" />
+
+		<!-- Mappatura chiave primaria di natura -->
+		<columnMapping
+			columnName="CD_FUNZIONE"
+			propertyName="funzione.cd_funzione" />
+			
+		<!-- Mappatura chiave primaria della variazione -->
+		<columnMapping
+			columnName="ESERCIZIO_PDG_VARIAZIONE"
+			propertyName="pdg_variazione.esercizio" />			
+		<columnMapping
+			columnName="PG_VARIAZIONE_PDG"
+			propertyName="pdg_variazione.pg_variazione_pdg" />			
+			
+	</defaultColumnMap>
+
+	<columnMap
+		name="V_ELEMENTO_VOCE_PDG_ETR"
+		tableName="V_ELEMENTO_VOCE_PDG_ETR"
+		extends="default" >
+	</columnMap>
+
+	<persistentProperty
+		name="centro_responsabilita"
+		partOfOid="true" />
+	<persistentProperty
+		name="elemento_voce"
+		partOfOid="true" />
+	<persistentProperty
+		name="linea_attivita"
+		partOfOid="true" />
+	<persistentProperty
+		name="centro_responsabilita_clgs" />
+	<persistentProperty
+		name="linea_attivita_clgs" />
+	<persistentProperty
+		name="elemento_voce_clgs" />
+	<persistentProperty
+		name="natura" />
+	<persistentProperty
+		name="funzione" />
+	<persistentProperty
+		name="pdg_variazione" />
+		
+</SQLPersistentInfo>

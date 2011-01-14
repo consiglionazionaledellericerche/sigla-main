@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametri_configBulk"
+	homeClassName="it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametri_configHome">
+	<defaultColumnMap
+		tableName="INCARICHI_PARAMETRI_CONFIG">
+		<columnMapping
+			columnName="CD_PROC_AMM"
+			propertyName="procedura_amministrativa.cd_proc_amm" />
+		<columnMapping
+			columnName="CD_TIPO_INCARICO"
+			propertyName="tipo_incarico.cd_tipo_incarico" />
+		<columnMapping
+			columnName="CD_TIPO_ATTIVITA"
+			propertyName="tipo_attivita.cd_tipo_attivita" />
+		<columnMapping
+			columnName="CD_PARAMETRI"
+			propertyName="incarichi_parametri.cd_parametri" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="procedura_amministrativa" />
+	<persistentProperty
+		name="tipo_incarico" />
+	<persistentProperty
+		name="tipo_attivita" />
+	<persistentProperty
+		name="incarichi_parametri" />
+</SQLPersistentInfo>

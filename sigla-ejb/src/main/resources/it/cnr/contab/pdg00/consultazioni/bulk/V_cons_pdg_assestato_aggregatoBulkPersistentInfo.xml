@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.consultazioni.bulk.V_cons_pdg_assestato_aggregatoBulk"
+	homeClassName="it.cnr.contab.pdg00.consultazioni.bulk.V_cons_pdg_assestato_aggregatoHome">
+	<defaultColumnMap
+		tableName="V_CONS_PDG_SPE_ASSESTATO">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PESO_DIP"
+			propertyName="peso_dip"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DIP"
+			propertyName="dip"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_DIPARTIMENTO"
+			propertyName="ds_dipartimento"
+			sqlTypeName="VARCHAR"
+			columnSize="765"
+			nullable="true" />
+		<columnMapping
+			columnName="CDS"
+			propertyName="cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DES_CDS"
+			propertyName="des_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="UO"
+			propertyName="uo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DES_UO"
+			propertyName="des_uo"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="CDR"
+			propertyName="cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE"
+			propertyName="cd_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="34"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="INI"
+			propertyName="ini"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_PIU"
+			propertyName="var_piu"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_MENO"
+			propertyName="var_meno"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="ASSESTATO"
+			propertyName="assestato"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="peso_dip" />
+	<persistentProperty
+		name="dip" />
+	<persistentProperty
+		name="ds_dipartimento" />
+	<persistentProperty
+		name="cds" />
+	<persistentProperty
+		name="des_cds" />
+	<persistentProperty
+		name="uo" />
+	<persistentProperty
+		name="des_uo" />
+	<persistentProperty
+		name="cdr" />
+	<persistentProperty
+		name="cd_linea_attivita" />
+	<persistentProperty
+		name="cd_classificazione" />
+	<persistentProperty
+		name="ds_classificazione" />
+	<persistentProperty
+		name="cd_livello1" />
+	<persistentProperty
+		name="cd_livello2" />
+	<persistentProperty
+		name="ini" />
+	<persistentProperty
+		name="var_piu" />
+	<persistentProperty
+		name="var_meno" />
+	<persistentProperty
+		name="assestato" />
+
+	<columnMap 
+		name="BASEDIP"
+		tableName="V_CONS_PDG_SPE_ASSESTATO">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PESO_DIP"
+			propertyName="peso_dip"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DIP"
+			propertyName="dip"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="INI"
+			propertyName="ini"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_PIU"
+			propertyName="var_piu"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_MENO"
+			propertyName="var_meno"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="ASSESTATO"
+			propertyName="assestato"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="BASEDIPCDS"
+		tableName="V_CONS_PDG_SPE_ASSESTATO"
+		extends="BASEDIP" >
+		<columnMapping
+			columnName="CDS"
+			propertyName="cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="BASEDIPCDSUO"
+		tableName="V_CONS_PDG_SPE_ASSESTATO"
+		extends="BASEDIPCDS" >
+		<columnMapping
+			columnName="UO"
+			propertyName="uo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+
+<!-- SPESE -->
+	<columnMap 
+		name="SPEDIP"
+		tableName="V_CONS_PDG_SPE_ASSESTATO"
+		extends="BASEDIP" >
+		<columnMapping
+			columnName="DS_DIPARTIMENTO"
+			propertyName="ds_dipartimento"
+			sqlTypeName="VARCHAR"
+			columnSize="765"
+			nullable="true" />
+	</columnMap>
+
+<!-- SPESE : PRIMO PERCORSO DI CONSULTAZIONE (DIPARTIMENTO\CDS\UO\DETTAGLI)-->
+	<columnMap 
+		name="SPEDIPCDS"
+		tableName="V_CONS_PDG_SPE_ASSESTATO"
+		extends="BASEDIPCDS" >
+		<columnMapping
+			columnName="DES_CDS"
+			propertyName="des_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="SPEDIPCDSUO"
+		tableName="V_CONS_PDG_SPE_ASSESTATO"
+		extends="BASEDIPCDSUO" >
+		<columnMapping
+			columnName="DES_UO"
+			propertyName="des_uo"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="SPEDIPCDSUODET"
+		tableName="V_CONS_PDG_SPE_ASSESTATO"
+		extends="BASEDIPCDSUO" >
+		<columnMapping
+			columnName="CDR"
+			propertyName="cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE"
+			propertyName="cd_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="34"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+	</columnMap>
+
+<!-- SPESE : SECONDO PERCORSO DI CONSULTAZIONE (DIPARTIMENTO\PRIMO LIVELLO CONSULTAZIONE\CDS\UO\DETTAGLI)-->
+	<columnMap 
+		name="SPEDIPLIV1"
+		tableName="V_CONS_PDG_SPE_ASSESTATO"
+		extends="BASEDIP" >
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="SPEDIPLIV1CDS"
+		tableName="V_CONS_PDG_SPE_ASSESTATO"
+		extends="SPEDIPCDS" >
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="SPEDIPLIV1CDSUO"
+		tableName="V_CONS_PDG_SPE_ASSESTATO"
+		extends="SPEDIPCDSUO" >
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="SPEDIPLIV1CDSUODET"
+		tableName="V_CONS_PDG_SPE_ASSESTATO"
+		extends="SPEDIPCDSUODET" >
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+
+<!-- SPESE : TERZO PERCORSO DI CONSULTAZIONE (DIPARTIMENTO\PRIMO LIVELLO CONSULTAZIONE\SECONDO LIVELLO CONSULTAZIONE\CDS\UO\DETTAGLI)-->
+	<columnMap 
+		name="SPEDIPLIV1LIV2"
+		tableName="V_CONS_PDG_SPE_ASSESTATO"
+		extends="SPEDIPLIV1" >
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="SPEDIPLIV1LIV2CDS"
+		tableName="V_CONS_PDG_SPE_ASSESTATO"
+		extends="SPEDIPLIV1CDS" >
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="SPEDIPLIV1LIV2CDSUO"
+		tableName="V_CONS_PDG_SPE_ASSESTATO"
+		extends="SPEDIPLIV1CDSUO" >
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="SPEDIPLIV1LIV2CDSUODET"
+		tableName="V_CONS_PDG_SPE_ASSESTATO"
+		extends="SPEDIPLIV1CDSUODET" >
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+
+<!-- ENTRATE -->
+	<columnMap 
+		name="ETRDIP"
+		tableName="V_CONS_PDG_ETR_ASSESTATO"
+		extends="SPEDIP" />
+
+<!-- ENTRATE : PRIMO PERCORSO DI CONSULTAZIONE (DIPARTIMENTO\CDS\UO\DETTAGLI)-->
+	<columnMap 
+		name="ETRDIPCDS"
+		tableName="V_CONS_PDG_ETR_ASSESTATO"
+		extends="SPEDIPCDS" />
+	<columnMap 
+		name="ETRDIPCDSUO"
+		tableName="V_CONS_PDG_ETR_ASSESTATO"
+		extends="SPEDIPCDSUO" />
+	<columnMap 
+		name="ETRDIPCDSUODET"
+		tableName="V_CONS_PDG_ETR_ASSESTATO"
+		extends="SPEDIPCDSUODET" />
+
+<!-- ENTRATE : SECONDO PERCORSO DI CONSULTAZIONE (DIPARTIMENTO\PRIMO LIVELLO CONSULTAZIONE\CDS\UO\DETTAGLI)-->
+	<columnMap 
+		name="ETRDIPLIV1"
+		tableName="V_CONS_PDG_ETR_ASSESTATO"
+		extends="SPEDIPLIV1" />
+	<columnMap 
+		name="ETRDIPLIV1CDS"
+		tableName="V_CONS_PDG_ETR_ASSESTATO"
+		extends="SPEDIPLIV1CDS" />
+	<columnMap 
+		name="ETRDIPLIV1CDSUO"
+		tableName="V_CONS_PDG_ETR_ASSESTATO"
+		extends="SPEDIPLIV1CDSUO" />
+	<columnMap 
+		name="ETRDIPLIV1CDSUODET"
+		tableName="V_CONS_PDG_ETR_ASSESTATO"
+		extends="SPEDIPLIV1CDSUODET" />
+
+<!-- ENTRATE : TERZO PERCORSO DI CONSULTAZIONE (DIPARTIMENTO\PRIMO LIVELLO CONSULTAZIONE\SECONDO LIVELLO CONSULTAZIONE\CDS\UO\DETTAGLI)-->
+	<columnMap 
+		name="ETRDIPLIV1LIV2"
+		tableName="V_CONS_PDG_ETR_ASSESTATO"
+		extends="SPEDIPLIV1LIV2" />
+	<columnMap 
+		name="ETRDIPLIV1LIV2CDS"
+		tableName="V_CONS_PDG_ETR_ASSESTATO"
+		extends="SPEDIPLIV1LIV2CDS" />
+	<columnMap 
+		name="ETRDIPLIV1LIV2CDSUO"
+		tableName="V_CONS_PDG_ETR_ASSESTATO"
+		extends="SPEDIPLIV1LIV2CDSUO" />
+	<columnMap 
+		name="ETRDIPLIV1LIV2CDSUODET"
+		tableName="V_CONS_PDG_ETR_ASSESTATO"
+		extends="SPEDIPLIV1LIV2CDSUODET" />
+</SQLPersistentInfo>

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.V_pdg_accertamento_etrBase"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.V_pdg_accertamento_etrHome">
+	<defaultColumnMap
+		tableName="V_PDG_ACCERTAMENTO_ETR">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_RES"
+			propertyName="esercizio_res"
+			sqlTypeName="DECIMAL"
+			primary="true"			
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROGETTO_PADRE"
+			propertyName="cd_progetto_padre"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_FUNZIONE"
+			propertyName="cd_funzione"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="cd_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_LINEA_ATTIVITA"
+			propertyName="ds_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RA_RCE"
+			propertyName="im_ra_rce"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RB_RSE"
+			propertyName="im_rb_rse"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RC_ESR"
+			propertyName="im_rc_esr"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RD_A2_RICAVI"
+			propertyName="im_rd_a2_ricavi"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RE_A2_ENTRATE"
+			propertyName="im_re_a2_entrate"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RF_A3_RICAVI"
+			propertyName="im_rf_a3_ricavi"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RG_A3_ENTRATE"
+			propertyName="im_rg_a3_entrate"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA_CLGS"
+			propertyName="cd_centro_responsabilita_clgs"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA_CLGS"
+			propertyName="cd_linea_attivita_clgs"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_APPARTENENZA_CLGS"
+			propertyName="ti_appartenenza_clgs"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_GESTIONE_CLGS"
+			propertyName="ti_gestione_clgs"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE_CLGS"
+			propertyName="cd_elemento_voce_clgs"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CATEGORIA_DETTAGLIO"
+			propertyName="categoria_dettaglio"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="esercizio_res" />
+	<persistentProperty
+		name="cd_centro_responsabilita" />
+	<persistentProperty
+		name="ti_appartenenza" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="cd_elemento_voce" />
+	<persistentProperty
+		name="cd_linea_attivita" />
+	<persistentProperty
+		name="cd_progetto" />
+	<persistentProperty
+		name="cd_progetto_padre" />
+	<persistentProperty
+		name="cd_funzione" />
+	<persistentProperty
+		name="cd_natura" />
+	<persistentProperty
+		name="ds_linea_attivita" />
+	<persistentProperty
+		name="im_ra_rce" />
+	<persistentProperty
+		name="im_rb_rse" />
+	<persistentProperty
+		name="im_rc_esr" />
+	<persistentProperty
+		name="im_rd_a2_ricavi" />
+	<persistentProperty
+		name="im_re_a2_entrate" />
+	<persistentProperty
+		name="im_rf_a3_ricavi" />
+	<persistentProperty
+		name="im_rg_a3_entrate" />
+	<persistentProperty
+		name="cd_centro_responsabilita_clgs" />
+	<persistentProperty
+		name="cd_linea_attivita_clgs" />
+	<persistentProperty
+		name="ti_appartenenza_clgs" />
+	<persistentProperty
+		name="ti_gestione_clgs" />
+	<persistentProperty
+		name="cd_elemento_voce_clgs" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="categoria_dettaglio" />
+</SQLPersistentInfo>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoKey" >
+	<defaultColumnMap
+		tableName="TIPO_TRATTAMENTO" >
+		<columnMapping
+			columnName="DT_INI_VALIDITA"
+			propertyName="dt_ini_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_TRATTAMENTO"
+			propertyName="cd_trattamento"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_ini_validita"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_trattamento"
+		partOfOid="true" />
+</SQLPersistentInfo>

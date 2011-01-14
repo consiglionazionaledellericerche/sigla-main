@@ -1,0 +1,67 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_natura"
+		property="cd_natura"
+		label="Natura"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="ds_natura"
+		property="ds_natura"
+		label="descrizione"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		label="Tipo"
+		keysProperty="tipo_naturaKeys"
+		inputType="SELECT"
+		nullable="false"
+		/>
+	<columnFieldProperty
+		name="cd_natura"
+		/>
+	<columnFieldProperty
+		name="ds_natura"
+		/>
+	<columnFieldProperty
+		name="tipo"
+		/>
+
+	<formFieldProperty
+		name="cd_natura"
+		/>
+	<formFieldProperty
+		name="ds_natura"
+		/>
+	<formFieldProperty
+		name="tipo"
+		/>
+
+	<findFieldProperty
+		name="cd_natura"
+		/>
+	<findFieldProperty
+		name="ds_natura"
+		/>
+	<findFieldProperty
+		name="tipo"
+		/>
+		
+	<form
+		name="find_natura" >
+		<formFieldProperty
+			name="cd_natura"
+			inputSize="2"/>
+		<formFieldProperty
+			name="ds_natura"
+			inputSize="30"/>
+	</form>
+
+
+</bulkInfo>

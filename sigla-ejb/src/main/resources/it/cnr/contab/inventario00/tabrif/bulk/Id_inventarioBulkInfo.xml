@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_inventario"
+		property="pg_inventario"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Progressivo" />
+	<fieldProperty
+		name="ds_inventario"
+		property="ds_inventario"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnSearch="true"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_inventario_origine"
+		property="cd_inventario_origine"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		label="Codice Inv. Origine" />
+	<fieldProperty
+		name="cd_uo_resp"
+		property="uoResp.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="20"
+		inputType="ROTEXT"
+		label="Unità Reponsabile" />
+	<fieldProperty
+		name="ds_uo_resp"
+		property="uoResp.ds_unita_organizzativa"
+		maxLength="300"
+		inputSize="80"
+		inputType="ROTEXT"
+		label="Ds Unità Reponsabile" />
+
+	<formFieldProperty
+		name="pg_inventario" />
+	<formFieldProperty
+		name="ds_inventario" />
+	<formFieldProperty
+		name="cd_inventario_origine" />
+	<formFieldProperty
+		name="cd_uo_resp" />
+	<formFieldProperty
+		name="ds_uo_resp" />
+	
+	<columnFieldProperty
+		name="pg_inventario"
+		style="width:80px" />
+	<columnFieldProperty
+		name="ds_inventario"
+		style="width:300px" />
+	<columnFieldProperty
+		name="cd_inventario_origine"
+		style="width:80px" />
+
+	<findFieldProperty
+		name="pg_inventario" />
+	<findFieldProperty
+		name="ds_inventario" />
+	<findFieldProperty
+		name="cd_inventario_origine" />
+
+</bulkInfo>

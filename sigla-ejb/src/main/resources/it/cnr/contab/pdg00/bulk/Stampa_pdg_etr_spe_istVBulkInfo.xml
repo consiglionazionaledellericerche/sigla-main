@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" 
+		shortDescription="PDG riclassificato per Istituto/Progetto/Commessa"
+		longDescription="PDG riclassificato per Istituto/Progetto/Commessa">
+
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputSize="2"		
+		inputType="ROTEXT"
+		label="Esercizio" />
+
+	<fieldProperty
+		name="findCDSForPrint"
+		property="cdsForPrint"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		nullable="true"
+		readonlyProperty="cdsForPrintEnabled"
+		completeOnSave="true"
+		label="Istituto" />
+	<fieldProperty
+		name="cdCDSForPrint"
+		property="cdsForPrint.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="true"
+		readonlyProperty="ROCdsForPrint"
+		label="Codice Istituto" />
+		
+	<fieldProperty
+		name="cdCDSCRForPrint"
+		property="cdCDSCRForPrint"/>
+		
+	<fieldProperty
+		name="findElemento_voceForPrint"
+		property="elementoVoceForPrint"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		nullable="true"
+		completeOnSave="true"
+		label="Elemento voce" />
+	<fieldProperty
+		name="cd_elemento_voceForPrint"
+		property="elementoVoceForPrint.cd_elemento_voce"
+		maxLength="30"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="true"
+		label="Codice elemento voce" />
+		
+	<fieldProperty
+		name="findUOForPrint"
+		property="uoForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		formName="searchtool"
+		readonlyProperty="uoForPrintEnabled"
+		nullable="true"		
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="cdUOForPrint"
+		property="uoForPrint.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="true"
+		readonlyProperty="ROUoForPrint"
+		label="Codice UO" />
+		
+	<fieldProperty
+		name="cdUOCRForPrint"
+		property="cdUOCRForPrint"/>
+		
+	<fieldProperty
+		name="ti_etr_spe"
+		property="ti_etr_spe"
+		inputType="RADIOGROUP"
+		label="Tipo"
+		layout="HORIZONTAL"
+		keysProperty="ti_etr_speKeys"
+		nullable="false"/>
+	<fieldProperty
+		name="ragrr_istituto"
+		property="ragrr_istituto"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		readonlyProperty="ROCheckBox"
+		label="Istituto"
+		nullable="false"/>
+	<fieldProperty
+		name="ragrr_uo"
+		property="ragrr_uo"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Unità organizzativa"
+		nullable="false"/>
+	<fieldProperty
+		name="ragrr_dipartimento"
+		property="ragrr_dipartimento"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Dipartimento"
+		nullable="false"/>
+	<fieldProperty
+		name="ragrr_progetto"
+		property="ragrr_progetto"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Progetto"
+		nullable="false"/>
+	<fieldProperty
+		name="ragrr_commessa"
+		property="ragrr_commessa"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Commessa"
+		nullable="false"/>
+	<fieldProperty
+		name="ragrr_modulo"
+		property="ragrr_modulo"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Modulo di attività"
+		nullable="false"/>
+	<fieldProperty
+		name="ragrr_titolo"
+		property="ragrr_titolo"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Titolo"
+		nullable="false"/>
+	<fieldProperty
+		name="ragrr_categoria"
+		property="ragrr_categoria"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Categoria"
+		nullable="false"/>
+	<fieldProperty
+		name="ragrr_natura"
+		property="ragrr_natura"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Natura"
+		nullable="false"/>
+	<fieldProperty
+		name="ragrr_elemento_voce"
+		property="ragrr_elemento_voce"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Elemento voce"
+		nullable="false"/>
+	<fieldProperty
+		name="seleziona"
+		property="esercizio"
+		inputType="BUTTON"
+		img="img/check10.gif"
+		href="javascript:submitForm('doSeleziona()')" />
+		
+    <formFieldProperty name="seleziona" />				
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="findCDSForPrint" />
+	<formFieldProperty name="cdCDSForPrint" nullable="true" />
+	<formFieldProperty name="cdCDSCRForPrint" />
+	<formFieldProperty name="findElemento_voceForPrint" />
+	<formFieldProperty name="cd_elemento_voceForPrint" nullable="true" />
+	<formFieldProperty name="cd_elementoVoceCRForPrint" />	
+	<formFieldProperty name="findUOForPrint" />
+	<formFieldProperty name="cdUOForPrint" nullable="true" />
+	<formFieldProperty name="cdUOCRForPrint" />
+	<formFieldProperty name="ti_etr_spe" />
+	<formFieldProperty name="ragrr_istituto" />
+	<formFieldProperty name="ragrr_uo" />
+	<formFieldProperty name="ragrr_dipartimento" />
+	<formFieldProperty name="ragrr_progetto" />
+	<formFieldProperty name="ragrr_commessa" />
+	<formFieldProperty name="ragrr_modulo" />
+	<formFieldProperty name="ragrr_titolo" />
+	<formFieldProperty name="ragrr_categoria" />
+	<formFieldProperty name="ragrr_natura" />
+	<formFieldProperty name="ragrr_elemento_voce" />
+	
+	
+	<printForm
+		name="/cnrpreventivo/pdg/stampa_pdg_etr_ist.rpt">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdCDSCRForPrint"
+			parameterPosition="1"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cd_elemento_voceForPrint"
+			parameterPosition="3"
+			parameterType="STRING" />			
+        <printFieldProperty 
+        	name="ragrr_istituto"
+			parameterPosition="4"
+			parameterType="STRING"/>
+        <printFieldProperty 
+        	name="ragrr_uo"
+			parameterPosition="5"
+			parameterType="STRING" />
+        <printFieldProperty 
+        	name="ragrr_dipartimento"
+			parameterPosition="6"
+			parameterType="STRING" />
+        <printFieldProperty 
+        	name="ragrr_progetto"
+			parameterPosition="7"
+			parameterType="STRING" />
+        <printFieldProperty 
+        	name="ragrr_commessa"
+			parameterPosition="8"
+			parameterType="STRING" />
+        <printFieldProperty 
+        	name="ragrr_modulo"
+			parameterPosition="9"
+			parameterType="STRING" />
+        <printFieldProperty 
+        	name="ragrr_titolo"
+			parameterPosition="10"
+			parameterType="STRING" />
+        <printFieldProperty 
+        	name="ragrr_categoria"
+			parameterPosition="11"
+			parameterType="STRING" />
+        <printFieldProperty 
+        	name="ragrr_natura"
+			parameterPosition="12"
+			parameterType="STRING" />
+        <printFieldProperty 
+        	name="ragrr_elemento_voce"
+			parameterPosition="13"
+			parameterType="STRING" />			
+	</printForm>	
+	<printForm
+		name="/cnrpreventivo/pdg/stampa_pdg_spe_ist.rpt">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdCDSCRForPrint"
+			parameterPosition="1"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cd_elemento_voceForPrint"
+			parameterPosition="3"
+			parameterType="STRING" />			
+        <printFieldProperty 
+        	name="ragrr_istituto"
+			parameterPosition="4"
+			parameterType="STRING"/>
+        <printFieldProperty 
+        	name="ragrr_uo"
+			parameterPosition="5"
+			parameterType="STRING" />
+        <printFieldProperty 
+        	name="ragrr_dipartimento"
+			parameterPosition="6"
+			parameterType="STRING" />
+        <printFieldProperty 
+        	name="ragrr_progetto"
+			parameterPosition="7"
+			parameterType="STRING" />
+        <printFieldProperty 
+        	name="ragrr_commessa"
+			parameterPosition="8"
+			parameterType="STRING" />
+        <printFieldProperty 
+        	name="ragrr_modulo"
+			parameterPosition="9"
+			parameterType="STRING" />
+        <printFieldProperty 
+        	name="ragrr_titolo"
+			parameterPosition="10"
+			parameterType="STRING" />
+        <printFieldProperty 
+        	name="ragrr_categoria"
+			parameterPosition="11"
+			parameterType="STRING" />
+        <printFieldProperty 
+        	name="ragrr_natura"
+			parameterPosition="12"
+			parameterType="STRING" />
+        <printFieldProperty 
+        	name="ragrr_elemento_voce"
+			parameterPosition="13"
+			parameterType="STRING" />			
+	</printForm>	
+</bulkInfo>

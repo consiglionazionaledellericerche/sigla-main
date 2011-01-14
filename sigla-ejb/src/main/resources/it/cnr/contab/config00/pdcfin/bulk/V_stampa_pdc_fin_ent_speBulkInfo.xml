@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Esercizio" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		maxLength="1"
+		inputSize="1"
+		inputType="RADIOGROUP"
+		label="Tipo"
+		layout="HORIZONTAL"
+		keysProperty="ti_gestioneKeys"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"/>
+	
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="ti_gestione" />
+
+
+<printForm
+		name="/cnrconfigurazione/pdc/piano_dei_conti_fin.jasper">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="Esercizio"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="ti_gestione"
+			property="ti_gestione"
+			parameterPosition="4"
+			parameterType="STRING"
+			paramNameJR="Ti_gestione"
+			paramTypeJR="java.lang.String" />
+	</printForm>
+	
+</bulkInfo>

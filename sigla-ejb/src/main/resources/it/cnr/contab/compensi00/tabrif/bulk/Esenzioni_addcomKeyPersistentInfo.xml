@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Esenzioni_addcomKey">
+	<defaultColumnMap
+		tableName="ESENZIONI_ADDCOM">
+		<columnMapping
+			columnName="CD_CATASTALE"
+			propertyName="cd_catastale"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="DT_INIZIO_VALIDITA"
+			propertyName="dt_inizio_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_catastale"
+		partOfOid="true" />
+	<persistentProperty
+		name="dt_inizio_validita"
+		partOfOid="true" />
+</SQLPersistentInfo>

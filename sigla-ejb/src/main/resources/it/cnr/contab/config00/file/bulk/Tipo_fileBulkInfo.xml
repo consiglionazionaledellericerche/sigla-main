@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_tipo_file"
+		property="cd_tipo_file"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice file" />
+	<fieldProperty
+		name="ds_tipo_file"
+		property="ds_tipo_file"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Descrizione file" />
+	<fieldProperty
+		name="estensione_file"
+		property="estensione_file"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Estensione file" />
+
+	<formFieldProperty
+		name="cd_tipo_file" />
+	<formFieldProperty
+		name="ds_tipo_file" />
+	<formFieldProperty
+		name="estensione_file" />
+
+	<findFieldProperty
+		name="cd_tipo_file" />
+	<findFieldProperty
+		name="ds_tipo_file" />
+	<findFieldProperty
+		name="estensione_file" />
+
+	<columnFieldProperty
+		name="cd_tipo_file" />
+	<columnFieldProperty
+		name="ds_tipo_file" />
+	<columnFieldProperty
+		name="estensione_file" />
+
+    <form name="searchtool">
+	    <formFieldProperty
+            name="cd_tipo_file" />	
+	    <formFieldProperty
+            name="ds_tipo_file"
+            inputType="TEXT"
+            inputSize="30" />           
+	</form>
+</bulkInfo>

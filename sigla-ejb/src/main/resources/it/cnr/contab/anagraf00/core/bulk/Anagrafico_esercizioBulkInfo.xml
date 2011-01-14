@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="fl_notaxarea"
+		property="fl_notaxarea"
+		inputType="CHECKBOX"
+		label="No TAX Area" />
+	<fieldProperty
+		name="fl_nofamilyarea"
+		property="fl_nofamilyarea"
+		inputType="CHECKBOX"
+		label="No FAMILY Area" />		
+	<fieldProperty
+		name="im_detrazione_personale_anag"
+		property="im_detrazione_personale_anag"
+		inputType="TEXT"
+		label="Importo detrazione personale" />
+	<fieldProperty
+		name="im_deduzione_family_area"
+		property="im_deduzione_family_area"
+		inputType="TEXT"
+		label="Importo deduzione FAMILY Area" />		
+	<fieldProperty
+		name="cd_anag"
+		property="cd_anag"
+		inputType="TEXT"
+		label="Codice Anagrafico" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="fl_no_detrazioni_altre"
+		property="fl_no_detrazioni_altre"
+		inputType="CHECKBOX"
+		label="No Detrazioni art.13 TUIR" />
+	<fieldProperty
+		name="fl_no_detrazioni_family"
+		property="fl_no_detrazioni_family"
+		inputType="CHECKBOX"
+		label="No Detrazioni per carichi di famiglia" />	
+	<fieldProperty
+		name="im_reddito_complessivo"
+		property="im_reddito_complessivo"
+		inputType="TEXT"
+		label="Reddito Complessivo" />	
+	<fieldProperty
+		name="im_reddito_abitaz_princ"
+		property="im_reddito_abitaz_princ"
+		inputType="TEXT"
+		label="Reddito Abitazione Principale" />		
+	<fieldProperty
+		name="fl_applica_detr_pers_max"
+		property="fl_applica_detr_pers_max"
+		inputType="CHECKBOX"
+		label="Applica Detrazione personale massima" />			
+	<formFieldProperty
+		name="fl_notaxarea" />
+	<formFieldProperty
+		name="fl_nofamilyarea" />		
+	<formFieldProperty
+		name="im_detrazione_personale_anag" />
+	<formFieldProperty
+		name="im_deduzione_family_area" />		
+	<formFieldProperty
+		name="cd_anag" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="fl_no_detrazioni_altre" />
+	<formFieldProperty
+		name="fl_no_detrazioni_family" />
+	<formFieldProperty
+		name="im_reddito_complessivo" />		
+	<formFieldProperty
+		name="im_reddito_abitaz_princ" />		
+	<formFieldProperty
+		name="fl_applica_detr_pers_max" />						
+	<columnFieldProperty
+		name="fl_notaxarea" />
+	<columnFieldProperty
+		name="fl_nofamilyarea" />		
+	<columnFieldProperty
+		name="im_detrazione_personale_anag" />
+	<columnFieldProperty
+		name="im_deduzione_family_area" />		
+	<columnFieldProperty
+		name="cd_anag" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="fl_no_detrazioni_altre" />
+	<columnFieldProperty
+		name="fl_no_detrazioni_family" />
+	<columnFieldProperty
+		name="im_reddito_complessivo" />		
+	<columnFieldProperty
+		name="im_reddito_abitaz_princ" />		
+	<columnFieldProperty
+		name="fl_applica_detr_pers_max" />						
+	<findFieldProperty
+		name="fl_notaxarea" />
+	<findFieldProperty
+		name="fl_nofamilyarea" />		
+	<findFieldProperty
+		name="im_detrazione_personale_anag" />
+	<findFieldProperty
+		name="im_deduzione_family_area" />		
+	<findFieldProperty
+		name="cd_anag" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="im_reddito_complessivo" />
+	<findFieldProperty
+		name="im_reddito_abitaz_princ" />
+	<findFieldProperty
+		name="fl_applica_detr_pers_max" />				
+</bulkInfo>

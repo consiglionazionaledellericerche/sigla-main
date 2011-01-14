@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="divisa"
+		property="divisa"
+		inputType="SEARCHTOOL" 		
+		enabledOnSearch="false"
+		label="Divisa"
+        enabledOnEdit="false" />	
+	<fieldProperty
+		name="cd_divisa"
+		property="divisa.cd_divisa"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		readonlyProperty="ROValuta"
+		label="Divisa"
+		caseSensitiveSearch="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+	 	enabledOnEdit="false"/>
+	<fieldProperty
+		name="ds_divisa"
+		property="divisa.ds_divisa"
+		inputSize="15"
+		inputType="ROTEXT"
+		label="Divisa"
+		caseSensitiveSearch="false" />
+		
+	<fieldProperty
+		name="cambio"
+		property="cambio"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		label="cambio"
+		nullable="false"
+	 	readonlyProperty="ROCambioDefault"
+		enabledOnEdit="false"/>
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_inizio_validita"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+	 	readonlyProperty="ROCambioDefault"
+		label="Inizio Validita'"
+		enabledOnEdit="false"/>
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		inputType="TEXT"
+		formatName="date_short"
+		readonlyProperty="ROCambioDefault"
+		label="Fine Validita'"
+		enabledOnEdit="false"/>
+
+	<formFieldProperty
+		name="cd_divisa" />
+	<formFieldProperty
+		name="ds_divisa" />
+	<formFieldProperty
+		name="divisa" />
+	<formFieldProperty
+		name="cambio" />
+	<formFieldProperty
+		name="dt_inizio_validita" />
+	<formFieldProperty
+		name="dt_fine_validita" />
+
+	
+	<columnFieldProperty
+		name="cd_divisa" />
+	<columnFieldProperty
+		name="ds_divisa" />
+	<columnFieldProperty
+		name="cambio" />
+	<columnFieldProperty
+		name="dt_inizio_validita" />
+	<columnFieldProperty
+		name="dt_fine_validita" />
+		
+	<findFieldProperty
+		name="cambio" />
+	<findFieldProperty
+		name="cd_divisa" />
+	<findFieldProperty
+		name="dt_inizio_validita" />
+	<findFieldProperty
+		name="dt_fine_validita" />
+
+</bulkInfo>

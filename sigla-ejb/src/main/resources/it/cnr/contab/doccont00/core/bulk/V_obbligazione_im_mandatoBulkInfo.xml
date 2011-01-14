@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="im_mandato"
+		property="im_mandato"
+		label="Importo mandato"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="13"
+		inputSize="13"
+		enabledOnSearch="true"
+		/>
+
+	<formFieldProperty
+		name="im_mandato"
+		/>
+
+	<columnFieldProperty
+		name="im_mandato"
+		columnStyle="width:130px; text-align: right; padding-right:5px"
+		/>
+
+	<findFieldProperty
+		name="im_mandato"
+		/>
+
+</bulkInfo>

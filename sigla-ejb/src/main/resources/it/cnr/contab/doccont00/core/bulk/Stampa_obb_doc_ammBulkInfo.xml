@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		inputSize="2"
+		nullable="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="findCdsForPrint"
+		property="cdsForPrint"
+		readonlyProperty="cdsForPrintEnabled"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		nullable="false"
+		label="Cds" />
+	<fieldProperty
+		name="cdCdsForPrint"
+		property="cdCdsForPrint" />
+	<fieldProperty
+		name="findUoForPrint"
+		property="uoForPrint"
+		inputType="SEARCHTOOL"
+		formName="searchtoolUO"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="cdUoForPrint"
+		property="cdUoForPrint" />
+	<fieldProperty
+		name="findElementoVoceForPrint"
+		property="elementoVoceForPrint"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Elemento voce" />
+	<fieldProperty
+		name="cdElementoVoceForPrint"
+		property="cdElementoVoceForPrint" />
+	<fieldProperty
+		name="findEsercizioDocForPrint"
+		property="esercizioDocForPrint"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		completeOnSave="true"
+		label="Esercizio Documento"/>
+	<fieldProperty
+		name="cdEsercizioDocForPrint"
+		property="cdEsercizioDocForPrint" />
+<!-- 	<fieldProperty
+		name="cdEsercizioDocForPrint"
+		property="esercizioDocForPrint.esercizio" 
+		maxLength="4"
+		inputSize="2"
+		readonlyProperty="ROEsercizioDocForPrint"
+		inputType="TEXT"/>
+ -->
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="findCdsForPrint" />
+	<formFieldProperty
+		name="cdCdsForPrint" />
+	<formFieldProperty
+		name="dsCdsForPrint" />
+	<formFieldProperty
+		name="findUoForPrint" />
+	<formFieldProperty
+		name="cdUoForPrint" />
+	<formFieldProperty
+		name="dsUoForPrint" />
+	<formFieldProperty
+		name="findElementoVoceForPrint" />
+	<formFieldProperty
+		name="cdElementoVoceForPrint" />
+	<formFieldProperty
+		name="dsElementoVoceForPrint" />
+	<formFieldProperty
+		name="findEsercizioDocForPrint" />
+	<formFieldProperty
+		name="cdEsercizioDocForPrint" />
+
+	<printForm
+		name="/cnrdoccont/doccont/associazioneobb_docamm.rpt" >
+		<printFieldProperty
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty
+			name="cdCdsForPrint"
+			parameterPosition="1"
+			parameterType="STRING" />
+		<printFieldProperty
+			name="cdUoForPrint"
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty
+			name="cdElementoVoceForPrint"
+			parameterPosition="3"
+			parameterType="STRING" />
+		<printFieldProperty
+			name="cdEsercizioDocForPrint"
+			parameterPosition="4"
+			parameterType="STRING" />
+	</printForm>
+</bulkInfo>

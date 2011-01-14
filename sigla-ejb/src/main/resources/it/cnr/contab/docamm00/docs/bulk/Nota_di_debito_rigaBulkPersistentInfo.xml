@@ -1,0 +1,71 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaBulk"
+	homeClassName="it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaHome" >
+
+	<defaultColumnMap
+		tableName="FATTURA_PASSIVA_RIGA" >		
+
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="notaDiDebito.esercizio" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="notaDiDebito.cd_cds" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="notaDiDebito.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_FATTURA_PASSIVA"
+			propertyName="notaDiDebito.pg_fattura_passiva" />	
+
+
+		<columnMapping
+			columnName="ESERCIZIO_ASSNCNA_FIN"
+			propertyName="riga_fattura_associata.fattura_passivaI.esercizio" />
+		<columnMapping
+			columnName="CD_CDS_ASSNCNA_FIN"
+			propertyName="riga_fattura_associata.fattura_passivaI.cd_cds" />
+		<columnMapping
+			columnName="CD_UO_ASSNCNA_FIN"
+			propertyName="riga_fattura_associata.fattura_passivaI.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_FATTURA_ASSNCNA_FIN"
+			propertyName="riga_fattura_associata.fattura_passivaI.pg_fattura_passiva" />	
+		<columnMapping
+			columnName="PG_RIGA_ASSNCNA_FIN"
+			propertyName="riga_fattura_associata.progressivo_riga" />	
+
+
+		<columnMapping
+			columnName="ESERCIZIO_ASSNCNA_ECO"
+			propertyName="riga_fattura_origine.fattura_passivaI.esercizio" />
+		<columnMapping
+			columnName="CD_CDS_ASSNCNA_ECO"
+			propertyName="riga_fattura_origine.fattura_passivaI.cd_cds" />
+		<columnMapping
+			columnName="CD_UO_ASSNCNA_ECO"
+			propertyName="riga_fattura_origine.fattura_passivaI.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_FATTURA_ASSNCNA_ECO"
+			propertyName="riga_fattura_origine.fattura_passivaI.pg_fattura_passiva" />	
+		<columnMapping
+			columnName="PG_RIGA_ASSNCNA_ECO"
+			propertyName="riga_fattura_origine.progressivo_riga" />	
+			
+	</defaultColumnMap>		
+
+	<persistentProperty
+		name="notaDiDebito"
+		partOfOid="true"/>
+
+	<fetchPolicy
+		name="testata">
+		<exclude pattern="notaDiDebito.*" />
+	</fetchPolicy>
+
+	<persistentProperty
+		name="riga_fattura_origine" />
+	<persistentProperty
+		name="riga_fattura_associata" />
+
+</SQLPersistentInfo>

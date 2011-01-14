@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaBase"
+	keyClassName="it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaKey"
+	homeClassName="it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome" >
+	<defaultColumnMap
+		tableName="TIPO_UNITA_ORGANIZZATIVA" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_TIPO_UNITA"
+			propertyName="ds_tipo_unita"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="ds_tipo_unita" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

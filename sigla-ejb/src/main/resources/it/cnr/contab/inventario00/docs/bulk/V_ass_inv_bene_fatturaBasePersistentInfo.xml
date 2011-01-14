@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.docs.bulk.V_ass_inv_bene_fatturaBase"
+	homeClassName="it.cnr.contab.inventario00.docs.bulk.V_ass_inv_bene_fatturaHome">
+	<defaultColumnMap
+		tableName="V_ASS_INV_BENE_FATTURA">
+		<columnMapping
+			columnName="CD_CDS_FATT_PASS"
+			propertyName="cd_cds_fatt_pass"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UO_FATT_PASS"
+			propertyName="cd_uo_fatt_pass"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_FATT_PASS"
+			propertyName="esercizio_fatt_pass"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_FATTURA_PASSIVA"
+			propertyName="pg_fattura_passiva"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="PROGRESSIVO_RIGA_FATT_PASS"
+			propertyName="progressivo_riga_fatt_pass"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="pg_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="NR_INVENTARIO"
+			propertyName="nr_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PROGRESSIVO"
+			propertyName="progressivo"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_BENE"
+			propertyName="ds_bene"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_FATTURA"
+			propertyName="ds_fattura"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="VARCHAR"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_TERZO"
+			propertyName="ds_terzo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_DOCUMENTO"
+			propertyName="ti_documento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_BUONO_C_S"
+			propertyName="pg_buono_c_s"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />	
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_AMM"
+			propertyName="cd_tipo_documento_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />	
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="VARCHAR"
+			columnSize="60"
+			nullable="true" />		
+				
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_cds_fatt_pass" />
+	<persistentProperty
+		name="cd_uo_fatt_pass" />
+	<persistentProperty
+		name="esercizio_fatt_pass" />
+	<persistentProperty
+		name="pg_fattura_passiva" />
+	<persistentProperty
+		name="progressivo_riga_fatt_pass" />
+	<persistentProperty
+		name="pg_inventario" />
+	<persistentProperty
+		name="nr_inventario" />
+	<persistentProperty
+		name="progressivo" />
+	<persistentProperty
+		name="ds_bene" />
+	<persistentProperty
+		name="ds_fattura" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="ds_terzo" />
+	<persistentProperty
+		name="ti_documento" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="pg_buono_c_s" />	
+	<persistentProperty
+		name="cd_tipo_documento_amm" />	
+	<persistentProperty
+		name="tipo" />
+	
+</SQLPersistentInfo>

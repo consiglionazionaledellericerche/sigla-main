@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+
+	<fieldProperty
+		name="ti_att_pass"
+		property="ti_att_pass"
+		keysProperty="ti_att_passKeys"
+		label="Attività/Passività" 
+		layout="HORIZONTAL"
+		inputType="RADIOGROUP"/>
+	
+	<formFieldProperty name="ti_att_pass" />
+		
+	<form
+		name="/cnrpreventivo/pdg/statopatrimonialericlassificato.rpt">
+		<formFieldProperty 
+			name="esercizio"
+			inputType="ROTEXT" />
+		<formFieldProperty 
+			name="cdCDSForPrint"/>
+		<formFieldProperty 
+			name="cdUOForPrint" />
+	</form>
+
+	<printForm
+		name="/cnrpreventivo/pdg/statopatrimonialericlassificato.rpt">
+		<printFieldProperty 
+			name="tc"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="ti_att_pass"
+			parameterPosition="1"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="ti_ist_com"
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="3"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdCDSCRForPrint"
+			parameterPosition="4"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="5"
+			parameterType="STRING" />	
+	</printForm>
+	<form
+		name="/cnrpreventivo/pdg/statopatrimonialericlassificato.jasper">
+		<formFieldProperty 
+			name="esercizio"
+			inputType="ROTEXT" />
+		<formFieldProperty 
+			name="cdCDSForPrint"/>
+		<formFieldProperty 
+			name="cdUOForPrint" />
+	</form>
+
+	<printForm
+		name="/cnrpreventivo/pdg/statopatrimonialericlassificato.jasper">
+		<printFieldProperty 
+			name="ti_att_pass"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="ATTPAS"
+			paramTypeJR="java.lang.String" />		
+		<printFieldProperty 
+			name="ti_ist_com"
+			parameterPosition="2"
+			parameterType="STRING"
+			paramNameJR="IST_COMM"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="3"
+			parameterType="STRING"
+			paramNameJR="inEs"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="cdCDSCRForPrint"
+			parameterPosition="4"
+			parameterType="STRING"
+			paramNameJR="CDS"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="5"
+			parameterType="STRING"
+			paramNameJR="uo"
+			paramTypeJR="java.lang.String" />	
+		<printFieldProperty 
+			name="dettaglioContiYN"
+			parameterPosition="5"
+			parameterType="STRING"
+			paramNameJR="dettaglioConti"
+			paramTypeJR="java.lang.String" />	
+	</printForm>		
+		
+</bulkInfo>

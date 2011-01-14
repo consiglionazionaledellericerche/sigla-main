@@ -1,0 +1,971 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_variazione_pdg"
+		property="pg_variazione_pdg"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero Variazione" />
+	<fieldProperty
+		name="ds_variazione"
+		property="ds_variazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1000"
+		label="Descrizione Variazione" />
+	<fieldProperty
+		name="dt_apertura"
+		property="dt_apertura"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Apertura" />
+	<fieldProperty
+		name="dt_chiusura"
+		property="dt_chiusura"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Chiusura" />
+	<fieldProperty
+		name="dt_approvazione"
+		property="dt_approvazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Approvazione" />
+	<fieldProperty
+		name="dt_approvazione_da"
+		property="dt_approvazione_da"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Da Data Approvazione" />
+	<fieldProperty
+		name="dt_approvazione_a"
+		property="dt_approvazione_a"
+		inputType="TEXT"
+		formatName="date_short"
+		label="A Data Approvazione" />
+	<fieldProperty
+		name="dt_annullamento"
+		property="dt_annullamento"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Annullamento" />
+	<fieldProperty
+		name="ds_delibera"
+		property="ds_delibera"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Descrizione Delibera" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="Stato" />
+	<fieldProperty
+		name="ds_stato"
+		property="ds_stato"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Stato" />
+	<fieldProperty
+		name="riferimenti"
+		property="riferimenti"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Riferimenti" />
+	<fieldProperty
+		name="cd_causale_respinta"
+		property="cd_causale_respinta"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Codice Causale Respinta" />
+	<fieldProperty
+		name="ds_causale_respinta"
+		property="ds_causale_respinta"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Descrizione Causale Respinta" />
+	<fieldProperty
+		name="dt_app_formale"
+		property="dt_app_formale"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Approvazione Formale" />
+	<fieldProperty
+		name="tipologia"
+		property="tipologia"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Tipologia" />
+	<fieldProperty
+		name="ds_tipo_variazione"
+		property="ds_tipo_variazione"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		label="Tipologia" />
+	<fieldProperty
+		name="tipologia_fin"
+		property="tipologia_fin"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="tipologia_fin" />
+	<fieldProperty
+		name="ds_tipologia_fin"
+		property="ds_tipologia_fin"
+		inputType="TEXT"
+		inputSize="13"
+		maxLength="13"
+		label="Origine delle fonti" />
+	<fieldProperty
+		name="pg_riga"
+		property="pg_riga"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Progressivo Riga" />
+	<fieldProperty
+		name="cd_cdr_assegnatario"
+		property="cd_cdr_assegnatario"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CdR Assegnatario" />
+	<fieldProperty
+		name="ds_cdr_assegnatario"
+		property="ds_cdr_assegnatario"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione CdR Assegnatario" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice Linea Attivita" />
+	<fieldProperty
+		name="cd_classificazione"
+		property="cd_classificazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="34"
+		label="Codice Classificazione" />
+	<fieldProperty
+		name="ds_classificazione"
+		property="ds_classificazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="250"
+		label="Descrizione Classificazione" />
+	<fieldProperty
+		name="nr_livello"
+		property="nr_livello"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="Numero Livello" />
+	<fieldProperty
+		name="cd_livello1"
+		property="cd_livello1"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Livello I" />
+	<fieldProperty
+		name="cd_livello2"
+		property="cd_livello2"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Livello II" />
+	<fieldProperty
+		name="cd_livello3"
+		property="cd_livello3"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Livello III" />
+	<fieldProperty
+		name="cd_livello4"
+		property="cd_livello4"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="cd_livello4" />
+	<fieldProperty
+		name="cd_livello5"
+		property="cd_livello5"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="cd_livello5" />
+	<fieldProperty
+		name="cd_livello6"
+		property="cd_livello6"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="cd_livello6" />
+	<fieldProperty
+		name="cd_livello7"
+		property="cd_livello7"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="cd_livello7" />
+	<fieldProperty
+		name="pg_modulo"
+		property="pg_modulo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo Modulo" />
+	<fieldProperty
+		name="cd_modulo"
+		property="cd_modulo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Modulo" />
+	<fieldProperty
+		name="ds_modulo"
+		property="ds_modulo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="433"
+		label="Descrizione Modulo" />
+	<fieldProperty
+		name="cd_tipo_modulo"
+		property="cd_tipo_modulo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice Tipo Modulo" />
+	<fieldProperty
+		name="ds_tipo_modulo"
+		property="ds_tipo_modulo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Descrizione Tipo Modulo" />
+	<fieldProperty
+		name="pg_commessa"
+		property="pg_commessa"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo Commessa" />
+	<fieldProperty
+		name="cd_commessa"
+		property="cd_commessa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Commessa" />
+	<fieldProperty
+		name="ds_commessa"
+		property="ds_commessa"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="433"
+		label="Descrizione Commessa" />
+	<fieldProperty
+		name="pg_progetto"
+		property="pg_progetto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo Progetto" />
+	<fieldProperty
+		name="cd_progetto"
+		property="cd_progetto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Progetto" />
+	<fieldProperty
+		name="ds_progetto"
+		property="ds_progetto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="433"
+		label="Descrizione Progetto" />
+	<fieldProperty
+		name="cd_dipartimento"
+		property="cd_dipartimento"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Dipartimento" />
+	<fieldProperty
+		name="ds_dipartimento"
+		property="ds_dipartimento"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="765"
+		label="Descrizione Dipartimento" />
+	<fieldProperty
+		name="cd_cds_area"
+		property="cd_cds_area"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds Area" />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Appartenenza" />
+	
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		label="Gestione"
+		inputType="RADIOGROUP"
+		keysProperty="ti_gestioneKeys"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		layout="HORIZONTAL" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Elemento Voce" />
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="ds_elemento_voce"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Descrizione Elemento Voce" />
+	<fieldProperty
+		name="dt_registrazione"
+		property="dt_registrazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Registrazione" />
+	<fieldProperty
+		name="descrizione"
+		property="descrizione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione" />
+	<fieldProperty
+		name="im_spese_gest_decentrata_int"
+		property="im_spese_gest_decentrata_int"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Spese Decentrate Interne" />
+	<fieldProperty
+		name="im_spese_gest_decentrata_est"
+		property="im_spese_gest_decentrata_est"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Spese Decentrate Esterne" />
+	<fieldProperty
+		name="im_spese_gest_accentrata_int"
+		property="im_spese_gest_accentrata_int"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Spese Accentrate Interne" />
+	<fieldProperty
+		name="im_spese_gest_accentrata_est"
+		property="im_spese_gest_accentrata_est"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Spese Accentrate Esterne" />
+	<fieldProperty
+		name="im_entrata"
+		property="im_entrata"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Entrata" />
+	<fieldProperty
+		name="abs_tot_variazione_da"
+		property="abs_tot_variazione_da"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="Da Totale Complessivo Variazione" />
+	<fieldProperty
+		name="abs_tot_variazione_a"
+		property="abs_tot_variazione_a"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="A Totale Complessivo Variazione" />
+		
+		
+	<fieldProperty
+		name="ragr_STO_S_CDS"
+		property="ragr_STO_S_CDS"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Storno di Spesa all'interno dello stesso Istituto"
+		nullable="false"/>
+	<fieldProperty
+		name="ragr_STO_E_CDS"
+		property="ragr_STO_E_CDS"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Storno di Entrata all'interno dello stesso Istituto"
+		nullable="false"/>
+	<fieldProperty
+		name="ragr_STO_S_TOT"
+		property="ragr_STO_S_TOT"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Storno di Spesa tra Istituti diversi"
+		nullable="false"/>		
+	<fieldProperty
+		name="ragr_STO_E_TOT"
+		property="ragr_STO_E_TOT"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Storno di Entrata tra Istituti diversi"
+		nullable="false"/>		
+	
+	<fieldProperty
+		name="ragr_STO_E_AREA"
+		property="ragr_STO_E_AREA"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Storno di Entrata all'interno della stessa Area"
+		nullable="false"/>		
+	<fieldProperty
+		name="ragr_STO_S_AREA"
+		property="ragr_STO_S_AREA"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Storno di Spesa all'interno della stessa Area"
+		nullable="false"/>		
+	<fieldProperty
+		name="ragr_VAR_MENO_FON"
+		property="ragr_VAR_MENO_FON"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Decremento Fondi"
+		nullable="false"/>		
+	<fieldProperty
+		name="ragr_VAR_PIU_FON"
+		property="ragr_VAR_PIU_FON"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Incremento Fondi"
+		nullable="false"/>			
+	<fieldProperty
+		name="ragr_VAR_PIU_CDS"
+		property="ragr_VAR_PIU_CDS"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Variazione per maggiori Entrate/Spese all'interno dello stesso Istituto"
+		nullable="false"/>		
+	<fieldProperty
+		name="ragr_VAR_MENO_CDS"
+		property="ragr_VAR_MENO_CDS"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Variazione per minori Entrate/Spese all'interno dello stesso Istituto"
+		nullable="false"/>		
+	<fieldProperty
+		name="ragr_VAR_PIU_TOT"
+		property="ragr_VAR_PIU_TOT"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Variazione per maggiori Entrate/Spese tra Istituti diversi"
+		nullable="false"/>	
+	<fieldProperty
+		name="ragr_VAR_MENO_TOT"
+		property="ragr_VAR_MENO_TOT"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Variazione per minori Entrate/Spese tra Istituti diversi"
+		nullable="false"/>	
+	<fieldProperty
+		name="ragr_PREL_FON"
+		property="ragr_PREL_FON"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Prelievo dai Fondi (non a quadratura)"
+		nullable="false"/>
+	<fieldProperty
+		name="ragr_REST_FOND"
+		property="ragr_REST_FOND"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Restituzione ai Fondi (non a quadratura)"
+		nullable="false"/>	
+	<fieldProperty
+		name="ragr_NO_TIPO"
+		property="ragr_NO_TIPO"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Tipologia non definita"
+		nullable="false"/>
+	<fieldProperty
+		name="seleziona"
+		property="esercizio"
+		inputType="BUTTON"
+		img="img/check10.gif"
+		href="javascript:submitForm('doSeleziona()')" />
+	
+
+	<fieldProperty
+		name="find_classificazione_voci"
+		property="v_classificazione_voci"
+		inputType="SEARCHTOOL"
+		formName="searchtool_1"
+		columnSet="searchtool_1"
+		freeSearchSet="searchtool_1"
+		enabledOnSearch="true"
+		/>	
+
+			
+			
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_variazione_pdg" />
+	<formFieldProperty
+		name="ds_variazione" />
+	<formFieldProperty
+		name="dt_apertura" />
+	<formFieldProperty
+		name="dt_chiusura" />
+	<formFieldProperty
+		name="dt_approvazione" />
+	<formFieldProperty
+		name="dt_approvazione_da" />
+	<formFieldProperty
+		name="dt_approvazione_a" />
+	<formFieldProperty
+		name="dt_annullamento" />
+	<formFieldProperty
+		name="ds_delibera" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="ds_stato" />
+	<formFieldProperty
+		name="riferimenti" />
+	<formFieldProperty
+		name="cd_causale_respinta" />
+	<formFieldProperty
+		name="ds_causale_respinta" />
+	<formFieldProperty
+		name="dt_app_formale" />
+	<formFieldProperty
+		name="tipologia" />
+	<formFieldProperty
+		name="ds_tipo_variazione" />
+	<formFieldProperty
+		name="tipologia_fin" />
+	<formFieldProperty
+		name="ds_tipologia_fin" />
+	<formFieldProperty
+		name="pg_riga" />
+	<formFieldProperty
+		name="cd_cdr_assegnatario" />
+	<formFieldProperty
+		name="ds_cdr_assegnatario" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="cd_classificazione" />
+	<formFieldProperty
+		name="ds_classificazione" />
+	<formFieldProperty
+		name="nr_livello" />
+	<formFieldProperty
+		name="cd_livello1" />
+	<formFieldProperty
+		name="cd_livello2" />
+	<formFieldProperty
+		name="cd_livello3" />
+	<formFieldProperty
+		name="cd_livello4" />
+	<formFieldProperty
+		name="cd_livello5" />
+	<formFieldProperty
+		name="cd_livello6" />
+	<formFieldProperty
+		name="cd_livello7" />
+	<formFieldProperty
+		name="pg_modulo" />
+	<formFieldProperty
+		name="cd_modulo" />
+	<formFieldProperty
+		name="ds_modulo" />
+	<formFieldProperty
+		name="cd_tipo_modulo" />
+	<formFieldProperty
+		name="ds_tipo_modulo" />
+	<formFieldProperty
+		name="pg_commessa" />
+	<formFieldProperty
+		name="cd_commessa" />
+	<formFieldProperty
+		name="ds_commessa" />
+	<formFieldProperty
+		name="pg_progetto" />
+	<formFieldProperty
+		name="cd_progetto" />
+	<formFieldProperty
+		name="ds_progetto" />
+	<formFieldProperty
+		name="cd_dipartimento" />
+	<formFieldProperty
+		name="ds_dipartimento" />
+	<formFieldProperty
+		name="cd_cds_area" />
+	<formFieldProperty
+		name="ti_appartenenza" />
+	
+	<formFieldProperty
+		name="ti_gestione"
+		command="doCambiaGestione" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="ds_elemento_voce" />
+	<formFieldProperty
+		name="dt_registrazione" />
+	<formFieldProperty
+		name="descrizione" />
+	<formFieldProperty
+		name="im_spese_gest_decentrata_int" />
+	<formFieldProperty
+		name="im_spese_gest_decentrata_est" />
+	<formFieldProperty
+		name="im_spese_gest_accentrata_int" />
+	<formFieldProperty
+		name="im_spese_gest_accentrata_est" />
+	<formFieldProperty
+		name="im_entrata" />
+	<formFieldProperty
+		name="abs_tot_variazione_da" />
+	<formFieldProperty
+		name="abs_tot_variazione_a" />
+		
+	<formFieldProperty 
+		name="seleziona" />	
+	<formFieldProperty
+		name="ragr_STO_S_CDS" />
+	<formFieldProperty
+		name="ragr_STO_E_CDS" />
+	<formFieldProperty
+		name="ragr_STO_S_TOT" />
+	<formFieldProperty
+		name="ragr_STO_E_TOT" />
+
+	<formFieldProperty
+		name="ragr_STO_S_AREA" />
+	<formFieldProperty
+		name="ragr_STO_E_AREA" />
+	<formFieldProperty
+		name="ragr_VAR_MENO_FON" />
+	<formFieldProperty
+		name="ragr_VAR_PIU_FON" />
+		
+	<formFieldProperty
+		name="ragr_VAR_PIU_CDS" />
+	<formFieldProperty
+		name="ragr_VAR_MENO_CDS" />		
+	<formFieldProperty
+		name="ragr_VAR_PIU_TOT" />
+	<formFieldProperty
+		name="ragr_VAR_MENO_TOT" />		
+	<formFieldProperty
+		name="ragr_PREL_FON" />
+	<formFieldProperty
+		name="ragr_REST_FOND" />	
+	<formFieldProperty
+		name="ragr_NO_TIPO" />
+
+	<formFieldProperty
+		name="find_classificazione_voci" />
+
+		
+		
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_variazione_pdg" />
+	<findFieldProperty
+		name="ds_variazione" />
+	<findFieldProperty
+		name="dt_apertura" />
+	<findFieldProperty
+		name="dt_chiusura" />
+	<findFieldProperty
+		name="dt_approvazione_da" />
+	<findFieldProperty
+		name="dt_approvazione_a" />
+	<findFieldProperty
+		name="dt_annullamento" />
+	<findFieldProperty
+		name="ds_delibera" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="ds_stato" />
+	<findFieldProperty
+		name="riferimenti" />
+	<findFieldProperty
+		name="cd_causale_respinta" />
+	<findFieldProperty
+		name="ds_causale_respinta" />
+	<findFieldProperty
+		name="dt_app_formale" />
+	<findFieldProperty
+		name="tipologia" />
+	<findFieldProperty
+		name="ds_tipo_variazione" />
+	<findFieldProperty
+		name="tipologia_fin" />
+	<findFieldProperty
+		name="ds_tipologia_fin" />
+	<findFieldProperty
+		name="pg_riga" />
+	<findFieldProperty
+		name="cd_cdr_assegnatario" />
+	<findFieldProperty
+		name="ds_cdr_assegnatario" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="cd_classificazione" />
+	<findFieldProperty
+		name="ds_classificazione" />
+	<findFieldProperty
+		name="nr_livello" />
+	<findFieldProperty
+		name="cd_livello1" />
+	<findFieldProperty
+		name="cd_livello2" />
+	<findFieldProperty
+		name="cd_livello3" />
+	<findFieldProperty
+		name="cd_livello4" />
+	<findFieldProperty
+		name="cd_livello5" />
+	<findFieldProperty
+		name="cd_livello6" />
+	<findFieldProperty
+		name="cd_livello7" />
+	<findFieldProperty
+		name="pg_modulo" />
+	<findFieldProperty
+		name="cd_modulo" />
+	<findFieldProperty
+		name="ds_modulo" />
+	<findFieldProperty
+		name="cd_tipo_modulo" />
+	<findFieldProperty
+		name="ds_tipo_modulo" />
+	<findFieldProperty
+		name="pg_commessa" />
+	<findFieldProperty
+		name="cd_commessa" />
+	<findFieldProperty
+		name="ds_commessa" />
+	<findFieldProperty
+		name="pg_progetto" />
+	<findFieldProperty
+		name="cd_progetto" />
+	<findFieldProperty
+		name="ds_progetto" />
+	<findFieldProperty
+		name="cd_dipartimento" />
+	<findFieldProperty
+		name="ds_dipartimento" />
+	<findFieldProperty
+		name="cd_cds_area" />
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="ds_elemento_voce" />
+	<findFieldProperty
+		name="dt_registrazione" />
+	<findFieldProperty
+		name="descrizione" />
+	<findFieldProperty
+		name="im_spese_gest_decentrata_int" />
+	<findFieldProperty
+		name="im_spese_gest_decentrata_est" />
+	<findFieldProperty
+		name="im_spese_gest_accentrata_int" />
+	<findFieldProperty
+		name="im_spese_gest_accentrata_est" />
+	<findFieldProperty
+		name="im_entrata" />
+	<findFieldProperty
+		name="abs_tot_variazione_da" />
+	<findFieldProperty
+		name="abs_tot_variazione_a" />
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_variazione_pdg" />
+	<columnFieldProperty
+		name="ds_variazione" />
+	<columnFieldProperty
+		name="dt_apertura" />
+	<columnFieldProperty
+		name="dt_chiusura" />
+	<columnFieldProperty
+		name="dt_approvazione" />
+	<columnFieldProperty
+		name="dt_annullamento" />
+	<columnFieldProperty
+		name="ds_delibera" />
+<!-- <columnFieldProperty
+		name="stato" /> -->
+	<columnFieldProperty
+		name="ds_stato" />
+<!--  	<columnFieldProperty
+		name="riferimenti" /> -->
+	<columnFieldProperty
+		name="cd_causale_respinta" />
+	<columnFieldProperty
+		name="ds_causale_respinta" />
+	<columnFieldProperty
+		name="dt_app_formale" />
+<!-- <columnFieldProperty
+		name="tipologia" />  -->
+	<columnFieldProperty
+		name="ds_tipo_variazione" />
+<!--	<columnFieldProperty
+		name="tipologia_fin" /> -->
+	<columnFieldProperty
+		name="ds_tipologia_fin" />
+<!--  	<columnFieldProperty
+		name="pg_riga" /> -->
+	<columnFieldProperty
+		name="cd_cdr_assegnatario" />
+	<columnFieldProperty
+		name="ds_cdr_assegnatario" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="cd_classificazione" />
+	<columnFieldProperty
+		name="ds_classificazione" />
+<!-- 	<columnFieldProperty
+		name="nr_livello" />  -->
+	<columnFieldProperty
+		name="cd_livello1" />
+	<columnFieldProperty
+		name="cd_livello2" />
+	<columnFieldProperty
+		name="cd_livello3" />
+<!-- <columnFieldProperty
+		name="cd_livello4" />
+	<columnFieldProperty
+		name="cd_livello5" />
+	<columnFieldProperty
+		name="cd_livello6" />
+	<columnFieldProperty
+		name="cd_livello7" />  -->
+	<columnFieldProperty
+		name="pg_modulo" /> 
+	<columnFieldProperty
+		name="cd_modulo" />
+	<columnFieldProperty
+		name="ds_modulo" />
+	<columnFieldProperty
+		name="cd_tipo_modulo" />
+	<columnFieldProperty
+		name="ds_tipo_modulo" />
+	<columnFieldProperty
+		name="pg_commessa" />
+	<columnFieldProperty
+		name="cd_commessa" />
+	<columnFieldProperty
+		name="ds_commessa" />
+	<columnFieldProperty
+		name="pg_progetto" />
+	<columnFieldProperty
+		name="cd_progetto" />
+	<columnFieldProperty
+		name="ds_progetto" />
+	<columnFieldProperty
+		name="cd_dipartimento" />
+	<columnFieldProperty
+		name="ds_dipartimento" />
+	<columnFieldProperty
+		name="cd_cds_area" />
+<!-- 	<columnFieldProperty
+		name="ti_appartenenza" />  -->
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="ds_elemento_voce" />
+<!-- 	<columnFieldProperty
+		name="dt_registrazione" />
+	<columnFieldProperty
+		name="descrizione" />  -->
+	<columnFieldProperty
+		name="im_spese_gest_decentrata_int" />
+	<columnFieldProperty
+		name="im_spese_gest_decentrata_est" />
+	<columnFieldProperty
+		name="im_spese_gest_accentrata_int" />
+	<columnFieldProperty
+		name="im_spese_gest_accentrata_est" />
+	<columnFieldProperty
+		name="im_entrata" />
+<!-- <columnFieldProperty
+		name="abs_tot_variazione_da" />
+	<columnFieldProperty
+		name="abs_tot_variazione_a" />  -->
+		
+</bulkInfo>

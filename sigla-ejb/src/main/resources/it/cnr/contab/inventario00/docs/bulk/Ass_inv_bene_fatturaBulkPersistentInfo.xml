@@ -1,0 +1,136 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk"
+	homeClassName="it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaHome" >
+
+
+	<defaultColumnMap
+		tableName="ASS_INV_BENE_FATTURA" >		
+		<columnMapping
+			columnName="CD_CDS_FATT_PASS"
+			propertyName="riga_fatt_pass.fattura_passivaI.cd_cds" />
+		<columnMapping
+			columnName="ESERCIZIO_FATT_PASS"
+			propertyName="riga_fatt_pass.fattura_passivaI.esercizio" />
+		<columnMapping
+			columnName="CD_UO_FATT_PASS"
+			propertyName="riga_fatt_pass.fattura_passivaI.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_FATTURA_PASSIVA"
+			propertyName="riga_fatt_pass.fattura_passivaI.pg_fattura_passiva" />
+		<columnMapping
+			columnName="PROGRESSIVO_RIGA_FATT_PASS"
+			propertyName="riga_fatt_pass.progressivo_riga" />
+
+		<columnMapping
+			columnName="CD_CDS_FATT_ATT"
+			propertyName="riga_fatt_att.fattura_attivaI.cd_cds" />
+		<columnMapping
+			columnName="ESERCIZIO_FATT_ATT"
+			propertyName="riga_fatt_att.fattura_attivaI.esercizio" />
+		<columnMapping
+			columnName="CD_UO_FATT_ATT"
+			propertyName="riga_fatt_att.fattura_attivaI.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_FATTURA_ATTIVA"
+			propertyName="riga_fatt_att.fattura_attivaI.pg_fattura_attiva" />
+		<columnMapping
+			columnName="PROGRESSIVO_RIGA_FATT_ATT"
+			propertyName="riga_fatt_att.progressivo_riga" />
+
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="test_buono.inventario.pg_inventario" />
+			<columnMapping
+			columnName="TI_DOCUMENTO"
+			propertyName="test_buono.ti_documento" />	
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="test_buono.esercizio" />	
+		<columnMapping
+			columnName="PG_BUONO_C_S"
+			propertyName="test_buono.pg_buono_c_s" />	
+	
+		<columnMapping
+			columnName="CD_CDS_DOC_GEN"
+			propertyName="riga_doc_gen.documento_generico.cd_cds" />
+		<columnMapping
+			columnName="ESERCIZIO_DOC_GEN"
+			propertyName="riga_doc_gen.documento_generico.esercizio"/>
+		<columnMapping
+			columnName="CD_UO_DOC_GEN"
+			propertyName="riga_doc_gen.documento_generico.cd_unita_organizzativa"/>
+		<columnMapping
+			columnName="PG_DOCUMENTO_GENERICO"
+			propertyName="riga_doc_gen.documento_generico.pg_documento_generico"/>
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_AMM"
+			propertyName="riga_doc_gen.documento_generico.tipo_documento.cd_tipo_documento_amm"/>
+		<columnMapping
+			columnName="PROGRESSIVO_RIGA_DOC_GEN"
+			propertyName="riga_doc_gen.documento_generico.progressivo_riga" />
+		<columnMapping
+			columnName="CD_CDS_DOC_GEN"
+			propertyName="riga_doc_gen.cd_cds" />
+		<columnMapping
+			columnName="ESERCIZIO_DOC_GEN"
+			propertyName="riga_doc_gen.esercizio" />
+		<columnMapping
+			columnName="CD_UO_DOC_GEN"
+			propertyName="riga_doc_gen.cd_unita_organizzativa"/>	
+		<columnMapping
+			columnName="PG_DOCUMENTO_GENERICO"
+			propertyName="riga_doc_gen.pg_documento_generico"/>
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_AMM"
+			propertyName="riga_doc_gen.tipo_documento.cd_tipo_documento_amm"/>
+		<columnMapping
+			columnName="PROGRESSIVO_RIGA_DOC_GEN"
+			propertyName="riga_doc_gen.progressivo_riga" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_AMM"
+			propertyName="riga_doc_gen.cd_tipo_documento_amm"/>		
+	</defaultColumnMap>		
+	<columnMap 
+		name="V_ASSOCIAZIONI_DISPONIBILI"
+		tableName="V_ASSOCIAZIONI_DISPONIBILI">
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="pg_inventario" />
+		<columnMapping
+			columnName="PROGRESSIVO"
+			propertyName="progressivo" />	
+		<columnMapping
+			columnName="NR_INVENTARIO"
+			propertyName="nr_inventario" />	
+		<columnMapping
+			columnName="TI_DOCUMENTO"
+			propertyName="ti_documento" />	
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio" />	
+		<columnMapping
+			columnName="PG_BUONO_C_S"
+			propertyName="pg_buono_c_s" />	
+	</columnMap>
+		<persistentProperty
+			name="pg_inventario" />
+		<persistentProperty
+			name="nr_inventario" />	
+		<persistentProperty
+			name="ti_documento" />	
+		<persistentProperty
+			name="esercizio" />	
+		<persistentProperty
+			name="pg_buono_c_s" />
+		<persistentProperty
+			name="progressivo" />
+			
+	<persistentProperty
+		name="riga_fatt_att" />
+	<persistentProperty
+		name="riga_fatt_pass" />
+	<persistentProperty
+		name="test_buono" />	
+	<persistentProperty
+		name="riga_doc_gen" />	
+</SQLPersistentInfo>

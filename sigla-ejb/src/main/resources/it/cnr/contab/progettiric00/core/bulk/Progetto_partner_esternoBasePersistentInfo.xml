@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.progettiric00.core.bulk.Progetto_partner_esternoBase"
+	keyClassName="it.cnr.contab.progettiric00.core.bulk.Progetto_partner_esternoKey"
+	homeClassName="it.cnr.contab.progettiric00.core.bulk.Progetto_partner_esternoHome" >
+	<defaultColumnMap
+		tableName="PROGETTO_PARTNER_ESTERNO" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO"
+			propertyName="importo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" 
+			nullable="false"/>
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="N_PERSONE"
+			propertyName="n_persone"
+			sqlTypeName="DECIMAL"
+			columnSize="9"
+			nullable="true"/>
+		<columnMapping
+			columnName="NOTE"
+			propertyName="note"
+			sqlTypeName="VARCHAR"
+			columnSize="400"
+			nullable="true" />						
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="importo" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="n_persone" />
+	<persistentProperty
+		name="note" />				
+</SQLPersistentInfo>

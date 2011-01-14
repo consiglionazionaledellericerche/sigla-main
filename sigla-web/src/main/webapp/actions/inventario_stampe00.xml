@@ -1,0 +1,79 @@
+<action-mappings>  
+
+	<action
+		path="/StampaBeniSenzaUtilizzatoriAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+	
+	<businessProcess name="StampaBeniSenzaUtilizzatoriBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+	    <forward name="default" path="/inventario00/stampa_beni_senza_utilizzatori.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.inventario00.docs.bulk.Stampa_beni_senza_utilizVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaBeniSenzaUtilizzatoriAction" />
+	    <init-param name="componentSessionName" value="CNRINVENTARIO00_EJB_Inventario_beniComponentSession" />
+	    <init-param name="reportName" value="/cnrdocamm/docamm/stampa_beni_senza_utilizzatori.jasper" />
+	</businessProcess>
+
+	<action
+		path="/StampaRegistroInventarioAction" actionClass="it.cnr.contab.inventario00.actions.Stampa_registro_inventarioAction">
+	</action>
+	
+	<businessProcess name="StampaRegistroInventarioBP" className="it.cnr.contab.inventario00.bp.StampaRegistroInventarioBP">
+	    <forward name="default" path="/inventario00/stampa_registro_inventario.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.inventario00.docs.bulk.Stampa_registro_inventarioVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaRegistroInventarioAction" />
+	    <init-param name="componentSessionName" value="CNRINVENTARIO00_EJB_Inventario_beniComponentSession" />
+	    <init-param name="reportName" value="/cnrdocamm/docamm/registro_inventario_princ.jasper" />
+	</businessProcess>
+
+	  <action 
+      path="/ConsultazioniAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+      </action>
+
+	<businessProcess name="ConAssBeniFattureBP" className="it.cnr.contab.inventario00.bp.ConAssBeniFattureBP">
+        <forward name="default" path="/consultazioni/form_lista.jsp"/>
+	    <init-param name="bulkClassName" value="it.cnr.contab.inventario00.docs.bulk.V_ass_inv_bene_fatturaBulk" />
+	    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
+		<init-param name="defaultAction" value="ConsultazioniAction" />	    
+	</businessProcess>
+	  <action 
+      path="/ConsultazioniAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+      </action>
+
+	<businessProcess name="ConsAssociazioniDisponibiliBP" className="it.cnr.contab.inventario00.bp.ConsAssociazioniDisponibiliBP">
+        <forward name="default" path="/consultazioni/form_lista.jsp"/>
+	    <init-param name="bulkClassName" value="it.cnr.contab.inventario00.docs.bulk.V_associazioni_disponibiliBulk" />
+	    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
+		<init-param name="defaultAction" value="ConsultazioniAction" />	    
+	</businessProcess>
+	 <action 
+      path="/ConsImpegniAssociazioniAction" actionClass="it.cnr.contab.inventario00.actions.ConsImpegniAssociazioniAction">
+      </action>
+	<businessProcess name="ConsImpegniAssociazioniBP" className="it.cnr.contab.inventario00.bp.ConsImpegniAssociazioniBP">
+        <forward name="default" path="/consultazioni/form_lista.jsp"/>
+	    <init-param name="bulkClassName" value="it.cnr.contab.inventario00.docs.bulk.V_impegni_inventarioBulk" />
+	    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+		<init-param name="defaultAction" value="ConsImpegniAssociazioniAction" />	    
+	</businessProcess>
+	 <action 
+      path="/ConsultazioniAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+      </action>
+	<businessProcess name="ConsDocPassivoObbDettBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+        <forward name="default" path="/consultazioni/form_lista.jsp"/>
+	    <init-param name="bulkClassName" value="it.cnr.contab.inventario00.docs.bulk.V_impegni_inventario_dettBulk" />
+ 	    <init-param name="filterEnabled" value="N"	/>
+	    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+		<init-param name="defaultAction" value="ConsultazioniAction" />	    
+	</businessProcess>
+	 <action 
+      path="/ConsultazioniAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+      </action>
+	<businessProcess name="ConsDocPassivoObbBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+        <forward name="default" path="/consultazioni/form_lista.jsp"/>
+	    <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.V_doc_passivo_obbligazioneBulk" />
+	    <init-param name="searchResultColumnSet" value="impegnidocumento"/>
+ 	    <init-param name="filterEnabled" value="N"	/>
+	    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+		<init-param name="defaultAction" value="ConsultazioniAction" />	    
+	</businessProcess>
+</action-mappings>

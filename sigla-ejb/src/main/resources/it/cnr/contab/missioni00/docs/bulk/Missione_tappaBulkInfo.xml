@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="dt_inizio_tappa"
+		property="dt_inizio_tappa"
+		optionsProperty="missione.collectionGiorni"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		formatName="date_short"		 
+		label="Inizio tappa"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="find_nazione"
+		property="nazione"
+		inputType="SEARCHTOOL"
+		label="Nazione Tappa"		
+		/>		
+	<fieldProperty
+		name="pg_nazione"
+		property="nazione.pg_nazione"
+		label="Nazione"
+		readonlyProperty="RONazione"				
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="20"
+		nullable="false"		
+		/>
+	<fieldProperty
+		name="ds_nazione"
+		property="nazione.ds_nazione"
+		label="Nazione"
+		inputSize="50"
+		maxLength="50"
+		inputType="ROTEXT" 
+		/>
+	<fieldProperty
+		name="comuneRadioGroup"
+		property="comune"
+		keysProperty="comuneKeys"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"	
+		label=""			
+		/>
+	<fieldProperty
+		name="vittoAlloggioNavigazioneRadioGroup"
+		property="flag_spese"
+		keysProperty="flag_speseKeys"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"	
+		label=""			
+		/>				
+	<fieldProperty
+		name="fl_no_diaria"
+		property="fl_no_diaria"
+		inputType="CHECKBOX"
+		label="Diaria No" 
+		/>
+	<fieldProperty
+		name="cambio_tappa"
+		property="cambio_tappa"
+		inputType="TEXT"
+		maxLength="16"
+		inputSize="16"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"		
+		label="Cambio tappa"
+		nullable="false"		
+		/>
+	<fieldProperty
+		name="cd_divisa_tappa"
+		property="divisa_tappa.cd_divisa"
+		label="Valuta tappa"
+		inputType="ROTEXT"
+		maxLength="10"
+		inputSize="10"
+		/>
+	<fieldProperty
+		name="ds_divisa_tappa"
+		property="divisa_tappa.ds_divisa"
+		label=""
+		inputSize="20"
+		inputType="ROTEXT" 
+		/>
+	<fieldProperty
+		name="dt_ingresso_estero"
+		property="dt_ingresso_estero"
+		inputType="TEXT"
+		formatName="date_short"		
+		label="Data ingresso estero" 
+		/>		
+	<fieldProperty
+		name="dt_uscita_estero"
+		property="dt_uscita_estero"
+		inputType="TEXT"
+		formatName="date_short"		
+		label="Data uscita estero" 
+		/>
+/*****/		
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Cds" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Unita organizzativa" />
+	<fieldProperty
+		name="pg_missione"
+		property="pg_missione"
+		inputType="TEXT"
+		label="N.missione" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="dt_fine_tappa"
+		property="dt_fine_tappa"
+		formatName="date_short"
+		label="Fine tappa" />		
+	<fieldProperty
+		name="fl_comune_altro"
+		property="fl_comune_altro"
+		inputType="CHECKBOX"
+		label="Comune altro" />		
+	<fieldProperty
+		name="fl_comune_estero"
+		property="fl_comune_estero"
+		inputType="CHECKBOX"
+		label="Comune estero" />
+	<fieldProperty
+		name="fl_comune_proprio"
+		property="fl_comune_proprio"
+		inputType="CHECKBOX"
+		label="Comune proprio" />
+	<fieldProperty
+		name="fl_navigazione"
+		property="fl_navigazione"
+		inputType="CHECKBOX"
+		label="Navigazione" />
+	<fieldProperty
+		name="fl_vitto_alloggio_gratuito"
+		property="fl_vitto_alloggio_gratuito"
+		inputType="CHECKBOX"
+		label="Vitto/Alloggio gratuito" />
+	<fieldProperty
+		name="fl_vitto_gratuito"
+		property="fl_vitto_gratuito"
+		inputType="CHECKBOX"
+		label="Vitto gratuito" />
+	<fieldProperty
+		name="fl_alloggio_gratuito"
+		property="fl_alloggio_gratuito"
+		inputType="CHECKBOX"
+		label="Alloggio gratuito" />		
+/*****/
+
+	<formFieldProperty name="dt_inizio_tappa" />
+	<formFieldProperty name="dt_fine_tappa" />	
+	<formFieldProperty name="find_nazione" />
+	<formFieldProperty name="pg_nazione" />
+	<formFieldProperty name="ds_nazione" />
+	<formFieldProperty name="comuneRadioGroup" />
+	<formFieldProperty name="vittoAlloggioNavigazioneRadioGroup" />
+	<formFieldProperty name="fl_no_diaria" />
+	<formFieldProperty name="cd_divisa_tappa" />
+	<formFieldProperty name="ds_divisa_tappa" />
+	<formFieldProperty name="cambio_tappa" />	
+	<formFieldProperty name="dt_ingresso_estero" />
+	<formFieldProperty name="dt_uscita_estero" />
+		
+	<columnFieldProperty 
+		name="dt_inizio_tappa"
+		formatName="timestamp"		
+		/>
+	<columnFieldProperty 
+		name="dt_fine_tappa"
+		formatName="timestamp"				
+		/>	
+	<columnFieldProperty name="fl_comune_proprio" />	
+	<columnFieldProperty name="fl_comune_altro" />
+	<columnFieldProperty name="fl_comune_estero" />	
+	<columnFieldProperty name="pg_nazione" />	
+	<columnFieldProperty name="cd_divisa_tappa" />
+	<columnFieldProperty name="cambio_tappa" />	
+	<columnFieldProperty name="fl_navigazione" />
+	<columnFieldProperty name="fl_vitto_gratuito" />
+	<columnFieldProperty name="fl_alloggio_gratuito" />	
+	<columnFieldProperty name="fl_vitto_alloggio_gratuito" />
+	<columnFieldProperty name="fl_no_diaria" />
+	<columnFieldProperty name="dt_ingresso_estero" />	
+	<columnFieldProperty name="dt_uscita_estero" />
+
+	<findFieldProperty name="dt_ingresso_estero" />
+	<findFieldProperty name="cd_cds" />
+	<findFieldProperty name="fl_vitto_alloggio_gratuito" />
+	<findFieldProperty name="fl_navigazione" />
+	<findFieldProperty name="cambio_tappa" />
+	<findFieldProperty name="cd_unita_organizzativa" />
+	<findFieldProperty name="pg_missione" />
+	<findFieldProperty name="dt_inizio_tappa" />
+	<findFieldProperty name="esercizio" />
+	<findFieldProperty name="fl_no_diaria" />
+	<findFieldProperty name="cd_divisa_tappa" />
+	<findFieldProperty name="pg_nazione" />
+	<findFieldProperty name="fl_comune_altro" />
+	<findFieldProperty name="fl_comune_estero" />
+	<findFieldProperty name="fl_vitto_gratuito" />
+	<findFieldProperty name="fl_comune_proprio" />
+	<findFieldProperty name="dt_uscita_estero" />
+	<findFieldProperty name="dt_fine_tappa" />
+	<findFieldProperty name="fl_alloggio_gratuito" />
+
+</bulkInfo>

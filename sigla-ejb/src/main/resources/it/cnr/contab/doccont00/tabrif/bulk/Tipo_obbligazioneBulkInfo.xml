@@ -1,0 +1,48 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_tipo_obbligazione"
+		property="cd_tipo_obbligazione"
+		label="Tipo impegno"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		enabledOnSearch="true"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="ds_tipo_obbligazione"
+		property="ds_tipo_obbligazione"
+		label="Descrizione"
+		inputType="TEXT"
+		cols="40"
+		rows="4"
+		nullable="false"
+		/>
+
+	<columnFieldProperty
+		name="cd_tipo_obbligazione"
+		/>
+	<columnFieldProperty
+		name="ds_tipo_obbligazione"
+		/>
+
+	<formFieldProperty
+		name="cd_tipo_obbligazione"
+		/>
+	<formFieldProperty
+		name="ds_tipo_obbligazione"
+		/>
+
+	<findFieldProperty
+		name="cd_tipo_obbligazione"
+		/>
+	<findFieldProperty
+		name="ds_tipo_obbligazione"
+		/>
+
+
+</bulkInfo>

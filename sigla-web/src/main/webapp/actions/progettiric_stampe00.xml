@@ -1,0 +1,23 @@
+<action-mappings>
+
+	<action
+		path="/CRUDProgettoStampaAction" actionClass="it.cnr.contab.progettiric00.action.CRUDProgettoStampaAction">
+	</action>
+	
+	<businessProcess name="StampaProgettiBP" className="it.cnr.contab.progettiric00.bp.ProgettoStampaBP">
+		<forward name="default" path="/progettiric00/stampa_progetti.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.progettiric00.core.bulk.Stampa_progettiVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="CRUDProgettoStampaAction" />
+	    <init-param name="componentSessionName" value="CNRPROGETTIRIC00_EJB_ProgettoRicercaComponentSession" />
+	    <init-param name="reportName" value="/progettiric/progettiric/progetti_per_dip_ist.rpt" />
+	</businessProcess>
+	<businessProcess name="StampaAnagraficaProgettiBP" className="it.cnr.contab.progettiric00.bp.ProgettoStampaBP">
+		<forward name="default" path="/progettiric00/stampa_anag_progetti.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.progettiric00.core.bulk.Stampa_anag_progettiVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="CRUDProgettoStampaAction" />
+	    <init-param name="componentSessionName" value="CNRPROGETTIRIC00_EJB_ProgettoRicercaComponentSession" />
+	    <init-param name="reportName" value="/progettiric/progettiric/anagrafica_progetti.jasper" />
+	</businessProcess>	
+</action-mappings>

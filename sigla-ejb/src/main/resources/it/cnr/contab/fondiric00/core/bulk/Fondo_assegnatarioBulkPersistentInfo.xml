@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.fondiric00.core.bulk.Fondo_assegnatarioBulk"
+	homeClassName="it.cnr.contab.fondiric00.core.bulk.Fondo_assegnatarioHome" >
+	<defaultColumnMap
+		tableName="FONDO_ASSEGNATARIO" >
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="CD_RESPONSABILE_TERZO"
+			propertyName="responsabile.cd_terzo"
+			fetchOnly="false" />
+	</defaultColumnMap>
+
+	<columnMap
+		name="V_UNITA_ORGANIZZATIVA_VALIDA"
+		tableName="V_UNITA_ORGANIZZATIVA_VALIDA"
+		extends="default" >
+	</columnMap>
+
+	<persistentProperty
+		name="unita_organizzativa"
+		partOfOid="true" />
+	<persistentProperty
+		name="responsabile" />
+</SQLPersistentInfo>

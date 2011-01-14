@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.tabrif.bulk.Missione_abbattimentiBulk"
+	homeClassName="it.cnr.contab.missioni00.tabrif.bulk.Missione_abbattimentiHome" >
+
+	<defaultColumnMap
+		tableName="MISSIONE_ABBATTIMENTI" >
+		
+		<columnMapping
+			columnName="PG_NAZIONE"
+			propertyName="nazione.pg_nazione" />	
+		<columnMapping
+			columnName="PG_RIF_INQUADRAMENTO"
+			propertyName="rifInquadramento.pg_rif_inquadramento" />
+
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="nazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="rifInquadramento"
+		partOfOid="true" />
+
+</SQLPersistentInfo>

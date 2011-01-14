@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk"
+	homeClassName="it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleHome" >	
+	<defaultColumnMap
+		tableName="V_MANDATO_REVERSALE" >
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzo.cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+	</defaultColumnMap>
+	<columnMap
+		name="V_MANDATO_REVERSALE_DISTINTA"
+		tableName="V_MANDATO_REVERSALE_DISTINTA"
+		extends="default" >
+	</columnMap>
+	<persistentProperty
+		name="terzo" />
+</SQLPersistentInfo>

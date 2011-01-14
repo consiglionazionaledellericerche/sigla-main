@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.bulk.ApplicationServerBase"
+	keyClassName="it.cnr.contab.config00.bulk.ApplicationServerKey"
+	homeClassName="it.cnr.contab.config00.bulk.ApplicationServerHome">
+	<defaultColumnMap
+		tableName="APPLICATION_SERVER">
+		<columnMapping
+			columnName="ATTIVO"
+			propertyName="attivo"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="LOGIN"
+			propertyName="login"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="HTTP_PORT"
+			propertyName="http_port"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="IP_ADDRESS"
+			propertyName="ip_address"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="attivo" />
+	<persistentProperty
+		name="login" />
+	<persistentProperty
+		name="http_port" />
+	<persistentProperty
+		name="ip_address" />
+</SQLPersistentInfo>

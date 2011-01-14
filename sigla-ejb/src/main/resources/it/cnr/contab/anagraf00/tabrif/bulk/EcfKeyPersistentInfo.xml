@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.tabrif.bulk.EcfKey">
+	<defaultColumnMap
+		tableName="ECF">
+		<columnMapping
+			columnName="PROG"
+			propertyName="prog"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="prog"
+		partOfOid="true" />
+</SQLPersistentInfo>

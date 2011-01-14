@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk"
+	homeClassName="it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome">
+	<defaultColumnMap
+		tableName="V_STRUTTURA_ORGANIZZATIVA">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ROOT"
+			propertyName="cd_root"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDR_AFFERENZA"
+			propertyName="cd_cdr_afferenza"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TIPO_UNITA"
+			propertyName="cd_tipo_unita"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TIPO_LIVELLO"
+			propertyName="cd_tipo_livello"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="FL_UO_CDS"
+			propertyName="fl_uo_cds"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_CDR_UO"
+			propertyName="fl_cdr_uo"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" 
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_root" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="cd_centro_responsabilita" />
+	<persistentProperty
+		name="cd_cdr_afferenza" />
+	<persistentProperty
+		name="cd_tipo_unita" />
+	<persistentProperty
+		name="cd_tipo_livello" />
+	<persistentProperty
+		name="fl_uo_cds" />
+	<persistentProperty
+		name="fl_cdr_uo" />
+</SQLPersistentInfo>

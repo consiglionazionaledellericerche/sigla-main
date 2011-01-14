@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="15"
+		inputSize="15"
+		inputType="ROTEXT"
+		enabledOnFreeSearch="false"
+		label="Centro di spesa" />
+	<fieldProperty
+		name="ds_cds"
+		property="cds.ds_unita_organizzativa"
+		inputSize="50"
+		inputType="ROTEXT"/>
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		enabledOnFreeSearch="false"		
+		maxLength="15"
+		inputSize="15"
+		inputType="ROTEXT"
+		label="Unit&#224; organizzativa"
+		/>
+	<fieldProperty
+		name="ds_unita_organizzativa"
+		property="unita_organizzativa.ds_unita_organizzativa"
+		inputType="ROTEXT"
+		inputSize="50"
+		/>
+	<fieldProperty
+		name="im_man_ini_sos"
+		property="im_man_ini_sos"
+		inputType="ROTEXT"
+		label="Totale mandati Reg.Sospeso" 		
+		formatName = "it.cnr.contab.util.EuroFormat"/>
+	<fieldProperty
+		name="im_man_ini_pag"
+		property="im_man_ini_pag"
+		inputType="ROTEXT"
+		label="Totale mandati Pagamento" 		
+		formatName = "it.cnr.contab.util.EuroFormat"/>
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio"
+		maxLength="4"
+		inputSize="4"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="im_man_ini_acc"
+		property="im_man_ini_acc"
+		inputType="ROTEXT"
+		label="Totale mandati Accreditamento"
+		formatName = "it.cnr.contab.util.EuroFormat" />
+	<fieldProperty
+		name="im_rev_ini_rit"
+		property="im_rev_ini_rit"
+		inputType="ROTEXT"
+		label="Totale reversali di Ritenute"
+		formatName = "it.cnr.contab.util.EuroFormat"/>
+	<fieldProperty
+		name="im_rev_ini_tra"
+		property="im_rev_ini_tra"
+		inputType="ROTEXT"
+		label="Totale reversali Trasferimento"
+		formatName = "it.cnr.contab.util.EuroFormat"/>
+	<fieldProperty
+		name="dt_emissione"
+		property="dt_emissione"
+		inputType="TEXT"
+		label="Data emissione"
+		formatName="date_short"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="im_rev_ini_sos"
+		property="im_rev_ini_sos"
+		inputType="ROTEXT"
+		label="Totale reversali Reg.Sospeso" 		
+		formatName = "it.cnr.contab.util.EuroFormat"/>
+	<fieldProperty
+		name="pg_distinta"
+		property="pg_distinta"
+		inputType="TEXT"
+		label="Numero Distinta"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"				
+		maxLength="10"
+		inputSize="10"/>
+	<fieldProperty
+		name="dt_invio"
+		property="dt_invio"
+		inputType="TEXT"
+		label="Data invio" 
+		formatName="date_short"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="totMandatiAnnullati"
+		property="totMandatiAnnullati"
+		inputType="ROTEXT"
+		label="Totale mandati annullati" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totMandati"
+		property="totMandati"
+		inputType="ROTEXT"
+		label="Totale mandati" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totMandatiAnnullatiRitrasmessi"
+		property="totMandatiAnnullatiRitrasmessi"
+		inputType="ROTEXT"
+		label="Totale mandati annullati ritrasmessi" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totReversaliAnnullate"
+		property="totReversaliAnnullate"
+		inputType="ROTEXT"
+		label="Totale reversali annullate" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totReversali"
+		property="totReversali"
+		inputType="ROTEXT"
+		label="Totale reversali" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totReversaliAnnullateRitrasmesse"
+		property="totReversaliAnnullateRitrasmesse"
+		inputType="ROTEXT"
+		label="Totale reversali annullate ritrasmesse" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totStoricoMandatiTrasmessi"
+		property="totStoricoMandatiTrasmessi"
+		inputType="ROTEXT"
+		label="Totale mandati trasmessi" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totStoricoMandatiPagamentoTrasmessi"
+		property="totStoricoMandatiPagamentoTrasmessi"
+		inputType="ROTEXT"
+		label="Totale mandati pagamento trasmessi" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totStoricoMandatiAccreditamentoTrasmessi"
+		property="totStoricoMandatiAccreditamentoTrasmessi"
+		inputType="ROTEXT"
+		label="Totale mandati accreditamento trasmessi" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totStoricoMandatiRegSospesoTrasmessi"
+		property="totStoricoMandatiRegSospesoTrasmessi"
+		inputType="ROTEXT"
+		label="Totale mandati reg.sospeso trasmessi" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totStoricoMandatiDaRitrasmettere"
+		property="totStoricoMandatiDaRitrasmettere"
+		inputType="ROTEXT"
+		label="Totale mandati annullati da ritrasmettere" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totStoricoReversaliTrasmesse"
+		property="totStoricoReversaliTrasmesse"
+		inputType="ROTEXT"
+		label="Totale reversali trasmesse" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totStoricoReversaliRegSospesoTrasmesse"
+		property="totStoricoReversaliRegSospesoTrasmesse"
+		inputType="ROTEXT"
+		label="Totale reversali reg.sospeso trasmesse" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totStoricoReversaliTrasferimentoTrasmesse"
+		property="totStoricoReversaliTrasferimentoTrasmesse"
+		inputType="ROTEXT"
+		label="Totale reversali trasferimento trasmesse" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totStoricoReversaliRitenuteTrasmesse"
+		property="totStoricoReversaliRitenuteTrasmesse"
+		inputType="ROTEXT"
+		label="Totale reversali ritenute trasmesse" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totStoricoReversaliDaRitrasmettere"
+		property="totStoricoReversaliDaRitrasmettere"
+		inputType="ROTEXT"
+		label="Totale reversali annullate da ritrasmettere" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totMandatiPagamento"
+		property="totMandatiPagamento"
+		inputType="ROTEXT"
+		label="Totale mandati Pagamento" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totMandatiPagamentoAnnullati"
+		property="totMandatiPagamentoAnnullati"
+		inputType="ROTEXT"
+		label="Totale mandati Pagamento Annullati" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totMandatiRegSospeso"
+		property="totMandatiRegSospeso"
+		inputType="ROTEXT"
+		label="Totale mandati Reg.Sospeso" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totMandatiRegSospesoAnnullati"
+		property="totMandatiRegSospesoAnnullati"
+		inputType="ROTEXT"
+		label="Totale mandati Reg.Sospeso Annullati" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totMandatiAccreditamento"
+		property="totMandatiAccreditamento"
+		inputType="ROTEXT"
+		label="Totale mandati Accreditamento" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totMandatiAccreditamentoAnnullati"
+		property="totMandatiAccreditamentoAnnullati"
+		inputType="ROTEXT"
+		label="Totale mandati Accreditamento Annullati" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totReversaliRegSospesoBI"
+		property="totReversaliRegSospesoBI"
+		inputType="ROTEXT"
+		label="Totale Reversali Banca d'Italia " 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totReversaliRegSospesoCC"
+		property="totReversaliRegSospesoCC"
+		inputType="ROTEXT"
+		label="Totale Reversali C/C" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totReversaliRitenute"
+		property="totReversaliRitenute"
+		inputType="ROTEXT"
+		label="Totale Reversali di Ritenute" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totReversaliTrasferimento"
+		property="totReversaliTrasferimento"
+		inputType="ROTEXT"
+		label="Totale reversali Trasferimento" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totReversaliRegSospesoBIAnnullate"
+		property="totReversaliRegSospesoBIAnnullate"
+		inputType="ROTEXT"
+		label="Totale Reversali Banca d'Italia Annullate" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totReversaliRegSospesoCCAnnullate"
+		property="totReversaliRegSospesoCCAnnullate"
+		inputType="ROTEXT"
+		label="Totale Reversali C/C Annullate" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totReversaliRitenuteAnnullate"
+		property="totReversaliRitenuteAnnullate"
+		inputType="ROTEXT"
+		label="Totale Reversali di Ritenute Annullate" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="totReversaliTrasferimentoAnnullate"
+		property="totReversaliTrasferimentoAnnullate"
+		inputType="ROTEXT"
+		label="Totale Reversali Trasferimento Annullate" 
+		formatName = "it.cnr.contab.util.EuroFormat" 
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="pg_distinta_def"
+		property="pg_distinta_def"
+		inputType="TEXT"
+		label="Numero Distinta Definitiva"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"				
+		maxLength="10"
+		inputSize="10"/>
+		
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="ds_cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="ds_unita_organizzativa" />
+	<formFieldProperty
+		name="im_man_ini_sos" />
+	<formFieldProperty
+		name="im_man_ini_pag" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="im_man_ini_acc" />
+	<formFieldProperty
+		name="im_rev_ini_rit" />
+	<formFieldProperty
+		name="im_rev_ini_tra" />
+	<formFieldProperty
+		name="dt_emissione" />
+	<formFieldProperty
+		name="im_rev_ini_sos" />
+	<formFieldProperty
+		name="pg_distinta" />
+	<formFieldProperty
+		name="dt_invio" />
+	<formFieldProperty
+		name="totReversaliAnnullate" />
+	<formFieldProperty
+		name="totReversali" />
+	<formFieldProperty
+		name="totReversaliAnnullateRitrasmesse" />
+	<formFieldProperty
+		name="totMandatiAnnullati" />
+	<formFieldProperty
+		name="totMandati" />
+	<formFieldProperty
+		name="totMandatiAnnullatiRitrasmessi" />
+	<formFieldProperty
+		name="totStoricoMandatiTrasmessi" />
+	<formFieldProperty
+		name="totStoricoMandatiDaRitrasmettere"/>
+	<formFieldProperty
+		name="totStoricoMandatiPagamentoTrasmessi" />
+	<formFieldProperty
+		name="totStoricoMandatiRegSospesoTrasmessi" />
+	<formFieldProperty
+		name="totStoricoMandatiAccreditamentoTrasmessi" />
+	<formFieldProperty
+		name="totStoricoReversaliTrasmesse" />
+	<formFieldProperty
+		name="totStoricoReversaliDaRitrasmettere"/>		
+	<formFieldProperty
+		name="totStoricoReversaliRegSospesoTrasmesse" />
+	<formFieldProperty
+		name="totStoricoReversaliTrasferimentoTrasmesse" />
+	<formFieldProperty
+		name="totStoricoReversaliRitenuteTrasmesse" />
+	<formFieldProperty
+		name="totMandatiPagamento" />
+	<formFieldProperty
+		name="totMandatiPagamentoAnnullati" />
+	<formFieldProperty
+		name="totMandatiAccreditamento" />
+	<formFieldProperty
+		name="totMandatiAccreditamentoAnnullati" />
+	<formFieldProperty
+		name="totMandatiRegSospeso" />
+	<formFieldProperty
+		name="totMandatiRegSospesoAnnullati" />
+	<formFieldProperty
+		name="totReversaliRegSospesoBI" />
+	<formFieldProperty
+		name="totReversaliRegSospesoBIAnnullate" />
+	<formFieldProperty
+		name="totReversaliRegSospesoCC" />
+	<formFieldProperty
+		name="totReversaliRegSospesoCCAnnullate" />
+	<formFieldProperty
+		name="totReversaliRitenute" />
+	<formFieldProperty
+		name="totReversaliRitenuteAnnullate" />
+	<formFieldProperty
+		name="totReversaliTrasferimento" />
+	<formFieldProperty
+		name="totReversaliTrasferimentoAnnullate" />
+	<formFieldProperty
+		name="pg_distinta_def" />
+		
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="pg_distinta" />
+	<columnFieldProperty
+		name="dt_emissione" />
+	<columnFieldProperty
+		name="dt_invio" />
+	<columnFieldProperty
+		name="pg_distinta_def" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="pg_distinta" />
+	<findFieldProperty
+		name="dt_emissione" />
+	<findFieldProperty
+		name="dt_invio" />
+	<findFieldProperty
+		name="pg_distinta_def" />
+
+</bulkInfo>

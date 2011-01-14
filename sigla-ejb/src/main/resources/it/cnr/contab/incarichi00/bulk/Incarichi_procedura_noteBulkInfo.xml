@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="incarichi_procedura.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Anno" />
+	<fieldProperty
+		name="pg_procedura"
+		property="incarichi_procedura.pg_procedura"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Identificativo Ente" />
+	<fieldProperty
+		name="pg_nota"
+		property="pg_nota"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Progressivo nota" />
+	<fieldProperty
+		name="nota"
+		property="nota"
+		inputType="TEXTAREA"
+		maxLength="1000"
+		cols="90"
+		rows="6"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		nullable="false"
+		label="Annotazione" />
+	<fieldProperty
+		name="dacr"
+		property="dacr"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Data" />
+	<fieldProperty
+		name="utcr"
+		property="utcr"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Utente" />
+
+  	<form name="searchtool">
+          <formFieldProperty
+                name="esercizio"/>
+          <formFieldProperty
+                name="pg_procedura"/>
+	   	  <formFieldProperty
+				name="pg_nota"/>                
+    </form>
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_procedura" />
+	<formFieldProperty
+		name="pg_nota" />
+	<formFieldProperty
+		name="nota" />
+
+	<columnFieldProperty
+		name="pg_nota" />
+	<columnFieldProperty
+		name="nota"
+		inputType="TEXT" />
+	<columnFieldProperty
+		name="utcr"/>
+	<columnFieldProperty
+		name="dacr"/>
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_procedura" />
+	<findFieldProperty
+		name="pg_nota" />
+	<findFieldProperty
+		name="nota" />
+</bulkInfo>

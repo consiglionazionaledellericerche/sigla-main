@@ -1,0 +1,651 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	shortDescription="Repertorio Incarichi"
+	longDescription="Repertorio Incarichi" >
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Anno" />
+	<fieldProperty
+		name="pg_repertorio"
+		property="pg_repertorio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Identificativo Incarico" />
+	<fieldProperty
+		name="cd_cds"
+		property="cds.cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="30"
+		enabledOnSearch="true"
+		label="Istituto" />
+	<fieldProperty
+		name="ds_cds"
+		property="cds.ds_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="300"
+		enabledOnSearch="true"
+		label="Istituto" />
+	<fieldProperty
+		name="cds"
+		property="cds"
+		readonlyProperty="ROCds"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Istituto" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="unita_organizzativa.cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="30"
+		label="Unità organizzativa" />
+	<fieldProperty
+		name="ds_unita_organizzativa"
+		property="unita_organizzativa.ds_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="300"
+		label="Unità organizzativa" />
+	<fieldProperty
+		name="indirizzo_unita_organizzativa"
+		property="indirizzo_unita_organizzativa"
+		inputType="ROTEXT"
+		inputSize="70"
+		maxLength="70"
+		label="Indirizzo" />
+	<fieldProperty
+		name="unita_organizzativa"
+		property="unita_organizzativa"
+		readonlyProperty="ROIncarico"
+		inputType="SEARCHTOOL"
+		formName="searchtoolUO"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Unità organizzativa" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		keysProperty="ti_statoKeys"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Stato Incarico" />
+	<fieldProperty
+		name="statoText"
+		property="statoText"
+		inputType="TEXT"
+		maxLength="30"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Stato Incarico" />
+	<fieldProperty
+		name="esercizio_procedura"
+		property="incarichi_procedura.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Procedura Conferimento" />
+	<fieldProperty
+		name="pg_procedura"
+		property="incarichi_procedura.pg_procedura"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo Procedura Conferimento" />
+	<fieldProperty
+		name="incarichi_procedura"
+		property="incarichi_procedura"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		nullable="false"
+		completeOnSave = "false"
+		label="Procedura Conferimento Incarico" />
+	<fieldProperty
+		name="terzo"
+		property="v_terzo"
+		readonlyProperty="ROSearchtoolTerzo"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		label="Contraente" />
+	<fieldProperty
+		name="terzoSearch"
+		property="v_terzo"
+		readonlyProperty="ROTerzo"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		label="Contraente" />
+	<fieldProperty
+		name="cd_terzoColumn"
+		property="cd_terzo"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="8"
+		label="Contraente" />
+	<fieldProperty
+		name="cd_terzo"
+		property="v_terzo.cd_terzo"
+		readonlyProperty="ROTerzo"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="8"
+		enabledOnSearch="true"
+		label="Contraente" />
+	<fieldProperty
+		name="cd_terzoSearch"
+		property="v_terzo.cd_terzo"
+		readonlyProperty="ROSearchtoolTerzo"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="8"
+		enabledOnSearch="true"
+		label="Contraente" />
+	<fieldProperty
+		name="ds_terzo"
+		property="ds_terzo"
+		inputType="ROTEXT"
+		inputSize="30"
+		enabledOnSearch="true"
+		label="Contraente" />
+	<fieldProperty
+		name="ragione_sociale"
+		property="v_terzo.ragione_sociale"
+		inputType="TEXT"
+		inputSize="62"
+		maxLength="62"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"
+		label="Ragione Sociale" />
+	<fieldProperty
+		name="nome"
+		property="v_terzo.nome"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"
+		label="Nome" />
+	<fieldProperty
+		name="cognome"
+		property="v_terzo.cognome"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"
+		label="Cognome" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="v_terzo.codice_fiscale"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"
+		label="Codice Fiscale" />
+	<fieldProperty
+		name="partita_iva"
+		property="v_terzo.partita_iva"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"
+		label="Partita Iva" />
+	<fieldProperty
+		name="indirizzoTerzo"
+		property="indirizzoTerzo"
+		inputType="ROTEXT"
+		inputSize="62"
+		maxLength="62"
+		label="Via/P.za" />
+	<fieldProperty
+		name="ds_comune"
+		property="v_terzo.terzo.comune_sede.ds_comune"
+		inputType="ROTEXT"
+		inputSize="20"
+		label="Comune" />
+	<fieldProperty
+		name="ds_provincia"
+		property="v_terzo.terzo.comune_sede.provincia.ds_provincia"
+		inputType="ROTEXT"
+		inputSize="20"
+		label="Provincia" />
+	<fieldProperty
+		name="dt_stipula"
+		property="dt_stipula"
+		readonlyProperty="RODataStipula"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnSearch="true"
+		nullable="false"
+		command="doOnDtStipulaChange"
+		label="Data di stipula" />
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_inizio_validita"
+		readonlyProperty="RODataContratto"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnSearch="true"
+		command="doOnDtInizioValiditaChange"
+		label="Data di inizio" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		readonlyProperty="RODataContratto"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnSearch="true"
+		command="doOnDtFineValiditaChange"
+		label="Data di fine" />
+	<fieldProperty
+		name="dt_proroga"
+		property="dt_proroga"
+		readonlyProperty="RODataProrogaOnView"
+		readonlyPropertyOnView="RODataProrogaOnView"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnSearch="true"
+		enabledOnView="true"
+		label="Proroga" />
+	<fieldProperty
+		name="dt_proroga_pagam"
+		property="dt_proroga_pagam"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnSearch="true"
+		enabledOnView="true"
+		label="Proroga Pagamento" />
+	<fieldProperty
+		name="cd_tipo_rapporto"
+		property="cd_tipo_rapporto"
+		readonlyProperty="RORapporto"
+		inputType="TEXT"
+		label="Codice Tipo Rapporto" />
+	<fieldProperty
+		name="tipo_rapporto"
+		property="tipo_rapporto"
+		printProperty="ds_tipo_rapporto"
+		optionsProperty="tipiRapporto"
+		readonlyProperty="RORapporto"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		label="Tipo Rapporto" />
+	<fieldProperty
+		name="cd_trattamento"
+		property="cd_trattamento"
+		readonlyProperty="ROTrattamento"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice trattamento" />
+	<fieldProperty
+		name="tipo_trattamento"
+		property="tipo_trattamento"
+		printProperty="ds_ti_trattamento"
+		optionsProperty="tipiTrattamento"
+		readonlyProperty="ROTrattamento"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Tipo Trattamento" />
+	<fieldProperty
+		name="ti_istituz_commerc"
+		property="ti_istituz_commerc"
+		keysProperty="ti_istituz_commercKeys"
+		readonlyProperty="RORapporto"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		label="Tipo Compenso" />
+	<fieldProperty
+		name="ti_istituz_commercForSearch"
+		property="ti_istituz_commerc"
+		keysProperty="ti_istituz_commercKeys"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		label="Tipo Compenso" />
+	<fieldProperty
+		name="fl_pubblica_contratto"
+		property="fl_pubblica_contratto"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Pubblica contratti stipulati" />
+	<fieldProperty
+		name="importo_lordo"
+		property="importo_lordo"
+		readonlyProperty="ROImportoLordo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		command="doOnImportoLordoChange"
+		label="Importo Lordo" />
+	<fieldProperty
+		name="importo_complessivo"
+		property="importo_complessivo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Spesa complessiva presunta calcolata" />
+	<fieldProperty
+		name="im_complessivo_ripartito"
+		property="im_complessivo_ripartito"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Ripartito" />
+	<fieldProperty
+		name="im_complessivo_finale"
+		property="im_complessivo_ripartito"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Complessivo Finale" />
+	<fieldProperty
+		name="importo_complessivo_incarico"
+		property="importo_complessivo_incarico"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Spesa complessiva presunta calcolata totale" />
+	<fieldProperty
+		name="importo_complessivo_variazioni"
+		property="importo_complessivo_variazioni"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Variazioni" />
+	<fieldProperty
+		name="importo_lordo_variazioni"
+		property="importo_lordo_variazioni"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni Lordo Percipiente" />
+	<fieldProperty
+		name="importo_da_ripartire"
+		property="importo_da_ripartire"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo da Ripartire" />
+	<fieldProperty
+		name="fl_inviato_corte_conti"
+		property="fl_inviato_corte_conti"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		nullable="false"
+		readonlyProperty="ROFlInvioCorteConti"
+		command="doDefault"
+		label="Inviato Corte Conti" />
+	<fieldProperty
+		name="dt_invio_corte_conti"
+		property="dt_invio_corte_conti"
+		readonlyProperty="RODataInvioCorteConti"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnSearch="true"
+		command="doOnDtInvioCorteContiChange"
+		label="Data di ricezione Corte dei Conti" />
+	<fieldProperty
+		name="esito_corte_conti"
+		property="esito_corte_conti"
+		keysProperty="ti_esitoCorteContiKeys"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		readonlyProperty="ROIncarico"
+		command="doDefault"
+		label="Esito Corte dei Conti" />
+	<fieldProperty
+		name="cd_provv"
+		property="cd_provv"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="20"
+		enabledOnSearch="true"
+		label="Codice Protocollo" />
+	<fieldProperty
+		name="nr_provv"
+		property="nr_provv"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Numero Protocollo" />
+	<fieldProperty
+		name="dt_provv"
+		property="dt_provv"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Data Protocollo" />
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_repertorio" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="ds_cds" />
+	<formFieldProperty
+		name="cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="ds_unita_organizzativa" />
+	<formFieldProperty
+		name="indirizzo_unita_organizzativa" />
+	<formFieldProperty
+		name="unita_organizzativa" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="statoText" />
+	<formFieldProperty
+		name="esercizio_procedura" />
+	<formFieldProperty
+		name="pg_procedura" />
+	<formFieldProperty
+		name="incarichi_procedura" />
+	<formFieldProperty
+		name="terzo" />
+	<formFieldProperty
+		name="terzoSearch" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="cd_terzoSearch" />
+	<formFieldProperty
+		name="ds_terzo" />
+	<formFieldProperty
+		name="ragione_sociale" />
+	<formFieldProperty
+		name="nome" />
+	<formFieldProperty
+		name="cognome" />
+	<formFieldProperty
+		name="codice_fiscale" />
+	<formFieldProperty
+		name="partita_iva" />
+	<formFieldProperty
+		name="indirizzoTerzo" />
+	<formFieldProperty
+		name="ds_comune" />
+	<formFieldProperty
+		name="ds_provincia" />
+	<formFieldProperty
+		name="dt_stipula" />
+	<formFieldProperty
+		name="dt_inizio_validita" />
+	<formFieldProperty
+		name="dt_fine_validita" />
+	<formFieldProperty
+		name="dt_proroga" />
+	<formFieldProperty
+		name="dt_proroga_pagam" />
+	<formFieldProperty
+		name="cd_tipo_rapporto" />
+	<formFieldProperty
+		name="tipo_rapporto" />
+	<formFieldProperty
+		name="cd_trattamento" />
+	<formFieldProperty
+		name="tipo_trattamento" />
+	<formFieldProperty
+		name="ti_istituz_commerc" />
+	<formFieldProperty
+		name="ti_istituz_commercForSearch" />
+	<formFieldProperty
+		name="fl_pubblica_contratto" />
+	<formFieldProperty
+		name="importo_lordo" 
+		style="border-style: outset;border-width : 1px;" />
+	<formFieldProperty
+		name="importo_complessivo"
+		inputType="ROTEXT"
+		label="Spesa complessiva&lt;BR&gt;presunta calcolata" 
+		style="border-style: outset;border-width : 1px;" />
+	<formFieldProperty
+		name="im_complessivo_ripartito" 
+		style="border-style: outset;border-width : 1px;" />
+	<formFieldProperty
+		name="im_complessivo_finale" 
+		style="border-style: outset;border-width : 1px;" />
+	<formFieldProperty
+		name="im_complessivo_incarico" 
+		style="border-style: outset;border-width : 1px;" />
+	<formFieldProperty
+		name="importo_complessivo_incarico" 
+		style="border-style: outset;border-width : 1px;" />
+	<formFieldProperty
+		name="importo_complessivo_variazioni" 
+		style="border-style: outset;border-width : 1px;" />
+	<formFieldProperty
+		name="importo_lordo_variazioni" 
+		style="border-style: outset;border-width : 1px;" />
+	<formFieldProperty
+		name="importo_da_ripartire" 
+		style="border-style: outset;border-width : 1px;" />
+	<formFieldProperty
+		name="fl_inviato_corte_conti" />
+	<formFieldProperty
+		name="dt_invio_corte_conti"
+		label="Data di ricezione&lt;BR&gt;Corte dei Conti" />
+	<formFieldProperty
+		name="esito_corte_conti" 
+		label="Esito&lt;BR&gt;Corte dei Conti" />
+	<formFieldProperty
+		name="cd_provv" 
+		label="Codice&lt;BR&gt;Protocollo" />
+	<formFieldProperty
+		name="nr_provv" 
+		label="Numero&lt;BR&gt;Protocollo" />
+	<formFieldProperty
+		name="dt_provv" 
+		label="Data&lt;BR&gt;Protocollo" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_repertorio" />
+	<columnFieldProperty
+		name="statoText" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="cognome" />
+	<columnFieldProperty
+		name="nome" />
+	<columnFieldProperty
+		name="ragione_sociale" />
+	<columnFieldProperty
+		name="dt_stipula" />
+	<columnFieldProperty
+		name="dt_inizio_validita" />
+	<columnFieldProperty
+		name="dt_fine_validita" />
+	<columnFieldProperty
+		name="dt_proroga" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="pg_repertorio" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="cd_terzoColumn" />
+	<findFieldProperty
+		name="dt_stipula" />
+	<findFieldProperty
+		name="dt_inizio_validita" />
+	<findFieldProperty
+		name="dt_fine_validita" />
+	<findFieldProperty
+		name="dt_proroga" />
+	<findFieldProperty
+		name="cd_tipo_rapporto" />
+	<findFieldProperty
+		name="cd_trattamento" />
+	<findFieldProperty
+		name="ti_istituz_commerc" />
+	<findFieldProperty
+		name="fl_inviato_corte_conti" />
+	<findFieldProperty
+		name="esito_corte_conti" />
+	<findFieldProperty
+		name="cd_provv" />
+	<findFieldProperty
+		name="nr_provv" />
+	<findFieldProperty
+		name="dt_provv" />
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="pg_repertorio" />
+	</form>
+</bulkInfo>

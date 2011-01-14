@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.cori00.docs.bulk.Liquid_coriBase"
+	keyClassName="it.cnr.contab.cori00.docs.bulk.Liquid_coriKey"
+	homeClassName="it.cnr.contab.cori00.docs.bulk.Liquid_coriHome" >
+	<defaultColumnMap
+		tableName="LIQUID_CORI" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_A"
+			propertyName="dt_a"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_DA"
+			propertyName="dt_da"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DA_ESERCIZIO_PRECEDENTE"
+			propertyName="da_esercizio_precedente"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" 
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="dt_a" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="dt_da" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="da_esercizio_precedente" />
+</SQLPersistentInfo>

@@ -1,0 +1,148 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_cdr"
+		property="cdr.cd_centro_responsabilita"
+		label="Cdr"
+		inputType="ROTEXT"
+		/>
+	<fieldProperty
+		name="ds_cdr"
+		property="cdr.ds_cdr"
+		inputSize="50"
+		label="Cdr"
+		inputType="ROTEXT"
+		/>
+	<fieldProperty
+		name="totObbligazioni1"
+		property="totObbligazioni1"
+		label="Totale Obbligazioni 1 anno"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		/>
+	<fieldProperty
+		name="totObbligazioni2"
+		property="totObbligazioni2"
+		label="Totale Obbligazioni 2 anno"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		/>
+	<fieldProperty
+		name="totObbligazioni3"
+		property="totObbligazioni3"
+		label="Totale Obbligazioni 3 anno"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		/>
+	<fieldProperty
+		name="totSpeseDaPdg1"
+		property="totSpeseDaPdg1"
+		label="Totale Spese nel P.d.G. 1 anno"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		/>
+	<fieldProperty
+		name="totSpeseDaPdg2"
+		property="totSpeseDaPdg2"
+		label="Totale Spese nel P.d.G. 2 anno"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		/>
+	<fieldProperty
+		name="totSpeseDaPdg3"
+		property="totSpeseDaPdg3"
+		label="Totale Spese nel P.d.G. 3 anno"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		/>
+	<fieldProperty
+		name="message1"
+		property="message1"
+		label=""
+		inputSize="150"		
+		inputType="ROTEXT"
+		/>
+	<fieldProperty
+		name="message2"
+		property="message2"
+		label=""
+		inputSize="150"				
+		inputType="ROTEXT"
+		/>
+	<fieldProperty
+		name="message3"
+		property="message3"
+		label=""
+		inputSize="150"				
+		inputType="ROTEXT"
+		/>
+		
+	
+
+	<formFieldProperty
+		name="cd_cdr"
+		/>
+	<formFieldProperty
+		name="ds_cdr"
+		/>
+	<formFieldProperty
+		name="totObbligazioni1"
+		/>
+	<formFieldProperty
+		name="totObbligazioni2"
+		/>
+	<formFieldProperty
+		name="totObbligazioni3"
+		/>
+	<formFieldProperty
+		name="totSpeseDaPdg1"
+		/>
+	<formFieldProperty
+		name="totSpeseDaPdg2"
+		/>
+	<formFieldProperty
+		name="totSpeseDaPdg3"
+		/>
+	<formFieldProperty
+		name="message1"
+		/>
+	<formFieldProperty
+		name="message2"
+		/>
+	<formFieldProperty
+		name="message3"
+		/>
+		
+		
+		
+
+	<findFieldProperty
+		name="cd_cdr"
+		/>
+	<findFieldProperty
+		name="ds_cdr"
+		/>
+	<findFieldProperty
+		name="totObbligazioni1"
+		/>
+	<findFieldProperty
+		name="totObbligazioni2"
+		/>
+	<findFieldProperty
+		name="totObbligazioni3"
+		/>
+	<findFieldProperty
+		name="totSpeseDaPdg1"
+		/>
+	<findFieldProperty
+		name="totSpeseDaPdg2"
+		/>
+	<findFieldProperty
+		name="totSpeseDaPdg3"
+		/>
+		
+
+</bulkInfo>

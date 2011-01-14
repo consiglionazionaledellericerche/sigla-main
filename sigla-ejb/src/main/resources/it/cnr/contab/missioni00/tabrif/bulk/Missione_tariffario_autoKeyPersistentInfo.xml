@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.tabrif.bulk.Missione_tariffario_autoKey" >
+	<defaultColumnMap
+		tableName="MISSIONE_TARIFFARIO_AUTO" >
+		<columnMapping
+			columnName="CD_TARIFFA_AUTO"
+			propertyName="cd_tariffa_auto"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="DT_INIZIO_VALIDITA"
+			propertyName="dt_inizio_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_tariffa_auto"
+		partOfOid="true" />
+	<persistentProperty
+		name="dt_inizio_validita"
+		partOfOid="true" />
+</SQLPersistentInfo>

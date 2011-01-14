@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_unita_organizzativa" />
+	<fieldProperty
+		name="cd_contributo_ritenuta"
+		property="cd_contributo_ritenuta"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_contributo_ritenuta" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="base_calcolo"
+		property="base_calcolo"
+		inputType="TEXT"
+		label="base_calcolo" />
+	<fieldProperty
+		name="pg_compenso"
+		property="pg_compenso"
+		inputType="TEXT"
+		label="pg_compenso" />
+	<fieldProperty
+		name="ti_ente_percipiente"
+		property="ti_ente_percipiente"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_ente_percipiente" />
+	<fieldProperty
+		name="imponibile"
+		property="imponibile"
+		inputType="TEXT"
+		label="imponibile" />
+	<fieldProperty
+		name="pg_riga"
+		property="pg_riga"
+		inputType="TEXT"
+		label="pg_riga" />
+	<fieldProperty
+		name="ammontare"
+		property="ammontare"
+		inputType="TEXT"
+		label="ammontare" />
+	<fieldProperty
+		name="aliquota"
+		property="aliquota"
+		inputType="TEXT"
+		label="aliquota" />
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_contributo_ritenuta" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="base_calcolo" />
+	<formFieldProperty
+		name="pg_compenso" />
+	<formFieldProperty
+		name="ti_ente_percipiente" />
+	<formFieldProperty
+		name="imponibile" />
+	<formFieldProperty
+		name="pg_riga" />
+	<formFieldProperty
+		name="ammontare" />
+	<formFieldProperty
+		name="aliquota" />
+
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="cd_contributo_ritenuta" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="base_calcolo" />
+	<columnFieldProperty
+		name="pg_compenso" />
+	<columnFieldProperty
+		name="ti_ente_percipiente" />
+	<columnFieldProperty
+		name="imponibile" />
+	<columnFieldProperty
+		name="pg_riga" />
+	<columnFieldProperty
+		name="ammontare" />
+	<columnFieldProperty
+		name="aliquota" />
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="cd_contributo_ritenuta" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="base_calcolo" />
+	<findFieldProperty
+		name="pg_compenso" />
+	<findFieldProperty
+		name="ti_ente_percipiente" />
+	<findFieldProperty
+		name="imponibile" />
+	<findFieldProperty
+		name="pg_riga" />
+	<findFieldProperty
+		name="ammontare" />
+	<findFieldProperty
+		name="aliquota" />
+
+</bulkInfo>

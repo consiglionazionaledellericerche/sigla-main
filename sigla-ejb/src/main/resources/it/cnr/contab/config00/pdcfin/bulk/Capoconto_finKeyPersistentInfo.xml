@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.Capoconto_finKey" >
+	<defaultColumnMap
+		tableName="CAPOCONTO_FIN" >
+		<columnMapping
+			columnName="CD_CAPOCONTO_FIN"
+			propertyName="cd_capoconto_fin"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_capoconto_fin"
+		partOfOid="true" />
+</SQLPersistentInfo>

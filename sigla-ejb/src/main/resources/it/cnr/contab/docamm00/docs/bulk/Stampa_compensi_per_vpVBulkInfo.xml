@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+
+	<form
+		name="/cnrdocamm/docamm/elencocompensipervocedelpiano.rpt">
+		<formFieldProperty 
+			name="esercizio"
+			inputType="ROTEXT" />
+		<formFieldProperty 
+			name="cdUOForPrint" />
+		<formFieldProperty 
+			name="cd_elemento_voce" />
+	</form>
+
+	<printForm
+		name="/cnrdocamm/docamm/elencocompensipervocedelpiano.rpt">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="1"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="voceDPForPrint"
+			parameterPosition="2"
+			parameterType="STRING" />
+	</printForm>		
+ 	<printForm
+		name="/cnrdocamm/docamm/elencocompensipervocedelpiano.jasper">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING" 
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer"/>
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="uo"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="voceDPForPrint"
+			parameterPosition="2"
+			parameterType="STRING" 
+			paramNameJR="capitolo"
+			paramTypeJR="java.lang.String"/>
+	</printForm>	
+					
+</bulkInfo>

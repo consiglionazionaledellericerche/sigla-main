@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_pgiro"
+		property="fl_pgiro"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="P.Giro"
+		keysProperty="fl_pgiro_Keys"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_tipo_documento_amm"
+		property="cd_tipo_documento_amm"
+		inputType="SELECT"
+		keysProperty="tipoDocumentoKeys"
+		label="Tipo" />
+	<fieldProperty
+		name="ds_tipo_documento_amm"
+		property="ds_tipo_documento_amm"
+		inputType="ROTEXT"
+		label="Tipo" />
+	<fieldProperty
+		name="nome"
+		property="terzoAnag.nome"
+		maxLength="30"
+		inputSize="50"
+		inputType="TEXT"
+		label="Nome"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_unita_organizzativa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_associato_doc_contabile"
+		property="im_associato_doc_contabile"
+		inputType="TEXT"
+		label="im_associato_doc_contabile" />
+	<fieldProperty
+		name="esercizio_ori_accertamento"
+		property="esercizio_ori_accertamento"
+		inputType="TEXT"
+		label="Es. accertamento" />
+	<fieldProperty
+		name="pg_accertamento"
+		property="pg_accertamento"
+		inputType="TEXT"
+		label="Nr. accertamento" />
+	<fieldProperty
+		name="pg_documento_amm"
+		property="pg_documento_amm"
+		inputType="TEXT"
+		label="Progressivo Documento" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="ti_pagamento"
+		property="ti_pagamento"
+		inputType="SELECT"
+		keysProperty="classeDiPagamentoKeys"
+		label="Classe di pagamento" />
+	<fieldProperty
+		name="ragione_sociale"
+		property="terzoAnag.ragione_sociale"
+		maxLength="30"
+		inputSize="100"
+		inputType="TEXT"
+		label="Ragione Sociale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_precedente"
+		property="terzoAnag.cd_precedente"
+		label="Codice Precedente"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="8"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_terzo"
+		property="terzoAnag.cd_terzo"
+		inputType="TEXT"
+		label="Debitore" />
+	<fieldProperty
+		name="cd_terzo_uo_cds"
+		property="cd_terzo_uo_cds"
+		inputType="TEXT"
+		label="Terzo UO Cds" />		
+	<fieldProperty
+		name="esercizio_accertamento"
+		property="esercizio_accertamento"
+		inputType="TEXT"
+		label="esercizio_accertamento" />
+	<fieldProperty
+		name="cd_modalita_pag"
+		property="cd_modalita_pag"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_modalita_pag"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cognome"
+		property="terzoAnag.cognome"
+		maxLength="30"
+		inputSize="50"
+		inputType="TEXT"
+		label="Cognome"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_scadenza"
+		property="im_scadenza"
+		inputType="TEXT"
+		maxLength="13"
+		inputSize="13"
+		label="Importo" 
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="im_reversale_riga"
+		property="im_reversale_riga"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="13"
+		inputSize="13"
+		inputType="TEXT"
+		label="Importo"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="pg_banca"
+		property="pg_banca"
+		inputType="TEXT"
+		label="pg_banca" />
+	<fieldProperty
+		name="dt_scadenza"
+		property="dt_scadenza"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Scadenza"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="pg_accertamento_scadenzario"
+		property="pg_accertamento_scadenzario"
+		inputType="TEXT"
+		label="pg_accertamento_scadenzario" />
+	<fieldProperty
+		name="partita_iva"
+		property="terzoAnag.partita_iva"
+		inputType="TEXT"
+		label="Partita IVA" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="terzoAnag.codice_fiscale"
+		inputType="TEXT"
+		label="Codice Fiscale" />
+	<fieldProperty
+		name="ti_competenza_residuo"
+		property="ti_competenza_residuo"
+		inputType="SELECT"
+		label="Competenza/ Residuo" />
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="nome" />
+	<formFieldProperty
+		name="cd_precedente" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="im_associato_doc_contabile" />
+	<formFieldProperty
+		name="esercizio_ori_accertamento" />
+	<formFieldProperty
+		name="pg_accertamento" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="ragione_sociale" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="esercizio_accertamento" />
+	<formFieldProperty
+		name="cd_modalita_pag" />
+	<formFieldProperty
+		name="cognome" />
+	<formFieldProperty
+		name="im_scadenza" />
+	<formFieldProperty
+		name="pg_banca" />
+	<formFieldProperty
+		name="dt_scadenza" />
+	<formFieldProperty
+		name="pg_accertamento_scadenzario" />
+	<formFieldProperty
+		name="cd_tipo_documento_amm" />
+	<formFieldProperty
+		name="partita_iva" />
+	<formFieldProperty
+		name="codice_fiscale" />		
+
+	<columnFieldProperty
+		name="pg_documento_amm"
+		label="Nr.Documento"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="ds_tipo_documento_amm"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="cd_terzo"
+		columnStyle="padding-left:20px"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="esercizio_ori_accertamento"
+		columnStyle="padding-left:20px"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="pg_accertamento"
+		columnStyle="padding-left:20px"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="fl_pgiro"
+		inputType="ROTEXT"
+		columnStyle="text-align: center"/>
+	<columnFieldProperty
+		name="dt_scadenza"
+		inputType="ROTEXT"
+		columnStyle="width:80px"/>
+	<columnFieldProperty
+		name="im_reversale_riga"
+		inputType="ROTEXT"
+		columnStyle="text-align: right"/>
+	<columnFieldProperty
+		name="ti_pagamento"
+		columnStyle="padding-left:20px"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="ti_competenza_residuo"
+		columnStyle="padding-left:20px"
+		inputType="ROTEXT"/>
+
+	<columnSet
+		name="regolarizzazione">
+	<columnFieldProperty
+		name="pg_documento_amm"
+		label="Nr.Documento"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="ds_tipo_documento_amm"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="cd_terzo"
+		columnStyle="padding-left:20px"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="fl_pgiro"
+		inputType="ROTEXT"
+		columnStyle="text-align: center"/>
+	<columnFieldProperty
+		name="dt_scadenza"
+		inputType="ROTEXT"
+		columnStyle="width:80px"/>
+	<columnFieldProperty
+		name="im_reversale_riga"
+		inputType="ROTEXT"
+		columnStyle="text-align: right"/>
+	<columnFieldProperty
+		name="ti_competenza_residuo"
+		columnStyle="padding-left:20px"
+		inputType="ROTEXT"/>
+	</columnSet>	
+		
+		
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="esercizio_accertamento" />
+	<findFieldProperty
+		name="esercizio_ori_accertamento" />
+	<findFieldProperty
+		name="pg_accertamento" />
+	<findFieldProperty
+		name="pg_accertamento_scadenzario" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="cd_terzo_uo_cds" />
+	<findFieldProperty
+		name="cd_modalita_pag" />
+	<findFieldProperty
+		name="im_scadenza" />
+	<findFieldProperty
+		name="pg_banca" />
+	<findFieldProperty
+		name="dt_scadenza" />
+	<findFieldProperty
+		name="cd_tipo_documento_amm" />
+	<findFieldProperty
+		name="ti_pagamento" />
+	<findFieldProperty
+		name="pg_documento_amm" />	
+
+</bulkInfo>

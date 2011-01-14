@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.bulk.Incarichi_richiestaBase"
+	keyClassName="it.cnr.contab.incarichi00.bulk.Incarichi_richiestaKey"
+	homeClassName="it.cnr.contab.incarichi00.bulk.Incarichi_richiestaHome">
+	<defaultColumnMap
+		tableName="INCARICHI_RICHIESTA">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TEMATICA_ATTIVITA"
+			propertyName="cd_tematica_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="ATTIVITA"
+			propertyName="attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="800"
+			nullable="false" />
+		<columnMapping
+			columnName="ATTIVITA_BREVE"
+			propertyName="attivita_breve"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="COMPETENZE"
+			propertyName="competenze"
+			sqlTypeName="VARCHAR"
+			columnSize="800"
+			nullable="true" />
+		<columnMapping
+			columnName="DURATA"
+			propertyName="durata"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false" />
+		<columnMapping
+			columnName="SEDE_LAVORO"
+			propertyName="sede_lavoro"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false" />
+		<columnMapping
+			columnName="NOTE"
+			propertyName="note"
+			sqlTypeName="VARCHAR"
+			columnSize="500"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DATA_PUBBLICAZIONE"
+			propertyName="data_pubblicazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_FINE_PUBBLICAZIONE"
+			propertyName="data_fine_pubblicazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_SCADENZA"
+			propertyName="data_scadenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="EMAIL_RISPOSTE"
+			propertyName="email_risposte"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="NR_RISORSE_DA_TROVARE"
+			propertyName="nr_risorse_da_trovare"
+			sqlTypeName="DECIMAL"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="NR_RISORSE_TROVATE_SI"
+			propertyName="nr_risorse_trovate_si"
+			sqlTypeName="DECIMAL"
+			columnSize="3" 
+			nullable="false" />
+		<columnMapping
+			columnName="NR_RISORSE_TROVATE_NO"
+			propertyName="nr_risorse_trovate_no"
+			sqlTypeName="DECIMAL"
+			columnSize="3" 
+			nullable="false" />
+		<columnMapping
+			columnName="NR_RISORSE_TROVATE_NA"
+			propertyName="nr_risorse_trovate_na"
+			sqlTypeName="DECIMAL"
+			columnSize="3" 
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="cd_tematica_attivita" />
+	<persistentProperty
+		name="attivita" />
+	<persistentProperty
+		name="attivita_breve" />
+	<persistentProperty
+		name="competenze" />
+	<persistentProperty
+		name="durata" />
+	<persistentProperty
+		name="sede_lavoro" />
+	<persistentProperty
+		name="note" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="data_pubblicazione" />
+	<persistentProperty
+		name="data_fine_pubblicazione" />
+	<persistentProperty
+		name="data_scadenza" />
+	<persistentProperty
+		name="email_risposte" />
+	<persistentProperty
+	    name="nr_risorse_da_trovare" />
+	<persistentProperty
+		name="nr_risorse_trovate_si" />
+	<persistentProperty
+		name="nr_risorse_trovate_no" />
+	<persistentProperty
+		name="nr_risorse_trovate_na" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

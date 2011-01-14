@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBase"
+	keyClassName="it.cnr.contab.prevent01.bulk.Pdg_modulo_costiKey"
+	homeClassName="it.cnr.contab.prevent01.bulk.Pdg_modulo_costiHome">
+	<defaultColumnMap
+		tableName="PDG_MODULO_COSTI">
+		<columnMapping
+			columnName="RIS_ES_PREC_TIT_I"
+			propertyName="ris_es_prec_tit_i"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="RIS_ES_PREC_TIT_II"
+			propertyName="ris_es_prec_tit_ii"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="RIS_PRES_ES_PREC_TIT_I"
+			propertyName="ris_pres_es_prec_tit_i"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="RIS_PRES_ES_PREC_TIT_II"
+			propertyName="ris_pres_es_prec_tit_ii"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_COSTI_GENERALI"
+			propertyName="im_costi_generali"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_CF_TFR"
+			propertyName="im_cf_tfr"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_CF_TFR_DET"
+			propertyName="im_cf_tfr_det"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />			
+		<columnMapping
+			columnName="IM_CF_AMM_IMMOBILI"
+			propertyName="im_cf_amm_immobili"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_CF_AMM_ATTREZZ"
+			propertyName="im_cf_amm_attrezz"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_CF_AMM_ALTRO"
+			propertyName="im_cf_amm_altro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ris_es_prec_tit_i" />
+	<persistentProperty
+		name="ris_es_prec_tit_ii" />
+	<persistentProperty
+		name="ris_pres_es_prec_tit_i" />
+	<persistentProperty
+		name="ris_pres_es_prec_tit_ii" />
+	<persistentProperty
+		name="im_costi_generali" />
+	<persistentProperty
+		name="im_cf_tfr" />
+	<persistentProperty
+		name="im_cf_tfr_det" />		
+	<persistentProperty
+		name="im_cf_amm_immobili" />
+	<persistentProperty
+		name="im_cf_amm_attrezz" />
+	<persistentProperty
+		name="im_cf_amm_altro" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

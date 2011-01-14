@@ -1,0 +1,1076 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CDS" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_conguaglio"
+		property="pg_conguaglio"
+		inputType="TEXT"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Nr. Conguaglio" />
+	<fieldProperty
+		name="pgConguaglioPos"
+		property="pgConguaglioPos"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Nr. Conguaglio" />
+	<fieldProperty
+		name="dt_registrazione"
+		property="dt_registrazione"
+		formatName="date_short"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnInsert = "true"
+		enabledOnEdit = "false"
+		enabledOnSearch = "false"
+		enabledOnFreeSearch = "false"
+		nullable="false"
+		label="Data registrazione" />
+	<fieldProperty
+		name="dt_registrazioneForSearch"
+		property="dt_registrazione"
+		formatName="date_short"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		nullable="false"
+		label="Data registrazione" />
+	<fieldProperty
+		name="dt_da_competenza_coge"
+		property="dt_da_competenza_coge"
+		formatName="date_short"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnInsert = "true"
+		enabledOnEdit = "false"
+		enabledOnSearch = "false"
+		enabledOnFreeSearch = "false"
+		nullable="false"
+		label="Competenza dal:" />
+	<fieldProperty
+		name="dt_da_competenza_cogeForSearch"
+		property="dt_da_competenza_coge"
+		formatName="date_short"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		nullable="false"
+		label="Competenza dal:" />
+	<fieldProperty
+		name="dt_a_competenza_coge"
+		property="dt_a_competenza_coge"
+		formatName="date_short"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnInsert = "true"
+		enabledOnEdit = "false"
+		enabledOnSearch = "false"
+		enabledOnFreeSearch = "false"
+		nullable="false"
+		label="Competenza al:" />
+	<fieldProperty
+		name="dt_a_competenza_cogeForSearch"
+		property="dt_a_competenza_coge"
+		formatName="date_short"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		nullable="false"
+		label="Competenza al:" />
+	<fieldProperty
+		name="ds_conguaglio"
+		property="ds_conguaglio"
+		maxLength="300"
+		inputSize="80"
+		inputType="TEXT"
+		enabledOnInsert = "true"
+		enabledOnEdit = "false"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		nullable="false"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_cancellazione"
+		property="dt_cancellazione"
+		formatName="date_short"
+		inputType="TEXT"
+		label="Data cancellazione"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"		
+		/>
+
+	<fieldProperty
+		name="fl_intera_qfissa_deduzione"
+		property="fl_intera_qfissa_deduzione"
+		inputType="CHECKBOX"
+		enabledOnInsert = "true"
+		enabledOnEdit = "false"
+		enabledOnSearch = "false"
+		enabledOnFreeSearch = "true"
+		label="Quota fissa deduzione irpef intera" />
+	<fieldProperty
+		name="fl_escludi_qvaria_deduzione"
+		property="fl_escludi_qvaria_deduzione"
+		inputType="CHECKBOX"
+		enabledOnInsert = "true"
+		enabledOnEdit = "false"
+		enabledOnSearch = "false"
+		enabledOnFreeSearch = "true"
+		label="Escludi quota variabile deduzione irpef intera" />
+	<fieldProperty		
+		name="fl_accantona_add_terr"
+		property="fl_accantona_add_terr"
+		inputType="CHECKBOX"		
+		enabledOnInsert = "true"
+		enabledOnSearch = "false"
+		enabledOnFreeSearch = "true"
+		label="Rateizzazione addizionali irpef"/>
+	<fieldProperty		
+		name="fl_detrazioni_fam_intero_anno"
+		property="fl_detrazioni_fam_intero_anno"
+		inputType="CHECKBOX"		
+		enabledOnInsert = "true"
+		enabledOnSearch = "false"
+		enabledOnFreeSearch = "true"
+		label="Applicazione Detrazioni Familiari per intero anno"/>		
+	<fieldProperty
+		name="im_detrazione_personale_anag"
+		property="im_detrazione_personale_anag"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"		
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Importo detrazione personale anagrafico" />		
+/*********** COMPENSO ************/
+	<fieldProperty
+		name="cd_uo_compenso"
+		property="cd_uo_compenso"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="cd_cds_compenso"
+		property="cd_cds_compenso"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="CDS" />
+	<fieldProperty
+		name="pg_compenso"
+		property="pg_compenso"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Progr." />
+	<fieldProperty
+		name="esercizio_compenso"
+		property="esercizio_compenso"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Esercizio" />
+/*********** ******** ************/
+/****************** TERZO ********************/
+	<fieldProperty
+		name="find_terzo"
+		property="v_terzo"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROTerzo"
+		completeOnSave = "false"
+		label="Terzo" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		label="Codice"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROCdTerzo"
+		enabledOnSearch="true"
+		maxLength="8"
+		inputSize="8" />
+	<fieldProperty
+		name="cd_precedente"
+		property="v_terzo.cd_terzo_precedente"
+		maxLength="20"
+		inputSize="6"
+		inputType="TEXT"
+		label="Codice precedente"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" 				
+		/>						
+/*********************************************/
+	<fieldProperty
+		name="ragione_sociale"
+		property="ragione_sociale"
+		maxLength="62"
+		inputSize="62"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Ragione Sociale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="nome"
+		property="nome"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Nome"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Cognome"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice Fiscale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="partita_iva"
+		property="partita_iva"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Partita Iva"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="indirizzoTerzo"
+		property="indirizzoTerzo"
+		maxLength="62"
+		inputSize="62"
+		inputType="ROTEXT"
+		label="Via/P.za" />
+	<fieldProperty
+		name="pg_comune"
+		property="pg_comune"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Comune" />
+	<fieldProperty
+		name="ds_comune"
+		property="ds_comune"
+		inputSize="20"
+		inputType="ROTEXT"
+		label="Comune" />
+	<fieldProperty
+		name="cd_provincia"
+		property="cd_provincia"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Provincia" />
+	<fieldProperty
+		name="ds_provincia"
+		property="ds_provincia"
+		inputSize="20"
+		inputType="ROTEXT"
+		label="Provincia" />
+	<fieldProperty
+		name="cd_regione"
+		property="cd_regione"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Regione" />
+	<fieldProperty
+		name="ds_regione"
+		property="ds_regione"
+		inputSize="20"
+		inputType="ROTEXT"
+		label="Regione" />
+/********************** BANCHE ********************/
+	<fieldProperty
+		name="termini_pagamento"
+		property="terminiPagamento"
+		printProperty="cd_ds_termini_pagamento"
+		optionsProperty="termini"
+		readonlyProperty="ROTerminiPagamento"
+		inputType="SELECT"
+		label="Term. pagamento" />
+	<fieldProperty
+		name="cd_termini_pag"
+		property="cd_termini_pag"
+		inputType="TEXT"
+		label="Codice Termine di Pag." />
+	<fieldProperty
+		name="modalita_pagamento"
+		property="modalitaPagamento"
+		printProperty="cd_ds_modalita_pagamento"
+		optionsProperty="modalita"
+		inputType="SELECT"
+		nullable="false"
+		readonlyProperty="ROModalitaPagamento"
+		label="Mod. pagamento" />
+	<fieldProperty
+		name="cd_modalita_pag"
+		property="cd_modalita_pag"
+		inputType="TEXT"
+		label="Codice Modalita di Pag." />
+	<fieldProperty
+		name="listaBanche"
+		property="banca"
+		inputType="BUTTON"
+		img="img/find16.gif"
+		readonlyProperty="abledToInsertBank"
+		label="Conto/i ..."
+		href="javascript:submitForm('doSearch(main.listaBanche)')" />
+	<fieldProperty
+		name="contoA"
+		property="banca"
+		inputType="FORM"
+		formName="A"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoP"
+		property="banca"
+		inputType="FORM"
+		formName="P"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoB"
+		property="banca"
+		inputType="FORM"
+		formName="BdocAmm"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoQ"
+		property="banca"
+		inputType="FORM"
+		formName="Q"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoN"
+		property="banca"
+		inputType="FORM"
+		formName="N"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+/**************************************************/
+	<fieldProperty
+		name="tipoRapporto"
+		property="tipoRapporto"
+		printProperty="ds_tipo_rapporto"
+		optionsProperty="tipiRapporto"
+		inputType="SELECT"
+		readonlyProperty="ROTerzo"
+		nullable="false"
+		label="Tipo Rapporto" />
+	<fieldProperty
+		name="cd_tipo_rapporto"
+		property="cd_tipo_rapporto"
+		inputType="TEXT"
+		label="Codice Tipo Rapporto" />
+	<fieldProperty
+		name="tipoTrattamento"
+		property="tipoTrattamento"
+		printProperty="ds_ti_trattamento"
+		optionsProperty="tipiTrattamento"
+		inputType="SELECT"
+		readonlyProperty="ROTerzo"
+		nullable="false"
+		label="Tipo Trattamento" />
+	<fieldProperty
+		name="cd_trattamento"
+		property="cd_trattamento"
+		inputType="TEXT"
+		label="Codice Trattamento" />
+/* ************************************************** */
+
+	<fieldProperty
+		name="im_lordo_conguaglio"
+		property="im_lordo_conguaglio"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		label="Importo lordo conguaglio" />
+
+/********** DATI ESTERNI *********/
+	<fieldProperty
+		name="dt_da_competenza_esterno"
+		property="dt_da_competenza_esterno"
+		formatName="date_short"
+		inputType="TEXT"
+		readonlyProperty="RODatiEsterni"
+		inputSize="20"
+		maxLength="20"
+		label="Competenza dal:" />
+	<fieldProperty
+		name="dt_a_competenza_esterno"
+		property="dt_a_competenza_esterno"
+		formatName="date_short"
+		inputType="TEXT"
+		readonlyProperty="RODatiEsterni"
+		inputSize="20"
+		maxLength="20"
+		label="Competenza al:" />
+	<fieldProperty
+		name="codice_fiscale_esterno"
+		property="codice_fiscale_esterno"
+		inputType="TEXT"
+		readonlyProperty="RODatiEsterni"
+		maxLength="16"
+		inputSize="20"
+		label="Codice fiscale Datore di lavoro"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="imponibile_fiscale_esterno"
+		property="imponibile_fiscale_esterno"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		readonlyProperty="RODatiEsterni"
+		nullable="false"
+		label="Imponibile fiscale" />
+	<fieldProperty
+		name="im_irpef_esterno"
+		property="im_irpef_esterno"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		readonlyProperty="RODatiEsterni"
+		nullable="false"
+		label="Ritenuta irpef netta" />
+	<fieldProperty
+		name="im_addreg_esterno"
+		property="im_addreg_esterno"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		readonlyProperty="RODatiEsterni"
+		nullable="false"
+		label="Add. regionale" />
+	<fieldProperty
+		name="im_addprov_esterno"
+		property="im_addprov_esterno"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		readonlyProperty="RODatiEsterni"
+		nullable="false"
+		label="Add. provinciale" />
+	<fieldProperty
+		name="im_addcom_esterno"
+		formatName="it.cnr.contab.util.EuroFormat"
+		property="im_addcom_esterno"
+		inputType="TEXT"
+		readonlyProperty="RODatiEsterni"
+		nullable="false"
+		label="Add. comunale" />
+	<fieldProperty
+		name="detrazioni_la_esterno"
+		property="detrazioni_la_esterno"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		readonlyProperty="RODatiEsterni"
+		nullable="false"
+		label="Detrazioni lavoro" />
+	<fieldProperty
+		name="detrazioni_pe_esterno"
+		property="detrazioni_pe_esterno"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		readonlyProperty="RODatiEsterni"
+		nullable="false"
+		label="Detr. personali" />
+	<fieldProperty
+		name="detrazioni_co_esterno"
+		property="detrazioni_co_esterno"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		readonlyProperty="RODatiEsterni"
+		nullable="false"
+		label="Detr. coniuge" />
+	<fieldProperty
+		name="detrazioni_fi_esterno"
+		property="detrazioni_fi_esterno"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		readonlyProperty="RODatiEsterni"
+		nullable="false"
+		label="Detr. figli" />
+	<fieldProperty
+		name="detrazioni_al_esterno"
+		property="detrazioni_al_esterno"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		readonlyProperty="RODatiEsterni"
+		nullable="false"
+		label="Detr. altri" />
+	<fieldProperty
+		name="numero_giorni_esterno"
+		property="numero_giorni_esterno"
+		inputType="TEXT"
+		readonlyProperty="RODatiEsterni"
+		label="Numero giorni di spettanza" />		
+	<fieldProperty
+		name="ds_comune_addcom_esterno"
+		property="comune_esterno.ds_comune"
+		readonlyProperty="RODatiEsterni"
+		inputSize="30"
+		label="Comune per Addizionale"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="find_comune_esterno"
+		property="comune_esterno"
+		label="Comune per Addizionale"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_provincia_esterno"
+		property="comune_esterno.provincia.ds_provincia"
+		label="Provincia"
+		inputType="ROTEXT" />					
+/*********** ****** **************/
+/*********** GODUTO **************/
+	<fieldProperty
+		name="im_irpef_goduto"
+		property="im_irpef_goduto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Irpef goduto" />
+	<fieldProperty
+		name="im_addreg_goduto"
+		property="im_addreg_goduto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Add. reg. goduto" />
+	<fieldProperty
+		name="im_addprov_goduto"
+		property="im_addprov_goduto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Add. prov. goduto" />
+	<fieldProperty
+		name="im_addcom_goduto"
+		property="im_addcom_goduto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Add. com. goduto" />
+	<fieldProperty
+		name="detrazioni_la_goduto"
+		property="detrazioni_la_goduto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Detr. lavoro goduto" />
+	<fieldProperty
+		name="detrazioni_pe_goduto"
+		property="detrazioni_pe_goduto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Detr. personali goduto" />
+	<fieldProperty
+		name="detrazioni_co_goduto"
+		property="detrazioni_co_goduto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Detr. coniuge goduto" />
+	<fieldProperty
+		name="detrazioni_fi_goduto"
+		property="detrazioni_fi_goduto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Detr. figli goduto" />
+	<fieldProperty
+		name="detrazioni_al_goduto"
+		property="detrazioni_al_goduto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Detr. altri goduto" />
+	<fieldProperty
+		name="im_deduzione_goduto"
+		property="im_deduzione_goduto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Deduzione irpef goduto" />
+	<fieldProperty
+		name="im_deduzione_family_goduto"
+		property="im_deduzione_family_goduto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Deduzione family goduto" />
+		
+/*********** ****** **************/
+/*********** DOVUTO **************/
+	<fieldProperty
+		name="im_irpef_dovuto"
+		property="im_irpef_dovuto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Irpef dovuto" />
+	<fieldProperty
+		name="im_addreg_dovuto"
+		property="im_addreg_dovuto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Add. reg. dovuto" />
+	<fieldProperty
+		name="im_addprov_dovuto"
+		property="im_addprov_dovuto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Add. prov. dovuto" />
+	<fieldProperty
+		name="im_addcom_dovuto"
+		property="im_addcom_dovuto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Add. com. dovuto" />
+	<fieldProperty
+		name="detrazioni_la_dovuto"
+		property="detrazioni_la_dovuto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Detr. lavoro dovuto" />
+	<fieldProperty
+		name="detrazioni_pe_dovuto"
+		property="detrazioni_pe_dovuto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Detr. personali dovuto" />
+	<fieldProperty
+		name="detrazioni_co_dovuto"
+		property="detrazioni_co_dovuto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Detr. coniuge dovuto" />
+	<fieldProperty
+		name="detrazioni_fi_dovuto"
+		property="detrazioni_fi_dovuto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Detr. figli dovuto" />
+	<fieldProperty
+		name="detrazioni_al_dovuto"
+		property="detrazioni_al_dovuto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Detr. altri dovuto" />
+	<fieldProperty
+		name="im_deduzione_dovuto"
+		property="im_deduzione_dovuto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Deduzione irpef dovuto" />
+	<fieldProperty
+		name="im_deduzione_family_dovuto"
+		property="im_deduzione_family_dovuto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Deduzione family dovuto" />
+		
+/*********** ****** **************/
+/*********** TOTALI **************/
+	<fieldProperty
+		name="im_irpef"
+		property="im_irpef"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Conguaglio Irpef" />
+	<fieldProperty
+		name="im_addreg"
+		property="im_addreg"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Conguaglio addizionale regionale" />
+	<fieldProperty
+		name="im_addprov"
+		property="im_addprov"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Conguaglio addizionale provinciale" />
+	<fieldProperty
+		name="im_addcom"
+		property="im_addcom"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Conguaglio addizionale comunale" />
+	<fieldProperty
+		name="detrazioni_la"
+		property="detrazioni_la"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Conguaglio detrazioni lavoro" />
+	<fieldProperty
+		name="detrazioni_pe"
+		property="detrazioni_pe"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Conguaglio detrazioni personali" />
+	<fieldProperty
+		name="detrazioni_co"
+		property="detrazioni_co"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Conguaglio detrazioni coniuge" />
+	<fieldProperty
+		name="detrazioni_fi"
+		property="detrazioni_fi"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Conguaglio detrazioni figli" />
+	<fieldProperty
+		name="detrazioni_al"
+		property="detrazioni_al"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Conguaglio detrazioni altri familiari" />
+
+	<fieldProperty
+		name="totale_irpef_dovuto"
+		property="totale_irpef_dovuto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Totale Irpef dovuto" />
+	<fieldProperty
+		name="totale_irpef_goduto"
+		property="totale_irpef_goduto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Totale Irpef goduto" />
+	<fieldProperty
+		name="totale_irpef"
+		property="totale_irpef"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Totale Irpef" />
+	<fieldProperty
+		name="totale_detrazioni_dovuto"
+		property="totale_detrazioni_dovuto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Detraz. dovuto" />
+	<fieldProperty
+		name="totale_detrazioni_goduto"
+		property="totale_detrazioni_goduto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Detraz. goduto" />
+	<fieldProperty
+		name="totale_detrazioni"
+		property="totale_detrazioni"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Totale Detrazioni" />
+	<fieldProperty
+		name="im_deduzione"
+		property="im_deduzione"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Deduzione irpef" />
+	<fieldProperty
+		name="im_deduzione_family"
+		property="im_deduzione_family"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="ROTEXT"
+		label="Deduzione family" />
+
+	<formFieldProperty name="cd_cds" />
+	<formFieldProperty name="cd_unita_organizzativa" />
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="pg_conguaglio" />
+	<formFieldProperty name="pgConguaglioPos" />
+	<formFieldProperty
+		name="dt_registrazione"
+		command="doOnDtRegistrazioneChange" />
+	<formFieldProperty
+		name="dt_da_competenza_coge"
+		command="doOnDtDaCompetenzaCogeChange" />
+	<formFieldProperty
+		name="dt_a_competenza_coge"
+		label = "al:"
+		command="doOnDtACompetenzaCogeChange" />
+	<formFieldProperty name="dt_registrazioneForSearch" />
+	<formFieldProperty name="dt_da_competenza_cogeForSearch" />
+	<formFieldProperty
+		name="dt_a_competenza_cogeForSearch"
+		label = "al:" />
+	<formFieldProperty name="ds_conguaglio" />
+	<formFieldProperty name="dt_cancellazione" />
+	<formFieldProperty name="cd_cds_compenso" />
+	<formFieldProperty name="cd_uo_compenso" />
+	<formFieldProperty name="esercizio_compenso" />
+	<formFieldProperty name="pg_compenso" />
+	<formFieldProperty name="find_terzo" />
+	<formFieldProperty name="cd_terzo" />
+	<formFieldProperty name="cd_precedente"/>			
+	<formFieldProperty name="nome" />
+	<formFieldProperty name="cognome" />
+	<formFieldProperty name="ragione_sociale" />
+	<formFieldProperty name="partita_iva" />
+	<formFieldProperty name="codice_fiscale" />
+	<formFieldProperty name="indirizzoTerzo" />
+	<formFieldProperty name="cd_regione" />
+	<formFieldProperty name="ds_regione" />
+	<formFieldProperty name="cd_provincia" />
+	<formFieldProperty name="ds_provincia" />
+	<formFieldProperty name="pg_comune" />
+	<formFieldProperty name="ds_comune" />
+	<formFieldProperty name="modalita_pagamento" />
+	<formFieldProperty name="termini_pagamento" />
+	<formFieldProperty name="listaBanche" />
+	<formFieldProperty name="tipoRapporto" />
+	<formFieldProperty name="tipoTrattamento" />
+	<formFieldProperty name="contoA" />
+	<formFieldProperty name="contoB" />
+	<formFieldProperty name="contoP" />
+	<formFieldProperty name="contoQ" />
+	<formFieldProperty name="contoN" />
+	<formFieldProperty name="detrazioni_fi_goduto" />
+	<formFieldProperty name="detrazioni_al_goduto" />
+	<formFieldProperty
+		name="dt_a_competenza_esterno"
+		label="al:" />
+	<formFieldProperty name="im_irpef_esterno" />
+	<formFieldProperty name="detrazioni_fi_esterno" />
+	<formFieldProperty name="im_irpef_goduto" />
+	<formFieldProperty name="im_lordo_conguaglio" />
+	<formFieldProperty name="detrazioni_pe_goduto" />
+	<formFieldProperty name="dt_da_competenza_esterno" />
+	<formFieldProperty name="detrazioni_co_goduto" />
+	<formFieldProperty name="detrazioni_la_dovuto" />
+	<formFieldProperty name="im_addreg_goduto" />
+	<formFieldProperty name="detrazioni_al_esterno" />
+	<formFieldProperty name="im_addprov_goduto" />
+	<formFieldProperty name="im_addcom_dovuto" />
+	<formFieldProperty name="detrazioni_co_esterno" />
+	<formFieldProperty name="detrazioni_fi_dovuto" />
+	<formFieldProperty name="detrazioni_al_dovuto" />
+	<formFieldProperty name="im_addprov_esterno" />
+	<formFieldProperty name="im_irpef_dovuto" />
+	<formFieldProperty name="im_addreg_esterno" />
+	<formFieldProperty name="detrazioni_la_goduto" />
+	<formFieldProperty name="codice_fiscale_esterno" />
+	<formFieldProperty name="detrazioni_pe_dovuto" />
+	<formFieldProperty name="imponibile_fiscale_esterno" />
+	<formFieldProperty name="detrazioni_co_dovuto" />
+	<formFieldProperty name="detrazioni_la_esterno" />
+	<formFieldProperty name="im_addcom_goduto" />
+	<formFieldProperty name="detrazioni_pe_esterno" />
+	<formFieldProperty name="im_addreg_dovuto" />
+	<formFieldProperty name="im_addprov_dovuto" />
+	<formFieldProperty name="im_addcom_esterno" />
+	<formFieldProperty name="im_irpef" />
+	<formFieldProperty name="im_addreg" />
+	<formFieldProperty name="im_addprov" />
+	<formFieldProperty name="im_addcom" />
+	<formFieldProperty name="detrazioni_la" />
+	<formFieldProperty name="detrazioni_pe" />
+	<formFieldProperty name="detrazioni_co" />
+	<formFieldProperty name="detrazioni_fi" />
+	<formFieldProperty name="detrazioni_al" />
+	<formFieldProperty name="totale_irpef_dovuto" />
+	<formFieldProperty name="totale_irpef_goduto" />
+	<formFieldProperty name="totale_irpef" />
+	<formFieldProperty name="totale_detrazioni" />
+	<formFieldProperty name="totale_detrazioni_dovuto" />
+	<formFieldProperty name="totale_detrazioni_goduto" />
+	<formFieldProperty name="im_deduzione_goduto" />
+	<formFieldProperty name="im_deduzione_family_goduto" />	
+	<formFieldProperty name="im_deduzione_dovuto" />
+	<formFieldProperty name="im_deduzione_family_dovuto" />	
+	<formFieldProperty name="im_deduzione" />
+	<formFieldProperty name="im_deduzione_family" />
+	<formFieldProperty name="fl_intera_qfissa_deduzione" />
+	<formFieldProperty name="fl_escludi_qvaria_deduzione" />
+	<formFieldProperty name="im_detrazione_personale_anag" />
+	<formFieldProperty name="fl_accantona_add_terr" />
+	<formFieldProperty name="fl_detrazioni_fam_intero_anno" />
+    <formFieldProperty name="numero_giorni_esterno" />		
+    <formFieldProperty name="ds_comune_addcom_esterno" />		
+    <formFieldProperty name="find_comune_esterno" />		
+    <formFieldProperty name="ds_provincia_esterno" />		
+        	
+	<columnFieldProperty name="cd_cds" />
+	<columnFieldProperty name="cd_unita_organizzativa" />
+	<columnFieldProperty name="esercizio" />
+	<columnFieldProperty name="pg_conguaglio" />
+	<columnFieldProperty name="ds_conguaglio" />
+	<columnFieldProperty name="dt_registrazione" />
+	<columnFieldProperty name="dt_da_competenza_coge" />
+	<columnFieldProperty name="dt_a_competenza_coge" />
+	<columnFieldProperty name="dt_cancellazione" />
+	<columnFieldProperty name="im_lordo_conguaglio" />
+	<columnFieldProperty
+		name="cd_terzo"
+		label="Codice Terzo"/>
+	<columnFieldProperty name="ragione_sociale" />
+	<columnFieldProperty name="nome" />
+	<columnFieldProperty name="cognome" />
+	<columnFieldProperty name="codice_fiscale" />
+	<columnFieldProperty name="partita_iva" />
+	<columnFieldProperty name="cd_termini_pag" />
+	<columnFieldProperty name="cd_modalita_pag" />
+	<columnFieldProperty name="cd_tipo_rapporto" />
+	<columnFieldProperty name="cd_trattamento" />
+	<columnFieldProperty name="cd_regione" />
+	<columnFieldProperty name="cd_provincia" />
+	<columnFieldProperty name="pg_comune" />
+	<columnFieldProperty name="codice_fiscale_esterno" />
+	<columnFieldProperty
+		name="dt_da_competenza_esterno"
+		label="Compentenza esterna dal:" />
+	<columnFieldProperty
+		name="dt_a_competenza_esterno"
+		label="Compentenza esterna al:" />
+	<columnFieldProperty
+		name="cd_cds_compenso"
+		label="Cds Compenso" />
+	<columnFieldProperty
+		name="cd_uo_compenso"
+		label="U.O. Compenso "/>
+	<columnFieldProperty
+		name="esercizio_compenso"
+		label="Esercizio Compenso "/>
+	<columnFieldProperty
+		name="pg_compenso"
+		label="Progr. Compenso "/>
+
+	<findFieldProperty name="esercizio" />
+	<findFieldProperty name="pg_conguaglio" />
+	<findFieldProperty name="ds_conguaglio" />
+	<findFieldProperty name="dt_registrazioneForSearch" />
+	<findFieldProperty
+		name="cd_terzo"
+		label="Codice Terzo" />
+	<findFieldProperty name="cd_precedente" />				
+	<findFieldProperty name="ragione_sociale" />
+	<findFieldProperty name="nome" />
+	<findFieldProperty name="cognome" />
+	<findFieldProperty name="codice_fiscale" />
+	<findFieldProperty name="partita_iva" />
+	<findFieldProperty name="cd_termini_pag" />
+	<findFieldProperty name="cd_modalita_pag" />
+	<findFieldProperty name="dt_da_competenza_cogeForSearch" />
+	<findFieldProperty name="dt_a_competenza_cogeForSearch" />
+	<findFieldProperty name="cd_tipo_rapporto" />
+	<findFieldProperty name="cd_trattamento" />
+	<findFieldProperty name="dt_cancellazione" />
+	<findFieldProperty name="im_lordo_conguaglio" />
+	<findFieldProperty name="pg_comune" />
+	<findFieldProperty name="cd_provincia" />
+	<findFieldProperty name="cd_regione" />
+	<findFieldProperty name="codice_fiscale_esterno" />
+	<findFieldProperty
+		name="dt_da_competenza_esterno"
+		label="Compentenza esterna dal:" />
+	<findFieldProperty
+		name="dt_a_competenza_esterno"
+		label="Compentenza esterna al:" />
+	<findFieldProperty 
+			name="esercizio_compenso"
+			label="Esercizio Compenso "/>
+	<findFieldProperty
+		name="pg_compenso"
+		label="Progr. Compenso "/>
+	<findFieldProperty name="fl_intera_qfissa_deduzione" />
+	<findFieldProperty name="fl_escludi_qvaria_deduzione" />
+	<findFieldProperty name="im_detrazione_personale_anag" />			
+	<findFieldProperty name="fl_accantona_add_terr" />
+	<findFieldProperty name="fl_detrazioni_fam_intero_anno" />	
+	
+</bulkInfo>

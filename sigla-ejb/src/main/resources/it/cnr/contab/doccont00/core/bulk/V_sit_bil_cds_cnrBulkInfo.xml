@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_voce"
+		property="cd_voce"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="cd_voce"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_variazioni_meno"
+		property="im_variazioni_meno"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="Variazioni-" />
+	<fieldProperty
+		name="im_stanz_iniziale"
+		property="im_stanz_iniziale"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="Stanziamento iniziale" />
+	<fieldProperty
+		name="im_residuo_iniziale"
+		property="im_residuo_iniziale"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="Residuo iniziale" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="im_accertato_impegnato"
+		property="im_accertato_impegnato"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="im_accertato_impegnato" />
+	<fieldProperty
+		name="im_accreditato"
+		property="im_accreditato"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="Totale Accreditato" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_gestione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_assestato"
+		property="im_assestato"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="Assestato" />
+	<fieldProperty
+		name="im_pagato_incassato_residuo"
+		property="im_pagato_incassato_residuo"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="im_pagato_incassato_residuo" />
+	<fieldProperty
+		name="im_pagato_incassato_competenza"
+		property="im_pagato_incassato_competenza"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="im_pagato_incassato_competenza" />
+	<fieldProperty
+		name="im_variazioni_piu"
+		property="im_variazioni_piu"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="Variazioni+" />
+	<fieldProperty
+		name="im_accertato_accreditato"
+		property="im_accertato_accreditato"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="Accertato-Accreditato" />
+	<fieldProperty
+		name="im_incassato_accreditato"
+		property="im_incassato_accreditato"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="Incassato-Accreditato" />
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="im_variazioni_meno" />
+	<formFieldProperty
+		name="im_stanz_iniziale" />
+	<formFieldProperty
+		name="im_residuo_iniziale" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="im_accertato_impegnato" />
+	<formFieldProperty
+		name="im_accreditato" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="im_assestato" />
+	<formFieldProperty
+		name="im_pagato_incassato_residuo" />
+	<formFieldProperty
+		name="im_pagato_incassato_competenza" />
+	<formFieldProperty
+		name="im_variazioni_piu" />
+
+	<columnSet
+		name="bilancioEntrate" >
+		<columnFieldProperty
+			name="cd_voce"
+			label="Cap.Entrata"/>
+		<columnFieldProperty
+			name="im_stanz_iniziale"
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="im_variazioni_piu"
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="im_variazioni_meno"
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="im_assestato"
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="im_residuo_iniziale"
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="im_accertato_impegnato"
+			label="Totale Accertato"
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="im_pagato_incassato_competenza"
+			label="Totale Incassato Competenza"
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="im_pagato_incassato_residuo" 
+			label="Totale Incassato Residuo"
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="im_accreditato"
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="im_accertato_accreditato"
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="im_incassato_accreditato"
+			columnStyle="text-align: right"/>
+	</columnSet>
+	
+	<columnSet
+		name="bilancioSpese" >
+		<columnFieldProperty
+			name="cd_voce"
+			label="Cap.Spesa"/>
+		<columnFieldProperty
+			name="im_stanz_iniziale"
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="im_variazioni_piu"
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="im_variazioni_meno"
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="im_assestato"
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="im_residuo_iniziale"
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="im_accertato_impegnato"
+			label="Totale Impegnato"
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="im_pagato_incassato_competenza"
+			label="Totale Pagato Competenza"
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="im_pagato_incassato_residuo" 
+			label="Totale Pagato Residuo"
+			columnStyle="text-align: right"/>
+	</columnSet>
+	
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="im_variazioni_meno" />
+	<findFieldProperty
+		name="im_stanz_iniziale" />
+	<findFieldProperty
+		name="im_residuo_iniziale" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="im_accertato_impegnato" />
+	<findFieldProperty
+		name="im_accreditato" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="im_assestato" />
+	<findFieldProperty
+		name="im_pagato_incassato_residuo" />
+	<findFieldProperty
+		name="im_pagato_incassato_competenza" />
+	<findFieldProperty
+		name="im_variazioni_piu" />
+
+</bulkInfo>

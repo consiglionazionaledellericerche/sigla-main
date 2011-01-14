@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="pg_fattura_origine"
+		property="riga_fattura_origine.fattura_passivaI.pg_fattura_passiva"
+		maxLength="200"
+		inputSize="50"
+		inputType="ROTEXT"
+		label="N. fattura origine"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_fattura_origine"
+		property="riga_fattura_origine.fattura_passivaI.dt_fattura_fornitore"
+		maxLength="200"
+		inputSize="50"
+		inputType="ROTEXT"
+		formatName="date_short"
+		label="Data fattura origine"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_fattura_origine"
+		property="riga_fattura_origine.fattura_passivaI.ds_fattura_passiva"
+		maxLength="200"
+		inputSize="50"
+		inputType="ROTEXT"
+		label="Descr. fattura origine"
+		caseSensitiveSearch="false" />
+
+	<formFieldProperty
+		name="pg_fattura_origine" />
+	<formFieldProperty
+		name="dt_fattura_origine" />
+	<formFieldProperty
+		name="ds_fattura_origine" />
+
+	<columnFieldProperty
+		name="pg_fattura_origine" />
+	<columnFieldProperty
+		name="dt_fattura_origine" />
+	<columnFieldProperty
+		name="ds_fattura_origine" />
+
+	<columnSet
+		name="righeNdDSet">
+		<columnFieldProperty
+			name="cd_bene_servizio"
+			/>
+		<columnFieldProperty
+			name="ds_riga_fattura"
+			/>
+		<columnFieldProperty
+			name="pg_fattura_origine"
+			/>
+		<columnFieldProperty
+			name="dt_fattura_origine"
+			/>
+		<columnFieldProperty
+			name="ds_fattura_origine"
+			/>
+		<columnFieldProperty
+			name="quantita"
+			/>
+		<columnFieldProperty
+			name="prezzo_unitario"
+			/>
+		<columnFieldProperty
+			name="im_imponibile"
+			/>
+		<columnFieldProperty
+			name="im_iva"
+			/>
+		<columnFieldProperty
+			name="stato_cofi"
+			/>
+		<columnFieldProperty
+			name="ti_associato_manrev"
+			/>
+		<columnFieldProperty
+			name="cd_fornitore" />
+		<columnFieldProperty
+			name="modalita_pagamento" />			
+	</columnSet>
+</bulkInfo>

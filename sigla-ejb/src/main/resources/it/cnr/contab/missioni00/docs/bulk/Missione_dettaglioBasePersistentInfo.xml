@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBase"
+	keyClassName="it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioKey"
+	homeClassName="it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioHome" >
+	<defaultColumnMap
+		tableName="MISSIONE_DETTAGLIO" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CHILOMETRI"
+			propertyName="chilometri"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="LOCALITA_SPOSTAMENTO"
+			propertyName="localita_spostamento"
+			sqlTypeName="VARCHAR"
+			columnSize="200" />
+		<columnMapping
+			columnName="DS_NO_GIUSTIFICATIVO"
+			propertyName="ds_no_giustificativo"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="IM_SPESA_MAX_DIVISA"
+			propertyName="im_spesa_max_divisa"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_CD_TI_SPESA"
+			propertyName="ti_cd_ti_spesa"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="TI_SPESA_DIARIA"
+			propertyName="ti_spesa_diaria"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_SPESA_DIVISA"
+			propertyName="im_spesa_divisa"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_SPESA_ANTICIPATA"
+			propertyName="fl_spesa_anticipata"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="ID_GIUSTIFICATIVO"
+			propertyName="id_giustificativo"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="DS_GIUSTIFICATIVO"
+			propertyName="ds_giustificativo"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="DS_SPESA"
+			propertyName="ds_spesa"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="IM_MAGGIORAZIONE"
+			propertyName="im_maggiorazione"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_SPESA_EURO"
+			propertyName="im_spesa_euro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_DIARIA_NETTO"
+			propertyName="im_diaria_netto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_DIARIA_LORDA"
+			propertyName="im_diaria_lorda"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_BASE_MAGGIORAZIONE"
+			propertyName="im_base_maggiorazione"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_SPESA_MAX"
+			propertyName="im_spesa_max"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_TOTALE_SPESA"
+			propertyName="im_totale_spesa"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CAMBIO_SPESA"
+			propertyName="cambio_spesa"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="4" />
+		<columnMapping
+			columnName="INDENNITA_CHILOMETRICA"
+			propertyName="indennita_chilometrica"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_MAGGIORAZIONE_EURO"
+			propertyName="im_maggiorazione_euro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_TI_SPESA"
+			propertyName="ds_ti_spesa"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="TI_AUTO"
+			propertyName="ti_auto"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="PERCENTUALE_MAGGIORAZIONE"
+			propertyName="percentuale_maggiorazione"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_DIARIA_MANUALE"
+			propertyName="fl_diaria_manuale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_TI_SPESA"
+			propertyName="cd_ti_spesa"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="CD_DIVISA_SPESA"
+			propertyName="cd_divisa_spesa"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="IM_QUOTA_ESENTE"
+			propertyName="im_quota_esente"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TI_PASTO"
+			propertyName="cd_ti_pasto"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="chilometri" />
+	<persistentProperty
+		name="localita_spostamento" />
+	<persistentProperty
+		name="ds_no_giustificativo" />
+	<persistentProperty
+		name="im_spesa_max_divisa" />
+	<persistentProperty
+		name="ti_cd_ti_spesa" />
+	<persistentProperty
+		name="ti_spesa_diaria" />
+	<persistentProperty
+		name="im_spesa_divisa" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="fl_spesa_anticipata" />
+	<persistentProperty
+		name="id_giustificativo" />
+	<persistentProperty
+		name="ds_giustificativo" />
+	<persistentProperty
+		name="ds_spesa" />
+	<persistentProperty
+		name="im_maggiorazione" />
+	<persistentProperty
+		name="im_spesa_euro" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="im_diaria_netto" />
+	<persistentProperty
+		name="im_base_maggiorazione" />
+	<persistentProperty
+		name="im_diaria_lorda" />
+	<persistentProperty
+		name="im_spesa_max" />
+	<persistentProperty
+		name="im_totale_spesa" />
+	<persistentProperty
+		name="cambio_spesa" />
+	<persistentProperty
+		name="indennita_chilometrica" />
+	<persistentProperty
+		name="im_maggiorazione_euro" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="ds_ti_spesa" />
+	<persistentProperty
+		name="ti_auto" />
+	<persistentProperty
+		name="percentuale_maggiorazione" />
+	<persistentProperty
+		name="fl_diaria_manuale" />
+	<persistentProperty
+		name="cd_ti_spesa" />
+	<persistentProperty
+		name="cd_divisa_spesa" />
+	<persistentProperty
+		name="cd_ti_pasto" />
+	<persistentProperty
+		name="im_quota_esente" />
+</SQLPersistentInfo>

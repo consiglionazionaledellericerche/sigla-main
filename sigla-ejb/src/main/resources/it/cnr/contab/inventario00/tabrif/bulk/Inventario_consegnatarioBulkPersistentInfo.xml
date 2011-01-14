@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.tabrif.bulk.Inventario_consegnatarioBulk"
+	homeClassName="it.cnr.contab.inventario00.tabrif.bulk.Inventario_consegnatarioHome" >
+	<defaultColumnMap tableName="INVENTARIO_CONSEGNATARIO" >
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="inventario.pg_inventario" />
+		<columnMapping
+			columnName="CD_CONSEGNATARIO"
+			propertyName="consegnatario.cd_terzo" />
+		<columnMapping
+			columnName="CD_DELEGATO"
+			propertyName="delegato.cd_terzo" />
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="inventario"
+		partOfOid="true" />
+	<persistentProperty
+		name="consegnatario" />
+	<persistentProperty
+		name="delegato" />
+
+</SQLPersistentInfo>

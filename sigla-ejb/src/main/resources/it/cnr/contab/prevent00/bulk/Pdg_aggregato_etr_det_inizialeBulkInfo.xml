@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="im_rb_rse_mod"
+		property="etr_modificato.im_rb_rse"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Ricavi senza entrate" />
+	<fieldProperty
+		name="im_rg_a3_entrate_mod"
+		property="etr_modificato.im_rg_a3_entrate"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Entrate" />
+	<fieldProperty
+		name="im_re_a2_entrate_mod"
+		property="etr_modificato.im_re_a2_entrate"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Entrate" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cdr.cd_centro_responsabilita"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="centro di responsabilita di Primo Livello" />
+	<fieldProperty
+		name="im_rd_a2_ricavi_mod"
+		property="etr_modificato.im_rd_a2_ricavi"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Ricavi" />
+	<fieldProperty
+		name="im_ra_rce_mod"
+		property="etr_modificato.im_ra_rce"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Ricavi con entrate" />
+	<fieldProperty
+		name="im_rf_a3_ricavi_mod"
+		property="etr_modificato.im_rf_a3_ricavi"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Ricavi" />
+	<fieldProperty
+		name="ti_gestione"
+		property="elemento_voce.ti_gestione"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_gestione" />
+	<fieldProperty
+		name="im_rc_esr_mod"
+		property="etr_modificato.im_rc_esr"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Entrate senza ricavi" />
+
+	<formFieldProperty
+		name="im_rg_a3_entrate_mod" />
+	<formFieldProperty
+		name="im_rf_a3_ricavi_mod" />
+	<formFieldProperty
+		name="im_re_a2_entrate_mod" />		
+	<formFieldProperty
+		name="im_rd_a2_ricavi_mod" /> 
+	<formFieldProperty
+		name="im_rc_esr_mod" />		
+	<formFieldProperty
+		name="im_rb_rse_mod" />		
+	<formFieldProperty
+		name="im_ra_rce_mod" />		
+	<formFieldProperty
+		name="im_rg_a3_entrate"
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rf_a3_ricavi"
+		enabledOnEdit="false"  />
+	<formFieldProperty
+		name="im_re_a2_entrate"
+		enabledOnEdit="false"  />		
+	<formFieldProperty
+		name="im_rd_a2_ricavi"
+		enabledOnEdit="false"  /> 
+	<formFieldProperty
+		name="im_rc_esr"
+		enabledOnEdit="false"  />		
+	<formFieldProperty
+		name="im_rb_rse"
+		enabledOnEdit="false"  />		
+	<formFieldProperty
+		name="im_ra_rce"
+		enabledOnEdit="false"  />		
+
+
+</bulkInfo>

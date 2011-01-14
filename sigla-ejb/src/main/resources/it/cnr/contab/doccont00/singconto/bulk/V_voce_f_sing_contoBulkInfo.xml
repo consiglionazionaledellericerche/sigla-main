@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="find_elemento_voce"
+		property="elemento_voce"
+		inputType="SEARCHTOOL"
+		label="Voce del piano"
+		enabledOnSearch="true"
+		completeOnSave="true" />
+	<fieldProperty
+		name="find_voce_f"
+		property="voce_f"
+		inputType="SEARCHTOOL"
+		label="Capitolo"
+		enabledOnSearch="true"
+		completeOnSave="true" />
+	<fieldProperty
+		name="find_cds"
+		property="cds"
+		inputType="SEARCHTOOL"
+		label="Cds"
+		enabledOnSearch="true"
+		completeOnSave="true" />
+	<fieldProperty
+		name="find_unita_organizzativa"
+		property="unita_organizzativa"
+		inputType="SEARCHTOOL"
+		label="UO"
+		enabledOnSearch="true"
+		completeOnSave="true" />
+	<fieldProperty
+		name="find_area_ricerca"
+		property="area_ricerca"
+		inputType="SEARCHTOOL"
+		label="Area di ricerca"
+		enabledOnSearch="true"
+		completeOnSave="true" />
+	<fieldProperty
+		name="find_natura"
+		property="natura"
+		inputType="SEARCHTOOL"
+		label="Natura"
+		enabledOnSearch="true"
+		completeOnSave="true" />
+	<fieldProperty
+		name="find_funzione"
+		property="funzione"
+		inputType="SEARCHTOOL"
+		label="Funzione"
+		enabledOnSearch="true"
+		completeOnSave="true" />
+	<fieldProperty
+		name="fl_ente"
+		property="fl_ente"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"		
+		label="Ente" />
+	
+	<fieldProperty
+		name="fl_voce_sac"
+		property="fl_voce_sac"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		label="Solo voce sac" />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Appartenenza"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_voce"
+		property="voce_f.ds_voce"
+		maxLength="300"
+		inputSize="25"
+		inputType="ROTEXT"
+		label="Descr. capitolo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Cds"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="unita_organizzativa.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="10"
+		inputType="TEXT"
+		readonlyProperty="ROUnita_organizzativa"
+		label="UO"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_unita_organizzativa"
+		property="unita_organizzativa.ds_unita_organizzativa"
+		maxLength="300"
+		inputSize="25"
+		inputType="ROTEXT"
+		label="Descr. UO"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="elemento_voce.cd_elemento_voce"
+		label="Voce del piano"
+		readonlyProperty="ROElemento_voce"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="10"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		enabledOnSearch="true"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_funzione"
+		property="funzione.cd_funzione"
+		readonlyProperty="ROFunzione"
+		maxLength="2"
+		inputSize="2"
+		inputType="TEXT"
+		label="Funzione"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_parte"
+		property="cd_parte"
+		maxLength="50"
+		inputSize="25"
+		inputType="TEXT"
+		label="Parte"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_categoria"
+		property="cd_categoria"
+		maxLength="50"
+		inputSize="25"
+		inputType="TEXT"
+		label="Categoria"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_proprio_voce"
+		property="area_ricerca.cd_unita_organizzativa"
+		readonlyProperty="ROArea_ricerca"
+		maxLength="50"
+		inputSize="30"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		label="Area di ricerca"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_partita_giro"
+		property="fl_partita_giro"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		label="Solo partita giro" />
+	<fieldProperty
+		name="ti_competenza_residuo"
+		property="ti_competenza_residuo"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		label="Competenza/Residuo"
+		enabledOnSearch="true"
+		keysProperty="ti_competenza_residuoKeys"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="elemento_voce.ds_elemento_voce"
+		maxLength="100"
+		inputSize="25"
+		inputType="ROTEXT"
+		label="Descr. voce del piano"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_natura"
+		property="natura.cd_natura"
+		readonlyProperty="RONatura"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Natura"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_cds_proprio"
+		property="cds.cd_unita_organizzativa"
+		readonlyProperty="ROCds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Cds"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		nullable="false"
+		keysProperty="ti_gestioneKeys"
+		label="Entrata/Spesa"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_voce"
+		property="voce_f.cd_voce"
+		readonlyProperty="ROVoce_f"
+		maxLength="50"
+		inputSize="10"
+		inputType="TEXT"
+		label="Capitolo"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+
+	<formFieldProperty
+		name="fl_ente" />	
+	<formFieldProperty
+		name="fl_voce_sac" />
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="ds_voce" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="esercizio" />
+	
+	<formFieldProperty
+		name="cd_parte" />
+	<formFieldProperty
+		name="cd_categoria" />
+	<formFieldProperty
+		name="cd_proprio_voce" />
+	<formFieldProperty
+		name="fl_partita_giro" />
+	<formFieldProperty
+		name="ti_competenza_residuo" />
+	<formFieldProperty
+		name="ds_elemento_voce" />
+	<formFieldProperty
+		name="cd_natura" />
+	<formFieldProperty
+		name="cd_cds_proprio" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_voce" />
+	<formFieldProperty
+		name="find_elemento_voce" />
+	<formFieldProperty
+		name="find_voce_f" />
+	<formFieldProperty
+		name="find_cds" />
+	<formFieldProperty
+		name="find_natura" />
+	
+	<formFieldProperty
+		name="find_area_ricerca" />
+	<formFieldProperty
+		name="find_unita_organizzativa" />
+	<formFieldProperty
+		name="ds_unita_organizzativa" />
+		
+	<columnFieldProperty
+		name="fl_voce_sac" />
+	<columnFieldProperty
+		name="ti_appartenenza" />
+	<columnFieldProperty
+		name="ds_voce" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="esercizio" />
+	
+	<columnFieldProperty
+		name="cd_parte" />
+	<columnFieldProperty
+		name="cd_categoria" />
+	<columnFieldProperty
+		name="cd_proprio_voce" />
+	<columnFieldProperty
+		name="fl_partita_giro" />
+	<columnFieldProperty
+		name="ti_competenza_residuo" />
+	<columnFieldProperty
+		name="ds_elemento_voce" />
+	<columnFieldProperty
+		name="cd_natura" />
+	<columnFieldProperty
+		name="cd_cds_proprio" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_voce" />
+
+	<findFieldProperty
+		name="fl_voce_sac" />
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="ds_voce" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="esercizio" />
+	
+	<findFieldProperty
+		name="cd_parte" />
+	<findFieldProperty
+		name="cd_categoria" />
+	<findFieldProperty
+		name="cd_proprio_voce" />
+	<findFieldProperty
+		name="fl_partita_giro" />
+	<findFieldProperty
+		name="ti_competenza_residuo" />
+	<findFieldProperty
+		name="ds_elemento_voce" />
+	<findFieldProperty
+		name="cd_natura" />
+	<findFieldProperty
+		name="cd_cds_proprio" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_voce" />
+
+</bulkInfo>

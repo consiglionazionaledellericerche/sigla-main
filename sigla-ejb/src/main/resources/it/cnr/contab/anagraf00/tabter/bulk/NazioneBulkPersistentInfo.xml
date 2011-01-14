@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk"
+	keyClassName="it.cnr.contab.anagraf00.tabter.bulk.NazioneKey"
+	homeClassName="it.cnr.contab.anagraf00.tabter.bulk.NazioneHome" >
+
+	<defaultColumnMap
+		tableName="NAZIONE" >
+
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="divisa.cd_divisa" />
+		<columnMapping
+			columnName="CD_DIVISA_PER_MISSIONE"
+			propertyName="divisaPerMissione.cd_divisa" />
+
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="divisa" />
+	<persistentProperty
+		name="divisaPerMissione" />
+</SQLPersistentInfo>

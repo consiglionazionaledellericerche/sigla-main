@@ -1,0 +1,110 @@
+<action-mappings>
+
+	<action
+		path="/StampaPartitarioCompensiAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+
+	<businessProcess name="StampaPartitarioCompensiBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+	    <forward name="default" path="/compensi00/stampa_partitario_compensi.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.compensi00.docs.bulk.StampaPartitarioCompensiVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaPartitarioCompensiAction" />
+	    <init-param name="componentSessionName" value="CNRCOMPENSI00_EJB_CompensoComponentSession" />
+	    <init-param name="reportName" value="/docamm/docamm/partitario_compensi.jasper" />
+	</businessProcess>
+
+	<action
+		path="/StampaRiepilogoCompensiAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+
+	<businessProcess name="StampaRiepilogoCompensiBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+	    <forward name="default" path="/compensi00/stampa_riepilogo_compensi.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.compensi00.docs.bulk.StampaRiepilogoCompensiVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaRiepilogoCompensiAction" />
+	    <init-param name="componentSessionName" value="CNRCOMPENSI00_EJB_CompensoComponentSession" />
+	    <init-param name="reportName" value="/docamm/docamm/vpg_partitario_compensi.jasper" />
+	</businessProcess>
+
+	<action
+		path="/StampaCertificazioneRitenutaPrevidenzialeAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+
+	<businessProcess name="StampaCertificazioneRitenutaPrevidenzialeBP" className="it.cnr.contab.compensi00.bp.StampaCertificazioneBP">
+	    <forward name="default" path="/compensi00/stampa_certificazione.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.compensi00.docs.bulk.StampaCertificazioneVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaCertificazioneRitenutaPrevidenzialeAction" />
+	    <init-param name="componentSessionName" value="CNRCOMPENSI00_EJB_CompensoComponentSession" />
+	    <init-param name="reportName" value="/docamm/docamm/certificazione.jasper" />
+	    <init-param name="TiCertif" value="PR" />
+	</businessProcess>
+
+	<action
+		path="/StampaCertificazioneRitenutaAccontoAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+
+	<businessProcess name="StampaCertificazioneRitenutaAccontoBP" className="it.cnr.contab.compensi00.bp.StampaCertificazioneBP">
+	    <forward name="default" path="/compensi00/stampa_certificazione.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.compensi00.docs.bulk.StampaCertificazioneVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaCertificazioneRitenutaAccontoAction" />
+	    <init-param name="componentSessionName" value="CNRCOMPENSI00_EJB_CompensoComponentSession" />
+	    <init-param name="reportName" value="/docamm/docamm/certificazione.jasper" />
+	    <init-param name="TiCertif" value="RA" />
+	</businessProcess>
+
+	<action
+		path="/StampaCertificazioneTitoloImpostaAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+
+	<businessProcess name="StampaCertificazioneTitoloImpostaBP" className="it.cnr.contab.compensi00.bp.StampaCertificazioneBP">
+	    <forward name="default" path="/compensi00/stampa_certificazione.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.compensi00.docs.bulk.StampaCertificazioneVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaCertificazioneTitoloImpostaAction" />
+	    <init-param name="componentSessionName" value="CNRCOMPENSI00_EJB_CompensoComponentSession" />
+	    <init-param name="reportName" value="/docamm/docamm/certificazione.jasper" />
+	    <init-param name="TiCertif" value="TI" />
+	</businessProcess>
+
+	<action
+		path="/StampaCertificazioneTitoloImpostaCoCoCoAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+
+	<businessProcess name="StampaCertificazioneTitoloImpostaCoCoCoBP" className="it.cnr.contab.compensi00.bp.StampaCertificazioneBP">
+	    <forward name="default" path="/compensi00/stampa_certificazione.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.compensi00.docs.bulk.StampaCertificazioneVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaCertificazioneTitoloImpostaCoCoCoAction" />
+	    <init-param name="componentSessionName" value="CNRCOMPENSI00_EJB_CompensoComponentSession" />
+	    <init-param name="reportName" value="/docamm/docamm/certificazione.jasper" />
+	    <init-param name="TiCertif" value="CC" />
+	</businessProcess>
+ 
+	<action
+		path="/StampaCertificazioneAction" actionClass="it.cnr.contab.compensi00.actions.StampaCertificazioneAction">
+	</action>
+
+	<businessProcess name="StampaCertificazioneBP" className="it.cnr.contab.compensi00.bp.StampaCertificazioneBP">
+	    <forward name="default" path="/compensi00/stampa_certificazione.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.compensi00.docs.bulk.StampaCertificazioneVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaCertificazioneAction" />
+	    <init-param name="componentSessionName" value="CNRCOMPENSI00_EJB_CompensoComponentSession" />
+	    <init-param name="reportName" value="/docamm/docamm/certificazione.jasper" />
+	</businessProcess> 
+	
+	<action
+		path="/StampaCompensiAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+
+	<businessProcess name="StampaCompensiBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+	    <forward name="default" path="/compensi00/stampa_compensi.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.compensi00.docs.bulk.StampaCompensiBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaCompensiAction" />
+	    <init-param name="componentSessionName" value="CNRCOMPENSI00_EJB_CompensoComponentSession" />
+	    <init-param name="reportName" value="/docamm/docamm/compenso.jasper" />
+	</businessProcess>
+</action-mappings>

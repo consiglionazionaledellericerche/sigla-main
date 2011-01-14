@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="progressivo_riga_fatt_att"
+		property="progressivo_riga_fatt_att"
+		inputType="TEXT"
+		label="progressivo_riga_fatt_att" />
+	<fieldProperty
+		name="cd_cds_fatt_att"
+		property="cd_cds_fatt_att"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds_fatt_att"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_fattura_passiva"
+		property="pg_fattura_passiva"
+		inputType="TEXT"
+		label="pg_fattura_passiva" />
+	<fieldProperty
+		name="esercizio_fatt_pass"
+		property="esercizio_fatt_pass"
+		inputType="TEXT"
+		label="esercizio_fatt_pass" />
+	<fieldProperty
+		name="progressivo_riga_fatt_pass"
+		property="progressivo_riga_fatt_pass"
+		inputType="TEXT"
+		label="progressivo_riga_fatt_pass" />
+	<fieldProperty
+		name="pg_fattura_attiva"
+		property="pg_fattura_attiva"
+		inputType="TEXT"
+		label="pg_fattura_attiva" />
+	<fieldProperty
+		name="nr_inventario"
+		property="nr_inventario"
+		inputType="TEXT"
+		label="nr_inventario" />
+	<fieldProperty
+		name="cd_uo_fatt_att"
+		property="cd_uo_fatt_att"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_uo_fatt_att"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_uo_fatt_pass"
+		property="cd_uo_fatt_pass"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_uo_fatt_pass"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_inventario"
+		property="pg_inventario"
+		inputType="TEXT"
+		label="pg_inventario" />
+	<fieldProperty
+		name="cd_cds_fatt_pass"
+		property="cd_cds_fatt_pass"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds_fatt_pass"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio_fatt_att"
+		property="esercizio_fatt_att"
+		inputType="TEXT"
+		label="esercizio_fatt_att" />
+	<fieldProperty
+		name="progressivo"
+		property="progressivo"
+		inputType="TEXT"
+		label="progressivo" />
+	<fieldProperty
+		name="ti_documento"
+		property="ti_documento"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_buono_c_s"
+		property="pg_buono_c_s"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero buono" />	
+	<fieldProperty
+		name="pg_riga"
+		property="pg_riga"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo inserimento" />	
+/************* Proprietà Bene ***********************/
+	
+	<fieldProperty
+		name="aumento_valore"
+		property="valore_unitario"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Aumento Valore" />
+	
+	<fieldProperty
+		name="progressivo_riga_doc_gen"
+		property="progressivo_riga_doc_gen"
+		inputType="TEXT"
+		label="progressivo_riga_doc_gen" />
+	<fieldProperty
+		name="cd_cds_doc_gen"
+		property="cd_cds_doc_gen"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds_doc_gen"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_documento_generico"
+		property="pg_documento_generico"
+		inputType="TEXT"
+		label="pg_documento_generico" />
+	<fieldProperty
+		name="esercizio_doc_gen"
+		property="esercizio_doc_gen"
+		inputType="TEXT"
+		label="esercizio_doc_gen" />
+	<fieldProperty
+		name="cd_tipo_documento_amm"
+		property="cd_tipo_documento_amm"
+		inputType="TEXT"
+		label="cd_tipo_documento_amm" />	
+	<formFieldProperty	
+		name="aumento_valore" />
+/*******************************************************/
+
+
+	<formFieldProperty
+		name="progressivo_riga_fatt_att" />
+	<formFieldProperty
+		name="cd_cds_fatt_att" />
+	<formFieldProperty
+		name="pg_fattura_passiva" />
+	<formFieldProperty
+		name="esercizio_fatt_pass" />
+	<formFieldProperty
+		name="progressivo_riga_fatt_pass" />
+	<formFieldProperty
+		name="pg_fattura_attiva" />
+	<formFieldProperty
+		name="nr_inventario" />
+	<formFieldProperty
+		name="cd_uo_fatt_att" />
+	<formFieldProperty
+		name="cd_uo_fatt_pass" />
+	<formFieldProperty
+		name="pg_inventario" />
+	<formFieldProperty
+		name="cd_cds_fatt_pass" />
+	<formFieldProperty
+		name="esercizio_fatt_att" />
+	<formFieldProperty
+		name="progressivo" />
+	<formFieldProperty
+		name="ti_documento" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_buono_c_s" />
+	<formFieldProperty
+		name="pg_riga" />	
+	<formFieldProperty
+		name="cd_cds_doc_gen" />
+	<formFieldProperty
+		name="cd_uo_doc_gen" />
+	<formFieldProperty
+		name="esercizio_doc_gen" />
+	<formFieldProperty
+		name="cd_tipo_documento_amm" />	
+	<formFieldProperty
+		name="pg_documento_generico" />
+	<formFieldProperty
+		name="progressivo_riga_doc_gen" />	
+	<columnFieldProperty
+		name="progressivo_riga_fatt_att" />
+	<columnFieldProperty
+		name="cd_cds_fatt_att" />
+	<columnFieldProperty
+		name="pg_fattura_passiva" />
+	<columnFieldProperty
+		name="esercizio_fatt_pass" />
+	<columnFieldProperty
+		name="progressivo_riga_fatt_pass" />
+	<columnFieldProperty
+		name="pg_fattura_attiva" />
+	<columnFieldProperty
+		name="nr_inventario" />
+	<columnFieldProperty
+		name="cd_uo_fatt_att" />
+	<columnFieldProperty
+		name="cd_uo_fatt_pass" />
+	<columnFieldProperty
+		name="pg_inventario" />
+	<columnFieldProperty
+		name="cd_cds_fatt_pass" />
+	<columnFieldProperty
+		name="esercizio_fatt_att" />
+	<columnFieldProperty
+		name="progressivo" />
+	<columnFieldProperty
+		name="ti_documento" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_buono_c_s" />	
+	<columnFieldProperty
+		name="pg_riga" />	
+	<columnFieldProperty
+		name="cd_cds_doc_gen" />
+	<columnFieldProperty
+		name="cd_uo_doc_gen" />
+	<columnFieldProperty
+		name="esercizio_doc_gen" />
+	<columnFieldProperty
+		name="cd_tipo_documento_amm" />	
+	<columnFieldProperty
+		name="pg_documento_generico" />
+	<columnFieldProperty
+		name="progressivo_riga_doc_gen" />		
+	<findFieldProperty
+		name="progressivo_riga_fatt_att" />
+	<findFieldProperty
+		name="cd_cds_fatt_att" />
+	<findFieldProperty
+		name="pg_fattura_passiva" />
+	<findFieldProperty
+		name="esercizio_fatt_pass" />
+	<findFieldProperty
+		name="progressivo_riga_fatt_pass" />
+	<findFieldProperty
+		name="pg_fattura_attiva" />
+	<findFieldProperty
+		name="nr_inventario" />
+	<findFieldProperty
+		name="cd_uo_fatt_att" />
+	<findFieldProperty
+		name="cd_uo_fatt_pass" />
+	<findFieldProperty
+		name="pg_inventario" />
+	<findFieldProperty
+		name="cd_cds_fatt_pass" />
+	<findFieldProperty
+		name="esercizio_fatt_att" />
+	<findFieldProperty
+		name="progressivo" />
+	<findFieldProperty
+		name="ti_documento" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_buono_c_s" />
+	<findFieldProperty
+		name="pg_riga" />	
+	<findFieldProperty
+		name="cd_cds_doc_gen" />
+	<findFieldProperty
+		name="cd_uo_doc_gen" />
+	<findFieldProperty
+		name="esercizio_doc_gen" />
+	<findFieldProperty
+		name="cd_tipo_documento_amm" />	
+	<findFieldProperty
+		name="pg_documento_generico" />
+	<findFieldProperty
+		name="progressivo_riga_doc_gen" />		
+</bulkInfo>

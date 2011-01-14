@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.coepcoan00.core.bulk.Saldo_coanKey" >
+	<defaultColumnMap
+		tableName="SALDO_COAN" >
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_VOCE_EP"
+			propertyName="cd_voce_ep"
+			sqlTypeName="VARCHAR"
+			columnSize="45"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TI_ISTITUZ_COMMERC"
+			propertyName="ti_istituz_commerc"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />					
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_centro_responsabilita"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_unita_organizzativa"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_voce_ep"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_linea_attivita"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_cds"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_istituz_commerc"
+		partOfOid="true" />						
+</SQLPersistentInfo>

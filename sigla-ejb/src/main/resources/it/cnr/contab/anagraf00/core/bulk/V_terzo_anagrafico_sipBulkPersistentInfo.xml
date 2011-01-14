@@ -1,0 +1,57 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.V_terzo_anagrafico_sipBulk"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.V_terzo_anagrafico_sipHome" >
+	<defaultColumnMap
+		tableName="V_TERZO_ANAGRAFICO_SIP" >
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="NUMERIC"
+			columnSize="8" />
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="cd_anag"
+			sqlTypeName="NUMERIC"
+			columnSize="8" />
+		<columnMapping
+			columnName="DENOMINAZIONE_SEDE"
+			propertyName="denominazione_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="200" />
+		<columnMapping
+			columnName="TI_ENTITA"
+			propertyName="ti_entita"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CODICE_FISCALE_PARIVA"
+			propertyName="codice_fiscale_pariva"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="cd_anag" />
+	<persistentProperty
+		name="denominazione_sede" />
+	<persistentProperty
+		name="ti_entita" />
+	<persistentProperty
+		name="codice_fiscale_pariva" />
+	<persistentProperty
+		name="cognome" />
+	<persistentProperty
+		name="nome" />
+</SQLPersistentInfo>

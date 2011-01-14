@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo>
+	<fieldProperty
+		name="pg_repertorio"
+		property="pg_repertorio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo identificativo della richiesta di attivazione contratto" />
+	<fieldProperty
+		name="tipo_variazione"
+		property="tipo_variazione"
+		keysProperty="tipo_variazioneKeys"
+		inputType="SELECT"
+		inputSize="50"
+		maxLength="50"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		nullable="false"
+		command="doOnTipoVariazioneChange"
+		label="Tipologia della variazione" />
+	<fieldProperty
+		name="tipo_variazioneMinima"
+		property="tipo_variazione"
+		keysProperty="tipo_variazioneMinimaKeys"
+		inputType="SELECT"
+		inputSize="50"
+		maxLength="50"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		nullable="false"
+		command="doOnTipoVariazioneChange"
+		label="Tipologia della variazione" />
+	<fieldProperty
+		name="tipo_variazioneForEnte"
+		property="tipo_variazione"
+		keysProperty="tipo_variazioneForEnteKeys"
+		inputType="SELECT"
+		inputSize="50"
+		maxLength="50"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		nullable="false"
+		command="doOnTipoVariazioneChange"
+		label="Tipologia della variazione" />
+	<fieldProperty
+		name="dt_variazione"
+		property="dt_variazione"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		nullable="true"
+		command="doOnDtVariazioneChange"
+		label="Data di stipula" />
+	<fieldProperty
+		name="ds_variazione"
+		property="ds_variazione"
+		inputType="TEXTAREA"
+		inputSize="2000"
+		maxLength="2000"
+		cols="80"
+		rows="3"
+		nullable="false"
+		caseSensitiveSearch="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="importo_lordo"
+		property="importo_lordo"
+		readonlyProperty="ROImportoLordo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		command="doOnImportoLordoVariazioneChange"
+		label="Lordo Percipiente" />
+	<fieldProperty
+		name="importo_complessivo"
+		property="importo_complessivo"
+		readonlyProperty="ROImportoComplessivo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		command="doOnImportoComplessivoVariazioneChange"
+		label="Spesa complessiva presunta calcolata" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		readonlyProperty="RODataFineValidita"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnSearch="true"
+		command="doOnDtFineValiditaVariazioneChange"
+		label="Data di fine" />
+
+	<formFieldProperty
+		name="pg_repertorio" />
+	<formFieldProperty
+		name="tipo_variazione" 
+		label="Tipologia" />
+	<formFieldProperty
+		name="tipo_variazioneMinima" 
+		label="Tipologia" />
+	<formFieldProperty
+		name="tipo_variazioneForEnte" 
+		label="Tipologia" />
+	<formFieldProperty
+		name="dt_variazione"
+		label="Data di stipula" />
+	<formFieldProperty 
+		name="ds_variazione"/>
+	<formFieldProperty
+		name="importo_lordo" 
+		label="Variazione&lt;BR&gt;Lordo Percipiente"/>
+	<formFieldProperty
+		name="importo_complessivo" 
+		label="Variazione&lt;BR&gt;Spesa complessiva&lt;BR&gt;presunta calcolata" />
+	<formFieldProperty
+		name="dt_fine_validita"
+		label="Nuova&lt;BR&gt;Data di fine&lt;BR&gt;Incarico" />
+
+	<findFieldProperty
+		name="progressivo_riga"
+		label="Nr. Variazione" />
+	<findFieldProperty
+		name="dt_variazione"  
+	 	label="Data" /> 
+	<findFieldProperty
+		name="tipo_variazione" 
+	 	label="Tipologia" />
+	<findFieldProperty
+		name="importo_lordo" />
+	<findFieldProperty
+		name="importo_complessivo" />
+	<findFieldProperty
+		name="dt_fine_validita" />
+	<findFieldProperty
+		name="nome_file" />
+	<findFieldProperty
+		name="stato" 
+		label="Stato"/>
+
+	<columnSet
+		name="variazioni">
+		<columnFieldProperty
+			name="progressivo_riga"
+			label="Nr. Variazione"/>
+		<columnFieldProperty
+			name="dt_variazione"  
+	 		label="Data" />
+		<columnFieldProperty
+			name="tipo_variazioneForEnte" 
+			keysProperty="tipo_variazioneForEnteKeys"
+	 		label="Tipologia" />
+		<columnFieldProperty
+			name="importo_lordo" 
+			headerLabel="Variazione Dati Incarico" 
+			label="Lordo Percipiente"/>
+		<columnFieldProperty
+			name="importo_complessivo" 
+			headerLabel="Variazione Dati Incarico" />
+		<columnFieldProperty
+			name="dt_fine_validita" 
+			headerLabel="Variazione Dati Incarico" />
+		<columnFieldProperty
+			name="nome_file"
+	 		label="File archiviato" />
+		<columnFieldProperty
+			name="stato" 
+			label="Stato" />
+	</columnSet>
+</bulkInfo>

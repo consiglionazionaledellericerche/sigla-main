@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="quote"
+		property="quote"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Quote" />
+	<fieldProperty
+		name="categoria"
+		property="categoria"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Categoria" />
+	<fieldProperty
+		name="ds_categoria"
+		property="ds_categoria"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Desc. Categoria" />
+	<fieldProperty
+		name="cdr"
+		property="cdr"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cdr" />
+	<fieldProperty
+		name="ds_cdr"
+		property="ds_cdr"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Desc.Cdr" />
+	<fieldProperty
+		name="perc_cdr"
+		property="perc_cdr"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Perc.Cdr" />
+	<fieldProperty
+		name="gae"
+		property="gae"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Gae" />
+	<fieldProperty
+		name="ds_gae"
+		property="ds_gae"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Desc.Gae" />
+	<fieldProperty
+		name="perc_gae"
+		property="perc_gae"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Perc.Gae" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="quote" />
+	<formFieldProperty
+		name="categoria" />
+	<formFieldProperty
+		name="ds_categoria" />
+	<formFieldProperty
+		name="cdr" />
+	<formFieldProperty
+		name="ds_cdr" />
+	<formFieldProperty
+		name="perc_cdr" />
+	<formFieldProperty
+		name="gae" />
+	<formFieldProperty
+		name="ds_gae" />
+	<formFieldProperty
+		name="perc_gae" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="quote" />
+	<findFieldProperty
+		name="categoria" />
+	<findFieldProperty
+		name="ds_categoria" />
+	<findFieldProperty
+		name="cdr" />
+	<findFieldProperty
+		name="ds_cdr" />
+	<findFieldProperty
+		name="perc_cdr" />
+	<findFieldProperty
+		name="gae" />
+	<findFieldProperty
+		name="ds_gae" />
+	<findFieldProperty
+		name="perc_gae" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="quote" />
+	<columnFieldProperty
+		name="categoria" />
+	<columnFieldProperty
+		name="ds_categoria" />
+	<columnFieldProperty
+		name="cdr" />
+	<columnFieldProperty
+		name="ds_cdr" />
+	<columnFieldProperty
+		name="perc_cdr" />
+	<columnFieldProperty
+		name="gae" />
+	<columnFieldProperty
+		name="ds_gae" />
+	<columnFieldProperty
+		name="perc_gae" />
+</bulkInfo>

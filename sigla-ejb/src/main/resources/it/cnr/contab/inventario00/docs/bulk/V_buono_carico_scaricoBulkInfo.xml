@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_inventario"
+		property="inventario.pg_inventario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice Inventario" />
+	<fieldProperty
+		name="nr_inventario"
+		property="nr_inventario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero Inventario" />	
+	<fieldProperty
+		name="ti_documento"
+		property="ti_documento"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Flag" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_buono_c_s"
+		property="pg_buono_c_s"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero buono" />
+	<fieldProperty
+		name="ds_buono_carico_scarico"
+		property="ds_buono_carico_scarico"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Descrizione" />
+	<fieldProperty
+		name="data_registrazione"
+		property="data_registrazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data registrazione" />
+	<fieldProperty
+		name="cd_tipo_carico_scarico"
+		property="tipoMovimento.cd_tipo_carico_scarico"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Tipo movimento" />
+	<fieldProperty
+		name="provenienza"
+		property="provenienza"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Provenienza" />
+	<fieldProperty
+		name="cd_barre"
+		property="cd_barre"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		label="Codice barre" />	
+	<formFieldProperty
+		name="pg_inventario" />
+	<formFieldProperty
+		name="nr_inventario" />	
+	<formFieldProperty
+		name="ti_documento" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_buono_c_s" />
+	<formFieldProperty
+		name="ds_buono_carico_scarico" />
+	<formFieldProperty
+		name="data_registrazione" />
+	<formFieldProperty
+		name="cd_tipo_carico_scarico" />
+	<formFieldProperty
+		 name="tipoMovimento" />
+	<formFieldProperty
+		 name="inventario" />		 	
+	<formFieldProperty
+		name="provenienza" />
+	<formFieldProperty
+		name="cd_barre" />	
+	<findFieldProperty
+		name="pg_inventario" />
+	<findFieldProperty
+		name="nr_inventario" />	
+	<findFieldProperty
+		name="ti_documento" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_buono_c_s" />
+	<findFieldProperty
+		name="ds_buono_carico_scarico" />
+	<findFieldProperty
+		name="data_registrazione" />
+	<findFieldProperty
+		 name="tipoMovimento" />	
+	<findFieldProperty
+		 name="inventario" />		
+	<findFieldProperty
+		name="cd_barre" />		
+	<columnFieldProperty
+		name="pg_buono_c_s" />
+	<columnFieldProperty
+		name="ds_buono_carico_scarico" />
+	<columnFieldProperty
+		name="data_registrazione" />
+	<columnFieldProperty
+		name="nr_inventario" />
+	<columnFieldProperty
+		name="provenienza" />
+	<columnFieldProperty
+		name="cd_barre" />		
+	<columnFieldProperty
+		 name="tipoMovimento" />	
+	<columnFieldProperty
+		 name="inventario" />	
+		
+</bulkInfo>

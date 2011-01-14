@@ -1,0 +1,43 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="fl_voce_sac"
+		property="fl_voce_sac"
+		label="Riservato SAC"
+		inputType="CHECKBOX"
+		keysProperty="fl_voce_sacKeys"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		/>
+
+	<formFieldProperty
+		name="fl_voce_sac"
+		/>
+
+	<columnFieldProperty
+		name="cd_elemento_padre"
+		label="Categoria"
+		/>
+	<columnFieldProperty
+		name="cd_capoconto_fin"
+		/>
+	<columnFieldProperty
+		name="fl_voce_sac"
+		/>
+		
+	<findFieldProperty
+		name="cd_elemento_padre"
+		label="Categoria"
+		/>
+	<findFieldProperty
+		name="cd_capoconto_fin"
+		/>
+	<findFieldProperty
+		name="fl_voce_sac"
+		inputType="SELECT"
+		/>
+
+</bulkInfo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fp_detBulk"
+	homeClassName="it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fp_detHome">
+	<defaultColumnMap
+		tableName="INCARICHI_COMUNICATI_FP_DET">
+		<columnMapping
+			columnName="ESERCIZIO_REPERTORIO"
+			propertyName="incarichi_comunicati_fp.incarichi_repertorio.esercizio" />
+		<columnMapping
+			columnName="PG_REPERTORIO"
+			propertyName="incarichi_comunicati_fp.incarichi_repertorio.pg_repertorio" />
+		<columnMapping
+			columnName="TIPO_RECORD"
+			propertyName="incarichi_comunicati_fp.tipo_record" />
+		<columnMapping
+			columnName="PG_RECORD"
+			propertyName="incarichi_comunicati_fp.pg_record" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="incarichi_comunicati_fp" 
+		partOfOid="true" />
+</SQLPersistentInfo>

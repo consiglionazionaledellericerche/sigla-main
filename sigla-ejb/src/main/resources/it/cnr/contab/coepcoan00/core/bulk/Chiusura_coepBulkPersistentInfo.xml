@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.coepcoan00.core.bulk.Chiusura_coepBulk"
+	homeClassName="it.cnr.contab.coepcoan00.core.bulk.Chiusura_coepHome">
+	<defaultColumnMap
+		tableName="CHIUSURA_COEP">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="esercizio_rif.cd_cds" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio_rif.esercizio"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio_rif"
+		partOfOid="true" />
+</SQLPersistentInfo>

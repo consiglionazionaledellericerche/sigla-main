@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_cds"
+		property="ubicazione.cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CdS"	
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="ubicazione.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Unita Organizzativa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_validita_variazione"
+		property="dt_validita_variazione"
+		inputType="ROTEXT"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"
+		label="dt_validita_variazione" />
+	<fieldProperty
+		name="dt_acquisizione"
+		property="dt_acquisizione"
+		inputType="ROTEXT"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"/>	
+	<fieldProperty
+		name="ds_bene"
+		property="ds_bene"
+		maxLength="1000"
+		inputSize="1000"
+		inputType="TEXTAREA"
+		cols="75"
+		rows="4"
+		nullable = "false"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	
+	<fieldProperty
+		name="valore_iniziale"
+		property="valore_iniziale"
+		inputType="TEXT"
+		maxLength="20"
+		nullable = "false"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Valore Iniziale" />
+	<fieldProperty
+		name="collocazione"
+		property="collocazione"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Collocazione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="nr_inventario"
+		property="nr_inventario"
+		inputType="TEXT"
+		label="Codice Bene" 
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="codiceCompleto"
+		property="numeroBeneCompleto"
+		inputType="TEXT"
+		inputSize="30"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"  
+		enabledOnFreeSearch="true"			
+		enabledOnSearch="true" 
+		label="Codice Bene" />
+	<fieldProperty
+		name="valore_ammortizzato"
+		property="valore_ammortizzato"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Valore ammortizzato" />
+	<fieldProperty
+		name="pg_inventario"
+		property="inventario.pg_inventario"
+		inputType="TEXT"
+		label="Codice Inventario" />
+	<fieldProperty
+		name="valore_bene"
+		property="valoreBene"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Valore bene" />
+	<fieldProperty
+		name="valore_unitario"
+		property="valore_unitario"
+		inputType="TEXT"
+		maxLength="20"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Valore Scaricato"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch="true" 
+		nullable="false"/>
+	<fieldProperty
+		name="variazione_meno"
+		property="variazione_meno"
+		inputType="TEXT"
+		maxLength="20"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Valore Scaricato"
+		nullable="false"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="variazione_piu"
+		property="variazione_piu"
+		inputType="TEXT"
+		maxLength="20"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Valore Caricato"
+		nullable="false"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="variazione_piuPerAssocia"
+		property="variazione_piu"
+		inputType="TEXT"
+		maxLength="20"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Valore Caricato"
+		nullable="false"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch="true" />
+	<fieldProperty 
+		name="fl_totalmente_scaricato"
+		property="fl_totalmente_scaricato"
+		inputType="CHECKBOX"
+		label="Scarico Definitivo" />
+		
+	/*****************************************************	
+	* Riferimento all'oggetto complesso assegnatario **/
+	<fieldProperty
+		name="find_assegnatario"
+		property="assegnatario"
+		inputType="SEARCHTOOL" 	
+		formName="searchtool" 	
+		label="Assegnatario"		
+		enabledOnSearch="true"		
+		enabledOnEdit="true"  />
+	<fieldProperty
+		name="cd_assegnatario"
+		property="assegnatario.cd_terzo"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Assegnatario"	
+		readonlyProperty="ROassegnatarioBene"
+		caseSensitiveSearch="false"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"  
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="ds_assegnatario"
+		property="assegnatario.denominazione_sede"
+		maxLength="300"
+		inputSize="50"
+		inputType="TEXT"
+		label="Assegnatario"
+		caseSensitiveSearch="false" />
+		
+		
+	/*****************************************************	
+	* Riferimento all'oggetto complesso ubicazioneBene **/
+	<fieldProperty
+		name="find_ubicazione"
+		property="ubicazione"
+		inputType="SEARCHTOOL" 	
+		formName="searchtool" 	
+		label="Ubicazione"		
+		enabledOnSearch="true"		
+		enabledOnEdit="true"  />
+	<fieldProperty
+		name="cd_ubicazione"
+		property="ubicazione.cd_ubicazione"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		nullable ="false"
+		label="Ubicazione"	
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		readonlyProperty="ROubicazioneBene"
+		caseSensitiveSearch="false"  />
+		
+	/*****************************************************	
+	* Riferimento all'oggetto complesso condizioneBene **/	
+	<fieldProperty
+		name="condizioni"
+		property="condizioneBene"		
+		printProperty="ds_condizione_bene"
+		optionsProperty="condizioni"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		nullable="false"
+		label="Condizione Bene"  
+		enabledOnFreeSearch="true"   
+		enabledOnSearch="true" />
+		
+	<fieldProperty
+		name="cd_condizione_bene"
+		property="condizioneBene.cd_condizione_bene"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		label="Condizione"
+		caseSensitiveSearch="false"  
+		enabledOnFreeSearch="true"   
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_condizione_bene"
+		property="condizioneBene.ds_condizione_bene"
+		maxLength="300"
+		inputSize="50"
+		inputType="TEXT"
+		label="Condizione"
+		caseSensitiveSearch="false"/>
+
+
+	/*****************************************************	
+	* Riferimento all'oggetto complesso categoria_Bene **/
+	<fieldProperty
+		name="find_categoria_bene"
+		property="categoria_Bene"
+		inputType="SEARCHTOOL" 
+		formName="searchtool" 
+		label="Categoria"		
+		readonlyProperty="ROcategoriaBene"	
+		enabledOnSearch="true"		
+	/>
+	//enabledOnEdit="false"  
+	<fieldProperty
+		name="cd_categoria_bene"
+		property="categoria_Bene.cd_categoria_gruppo"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		nullable="false"
+		label="Categoria"		
+		enabledOnSearch="true"  		
+		enabledOnFreeSearch="true"  		
+		caseSensitiveSearch="false"/>		
+	<fieldProperty
+		name="cd_categoria_beneForFreeSearch"
+		property="cd_categoria_gruppo"
+		inputType="TEXT"
+		label="Categoria"		
+	/>			
+	<fieldProperty
+		name="ds_categoria_bene"
+		property="categoria_Bene.ds_categoria_gruppo"
+		maxLength="300"
+		inputSize="50"
+		inputType="TEXT"
+		label="Categoria"
+		caseSensitiveSearch="false"/>
+
+/********** Bene Principale ******************************/
+	<fieldProperty
+		name="find_bene_principale"
+		property="bene_principale"
+		inputType="SEARCHTOOL" 		
+		formName="searchtool" 		
+		label="Bene Principale"	
+		enabledOnSearch="true"	
+		enabledOnEdit="true"  
+		completeOnSave="false"/>
+	<fieldProperty
+		name="cd_bene_principale"
+		property="bene_principale.nr_inventario"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="6"
+		label="Bene Principale"	
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_bene_principale"
+		property="bene_principale.ds_bene"
+		inputType="ROTEXT"
+		inputSize="30"
+		enabledOnSearch="true"	
+		enabledOnEdit="true"
+		caseSensitiveSearch="false" />
+	
+		
+	/*****************************************************	
+	* Riferimento a ISTITUZIONALE_COMMERCIALE **/	
+	<fieldProperty
+		name="ti_istituzionale_commerciale"
+		property="ti_commerciale_istituzionale"
+		keysProperty="ti_istituzionale_commercialeKeys"
+		label="Tipo Bene" 
+		inputType="RADIOGROUP"/>
+		
+	<fieldProperty
+		name="progressivo"
+		property="progressivo"
+		inputType="TEXT"
+		label="Progressivo" 
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch="true" />
+
+	<fieldProperty
+		name="num_buono"
+		property="num_buono"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Nr.Buono Carico"
+		caseSensitiveSearch="false" />
+		
+	<fieldProperty
+		name="valore_alienazione"
+		property="valore_alienazione"
+		inputType="TEXT"
+		maxLength="20"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Valore Alienazione"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="valore_alienazione_apg"
+		property="valore_alienazione_apg"
+		inputType="TEXT"
+		maxLength="20"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Valore Alienazione"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch="true" 
+		nullable="false" />
+		
+/********** Tipo Ammortamento ******************************/
+	<fieldProperty
+		name="ti_ammortamento"
+		property="tipo_ammortamento"		
+		printProperty="ds_tipo"
+		optionsProperty="ti_ammortamenti"
+		maxLength="100"
+		inputSize="30"
+		inputType="SELECT"
+		nullable="true"
+		enabledOnSearch="false"		
+		enabledOnEdit="true"
+		label="Tipo Ammortamento"/>
+	<fieldProperty
+		name="ti_ammortamento_notIns"
+		property="tipo_ammortamento.ds_tipo_ammortamento"
+		inputType="ROTEXT"
+		inputSize="30"
+		label="Tipo Ammortamento" />	
+	<fieldProperty
+		name="fl_ammortamento"
+		property="fl_ammortamento"
+		inputType="CHECKBOX"
+		label="Soggetto ad Ammortamento" />
+	<fieldProperty
+		name="perc_primo_anno"
+		property="tipo_ammortamento.perc_primo_anno"		
+		maxLength="7"
+		inputSize="7"
+		formatName="it.cnr.contab.util.PositivePercentFormat"	
+		inputType="ROTEXT"
+		label="Perc. Primo Anno" />
+	<fieldProperty
+		name="perc_successivi"
+		property="tipo_ammortamento.perc_successivi"	
+		maxLength="7"
+		inputSize="7"
+		formatName="it.cnr.contab.util.PositivePercentFormat"
+		inputType="ROTEXT"
+		label="Perc. Successivi" />
+	<fieldProperty
+		name="imponibile_ammortamento"
+		property="imponibile_ammortamento"
+		inputType="ROTEXT"
+		maxLength="20"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Valore da ammortizzare" />
+	<fieldProperty
+		name="etichetta"
+		property="etichetta"
+		inputType="TEXT"
+		inputSize="20"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"  
+		enabledOnFreeSearch="true"			
+		enabledOnSearch="true" 
+		label="Etichetta" />
+	<fieldProperty
+		name="cd_barre"
+		property="cd_barre"
+		inputType="TEXT"
+		label="Cod. Barre" 
+		inputSize="6"
+		maxLength="6"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch="true" />
+
+	<fieldProperty
+		name="targa"
+		property="targa"
+		inputType="TEXT"
+		label="Targa" 
+		inputSize="8"
+		maxLength="8"
+		enabledOnInsert = "true"
+		readonlyProperty="ROtarga"	
+		enabledOnEdit = "true"
+		enabledOnSearch="true" />	
+/****** 	PROPERTY RELATIVE AL TRASFERIMENTO  ***********/
+	<fieldProperty
+		name="find_nuovo_bene_padre"
+		property="nuovo_bene_padre"
+		inputType="SEARCHTOOL" 	
+		formName="searchtool" 	
+		label="Nuovo Bene Principale"
+		completeOnSave="false"/>
+	<fieldProperty
+		name="cd_nuovo_bene_padre"
+		property="nuovo_bene_padre.nr_inventario"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="6"
+		readonlyProperty="ROnuovoBenePadre"	
+		nullable="false"
+		label="Nuovo Bene Principale"	
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_nuovo_bene_padre"
+		property="nuovo_bene_padre.ds_bene"
+		inputType="ROTEXT"
+		inputSize="30"
+		caseSensitiveSearch="false" />
+	<fieldProperty 
+		name="fl_trasf_come_principale"
+		property="fl_trasf_come_principale"
+		inputType="CHECKBOX"
+		label="Trasferisci come bene principale" />
+	<fieldProperty 
+		name="id_bene_origine"
+		property="id_bene_origine"
+		inputType="ROTEXT"
+		label="Identif. bene orig." />
+	<fieldProperty 
+		name="id_bene_origineForFreeSearch"
+		property="id_bene_origine"
+		inputType="TEXT"
+		label="Identif. bene orig." />
+		
+	<fieldProperty
+		name="variazione_menoPerAssocia"
+		property="variazione_meno"
+		inputType="TEXT"
+		maxLength="20"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Valore Scaricato"
+		nullable="false"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch="true" />
+	<formFieldProperty
+		name="codiceCompleto" />
+	<formFieldProperty
+		name="etichetta" />
+	<formFieldProperty
+		name="ds_bene" />
+	
+/****** 	CATEGORIA  ***********/			
+	<formFieldProperty
+		name="find_categoria_bene" />
+	<formFieldProperty
+		name="cd_categoria_bene" />
+	<formFieldProperty
+		name="categoria_Bene" />	
+
+/****** UBICAZIONE      ***********/	
+	<formFieldProperty
+		name="find_ubicazione" />		
+	<formFieldProperty
+		name="cd_ubicazione" />
+	<formFieldProperty
+		name="ds_ubicazione" />
+	<formFieldProperty
+		name="ubicazione" />
+	
+/****** 	ASSEGNATARIO  ***********/	
+	<formFieldProperty
+		name="find_assegnatario" />
+	<formFieldProperty
+		name="cd_assegnatario" />
+	<formFieldProperty
+		name="ds_assegnatario" />
+
+/********** Bene Principale **********/	
+	<formFieldProperty
+		name="find_bene_principale" />
+	<formFieldProperty
+		name="cd_bene_principale" />
+	<formFieldProperty
+		name="ds_bene_principale" />	
+
+	<formFieldProperty
+		name="valore_iniziale" />
+	<formFieldProperty
+		name="collocazione" />
+	<formFieldProperty
+		name="nr_inventario" />
+	<formFieldProperty
+		name="valore_ammortizzato" />
+	<formFieldProperty
+		name="pg_inventario" />
+	<formFieldProperty
+		name="condizioni" />
+	<formFieldProperty
+		name="cd_condizione_bene" />
+	<formFieldProperty
+		name="ds_condizione_bene" />
+	
+	<formFieldProperty
+		name="ti_istituzionale_commerciale" />
+	<formFieldProperty
+		name="progressivo" />
+	<formFieldProperty
+		name="num_buono" />	
+	<formFieldProperty
+		name="valore_bene" />
+	<formFieldProperty
+		name="valore_unitario" />
+	<formFieldProperty
+		name="variazione_meno" />
+	<formFieldProperty
+		name="variazione_piu" />
+	<formFieldProperty
+		name="variazione_piuPerAssocia" 
+		command="doSalvaVariazionePiu"/>
+	<formFieldProperty
+		name="variazione_menoPerAssocia" 
+		command="doSalvaVariazioneMeno"/>	
+	<formFieldProperty
+		name="fl_totalmente_scaricato" />
+	<formFieldProperty
+		name="valore_alienazione" />
+	<formFieldProperty
+		name="valore_alienazione_apg" 
+		command="doAssegnaValoreAlienazione" />	
+	<formFieldProperty
+		name="dt_validita_variazione" />
+	<formFieldProperty
+		name="dt_acquisizione" />	
+/******* Tipo Ammortamento *****************/
+	<formFieldProperty
+		name="ti_ammortamento" />
+	<formFieldProperty
+		name="ti_ammortamento_notIns" />
+	<formFieldProperty
+		name="fl_ammortamento" />
+	<formFieldProperty
+		name="perc_successivi" />
+	<formFieldProperty
+		name="perc_primo_anno" />
+	<formFieldProperty
+		name="imponibile_ammortamento" />
+
+	<formFieldProperty
+		name="find_nuovo_bene_padre" />
+	<formFieldProperty
+		name="cd_nuovo_bene_padre" />
+	<formFieldProperty 
+		name="ds_nuovo_bene_padre" />
+	<formFieldProperty 
+		name="fl_trasf_come_principale" />
+	<formFieldProperty 
+		name="id_bene_origine" />		
+	<formFieldProperty
+		name="cd_barre" />
+	<formFieldProperty
+		name="targa" />	
+		
+	<columnFieldProperty
+		name="etichetta" 
+		style="width:130px" />
+	<columnFieldProperty
+		name="nr_inventario"   
+		style="width:80px" />
+	<columnFieldProperty
+		name="progressivo"  
+		style="width:30px" />
+	<columnFieldProperty
+		name="ds_bene"  
+		style="width:300px" />
+	<columnFieldProperty
+		name="cd_categoria_bene"  
+		style="width:50px" />
+	<columnFieldProperty
+		name="valore_bene"   
+		style="width:80px"/>
+	<columnFieldProperty
+		name="ds_condizione_bene"   
+		style="width:70px"/>
+	<columnFieldProperty
+		name="cd_assegnatario"   
+		style="width:300px"/>	
+	<columnFieldProperty
+		name="cd_ubicazione"   
+		style="width:50px"/>		
+	<columnFieldProperty
+		name="collocazione"   
+		style="width:50px"/>
+
+	<findFieldProperty
+		name="etichetta" />
+	<findFieldProperty
+		name="id_bene_origineForFreeSearch" />
+	<findFieldProperty
+		name="nr_inventario" />
+	<findFieldProperty
+		name="progressivo" />
+	<findFieldProperty
+		name="ds_bene" />
+	<findFieldProperty
+		name="cd_categoria_beneForFreeSearch" />
+	<findFieldProperty
+		name="valore_iniziale" />
+	<findFieldProperty
+		name="cd_ubicazione" />
+	<findFieldProperty
+		name="cd_assegnatario" />
+	<findFieldProperty
+		name="collocazione" />
+	<findFieldProperty
+		name="condizioni" />
+	<findFieldProperty
+		name="cd_barre" />
+	<findFieldProperty
+		name="targa" />	
+		
+	<freeSearchSet name="freeSearchWithoutProgressivoSet">
+		<findFieldProperty
+			name="etichetta" />
+		<findFieldProperty
+			name="id_bene_origineForFreeSearch" />
+		<findFieldProperty
+			name="nr_inventario" />	
+		<findFieldProperty
+			name="ds_bene" />
+		<findFieldProperty
+			name="cd_categoria_beneForFreeSearch" />
+		<findFieldProperty
+			name="valore_iniziale" />
+		<findFieldProperty
+			name="cd_ubicazione" />
+		<findFieldProperty
+			name="cd_assegnatario" />
+		<findFieldProperty
+			name="collocazione" />
+		<findFieldProperty
+			name="condizioni" />
+	</freeSearchSet>
+    <form name="searchtool">		
+	    <formFieldProperty
+			name="nr_inventario"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true" />
+		 <formFieldProperty
+			name="ds_bene" 
+			inputSize="60"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true" />
+	</form>
+	<columnSet
+		name="righeDaScarico">	
+		<columnFieldProperty
+			name="codiceCompleto"
+			style="width:80px" />	
+		<columnFieldProperty
+			name="ds_bene"
+			style="width:300px" />
+		<columnFieldProperty
+			name="valore_bene"/>
+		<columnFieldProperty
+			name="valore_unitario"/>
+		<columnFieldProperty
+			name="valore_alienazione" />
+	</columnSet>
+</bulkInfo>

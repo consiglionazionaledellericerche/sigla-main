@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.cori00.docs.bulk.Liquid_gruppo_coriIBulk"
+	homeClassName="it.cnr.contab.cori00.docs.bulk.Liquid_gruppo_coriIHome" >
+
+	<defaultColumnMap tableName="LIQUID_GRUPPO_CORI" >			
+				
+	</defaultColumnMap>
+
+	<columnMap
+		name="V_LIQUID_GRUPPO_CORI"
+		tableName="V_LIQUID_GRUPPO_CORI">
+		<columnMapping
+			columnName="PG_LIQUIDAZIONE"
+			propertyName="pg_liquidazione"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_LIQUIDAZIONE_ORIGINE"
+			propertyName="pg_liquidazione_origine"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_REGIONE"
+			propertyName="cd_regione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_GRUPPO_CR"
+			propertyName="cd_gruppo_cr"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_COMUNE"
+			propertyName="pg_comune"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE"
+			propertyName="cd_cds_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UO_ORIGINE"
+			propertyName="cd_uo_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />		
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />		
+		<columnMapping
+			columnName="DS_GRUPPO_CR"
+			propertyName="ds_gruppo_cr"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="TERZO_VERSAMENTO"
+			propertyName="terzo_versamento"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="FL_ACCENTRATO"
+			propertyName="fl_accentrato"
+			sqlTypeName="CHAR"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+			columnSize="1"/>
+		<columnMapping
+			columnName="IM_LIQUIDATO"
+			propertyName="im_liquidato"
+			sqlTypeName="DECIMAL"
+			columnSize="10"/>
+		<columnMapping
+			columnName="PG_DOC"
+			propertyName="pg_doc"
+			sqlTypeName="DECIMAL"
+			columnSize="10"/>	
+	</columnMap>
+
+
+	<columnMap
+		name="V_LIQUID_CENTRO_UO"
+		tableName="V_LIQUID_CENTRO_UO">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_LIQUIDAZIONE"
+			propertyName="pg_liquidazione"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_GRUPPO_CR"
+			propertyName="cd_gruppo_cr"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_REGIONE"
+			propertyName="cd_regione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_COMUNE"
+			propertyName="pg_comune"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE"
+			propertyName="cd_cds_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UO_ORIGINE"
+			propertyName="cd_uo_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />			
+		<columnMapping
+			columnName="PG_LIQUIDAZIONE_ORIGINE"
+			propertyName="pg_liquidazione_origine"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"
+			primary="true" />			
+		<columnMapping
+			columnName="IM_LIQUIDATO"
+			propertyName="im_liquidato"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />			
+	</columnMap>
+	
+	<persistentProperty
+		name="terzo_versamento" />
+	<persistentProperty
+		name="ds_gruppo_cr" />
+
+</SQLPersistentInfo>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.V_pdg_accertamento_etrKey">
+	<defaultColumnMap
+		tableName="V_PDG_ACCERTAMENTO_ETR">
+	</defaultColumnMap>
+</SQLPersistentInfo>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofi_obb_scadBulk"
+	homeClassName="it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofi_obb_scadHome">
+	<defaultColumnMap
+		tableName="STIPENDI_COFI_OBB_SCAD">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_CDS_OBBLIGAZIONE"
+			propertyName="cd_cds_obbligazione"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="esercizio_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="esercizio_ori_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+	</defaultColumnMap>
+	<defaultColumnMap
+		tableName="STIPENDI_COFI_OBB_SCAD" >
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="stipendi_cofi.esercizio" />
+		<columnMapping
+			columnName="MESE"
+			propertyName="stipendi_cofi.mese"/>	
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="stipendi_cofi"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_cds_obbligazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio_obbligazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio_ori_obbligazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_obbligazione"
+		partOfOid="true" />
+</SQLPersistentInfo>

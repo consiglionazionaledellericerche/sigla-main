@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.consultazioni.bulk.V_inventario_utilizzatoriBulk"
+	homeClassName="it.cnr.contab.inventario00.consultazioni.bulk.V_inventario_utilizzatoriHome">
+	<defaultColumnMap
+		tableName="V_INVENTARIO_UTILIZZATORI">
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="pg_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="NR_INVENTARIO"
+			propertyName="nr_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PROGRESSIVO"
+			propertyName="progressivo"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_BENE"
+			propertyName="ds_bene"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CATEGORIA_GRUPPO"
+			propertyName="cd_categoria_gruppo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_AMMORTAMENTO"
+			propertyName="fl_ammortamento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DS_CONDIZIONE_BENE"
+			propertyName="ds_condizione_bene"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="TIPOLOGIA"
+			propertyName="tipologia"
+			sqlTypeName="VARCHAR"
+			columnSize="11"
+			nullable="true" />
+		<columnMapping
+			columnName="VALORE"
+			propertyName="valore"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="FONDO"
+			propertyName="fondo"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPONIBILE"
+			propertyName="imponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UBICAZIONE"
+			propertyName="cd_ubicazione"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_UBICAZIONE"
+			propertyName="ds_ubicazione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="ASSEGNATARIO"
+			propertyName="assegnatario"
+			sqlTypeName="VARCHAR"
+			columnSize="101"
+			nullable="true" />
+		<columnMapping
+			columnName="ETICHETTA"
+			propertyName="etichetta"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="false" />
+		<columnMapping
+			columnName="ID_BENE_ORIGINE"
+			propertyName="id_bene_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_BARRE"
+			propertyName="cd_barre"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			nullable="true" />
+		<columnMapping
+			columnName="TARGA"
+			propertyName="targa"
+			sqlTypeName="VARCHAR"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UTILIZZATORE_CDR"
+			propertyName="cd_utilizzatore_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_CDR"
+			propertyName="ds_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_LINEA_ATTIVITA"
+			propertyName="ds_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_inventario" />
+	<persistentProperty
+		name="nr_inventario" />
+	<persistentProperty
+		name="progressivo" />
+	<persistentProperty
+		name="ds_bene" />
+	<persistentProperty
+		name="cd_categoria_gruppo" />
+	<persistentProperty
+		name="fl_ammortamento" />
+	<persistentProperty
+		name="ds_condizione_bene" />
+	<persistentProperty
+		name="tipologia" />
+	<persistentProperty
+		name="valore" />
+	<persistentProperty
+		name="fondo" />
+	<persistentProperty
+		name="imponibile" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="cd_ubicazione" />
+	<persistentProperty
+		name="ds_ubicazione" />
+	<persistentProperty
+		name="assegnatario" />
+	<persistentProperty
+		name="etichetta" />
+	<persistentProperty
+		name="id_bene_origine" />
+	<persistentProperty
+		name="cd_barre" />
+	<persistentProperty
+		name="targa" />
+	<persistentProperty
+		name="cd_utilizzatore_cdr" />
+	<persistentProperty
+		name="ds_cdr" />
+	<persistentProperty
+		name="cd_linea_attivita" />
+	<persistentProperty
+		name="ds_linea_attivita" />
+</SQLPersistentInfo>

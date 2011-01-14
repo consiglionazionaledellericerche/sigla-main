@@ -1,0 +1,15 @@
+<action-mappings>
+
+	<action
+		path="/StampaPrevidenzialeDipendentiAction" actionClass="it.cnr.contab.anagraf00.action.Stampa_previdenziale_dipendentiAction">
+	</action>
+						   
+	<businessProcess name="StampaPrevidenzialeDipendentiBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+		<forward name="default" path="/anagraf00/stampa_previdenziale_dipendenti.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.anagraf00.core.bulk.Stampa_previdenziale_dipendentiVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaPrevidenzialeDipendentiAction" />
+	    <init-param name="componentSessionName" value="CNRANAGRAF00_EJB_AnagraficoComponentSession" />
+	    <init-param name="reportName" value="/cnranagrafica/clienti/prevdip.jasper" />
+	</businessProcess>
+</action-mappings>

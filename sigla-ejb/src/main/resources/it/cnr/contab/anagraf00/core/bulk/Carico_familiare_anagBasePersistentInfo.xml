@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.Carico_familiare_anagBase"
+	keyClassName="it.cnr.contab.anagraf00.core.bulk.Carico_familiare_anagKey"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.Carico_familiare_anagHome" >
+	<defaultColumnMap
+		tableName="CARICO_FAMILIARE_ANAG" >
+		<columnMapping
+			columnName="DT_NASCITA_FIGLIO"
+			propertyName="dt_nascita_figlio"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_FIN_VALIDITA"
+			propertyName="dt_fin_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_PERSONA"
+			propertyName="ti_persona"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_FINE_FIGLIO_HA_TREANNI"
+			propertyName="dt_fine_figlio_ha_treanni"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="FL_PRIMO_FIGLIO"
+			propertyName="fl_primo_figlio"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_HANDICAP"
+			propertyName="fl_handicap"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="PRC_CARICO"
+			propertyName="prc_carico"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_PRIMO_FIGLIO_MANCA_CON"
+			propertyName="fl_primo_figlio_manca_con"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CODICE_FISCALE_ALTRO_GEN"
+			propertyName="codice_fiscale_altro_gen"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />			
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_nascita_figlio" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="codice_fiscale" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="ti_persona" />
+	<persistentProperty
+		name="dt_fin_validita" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="dt_fine_figlio_ha_treanni" />
+	<persistentProperty
+		name="fl_primo_figlio" />
+	<persistentProperty
+		name="fl_handicap" />
+	<persistentProperty
+		name="fl_primo_figlio_manca_con" />		
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="prc_carico" />
+	<persistentProperty
+		name="codice_fiscale_altro_gen" />		
+</SQLPersistentInfo>

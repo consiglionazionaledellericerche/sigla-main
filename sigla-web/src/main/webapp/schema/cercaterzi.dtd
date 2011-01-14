@@ -1,0 +1,23 @@
+<!ELEMENT cercaterzi:root ((cercaterzi:numris,cercaterzi:terzo*)|cercaterzi:errore)>
+<!ELEMENT cercaterzi:numris (#PCDATA)>
+<!ELEMENT cercaterzi:terzo ((cercaterzi:codice,cercaterzi:denominazione,cercaterzi:partitaiva)|(cercaterzi:codice,cercaterzi:cognome,cercaterzi:nome,cercaterzi:codicefiscale)
+                             |(cercaterzi:codice,cercaterzi:denominazione,cercaterzi:partitaiva,cercaterzi:codicefiscale)|(cercaterzi:codice,cercaterzi:cognome,cercaterzi:nome,cercaterzi:partitaiva,cercaterzi:codicefiscale,cercaterzi:data_cessazione)
+                             |(cercaterzi:codice,cercaterzi:cognome,cercaterzi:nome,cercaterzi:codicefiscale,cercaterzi:matricola,cercaterzi:qualifica,cercaterzi:desc_qualifica,cercaterzi:livello_1,cercaterzi:tiporapporto,cercaterzi:uo,cercaterzi:annorif,cercaterzi:meserif,cercaterzi:data_cessazione)  )>
+<!ELEMENT cercaterzi:codice (#PCDATA)>
+<!ELEMENT cercaterzi:denominazione (#PCDATA)>
+<!ELEMENT cercaterzi:cognome (#PCDATA)>
+<!ELEMENT cercaterzi:nome (#PCDATA)>
+<!ELEMENT cercaterzi:partitaiva (#PCDATA)>
+<!ELEMENT cercaterzi:codicefiscale (#PCDATA)>
+<!ELEMENT cercaterzi:matricola (#PCDATA)>
+<!ELEMENT cercaterzi:qualifica (#PCDATA)>
+<!ELEMENT cercaterzi:desc_qualifica (#PCDATA)>
+<!ELEMENT cercaterzi:tiporapporto (#PCDATA)>
+<!ELEMENT cercaterzi:uo (#PCDATA)>
+<!ELEMENT cercaterzi:annorif (#PCDATA)>
+<!ELEMENT cercaterzi:meserif (#PCDATA)>
+<!ELEMENT cercaterzi:data_cessazione (#PCDATA)>
+<!ELEMENT cercaterzi:livello_1 (#PCDATA)>
+<!ELEMENT cercaterzi:errore (#PCDATA)>
+<!ATTLIST cercaterzi:root xmlns:cercaterzi CDATA #FIXED 'http://gestioneistituti.cnr.it/cercaterzi'>
+<!ATTLIST cercaterzi:errore codice CDATA #REQUIRED>

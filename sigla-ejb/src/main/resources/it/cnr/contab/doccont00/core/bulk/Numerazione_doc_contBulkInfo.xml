@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ultimo"
+		property="ultimo"
+		inputType="TEXT"
+		label="ultimo" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="corrente"
+		property="corrente"
+		inputType="TEXT"
+		label="corrente" />
+	<fieldProperty
+		name="primo"
+		property="primo"
+		inputType="TEXT"
+		label="primo" />
+	<fieldProperty
+		name="cd_tipo_documento_cont"
+		property="cd_tipo_documento_cont"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_tipo_documento_cont" />
+
+	<formFieldProperty
+		name="ultimo" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="corrente" />
+	<formFieldProperty
+		name="primo" />
+	<formFieldProperty
+		name="cd_tipo_documento_cont" />
+
+	<columnFieldProperty
+		name="ultimo" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="corrente" />
+	<columnFieldProperty
+		name="primo" />
+	<columnFieldProperty
+		name="cd_tipo_documento_cont" />
+
+	<findFieldProperty
+		name="ultimo" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="corrente" />
+	<findFieldProperty
+		name="primo" />
+	<findFieldProperty
+		name="cd_tipo_documento_cont" />
+
+</bulkInfo>

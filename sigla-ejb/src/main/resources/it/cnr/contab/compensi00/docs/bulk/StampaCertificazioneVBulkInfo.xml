@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="tc"
+		property="tc" />
+	<fieldProperty
+		name="noteForPrint"
+		property="noteForPrint" />
+	<fieldProperty
+		name="ti_cert"
+		property="ti_cert"
+		maxLength="2"
+		inputSize="2"
+		inputType="RADIOGROUP"
+		label="Tipo Certificazione"
+		keysProperty="tipoKeys"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		caseSensitiveSearch="false" />
+		
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT" 
+		inputSize="8"
+		maxLength="8"
+		label="Esercizio"/>
+	<fieldProperty
+		name="findAnagraficoForPrint"
+		property="anagraficoForPrint"
+		inputType="SEARCHTOOL"
+		label="Anagrafico" />
+	<fieldProperty
+		name="cd_anag"
+		property="anagraficoForPrint.cd_anag"
+		inputType="TEXT"
+		readonlyProperty="ROAnagraficoForPrint"
+		nullable="false"
+		maxLength="8"
+		inputSize="8" 
+		label="Codice" />
+	<fieldProperty
+		name="ragione_sociale"
+		property="anagraficoForPrint.ragione_sociale"
+		inputType="ROTEXT"
+		inputSize="30" 
+		label="Ragione sociale" />
+	<fieldProperty
+		name="note"
+		property="note"
+		inputType="TEXTAREA"
+		maxLength="300"
+		cols="30"
+		rows="5"
+		label="Note" />
+	<fieldProperty
+		name="cdAnagCRParameter"
+		property="cdAnagCRParameter" />
+	
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="ti_cert" />
+	<formFieldProperty name="cd_anag" />
+	<formFieldProperty name="findAnagraficoForPrint" />
+	<formFieldProperty name="ragione_sociale" />
+	<formFieldProperty name="note" />
+	
+	<form
+		name="/docamm/docamm/certificazione.rpt">
+		<formFieldProperty name="esercizio" />
+		<formFieldProperty name="ti_cert" />
+		<formFieldProperty name="cd_anag" />	
+		<formFieldProperty name="findAnagraficoForPrint" />
+		<formFieldProperty name="ragione_sociale" />
+		<formFieldProperty name="note" />
+	</form>
+
+	<printForm
+		name="/docamm/docamm/certificazione.rpt">
+		<printFieldProperty 
+			name="tc"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="1"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="ti_cert"
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdAnagCRParameter"
+			parameterPosition="3"
+			parameterType="STRING" />
+		<printFieldProperty
+			name="noteForPrint"
+			parameterPosition="4"
+			parameterType="STRING" />
+	</printForm>
+	<printForm
+		name="/docamm/docamm/certificazione.jasper">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING" 
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="ti_cert"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="ti_cert"
+			paramTypeJR="java.lang.String"  />
+		<printFieldProperty 
+			name="cdAnagCRParameter"
+			parameterPosition="2"
+			parameterType="STRING"
+			paramNameJR="cd_anag"
+			paramTypeJR="java.lang.String"  />
+		<printFieldProperty
+			name="noteForPrint"
+			parameterPosition="3"
+			parameterType="STRING"
+			paramNameJR="nota"
+			paramTypeJR="java.lang.String"  />
+	</printForm>
+
+</bulkInfo>

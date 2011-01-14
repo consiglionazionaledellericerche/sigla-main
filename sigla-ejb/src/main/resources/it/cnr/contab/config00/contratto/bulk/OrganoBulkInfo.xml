@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Tipologie di Organi"
+          longDescription="Tipologie di Organi">
+	<fieldProperty
+		name="cd_organo"
+		property="cd_organo"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		nullable="false"
+		enabledOnSearch="true"
+		label="Codice" />
+	<fieldProperty
+		name="ds_organo"
+		property="ds_organo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		enabledOnSearch="true"
+		maxLength="200"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_inizio_validita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Data di inizio validità" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Data di fine validità" />		
+	<fieldProperty
+		name="fl_cancellato"
+		property="fl_cancellato"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Cancellato" />
+	<fieldProperty
+		name="fl_non_definito"
+		property="fl_non_definito"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Organo non definito" />
+		
+    <form name="searchtool">
+	  <formFieldProperty
+		name="cd_organo"
+		inputSize="20" />	
+	  <formFieldProperty
+		name="ds_organo"
+		inputType="TEXT"
+		inputSize="30"
+		 />           
+	</form>	
+	
+	<formFieldProperty
+		name="cd_organo" />	
+	<formFieldProperty
+		name="ds_organo" />
+	<formFieldProperty
+		name="dt_inizio_validita" />
+	<formFieldProperty
+		name="dt_fine_validita" />		
+	<formFieldProperty
+		name="fl_cancellato" />
+	<formFieldProperty
+		name="fl_non_definito" />
+		
+	<columnFieldProperty
+		name="cd_organo" />
+	<columnFieldProperty
+		name="ds_organo" />
+	<columnFieldProperty
+		name="dt_inizio_validita" />
+	<columnFieldProperty
+		name="dt_fine_validita" />		
+	<columnFieldProperty
+		name="fl_cancellato" />
+	<columnFieldProperty
+		name="fl_non_definito" />
+		
+	<findFieldProperty
+		name="cd_organo" />
+	<findFieldProperty
+		name="ds_organo" />
+	<findFieldProperty
+		name="dt_inizio_validita" />
+	<findFieldProperty
+		name="dt_fine_validita" />		
+	<findFieldProperty
+		name="fl_cancellato" />
+	<findFieldProperty
+		name="fl_non_definito" />
+</bulkInfo>

@@ -1,0 +1,12 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.V_voce_f_partita_giroBulk"
+	homeClassName="it.cnr.contab.config00.pdcfin.bulk.V_voce_f_partita_giroHome" >
+	<defaultColumnMap
+		tableName="V_VOCE_F_PARTITA_GIRO" >
+		<columnMapping
+			columnName="DS_TITOLO_CAPITOLO"
+			propertyName="ds_titolo_capitolo"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="ds_titolo_capitolo" />
+</SQLPersistentInfo>

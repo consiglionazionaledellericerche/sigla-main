@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="id_classificazione"
+		property="id_classificazione"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		label="Identificativo" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		enabledOnSearch="true"
+		label="Esercizio" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		label="Gestione E/S" />
+	<fieldProperty
+		name="cd_livello1"
+		property="cd_livello1"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		label="Primo Livello" />
+	<fieldProperty
+		name="cd_livello2"
+		property="cd_livello2"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		label="Secondo Livello" />
+	<fieldProperty
+		name="cd_livello3"
+		property="cd_livello3"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		label="Terzo Livello" />
+	<fieldProperty
+		name="cd_livello4"
+		property="cd_livello4"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		label="Quarto Livello" />
+	<fieldProperty
+		name="cd_livello5"
+		property="cd_livello5"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		label="Quinto Livello" />
+	<fieldProperty
+		name="cd_livello6"
+		property="cd_livello6"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		label="Sesto Livello" />
+	<fieldProperty
+		name="cd_livello7"
+		property="cd_livello7"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		label="Settimo Livello" />
+	<fieldProperty
+		name="id_class_padre"
+		property="classificazione_voci.id_classificazione"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		enabledOnSearch="true"
+		label="Identificativo Padre" />
+	<fieldProperty
+		name="ds_classificazione_vis"
+		property="ds_classificazione"
+		inputType="TEXT"
+		inputSize="80"
+		maxLength="80"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		enabledOnSearch="true"
+		label="Descrizione" />
+	<fieldProperty
+		name="ds_class_padre_pre1"
+		property="classificazione_voci.ds_classificazione"
+		inputType="TEXT"
+		inputSize="80"
+		maxLength="80"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		label="Descrizione" />
+	<fieldProperty
+		name="ds_class_padre_pre2"
+		property="classificazione_voci.classificazione_voci.ds_classificazione"
+		inputType="TEXT"
+		inputSize="80"
+		maxLength="80"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		label="Descrizione" />
+	<fieldProperty
+		name="ds_class_padre_pre3"
+		property="classificazione_voci.classificazione_voci.classificazione_voci.ds_classificazione"
+		inputType="TEXT"
+		inputSize="80"
+		maxLength="80"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		label="Descrizione" />
+	<fieldProperty
+		name="ds_class_padre_pre4"
+		property="classificazione_voci.classificazione_voci.classificazione_voci.classificazione_voci.ds_classificazione"
+		inputType="TEXT"
+		inputSize="80"
+		maxLength="80"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		label="Descrizione" />
+	<fieldProperty
+		name="ds_class_padre_pre5"
+		property="classificazione_voci.classificazione_voci.classificazione_voci.classificazione_voci.classificazione_voci.ds_classificazione"
+		inputType="TEXT"
+		inputSize="80"
+		maxLength="80"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		label="Descrizione" />
+	<fieldProperty
+		name="ds_class_padre_pre6"
+		property="classificazione_voci.classificazione_voci.classificazione_voci.classificazione_voci.classificazione_voci.classificazione_voci.ds_classificazione"
+		inputType="TEXT"
+		inputSize="80"
+		maxLength="80"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		label="Descrizione" />
+	<fieldProperty
+		name="ds_classificazione"
+		property="ds_classificazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="250"
+		enabledOnSearch="true"
+		label="Descrizione" />
+	<fieldProperty
+		name="fl_mastrino"
+		property="fl_mastrino"
+		inputType="CHECKBOX"
+		inputSize="1"		
+		label="Mastrino" 
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="fl_class_sac"
+		property="fl_class_sac"
+		inputType="CHECKBOX"
+		inputSize="1"		
+		label="Classificazione SAC" 
+		nullable="false" />
+	<fieldProperty
+		name="fl_solo_gestione"
+		property="fl_solo_gestione"
+		inputType="CHECKBOX"
+		inputSize="1"		
+		label="Utilizzabile solo in fase di gestione" 
+		nullable="false" />
+	<fieldProperty
+		name="fl_piano_riparto"
+		property="fl_piano_riparto"
+		inputType="CHECKBOX"
+		inputSize="1"		
+		label="Utilizzabile nel Piano di Riparto" 
+		nullable="false" />
+	<fieldProperty
+		name="fl_accentrato"
+		property="fl_accentrato"
+		inputType="CHECKBOX"
+		inputSize="1"		
+		label="Gestione Spese Accentrate" 
+		command="doOnFlAccentrato"
+		nullable="false" />
+	<fieldProperty
+		name="fl_decentrato"
+		property="fl_decentrato"
+		inputType="CHECKBOX"
+		inputSize="1"		
+		label="Gestione Spese Decentrate" 
+		nullable="false" />
+	<fieldProperty
+		name="fl_esterna_da_quadrare_sac"
+		property="fl_esterna_da_quadrare_sac"
+		inputType="CHECKBOX"
+		inputSize="1"		
+		label="Esterna da quadrare SAC" 
+		nullable="false" />
+	<fieldProperty
+		name="cdr_accentratore"
+		property="centro_responsabilita.cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="30"
+		label="CDR Accentratore" />
+	<fieldProperty
+		name="ds_cdr"
+		property="centro_responsabilita.ds_cdr"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Descrizione" />
+	<fieldProperty
+		name="find_centro_responsabilita"
+		property="centro_responsabilita"
+		inputType="SEARCHTOOL" 
+		formName="searchtool" 
+		enabledOnSearch="true"
+        enabledOnEdit="true"
+		label="CDR Accentratore" />
+<!--		readonlyProperty="ROCentroResponsabilita" -->
+	<fieldProperty
+		name="tot_imp_piano_riparto_spese"
+		property="tot_imp_piano_riparto_spese"
+		inputSize="20"
+		maxLength="18"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Somma Totale Spese Accentrate" />
+
+	<formFieldProperty
+		name="id_classificazione" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_livello1" />
+	<formFieldProperty
+		name="cd_livello2" />
+	<formFieldProperty
+		name="cd_livello3" />
+	<formFieldProperty
+		name="cd_livello4" />
+	<formFieldProperty
+		name="cd_livello5" />
+	<formFieldProperty
+		name="cd_livello6" />
+	<formFieldProperty
+		name="cd_livello7" />
+	<formFieldProperty
+		name="ds_classificazione" />
+	<formFieldProperty
+		name="id_class_padre" />
+	<formFieldProperty
+		name="ds_classificazione_vis" />
+	<formFieldProperty
+		name="ds_class_padre_pre1" />
+	<formFieldProperty
+		name="ds_class_padre_pre2" />
+	<formFieldProperty
+		name="ds_class_padre_pre3" />
+	<formFieldProperty
+		name="ds_class_padre_pre4" />
+	<formFieldProperty
+		name="ds_class_padre_pre5" />
+	<formFieldProperty
+		name="ds_class_padre_pre6" />
+	<formFieldProperty
+		name="fl_mastrino" />
+	<formFieldProperty
+		name="fl_class_sac" />
+	<formFieldProperty
+		name="fl_solo_gestione" />
+	<formFieldProperty
+		name="fl_piano_riparto" />
+	<formFieldProperty
+		name="fl_accentrato" />
+	<formFieldProperty
+		name="fl_decentrato" />
+	<formFieldProperty
+		name="fl_esterna_da_quadrare_sac" />
+	<formFieldProperty
+		name="cdr_accentratore" />
+	<formFieldProperty
+		name="ds_cdr" />
+	<formFieldProperty
+		name="find_centro_responsabilita" />
+	<formFieldProperty
+		name="tot_imp_piano_riparto_spese" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_livello1" />
+	<findFieldProperty
+		name="cd_livello1" />
+	<findFieldProperty
+		name="cd_livello2" />
+	<findFieldProperty
+		name="cd_livello3" />
+	<findFieldProperty
+		name="cd_livello4" />
+	<findFieldProperty
+		name="cd_livello5" />
+	<findFieldProperty
+		name="cd_livello6" />
+	<findFieldProperty
+		name="cd_livello7" />
+	<findFieldProperty
+		name="ds_classificazione" />
+	<findFieldProperty
+		name="fl_class_sac" />
+	<findFieldProperty
+		name="fl_solo_gestione" />
+	<findFieldProperty
+		name="fl_piano_riparto" />
+	<findFieldProperty
+		name="fl_accentrato" />
+	<findFieldProperty
+		name="fl_decentrato" />
+	<findFieldProperty
+		name="fl_esterna_da_quadrare_sac" />
+	<findFieldProperty
+		name="cdr_accentratore" 
+		label="Centro di Responsabilità Accentratore"/>
+
+	<columnFieldProperty
+		name="cd_livello1" />
+	<columnFieldProperty
+		name="cd_livello2" />
+	<columnFieldProperty
+		name="cd_livello3" />
+	<columnFieldProperty
+		name="cd_livello4" />
+	<columnFieldProperty
+		name="cd_livello5" />
+	<columnFieldProperty
+		name="cd_livello6" />
+	<columnFieldProperty
+		name="cd_livello7" />
+	<columnFieldProperty
+		name="ds_classificazione" />
+	<columnFieldProperty
+		name="fl_class_sac" />
+	<columnFieldProperty
+		name="fl_solo_gestione" />
+	<columnFieldProperty
+		name="fl_piano_riparto" />
+	<columnFieldProperty
+		name="fl_accentrato" />
+	<columnFieldProperty
+		name="fl_decentrato" />
+	<columnFieldProperty
+		name="fl_esterna_da_quadrare_sac" />
+	<columnFieldProperty
+		name="cdr_accentratore" />
+	<columnFieldProperty
+		name="ds_cdr" />
+		
+	
+</bulkInfo>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.FunzioneBase"
+	keyClassName="it.cnr.contab.config00.pdcfin.bulk.FunzioneKey"
+	homeClassName="it.cnr.contab.config00.pdcfin.bulk.FunzioneHome" >
+	<defaultColumnMap
+		tableName="FUNZIONE" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_FUNZIONE"
+			propertyName="ds_funzione"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_UTILIZZABILE"
+			propertyName="fl_utilizzabile"
+			sqlTypeName="CHAR"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"
+			columnSize="1" />	
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="ds_funzione" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="fl_utilizzabile" />
+</SQLPersistentInfo>

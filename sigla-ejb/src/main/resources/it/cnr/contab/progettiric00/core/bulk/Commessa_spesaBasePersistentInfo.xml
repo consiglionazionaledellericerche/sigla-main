@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.progettiric00.core.bulk.Commessa_spesaBase"
+	keyClassName="it.cnr.contab.progettiric00.core.bulk.Commessa_spesaKey"
+	homeClassName="it.cnr.contab.progettiric00.core.bulk.Commessa_spesaHome">
+	<defaultColumnMap
+		tableName="COMMESSA_SPESA">
+		<columnMapping
+			columnName="GENERALE_AFFITTO"
+			propertyName="generale_affitto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="GESTIONE_NAVE"
+			propertyName="gestione_nave"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="CC_BREV_PI"
+			propertyName="cc_brev_pi"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="EDILIZIA"
+			propertyName="edilizia"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="AMM_IMMOBILI"
+			propertyName="amm_immobili"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ACC_TFR"
+			propertyName="acc_tfr"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="AMM_TECNICO"
+			propertyName="amm_tecnico"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="AMM_ALTRI_BENI"
+			propertyName="amm_altri_beni"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="RES_FO"
+			propertyName="res_fo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="RES_MIN"
+			propertyName="res_min"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="RES_UE_INT"
+			propertyName="res_ue_int"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="RES_PRIVATI"
+			propertyName="res_privati"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="generale_affitto" />
+	<persistentProperty
+		name="gestione_nave" />
+	<persistentProperty
+		name="cc_brev_pi" />
+	<persistentProperty
+		name="edilizia" />
+	<persistentProperty
+		name="amm_immobili" />
+	<persistentProperty
+		name="acc_tfr" />
+	<persistentProperty
+		name="amm_tecnico" />
+	<persistentProperty
+		name="amm_altri_beni" />
+	<persistentProperty
+		name="res_fo" />
+	<persistentProperty
+		name="res_min" />
+	<persistentProperty
+		name="res_ue_int" />
+	<persistentProperty
+		name="res_privati" />
+</SQLPersistentInfo>

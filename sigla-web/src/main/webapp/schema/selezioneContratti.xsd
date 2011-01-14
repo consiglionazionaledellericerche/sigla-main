@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="https://contab.cnr.it/SIGLA/schema/selezioneContratti"
+	xmlns:sc="https://contab.cnr.it/SIGLA/schema/selezioneContratti"
+	elementFormDefault="qualified" attributeFormDefault="qualified">
+	<xs:simpleType name="StatoType">
+		 <xs:restriction base="xs:string">
+		<xs:enumeration value="D" />	
+		<xs:enumeration value="C" />	
+		<xs:enumeration value="P" />	
+		</xs:restriction>
+	 </xs:simpleType>
+
+	<xs:simpleType name="UoType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9A-Za-z]{3}\.[0-9A-Za-z]{3}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodiceType" >
+		 <xs:restriction base="xs:integer">
+		<xs:enumeration value="200" />	
+		<xs:enumeration value="201" />	
+		<xs:enumeration value="202" />	
+		<xs:enumeration value="203" />	
+		<xs:enumeration value="204" />	
+		<xs:enumeration value="205" />	
+		</xs:restriction>
+	 </xs:simpleType>
+	   
+	<xs:complexType name="ErroreType">
+		<xs:sequence>
+		<xs:element ref="sc:codice"  minOccurs="1" />
+		<xs:element ref="sc:messaggio"  minOccurs="1" />
+		</xs:sequence>
+	 </xs:complexType>
+	<xs:complexType name="ProtocolloType">
+		<xs:sequence>
+			<xs:element ref="sc:EsercizioProtocollo"  minOccurs="0" />
+			<xs:element ref="sc:CodProtocolloGenerale"  minOccurs="0" />
+		</xs:sequence>
+	 </xs:complexType>
+	 
+	<xs:complexType name="RichiestaType">
+		<xs:sequence>
+			<xs:element ref="sc:Uo" maxOccurs="unbounded"  minOccurs="1" />
+		    <xs:element ref="sc:Oggetto" />
+			<xs:element ref="sc:Giuridica" minOccurs="0"/>
+			<xs:element ref="sc:Stato"  minOccurs="0"/>
+			<xs:element ref="sc:Esercizio_da" minOccurs="0"/>
+			<xs:element ref="sc:Esercizio_a" minOccurs="0"/>
+			<xs:element ref="sc:Id" minOccurs="0"/>
+			<xs:element ref="sc:DaNum" />
+			<xs:element ref="sc:Num" />
+		</xs:sequence>	
+	 </xs:complexType>
+
+
+	<xs:complexType name="ContrattoType">
+		<xs:sequence>
+			<xs:element ref="sc:Id"/>
+			<xs:element ref="sc:Esercizio"/>
+			<xs:element ref="sc:Stato" />
+			<xs:element ref="sc:Uo" maxOccurs="unbounded"  minOccurs="1" />
+        	<xs:element ref="sc:Oggetto"  />
+			<xs:element ref="sc:FiguraEsterna" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="sc:Firmatario" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="sc:Responsabile" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="sc:Protocollo" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="sc:DataStipula"  minOccurs="0" maxOccurs="1" />
+			<xs:element ref="sc:DataInizioValidita"   minOccurs="0" maxOccurs="1" />
+			<xs:element ref="sc:DataFineValidita"  minOccurs="0" maxOccurs="1" />
+			<xs:element ref="sc:ImpAttivo"   minOccurs="0" maxOccurs="1" />
+			<xs:element ref="sc:ImpPassivo"  minOccurs="0" maxOccurs="1" />
+		</xs:sequence>	
+    </xs:complexType>
+
+	<xs:complexType name="FiguraGiuridicaType">
+	    <xs:sequence>
+	    	<xs:element ref="sc:CodiceTerzo"/>
+			<xs:element ref="sc:Denominazione" />
+		</xs:sequence>
+	 </xs:complexType>
+
+	<xs:complexType name="SelezioneType">
+	<xs:sequence>
+			<xs:element ref="sc:Contratto" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	 </xs:complexType>
+
+	<xs:complexType name="SelezioneContrattiType">
+		<xs:sequence>
+			<xs:element name="timestamp" type="xs:string"/>
+			<xs:element name="numris" type="xs:integer" />
+			<xs:element ref="sc:Richiesta" />
+			<xs:choice maxOccurs="1" minOccurs="1">
+				<xs:element ref="sc:Errore" />
+				<xs:element ref="sc:Contratti" />
+			</xs:choice>
+		</xs:sequence>		
+	 </xs:complexType>
+
+	<xs:element name="FiguraEsterna" type="sc:FiguraGiuridicaType" />
+	<xs:element name="Errore" type="sc:ErroreType">
+	<xs:annotation>
+			<xs:documentation>Errore.</xs:documentation>
+		</xs:annotation>
+	 </xs:element>
+	<xs:element name="Richiesta" type="sc:RichiestaType" >
+	<xs:annotation>
+			<xs:documentation>
+				I parametri della richiesta
+			</xs:documentation>
+	</xs:annotation>
+	 </xs:element>
+	<xs:element name="SelezioneContratti" type="sc:SelezioneContrattiType" />
+	<xs:element name="Contratto" type="sc:ContrattoType">
+	<xs:annotation>
+			<xs:documentation>I dati di un contratto.</xs:documentation>
+		</xs:annotation>
+	 </xs:element>
+	<xs:element name="Uo" type="sc:UoType" />
+	<xs:element name="Oggetto" type="xs:string" />
+	<xs:element name="Contratti" type="sc:SelezioneType" />
+	<xs:element name="Firmatario" type="sc:FiguraGiuridicaType" />
+	<xs:element name="Denominazione" type="xs:string" />
+	<xs:element name="Responsabile" type="sc:FiguraGiuridicaType" />
+	<xs:element name="Protocollo" type="sc:ProtocolloType" />
+	<xs:element name="DataStipula" type="xs:date" />
+ 	<xs:element name="Fgiuridica" type="xs:positiveInteger" />
+	<xs:element name="Giuridica" type="xs:string" />
+	<xs:element name="Stato" type="xs:string" />
+	<xs:element name="Esercizio_a" type="xs:positiveInteger" />
+	<xs:element name="Esercizio_da" type="xs:positiveInteger" />
+	<xs:element name="Esercizio" type="xs:positiveInteger" />
+	<xs:element name="Id" type="xs:positiveInteger" />
+	<xs:element name="DaNum" type="xs:positiveInteger"  />
+	<xs:element name="Num" type="xs:positiveInteger"  />
+	<xs:element name="CodiceTerzo" type="xs:positiveInteger" />	
+	<xs:element name="DataInizioValidita" type="xs:date" /> 
+	<xs:element name="DataFineValidita" type="xs:date"/> 
+	<xs:element name="ImpAttivo" type="xs:float" /> 
+	<xs:element name="ImpPassivo" type="xs:float" nillable="true"/>
+	
+	<xs:element name="EsercizioProtocollo" type="xs:positiveInteger"/>
+	<xs:element name="CodProtocolloGenerale" type="xs:string"/>
+	
+	<xs:element name="messaggio"  type="xs:string"/>
+	<xs:element name="codice" type="sc:CodiceType" />
+	
+</xs:schema>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="find_tipo_rapporto"
+		property="tipoRapporto"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="Rapporto" />
+	<fieldProperty
+		name="cd_tipo_rapporto"
+		property="cd_tipo_rapporto"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Rapporto"
+		nullable="false"
+		readonlyProperty = "ROTipoRapporto"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="ds_tipo_rapporto"
+		property="tipoRapporto.ds_tipo_rapporto"
+		maxLength="100"
+		inputSize="60"
+		inputType="ROTEXT"
+		nullable="false"
+		label="Descrizione tipo rapporto" />
+	<fieldProperty
+		name="find_trattamento"
+		property="tipoTrattamento"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="Trattamento" />
+	<fieldProperty
+		name="cd_trattamento"
+		property="cd_trattamento"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty = "ROTipoTrattamento"
+		label="Trattamento"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="ds_trattamento"
+		property="tipoTrattamento.ds_ti_trattamento"
+		maxLength="100"
+		inputSize="60"
+		nullable="false"
+		inputType="ROTEXT"
+		label="Descrizione tipo trattamento" />
+
+
+	<formFieldProperty name="find_tipo_rapporto" />
+	<formFieldProperty name="cd_tipo_rapporto" />
+	<formFieldProperty name="ds_tipo_rapporto" />
+	<formFieldProperty name="find_trattamento" />
+	<formFieldProperty name="cd_trattamento" />
+	<formFieldProperty name="ds_trattamento" />
+
+	<columnFieldProperty name="cd_tipo_rapporto" />
+	<columnFieldProperty name="ds_tipo_rapporto" />
+	<columnFieldProperty name="cd_trattamento" />
+
+	<findFieldProperty name="cd_tipo_rapporto" />
+	<findFieldProperty name="cd_trattamento" />
+
+</bulkInfo>

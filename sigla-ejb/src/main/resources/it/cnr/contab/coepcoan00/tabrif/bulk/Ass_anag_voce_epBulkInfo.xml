@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ente_altro"
+		property="ente_altro"
+		maxLength="1"
+		inputSize="1"
+		label="Ente/Altro"
+		inputType="SELECT"
+		keysProperty="ti_entita_giuridicaKeys"
+		nullable="false"
+		enabledOnEdit="false"
+		enabledOnInsert="true"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio"
+		maxLength="4"
+		inputSize="4"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"/>
+	<fieldProperty
+		name="ti_entita"
+		property="ti_entita"
+		maxLength="5"
+		inputSize="5"
+		label="Tipo entit&#224;"
+		inputType="SELECT"
+		keysProperty="ti_entitaKeys"
+		nullable="false"
+		enabledOnEdit="false"
+		enabledOnInsert="true"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="ti_terzo"
+		property="ti_terzo"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		label="Tipo di terzo"
+		keysProperty="ti_terzoKeys"
+		nullable="false"
+		enabledOnEdit="false"
+		enabledOnInsert="true"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="find_conto"
+		property="conto"
+		inputType="SEARCHTOOL" 
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_voce_ep"
+		property="conto.cd_voce_ep"
+		readonlyProperty="ROConto"
+		maxLength="45"
+		inputSize="20"
+		inputType="TEXT"
+		label="Conto"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"				
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_conto"
+		property="conto.ds_voce_ep"
+		readonlyProperty="ROConto"
+		label=""
+		inputSize="60"
+		inputType="ROTEXT" 
+		/>
+	<fieldProperty
+		name="find_classanag"
+		property="classanag"
+		inputType="SEARCHTOOL"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_classific_anag"
+		property="classanag.cd_classific_anag"
+		readonlyProperty="ROClassanag"
+		maxLength="10"
+		inputSize="20"
+		inputType="TEXT"
+		label="Classificazione anag."
+		formatName="it.cnr.jada.util.UppercaseStringFormat"				
+		nullable="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false"/>
+	<fieldProperty
+		name="ds_classanag"
+		property="classanag.ds_classific_anag"
+		readonlyProperty="ROClassanag"
+		label=""
+		inputSize="60"
+		inputType="ROTEXT" 
+		/>
+	<fieldProperty
+		name="italiano_estero"
+		property="italiano_estero"
+		maxLength="1"
+		inputSize="1"
+		label="Italiano/Estero"
+		inputType="SELECT"
+		keysProperty="ti_italiano_esteroKeys"
+		nullable="false"
+		enabledOnEdit="false"
+		enabledOnInsert="true"
+		enabledOnSearch="true"/>
+		
+
+	<formFieldProperty
+		name="ente_altro" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="ti_entita" />
+	<formFieldProperty
+		name="ti_terzo" />
+	<formFieldProperty
+		name="find_conto" />
+	<formFieldProperty
+		name="cd_voce_ep" />
+	<formFieldProperty
+		name="ds_conto" />
+	<formFieldProperty
+		name="find_classanag" />
+	<formFieldProperty
+		name="cd_classific_anag" />
+	<formFieldProperty
+		name="ds_classanag" />
+	<formFieldProperty
+		name="italiano_estero" />
+
+	<columnFieldProperty
+		name="ente_altro" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="ti_entita" />
+	<columnFieldProperty
+		name="ti_terzo" />
+	<columnFieldProperty
+		name="cd_voce_ep" />
+	<columnFieldProperty
+		name="cd_classific_anag" />
+	<columnFieldProperty
+		name="italiano_estero" />
+
+	<findFieldProperty
+		name="ente_altro" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="ti_entita" />
+	<findFieldProperty
+		name="ti_terzo" />
+	<findFieldProperty
+		name="cd_voce_ep" />
+	<findFieldProperty
+		name="cd_classific_anag" />
+	<findFieldProperty
+		name="italiano_estero" />
+
+</bulkInfo>

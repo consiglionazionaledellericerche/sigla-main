@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.bulk.Parametri_uoBulk"
+	homeClassName="it.cnr.contab.config00.bulk.Parametri_uoHome">
+	<defaultColumnMap
+		tableName="PARAMETRI_UO">
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="PG_MODULO_DEFAULT"
+			propertyName="modulo_default.pg_progetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="unita_organizzativa"
+		partOfOid="true" />
+	<persistentProperty
+		name="modulo_default"/>
+</SQLPersistentInfo>

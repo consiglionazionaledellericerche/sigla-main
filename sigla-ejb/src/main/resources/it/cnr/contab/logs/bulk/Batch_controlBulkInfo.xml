@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="utente"
+		property="utente"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Utente"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_batch"
+		property="ds_batch"
+		maxLength="50"
+		inputSize="50"
+		rows="2"
+		cols="25"
+		inputType="TEXTAREA"
+		label="Descrizione"
+		nullable="false"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_attivato"
+		property="fl_attivato"
+		inputType="CHECKBOX"
+		label="Attivo" />
+	<fieldProperty
+		name="procedura"
+		property="procedura"
+		inputType="SEARCHTOOL"
+		label="Procedura"
+		nullable="false"
+		formName="searchtool" />
+	<fieldProperty
+		name="dt_partenza"
+		property="dt_partenza"
+		inputSize="20"
+		inputType="TEXT"
+		label="Data e ora"
+		nullable="false"
+		formatName="timestamp" />
+	<fieldProperty
+		name="intervallo"
+		property="intervallo"
+		inputSize="20"
+		inputType="TEXT"
+		label="Intervallo" />
+	<fieldProperty
+		name="intervallo_calcolato"
+		property="intervallo_calcolato"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		label="Intervallo" />
+	<fieldProperty
+		name="tipo_intervallo"
+		property="tipo_intervallo"
+		keysProperty="tipo_intervalloKeys"
+		inputType="SELECT"
+		nullable="false"
+		label="Unità intervallo" />
+
+	<formFieldProperty
+		name="ds_batch" />
+	<formFieldProperty
+		name="procedura" />
+	<formFieldProperty
+		name="dt_partenza" />
+	<formFieldProperty
+		name="intervallo_calcolato" />
+	<formFieldProperty
+		name="tipo_intervallo" />
+		
+	<columnFieldProperty
+		name="utente" />
+	<columnFieldProperty
+		name="ds_batch" />
+	<columnFieldProperty
+		name="fl_attivato" />
+	<columnFieldProperty
+		name="dt_partenza" />
+	<columnFieldProperty
+		name="intervallo_calcolato" />
+	<columnFieldProperty
+		name="tipo_intervallo" />
+
+</bulkInfo>

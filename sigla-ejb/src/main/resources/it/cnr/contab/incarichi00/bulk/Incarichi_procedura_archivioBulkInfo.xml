@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_procedura"
+		property="pg_procedura"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo identificativo della richiesta di attivazione contratto" />
+
+	<formFieldProperty
+		name="pg_procedura" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_procedura" />
+	<findFieldProperty
+		name="progressivo_riga" />
+	<findFieldProperty
+		name="nome_file" />
+	<findFieldProperty
+		name="ds_file" />
+	<findFieldProperty
+		name="tipo_archivio" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="data_creazione" />
+	<findFieldProperty
+		name="utcr" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_procedura" />
+	<columnFieldProperty
+		name="progressivo_riga" />
+	<columnFieldProperty
+		name="nome_file" />
+	<columnFieldProperty
+		name="ds_file" />
+	<columnFieldProperty
+		name="tipo_archivio" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="data_creazione" />
+	<columnFieldProperty
+		name="utcr" />
+</bulkInfo>

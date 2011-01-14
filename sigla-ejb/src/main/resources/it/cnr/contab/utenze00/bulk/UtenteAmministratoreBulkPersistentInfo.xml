@@ -1,0 +1,15 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.UtenteAmministratoreBulk"
+	homeClassName="it.cnr.contab.utenze00.bulk.UtenteAmministratoreHome" >
+	<defaultColumnMap
+		tableName="UTENTE" >
+		<columnMapping
+			columnName="CD_CDS_CONFIGURATORE"
+			propertyName="cds.cd_unita_organizzativa"
+			/>
+	</defaultColumnMap>
+<columnMap 
+		name="V_UTENTE_CDS"
+		tableName="V_UTENTE_CDS"
+		extends="default" />
+</SQLPersistentInfo>

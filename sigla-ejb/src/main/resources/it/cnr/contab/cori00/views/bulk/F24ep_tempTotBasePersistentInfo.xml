@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.cori00.views.bulk.F24ep_tempTotBase"
+	keyClassName="it.cnr.contab.cori00.views.bulk.F24ep_tempTotKey"
+	homeClassName="it.cnr.contab.cori00.views.bulk.F24ep_tempTotHome">
+	<defaultColumnMap
+		tableName="F24EP_TEMP_TOT">
+		<columnMapping
+			columnName="TIPO_RIGA_F24"
+			propertyName="tipo_riga_f24"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CODICE_TRIBUTO"
+			propertyName="codice_tributo"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CODICE_ENTE"
+			propertyName="codice_ente"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="MESE_RIF"
+			propertyName="mese_rif"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="ANNO_RIF"
+			propertyName="anno_rif"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_DEBITO"
+			propertyName="importo_debito"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_LIQUIDAZIONE"
+			propertyName="pg_liquidazione"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MATRICOLA_INPS"
+			propertyName="cd_matricola_inps"
+			sqlTypeName="VARCHAR"
+			columnSize="17"
+			nullable="true" />	
+		<columnMapping
+			columnName="PERIODO_DA"
+			propertyName="periodo_da"
+			sqlTypeName="VARCHAR"
+			columnSize="6"
+			nullable="true" />	
+		<columnMapping
+			columnName="PERIODO_A"
+			propertyName="periodo_a"
+			sqlTypeName="VARCHAR"
+			columnSize="6"
+			nullable="true" />		
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipo_riga_f24" />
+	<persistentProperty
+		name="codice_tributo" />
+	<persistentProperty
+		name="codice_ente" />
+	<persistentProperty
+		name="mese_rif" />
+	<persistentProperty
+		name="anno_rif" />
+	<persistentProperty
+		name="importo_debito" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="pg_liquidazione" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_matricola_inps" />
+	<persistentProperty
+		name="periodo_da" />
+	<persistentProperty
+		name="periodo_a" />	
+</SQLPersistentInfo>

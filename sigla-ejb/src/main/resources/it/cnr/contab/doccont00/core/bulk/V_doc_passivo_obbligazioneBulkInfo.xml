@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ragione_sociale"
+		property="terzoAnag.ragione_sociale"
+		maxLength="30"
+		inputSize="100"
+		inputType="TEXT"
+		label="Ragione Sociale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_precedente"
+		property="terzoAnag.cd_precedente"
+		label="Codice Precedente"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="8"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_pgiro"
+		property="fl_pgiro"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="P.Giro"
+		keysProperty="fl_pgiro_Keys"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_fai_reversale"
+		property="fl_fai_reversale"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cognome"
+		property="terzoAnag.cognome"
+		maxLength="30"
+		inputSize="50"
+		inputType="TEXT"
+		label="Cognome"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="nome"
+		property="terzoAnag.nome"
+		maxLength="30"
+		inputSize="50"
+		inputType="TEXT"
+		label="Nome"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_cds_obbligazione"
+		property="cd_cds_obbligazione"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds_obbligazione"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_unita_organizzativa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio_obbligazione"
+		property="esercizio_obbligazione"
+		inputType="TEXT"
+		label="esercizio_obbligazione" />
+	<fieldProperty
+		name="esercizio_ori_obbligazione"
+		property="esercizio_ori_obbligazione"
+		inputType="TEXT"
+		label="Es. impegno" />
+	<fieldProperty
+		name="pg_obbligazione"
+		property="pg_obbligazione"
+		inputType="TEXT"
+		label="Nr. impegno" />
+	<fieldProperty
+		name="pg_obbligazione_scadenzario"
+		property="pg_obbligazione_scadenzario"
+		inputType="TEXT"
+		label="pg_obbligazione_scadenzario" />
+	<fieldProperty
+		name="pg_documento_amm"
+		property="pg_documento_amm"
+		inputType="TEXT"
+		label="Progressivo Documento" />
+	<fieldProperty
+		name="nr_fattura_fornitore"
+		property="nr_fattura_fornitore"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Nr.Fattura Fornitore"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_terzo"
+		property="terzoAnag.cd_terzo"
+		inputType="TEXT"
+		label="Beneficiario" />
+	<fieldProperty
+		name="cd_terzo_cessionario"
+		property="cd_terzo_cessionario"
+		inputType="TEXT"
+		label="Cessionario" />		
+	<fieldProperty
+		name="cd_modalita_pag"
+		property="cd_modalita_pag"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_modalita_pag"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_scadenza"
+		property="im_scadenza"
+		inputType="TEXT"
+		maxLength="13"
+		inputSize="13"
+		label="Importo" 
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="im_mandato_riga"
+		property="im_mandato_riga"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="13"
+		inputSize="13"
+		inputType="TEXT"
+		label="Importo"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="pg_banca"
+		property="pg_banca"
+		inputType="TEXT"
+		label="pg_banca" />
+	<fieldProperty
+		name="dt_scadenza"
+		property="dt_scadenza"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Scadenza"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="cd_tipo_documento_amm"
+		property="cd_tipo_documento_amm"
+		inputType="SELECT"
+		keysProperty="tipoDocumentoKeys"
+		label="Tipo" />
+	<fieldProperty
+		name="ds_tipo_documento_amm"
+		property="ds_tipo_documento_amm"
+		inputType="ROTEXT"
+		label="Tipo" />
+	<fieldProperty
+		name="ti_pagamento"
+		property="ti_pagamento"
+		inputType="SELECT"
+		keysProperty="classeDiPagamentoKeys"
+		label="Classe di pagamento" />
+	<fieldProperty
+		name="partita_iva"
+		property="terzoAnag.partita_iva"
+		inputType="TEXT"
+		label="Partita IVA" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="terzoAnag.codice_fiscale"
+		inputType="TEXT"
+		label="Codice Fiscale" />
+	<fieldProperty
+		name="im_iva_doc_amm"
+		property="im_iva_doc_amm"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		inputType="TEXT"
+		label="Iva Documento" />	
+	<fieldProperty
+		name="im_imponibile_doc_amm"
+		property="im_imponibile_doc_amm"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		inputType="TEXT"
+		label="Imp. Documento" />	
+	<fieldProperty
+		name="im_totale_doc_amm"
+		property="im_totale_doc_amm"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		inputType="TEXT"
+		label="Imp. Tot. Documento" />	
+	<fieldProperty
+		name="pg_lettera"
+		property="pg_lettera"
+		inputType="TEXT"
+		label="Prog. Lettera" />	
+	<formFieldProperty
+		name="ragione_sociale" />
+	<formFieldProperty
+		name="cd_precedente" />
+	<formFieldProperty
+		name="cognome" />
+	<formFieldProperty
+		name="nome" />		
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_cds_obbligazione" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="esercizio_obbligazione" />
+	<formFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<formFieldProperty
+		name="pg_obbligazione" />
+	<formFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<formFieldProperty
+		name="pg_fattura_passiva" />
+	<formFieldProperty
+		name="nr_fattura_fornitore" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="cd_modalita_pag" />
+	<formFieldProperty
+		name="im_scadenza" />
+	<formFieldProperty
+		name="pg_banca" />
+	<formFieldProperty
+		name="dt_scadenza" />
+	<formFieldProperty
+		name="cd_tipo_documento_amm" />
+	<formFieldProperty
+		name="partita_iva" />
+	<formFieldProperty
+		name="codice_fiscale" />		
+
+	<columnFieldProperty
+		name="pg_documento_amm"
+		label="Nr. Documento"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="nr_fattura_fornitore"
+		label="Nr. Fattura"
+		inputType="ROTEXT"/>		
+	<columnFieldProperty
+		name="ds_tipo_documento_amm"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="cd_terzo"
+		columnStyle="padding-left:20px"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="cd_terzo_cessionario"
+		columnStyle="padding-left:20px"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="esercizio_ori_obbligazione"
+		columnStyle="padding-left:20px"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="pg_obbligazione"
+		columnStyle="padding-left:20px"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="fl_pgiro"
+		inputType="ROTEXT"
+		columnStyle="text-align: center"/>
+	<columnFieldProperty
+		name="dt_scadenza"
+		inputType="ROTEXT"
+		columnStyle="width:80px"/>
+	<columnFieldProperty
+		name="im_mandato_riga"
+		inputType="ROTEXT"
+		columnStyle="text-align: right"/>
+	<columnFieldProperty
+		name="ti_pagamento"
+		columnStyle="padding-left:20px"
+		inputType="ROTEXT"/>
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_cds_obbligazione" />		
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="esercizio_obbligazione" />
+	<findFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<findFieldProperty
+		name="pg_obbligazione" />
+	<findFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<findFieldProperty
+		name="pg_fattura_passiva" />
+	<findFieldProperty
+		name="nr_fattura_fornitore" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="cd_terzo_cessionario" />
+	<findFieldProperty
+		name="cd_modalita_pag" />
+	<findFieldProperty
+		name="im_scadenza" />
+	<findFieldProperty
+		name="pg_banca" />
+	<findFieldProperty
+		name="dt_scadenza" />
+	<findFieldProperty
+		name="cd_tipo_documento_amm" />
+	<findFieldProperty
+		name="ti_pagamento" />
+	<findFieldProperty
+		name="pg_documento_amm" />
+	<columnSet	
+	     name="impegnidocumento">
+     <columnFieldProperty
+   		name="pg_documento_amm"
+		label="Nr. Documento"/>
+	<columnFieldProperty
+		name="nr_fattura_fornitore"
+		label="Nr. Fattura"/>		
+	<columnFieldProperty
+		name="ds_tipo_documento_amm"/>
+	<columnFieldProperty
+		name="esercizio_ori_obbligazione"
+		columnStyle="padding-left:20px"/>
+	<columnFieldProperty
+		name="pg_obbligazione"
+		columnStyle="padding-left:20px"/>	
+	<columnFieldProperty
+		name="dt_scadenza"
+		columnStyle="width:80px"/>
+	<columnFieldProperty
+		name="im_imponibile_doc_amm"
+		columnStyle="text-align: right"/>	
+	<columnFieldProperty
+		name="im_iva_doc_amm"
+		columnStyle="text-align: right"/>	
+	<columnFieldProperty
+		name="im_totale_doc_amm"
+		columnStyle="text-align: right"/>				
+	<columnFieldProperty
+		name="pg_lettera"
+		columnStyle="text-align: right"/>				
+	</columnSet>		
+</bulkInfo>

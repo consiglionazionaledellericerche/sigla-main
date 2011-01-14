@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Dettagli Parte Spesa"
+          longDescription="Dettagli Parte Spesa">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="mese"
+		property="mese"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		label="Mese" />
+	<fieldProperty
+		name="tipo_flusso"
+		property="tipo_flusso"
+		keysProperty="tipo_flussoKeys"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipologia Flusso" />
+	<fieldProperty
+		name="cd_cds_obbligazione"
+		property="cd_cds_obbligazione"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds obbligazione" />
+	<fieldProperty
+		name="esercizio_obbligazione"
+		property="esercizio_obbligazione"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio obbligazione" />
+	<fieldProperty
+		name="pg_obbligazione"
+		property="pg_obbligazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero obbligazione" />
+	<fieldProperty
+		name="im_totale"
+		property="im_totale"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo" />
+	<fieldProperty
+		name="esercizio_ori_obbligazione"
+		property="esercizio_ori_obbligazione"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio origine obbligazione" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="mese" />
+	<formFieldProperty
+		name="tipo_flusso" />
+	<formFieldProperty
+		name="cd_cds_obbligazione" />
+	<formFieldProperty
+		name="esercizio_obbligazione" />
+	<formFieldProperty
+		name="pg_obbligazione" />
+	<formFieldProperty
+		name="im_totale" />
+	<formFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="mese" />
+	<findFieldProperty
+		name="tipo_flusso" />
+	<findFieldProperty
+		name="cd_cds_obbligazione" />
+	<findFieldProperty
+		name="esercizio_obbligazione" />
+	<findFieldProperty
+		name="pg_obbligazione" />
+	<findFieldProperty
+		name="im_totale" />
+	<findFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<columnFieldProperty
+		name="tipo_flusso" />
+	<columnFieldProperty
+		name="cd_cds_obbligazione" />
+	<columnFieldProperty
+		name="esercizio_obbligazione" />
+	<columnFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<columnFieldProperty
+		name="pg_obbligazione" />
+	<columnFieldProperty
+		name="im_totale" />
+</bulkInfo>

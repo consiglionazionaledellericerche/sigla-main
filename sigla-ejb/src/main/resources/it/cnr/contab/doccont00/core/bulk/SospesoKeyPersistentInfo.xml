@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.SospesoKey" >
+	<defaultColumnMap
+		tableName="SOSPESO" >
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_SOSPESO"
+			propertyName="cd_sospeso"
+			sqlTypeName="VARCHAR"
+			columnSize="24"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TI_ENTRATA_SPESA"
+			propertyName="ti_entrata_spesa"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TI_SOSPESO_RISCONTRO"
+			propertyName="ti_sospeso_riscontro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_sospeso"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_entrata_spesa"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_sospeso_riscontro"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_cds"
+		partOfOid="true" />
+</SQLPersistentInfo>

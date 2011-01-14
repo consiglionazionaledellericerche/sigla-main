@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.AddizionaliKey">
+	<defaultColumnMap
+		tableName="ADDIZIONALI">
+		<columnMapping
+			columnName="CD_CATASTALE"
+			propertyName="cd_catastale"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_catastale"
+		partOfOid="true" />
+</SQLPersistentInfo>

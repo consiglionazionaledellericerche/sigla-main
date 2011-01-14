@@ -1,0 +1,250 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Annotazione d'Entrata su Partita di Giro">
+	<fieldProperty
+		name="cd_tipo_documento_cont"
+		property="cd_tipo_documento_cont"
+		inputType="SELECT"
+		keysProperty="competenzaResiduoKeys"		
+		label="Competenza/Residuo"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"				
+		caseSensitiveSearch="false" />		
+		/>
+	<fieldProperty
+		name="im_accertamento"
+		property="im_accertamento"
+		label="Importo"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="unita_organizzativa"
+		property="unita_organizzativa"
+		inputType="SELECT"
+		optionsProperty="unitaOrganizzativaOptions"
+		printProperty="ds_estesa"
+		nullable="false"
+		inputSize="40"
+		label="Unit&#224; organizzativa"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		enabledOnEdit="false"				
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_scadenza"
+		property="dt_scadenza"
+		label="Data scadenza"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="esercizio_reversale"
+		property="esercizio_reversale"
+		label="Esercizio reversale"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"
+		/>
+	<fieldProperty
+		name="pg_reversale"
+		property="pg_reversale"
+		label="Nr. reversale"
+		inputType="ROTEXT"
+		/>
+	<fieldProperty
+		name="esercizio_doc_attivo"
+		property="esercizio_doc_attivo"
+		label="Esercizio doc. attivo"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"
+		/>
+	<fieldProperty
+		name="pg_doc_attivo"
+		property="pg_doc_attivo"
+		label="Nr. doc. attivo"
+		inputType="ROTEXT"
+		/>
+	<fieldProperty
+		name="cd_tipo_documento_amm"
+		property="cd_tipo_documento_amm"
+		label="Tipo doc. attivo"
+		keysProperty= "tipoDocumentoKeys"
+		inputType="ROTEXT"
+		/>
+	<fieldProperty
+		name="esercizio_originale"
+		property="esercizio_originale"
+		label="Esercizio Accertamento"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="pg_accertamento"
+		property="pg_accertamento"
+		label="Numero Progressivo"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_voce"
+		property="capitolo.cd_voce"
+		label="Voce del Piano"
+		inputType="TEXT"
+		maxLength="50"
+		inputSize="20"
+		readonlyProperty="ROCapitolo"		
+		enabledOnSearch="true"
+		nullable="false"		
+		/>
+	<fieldProperty
+		name="find_capitolo"
+		property="capitolo"
+		inputType="SEARCHTOOL"
+		label="Voce del Piano"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="ds_voce"
+		property="capitolo.ds_voce"
+		readonlyProperty="ROCapitolo"
+		label=""
+		inputSize="60"
+		inputType="ROTEXT" 
+		/>
+	<fieldProperty
+		name="dt_cancellazione"
+		property="dt_cancellazione"
+		label="Data Cancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="fl_netto_sospeso"
+		property="fl_netto_sospeso"
+		inputType="CHECKBOX"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Generata dalla sospensione&lt;BR&gt;di un pagamento netto" />		
+
+	<formFieldProperty
+		name="cd_tipo_documento_cont"
+		/>	
+	<formFieldProperty
+		name="im_accertamento"
+		/>	
+	<formFieldProperty
+		name="unita_organizzativa"
+		/>
+	<formFieldProperty
+		name="dt_scadenza"
+		/>
+	<formFieldProperty
+		name="esercizio_reversale"
+		/>
+	<formFieldProperty
+		name="pg_reversale"
+		/>
+	<formFieldProperty
+		name="esercizio_doc_attivo"
+		/>
+	<formFieldProperty
+		name="pg_doc_attivo"
+		/>
+	<formFieldProperty
+		name="cd_tipo_documento_amm"
+		/>
+	<formFieldProperty
+		name="esercizio_originale"
+		/>
+	<formFieldProperty
+		name="pg_accertamento"
+		/>
+	<formFieldProperty
+		name="cd_voce"
+		/>
+	<formFieldProperty
+		name="ds_voce"
+		/>
+	<formFieldProperty
+		name="find_capitolo"
+		/>
+	<formFieldProperty
+		name="dt_cancellazione"
+		/>
+	<formFieldProperty
+		name="fl_netto_sospeso"
+		/>
+		
+	<columnFieldProperty
+		name="esercizio"
+		label="Esercizio"
+		/>
+	<columnFieldProperty
+		name="esercizio_originale"
+		/>
+	<columnFieldProperty
+		name="pg_accertamento"
+		/>
+	<columnFieldProperty
+		name="cd_terzo"	/>
+	<columnFieldProperty
+		name="im_accertamento"
+		columnStyle="width:130px; text-align: right; padding-right:5px"
+		/>
+	<columnFieldProperty
+		name="cd_voce"	/>
+	<columnFieldProperty
+		name="dt_cancellazione"
+		/>
+	<columnFieldProperty
+		name="fl_netto_sospeso"
+		/>		
+
+	<findFieldProperty
+		name="im_accertamento"
+		/>
+	<findFieldProperty
+		name="esercizio"
+		label="Esercizio"
+		/>
+	<findFieldProperty
+		name="esercizio_originale"
+		/>
+	<findFieldProperty
+		name="pg_accertamento"
+		/>	
+	<findFieldProperty
+		name="cd_voce"
+		/>
+	<findFieldProperty
+		name="dt_cancellazione"
+		/>
+	<findFieldProperty
+		name="fl_netto_sospeso"
+		/>		
+</bulkInfo>

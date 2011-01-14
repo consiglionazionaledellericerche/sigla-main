@@ -1,0 +1,20 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.latt.bulk.Ass_tipo_la_cdrBulk"
+	homeClassName="it.cnr.contab.config00.latt.bulk.Ass_tipo_la_cdrHome" >
+	<defaultColumnMap
+		tableName="ASS_TIPO_LA_CDR" >
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="centro_responsabilita.cd_centro_responsabilita" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="centro_responsabilita"
+		partOfOid="true" />
+
+	<fetchPolicy
+		name="it.cnr.contab.config00.comp.AssociazioniLinea_attivitaComponent.inizializzaBulkPerModifica">
+		<exclude pattern="*" />
+		<include pattern="centro_responsabilita" />
+	</fetchPolicy>
+
+</SQLPersistentInfo>

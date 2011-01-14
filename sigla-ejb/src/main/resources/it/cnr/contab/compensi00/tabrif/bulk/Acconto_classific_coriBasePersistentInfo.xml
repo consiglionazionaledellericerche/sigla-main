@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Acconto_classific_coriBase"
+	keyClassName="it.cnr.contab.compensi00.tabrif.bulk.Acconto_classific_coriKey"
+	homeClassName="it.cnr.contab.compensi00.tabrif.bulk.Acconto_classific_coriHome">
+	<defaultColumnMap
+		tableName="ACCONTO_CLASSIFIC_CORI">
+		<columnMapping
+			columnName="IMPONIBILE"
+			propertyName="imponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="ALIQUOTA"
+			propertyName="aliquota"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			columnScale="6"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ACCONTO_CALCOLATO"
+			propertyName="im_acconto_calcolato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ACCONTO_TRATTENUTO"
+			propertyName="im_acconto_trattenuto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_COMUNE"
+			propertyName="pg_comune"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_CONGUAGLIO"
+			propertyName="pg_conguaglio"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UO_CONGUAGLIO"
+			propertyName="cd_uo_conguaglio"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true"/>
+		<columnMapping
+			columnName="CD_CDS_CONGUAGLIO"
+			propertyName="cd_cds_conguaglio"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true"/>
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="imponibile" />
+	<persistentProperty
+		name="aliquota" />
+	<persistentProperty
+		name="im_acconto_calcolato" />
+	<persistentProperty
+		name="im_acconto_trattenuto" />
+	<persistentProperty
+		name="pg_comune" />
+	<persistentProperty
+		name="pg_conguaglio" />
+	<persistentProperty
+		name="cd_uo_conguaglio" />
+	<persistentProperty
+		name="cd_cds_conguaglio" />						
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

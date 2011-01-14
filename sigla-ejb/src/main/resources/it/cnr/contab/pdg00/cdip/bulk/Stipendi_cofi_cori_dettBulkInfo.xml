@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Dettagli Parte Entrata"
+          longDescription="Dettagli Parte Entrata">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="mese"
+		property="mese"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		label="Mese" />
+	<fieldProperty
+		name="tipo_flusso"
+		property="tipo_flusso"
+		keysProperty="tipo_flussoKeys"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipologia Flusso" />		
+	<fieldProperty
+		name="cd_contributo_ritenuta"
+		property="cd_contributo_ritenuta"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice CO/RI" />
+	<fieldProperty
+		name="ti_ente_percipiente"
+		property="ti_ente_percipiente"
+		keysProperty="tipo_flussoKeys"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo" />
+	<fieldProperty
+		name="ammontare"
+		property="ammontare"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Ammontare" />
+	<fieldProperty
+		name="dt_da_competenza_coge"
+		property="dt_da_competenza_coge"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data inizio competenza" />
+	<fieldProperty
+		name="dt_a_competenza_coge"
+		property="dt_a_competenza_coge"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data fine competenza" />
+	<fieldProperty
+		name="cd_catastale"
+		property="cd_catastale"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice Catastale" />
+	<fieldProperty
+		name="saldo"
+		property="saldo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Saldo" />	
+		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="mese" />
+	<formFieldProperty
+		name="tipo_flusso" />
+	<formFieldProperty
+		name="cd_contributo_ritenuta" />
+	<formFieldProperty
+		name="ti_ente_percipiente" />
+	<formFieldProperty
+		name="ammontare" />
+	<formFieldProperty
+		name="dt_da_competenza_coge" />
+	<formFieldProperty
+		name="dt_a_competenza_coge" />
+	<formFieldProperty
+		name="cd_catastale" />	
+	<formFieldProperty
+		name="saldo" />	
+		
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="mese" />
+	<findFieldProperty
+		name="tipo_flusso" />
+	<findFieldProperty
+		name="cd_contributo_ritenuta" />
+	<findFieldProperty
+		name="ti_ente_percipiente" />
+	<findFieldProperty
+		name="ammontare" />
+	<findFieldProperty
+		name="dt_da_competenza_coge" />
+	<findFieldProperty
+		name="dt_a_competenza_coge" />
+	<findFieldProperty
+		name="cd_catastale" />	
+	<findFieldProperty
+		name="saldo" />	
+		
+	<columnFieldProperty
+		name="tipo_flusso" />
+	<columnFieldProperty
+		name="cd_contributo_ritenuta" />
+	<columnFieldProperty
+		name="ti_ente_percipiente" />
+	<columnFieldProperty
+		name="ammontare" />
+	<columnFieldProperty
+		name="dt_da_competenza_coge" />
+	<columnFieldProperty
+		name="dt_a_competenza_coge" />
+	<columnFieldProperty
+		name="cd_catastale" />	
+	<columnFieldProperty
+		name="saldo" />	
+		
+</bulkInfo>

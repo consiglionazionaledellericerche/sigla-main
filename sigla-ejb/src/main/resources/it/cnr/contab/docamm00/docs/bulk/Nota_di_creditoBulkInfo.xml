@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="im_importo_totale_fattura_fornitore_euro"
+		label="Totale nota di credito fornitore euro" />
+	<fieldProperty
+		name="nr_fattura_fornitore"
+		property="nr_fattura_fornitore"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		label="N. Nota di Credito"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="importoTotalePerAccertamenti"
+		property="importoTotalePerAccertamenti"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		readonlyProperty="ROImportoTotalePerAccertamenti"
+		label="Totale dettagli" />
+
+	<fieldProperty
+		name="modalita_pagamento_uo"
+		property="modalita_pagamento_uo"
+		printProperty="cd_ds_modalita_pagamento"
+		optionsProperty="modalita_uo"
+		readonlyProperty="ROModalitaPagamentoUO"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		nullable="false"
+		label="Mod. pagamento" />
+	<fieldProperty
+		name="termini_pagamento_uo"
+		property="termini_pagamento_uo"
+		printProperty="cd_ds_termini_pagamento"
+		optionsProperty="termini_uo"
+		readonlyProperty="ROTerminiPagamentoUO"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		label="Term. pagamento" />
+		
+	<fieldProperty
+		name="listabancheuo"
+		property="banca_uo"
+		inputType="BUTTON"
+		img="img/find16.gif"
+		readonlyProperty="abledToInsertUOBank"
+		label="Conto/i..."
+		href="javascript:submitForm('doSearch(main.listabancheuo)')" />
+	<fieldProperty
+		name="pg_banca_uo"
+		property="banca_uo.pg_banca"
+		inputType="TEXT"
+		label="" />
+			
+	<fieldProperty
+		name="contoAUO"
+		property="banca_uo"
+		inputType="FORM"
+		formName="A"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoPUO"
+		property="banca_uo"
+		inputType="FORM"
+		formName="P"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoBUO"
+		property="banca_uo"
+		inputType="FORM"
+		formName="BdocAmm"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoQUO"
+		property="banca_uo"
+		inputType="FORM"
+		formName="Q"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoIUO"
+		property="banca_uo"
+		inputType="FORM"
+		formName="I"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoNUO"
+		property="banca_uo"
+		inputType="FORM"
+		formName="N"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+			
+	<formFieldProperty
+		name="nr_fattura_fornitore"
+		label="N. Nota di Credito" />
+	<formFieldProperty
+		name="importoTotalePerAccertamenti" />
+
+	<formFieldProperty
+		name="modalita_pagamento_uo"/>
+	<formFieldProperty
+		name="termini_pagamento_uo"/>
+		
+	<formFieldProperty
+		name="listabancheuo"/>
+			
+	<formFieldProperty
+		name="contoAUO"/>
+	<formFieldProperty
+		name="contoPUO"/>
+	<formFieldProperty
+		name="contoBUO"/>
+	<formFieldProperty
+		name="contoQUO"/>
+	<formFieldProperty
+		name="contoIUO"/>
+	<formFieldProperty
+		name="contoNUO"/>
+
+	<columnFieldProperty
+		name="nr_fattura_fornitore"
+		label="Numero documento" />
+
+</bulkInfo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.V_anagrafico_terzoKey" >
+	<defaultColumnMap
+		tableName="V_ANAGRAFICO_TERZO" >
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			primary="true"			
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_terzo"
+		partOfOid="true" />
+</SQLPersistentInfo>

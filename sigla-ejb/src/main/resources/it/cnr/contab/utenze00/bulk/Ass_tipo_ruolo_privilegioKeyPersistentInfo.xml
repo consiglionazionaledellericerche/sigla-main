@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.Ass_tipo_ruolo_privilegioKey">
+	<defaultColumnMap
+		tableName="ASS_TIPO_RUOLO_PRIVILEGIO">
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="VARCHAR"
+			columnSize="6"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_PRIVILEGIO"
+			propertyName="cd_privilegio"
+			sqlTypeName="VARCHAR"
+			columnSize="6"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipo"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_privilegio"
+		partOfOid="true" />
+</SQLPersistentInfo>

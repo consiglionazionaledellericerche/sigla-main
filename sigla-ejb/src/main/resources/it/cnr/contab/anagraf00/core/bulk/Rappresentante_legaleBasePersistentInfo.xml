@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.Rappresentante_legaleBase"
+	keyClassName="it.cnr.contab.anagraf00.core.bulk.Rappresentante_legaleKey"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.Rappresentante_legaleHome" >
+	<defaultColumnMap
+		tableName="RAPPRESENTANTE_LEGALE" >
+		<columnMapping
+			columnName="DT_CANC"
+			propertyName="dt_canc"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="false" />
+		<columnMapping
+			columnName="TITOLO"
+			propertyName="titolo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_NASCITA"
+			propertyName="dt_nascita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_COMUNE_NASCITA"
+			propertyName="pg_comune_nascita"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_canc" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="codice_fiscale" />
+	<persistentProperty
+		name="cognome" />
+	<persistentProperty
+		name="titolo" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="dt_nascita" />
+	<persistentProperty
+		name="nome" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_comune_nascita" />
+</SQLPersistentInfo>

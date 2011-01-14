@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			targetNamespace="http://contab.cnr.it/schema/SIGLA"
+            xmlns="http://contab.cnr.it/schema/SIGLA"
+            elementFormDefault="qualified"
+            version="1.5">
+  <xsd:element name="bulkInfo">
+        <xsd:annotation>
+        	<xsd:documentation></xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType mixed="true">
+	        <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+	            <xsd:element ref="fieldProperty" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element ref="formFieldProperty" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element ref="columnFieldProperty" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element ref="findFieldProperty" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element ref="printFieldProperty" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element ref="form" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element ref="columnSet" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element ref="freeSearchSet" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element ref="printForm" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+            <xsd:attribute name="longDescription" type="xsd:string" use="optional" />
+            <xsd:attribute name="shortDescription" type="xsd:string" use="optional" />
+        </xsd:complexType>
+    </xsd:element>
+  	<xsd:element name="fieldProperty" type="FieldPropertyType">
+  		<xsd:annotation>
+  			<xsd:documentation>
+  				Sono le definizioni di base di un fieldProperty.
+  			</xsd:documentation>
+  		</xsd:annotation></xsd:element>
+  	<xsd:element name="formFieldProperty" type="FormFieldPropertyType">
+  		<xsd:annotation>
+  			<xsd:documentation>
+  				Vengono usate nei visori (form) per visualizzare i
+  				campi di edit associati ad un modello.
+  			</xsd:documentation>
+  		</xsd:annotation></xsd:element>
+  	<xsd:element name="columnFieldProperty" type="ColumnFieldPropertyType">
+  		<xsd:annotation>
+  			<xsd:documentation>
+  				Vengono usate per mostrare informazioni tabulari
+  				associate ad una classe di modelli (una
+  				columnFieldProperty per ogni colonna).
+  			</xsd:documentation>
+  		</xsd:annotation></xsd:element>
+  	<xsd:element name="findFieldProperty" type="FindFieldPropertyType">
+  		<xsd:annotation>
+  			<xsd:documentation>
+  				Vengono usate per gestire le operazioni di ricerca e
+  				di ricerca libera. Ogni findFieldProperty definisce
+  				una clausola di ricerca modificabile dall'utente
+  			</xsd:documentation>
+  		</xsd:annotation></xsd:element>
+  	<xsd:element name="printFieldProperty" type="PrintFieldPropertyType">
+  		<xsd:annotation>
+  			<xsd:documentation>
+  				Vengono usate per mostrare informazioni orientate alla
+  				stampa del modello.
+  			</xsd:documentation>
+  		</xsd:annotation></xsd:element>
+
+  	<xsd:element name="form">
+        <xsd:annotation>
+        	<xsd:documentation>
+        		Ragruppamento di formFieldProperty da usare nelle form HTML
+        	</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="formFieldProperty" maxOccurs="unbounded" />
+            </xsd:sequence>
+            <xsd:attribute name="name" type="xsd:string" use="required" />
+        </xsd:complexType>
+    </xsd:element>
+
+  	<xsd:element name="columnSet">
+        <xsd:annotation>
+        	<xsd:documentation>
+        		Ragruppamento di columnFieldProperty da usare nelle form
+        		HTML di ricerca
+        	</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="columnFieldProperty" maxOccurs="unbounded" />
+            </xsd:sequence>
+            <xsd:attribute name="name" type="xsd:string" use="required" />
+        </xsd:complexType>
+    </xsd:element>
+
+  	<xsd:element name="freeSearchSet">
+        <xsd:annotation>
+        	<xsd:documentation>
+        		Ragruppamento di findFieldProperty da usare nelle form
+        		HTML di ricerca libera
+        	</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="findFieldProperty" maxOccurs="unbounded" />
+            </xsd:sequence>
+            <xsd:attribute name="name" type="xsd:string" use="required" />
+        </xsd:complexType>
+    </xsd:element>
+
+	<xsd:element name="printForm">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="printFieldProperty" maxOccurs="unbounded" />
+            </xsd:sequence>
+            <xsd:attribute name="name" type="xsd:string" use="required" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="BaseFieldPropertyType">
+        <xsd:attribute name="property" type="xsd:string" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Nome della property JavaBean per estrarre/valorizzare il valore della FieldProperty.
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="columnSet" type="xsd:string" use="optional">
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Nome del ColumnSet di riferimento, viene usato per i FieldProperty di tipo "SEARCHTOOL", 
+        			e indica il columnSet da utilizzare all'atto della ricerca.
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="freeSearchSet" type="xsd:string" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Nome del FreeSearchSet di riferimento, viene usato per i FIeldProperty di tipo "SEARCHTOOL", 
+        			e indica il FreeSearchSet da utilizzare all'atto della ricerca libera.
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="descProperty" type="xsd:string" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Nome della propietà del JavaBean da visualizzare, viene usato per i FieldProperty di tipo "DESCTOOL".
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="printProperty" type="xsd:string" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Se valorizzato è il nome di una property da utilizzare per ottenere un valore "stampabile".
+        			Le fieldProperty dotate di printProperty sono implicitamente readonly tranne quelle con inputType = "SELECT" 
+					e optionsProperty non nulla; in questo caso il valore da assegnare in scrittura è uno di quelli 
+					presenti nelle "options"; printProperty viene usata anche per estrarre la descrizione nell'elenco 
+					delle opzioni della SELECT. 
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="keysProperty" type="xsd:string" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Se valorizzato è il nome di una property del JavaBean da utilizzare per convertire il valore
+        			della FieldProperty mediante il lookup in un dizionario di chiavi; 
+        			la property deve restituire un'istanza di java.util.Dictionary che viene usata sia in lettura che in scrittura. Se inputType è
+        			uguale a SELECT il dizionario viene anche usato per ottenere l'elenco dei valori con cui riempire l'elenco delle opzioni.
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="optionsProperty" type="xsd:string" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Se valorizzato è il nome di una property del JavaBean da utilizzare per riempire l'elenco delle
+        			opzioni di nel caso in cui inputType è "SELECT".
+					La property deve restituire un oggetto assimilabile a una collezione (un array statico o un'istanza di
+        			java.util.Collection, java.util.Enumeration o di java.util.Iterator).
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="readonlyProperty" type="xsd:string" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Se valorizzato è il nome di una property da utilizzare per ottenere la disabilitazione dinamica del campo di input. 
+        			La property deve essere di tipo Boolean e se il suo valore è true il campo viene disabilitato.
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="readonlyPropertyOnEdit" type="xsd:string" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Nome della property da usare se il FormController si trova in modalità FormController.EDIT per disabilitare in modo dinamico il campo di input.
+        			La property deve essere di tipo Boolean e se il suo valore è true il campo viene disabilitato.
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="readonlyPropertyOnInsert" type="xsd:string" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Nome della property da usare se il FormController si trova in modalità FormController.INSERT per disabilitare in modo dinamico il campo di input.
+        			La property deve essere di tipo Boolean e se il suo valore è true il campo viene disabilitato.
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="readonlyPropertyOnSearch" type="xsd:string" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Nome della property da usare se il FormController si trova in modalità FormController.SEARCH per disabilitare in modo dinamico il campo di input.
+        			La property deve essere di tipo Boolean e se il suo valore è true il campo viene disabilitato.
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="readonlyPropertyOnFreeSearch" type="xsd:string" use="optional">
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Nome della property da usare se il FormController si trova in modalità FormController.FREESEARCH per disabilitare in modo dinamico il campo di input.
+        			La property deve essere di tipo Boolean e se il suo valore è true il campo viene disabilitato.
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="readonlyPropertyOnView" type="xsd:string" use="optional">
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Nome della property da usare se il FormController si trova in modalità FormController.VIEW per disabilitare in modo dinamico il campo di input.
+        			La property deve essere di tipo Boolean e se il suo valore è true il campo viene disabilitato.
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="findProperty" type="xsd:string" use="optional">
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Nome della property da usare per impostare la ricerca su una property diversa da quella indicata in property,
+        			può essere utilizzata ad esempio pei i "SERACHTOOL" in determinati casi.
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+		<xsd:attribute name="inputType" use="optional">
+            <xsd:annotation>
+            	<xsd:documentation>
+            		Nome del tipo di input da usare per la
+            		presentazione. Oltre ai classici input html
+            		("TEXT","TEXTAREA","HIDDEN","PASSWORD","RADIOGROUP","SELECT","CHECKBOX","BUTTON","FILE"), sono presenti alcune estensioni:
+            		"ROTEXT" --> Corrisponde ad un campo di input html disabilitato.
+            		"SEARCHTOOL" --> Corrisponde a diversi (in genere due, tipo "Codice e Descrizione") campi di input html (se valorizzato l'attributo "formName"),
+            						altrimenti presenta solamente tre pulsanti atti a riplire i campi, effettuare la ricerca, effettuare la ricerca libera.
+            		"CRUDTOOL" --> Corrisponde ad un bottone html utilizzato per effettuare operazioni di CRUD su una mappa diversa.
+            		"DESCTOOL" --> Corrisponde ad campo di input html a cui è associato una "descProperty" da valorizzare per mostrare una 
+            						property ulteriore a quella di base.
+            	</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+            	<xsd:restriction base="xsd:NMTOKEN">
+            		<xsd:enumeration value="TEXT" />
+            		<xsd:enumeration value="TEXTAREA" />
+            		<xsd:enumeration value="HIDDEN" />
+            		<xsd:enumeration value="PASSWORD" />
+            		<xsd:enumeration value="RADIOGROUP" />
+            		<xsd:enumeration value="ROTEXT" />
+            		<xsd:enumeration value="SEARCHTOOL" />
+            		<xsd:enumeration value="SELECT" />
+            		<xsd:enumeration value="CHECKBOX" />
+            		<xsd:enumeration value="CRUDTOOL" />
+            		<xsd:enumeration value="BUTTON" />
+            		<xsd:enumeration value="DESCTOOL" />
+            		<xsd:enumeration value="FILE" />
+            		<xsd:enumeration value="FORM">
+            	</xsd:enumeration>
+            	</xsd:restriction>
+            </xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="layout" use="optional">
+            <xsd:annotation>
+            	<xsd:documentation>
+            		Tipo di layout da applicare; può assumere i valori
+            		"HORIZONTAL" e "VERTICAL"; attualmente è valido solo
+            		per inputType = "RADIOGROUP" e "SEARCHTOOL" (viene
+            		applicato alla form di ricerca, vd. formName).
+            	</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+				<xsd:restriction base="xsd:NMTOKEN">
+					<xsd:enumeration value="HORIZONTAL" />
+					<xsd:enumeration value="VERTICAL" />
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+        <xsd:attribute name="formName" type="xsd:string" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Nome di una form da utilizzare per visualizzare i
+        			campi di ricerca di un SEARCHTOOL; se valorizzato
+        			accanto ai bottoni di ricerca del SEARCHTOOL vengono
+        			visualizzati tutti i campi presenti nella form
+        			specificata nel BulkInfo associato al tipo della
+        			"property" di questa FieldProperty;
+        		</xsd:documentation>
+        	</xsd:annotation></xsd:attribute>
+        <xsd:attribute name="inputSize" type="xsd:int" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Lunghezza media in caratteri di un campo di input;
+        			valido solo per inputType = "TEXT" o "ROTEXT"
+        		</xsd:documentation>
+        	</xsd:annotation></xsd:attribute>
+        <xsd:attribute name="maxLength" type="xsd:int" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Massima lunghezza editabile di un campo di input
+        			quando inputType = "TEXT"
+        		</xsd:documentation>
+        	</xsd:annotation></xsd:attribute>
+        <xsd:attribute name="cols" type="xsd:int" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Numero di colonne di un campo di input di tipo
+        			TEXTAREA
+        		</xsd:documentation>
+        	</xsd:annotation></xsd:attribute>
+        <xsd:attribute name="rows" type="xsd:int" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Numero di righe di un campo di input di tipo
+        			TEXTAREA
+        		</xsd:documentation>
+        	</xsd:annotation></xsd:attribute>
+		<xsd:attribute name="formatName" use="optional">
+            <xsd:annotation>
+            	<xsd:documentation>
+            		Nome del Format da applicare al valore della
+            		FieldProperty per la visualizzazione in un campo di
+            		testo (se nullo viene usato toString). Può essere il
+            		nome di una classe Format.
+            	</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+				<xsd:restriction base="xsd:NMTOKEN">
+					<xsd:enumeration value="date_short"/>
+					<xsd:enumeration value="date_medium"/>
+					<xsd:enumeration value="date_long"/>
+					<xsd:enumeration value="timestamp"/>
+					<xsd:enumeration value="it.cnr.jada.util.UppercaseStringFormat"/>
+					<xsd:enumeration value="it.cnr.jada.util.LowercaseStringFormat"/>
+					<xsd:enumeration value="it.cnr.jada.bulk.PrimitiveNumberFormat"/>
+					<xsd:enumeration value="it.cnr.contab.util.ConstrainedPercentFormat"/>
+					<xsd:enumeration value="it.cnr.contab.util.EuroFormat"/>
+					<xsd:enumeration value="it.cnr.contab.util.EuroPositivoFormat"/>
+					<xsd:enumeration value="it.cnr.contab.util.CapFormat"/>
+					<xsd:enumeration value="it.cnr.contab.util.Constrained6DescimalPercentFormat"/>
+					<xsd:enumeration value="it.cnr.contab.util.ConstrainedPercentFormat"/>
+					<xsd:enumeration value="it.cnr.contab.util.GenericImportoFormat"/>
+					<xsd:enumeration value="it.cnr.contab.util.GenericPrezzoUnitarioFormat"/>
+					<xsd:enumeration value="it.cnr.contab.util.Importo2CifreFormat"/>
+					<xsd:enumeration value="it.cnr.contab.util.Importo2CifrePositivoFormat"/>
+					<xsd:enumeration value="it.cnr.contab.util.Importo6CifreFormat"/>
+					<xsd:enumeration value="it.cnr.contab.util.ImportoFormat"/>
+					<xsd:enumeration value="it.cnr.contab.util.PercentFormat"/>
+					<xsd:enumeration value="it.cnr.contab.util.PositiveDecimalFormat"/>
+					<xsd:enumeration value="it.cnr.contab.util.PositivePercentFormat"/>
+					<xsd:enumeration value="it.cnr.contab.util.PrezzoUnitarioPositivoFormat"/>
+					<xsd:enumeration value="it.cnr.contab.util.StringFormat"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+        <xsd:attribute name="enabledOnSearch" type="xsd:boolean" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Se true il campo viene abilitato in modalità
+        			FormController.SEARCH
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="enabledOnInsert" type="xsd:boolean" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Se true il campo viene abilitato in modalità
+        			FormController.INSERT
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="enabledOnEdit" type="xsd:boolean" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Se true il campo viene abilitato in modalità
+        			FormController.EDIT
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="enabledOnFreeSearch" type="xsd:boolean" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Se true il campo viene abilitato in modalità
+        			FormController.FREESEARCH
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="enabledOnView" type="xsd:boolean" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Se true il campo viene abilitato in modalità
+        			FormController.VIEW
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="caseSensitiveSearch" type="xsd:boolean" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Se vale false le ricerche vengono effettuate "case
+        			insensitive" (sia quelle con = che con LIKE), il
+        			default è true.
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="completeOnSave" type="xsd:boolean" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Se true il FormController che governa l'editing del
+        			JavaBean può tentare di completare automaticamente
+        			il valore della FieldProperty SEARCHTOOL sulla base
+        			delle informazioni inserite nei campi di ricerca. Il
+        			default è true.
+        		</xsd:documentation>
+        	</xsd:annotation></xsd:attribute>
+        <xsd:attribute name="nullable" type="xsd:boolean" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Se true e inputType = SELECT viene aggiunta una voce
+        			vuota allinizio dell'elenco delle opzioni
+        			selezionabili. Se l'utente seleziona tale voce la
+        			property viene impostata a null.Il deafult è true,
+        			se impostata a false il campo viene presentato di
+        			colore diverso.
+        		</xsd:documentation>
+        	</xsd:annotation></xsd:attribute>
+        <xsd:attribute name="CRUDBusinessProcessName" type="xsd:string" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Nome del CRUDBP da utilizzare sull'attivazione del
+        			bottone del CRUDTOOL
+        		</xsd:documentation>
+        	</xsd:annotation></xsd:attribute>
+        <xsd:attribute name="img" type="xsd:string" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			URL di immagine; valido solo per inputType =
+        			"BUTTON"
+        		</xsd:documentation>
+        	</xsd:annotation></xsd:attribute>
+        <xsd:attribute name="href" type="xsd:string" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			URL da usare sulle label del campo di input; se
+        			inputType = "BUTTON" viene usato sull'evento
+        			"onclick"
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="command" type="xsd:string" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Attributo usato per la validazione del campo di input, 
+        			deve contenre il nome del metodo della classe Action associata da richiamare, 
+        			all'atto della validazione si può anche specificare il metodo doDefault comune
+        			a tutte le Action. 
+        		</xsd:documentation>
+        	</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="accessKey" type="xsd:string" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Usato per inputType="BUTTON" fornisce la scorciatoia
+        			da tastiera
+        		</xsd:documentation>
+        	</xsd:annotation></xsd:attribute>
+        <xsd:attribute name="label" type="xsd:string" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Label da utilizzare per il campo di input.
+        		</xsd:documentation>
+        	</xsd:annotation></xsd:attribute>
+        <xsd:attribute name="style" type="xsd:string" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Lo style CSS da applicare al campo di input
+        		</xsd:documentation>
+        	</xsd:annotation></xsd:attribute>
+        <xsd:attribute name="labelStyle" type="xsd:string" use="optional" >
+        	<xsd:annotation>
+        		<xsd:documentation>
+        			Lo style CSS da applicare alla label
+        		</xsd:documentation>
+        	</xsd:annotation></xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="FieldPropertyType">
+    	<xsd:complexContent>
+            <xsd:extension base="BaseFieldPropertyType">
+      			<xsd:attribute name="name" type="xsd:ID" use="required" >
+      				<xsd:annotation>
+      					<xsd:documentation>
+      						Nome logico del FieldProperty, l'attributo
+      						è obbligatorio, ed è univoco all'interno
+      						del documento.
+      					</xsd:documentation>
+      				</xsd:annotation></xsd:attribute>
+    		</xsd:extension>
+    	</xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="FormFieldPropertyType">
+    	<xsd:complexContent>
+            <xsd:extension base="BaseFieldPropertyType">
+    			<xsd:attribute name="name" type="xsd:string" use="required" >
+    				<xsd:annotation>
+    					<xsd:documentation>
+    						Nome logico del FormFieldProperty,
+    						l'attributo è obbligatorio, ed deve essere
+    						un riferimento ad un FieldProperty.
+    					</xsd:documentation>
+    				</xsd:annotation></xsd:attribute>
+    		</xsd:extension>
+    	</xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="ColumnFieldPropertyType">
+    	<xsd:complexContent>
+            <xsd:extension base="BaseFieldPropertyType">
+    			<xsd:attribute name="name" type="xsd:string" use="required" >
+    				<xsd:annotation>
+    					<xsd:documentation>
+    						Nome logico del ColumnFieldProperty,
+    						l'attributo è obbligatorio, ed deve essere
+    						un riferimento ad un FieldProperty.
+    					</xsd:documentation>
+    				</xsd:annotation></xsd:attribute>
+    			<xsd:attribute name="headerLabel" type="xsd:string" use="optional" >
+    				<xsd:annotation>
+    					<xsd:documentation>
+    						Permette di definire una ulteriore Label,
+    						che funge da ragruppamento di colonne.
+    					</xsd:documentation>
+    				</xsd:annotation></xsd:attribute>
+    			<xsd:attribute name="headerStyle" type="xsd:string" use="optional" >
+    				<xsd:annotation>
+    					<xsd:documentation>
+    						Lo style CSS da applicare alla HeaderLabel
+    					</xsd:documentation>
+    				</xsd:annotation></xsd:attribute>
+    			<xsd:attribute name="columnStyle" type="xsd:string" use="optional" >
+    				<xsd:annotation>
+    					<xsd:documentation>
+    						Lo style CSS da applicare alla Label
+    					</xsd:documentation>
+    				</xsd:annotation></xsd:attribute>
+    		</xsd:extension>
+    	</xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="FindFieldPropertyType">
+    	<xsd:complexContent>
+            <xsd:extension base="BaseFieldPropertyType">
+    			<xsd:attribute name="name" type="xsd:string" use="required" >
+    				<xsd:annotation>
+    					<xsd:documentation>
+    						Nome logico del
+    						FindFieldProperty,l'attributo è
+    						obbligatorio, ed deve essere un riferimento
+    						ad un FieldProperty.
+    					</xsd:documentation>
+    				</xsd:annotation></xsd:attribute>
+    		</xsd:extension>
+    	</xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="PrintFieldPropertyType">
+    	<xsd:complexContent>
+            <xsd:extension base="BaseFieldPropertyType">
+		        <xsd:attribute name="name" type="xsd:string" use="required" >
+		        	<xsd:annotation>
+		        		<xsd:documentation>
+		        			Nome logico del PrintFieldProperty, l'attributo è
+		        			obbligatorio, ed deve essere un riferimento ad un
+		        			FieldProperty.
+		        		</xsd:documentation>
+		        	</xsd:annotation></xsd:attribute>
+		        <xsd:attribute name="parameterPosition" type="xsd:int" use="optional" >
+		        	<xsd:annotation>
+		        		<xsd:documentation>
+		        			Obsoleto usato per CrystalReport
+		        		</xsd:documentation>
+		        	</xsd:annotation></xsd:attribute>
+		        <xsd:attribute name="parameterType" type="xsd:string" use="optional" >
+		        	<xsd:annotation>
+		        		<xsd:documentation>
+		        			Obsoleto usato per CrystalReport
+		        		</xsd:documentation>
+		        	</xsd:annotation></xsd:attribute>
+		        <xsd:attribute name="paramNameJR" type="xsd:string" use="optional" >
+		        	<xsd:annotation>
+		        		<xsd:documentation>
+		        			Nome del parametro da passare a JasperReport per la
+		        			produzione della stampa
+		        		</xsd:documentation>
+		        	</xsd:annotation></xsd:attribute>
+		        <xsd:attribute name="paramTypeJR" type="xsd:string" use="optional" >
+		        	<xsd:annotation>
+		        		<xsd:documentation>
+		        			Tipo del parametro da passare a JasperReport per la
+		        			produzione della stampa, il nome deve essere una
+		        			classe Java.
+		        		</xsd:documentation>
+		        	</xsd:annotation>
+		        </xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+    </xsd:complexType>
+</xsd:schema>

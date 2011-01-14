@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="tc"
+		property="tc" />	
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="ROTEXT"
+		label="CDS" />
+	/***************************************************************
+	 **  Search tool utilizzato per la ricerca del progetto padre **
+	 ***************************************************************/
+		
+	<fieldProperty
+		name="find_nodo_padre"
+		property="progettoForPrint"
+		inputType="SEARCHTOOL"
+		label="Progetto"	/>
+	<fieldProperty
+		name="cd_progetto"
+		property="progettoForPrint.cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+                readonlyProperty="ROProgettoForPrint"		
+		label="Codice progetto"/>		
+	<fieldProperty
+		name="ds_progetto"
+		property="progettoForPrint.ds_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"/>		
+	<fieldProperty
+		name="cdProgettoCRForPrint"
+		property="cdProgettoCRForPrint"/>		
+		
+	/*********************************************************/		
+	<formFieldProperty
+		name="esercizio"/>
+	<formFieldProperty
+		name="cd_cds"/>
+	<formFieldProperty
+		name="progettoForPrint"/>
+	<formFieldProperty
+		name="cd_progetto"
+		/>
+	<formFieldProperty
+		name="ds_progetto"/>
+	<formFieldProperty
+		name="find_nodo_padre" />
+	<formFieldProperty name="cdProgettoCRForPrint" />
+			
+	<form
+		name="/progettiric/progettiric/progetti_per_dip_ist.rpt">
+	<formFieldProperty
+		name="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio" />
+	<formFieldProperty
+		name="cd_cds"
+		inputType="ROTEXT"
+		label="CDS" />
+	</form>
+
+	<printForm
+		name="/progettiric/progettiric/progetti_per_dip_ist.rpt">
+		<printFieldProperty 
+			name="tc"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="1"
+			parameterType="STRING" />			
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdProgettoCRForPrint"
+			parameterPosition="3"
+			parameterType="STRING" />
+			
+	</printForm>
+
+</bulkInfo>

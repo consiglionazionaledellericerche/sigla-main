@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.bulk.Parametri_cdsBulk"
+	homeClassName="it.cnr.contab.config00.bulk.Parametri_cdsHome" >
+	<defaultColumnMap
+		tableName="PARAMETRI_CDS" >
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="centro_spesa.cd_unita_organizzativa"
+		/>
+	</defaultColumnMap>
+
+	<persistentProperty 
+	   name="centro_spesa"
+	   partOfOid="true" />
+</SQLPersistentInfo>

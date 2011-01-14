@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_job"
+		property="pg_job"
+		inputType="TEXT"
+		label="Progressivo job"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="fl_errori"
+		property="fl_errori"
+		inputType="CHECKBOX"
+		label="Ha errori"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="pg_esecuzione"
+		property="pg_esecuzione"
+		inputType="TEXT"
+		label="Progressivo esecuzione"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="dacr"
+		property="dacr"
+		inputType="TEXT"
+        formatName="timestamp"
+		label="Data di creazione"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="ds_log"
+		property="ds_log"
+		cols="100"
+		rows="5"
+		inputType="TEXTAREA"
+		label="Descrizione"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="pg_batch"
+		property="pg_batch"
+		inputType="TEXT"
+		label="Progressivo del batch"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="note"
+		property="note"
+		cols="100"
+		rows="5"
+		inputType="TEXTAREA"
+		label="note"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+
+	<formFieldProperty
+		name="pg_esecuzione" />
+	<formFieldProperty
+		name="dacr" />
+	<formFieldProperty
+		name="pg_job" />
+	<formFieldProperty
+		name="pg_batch" />
+	<formFieldProperty
+		name="fl_errori" />
+	<formFieldProperty
+		name="ds_log" />
+	<formFieldProperty
+		name="note" />
+
+	<columnFieldProperty
+		name="pg_esecuzione" />
+	<columnFieldProperty
+		name="dacr" />
+	<columnFieldProperty
+		name="fl_errori" />
+	<columnFieldProperty
+		name="pg_job" />
+	<columnFieldProperty
+		name="pg_batch" />
+	<columnFieldProperty
+		name="ds_log" />
+	<columnFieldProperty
+		name="note" />
+
+	<findFieldProperty
+		name="pg_esecuzione" />
+	<findFieldProperty
+		name="dacr" />
+	<findFieldProperty
+		name="fl_errori" />
+	<findFieldProperty
+		name="pg_job" />
+	<findFieldProperty
+		name="pg_batch" />
+	<findFieldProperty
+		name="ds_log" />
+	<findFieldProperty
+		name="note" />
+
+</bulkInfo>

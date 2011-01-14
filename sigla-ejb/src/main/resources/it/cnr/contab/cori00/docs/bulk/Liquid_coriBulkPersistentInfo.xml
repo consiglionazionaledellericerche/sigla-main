@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.cori00.docs.bulk.Liquid_coriBulk"
+	homeClassName="it.cnr.contab.cori00.docs.bulk.Liquid_coriHome" >
+
+	<defaultColumnMap tableName="LIQUID_CORI" >			
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cds.cd_unita_organizzativa"/>		
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa"/>	
+				
+	</defaultColumnMap>
+		
+	<persistentProperty
+		name="cds"
+		partOfOid="true" />
+	<persistentProperty
+		name="unita_organizzativa"
+		partOfOid="true" />
+
+</SQLPersistentInfo>

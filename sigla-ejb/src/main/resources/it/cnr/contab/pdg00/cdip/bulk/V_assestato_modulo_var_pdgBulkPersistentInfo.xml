@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.cdip.bulk.V_assestato_modulo_var_pdgBulk"
+	homeClassName="it.cnr.contab.pdg00.cdip.bulk.V_assestato_modulo_var_pdgHome">
+	<defaultColumnMap
+		tableName="V_ASSESTATO_MODULO_VAR_PDG">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_VARIAZIONE_PDG"
+			propertyName="pg_variazione_pdg"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="DIPART"
+			propertyName="dipart"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PROGETTO"
+			propertyName="progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="COMMESSA"
+			propertyName="commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="MODULO"
+			propertyName="modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="400"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_PROGETTO"
+			propertyName="tipo_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="SPESE_INI"
+			propertyName="spese_ini"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="COSTI_INI"
+			propertyName="costi_ini"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PRE_SPESE_VAR_APP"
+			propertyName="pre_spese_var_app"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PRE_COSTI_VAR_APP"
+			propertyName="pre_costi_var_app"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PRE_SPESE_VAR_PRD"
+			propertyName="pre_spese_var_prd"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PRE_COSTI_VAR_PRD"
+			propertyName="pre_costi_var_prd"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="SPESE_VAR_APP"
+			propertyName="spese_var_app"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="COSTI_VAR_APP"
+			propertyName="costi_var_app"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="SPESE_VAR_PRD"
+			propertyName="spese_var_prd"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="COSTI_VAR_PRD"
+			propertyName="costi_var_prd"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="POST_SPESE_VAR_APP"
+			propertyName="post_spese_var_app"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="POST_COSTI_VAR_APP"
+			propertyName="post_costi_var_app"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="POST_SPESE_VAR_PRD"
+			propertyName="post_spese_var_prd"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="POST_COSTI_VAR_PRD"
+			propertyName="post_costi_var_prd"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="SPESE_ASSESTATO_APP"
+			propertyName="spese_assestato_app"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="COSTI_ASSESTATO_APP"
+			propertyName="costi_assestato_app"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="ENTRATE_INI"
+			propertyName="entrate_ini"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="RICAVI_INI"
+			propertyName="ricavi_ini"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PRE_ENTRATE_VAR_APP"
+			propertyName="pre_entrate_var_app"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PRE_RICAVI_VAR_APP"
+			propertyName="pre_ricavi_var_app"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PRE_ENTRATE_VAR_PRD"
+			propertyName="pre_entrate_var_prd"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PRE_RICAVI_VAR_PRD"
+			propertyName="pre_ricavi_var_prd"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="ENTRATE_VAR_APP"
+			propertyName="entrate_var_app"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="RICAVI_VAR_APP"
+			propertyName="ricavi_var_app"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="ENTRATE_VAR_PRD"
+			propertyName="entrate_var_prd"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="RICAVI_VAR_PRD"
+			propertyName="ricavi_var_prd"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="POST_ENTRATE_VAR_APP"
+			propertyName="post_entrate_var_app"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="POST_RICAVI_VAR_APP"
+			propertyName="post_ricavi_var_app"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="POST_ENTRATE_VAR_PRD"
+			propertyName="post_entrate_var_prd"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="POST_RICAVI_VAR_PRD"
+			propertyName="post_ricavi_var_prd"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="ENTRATE_ASSESTATO_APP"
+			propertyName="entrate_assestato_app"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="RICAVI_ASSESTATO_APP"
+			propertyName="ricavi_assestato_app"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="pg_variazione_pdg" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="dipart" />
+	<persistentProperty
+		name="progetto" />
+	<persistentProperty
+		name="commessa" />
+	<persistentProperty
+		name="modulo" />
+	<persistentProperty
+		name="ds_modulo" />
+	<persistentProperty
+		name="tipo_progetto" />
+	<persistentProperty
+		name="spese_ini" />
+	<persistentProperty
+		name="costi_ini" />
+	<persistentProperty
+		name="pre_spese_var_app" />
+	<persistentProperty
+		name="pre_costi_var_app" />
+	<persistentProperty
+		name="pre_spese_var_prd" />
+	<persistentProperty
+		name="pre_costi_var_prd" />
+	<persistentProperty
+		name="spese_var_app" />
+	<persistentProperty
+		name="costi_var_app" />
+	<persistentProperty
+		name="spese_var_prd" />
+	<persistentProperty
+		name="costi_var_prd" />
+	<persistentProperty
+		name="post_spese_var_app" />
+	<persistentProperty
+		name="post_costi_var_app" />
+	<persistentProperty
+		name="post_spese_var_prd" />
+	<persistentProperty
+		name="post_costi_var_prd" />
+	<persistentProperty
+		name="spese_assestato_app" />
+	<persistentProperty
+		name="costi_assestato_app" />
+	<persistentProperty
+		name="entrate_ini" />
+	<persistentProperty
+		name="ricavi_ini" />
+	<persistentProperty
+		name="pre_entrate_var_app" />
+	<persistentProperty
+		name="pre_ricavi_var_app" />
+	<persistentProperty
+		name="pre_entrate_var_prd" />
+	<persistentProperty
+		name="pre_ricavi_var_prd" />
+	<persistentProperty
+		name="entrate_var_app" />
+	<persistentProperty
+		name="ricavi_var_app" />
+	<persistentProperty
+		name="entrate_var_prd" />
+	<persistentProperty
+		name="ricavi_var_prd" />
+	<persistentProperty
+		name="post_entrate_var_app" />
+	<persistentProperty
+		name="post_ricavi_var_app" />
+	<persistentProperty
+		name="post_entrate_var_prd" />
+	<persistentProperty
+		name="post_ricavi_var_prd" />		
+	<persistentProperty
+		name="entrate_assestato_app" />
+	<persistentProperty
+		name="ricavi_assestato_app" />
+</SQLPersistentInfo>

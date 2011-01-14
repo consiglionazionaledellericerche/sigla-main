@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Ass_mandato_reversaleKey" >
+	<defaultColumnMap
+		tableName="ASS_MANDATO_REVERSALE" >
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pg_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS_REVERSALE"
+			propertyName="cd_cds_reversale"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS_MANDATO"
+			propertyName="cd_cds_mandato"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_REVERSALE"
+			propertyName="pg_reversale"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_REVERSALE"
+			propertyName="esercizio_reversale"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_MANDATO"
+			propertyName="esercizio_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_mandato"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_cds_reversale"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_cds_mandato"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_reversale"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio_reversale"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio_mandato"
+		partOfOid="true" />
+</SQLPersistentInfo>

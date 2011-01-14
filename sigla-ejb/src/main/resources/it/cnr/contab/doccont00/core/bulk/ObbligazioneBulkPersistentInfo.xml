@@ -1,0 +1,73 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.ObbligazioneHome" >
+	<defaultColumnMap
+		tableName="OBBLIGAZIONE" >
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cds.cd_unita_organizzativa"/>	
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="creditore.cd_terzo"/>	
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="elemento_voce.esercizio"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="elemento_voce.cd_elemento_voce"/>	
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="elemento_voce.ti_gestione"/>		
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="elemento_voce.ti_appartenenza"/>
+		<columnMapping
+			columnName="CD_TIPO_OBBLIGAZIONE"
+			propertyName="tipo_obbligazione.cd_tipo_obbligazione"/>
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa"/>
+		<columnMapping
+			columnName="ESERCIZIO_CONTRATTO"
+			propertyName="contratto.esercizio"/>
+		<columnMapping
+			columnName="STATO_CONTRATTO"
+			propertyName="contratto.stato"/>			
+		<columnMapping
+			columnName="PG_CONTRATTO"
+			propertyName="contratto.pg_contratto"/>
+		<columnMapping
+			columnName="ESERCIZIO_REP"
+			propertyName="incarico_repertorio.esercizio"/>
+		<columnMapping
+			columnName="PG_REPERTORIO"
+			propertyName="incarico_repertorio.pg_repertorio"/>
+			
+	</defaultColumnMap>
+	<persistentProperty
+		name="cds"
+		partOfOid= "true"/>
+	<persistentProperty
+		name="unita_organizzativa"/>			
+	<persistentProperty
+		name="creditore" />	
+	<persistentProperty
+		name="elemento_voce"/>
+	<persistentProperty
+		name="tipo_obbligazione" />
+	<persistentProperty
+		name="contratto" />
+	<persistentProperty
+		name="incarico_repertorio" />
+
+	<fetchPolicy
+		name="it.cnr.contab.doccont00.comp.ObbligazioneComponent.edit">
+		<exclude pattern="cds.*"/>
+		<exclude pattern="elemento_voce.*"/>
+		<exclude pattern="creditore.*"/>										
+		<include pattern="creditore.anagrafico"/>
+		<exclude pattern="creditore.anagrafico.*"/>		
+	</fetchPolicy>
+
+</SQLPersistentInfo>

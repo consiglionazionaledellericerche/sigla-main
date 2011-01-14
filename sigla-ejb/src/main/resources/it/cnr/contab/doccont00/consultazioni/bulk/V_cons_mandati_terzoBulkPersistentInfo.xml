@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_mandati_terzoBulk"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_mandati_terzoHome">
+	<defaultColumnMap
+		tableName="V_CONS_MANDATI_TERZO">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CDS"
+			propertyName="cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CDS_ORIGINE"
+			propertyName="cds_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_CDS_ORIGINE"
+			propertyName="ds_cds_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="UO"
+			propertyName="uo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pg_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_MANDATO"
+			propertyName="ds_mandato"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="NATURA_MANDATO"
+			propertyName="natura_mandato"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_MANDATO"
+			propertyName="ti_mandato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO_MANDATO"
+			propertyName="stato_mandato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_DISTINTA"
+			propertyName="pg_distinta"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="UO_DISTINTA"
+			propertyName="uo_distinta"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_EMISSIONE"
+			propertyName="dt_emissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_TRASMISSIONE"
+			propertyName="dt_trasmissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PAGAMENTO"
+			propertyName="dt_pagamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_ANNULLAMENTO"
+			propertyName="dt_annullamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="esercizio_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="esercizio_ori_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_OBBLIGAZIONE"
+			propertyName="ds_obbligazione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="ds_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="DENOMINAZIONE_SEDE"
+			propertyName="denominazione_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="pg_banca"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="ABI"
+			propertyName="abi"
+			sqlTypeName="CHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="CAB"
+			propertyName="cab"
+			sqlTypeName="CHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="NUMERO_CONTO"
+			propertyName="numero_conto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="INTESTAZIONE"
+			propertyName="intestazione"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_PAGAMENTO"
+			propertyName="ti_pagamento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_TI_PAGAMENTO"
+			propertyName="ds_ti_pagamento"
+			sqlTypeName="VARCHAR"
+			columnSize="9"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MANDATO_RIGA"
+			propertyName="im_mandato_riga"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RITENUTE_RIGA"
+			propertyName="im_ritenute_riga"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="NETTO_RIGA"
+			propertyName="netto_riga"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_COGE"
+			propertyName="stato_coge"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cds" />
+	<persistentProperty
+		name="cds_origine" />
+	<persistentProperty
+		name="ds_cds_origine" />
+	<persistentProperty
+		name="uo" />
+	<persistentProperty
+		name="pg_mandato" />
+	<persistentProperty
+		name="ds_mandato" />
+	<persistentProperty
+		name="natura_mandato" />
+	<persistentProperty
+		name="ti_mandato" />
+	<persistentProperty
+		name="stato_mandato" />
+	<persistentProperty
+		name="pg_distinta" />
+	<persistentProperty
+		name="uo_distinta" />
+	<persistentProperty
+		name="dt_emissione" />
+	<persistentProperty
+		name="dt_trasmissione" />
+	<persistentProperty
+		name="dt_pagamento" />
+	<persistentProperty
+		name="dt_annullamento" />
+	<persistentProperty
+		name="esercizio_obbligazione" />
+	<persistentProperty
+		name="esercizio_ori_obbligazione" />
+	<persistentProperty
+		name="pg_obbligazione" />
+	<persistentProperty
+		name="ds_obbligazione" />
+	<persistentProperty
+		name="cd_elemento_voce" />
+	<persistentProperty
+		name="ds_elemento_voce" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="denominazione_sede" />
+	<persistentProperty
+		name="pg_banca" />
+	<persistentProperty
+		name="abi" />
+	<persistentProperty
+		name="cab" />
+	<persistentProperty
+		name="numero_conto" />
+	<persistentProperty
+		name="intestazione" />
+	<persistentProperty
+		name="ti_pagamento" />
+	<persistentProperty
+		name="ds_ti_pagamento" />
+	<persistentProperty
+		name="im_mandato_riga" />
+	<persistentProperty
+		name="im_ritenute_riga" />
+	<persistentProperty
+		name="netto_riga" />
+	<persistentProperty
+		name="stato_coge" />
+</SQLPersistentInfo>

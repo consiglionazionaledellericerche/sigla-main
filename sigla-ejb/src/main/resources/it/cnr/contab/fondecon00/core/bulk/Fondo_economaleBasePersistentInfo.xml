@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.fondecon00.core.bulk.Fondo_economaleBase"
+	keyClassName="it.cnr.contab.fondecon00.core.bulk.Fondo_economaleKey"
+	homeClassName="it.cnr.contab.fondecon00.core.bulk.Fondo_economaleHome" >
+	<defaultColumnMap
+		tableName="FONDO_ECONOMALE" >
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="pg_banca"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_SR_SOSPESO"
+			propertyName="ti_sr_sospeso"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="cd_modalita_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_MAX_GG_SPESA_DOC"
+			propertyName="im_max_gg_spesa_doc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pg_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_AMMONTARE_FONDO"
+			propertyName="im_ammontare_fondo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_SOSPESO"
+			propertyName="cd_sospeso"
+			sqlTypeName="VARCHAR"
+			columnSize="24" />
+		<columnMapping
+			columnName="FL_REV_DA_EMETTERE"
+			propertyName="fl_rev_da_emettere"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="IM_RESIDUO_FONDO"
+			propertyName="im_residuo_fondo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_AMMONTARE_INIZIALE"
+			propertyName="im_ammontare_iniziale"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_ES_SOSPESO"
+			propertyName="ti_es_sospeso"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="IM_LIMITE_MIN_REINTEGRO"
+			propertyName="im_limite_min_reintegro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_REVERSALE"
+			propertyName="pg_reversale"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="ESERCIZIO_REVERSALE"
+			propertyName="esercizio_reversale"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="FL_APERTO"
+			propertyName="fl_aperto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="IM_TOTALE_SPESE"
+			propertyName="im_totale_spese"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_TOTALE_NETTO_SPESE"
+			propertyName="im_totale_netto_spese"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_MAX_MM_SPESA_NON_DOC"
+			propertyName="im_max_mm_spesa_non_doc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_TOTALE_REINTEGRI"
+			propertyName="im_totale_reintegri"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_MAX_MM_SPESA_DOC"
+			propertyName="im_max_mm_spesa_doc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_FONDO"
+			propertyName="ds_fondo"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="IM_MAX_GG_SPESA_NON_DOC"
+			propertyName="im_max_gg_spesa_non_doc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_banca" />
+	<persistentProperty
+		name="ti_sr_sospeso" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="cd_modalita_pag" />
+	<persistentProperty
+		name="im_max_gg_spesa_doc" />
+	<persistentProperty
+		name="pg_mandato" />
+	<persistentProperty
+		name="im_ammontare_fondo" />
+	<persistentProperty
+		name="cd_sospeso" />
+	<persistentProperty
+		name="fl_rev_da_emettere" />
+	<persistentProperty
+		name="im_residuo_fondo" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="im_ammontare_iniziale" />
+	<persistentProperty
+		name="ti_es_sospeso" />
+	<persistentProperty
+		name="im_limite_min_reintegro" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_reversale" />
+	<persistentProperty
+		name="esercizio_reversale" />
+	<persistentProperty
+		name="fl_aperto" />
+	<persistentProperty
+		name="im_totale_spese" />
+	<persistentProperty
+		name="im_totale_netto_spese" />
+	<persistentProperty
+		name="im_max_mm_spesa_non_doc" />
+	<persistentProperty
+		name="im_totale_reintegri" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="im_max_mm_spesa_doc" />
+	<persistentProperty
+		name="ds_fondo" />
+	<persistentProperty
+		name="im_max_gg_spesa_non_doc" />
+</SQLPersistentInfo>

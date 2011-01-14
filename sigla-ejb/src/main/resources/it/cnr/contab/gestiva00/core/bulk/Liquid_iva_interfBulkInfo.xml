@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Liquidazione IVA Interfaccia">
+	<!-- ************************** FIELD PROPERTY ************************ -->
+	
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		maxLength="4"
+		inputSize="4"
+		inputType="TEXT"
+		label="Esercizio" />
+			
+	<fieldProperty
+		name="dt_inizio"
+		property="dt_inizio"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		nullable="false"
+		enabledOnEdit="false"
+		label="Data inizio" />
+	<fieldProperty
+		name="dt_fine"
+		property="dt_fine"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		nullable="false"
+		enabledOnEdit="false"		
+		label="Data fine" />
+		
+	<fieldProperty
+		name="mese"
+		property="mese"
+		maxLength="20"
+		inputSize="20"
+		inputType="SELECT"
+		nullable="false"
+		keysProperty="MESI"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Mese"/>
+
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		label="U.O." />			
+
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Cds" />	
+
+	<fieldProperty
+		name="ti_liquidazione"
+		property="ti_liquidazione"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		nullable="false"
+		keysProperty="TIPI_LIQ"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		enabledOnInsert="true"
+		label="Tipo" />	
+		
+	<fieldProperty
+		name="iva_debito"
+		property="iva_debito"
+		label="Importo IVA Debito"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"	
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false"		
+		/>		
+
+	<fieldProperty
+		name="iva_credito"
+		property="iva_credito"
+		label="Importo IVA Credito"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"	
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false"		
+		/>	
+
+	<fieldProperty
+		name="note"
+		property="note"
+		maxLength="1000"
+		inputSize="1000"
+		inputType="TEXTAREA"
+		label="Note" 
+		style="width: 25em" />		
+
+	<fieldProperty
+		name="fl_gia_eleborata"
+		property="fl_gia_eleborata"
+		label="Elaborata"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		/>		
+	<!-- ************************ FORM FIELD PROPERTY ******************** -->
+
+	<formFieldProperty name="dt_inizio" />
+	<formFieldProperty name="dt_fine" />
+	<formFieldProperty name="mese" />
+	<formFieldProperty name="cd_unita_organizzativa" />
+	<formFieldProperty name="ti_liquidazione" />
+	<formFieldProperty name="iva_debito" />
+	<formFieldProperty name="iva_credito" />
+	<formFieldProperty name="note" />
+	<formFieldProperty name="fl_gia_eleborata" />
+	
+	<!-- ************************ FIND FIELD PROPERTY ******************** -->
+
+	<findFieldProperty name="dt_inizio" />
+	<findFieldProperty name="dt_fine" />
+	<findFieldProperty name="mese" />	
+	<findFieldProperty name="esercizio" />		
+	<findFieldProperty name="cd_cds" />
+	
+	<!-- ************************ COLUMN FIELD PROPERTY ****************** -->
+	
+	<!-- <columnFieldProperty name="esercizio" /> -->	
+	<columnFieldProperty name="dt_inizio" />
+	<columnFieldProperty name="dt_fine" />
+	<columnFieldProperty name="cd_unita_organizzativa" />
+	<columnFieldProperty name="ti_liquidazione"	/>
+	<columnFieldProperty name="iva_debito" />
+	<columnFieldProperty name="iva_credito"	/>
+	<columnFieldProperty name="note" />
+	<columnFieldProperty name="fl_gia_eleborata" />
+	<!-- ************************ COLUMN SET ***************************** -->
+
+</bulkInfo>

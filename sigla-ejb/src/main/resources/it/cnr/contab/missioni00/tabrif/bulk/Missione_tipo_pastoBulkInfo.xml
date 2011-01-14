@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_ti_pasto"
+		property="cd_ti_pasto"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false" 
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice" />
+	<fieldProperty
+		name="ti_area_geografica"
+		property="ti_area_geografica"
+		keysProperty="ti_area_geograficaKeys"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false" 
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Area Geografica" />
+	<fieldProperty
+		name="rif_inquadramento"
+		property="rifInquadramento"
+		printProperty="descrRifInquadramento"
+		optionsProperty="rifInquadramenti"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false" 
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Inquadramento" />
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_inizio_validita"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false" 
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Data Inizio Validita" />
+/************ NAZIONE **************/
+	<fieldProperty
+		name="find_nazione"
+		property="nazione"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROFindNazione"
+		enabledOnInsert="true"
+		enabledOnEdit="false" 
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Nazione" />
+	<fieldProperty
+		name="pg_nazione"
+		property="pg_nazione"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="RONazione"
+		enabledOnInsert="true"
+		enabledOnEdit="false" 
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Nazione" />
+	<fieldProperty
+		name="ds_nazione"
+		property="nazione.ds_nazione"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Nazione" />
+/***********************************/
+/************* DIVISA **************/
+	<fieldProperty
+		name="find_divisa"
+		property="divisa"
+		inputType="SEARCHTOOL"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Valuta" />
+	<fieldProperty
+		name="cd_divisa"
+		property="cd_divisa"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="RODivisa"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Valuta" />
+	<fieldProperty
+		name="ds_divisa"
+		property="divisa.ds_divisa"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Valuta" />
+/***********************************/
+	<fieldProperty
+		name="limite_max_pasto"
+		property="limite_max_pasto"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Limite Pasto" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Data Fine Validita" />
+	<fieldProperty
+		name="dataFineValidita"
+		property="dataFineValidita"
+		inputType="TEXT"
+		formatName="date_short"				
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Data Fine Validita" />
+	<fieldProperty
+		name="dt_cancellazione"
+		property="dt_cancellazione"
+		inputType="TEXT"
+		formatName="date_short"				
+		enabledOnInsert="false"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Data Cancellazione" />
+
+	<formFieldProperty name="cd_ti_pasto" />
+	<formFieldProperty name="ti_area_geografica" />
+	<formFieldProperty name="pg_nazione" />
+	<formFieldProperty name="ds_nazione" />
+	<formFieldProperty name="find_nazione" />			
+	<formFieldProperty name="rif_inquadramento" />
+	<formFieldProperty name="dt_inizio_validita" />
+	<formFieldProperty name="cd_divisa" />
+	<formFieldProperty name="ds_divisa" />
+	<formFieldProperty name="find_divisa" />			
+	<formFieldProperty name="limite_max_pasto" />
+	<formFieldProperty name="dataFineValidita" />
+	<formFieldProperty name="dt_cancellazione" />
+ 
+	<columnFieldProperty name="cd_ti_pasto" />
+	<columnFieldProperty name="rif_inquadramento" />
+	<columnFieldProperty name="ti_area_geografica" />
+	<columnFieldProperty name="pg_nazione" />
+	<columnFieldProperty name="ds_nazione" />
+	<columnFieldProperty name="cd_divisa" />
+	<columnFieldProperty name="ds_divisa" />
+	<columnFieldProperty name="limite_max_pasto" />
+	<columnFieldProperty name="dt_inizio_validita" />
+	<columnFieldProperty name="dataFineValidita" />
+	<columnFieldProperty name="dt_cancellazione" />
+
+	<findFieldProperty name="cd_ti_pasto" />
+	<findFieldProperty name="rif_inquadramento" />
+	<findFieldProperty name="ti_area_geografica" />
+	<findFieldProperty name="pg_nazione" />
+	<findFieldProperty name="cd_divisa" />
+	<findFieldProperty name="limite_max_pasto" />
+	<findFieldProperty name="dt_inizio_validita" />
+	<findFieldProperty name="dt_fine_validita" />
+	<findFieldProperty name="dt_cancellazione" />
+
+</bulkInfo>

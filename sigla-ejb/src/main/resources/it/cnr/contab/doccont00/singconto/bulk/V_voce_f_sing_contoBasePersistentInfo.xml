@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.singconto.bulk.V_voce_f_sing_contoBase"
+	homeClassName="it.cnr.contab.doccont00.singconto.bulk.V_voce_f_sing_contoHome" >
+	<defaultColumnMap
+		tableName="V_VOCE_F_SING_CONTO" >
+		<columnMapping
+			columnName="CD_PROPRIO_VOCE"
+			propertyName="cd_proprio_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="FL_PARTITA_GIRO"
+			propertyName="fl_partita_giro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="cd_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="cd_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_VOCE_SAC"
+			propertyName="fl_voce_sac"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="ds_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="CD_PARTE"
+			propertyName="cd_parte"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="CD_CATEGORIA"
+			propertyName="cd_categoria"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="CD_CDS_PROPRIO"
+			propertyName="cd_cds_proprio"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_FUNZIONE"
+			propertyName="cd_funzione"
+			sqlTypeName="VARCHAR"
+			columnSize="2" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_COMPETENZA_RESIDUO"
+			propertyName="ti_competenza_residuo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_VOCE"
+			propertyName="ds_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_proprio_voce" />
+	<persistentProperty
+		name="fl_partita_giro" />
+	<persistentProperty
+		name="cd_natura" />
+	<persistentProperty
+		name="cd_voce" />
+	<persistentProperty
+		name="fl_voce_sac" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="cd_elemento_voce" />
+	<persistentProperty
+		name="ds_elemento_voce" />
+	<persistentProperty
+		name="cd_parte" />
+	<persistentProperty
+		name="cd_categoria" />
+	<persistentProperty
+		name="cd_cds_proprio" />
+	<persistentProperty
+		name="cd_funzione" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="ti_appartenenza" />
+	<persistentProperty
+		name="ti_competenza_residuo" />
+	<persistentProperty
+		name="ds_voce" />
+	<persistentProperty
+		name="cd_cds" />
+</SQLPersistentInfo>

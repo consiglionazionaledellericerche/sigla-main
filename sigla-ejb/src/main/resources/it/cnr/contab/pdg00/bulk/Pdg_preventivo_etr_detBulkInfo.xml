@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="centro_responsabilita.cd_centro_responsabilita"
+		inputType="TEXT"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Codice CdR" />
+	<fieldProperty
+		name="ds_centro_responsabilita"
+		property="ds_cdr"
+		inputType="TEXT"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Descrizione CdR" />
+	<fieldProperty
+		name="ds_altro_cdr"
+		property="centro_responsabilita_clgs.cd_ds_cdr"
+		readonlyProperty="RODettaglio"
+		inputType="TEXT"
+		label="Descrizione Alro CdR" />
+
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="elemento_voce.cd_elemento_voce"
+		inputType="TEXT"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		readonlyProperty="ROelemento_voce"
+		label="Codice Voce" />
+	<fieldProperty
+		name="cd_elemento_voce_ricerca"
+		property="elemento_voce.cd_elemento_voce"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="Codice Voce" />
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="elemento_voce.ds_elemento_voce"
+		inputType="TEXT"
+		readonlyProperty="ROelemento_voce"
+		label="Descrizione Voce" />
+	<fieldProperty
+		name="elemento_voce"
+		property="elemento_voce"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROelemento_voce"
+		formName="searchtool"
+		label="Voce del Piano" />
+	<fieldProperty
+		name="classificazione_entrate"
+		property="classificazione_entrate"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="false"
+		enabledOnSearch="false"
+		inputType="SEARCHTOOL"
+		formName="searchtoolbase"
+		label="Classificazione Entrate" />	
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="linea_attivita.cd_linea_attivita"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		readonlyProperty="RODettaglio"
+		inputType="TEXT"
+		label="Codice GAE" />
+	<fieldProperty
+		name="ds_linea_attivita"
+		property="linea_attivita.denominazione"
+		inputType="TEXT"
+		readonlyProperty="RODettaglio"
+		label="Descrizione GAE" />
+	<fieldProperty
+		name="linea_attivita"
+		property="linea_attivita"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		readonlyProperty="RODettaglio"
+		inputType="SEARCHTOOL"
+		formName="searchtool_denominazione"
+		label="GAE" />
+		
+	<fieldProperty
+		name="centro_responsabilita_clgs"
+		property="centro_responsabilita_clgs"
+		readonlyProperty="RODettaglio"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Cdr Altra UO" />	
+
+	<fieldProperty
+		name="linea_attivita_clgs"
+		property="linea_attivita_clgs"
+		readonlyProperty="RODettaglio"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="linea_attivita_clgs" />
+
+	<fieldProperty
+		name="pg_spesa_clgs"
+		property="pg_spesa_clgs"
+		inputType="TEXT"
+		readonlyProperty="RODettaglio"
+		label="pg_spesa_clgs" />
+	<fieldProperty
+		name="ti_appartenenza_clgs"
+		property="ti_appartenenza_clgs"
+		readonlyProperty="RODettaglio"
+		inputType="TEXT"
+		label="ti_appartenenza_clgs" />
+	<fieldProperty
+		name="ti_gestione_clgs"
+		property="ti_gestione_clgs"
+		inputType="TEXT"
+		readonlyProperty="RODettaglio"
+		label="ti_gestione_clgs" />
+	<fieldProperty
+		name="cd_elemento_voce_clgs"
+		property="cd_elemento_voce_clgs"
+		inputType="TEXT"
+		readonlyProperty="RODettaglio"
+		label="cd_elemento_voce_clgs" />
+
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		readonlyProperty="RODettaglio"
+		enabledOnFreeSearch="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="descrizione"
+		property="descrizione"
+		style="width: 35em"
+		readonlyProperty="RODettaglio"
+		inputType="TEXTAREA"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_entrata"
+		property="pg_entrata"
+		readonlyProperty="RODettaglio"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Numero dettaglio" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		keysProperty="statoKeys"
+		label="Stato"
+		inputType="RADIOGROUP"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="dt_registrazione"
+		property="dt_registrazione"
+		inputType="TEXT"
+		readonlyProperty="RODettaglio"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="Data di Registrazione" />
+	<fieldProperty
+		name="fl_sola_lettura"
+		property="fl_sola_lettura"
+		inputType="ROTEXT"
+		label="fl_sola_lettura" />
+	<fieldProperty
+		name="categoria_dettaglio"
+		property="categoria_dettaglio"
+		inputType="ROTEXT"
+		label="categoria_dettaglio" />
+	<fieldProperty
+		name="origine"
+		property="origine"
+		keysProperty="origineKeys"
+		inputType="SELECT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Origine" />
+
+	<fieldProperty
+		name="im_rb_rse"
+		property="im_rb_rse"
+		inputSize="20"
+		maxLength="18"
+		readonlyProperty="RODettaglio"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Ricavi senza entrate (B)" />
+	<fieldProperty
+		name="im_rg_a3_entrate"
+		property="im_rg_a3_entrate"
+		inputSize="20"
+		maxLength="18"
+		readonlyProperty="RODettaglio"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Entrate (G)" />
+	<fieldProperty
+		name="im_re_a2_entrate"
+		property="im_re_a2_entrate"
+		inputSize="20"
+		maxLength="18"
+		readonlyProperty="RODettaglio"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Entrate (E)" />
+	<fieldProperty
+		name="im_rd_a2_ricavi"
+		property="im_rd_a2_ricavi"
+		inputSize="20"
+		maxLength="18"
+		readonlyProperty="RODettaglio"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Ricavi (D)" />
+	<fieldProperty
+		name="im_ra_rce"
+		property="im_ra_rce"
+		inputSize="20"
+		maxLength="18"
+		readonlyProperty="RODettaglio"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Ricavi con entrate (A)" />
+	<fieldProperty
+		name="im_rf_a3_ricavi"
+		property="im_rf_a3_ricavi"
+		inputSize="20"
+		readonlyProperty="RODettaglio"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Ricavi (F)" />
+	<fieldProperty
+		name="im_rc_esr"
+		property="im_rc_esr"
+		inputSize="20"
+		maxLength="18"
+		readonlyProperty="RODettaglio"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Entrate senza ricavi (C)" />
+
+	<!-- Natura e funzione -->
+	<fieldProperty
+		name="funzione"
+		property="funzione"
+		printProperty="cd_ds_funzione"
+		optionsProperty="funzioni"
+		inputType="SELECT"
+		label="Funzione"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="natura"
+		property="natura"
+		printProperty="cd_ds_natura"
+		optionsProperty="nature"
+		inputType="SELECT"
+		label="Natura"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_natura"
+		property="cd_natura"
+		label="Natura"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="1" />
+	<fieldProperty
+		name="cd_funzione"
+		property="cd_funzione"
+		label="Funzione"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="2" />
+		
+	<fieldProperty
+		name="pdg_variazione"
+		property="pdg_variazione"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"		
+		label="Variazione" />
+	<fieldProperty
+		name="esercizio_pdg_variazione"
+		property="pdg_variazione.esercizio"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"	
+        enabledOnFreeSearch="false"
+		label="Esercizio variazione" />
+	<fieldProperty
+		name="pg_variazione_pdg"
+		property="pdg_variazione.pg_variazione_pdg"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"		
+        enabledOnFreeSearch="false"		
+		label="Progressivo variazione" />
+		
+				
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="descrizione" />
+	<formFieldProperty
+		name="pg_entrata" />
+	<formFieldProperty
+		name="cd_linea_attivita_clge" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="cd_centro_responsabilita_clgs" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="cd_centro_responsabilita_clge" />
+	<formFieldProperty
+		name="dt_registrazione" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_linea_attivita_clgs" />
+	<formFieldProperty
+		name="ds_elemento_voce" />
+	<formFieldProperty
+		name="ds_linea_attivita" />
+	<formFieldProperty
+		name="ds_centro_responsabilita" />
+	<formFieldProperty
+		name="elemento_voce" />
+	<formFieldProperty
+		name="classificazione_entrate" />
+	<formFieldProperty
+		name="linea_attivita" />
+	<formFieldProperty
+		name="centro_responsabilita_clgs" />
+	<formFieldProperty
+		name="linea_attivita_clgs" />
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="descrizione" />
+	<formFieldProperty
+		name="pg_entrata" />
+	<formFieldProperty
+		name="cd_linea_attivita_clge" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="cd_centro_responsabilita_clgs" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="cd_centro_responsabilita_clge" />
+	<formFieldProperty
+		name="dt_registrazione" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_linea_attivita_clgs" />
+	<formFieldProperty
+		name="ds_elemento_voce" />
+	<formFieldProperty
+		name="ds_linea_attivita" />
+	<formFieldProperty
+		name="elemento_voce" />
+	<formFieldProperty
+		name="linea_attivita" />
+	<formFieldProperty
+		name="centro_responsabilita_clgs" />
+	<formFieldProperty
+		name="linea_attivita_clgs" />
+	<formFieldProperty
+		name="fl_sola_lettura" />
+	<formFieldProperty
+		name="categoria_dettaglio" />
+	<formFieldProperty
+		name="origine" />
+	<formFieldProperty
+		name="ds_centro_responsabilita" />
+	<formFieldProperty
+		name="pg_spesa_clgs" />
+	<formFieldProperty
+		name="ti_appartenenza_clgs" />
+	<formFieldProperty
+		name="ti_gestione_clgs" />
+	<formFieldProperty
+		name="cd_elemento_voce_clgs" />
+
+	<formFieldProperty
+		name="im_rc_esr" />
+	<formFieldProperty
+		name="im_rd_a2_ricavi" />
+	<formFieldProperty
+		name="im_ra_rce" />
+	<formFieldProperty
+		name="im_rf_a3_ricavi" />
+	<formFieldProperty
+		name="im_re_a2_entrate" />
+	<formFieldProperty
+		name="im_rb_rse" />
+	<formFieldProperty
+		name="im_rg_a3_entrate" />
+	<formFieldProperty
+		name="natura" />
+	<formFieldProperty
+		name="funzione" />
+	<formFieldProperty
+		name="pdg_variazione" />
+		
+	<columnFieldProperty
+		name="pg_entrata" />
+	<columnFieldProperty
+		name="descrizione" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="origine" />
+	<columnFieldProperty
+		name="stato"
+		style="width: 20em" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="ds_linea_attivita" />
+	<columnFieldProperty
+		name="cd_natura" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="ds_elemento_voce" />
+	<columnFieldProperty
+		name="dt_registrazione" />
+	<columnFieldProperty
+		name="esercizio_pdg_variazione" />
+	<columnFieldProperty
+		name="pg_variazione_pdg" />
+
+	<columnSet
+		name="entrateCaricate">
+		<columnFieldProperty
+			name="descrizione" />
+		<columnFieldProperty
+			name="ds_altro_cdr"
+			enabledOnEdit="false" />
+		<columnFieldProperty
+			name="stato"
+			style="width: 20em" />
+		<columnFieldProperty
+			name="cd_linea_attivita" />
+		<columnFieldProperty
+			name="ds_linea_attivita" />
+		<columnFieldProperty
+			name="cd_elemento_voce" />
+		<columnFieldProperty
+			name="ds_elemento_voce" />
+		<columnFieldProperty
+			name="im_rb_rse"
+			label="Ricavi esercizio 1" />
+		<columnFieldProperty
+			name="im_rd_a2_ricavi"
+			label="Ricavi esercizio 2" />
+		<columnFieldProperty
+			name="im_rf_a3_ricavi"
+			label="Ricavi esercizio 3" />
+		<columnFieldProperty
+			name="dt_registrazione" />
+	</columnSet>
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="pg_entrata" />
+	<findFieldProperty
+		name="descrizione" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="cd_elemento_voce_ricerca" />
+	<findFieldProperty
+		name="dt_registrazione" />
+	<findFieldProperty
+		name="cd_natura" />
+	<findFieldProperty
+		name="cd_funzione" />
+	<findFieldProperty
+		name="origine" />
+	<findFieldProperty
+		name="esercizio_pdg_variazione" />
+	<findFieldProperty
+		name="pg_variazione_pdg" />
+</bulkInfo>

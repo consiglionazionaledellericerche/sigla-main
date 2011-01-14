@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<!-- ************************ FIELD PROPERTY ************************* -->
+	<fieldProperty
+		name="dt_stampa"
+		property="dt_stampa"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"
+		nullable="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		label="Data stampa" />
+
+	<!-- ************************ FORM FIELD PROPERTY ******************** -->
+	<formFieldProperty name="dt_stampa" />
+
+	<!-- ************************ FIND FIELD PROPERTY ******************** -->
+	<findFieldProperty name="dt_stampa" />
+	
+</bulkInfo>

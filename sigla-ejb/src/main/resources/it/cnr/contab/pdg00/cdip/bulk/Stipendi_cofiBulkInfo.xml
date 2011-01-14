@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="stato"
+		property="stato"
+		keysProperty="statoKeys"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Stato"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="mese"
+		property="mese"
+		inputType="TEXT"
+		label="Mese" />
+	<fieldProperty
+		name="meseLettere"
+		property="meseLettere"		
+		keysProperty="meseKeys" />
+		
+	<fieldProperty
+		name="cd_uo_doc_gen"
+		property="cd_uo_doc_gen"
+		inputType="TEXT"
+		label="UO doc. gen." />
+	<fieldProperty
+		name="pg_doc_gen"
+		property="pg_doc_gen"
+		inputType="TEXT"
+		label="Pg. doc. gen." />
+	<fieldProperty
+		name="cd_uo_comp"
+		property="cd_uo_comp"
+		inputType="TEXT"
+		label="UO compenso" />
+	<fieldProperty
+		name="pg_comp"
+		property="pg_comp"
+		inputType="TEXT"
+		label="Nr. compenso" />
+	<fieldProperty
+		name="cd_cds_mandato"
+		property="cd_cds_mandato"
+		inputType="TEXT"
+		label="CDS mandato" />
+	<fieldProperty
+		name="pg_mandato"
+		property="pg_mandato"
+		inputType="TEXT"
+		label="Nr. mandato" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="mese" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="cd_uo_doc_gen" />
+	<columnFieldProperty
+		name="pg_doc_gen" />
+	<columnFieldProperty
+		name="cd_uo_comp" />
+	<columnFieldProperty
+		name="pg_comp" />
+	<columnFieldProperty
+		name="cd_cds_mandato" />
+	<columnFieldProperty
+		name="pg_mandato" />
+
+</bulkInfo>

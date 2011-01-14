@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Acconto_classific_coriBulk"
+	homeClassName="it.cnr.contab.compensi00.tabrif.bulk.Acconto_classific_coriHome">
+	<defaultColumnMap
+		tableName="ACCONTO_CLASSIFIC_CORI">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="anagrafico.cd_anag"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE_CORI"
+			propertyName="cd_classificazione_cori"
+			sqlTypeName="CHAR"
+			columnSize="2" />
+		<columnMapping
+			columnName="PG_COMUNE"
+			propertyName="comune.pg_comune"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />				
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="anagrafico"
+		partOfOid="true"/>
+	<persistentProperty
+		name="cd_classificazione_cori"
+		partOfOid="true" />
+	<persistentProperty
+		name="comune" />
+</SQLPersistentInfo>

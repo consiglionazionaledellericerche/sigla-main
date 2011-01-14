@@ -1,0 +1,37 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Accertamento">
+	<columnFieldProperty
+		name="esercizio"
+		label="Esercizio creazione"		
+		/>
+	<columnFieldProperty
+		name="esercizio_competenza"
+		label="Esercizio competenza"
+		/>
+	<columnFieldProperty
+		name="im_reversali"
+		/>
+	<columnFieldProperty
+		name="dt_cancellazione"
+		/>
+
+	<findFieldProperty
+		name="esercizio_competenza"
+		label="Esercizio competenza"
+		/>
+	<findFieldProperty
+		name="cd_riferimento_contratto"
+		/>
+	<findFieldProperty
+		name="dt_cancellazione"
+		/>		
+	<findFieldProperty
+		name="dt_scadenza_contratto"
+		/>
+	<findFieldProperty
+		name="note_accertamento"
+		/>
+
+</bulkInfo>

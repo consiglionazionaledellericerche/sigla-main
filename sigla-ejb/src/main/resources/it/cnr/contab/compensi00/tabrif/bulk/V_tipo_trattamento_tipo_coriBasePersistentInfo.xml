@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.V_tipo_trattamento_tipo_coriBase"
+	homeClassName="it.cnr.contab.compensi00.tabrif.bulk.V_tipo_trattamento_tipo_coriHome" >
+	<defaultColumnMap
+		tableName="V_TIPO_TRATTAMENTO_TIPO_CORI" >
+		<columnMapping
+			columnName="FL_DETRAZIONI_DIPENDENTE"
+			propertyName="fl_detrazioni_dipendente"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DT_INI_VAL_TIPO_CORI"
+			propertyName="dt_ini_val_tipo_cori"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE_CORI"
+			propertyName="cd_classificazione_cori"
+			sqlTypeName="CHAR"
+			columnSize="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_INI_VAL_TRATT_CORI"
+			propertyName="dt_ini_val_tratt_cori"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_FIN_VAL_TRATTAMENTO"
+			propertyName="dt_fin_val_trattamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="SEGNO"
+			propertyName="segno"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_TASSAZIONE_SEPARATA"
+			propertyName="fl_tassazione_separata"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DT_FIN_VAL_TRATT_CORI"
+			propertyName="dt_fin_val_tratt_cori"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_DETRAZIONI_FAMILIARI"
+			propertyName="fl_detrazioni_familiari"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="TI_CASSA_COMPETENZA"
+			propertyName="ti_cassa_competenza"
+			sqlTypeName="CHAR"
+			columnSize="2"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_IRPEF_ANNUALIZZATA"
+			propertyName="fl_irpef_annualizzata"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="ID_RIGA"
+			propertyName="id_riga"
+			sqlTypeName="CHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="PRECISIONE"
+			propertyName="precisione"
+			sqlTypeName="DECIMAL"
+			columnSize="9"
+			columnScale="6" />
+		<columnMapping
+			columnName="TI_ANAGRAFICO"
+			propertyName="ti_anagrafico"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CORI"
+			propertyName="cd_cori"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TRATTAMENTO"
+			propertyName="cd_trattamento"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CALCOLO_IMPONIBILE"
+			propertyName="calcolo_imponibile"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_CLASSIFICAZIONE_MONTANTI"
+			propertyName="pg_classificazione_montanti"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="DT_INI_VAL_TRATTAMENTO"
+			propertyName="dt_ini_val_trattamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_FIN_VAL_TIPO_CORI"
+			propertyName="dt_fin_val_tipo_cori"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="FL_USO_IN_LORDIZZA"
+			propertyName="fl_uso_in_lordizza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_SCRIVI_MONTANTI"
+			propertyName="fl_scrivi_montanti"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="fl_detrazioni_dipendente" />
+	<persistentProperty
+		name="dt_ini_val_tipo_cori" />
+	<persistentProperty
+		name="cd_classificazione_cori" />
+	<persistentProperty
+		name="dt_ini_val_tratt_cori" />
+	<persistentProperty
+		name="dt_fin_val_trattamento" />
+	<persistentProperty
+		name="segno" />
+	<persistentProperty
+		name="fl_tassazione_separata" />
+	<persistentProperty
+		name="dt_fin_val_tratt_cori" />
+	<persistentProperty
+		name="fl_detrazioni_familiari" />
+	<persistentProperty
+		name="ti_cassa_competenza" />
+	<persistentProperty
+		name="fl_irpef_annualizzata" />
+	<persistentProperty
+		name="id_riga" />
+	<persistentProperty
+		name="precisione" />
+	<persistentProperty
+		name="ti_anagrafico" />
+	<persistentProperty
+		name="cd_cori" />
+	<persistentProperty
+		name="cd_trattamento" />
+	<persistentProperty
+		name="calcolo_imponibile" />
+	<persistentProperty
+		name="pg_classificazione_montanti" />
+	<persistentProperty
+		name="dt_ini_val_trattamento" />
+	<persistentProperty
+		name="dt_fin_val_tipo_cori" />
+	<persistentProperty
+		name="fl_uso_in_lordizza" />
+	<persistentProperty
+		name="fl_scrivi_montanti" />
+</SQLPersistentInfo>

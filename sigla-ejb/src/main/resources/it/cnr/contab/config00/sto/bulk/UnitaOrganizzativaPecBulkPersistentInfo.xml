@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk"
+	homeClassName="it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecHome">
+	<defaultColumnMap
+		tableName="UNITA_ORGANIZZATIVA_PEC">
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unitaOrganizzativa.cd_unita_organizzativa" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="unitaOrganizzativa"
+		partOfOid="true" />
+</SQLPersistentInfo>

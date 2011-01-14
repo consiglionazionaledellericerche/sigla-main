@@ -1,0 +1,970 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Giulio Rambelli (k-tech) -->
+<!-- $Id: dichiarazionexml.xsd,v 1.21 2005/11/22 11:33:09 g.rambelli Exp $ -->
+<xs:schema xmlns:anagrafe="http://www.anagrafeprestazioni.it/comunicazionexml" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.anagrafeprestazioni.it/comunicazionexml" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="comunicazione">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="consulenti">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="nuovoIncarico" minOccurs="0" maxOccurs="1000">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:choice>
+											<xs:element name="incaricatoAzienda">
+												<xs:complexType>
+													<xs:attribute name="partitaIva" type="xs:string" use="optional"/>
+													<xs:attribute name="denominazione" type="xs:string" use="required"/>
+													<xs:attribute name="estero" type="xs:boolean" use="required"/>
+													<xs:attribute name="codiceComuneSede" type="xs:string" use="optional"/>
+													<xs:attribute name="tipologiaConsulente" type="xs:string" use="required"/>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="incaricatoPersona">
+												<xs:complexType>
+													<xs:attribute name="codiceFiscalePartitaIva" type="xs:string" use="optional"/>
+													<xs:attribute name="cognome" type="xs:string" use="required"/>
+													<xs:attribute name="nome" type="xs:string" use="required"/>
+													<xs:attribute name="estero" type="xs:boolean" use="required"/>
+													<xs:attribute name="dataNascita" type="xs:string" use="optional"/>
+													<xs:attribute name="sesso" type="xs:string" use="optional"/>
+													<xs:attribute name="tipologiaConsulente" type="xs:string" use="optional" fixed="P1"/>
+												</xs:complexType>
+											</xs:element>
+										</xs:choice>
+										<xs:element name="nuovoPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="semestre" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="2"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="importo" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:fractionDigits value="2"/>
+															<xs:minExclusive value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="codiceEnte" type="xs:string" use="required"/>
+									<xs:attribute name="annoRiferimento" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:int">
+												<xs:minInclusive value="1995"/>
+												<xs:maxInclusive value="2020"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="semestreRiferimento" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:int">
+												<xs:minInclusive value="1"/>
+												<xs:maxInclusive value="2"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="modalitaAcquisizione" type="xs:string" use="required"/>
+									<xs:attribute name="tipoRapporto" type="xs:string" use="required"/>
+									<xs:attribute name="attivitaEconomica" type="xs:string" use="required"/>
+									<xs:attribute name="descrizioneIncarico" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:maxLength value="200"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="dataInizio" type="xs:date" use="required"/>
+									<xs:attribute name="dataFine" type="xs:date" use="optional"/>
+									<xs:attribute name="variazioniIncarico" type="xs:string" use="optional"/>
+									<xs:attribute name="importoPrevisto" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:decimal">
+												<xs:fractionDigits value="2"/>
+												<xs:minExclusive value="0"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>                                    
+									<xs:attribute name="saldo" type="xs:boolean" use="required"/>
+                                    <xs:attribute name="riferimentoRegolamento" type="xs:boolean" use="required"/>
+									<!-- Per codice ente si intende il codice identificativo della PA o dell'unità organizzativa che dichiara -->
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="cancellaIncarico" minOccurs="0" maxOccurs="1000">
+								<xs:complexType>
+									<xs:attribute name="id" type="xs:long" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="modificaIncarico" minOccurs="0" maxOccurs="1000">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="nuovoPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="semestre" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="2"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="importo" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:fractionDigits value="2"/>
+															<xs:minExclusive value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="modificaPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="semestre" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="2"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="importo" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:fractionDigits value="2"/>
+															<xs:minExclusive value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="cancellaPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="semestre" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="2"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="id" type="xs:long" use="required"/>
+									<xs:attribute name="modalitaAcquisizione" type="xs:string" use="optional"/>
+									<xs:attribute name="tipoRapporto" type="xs:string" use="optional"/>
+									<xs:attribute name="attivitaEconomica" type="xs:string" use="optional"/>
+									<xs:attribute name="descrizioneIncarico" type="xs:string" use="optional"/>
+									<xs:attribute name="dataInizio" type="xs:date" use="optional"/>
+									<xs:attribute name="dataFine" type="xs:date" use="optional"/>
+									<xs:attribute name="variazioniIncarico" type="xs:string" use="required"/>
+									<xs:attribute name="importoPrevisto" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:decimal">
+												<xs:fractionDigits value="2"/>
+												<xs:minExclusive value="0"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="saldo" type="xs:boolean" use="required"/>
+                                    <xs:attribute name="riferimentoRegolamento" type="xs:boolean" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="saldoIncarico" minOccurs="0" maxOccurs="1000">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="nuovoPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="semestre" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="2"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="importo" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:fractionDigits value="2"/>
+															<xs:minExclusive value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="modificaPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="semestre" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="2"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="importo" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:fractionDigits value="2"/>
+															<xs:minExclusive value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="cancellaPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="semestre" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="2"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="id" type="xs:long" use="required"/>
+									<xs:attribute name="saldo" type="xs:boolean" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="dipendenti">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="nuovoIncarico" minOccurs="0" maxOccurs="1000">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="dipendente">
+											<xs:complexType>
+												<xs:attribute name="codiceFiscale" type="xs:string" use="required"/>
+												<xs:attribute name="nome" type="xs:string" use="required"/>
+												<xs:attribute name="cognome" type="xs:string" use="required"/>
+												<xs:attribute name="qualifica" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="nuovoPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="importo" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:fractionDigits value="2"/>
+															<xs:minExclusive value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="codiceEnte" type="xs:string" use="required"/>
+									<xs:attribute name="annoRiferimento" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:int">
+												<xs:minInclusive value="1995"/>
+												<xs:maxInclusive value="2020"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="importoPrevisto" use="optional">
+										<xs:simpleType>
+											<xs:restriction base="xs:decimal">
+												<xs:fractionDigits value="2"/>
+												<xs:minInclusive value="0"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="tipologiaSoggConferente" type="xs:string" use="required"/>
+									<xs:attribute name="tipologiaIncarico" type="xs:string" use="required"/>
+									<xs:attribute name="cfConferente" type="xs:string" use="required"/>
+									<xs:attribute name="denominazioneConferente" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:maxLength value="81"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="dataAutorizzazione" type="xs:date" use="required"/>
+									<xs:attribute name="dataInizio" type="xs:date" use="required"/>
+									<xs:attribute name="dataFine" type="xs:date" use="optional"/>
+									<xs:attribute name="doveriUfficio" type="xs:string" use="required"/>
+									<xs:attribute name="note" use="optional">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:maxLength value="1000"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="saldo" type="xs:boolean" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="modificaIncarico" minOccurs="0" maxOccurs="1000">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="nuovoPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="importo" use="optional">
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:fractionDigits value="2"/>
+															<xs:minExclusive value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="cancellaPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="modificaPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="importo" use="optional">
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:fractionDigits value="2"/>
+															<xs:minExclusive value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="id" type="xs:long" use="required"/>
+									<xs:attribute name="qualificaIncaricato" type="xs:string" use="optional"/>
+									<xs:attribute name="importoPrevisto" use="optional">
+										<xs:simpleType>
+											<xs:restriction base="xs:decimal">
+												<xs:fractionDigits value="2"/>
+												<xs:minExclusive value="0"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="tipologiaSoggConferente" type="xs:string" use="optional"/>
+									<xs:attribute name="tipologiaIncarico" type="xs:string" use="optional"/>
+									<xs:attribute name="cfConferente" type="xs:string" use="optional"/>
+									<xs:attribute name="denominazioneConferente" type="xs:string" use="optional"/>
+									<xs:attribute name="dataAutorizzazione" type="xs:date" use="optional"/>
+									<xs:attribute name="dataInizio" type="xs:date" use="optional"/>
+									<xs:attribute name="dataFine" type="xs:date" use="optional"/>
+									<xs:attribute name="doveriUfficio" type="xs:string" use="optional"/>
+									<xs:attribute name="note" type="xs:string" use="optional"/>
+									<xs:attribute name="saldo" type="xs:boolean" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="saldoIncarico" minOccurs="0" maxOccurs="1000">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="nuovoPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="importo" use="optional">
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:fractionDigits value="2"/>
+															<xs:minExclusive value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="cancellaPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="modificaPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="importo" use="optional">
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:fractionDigits value="2"/>
+															<xs:minExclusive value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="id" type="xs:long" use="required"/>
+									<xs:attribute name="saldo" type="xs:boolean" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="cancellaIncarico" minOccurs="0" maxOccurs="1000">
+								<xs:complexType>
+									<xs:attribute name="id" type="xs:long" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="esitoComunicazione">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="dipendenti">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="nuovoIncarico" minOccurs="0" maxOccurs="1000">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="dipendente">
+											<xs:complexType>
+												<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+												<xs:attribute name="codiceFiscale" type="xs:string" use="required"/>
+												<xs:attribute name="errCodiceFiscale" type="xs:string" use="optional"/>
+												<xs:attribute name="nome" type="xs:string" use="required"/>
+												<xs:attribute name="errNome" type="xs:string" use="optional"/>
+												<xs:attribute name="cognome" type="xs:string" use="required"/>
+												<xs:attribute name="errCognome" type="xs:string" use="optional"/>
+												<xs:attribute name="qualifica" type="xs:string" use="required"/>
+												<xs:attribute name="errQualifica" type="xs:string" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="nuovoPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="errAnno" type="xs:string" use="optional"/>
+												<xs:attribute name="importo" use="optional">
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:fractionDigits value="2"/>
+															<xs:minExclusive value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="errImporto" type="xs:string" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+									<xs:attribute name="codiceEnte" type="xs:string" use="required"/>
+									<xs:attribute name="errCodiceEnte" type="xs:string" use="optional"/>
+									<xs:attribute name="annoRiferimento" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:int">
+												<xs:minInclusive value="1995"/>
+												<xs:maxInclusive value="2020"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="errAnnoRiferimento" type="xs:string" use="optional"/>
+									<xs:attribute name="importoPrevisto" use="optional">
+										<xs:simpleType>
+											<xs:restriction base="xs:decimal">
+												<xs:fractionDigits value="2"/>
+												<xs:minInclusive value="0"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="idIncarico" type="xs:string" use="optional"/>
+									<xs:attribute name="errImportoPrevisto" type="xs:string" use="optional"/>
+									<xs:attribute name="tipologiaSoggConferente" type="xs:string" use="required"/>
+									<xs:attribute name="errTipologiaSoggConferente" type="xs:string" use="optional"/>
+									<xs:attribute name="tipologiaIncarico" type="xs:string" use="required"/>
+									<xs:attribute name="errTipologiaIncarico" type="xs:string" use="optional"/>
+									<xs:attribute name="cfConferente" type="xs:string" use="required"/>
+									<xs:attribute name="errCfConferente" type="xs:string" use="optional"/>
+									<xs:attribute name="denominazioneConferente" type="xs:string" use="required"/>
+									<xs:attribute name="errDenominazioneConferente" type="xs:string" use="optional"/>
+									<xs:attribute name="dataAutorizzazione" type="xs:date" use="required"/>
+									<xs:attribute name="errDataAutorizzazione" type="xs:string" use="optional"/>
+									<xs:attribute name="dataInizio" type="xs:date" use="required"/>
+									<xs:attribute name="errDataInizio" type="xs:string" use="optional"/>
+									<xs:attribute name="dataFine" type="xs:date" use="optional"/>
+									<xs:attribute name="errDataFine" type="xs:string" use="optional"/>
+									<xs:attribute name="doveriUfficio" type="xs:string" use="required"/>
+									<xs:attribute name="errDoveriUfficio" type="xs:string" use="optional"/>
+									<xs:attribute name="note" type="xs:string" use="required"/>
+									<xs:attribute name="errNote" type="xs:string" use="optional"/>
+									<xs:attribute name="saldo" type="xs:boolean" use="optional" default="false"/>
+									<xs:attribute name="errSaldo" type="xs:string" use="optional"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="modificaIncarico" minOccurs="0" maxOccurs="1000">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="nuovoPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="errAnno" type="xs:string" use="optional"/>
+												<xs:attribute name="importo" use="optional">
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:fractionDigits value="2"/>
+															<xs:minExclusive value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="errImporto" type="xs:string" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="cancellaPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="errAnno" type="xs:string" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="modificaPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="errAnno" type="xs:string" use="optional"/>
+												<xs:attribute name="importo" use="optional">
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:fractionDigits value="2"/>
+															<xs:minExclusive value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="errImporto" type="xs:string" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+									<xs:attribute name="id" type="xs:long" use="required"/>
+									<xs:attribute name="errId" type="xs:string" use="optional"/>
+									<xs:attribute name="qualificaIncaricato" type="xs:string" use="optional"/>
+									<xs:attribute name="errQualificaIncaricato" type="xs:string" use="optional"/>
+									<xs:attribute name="importoPrevisto" use="optional">
+										<xs:simpleType>
+											<xs:restriction base="xs:decimal">
+												<xs:fractionDigits value="2"/>
+												<xs:minExclusive value="0"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="errImportoPrevisto" type="xs:string" use="optional"/>
+									<xs:attribute name="tipologiaSoggConferente" type="xs:string" use="optional"/>
+									<xs:attribute name="errTipologiaSoggConferente" type="xs:string" use="optional"/>
+									<xs:attribute name="tipologiaIncarico" type="xs:string" use="optional"/>
+									<xs:attribute name="errTipologiaIncarico" type="xs:string" use="optional"/>
+									<xs:attribute name="cfConferente" type="xs:string" use="optional"/>
+									<xs:attribute name="errCfConferente" type="xs:string" use="optional"/>
+									<xs:attribute name="denominazioneConferente" type="xs:string" use="optional"/>
+									<xs:attribute name="errDenominazioneConferente" type="xs:string" use="optional"/>
+									<xs:attribute name="dataAutorizzazione" type="xs:date" use="optional"/>
+									<xs:attribute name="errDataAutorizzazione" type="xs:string" use="optional"/>
+									<xs:attribute name="dataInizio" type="xs:date" use="optional"/>
+									<xs:attribute name="errDataInizio" type="xs:string" use="optional"/>
+									<xs:attribute name="dataFine" type="xs:date" use="optional"/>
+									<xs:attribute name="errDataFine" type="xs:string" use="optional"/>
+									<xs:attribute name="doveriUfficio" type="xs:string" use="optional"/>
+									<xs:attribute name="errDoveriUfficio" type="xs:string" use="optional"/>
+									<xs:attribute name="note" type="xs:string" use="optional"/>
+									<xs:attribute name="errNote" type="xs:string" use="optional"/>
+									<xs:attribute name="saldo" type="xs:boolean" use="required"/>
+									<xs:attribute name="errSaldo" type="xs:string" use="optional"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="saldoIncarico" minOccurs="0" maxOccurs="1000">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="nuovoPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="errAnno" type="xs:string" use="optional"/>
+												<xs:attribute name="importo" use="optional">
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:fractionDigits value="2"/>
+															<xs:minExclusive value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="errImporto" type="xs:string" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="cancellaPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="errAnno" type="xs:string" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="modificaPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="errAnno" type="xs:string" use="optional"/>
+												<xs:attribute name="importo" use="optional">
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:fractionDigits value="2"/>
+															<xs:minExclusive value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="errImporto" type="xs:string" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+									<xs:attribute name="id" type="xs:long" use="required"/>
+									<xs:attribute name="errId" type="xs:string" use="optional"/>
+									<xs:attribute name="saldo" type="xs:boolean" use="required"/>
+									<xs:attribute name="errSaldo" type="xs:string" use="optional"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="cancellaIncarico" minOccurs="0" maxOccurs="1000">
+								<xs:complexType>
+									<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+									<xs:attribute name="id" type="xs:long" use="required"/>
+									<xs:attribute name="errId" type="xs:string" use="optional"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="consulenti">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="cancellaIncarico" minOccurs="0" maxOccurs="1000">
+								<xs:complexType>
+									<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+									<xs:attribute name="id" type="xs:long" use="required"/>
+									<xs:attribute name="errId" type="xs:string" use="optional"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="nuovoIncarico" minOccurs="0" maxOccurs="1000">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="nuovoPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="errAnno" type="xs:string" use="optional"/>
+												<xs:attribute name="semestre" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="2"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="errSemetre" type="xs:string" use="optional"/>
+												<xs:attribute name="importo" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:fractionDigits value="2"/>
+															<xs:minExclusive value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="errImporto" type="xs:string" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:choice>
+											<xs:element name="incaricatoPersona">
+												<xs:complexType>
+													<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+													<xs:attribute name="codiceFiscalePartitaIva" type="xs:string" use="required"/>
+													<xs:attribute name="errCodiceFiscalePartitaIva" type="xs:string" use="optional"/>
+													<xs:attribute name="cognome" type="xs:string" use="required"/>
+													<xs:attribute name="errCognome" type="xs:string" use="optional"/>
+													<xs:attribute name="nome" type="xs:string" use="required"/>
+													<xs:attribute name="errNome" type="xs:string" use="optional"/>
+													<xs:attribute name="estero" type="xs:boolean" use="required"/>
+													<xs:attribute name="errEstero" type="xs:string" use="optional"/>
+													<xs:attribute name="dataNascita" type="xs:string" use="optional"/>
+													<xs:attribute name="errDataNascita" type="xs:string" use="optional"/>
+													<xs:attribute name="sesso" type="xs:string" use="optional"/>
+													<xs:attribute name="errSesso" type="xs:string" use="optional"/>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="incaricatoAzienda">
+												<xs:complexType>
+													<xs:attribute name="esito" type="anagrafe:esito" use="optional"/>
+													<xs:attribute name="partitaIva" type="xs:string" use="required"/>
+													<xs:attribute name="errPartitaIva" type="xs:string" use="optional"/>
+													<xs:attribute name="denominazione" type="xs:string" use="required"/>
+													<xs:attribute name="errDenominazione" type="xs:string" use="optional"/>
+													<xs:attribute name="codiceComuneSede" type="xs:string" use="required"/>
+													<xs:attribute name="errCodiceComuneSede" type="xs:string" use="optional"/>
+													<xs:attribute name="tipologiaConsulente" type="xs:string" use="required"/>
+													<xs:attribute name="errTipologiaConsulente" type="xs:string" use="optional"/>
+													<xs:attribute name="estero" type="xs:boolean" use="required"/>
+													<xs:attribute name="errEstero" type="xs:string" use="optional"/>
+												</xs:complexType>
+											</xs:element>
+										</xs:choice>
+									</xs:sequence>
+									<xs:attribute name="idIncarico" type="xs:string" use="optional"/>
+									<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+									<xs:attribute name="codiceEnte" type="xs:string" use="required"/>
+									<xs:attribute name="errCodiceEnte" type="xs:string" use="optional"/>
+									<xs:attribute name="note" type="xs:string" use="required"/>
+									<xs:attribute name="errNote" type="xs:string" use="optional"/>
+									<xs:attribute name="annoRiferimento" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:int">
+												<xs:minInclusive value="1995"/>
+												<xs:maxInclusive value="2020"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="errAnnoRiferimento" type="xs:string" use="optional"/>
+									<xs:attribute name="semestreRiferimento" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:int">
+												<xs:minInclusive value="1"/>
+												<xs:maxInclusive value="2"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="errSemestreRiferimento" type="xs:string" use="optional"/>
+									<xs:attribute name="modalitaAcquisizione" type="xs:string" use="required"/>
+									<xs:attribute name="errModalitaAcquisizione" type="xs:string" use="optional"/>
+									<xs:attribute name="tipoRapporto" type="xs:string" use="required"/>
+									<xs:attribute name="errTipoRapporto" type="xs:string" use="optional"/>
+									<xs:attribute name="attivitaEconomica" type="xs:string" use="required"/>
+									<xs:attribute name="errAttivitaEconomica" type="xs:string" use="optional"/>
+									<xs:attribute name="descrizioneIncarico" type="xs:string" use="optional"/>
+									<xs:attribute name="errDescrizioneIncarico" type="xs:string" use="optional"/>
+									<xs:attribute name="dataInizio" type="xs:date" use="required"/>
+									<xs:attribute name="errDataInizio" type="xs:string" use="optional"/>
+									<xs:attribute name="dataFine" type="xs:date" use="optional"/>
+									<xs:attribute name="errDataFine" type="xs:string" use="optional"/>
+									<xs:attribute name="variazioniIncarico" type="xs:string" use="optional"/>
+									<xs:attribute name="errVariazioniIncarico" type="xs:string" use="optional"/>
+									<xs:attribute name="importoPrevisto" use="optional">
+										<xs:simpleType>
+											<xs:restriction base="xs:decimal">
+												<xs:fractionDigits value="2"/>
+												<xs:minExclusive value="0"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="errImportoPrevisto" type="xs:string" use="optional"/>
+									<xs:attribute name="saldo" type="xs:boolean" use="optional" default="false"/>
+									<xs:attribute name="errSaldo" type="xs:string" use="optional"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="modificaIncarico" minOccurs="0" maxOccurs="1000">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="nuovoPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="errAnno" type="xs:string" use="optional"/>
+												<xs:attribute name="semestre" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="2"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="errSemetre" type="xs:string" use="optional"/>
+												<xs:attribute name="importo" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:fractionDigits value="2"/>
+															<xs:minExclusive value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="errImporto" type="xs:string" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="modificaPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="errAnno" type="xs:string" use="optional"/>
+												<xs:attribute name="semestre" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="2"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="errSemetre" type="xs:string" use="optional"/>
+												<xs:attribute name="importo" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:fractionDigits value="2"/>
+															<xs:minExclusive value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="errImporto" type="xs:string" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="cancellaPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="errAnno" type="xs:string" use="optional"/>
+												<xs:attribute name="semestre" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="2"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="errSemetre" type="xs:string" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+									<xs:attribute name="id" type="xs:long" use="required"/>
+									<xs:attribute name="errId" type="xs:string" use="optional"/>
+									<xs:attribute name="modalitaAcquisizione" type="xs:string" use="optional"/>
+									<xs:attribute name="errModalitaAcquisizione" type="xs:string" use="optional"/>
+									<xs:attribute name="tipoRapporto" type="xs:string" use="optional"/>
+									<xs:attribute name="errTipoRapporto" type="xs:string" use="optional"/>
+									<xs:attribute name="attivitaEconomica" type="xs:string" use="optional"/>
+									<xs:attribute name="errAttivitaEconomica" type="xs:string" use="optional"/>
+									<xs:attribute name="descrizioneIncarico" type="xs:string" use="optional"/>
+									<xs:attribute name="errDescrizioneIncarico" type="xs:string" use="optional"/>
+									<xs:attribute name="dataInizio" type="xs:date" use="optional"/>
+									<xs:attribute name="errDataInizio" type="xs:string" use="optional"/>
+									<xs:attribute name="dataFine" type="xs:date" use="optional"/>
+									<xs:attribute name="errDataFine" type="xs:string" use="optional"/>
+									<xs:attribute name="variazioniIncarico" type="xs:string" use="optional"/>
+									<xs:attribute name="errVariazioniIncarico" type="xs:string" use="optional"/>
+									<xs:attribute name="importoPrevisto" use="optional">
+										<xs:simpleType>
+											<xs:restriction base="xs:decimal">
+												<xs:fractionDigits value="2"/>
+												<xs:minExclusive value="0"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="errImportoPrevisto" type="xs:string" use="optional"/>
+									<xs:attribute name="saldo" type="xs:boolean" use="required"/>
+									<xs:attribute name="errSaldo" type="xs:string" use="optional"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="saldoIncarico" minOccurs="0" maxOccurs="1000">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="nuovoPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="errAnno" type="xs:string" use="optional"/>
+												<xs:attribute name="semestre" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="2"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="errSemetre" type="xs:string" use="optional"/>
+												<xs:attribute name="importo" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:fractionDigits value="2"/>
+															<xs:minExclusive value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="errImporto" type="xs:string" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="modificaPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="errAnno" type="xs:string" use="optional"/>
+												<xs:attribute name="semestre" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="2"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="errSemetre" type="xs:string" use="optional"/>
+												<xs:attribute name="importo" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:decimal">
+															<xs:fractionDigits value="2"/>
+															<xs:minExclusive value="0"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="errImporto" type="xs:string" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="cancellaPagamento" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+												<xs:attribute name="anno" type="xs:int" use="required"/>
+												<xs:attribute name="errAnno" type="xs:string" use="optional"/>
+												<xs:attribute name="semestre" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="2"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="errSemetre" type="xs:string" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+									<xs:attribute name="id" type="xs:long" use="required"/>
+									<xs:attribute name="errId" type="xs:string" use="optional"/>
+									<xs:attribute name="saldo" type="xs:boolean" use="required"/>
+									<xs:attribute name="errSaldo" type="xs:string" use="optional"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="errore" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:attribute name="messaggio" type="xs:string" use="required"/>
+						<xs:attribute name="riga" type="xs:int" use="optional"/>
+						<xs:attribute name="colonna" type="xs:int" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:attribute name="esito" type="anagrafe:esito" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="esito">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OK"/>
+			<xs:enumeration value="ERRATO"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

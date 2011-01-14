@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	keyClassName="it.cnr.contab.doccont00.core.bulk.ReversaleKey">
+	<defaultColumnMap
+		tableName="V_PDG_OBBLIGAZIONE_SPE" >
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="CHAR"
+			primary="true"			
+			columnSize="1" />
+		<columnMapping
+			columnName="CATEGORIA_DETTAGLIO"
+			propertyName="categoria_dettaglio"
+			sqlTypeName="VARCHAR"
+			primary="true"			
+			columnSize="3" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			primary="true"			
+			columnSize="4" />
+		<columnMapping
+			columnName="ESERCIZIO_RES"
+			propertyName="esercizio_res"
+			sqlTypeName="DECIMAL"
+			primary="true"			
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			primary="true"			
+			columnSize="20" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			primary="true"			
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			primary="true"			
+			columnSize="30" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			primary="true"			
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			primary="true"			
+			columnSize="10" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="stato" 
+		partOfOid="true"/>
+	<persistentProperty
+		name="categoria_dettaglio" 
+		partOfOid="true"/>
+	<persistentProperty
+		name="esercizio" 
+		partOfOid="true"/>
+	<persistentProperty
+		name="esercizio_res" 
+		partOfOid="true"/>
+	<persistentProperty
+		name="ti_gestione" 
+		partOfOid="true"/>
+	<persistentProperty
+		name="cd_elemento_voce" 
+		partOfOid="true"/>
+	<persistentProperty
+		name="cd_centro_responsabilita" 
+		partOfOid="true"/>
+	<persistentProperty
+		name="ti_appartenenza" 
+		partOfOid="true"/>
+	<persistentProperty
+		name="cd_linea_attivita" 
+		partOfOid="true"/>
+</SQLPersistentInfo>

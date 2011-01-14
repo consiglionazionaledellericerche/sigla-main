@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.docs.bulk.MissioneBulk"
+	homeClassName="it.cnr.contab.missioni00.docs.bulk.MissioneHome" >
+	
+	<defaultColumnMap tableName="MISSIONE">		
+
+		<columnMapping
+			columnName="CD_TIPO_MISSIONE"
+			propertyName="tipo_missione.cd_tipo_missione"/>			
+		
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="modalita_pagamento.cd_modalita_pag" />
+	
+		<columnMapping
+			columnName="CD_TERMINI_PAG"
+			propertyName="termini_pagamento.cd_termini_pag" />
+			
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="banca.pg_banca" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="banca.cd_terzo"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="banca.terzo.cd_terzo"
+			fetchOnly="true"/>
+
+		<columnMapping
+			columnName="CD_TIPO_RAPPORTO"
+			propertyName="tipo_rapporto.cd_tipo_rapporto"/>
+
+		<columnMapping
+			columnName="PG_RIF_INQUADRAMENTO"
+			propertyName="rif_inquadramento.pg_rif_inquadramento"/>						
+
+		<columnMapping
+			columnName="CD_CDS_OBBLIGAZIONE"
+			propertyName="obbligazione_scadenzario.obbligazione.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="obbligazione_scadenzario.obbligazione.cds.esercizio"
+			fetchOnly="true" />				
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="obbligazione_scadenzario.obbligazione.esercizio" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="obbligazione_scadenzario.obbligazione.esercizio_originale" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="obbligazione_scadenzario.obbligazione.pg_obbligazione" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="obbligazione_scadenzario.pg_obbligazione_scadenzario" />
+
+		<columnMapping
+			columnName="CD_CDS_ANTICIPO"
+			propertyName="anticipo.cd_cds" />
+		<columnMapping
+			columnName="ESERCIZIO_ANTICIPO"
+			propertyName="anticipo.esercizio"/>				
+		<columnMapping
+			columnName="CD_UO_ANTICIPO"
+			propertyName="anticipo.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_ANTICIPO"
+			propertyName="anticipo.pg_anticipo" />			
+	</defaultColumnMap>		
+
+	<persistentProperty
+		name="tipo_missione" />		
+	<persistentProperty
+		name="modalita_pagamento" />
+	<persistentProperty
+		name="termini_pagamento" />
+	<persistentProperty
+		name="banca" />
+	<persistentProperty
+		name="tipo_rapporto" />
+	<persistentProperty
+		name="rif_inquadramento" />	
+	<persistentProperty
+		name="obbligazione_scadenzario" />
+	<persistentProperty
+		name="anticipo" />			
+	
+</SQLPersistentInfo>

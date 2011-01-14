@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.V_prev_dipBase"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.V_prev_dipHome" >
+	<defaultColumnMap
+		tableName="V_PREV_DIP" >
+		<columnMapping
+			columnName="MATRICOLA"
+			propertyName="matricola"
+			sqlTypeName="DECIMAL"
+			columnSize="9" />
+		<columnMapping
+			columnName="RAPPORTO"
+			propertyName="rapporto"
+			sqlTypeName="VARCHAR"
+			columnSize="2" />
+		<columnMapping
+			columnName="ENTE"
+			propertyName="ente"
+			sqlTypeName="VARCHAR"
+			columnSize="2" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="NOMINATIVO"
+			propertyName="nominativo"
+			sqlTypeName="VARCHAR"
+			columnSize="60" />
+		<columnMapping
+			columnName="SEDE"
+			propertyName="sede"
+			sqlTypeName="VARCHAR"
+			columnSize="6" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="matricola" />
+	<persistentProperty
+		name="rapporto" />
+	<persistentProperty
+		name="ente" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="nominativo" />
+	<persistentProperty
+		name="sede" />
+</SQLPersistentInfo>

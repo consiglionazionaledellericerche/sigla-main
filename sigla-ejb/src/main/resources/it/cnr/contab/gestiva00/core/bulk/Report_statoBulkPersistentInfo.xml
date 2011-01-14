@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.gestiva00.core.bulk.Report_statoBulk"
+	homeClassName="it.cnr.contab.gestiva00.core.bulk.Report_statoHome" >
+
+	<defaultColumnMap
+		tableName="REPORT_STATO" >
+		<columnMapping
+			columnName="CD_TIPO_SEZIONALE"
+			propertyName="tipo_sezionale.cd_tipo_sezionale" />
+	</defaultColumnMap>
+	
+	<persistentProperty
+		name="tipo_sezionale"
+		partOfOid="true" />
+
+</SQLPersistentInfo>

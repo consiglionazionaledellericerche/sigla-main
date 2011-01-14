@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="findUbicazioneDestinazione"
+		property="ubicazione_destinazione"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		completeOnSave = "true"
+		label="Ubicazione Destinazione" />
+	<fieldProperty
+		name="cdUbicazioneDestinazione"
+		property="ubicazione_destinazione.cd_ubicazione"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROUbicazioneDestinazione"
+		label="Codice Ubicazione" />
+	/*****************************************************	
+	* Riferimento all'oggetto complesso assegnatario **/
+	<fieldProperty
+		name="find_assegnatario"
+		property="assegnatario"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		completeOnSave = "true"
+		label="Assegnatario"  />
+	<fieldProperty
+		name="cd_assegnatario"
+		property="assegnatario.cd_terzo"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Assegnatario"	
+		readonlyProperty="ROassegnatarioBene"
+		caseSensitiveSearch="false"
+		nullable="false" />
+<!--  commento -->
+	<formFieldProperty
+		name="find_assegnatario" />
+	<formFieldProperty
+		name="cd_assegnatario" />
+	<formFieldProperty 
+		name="findUbicazioneDestinazione" />
+	<formFieldProperty 
+		name="cdUbicazioneDestinazione" />
+</bulkInfo>

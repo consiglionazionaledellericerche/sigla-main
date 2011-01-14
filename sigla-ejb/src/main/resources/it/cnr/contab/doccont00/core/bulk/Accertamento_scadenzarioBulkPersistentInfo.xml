@@ -1,0 +1,107 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioHome" >
+	<defaultColumnMap
+		tableName="ACCERTAMENTO_SCADENZARIO" >
+		
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="accertamento.pg_accertamento"
+			/>
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE"
+			propertyName="accertamento.esercizio_originale"
+			/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="accertamento.esercizio"
+			/>
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="accertamento.cds.cd_unita_organizzativa"
+			/>
+	</defaultColumnMap>
+	<columnMap
+		name="IMPORTO_ASSOCIATO"
+		tableName="ACCERTAMENTO_SCADENZARIO" >
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="pg_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE"
+			propertyName="esercizio_originale"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO_SCADENZARIO"
+			propertyName="pg_accertamento_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ASSOCIATO_DOC_AMM"
+			propertyName="im_associato_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+	</columnMap>
+	<persistentProperty
+		name="accertamento"
+		partOfOid="true" />
+	<fetchPolicy
+		name="it.cnr.contab.doccont00.comp.AccertamentoComponent.edit">
+		<exclude pattern="*"/>
+	</fetchPolicy>
+</SQLPersistentInfo>

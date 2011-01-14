@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="ti_appartenenza"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="cd_cds"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="proc_name"
+		property="proc_name"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="proc_name"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="cd_unita_organizzativa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="cd_elemento_voce"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="pg_minicarriera"
+		property="pg_minicarriera"
+		inputType="TEXT"
+		label="pg_minicarriera" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="cd_linea_attivita"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="cd_centro_responsabilita"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio_competenza"
+		property="esercizio_competenza"
+		inputType="TEXT"
+		label="esercizio_competenza" />
+	<fieldProperty
+		name="par_num"
+		property="par_num"
+		inputType="TEXT"
+		label="par_num" />
+	<fieldProperty
+		name="pg_call"
+		property="pg_call"
+		inputType="TEXT"
+		label="pg_call" />
+	<fieldProperty
+		name="messagetouser"
+		property="messagetouser"
+		maxLength="200"
+		inputSize="200"
+		inputType="TEXT"
+		label="messagetouser"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="ti_gestione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_voce"
+		property="cd_voce"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="cd_voce"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_rata"
+		property="pg_rata"
+		inputType="TEXT"
+		label="pg_rata" />
+
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="proc_name" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_minicarriera" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="esercizio_competenza" />
+	<formFieldProperty
+		name="par_num" />
+	<formFieldProperty
+		name="pg_call" />
+	<formFieldProperty
+		name="messagetouser" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_voce" />
+	<formFieldProperty
+		name="pg_rata" />
+
+	<columnFieldProperty
+		name="ti_appartenenza" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="proc_name" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_minicarriera" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="esercizio_competenza" />
+	<columnFieldProperty
+		name="par_num" />
+	<columnFieldProperty
+		name="pg_call" />
+	<columnFieldProperty
+		name="messagetouser" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_voce" />
+	<columnFieldProperty
+		name="pg_rata" />
+
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="proc_name" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_minicarriera" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="esercizio_competenza" />
+	<findFieldProperty
+		name="par_num" />
+	<findFieldProperty
+		name="pg_call" />
+	<findFieldProperty
+		name="messagetouser" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_voce" />
+	<findFieldProperty
+		name="pg_rata" />
+
+</bulkInfo>

@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		label="CDS" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_ordine"
+		property="pg_ordine"
+		inputType="TEXT"
+		inputSize="10"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		label="Nr. Ordine"
+		style="text-align: right" />
+	<fieldProperty
+		name="dt_registrazione"
+		property="dt_registrazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		formatName="date_short"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Data Registrazione" />
+	<fieldProperty
+		name="findTipoConsegna"
+		property="tipoConsegna"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		label="Tipo Consegna" />
+	<fieldProperty
+		name="cdTipoConsegna"
+		property="tipoConsegna.cd_tipo_consegna"
+		readonlyProperty="ROCdTipoConsegna"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false"
+		nullable="false"
+		label="Tipo Consegna" />
+	<fieldProperty
+		name="dsTipoConsegna"
+		property="tipoConsegna.ds_tipo_consegna"
+		inputType="ROTEXT"
+		inputSize="70"
+		maxLength="100"
+		label="Descr. Tipo Consegna" />
+	<fieldProperty
+		name="note"
+		property="note"
+		inputType="TEXTAREA"
+		cols="100"
+		rows="4"
+		label="Note" />
+	<fieldProperty
+		name="esercizio_ori_obbligazione"
+		property="obbligazione.esercizio_originale"
+		inputType="TEXT"
+		inputSize="4"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		label="Es. Impegno"
+		style="text-align: right" />
+	<fieldProperty
+		name="pg_obbligazione"
+		property="obbligazione.pg_obbligazione"
+		inputType="TEXT"
+		inputSize="10"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		label="Impegno"
+		style="text-align: right" />
+	<fieldProperty
+		name="pg_obblig"
+		property="obbligazione.pg_obbligazione"
+		inputType="ROTEXT"
+		inputSize="10"
+		label="Impegno"
+		style="text-align: right" />
+	<fieldProperty
+		name="ds_obbligazione"
+		property="obbligazione.ds_obbligazione"
+		inputType="ROTEXT"
+		inputSize="70"
+		label="Obbligazione" />
+	<fieldProperty
+		name="im_obbligazione"
+		property="im_obbligazione"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		label="Importo" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="elementoVoce.cd_elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		label="Voce del Piano" />
+	<fieldProperty
+		name="dsElementoVoce"
+		property="elementoVoce.ds_elemento_voce"
+		inputType="ROTEXT"
+		inputSize="70"
+		label="Voce del Piano" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Gestione" />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Appartenenza" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		label="Codice Terzo" />
+	<fieldProperty
+		name="nome"
+		property="nome"
+		inputType="TEXT"
+		inputSize="20"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"
+		label="Nome" />
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		inputType="TEXT"
+		inputSize="20"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"
+		label="Cognome" />
+	<fieldProperty
+		name="ragione_sociale"
+		property="ragione_sociale"
+		inputType="TEXT"
+		inputSize="65"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		label="Ragione Sociale" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		inputType="TEXT"
+		inputSize="20"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		label="Codice Fiscale" />
+	<fieldProperty
+		name="partita_iva"
+		property="partita_iva"
+		inputType="TEXT"
+		inputSize="20"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"
+		label="Partita Iva" />
+	<fieldProperty
+		name="via_sede"
+		property="via_sede"
+		inputType="TEXT"
+		inputSize="53"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		label="Indirizzo" />
+	<fieldProperty
+		name="numero_civico_sede"
+		property="numero_civico_sede"
+		inputType="TEXT"
+		inputSize="5"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		label="Nr." />
+	<fieldProperty
+		name="termini_pagamento"
+		property="terminiPagamento"
+		printProperty="cd_ds_termini_pagamento"
+		optionsProperty="termini"
+		inputType="SELECT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Term. pagamento"
+		style="width:15em" />
+	<fieldProperty
+		name="modalita_pagamento"
+		property="modalitaPagamento"
+		printProperty="cd_ds_modalita_pagamento"
+		optionsProperty="modalita"
+		inputType="SELECT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Mod. pagamento"
+		style="width:15em" />
+	<fieldProperty
+		name="listabanche"
+		property="banca"
+		readonlyProperty="abledToInsertBank"
+		inputType="BUTTON"
+		img="img/find16.gif"
+		href="javascript:submitForm('doSearch(main.listabanche)')"
+		label="Conto/i d'appoggio" />
+	<fieldProperty
+		name="pg_banca"
+		property="pg_banca"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Banca" />
+	<fieldProperty
+		name="contoA"
+		property="banca"
+		inputType="FORM"
+		formName="A"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoP"
+		property="banca"
+		inputType="FORM"
+		formName="P"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoB"
+		property="banca"
+		inputType="FORM"
+		formName="BdocAmm"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoQ"
+		property="banca"
+		inputType="FORM"
+		formName="Q"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoN"
+		property="banca"
+		inputType="FORM"
+		formName="N"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="clausola"
+		property="clausola"
+		inputType="TEXTAREA"
+		maxLength="4000"
+		cols="100"
+		rows="4"
+		label="Clausola" />
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_ordine" />
+	<formFieldProperty
+		name="dt_registrazione" />
+	<formFieldProperty
+		name="note" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="nome" />
+	<formFieldProperty
+		name="cognome" />
+	<formFieldProperty
+		name="ragione_sociale" />
+	<formFieldProperty
+		name="codice_fiscale" />
+	<formFieldProperty
+		name="partita_iva" />
+	<formFieldProperty
+		name="via_sede" />
+	<formFieldProperty
+		name="numero_civico_sede" />
+	<formFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<formFieldProperty
+		name="pg_obbligazione" />
+	<formFieldProperty
+		name="pg_obblig" />
+	<formFieldProperty
+		name="ds_obbligazione" />
+	<formFieldProperty
+		name="im_obbligazione" />
+	<formFieldProperty
+		name="modalita_pagamento" />
+	<formFieldProperty
+		name="termini_pagamento" />
+	<formFieldProperty
+		name="listabanche" />
+	<formFieldProperty
+		name="pg_banca" />
+	<formFieldProperty
+		name="contoA" />
+	<formFieldProperty
+		name="contoB" />
+	<formFieldProperty
+		name="contoP" />
+	<formFieldProperty
+		name="contoQ" />
+	<formFieldProperty
+		name="contoN"/>
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="dsElementoVoce" />
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cdTipoConsegna" />
+	<formFieldProperty
+		name="dsTipoConsegna" />
+	<formFieldProperty
+		name="findTipoConsegna" />
+	<formFieldProperty
+		name="clausola" />
+		
+	<columnFieldProperty
+		name="pg_ordine" />
+	<columnFieldProperty
+		name="dt_registrazione" />
+	<columnFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<columnFieldProperty
+		name="pg_obbligazione" />
+	<columnFieldProperty
+		name="ds_obbligazione" />
+	<columnFieldProperty
+		name="cdTipoConsegna" />
+	<columnFieldProperty
+		name="dsTipoConsegna" />
+	<columnFieldProperty
+		name="im_obbligazione" />
+	<columnFieldProperty
+		name="note" />
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="nome" />
+	<columnFieldProperty
+		name="cognome" />
+	<columnFieldProperty
+		name="ragione_sociale" />
+	<columnFieldProperty
+		name="via_sede" />
+	<columnFieldProperty
+		name="numero_civico_sede" />
+	<columnFieldProperty
+		name="partita_iva" />
+	<columnFieldProperty
+		name="codice_fiscale" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="ti_appartenenza" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="modalita_pagamento" />
+	<columnFieldProperty
+		name="termini_pagamento" />
+	<columnFieldProperty
+		name="pg_banca" />
+	<columnFieldProperty
+		name="clausola" />
+
+	<findFieldProperty
+		name="pg_ordine" />
+	<findFieldProperty
+		name="dt_registrazione" />
+	<findFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<findFieldProperty
+		name="pg_obbligazione" />
+	<findFieldProperty
+		name="cdTipoConsegna" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="nome" />
+	<findFieldProperty
+		name="cognome" />
+	<findFieldProperty
+		name="ragione_sociale" />
+	<findFieldProperty
+		name="via_sede" />
+	<findFieldProperty
+		name="numero_civico_sede" />
+	<findFieldProperty
+		name="partita_iva" />
+	<findFieldProperty
+		name="codice_fiscale" />
+	<findFieldProperty
+		name="im_obbligazione"
+		label="Importo obbligazione" />
+	<findFieldProperty
+		name="cd_elemento_voce"
+		label="Codice elemento voce" />
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="modalita_pagamento" />
+	<findFieldProperty
+		name="termini_pagamento" />
+	<findFieldProperty
+		name="pg_banca" />
+	<findFieldProperty
+		name="note" />
+</bulkInfo>

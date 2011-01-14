@@ -1,0 +1,50 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_regione"
+		property="cd_regione"
+		label="Codice regione"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="ds_regione"
+		property="ds_regione"
+		label="Descrizione regione"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="fl_addreg_aliqmax"
+		property="fl_addreg_aliqmax"
+		label="Applica l'aliquota massima"
+		inputType="CHECKBOX" />	
+
+	<columnFieldProperty
+		name="cd_regione"
+		/>
+	<columnFieldProperty
+		name="ds_regione"
+		/>
+	<columnFieldProperty
+		name="fl_addreg_aliqmax"
+		/>
+	<formFieldProperty
+		name="cd_regione"
+		/>
+	<formFieldProperty
+		name="ds_regione"
+		/>
+     <formFieldProperty
+		name="fl_addreg_aliqmax"
+		/>
+	<findFieldProperty
+		name="cd_regione"
+		/>
+	<findFieldProperty
+		name="ds_regione"
+		/>
+
+
+</bulkInfo>

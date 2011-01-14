@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBase"
+	keyClassName="it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaKey"
+	homeClassName="it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaHome" >
+	<defaultColumnMap
+		tableName="FATTURA_ATTIVA_RIGA" >
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dt_cancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="esercizio_ori_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_RIGA_ASSNCNA_FIN"
+			propertyName="pg_riga_assncna_fin"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ACCERTAMENTO"
+			propertyName="esercizio_ori_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="pg_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="IM_TOTALE_DIVISA"
+			propertyName="im_totale_divisa"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO_SCADENZARIO"
+			propertyName="pg_accertamento_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="QUANTITA"
+			propertyName="quantita"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_VOCE_IVA"
+			propertyName="cd_voce_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_ACCERTAMENTO"
+			propertyName="cd_cds_accertamento"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="TI_ASSOCIATO_MANREV"
+			propertyName="ti_associato_manrev"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_DIPONIBILE_NC"
+			propertyName="im_diponibile_nc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="PREZZO_UNITARIO"
+			propertyName="prezzo_unitario"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO_COFI"
+			propertyName="stato_cofi"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_A_COMPETENZA_COGE"
+			propertyName="dt_a_competenza_coge"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IMPONIBILE"
+			propertyName="im_imponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_FATTURA_ASSNCNA_FIN"
+			propertyName="pg_fattura_assncna_fin"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_TARIFFARIO"
+			propertyName="cd_tariffario"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_CDS_OBBLIGAZIONE"
+			propertyName="cd_cds_obbligazione"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_UO_ASSNCNA_FIN"
+			propertyName="cd_uo_assncna_fin"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="ESERCIZIO_ASSNCNA_FIN"
+			propertyName="esercizio_assncna_fin"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="ESERCIZIO_ACCERTAMENTO"
+			propertyName="esercizio_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_CDS_ASSNCNA_FIN"
+			propertyName="cd_cds_assncna_fin"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="FL_IVA_FORZATA"
+			propertyName="fl_iva_forzata"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_DA_COMPETENZA_COGE"
+			propertyName="dt_da_competenza_coge"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IVA"
+			propertyName="im_iva"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_RIGA_FATTURA"
+			propertyName="ds_riga_fattura"
+			sqlTypeName="VARCHAR"
+			columnSize="1000" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="esercizio_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="DATA_ESIGIBILITA_IVA"
+			propertyName="data_esigibilita_iva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />	
+		<columnMapping
+			columnName="CD_BENE_SERVIZIO"
+			propertyName="cd_bene_servizio"
+			sqlTypeName="VARCHAR"
+			columnSize="10"/>	
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_cancellazione" />
+	<persistentProperty
+		name="esercizio_ori_obbligazione" />
+	<persistentProperty
+		name="pg_obbligazione" />
+	<persistentProperty
+		name="pg_riga_assncna_fin" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="esercizio_ori_accertamento" />
+	<persistentProperty
+		name="pg_accertamento" />
+	<persistentProperty
+		name="im_totale_divisa" />
+	<persistentProperty
+		name="pg_accertamento_scadenzario" />
+	<persistentProperty
+		name="quantita" />
+	<persistentProperty
+		name="cd_voce_iva" />
+	<persistentProperty
+		name="cd_cds_accertamento" />
+	<persistentProperty
+		name="ti_associato_manrev" />
+	<persistentProperty
+		name="im_diponibile_nc" />
+	<persistentProperty
+		name="prezzo_unitario" />
+	<persistentProperty
+		name="stato_cofi" />
+	<persistentProperty
+		name="dt_a_competenza_coge" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="im_imponibile" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="cd_tariffario" />
+	<persistentProperty
+		name="pg_fattura_assncna_fin" />
+	<persistentProperty
+		name="cd_cds_obbligazione" />
+	<persistentProperty
+		name="pg_obbligazione_scadenzario" />
+	<persistentProperty
+		name="cd_uo_assncna_fin" />
+	<persistentProperty
+		name="esercizio_assncna_fin" />
+	<persistentProperty
+		name="esercizio_accertamento" />
+	<persistentProperty
+		name="cd_cds_assncna_fin" />
+	<persistentProperty
+		name="fl_iva_forzata" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="dt_da_competenza_coge" />
+	<persistentProperty
+		name="im_iva" />
+	<persistentProperty
+		name="ds_riga_fattura" />
+	<persistentProperty
+		name="esercizio_obbligazione" />
+	<persistentProperty
+		name="data_esigibilita_iva" />	
+	<persistentProperty
+		name="cd_bene_servizio"/>	
+</SQLPersistentInfo>

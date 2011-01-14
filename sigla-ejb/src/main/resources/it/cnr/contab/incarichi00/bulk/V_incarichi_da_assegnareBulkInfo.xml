@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio_limite"
+		property="esercizio_limite"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_procedura"
+		property="pg_procedura"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="nr.procedura" />
+	<fieldProperty
+		name="esercizio_repertorio"
+		property="esercizio_repertorio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Repertorio" />
+	<fieldProperty
+		name="pg_repertorio"
+		property="pg_repertorio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="nr.repertorio" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Codice terzo" />
+	<fieldProperty
+		name="dt_pubblicazione"
+		property="dt_pubblicazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data pubblicazione" />
+	<fieldProperty
+		name="dt_fine_pubblicazione"
+		property="dt_fine_pubblicazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data fine pubblicazione" />
+	<fieldProperty
+		name="dt_scadenza"
+		property="dt_scadenza"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data scadenza" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		label="Stato" />
+	<fieldProperty
+		name="cd_tipo_limite"
+		property="cd_tipo_limite"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Tipo limite" />
+	<fieldProperty
+		name="im_incarichi"
+		property="im_incarichi"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Incarichi" />
+	<fieldProperty
+		name="statoText"
+		property="statoText"
+		inputType="TEXT"
+		maxLength="30"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Stato richiesta" />
+		
+		
+	<formFieldProperty
+		name="esercizio_limite" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_procedura" />
+	<formFieldProperty
+		name="esercizio_repertorio" />
+	<formFieldProperty
+		name="pg_repertorio" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="dt_pubblicazione" />
+	<formFieldProperty
+		name="dt_fine_pubblicazione" />
+	<formFieldProperty
+		name="dt_scadenza" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="cd_tipo_limite" />
+	<formFieldProperty
+		name="im_incarichi" />
+	<formFieldProperty
+		name="statoText" />
+		
+	<findFieldProperty
+		name="esercizio_limite" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_procedura" />
+	<findFieldProperty
+		name="esercizio_repertorio" />
+	<findFieldProperty
+		name="pg_repertorio" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="dt_pubblicazione" />
+	<findFieldProperty
+		name="dt_fine_pubblicazione" />
+	<findFieldProperty
+		name="dt_scadenza" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="cd_tipo_limite" />
+	<findFieldProperty
+		name="im_incarichi" />
+		
+	<columnFieldProperty
+		name="esercizio_limite" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_procedura" />
+	<columnFieldProperty
+		name="esercizio_repertorio" />
+	<columnFieldProperty
+		name="pg_repertorio" />
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="dt_pubblicazione" />
+	<columnFieldProperty
+		name="dt_fine_pubblicazione" />
+	<columnFieldProperty
+		name="dt_scadenza" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="cd_tipo_limite" />
+	<columnFieldProperty
+		name="im_incarichi" />
+	<columnFieldProperty
+		name="statoText" />
+
+	<columnSet
+		name="incarichiScaduti">
+		<columnFieldProperty
+			name="esercizio" />
+		<columnFieldProperty
+			name="pg_procedura" />
+		<columnFieldProperty
+			name="dt_scadenza" />
+		<columnFieldProperty
+			name="im_incarichi" />
+	</columnSet>
+	<columnSet
+		name="incarichiValidi">
+		<columnFieldProperty
+			name="esercizio" />
+		<columnFieldProperty
+			name="pg_procedura" />
+		<columnFieldProperty
+			name="statoText" />
+		<columnFieldProperty
+			name="dt_scadenza" />
+		<columnFieldProperty
+			name="im_incarichi" />
+	</columnSet>
+</bulkInfo>

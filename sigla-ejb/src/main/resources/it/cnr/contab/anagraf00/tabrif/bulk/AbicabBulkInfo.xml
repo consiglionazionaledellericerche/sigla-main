@@ -1,0 +1,201 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="abi"
+		property="abi"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.CapFormat"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="ABI" />
+	<fieldProperty
+		name="abiForSearch"
+		property="abi"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="ABI" />
+	<fieldProperty
+		name="cab"
+		property="cab"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.CapFormat"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="CAB" />
+	<fieldProperty
+		name="cabForSearch"
+		property="cab"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="CAB" />
+	<fieldProperty
+		name="ds_abicab"
+		property="ds_abicab"
+		maxLength="150"
+		inputSize="100"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="via"
+		property="via"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false"
+		label="Via" />
+	<fieldProperty
+		name="cap"
+		property="cap"
+		maxLength="5"
+		inputSize="5"
+		optionsProperty="capsComune"
+		inputType="SELECT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		label="CAP" />
+	<fieldProperty
+		name="capForSearch"
+		property="cap"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="CAP" />
+	<fieldProperty
+		name="frazione"
+		property="frazione"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false"
+		label="Frazione" />
+	<fieldProperty
+		name="fl_cancellato"
+		property="fl_cancellato"
+		inputType="CHECKBOX"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "false"
+		enabledOnFreeSearch = "true"
+		label="Cancellato" />
+/* *************** ****** *************** */
+/* *************** COMUNE *************** */
+/* *************** ****** *************** */
+	<fieldProperty
+		name="pg_comune"
+		property="pg_comune"
+		readonlyProperty="ROComune"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice comune/citt&#224;" />
+	<fieldProperty
+		name="ds_comune"
+		property="comune.ds_comune"
+		readonlyProperty="ROComune"
+		maxLength="70"
+		inputSize="70"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		label="Comune/Citt&#224;" />
+	<fieldProperty
+		name="find_comune"
+		property="comune"
+		inputType="SEARCHTOOL"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Comune/Citt&#224;" />
+	<fieldProperty
+		name="pg_comuneForSearch"
+		property="pg_comune"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice comune/citt&#224;" />
+
+	<formFieldProperty name="abi" />
+	<formFieldProperty name="cab" />
+	<formFieldProperty name="ds_abicab" />
+	<formFieldProperty name="via" />
+	<formFieldProperty name="cap" />
+	<formFieldProperty name="capForSearch" />
+	<formFieldProperty name="frazione" />
+	<formFieldProperty name="pg_comune" />
+	<formFieldProperty name="ds_comune" />
+	<formFieldProperty name="find_comune" />
+	<formFieldProperty name="fl_cancellato" />
+
+	<columnFieldProperty name="abi" />
+	<columnFieldProperty name="cab" />
+	<columnFieldProperty name="ds_abicab" />
+	<columnFieldProperty name="ds_comune" />
+	<columnFieldProperty name="via" />
+	<columnFieldProperty name="cap" />
+	<columnFieldProperty name="frazione" />
+	<columnFieldProperty name="fl_cancellato" />
+
+	<findFieldProperty name="abiForSearch" />
+	<findFieldProperty name="cabForSearch" />
+	<findFieldProperty name="ds_abicab" />
+	<findFieldProperty name="via" />
+	<findFieldProperty name="capForSearch" /> 
+	<findFieldProperty name="frazione" />
+	<findFieldProperty name="pg_comuneForSearch" />
+	<findFieldProperty name="fl_cancellato" />
+
+</bulkInfo>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.tabrif.bulk.Tipo_ammortamentoKey" >
+	<defaultColumnMap
+		tableName="TIPO_AMMORTAMENTO" >
+		<columnMapping
+			columnName="TI_AMMORTAMENTO"
+			propertyName="ti_ammortamento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_TIPO_AMMORTAMENTO"
+			propertyName="cd_tipo_ammortamento"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ti_ammortamento"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_tipo_ammortamento"
+		partOfOid="true" />
+</SQLPersistentInfo>

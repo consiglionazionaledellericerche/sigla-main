@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.docs.bulk.Bonus_nucleo_famBulk"
+	homeClassName="it.cnr.contab.compensi00.docs.bulk.Bonus_nucleo_famHome">
+	<defaultColumnMap
+		tableName="BONUS_NUCLEO_FAM">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="bonus.esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_BONUS"
+			propertyName="bonus.pg_bonus"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="bonus"
+		partOfOid="true" />		
+</SQLPersistentInfo>

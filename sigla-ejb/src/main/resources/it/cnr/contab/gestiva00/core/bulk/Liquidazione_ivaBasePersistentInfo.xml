@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaBase"
+	keyClassName="it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaKey"
+	homeClassName="it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaHome" >
+	<defaultColumnMap
+		tableName="LIQUIDAZIONE_IVA" >
+		<columnMapping
+			columnName="IVA_CREDITO"
+			propertyName="iva_credito"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="ESERCIZIO_OBB_ACCENTR"
+			propertyName="esercizio_obb_accentr"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="IVA_CREDITO_NO_PRORATA"
+			propertyName="iva_credito_no_prorata"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="CD_CDS_OBB_ACCENTR"
+			propertyName="cd_cds_obb_accentr"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="IVA_DEB_CRED"
+			propertyName="iva_deb_cred"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="PERC_PRORATA_DETRAIBILE"
+			propertyName="perc_prorata_detraibile"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="ANNOTAZIONI"
+			propertyName="annotazioni"
+			sqlTypeName="VARCHAR"
+			columnSize="1000" />
+		<columnMapping
+			columnName="VAR_IMP_PER_PREC"
+			propertyName="var_imp_per_prec"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="IVA_VENDITE_DIFF"
+			propertyName="iva_vendite_diff"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="IVA_ACQ_NON_DETR"
+			propertyName="iva_acq_non_detr"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBB_ACCENTR"
+			propertyName="esercizio_ori_obb_accentr"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_OBB_ACCENTR"
+			propertyName="pg_obb_accentr"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="ESERCIZIO_DOC_AMM"
+			propertyName="esercizio_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="IVA_ACQUISTI_DIFF"
+			propertyName="iva_acquisti_diff"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="CAB"
+			propertyName="cab"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="IVA_INTRAUE"
+			propertyName="iva_intraue"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="IVA_VERSATA"
+			propertyName="iva_versata"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="ACCONTO_IVA_VERS"
+			propertyName="acconto_iva_vers"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="CRED_IVA_INFRANN_RIMB"
+			propertyName="cred_iva_infrann_rimb"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CRED_IVA_COMP_DETR"
+			propertyName="cred_iva_comp_detr"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="IVA_DEB_CRED_PER_PREC"
+			propertyName="iva_deb_cred_per_prec"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="IVA_DEBITO"
+			propertyName="iva_debito"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="COD_AZIENDA"
+			propertyName="cod_azienda"
+			sqlTypeName="VARCHAR"
+			columnSize="4" />
+		<columnMapping
+			columnName="CRED_IVA_SPEC_DETR"
+			propertyName="cred_iva_spec_detr"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="IVA_AUTOFATT"
+			propertyName="iva_autofatt"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="DT_VERSAMENTO"
+			propertyName="dt_versamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="CRED_IVA_INFRANN_COMP"
+			propertyName="cred_iva_infrann_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="IVA_ACQ_DIFF_ESIG"
+			propertyName="iva_acq_diff_esig"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="IVA_VENDITE"
+			propertyName="iva_vendite"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="IVA_NON_VERS_PER_PREC"
+			propertyName="iva_non_vers_per_prec"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="CD_UO_DOC_AMM"
+			propertyName="cd_uo_doc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="IVA_VEND_DIFF_ESIG"
+			propertyName="iva_vend_diff_esig"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="IVA_DA_VERSARE"
+			propertyName="iva_da_versare"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_DOC_AMM"
+			propertyName="cd_cds_doc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="ABI"
+			propertyName="abi"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="INT_DEB_LIQ_TRIM"
+			propertyName="int_deb_liq_trim"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="IVA_ACQUISTI"
+			propertyName="iva_acquisti"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="PG_DOC_AMM"
+			propertyName="pg_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO"
+			propertyName="cd_tipo_documento"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="iva_credito" />
+	<persistentProperty
+		name="esercizio_obb_accentr" />
+	<persistentProperty
+		name="iva_credito_no_prorata" />
+	<persistentProperty
+		name="cd_cds_obb_accentr" />
+	<persistentProperty
+		name="iva_deb_cred" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="perc_prorata_detraibile" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="annotazioni" />
+	<persistentProperty
+		name="var_imp_per_prec" />
+	<persistentProperty
+		name="iva_vendite_diff" />
+	<persistentProperty
+		name="iva_acq_non_detr" />
+	<persistentProperty
+		name="esercizio_ori_obb_accentr" />
+	<persistentProperty
+		name="pg_obb_accentr" />
+	<persistentProperty
+		name="esercizio_doc_amm" />
+	<persistentProperty
+		name="iva_acquisti_diff" />
+	<persistentProperty
+		name="cab" />
+	<persistentProperty
+		name="iva_intraue" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="iva_versata" />
+	<persistentProperty
+		name="acconto_iva_vers" />
+	<persistentProperty
+		name="cred_iva_infrann_rimb" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="cred_iva_comp_detr" />
+	<persistentProperty
+		name="iva_deb_cred_per_prec" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="iva_debito" />
+	<persistentProperty
+		name="cod_azienda" />
+	<persistentProperty
+		name="cred_iva_spec_detr" />
+	<persistentProperty
+		name="iva_autofatt" />
+	<persistentProperty
+		name="dt_versamento" />
+	<persistentProperty
+		name="cred_iva_infrann_comp" />
+	<persistentProperty
+		name="iva_acq_diff_esig" />
+	<persistentProperty
+		name="iva_vendite" />
+	<persistentProperty
+		name="iva_non_vers_per_prec" />
+	<persistentProperty
+		name="cd_uo_doc_amm" />
+	<persistentProperty
+		name="iva_vend_diff_esig" />
+	<persistentProperty
+		name="iva_da_versare" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="cd_cds_doc_amm" />
+	<persistentProperty
+		name="abi" />
+	<persistentProperty
+		name="int_deb_liq_trim" />
+	<persistentProperty
+		name="iva_acquisti" />
+	<persistentProperty
+		name="pg_doc_amm" />
+	<persistentProperty
+		name="cd_tipo_documento" />
+</SQLPersistentInfo>

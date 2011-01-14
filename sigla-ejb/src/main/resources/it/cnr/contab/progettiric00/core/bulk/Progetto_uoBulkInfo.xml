@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="unita_organizzativa.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Codice Unità Organizzativa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="unita_organizzativa"
+		property="unita_organizzativa"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		readonlyProperty="notNew"
+		enabledOnSearch="true"
+		label="Unità Organizzativa" />	
+
+	<fieldProperty
+		name="pg_progetto"
+		property="pg_progetto"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice Progetto" />
+	<fieldProperty
+		name="importo"
+		property="importo"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo" />
+
+	<form name="uo">
+		<formFieldProperty
+			name="cd_unita_organizzativa"
+			/>			
+		<formFieldProperty
+			name="ds_unita_organizzativa"
+			property="unita_organizzativa.ds_unita_organizzativa"
+			label="Descrizione Unità Organizzativa"
+			/>
+		<!-- Per ora l'importo non è gestito 	
+		<formFieldProperty
+			name="importo"
+			/> -->
+	</form>
+	<columnSet name="uo">
+		<columnFieldProperty
+			name="cd_unita_organizzativa"/>
+		<columnFieldProperty
+			name="ds_unita_organizzativa"
+			property="unita_organizzativa.ds_unita_organizzativa"
+			label="Descrizione Unità Organizzativa"/>
+		<!-- Per ora l'importo non è gestito 	
+		<columnFieldProperty
+			name="importo"/> -->
+	</columnSet>
+	
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="pg_progetto" />
+	<formFieldProperty
+		name="unita_organizzativa" />
+	<formFieldProperty
+		name="importo" />
+
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="pg_progetto" />
+	<columnFieldProperty
+		name="importo" />
+
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="pg_progetto" />
+	<findFieldProperty
+		name="importo" />
+
+</bulkInfo>

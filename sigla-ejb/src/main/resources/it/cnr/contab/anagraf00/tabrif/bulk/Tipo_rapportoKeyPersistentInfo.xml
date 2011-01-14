@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoKey" >
+	<defaultColumnMap
+		tableName="TIPO_RAPPORTO" >
+		<columnMapping
+			columnName="CD_TIPO_RAPPORTO"
+			propertyName="cd_tipo_rapporto"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_tipo_rapporto"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_inventario"
+		property="pg_inventario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Inventario" />
+	<fieldProperty
+		name="nr_inventario"
+		property="nr_inventario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice Bene" />
+	<fieldProperty
+		name="progressivo"
+		property="progressivo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo" />
+	<fieldProperty
+		name="ds_bene"
+		property="ds_bene"
+		inputType="TEXTAREA"
+		cols="75"
+		rows="4"
+		maxLength="1000"
+		label="Descr. bene" />
+	<fieldProperty
+		name="cd_categoria_gruppo"
+		property="cd_categoria_gruppo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Categoria/Gruppo" />
+	<fieldProperty
+		name="fl_ammortamento"
+		property="fl_ammortamento"
+		inputType="CHECKBOX"
+		label="Ammortizzabile" />
+	<fieldProperty
+		name="ds_condizione_bene"
+		property="ds_condizione_bene"
+		inputType="TEXT"
+		maxLength="100"
+		label="Condizione bene" />
+	<fieldProperty
+		name="tipologia"
+		property="tipologia"
+		inputType="TEXT"
+		inputSize="11"
+		maxLength="11"
+		label="Tipologia" />
+	<fieldProperty
+		name="valore"
+		property="valore"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Valore" />
+	<fieldProperty
+		name="fondo"
+		property="fondo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="fondo" />
+	<fieldProperty
+		name="imponibile"
+		property="imponibile"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Imponibile" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Stato" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="UO" />
+	<fieldProperty
+		name="cd_ubicazione"
+		property="cd_ubicazione"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cod.ubicazione" />
+	<fieldProperty
+		name="ds_ubicazione"
+		property="ds_ubicazione"
+		inputType="TEXT"
+		maxLength="300"
+		label="Desc.ubicazione" />
+	<fieldProperty
+		name="assegnatario"
+		property="assegnatario"
+		inputType="TEXT"
+		maxLength="101"
+		label="Assegnatario" />
+	<fieldProperty
+		name="etichetta"
+		property="etichetta"
+		inputType="TEXT"
+		maxLength="50"
+		label="Etichetta" />
+	<fieldProperty
+		name="id_bene_origine"
+		property="id_bene_origine"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Bene origine" />
+	<fieldProperty
+		name="cd_barre"
+		property="cd_barre"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		label="Cod. barre" />
+	<fieldProperty
+		name="targa"
+		property="targa"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Targa" />
+	<fieldProperty
+		name="cd_utilizzatore_cdr"
+		property="cd_utilizzatore_cdr"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cdr Utilizzatore" />
+	<fieldProperty
+		name="ds_cdr"
+		property="ds_cdr"
+		inputType="TEXT"
+		maxLength="300"
+		label="Desc. utilizzatore" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="GAE" />
+	<fieldProperty
+		name="ds_linea_attivita"
+		property="ds_linea_attivita"
+		inputType="TEXT"
+		maxLength="300"
+		label="Desc.GAE" />
+	<formFieldProperty
+		name="pg_inventario" />
+	<formFieldProperty
+		name="nr_inventario" />
+	<formFieldProperty
+		name="progressivo" />
+	<formFieldProperty
+		name="ds_bene" />
+	<formFieldProperty
+		name="cd_categoria_gruppo" />
+	<formFieldProperty
+		name="fl_ammortamento" />
+	<formFieldProperty
+		name="ds_condizione_bene" />
+	<formFieldProperty
+		name="tipologia" />
+	<formFieldProperty
+		name="valore" />
+	<formFieldProperty
+		name="fondo" />
+	<formFieldProperty
+		name="imponibile" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_ubicazione" />
+	<formFieldProperty
+		name="ds_ubicazione" />
+	<formFieldProperty
+		name="assegnatario" />
+	<formFieldProperty
+		name="etichetta" />
+	<formFieldProperty
+		name="id_bene_origine" />
+	<formFieldProperty
+		name="cd_barre" />
+	<formFieldProperty
+		name="targa" />
+	<formFieldProperty
+		name="cd_utilizzatore_cdr" />
+	<formFieldProperty
+		name="ds_cdr" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="ds_linea_attivita" />
+	<findFieldProperty
+		name="pg_inventario" />
+	<findFieldProperty
+		name="nr_inventario" />
+	<findFieldProperty
+		name="progressivo" />
+	<findFieldProperty
+		name="ds_bene" />
+	<findFieldProperty
+		name="cd_categoria_gruppo" />
+	<findFieldProperty
+		name="fl_ammortamento" />
+	<findFieldProperty
+		name="ds_condizione_bene" />
+	<findFieldProperty
+		name="tipologia" />
+	<findFieldProperty
+		name="valore" />
+	<findFieldProperty
+		name="fondo" />
+	<findFieldProperty
+		name="imponibile" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="cd_ubicazione" />
+	<findFieldProperty
+		name="ds_ubicazione" />
+	<findFieldProperty
+		name="assegnatario" />
+	<findFieldProperty
+		name="etichetta" />
+	<findFieldProperty
+		name="id_bene_origine" />
+	<findFieldProperty
+		name="cd_barre" />
+	<findFieldProperty
+		name="targa" />
+	<findFieldProperty
+		name="cd_utilizzatore_cdr" />
+	<findFieldProperty
+		name="ds_cdr" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="ds_linea_attivita" />
+	<columnFieldProperty
+		name="pg_inventario" />
+	<columnFieldProperty
+		name="nr_inventario" />
+	<columnFieldProperty
+		name="progressivo" />
+	<columnFieldProperty
+		name="ds_bene" />
+	<columnFieldProperty
+		name="cd_categoria_gruppo" />
+	<columnFieldProperty
+		name="fl_ammortamento" />
+	<columnFieldProperty
+		name="ds_condizione_bene" />
+	<columnFieldProperty
+		name="tipologia" />
+	<columnFieldProperty
+		name="valore" />
+	<columnFieldProperty
+		name="fondo" />
+	<columnFieldProperty
+		name="imponibile" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="cd_ubicazione" />
+	<columnFieldProperty
+		name="ds_ubicazione" />
+	<columnFieldProperty
+		name="assegnatario" />
+	<columnFieldProperty
+		name="etichetta" />
+	<columnFieldProperty
+		name="id_bene_origine" />
+	<columnFieldProperty
+		name="cd_barre" />
+	<columnFieldProperty
+		name="targa" />
+	<columnFieldProperty
+		name="cd_utilizzatore_cdr" />
+	<columnFieldProperty
+		name="ds_cdr" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="ds_linea_attivita" />
+</bulkInfo>

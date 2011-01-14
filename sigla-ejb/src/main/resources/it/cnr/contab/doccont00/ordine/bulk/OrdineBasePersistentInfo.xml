@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.ordine.bulk.OrdineBase"
+	keyClassName="it.cnr.contab.doccont00.ordine.bulk.OrdineKey"
+	homeClassName="it.cnr.contab.doccont00.ordine.bulk.OrdineHome" >
+	<defaultColumnMap
+		tableName="ORDINE" >
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="pg_banca"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="esercizio_ori_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="NUMERO_CIVICO_SEDE"
+			propertyName="numero_civico_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="VARCHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="cd_modalita_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERMINI_PAG"
+			propertyName="cd_termini_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="CD_TIPO_CONSEGNA"
+			propertyName="cd_tipo_consegna"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="RAGIONE_SOCIALE"
+			propertyName="ragione_sociale"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_OBBLIGAZIONE"
+			propertyName="im_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="NOTE"
+			propertyName="note"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="VIA_SEDE"
+			propertyName="via_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partita_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="CLAUSOLA"
+			propertyName="clausola"
+			sqlTypeName="VARCHAR"
+			columnSize="3000" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_banca" />
+	<persistentProperty
+		name="esercizio_ori_obbligazione" />
+	<persistentProperty
+		name="pg_obbligazione" />
+	<persistentProperty
+		name="numero_civico_sede" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="codice_fiscale" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="cd_modalita_pag" />
+	<persistentProperty
+		name="cd_termini_pag" />
+	<persistentProperty
+		name="cognome" />
+	<persistentProperty
+		name="cd_tipo_consegna" />
+	<persistentProperty
+		name="ragione_sociale" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="cd_elemento_voce" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="im_obbligazione" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="note" />
+	<persistentProperty
+		name="ti_appartenenza" />
+	<persistentProperty
+		name="nome" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="dt_registrazione" />
+	<persistentProperty
+		name="via_sede" />
+	<persistentProperty
+		name="partita_iva" />
+	<persistentProperty
+		name="clausola" />
+</SQLPersistentInfo>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="UO" />
+	<fieldProperty
+		name="cd_voce_ep"
+		property="cd_voce_ep"
+		inputType="TEXT"
+		inputSize="45"
+		maxLength="45"
+		label="Voce E/P" />
+	<fieldProperty
+		name="ds_voce_ep"
+		property="ds_voce_ep"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		label="Desc.Voce E/P" />
+	<fieldProperty
+		name="contabilizzazione"
+		property="contabilizzazione"
+		inputType="TEXT"
+		inputSize="13"
+		maxLength="13"
+		label="Contabilizzazione" />
+	<fieldProperty
+		name="dare"
+		property="dare"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Dare" />
+	<fieldProperty
+		name="avere"
+		property="avere"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Avere" />
+	<fieldProperty
+		name="saldo"
+		property="saldo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Saldo" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_voce_ep" />
+	<formFieldProperty
+		name="ds_voce_ep" />
+	<formFieldProperty
+		name="contabilizzazione" />
+	<formFieldProperty
+		name="dare" />
+	<formFieldProperty
+		name="avere" />
+	<formFieldProperty
+		name="saldo" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="cd_voce_ep" />
+	<findFieldProperty
+		name="ds_voce_ep" />
+	<findFieldProperty
+		name="contabilizzazione" />
+	<findFieldProperty
+		name="dare" />
+	<findFieldProperty
+		name="avere" />
+	<findFieldProperty
+		name="saldo" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="cd_voce_ep" />
+	<columnFieldProperty
+		name="ds_voce_ep" />
+	<columnFieldProperty
+		name="contabilizzazione" />
+	<columnFieldProperty
+		name="dare" />
+	<columnFieldProperty
+		name="avere" />
+	<columnFieldProperty
+		name="saldo" />
+</bulkInfo>

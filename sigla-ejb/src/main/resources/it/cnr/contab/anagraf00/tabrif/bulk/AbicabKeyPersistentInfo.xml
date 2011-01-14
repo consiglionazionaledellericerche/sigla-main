@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.tabrif.bulk.AbicabKey" >
+	<defaultColumnMap
+		tableName="ABICAB" >
+		<columnMapping
+			columnName="CAB"
+			propertyName="cab"
+			sqlTypeName="CHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ABI"
+			propertyName="abi"
+			sqlTypeName="CHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cab"
+		partOfOid="true" />
+	<persistentProperty
+		name="abi"
+		partOfOid="true" />
+</SQLPersistentInfo>

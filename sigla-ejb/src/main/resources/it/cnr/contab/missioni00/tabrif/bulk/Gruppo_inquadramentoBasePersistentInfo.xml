@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.tabrif.bulk.Gruppo_inquadramentoBase"
+	keyClassName="it.cnr.contab.missioni00.tabrif.bulk.Gruppo_inquadramentoKey"
+	homeClassName="it.cnr.contab.missioni00.tabrif.bulk.Gruppo_inquadramentoHome" >
+	<defaultColumnMap
+		tableName="GRUPPO_INQUADRAMENTO" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_GRUPPO_INQUADRAMENTO"
+			propertyName="ds_gruppo_inquadramento"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_DEFAULT"
+			propertyName="fl_default"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="ds_gruppo_inquadramento" />
+	<persistentProperty
+		name="fl_default" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

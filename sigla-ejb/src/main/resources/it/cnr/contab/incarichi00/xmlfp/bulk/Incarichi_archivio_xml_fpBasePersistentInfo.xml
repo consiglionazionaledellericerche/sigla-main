@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_archivio_xml_fpBase"
+	keyClassName="it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_archivio_xml_fpKey"
+	homeClassName="it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_archivio_xml_fpHome">
+	<defaultColumnMap
+		tableName="INCARICHI_ARCHIVIO_XML_FP">
+		<columnMapping
+			columnName="DS_ARCHIVIO"
+			propertyName="ds_archivio"
+			sqlTypeName="VARCHAR"
+			columnSize="2000" />			
+		<columnMapping
+		   columnName="NOME_FILE_INV"
+		   propertyName="nome_file_inv"
+		   sqlTypeName="VARCHAR"
+		   columnSize="400"
+		   nullable="false" />		   
+		<columnMapping
+		   columnName="NOME_FILE_RIC"
+		   propertyName="nome_file_ric"
+		   sqlTypeName="VARCHAR"
+		   columnSize="400"
+		   nullable="false" />		   
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ds_archivio" />
+	<persistentProperty
+		name="nome_file_inv" />
+	<persistentProperty
+		name="nome_file_ric" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

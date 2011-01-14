@@ -1,0 +1,36 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.docs.bulk.Documento_genericoBase"
+	homeClassName="it.cnr.contab.docamm00.docs.bulk.Documento_genericoHome" >
+
+	<defaultColumnMap
+		tableName="DOCUMENTO_GENERICO" >		
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="valuta.cd_divisa"/>
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_AMM"
+			propertyName="tipo_documento.cd_tipo_documento_amm" />
+		<columnMapping
+			columnName="PG_LETTERA"
+			propertyName="lettera_pagamento_estero.pg_lettera" />
+		<columnMapping
+			columnName="ESERCIZIO_LETTERA"
+			propertyName="lettera_pagamento_estero.esercizio" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="lettera_pagamento_estero.cd_cds"
+			fetchOnly="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="lettera_pagamento_estero.cd_unita_organizzativa"
+			fetchOnly="true" />
+	</defaultColumnMap>		
+
+	<persistentProperty
+		name="valuta" />
+	<persistentProperty
+		name="tipo_documento"
+		partOfOid="true" />
+	<persistentProperty
+		name="lettera_pagamento_estero" />
+</SQLPersistentInfo>

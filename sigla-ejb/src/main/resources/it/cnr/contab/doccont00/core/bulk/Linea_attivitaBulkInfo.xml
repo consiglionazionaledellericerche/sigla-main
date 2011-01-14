@@ -1,0 +1,157 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="find_linea_attivita"
+		property="linea_att"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="crea_linea_attivita"
+		property="linea_att"
+		inputType="CRUDTOOL"
+		CRUDBusinessProcessName="CRUDLinea_attivitaBP"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_funzione"
+		property="linea_att.funzione.cd_funzione"
+		label="Funzione"
+		inputType="TEXT"
+		inputSize="2" />
+	<fieldProperty
+		name="cd_natura"
+		property="linea_att.natura.cd_natura"
+		label="Natura"
+		inputType="TEXT"
+		inputSize="2" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="linea_att.cd_linea_attivita"
+		maxLength="10"
+		inputSize="5"
+		inputType="TEXT"
+		readonlyProperty="ROcd_linea_attivita"		
+		label="Codice GAE"
+		caseSensitiveSearch="false"
+		 />
+	<fieldProperty
+		name="cd_progetto"
+		property="linea_att.progetto.cd_progetto"
+		maxLength="30"
+		inputSize="5"
+		inputType="TEXT"
+		readonlyProperty="ROcd_linea_attivita"		
+		label="Modulo di Attivita'"
+		caseSensitiveSearch="false"
+		 />		 
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="linea_att.centro_responsabilita.cd_centro_responsabilita"
+		maxLength="30"
+		inputSize="7"
+		inputType="TEXT"
+		readonlyProperty="ROcd_linea_attivita"
+		label="CdR"/>
+	<fieldProperty
+		name="ds_linea_attivita"
+		property="linea_att.denominazione"
+		maxLength="100"
+		inputSize="15"
+		inputType="TEXT"
+		label="Descrizione"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="prcImputazioneFin"
+		property="prcImputazioneFin"
+		label="%"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="5"
+		formatName = "it.cnr.contab.util.PercentFormat"
+		readonlyProperty="ROPrcImputazioneFin"
+		/>
+
+	<formFieldProperty
+		name="cd_linea_attivita"
+		/>
+	<formFieldProperty
+		name="cd_progetto"
+		/>		
+	<formFieldProperty
+		name="cd_centro_responsabilita"
+		/>
+	<formFieldProperty
+		name="prcImputazioneFin"
+		/>
+	<formFieldProperty
+		name="crea_linea_attivita"
+		/>
+		
+	<columnFieldProperty
+		name="cd_linea_attivita"
+		/>
+	<columnFieldProperty
+		name="cd_centro_responsabilita"
+		/>
+	<columnFieldProperty
+		name="ds_linea_attivita"
+		/>
+	<columnFieldProperty
+		name="cd_funzione"
+		/>
+	<columnFieldProperty
+		name="cd_natura"
+		/>
+	<columnFieldProperty
+		name="prcImputazioneFin"
+		/>
+
+	<columnSet
+		name="latt">
+		<columnFieldProperty
+			name="find_linea_attivita"
+			/>
+		<columnFieldProperty
+			name="crea_linea_attivita"
+			/>
+		<columnFieldProperty
+			name="cd_progetto"
+			enabledOnEdit="true"
+			enabledOnInsert="true"			
+			/>			
+		<columnFieldProperty
+			name="cd_linea_attivita"
+			enabledOnEdit="true"
+			enabledOnInsert="true"			
+			/>
+		<columnFieldProperty
+			name="cd_centro_responsabilita"
+			enabledOnEdit="true"
+			enabledOnInsert="true"						
+			/>
+		<columnFieldProperty
+			name="ds_linea_attivita"
+			enabledOnEdit="false"
+			/>
+		<columnFieldProperty
+			name="prcImputazioneFin"
+			headerStyle="text-align: center"
+			columnStyle="width:50px; text-align: right"
+			enabledOnEdit="true"
+			enabledOnInsert="true"			
+			/>		
+		<columnFieldProperty
+			name="cd_funzione"
+			enabledOnEdit="false"
+			/>
+		<columnFieldProperty
+			name="cd_natura"
+			enabledOnEdit="false"
+			/>	
+	</columnSet>
+		
+</bulkInfo>

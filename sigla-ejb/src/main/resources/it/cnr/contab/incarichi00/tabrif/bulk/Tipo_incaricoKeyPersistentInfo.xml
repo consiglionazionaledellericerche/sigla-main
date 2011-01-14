@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_incaricoKey">
+	<defaultColumnMap
+		tableName="TIPO_INCARICO">
+		<columnMapping
+			columnName="CD_TIPO_INCARICO"
+			propertyName="cd_tipo_incarico"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_tipo_incarico"
+		partOfOid="true" />
+</SQLPersistentInfo>

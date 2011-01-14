@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="id_report"
+		property="id_report"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Id" />
+	<fieldProperty
+		name="chiave"
+		property="chiave"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		label="Chiave" />
+	<fieldProperty
+		name="sequenza"
+		property="sequenza"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Sequenza" />
+	<fieldProperty
+		name="descrizione"
+		property="descrizione"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		label="Descrizione" />		
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Riga" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		inputSize="200"
+		maxLength="8"
+		label="Codice Terzo" />
+	<fieldProperty
+		name="denominazione"
+		property="denominazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Denominazione" />
+	<fieldProperty
+		name="dt_da_competenza_coge"
+		property="dt_da_competenza_coge"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		nullable="false"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Data inizio selezione" />
+	<fieldProperty
+		name="dt_a_competenza_coge"
+		property="dt_a_competenza_coge"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		nullable="false"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Data fine selezione" />
+	<fieldProperty
+		name="attivita"
+		property="attivita"
+		maxLength="1"
+		inputSize="1"
+		inputType="RADIOGROUP"
+		label="Attività"
+		keysProperty="attivitaKeys"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="numero_giorni"
+		property="numero_giorni"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Totale Giorni Compensi" />
+	<fieldProperty
+		name="im_totale_compenso"
+		property="im_totale_compenso"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Compensi" />
+	<fieldProperty
+		name="im_lordo_percipiente"
+		property="im_lordo_percipiente"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Lordo" />
+	<fieldProperty
+		name="im_netto_percipiente"
+		property="im_netto_percipiente"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label=" Totale Netto" />
+	<fieldProperty
+		name="im_cr_percipiente"
+		property="im_cr_percipiente"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Tot. carico perc." />
+	<fieldProperty
+		name="im_cr_ente"
+		property="im_cr_ente"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Tot. carico ente" />
+	<fieldProperty
+		name="im_totale_compenso_periodo"
+		property="im_totale_compenso_periodo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale compensi per periodo" />
+		
+	<formFieldProperty
+		name="id_report" />
+	<formFieldProperty
+		name="chiave" />
+	<formFieldProperty
+		name="sequenza" />
+	<formFieldProperty
+		name="descrizione" />
+	<formFieldProperty
+		name="tipo" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="denominazione" />
+	<formFieldProperty
+		name="dt_da_competenza_coge" />
+	<formFieldProperty
+		name="dt_a_competenza_coge" />
+	<formFieldProperty
+		name="attivita"/>		
+	<formFieldProperty
+		name="numero_giorni" />
+	<formFieldProperty
+		name="im_totale_compenso" />
+	<formFieldProperty
+		name="im_lordo_percipiente" />
+	<formFieldProperty
+		name="im_netto_percipiente" />
+	<formFieldProperty
+		name="im_cr_percipiente" />
+	<formFieldProperty
+		name="im_cr_ente" />
+	<formFieldProperty
+		name="im_totale_compenso_periodo" />
+
+	<findFieldProperty
+		name="id_report" />
+	<findFieldProperty
+		name="chiave" />
+	<findFieldProperty
+		name="sequenza" />
+	<findFieldProperty
+		name="descrizione" />
+	<findFieldProperty
+		name="tipo" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="denominazione" />
+	<findFieldProperty
+		name="dt_da_competenza_coge" />
+	<findFieldProperty
+		name="dt_a_competenza_coge" />
+	<findFieldProperty
+		name="attivita"
+		inputType="SELECT"/>
+	<findFieldProperty
+		name="numero_giorni" />
+	<findFieldProperty
+		name="im_totale_compenso" />
+	<findFieldProperty
+		name="im_lordo_percipiente" />
+	<findFieldProperty
+		name="im_netto_percipiente" />
+	<findFieldProperty
+		name="im_cr_percipiente" />
+	<findFieldProperty
+		name="im_cr_ente" />
+	<findFieldProperty
+		name="im_totale_compenso_periodo" />
+				
+	<!--
+	<columnFieldProperty
+		name="tipo" />  -->
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="denominazione" />
+	<columnFieldProperty
+		name="dt_da_competenza_coge" />
+	<columnFieldProperty
+		name="dt_a_competenza_coge" />
+	<columnFieldProperty
+		name="attivita" />		
+	<columnFieldProperty
+		name="numero_giorni" />
+	<columnFieldProperty
+		name="im_totale_compenso" />
+	<columnFieldProperty
+		name="im_lordo_percipiente" />
+	<columnFieldProperty
+		name="im_netto_percipiente" />
+	<columnFieldProperty
+		name="im_cr_percipiente" />
+	<columnFieldProperty
+		name="im_cr_ente" />
+	<columnFieldProperty
+		name="im_totale_compenso_periodo" />
+</bulkInfo>

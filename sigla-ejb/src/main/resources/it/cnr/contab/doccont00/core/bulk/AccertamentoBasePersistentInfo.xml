@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo persistentClassName="it.cnr.contab.doccont00.core.bulk.AccertamentoBase" keyClassName="it.cnr.contab.doccont00.core.bulk.AccertamentoKey" homeClassName="it.cnr.contab.doccont00.core.bulk.AccertamentoHome">
+	<defaultColumnMap tableName="ACCERTAMENTO">
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE"
+			propertyName="esercizio_originale"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping columnName="DT_CANCELLAZIONE" propertyName="dt_cancellazione" sqlTypeName="TIMESTAMP" columnSize="7"/>
+		<columnMapping columnName="CD_RIFERIMENTO_CONTRATTO" propertyName="cd_riferimento_contratto" sqlTypeName="VARCHAR" columnSize="30"/>
+		<columnMapping columnName="PG_VER_REC" propertyName="pg_ver_rec" sqlTypeName="DECIMAL" columnSize="22" nullable="false"/>
+		<columnMapping columnName="IM_ACCERTAMENTO" propertyName="im_accertamento" sqlTypeName="DECIMAL" columnSize="15" columnScale="2" nullable="false"/>
+		<columnMapping columnName="CD_TIPO_DOCUMENTO_CONT" propertyName="cd_tipo_documento_cont" sqlTypeName="VARCHAR" columnSize="10" nullable="false"/>
+		<columnMapping columnName="CD_VOCE" propertyName="cd_voce" sqlTypeName="VARCHAR" columnSize="50" nullable="false"/>
+		<columnMapping columnName="FL_PGIRO" propertyName="fl_pgiro" sqlTypeName="CHAR" columnSize="1" nullable="false" converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+		<columnMapping columnName="CD_UO_ORIGINE" propertyName="cd_uo_origine" sqlTypeName="VARCHAR" columnSize="30" nullable="false"/>
+		<columnMapping columnName="ESERCIZIO_ORI_ORI_RIPORTO" propertyName="esercizio_ori_ori_riporto" sqlTypeName="DECIMAL" columnSize="4"/>
+		<columnMapping columnName="PG_ACCERTAMENTO_ORI_RIPORTO" propertyName="pg_accertamento_ori_riporto" sqlTypeName="DECIMAL" columnSize="10"/>
+		<columnMapping columnName="CD_FONDO_RICERCA" propertyName="cd_fondo_ricerca" sqlTypeName="VARCHAR" columnSize="20"/>
+		<columnMapping columnName="CD_CDS_ORIGINE" propertyName="cd_cds_origine" sqlTypeName="VARCHAR" columnSize="30" nullable="false"/>
+		<columnMapping columnName="CD_ELEMENTO_VOCE" propertyName="cd_elemento_voce" sqlTypeName="VARCHAR" columnSize="20" nullable="false"/>
+		<columnMapping columnName="TI_GESTIONE" propertyName="ti_gestione" sqlTypeName="CHAR" columnSize="1" nullable="false"/>
+		<columnMapping columnName="RIPORTATO" propertyName="riportato" sqlTypeName="CHAR" columnSize="1" nullable="false"/>
+		<columnMapping columnName="UTCR" propertyName="utcr" sqlTypeName="VARCHAR" columnSize="20" nullable="false"/>
+		<columnMapping columnName="ESERCIZIO_ORI_RIPORTO" propertyName="esercizio_ori_riporto" sqlTypeName="DECIMAL" columnSize="4"/>
+		<columnMapping columnName="DACR" propertyName="dacr" sqlTypeName="TIMESTAMP" columnSize="7" nullable="false"/>
+		<columnMapping columnName="CD_CDS_ORI_RIPORTO" propertyName="cd_cds_ori_riporto" sqlTypeName="VARCHAR" columnSize="30"/>
+		<columnMapping columnName="DUVA" propertyName="duva" sqlTypeName="TIMESTAMP" columnSize="7" nullable="false"/>
+		<columnMapping columnName="NOTE_ACCERTAMENTO" propertyName="note_accertamento" sqlTypeName="VARCHAR" columnSize="300"/>
+		<columnMapping columnName="TI_APPARTENENZA" propertyName="ti_appartenenza" sqlTypeName="CHAR" columnSize="1" nullable="false"/>
+		<columnMapping columnName="CD_UNITA_ORGANIZZATIVA" propertyName="cd_unita_organizzativa" sqlTypeName="VARCHAR" columnSize="30" nullable="false"/>
+		<columnMapping columnName="DS_ACCERTAMENTO" propertyName="ds_accertamento" sqlTypeName="VARCHAR" columnSize="300" nullable="false"/>
+		<columnMapping columnName="DT_SCADENZA_CONTRATTO" propertyName="dt_scadenza_contratto" sqlTypeName="TIMESTAMP" columnSize="7"/>
+		<columnMapping columnName="CD_TERZO" propertyName="cd_terzo" sqlTypeName="DECIMAL" columnSize="8" nullable="false"/>
+		<columnMapping columnName="UTUV" propertyName="utuv" sqlTypeName="VARCHAR" columnSize="20" nullable="false"/>
+		<columnMapping columnName="DT_REGISTRAZIONE" propertyName="dt_registrazione" sqlTypeName="TIMESTAMP" columnSize="7" nullable="false"/>
+		<columnMapping columnName="ESERCIZIO_COMPETENZA" propertyName="esercizio_competenza" sqlTypeName="DECIMAL" columnSize="4" nullable="false"/>
+		<columnMapping columnName="PG_ACCERTAMENTO_ORIGINE" propertyName="pg_accertamento_origine" sqlTypeName="DECIMAL" columnSize="10"/>
+		<columnMapping columnName="ESERCIZIO_CONTRATTO" propertyName="esercizio_contratto" sqlTypeName="DECIMAL" columnSize="4"/>
+		<columnMapping columnName="STATO_CONTRATTO" propertyName="stato_contratto" sqlTypeName="CHAR" columnSize="1"/>						
+		<columnMapping columnName="PG_CONTRATTO" propertyName="pg_contratto" sqlTypeName="DECIMAL" columnSize="10"/>			
+		<columnMapping columnName="FL_CALCOLO_AUTOMATICO" propertyName="fl_calcolo_automatico" sqlTypeName="CHAR" columnSize="1" nullable="true" converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+		<columnMapping
+			columnName="FL_NETTO_SOSPESO"
+			propertyName="fl_netto_sospeso"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio_originale" />
+	<persistentProperty name="dt_cancellazione"/>
+	<persistentProperty name="cd_riferimento_contratto"/>
+	<persistentProperty name="pg_ver_rec"/>
+	<persistentProperty name="im_accertamento"/>
+	<persistentProperty name="cd_tipo_documento_cont"/>
+	<persistentProperty name="cd_voce"/>
+	<persistentProperty name="fl_pgiro"/>
+	<persistentProperty name="cd_uo_origine"/>
+	<persistentProperty name="esercizio_ori_ori_riporto"/>
+	<persistentProperty name="pg_accertamento_ori_riporto"/>
+	<persistentProperty name="cd_fondo_ricerca"/>
+	<persistentProperty name="cd_cds_origine"/>
+	<persistentProperty name="ti_gestione"/>
+	<persistentProperty name="cd_elemento_voce"/>
+	<persistentProperty name="riportato"/>
+	<persistentProperty name="utcr"/>
+	<persistentProperty name="esercizio_ori_riporto"/>
+	<persistentProperty name="dacr"/>
+	<persistentProperty name="cd_cds_ori_riporto"/>
+	<persistentProperty name="duva"/>
+	<persistentProperty name="note_accertamento"/>
+	<persistentProperty name="cd_unita_organizzativa"/>
+	<persistentProperty name="ti_appartenenza"/>
+	<persistentProperty name="ds_accertamento"/>
+	<persistentProperty name="dt_scadenza_contratto"/>
+	<persistentProperty name="cd_terzo"/>
+	<persistentProperty name="utuv"/>
+	<persistentProperty name="dt_registrazione"/>
+	<persistentProperty name="esercizio_competenza"/>
+	<persistentProperty name="pg_accertamento_origine"/>
+	<persistentProperty name="esercizio_contratto"/>
+	<persistentProperty name="stato_contratto"/>				
+	<persistentProperty name="pg_contratto"/>		
+	<persistentProperty name="fl_calcolo_automatico"/>
+	<persistentProperty	name="fl_netto_sospeso" />
+</SQLPersistentInfo>

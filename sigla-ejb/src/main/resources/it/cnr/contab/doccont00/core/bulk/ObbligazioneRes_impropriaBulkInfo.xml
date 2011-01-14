@@ -1,0 +1,166 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Impegni Residui Impropri">
+	<fieldProperty
+		name="stato_obbligazione"
+		property="stato_obbligazione"
+		label="Stato"
+		inputType="SELECT"
+		keysProperty="stato_obbligazioneKeys"
+		maxLength="1"
+		inputSize="2"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"		
+		/>
+
+	<fieldProperty
+		name="esercizio_ori_ori_riporto"
+		property="esercizio_ori_ori_riporto"
+		label="Es. Impegno origine"
+		inputType="TEXT"
+		maxLength="4"
+		inputSize="4"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		/>
+ 	<fieldProperty
+		name="pg_obbligazione_ori_riporto"
+		property="pg_obbligazione_ori_riporto"
+		label="Nr. Impegno origine"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="esercizio_competenza"
+		property="esercizio_competenza"
+		label="Esercizio"
+		inputType="TEXT"
+		maxLength="4"
+		inputSize="5"
+		enabledOnEdit="false"
+		enabledOnInsert="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="esercizio_originale"
+		property="esercizio_originale"
+		label="Esercizio Impegno"
+		optionsProperty="anniResidui"
+		inputType="SELECT"
+		enabledOnEdit="false"
+		enabledOnInsert="true"
+		enabledOnSearch="true"
+		nullable="false"
+		/>
+ 	<fieldProperty
+		name="pg_obbligazione"
+		property="pg_obbligazione"
+		label="Numero Impegno"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="find_voce"
+		property="voce"
+		inputType="SEARCHTOOL"
+		label="Capitolo finanziario"
+		enabledOnSearch="true"
+		completeOnSave="true"
+		/>
+	<fieldProperty
+		name="cd_voce"
+		property="voce.cd_voce"
+		label="Capitolo finanziario"
+		readonlyProperty="ROVoce"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="20"
+		enabledOnSearch="true"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="ds_voce"
+		property="voce.ds_voce"
+		label=""
+		readonlyProperty="ROVoce"
+		inputType="ROTEXT"
+		inputSize="60"
+		/>
+		
+		
+	<formFieldProperty
+		name="stato_obbligazione"
+		/>	
+	<formFieldProperty
+		name="esercizio_ori_ori_riporto"
+		/>
+	<formFieldProperty
+		name="pg_obbligazione_ori_riporto"
+		/>
+	<formFieldProperty
+		name="esercizio_competenza"
+		/>
+	<formFieldProperty
+		name="esercizio_originale"
+		/>
+	<formFieldProperty
+		name="pg_obbligazione"
+		/>
+	<formFieldProperty
+		name="find_voce"
+		/>
+	<formFieldProperty
+		name="cd_voce"
+		/>
+	<formFieldProperty
+		name="ds_voce"
+		/>
+		
+	<columnFieldProperty
+		name="stato_obbligazione"
+		columnStyle="text-align: center"
+		/>
+	<columnFieldProperty
+		name="esercizio_ori_ori_riporto"
+		columnStyle="padding-left:5px"
+		/>
+
+	<columnFieldProperty
+		name="pg_obbligazione_ori_riporto"
+		columnStyle="padding-left:5px"
+		/>
+
+	<findFieldProperty
+		name="stato_obbligazione"
+		/>
+	<findFieldProperty
+		name="esercizio_ori_ori_riporto"
+		/>
+	<findFieldProperty
+		name="pg_obbligazione_ori_riporto"
+		/>
+	<findFieldProperty
+		name="esercizio_competenza"
+		/>
+	<findFieldProperty
+		name="esercizio_originale"
+		/>
+	<findFieldProperty
+		name="pg_obbligazione"
+		/>
+</bulkInfo>

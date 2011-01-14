@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk"
+	homeClassName="it.cnr.contab.varstanz00.bulk.Var_stanz_resHome">
+	<defaultColumnMap
+		tableName="VAR_STANZ_RES">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="centroDiSpesa.cd_unita_organizzativa"/>
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="centroDiResponsabilita.cd_centro_responsabilita"/>
+		<columnMapping
+			columnName="ESERCIZIO_RES"
+			propertyName="esercizio_res.esercizio"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="centroDiSpesa"/>
+	<persistentProperty
+		name="centroDiResponsabilita"/>
+	<persistentProperty
+		name="esercizio_res"/>		
+</SQLPersistentInfo>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.intrastat.bulk.FatturaAttivaIntraSKey">
+	<defaultColumnMap
+		tableName="FATTURA_ATTIVA_INTRA_S">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cdCds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cdUnitaOrganizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_FATTURA_ATTIVA"
+			propertyName="pgFatturaAttiva"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_RIGA_INTRA"
+			propertyName="pgRigaIntra"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_STORICO_"
+			propertyName="pgStorico"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdCds"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdUnitaOrganizzativa"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="pgFatturaAttiva"
+		partOfOid="true" />
+	<persistentProperty
+		name="pgRigaIntra"
+		partOfOid="true" />
+	<persistentProperty
+		name="pgStorico"
+		partOfOid="true" />
+</SQLPersistentInfo>

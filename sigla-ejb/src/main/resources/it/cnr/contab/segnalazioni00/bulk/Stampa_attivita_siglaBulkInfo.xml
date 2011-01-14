@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	
+	<fieldProperty
+		name="findTerzoForPrint"
+		property="terzoForPrint"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		completeOnSave="true"
+		readonlyProperty="terzoForPrintEnabled"
+		label="Responsabile" />
+	<fieldProperty
+		name="cdTerzoForPrint"
+		property="cdTerzoForPrint"/>
+		
+		
+	<fieldProperty
+		name="esercizio_base"
+		property="esercizio_base"
+		optionsProperty="anni"
+		printProperty ="esercizio"
+		inputSize="4"
+		inputType="SELECT"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		label="Esercizio" />	
+	<fieldProperty
+			name="esercizioForPrint"
+			property="esercizioForPrint"/>	
+	
+<!-- 	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="SELECT"
+		keysProperty="statoKeys"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		label="Stato" />
+		
+	<fieldProperty
+		name="tipo_attivita"
+		property="tipo_attivita"
+		inputType="SELECT"
+		keysProperty="tipo_attivitaKeys"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		label="Tipo Attività"  /> -->
+	
+	
+
+	<formFieldProperty 
+		name="esercizio_base"/>
+	<formFieldProperty 
+		name="esercizioForPrint"/>
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="tipo_attivita" />
+	<formFieldProperty 
+		name="findTerzoForPrint" />
+	<formFieldProperty 
+		name="cdTerzoForPrint" />
+		
+	<formFieldProperty name="dsTerzoForPrint" />
+
+	
+	<fieldProperty
+		name="stato_analisi"
+		property="stato_analisi"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Analisi"
+		nullable="false"/>
+		
+	<fieldProperty
+		name="stato_sviluppo"
+		property="stato_sviluppo"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Sviluppo"
+		nullable="false"/>
+	
+	<fieldProperty
+		name="stato_test"
+		property="stato_test"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Test"
+		nullable="false"/>
+	
+	<fieldProperty
+		name="stato_rilasciato"
+		property="stato_rilasciato"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Rilasciato"
+		nullable="false"/>
+	
+	<fieldProperty
+		name="stato_iniziale"
+		property="stato_iniziale"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Iniziale"
+		nullable="false"/>
+	
+	<fieldProperty
+		name="tipo_att_correttiva"
+		property="tipo_att_correttiva"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Correttiva"
+		nullable="false"/>
+		
+	<fieldProperty
+		name="tipo_att_evolutiva"
+		property="tipo_att_evolutiva"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Evolutiva"
+		nullable="false"/>
+	
+	<fieldProperty
+		name="tipo_att_manutentiva"
+		property="tipo_att_manutentiva"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Manutentiva"
+		nullable="false"/>
+			
+	<fieldProperty
+		name="tipo_att_estrazione_dati"
+		property="tipo_att_estrazione_dati"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Estrazione Dati"
+		nullable="false"/>
+		
+	<fieldProperty
+		name="tipo_att_supporto_gestione"
+		property="tipo_att_supporto_gestione"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Supporto Gestione"
+		nullable="false"/>
+		
+	<fieldProperty
+		name="selezionaStato"
+		property="selezionaStato"
+		inputType="BUTTON"
+		img="img/check10.gif"
+		href="javascript:submitForm('doSelezionaStato()')" />
+	
+	<fieldProperty
+		name="selezionaTipoAttivita"
+		property="selezionaTipoAttivita"
+		inputType="BUTTON"
+		img="img/check10.gif"
+		href="javascript:submitForm('doSelezionaTipoAttivita()')" />
+	
+	<formFieldProperty name="selezionaStato" />
+	
+	<formFieldProperty name="stato_iniziale" /> 
+	<formFieldProperty name="stato_analisi" /> 
+	<formFieldProperty name="stato_sviluppo" /> 
+	<formFieldProperty name="stato_test" />
+	<formFieldProperty name="stato_rilasciato" /> 
+	
+	
+	<formFieldProperty name="selezionaTipoAttivita" />
+	
+	<formFieldProperty name="tipo_att_correttiva" /> 
+	<formFieldProperty name="tipo_att_evolutiva" /> 
+	<formFieldProperty name="tipo_att_manutentiva" /> 
+	<formFieldProperty name="tipo_att_estrazione_dati" /> 
+	<formFieldProperty name="tipo_att_supporto_gestione" /> 
+		
+	<printForm
+		name="/Sigla_Dwh/attivita_sigla.jasper">
+		<printFieldProperty 
+			name="esercizioForPrint"
+			parameterPosition="0"
+			parameterType="Integer" 
+			paramNameJR="Esercizio"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+			name="cdTerzoForPrint"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="Responsabile"
+			paramTypeJR="java.lang.String" />	
+		<printFieldProperty 
+        	name="stato_analisi"
+			parameterPosition="2"
+			parameterType="STRING" 
+			paramNameJR="Stato_analisi"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+        	name="stato_sviluppo"
+			parameterPosition="3"
+			parameterType="STRING" 
+			paramNameJR="Stato_sviluppo"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+        	name="stato_test"
+			parameterPosition="4"
+			parameterType="STRING"
+			paramNameJR="Stato_test"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+        	name="stato_rilasciato"
+			parameterPosition="5"
+			parameterType="STRING" 
+			paramNameJR="Stato_rilasciato"
+			paramTypeJR="java.lang.String"/> 
+		<printFieldProperty 
+        	name="stato_iniziale"
+			parameterPosition="6"
+			parameterType="STRING" 
+			paramNameJR="Stato_iniziale"
+			paramTypeJR="java.lang.String"/> 
+		<printFieldProperty 
+        	name="tipo_att_correttiva"
+			parameterPosition="7"
+			parameterType="STRING" 
+			paramNameJR="Tipo_att_correttiva"
+			paramTypeJR="java.lang.String"/>  
+		<printFieldProperty 
+        	name="tipo_att_evolutiva"
+			parameterPosition="8"
+			parameterType="STRING" 
+			paramNameJR="Tipo_att_evolutiva"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+        	name="tipo_att_manutentiva"
+			parameterPosition="9"
+			parameterType="STRING"
+			paramNameJR="Tipo_att_manutentiva"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+        	name="tipo_att_estrazione_dati"
+			parameterPosition="10"
+			parameterType="STRING"
+			paramNameJR="Tipo_att_estrazione_dati"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+        	name="tipo_att_supporto_gestione"
+			parameterPosition="11"
+			parameterType="STRING"
+			paramNameJR="Tipo_att_supporto_gestione"
+			paramTypeJR="java.lang.String" />
+	</printForm>	
+	
+</bulkInfo>

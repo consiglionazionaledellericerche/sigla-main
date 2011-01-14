@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBase"
+	keyClassName="it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeKey"
+	homeClassName="it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeHome">
+	<defaultColumnMap
+		tableName="PROCEDURE_AMMINISTRATIVE">
+		<columnMapping
+			columnName="DS_PROC_AMM"
+			propertyName="ds_proc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_PROC_AMM"
+			propertyName="ti_proc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_RICERCA_INCARICO"
+			propertyName="fl_ricerca_incarico"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_CANCELLATO"
+			propertyName="fl_cancellato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="INCARICO_RIC_GIORNI_PUBBL"
+			propertyName="incarico_ric_giorni_pubbl"
+			sqlTypeName="DECIMAL"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="INCARICO_RIC_GIORNI_SCAD"
+			propertyName="incarico_ric_giorni_scad"
+			sqlTypeName="DECIMAL"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_GRUPPO_FILE"
+			propertyName="cd_gruppo_file"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="FL_MERAMENTE_OCCASIONALE"
+			propertyName="fl_meramente_occasionale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ds_proc_amm" />
+	<persistentProperty
+		name="ti_proc_amm" />
+	<persistentProperty
+        name="fl_ricerca_incarico" />
+	<persistentProperty
+		name="fl_cancellato" />
+	<persistentProperty
+		name="incarico_ric_giorni_pubbl" />
+	<persistentProperty
+		name="incarico_ric_giorni_scad" />
+	<persistentProperty
+		name="cd_gruppo_file" />
+	<persistentProperty
+		name="fl_meramente_occasionale" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Inquadramenti"
+          longDescription="Inquadramenti">
+	<fieldProperty
+		name="pg_rif_inquadramento"
+		property="pg_rif_inquadramento"
+		inputType="TEXT"
+		label="Riferimento Inquadramento" />
+	<fieldProperty
+		name="cd_progressione"
+		property="cd_progressione"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="10"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false"
+		label="Profilo" />
+	<fieldProperty
+		name="cd_livello"
+		property="cd_livello"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="10"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false"
+		label="Progressione" />
+	<fieldProperty
+		name="cd_profilo"
+		property="cd_profilo"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="10"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false"
+		label="Livello" />
+	<fieldProperty
+		name="ds_inquadramento"
+		property="ds_inquadramento"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="300"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="ti_dipendente_altro"
+		property="ti_dipendente_altro"
+		layout="HORIZONTAL"
+		keysProperty="ti_dipendente_altroKeys"
+		inputType="RADIOGROUP"
+		enabledOnSearch="true"
+		enabledOnView="true"
+		nullable="false"
+		label="Tipo Anagrafico" />
+	<fieldProperty
+		name="cd_gruppo_inquadramento"
+		property="cd_gruppo_inquadramento"
+		keysProperty="cd_gruppo_inquadramentoKeys"
+		inputType="SELECT"
+		inputSize="3"
+		maxLength="10"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false"
+		nullable="false"
+		label="Gruppo Inquadramento" />
+
+	<formFieldProperty
+		name="pg_rif_inquadramento" />
+	<formFieldProperty
+		name="cd_profilo" />
+	<formFieldProperty
+		name="cd_progressione" />
+	<formFieldProperty
+		name="cd_livello" />
+	<formFieldProperty
+		name="cd_gruppo_inquadramento" />
+	<formFieldProperty
+		name="ds_inquadramento" />
+	<formFieldProperty
+		name="ti_dipendente_altro" />
+	
+	<columnFieldProperty
+		name="pg_rif_inquadramento" />
+	<columnFieldProperty
+		name="cd_profilo" />
+	<columnFieldProperty
+		name="cd_progressione" />
+	<columnFieldProperty
+		name="cd_livello" />
+	<columnFieldProperty
+		name="cd_gruppo_inquadramento" />
+	<columnFieldProperty
+		name="ds_inquadramento" />
+	<columnFieldProperty
+		name="ti_dipendente_altro" />
+
+	
+	<findFieldProperty
+		name="cd_profilo" />
+	<findFieldProperty
+		name="cd_progressione" />
+	<findFieldProperty
+		name="cd_livello" />
+	<findFieldProperty
+		name="cd_gruppo_inquadramento" />
+	<findFieldProperty
+		name="ds_inquadramento" />
+	<findFieldProperty
+		name="ti_dipendente_altro" />
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_progressione" />
+		<formFieldProperty
+			name="cd_livello" />
+		<formFieldProperty
+			name="cd_profilo" />
+		<formFieldProperty
+			name="ds_inquadramento" />
+	</form>
+</bulkInfo>

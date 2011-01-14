@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio" />
+	<fieldProperty
+		name="peso_dip"
+		property="peso_dip"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="peso_dip" />
+	<fieldProperty
+		name="dip"
+		property="dip"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Dipartimento" />
+	<fieldProperty
+		name="ds_dipartimento"
+		property="ds_dipartimento"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="765"
+		label="Descrizione" />
+	<fieldProperty
+		name="cds"
+		property="cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds" />
+	<fieldProperty
+		name="des_cds"
+		property="des_cds"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione" />
+	<fieldProperty
+		name="uo"
+		property="uo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Unità Organizzativa" />
+	<fieldProperty
+		name="des_uo"
+		property="des_uo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione" />
+	<fieldProperty
+		name="cdr"
+		property="cdr"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cdr" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="G.A.E." />
+	<fieldProperty
+		name="cd_classificazione"
+		property="cd_classificazione"
+		inputType="TEXT"
+		inputSize="34"
+		maxLength="34"
+		label="Classificazione" />
+	<fieldProperty
+		name="ds_classificazione"
+		property="ds_classificazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="250"
+		label="Descrizione" />
+	<fieldProperty
+		name="cd_livello1"
+		property="cd_livello1"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Titolo" />
+	<fieldProperty
+		name="cd_livello2"
+		property="cd_livello2"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Categoria" />
+	<fieldProperty
+		name="ini"
+		property="ini"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Stanziamento Iniziale" />
+	<fieldProperty
+		name="var_piu"
+		property="var_piu"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazione Positiva" />
+	<fieldProperty
+		name="var_meno"
+		property="var_meno"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazione Negativa" />
+	<fieldProperty
+		name="assestato"
+		property="assestato"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato" />
+
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="peso_dip" />
+	<formFieldProperty name="dip" />
+	<formFieldProperty name="ds_dipartimento" />
+	<formFieldProperty name="cds" />
+	<formFieldProperty name="des_cds" />
+	<formFieldProperty name="uo" />
+	<formFieldProperty name="des_uo" />
+	<formFieldProperty name="cdr" />
+	<formFieldProperty name="cd_linea_attivita" />
+	<formFieldProperty name="cd_classificazione" />
+	<formFieldProperty name="ds_classificazione" />
+	<formFieldProperty name="cd_livello1" />
+	<formFieldProperty name="cd_livello2" />
+	<formFieldProperty name="ini" />
+	<formFieldProperty name="var_piu" />
+	<formFieldProperty name="var_meno" />
+	<formFieldProperty name="assestato" />
+ 
+	<findFieldProperty name="dip" />
+	<findFieldProperty name="ds_dipartimento" />
+	<findFieldProperty name="cds" />
+	<findFieldProperty name="des_cds" />
+	<findFieldProperty name="uo" />
+	<findFieldProperty name="des_uo" />
+	<findFieldProperty name="cdr" />
+	<findFieldProperty name="cd_linea_attivita" />
+	<findFieldProperty name="cd_classificazione" />
+	<findFieldProperty name="ds_classificazione" />
+	<findFieldProperty name="cd_livello1" />
+	<findFieldProperty name="cd_livello2" />
+	<findFieldProperty name="ini" />
+	<findFieldProperty name="var_piu" />
+	<findFieldProperty name="var_meno" />
+
+	<columnFieldProperty name="esercizio" />
+	<columnFieldProperty name="peso_dip" />
+	<columnFieldProperty name="dip" />
+	<columnFieldProperty name="ds_dipartimento" />
+	<columnFieldProperty name="cds" />
+	<columnFieldProperty name="des_cds" />
+	<columnFieldProperty name="uo" />
+	<columnFieldProperty name="des_uo" />
+	<columnFieldProperty name="cdr" />
+	<columnFieldProperty name="cd_linea_attivita" />
+	<columnFieldProperty name="cd_classificazione" />
+	<columnFieldProperty name="ds_classificazione" />
+	<columnFieldProperty name="cd_livello1" />
+	<columnFieldProperty name="cd_livello2" />
+	<columnFieldProperty name="ini" />
+	<columnFieldProperty name="var_piu" />
+	<columnFieldProperty name="var_meno" />
+	<columnFieldProperty name="assestato" />
+ 
+	<columnSet name="DIP">
+		<columnFieldProperty name="dip" />
+		<columnFieldProperty name="ds_dipartimento" />
+		<columnFieldProperty name="ini" />
+		<columnFieldProperty name="var_piu" />
+		<columnFieldProperty name="var_meno" />
+		<columnFieldProperty name="assestato" />
+	</columnSet>
+
+	<columnSet name="DIPCDS">
+		<columnFieldProperty name="dip" />
+		<columnFieldProperty name="cds" />
+		<columnFieldProperty name="des_cds" />
+		<columnFieldProperty name="ini" />
+		<columnFieldProperty name="var_piu" />
+		<columnFieldProperty name="var_meno" />
+		<columnFieldProperty name="assestato" />
+	</columnSet>
+	<columnSet name="DIPCDSUO">
+		<columnFieldProperty name="dip" />
+		<columnFieldProperty name="cds" />
+		<columnFieldProperty name="uo" />
+		<columnFieldProperty name="des_uo" />
+		<columnFieldProperty name="ini" />
+		<columnFieldProperty name="var_piu" />
+		<columnFieldProperty name="var_meno" />
+		<columnFieldProperty name="assestato" />
+	</columnSet>
+	<columnSet name="DIPCDSUODET">
+		<columnFieldProperty name="dip" />
+		<columnFieldProperty name="cds" />
+		<columnFieldProperty name="uo" />
+		<columnFieldProperty name="cdr" />
+		<columnFieldProperty name="cd_linea_attivita" />
+		<columnFieldProperty name="cd_classificazione" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="ini" />
+		<columnFieldProperty name="var_piu" />
+		<columnFieldProperty name="var_meno" />
+		<columnFieldProperty name="assestato" />
+	</columnSet>
+
+	<columnSet name="DIPLIV1">
+		<columnFieldProperty name="dip" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="ini" />
+		<columnFieldProperty name="var_piu" />
+		<columnFieldProperty name="var_meno" />
+		<columnFieldProperty name="assestato" />
+	</columnSet>
+	<columnSet name="DIPLIV1CDS">
+		<columnFieldProperty name="dip" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cds" />
+		<columnFieldProperty name="des_cds" />
+		<columnFieldProperty name="ini" />
+		<columnFieldProperty name="var_piu" />
+		<columnFieldProperty name="var_meno" />
+		<columnFieldProperty name="assestato" />
+	</columnSet>
+	<columnSet name="DIPLIV1CDSUO">
+		<columnFieldProperty name="dip" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cds" />
+		<columnFieldProperty name="uo" />
+		<columnFieldProperty name="des_uo" />
+		<columnFieldProperty name="ini" />
+		<columnFieldProperty name="var_piu" />
+		<columnFieldProperty name="var_meno" />
+		<columnFieldProperty name="assestato" />
+	</columnSet>
+	<columnSet name="DIPLIV1CDSUODET">
+		<columnFieldProperty name="dip" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cds" />
+		<columnFieldProperty name="uo" />
+		<columnFieldProperty name="cdr" />
+		<columnFieldProperty name="cd_linea_attivita" />
+		<columnFieldProperty name="cd_classificazione" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="ini" />
+		<columnFieldProperty name="var_piu" />
+		<columnFieldProperty name="var_meno" />
+		<columnFieldProperty name="assestato" />
+	</columnSet>
+
+	<columnSet name="DIPLIV1LIV2">
+		<columnFieldProperty name="dip" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="ini" />
+		<columnFieldProperty name="var_piu" />
+		<columnFieldProperty name="var_meno" />
+		<columnFieldProperty name="assestato" />
+	</columnSet>
+	<columnSet name="DIPLIV1LIV2CDS">
+		<columnFieldProperty name="dip" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cds" />
+		<columnFieldProperty name="des_cds" />
+		<columnFieldProperty name="ini" />
+		<columnFieldProperty name="var_piu" />
+		<columnFieldProperty name="var_meno" />
+		<columnFieldProperty name="assestato" />
+	</columnSet>
+	<columnSet name="DIPLIV1LIV2CDSUO">
+		<columnFieldProperty name="dip" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cds" />
+		<columnFieldProperty name="uo" />
+		<columnFieldProperty name="des_uo" />
+		<columnFieldProperty name="ini" />
+		<columnFieldProperty name="var_piu" />
+		<columnFieldProperty name="var_meno" />
+		<columnFieldProperty name="assestato" />
+	</columnSet>
+	<columnSet name="DIPLIV1LIV2CDSUODET">
+		<columnFieldProperty name="dip" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cds" />
+		<columnFieldProperty name="uo" />
+		<columnFieldProperty name="cdr" />
+		<columnFieldProperty name="cd_linea_attivita" />
+		<columnFieldProperty name="cd_classificazione" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="ini" />
+		<columnFieldProperty name="var_piu" />
+		<columnFieldProperty name="var_meno" />
+		<columnFieldProperty name="assestato" />
+	</columnSet>
+
+	<freeSearchSet name="DIP">
+		<findFieldProperty name="dip" />
+		<findFieldProperty name="ds_dipartimento" />
+		<findFieldProperty name="ini" />
+		<findFieldProperty name="var_piu" />
+		<findFieldProperty name="var_meno" />
+		<findFieldProperty name="assestato" />
+	</freeSearchSet>
+
+	<freeSearchSet name="DIPCDS">
+		<findFieldProperty name="dip" />
+		<findFieldProperty name="cds" />
+		<findFieldProperty name="des_cds" />
+		<findFieldProperty name="ini" />
+		<findFieldProperty name="var_piu" />
+		<findFieldProperty name="var_meno" />
+		<findFieldProperty name="assestato" />
+	</freeSearchSet>
+	<freeSearchSet name="DIPCDSUO">
+		<findFieldProperty name="dip" />
+		<findFieldProperty name="cds" />
+		<findFieldProperty name="uo" />
+		<findFieldProperty name="des_uo" />
+		<findFieldProperty name="ini" />
+		<findFieldProperty name="var_piu" />
+		<findFieldProperty name="var_meno" />
+		<findFieldProperty name="assestato" />
+	</freeSearchSet>
+	<freeSearchSet name="DIPCDSUODET">
+		<findFieldProperty name="dip" />
+		<findFieldProperty name="cds" />
+		<findFieldProperty name="uo" />
+		<findFieldProperty name="cdr" />
+		<findFieldProperty name="cd_linea_attivita" />
+		<findFieldProperty name="cd_classificazione" />
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="ini" />
+		<findFieldProperty name="var_piu" />
+		<findFieldProperty name="var_meno" />
+		<findFieldProperty name="assestato" />
+	</freeSearchSet>
+
+	<freeSearchSet name="DIPLIV1">
+		<findFieldProperty name="dip" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="ini" />
+		<findFieldProperty name="var_piu" />
+		<findFieldProperty name="var_meno" />
+		<findFieldProperty name="assestato" />
+	</freeSearchSet>
+	<freeSearchSet name="DIPLIV1CDS">
+		<findFieldProperty name="dip" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cds" />
+		<findFieldProperty name="des_cds" />
+		<findFieldProperty name="ini" />
+		<findFieldProperty name="var_piu" />
+		<findFieldProperty name="var_meno" />
+		<findFieldProperty name="assestato" />
+	</freeSearchSet>
+	<freeSearchSet name="DIPLIV1CDSUO">
+		<findFieldProperty name="dip" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cds" />
+		<findFieldProperty name="uo" />
+		<findFieldProperty name="des_uo" />
+		<findFieldProperty name="ini" />
+		<findFieldProperty name="var_piu" />
+		<findFieldProperty name="var_meno" />
+		<findFieldProperty name="assestato" />
+	</freeSearchSet>
+	<freeSearchSet name="DIPLIV1CDSUODET">
+		<findFieldProperty name="dip" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cds" />
+		<findFieldProperty name="uo" />
+		<findFieldProperty name="cdr" />
+		<findFieldProperty name="cd_linea_attivita" />
+		<findFieldProperty name="cd_classificazione" />
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="ini" />
+		<findFieldProperty name="var_piu" />
+		<findFieldProperty name="var_meno" />
+		<findFieldProperty name="assestato" />
+	</freeSearchSet>
+
+	<freeSearchSet name="DIPLIV1LIV2">
+		<findFieldProperty name="dip" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="ini" />
+		<findFieldProperty name="var_piu" />
+		<findFieldProperty name="var_meno" />
+		<findFieldProperty name="assestato" />
+	</freeSearchSet>
+	<freeSearchSet name="DIPLIV1LIV2CDS">
+		<findFieldProperty name="dip" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="cds" />
+		<findFieldProperty name="des_cds" />
+		<findFieldProperty name="ini" />
+		<findFieldProperty name="var_piu" />
+		<findFieldProperty name="var_meno" />
+		<findFieldProperty name="assestato" />
+	</freeSearchSet>
+	<freeSearchSet name="DIPLIV1LIV2CDSUO">
+		<findFieldProperty name="dip" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="cds" />
+		<findFieldProperty name="uo" />
+		<findFieldProperty name="des_uo" />
+		<findFieldProperty name="ini" />
+		<findFieldProperty name="var_piu" />
+		<findFieldProperty name="var_meno" />
+		<findFieldProperty name="assestato" />
+	</freeSearchSet>
+	<freeSearchSet name="DIPLIV1LIV2CDSUODET">
+		<findFieldProperty name="dip" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="cds" />
+		<findFieldProperty name="uo" />
+		<findFieldProperty name="cdr" />
+		<findFieldProperty name="cd_linea_attivita" />
+		<findFieldProperty name="cd_classificazione" />
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="ini" />
+		<findFieldProperty name="var_piu" />
+		<findFieldProperty name="var_meno" />
+		<findFieldProperty name="assestato" />
+	</freeSearchSet>
+</bulkInfo>

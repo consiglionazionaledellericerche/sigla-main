@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds" />
+	<fieldProperty
+		name="cd_uo"
+		property="cd_uo"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_uo" />
+	<fieldProperty
+		name="pg_scrittura_an"
+		property="pg_scrittura_an"
+		inputType="TEXT"
+		label="pg_scrittura_an" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="mese"
+		property="mese"
+		inputType="TEXT"
+		label="mese" />
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_uo" />
+	<formFieldProperty
+		name="pg_scrittura_an" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="mese" />
+
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_uo" />
+	<columnFieldProperty
+		name="pg_scrittura_an" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="mese" />
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_uo" />
+	<findFieldProperty
+		name="pg_scrittura_an" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="mese" />
+
+</bulkInfo>

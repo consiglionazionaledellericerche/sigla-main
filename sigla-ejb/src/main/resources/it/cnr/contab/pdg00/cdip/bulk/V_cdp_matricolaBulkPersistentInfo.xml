@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.cdip.bulk.V_cdp_matricolaBulk"
+	homeClassName="it.cnr.contab.pdg00.cdip.bulk.V_cdp_matricolaHome" >
+	<defaultColumnMap>
+		<columnMapping
+			columnName="MESE"
+			propertyName="mese"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			primary="true" />
+		<columnMapping
+			columnName="ID_MATRICOLA"
+			propertyName="id_matricola"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UO_CARICO"
+			propertyName="cd_uo_carico"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="mese"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="id_matricola"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_uo_carico"
+		partOfOid="true" />
+</SQLPersistentInfo>

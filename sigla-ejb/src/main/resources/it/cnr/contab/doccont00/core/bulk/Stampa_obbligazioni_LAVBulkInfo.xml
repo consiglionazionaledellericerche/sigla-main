@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio" />	
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="ROTEXT"
+		maxLength="10"
+		inputSize="10"
+		label="CDS"/>	
+	<fieldProperty
+		name="cdUoForPrint"
+		property="cdUoForPrint"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Unita Organizzativa" />
+
+	<fieldProperty
+		name="findCdrForPrint"
+		property="cdrForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		label="Centro di Responsabilità" />
+	<fieldProperty
+		name="cdCdrForPrint"
+		property="cdrForPrint.cd_centro_responsabilita"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROCdrForPrint"
+		label="Codice Cdr" />	
+	<fieldProperty
+		name="dsCdrForPrint"
+		property="cdrForPrint.ds_cdr"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione Cdr" />
+
+	<fieldProperty
+		name="findLineaAttForPrint"
+		property="lineaAttForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		readonlyProperty="ROLineaAttForPrintSearchTool"
+		label="GAE" />
+	<fieldProperty
+		name="cdLineaAttForPrint"
+		property="lineaAttForPrint.cd_linea_attivita"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROLineaAttForPrint"
+		label="Codice LA" />	
+	<fieldProperty
+		name="dsLineaAttForPrint"
+		property="lineaAttForPrint.denominazione"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Denominazione" />
+
+	<fieldProperty
+		name="dataInizio"
+		property="dataInizio"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Data inizio"/>
+	<fieldProperty
+		name="dataFine"
+		property="dataFine"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Data fine" />
+
+		
+	<fieldProperty
+		name="cdLANullableForPrint"
+		property="cdLANullableForPrint" />	
+	<fieldProperty
+		name="cdCdrNullableForPrint"
+		property="cdCdrNullableForPrint" />		
+		
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="cd_cds" />
+	<formFieldProperty name="cdUoForPrint" />
+	
+	<formFieldProperty name="findCdrForPrint" />
+	<formFieldProperty name="cdCdrForPrint" />
+	<formFieldProperty name="dsCdrForPrint" />
+	
+	<formFieldProperty name="findLineaAttForPrint" />
+	<formFieldProperty name="cdLineaAttForPrint" />
+	<formFieldProperty name="dsLineaAttForPrint" />
+	
+	<formFieldProperty name="dataInizio" />
+	<formFieldProperty name="dataFine" />
+	
+	<formFieldProperty name="cdCdrNullableForPrint" />
+	<formFieldProperty name="cdLANullableForPrint" />
+
+	<form
+		name="/cnrdoccont/doccont/obbligazioniperlineediattiv.rpt">
+		<formFieldProperty 
+			name="esercizio"
+			inputType="ROTEXT" />
+	
+		<formFieldProperty name="findCdrForPrint" />
+		<formFieldProperty name="cdCdrForPrint" />
+		<formFieldProperty name="dsCdrForPrint" />	
+		<formFieldProperty name="findLineaAttForPrint" />
+		<formFieldProperty name="cdLineaAttForPrint" />
+		<formFieldProperty name="dsLineaAttForPrint" />
+		<formFieldProperty name="dataInizio" />
+		<formFieldProperty name="dataFine" />
+		<formFieldProperty name="cdUoForPrint" />
+	</form>
+	<form
+		name="/cnrdoccont/doccont/obbligazioniperlineediattiv.jasper">
+		<formFieldProperty 
+			name="esercizio"
+			inputType="ROTEXT" />
+	
+		<formFieldProperty name="findCdrForPrint" />
+		<formFieldProperty name="cdCdrForPrint" />
+		<formFieldProperty name="dsCdrForPrint" />	
+		<formFieldProperty name="findLineaAttForPrint" />
+		<formFieldProperty name="cdLineaAttForPrint" />
+		<formFieldProperty name="dsLineaAttForPrint" />
+		<formFieldProperty name="dataInizio" />
+		<formFieldProperty name="dataFine" />
+		<formFieldProperty name="cdUoForPrint" />
+	</form>
+
+
+	<printForm
+		name="/cnrdoccont/doccont/obbligazioniperlineediattiv.rpt">
+		<printFieldProperty 
+			name="cdCdrNullableForPrint"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdLANullableForPrint"
+			parameterPosition="1"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="dataInizio"
+			parameterPosition="3"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="dataFine"
+			parameterPosition="4"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="5"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdUoForPrint"
+			parameterPosition="6"
+			parameterType="STRING" />
+	</printForm>		
+	<printForm
+		name="/cnrdoccont/doccont/obbligazioniperlineediattiv.jasper">
+		<printFieldProperty 
+			name="cdCdrNullableForPrint"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="cdr"
+			paramTypeJR="java.lang.String"  />
+		<printFieldProperty 
+			name="cdLANullableForPrint"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="linea"
+			paramTypeJR="java.lang.String"  />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="2"
+			parameterType="STRING"
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer"  />
+		<printFieldProperty 
+			name="dataInizio"
+			parameterPosition="3"
+			parameterType="DATE"
+			paramNameJR="data_da"
+			paramTypeJR="java.util.Date"  />
+		<printFieldProperty 
+			name="dataFine"
+			parameterPosition="4"
+			parameterType="DATE"
+			paramNameJR="data_a"
+			paramTypeJR="java.util.Date"  />
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="5"
+			parameterType="STRING"
+			paramNameJR="cds"
+			paramTypeJR="java.lang.String"  />
+		<printFieldProperty 
+			name="cdUoForPrint"
+			parameterPosition="6"
+			parameterType="STRING"
+			paramNameJR="uo"
+			paramTypeJR="java.lang.String"  />
+	</printForm>
+</bulkInfo>

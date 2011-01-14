@@ -1,0 +1,27 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.reports.bulk.Print_spooler_paramKey" >
+	<defaultColumnMap
+		tableName="PRINT_SPOOLER_PARAM" >
+		<columnMapping
+			columnName="PG_STAMPA"
+			propertyName="pgStampa"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="NOME_PARAM"
+			propertyName="nomeParam"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false"
+			primary="true" />
+			
+	</defaultColumnMap>
+	<persistentProperty
+		name="pgStampa"
+		partOfOid="true" />
+	<persistentProperty
+		name="nomeParam"
+		partOfOid="true" />		
+</SQLPersistentInfo>

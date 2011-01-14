@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="attributo"
+		property="attributo"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="attributo" />
+	<fieldProperty
+		name="livello"
+		property="livello"
+		inputType="TEXT"
+		label="livello" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="lunghezza"
+		property="lunghezza"
+		inputType="TEXT"
+		label="lunghezza" />
+	<fieldProperty
+		name="tabella"
+		property="tabella"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="tabella" />
+
+	<formFieldProperty
+		name="attributo" />
+	<formFieldProperty
+		name="livello" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="lunghezza" />
+	<formFieldProperty
+		name="tabella" />
+
+	<columnFieldProperty
+		name="attributo" />
+	<columnFieldProperty
+		name="livello" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="lunghezza" />
+	<columnFieldProperty
+		name="tabella" />
+
+	<findFieldProperty
+		name="attributo" />
+	<findFieldProperty
+		name="livello" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="lunghezza" />
+	<findFieldProperty
+		name="tabella" />
+
+</bulkInfo>

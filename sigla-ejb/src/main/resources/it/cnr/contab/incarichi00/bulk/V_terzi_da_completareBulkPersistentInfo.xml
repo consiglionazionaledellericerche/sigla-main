@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.bulk.V_terzi_da_completareBulk"
+	homeClassName="it.cnr.contab.incarichi00.bulk.V_terzi_da_completareHome">
+	<defaultColumnMap
+		tableName="V_TERZI_DA_COMPLETARE">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="DENOMINAZIONE"
+			propertyName="denominazione"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+	</defaultColumnMap>
+
+	<persistentProperty
+			name="cd_cds" />
+	<persistentProperty
+			name="cd_unita_organizzativa" />
+	<persistentProperty
+			name="cd_terzo" />
+	<persistentProperty
+			name="denominazione" />
+</SQLPersistentInfo>

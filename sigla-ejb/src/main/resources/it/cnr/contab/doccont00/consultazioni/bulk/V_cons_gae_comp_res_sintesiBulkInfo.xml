@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio" />
+	<fieldProperty
+		name="cds"
+		property="cds"
+		inputType="TEXT"
+		label="Cds" />
+	<fieldProperty
+		name="cdr"
+		property="cdr"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cdr" />
+	<fieldProperty
+		name="ds_cdr"
+		property="ds_cdr"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Desc. Cdr" />
+	<fieldProperty
+		name="lda"
+		property="lda"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="GAE" />
+	<fieldProperty
+		name="ds_lda"
+		property="ds_lda"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Desc. GAE" />
+	<fieldProperty
+		name="cd_responsabile_terzo"
+		property="cd_responsabile_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Responsabile" />
+	<fieldProperty
+		name="denominazione_sede"
+		property="denominazione_sede"
+		inputType="TEXT"
+		maxLength="200"
+		label="denominazione sede" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Elemento voce" />
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="ds_elemento_voce"
+		inputType="TEXT"
+		maxLength="100"
+		label="Desc elemento_voce" />
+	<fieldProperty
+		name="cd_cds_obb"
+		property="cd_cds_obb"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds Imp" />
+	<fieldProperty
+		name="esercizio_obbligazione"
+		property="esercizio_obbligazione"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio obbligazione" />
+	<fieldProperty
+		name="esercizio_originale"
+		property="esercizio_originale"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio originale" />
+	<fieldProperty
+		name="pg_obbligazione"
+		property="pg_obbligazione"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="n° obbligazione" />
+	<fieldProperty
+		name="pg_obbligazione_scadenzario"
+		property="pg_obbligazione_scadenzario"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="n° scadenzario" />
+	<fieldProperty
+		name="ds_scadenza"
+		property="ds_scadenza"
+		inputType="TEXT"
+		maxLength="300"
+		label="desc. scadenza" />
+	<fieldProperty
+		name="im_impegni"
+		property="im_impegni"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+	    formatName="it.cnr.contab.util.EuroFormat"
+		label="imp. impegno" />
+	<fieldProperty
+		name="cd_cds_man"
+		property="cd_cds_man"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="cds mandato" />
+	<fieldProperty
+		name="pg_mandato"
+		property="pg_mandato"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="n° mandato" />
+	<fieldProperty
+		name="dt_emissione"
+		property="dt_emissione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="data emissione" />
+	<fieldProperty
+		name="dt_trasmissione"
+		property="dt_trasmissione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="data trasmissione" />
+	<fieldProperty
+		name="dt_pagamento"
+		property="dt_pagamento"
+		inputType="TEXT"
+		formatName="date_short"
+		label="data pagamento" />
+	<fieldProperty
+		name="ds_mandato"
+		property="ds_mandato"
+		inputType="TEXT"
+		maxLength="300"
+		label="desc. mandato" />
+	<fieldProperty
+		name="im_mandati"
+		property="im_mandati"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="imp. mandato" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cds" />
+	<formFieldProperty
+		name="cdr" />
+	<formFieldProperty
+		name="ds_cdr" />
+	<formFieldProperty
+		name="lda" />
+	<formFieldProperty
+		name="ds_lda" />
+	<formFieldProperty
+		name="cd_responsabile_terzo" />
+	<formFieldProperty
+		name="denominazione_sede" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="ds_elemento_voce" />
+	<formFieldProperty
+		name="cd_cds_obb" />
+	<formFieldProperty
+		name="esercizio_obbligazione" />
+	<formFieldProperty
+		name="esercizio_originale" />
+	<formFieldProperty
+		name="pg_obbligazione" />
+	<formFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<formFieldProperty
+		name="ds_scadenza" />
+	<formFieldProperty
+		name="im_impegni" />
+	<formFieldProperty
+		name="cd_cds_man" />
+	<formFieldProperty
+		name="pg_mandato" />
+	<formFieldProperty
+		name="dt_emissione" />
+	<formFieldProperty
+		name="dt_trasmissione" />
+	<formFieldProperty
+		name="dt_pagamento" />
+	<formFieldProperty
+		name="ds_mandato" />
+	<formFieldProperty
+		name="im_mandati" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cds" />
+	<findFieldProperty
+		name="cdr" />
+	<findFieldProperty
+		name="ds_cdr" />
+	<findFieldProperty
+		name="lda" />
+	<findFieldProperty
+		name="ds_lda" />
+	<findFieldProperty
+		name="cd_responsabile_terzo" />
+	<findFieldProperty
+		name="denominazione_sede" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="ds_elemento_voce" />
+	<findFieldProperty
+		name="cd_cds_obb" />
+	<findFieldProperty
+		name="esercizio_obbligazione" />
+	<findFieldProperty
+		name="esercizio_originale" />
+	<findFieldProperty
+		name="pg_obbligazione" />
+	<findFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<findFieldProperty
+		name="ds_scadenza" />
+	<findFieldProperty
+		name="im_impegni" />
+	<findFieldProperty
+		name="cd_cds_man" />
+	<findFieldProperty
+		name="pg_mandato" />
+	<findFieldProperty
+		name="dt_emissione" />
+	<findFieldProperty
+		name="dt_trasmissione" />
+	<findFieldProperty
+		name="dt_pagamento" />
+	<findFieldProperty
+		name="ds_mandato" />
+	<findFieldProperty
+		name="im_mandati" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cds" />
+	<columnFieldProperty
+		name="cdr" />
+	<columnFieldProperty
+		name="ds_cdr" />
+	<columnFieldProperty
+		name="lda" />
+	<columnFieldProperty
+		name="ds_lda" />
+	<columnFieldProperty
+		name="cd_responsabile_terzo" />
+	<columnFieldProperty
+		name="denominazione_sede" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="ds_elemento_voce" />
+	<columnFieldProperty
+		name="cd_cds_obb" />
+	<columnFieldProperty
+		name="esercizio_obbligazione" />
+	<columnFieldProperty
+		name="esercizio_originale" />
+	<columnFieldProperty
+		name="pg_obbligazione" />
+	<columnFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<columnFieldProperty
+		name="ds_scadenza" />
+	<columnFieldProperty
+		name="im_impegni" />
+	<columnFieldProperty
+		name="cd_cds_man" />
+	<columnFieldProperty
+		name="pg_mandato" />
+	<columnFieldProperty
+		name="dt_emissione" />
+	<columnFieldProperty
+		name="dt_trasmissione" />
+	<columnFieldProperty
+		name="dt_pagamento" />
+	<columnFieldProperty
+		name="ds_mandato" />
+	<columnFieldProperty
+		name="im_mandati" />
+</bulkInfo>

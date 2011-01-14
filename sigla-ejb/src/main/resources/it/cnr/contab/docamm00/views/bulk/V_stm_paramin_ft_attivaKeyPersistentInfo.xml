@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it_cnr_contab_docamm00_views_bulk_V_stm_paramin_ft_attivaKey" >
+	<defaultColumnMap
+		tableName="V_STM_PARAMIN_FT_ATTIVA" >
+		<columnMapping
+			columnName="ID_REPORT"
+			propertyName="id_report"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="id_report"
+		partOfOid="true" />
+</SQLPersistentInfo>

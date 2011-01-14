@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_contributo_ritenuta"
+		property="contributo_ritenuta.cd_contributo_ritenuta"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		label="Codice CO/RI" />
+	<fieldProperty
+		name="find_contributo_ritenuta"
+		property="contributo_ritenuta"
+		label="Contributo Ritenuta"		
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_contributo_ritenuta"
+		property="contributo_ritenuta.ds_contributo_ritenuta"
+		label="Descrizione"
+		inputSize="100"
+		enabledOnSearch="true"
+		inputType="ROTEXT" />	
+	<fieldProperty
+		name="ti_ente_percepiente"
+		property="ti_ente_percepiente"
+		keysProperty="ti_entePercipienteKeys"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"
+		enabledOnSearch="true"	
+		label="Tipo Ente percepiente" />
+	<fieldProperty
+		name="sezione"
+		property="sezione"
+		keysProperty="sezioneKeys"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"	
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="Sezione" />
+	<fieldProperty
+		name="find_voce"
+		property="voce_ep"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		completeOnSave="true"
+		label="Voce del Piano"/>
+	<fieldProperty
+		name="cd_voce_ep"
+		property="voce_ep.cd_voce_ep"
+		label="Voce del piano"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="10"
+		enabledOnSearch="true"
+		nullable="false"/>
+	<fieldProperty
+		name="ds_voce_ep"
+		property="voce_ep.ds_voce_ep"
+		label=""
+		inputType="ROTEXT"
+		inputSize="60"/>	
+	<fieldProperty
+		name="find_voce_contr"
+		property="voce_ep_contr"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		completeOnSave="true"
+		label="Voce del Piano contropartita"/>
+	<fieldProperty
+		name="cd_voce_ep_contr"
+		property="voce_ep_contr.cd_voce_ep"
+		label="Voce del Piano contropartita"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="10"
+		enabledOnSearch="true"
+		nullable="false"		/>
+	<fieldProperty
+		name="ds_voce_ep_contr"
+		property="voce_ep_contr.ds_voce_ep"
+		label=""
+		inputType="ROTEXT"
+		inputSize="60"/>		
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_contributo_ritenuta" />
+	<formFieldProperty
+		name="ds_contributo_ritenuta" />	
+	<formFieldProperty
+		name="find_contributo_ritenuta" />		
+	<formFieldProperty
+		name="ti_ente_percepiente" />
+	<formFieldProperty
+		name="sezione" />
+	<formFieldProperty
+		name="find_voce" />
+	<formFieldProperty
+		name="find_voce_contr" />
+		
+	<formFieldProperty
+		name="cd_voce_ep" />
+	<formFieldProperty
+		name="cd_voce_ep_contr" />
+	<formFieldProperty
+		name="ds_voce_ep" />
+	<formFieldProperty
+		name="ds_voce_ep_contr" />
+			
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_contributo_ritenuta" />
+		
+	<findFieldProperty
+		name="ti_ente_percepiente" />
+	<findFieldProperty
+		name="sezione" />
+	<findFieldProperty
+		name="cd_voce_ep" />
+	<findFieldProperty
+		name="cd_voce_ep_contr" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_contributo_ritenuta" />
+	<columnFieldProperty
+		name="ti_ente_percepiente" />
+	<columnFieldProperty
+		name="sezione" />
+	<columnFieldProperty
+		name="cd_voce_ep" />
+	<columnFieldProperty
+		name="cd_voce_ep_contr" />
+</bulkInfo>

@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cds.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="10"
+		inputType="ROTEXT"
+		enabledOnFreeSearch="false"
+		label="Cds" />
+	<fieldProperty
+		name="ds_cds"
+		property="cds.ds_unita_organizzativa"
+		maxLength="30"
+		inputSize="50"
+		inputType="ROTEXT"
+		label="Cds" />
+	<fieldProperty
+		name="dt_contabilizzazione"
+		property="dt_contabilizzazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Data scrittura" />
+	<fieldProperty
+		name="pg_numero_documento"
+		property="pg_numero_documento"
+		inputType="ROTEXT"
+		label="Numero documento" />
+	<fieldProperty
+		name="pg_numero_documentoForFind"
+		property="pg_numero_documento"
+		inputType="TEXT"
+		label="N. documento orig." />
+	<fieldProperty
+		name="ds_scrittura"
+		property="ds_scrittura"
+		maxLength="250"
+		inputSize="100"
+		inputType="TEXT"
+		label="Descrizione"
+		enabledOnSearch="true"		
+		caseSensitiveSearch="false" 
+		nullable="false"/>
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="uo.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="7"
+		inputType="ROTEXT"
+		enabledOnFreeSearch="false"		
+		label="Unit&#224; organizzativa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_unita_organizzativa"
+		property="uo.ds_unita_organizzativa"
+		inputSize="50"
+		inputType="ROTEXT"
+		label="Unit&#224; organizzativa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Stato"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio_documento_amm"
+		property="esercizio_documento_amm"
+		inputType="TEXT"
+		label="Esercizio documento amm." />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		maxLength="4"
+		inputSize="4"		
+		inputType="ROTEXT"
+		enabledOnFreeSearch="false"		
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_tipo_documento"
+		property="cd_tipo_documento"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Tipo documento"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="origine_scrittura"
+		property="origine_scrittura"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Origine Scrittura"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_comp_documento"
+		property="cd_comp_documento"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Documento"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_scrittura"
+		property="ti_scrittura"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Tipo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_scrittura"
+		property="im_scrittura"
+		inputType="TEXT"
+		enabledOnSearch="true"		
+		label="Importo"
+		maxLength="16"
+		inputSize="16"
+		formatName = "it.cnr.contab.util.EuroFormat"/>
+	<fieldProperty
+		name="dt_cancellazione"
+		property="dt_cancellazione"
+		inputType="ROTEXT"
+		inputSize="10"				
+		formatName="date_short"				
+		label="Data cancellazione" />
+	<fieldProperty
+		name="cd_terzo"
+		property="terzo.cd_terzo"
+		readonlyProperty="ROTerzo"
+		inputSize="8"				
+		inputType="TEXT"
+		enabledOnSearch="true"		
+		label="Terzo" />
+	<fieldProperty
+		name="ds_terzo"
+		property="terzo.denominazione_sede"
+		inputType="ROTEXT"
+		inputSize="30"				
+		label="Terzo" />
+	<fieldProperty
+		name="find_terzo"
+		property="terzo"
+		inputType="SEARCHTOOL" 
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="attiva"
+		property="attiva"
+		keysProperty="stato_attivaKeys"		
+		inputType="SELECT"
+		label="Attiva"
+		enabledOnInsert="false"
+		enabledOnEdit="false"		
+		enabledOnFreeSearch="true"		
+		enabledOnSearch="true"		
+		/>
+	<fieldProperty
+		name="pg_scrittura_annullata"
+		property="pg_scrittura_annullata"
+		inputType="TEXT"
+		label="N.scrittura annullata"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"		
+		/>
+	<fieldProperty
+		name="pg_scrittura"
+		property="pg_scrittura"
+		inputType="TEXT"
+		inputSize="10"				
+		label="Numero scrittura" 
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="imTotaleMov"
+		property="imTotaleMov"
+		inputType="ROTEXT"
+		inputSize="10"
+		formatName = "it.cnr.contab.util.EuroFormat"				
+		label="Importo totale Movimenti" />
+	<fieldProperty
+		name="cd_cds_documento"
+		property="cd_cds_documento"
+		maxLength="30"
+		inputSize="10"
+		inputType="TEXT"
+		label="Cds documento"
+		caseSensitiveSearch="false"/>
+	<fieldProperty
+		name="cd_uo_documento"
+		property="cd_uo_documento"
+		maxLength="30"
+		inputSize="10"
+		inputType="TEXT"
+		label="UO documento"
+		caseSensitiveSearch="false" />
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="ds_cds" />
+	<formFieldProperty
+		name="dt_contabilizzazione" />
+	<formFieldProperty
+		name="pg_numero_documento" />
+	<formFieldProperty
+		name="ds_scrittura" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="ds_unita_organizzativa" />	
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="esercizio_documento_amm" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_tipo_documento" />
+	<formFieldProperty
+		name="origine_scrittura" />
+	<formFieldProperty
+		name="cd_comp_documento" />
+	<formFieldProperty
+		name="ti_scrittura" />
+	<formFieldProperty
+		name="im_scrittura" />
+	<formFieldProperty
+		name="dt_cancellazione" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="ds_terzo" />
+	<formFieldProperty
+		name="find_terzo" />	
+	<formFieldProperty
+		name="attiva" />
+	<formFieldProperty
+		name="pg_scrittura_annullata" />
+	<formFieldProperty
+		name="pg_scrittura" />
+	<formFieldProperty
+		name="imTotaleMov" />
+	<formFieldProperty
+		name="cd_cds_documento" />
+	<formFieldProperty
+		name="cd_uo_documento" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="pg_scrittura" />
+	<columnFieldProperty
+		name="dt_contabilizzazione" />
+	<columnFieldProperty
+		name="ds_scrittura" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="im_scrittura" />
+	<columnFieldProperty
+		name="cd_terzo" />
+
+	<findFieldProperty
+		name="pg_scrittura" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="dt_contabilizzazione" />
+	<findFieldProperty
+		name="ds_scrittura" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="im_scrittura" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="attiva" />
+	<findFieldProperty
+		name="pg_scrittura_annullata" />
+	<findFieldProperty
+		name="pg_numero_documentoForFind" />
+	<findFieldProperty
+		name="esercizio_documento_amm" />	
+	<findFieldProperty
+		name="cd_tipo_documento" />		
+</bulkInfo>

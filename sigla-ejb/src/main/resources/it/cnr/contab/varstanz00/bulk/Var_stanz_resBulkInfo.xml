@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Variazioni Stanziamento residuo"
+          longDescription="Variazioni allo Stanziamento residuo">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_variazione"
+		property="pg_variazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		label="Numero Variazione" />
+    <fieldProperty
+        name="centroDiSpesa"
+        property="centroDiSpesa"
+        inputType="SEARCHTOOL"
+        formName="searchtool"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"
+        label="CDS" />		
+	<fieldProperty
+		name="cd_cds"
+		property="centroDiSpesa.cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS in scrivania" />
+    <fieldProperty
+        name="centroDiResponsabilita"
+        property="centroDiResponsabilita"
+        inputType="SEARCHTOOL"
+        formName="searchtool"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"
+        label="CDR proponente" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="centroDiResponsabilita.cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CdR Proponente" />
+	<fieldProperty
+		name="dt_apertura"
+		property="dt_apertura"
+		inputType="TEXT"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		formatName="date_short"
+		inputSize="8"
+		nullable="false"
+		label="Data di apertura" />
+	<fieldProperty
+		name="ds_delibera"
+		property="ds_delibera"
+		inputType="TEXTAREA"
+		cols="80"
+		rows="3"
+        enabledOnSearch="true"		
+		maxLength="300"
+		label="Descrizione della delibera" />
+	<fieldProperty
+		name="ds_variazione"
+		property="ds_variazione"
+		inputType="TEXTAREA"
+		cols="80"
+		rows="4"
+        enabledOnSearch="true"		
+		maxLength="1000"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="dt_chiusura"
+		property="dt_chiusura"
+		inputType="TEXT"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		formatName="date_short"
+		inputSize="8"
+		label="Data di chiusura" />
+	<fieldProperty
+		name="dt_approvazione"
+		property="dt_approvazione"
+		inputType="TEXT"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		formatName="date_short"
+		inputSize="8"
+		label="Data di approvazione" />
+	<fieldProperty
+		name="dt_annullamento"
+		property="dt_annullamento"
+		inputType="TEXT"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		formatName="date_short"
+		inputSize="8"
+		label="Data di annullamento" />
+	<fieldProperty
+		name="ds_aggiuntiva"
+		property="ds_aggiuntiva"
+		inputType="TEXTAREA"
+		cols="80"
+		rows="3"
+        enabledOnSearch="true"		
+		maxLength="300"
+		label="Descrizione aggiuntiva" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="SELECT"
+		keysProperty="ti_statoKeys"
+		inputSize="3"
+		maxLength="3"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		nullable="false"
+		label="Stato" />
+	<fieldProperty
+		name="tipologia"
+		property="tipologia"
+		inputType="SELECT"
+		keysProperty="ti_tipologiaKeys"
+		readonlyProperty="ROTipologia"
+		maxLength="10"
+		enabledOnInsert="true"
+        enabledOnSearch="true"		
+        enabledOnEdit="true"                
+		nullable="false"
+		label="Tipologia" />
+	<fieldProperty
+		name="tipologia_fin"
+		property="tipologia_fin"
+		inputType="SELECT"
+		keysProperty="ti_tipologia_finKeys"
+		readonlyProperty="ROTipologia"
+		maxLength="10"
+		enabledOnInsert="true"
+        enabledOnSearch="true"		
+        enabledOnEdit="true"                
+		label="Origine delle Fonti" />
+		
+	<fieldProperty
+		name="ds_variazione_riga"
+		property="ds_variazione"
+		inputType="ROTEXT"
+		inputSize="50"
+		label="Descrizione" />
+	<fieldProperty
+		name="label_variazione_riga"
+		label="Variazione" />
+		
+    <fieldProperty
+        name="cdr"
+        property="cdr"
+        inputType="SEARCHTOOL"
+        formName="searchtool"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="false"
+        label="Centro di responsabilita" />
+	<fieldProperty
+		name="esercizio_res"
+		property="esercizio_res"
+		printProperty="esercizio"
+		inputSize="4"
+		maxLength="4"
+		nullable="false"
+		optionsProperty="esercizi_res"
+		inputType="SELECT"		
+		readonlyProperty="ROEsercizio_res"
+        enabledOnSearch="true"		
+		label="Esercizio residuo" />
+	<fieldProperty
+		name="totale_righe_variazione"
+		property="totale_righe_variazione"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale" />
+
+	<fieldProperty
+		name="totale_da_ripartire"
+		property="totale_da_ripartire"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale da ripartire" />		
+	<fieldProperty
+		name="pg_variazione_bilancio"
+		property="var_bilancio.pg_variazione"
+		inputType="ROTEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Variazione" />
+	<fieldProperty
+		name="ds_variazione_bilancio"
+		property="var_bilancio.ds_variazione"
+		inputType="ROTEXT"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+        inputSize="100"
+		maxLength="300"
+		label="Descrizione" />		
+	<form name="searchtool">
+    	<formFieldProperty
+    		name="esercizio" />
+    	<formFieldProperty
+    		name="pg_variazione" />	
+	</form>	
+	<form name="variazioniEnte">
+    	<formFieldProperty
+    		name="pg_variazione"
+    		maxLength="10"
+			inputSize="10"
+			inputType="TEXT" />	
+		<formFieldProperty
+			name="ds_variazione"
+			maxLength="300"
+			inputSize="70"
+			inputType="TEXT" />
+	</form>	
+	
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_variazione" />		
+	<formFieldProperty
+		name="centroDiSpesa" />
+	<formFieldProperty
+		name="centroDiResponsabilita" />
+	<formFieldProperty
+		name="dt_apertura" />
+	<formFieldProperty
+		name="ds_delibera" />
+	<formFieldProperty
+		name="ds_variazione" />
+	<formFieldProperty
+		name="dt_chiusura" />
+	<formFieldProperty
+		name="dt_approvazione" />
+	<formFieldProperty
+		name="dt_annullamento" />
+	<formFieldProperty
+		name="ds_aggiuntiva" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="tipologia" />
+	<formFieldProperty
+		name="tipologia_fin"
+		command="doOnChangeTipologiaFin"/>
+	<formFieldProperty
+		name="ds_variazione_riga" />
+	<formFieldProperty
+		name="cdr" />
+	<formFieldProperty
+		name="esercizio_res" />
+	<formFieldProperty
+		name="totale_da_ripartire" />
+	<formFieldProperty
+		name="label_variazione_riga" />
+	<formFieldProperty
+		name="totale_righe_variazione"/>
+	<formFieldProperty
+		name="pg_variazione_bilancio" />
+	<formFieldProperty
+		name="ds_variazione_bilancio" />		
+		
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_variazione" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="dt_apertura" />
+	<findFieldProperty
+		name="ds_delibera" />
+	<findFieldProperty
+		name="ds_variazione" />
+	<findFieldProperty
+		name="dt_chiusura" />
+	<findFieldProperty
+		name="dt_approvazione" />
+	<findFieldProperty
+		name="dt_annullamento" />
+	<findFieldProperty
+		name="ds_aggiuntiva" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="tipologia" />
+	<findFieldProperty
+		name="tipologia_fin" />
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_variazione" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="dt_apertura" />
+	<columnFieldProperty
+		name="ds_delibera" />
+	<columnFieldProperty
+		name="ds_variazione" />
+	<columnFieldProperty
+		name="dt_chiusura" />
+	<columnFieldProperty
+		name="dt_approvazione" />
+	<columnFieldProperty
+		name="dt_annullamento" />
+	<columnFieldProperty
+		name="ds_aggiuntiva" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="tipologia" />
+	<columnFieldProperty
+		name="tipologia_fin" />		
+</bulkInfo>

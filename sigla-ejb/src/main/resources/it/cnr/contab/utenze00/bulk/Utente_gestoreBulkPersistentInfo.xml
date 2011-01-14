@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.Utente_gestoreBulk"
+	homeClassName="it.cnr.contab.utenze00.bulk.Utente_gestoreHome">
+	<defaultColumnMap
+		tableName="UTENTE_GESTORE">
+		<columnMapping
+			columnName="CD_UTENTE"
+			propertyName="utente.cd_utente"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="CD_GESTORE"
+			propertyName="gestore.cd_utente"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="utente"
+		partOfOid="true" />
+	<persistentProperty
+		name="gestore"
+		partOfOid="true" />
+</SQLPersistentInfo>

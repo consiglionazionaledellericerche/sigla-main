@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_tipologia"
+		property="tipologie_istat.pg_tipologia"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		readonlyPropertyOnEdit="ROGiaAssociato"
+		label="Progressivo Tipologia Istat" />
+ 	<fieldProperty
+		name="esercizio_siope"
+		property="codici_siope.esercizio"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio del Codice Siope" />  
+	<fieldProperty
+		name="ti_gestione_siope"
+		property="codici_siope.ti_gestione"
+		keysProperty="ti_gestione_siopeKeys"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		readonlyPropertyOnEdit="ROGiaAssociato"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Gestione Siope" />
+	<fieldProperty
+		name="find_codici_siope"
+		property="codici_siope"
+		inputType="SEARCHTOOL"
+		readonlyPropertyOnEdit="ROGiaAssociato"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="cd_siope"
+		property="codici_siope.cd_siope"
+		label="Codice Siope" 
+		readonlyPropertyOnEdit="ROGiaAssociato"
+		inputType="TEXT"
+		maxLength="4"
+		inputSize="4"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="ds_siope"
+		property="codici_siope.descrizione"
+		inputType="ROTEXT"
+		inputSize="80"
+		label="Descrizione"
+		enabledOnSearch="true" />
+	<formFieldProperty
+		name="pg_tipologia" />
+	<formFieldProperty
+		name="esercizio_siope" /> 
+	<formFieldProperty
+		name="ti_gestione_siope" />
+	<formFieldProperty
+		name="cd_siope" />
+	<formFieldProperty
+		name="ds_siope" />
+	<formFieldProperty
+		name="find_codici_siope" />
+		
+	<findFieldProperty
+		name="pg_tipologia" />
+	<findFieldProperty
+		name="esercizio_siope" /> 
+	<findFieldProperty
+		name="ti_gestione_siope" />
+	<findFieldProperty
+		name="cd_siope" />
+		
+	<columnFieldProperty
+		name="pg_tipologia" />
+	<columnFieldProperty
+		name="esercizio_siope" />  
+	<columnFieldProperty
+		name="ti_gestione_siope" />
+	<columnFieldProperty
+		name="cd_siope" />
+</bulkInfo>

@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio" />
+	<fieldProperty
+		name="pg_repertorio"
+		property="pg_repertorio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Id. Incarico" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds" />
+	<fieldProperty
+		name="ds_cds"
+		property="ds_cds"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Uo" />
+	<fieldProperty
+		name="ds_unita_organizzativa"
+		property="ds_unita_organizzativa"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione" />
+	<fieldProperty
+		name="nominativo"
+		property="nominativo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Nominativo" />
+	<fieldProperty
+		name="oggetto"
+		property="oggetto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1000"
+		label="Oggetto" />
+	<fieldProperty
+		name="importo_lordo"
+		property="importo_lordo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Lordo" />
+	<fieldProperty
+		name="importo_variazione"
+		property="importo_variazione"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Variazione" />
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_inizio_validita"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data inizio validita" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		label="Data fine validita" />
+	<fieldProperty
+		name="dt_fine_validita_variazione"
+		property="dt_fine_validita_variazione"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		label="Data fine validita variazione" />
+	<fieldProperty
+		name="dt_stipula"
+		property="dt_stipula"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Stipula" />
+	<fieldProperty
+		name="ds_provvedimento"
+		property="ds_provvedimento"
+		inputType="TEXT"
+		inputSize="70"
+		maxLength="70"
+		label="Provvedimento" />
+	<fieldProperty
+		name="esercizio_procedura"
+		property="esercizio_procedura"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio" />
+	<fieldProperty
+		name="pg_procedura"
+		property="pg_procedura"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Id. Procedura" />
+		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_repertorio" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="ds_cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="ds_unita_organizzativa" />
+	<formFieldProperty
+		name="nominativo" />
+	<formFieldProperty
+		name="oggetto" />
+	<formFieldProperty
+		name="importo_lordo" />
+	<formFieldProperty
+		name="importo_variazione" />
+	<formFieldProperty
+		name="dt_inizio_validita" />
+	<formFieldProperty
+		name="dt_fine_validita" />
+	<formFieldProperty
+		name="dt_fine_validita_variazione" />
+	<formFieldProperty
+		name="dt_stipula" />
+	<formFieldProperty
+		name="ds_provvedimento" />
+	<formFieldProperty
+		name="esercizio_procedura" />
+	<formFieldProperty
+		name="pg_procedura" />
+		
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_repertorio" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="ds_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="ds_unita_organizzativa" />
+	<findFieldProperty
+		name="nominativo" />
+	<findFieldProperty
+		name="oggetto" />
+	<findFieldProperty
+		name="importo_lordo" />
+	<findFieldProperty
+		name="importo_variazione" />
+	<findFieldProperty
+		name="dt_inizio_validita" />
+	<findFieldProperty
+		name="dt_fine_validita" />
+	<findFieldProperty
+		name="dt_fine_validita_variazione" />
+	<findFieldProperty
+		name="dt_stipula" />
+	<findFieldProperty
+		name="ds_provvedimento" />
+	<findFieldProperty
+		name="esercizio_procedura" />
+	<findFieldProperty
+		name="pg_procedura" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_repertorio" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="ds_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="ds_unita_organizzativa" />
+	<columnFieldProperty
+		name="nominativo" />
+	<columnFieldProperty
+		name="oggetto" />
+	<columnFieldProperty
+		name="importo_lordo" />
+	<columnFieldProperty
+		name="importo_variazione" />
+	<columnFieldProperty
+		name="dt_inizio_validita" />
+	<columnFieldProperty
+		name="dt_fine_validita" />
+	<columnFieldProperty
+		name="dt_fine_validita_variazione" />
+	<columnFieldProperty
+		name="dt_stipula" />
+	<columnFieldProperty
+		name="ds_provvedimento" />
+	<columnFieldProperty
+		name="esercizio_procedura" />
+	<columnFieldProperty
+		name="pg_procedura" />
+
+	<columnSet
+		name="basic" >
+		<columnFieldProperty
+			name="esercizio" />
+		<columnFieldProperty
+			name="pg_repertorio" />
+		<columnFieldProperty
+			name="cd_cds" />
+		<columnFieldProperty
+			name="ds_cds" />
+		<columnFieldProperty
+			name="cd_unita_organizzativa" />
+		<columnFieldProperty
+			name="ds_unita_organizzativa" />
+		<columnFieldProperty
+			name="nominativo" />
+		<columnFieldProperty
+			name="oggetto" />
+		<columnFieldProperty
+			name="importo_lordo" />
+		<columnFieldProperty
+			name="importo_variazione" />
+		<columnFieldProperty
+			name="dt_inizio_validita" />
+		<columnFieldProperty
+			name="dt_fine_validita" />
+		<columnFieldProperty
+			name="dt_fine_validita_variazione" />
+		<columnFieldProperty
+			name="dt_stipula" />
+		<columnFieldProperty
+			name="ds_provvedimento" />
+		<columnFieldProperty
+			name="esercizio_procedura" />
+		<columnFieldProperty
+			name="pg_procedura" />
+	</columnSet>
+</bulkInfo>

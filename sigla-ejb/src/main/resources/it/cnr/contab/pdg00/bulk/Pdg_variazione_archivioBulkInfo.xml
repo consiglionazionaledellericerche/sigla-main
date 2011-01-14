@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Archivio Consultazioni relative ai PDG"
+          longDescription="Archivio Consultazioni relative ai PDG">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio di riferimento" />
+	<fieldProperty
+		name="pg_variazione_pdg"
+		property="pg_variazione_pdg"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo variazione al Piano di Gestione" />
+	<fieldProperty
+		name="progressivo_riga"
+		property="progressivo_riga"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="Progressivo interno del dettaglio, per Variazione di PDG" />
+	<fieldProperty
+		name="tipo_archivio"
+		property="tipo_archivio"
+		inputType="SELECT"
+		keysProperty="tipo_archivioKeys"
+		inputSize="50"
+		maxLength="50"
+		label="Tipologia del file archiviato" />
+	<fieldProperty
+		name="data_creazione"
+		property="data_creazione"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Data di Archiviazione" />
+	<fieldProperty
+		name="utcr"
+		property="utcr"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Utente di Archiviazione" />
+	<fieldProperty
+		name="attivaFile_blob"
+		property="tipo_archivio"
+		inputType="BUTTON"
+		img="img/import24.gif"
+		label="Attiva File"
+		enabledOnView="true"
+		href="javascript:doScaricaFile()" />		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_variazione_pdg" />
+	<formFieldProperty
+		name="progressivo_riga" />
+	<formFieldProperty
+		name="tipo_archivio" />
+	<formFieldProperty
+		name="data_creazione" />
+	<formFieldProperty
+		name="utcr" />
+    <formFieldProperty
+		name="attivaFile_blob"/>		
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_variazione_pdg" />
+	<findFieldProperty
+		name="progressivo_riga" />
+	<findFieldProperty
+		name="tipo_archivio" />
+	<findFieldProperty
+		name="data_creazione" />
+	<findFieldProperty
+		name="utcr" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_variazione_pdg" />
+	<columnFieldProperty
+		name="progressivo_riga" />
+	<columnFieldProperty
+		name="tipo_archivio" />
+	<columnFieldProperty
+		name="data_creazione" />
+	<columnFieldProperty
+		name="utcr" />
+	<columnSet
+	        name="archivioConsultazioni">
+        	<columnFieldProperty
+        		name="progressivo_riga" 
+        		label="Progressivo"/>
+        	<columnFieldProperty
+        		name="tipo_archivio" />
+        	<columnFieldProperty
+        		name="data_creazione" />
+        	<columnFieldProperty
+        		name="utcr" />
+	</columnSet>        			
+</bulkInfo>

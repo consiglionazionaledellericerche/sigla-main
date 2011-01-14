@@ -1,0 +1,831 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		enabledOnFreeSearch="false"
+		readonlyProperty="chiuso"
+		label="Cds" />
+	<fieldProperty
+		name="cd_cdsForPrint"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Cds" />
+	<fieldProperty
+		name="im_ammontare_iniziale"
+		property="im_ammontare_iniziale"
+		inputType="ROTEXT"
+		readonlyProperty="chiuso"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Ammontare iniziale" />
+	<fieldProperty
+		name="im_totale_spese"
+		property="im_totale_spese"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		nullable="false"
+		label="Tot. spese da reintegr." />
+	<fieldProperty
+		name="im_totale_netto_spese"
+		property="im_totale_netto_spese"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		nullable="false"
+		label="Tot. netto spese da reintegr." />
+	<fieldProperty
+		name="im_residuo_fondo"
+		property="im_residuo_fondo"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		nullable="false"
+		label="Residuo" />
+	<fieldProperty
+		name="cd_codice_fondo"
+		property="cd_codice_fondo"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		readonlyPropertyOnInsert="chiuso"
+		readonlyPropertyOnEdit="chiuso"
+		label="Fondo" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="unita_organizzativa.cd_unita_organizzativa"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		enabledOnFreeSearch="false"
+		label="Unità Organizzativa" />
+	<fieldProperty
+		name="cd_uoForPrint"
+		property="unita_organizzativa.cd_unita_organizzativa"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Unità Organizzativa" />
+	<fieldProperty
+		name="ds_unita_organizzativa"
+		property="unita_organizzativa.ds_unita_organizzativa"
+		maxLength="300"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Unità Organizzativa" />
+	<fieldProperty
+		name="im_ammontare_fondo"
+		property="im_ammontare_fondo"
+		inputType="ROTEXT"
+		readonlyProperty="chiuso"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Ammontare globale" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		readonlyProperty="chiuso"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Esercizio" />
+	<fieldProperty
+		name="im_max_gg_spesa_doc"
+		property="im_max_gg_spesa_doc"
+		inputType="TEXT"
+		readonlyProperty="chiuso"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		nullable="false"
+		label="Massimale singola spesa" />
+	<fieldProperty
+		name="im_max_mm_spesa_doc"
+		property="im_max_mm_spesa_doc"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		readonlyProperty="chiuso"
+		inputType="TEXT"
+		nullable="false"
+		label="Massimale mensile docum." />
+	<fieldProperty
+		name="im_max_mm_spesa_non_doc"
+		property="im_max_mm_spesa_non_doc"
+		inputType="TEXT"
+		readonlyProperty="chiuso"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		nullable="false"
+		label="Massimale mensile non docum." />
+	<fieldProperty
+		name="im_totale_reintegri"
+		property="im_totale_reintegri"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		nullable="false"
+		label="Totale reintegri" />
+	<fieldProperty
+		name="ds_fondo"
+		property="ds_fondo"
+		maxLength="300"
+		inputSize="50"
+		inputType="TEXT"
+		nullable="true"
+		readonlyProperty="chiuso"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_aperto"
+		property="fl_aperto"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		nullable="false"
+		label="Fondo aperto" />
+	<fieldProperty
+		name="fl_rev_da_emettere"
+		property="fl_rev_da_emettere"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		nullable="false"
+		label="Emettere reversale" />
+	<fieldProperty
+		name="cd_sospeso_di_chiusura"
+		property="sospeso_di_chiusura.cd_sospeso_padre"
+		maxLength="24"
+		inputSize="24"
+		inputType="ROTEXT"
+		label="Sospeso di chiusura" />
+	<fieldProperty
+		name="im_max_gg_spesa_non_doc"
+		property="im_max_gg_spesa_non_doc"
+		inputType="TEXT"
+		readonlyProperty="chiuso"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		nullable="false"
+		label="Massimale singola spesa" />
+	<fieldProperty
+		name="im_limite_min_reintegro"
+		property="im_limite_min_reintegro"
+		inputType="TEXT"
+		readonlyProperty="chiuso"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		nullable="false"
+		label="Limite minimo reintegro" />
+	<fieldProperty
+		name="unita_organizzativa"
+		property="unita_organizzativa"
+		inputType="ROTEXT"
+		formName="searchtool"
+		label="Unità Organizzativa" />
+
+
+	<!-- Economo -->
+	<fieldProperty
+		name="economo"
+		property="economo"
+		inputType="SEARCHTOOL"
+		readonlyPropertyOnInsert="ROEconomoSearchTool"
+		readonlyPropertyOnEdit="ROEconomoSearchTool"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		completeOnSave="false"
+		label="Economo"/>
+	<fieldProperty
+		name="crea_economo"
+		property="economo"
+		inputType="CRUDTOOL"
+		readonlyProperty="ROEconomoCrudTool"
+		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP" />
+	<fieldProperty
+		name="cd_economo"
+		property="economo.cd_terzo"
+		maxLength="30"
+		inputSize="10"
+		inputType="TEXT"
+		label="Economo"
+		readonlyProperty="ROeconomo"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_economoForFind"
+		property="economo.cd_terzo"
+		maxLength="30"
+		inputSize="10"
+		inputType="TEXT"
+		label="Economo"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_precedente_economo"
+		property="economo.cd_precedente"
+		maxLength="20"
+		inputSize="6"
+		inputType="TEXT"
+		label="Codice precedente"
+		readonlyProperty="ROeconomo"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="partita_iva_economo"
+		property="economo.anagrafico.partita_iva"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Partita IVA"
+		readonlyProperty="ROeconomo"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="codice_fiscale_economo"
+		property="economo.anagrafico.codice_fiscale"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Codice fiscale"
+		readonlyProperty="ROeconomo"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_economo"
+		property="economo.anagrafico.descrizioneAnagrafica"
+		inputSize="50"
+		inputType="ROTEXT"
+		label=""
+		nullable="false"
+		readonlyProperty="ROeconomo"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+
+	<!-- Mandato di origine -->
+	<fieldProperty
+		name="mandato"
+		property="mandato"
+		inputSize="10"
+		inputType="SEARCHTOOL"
+		readonlyPropertyOnInsert="ROMandatoSearchTool"
+		readonlyPropertyOnEdit="ROMandatoSearchTool"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		completeOnSave="false"
+		label="Mandato"/>
+	<fieldProperty
+		name="pg_mandato"
+		property="mandato.pg_mandato"
+		inputSize="10"
+		maxLength="30"
+		inputType="TEXT"
+		label="Mandato"
+		readonlyPropertyOnInsert="ROmandato"
+		readonlyPropertyOnEdit="ROmandato"
+		readonlyPropertyOnSearch="ROmandatoForSearch"
+		readonlyPropertyOnFreeSearch="ROmandatoForSearch"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_mandatoForFind"
+		property="mandato.pg_mandato"
+		inputSize="10"
+		maxLength="30"
+		inputType="TEXT"
+		label="Mandato"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="ds_mandato"
+		property="mandato.ds_mandato"
+		inputSize="50"
+		inputType="ROTEXT"
+		label=""
+		nullable="false"
+		readonlyProperty="ROmandato"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+
+	<!-- Reversale -->
+	<fieldProperty
+		name="pg_reversale"
+		property="reversale.pg_reversale"
+		maxLength="30"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Reversale"
+		readonlyProperty="ROreversale"
+		nullable="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio_reversale"
+		property="reversale.esercizio"
+		maxLength="4"
+		inputSize="4"
+		inputType="ROTEXT"
+		label="Esercizio rev."
+		readonlyProperty="ROreversale"
+		nullable="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="ds_reversale"
+		property="reversale.ds_reversale"
+		inputSize="50"
+		inputType="ROTEXT"
+		label=""
+		nullable="false"
+		readonlyProperty="ROreversale"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+
+	<!-- Modalita Pagamento -->
+	<fieldProperty
+		name="modalita_pagamento"
+		property="modalita_pagamento"
+		printProperty="cd_ds_modalita_pagamento"
+		optionsProperty="modalita"
+		readonlyProperty="chiuso"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		nullable="false"
+		label="Mod. pagamento" />
+
+	<!-- Banche -->
+	<fieldProperty
+		name="listabanche"
+		property="banca"
+		inputType="BUTTON"
+		img="img/find16.gif"
+		readonlyProperty="abledToInsertBank"
+		label="Conto/i..."
+		href="javascript:submitForm('doSearch(main.listabanche)')" />
+	<fieldProperty
+		name="contoA"
+		property="banca"
+		inputType="FORM"
+		formName="A"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoP"
+		property="banca"
+		inputType="FORM"
+		formName="P"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoB"
+		property="banca"
+		inputType="FORM"
+		formName="BdocAmm"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoQ"
+		property="banca"
+		inputType="FORM"
+		formName="Q"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoN"
+		property="banca"
+		inputType="FORM"
+		formName="N"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+
+
+	<!-- Scadenza obbligazione da utilizzare per la ricerca spese non doc -->
+	<fieldProperty
+		name="scadenza_ricerca"
+		property="scadenza_ricerca"
+		inputSize="10"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		enabledOnInsert="false"
+		completeOnSave="false"
+		label="Scadenza impegno"/>
+	<fieldProperty
+		name="cd_cds_scadenza_ricerca"
+		property="scadenza_ricerca.cd_cds"
+		inputSize="10"
+		maxLength="30"
+		inputType="ROTEXT"
+		label="Cds"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio_ori_obbligazione_scadenza_ricerca"
+		property="scadenza_ricerca.esercizio_originale"
+		inputSize="4"
+		maxLength="4"
+		inputType="TEXT"
+		readonlyProperty="ROscadenza_ricerca"
+		label="Es. impegno"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_obbligazione_scadenza_ricerca"
+		property="scadenza_ricerca.pg_obbligazione"
+		inputSize="10"
+		maxLength="30"
+		inputType="TEXT"
+		readonlyProperty="ROscadenza_ricerca"
+		label="N. impegno"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_obbligazione_scadenzario_scadenza_ricerca"
+		property="scadenza_ricerca.pg_obbligazione_scadenzario"
+		inputSize="10"
+		maxLength="30"
+		readonlyProperty="ROscadenza_ricerca"
+		inputType="TEXT"
+		label="N. scadenza"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_scadenza_scadenza_ricerca"
+		property="scadenza_ricerca.dt_scadenza"
+		inputSize="10"
+		maxLength="30"
+		inputType="ROTEXT"
+		formatName="date_short"
+		label="Data"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_scadenza_scadenza_ricerca"
+		property="scadenza_ricerca.ds_scadenza"
+		inputSize="10"
+		maxLength="30"
+		inputType="ROTEXT"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_scadenza_scadenza_ricerca"
+		property="scadenza_ricerca.im_scadenza"
+		inputSize="10"
+		maxLength="30"
+		inputType="ROTEXT"
+		label="Importo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="creditore_scadenza"
+		property="scadenza_ricerca.obbligazione.creditore"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROcreditore_scadenzaSearchTool"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		completeOnSave="false"
+		label="Creditore"/>
+	<fieldProperty
+		name="cd_creditore_scadenza"
+		property="creditore_scadenza.cd_terzo"
+		maxLength="30"
+		inputSize="10"
+		inputType="TEXT"
+		label="Creditore"
+		readonlyProperty="ROcreditore_scadenza"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_precedente_creditore"
+		property="creditore_scadenza.cd_precedente"
+		maxLength="20"
+		inputSize="6"
+		inputType="TEXT"
+		label="Codice precedente"
+		readonlyProperty="ROcreditore_scadenza"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="partita_iva_creditore"
+		property="creditore_scadenza.anagrafico.partita_iva"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Partita IVA"
+		readonlyProperty="ROcreditore_scadenza"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="codice_fiscale_creditore"
+		property="creditore_scadenza.anagrafico.codice_fiscale"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Codice fiscale"
+		readonlyProperty="ROcreditore_scadenza"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_creditore_scadenza"
+		property="creditore_scadenza.anagrafico.descrizioneAnagrafica"
+		inputSize="50"
+		inputType="ROTEXT"
+		label=""
+		nullable="false"
+		readonlyProperty="ROcreditore_scadenza"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="importo_totale_scadenze_non_doc"
+		property="importo_totale_scadenze_non_doc"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Tot spese" />
+	<fieldProperty
+		name="spesaDocumentataRadioGroup"
+		property="spesaDocumentata"
+		keysProperty="spesaDocumentataKeys"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"
+		readonlyProperty="ROscadenza_ricerca_filtri"
+		enabledOnInsert="false"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		label="Spesa documentata"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="spesaReintegrataRadioGroup"
+		property="spesaReintegrata"
+		keysProperty="spesaReintegrataKeys"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"	
+		readonlyProperty="ROscadenza_ricerca_filtri"
+		enabledOnInsert="false"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		label="Spesa reintegrata"
+		caseSensitiveSearch="false" />
+
+	<formFieldProperty
+		name="spesaDocumentataRadioGroup" />
+	<formFieldProperty
+		name="spesaReintegrataRadioGroup" />
+	
+	<formFieldProperty
+		name="ds_unita_organizzativa" />
+	<formFieldProperty
+		name="unita_organizzativa" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_cdsForPrint" />
+	<formFieldProperty
+		name="im_ammontare_iniziale" />
+	<formFieldProperty
+		name="im_totale_spese" />
+	<formFieldProperty
+		name="im_totale_netto_spese" />
+	<formFieldProperty
+		name="im_residuo_fondo" />
+	<formFieldProperty
+		name="cd_codice_fondo" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_uoForPrint" />
+	<formFieldProperty
+		name="im_ammontare_fondo" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="im_max_gg_spesa_doc" />
+	<formFieldProperty
+		name="im_max_mm_spesa_doc" />
+	<formFieldProperty
+		name="im_max_mm_spesa_non_doc" />
+	<formFieldProperty
+		name="im_totale_reintegri" />
+	<formFieldProperty
+		name="ds_fondo" />
+	<formFieldProperty
+		name="fl_aperto" />
+	<formFieldProperty
+		name="cd_sospeso_di_chiusura" />
+	<formFieldProperty
+		name="pg_reversale" />
+	<formFieldProperty
+		name="esercizio_reversale" />
+	<formFieldProperty
+		name="im_max_gg_spesa_non_doc" />
+	<formFieldProperty
+		name="im_limite_min_reintegro" />
+	
+	<!-- Economo -->
+	<formFieldProperty
+		name="economo" />
+	<formFieldProperty
+		name="crea_economo" />
+	<formFieldProperty
+		name="cd_economo" />
+	<formFieldProperty
+		name="ds_economo" />
+	<formFieldProperty
+		name="codice_fiscale_economo" />
+	<formFieldProperty
+		name="partita_iva_economo" />
+	<formFieldProperty
+		name="cd_precedente_economo" />
+		
+	<!-- Mandato -->
+	<formFieldProperty
+		name="mandato" />
+	<formFieldProperty
+		name="pg_mandato" />
+	<formFieldProperty
+		name="ds_mandato" />
+
+	<!-- Reversale -->
+	<formFieldProperty
+		name="pg_reversale" />
+	<formFieldProperty
+		name="esercizio_reversale" />
+	<formFieldProperty
+		name="ds_reversale" />
+
+	<!-- Modalita Pagamento -->
+	<formFieldProperty
+		name="modalita_pagamento" />
+
+	<!-- Banche -->
+	<formFieldProperty
+		name="listabanche"
+		label="Conto/i..." />
+	<formFieldProperty
+		name="contoA" />
+	<formFieldProperty
+		name="contoP" />
+	<formFieldProperty
+		name="contoB" />
+	<formFieldProperty
+		name="contoQ" />
+	<formFieldProperty
+		name="contoN"/>
+
+	<!-- Spese non documentate info -->
+	<formFieldProperty
+		name="scadenza_ricerca" />
+	<formFieldProperty
+		name="cd_cds_scadenza_ricerca" />
+	<formFieldProperty
+		name="esercizio_ori_obbligazione_scadenza_ricerca" />
+	<formFieldProperty
+		name="pg_obbligazione_scadenza_ricerca" />
+	<formFieldProperty
+		name="pg_obbligazione_scadenzario_scadenza_ricerca" />
+	<formFieldProperty
+		name="ds_scadenza_scadenza_ricerca" />
+	<formFieldProperty
+		name="dt_scadenza_scadenza_ricerca" />
+	<formFieldProperty
+		name="im_scadenza_scadenza_ricerca" />
+	<formFieldProperty
+		name="creditore_scadenza" />
+	<formFieldProperty
+		name="cd_creditore_scadenza" />
+	<formFieldProperty
+		name="ds_creditore_scadenza" />
+	<formFieldProperty
+		name="cd_precedente_creditore" />
+	<formFieldProperty
+		name="partita_iva_creditore" />
+	<formFieldProperty
+		name="codice_fiscale_creditore" />
+	<formFieldProperty
+		name="importo_totale_scadenze_non_doc" />
+		
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="im_ammontare_iniziale" />
+	<columnFieldProperty
+		name="im_totale_spese" />
+	<columnFieldProperty
+		name="im_totale_netto_spese" />
+	<columnFieldProperty
+		name="im_residuo_fondo" />
+	<columnFieldProperty
+		name="cd_codice_fondo" />
+	<columnFieldProperty
+		name="cd_economo" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="im_ammontare_fondo" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="im_max_gg_spesa_doc" />
+	<columnFieldProperty
+		name="im_max_mm_spesa_doc" />
+	<columnFieldProperty
+		name="pg_mandato" />
+	<columnFieldProperty
+		name="im_max_mm_spesa_non_doc" />
+	<columnFieldProperty
+		name="im_totale_reintegri" />
+	<columnFieldProperty
+		name="ds_fondo" />
+	<columnFieldProperty
+		name="fl_aperto" />
+	<columnFieldProperty
+		name="im_max_gg_spesa_non_doc" />
+	<columnFieldProperty
+		name="im_limite_min_reintegro" />
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_codice_fondo" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="im_max_gg_spesa_doc" />
+	<findFieldProperty
+		name="im_max_mm_spesa_doc" />
+	<findFieldProperty
+		name="im_max_mm_spesa_non_doc" />
+	<findFieldProperty
+		name="ds_fondo" />
+	<findFieldProperty
+		name="fl_aperto" />
+	<findFieldProperty
+		name="im_max_gg_spesa_non_doc" />
+	<findFieldProperty
+		name="im_limite_min_reintegro" />
+	<findFieldProperty
+		name="cd_economoForFind" />
+	<findFieldProperty
+		name="codice_fiscale_economo" />
+	<findFieldProperty
+		name="partita_iva_economo" />
+	<findFieldProperty
+		name="cd_precedente_economo" />
+	<findFieldProperty
+		name="pg_mandatoForFind" />
+
+	<freeSearchSet
+		name="fondoForPrint">
+		<findFieldProperty
+			name="cd_codice_fondo" />
+		<findFieldProperty
+			name="esercizio" />
+		<findFieldProperty
+			name="im_max_gg_spesa_doc" />
+		<findFieldProperty
+			name="im_max_mm_spesa_doc" />
+		<findFieldProperty
+			name="im_max_mm_spesa_non_doc" />
+		<findFieldProperty
+			name="ds_fondo" />
+		<findFieldProperty
+			name="fl_aperto" />
+		<findFieldProperty
+			name="im_max_gg_spesa_non_doc" />
+		<findFieldProperty
+			name="im_limite_min_reintegro" />
+		<findFieldProperty
+			name="cd_economoForFind" />
+		<findFieldProperty
+			name="pg_mandatoForFind" />
+	</freeSearchSet>
+
+</bulkInfo>

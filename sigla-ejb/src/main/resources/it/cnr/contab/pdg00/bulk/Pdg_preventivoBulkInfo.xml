@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="stato"
+		property="stato"
+		label="Stato"
+		keysProperty="statiKeys"
+		inputType="SELECT"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio" />
+
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="centro_responsabilita.cd_centro_responsabilita" />
+		inputType="TEXT"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="Codice CDR" />
+	<fieldProperty
+		name="ds_cdr"
+		property="centro_responsabilita.ds_cdr" />
+		inputType="TEXT"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="Descrizione CDR" />
+	<fieldProperty
+		name="centro_responsabilita"
+		property="centro_responsabilita"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Centro di Responsabilità" />
+			
+	<fieldProperty
+		name="annotazioni"
+		property="annotazioni"
+		style="height: 10em; width: 35em"
+		inputType="TEXTAREA"
+		label="Annotazioni" />
+	<fieldProperty
+		name="fl_ribaltato_su_area"
+		property="fl_ribaltato_su_area"
+		inputType="CHECKBOX"
+		label="rib. su area"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"/>
+	<fieldProperty
+		name="linea_attivita_eliminazione"
+		property="linea_attivita_eliminazione"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="GAE da Eliminare" />
+
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="annotazioni" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="centro_responsabilita" />
+	<formFieldProperty
+		name="fl_ribaltato_su_area" />
+	<formFieldProperty
+		name="linea_attivita_eliminazione" />
+
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="fl_ribaltato_su_area" />
+
+</bulkInfo>

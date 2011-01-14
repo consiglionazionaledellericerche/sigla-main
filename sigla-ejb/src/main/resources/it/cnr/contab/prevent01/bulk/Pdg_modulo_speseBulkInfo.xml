@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="ROTEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CdR" />
+	<fieldProperty
+		name="ds_centro_responsabilita"
+		property="pdg_modulo_costi.pdg_modulo.cdr.ds_cdr"
+		inputType="ROTEXT"
+		inputSize="80"
+		maxLength="300"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="CdR" />
+	<fieldProperty
+		name="pg_progetto"
+		property="pg_progetto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo identificativo del modulo di attività" />
+	<fieldProperty
+        name="classificazione"
+        property="classificazione"
+        inputType="SEARCHTOOL"
+        formName="searchtool"
+        columnSet="searchtool"
+        freeSearchSet="searchtool"
+        enabledOnInsert="true"
+        enabledOnSearch="true"
+        readonlyPropertyOnEdit="classificazioneRO"
+        label="Classificazione" />		
+	<fieldProperty
+		name="id_classificazione"
+		property="classificazione.id_classificazione"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		label="Identificativo univoco della classificazione ufficiale" />
+	<fieldProperty
+		name="cd_classificazione"
+		property="classificazione.cd_classificazione"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		label="Classificazione" />
+		
+	<fieldProperty
+        name="area"
+        property="area"
+        inputType="SEARCHTOOL"
+        formName="searchtool"
+        enabledOnInsert="true"
+        enabledOnSearch="true"
+        nullable="false"
+        readonlyPropertyOnEdit="areaRO"
+        label="Area" />		
+	<fieldProperty
+		name="cd_cds_area"
+		property="area.cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Area" />
+		
+	<fieldProperty
+		name="im_spese_gest_decentrata_int"
+		property="im_spese_gest_decentrata_int"
+		inputType="TEXT"
+        maxLength="15"
+		inputSize="15"	
+		nullable="false"
+		readonlyProperty="RODecentrata"							
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Fonti interne" />
+	<fieldProperty
+		name="im_spese_gest_decentrata_est"
+		property="im_spese_gest_decentrata_est"
+		inputType="TEXT"
+        maxLength="15"
+		inputSize="15"	
+		nullable="false"
+		readonlyProperty="RODecentrata"							
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Fonti esterne" />
+	<fieldProperty
+		name="tot_gest_decentrata"
+		property="tot_gest_decentrata"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale gestione decentrata (A)" />		
+	<fieldProperty
+		name="im_spese_gest_accentrata_int"
+		property="im_spese_gest_accentrata_int"
+		inputType="TEXT"
+		maxLength="15"
+		inputSize="15"
+		nullable="false"
+		readonlyProperty="ROAccentrataCdsArea"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Fonti interne" />
+	<fieldProperty
+		name="im_spese_gest_accentrata_est"
+		property="im_spese_gest_accentrata_est"
+		inputType="TEXT"
+		maxLength="15"
+		inputSize="15"
+		nullable="false"
+		readonlyProperty="ROAccentrataRiparto"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Fonti esterne" />
+	<fieldProperty
+		name="tot_gest_accentrata"
+		property="tot_gest_accentrata"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale gestione accentrata (B)" />
+	<fieldProperty
+		name="tot_competenza_anno_in_corso"
+		property="tot_competenza_anno_in_corso"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale competenza anno corrente (A+B)" />			
+	<fieldProperty
+		name="im_spese_a2"
+		property="im_spese_a2"
+		inputType="TEXT"
+		maxLength="15"
+		inputSize="15"
+		nullable="false"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale competenza anno successivo" />
+	<fieldProperty
+		name="im_spese_a3"
+		property="im_spese_a3"
+		inputType="TEXT"
+		maxLength="15"
+		inputSize="15"
+		nullable="false"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale competenza anno corrente +2" />
+	<fieldProperty
+		name="prev_ass_imp_int"
+		property="prev_ass_imp_int"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Fonti Interne" />			
+	<fieldProperty
+		name="prev_ass_imp_est"
+		property="prev_ass_imp_est"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Fonti Esterne" />			
+	<fieldProperty
+		name="tot_prev_ass_imp"
+		property="tot_prev_ass_imp"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale" />			
+
+
+	<fieldProperty
+		name="ROim_spese_gest_decentrata_int"
+		property="im_spese_gest_decentrata_int"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Fonti interne" />
+	<fieldProperty
+		name="ROim_spese_gest_decentrata_est"
+		property="im_spese_gest_decentrata_est"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Fonti esterne" />
+	<fieldProperty
+		name="ROim_spese_gest_accentrata_int"
+		property="im_spese_gest_accentrata_int"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Fonti interne" />
+	<fieldProperty
+		name="ROim_spese_gest_accentrata_est"
+		property="im_spese_gest_accentrata_est"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Fonti esterne" />
+	<fieldProperty
+		name="totale_spese_accentrate_interne_gest"
+		property="totale_spese_accentrate_interne_gest"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Spese Accentrate Interne" />
+	<fieldProperty
+		name="totale_spese_accentrate_esterne_gest"
+		property="totale_spese_accentrate_esterne_gest"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Spese Accentrate Esterne" />
+	<fieldProperty
+		name="totale_spese_decentrate_interne_gest"
+		property="totale_spese_decentrate_interne_gest"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Spese Decentrate Interne" />
+	<fieldProperty
+		name="totale_spese_decentrate_esterne_gest"
+		property="totale_spese_decentrate_esterne_gest"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Spese Decentrate Esterne" />
+	<fieldProperty
+		name="importo_da_ripartire_acc_int_gest"
+		property="importo_da_ripartire_acc_int_gest"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Spese Accentrate Interne da Ripartire" />
+	<fieldProperty
+		name="importo_da_ripartire_acc_est_gest"
+		property="importo_da_ripartire_acc_est_gest"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Spese Accentrate Esterne da Ripartire" />
+	<fieldProperty
+		name="importo_da_ripartire_dec_int_gest"
+		property="importo_da_ripartire_dec_int_gest"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Spese Decentrate Interne da Ripartire" />
+	<fieldProperty
+		name="importo_da_ripartire_dec_est_gest"
+		property="importo_da_ripartire_dec_est_gest"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Spese Decentrate Esterne da Ripartire" />
+
+	<fieldProperty
+		name="dipartimento"
+		property="pdg_modulo_costi.pdg_modulo.progetto.progettopadre.progettopadre.cd_dipartimento"
+		descProperty="pdg_modulo_costi.pdg_modulo.progetto.progettopadre.progettopadre.dipartimento.ds_dipartimento"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="5"
+		maxLength="10"
+		label="Dipartimento" />		
+	<fieldProperty
+		name="progetto"
+		property="pdg_modulo_costi.pdg_modulo.progetto.progettopadre.progettopadre.cd_progetto"
+		descProperty="pdg_modulo_costi.pdg_modulo.progetto.progettopadre.progettopadre.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="10"
+		maxLength="10"
+		label="Progetto" />
+	<fieldProperty
+		name="commessa"
+		property="pdg_modulo_costi.pdg_modulo.progetto.progettopadre.cd_progetto"
+		descProperty="pdg_modulo_costi.pdg_modulo.progetto.progettopadre.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="15"
+		maxLength="10"
+		label="Commessa" />
+	<fieldProperty
+		name="modulo"
+		property="pdg_modulo_costi.pdg_modulo.progetto.cd_progetto"
+		descProperty="pdg_modulo_costi.pdg_modulo.progetto.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="20"
+		maxLength="10"
+		label="Modulo di Commessa" />
+	<fieldProperty
+		name="desctool_classificazione"
+		property="classificazione.cd_classificazione"
+		descProperty="classificazione.ds_classificazione"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="25"
+		maxLength="30"
+		label="Classificazione Ufficiale" />	
+	<fieldProperty
+		name="desctool_area"
+		property="area.cd_unita_organizzativa"
+		descProperty="area.ds_unita_organizzativa"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Area" />	
+
+	<fieldProperty
+		name="label_gestione_decentrata"
+		label="Gestione Decentrata" />
+	<fieldProperty
+		name="label_gestione_accentrata"
+		label="Gestione Accentrata" />
+	<fieldProperty
+		name="label_previsione_assestata_impegno"
+		label="Previsione Assestata di Impegno anno precedente" />
+	<fieldProperty
+		name="label_previsione"
+		label="Previsione" />
+	<fieldProperty
+		name="label_gestione"
+		label="Gestione" />
+	<fieldProperty
+		name="label_importo_da_ripartire"
+		label="Importo da Ripartire" />
+	<fieldProperty
+		name="label_fonti_esterne"
+		labelStyle="color:blue"
+		label="Fonti Esterne" />
+	<fieldProperty
+		name="label_fonti_interne"
+		labelStyle="color:blue"
+		label="Fonti Interne" />
+	<fieldProperty
+		name="label_totali_generali"
+		labelStyle="color:blue"
+		label="Totali Generali" />
+	<fieldProperty
+		name="label_spese_decentrate"
+		labelStyle="color:blue"
+		label="Spese Decentrate" />
+	<fieldProperty
+		name="label_spese_accentrate"
+		labelStyle="color:blue"
+		label="Spese Accentrate" />
+	<fieldProperty
+		name="label_totale_spese"
+		labelStyle="color:blue"
+		label="Totale Spese" />
+		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="ds_centro_responsabilita" />
+	<formFieldProperty
+		name="pg_progetto" />
+	<formFieldProperty
+        name="classificazione"/>		
+	<formFieldProperty
+		name="id_classificazione" />
+	<formFieldProperty
+		name="cd_cds_area" />
+	<formFieldProperty
+		name="area" />		
+	<formFieldProperty
+		name="im_spese_gest_decentrata_int"
+		command="doOnIm_spese_gest_decentrata_intChange" />
+	<formFieldProperty
+		name="im_spese_gest_decentrata_est"
+		command="doOnIm_spese_gest_decentrata_estChange" />
+	<formFieldProperty
+		name="tot_gest_decentrata"/>				
+	<formFieldProperty
+		name="im_spese_gest_accentrata_int"
+		command="doOnIm_spese_gest_accentrata_intChange" />
+	<formFieldProperty
+		name="im_spese_gest_accentrata_est"
+		command="doOnIm_spese_gest_accentrata_estChange" />
+	<formFieldProperty
+		name="tot_gest_accentrata"/>
+	<formFieldProperty
+		name="tot_competenza_anno_in_corso"/>		
+	<formFieldProperty
+		name="im_spese_a2"
+		command="doOnIm_spese_a2Change" />
+	<formFieldProperty
+		name="im_spese_a3"
+		command="doOnIm_spese_a3Change" />
+	<formFieldProperty
+		name="prev_ass_imp_int"/>			
+	<formFieldProperty
+		name="prev_ass_imp_est"/>			
+	<formFieldProperty
+		name="tot_prev_ass_imp"/>			
+
+	<formFieldProperty
+		name="dipartimento" />	
+	<formFieldProperty
+		name="progetto" />	
+	<formFieldProperty
+		name="commessa" />	
+	<formFieldProperty
+		name="modulo" />	
+	<formFieldProperty
+		name="desctool_classificazione" />	
+	<formFieldProperty
+		name="desctool_area" />	
+	<formFieldProperty
+		name="label_previsione_assestata_impegno"/>		
+	<formFieldProperty
+		name="label_gestione_decentrata"/>
+	<formFieldProperty
+		name="label_gestione_accentrata"/>
+
+	<formFieldProperty
+		name="label_previsione" />
+	<formFieldProperty
+		name="label_gestione" />
+	<formFieldProperty
+		name="label_importo_da_ripartire" />
+	<formFieldProperty
+		name="label_fonti_esterne" />
+	<formFieldProperty
+		name="label_fonti_interne" />
+	<formFieldProperty
+		name="label_totali_generali" />
+	<formFieldProperty
+		name="label_spese_decentrate" />
+	<formFieldProperty
+		name="label_spese_accentrate" />
+	<formFieldProperty
+		name="label_totale_spese" />
+
+	<formFieldProperty
+		name="importo_da_ripartire_acc_int_gest" />
+	<formFieldProperty
+		name="importo_da_ripartire_acc_est_gest" />
+	<formFieldProperty
+		name="importo_da_ripartire_dec_int_gest" />
+	<formFieldProperty
+		name="importo_da_ripartire_dec_est_gest"/>
+	<formFieldProperty
+		name="ROim_spese_gest_decentrata_int" />
+	<formFieldProperty
+		name="ROim_spese_gest_decentrata_est" />
+	<formFieldProperty
+		name="ROim_spese_gest_accentrata_int" />
+	<formFieldProperty
+		name="ROim_spese_gest_accentrata_est" />
+	<formFieldProperty
+		name="totale_spese_accentrate_interne_gest" />
+	<formFieldProperty
+		name="totale_spese_accentrate_esterne_gest" />
+	<formFieldProperty
+		name="totale_spese_decentrate_interne_gest" />
+	<formFieldProperty
+		name="totale_spese_decentrate_esterne_gest" />
+		
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="pg_progetto" />
+	<findFieldProperty
+		name="id_classificazione" />
+	<findFieldProperty
+		name="cd_cds_area" />
+	<findFieldProperty
+		name="im_spese_gest_decentrata_int" />
+	<findFieldProperty
+		name="im_spese_gest_decentrata_est" />
+	<findFieldProperty
+		name="im_spese_gest_accentrata_int" />
+	<findFieldProperty
+		name="im_spese_gest_accentrata_est" />
+	<findFieldProperty
+		name="im_spese_a2" />
+	<findFieldProperty
+		name="im_spese_a3" />
+		
+	<columnFieldProperty
+		name="cd_classificazione"
+		descProperty="classificazione.ds_classificazione"
+		inputType="DESCTOOL"/>		
+	<columnFieldProperty
+		name="prev_ass_imp_int"
+		label="Fonti Int."
+		style=""
+		headerLabel="Prev Ass. impegni anno precedente"/>
+	<columnFieldProperty
+		name="prev_ass_imp_est"
+		label="Fonti Est."
+		style=""
+		headerLabel="Prev Ass. impegni anno precedente"/>
+	<columnFieldProperty
+		name="im_spese_gest_decentrata_int"
+		headerLabel="GESTIONE DECENTRATA"/>
+	<columnFieldProperty
+		name="im_spese_gest_decentrata_est"
+		headerLabel="GESTIONE DECENTRATA" />
+	<columnFieldProperty
+		name="tot_gest_decentrata"
+		label="Totale A"
+		style=""
+		headerLabel="GESTIONE DECENTRATA"/>					
+	<columnFieldProperty
+		name="im_spese_gest_accentrata_int"
+		headerLabel="GESTIONE ACCENTRATA" />
+	<columnFieldProperty
+		name="im_spese_gest_accentrata_est"
+		headerLabel="GESTIONE ACCENTRATA" />
+	<columnFieldProperty
+		name="tot_gest_accentrata"
+		label="Totale B"
+		style=""
+		headerLabel="GESTIONE ACCENTRATA"/>				
+	<columnFieldProperty
+		name="tot_competenza_anno_in_corso"
+		label="anno corrente (A+B)"
+		style=""
+		headerLabel="Totale Competenza"/>
+	<columnFieldProperty
+		name="im_spese_a2"
+		label="anno successivo"
+		headerLabel="Totale Competenza" />
+	<columnFieldProperty
+		name="im_spese_a3"
+		label="anno corrente +2"
+		headerLabel="Totale Competenza" />
+	<columnFieldProperty
+		name="cd_cds_area"
+		columnStyle="valign:center;"/>
+		
+</bulkInfo>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.Pagamento_esternoKey" >
+	<defaultColumnMap
+		tableName="PAGAMENTO_ESTERNO" >
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="cd_anag"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_PAGAMENTO"
+			propertyName="pg_pagamento"
+			sqlTypeName="DECIMAL"
+			columnSize="3"
+			nullable="false"
+			primary="true" />			
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_anag"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_pagamento"
+		partOfOid="true" />		
+</SQLPersistentInfo>

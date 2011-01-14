@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.Ruolo_accessoKey" >
+	<defaultColumnMap
+		tableName="RUOLO_ACCESSO" >
+		<columnMapping
+			columnName="CD_RUOLO"
+			propertyName="cd_ruolo"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_ACCESSO"
+			propertyName="cd_accesso"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_ruolo"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_accesso"
+		partOfOid="true" />
+</SQLPersistentInfo>

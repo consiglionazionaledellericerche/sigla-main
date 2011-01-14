@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_trattamento"
+		property="cd_trattamento"
+		maxLength="5"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice"
+		nullable="false"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		enabledOnInsert="true" />
+	<fieldProperty
+		name="cd_trattamentoForSearch"
+		property="cd_trattamento"
+		maxLength="5"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		enabledOnInsert="true" />
+	<fieldProperty
+		name="ds_ti_trattamento"
+		property="ds_ti_trattamento"
+		maxLength="100"
+		inputSize="63"
+		inputType="TEXT"
+		label="Descrizione"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fin_validita"
+		formatName="date_short"
+		inputType="TEXT"
+		label="Fine validita" />
+	<fieldProperty
+		name="dataFineValidita"
+		property="dataFineValidita"
+		formatName="date_short"
+		inputType="TEXT"
+		label="Fine validita" />
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_ini_validita"
+		formatName="date_short"	
+		inputType="TEXT"
+		inputSize="10"
+		label="Inizio validita"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		enabledOnInsert="true" />
+	<fieldProperty
+		name="ti_anagrafico"
+		property="ti_anagrafico"
+		keysProperty="tipoAnagraficoKeys"
+		label="Tipo Anagrafico"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"		
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />
+	<fieldProperty
+		name="fl_detrazioni_familiari"
+		property="fl_detrazioni_familiari"
+		inputType="CHECKBOX"
+		label="Detrazioni familiari"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />
+	<fieldProperty
+		name="fl_detrazioni_dipendente"
+		property="fl_detrazioni_dipendente"
+		inputType="CHECKBOX"
+		label="Detrazioni dipendente"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />
+	<fieldProperty
+		name="fl_tassazione_separata"
+		property="fl_tassazione_separata"
+		inputType="CHECKBOX"
+		label="Tassazione separata"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />
+	<fieldProperty
+		name="fl_soggetto_conguaglio"
+		property="fl_soggetto_conguaglio"
+		inputType="CHECKBOX"
+		label="Soggetto conguaglio"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />
+	<fieldProperty
+		name="fl_senza_calcoli"
+		property="fl_senza_calcoli"
+		inputType="CHECKBOX"
+		label="Senza calcoli"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />
+	<fieldProperty
+		name="fl_registra_fattura"
+		property="fl_registra_fattura"
+		inputType="CHECKBOX"
+		label="Registra fattura"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />
+	<fieldProperty
+		name="fl_diaria"
+		property="fl_diaria"
+		inputType="CHECKBOX"
+		label="Diaria"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />
+	<fieldProperty
+		name="fl_irpef_annualizzata"
+		property="fl_irpef_annualizzata"
+		inputType="CHECKBOX"
+		label="IRPEF Annualizzata"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />
+	<fieldProperty
+		name="ti_commerciale"
+		property="ti_commerciale"
+		keysProperty="tipoCommercialeKeys"
+		label="Tipo Commerciale"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"		
+		caseSensitiveSearch="false"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />
+	<fieldProperty
+		name="fl_default_conguaglio"
+		property="fl_default_conguaglio"
+		inputType="CHECKBOX"
+		label="Per conguaglio"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />
+	<fieldProperty
+		name="fl_agevolazioni_cervelli"
+		property="fl_agevolazioni_cervelli"
+		inputType="CHECKBOX"
+		label="'Rientro dei cervelli'"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />		
+	<fieldProperty
+		name="fl_utilizzabile_art35"
+		property="fl_utilizzabile_art35"
+		inputType="CHECKBOX"
+		label="Soggetta all'Art.35 DL223/2006"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />
+	<fieldProperty
+		name="fl_anno_prec"
+		property="fl_anno_prec"
+		inputType="CHECKBOX"
+		label="Anno precedente (solo per dipendenti)"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />
+	<fieldProperty
+		name="fl_detrazioni_altre"
+		property="fl_detrazioni_altre"
+		inputType="CHECKBOX"
+		label="Altri Tipi di Detrazioni"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />
+	<fieldProperty
+		name="fl_incarico"
+		property="fl_incarico"
+		inputType="CHECKBOX"
+		label="Gestione Incarichi"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />
+
+	<formFieldProperty
+		name="cd_trattamento"
+		command="doCaricaIntervalli" />
+	<formFieldProperty name="cd_trattamentoForSearch" maxLength="10"/>
+	<formFieldProperty name="ds_ti_trattamento" />
+	<formFieldProperty name="dt_inizio_validita" />
+	<formFieldProperty name="dt_fine_validita" />
+	<formFieldProperty name="dataFineValidita" />
+	<formFieldProperty name="ti_anagrafico" />
+	<formFieldProperty name="fl_detrazioni_familiari" />
+	<formFieldProperty name="fl_detrazioni_dipendente" />
+	<formFieldProperty name="fl_tassazione_separata" />
+	<formFieldProperty name="fl_soggetto_conguaglio" />
+	<formFieldProperty name="fl_senza_calcoli" />
+	<formFieldProperty name="fl_registra_fattura" />
+	<formFieldProperty name="fl_diaria" />
+	<formFieldProperty name="fl_irpef_annualizzata" />
+	<formFieldProperty name="ti_commerciale" />
+	<formFieldProperty name="fl_default_conguaglio" />
+	<formFieldProperty name="fl_agevolazioni_cervelli" />	
+	<formFieldProperty name="fl_utilizzabile_art35" />	
+	<formFieldProperty name="fl_anno_prec" />	
+	<formFieldProperty name="fl_detrazioni_altre" />		
+	<formFieldProperty name="fl_incarico" />			
+
+	<columnFieldProperty name="cd_trattamento" />
+	<columnFieldProperty name="ds_ti_trattamento" />
+	<columnFieldProperty name="dt_inizio_validita" />
+	<columnFieldProperty name="dataFineValidita" />
+	<columnFieldProperty name="ti_anagrafico" />
+	<columnFieldProperty name="fl_detrazioni_familiari" />
+	<columnFieldProperty name="fl_detrazioni_dipendente" />
+	<columnFieldProperty name="fl_tassazione_separata" />
+	<columnFieldProperty name="fl_soggetto_conguaglio" />
+	<columnFieldProperty name="fl_senza_calcoli" />
+	<columnFieldProperty name="fl_registra_fattura" />
+	<columnFieldProperty name="fl_diaria" />
+	<columnFieldProperty name="fl_irpef_annualizzata" />
+	<columnFieldProperty name="ti_commerciale" />
+	<columnFieldProperty name="fl_default_conguaglio" />
+	<columnFieldProperty name="fl_agevolazioni_cervelli" />	
+	<columnFieldProperty name="fl_utilizzabile_art35" />		
+	<columnFieldProperty name="fl_anno_prec" />			
+	<columnFieldProperty name="fl_detrazioni_altre" />				
+	<columnFieldProperty name="fl_incarico" />					
+
+	<columnSet name="cd_ds_trattamento">
+		<columnFieldProperty name="cd_trattamento" />
+		<columnFieldProperty name="ds_ti_trattamento" />
+		<columnFieldProperty name="dt_inizio_validita" />
+	</columnSet>
+
+	<findFieldProperty name="cd_trattamento" maxLength="10"/>
+	<findFieldProperty name="cd_trattamentoForSearch" maxLength="10"/>
+	<findFieldProperty name="ds_ti_trattamento" />
+	<findFieldProperty name="dt_inizio_validita" />
+	<findFieldProperty name="dt_fine_validita" />
+	<findFieldProperty name="ti_anagrafico" />
+	<findFieldProperty name="fl_detrazioni_familiari" />
+	<findFieldProperty name="fl_detrazioni_dipendente" />
+	<findFieldProperty name="fl_tassazione_separata" />
+	<findFieldProperty name="fl_soggetto_conguaglio" />
+	<findFieldProperty name="fl_senza_calcoli" />
+	<findFieldProperty name="fl_registra_fattura" />
+	<findFieldProperty name="fl_diaria" />
+	<findFieldProperty name="fl_irpef_annualizzata" />
+	<findFieldProperty name="ti_commerciale" />
+	<findFieldProperty name="fl_default_conguaglio" />
+	<findFieldProperty name="fl_agevolazioni_cervelli" />	
+	<findFieldProperty name="fl_utilizzabile_art35" />	
+	<findFieldProperty name="fl_anno_prec" />		
+	<findFieldProperty name="fl_detrazioni_altre" />			
+	<findFieldProperty name="fl_incarico" />				
+</bulkInfo>

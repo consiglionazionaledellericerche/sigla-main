@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.cdip.bulk.V_stampa_costi_personaleBase"
+	homeClassName="it.cnr.contab.pdg00.cdip.bulk.V_stampa_costi_personaleHome">
+	<defaultColumnMap
+		tableName="PRT_STAMPA_PERSONALE">
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="VARCHAR"
+			columnSize="26"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="MESE"
+			propertyName="mese"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="UO"
+			propertyName="uo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CDR"
+			propertyName="cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ALTRA_UO"
+			propertyName="altra_uo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="ds_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="400"
+			nullable="true" />			
+		<columnMapping
+			columnName="CD_DIPARTIMENTO"
+			propertyName="cd_dipartimento"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />	
+		<columnMapping
+			columnName="DS_DIPARTIMENTO"
+			propertyName="ds_dipartimento"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />			
+		<columnMapping
+			columnName="CD_COMMESSA"
+			propertyName="cd_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_COMMESSA"
+			propertyName="ds_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="400"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="400"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_LINEA_ATTIVITA"
+			propertyName="ds_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="ID_MATRICOLA"
+			propertyName="id_matricola"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="NOMINATIVO"
+			propertyName="nominativo"
+			sqlTypeName="VARCHAR"
+			columnSize="60"
+			nullable="true" />
+		<columnMapping
+			columnName="PERCENT_A1"
+			propertyName="percent_a1"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="PERCENT_A2"
+			propertyName="percent_a2"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="PERCENT_A3"
+			propertyName="percent_a3"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
+			<columnMapping
+			columnName="STIPENDIO_A1"
+			propertyName="stipendio_a1"
+			sqlTypeName="DECIMAL"
+			columnScale="2"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="STIPENDIO"
+			propertyName="stipendio"
+			sqlTypeName="DECIMAL"
+			columnScale="2"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="CDS"
+			propertyName="cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />			
+		<columnMapping
+			columnName="DS_PROFILO"
+			propertyName="ds_profilo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />			
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipo" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="mese" />
+	<persistentProperty
+		name="uo" />
+	<persistentProperty
+		name="cdr" />
+	<persistentProperty
+		name="altra_uo" />
+	<persistentProperty
+		name="cd_progetto" />
+	<persistentProperty
+		name="ds_progetto" />		
+	<persistentProperty
+		name="cd_dipartimento" />
+	<persistentProperty
+		name="ds_dipartimento" />		
+	<persistentProperty
+		name="cd_commessa" />
+	<persistentProperty
+		name="ds_commessa" />
+	<persistentProperty
+		name="cd_modulo" />
+	<persistentProperty
+		name="ds_modulo" />
+	<persistentProperty
+		name="cd_linea_attivita" />
+	<persistentProperty
+		name="ds_linea_attivita" />
+	<persistentProperty
+		name="id_matricola" />
+	<persistentProperty
+		name="nominativo" />
+	<persistentProperty
+		name="percent_a1" />
+	<persistentProperty
+		name="percent_a2" />
+	<persistentProperty
+		name="percent_a3" />
+	<persistentProperty
+		name="stipendio_a1" />
+	<persistentProperty
+		name="stipendio" />
+	<persistentProperty
+		name="cds" />
+	<persistentProperty
+		name="ds_profilo" />		
+</SQLPersistentInfo>

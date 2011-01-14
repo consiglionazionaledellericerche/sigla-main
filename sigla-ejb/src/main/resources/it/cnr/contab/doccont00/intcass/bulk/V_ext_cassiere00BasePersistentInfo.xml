@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.intcass.bulk.V_ext_cassiere00Base"
+	homeClassName="it.cnr.contab.doccont00.intcass.bulk.V_ext_cassiere00Home" >
+	<defaultColumnMap
+		tableName="V_EXT_CASSIERE00" >
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="NOME_FILE"
+			propertyName="nome_file"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="nome_file" />
+</SQLPersistentInfo>

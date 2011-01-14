@@ -1,0 +1,1049 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="matricola"
+		property="matricola"
+		inputType="TEXT"
+		inputSize="9"
+		maxLength="9"
+		label="matricola" />
+	<fieldProperty
+		name="nominativo"
+		property="nominativo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="60"
+		label="nominativo" />
+	<fieldProperty
+		name="sesso"
+		property="sesso"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="sesso" />
+	<fieldProperty
+		name="dip_cod_fis"
+		property="dip_cod_fis"
+		inputType="TEXT"
+		inputSize="16"
+		maxLength="16"
+		label="dip_cod_fis" />
+	<fieldProperty
+		name="data_nascita"
+		property="data_nascita"
+		inputType="TEXT"
+		formatName="date_short"
+		label="data_nascita" />
+	<fieldProperty
+		name="comune_nasc"
+		property="comune_nasc"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="40"
+		label="comune_nasc" />
+	<fieldProperty
+		name="prov_nasc"
+		property="prov_nasc"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		label="prov_nasc" />
+	<fieldProperty
+		name="ind_resid"
+		property="ind_resid"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="80"
+		label="ind_resid" />
+	<fieldProperty
+		name="com_resid"
+		property="com_resid"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="40"
+		label="com_resid" />
+	<fieldProperty
+		name="cap_resid"
+		property="cap_resid"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="cap_resid" />
+	<fieldProperty
+		name="pro_resid"
+		property="pro_resid"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		label="pro_resid" />
+	<fieldProperty
+		name="cod_comune"
+		property="cod_comune"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="cod_comune" />
+	<fieldProperty
+		name="stato_civile"
+		property="stato_civile"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="stato_civile" />
+	<fieldProperty
+		name="dec_stat_civ"
+		property="dec_stat_civ"
+		inputType="TEXT"
+		formatName="date_short"
+		label="dec_stat_civ" />
+	<fieldProperty
+		name="tit_onorif"
+		property="tit_onorif"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="tit_onorif" />
+	<fieldProperty
+		name="desc_tit_onorif"
+		property="desc_tit_onorif"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="35"
+		label="desc_tit_onorif" />
+	<fieldProperty
+		name="tit_studio"
+		property="tit_studio"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		label="tit_studio" />
+	<fieldProperty
+		name="desc_tit_studio"
+		property="desc_tit_studio"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="35"
+		label="desc_tit_studio" />
+	<fieldProperty
+		name="cod_spec"
+		property="cod_spec"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="cod_spec" />
+	<fieldProperty
+		name="desc_spec"
+		property="desc_spec"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="35"
+		label="desc_spec" />
+	<fieldProperty
+		name="anno_spec"
+		property="anno_spec"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="anno_spec" />
+	<fieldProperty
+		name="luogo_spec"
+		property="luogo_spec"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		label="luogo_spec" />
+	<fieldProperty
+		name="abilitazione"
+		property="abilitazione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="abilitazione" />
+	<fieldProperty
+		name="anno_abilitazione"
+		property="anno_abilitazione"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="anno_abilitazione" />
+	<fieldProperty
+		name="fascicolo"
+		property="fascicolo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="fascicolo" />
+	<fieldProperty
+		name="data_assunzione"
+		property="data_assunzione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="data_assunzione" />
+	<fieldProperty
+		name="data_cessazione"
+		property="data_cessazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="data_cessazione" />
+	<fieldProperty
+		name="causa_cess"
+		property="causa_cess"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="causa_cess" />
+	<fieldProperty
+		name="desc_causa_cess"
+		property="desc_causa_cess"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="35"
+		label="desc_causa_cess" />
+	<fieldProperty
+		name="rapp_impiego"
+		property="rapp_impiego"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		label="rapp_impiego" />
+	<fieldProperty
+		name="livello_1"
+		property="livello_1"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="livello_1" />
+	<fieldProperty
+		name="livello_2"
+		property="livello_2"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="livello_2" />
+	<fieldProperty
+		name="livello_3"
+		property="livello_3"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="livello_3" />
+	<fieldProperty
+		name="profilo"
+		property="profilo"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="profilo" />
+	<fieldProperty
+		name="contratto"
+		property="contratto"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		label="contratto" />
+	<fieldProperty
+		name="desc_profilo"
+		property="desc_profilo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="desc_profilo" />
+	<fieldProperty
+		name="livprec_1"
+		property="livprec_1"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="livprec_1" />
+	<fieldProperty
+		name="livprec_2"
+		property="livprec_2"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="livprec_2" />
+	<fieldProperty
+		name="livprec_3"
+		property="livprec_3"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="livprec_3" />
+	<fieldProperty
+		name="profilo_prec"
+		property="profilo_prec"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="profilo_prec" />
+	<fieldProperty
+		name="desc_prof_prec"
+		property="desc_prof_prec"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="desc_prof_prec" />
+	<fieldProperty
+		name="contratto_prec"
+		property="contratto_prec"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		label="contratto_prec" />
+	<fieldProperty
+		name="profilo_prec_fine"
+		property="profilo_prec_fine"
+		inputType="TEXT"
+		formatName="date_short"
+		label="profilo_prec_fine" />
+	<fieldProperty
+		name="tipo_contratto"
+		property="tipo_contratto"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		label="tipo_contratto" />
+	<fieldProperty
+		name="desc_tipo_contratto"
+		property="desc_tipo_contratto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="35"
+		label="desc_tipo_contratto" />
+	<fieldProperty
+		name="ente_prev"
+		property="ente_prev"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		label="ente_prev" />
+	<fieldProperty
+		name="unita_oper"
+		property="unita_oper"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		label="unita_oper" />
+	<fieldProperty
+		name="sede_lavoro"
+		property="sede_lavoro"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		label="sede_lavoro" />
+	<fieldProperty
+		name="dec_inizio"
+		property="dec_inizio"
+		inputType="TEXT"
+		formatName="date_short"
+		label="dec_inizio" />
+	<fieldProperty
+		name="dec_fine"
+		property="dec_fine"
+		inputType="TEXT"
+		formatName="date_short"
+		label="dec_fine" />
+	<fieldProperty
+		name="tipo_pres"
+		property="tipo_pres"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		label="tipo_pres" />
+	<fieldProperty
+		name="desc_tipo_pres"
+		property="desc_tipo_pres"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="35"
+		label="desc_tipo_pres" />
+	<fieldProperty
+		name="tit_afferen"
+		property="tit_afferen"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		label="tit_afferen" />
+	<fieldProperty
+		name="mod_pag"
+		property="mod_pag"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="mod_pag" />
+	<fieldProperty
+		name="abi_pag"
+		property="abi_pag"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="abi_pag" />
+	<fieldProperty
+		name="cab_pag"
+		property="cab_pag"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="cab_pag" />
+	<fieldProperty
+		name="nrc_pag"
+		property="nrc_pag"
+		inputType="TEXT"
+		inputSize="12"
+		maxLength="12"
+		label="nrc_pag" />
+	<fieldProperty
+		name="imp_fisc"
+		property="imp_fisc"
+		inputType="TEXT"
+		inputSize="16"
+		maxLength="16"
+		label="imp_fisc" />
+	<fieldProperty
+		name="imp_prev"
+		property="imp_prev"
+		inputType="TEXT"
+		inputSize="16"
+		maxLength="16"
+		label="imp_prev" />
+	<fieldProperty
+		name="imp_impo1"
+		property="imp_impo1"
+		inputType="TEXT"
+		inputSize="16"
+		maxLength="16"
+		label="imp_impo1" />
+	<fieldProperty
+		name="imp_impo2"
+		property="imp_impo2"
+		inputType="TEXT"
+		inputSize="16"
+		maxLength="16"
+		label="imp_impo2" />
+	<fieldProperty
+		name="sindacato"
+		property="sindacato"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="sindacato" />
+	<fieldProperty
+		name="anz_rapp_prec"
+		property="anz_rapp_prec"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="anz_rapp_prec" />
+	<fieldProperty
+		name="anz_riscatti"
+		property="anz_riscatti"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="anz_riscatti" />
+	<fieldProperty
+		name="tot_anni"
+		property="tot_anni"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="tot_anni" />
+	<fieldProperty
+		name="data_rif"
+		property="data_rif"
+		inputType="TEXT"
+		formatName="date_short"
+		label="data_rif" />
+	<fieldProperty
+		name="anno_rif"
+		property="anno_rif"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="anno_rif" />
+	<fieldProperty
+		name="mese_rif"
+		property="mese_rif"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		label="mese_rif" />
+	<fieldProperty
+		name="tipo_ass"
+		property="tipo_ass"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		label="tipo_ass" />
+	<fieldProperty
+		name="des_tipo_ass"
+		property="des_tipo_ass"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		label="des_tipo_ass" />
+	<fieldProperty
+		name="rif_conc"
+		property="rif_conc"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="rif_conc" />
+	<fieldProperty
+		name="tab_cod_comnas"
+		property="tab_cod_comnas"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="tab_cod_comnas" />
+	<fieldProperty
+		name="tab_cap_comnas"
+		property="tab_cap_comnas"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="tab_cap_comnas" />
+	<fieldProperty
+		name="partime"
+		property="partime"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="partime" />
+	<fieldProperty
+		name="att_rid_stip"
+		property="att_rid_stip"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="att_rid_stip" />
+	<fieldProperty
+		name="giu_dec_inizio"
+		property="giu_dec_inizio"
+		inputType="TEXT"
+		formatName="date_short"
+		label="giu_dec_inizio" />
+	<fieldProperty
+		name="naz_nas"
+		property="naz_nas"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="naz_nas" />
+	<fieldProperty
+		name="ncar_cogn"
+		property="ncar_cogn"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="ncar_cogn" />
+	<fieldProperty
+		name="uo_tit"
+		property="uo_tit"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		label="uo_tit" />
+	<fieldProperty
+		name="fl_gestione_manuale"
+		property="fl_gestione_manuale"
+		inputType="CHECKBOX"
+		label="fl_gestione_manuale" />
+	<formFieldProperty
+		name="matricola" />
+	<formFieldProperty
+		name="nominativo" />
+	<formFieldProperty
+		name="sesso" />
+	<formFieldProperty
+		name="dip_cod_fis" />
+	<formFieldProperty
+		name="data_nascita" />
+	<formFieldProperty
+		name="comune_nasc" />
+	<formFieldProperty
+		name="prov_nasc" />
+	<formFieldProperty
+		name="ind_resid" />
+	<formFieldProperty
+		name="com_resid" />
+	<formFieldProperty
+		name="cap_resid" />
+	<formFieldProperty
+		name="pro_resid" />
+	<formFieldProperty
+		name="cod_comune" />
+	<formFieldProperty
+		name="stato_civile" />
+	<formFieldProperty
+		name="dec_stat_civ" />
+	<formFieldProperty
+		name="tit_onorif" />
+	<formFieldProperty
+		name="desc_tit_onorif" />
+	<formFieldProperty
+		name="tit_studio" />
+	<formFieldProperty
+		name="desc_tit_studio" />
+	<formFieldProperty
+		name="cod_spec" />
+	<formFieldProperty
+		name="desc_spec" />
+	<formFieldProperty
+		name="anno_spec" />
+	<formFieldProperty
+		name="luogo_spec" />
+	<formFieldProperty
+		name="abilitazione" />
+	<formFieldProperty
+		name="anno_abilitazione" />
+	<formFieldProperty
+		name="fascicolo" />
+	<formFieldProperty
+		name="data_assunzione" />
+	<formFieldProperty
+		name="data_cessazione" />
+	<formFieldProperty
+		name="causa_cess" />
+	<formFieldProperty
+		name="desc_causa_cess" />
+	<formFieldProperty
+		name="rapp_impiego" />
+	<formFieldProperty
+		name="livello_1" />
+	<formFieldProperty
+		name="livello_2" />
+	<formFieldProperty
+		name="livello_3" />
+	<formFieldProperty
+		name="profilo" />
+	<formFieldProperty
+		name="contratto" />
+	<formFieldProperty
+		name="desc_profilo" />
+	<formFieldProperty
+		name="livprec_1" />
+	<formFieldProperty
+		name="livprec_2" />
+	<formFieldProperty
+		name="livprec_3" />
+	<formFieldProperty
+		name="profilo_prec" />
+	<formFieldProperty
+		name="desc_prof_prec" />
+	<formFieldProperty
+		name="contratto_prec" />
+	<formFieldProperty
+		name="profilo_prec_fine" />
+	<formFieldProperty
+		name="tipo_contratto" />
+	<formFieldProperty
+		name="desc_tipo_contratto" />
+	<formFieldProperty
+		name="ente_prev" />
+	<formFieldProperty
+		name="unita_oper" />
+	<formFieldProperty
+		name="sede_lavoro" />
+	<formFieldProperty
+		name="dec_inizio" />
+	<formFieldProperty
+		name="dec_fine" />
+	<formFieldProperty
+		name="tipo_pres" />
+	<formFieldProperty
+		name="desc_tipo_pres" />
+	<formFieldProperty
+		name="tit_afferen" />
+	<formFieldProperty
+		name="mod_pag" />
+	<formFieldProperty
+		name="abi_pag" />
+	<formFieldProperty
+		name="cab_pag" />
+	<formFieldProperty
+		name="nrc_pag" />
+	<formFieldProperty
+		name="imp_fisc" />
+	<formFieldProperty
+		name="imp_prev" />
+	<formFieldProperty
+		name="imp_impo1" />
+	<formFieldProperty
+		name="imp_impo2" />
+	<formFieldProperty
+		name="sindacato" />
+	<formFieldProperty
+		name="anz_rapp_prec" />
+	<formFieldProperty
+		name="anz_riscatti" />
+	<formFieldProperty
+		name="tot_anni" />
+	<formFieldProperty
+		name="data_rif" />
+	<formFieldProperty
+		name="anno_rif" />
+	<formFieldProperty
+		name="mese_rif" />
+	<formFieldProperty
+		name="tipo_ass" />
+	<formFieldProperty
+		name="des_tipo_ass" />
+	<formFieldProperty
+		name="rif_conc" />
+	<formFieldProperty
+		name="tab_cod_comnas" />
+	<formFieldProperty
+		name="tab_cap_comnas" />
+	<formFieldProperty
+		name="partime" />
+	<formFieldProperty
+		name="att_rid_stip" />
+	<formFieldProperty
+		name="giu_dec_inizio" />
+	<formFieldProperty
+		name="naz_nas" />
+	<formFieldProperty
+		name="ncar_cogn" />
+	<formFieldProperty
+		name="uo_tit" />
+	<formFieldProperty
+		name="fl_gestione_manuale" />
+	<findFieldProperty
+		name="matricola" />
+	<findFieldProperty
+		name="nominativo" />
+	<findFieldProperty
+		name="sesso" />
+	<findFieldProperty
+		name="dip_cod_fis" />
+	<findFieldProperty
+		name="data_nascita" />
+	<findFieldProperty
+		name="comune_nasc" />
+	<findFieldProperty
+		name="prov_nasc" />
+	<findFieldProperty
+		name="ind_resid" />
+	<findFieldProperty
+		name="com_resid" />
+	<findFieldProperty
+		name="cap_resid" />
+	<findFieldProperty
+		name="pro_resid" />
+	<findFieldProperty
+		name="cod_comune" />
+	<findFieldProperty
+		name="stato_civile" />
+	<findFieldProperty
+		name="dec_stat_civ" />
+	<findFieldProperty
+		name="tit_onorif" />
+	<findFieldProperty
+		name="desc_tit_onorif" />
+	<findFieldProperty
+		name="tit_studio" />
+	<findFieldProperty
+		name="desc_tit_studio" />
+	<findFieldProperty
+		name="cod_spec" />
+	<findFieldProperty
+		name="desc_spec" />
+	<findFieldProperty
+		name="anno_spec" />
+	<findFieldProperty
+		name="luogo_spec" />
+	<findFieldProperty
+		name="abilitazione" />
+	<findFieldProperty
+		name="anno_abilitazione" />
+	<findFieldProperty
+		name="fascicolo" />
+	<findFieldProperty
+		name="data_assunzione" />
+	<findFieldProperty
+		name="data_cessazione" />
+	<findFieldProperty
+		name="causa_cess" />
+	<findFieldProperty
+		name="desc_causa_cess" />
+	<findFieldProperty
+		name="rapp_impiego" />
+	<findFieldProperty
+		name="livello_1" />
+	<findFieldProperty
+		name="livello_2" />
+	<findFieldProperty
+		name="livello_3" />
+	<findFieldProperty
+		name="profilo" />
+	<findFieldProperty
+		name="contratto" />
+	<findFieldProperty
+		name="desc_profilo" />
+	<findFieldProperty
+		name="livprec_1" />
+	<findFieldProperty
+		name="livprec_2" />
+	<findFieldProperty
+		name="livprec_3" />
+	<findFieldProperty
+		name="profilo_prec" />
+	<findFieldProperty
+		name="desc_prof_prec" />
+	<findFieldProperty
+		name="contratto_prec" />
+	<findFieldProperty
+		name="profilo_prec_fine" />
+	<findFieldProperty
+		name="tipo_contratto" />
+	<findFieldProperty
+		name="desc_tipo_contratto" />
+	<findFieldProperty
+		name="ente_prev" />
+	<findFieldProperty
+		name="unita_oper" />
+	<findFieldProperty
+		name="sede_lavoro" />
+	<findFieldProperty
+		name="dec_inizio" />
+	<findFieldProperty
+		name="dec_fine" />
+	<findFieldProperty
+		name="tipo_pres" />
+	<findFieldProperty
+		name="desc_tipo_pres" />
+	<findFieldProperty
+		name="tit_afferen" />
+	<findFieldProperty
+		name="mod_pag" />
+	<findFieldProperty
+		name="abi_pag" />
+	<findFieldProperty
+		name="cab_pag" />
+	<findFieldProperty
+		name="nrc_pag" />
+	<findFieldProperty
+		name="imp_fisc" />
+	<findFieldProperty
+		name="imp_prev" />
+	<findFieldProperty
+		name="imp_impo1" />
+	<findFieldProperty
+		name="imp_impo2" />
+	<findFieldProperty
+		name="sindacato" />
+	<findFieldProperty
+		name="anz_rapp_prec" />
+	<findFieldProperty
+		name="anz_riscatti" />
+	<findFieldProperty
+		name="tot_anni" />
+	<findFieldProperty
+		name="data_rif" />
+	<findFieldProperty
+		name="anno_rif" />
+	<findFieldProperty
+		name="mese_rif" />
+	<findFieldProperty
+		name="tipo_ass" />
+	<findFieldProperty
+		name="des_tipo_ass" />
+	<findFieldProperty
+		name="rif_conc" />
+	<findFieldProperty
+		name="tab_cod_comnas" />
+	<findFieldProperty
+		name="tab_cap_comnas" />
+	<findFieldProperty
+		name="partime" />
+	<findFieldProperty
+		name="att_rid_stip" />
+	<findFieldProperty
+		name="giu_dec_inizio" />
+	<findFieldProperty
+		name="naz_nas" />
+	<findFieldProperty
+		name="ncar_cogn" />
+	<findFieldProperty
+		name="uo_tit" />
+	<findFieldProperty
+		name="fl_gestione_manuale" />
+	<columnFieldProperty
+		name="matricola" />
+	<columnFieldProperty
+		name="nominativo" />
+	<columnFieldProperty
+		name="sesso" />
+	<columnFieldProperty
+		name="dip_cod_fis" />
+	<columnFieldProperty
+		name="data_nascita" />
+	<columnFieldProperty
+		name="comune_nasc" />
+	<columnFieldProperty
+		name="prov_nasc" />
+	<columnFieldProperty
+		name="ind_resid" />
+	<columnFieldProperty
+		name="com_resid" />
+	<columnFieldProperty
+		name="cap_resid" />
+	<columnFieldProperty
+		name="pro_resid" />
+	<columnFieldProperty
+		name="cod_comune" />
+	<columnFieldProperty
+		name="stato_civile" />
+	<columnFieldProperty
+		name="dec_stat_civ" />
+	<columnFieldProperty
+		name="tit_onorif" />
+	<columnFieldProperty
+		name="desc_tit_onorif" />
+	<columnFieldProperty
+		name="tit_studio" />
+	<columnFieldProperty
+		name="desc_tit_studio" />
+	<columnFieldProperty
+		name="cod_spec" />
+	<columnFieldProperty
+		name="desc_spec" />
+	<columnFieldProperty
+		name="anno_spec" />
+	<columnFieldProperty
+		name="luogo_spec" />
+	<columnFieldProperty
+		name="abilitazione" />
+	<columnFieldProperty
+		name="anno_abilitazione" />
+	<columnFieldProperty
+		name="fascicolo" />
+	<columnFieldProperty
+		name="data_assunzione" />
+	<columnFieldProperty
+		name="data_cessazione" />
+	<columnFieldProperty
+		name="causa_cess" />
+	<columnFieldProperty
+		name="desc_causa_cess" />
+	<columnFieldProperty
+		name="rapp_impiego" />
+	<columnFieldProperty
+		name="livello_1" />
+	<columnFieldProperty
+		name="livello_2" />
+	<columnFieldProperty
+		name="livello_3" />
+	<columnFieldProperty
+		name="profilo" />
+	<columnFieldProperty
+		name="contratto" />
+	<columnFieldProperty
+		name="desc_profilo" />
+	<columnFieldProperty
+		name="livprec_1" />
+	<columnFieldProperty
+		name="livprec_2" />
+	<columnFieldProperty
+		name="livprec_3" />
+	<columnFieldProperty
+		name="profilo_prec" />
+	<columnFieldProperty
+		name="desc_prof_prec" />
+	<columnFieldProperty
+		name="contratto_prec" />
+	<columnFieldProperty
+		name="profilo_prec_fine" />
+	<columnFieldProperty
+		name="tipo_contratto" />
+	<columnFieldProperty
+		name="desc_tipo_contratto" />
+	<columnFieldProperty
+		name="ente_prev" />
+	<columnFieldProperty
+		name="unita_oper" />
+	<columnFieldProperty
+		name="sede_lavoro" />
+	<columnFieldProperty
+		name="dec_inizio" />
+	<columnFieldProperty
+		name="dec_fine" />
+	<columnFieldProperty
+		name="tipo_pres" />
+	<columnFieldProperty
+		name="desc_tipo_pres" />
+	<columnFieldProperty
+		name="tit_afferen" />
+	<columnFieldProperty
+		name="mod_pag" />
+	<columnFieldProperty
+		name="abi_pag" />
+	<columnFieldProperty
+		name="cab_pag" />
+	<columnFieldProperty
+		name="nrc_pag" />
+	<columnFieldProperty
+		name="imp_fisc" />
+	<columnFieldProperty
+		name="imp_prev" />
+	<columnFieldProperty
+		name="imp_impo1" />
+	<columnFieldProperty
+		name="imp_impo2" />
+	<columnFieldProperty
+		name="sindacato" />
+	<columnFieldProperty
+		name="anz_rapp_prec" />
+	<columnFieldProperty
+		name="anz_riscatti" />
+	<columnFieldProperty
+		name="tot_anni" />
+	<columnFieldProperty
+		name="data_rif" />
+	<columnFieldProperty
+		name="anno_rif" />
+	<columnFieldProperty
+		name="mese_rif" />
+	<columnFieldProperty
+		name="tipo_ass" />
+	<columnFieldProperty
+		name="des_tipo_ass" />
+	<columnFieldProperty
+		name="rif_conc" />
+	<columnFieldProperty
+		name="tab_cod_comnas" />
+	<columnFieldProperty
+		name="tab_cap_comnas" />
+	<columnFieldProperty
+		name="partime" />
+	<columnFieldProperty
+		name="att_rid_stip" />
+	<columnFieldProperty
+		name="giu_dec_inizio" />
+	<columnFieldProperty
+		name="naz_nas" />
+	<columnFieldProperty
+		name="ncar_cogn" />
+	<columnFieldProperty
+		name="uo_tit" />
+	<columnFieldProperty
+		name="fl_gestione_manuale" />
+</bulkInfo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Gruppo_cr_uoBulk"
+	homeClassName="it.cnr.contab.compensi00.tabrif.bulk.Gruppo_cr_uoHome">
+	<defaultColumnMap
+		tableName="GRUPPO_CR_UO">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="gruppo.esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_GRUPPO_CR"
+			propertyName="gruppo.cd_gruppo_cr"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="gruppo"
+		partOfOid="true" />
+	<persistentProperty
+		name="unita_organizzativa"
+		partOfOid="true" />
+</SQLPersistentInfo>

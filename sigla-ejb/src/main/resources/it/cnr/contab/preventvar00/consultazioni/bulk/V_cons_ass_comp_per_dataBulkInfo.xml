@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_dipartimento"
+		property="cd_dipartimento"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Dipartimento" />
+	<fieldProperty
+		name="pg_progetto"
+		property="pg_progetto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo Progetto" />
+	<fieldProperty
+		name="cd_progetto"
+		property="cd_progetto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice Progetto" />
+	<fieldProperty
+		name="ds_progetto"
+		property="ds_progetto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="433"
+		label="Descrizione Progetto" />
+	<fieldProperty
+		name="pg_commessa"
+		property="pg_commessa"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo Commessa" />
+	<fieldProperty
+		name="cd_commessa"
+		property="cd_commessa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice Commessa" />
+	<fieldProperty
+		name="ds_commessa"
+		property="ds_commessa"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="433"
+		label="Descrizione Commessa" />
+	<fieldProperty
+		name="pg_modulo"
+		property="pg_modulo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo Modulo" />
+	<fieldProperty
+		name="cd_modulo"
+		property="cd_modulo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice Modulo" />
+	<fieldProperty
+		name="ds_modulo"
+		property="ds_modulo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="433"
+		label="Descrizione Modulo" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CdR" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Linea Attivita" />
+ 	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Appartenenza" />  
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		label="Gestione"
+		inputType="RADIOGROUP"
+		keysProperty="ti_gestioneKeys"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		layout="HORIZONTAL" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Voce" />
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="ds_elemento_voce"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Descrizione Voce" />
+	<fieldProperty
+		name="cd_livello1"
+		property="cd_livello1"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Titolo" />
+	<fieldProperty
+		name="ds_livello1"
+		property="ds_livello1"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="250"
+		label="Descrizione Titolo" />
+	<fieldProperty
+		name="cd_livello2"
+		property="cd_livello2"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Categoria" />
+	<fieldProperty
+		name="ds_livello2"
+		property="ds_livello2"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="250"
+		label="Descrizione Categoria" />
+	<fieldProperty
+		name="cd_livello3"
+		property="cd_livello3"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="cd_livello3" />
+	<fieldProperty
+		name="ds_livello3"
+		property="ds_livello3"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="250"
+		label="ds_livello3" />
+	<fieldProperty
+		name="cd_livello4"
+		property="cd_livello4"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="cd_livello4" />
+	<fieldProperty
+		name="cd_livello5"
+		property="cd_livello5"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="cd_livello5" />
+	<fieldProperty
+		name="cd_livello6"
+		property="cd_livello6"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="cd_livello6" />
+	<fieldProperty
+		name="cd_livello7"
+		property="cd_livello7"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="cd_livello7" />
+	<fieldProperty
+		name="pg_variazione_pdg"
+		property="pg_variazione_pdg"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="Variazione" />
+	<fieldProperty
+		name="data_approvazione_var"
+		property="data_approvazione_var"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Situazione" />
+	<fieldProperty
+		name="im_stanz_iniziale_a1"
+		property="im_stanz_iniziale_a1"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="im_stanz_iniziale_a1" />
+	<fieldProperty
+		name="variazioni_piu"
+		property="variazioni_piu"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="variazioni_piu" />
+	<fieldProperty
+		name="variazioni_meno"
+		property="variazioni_meno"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="variazioni_meno" />
+	<fieldProperty
+		name="tot_im_stanz_iniziale_a1"
+		property="tot_im_stanz_iniziale_a1"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Importo Stanziamento Iniziale" />
+	<fieldProperty
+		name="tot_variazioni_piu"
+		property="tot_variazioni_piu"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Variazioni Più" />
+	<fieldProperty
+		name="tot_variazioni_meno"
+		property="tot_variazioni_meno"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Variazioni Meno" />
+		
+		
+		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_dipartimento" />
+	<formFieldProperty
+		name="pg_progetto" />
+	<formFieldProperty
+		name="cd_progetto" />
+	<formFieldProperty
+		name="ds_progetto" />
+	<formFieldProperty
+		name="pg_commessa" />
+	<formFieldProperty
+		name="cd_commessa" />
+	<formFieldProperty
+		name="ds_commessa" />
+	<formFieldProperty
+		name="pg_modulo" />
+	<formFieldProperty
+		name="cd_modulo" />
+	<formFieldProperty
+		name="ds_modulo" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+ 	<formFieldProperty
+		name="ti_appartenenza" />  
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="ds_elemento_voce" />
+	<formFieldProperty
+		name="cd_livello1" />
+	<formFieldProperty
+		name="ds_livello1" />
+	<formFieldProperty
+		name="cd_livello2" />
+	<formFieldProperty
+		name="ds_livello2" />
+	<formFieldProperty
+		name="cd_livello3" />
+	<formFieldProperty
+		name="ds_livello3" />
+	<formFieldProperty
+		name="cd_livello4" />
+	<formFieldProperty
+		name="cd_livello5" />
+	<formFieldProperty
+		name="cd_livello6" />
+	<formFieldProperty
+		name="cd_livello7" />
+	<formFieldProperty
+		name="pg_variazione_pdg" />
+	<formFieldProperty
+		name="data_approvazione_var" />
+	<formFieldProperty
+		name="im_stanz_iniziale_a1" />
+	<formFieldProperty
+		name="variazioni_piu" />
+	<formFieldProperty
+		name="variazioni_meno" />
+	<formFieldProperty
+		name="tot_im_stanz_iniziale_a1" />
+	<formFieldProperty
+		name="tot_variazioni_piu" />
+	<formFieldProperty
+		name="tot_variazioni_meno" />
+		
+		
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_dipartimento" />
+	<findFieldProperty
+		name="pg_progetto" />
+	<findFieldProperty
+		name="cd_progetto" />
+	<findFieldProperty
+		name="ds_progetto" />
+	<findFieldProperty
+		name="pg_commessa" />
+	<findFieldProperty
+		name="cd_commessa" />
+	<findFieldProperty
+		name="ds_commessa" />
+	<findFieldProperty
+		name="pg_modulo" />
+	<findFieldProperty
+		name="cd_modulo" />
+	<findFieldProperty
+		name="ds_modulo" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+  	<findFieldProperty
+		name="ti_appartenenza" /> 
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="ds_elemento_voce" />
+	<findFieldProperty
+		name="cd_livello1" />
+	<findFieldProperty
+		name="ds_livello1" />
+	<findFieldProperty
+		name="cd_livello2" />
+	<findFieldProperty
+		name="ds_livello2" />
+	<findFieldProperty
+		name="cd_livello3" />
+	<findFieldProperty
+		name="ds_livello3" />
+	<findFieldProperty
+		name="cd_livello4" />
+	<findFieldProperty
+		name="cd_livello5" />
+	<findFieldProperty
+		name="cd_livello6" />
+	<findFieldProperty
+		name="cd_livello7" />
+	<findFieldProperty
+		name="pg_variazione_pdg" />
+	<findFieldProperty
+		name="data_approvazione_var" />
+	<findFieldProperty
+		name="im_stanz_iniziale_a1" />
+	<findFieldProperty
+		name="variazioni_piu" />
+	<findFieldProperty
+		name="variazioni_meno" />
+	<findFieldProperty
+		name="tot_im_stanz_iniziale_a1" />
+	<findFieldProperty
+		name="tot_variazioni_piu" />
+	<findFieldProperty
+		name="tot_variazioni_meno" />
+		
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_dipartimento" />
+	<columnFieldProperty
+		name="pg_progetto" />
+	<columnFieldProperty
+		name="cd_progetto" />
+	<columnFieldProperty
+		name="ds_progetto" />
+	<columnFieldProperty
+		name="pg_commessa" />
+	<columnFieldProperty
+		name="cd_commessa" />
+	<columnFieldProperty
+		name="ds_commessa" />
+	<columnFieldProperty
+		name="pg_modulo" />
+	<columnFieldProperty
+		name="cd_modulo" />
+	<columnFieldProperty
+		name="ds_modulo" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+ 	<columnFieldProperty
+		name="ti_appartenenza" />  
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="ds_elemento_voce" />
+	<columnFieldProperty
+		name="cd_livello1" />
+	<columnFieldProperty
+		name="ds_livello1" />
+	<columnFieldProperty
+		name="cd_livello2" />
+	<columnFieldProperty
+		name="ds_livello2" />
+	<columnFieldProperty
+		name="cd_livello3" />
+	<columnFieldProperty
+		name="ds_livello3" />
+	<columnFieldProperty
+		name="cd_livello4" />
+	<columnFieldProperty
+		name="cd_livello5" />
+	<columnFieldProperty
+		name="cd_livello6" />
+	<columnFieldProperty
+		name="cd_livello7" />
+	<columnFieldProperty
+		name="pg_variazione_pdg" />
+	<columnFieldProperty
+		name="data_approvazione_var" />
+	<columnFieldProperty
+		name="im_stanz_iniziale_a1" />
+	<columnFieldProperty
+		name="variazioni_piu" />
+	<columnFieldProperty
+		name="variazioni_meno" />
+	<columnFieldProperty
+		name="tot_im_stanz_iniziale_a1" />
+	<columnFieldProperty
+		name="tot_variazioni_piu" />
+	<columnFieldProperty
+		name="tot_variazioni_meno" />
+		
+		
+		<columnSet name="BASE">
+			<columnFieldProperty name="cd_dipartimento" />
+			<columnFieldProperty name="cd_livello1" />
+			<columnFieldProperty name="ds_livello1" />
+			<columnFieldProperty name="cd_livello2" />
+			<columnFieldProperty name="ds_livello2" />
+			<columnFieldProperty name="tot_im_stanz_iniziale_a1" />
+			<columnFieldProperty name="tot_variazioni_piu" />
+			<columnFieldProperty name="tot_variazioni_meno" />
+		</columnSet>
+		
+		<columnSet name="BASEVARPIU">
+			<columnFieldProperty name="cd_dipartimento" />
+			<columnFieldProperty name="cd_livello1" />
+			<columnFieldProperty name="ds_livello1" />
+			<columnFieldProperty name="cd_livello2" />
+			<columnFieldProperty name="ds_livello2" />
+			<columnFieldProperty name="pg_variazione_pdg" />
+			<columnFieldProperty name="data_approvazione_var" />
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="ds_modulo" />
+			<columnFieldProperty name="cd_centro_responsabilita" />
+			<columnFieldProperty name="cd_linea_attivita" />
+			<columnFieldProperty name="cd_elemento_voce" />
+			<columnFieldProperty name="ds_elemento_voce" />
+			<columnFieldProperty name="tot_im_stanz_iniziale_a1" />
+			<columnFieldProperty name="tot_variazioni_piu" />
+		</columnSet>
+		
+		<columnSet name="BASEVARMENO">
+			<columnFieldProperty name="cd_dipartimento" />
+			<columnFieldProperty name="cd_livello1" />
+			<columnFieldProperty name="ds_livello1" />
+			<columnFieldProperty name="cd_livello2" />
+			<columnFieldProperty name="ds_livello2" />
+			<columnFieldProperty name="pg_variazione_pdg" />
+			<columnFieldProperty name="data_approvazione_var" />
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="ds_modulo" />
+			<columnFieldProperty name="cd_centro_responsabilita" />
+			<columnFieldProperty name="cd_linea_attivita" />
+			<columnFieldProperty name="cd_elemento_voce" />
+			<columnFieldProperty name="ds_elemento_voce" />
+			<columnFieldProperty name="tot_im_stanz_iniziale_a1" />
+			<columnFieldProperty name="tot_variazioni_meno" />
+		</columnSet>
+		
+		<columnSet name="BASESTANZ">
+			<columnFieldProperty name="cd_dipartimento" />
+			<columnFieldProperty name="cd_livello1" />
+			<columnFieldProperty name="ds_livello1" />
+			<columnFieldProperty name="cd_livello2" />
+			<columnFieldProperty name="ds_livello2" />
+			<columnFieldProperty name="data_approvazione_var" />
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="ds_modulo" />
+			<columnFieldProperty name="cd_centro_responsabilita" />
+			<columnFieldProperty name="cd_linea_attivita" />
+			<columnFieldProperty name="cd_elemento_voce" />
+			<columnFieldProperty name="ds_elemento_voce" />
+			<columnFieldProperty name="tot_im_stanz_iniziale_a1" />
+		</columnSet>
+		
+		<freeSearchSet name="BASE">		
+			<findFieldProperty name="cd_dipartimento" />
+			<findFieldProperty name="cd_livello1" />
+			<findFieldProperty name="ds_livello1" />
+			<findFieldProperty name="cd_livello2" />
+			<findFieldProperty name="ds_livello2"/>	
+		 <!-- 	<findFieldProperty name="tot_im_stanz_iniziale_a1" />
+		 	<findFieldProperty name="tot_variazioni_piu" />
+			<findFieldProperty name="tot_variazioni_meno" /> -->
+		</freeSearchSet>
+		
+		<freeSearchSet name="BASEVARPIU">		
+			<findFieldProperty name="cd_dipartimento" />
+			<findFieldProperty name="cd_livello1" />
+			<findFieldProperty name="ds_livello1" />
+			<findFieldProperty name="cd_livello2" />
+			<findFieldProperty name="ds_livello2"/>
+			<findFieldProperty name="pg_variazione_pdg" />
+			<findFieldProperty name="data_approvazione_var" />
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="ds_modulo" />
+			<findFieldProperty name="cd_centro_responsabilita" />
+			<findFieldProperty name="cd_linea_attivita" />
+			<findFieldProperty name="cd_elemento_voce" />
+			<findFieldProperty name="ds_elemento_voce" />
+	<!-- 		<findFieldProperty name="tot_im_stanz_iniziale_a1" />
+			<findFieldProperty name="tot_variazioni_piu" />  -->
+		</freeSearchSet>
+		
+		<freeSearchSet name="BASEVARMENO">		
+			<findFieldProperty name="cd_dipartimento" />
+			<findFieldProperty name="cd_livello1" />
+			<findFieldProperty name="ds_livello1" />
+			<findFieldProperty name="cd_livello2" />
+			<findFieldProperty name="ds_livello2"/>	
+			<findFieldProperty name="pg_variazione_pdg" />
+			<findFieldProperty name="data_approvazione_var" />
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="ds_modulo" />
+			<findFieldProperty name="cd_centro_responsabilita" />
+			<findFieldProperty name="cd_linea_attivita" />
+			<findFieldProperty name="cd_elemento_voce" />
+			<findFieldProperty name="ds_elemento_voce" />
+		<!-- 	<findFieldProperty name="tot_im_stanz_iniziale_a1" />
+			<findFieldProperty name="tot_variazioni_meno" />  -->
+		</freeSearchSet>
+		
+		<freeSearchSet name="BASESTANZ">		
+			<findFieldProperty name="cd_dipartimento" />
+			<findFieldProperty name="cd_livello1" />
+			<findFieldProperty name="ds_livello1" />
+			<findFieldProperty name="cd_livello2" />
+			<findFieldProperty name="ds_livello2"/>	
+			<findFieldProperty name="data_approvazione_var" />
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="ds_modulo" />
+			<findFieldProperty name="cd_centro_responsabilita" />
+			<findFieldProperty name="cd_linea_attivita" />
+			<findFieldProperty name="cd_elemento_voce" />
+			<findFieldProperty name="ds_elemento_voce" />
+		</freeSearchSet>
+	
+</bulkInfo>

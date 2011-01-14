@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.segnalazioni00.bulk.ConfrontoSiglaDwhBase"
+	keyClassName="it.cnr.contab.segnalazioni00.bulk.ConfrontoSiglaDwhKey"
+	homeClassName="it.cnr.contab.segnalazioni00.bulk.ConfrontoSiglaDwhHome">
+	<defaultColumnMap
+		tableName="CONFRONTO_SIGLA_DWH">
+		<columnMapping
+			columnName="DT_ELABORAZIONE"
+			propertyName="dt_elaborazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_ELABORAZIONE"
+			propertyName="pg_elaborazione"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_RIGA"
+			propertyName="pg_riga"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_RES"
+			propertyName="esercizio_res"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_STANZ_INIZIALE_A1_SIGLA"
+			propertyName="im_stanz_iniziale_a1_sigla"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONI_PIU_SIGLA"
+			propertyName="variazioni_piu_sigla"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONI_MENO_SIGLA"
+			propertyName="variazioni_meno_sigla"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_OBBL_ACC_COMP_SIGLA"
+			propertyName="im_obbl_acc_comp_sigla"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_STANZ_RES_IMPROPRIO_SIGLA"
+			propertyName="im_stanz_res_improprio_sigla"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_PIU_STANZ_RES_IMP_SIGLA"
+			propertyName="var_piu_stanz_res_imp_sigla"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_MENO_STANZ_RES_IMP_SIGLA"
+			propertyName="var_meno_stanz_res_imp_sigla"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_OBBL_RES_IMP_SIGLA"
+			propertyName="im_obbl_res_imp_sigla"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_OBBL_RES_PRO_SIGLA"
+			propertyName="im_obbl_res_pro_sigla"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_PIU_OBBL_RES_PRO_SIGLA"
+			propertyName="var_piu_obbl_res_pro_sigla"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_MENO_OBBL_RES_PRO_SIGLA"
+			propertyName="var_meno_obbl_res_pro_sigla"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_SIGLA"
+			propertyName="im_mandati_reversali_sigla"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_STANZ_INIZIALE_A1_DWH"
+			propertyName="im_stanz_iniziale_a1_dwh"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONI_PIU_DWH"
+			propertyName="variazioni_piu_dwh"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONI_MENO_DWH"
+			propertyName="variazioni_meno_dwh"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_OBBL_ACC_COMP_DWH"
+			propertyName="im_obbl_acc_comp_dwh"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_STANZ_RES_IMPROPRIO_DWH"
+			propertyName="im_stanz_res_improprio_dwh"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_PIU_STANZ_RES_IMP_DWH"
+			propertyName="var_piu_stanz_res_imp_dwh"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_MENO_STANZ_RES_IMP_DWH"
+			propertyName="var_meno_stanz_res_imp_dwh"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_OBBL_RES_IMP_DWH"
+			propertyName="im_obbl_res_imp_dwh"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_OBBL_RES_PRO_DWH"
+			propertyName="im_obbl_res_pro_dwh"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_PIU_OBBL_RES_PRO_DWH"
+			propertyName="var_piu_obbl_res_pro_dwh"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_MENO_OBBL_RES_PRO_DWH"
+			propertyName="var_meno_obbl_res_pro_dwh"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_DWH"
+			propertyName="im_mandati_reversali_dwh"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_elaborazione" />
+	<persistentProperty
+		name="pg_elaborazione" />
+	<persistentProperty
+		name="pg_riga" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="esercizio_res" />
+	<persistentProperty
+		name="cd_centro_responsabilita" />
+	<persistentProperty
+		name="cd_linea_attivita" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="cd_elemento_voce" />
+	<persistentProperty
+		name="im_stanz_iniziale_a1_sigla" />
+	<persistentProperty
+		name="variazioni_piu_sigla" />
+	<persistentProperty
+		name="variazioni_meno_sigla" />
+	<persistentProperty
+		name="im_obbl_acc_comp_sigla" />
+	<persistentProperty
+		name="im_stanz_res_improprio_sigla" />
+	<persistentProperty
+		name="var_piu_stanz_res_imp_sigla" />
+	<persistentProperty
+		name="var_meno_stanz_res_imp_sigla" />
+	<persistentProperty
+		name="im_obbl_res_imp_sigla" />
+	<persistentProperty
+		name="im_obbl_res_pro_sigla" />
+	<persistentProperty
+		name="var_piu_obbl_res_pro_sigla" />
+	<persistentProperty
+		name="var_meno_obbl_res_pro_sigla" />
+	<persistentProperty
+		name="im_mandati_reversali_sigla" />
+	<persistentProperty
+		name="im_stanz_iniziale_a1_dwh" />
+	<persistentProperty
+		name="variazioni_piu_dwh" />
+	<persistentProperty
+		name="variazioni_meno_dwh" />
+	<persistentProperty
+		name="im_obbl_acc_comp_dwh" />
+	<persistentProperty
+		name="im_stanz_res_improprio_dwh" />
+	<persistentProperty
+		name="var_piu_stanz_res_imp_dwh" />
+	<persistentProperty
+		name="var_meno_stanz_res_imp_dwh" />
+	<persistentProperty
+		name="im_obbl_res_imp_dwh" />
+	<persistentProperty
+		name="im_obbl_res_pro_dwh" />
+	<persistentProperty
+		name="var_piu_obbl_res_pro_dwh" />
+	<persistentProperty
+		name="var_meno_obbl_res_pro_dwh" />
+	<persistentProperty
+		name="im_mandati_reversali_dwh" />
+</SQLPersistentInfo>

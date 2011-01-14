@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_messaggio"
+		property="pg_messaggio"
+		inputType="TEXT"
+		label="pg_messaggio" />
+	<fieldProperty
+		name="cd_utente"
+		property="cd_utente"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="cd_utente" />
+
+	<formFieldProperty
+		name="pg_messaggio" />
+	<formFieldProperty
+		name="cd_utente" />
+
+	<columnFieldProperty
+		name="pg_messaggio" />
+	<columnFieldProperty
+		name="cd_utente" />
+
+	<findFieldProperty
+		name="pg_messaggio" />
+	<findFieldProperty
+		name="cd_utente" />
+
+</bulkInfo>

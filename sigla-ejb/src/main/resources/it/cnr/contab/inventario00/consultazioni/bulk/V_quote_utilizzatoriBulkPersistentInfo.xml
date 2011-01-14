@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.consultazioni.bulk.V_quote_utilizzatoriBulk"
+	homeClassName="it.cnr.contab.inventario00.consultazioni.bulk.V_quote_utilizzatoriHome">
+<defaultColumnMap
+		tableName="V_QUOTE_UTILIZZATORI">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="QUOTE"
+			propertyName="quote"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="CATEGORIA"
+			propertyName="categoria"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_CATEGORIA"
+			propertyName="ds_categoria"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="CDR"
+			propertyName="cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_CDR"
+			propertyName="ds_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="PERC_CDR"
+			propertyName="perc_cdr"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="GAE"
+			propertyName="gae"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_GAE"
+			propertyName="ds_gae"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="PERC_GAE"
+			propertyName="perc_gae"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="quote" />
+	<persistentProperty
+		name="categoria" />
+	<persistentProperty
+		name="ds_categoria" />
+	<persistentProperty
+		name="cdr" />
+	<persistentProperty
+		name="ds_cdr" />
+	<persistentProperty
+		name="perc_cdr" />
+	<persistentProperty
+		name="gae" />
+	<persistentProperty
+		name="ds_gae" />
+	<persistentProperty
+		name="perc_gae" />
+</SQLPersistentInfo>

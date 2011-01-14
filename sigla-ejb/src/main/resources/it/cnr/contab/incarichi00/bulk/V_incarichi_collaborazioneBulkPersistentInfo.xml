@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.bulk.V_incarichi_collaborazioneBulk"
+	homeClassName="it.cnr.contab.incarichi00.bulk.V_incarichi_collaborazioneHome">
+	<defaultColumnMap
+		tableName="V_INCARICHI_COLLABORAZIONE">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_PROCEDURA"
+			propertyName="pg_procedura"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_CDS"
+			propertyName="ds_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_UNITA_ORGANIZZATIVA"
+			propertyName="ds_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="false" />
+		<columnMapping
+			columnName="OGGETTO"
+			propertyName="oggetto"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="false" />
+		<columnMapping
+			columnName="NR_CONTRATTI"
+			propertyName="nr_contratti"
+			sqlTypeName="DECIMAL"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_PUBBLICAZIONE"
+			propertyName="dt_pubblicazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_FINE_PUBBLICAZIONE"
+			propertyName="dt_fine_pubblicazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_SCADENZA"
+			propertyName="dt_scadenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="pg_procedura" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="ds_cds" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="ds_unita_organizzativa" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="oggetto" />
+	<persistentProperty
+		name="nr_contratti" />
+	<persistentProperty
+		name="dt_pubblicazione" />
+	<persistentProperty
+		name="dt_fine_pubblicazione" />
+	<persistentProperty
+		name="dt_scadenza" />
+</SQLPersistentInfo>

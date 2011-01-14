@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="tc"
+		property="tc" />
+	<fieldProperty
+		name="cdTerzoCRParameter"
+		property="cdTerzoCRParameter" />
+
+	<fieldProperty
+		name="pgInizio"
+		property="pgInizio"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Nr. missione da:" />
+	<fieldProperty
+		name="pgFine"
+		property="pgFine"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="a:" />
+	<fieldProperty
+		name="cdUOForPrint"
+		property="uoForPrint.cd_unita_organizzativa"
+		inputType="ROTEXT"
+		maxLength="30"
+		inputSize="20"
+		label="Unita organizzativa" />
+	<fieldProperty
+		name="dsUOForPrint"
+		property="uoForPrint.ds_unita_organizzativa"
+		inputType="ROTEXT"
+		maxLength="300"
+		inputSize="70"
+		label="Unita organizzativa" />
+	<fieldProperty
+		name="findTerzo"
+		property="terzoForPrint"
+		inputType="SEARCHTOOL"
+		label="Terzo" />
+	<fieldProperty
+		name="cdTerzo"
+		property="terzoForPrint.cd_terzo"
+		inputType="TEXT"
+		readonlyProperty="ROTerzoForPrint"
+		maxLength="8"
+		inputSize="8" 
+		label="Codice" />
+
+	<formFieldProperty
+		name="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio" />
+	<formFieldProperty
+		name="cd_cds"
+		inputType="ROTEXT"
+		label="CDS" />
+	<formFieldProperty name="cdUOForPrint" />
+	<formFieldProperty name="dsUOForPrint" />
+	<formFieldProperty name="pgInizio" />
+	<formFieldProperty name="pgFine" />
+	<formFieldProperty name="cdTerzo" />
+	<formFieldProperty name="findTerzo" />
+
+	<form name="/docamm/docamm/vpg_missione.rpt">
+		<formFieldProperty
+			name="esercizio"
+			inputType="ROTEXT"
+			label="Esercizio" />
+		<formFieldProperty 
+			name="cd_cds"
+			inputType="ROTEXT"
+			label="CDS" />
+		<formFieldProperty name="cdUOForPrint" />
+		<formFieldProperty name="dsUOForPrint" />
+		<formFieldProperty name="pgInizio" />
+		<formFieldProperty name="pgFine" />
+		<formFieldProperty name="cdTerzo" />
+		<formFieldProperty name="findTerzo" />
+	</form>
+	<form name="/docamm/docamm/vpg_missione.jasper">
+		<formFieldProperty
+			name="esercizio"
+			inputType="ROTEXT"
+			label="Esercizio" />
+		<formFieldProperty 
+			name="cd_cds"
+			inputType="ROTEXT"
+			label="CDS" />
+		<formFieldProperty name="cdUOForPrint" />
+		<formFieldProperty name="dsUOForPrint" />
+		<formFieldProperty name="pgInizio" />
+		<formFieldProperty name="pgFine" />
+		<formFieldProperty name="cdTerzo" />
+		<formFieldProperty name="findTerzo" />
+	</form>
+
+	<printForm
+		name="/docamm/docamm/vpg_missione.rpt">
+		<printFieldProperty 
+			name="tc"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="1"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdUOForPrint"
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="3"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="pgInizio"
+			parameterPosition="4"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="pgFine"
+			parameterPosition="5"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdTerzoCRParameter"
+			parameterPosition="6"
+			parameterType="STRING" />
+	</printForm>
+	<printForm
+		name="/docamm/docamm/vpg_missione.jasper">
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="aCd_cds"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cdUOForPrint"
+			parameterPosition="2"
+			parameterType="STRING"
+			paramNameJR="aCd_uo"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="3"
+			parameterType="STRING"
+			paramNameJR="aEs"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="pgInizio"
+			parameterPosition="4"
+			parameterType="STRING"
+			paramNameJR="aPg_da"
+			paramTypeJR="java.lang.Long" />
+		<printFieldProperty 
+			name="pgFine"
+			parameterPosition="5"
+			parameterType="STRING"
+			paramNameJR="aPg_a"
+			paramTypeJR="java.lang.Long" />
+		<printFieldProperty 
+			name="cdTerzoCRParameter"
+			parameterPosition="6"
+			parameterType="STRING"
+			paramNameJR="aCd_terzo"
+			paramTypeJR="java.lang.String" />
+	</printForm>
+</bulkInfo>

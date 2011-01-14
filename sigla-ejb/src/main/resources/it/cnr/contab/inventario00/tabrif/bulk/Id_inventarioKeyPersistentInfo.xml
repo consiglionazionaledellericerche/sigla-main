@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.tabrif.bulk.Id_inventarioKey" >
+	<defaultColumnMap
+		tableName="ID_INVENTARIO" >
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="pg_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_inventario"
+		partOfOid="true" />
+</SQLPersistentInfo>

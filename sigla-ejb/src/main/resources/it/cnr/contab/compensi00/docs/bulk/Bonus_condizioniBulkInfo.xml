@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Bonus" />
+	<fieldProperty
+		name="cd_condizione"
+		property="cd_condizione"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Codice Bonus" />
+	<fieldProperty
+		name="ds_condizione"
+		property="ds_condizione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Descrizione Bonus" />
+	<fieldProperty
+		name="numero_componenti"
+		property="numero_componenti"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="Numero componenti per il Bonus" />
+	<fieldProperty
+		name="im_reddito_limite"
+		property="im_reddito_limite"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo  Bonus" />
+	<fieldProperty
+		name="im_bonus"
+		property="im_bonus"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="im_bonus" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_condizione" />
+	<formFieldProperty
+		name="ds_condizione" />
+	<formFieldProperty
+		name="numero_componenti" />
+	<formFieldProperty
+		name="im_reddito_limite" />
+	<formFieldProperty
+		name="im_bonus" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_condizione" />
+	<findFieldProperty
+		name="ds_condizione" />
+	<findFieldProperty
+		name="numero_componenti" />
+	<findFieldProperty
+		name="im_reddito_limite" />
+	<findFieldProperty
+		name="im_bonus" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_condizione" />
+	<columnFieldProperty
+		name="ds_condizione" />
+	<columnFieldProperty
+		name="numero_componenti" />
+	<columnFieldProperty
+		name="im_reddito_limite" />
+	<columnFieldProperty
+		name="im_bonus" />
+</bulkInfo>

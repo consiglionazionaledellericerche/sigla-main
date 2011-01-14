@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="elemento_voce.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="elemento_voce.ti_appartenenza"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Appartenenza" />
+	<fieldProperty
+		name="ti_gestione"
+		property="elemento_voce.ti_gestione"
+		keysProperty="ti_GestioneKeys"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"	
+		enabledOnSearch="true"
+		readonlyProperty="ROTi_gestione"
+		enabledOnEdit="false"
+		label="Sezione" />
+	<fieldProperty
+		name="ti_ente_percepiente"
+		property="ti_ente_percepiente"
+		keysProperty="ti_entePercipienteKeys"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"	
+		enabledOnSearch="true"
+		label="Tipo Ente Percipiente"/>
+	<fieldProperty
+		name="cd_contributo_ritenuta"
+		property="contributo_ritenuta.cd_contributo_ritenuta"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		label="Codice CO/RI" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="TEXT"
+		maxLength="45"
+		enabledOnSearch="true"
+		label="Elemento voce" />
+	<fieldProperty
+		name="find_elemento_voce"
+		property="elemento_voce"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		label="Elemento voce" />
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="elemento_voce.ds_elemento_voce"
+		label=""
+		inputType="ROTEXT"
+		inputSize="100"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="find_contributo_ritenuta"
+		property="contributo_ritenuta"
+		label="Contributo Ritenuta"		
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_contributo_ritenuta"
+		property="contributo_ritenuta.ds_contributo_ritenuta"
+		label="Descrizione"
+		inputSize="100"
+		enabledOnSearch="true"
+		inputType="ROTEXT" />
+			
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="ti_ente_percepiente" />
+	<formFieldProperty
+		name="cd_contributo_ritenuta" />
+	<formFieldProperty
+		name="ds_contributo_ritenuta" />	
+	<formFieldProperty
+		name="find_contributo_ritenuta" />		
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="ds_elemento_voce" />	
+	<formFieldProperty
+		name="find_elemento_voce" />	
+		
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="ti_ente_percepiente" />
+	<findFieldProperty
+		name="cd_contributo_ritenuta" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="ti_appartenenza" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="ti_ente_percepiente" />
+	<columnFieldProperty
+		name="cd_contributo_ritenuta" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+</bulkInfo>

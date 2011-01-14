@@ -1,0 +1,19 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Mandato_terzoIBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Mandato_terzoIHome" >
+	<defaultColumnMap
+		tableName="MANDATO_TERZO" >
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="mandatoI.pg_mandato"/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="mandatoI.esercizio" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="mandatoI.cds.cd_unita_organizzativa" />
+	</defaultColumnMap>			
+	<persistentProperty
+		name="mandatoI" 
+		partOfOid="true"/>	
+</SQLPersistentInfo>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Esenzioni_addcomBulk"
+	homeClassName="it.cnr.contab.compensi00.tabrif.bulk.Esenzioni_addcomHome">
+	<defaultColumnMap
+		tableName="ESENZIONI_ADDCOM">
+		<columnMapping
+			columnName="CD_CATASTALE"
+			propertyName="comune.cd_catastale"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_COMUNE"
+			propertyName="comune.pg_comune"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />	
+	</defaultColumnMap>
+	<persistentProperty
+		name="comune" />
+</SQLPersistentInfo>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.fondiric00.core.bulk.Fondo_attivita_vincolataBulk"
+	homeClassName="it.cnr.contab.fondiric00.core.bulk.Fondo_attivita_vincolataHome" >
+	<defaultColumnMap
+		tableName="FONDO_ATTIVITA_VINCOLATA" >
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="divisa.cd_divisa"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="CD_RESPONSABILE_TERZO"
+			propertyName="responsabile.cd_terzo"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="CD_ENTE_FIN"
+			propertyName="ente.cd_terzo"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="CD_TIPO_FONDO"
+			propertyName="tipo.cd_tipo_fondo"
+			fetchOnly="false" />
+	</defaultColumnMap>
+
+	<columnMap
+		name="V_UNITA_ORGANIZZATIVA_VALIDA"
+		tableName="V_UNITA_ORGANIZZATIVA_VALIDA"
+		extends="default" >
+	</columnMap>
+
+	<persistentProperty
+		name="divisa" />
+	<persistentProperty
+		name="unita_organizzativa" />
+	<persistentProperty
+		name="responsabile" />
+	<persistentProperty
+		name="ente" />
+	<persistentProperty
+		name="tipo" />
+</SQLPersistentInfo>

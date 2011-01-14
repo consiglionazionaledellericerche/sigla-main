@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBase"
+	keyClassName="it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoKey"
+	homeClassName="it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoHome" >
+	<defaultColumnMap
+		tableName="TIPO_RAPPORTO" >
+		<columnMapping
+			columnName="TI_RAPPORTO_ALTRO"
+			propertyName="ti_rapporto_altro"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_TIPO_RAPPORTO"
+			propertyName="ds_tipo_rapporto"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_DIPENDENTE_ALTRO"
+			propertyName="ti_dipendente_altro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_INQUADRAMENTO"
+			propertyName="fl_inquadramento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			 />
+		<columnMapping
+			columnName="FL_BONUS"
+			propertyName="fl_bonus"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_TRATTAMENTO"
+			propertyName="cd_trattamento"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />				 		
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="ti_rapporto_altro" />
+	<persistentProperty
+		name="ds_tipo_rapporto" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="ti_dipendente_altro" />
+	<persistentProperty
+		name="fl_inquadramento" />
+	<persistentProperty
+		name="fl_bonus" />
+	<persistentProperty
+		name="cd_trattamento" />			
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

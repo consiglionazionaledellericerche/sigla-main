@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Scheda Analitica Conto"
+          longDescription="Scheda Analitica Conto">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds Scrittura" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Scrittura" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="U.O. Scrittura" />
+	<fieldProperty
+		name="pg_scrittura"
+		property="pg_scrittura"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Num. Scrittura" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Terzo" />
+	<fieldProperty
+		name="origine_scrittura"
+		property="origine_scrittura"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Origine" />
+	<fieldProperty
+		name="cd_causale_coge"
+		property="cd_causale_coge"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		label="Causale" />
+	<fieldProperty
+		name="ti_scrittura"
+		property="ti_scrittura"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="ti_scrittura" />
+	<fieldProperty
+		name="cd_tipo_documento"
+		property="cd_tipo_documento"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Tipo Documento" />
+	<fieldProperty
+		name="cd_cds_documento"
+		property="cd_cds_documento"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds Documento" />
+	<fieldProperty
+		name="cd_uo_documento"
+		property="cd_uo_documento"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="U.O. Documento" />
+	<fieldProperty
+		name="pg_numero_documento"
+		property="pg_numero_documento"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Num. Documento" />
+	<fieldProperty
+		name="esercizio_documento_amm"
+		property="esercizio_documento_amm"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Es. Documento" />
+	<fieldProperty
+		name="cd_comp_documento"
+		property="cd_comp_documento"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		label="Estremi Documento" />
+	<fieldProperty
+		name="im_scrittura"
+		property="im_scrittura"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="im_scrittura" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="stato" />
+	<fieldProperty
+		name="attiva"
+		property="attiva"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Attiva S/N" />
+	<fieldProperty
+		name="cd_voce_ep"
+		property="cd_voce_ep"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="45"
+		label="Conto Economico Patrimoniale" />
+	<fieldProperty
+		name="ds_voce_ep"
+		property="ds_voce_ep"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Descrizione" />
+	<fieldProperty
+		name="sezione"
+		property="sezione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Sezione" />
+	<fieldProperty
+		name="im_movimento"
+		property="im_movimento"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo" />
+	<fieldProperty
+		name="dt_da_competenza_coge"
+		property="dt_da_competenza_coge"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Da Competenza" />
+	<fieldProperty
+		name="dt_a_competenza_coge"
+		property="dt_a_competenza_coge"
+		inputType="TEXT"
+		formatName="date_short"
+		label="A Competenza" />
+	<fieldProperty
+		name="ti_istituz_commerc"
+		property="ti_istituz_commerc"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Istituzionale/Commerciale" />
+	<fieldProperty
+		name="fl_mov_terzo"
+		property="fl_mov_terzo"
+		inputType="CHECKBOX"
+		label="fl_mov_terzo" />
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="pg_scrittura" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="origine_scrittura" />
+	<formFieldProperty
+		name="cd_causale_coge" />
+	<formFieldProperty
+		name="ti_scrittura" />
+	<formFieldProperty
+		name="cd_tipo_documento" />
+	<formFieldProperty
+		name="cd_cds_documento" />
+	<formFieldProperty
+		name="cd_uo_documento" />
+	<formFieldProperty
+		name="pg_numero_documento" />
+	<formFieldProperty
+		name="esercizio_documento_amm" />
+	<formFieldProperty
+		name="cd_comp_documento" />
+	<formFieldProperty
+		name="im_scrittura" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="attiva" />
+	<formFieldProperty
+		name="cd_voce_ep" />
+	<formFieldProperty
+		name="ds_voce_ep" />
+	<formFieldProperty
+		name="sezione" />
+	<formFieldProperty
+		name="im_movimento" />
+	<formFieldProperty
+		name="dt_da_competenza_coge" />
+	<formFieldProperty
+		name="dt_a_competenza_coge" />
+	<formFieldProperty
+		name="ti_istituz_commerc" />
+	<formFieldProperty
+		name="fl_mov_terzo" />
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="pg_scrittura" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="origine_scrittura" />
+	<findFieldProperty
+		name="cd_causale_coge" />
+	<findFieldProperty
+		name="ti_scrittura" />
+	<findFieldProperty
+		name="cd_tipo_documento" />
+	<findFieldProperty
+		name="cd_cds_documento" />
+	<findFieldProperty
+		name="cd_uo_documento" />
+	<findFieldProperty
+		name="pg_numero_documento" />
+	<findFieldProperty
+		name="esercizio_documento_amm" />
+	<findFieldProperty
+		name="cd_comp_documento" />
+	<findFieldProperty
+		name="im_scrittura" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="attiva" />
+	<findFieldProperty
+		name="cd_voce_ep" />
+	<findFieldProperty
+		name="ds_voce_ep" />
+	<findFieldProperty
+		name="sezione" />
+	<findFieldProperty
+		name="im_movimento" />
+	<findFieldProperty
+		name="dt_da_competenza_coge" />
+	<findFieldProperty
+		name="dt_a_competenza_coge" />
+	<findFieldProperty
+		name="ti_istituz_commerc" />
+	<findFieldProperty
+		name="fl_mov_terzo" />
+
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="pg_scrittura" />
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="origine_scrittura" />
+	<columnFieldProperty
+		name="cd_causale_coge" />
+	<columnFieldProperty
+		name="cd_tipo_documento" />
+	<columnFieldProperty
+		name="esercizio_documento_amm" />
+	<columnFieldProperty
+		name="cd_cds_documento" />
+	<columnFieldProperty
+		name="cd_uo_documento" />
+	<columnFieldProperty
+		name="pg_numero_documento" />
+	<columnFieldProperty
+		name="cd_comp_documento" />
+	<columnFieldProperty
+		name="attiva" />
+	<columnFieldProperty
+		name="cd_voce_ep" />
+	<columnFieldProperty
+		name="ds_voce_ep" />
+	<columnFieldProperty
+		name="sezione" />
+	<columnFieldProperty
+		name="im_movimento" />
+	<columnFieldProperty
+		name="dt_da_competenza_coge" />
+	<columnFieldProperty
+		name="dt_a_competenza_coge" />
+	<columnFieldProperty
+		name="ti_istituz_commerc" />
+</bulkInfo>

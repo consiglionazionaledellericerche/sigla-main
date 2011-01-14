@@ -1,0 +1,160 @@
+/*
+ * Created by Aurelio's BulkGenerator 1.0
+ * Date 26/07/2007
+ */
+package it.cnr.contab.incarichi00.bulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.persistency.Broker;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.PersistentHome;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+
+import java.sql.Connection;
+public class Incarichi_repertorioHome extends BulkHome {
+	public Incarichi_repertorioHome(Connection conn) {
+		super(Incarichi_repertorioBulk.class, conn);
+	}
+	public Incarichi_repertorioHome(Connection conn, PersistentCache persistentCache) {
+		super(Incarichi_repertorioBulk.class, conn, persistentCache);
+	}
+	public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext, OggettoBulk bulk) throws PersistencyException {
+		try {
+			((Incarichi_repertorioBulk)bulk).setEsercizio(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+			((Incarichi_repertorioBulk)bulk).setPg_repertorio(
+					new Long(
+					((Long)findAndLockMax( bulk, "pg_repertorio", new Long(0) )).longValue()+1
+				)
+			);
+		} catch(it.cnr.jada.bulk.BusyResourceException e) {
+			throw new PersistencyException(e);
+		}
+	}
+	public java.util.List findIncarichi_repertorio_annoList( it.cnr.jada.UserContext userContext,Incarichi_repertorioBulk increp ) throws IntrospectionException,PersistencyException 
+	{
+		PersistentHome incHome = getHomeCache().getHome(Incarichi_repertorio_annoBulk.class );
+		SQLBuilder sql = incHome.createSQLBuilder();
+		if (increp.getEsercizio()==null)
+			sql.addClause("AND","esercizio",SQLBuilder.ISNULL, null);
+		else
+			sql.addClause("AND","esercizio",SQLBuilder.EQUALS, increp.getEsercizio());
+		
+		if (increp.getPg_repertorio()==null)
+			sql.addClause("AND","pg_repertorio",SQLBuilder.ISNULL, null);
+		else
+			sql.addClause("AND","pg_repertorio",SQLBuilder.EQUALS, increp.getPg_repertorio());
+		
+		sql.addOrderBy("ESERCIZIO_LIMITE");
+		return incHome.fetchAll(sql);
+//		getHomeCache().fetchAll(userContext);
+//		return l;
+	}
+	/**
+	 * Recupera tutti i dati nella tabella INCARICHI_REPERTORIO_ARCHIVIO relativi alla testata in uso.
+	 *
+	 * @param testata La testata in uso.
+	 *
+	 * @return java.util.Collection Collezione di oggetti <code>Incarichi_repertorio_archivioBulk</code>
+	 */
+
+	public java.util.Collection findArchivioAllegati(Incarichi_repertorioBulk incarico) throws IntrospectionException, PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(Incarichi_repertorio_archivioBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.addClause("AND","esercizio",SQLBuilder.EQUALS,incarico.getEsercizio());
+		sql.addClause("AND","pg_repertorio",SQLBuilder.EQUALS,incarico.getPg_repertorio());
+		sql.addOrderBy("PROGRESSIVO_RIGA");
+		return dettHome.fetchAll(sql);
+	}	
+	public Incarichi_repertorioBulk findByIncarichi_richiesta(Incarichi_richiestaBulk incRichiesta) throws PersistencyException{
+		SQLBuilder sql = super.createSQLBuilder();
+		sql.addClause(FindClause.AND,"esercizio_richiesta",SQLBuilder.EQUALS,incRichiesta.getEsercizio());
+		sql.addClause(FindClause.AND,"pg_richiesta",SQLBuilder.EQUALS,incRichiesta.getPg_richiesta());
+		sql.addClause(FindClause.AND, "stato", SQLBuilder.NOT_EQUALS,Incarichi_repertorioBulk.STATO_ANNULLATO);
+		sql.addClause(FindClause.AND, "stato", SQLBuilder.NOT_EQUALS,Incarichi_repertorioBulk.STATO_ELIMINATO);
+		Broker broker = createBroker(sql);
+		if (broker.next())
+		  return (Incarichi_repertorioBulk)fetch(broker);
+		return null;
+	}
+	/**
+	 * Recupera il totale delle Obbligazioni legate all'incarico
+	 *
+	 * @param esercizio del'incarico
+	 * @param progressivo dell'incarico
+	 *
+	 * @return java.math.BigDecimal
+	 */
+
+	public SQLBuilder calcolaTotObbligazioni(it.cnr.jada.UserContext userContext,Incarichi_repertorioBulk incarico) throws IntrospectionException, PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(ObbligazioneBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.resetColumns();
+		sql.addColumn("SUM(IM_OBBLIGAZIONE) TOTALE ");
+		sql.addClause("AND","esercizio_rep",SQLBuilder.EQUALS,incarico.getEsercizio());
+		sql.addClause("AND","pg_repertorio",SQLBuilder.EQUALS,incarico.getPg_repertorio());
+		sql.addJoin("esercizio","esercizio_originale");		
+		return sql;
+	}
+
+	public java.util.List findIncarichi_repertorio_varList( it.cnr.jada.UserContext userContext,Incarichi_repertorioBulk increp ) throws IntrospectionException,PersistencyException 
+	{
+		PersistentHome incHome = getHomeCache().getHome(Incarichi_repertorio_varBulk.class );
+		SQLBuilder sql = incHome.createSQLBuilder();
+		if (increp.getEsercizio()==null)
+			sql.addClause("AND","esercizio",SQLBuilder.ISNULL, null);
+		else
+			sql.addClause("AND","esercizio",SQLBuilder.EQUALS, increp.getEsercizio());
+		
+		if (increp.getPg_repertorio()==null)
+			sql.addClause("AND","pg_repertorio",SQLBuilder.ISNULL, null);
+		else
+			sql.addClause("AND","pg_repertorio",SQLBuilder.EQUALS, increp.getPg_repertorio());
+		
+		sql.addOrderBy("PROGRESSIVO_RIGA");
+		return incHome.fetchAll(sql);
+	}
+
+	/**
+	 * Recupera tutti i dati nella tabella ASS_INCARICO_UO relativi alla testata in uso.
+	 *
+	 * @param testata La testata in uso.
+	 *
+	 * @return java.util.Collection Collezione di oggetti <code>Ass_incarico_uoBulk</code>
+	 */
+
+	public java.util.Collection findAssociazioneUO(Incarichi_repertorioBulk incarico) throws IntrospectionException, PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(Ass_incarico_uoBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,incarico.getEsercizio());
+		sql.addClause(FindClause.AND,"pg_repertorio",SQLBuilder.EQUALS,incarico.getPg_repertorio());
+		sql.addOrderBy("CD_UNITA_ORGANIZZATIVA");
+		return dettHome.fetchAll(sql);
+	}
+
+	/**
+	 * Recupera tutte le Uo disponibili ad essere associate
+	 *
+	 * @param testata La testata in uso.
+	 *
+	 * @return java.util.Collection Collezione di oggetti <code>Ass_incarico_uoBulk</code>
+	 */
+
+	public java.util.Collection findAssociazioneUODisponibili(Incarichi_repertorioBulk incarico) throws IntrospectionException, PersistencyException {	
+		PersistentHome dettHome = getHomeCache().getHome(Unita_organizzativaBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		if (!incarico.getAssociazioneUO().isEmpty()){
+			SQLBuilder sqlEx = getHomeCache().getHome(Ass_incarico_uoBulk.class).createSQLBuilder();
+			sqlEx.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,incarico.getEsercizio());
+			sqlEx.addClause(FindClause.AND,"pg_repertorio",SQLBuilder.EQUALS,incarico.getPg_repertorio());
+			sqlEx.addSQLJoin("UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA","ASS_INCARICO_UO.CD_UNITA_ORGANIZZATIVA");
+			sql.addSQLNotExistsClause("AND",sqlEx);
+		}
+		sql.addOrderBy("CD_UNITA_ORGANIZZATIVA");
+		return dettHome.fetchAll(sql);
+	}
+}

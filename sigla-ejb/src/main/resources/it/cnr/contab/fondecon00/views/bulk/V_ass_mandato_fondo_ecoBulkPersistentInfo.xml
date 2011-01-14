@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.fondecon00.views.bulk.V_ass_mandato_fondo_ecoBulk"
+	homeClassName="it.cnr.contab.fondecon00.views.bulk.V_ass_mandato_fondo_ecoHome" >
+	<defaultColumnMap
+		tableName="V_ASS_MANDATO_FONDO_ECO" >
+
+<!-- Fondo Economale -->
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="fondo.esercizio"
+			fetchOnly="true" />
+		<columnMapping
+			columnName="CD_CODICE_FONDO"
+			propertyName="fondo.cd_codice_fondo" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="fondo.unita_organizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="fondo.cd_cds"
+			fetchOnly="true" />
+
+<!-- Mandato -->
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="mandato.pg_mandato" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="mandato.esercizio" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="mandato.cds.cd_unita_organizzativa"
+			 />
+
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="fondo" />
+	<persistentProperty
+		name="mandato" />
+
+</SQLPersistentInfo>

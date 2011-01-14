@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+		shortDescription="Estrazione File XML Funzione Pubblica">
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="8"
+		enabledOnSearch="true"
+		label="Contraente" />
+	<fieldProperty
+		name="cd_proc_amm"
+		property="cd_proc_amm"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnSearch="true"
+		label="Procedura amministrativa" />
+	<fieldProperty
+		name="cd_tipo_attivita"
+		property="cd_tipo_attivita"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnSearch="true"
+		label="Tipo Attività" />
+	<fieldProperty
+		name="ds_tipo_attivita"
+		property="ds_tipo_attivita"
+		inputType="TEXTAREA"
+		maxLength="200"
+		cols="60"
+		rows="5"
+		enabledOnSearch="true"
+		label="Descrizione" />
+	<fieldProperty
+		name="cd_tipo_incarico"
+		property="cd_tipo_incarico"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnSearch="true"
+		label="Tipo Incarico" />
+	<fieldProperty
+		name="ds_tipo_incarico"
+		property="ds_tipo_incarico"
+		inputType="TEXTAREA"
+		maxLength="200"
+		cols="60"
+		rows="5"
+		enabledOnSearch="true"
+		label="Descrizione" />
+	<fieldProperty
+		name="tipo_natura"
+		property="tipo_natura"
+		keysProperty="tipo_naturaKeys"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Origine delle Fonti" />
+	<fieldProperty
+		name="fl_meramente_occasionale"
+		property="fl_meramente_occasionale"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		label="Collaboratore&lt;BR&gt;Meramente Occasionale" />
+	<fieldProperty
+		name="fl_pubblica_contratto"
+		property="fl_pubblica_contratto"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		label="Pubblica contratti stipulati" />
+	<fieldProperty
+		name="fl_art51"
+		property="fl_art51"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		label="Selezione art.51 comma 6 L. 449/1997" />
+	<fieldProperty
+		name="fl_inviato_corte_conti"
+		property="fl_inviato_corte_conti"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		label="Inviato Corte Conti" />
+
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="cd_proc_amm" />
+	<formFieldProperty
+		name="cd_tipo_attivita" />
+	<formFieldProperty
+		name="ds_tipo_attivita" />
+	<formFieldProperty
+		name="cd_tipo_incarico" />
+	<formFieldProperty
+		name="ds_tipo_incarico" />
+	<formFieldProperty
+		name="tipo_natura" />
+	<formFieldProperty
+		name="fl_meramente_occasionale" />
+	<formFieldProperty
+		name="fl_pubblica_contratto" />
+	<formFieldProperty
+		name="fl_art51" />
+	<formFieldProperty
+		name="fl_inviato_corte_conti" />
+
+	<columnSet
+        name="basic">
+		<columnFieldProperty
+			name="esercizio" 
+			headerLabel="INCARICO"
+			label="Esercizio"/>
+		<columnFieldProperty
+			name="pg_repertorio" 
+			headerLabel="INCARICO"
+			label="Id."/>
+		<columnFieldProperty
+			name="cd_cds" 
+			headerLabel="CDS"
+			label="Codice"/>
+		<columnFieldProperty
+			name="ds_cds"  
+			headerLabel="CDS"
+			label="Descrizione"/>
+		<columnFieldProperty
+			name="cd_unita_organizzativa"  
+			headerLabel="UO"
+			label="Codice"/>
+		<columnFieldProperty
+			name="ds_unita_organizzativa"  
+			headerLabel="UO"
+			label="Descrizione"/>
+		<columnFieldProperty
+			name="cd_terzo"  
+			headerLabel="CONTRAENTE"
+			label="Codice"/>
+		<columnFieldProperty
+			name="nominativo"  
+			headerLabel="CONTRAENTE"
+			label="Nominativo"/>
+		<columnFieldProperty
+			name="oggetto" />
+		<columnFieldProperty
+			name="importo_lordo" />
+		<columnFieldProperty
+			name="importo_variazione" />
+		<columnFieldProperty
+			name="dt_stipula" />
+		<columnFieldProperty
+			name="dt_inizio_validita" />
+		<columnFieldProperty
+			name="dt_fine_validita" />
+		<columnFieldProperty
+			name="dt_fine_validita_variazione" />
+		<columnFieldProperty
+			name="ds_provvedimento" />
+		<columnFieldProperty
+			name="esercizio_procedura"  
+			headerLabel="PROCEDURA"
+			label="Esercizio"/>
+		<columnFieldProperty
+			name="pg_procedura"  
+			headerLabel="PROCEDURA"
+			label="Id."/>
+	 	<columnFieldProperty
+			name="cd_proc_amm" />
+		<columnFieldProperty
+			name="cd_tipo_attivita"  
+			headerLabel="TIPO ATTIVITA'"
+			label="Codice"/>
+		<columnFieldProperty
+			name="ds_tipo_attivita"  
+			headerLabel="TIPO ATTIVITA'"
+			label="Descrizione"/>
+		<columnFieldProperty
+			name="cd_tipo_incarico"  
+			headerLabel="TIPO INCARICO"
+			label="Codice"/>
+		<columnFieldProperty
+			name="ds_tipo_incarico"  
+			headerLabel="TIPO INCARICO"
+			label="Descrizione"/>
+		<columnFieldProperty
+			name="tipo_natura" 
+		    label="Fonti"/>
+		<columnFieldProperty
+			name="fl_meramente_occasionale" 
+		    label="Meramente Occasionale"/>
+		<columnFieldProperty
+			name="fl_pubblica_contratto" 
+			label="Pubblicato"/>
+		<columnFieldProperty
+			name="fl_art51" 
+		    label="Art.51"/>
+		<columnFieldProperty
+			name="fl_inviato_corte_conti" />
+	</columnSet>        	
+
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="cd_proc_amm" />
+	<findFieldProperty
+		name="cd_tipo_attivita" />
+	<findFieldProperty
+		name="ds_tipo_attivita" />
+	<findFieldProperty
+		name="cd_tipo_incarico" />
+	<findFieldProperty
+		name="ds_tipo_incarico" />
+	<findFieldProperty
+		name="tipo_natura" />
+	<findFieldProperty
+		name="fl_meramente_occasionale" />
+	<findFieldProperty
+		name="fl_pubblica_contratto" />
+	<findFieldProperty
+		name="fl_art51" />
+	<findFieldProperty
+		name="fl_inviato_corte_conti" />		
+</bulkInfo>

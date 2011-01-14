@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.consultazioni.bulk.V_pdg_residuoBase"
+	homeClassName="it.cnr.contab.pdg00.consultazioni.bulk.V_pdg_residuoHome">
+	<defaultColumnMap
+		tableName="V_PDG_RESIDUO">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_CDR"
+			propertyName="ds_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO_RESIDUO"
+			propertyName="stato_residuo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_MASSA_SPENDIBILE"
+			propertyName="im_massa_spendibile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_DETTAGLIO"
+			propertyName="pg_dettaglio"
+			sqlTypeName="DECIMAL"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDR_LINEA"
+			propertyName="cd_cdr_linea"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="LA_DENOMINAZIONE"
+			propertyName="la_denominazione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_FUNZIONE"
+			propertyName="cd_funzione"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="cd_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_DIPARTIMENTO"
+			propertyName="cd_dipartimento"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="ds_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_CLA_S"
+			propertyName="codice_cla_s"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="CLA_S_DESCRIZIONE"
+			propertyName="cla_s_descrizione"
+			sqlTypeName="VARCHAR"
+			columnSize="400"
+			nullable="true" />
+		<columnMapping
+			columnName="RES_DESCRIZIONE"
+			propertyName="res_descrizione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RESIDUO"
+			propertyName="im_residuo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO_DETTAGLIO"
+			propertyName="stato_dettaglio"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_centro_responsabilita" />
+	<persistentProperty
+		name="ds_cdr" />
+	<persistentProperty
+		name="stato_residuo" />
+	<persistentProperty
+		name="im_massa_spendibile" />
+	<persistentProperty
+		name="pg_dettaglio" />
+	<persistentProperty
+		name="cd_cdr_linea" />
+	<persistentProperty
+		name="cd_linea_attivita" />
+	<persistentProperty
+		name="la_denominazione" />
+	<persistentProperty
+		name="cd_funzione" />
+	<persistentProperty
+		name="cd_natura" />
+	<persistentProperty
+		name="cd_progetto" />
+	<persistentProperty
+		name="cd_dipartimento" />
+	<persistentProperty
+		name="ti_appartenenza" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="cd_elemento_voce" />
+	<persistentProperty
+		name="ds_elemento_voce" />
+	<persistentProperty
+		name="codice_cla_s" />
+	<persistentProperty
+		name="cla_s_descrizione" />
+	<persistentProperty
+		name="res_descrizione" />
+	<persistentProperty
+		name="im_residuo" />
+	<persistentProperty
+		name="stato_dettaglio" />
+</SQLPersistentInfo>

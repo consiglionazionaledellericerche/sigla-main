@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk"
+	homeClassName="it.cnr.contab.prevent01.bulk.Pdg_esercizioHome">
+	<defaultColumnMap
+		tableName="PDG_ESERCIZIO">
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cdr.cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdr"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Ripartizione costi" longDescription="Ripartizione costi">
+	<fieldProperty name="tipo" property="tipo" inputType="SELECT" keysProperty="sommeKeys" label="Tipologia"/>
+	<fieldProperty name="esercizio" property="esercizio" inputType="TEXT" inputSize="4" maxLength="4" label="Esercizio"/>
+	<fieldProperty name="mese" property="mese" inputType="SELECT" label="Mese" keysProperty="meseKeys"/>
+	<fieldProperty name="uo" property="uo" inputType="TEXT" inputSize="30" maxLength="30" label="Unità operativa"/>
+	<fieldProperty name="cdr" property="cdr" inputType="TEXT" inputSize="30" maxLength="30" label="CDR"/>
+	<fieldProperty name="altra_uo" property="altra_uo" inputType="TEXT" inputSize="30" maxLength="30" label="UO di provenienza / destinazione"/>
+	<fieldProperty name="cd_progetto" property="cd_progetto" inputType="TEXT" inputSize="30" maxLength="30" label="Codice Progetto"/>
+	<fieldProperty name="ds_progetto" property="ds_progetto" inputType="TEXTAREA" cols="60" rows="5" maxLength="400" label="Descr. Progetto"/>		
+	<fieldProperty name="cd_dipartimento" property="cd_dipartimento" inputType="TEXT" inputSize="30" maxLength="30" label="Codice dipartimento"/>
+	<fieldProperty name="ds_dipartimento" property="ds_dipartimento" inputType="TEXT" inputSize="30" maxLength="300" label="Descrzione dipartimento"/>		
+	<fieldProperty name="cd_commessa" property="cd_commessa" inputType="TEXT" inputSize="30" maxLength="30" label="Codice Commessa"/>
+	<fieldProperty name="ds_commessa" property="ds_commessa" inputType="TEXTAREA" cols="60" rows="5" maxLength="400" label="Descr. Commessa"/>
+	<fieldProperty name="cd_modulo" property="cd_modulo" inputType="TEXT" inputSize="30" maxLength="30" label="Codice Modulo di attività"/>
+	<fieldProperty name="ds_modulo" property="ds_modulo" inputType="TEXTAREA" cols="60" rows="5" maxLength="400" label="Descr. Modulo di attività"/>
+	<fieldProperty name="cd_linea_attivita" property="cd_linea_attivita" inputType="TEXT" inputSize="10" maxLength="10" label="Codice GAE"/>
+	<fieldProperty name="ds_linea_attivita" property="ds_linea_attivita" inputType="TEXTAREA" cols="60" rows="5" maxLength="300" label="Descr. GAE"/>
+	<fieldProperty name="id_matricola" property="id_matricola" inputType="TEXT" inputSize="10" maxLength="10" label="Matricola"/>
+	<fieldProperty name="nominativo" property="nominativo" inputType="TEXTAREA" cols="60" rows="5" maxLength="60" label="Nominativo"/>
+	<fieldProperty name="ds_profilo" property="ds_profilo" inputType="TEXTAREA" cols="60" rows="5" maxLength="100" label="Profilo"/>		
+	<fieldProperty name="percent_a1" property="percent_a1" inputType="TEXT" formatName="it.cnr.contab.util.PercentFormat" label="Percentuale Primo Anno"/>
+	<fieldProperty name="percent_a2" property="percent_a2" inputType="TEXT" formatName="it.cnr.contab.util.PercentFormat" label="Percentuale Secondo Anno"/>
+	<fieldProperty name="percent_a3" property="percent_a3" inputType="TEXT" formatName="it.cnr.contab.util.PercentFormat" label="Percentuale Terzo Anno"/>
+	<fieldProperty name="stipendio_a1" property="stipendio_a1" inputType="TEXT" formatName="it.cnr.contab.util.EuroFormat" label="Costo per GAE"/>
+	<fieldProperty name="stipendio" property="stipendio" inputType="TEXT" formatName="it.cnr.contab.util.EuroFormat" label="Costo Totale Annuo"/>
+	<fieldProperty name="cds" property="cds" inputType="TEXT" inputSize="30" maxLength="30" label="cds"/>
+	<formFieldProperty name="tipo"/>
+	<formFieldProperty name="esercizio"/>
+	<formFieldProperty name="mese"/>
+	<formFieldProperty name="uo"/>
+	<formFieldProperty name="cdr"/>
+	<formFieldProperty name="altra_uo"/>
+	<formFieldProperty name="cd_progetto"/>
+	<formFieldProperty name="ds_progetto"/>
+	<formFieldProperty name="cd_dipartimento"/>
+	<formFieldProperty name="ds_dipartimento"/>
+	<formFieldProperty name="cd_commessa"/>
+	<formFieldProperty name="ds_commessa"/>
+	<formFieldProperty name="cd_modulo"/>
+	<formFieldProperty name="ds_modulo"/>
+	<formFieldProperty name="cd_linea_attivita"/>
+	<formFieldProperty name="ds_linea_attivita"/>
+	<formFieldProperty name="id_matricola"/>
+	<formFieldProperty name="nominativo"/>
+	<formFieldProperty name="ds_profilo"/>
+	<formFieldProperty name="percent_a1"/>
+	<formFieldProperty name="percent_a2"/>
+	<formFieldProperty name="percent_a3"/>
+	<formFieldProperty name="stipendio_a1"/>
+	<formFieldProperty name="stipendio"/>
+	<formFieldProperty name="cds"/>
+	<columnFieldProperty name="tipo"/>
+	<columnFieldProperty name="esercizio"/>
+	<columnFieldProperty name="mese"/>
+	<columnFieldProperty name="uo"/>
+	<columnFieldProperty name="cdr"/>
+	<columnFieldProperty name="altra_uo"/>
+	<columnFieldProperty name="cd_progetto"/>
+	<columnFieldProperty name="ds_progetto"/>		
+	<columnFieldProperty name="cd_dipartimento"/>	
+	<columnFieldProperty name="ds_dipartimento"/>		
+	<columnFieldProperty name="cd_commessa"/>
+	<columnFieldProperty name="ds_commessa"/>
+	<columnFieldProperty name="cd_modulo"/>
+	<columnFieldProperty name="ds_modulo"/>
+	<columnFieldProperty name="cd_linea_attivita"/>
+	<columnFieldProperty name="ds_linea_attivita"/>
+	<columnFieldProperty name="id_matricola"/>
+	<columnFieldProperty name="nominativo"/>
+	<columnFieldProperty name="ds_profilo"/>
+	<columnFieldProperty name="percent_a1"/>
+	<columnFieldProperty name="percent_a2"/>
+	<columnFieldProperty name="percent_a3"/>
+	<columnFieldProperty name="stipendio_a1"/>
+	<columnFieldProperty name="stipendio"/>
+	
+	<findFieldProperty name="tipo"/>
+	<findFieldProperty name="esercizio"/>
+	<!--  <findFieldProperty name="mese"/> -->
+	<findFieldProperty name="uo"/>
+	<findFieldProperty name="cdr"/>
+	<findFieldProperty name="altra_uo"/>
+	<findFieldProperty name="cd_progetto"/>
+	<findFieldProperty name="ds_progetto"/>		
+	<findFieldProperty name="cd_dipartimento"/>	
+	<findFieldProperty name="ds_dipartimento"/>		
+	<findFieldProperty name="cd_commessa"/>
+	<findFieldProperty name="ds_commessa"/>
+	<findFieldProperty name="cd_modulo"/>
+	<findFieldProperty name="ds_modulo"/>
+	<findFieldProperty name="cd_linea_attivita"/>
+	<findFieldProperty name="ds_linea_attivita"/>
+	<findFieldProperty name="id_matricola"/>
+	<findFieldProperty name="nominativo"/>
+	<findFieldProperty name="ds_profilo"/>
+	<findFieldProperty name="percent_a1"/>
+	<findFieldProperty name="percent_a2"/>
+	<findFieldProperty name="percent_a3"/>
+	<findFieldProperty name="stipendio"/>
+	<findFieldProperty name="stipendio_a1"/>
+	
+	
+	<columnSet
+		name="ConsMensile">
+			<columnFieldProperty name="tipo"/>
+			<columnFieldProperty name="esercizio"/>
+			<columnFieldProperty name="mese"/> 
+			<columnFieldProperty name="uo"/>
+			<columnFieldProperty name="cdr"/>
+			<columnFieldProperty name="altra_uo"/>
+			<columnFieldProperty name="cd_progetto"/>
+			<columnFieldProperty name="ds_progetto"/>		
+			<columnFieldProperty name="cd_dipartimento"/>	
+			<columnFieldProperty name="ds_dipartimento"/>		
+			<columnFieldProperty name="cd_commessa"/>
+			<columnFieldProperty name="ds_commessa"/>
+			<columnFieldProperty name="cd_modulo"/>
+			<columnFieldProperty name="ds_modulo"/>
+			<columnFieldProperty name="cd_linea_attivita"/>
+			<columnFieldProperty name="ds_linea_attivita"/>
+			<columnFieldProperty name="id_matricola"/>
+			<columnFieldProperty name="nominativo"/>
+			<columnFieldProperty name="ds_profilo"/>
+			<columnFieldProperty name="percent_a1" label="Percentuale per GAE"/>
+			<columnFieldProperty name="stipendio_a1" label="Costo per GAE"/>
+			<columnFieldProperty name="stipendio" label="Costo Mensile"/>
+	</columnSet>	
+	
+	
+</bulkInfo>

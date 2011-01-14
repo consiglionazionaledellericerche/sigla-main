@@ -1,0 +1,26 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.sto.bulk.CdsBulk" >
+	
+	<defaultColumnMap
+		tableName="UNITA_ORGANIZZATIVA" >
+		<columnMapping
+			columnName="CD_RESPONSABILE"
+			propertyName="responsabile.cd_terzo"
+ 		  />
+		<columnMapping
+			columnName="CD_AREA_SCIENTIFICA"
+			propertyName="area_scientifica.cd_area_scientifica"
+ 		  />
+	</defaultColumnMap>
+
+	<columnMap 
+		name="V_CDS_VALIDO"
+		tableName="V_UNITA_ORGANIZZATIVA_VALIDA"
+		extends="default" />
+
+	<persistentProperty
+		name="responsabile" />
+	<persistentProperty
+		name="area_scientifica" />
+
+</SQLPersistentInfo>

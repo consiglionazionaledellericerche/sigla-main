@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_dipartimento"
+		property="cd_dipartimento"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		enabledOnSearch="true"
+		label="Codice" />
+	<fieldProperty
+		name="ds_dipartimento"
+		property="ds_dipartimento"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		nullable="false"
+		enabledOnSearch="true"
+		label="Descrizione" />
+	<fieldProperty
+		name="dt_istituzione"
+		property="dt_istituzione"
+		inputType="TEXT"
+        formatName="date_short"
+        nullable="false"
+        enabledOnSearch="true"
+        label="Data istituzione" />
+	<fieldProperty
+		name="ds_del_ist"
+		property="ds_del_ist"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		nullable="false"
+		enabledOnSearch="true"
+		label="Delibera di Istituzione" />
+	<fieldProperty
+		name="find_direttore"
+		property="direttore"
+		inputType="SEARCHTOOL"
+		nullable="false" 
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_terzo"
+		property="direttore.cd_terzo"
+		readonlyProperty="RODirettore"
+		label="Direttore"
+		inputType="TEXT"
+		maxLength="8"
+		inputSize="6"
+		nullable="false"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="ds_direttore"
+		property="ds_direttore"
+		readonlyProperty="RODirettore"
+		label="Nominativo direttore"
+		inputSize="20"
+		enabledOnSearch="true"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="crea_direttore"
+		property="direttore"
+		inputType="CRUDTOOL" 
+		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
+		/>
+	<fieldProperty
+		name="dt_soppressione"
+		property="dt_soppressione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnSearch="true"
+		label="Data Soppressione" />
+	<fieldProperty
+		name="ds_del_soppr"
+		property="ds_del_soppr"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		enabledOnSearch="true"
+		label="Delibera di soppressione" />
+	<fieldProperty
+		name="id_dipartimento"
+		property="id_dipartimento"
+		label="id dipartimento"
+		inputType="TEXT"
+		maxLength="8"
+		inputSize="6"
+		nullable="false"
+		enabledOnSearch="true"
+		/>
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_dipartimento"
+			inputType="TEXT"
+			inputSize="15" />
+		<formFieldProperty
+			name="ds_dipartimento"
+			inputType="TEXT"
+			inputSize="30" />
+	</form>
+	<formFieldProperty
+		name="cd_dipartimento" />		
+	<formFieldProperty
+		name="ds_dipartimento" />
+	<formFieldProperty
+		name="dt_istituzione" />
+	<formFieldProperty
+		name="ds_del_ist" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="dt_soppressione" />
+	<formFieldProperty
+		name="ds_del_soppr" />
+	<formFieldProperty
+		name="ds_direttore"/>
+	<formFieldProperty
+		name="find_direttore"/>
+	<formFieldProperty
+		name="crea_direttore"/>
+	<formFieldProperty
+		name="id_dipartimento" />		
+
+	<columnFieldProperty
+		name="cd_dipartimento" />		
+	<columnFieldProperty
+		name="ds_dipartimento" />
+	<columnFieldProperty
+		name="dt_istituzione" />
+	<columnFieldProperty
+		name="ds_del_ist" />
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="ds_direttore" />		
+	<columnFieldProperty
+		name="dt_soppressione" />
+	<columnFieldProperty
+		name="ds_del_soppr" />
+				
+	<findFieldProperty
+		name="cd_dipartimento" />		
+	<findFieldProperty
+		name="ds_dipartimento" />
+	<findFieldProperty
+		name="dt_istituzione" />
+	<findFieldProperty
+		name="ds_del_ist" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="dt_soppressione" />
+	<findFieldProperty
+		name="ds_del_soppr" />
+	<findFieldProperty
+		name="id_dipartimento" />		
+</bulkInfo>

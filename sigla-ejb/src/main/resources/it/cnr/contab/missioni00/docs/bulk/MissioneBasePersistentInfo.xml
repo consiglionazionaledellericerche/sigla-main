@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.docs.bulk.MissioneBase"
+	keyClassName="it.cnr.contab.missioni00.docs.bulk.MissioneKey"
+	homeClassName="it.cnr.contab.missioni00.docs.bulk.MissioneHome" >
+	<defaultColumnMap
+		tableName="MISSIONE" >
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dt_cancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="esercizio_ori_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="pg_banca"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_PROVVISORIO_DEFINITIVO"
+			propertyName="ti_provvisorio_definitivo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO_COGE"
+			propertyName="stato_coge"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="IM_TOTALE_MISSIONE"
+			propertyName="im_totale_missione"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="cd_modalita_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_SPESE_ANTICIPATE"
+			propertyName="im_spese_anticipate"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERMINI_PAG"
+			propertyName="cd_termini_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="STATO_PAGAMENTO_FONDO_ECO"
+			propertyName="stato_pagamento_fondo_eco"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_PAGAMENTO_MANDATO"
+			propertyName="dt_pagamento_mandato"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="PG_RIF_INQUADRAMENTO"
+			propertyName="pg_rif_inquadramento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_COMUNE_ALTRO"
+			propertyName="fl_comune_altro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="IM_SPESE"
+			propertyName="im_spese"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="RAGIONE_SOCIALE"
+			propertyName="ragione_sociale"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="TI_ASSOCIATO_MANREV"
+			propertyName="ti_associato_manrev"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_PAGAMENTO_FONDO_ECO"
+			propertyName="dt_pagamento_fondo_eco"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="FL_COMUNE_ESTERO"
+			propertyName="fl_comune_estero"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="STATO_COFI"
+			propertyName="stato_cofi"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_LORDO_PERCEPIENTE"
+			propertyName="im_lordo_percepiente"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_INIZIO_MISSIONE"
+			propertyName="dt_inizio_missione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_NETTO_PECEPIENTE"
+			propertyName="im_netto_pecepiente"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_ASSOCIATO_COMPENSO"
+			propertyName="fl_associato_compenso"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="TI_ISTITUZ_COMMERC"
+			propertyName="ti_istituz_commerc"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_ANTICIPO"
+			propertyName="cd_cds_anticipo"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="DS_MISSIONE"
+			propertyName="ds_missione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_DIARIA_NETTO"
+			propertyName="im_diaria_netto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_FINE_MISSIONE"
+			propertyName="dt_fine_missione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_ANTICIPO"
+			propertyName="pg_anticipo"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="IM_DIARIA_LORDA"
+			propertyName="im_diaria_lorda"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_OBBLIGAZIONE"
+			propertyName="cd_cds_obbligazione"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="DT_TRASMISSIONE_MANDATO"
+			propertyName="dt_trasmissione_mandato"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="TI_ANAGRAFICO"
+			propertyName="ti_anagrafico"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="DT_EMISSIONE_MANDATO"
+			propertyName="dt_emissione_mandato"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="CD_TRATTAMENTO"
+			propertyName="cd_trattamento"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_ANTICIPO"
+			propertyName="cd_uo_anticipo"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="STATO_COAN"
+			propertyName="stato_coan"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_MISSIONE"
+			propertyName="cd_tipo_missione"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="ESERCIZIO_ANTICIPO"
+			propertyName="esercizio_anticipo"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partita_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="IM_QUOTA_ESENTE"
+			propertyName="im_quota_esente"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_COMUNE_PROPRIO"
+			propertyName="fl_comune_proprio"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="esercizio_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_TIPO_RAPPORTO"
+			propertyName="cd_tipo_rapporto"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_cancellazione" />
+	<persistentProperty
+		name="pg_banca" />
+	<persistentProperty
+		name="esercizio_ori_obbligazione" />
+	<persistentProperty
+		name="pg_obbligazione" />
+	<persistentProperty
+		name="ti_provvisorio_definitivo" />
+	<persistentProperty
+		name="stato_coge" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="codice_fiscale" />
+	<persistentProperty
+		name="im_totale_missione" />
+	<persistentProperty
+		name="cd_modalita_pag" />
+	<persistentProperty
+		name="im_spese_anticipate" />
+	<persistentProperty
+		name="cd_termini_pag" />
+	<persistentProperty
+		name="cognome" />
+	<persistentProperty
+		name="stato_pagamento_fondo_eco" />
+	<persistentProperty
+		name="dt_pagamento_mandato" />
+	<persistentProperty
+		name="pg_rif_inquadramento" />
+	<persistentProperty
+		name="fl_comune_altro" />
+	<persistentProperty
+		name="ragione_sociale" />
+	<persistentProperty
+		name="im_spese" />
+	<persistentProperty
+		name="ti_associato_manrev" />
+	<persistentProperty
+		name="fl_comune_estero" />
+	<persistentProperty
+		name="dt_pagamento_fondo_eco" />
+	<persistentProperty
+		name="stato_cofi" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dt_inizio_missione" />
+	<persistentProperty
+		name="im_lordo_percepiente" />
+	<persistentProperty
+		name="im_netto_pecepiente" />
+	<persistentProperty
+		name="fl_associato_compenso" />
+	<persistentProperty
+		name="ti_istituz_commerc" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="cd_cds_anticipo" />
+	<persistentProperty
+		name="ds_missione" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="im_diaria_netto" />
+	<persistentProperty
+		name="dt_fine_missione" />
+	<persistentProperty
+		name="pg_anticipo" />
+	<persistentProperty
+		name="im_diaria_lorda" />
+	<persistentProperty
+		name="cd_cds_obbligazione" />
+	<persistentProperty
+		name="dt_trasmissione_mandato" />
+	<persistentProperty
+		name="pg_obbligazione_scadenzario" />
+	<persistentProperty
+		name="ti_anagrafico" />
+	<persistentProperty
+		name="nome" />
+	<persistentProperty
+		name="dt_emissione_mandato" />
+	<persistentProperty
+		name="cd_trattamento" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="cd_uo_anticipo" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="stato_coan" />
+	<persistentProperty
+		name="cd_tipo_missione" />
+	<persistentProperty
+		name="esercizio_anticipo" />
+	<persistentProperty
+		name="dt_registrazione" />
+	<persistentProperty
+		name="partita_iva" />
+	<persistentProperty
+		name="im_quota_esente" />
+	<persistentProperty
+		name="fl_comune_proprio" />
+	<persistentProperty
+		name="esercizio_obbligazione" />
+	<persistentProperty
+		name="cd_tipo_rapporto" />
+</SQLPersistentInfo>

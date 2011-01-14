@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.tabter.bulk.NazioneBase"
+	keyClassName="it.cnr.contab.anagraf00.tabter.bulk.NazioneKey"
+	homeClassName="it.cnr.contab.anagraf00.tabter.bulk.NazioneHome" >
+	<defaultColumnMap
+		tableName="NAZIONE" >
+		<columnMapping
+			columnName="NAZIONALITA"
+			propertyName="nazionalita"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_NAZIONE_770"
+			propertyName="cd_nazione_770"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_CATASTALE"
+			propertyName="cd_catastale"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_ISO"
+			propertyName="cd_iso"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="cd_divisa"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_DIVISA_PER_MISSIONE"
+			propertyName="cd_divisa_per_missione"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_NAZIONE"
+			propertyName="cd_nazione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_NAZIONE"
+			propertyName="ds_nazione"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_NAZIONE"
+			propertyName="ti_nazione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_IBAN"
+			propertyName="fl_iban"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" 
+		    converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="STRUTTURA_IBAN"
+			propertyName="struttura_iban"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="STRUTTURA_PIVA"
+			propertyName="struttura_piva"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />	
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="nazionalita" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="cd_nazione_770" />
+	<persistentProperty
+		name="cd_catastale" />
+	<persistentProperty
+		name="cd_iso" />
+	<persistentProperty
+		name="cd_divisa" />
+	<persistentProperty
+		name="cd_divisa_per_missione" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="cd_nazione" />
+	<persistentProperty
+		name="ds_nazione" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="ti_nazione" />
+	<persistentProperty
+		name="fl_iban" />
+	<persistentProperty
+		name="struttura_iban" />
+	<persistentProperty
+		name="struttura_piva" />	
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

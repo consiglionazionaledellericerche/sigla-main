@@ -1,0 +1,13 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.EV_cnr_entrate_capitoloBulk"
+	homeClassName="it.cnr.contab.config00.pdcfin.bulk.EV_cnr_entrate_capitoloHome" >
+	<defaultColumnMap
+		tableName="ELEMENTO_VOCE" >
+	<columnMapping
+		columnName="FL_PARTITA_GIRO"
+		propertyName="elemento_padre.fl_partita_giro"
+		converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" 
+	/>
+	</defaultColumnMap>	
+
+</SQLPersistentInfo>

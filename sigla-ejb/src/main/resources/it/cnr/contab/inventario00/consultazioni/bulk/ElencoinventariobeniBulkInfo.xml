@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Elenco inventario beni">
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Unità organizzativa" />
+	<fieldProperty
+		name="cd_categoria_gruppo"
+		property="cd_categoria_gruppo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Categoria" />
+	<fieldProperty
+		name="nr_inventario"
+		property="nr_inventario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero Inventario" />
+	<fieldProperty
+		name="etichetta"
+		property="etichetta"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="50"
+		label="Etichetta" />	
+	<fieldProperty
+		name="progressivo"
+		property="progressivo"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="Progressivo" />
+	<fieldProperty
+		name="ds_bene"
+		property="ds_bene"
+		inputType="TEXT"
+		inputSize="300"
+		maxLength="300"
+		label="Descrizione bene" />
+	<fieldProperty
+		name="targa"
+		property="targa"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Targa" />	
+	<fieldProperty
+		name="data_registrazione"
+		property="data_registrazione"
+		inputType="TEXT"
+        formatName="date_short"
+		label="Data registrazione" />
+	<fieldProperty
+		name="valore_iniziale"
+		property="valore_iniziale"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Valore iniziale" />
+	<fieldProperty
+		name="variazione_meno"
+		property="variazione_meno"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Variazione meno" />
+	<fieldProperty
+		name="variazione_piu"
+		property="variazione_piu"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Variazione più" />
+	<fieldProperty
+		name="valore_finale"
+		property="valore_finale"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Valore finale" />		
+
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_categoria_gruppo" />
+	<formFieldProperty
+		name="nr_inventario" />
+	<formFieldProperty
+		name="etichetta" />
+	<formFieldProperty
+		name="progressivo" />
+	<formFieldProperty
+		name="ds_bene" />
+	<formFieldProperty
+		name="targa" />	
+	<formFieldProperty
+		name="data_registrazione" />
+	<formFieldProperty
+		name="valore_iniziale" />
+	<formFieldProperty
+		name="variazione_meno" />
+	<formFieldProperty
+		name="variazione_piu" />
+	<formFieldProperty
+		name="variazione_finale" />
+
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="cd_categoria_gruppo" />
+	<columnFieldProperty
+		name="nr_inventario" />
+	<columnFieldProperty
+		name="etichetta" />	
+	<columnFieldProperty
+		name="progressivo" />
+	<columnFieldProperty
+		name="ds_bene" />		
+	<columnFieldProperty
+		name="targa" />			
+	<columnFieldProperty
+		name="data_registrazione" />
+	<columnFieldProperty
+		name="valore_iniziale" />
+	<columnFieldProperty
+		name="variazione_piu" />
+	<columnFieldProperty
+		name="variazione_meno" />
+	<columnFieldProperty
+		name="valore_finale" />
+		
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="cd_categoria_gruppo" />
+	<findFieldProperty
+		name="nr_inventario" />
+	<findFieldProperty
+		name="etichetta" />
+	<findFieldProperty
+		name="progressivo" />
+	<findFieldProperty
+		name="ds_bene" />	
+	<findFieldProperty
+		name="targa" />				
+	<findFieldProperty
+		name="data_registrazione" />
+	<findFieldProperty
+		name="valore_iniziale" />
+	<findFieldProperty
+		name="variazione_piu" />
+	<findFieldProperty
+		name="variazione_meno" />
+	<findFieldProperty
+		name="valore_finale" />
+		
+</bulkInfo>

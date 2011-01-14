@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio di riferimento" />
+	<fieldProperty
+		name="cd_dipartimento"
+		property="cd_dipartimento"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Codice Dipartimento" />
+	<fieldProperty
+		name="cd_cds_area"
+		property="cd_cds_area"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Area di Ricerca" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_dipartimento" />
+	<formFieldProperty
+		name="cd_cds_area" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_dipartimento" />
+	<findFieldProperty
+		name="cd_cds_area" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_dipartimento" />
+	<columnFieldProperty
+		name="cd_cds_area" />
+</bulkInfo>

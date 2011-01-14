@@ -1,0 +1,59 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk" >
+	
+	<defaultColumnMap
+		tableName="UNITA_ORGANIZZATIVA" >
+		<columnMapping
+			columnName="CD_UNITA_PADRE"
+			propertyName="unita_padre.cd_unita_organizzativa"
+			/>
+		<columnMapping
+			columnName="CD_AREA_RICERCA"
+			propertyName="cds_area_ricerca.cd_unita_organizzativa"
+			/>
+		<columnMapping
+			columnName="CD_RESPONSABILE"
+			propertyName="responsabile.cd_terzo"
+			/>
+		<columnMapping
+			columnName="CD_RESPONSABILE_AMM"
+			propertyName="responsabile_amm.cd_terzo"
+			/>
+		<columnMapping
+			columnName="CD_AREA_SCIENTIFICA"
+			propertyName="area_scientifica.cd_area_scientifica"
+ 		  />
+	</defaultColumnMap>
+
+	<columnMap 
+		name="V_UNITA_ORGANIZZATIVA_VALIDA"
+		tableName="V_UNITA_ORGANIZZATIVA_VALIDA"
+		extends="default" />
+
+	<columnMap
+		name="V_UTENTE_UNITA_ORGANIZZATIVA"
+		extends="default"
+		tableName="V_UTENTE_UNITA_ORGANIZZATIVA" >
+	</columnMap>
+		
+	<persistentProperty
+		name="unita_padre" />
+	<persistentProperty
+		name="cds_area_ricerca" />
+	<persistentProperty
+		name="responsabile" />
+	<persistentProperty
+		name="responsabile_amm" />				
+	<persistentProperty
+		name="area_scientifica" />
+		
+	<fetchPolicy
+		name="it.cnr.contab.utente00.nav.comp.GestioneLoginComponent.listaUOPerUtente">
+		<exclude pattern="*" />
+		<include pattern="responsabile" />
+		<include pattern="responsabile.anagrafico" />
+		<include pattern="responsabile_amm" />
+		<include pattern="responsabile_amm.anagrafico" />
+	</fetchPolicy>
+
+</SQLPersistentInfo>

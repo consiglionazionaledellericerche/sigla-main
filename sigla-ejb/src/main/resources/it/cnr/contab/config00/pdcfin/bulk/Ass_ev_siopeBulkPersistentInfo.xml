@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.Ass_ev_siopeBulk"
+	homeClassName="it.cnr.contab.config00.pdcfin.bulk.Ass_ev_siopeHome">
+	<defaultColumnMap
+		tableName="ASS_EV_SIOPE">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="elemento_voce.esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="elemento_voce.ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="elemento_voce.ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="elemento_voce.cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="CD_SIOPE"
+			propertyName="codici_siope.cd_siope"
+			sqlTypeName="VARCHAR"
+			columnSize="45" />
+		<columnMapping
+			columnName="ESERCIZIO_SIOPE"
+			propertyName="codici_siope.esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="TI_GESTIONE_SIOPE"
+			propertyName="codici_siope.ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+	</defaultColumnMap>
+<!-- 	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_appartenenza"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_gestione"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_elemento_voce"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_siope"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio_siope"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_gestione_siope"
+		partOfOid="true" /> -->
+	<persistentProperty
+		name="elemento_voce"
+		partOfOid="true" />
+	<persistentProperty
+		name="codici_siope"
+		partOfOid="true" />
+</SQLPersistentInfo>

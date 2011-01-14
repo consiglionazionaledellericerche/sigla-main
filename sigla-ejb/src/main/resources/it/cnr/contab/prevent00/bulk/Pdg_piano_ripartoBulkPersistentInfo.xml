@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent00.bulk.Pdg_piano_ripartoBulk"
+	homeClassName="it.cnr.contab.prevent00.bulk.Pdg_piano_ripartoHome">
+	<defaultColumnMap
+		tableName="PDG_PIANO_RIPARTO">
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="centro_responsabilita.cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="ID_CLASSIFICAZIONE"
+			propertyName="v_classificazione_voci.id_classificazione"
+			sqlTypeName="DECIMAL"
+			columnSize="7" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="centro_responsabilita"
+		partOfOid="true" />
+	<persistentProperty
+		name="v_classificazione_voci"
+		partOfOid="true" />
+</SQLPersistentInfo>

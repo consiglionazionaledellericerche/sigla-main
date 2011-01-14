@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBase"
+	keyClassName="it.cnr.contab.incarichi00.bulk.Incarichi_proceduraKey"
+	homeClassName="it.cnr.contab.incarichi00.bulk.Incarichi_proceduraHome">
+	<defaultColumnMap
+		tableName="INCARICHI_PROCEDURA">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dt_cancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_RESPINTA"
+			propertyName="dt_respinta"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PUBBLICAZIONE"
+			propertyName="dt_pubblicazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_FINE_PUBBLICAZIONE"
+			propertyName="dt_fine_pubblicazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_SCADENZA"
+			propertyName="dt_scadenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_COMUNE"
+			propertyName="pg_comune"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_RICHIESTA"
+			propertyName="esercizio_richiesta"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_RICHIESTA"
+			propertyName="pg_richiesta"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_FIRMATARIO"
+			propertyName="cd_firmatario"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO_RESP"
+			propertyName="cd_terzo_resp"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="CD_PROC_AMM"
+			propertyName="cd_proc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_ATTO"
+			propertyName="cd_tipo_atto"
+			sqlTypeName="VARCHAR"
+			columnSize="5"/>
+		<columnMapping
+			columnName="DS_ATTO"
+			propertyName="ds_atto"
+			sqlTypeName="VARCHAR"
+			columnSize="100"/>
+		<columnMapping
+			columnName="CD_PROTOCOLLO"
+			propertyName="cd_protocollo"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="OGGETTO"
+			propertyName="oggetto"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_INCARICO"
+			propertyName="cd_tipo_incarico"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_ATTIVITA"
+			propertyName="cd_tipo_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false" />
+		<columnMapping
+			columnName="TIPO_NATURA"
+			propertyName="tipo_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_MERAMENTE_OCCASIONALE"
+			propertyName="fl_meramente_occasionale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="ESERCIZIO_PADRE"
+			propertyName="esercizio_padre"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_PROCEDURA_PADRE"
+			propertyName="pg_procedura_padre"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_LORDO"
+			propertyName="importo_lordo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO_COMPLESSIVO"
+			propertyName="importo_complessivo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_PUBBLICA_CONTRATTO"
+			propertyName="fl_pubblica_contratto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="NR_CONTRATTI"
+			propertyName="nr_contratti"
+			sqlTypeName="DECIMAL"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="NR_CONTRATTI_INIZIALE"
+			propertyName="nr_contratti_iniziale"
+			sqlTypeName="DECIMAL"
+			columnSize="3" />
+		<columnMapping
+			columnName="FL_ART51"
+			propertyName="fl_art51"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_SBLOCCATO"
+			propertyName="fl_sbloccato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DS_MOTIVAZIONE_SBLOCCO"
+			propertyName="ds_motivazione_sblocco"
+			sqlTypeName="VARCHAR"
+			columnSize="500"
+			nullable="true" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="dt_registrazione" />
+	<persistentProperty
+		name="dt_cancellazione" />
+	<persistentProperty
+		name="dt_respinta" />
+	<persistentProperty
+		name="dt_pubblicazione" />
+	<persistentProperty
+		name="dt_fine_pubblicazione" />
+	<persistentProperty
+		name="dt_scadenza" />
+	<persistentProperty
+		name="pg_comune" />
+	<persistentProperty
+		name="esercizio_richiesta" />
+	<persistentProperty
+		name="pg_richiesta" />
+	<persistentProperty
+		name="cd_firmatario" />
+	<persistentProperty
+		name="cd_terzo_resp" />
+	<persistentProperty
+		name="cd_proc_amm" />
+	<persistentProperty
+		name="cd_tipo_atto" />
+	<persistentProperty
+		name="ds_atto" />
+	<persistentProperty
+		name="cd_protocollo" />
+	<persistentProperty
+		name="oggetto" />
+	<persistentProperty
+		name="cd_tipo_incarico" />
+	<persistentProperty
+		name="cd_tipo_attivita" />
+	<persistentProperty
+		name="tipo_natura" />
+	<persistentProperty
+		name="fl_meramente_occasionale" />
+	<persistentProperty
+		name="esercizio_padre" />
+	<persistentProperty
+		name="pg_procedura_padre" />
+	<persistentProperty
+		name="importo_lordo" />
+	<persistentProperty
+		name="importo_complessivo" />
+	<persistentProperty
+		name="fl_pubblica_contratto" />
+	<persistentProperty
+		name="nr_contratti" />
+	<persistentProperty
+		name="nr_contratti_iniziale" />
+	<persistentProperty
+		name="fl_art51" />
+	<persistentProperty
+		name="fl_sbloccato" />
+	<persistentProperty
+		name="ds_motivazione_sblocco" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

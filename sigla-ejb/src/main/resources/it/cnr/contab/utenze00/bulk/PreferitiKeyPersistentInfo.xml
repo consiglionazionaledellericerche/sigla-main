@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.PreferitiKey">
+	<defaultColumnMap
+		tableName="PREFERITI">
+		<columnMapping
+			columnName="CD_UTENTE"
+			propertyName="cd_utente"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="BUSINESS_PROCESS"
+			propertyName="business_process"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TI_FUNZIONE"
+			propertyName="ti_funzione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_utente"
+		partOfOid="true" />
+	<persistentProperty
+		name="business_process"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_funzione"
+		partOfOid="true" />
+</SQLPersistentInfo>

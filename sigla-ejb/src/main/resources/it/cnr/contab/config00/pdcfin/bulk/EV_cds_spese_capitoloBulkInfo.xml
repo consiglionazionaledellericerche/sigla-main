@@ -1,0 +1,15 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<columnFieldProperty
+		name="cd_capoconto_fin"
+		/>
+	
+	<findFieldProperty
+		name="cd_elemento_padre"
+		/>
+	<findFieldProperty
+		name="cd_capoconto_fin"
+		/>
+</bulkInfo>

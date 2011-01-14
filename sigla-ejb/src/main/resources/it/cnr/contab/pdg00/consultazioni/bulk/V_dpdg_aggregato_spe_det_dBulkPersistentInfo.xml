@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.consultazioni.bulk.V_dpdg_aggregato_spe_det_dBulk"
+	homeClassName="it.cnr.contab.pdg00.consultazioni.bulk.V_dpdg_aggregato_spe_det_dHome">
+	<defaultColumnMap
+		tableName="V_DPDG_AGGREGATO_SPE_DET_D">
+	</defaultColumnMap>
+</SQLPersistentInfo>

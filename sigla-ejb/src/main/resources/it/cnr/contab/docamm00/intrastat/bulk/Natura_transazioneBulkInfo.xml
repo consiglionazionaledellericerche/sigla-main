@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ds_natura_transazione"
+		property="ds_natura_transazione"
+		maxLength="300"
+		inputType="TEXTAREA"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		cols="100"
+		rows="3"
+		nullable="false"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_natura_transazione"
+		property="cd_natura_transazione"
+		maxLength="5"
+		inputSize="5"
+		nullable="false"
+		inputType="TEXT"
+		readonlyProperty="ROnatura_transazione"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		maxLength="4"
+		inputSize="4"
+		nullable="false"
+		inputType="TEXT"
+		readonlyProperty="ROnatura_transazione"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Esercizio" />
+	<fieldProperty
+		name="id_natura_transazione"
+		property="id_natura_transazione"
+		nullable="false"
+		inputType="TEXT"
+		readonlyProperty="ROnatura_transazione"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Id. natura" />	
+	<fieldProperty
+		name="cd_oper_triangolare"
+		property="cd_oper_triangolare"
+		nullable="true"
+		inputType="TEXT"
+		readonlyProperty="ROnatura_transazione"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice Operazioni Triangolari" />	
+		
+	<formFieldProperty
+		name="id_natura_transazione" />	
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_oper_triangolare" />		
+	<formFieldProperty
+		name="cd_natura_transazione" />
+	<formFieldProperty
+		name="ds_natura_transazione" />
+
+	<columnFieldProperty
+		name="id_natura_transazione" />	
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_oper_triangolare" />		
+	<columnFieldProperty
+		name="cd_natura_transazione" />
+	<columnFieldProperty
+		name="ds_natura_transazione" />
+		
+	<findFieldProperty
+		name="id_natura_transazione" />	
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_oper_triangolare" />		
+	<findFieldProperty
+		name="cd_natura_transazione" />
+	<findFieldProperty
+		name="ds_natura_transazione" />		
+	
+
+</bulkInfo>

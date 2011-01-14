@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk"
+	homeClassName="it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoHome">
+	<defaultColumnMap
+		tableName="INCARICHI_REPERTORIO_ANNO">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="incarichi_repertorio.esercizio" />
+		<columnMapping
+			columnName="PG_REPERTORIO"
+			propertyName="incarichi_repertorio.pg_repertorio" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="incarichi_repertorio"
+		partOfOid="true" />
+</SQLPersistentInfo>

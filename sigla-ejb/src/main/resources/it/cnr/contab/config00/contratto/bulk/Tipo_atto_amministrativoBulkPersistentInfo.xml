@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.contratto.bulk.Tipo_atto_amministrativoBulk"
+	homeClassName="it.cnr.contab.config00.contratto.bulk.Tipo_atto_amministrativoHome">
+	<defaultColumnMap
+		tableName="TIPO_ATTO_AMMINISTRATIVO">
+	</defaultColumnMap>
+</SQLPersistentInfo>

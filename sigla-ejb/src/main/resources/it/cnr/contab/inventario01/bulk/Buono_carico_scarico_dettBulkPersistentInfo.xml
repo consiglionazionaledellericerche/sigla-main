@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettBulk"
+	homeClassName="it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettHome">
+	<defaultColumnMap
+		tableName="BUONO_CARICO_SCARICO_DETT">
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="buono_cs.inventario.pg_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="TI_DOCUMENTO"
+			propertyName="buono_cs.ti_documento"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="buono_cs.esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_BUONO_C_S"
+			propertyName="buono_cs.pg_buono_c_s"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="NR_INVENTARIO"
+			propertyName="bene.nr_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="PROGRESSIVO"
+			propertyName="bene.progressivo"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="bene.inventario.pg_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />	
+			
+	</defaultColumnMap>
+	<persistentProperty
+		name="buono_cs"
+		partOfOid="true" />
+	<persistentProperty
+		name="bene"
+		partOfOid="true" />
+		
+</SQLPersistentInfo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.progettiric00.core.bulk.Progetto_partner_esternoBulk"
+	homeClassName="it.cnr.contab.progettiric00.core.bulk.Progetto_partner_esternoHome" >
+	<defaultColumnMap
+		tableName="PROGETTO_PARTNER_ESTERNO" >
+		<columnMapping
+			columnName="CD_PARTNER_ESTERNO"
+			propertyName="partner_esterno.cd_terzo"
+			fetchOnly="false" />
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="partner_esterno" 
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Uo" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_documento"
+		property="pg_documento"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Nr. Documento" />
+	<fieldProperty
+		name="progressivo_riga"
+		property="progressivo_riga"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Riga" />
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		label="Tipo Documento" />
+	<fieldProperty
+		name="im_imponibile"
+		property="im_imponibile"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Imponibile" />
+	<fieldProperty
+		name="im_iva"
+		property="im_iva"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		inputSize="22"
+		maxLength="22"
+		label="Iva" />
+	<fieldProperty
+		name="pg_inventario"
+		property="pg_inventario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Cod. Inventario" />
+	<fieldProperty
+		name="nr_inventario"
+		property="nr_inventario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Nr. Inventario" />
+	<fieldProperty
+		name="progressivo"
+		property="progressivo"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="Prog. Inventario" />
+	<fieldProperty
+		name="valore_unitario"
+		property="valore_unitario"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		inputSize="20"
+		maxLength="20"
+		label="Valore" />
+	<fieldProperty
+		name="ti_documento"
+		property="ti_documento"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Tipo Buono" />
+	<fieldProperty
+		name="pg_buono_c_s"
+		property="pg_buono_c_s"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Nr. Buono" />
+	<fieldProperty
+		name="esercizio_imp"
+		property="esercizio_imp"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Impegno" />
+	<fieldProperty
+		name="cds_imp"
+		property="cds_imp"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds Impegno" />
+	<fieldProperty
+		name="esercizio_originale"
+		property="esercizio_originale"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio originale" />
+	<fieldProperty
+		name="pg_obbligazione"
+		property="pg_obbligazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Nr. Impegno" />
+	<fieldProperty
+		name="pg_obbligazione_scadenzario"
+		property="pg_obbligazione_scadenzario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Scadenza" />
+	<fieldProperty
+		name="im_scadenza"
+		property="im_scadenza"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Scadenza" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_documento" />
+	<formFieldProperty
+		name="progressivo_riga" />
+	<formFieldProperty
+		name="tipo" />
+	<formFieldProperty
+		name="im_imponibile" />
+	<formFieldProperty
+		name="im_iva" />
+	<formFieldProperty
+		name="pg_inventario" />
+	<formFieldProperty
+		name="nr_inventario" />
+	<formFieldProperty
+		name="progressivo" />
+	<formFieldProperty
+		name="valore_unitario" />
+	<formFieldProperty
+		name="ti_documento" />
+	<formFieldProperty
+		name="pg_buono_c_s" />
+	<formFieldProperty
+		name="esercizio_imp" />
+	<formFieldProperty
+		name="cds_imp" />
+	<formFieldProperty
+		name="esercizio_originale" />
+	<formFieldProperty
+		name="pg_obbligazione" />
+	<formFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<formFieldProperty
+		name="im_scadenza" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_documento" />
+	<findFieldProperty
+		name="progressivo_riga" />
+	<findFieldProperty
+		name="tipo" />
+	<findFieldProperty
+		name="im_imponibile" />
+	<findFieldProperty
+		name="im_iva" />
+	<findFieldProperty
+		name="pg_inventario" />
+	<findFieldProperty
+		name="nr_inventario" />
+	<findFieldProperty
+		name="progressivo" />
+	<findFieldProperty
+		name="valore_unitario" />
+	<findFieldProperty
+		name="ti_documento" />
+	<findFieldProperty
+		name="pg_buono_c_s" />
+	<findFieldProperty
+		name="esercizio_imp" />
+	<findFieldProperty
+		name="cds_imp" />
+	<findFieldProperty
+		name="esercizio_originale" />
+	<findFieldProperty
+		name="pg_obbligazione" />
+	<findFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<findFieldProperty
+		name="im_scadenza" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_documento" />
+	<columnFieldProperty
+		name="progressivo_riga" />
+	<columnFieldProperty
+		name="tipo" />
+	<columnFieldProperty
+		name="im_imponibile" />
+	<columnFieldProperty
+		name="im_iva" />
+	<columnFieldProperty
+		name="pg_inventario" />
+	<columnFieldProperty
+		name="nr_inventario" />
+	<columnFieldProperty
+		name="progressivo" />
+	<columnFieldProperty
+		name="valore_unitario" />
+	<columnFieldProperty
+		name="ti_documento" />
+	<columnFieldProperty
+		name="pg_buono_c_s" />
+	<columnFieldProperty
+		name="esercizio_imp" />
+	<columnFieldProperty
+		name="cds_imp" />
+	<columnFieldProperty
+		name="esercizio_originale" />
+	<columnFieldProperty
+		name="pg_obbligazione" />
+	<columnFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<columnFieldProperty
+		name="im_scadenza" />
+</bulkInfo>

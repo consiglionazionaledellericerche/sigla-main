@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.AccessoBase"
+	keyClassName="it.cnr.contab.utenze00.bulk.AccessoKey"
+	homeClassName="it.cnr.contab.utenze00.bulk.AccessoHome" >
+	<defaultColumnMap
+		tableName="ACCESSO" >
+		<columnMapping
+			columnName="TI_ACCESSO"
+			propertyName="ti_accesso"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_ACCESSO"
+			propertyName="ds_accesso"
+			sqlTypeName="VARCHAR"
+			columnSize="200" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ti_accesso" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="ds_accesso" />
+</SQLPersistentInfo>

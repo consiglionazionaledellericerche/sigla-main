@@ -1,0 +1,19 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.MandatoAccreditamento_terzoBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.MandatoAccreditamento_terzoHome" >
+	<defaultColumnMap
+		tableName="MANDATO_TERZO" >
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="mandatoAccreditamento.pg_mandato"/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="mandatoAccreditamento.esercizio" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="mandatoAccreditamento.cds.cd_unita_organizzativa" />
+	</defaultColumnMap>			
+	<persistentProperty
+		name="mandatoAccreditamento" 
+		partOfOid="true"/>	
+</SQLPersistentInfo>

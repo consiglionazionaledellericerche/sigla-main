@@ -1,0 +1,29 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.BancaBulk"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.BancaHome" >
+	<defaultColumnMap
+		tableName="BANCA" >
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzo.cd_terzo" />
+		<columnMapping
+			columnName="ABI"
+			propertyName="abi_cab.abi" />
+		<columnMapping
+			columnName="CAB"
+			propertyName="abi_cab.cab" />
+	</defaultColumnMap>  
+	
+	<columnMap
+		name="V_BANCA_ANAG"
+		tableName="V_BANCA_ANAG"
+		extends="default" >
+	</columnMap>
+	
+	<persistentProperty
+		name="terzo"
+		partOfOid="true" />
+	<persistentProperty
+		name="abi_cab"
+		/>
+</SQLPersistentInfo>

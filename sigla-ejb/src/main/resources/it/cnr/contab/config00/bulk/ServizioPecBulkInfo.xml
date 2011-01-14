@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Servizi possessori di PEC"
+	longDescription="Servizi possessori di PEC">
+	<fieldProperty
+		name="cdServizio"
+		property="cdServizio"
+		inputType="ROTEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="dsServizio"
+		property="dsServizio"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Descrizione del Servizio" />
+	<fieldProperty
+		name="email"
+		property="email"
+		inputType="TEXT"
+		maxLength="100"
+		inputSize="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="email" />
+	<fieldProperty
+		name="email2"
+		property="email2"
+		inputType="TEXT"
+		maxLength="100"
+		inputSize="30"
+		enabledOnEdit="false"
+		label="email2" />
+	<fieldProperty
+		name="email3"
+		property="email3"
+		inputType="TEXT"
+		maxLength="100"
+		inputSize="30"
+		enabledOnEdit="false"
+		label="email3" />
+	<fieldProperty
+		name="emailTest"
+		property="emailTest"
+		inputType="TEXT"
+		maxLength="100"
+		inputSize="30"
+		enabledOnEdit="false"
+		label="email PEC di test per ambienti di sviluppo/test" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdServizio" />
+	</form>
+	<formFieldProperty
+		name="cdServizio" />
+	<formFieldProperty
+		name="dsServizio" />
+	<formFieldProperty
+		name="email" />
+	<formFieldProperty
+		name="email2" />
+	<formFieldProperty
+		name="email3" />
+	<formFieldProperty
+		name="emailTest" />
+	<findFieldProperty
+		name="cdServizio" />
+	<findFieldProperty
+		name="dsServizio" />
+	<findFieldProperty
+		name="email" />
+	<findFieldProperty
+		name="email2" />
+	<findFieldProperty
+		name="email3" />
+	<findFieldProperty
+		name="emailTest" />
+	<columnFieldProperty
+		name="cdServizio" />
+	<columnFieldProperty
+		name="dsServizio" />
+	<columnFieldProperty
+		name="email" />
+	<columnFieldProperty
+		name="email2" />
+	<columnFieldProperty
+		name="email3" />
+	<columnFieldProperty
+		name="emailTest" />
+</bulkInfo>

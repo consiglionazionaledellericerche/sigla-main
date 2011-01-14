@@ -1,0 +1,247 @@
+package it.cnr.contab.compensi00.docs.bulk;
+
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.jada.util.OrderedHashtable;
+
+/**
+ * Insert the type's description here.
+ * Creation date: (27/01/2004 11.09.05)
+ * @author: Gennaro Borriello
+ */
+public class StampaCertificazioneVBulk extends it.cnr.jada.bulk.OggettoBulk {
+
+	// ESERCIZIO 
+	private java.lang.Integer esercizio;
+
+	// ANAGRAFICO
+	private AnagraficoBulk anagraficoForPrint;
+
+	// NOTE
+	private String note;
+	private String ti_cert;
+	//private boolean editingTi_cert; 
+
+	private static OrderedHashtable tipoKeys;
+	// Tipi di stampa
+	public static final String TI_ACCONTO = "RA";
+	public static final String TI_PREVIDENZIALE = "PR";
+	public static final String TI_IMPOSTA = "TI";
+	public static final String TI_IMPOSTA_CC = "CC";
+	public static final String TI_CONTRIBUTI = "RC";
+
+	private boolean stampaRit_prev;
+	private boolean stampaRit_acconto;
+	private boolean stampaTit_imposta;
+	private boolean stampaTit_imposta_cc;	
+	private boolean stampaRit_contrib;
+
+/**
+ * StampaCertificazioneVBulk constructor comment.
+ */
+public StampaCertificazioneVBulk() {
+	super();
+}
+
+public OrderedHashtable getTipoKeys() {
+	if (tipoKeys == null)
+	{
+		tipoKeys = new OrderedHashtable();
+		tipoKeys.put("RA", "a Ritenuta d'Acconto");
+		tipoKeys.put("PR", "a Ritenuta Previdenziale");	
+		tipoKeys.put("TI", "a Titolo d'Imposta");
+		tipoKeys.put("CC", "a Titolo d'Imposta - Co.Co.Co.");
+		tipoKeys.put("RC", "per Contributi corrisposti ad imprese");
+	}
+	return tipoKeys;
+}
+
+public static void setTipoKeys(OrderedHashtable hashtable) {
+	tipoKeys = hashtable;
+}
+
+/**
+ * Insert the method's description here.
+ * Creation date: (27/01/2004 11.34.50)
+ * @return it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk
+ */
+public it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk getAnagraficoForPrint() {
+	return anagraficoForPrint;
+}
+public String getCdAnagCRParameter() {
+
+	if (getAnagraficoForPrint()==null)
+		return "%";
+	if (getAnagraficoForPrint().getCd_anag()==null)
+		return "%";
+
+	return getAnagraficoForPrint().getCd_anag().toString();
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (27/01/2004 11.34.50)
+ * @return java.lang.Integer
+ */
+public java.lang.Integer getEsercizio() {
+	return esercizio;
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (27/01/2004 11.34.50)
+ * @return java.lang.String
+ */
+public java.lang.String getNote() {
+	return note;
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (27/01/2004 11.34.50)
+ * @return java.lang.String
+ */
+public java.lang.String getNoteForPrint() {
+
+	if (getNote() != null)
+		return getNote();
+
+	return " ";
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (13/02/2003 14.11.01)
+ * @return java.lang.String
+ */
+public Integer getTc() {
+	return new Integer(0);
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (13/02/2003 14.11.01)
+ * @return java.lang.String
+ */
+public String getTi_cert() {
+	return ti_cert;
+/*
+	if (isStampaRit_acconto())
+		return TI_ACCONTO;
+	else if (isStampaRit_prev())
+		return TI_PREVIDENZIALE;
+	else if (isStampaTit_imposta())
+		return TI_IMPOSTA;		
+	else if (isStampaTit_imposta_cc())
+		return TI_IMPOSTA_CC;
+    else
+    	return TI_CONTRIBUTI;
+    	*/
+}
+
+public boolean isROAnagraficoForPrint(){
+	return anagraficoForPrint == null || anagraficoForPrint.getCrudStatus() == NORMAL;
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (27/01/2004 12.14.31)
+ * @return boolean
+ */
+public boolean isStampaRit_acconto() {
+	return stampaRit_acconto;
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (27/01/2004 12.14.31)
+ * @return boolean
+ */
+public boolean isStampaRit_prev() {
+	return stampaRit_prev;
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (27/01/2004 12.14.31)
+ * @return boolean
+ */
+public boolean isStampaTit_imposta() {
+	return stampaTit_imposta;
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (27/01/2004 12.14.31)
+ * @return boolean
+ */
+public boolean isStampaRit_contrib() {
+	return stampaRit_contrib;
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (27/01/2004 11.34.50)
+ * @param newAnagraficoForPrint it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk
+ */
+public void setAnagraficoForPrint(it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk newAnagraficoForPrint) {
+	anagraficoForPrint = newAnagraficoForPrint;
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (27/01/2004 11.34.50)
+ * @param newEsercizio java.lang.Integer
+ */
+public void setEsercizio(java.lang.Integer newEsercizio) {
+	esercizio = newEsercizio;
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (27/01/2004 11.34.50)
+ * @param newNote java.lang.String
+ */
+public void setNote(java.lang.String newNote) {
+	note = newNote;
+}
+
+/**
+ * Insert the method's description here.
+ * Creation date: (27/01/2004 12.14.31)
+ * @param newStampaRit_acconto boolean
+ */
+public void setStampaRit_acconto(boolean newStampaRit_acconto) {
+	stampaRit_acconto = newStampaRit_acconto;
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (27/01/2004 12.14.31)
+ * @param newStampaRit_prev boolean
+ */
+public void setStampaRit_prev(boolean newStampaRit_prev) {
+	stampaRit_prev = newStampaRit_prev;
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (27/01/2004 12.14.31)
+ * @param newStampaRit_prev boolean
+ */
+public void setStampaRit_contrib(boolean newStampaRit_contrib) {
+	stampaRit_contrib = newStampaRit_contrib;
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (27/01/2004 12.14.31)
+ * @param newStampaTit_imposta boolean
+ */
+public void setStampaTit_imposta(boolean newStampaTit_imposta) {
+	stampaTit_imposta = newStampaTit_imposta;
+}
+	/**
+	 * @return
+	 */
+	public boolean isStampaTit_imposta_cc() {
+		return stampaTit_imposta_cc;
+	}
+
+	/**
+	 * @param b
+	 */
+	public void setStampaTit_imposta_cc(boolean b) {
+		stampaTit_imposta_cc = b;
+	}
+	/**
+	 * @param ti_cert The ti_cert to set.
+	 */
+	public void setTi_cert(String ti_cert) {
+		this.ti_cert = ti_cert;
+	}
+}

@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_reversaliBulk"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_reversaliHome">
+	<defaultColumnMap
+		tableName="V_CONS_SIOPE_REVERSALI">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_REVERSALE"
+			propertyName="pg_reversale"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_ACCERTAMENTO"
+			propertyName="esercizio_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ACCERTAMENTO"
+			propertyName="esercizio_ori_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="pg_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO_SCADENZARIO"
+			propertyName="pg_accertamento_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_DOC_AMM"
+			propertyName="cd_cds_doc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_DOC_AMM"
+			propertyName="cd_uo_doc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_DOC_AMM"
+			propertyName="esercizio_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_AMM"
+			propertyName="cd_tipo_documento_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_TIPO_DOC_AMM"
+			propertyName="ds_tipo_doc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_DOC_AMM"
+			propertyName="pg_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_SIOPE"
+			propertyName="esercizio_siope"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_SIOPE"
+			propertyName="cd_siope"
+			sqlTypeName="VARCHAR"
+			columnSize="45"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_SIOPE"
+			propertyName="ds_siope"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO"
+			propertyName="importo"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="false" />
+	<!-- 	<columnMapping
+			columnName="TOT_IM_SIOPE"
+			propertyName="tot_im_siope"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />  -->
+		<columnMapping
+			columnName="DT_EMISSIONE"
+			propertyName="dt_emissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_EMISSIONE_DA"
+			propertyName="dt_emissione_da"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_EMISSIONE_A"
+			propertyName="dt_emissione_a"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_INCASSO"
+			propertyName="dt_incasso"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_INCASSO_DA"
+			propertyName="dt_incasso_da"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_INCASSO_A"
+			propertyName="dt_incasso_a"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_TRASMISSIONE"
+			propertyName="dt_trasmissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_TRASMISSIONE_DA"
+			propertyName="dt_trasmissione_da"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_TRASMISSIONE_A"
+			propertyName="dt_trasmissione_a"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="pg_reversale" />
+	<persistentProperty
+		name="esercizio_accertamento" />
+	<persistentProperty
+		name="esercizio_ori_accertamento" />
+	<persistentProperty
+		name="pg_accertamento" />
+	<persistentProperty
+		name="pg_accertamento_scadenzario" />
+	<persistentProperty
+		name="cd_cds_doc_amm" />
+	<persistentProperty
+		name="cd_uo_doc_amm" />
+	<persistentProperty
+		name="esercizio_doc_amm" />
+	<persistentProperty
+		name="cd_tipo_documento_amm" />
+	<persistentProperty
+		name="ds_tipo_doc_amm" />
+	<persistentProperty
+		name="pg_doc_amm" />
+	<persistentProperty
+		name="esercizio_siope" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="cd_siope" />
+	<persistentProperty
+		name="ds_siope" />
+	<persistentProperty
+		name="importo" />
+<!--  	<persistentProperty
+		name="tot_im_siope" /> -->
+	<persistentProperty
+		name="dt_emissione" />
+<!--	<persistentProperty
+		name="dt_emissione_da" />
+	<persistentProperty
+		name="dt_emissione_a" /> -->
+	<persistentProperty
+		name="dt_incasso" />
+<!--	<persistentProperty
+		name="dt_incasso_da" />
+	<persistentProperty
+		name="dt_incasso_a" /> -->
+	<persistentProperty
+		name="dt_trasmissione" />
+<!--	<persistentProperty
+		name="dt_trasmissione_da" />
+	<persistentProperty
+		name="dt_trasmissione_a" /> -->
+		
+	<columnMap 
+		name="BASE"
+		tableName="V_CONS_SIOPE_REVERSALI">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_SIOPE"
+			propertyName="cd_siope"
+			sqlTypeName="VARCHAR"
+			columnSize="45"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_SIOPE"
+			propertyName="ds_siope"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO"
+			propertyName="importo"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />	
+		</columnMap>
+		
+		<columnMap 
+		name="BASEDETT"
+		tableName="V_CONS_SIOPE_REVERSALI">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_REVERSALE"
+			propertyName="pg_reversale"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_ACCERTAMENTO"
+			propertyName="esercizio_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ACCERTAMENTO"
+			propertyName="esercizio_ori_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="pg_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO_SCADENZARIO"
+			propertyName="pg_accertamento_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_DOC_AMM"
+			propertyName="cd_cds_doc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_DOC_AMM"
+			propertyName="cd_uo_doc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_DOC_AMM"
+			propertyName="esercizio_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_AMM"
+			propertyName="cd_tipo_documento_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_TIPO_DOC_AMM"
+			propertyName="ds_tipo_doc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_DOC_AMM"
+			propertyName="pg_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_SIOPE"
+			propertyName="esercizio_siope"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_SIOPE"
+			propertyName="cd_siope"
+			sqlTypeName="VARCHAR"
+			columnSize="45"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_SIOPE"
+			propertyName="ds_siope"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO"
+			propertyName="importo"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_EMISSIONE"
+			propertyName="dt_emissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_INCASSO"
+			propertyName="dt_incasso"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_TRASMISSIONE"
+			propertyName="dt_trasmissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		</columnMap>
+</SQLPersistentInfo>

@@ -1,0 +1,37 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<formFieldProperty
+		name="cd_cap"
+		nullable="false" />
+	<formFieldProperty
+		name="cd_provincia"
+		nullable="false" />
+	<formFieldProperty
+		name="ds_provincia"
+		nullable="false" />
+
+	<columnSet name="comuneItaliano">
+		<columnFieldProperty name="pg_comune" />
+		<columnFieldProperty name="ds_comune" />
+		<columnFieldProperty name="cd_comune" />
+		<columnFieldProperty name="cd_catastale" />
+		<columnFieldProperty name="cd_cap" />
+		<columnFieldProperty
+			name="cd_provincia"
+			label="Provincia" />
+	</columnSet>
+
+	<freeSearchSet name="comuneItalianoFreeSearchSet">
+		<findFieldProperty name="pg_comune" />
+		<findFieldProperty name="ds_comune" />
+		<findFieldProperty name="cd_comune" />
+		<findFieldProperty name="cd_catastale" />
+		<findFieldProperty name="cd_cap" />
+		<findFieldProperty name="cd_provincia" />
+		<findFieldProperty name="dt_canc" />
+	</freeSearchSet>
+
+</bulkInfo>

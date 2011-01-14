@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="ROTEXT"
+		maxLength="10"
+		inputSize="10"
+		label="CDS"/>
+		
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio" />
+
+	<fieldProperty
+		name="dataInizio"
+		property="dataInizio"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Dalla data"/>
+	<fieldProperty
+		name="dataFine"
+		property="dataFine"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Alla data" />
+	<fieldProperty
+		name="ti_entrata_spesa"
+		property="ti_entrata_spesa"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		label="Entrata/Spesa"
+		keysProperty="ti_entrata_spesaKeys"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"/>
+		
+	<formFieldProperty name="cd_cds" />		
+	<formFieldProperty name="dataInizio" />
+	<formFieldProperty name="dataFine" />
+	<formFieldProperty name="ti_entrata_spesa" />
+	<formFieldProperty name="esercizio" />
+
+</bulkInfo>

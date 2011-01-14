@@ -1,0 +1,975 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.docs.bulk.CompensoBase"
+	keyClassName="it.cnr.contab.compensi00.docs.bulk.CompensoKey"
+	homeClassName="it.cnr.contab.compensi00.docs.bulk.CompensoHome" >
+	<defaultColumnMap
+		tableName="COMPENSO" >
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="DS_COMPENSO"
+			propertyName="ds_compenso"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_RECUPERO_RATE"
+			propertyName="fl_recupero_rate"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_INTERA_QFISSA_DEDUZIONE"
+			propertyName="fl_intera_qfissa_deduzione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="TI_ISTITUZ_COMMERC"
+			propertyName="ti_istituz_commerc"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO_COAN"
+			propertyName="stato_coan"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="QUOTA_ESENTE"
+			propertyName="quota_esente"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dt_cancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DETRAZIONE_ALTRI_NETTO"
+			propertyName="detrazione_altri_netto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_PAGAMENTO_FONDO_ECO"
+			propertyName="dt_pagamento_fondo_eco"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="IM_NETTO_PERCIPIENTE"
+			propertyName="im_netto_percipiente"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="NR_FATTURA_FORNITORE"
+			propertyName="nr_fattura_fornitore"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="CD_TERMINI_PAG_UO_CDS"
+			propertyName="cd_termini_pag_uo_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="ALIQUOTA_IRPEF_TASSEP"
+			propertyName="aliquota_irpef_tassep"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			columnScale="6"
+			nullable="false" />
+		<columnMapping
+			columnName="DETRAZIONE_CONIUGE_NETTO"
+			propertyName="detrazione_coniuge_netto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="cd_modalita_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TRATTAMENTO"
+			propertyName="cd_trattamento"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_DEDUZIONE_IRPEF"
+			propertyName="im_deduzione_irpef"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPONIBILE_INAIL"
+			propertyName="imponibile_inail"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_DETRAZIONE_PERSONALE_ANAG"
+			propertyName="im_detrazione_personale_anag"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_PAGAMENTO_MANDATO"
+			propertyName="dt_pagamento_mandato"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="TI_ASSOCIATO_MANREV"
+			propertyName="ti_associato_manrev"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_LORDO_PERCIPIENTE"
+			propertyName="im_lordo_percipiente"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="NUMERO_GIORNI"
+			propertyName="numero_giorni"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_MODALITA_PAG_UO_CDS"
+			propertyName="cd_modalita_pag_uo_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="STATO_COGE"
+			propertyName="stato_coge"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_PROVINCIA_ADD"
+			propertyName="cd_provincia_add"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_MISSIONE"
+			propertyName="cd_uo_missione"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ACCERTAMENTO"
+			propertyName="esercizio_ori_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="pg_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="DT_A_COMPETENZA_COGE"
+			propertyName="dt_a_competenza_coge"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_FATTURA_FORNITORE"
+			propertyName="esercizio_fattura_fornitore"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_CDR_GENRC"
+			propertyName="cd_cdr_genrc"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_UO_DOC_GENRC"
+			propertyName="cd_uo_doc_genrc"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_TIPO_DOC_GENRC"
+			propertyName="cd_tipo_doc_genrc"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="IM_CR_PERCIPIENTE"
+			propertyName="im_cr_percipiente"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_MISSIONE"
+			propertyName="esercizio_missione"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_CDS_DOC_GENRC"
+			propertyName="cd_cds_doc_genrc"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA_GENRC"
+			propertyName="cd_linea_attivita_genrc"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="STATO_COFI"
+			propertyName="stato_cofi"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_ACCERTAMENTO"
+			propertyName="cd_cds_accertamento"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="FL_ACCANTONA_ADD_TERR"
+			propertyName="fl_accantona_add_terr"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="ESERCIZIO_ACCERTAMENTO"
+			propertyName="esercizio_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="DETRAZIONI_LA"
+			propertyName="detrazioni_la"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="ALIQUOTA_FISCALE"
+			propertyName="aliquota_fiscale"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			columnScale="3" />
+		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partita_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="CD_REGIONE_IRAP"
+			propertyName="cd_regione_irap"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE"
+			propertyName="cd_cds_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPONIBILE_FISCALE_NETTO"
+			propertyName="imponibile_fiscale_netto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="ALIQUOTA_IRPEF_DA_MISSIONE"
+			propertyName="aliquota_irpef_da_missione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			columnScale="6"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="CD_UO_ORIGINE"
+			propertyName="cd_uo_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO_UO_CDS"
+			propertyName="cd_terzo_uo_cds"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="PG_MISSIONE"
+			propertyName="pg_missione"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO_SCADENZARIO"
+			propertyName="pg_accertamento_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_TIPOLOGIA_RISCHIO"
+			propertyName="cd_tipologia_rischio"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="DETRAZIONE_CONIUGE"
+			propertyName="detrazione_coniuge"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_DOC_GENRC"
+			propertyName="pg_doc_genrc"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="IM_CR_ENTE"
+			propertyName="im_cr_ente"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_VOCE_IVA"
+			propertyName="cd_voce_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="esercizio_ori_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="FL_DIARIA"
+			propertyName="fl_diaria"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="pg_banca"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DETRAZIONI_PERSONALI_NETTO"
+			propertyName="detrazioni_personali_netto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_COMPENSO_CONGUAGLIO"
+			propertyName="fl_compenso_conguaglio"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DT_TRASMISSIONE_MANDATO"
+			propertyName="dt_trasmissione_mandato"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="STATO_PAGAMENTO_FONDO_ECO"
+			propertyName="stato_pagamento_fondo_eco"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_COMPENSO_MINICARRIERA"
+			propertyName="fl_compenso_minicarriera"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DETRAZIONE_FIGLI"
+			propertyName="detrazione_figli"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DETRAZIONI_LA_NETTO"
+			propertyName="detrazioni_la_netto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_RAPPORTO"
+			propertyName="cd_tipo_rapporto"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_BANCA_UO_CDS"
+			propertyName="pg_banca_uo_cds"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_CDS_MISSIONE"
+			propertyName="cd_cds_missione"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="FL_COMPENSO_MCARRIERA_TASSEP"
+			propertyName="fl_compenso_mcarriera_tassep"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_COMPENSO_STIPENDI"
+			propertyName="fl_compenso_stipendi"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DT_DA_COMPETENZA_COGE"
+			propertyName="dt_da_competenza_coge"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_SENZA_CALCOLI"
+			propertyName="fl_senza_calcoli"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="IMPONIBILE_FISCALE"
+			propertyName="imponibile_fiscale"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_DOC_GENRC"
+			propertyName="esercizio_doc_genrc"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_ESCLUDI_QVARIA_DEDUZIONE"
+			propertyName="fl_escludi_qvaria_deduzione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="DETRAZIONE_ALTRI"
+			propertyName="detrazione_altri"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_ANAGRAFICO"
+			propertyName="ti_anagrafico"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPONIBILE_IVA"
+			propertyName="imponibile_iva"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="CD_CDS_OBBLIGAZIONE"
+			propertyName="cd_cds_obbligazione"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="esercizio_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_REGIONE_ADD"
+			propertyName="cd_regione_add"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="DT_FATTURA_FORNITORE"
+			propertyName="dt_fattura_fornitore"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DETRAZIONE_FIGLI_NETTO"
+			propertyName="detrazione_figli_netto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="RAGIONE_SOCIALE"
+			propertyName="ragione_sociale"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="CD_TERMINI_PAG"
+			propertyName="cd_termini_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="QUOTA_ESENTE_NO_IVA"
+			propertyName="quota_esente_no_iva"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DETRAZIONI_PERSONALI"
+			propertyName="detrazioni_personali"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_COMUNE_ADD"
+			propertyName="pg_comune_add"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_NO_FISCALE"
+			propertyName="im_no_fiscale"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_GENERATA_FATTURA"
+			propertyName="fl_generata_fattura"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DT_EMISSIONE_MANDATO"
+			propertyName="dt_emissione_mandato"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="IM_TOTALE_COMPENSO"
+			propertyName="im_totale_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="QUOTA_ESENTE_INPS"
+			propertyName="quota_esente_inps"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />	
+		<columnMapping
+			columnName="CD_RAPPORTO_INPS"
+			propertyName="cd_rapporto_inps"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />				
+		<columnMapping
+			columnName="CD_ATTIVITA_INPS"
+			propertyName="cd_attivita_inps"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_ALTRA_ASS_INPS"
+			propertyName="cd_altra_ass_inps"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />	
+		<columnMapping
+			columnName="PG_COMUNE_INPS"
+			propertyName="pg_comune_inps"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />	
+		<columnMapping
+			columnName="IM_REDDITO_COMPLESSIVO"
+			propertyName="im_reddito_complessivo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_REDDITO_ABITAZ_PRINC"
+			propertyName="im_reddito_abitaz_princ"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		<columnMapping
+			columnName="ESERCIZIO_REP"
+			propertyName="esercizio_rep"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_REPERTORIO"
+			propertyName="pg_repertorio"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />	
+		<columnMapping
+			columnName="ESERCIZIO_LIMITE_REP"
+			propertyName="esercizio_limite_rep"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />		
+		<columnMapping
+			columnName="IM_NETTO_DA_TRATTENERE"
+			propertyName="im_netto_da_trattenere"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />																											
+		<columnMapping
+			columnName="TI_PRESTAZIONE"
+			propertyName="ti_prestazione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping	
+			columnName="ESERCIZIO_BONUS"
+			propertyName="esercizio_bonus"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_BONUS"
+			propertyName="pg_bonus"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />		
+		<columnMapping
+			columnName="FL_LIQUIDAZIONE_DIFFERITA"
+			propertyName="fl_liquidazione_differita"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+	</defaultColumnMap>
+	<persistentProperty
+		name="cognome" />
+	<persistentProperty
+		name="ds_compenso" />
+	<persistentProperty
+		name="fl_recupero_rate" />
+	<persistentProperty
+		name="fl_intera_qfissa_deduzione" />
+	<persistentProperty
+		name="stato_coan" />
+	<persistentProperty
+		name="quota_esente" />
+	<persistentProperty
+		name="ti_istituz_commerc" />
+	<persistentProperty
+		name="dt_cancellazione" />
+	<persistentProperty
+		name="detrazione_altri_netto" />
+	<persistentProperty
+		name="dt_pagamento_fondo_eco" />
+	<persistentProperty
+		name="im_netto_percipiente" />
+	<persistentProperty
+		name="nr_fattura_fornitore" />
+	<persistentProperty
+		name="cd_termini_pag_uo_cds" />
+	<persistentProperty
+		name="aliquota_irpef_tassep" />
+	<persistentProperty
+		name="detrazione_coniuge_netto" />
+	<persistentProperty
+		name="cd_modalita_pag" />
+	<persistentProperty
+		name="cd_trattamento" />
+	<persistentProperty
+		name="im_deduzione_irpef" />
+	<persistentProperty
+		name="imponibile_inail" />
+	<persistentProperty
+		name="dt_pagamento_mandato" />
+	<persistentProperty
+		name="im_detrazione_personale_anag" />
+	<persistentProperty
+		name="ti_associato_manrev" />
+	<persistentProperty
+		name="im_lordo_percipiente" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="numero_giorni" />
+	<persistentProperty
+		name="cd_modalita_pag_uo_cds" />
+	<persistentProperty
+		name="stato_coge" />
+	<persistentProperty
+		name="cd_provincia_add" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="cd_uo_missione" />
+	<persistentProperty
+		name="esercizio_ori_accertamento" />
+	<persistentProperty
+		name="pg_accertamento" />
+	<persistentProperty
+		name="dt_a_competenza_coge" />
+	<persistentProperty
+		name="esercizio_fattura_fornitore" />
+	<persistentProperty
+		name="cd_uo_doc_genrc" />
+	<persistentProperty
+		name="cd_cdr_genrc" />
+	<persistentProperty
+		name="cd_tipo_doc_genrc" />
+	<persistentProperty
+		name="im_cr_percipiente" />
+	<persistentProperty
+		name="esercizio_missione" />
+	<persistentProperty
+		name="cd_cds_doc_genrc" />
+	<persistentProperty
+		name="cd_linea_attivita_genrc" />
+	<persistentProperty
+		name="stato_cofi" />
+	<persistentProperty
+		name="cd_cds_accertamento" />
+	<persistentProperty
+		name="esercizio_accertamento" />
+	<persistentProperty
+		name="fl_accantona_add_terr" />
+	<persistentProperty
+		name="detrazioni_la" />
+	<persistentProperty
+		name="aliquota_fiscale" />
+	<persistentProperty
+		name="partita_iva" />
+	<persistentProperty
+		name="cd_regione_irap" />
+	<persistentProperty
+		name="cd_cds_origine" />
+	<persistentProperty
+		name="imponibile_fiscale_netto" />
+	<persistentProperty
+		name="aliquota_irpef_da_missione" />
+	<persistentProperty
+		name="pg_obbligazione_scadenzario" />
+	<persistentProperty
+		name="nome" />
+	<persistentProperty
+		name="cd_uo_origine" />
+	<persistentProperty
+		name="cd_terzo_uo_cds" />
+	<persistentProperty
+		name="pg_missione" />
+	<persistentProperty
+		name="pg_accertamento_scadenzario" />
+	<persistentProperty
+		name="cd_tipologia_rischio" />
+	<persistentProperty
+		name="detrazione_coniuge" />
+	<persistentProperty
+		name="pg_doc_genrc" />
+	<persistentProperty
+		name="im_cr_ente" />
+	<persistentProperty
+		name="esercizio_ori_obbligazione" />
+	<persistentProperty
+		name="pg_obbligazione" />
+	<persistentProperty
+		name="cd_voce_iva" />
+	<persistentProperty
+		name="fl_diaria" />
+	<persistentProperty
+		name="pg_banca" />
+	<persistentProperty
+		name="detrazioni_personali_netto" />
+	<persistentProperty
+		name="dt_trasmissione_mandato" />
+	<persistentProperty
+		name="fl_compenso_conguaglio" />
+	<persistentProperty
+		name="stato_pagamento_fondo_eco" />
+	<persistentProperty
+		name="fl_compenso_minicarriera" />
+	<persistentProperty
+		name="detrazione_figli" />
+	<persistentProperty
+		name="detrazioni_la_netto" />
+	<persistentProperty
+		name="cd_tipo_rapporto" />
+	<persistentProperty
+		name="pg_banca_uo_cds" />
+	<persistentProperty
+		name="cd_cds_missione" />
+	<persistentProperty
+		name="fl_compenso_mcarriera_tassep" />
+	<persistentProperty
+		name="dt_da_competenza_coge" />
+	<persistentProperty
+		name="fl_compenso_stipendi" />
+	<persistentProperty
+		name="fl_senza_calcoli" />
+	<persistentProperty
+		name="imponibile_fiscale" />
+	<persistentProperty
+		name="dt_registrazione" />
+	<persistentProperty
+		name="esercizio_doc_genrc" />
+	<persistentProperty
+		name="fl_escludi_qvaria_deduzione" />
+	<persistentProperty
+		name="codice_fiscale" />
+	<persistentProperty
+		name="detrazione_altri" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="ti_anagrafico" />
+	<persistentProperty
+		name="imponibile_iva" />
+	<persistentProperty
+		name="cd_cds_obbligazione" />
+	<persistentProperty
+		name="cd_regione_add" />
+	<persistentProperty
+		name="esercizio_obbligazione" />
+	<persistentProperty
+		name="dt_fattura_fornitore" />
+	<persistentProperty
+		name="detrazione_figli_netto" />
+	<persistentProperty
+		name="ragione_sociale" />
+	<persistentProperty
+		name="cd_termini_pag" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="quota_esente_no_iva" />
+	<persistentProperty
+		name="detrazioni_personali" />
+	<persistentProperty
+		name="pg_comune_add" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="im_no_fiscale" />
+	<persistentProperty
+		name="dt_emissione_mandato" />
+	<persistentProperty
+		name="fl_generata_fattura" />
+	<persistentProperty
+		name="im_totale_compenso" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="quota_esente_inps" />	
+	<persistentProperty
+		name="cd_rapporto_inps" />				
+	<persistentProperty
+		name="cd_attivita_inps" />				
+	<persistentProperty
+		name="cd_altra_ass_inps" />		
+	<persistentProperty
+		name="pg_comune_inps" />	
+	<persistentProperty
+		name="im_reddito_complessivo" />										
+	<persistentProperty
+		name="im_reddito_abitaz_princ" />												
+	<persistentProperty
+		name="esercizio_rep" />		
+	<persistentProperty
+		name="pg_repertorio" />		
+	<persistentProperty
+		name="esercizio_limite_rep" />						
+	<persistentProperty
+		name="im_netto_da_trattenere" />								
+	<persistentProperty
+		name="ti_prestazione" />
+	<persistentProperty
+		name="esercizio_bonus" />		
+	<persistentProperty
+		name="pg_bonus" />		
+	<persistentProperty
+		name="fl_liquidazione_differita" />			
+</SQLPersistentInfo>

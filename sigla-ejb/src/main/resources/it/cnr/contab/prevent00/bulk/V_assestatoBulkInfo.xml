@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	shortDescription="Situazione assestato"
+	longDescription="Situazione assestato" >
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="esercizio_res"
+		property="esercizio_res"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="Esercizio residuo" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="Centro di responsabilità" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="G.A.E." />
+	<fieldProperty
+		name="ds_linea_attivita"
+		property="ds_linea_attivita"
+		inputType="TEXTAREA"
+		maxLength="300"
+		cols="60"
+		rows="5"
+		enabledOnEdit="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="cd_natura"
+		property="cd_natura"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="Natura" />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="Appartenenza" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="gestione" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="Capitolo" />
+	<fieldProperty
+		name="dett_imp_voce"
+		property="dett_imp_voce"
+		inputType="TEXTAREA"
+		maxLength="300"
+		cols="60"
+		rows="5" />
+	<fieldProperty
+		name="cd_modulo"
+		property="cd_modulo"
+		inputType="TEXTAREA"
+		inputSize="40"
+		maxLength="40"
+		label="Codice Modulo" />
+	<fieldProperty
+		name="stanziamento_iniziale"
+		property="stanziamento_iniziale"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Stanziamento iniziale" />
+	<fieldProperty
+		name="variazioni_positive"
+		property="variazioni_positive"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Variazioni positive" />
+	<fieldProperty
+		name="variazioni_negative"
+		property="variazioni_negative"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Variazioni negative" />
+	<fieldProperty
+		name="variazioni_residui_propri"
+		property="variazioni_residui_propri"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Variazioni Residui Propri" />
+	<fieldProperty
+		name="assestato_iniziale"
+		property="assestato_iniziale"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Assestato iniziale" />
+	<fieldProperty
+		name="importo_utilizzato"
+		property="importo_utilizzato"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Importo_utilizzato" />
+	<fieldProperty
+		name="importo_disponibile"
+		property="importo_disponibile"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Disponibilità" />
+	<fieldProperty
+		name="variazioni_provvisorie"
+		property="variazioni_provvisorie"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Provvisorie" />
+	<fieldProperty
+		name="variazioni_definitive"
+		property="variazioni_definitive"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Definitive" />
+	<fieldProperty
+		name="assestato_finale"
+		property="assestato_finale"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Totale" />
+	<fieldProperty
+		name="imp_da_assegnare"
+		property="imp_da_assegnare"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo da assegnare" />
+	<fieldProperty
+		name="prc_da_assegnare"
+		property="prc_da_assegnare"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		formatName="it.cnr.contab.util.PercentFormat"
+		label="Percentuale da assegnare" />
+	<fieldProperty
+		name="importo_disponibile_netto"
+		property="importo_disponibile_netto"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Disponibilità" />
+
+	<formFieldProperty
+		name="imp_da_assegnare" />
+	<formFieldProperty
+		name="prc_da_assegnare" />
+
+	<columnFieldProperty
+		name="cd_centro_responsabilita"
+		enabledOnInsert="false" />
+	<columnFieldProperty
+		name="cd_linea_attivita"
+		enabledOnInsert="false" />
+	<columnFieldProperty
+		name="cd_elemento_voce"
+		enabledOnInsert="false" />
+	<columnFieldProperty
+		name="cd_modulo"
+		enabledOnInsert="false"
+		enabledOnEdit="false" />
+	<columnFieldProperty
+		name="importo_disponibile"
+		enabledOnInsert="false"
+		columnStyle="text-align: right" />
+	<columnFieldProperty
+		name="variazioni_provvisorie"
+		enabledOnInsert="false"
+		headerLabel="Variazioni in attesa da approvazione"
+		columnStyle="text-align: right" />
+	<columnFieldProperty
+		name="variazioni_definitive"
+		enabledOnInsert="false"
+		headerLabel="Variazioni in attesa da approvazione"
+		columnStyle="text-align: right" />
+	<columnFieldProperty
+		name="assestato_finale"
+		enabledOnInsert="false"
+		columnStyle="text-align: right" />
+	<columnFieldProperty
+		name="imp_da_assegnare"
+		columnStyle="text-align: right;" />
+	<columnFieldProperty
+		name="importo_disponibile_netto"
+		enabledOnInsert="false"
+		columnStyle="text-align: right" />
+
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="variazioni_provvisorie"
+		label="Variazioni provvisorie" />
+	<findFieldProperty
+		name="variazioni_definitive"
+		label="Variazioni definitive" />
+	<findFieldProperty
+		name="assestato_finale" />
+
+	<columnSet
+		name="modalitaInserimentoPercentuali" >
+		<columnFieldProperty
+			name="cd_centro_responsabilita"
+			enabledOnInsert="false" />
+		<columnFieldProperty
+			name="cd_linea_attivita"
+			enabledOnInsert="false" />
+		<columnFieldProperty
+			name="ds_linea_attivita"
+			enabledOnInsert="false" />
+		<columnFieldProperty
+			name="cd_natura"
+			enabledOnInsert="false" />
+		<columnFieldProperty
+			name="importo_disponibile_netto"
+			inputType="DESCTOOL"
+			descProperty="dett_imp_voce"
+			enabledOnInsert="false"
+			columnStyle="text-align: right" />
+		<columnFieldProperty
+			name="prc_da_assegnare"
+			label="%"
+			headerLabel="Assegna"
+			headerStyle="text-align: center"
+			columnStyle="width:50px; text-align: right" 
+			command="doAssegnaPercentuale"/>
+		<columnFieldProperty
+			name="imp_da_assegnare"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			label="Importo"
+			headerLabel="Assegna"
+			columnStyle="text-align: right;" />
+	</columnSet>
+	<columnSet
+		name="modalitaInserimentoImporti" >
+		<columnFieldProperty
+			name="cd_centro_responsabilita"
+			enabledOnInsert="false" />
+		<columnFieldProperty
+			name="cd_linea_attivita"
+			enabledOnInsert="false" />
+		<columnFieldProperty
+			name="ds_linea_attivita"
+			enabledOnInsert="false" />
+		<columnFieldProperty
+			name="cd_natura"
+			enabledOnInsert="false" />
+		<columnFieldProperty
+			name="importo_disponibile_netto"
+			inputType="DESCTOOL"
+		    descProperty="dett_imp_voce"
+			enabledOnInsert="false"
+			columnStyle="text-align: right" />
+		<columnFieldProperty
+			name="prc_da_assegnare"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			label="%"
+			headerLabel="Assegna"
+			headerStyle="text-align: center"
+			columnStyle="width:50px; text-align: right" />
+		<columnFieldProperty
+			name="imp_da_assegnare"
+			label="Importo"
+			headerLabel="Assegna"
+			columnStyle="text-align: right;"
+			command="doAssegnaImporto"/>
+	</columnSet>
+	<columnSet
+		name="modalitaConsultazione" >
+		<columnFieldProperty
+			name="cd_centro_responsabilita"
+			enabledOnInsert="false" />
+		<columnFieldProperty
+			name="cd_linea_attivita"
+			enabledOnInsert="false" />
+		<columnFieldProperty
+			name="ds_linea_attivita"
+			enabledOnInsert="false" />
+		<columnFieldProperty
+			name="cd_natura"
+			enabledOnInsert="false" />
+		<columnFieldProperty
+			name="cd_modulo"
+			enabledOnInsert="false"
+			enabledOnEdit="false" />
+		<columnFieldProperty
+			name="importo_disponibile_netto"
+			inputType="DESCTOOL"
+			descProperty="dett_imp_voce"
+			enabledOnInsert="false"
+			columnStyle="text-align: right" />
+	</columnSet>
+</bulkInfo>

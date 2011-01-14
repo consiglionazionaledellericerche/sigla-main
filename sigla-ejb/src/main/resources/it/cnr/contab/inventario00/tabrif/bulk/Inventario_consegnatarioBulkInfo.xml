@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		maxLength="10"
+		inputSize="10"
+		label="Data Fine Validità"
+		inputType="TEXT"		
+		enabledOnFreeSearch = "true"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "false"
+		formatName="date_short" />
+	<fieldProperty
+		name="dataFineValidita"
+		property="dataFineValidita"
+		maxLength="10"
+		inputSize="10"
+		label="Data Fine Validità"
+		inputType="ROTEXT"
+		formatName="date_short"
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_inizio_validita"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable = "false"
+		formatName="date_short"
+		label="Data Inizio Validità"
+		enabledOnInsert="true"
+      	enabledOnEdit="false"
+		enabledOnSearch="false" />
+
+
+	/********************************
+	****** Attributi Complessi ******
+	********************************/
+
+	<fieldProperty
+		name="pg_inventario"
+		property="inventario.pg_inventario"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Inventario" />
+	<fieldProperty
+		name="ds_inventario"
+		property="inventario.ds_inventario"
+		maxLength="100"
+		inputSize="70"
+		inputType="ROTEXT"
+		label="Descrizione Inventario" />
+
+	/********************************
+	********** Search tool **********
+	********************************/
+
+	/* --> CONSEGNATARIO */
+	<fieldProperty
+		name="find_consegnatario"
+		property="consegnatario"
+		inputType="SEARCHTOOL"
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="false" 
+		label="Consegnatario"	/>
+	<fieldProperty
+		name="cd_consegnatario"
+		property="consegnatario.cd_terzo"
+		maxLength="8"
+		inputSize="10"
+		inputType="TEXT"
+		nullable = "false"
+		label="Consegnatario"		
+		enabledOnFreeSearch = "true"
+		enabledOnInsert = "true"
+		enabledOnEdit = "false"
+		enabledOnSearch = "false" />
+	<fieldProperty
+		name="ds_consegnatario"
+		property="ds_consegnatario"
+		maxLength="100"
+		inputSize="70"
+		inputType="ROTEXT"
+		label="Consegnatario"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="false" />		
+		
+	/* --> DELEGATO */
+	<fieldProperty
+		name="find_delegato"
+		property="delegato"
+		inputType="SEARCHTOOL"
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="false" 
+		label="Delegato"	/>
+	<fieldProperty
+		name="cd_delegato"
+		property="delegato.cd_terzo"
+		maxLength="8"
+		inputSize="10"
+		inputType="TEXT"
+		label="Delegato"		
+		enabledOnFreeSearch = "true"
+		enabledOnInsert = "true"
+		enabledOnEdit = "false"
+		enabledOnSearch = "false" />
+	<fieldProperty
+		name="ds_delegato"
+		property="ds_delegato"
+		maxLength="100"
+		inputSize="70"
+		inputType="ROTEXT"
+		label="Delegato"
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="false" />
+		
+	/*********************************************************/
+	
+	<formFieldProperty
+		name="ds_inventario" />
+	<formFieldProperty
+		name="pg_inventario" />
+
+	<formFieldProperty
+		name="cd_consegnatario" />
+	<formFieldProperty
+		name="ds_consegnatario" />
+	<formFieldProperty
+		name="find_consegnatario" />
+
+	<formFieldProperty
+		name="cd_delegato" />
+	<formFieldProperty
+		name="ds_delegato" />
+	<formFieldProperty
+		name="find_delegato" />
+
+	<formFieldProperty
+		name="dt_inizio_validita" />
+	<formFieldProperty
+		name="dataFineValidita" />
+
+	<columnFieldProperty
+		name="ds_consegnatario" />
+	<columnFieldProperty
+		name="ds_delegato" />
+	<columnFieldProperty
+		name="pg_inventario" />
+	<columnFieldProperty
+		name="dt_inizio_validita" />
+	<columnFieldProperty
+		name="dataFineValidita" />
+
+	<findFieldProperty
+		name="cd_delegato" />
+	<findFieldProperty
+		name="cd_consegnatario" />
+	<findFieldProperty
+		name="dt_inizio_validita" />
+	<findFieldProperty
+		name="dt_fine_validita" />
+
+</bulkInfo>

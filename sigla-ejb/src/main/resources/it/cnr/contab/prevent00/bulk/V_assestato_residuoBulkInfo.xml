@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Situazione assestato residuo"
+          longDescription="Situazione assestato residuo">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="esercizio_res"
+		property="esercizio_res"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio residuo" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="true"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Centro di responsabilità" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="G.A.E." />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Appartenenza" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="gestione" />
+	<fieldProperty
+		name="cd_voce"
+		property="cd_voce"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		inputSize="50"		
+		maxLength="50"
+		label="Capitolo" />
+	<fieldProperty
+		name="assestato_res"
+		property="assestato_res"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato residuo" />
+	<fieldProperty
+		name="tot_imp_res_imp"
+		property="tot_imp_res_imp"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="true"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale impegnato residuo improprio" />
+	<fieldProperty
+		name="disp_res_imp"
+		property="disp_res_imp"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Disponibilità" />
+	<fieldProperty
+		name="variazioni_provvisorie"
+		property="variazioni_provvisorie"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Provvisorie" />
+	<fieldProperty
+		name="variazioni_definitive"
+		property="variazioni_definitive"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Definitive" />
+	<fieldProperty
+		name="totale_da_poter_assegnare"
+		property="totale_da_poter_assegnare"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale" />
+		
+	<fieldProperty
+		name="imp_da_assegnare"
+		property="imp_da_assegnare"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo da assegnare"		
+		enabledOnEdit="true"
+		enabledOnInsert="true" />		
+		
+	<formFieldProperty
+		name="imp_da_assegnare" />
+		
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="cd_voce" />
+	<findFieldProperty
+		name="variazioni_provvisorie"
+		label="Variazioni provvisorie"/>
+	<findFieldProperty
+		name="variazioni_definitive"
+		label="Variazioni definitive"/>
+	<findFieldProperty
+		name="totale_da_poter_assegnare"/>
+		
+	<columnFieldProperty
+		name="cd_centro_responsabilita"
+		enabledOnEdit="false"
+		enabledOnInsert="false" />
+	<columnFieldProperty
+		name="cd_linea_attivita"
+		enabledOnEdit="false"
+		enabledOnInsert="false" />
+	<columnFieldProperty
+		name="cd_voce"
+		enabledOnEdit="false"
+		enabledOnInsert="false" />
+	<columnFieldProperty
+		name="disp_res_imp"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		columnStyle="text-align: right"/>
+	<columnFieldProperty
+		name="variazioni_provvisorie"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		columnStyle="text-align: right"
+		headerLabel="Variazioni in attesa da approvazione"/>
+	<columnFieldProperty
+		name="variazioni_definitive"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		columnStyle="text-align: right"
+		headerLabel="Variazioni in attesa da approvazione"/>
+	<columnFieldProperty
+		name="totale_da_poter_assegnare"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		columnStyle="text-align: right"/>
+	<columnFieldProperty
+		name="imp_da_assegnare"
+		columnStyle="text-align: right;"
+		command="doAssegnaImporto"/>
+</bulkInfo>

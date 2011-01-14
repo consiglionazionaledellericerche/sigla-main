@@ -1,0 +1,4 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.ImpegnoResiduoBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.ImpegnoResiduoHome" >
+</SQLPersistentInfo>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.latt.bulk.RisultatoBulk"
+	homeClassName="it.cnr.contab.config00.latt.bulk.RisultatoHome" >
+	<defaultColumnMap
+		tableName="RISULTATO" >
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="linea_attivita.centro_responsabilita.cd_centro_responsabilita" />
+        <columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="linea_attivita.cd_linea_attivita" />
+		<columnMapping
+			columnName="CD_TIPO_RISULTATO"
+			propertyName="tipo_risultato.cd_tipo_risultato" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="linea_attivita"
+		partOfOid="true" />
+	<persistentProperty
+		name="tipo_risultato" />
+</SQLPersistentInfo>

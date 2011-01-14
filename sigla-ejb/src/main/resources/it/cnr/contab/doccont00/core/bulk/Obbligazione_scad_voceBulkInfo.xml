@@ -1,0 +1,215 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		label="cd_cds"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		label="CdR"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="cd_fondo_ricerca"
+		property="cd_fondo_ricerca"
+		label="cd_fondo_ricerca"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		label="Codice GAE"
+		inputType="ROTEXT"
+		/>
+	<fieldProperty
+		name="cd_funzione"
+		property="cd_funzione"
+		label="Funzione"
+		inputType="ROTEXT"
+		/>
+	<fieldProperty
+		name="cd_natura"
+		property="cd_natura"
+		label="Natura"
+		inputType="ROTEXT"
+		/>
+	<fieldProperty
+		name="prc"
+		property="prc"
+		label="%"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.PercentFormat"
+		/>
+	<fieldProperty
+		name="cd_voce"
+		property="cd_voce"
+		label="Capitolo"
+		inputType="ROTEXT"
+		/>
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		label="esercizio"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="im_voce"
+		property="im_voce"
+		label="Importo"
+		inputType="TEXT"
+		maxLength="13"
+		inputSize="13"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		/>
+	<fieldProperty
+		name="esercizio_originale"
+		property="esercizio_originale"
+		label="esercizio_originale"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="pg_obbligazione"
+		property="pg_obbligazione"
+		label="pg_obbligazione"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="pg_obbligazione_scadenzario"
+		property="pg_obbligazione_scadenzario"
+		label="pg_obbligazione_scadenzario"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		label="ti_appartenenza"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		label="ti_gestione"
+		inputType="TEXT"
+		/>
+
+	<!-- <columnFieldProperty
+		name="cd_voce"
+		columnStyle="width:140px; text-align:left"
+		enabledOnEdit="false"
+		/>
+		 -->
+	<columnFieldProperty
+		name="cd_centro_responsabilita"
+		columnStyle="width:80px; text-align:left"
+		enabledOnEdit="false"		
+		/>
+	<columnFieldProperty
+		name="cd_linea_attivita"
+		enabledOnEdit="false"		
+		/>
+	<columnFieldProperty
+		name="cd_funzione"
+		enabledOnEdit="false"		
+		/>
+	<columnFieldProperty
+		name="cd_natura"
+		enabledOnEdit="false"		
+		/>
+	<columnFieldProperty
+		name="prc"
+		headerStyle="text-align: center"
+		columnStyle="width:50px; text-align: right"
+		enabledOnEdit="false"		
+		/>
+	<columnFieldProperty
+		name="im_voce"
+		columnStyle="width:80px; text-align: right"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		/>
+
+	
+
+
+	<formFieldProperty
+		name="cd_cds"
+		/>
+	<formFieldProperty
+		name="cd_centro_responsabilita"
+		/>
+	<formFieldProperty
+		name="cd_fondo_ricerca"
+		/>
+	<formFieldProperty
+		name="cd_linea_attivita"
+		/>
+	<formFieldProperty
+		name="cd_voce"
+		/>
+	<formFieldProperty
+		name="esercizio"
+		/>
+	<formFieldProperty
+		name="im_voce"
+		/>
+	<formFieldProperty
+		name="esercizio_originale"
+		/>
+	<formFieldProperty
+		name="pg_obbligazione"
+		/>
+	<formFieldProperty
+		name="pg_obbligazione_scadenzario"
+		/>
+	<formFieldProperty
+		name="ti_appartenenza"
+		/>
+	<formFieldProperty
+		name="ti_gestione"
+		/>
+
+	<findFieldProperty
+		name="cd_cds"
+		/>
+	<findFieldProperty
+		name="cd_centro_responsabilita"
+		/>
+	<findFieldProperty
+		name="cd_fondo_ricerca"
+		/>
+	<findFieldProperty
+		name="cd_linea_attivita"
+		/>
+	<findFieldProperty
+		name="cd_voce"
+		/>
+	<findFieldProperty
+		name="esercizio"
+		/>
+	<findFieldProperty
+		name="im_voce"
+		/>
+	<findFieldProperty
+		name="esercizio_originale"
+		/>
+	<findFieldProperty
+		name="pg_obbligazione"
+		/>
+	<findFieldProperty
+		name="pg_obbligazione_scadenzario"
+		/>
+	<findFieldProperty
+		name="ti_appartenenza"
+		/>
+	<findFieldProperty
+		name="ti_gestione"
+		/>
+
+
+</bulkInfo>

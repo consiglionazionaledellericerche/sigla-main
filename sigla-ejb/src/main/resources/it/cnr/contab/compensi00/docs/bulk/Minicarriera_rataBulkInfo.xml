@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds_compenso"
+		property="cd_cds_compenso"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CDS Compenso"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CDS" />
+	<fieldProperty
+		name="dt_inizio_rata"
+		property="dt_inizio_rata"
+		formatName="date_short"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Data inizio" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="UO" />
+	<fieldProperty
+		name="stato_ass_compenso"
+		property="stato_ass_compenso"
+		keysProperty="stato_ass_compensoKeys"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Stato ass. compenso"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_uo_compenso"
+		property="cd_uo_compenso"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="UO Compenso"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_minicarriera"
+		property="pg_minicarriera"
+		inputType="TEXT"
+		label="N. minicarriera" />
+	<fieldProperty
+		name="im_rata"
+		property="im_rata"
+		inputType="TEXT"
+		nullable="false"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Importo" />
+	<fieldProperty
+		name="esercizio_compenso"
+		property="esercizio_compenso"
+		inputType="TEXT"
+		label="Esercizio compenso" />
+	<fieldProperty
+		name="pg_compenso"
+		property="pg_compenso"
+		inputType="TEXT"
+		label="N. Compenso" />
+	<fieldProperty
+		name="dt_fine_rata"
+		property="dt_fine_rata"
+		formatName="date_short"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Data fine" />
+	<fieldProperty
+		name="dt_scadenza"
+		property="dt_scadenza"
+		formatName="date_short"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Data scadenza" />
+	<fieldProperty
+		name="pg_rata"
+		property="pg_rata"
+		inputType="ROTEXT"
+		label="Progressivo" />
+
+	<formFieldProperty
+		name="cd_cds_compenso" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="dt_inizio_rata" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="stato_ass_compenso" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_uo_compenso" />
+	<formFieldProperty
+		name="pg_minicarriera" />
+	<formFieldProperty
+		name="im_rata" />
+	<formFieldProperty
+		name="esercizio_compenso" />
+	<formFieldProperty
+		name="pg_compenso" />
+	<formFieldProperty
+		name="dt_fine_rata" />
+	<formFieldProperty
+		name="dt_scadenza" />
+	<formFieldProperty
+		name="pg_rata" />
+
+	<columnFieldProperty
+		name="pg_rata" />
+	<columnFieldProperty
+		name="im_rata" />
+	<columnFieldProperty
+		name="dt_inizio_rata" />
+	<columnFieldProperty
+		name="dt_fine_rata" />
+	<columnFieldProperty
+		name="dt_scadenza" />
+	<columnFieldProperty
+		name="stato_ass_compenso" />
+	<columnFieldProperty
+		name="pg_compenso" />
+	<columnFieldProperty
+		name="esercizio_compenso" />
+
+	<findFieldProperty
+		name="cd_cds_compenso" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="dt_inizio_rata" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="stato_ass_compenso" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_uo_compenso" />
+	<findFieldProperty
+		name="pg_minicarriera" />
+	<findFieldProperty
+		name="im_rata" />
+	<findFieldProperty
+		name="esercizio_compenso" />
+	<findFieldProperty
+		name="pg_compenso" />
+	<findFieldProperty
+		name="dt_fine_rata" />
+	<findFieldProperty
+		name="dt_scadenza" />
+	<findFieldProperty
+		name="pg_rata" />
+
+</bulkInfo>

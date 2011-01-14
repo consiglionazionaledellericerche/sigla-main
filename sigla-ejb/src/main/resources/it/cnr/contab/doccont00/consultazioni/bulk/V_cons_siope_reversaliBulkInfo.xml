@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS" />
+	<fieldProperty
+		name="find_cds"
+		property="cds"
+		inputType="SEARCHTOOL"
+		label="CDS"
+		readonlyProperty="ROFindCds"
+		enabledOnSearch="true"
+		completeOnSave="true" />
+	<fieldProperty
+		name="cds_cd"
+		property="cds.cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		readonlyProperty="ROFindCds"
+		label="CDS" />
+	<fieldProperty
+		name="cds_ds"
+		property="cds.ds_unita_organizzativa"
+		inputType="ROTEXT"
+		inputSize="60"
+		maxLength="60"
+		label="CDS" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_reversale"
+		property="pg_reversale"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Reversale" />
+	<fieldProperty
+		name="esercizio_accertamento"
+		property="esercizio_accertamento"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Accertamento" />
+	<fieldProperty
+		name="esercizio_ori_accertamento"
+		property="esercizio_ori_accertamento"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Residuo" />
+	<fieldProperty
+		name="pg_accertamento"
+		property="pg_accertamento"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Accertamento" />
+	<fieldProperty
+		name="pg_accertamento_scadenzario"
+		property="pg_accertamento_scadenzario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Scad." />
+	<fieldProperty
+		name="cd_cds_doc_amm"
+		property="cd_cds_doc_amm"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS Doc. Amm." />
+	<fieldProperty
+		name="cd_uo_doc_amm"
+		property="cd_uo_doc_amm"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="UO Doc. Amm." />
+	<fieldProperty
+		name="esercizio_doc_amm"
+		property="esercizio_doc_amm"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Doc. Amm." />
+	<fieldProperty
+		name="cd_tipo_documento_amm"
+		property="cd_tipo_documento_amm"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Tipo Doc. Amm." />
+	<fieldProperty
+		name="ds_tipo_doc_amm"
+		property="ds_tipo_doc_amm"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Tipo Doc. Amm." />
+	<fieldProperty
+		name="pg_doc_amm"
+		property="pg_doc_amm"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Num. Doc. Amm." />
+	<fieldProperty
+		name="esercizio_siope"
+		property="esercizio_siope"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Siope" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Gestione" />
+	<fieldProperty
+		name="cd_siope"
+		property="cd_siope"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="1"
+		maxLength="45"
+		label="Codice Siope" />
+	<fieldProperty
+		name="ds_siope"
+		property="ds_siope"
+		inputType="TEXTAREA"
+		cols="200"
+		rows="1"
+		maxLength="200"
+		label="Descrizione Siope" />
+	<fieldProperty
+		name="importo"
+		property="importo"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Siope" />
+<!--	<fieldProperty
+		name="tot_im_siope"
+		property="tot_im_siope"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Siope" /> -->
+	<fieldProperty
+		name="dt_emissione"
+		property="dt_emissione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Emissione" />
+	<fieldProperty
+		name="dt_emissione_da"
+		property="dt_emissione_da"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Da Data Emissione" />
+	<fieldProperty
+		name="dt_emissione_a"
+		property="dt_emissione_a"
+		inputType="TEXT"
+		formatName="date_short"
+		label="A Data Emissione" />
+	<fieldProperty
+		name="dt_incasso"
+		property="dt_incasso"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Riscontro" />
+	<fieldProperty
+		name="dt_incasso_da"
+		property="dt_incasso_da"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Da Data Riscontro" />
+	<fieldProperty
+		name="dt_incasso_a"
+		property="dt_incasso_a"
+		inputType="TEXT"
+		formatName="date_short"
+		label="A Data Riscontro" />
+	<fieldProperty
+		name="dt_trasmissione"
+		property="dt_trasmissione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Trasmissione" />
+	<fieldProperty
+		name="dt_trasmissione_da"
+		property="dt_trasmissione_da"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Da Data Trasmissione" />
+	<fieldProperty
+		name="dt_trasmissione_a"
+		property="dt_trasmissione_a"
+		inputType="TEXT"
+		formatName="date_short"
+		label="A Data Trasmissione" />
+		
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="find_cds" />
+	<formFieldProperty
+		name="cds_cd" />
+	<formFieldProperty
+		name="cds_ds" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_reversale" />
+	<formFieldProperty
+		name="esercizio_accertamento" />
+	<formFieldProperty
+		name="esercizio_ori_accertamento" />
+	<formFieldProperty
+		name="pg_accertamento" />
+	<formFieldProperty
+		name="pg_accertamento_scadenzario" />
+	<formFieldProperty
+		name="cd_cds_doc_amm" />
+	<formFieldProperty
+		name="cd_uo_doc_amm" />
+	<formFieldProperty
+		name="esercizio_doc_amm" />
+	<formFieldProperty
+		name="cd_tipo_documento_amm" />
+	<formFieldProperty
+		name="ds_tipo_doc_amm" />
+	<formFieldProperty
+		name="pg_doc_amm" />
+	<formFieldProperty
+		name="esercizio_siope" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_siope" />
+	<formFieldProperty
+		name="ds_siope" />
+	<formFieldProperty
+		name="importo" />
+<!--  	<formFieldProperty
+		name="tot_im_siope" /> -->
+	<formFieldProperty
+		name="dt_emissione" />
+	<formFieldProperty
+		name="dt_emissione_da" />
+	<formFieldProperty
+		name="dt_emissione_a" />
+	<formFieldProperty
+		name="dt_incasso" />
+	<formFieldProperty
+		name="dt_incasso_da" />
+	<formFieldProperty
+		name="dt_incasso_a" />
+	<formFieldProperty
+		name="dt_trasmissione" />
+	<formFieldProperty
+		name="dt_trasmissione_da" />
+	<formFieldProperty
+		name="dt_trasmissione_a" />
+		
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_reversale" />
+	<findFieldProperty
+		name="esercizio_accertamento" />
+	<findFieldProperty
+		name="esercizio_ori_accertamento" />
+	<findFieldProperty
+		name="pg_accertamento" />
+	<findFieldProperty
+		name="pg_accertamento_scadenzario" />
+	<findFieldProperty
+		name="cd_cds_doc_amm" />
+	<findFieldProperty
+		name="cd_uo_doc_amm" />
+	<findFieldProperty
+		name="esercizio_doc_amm" />
+	<findFieldProperty
+		name="cd_tipo_documento_amm" />
+	<findFieldProperty
+		name="pg_doc_amm" />
+	<findFieldProperty
+		name="esercizio_siope" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_siope" />
+	<findFieldProperty
+		name="ds_siope" />
+	<findFieldProperty
+		name="importo" />
+	
+	<findFieldProperty
+		name="dt_emissione" />
+	
+	<findFieldProperty
+		name="dt_incasso" />
+	
+	<findFieldProperty
+		name="dt_trasmissione" />
+	
+		
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_reversale" />
+	<columnFieldProperty
+		name="esercizio_accertamento" />
+	<columnFieldProperty
+		name="esercizio_ori_accertamento" />
+	<columnFieldProperty
+		name="pg_accertamento" />
+	<columnFieldProperty
+		name="pg_accertamento_scadenzario" />
+	<columnFieldProperty
+		name="cd_cds_doc_amm" />
+	<columnFieldProperty
+		name="cd_uo_doc_amm" />
+	<columnFieldProperty
+		name="esercizio_doc_amm" />
+	<columnFieldProperty
+		name="cd_tipo_documento_amm" />
+	<columnFieldProperty
+		name="ds_tipo_doc_amm" />
+	<columnFieldProperty
+		name="pg_doc_amm" />
+	<columnFieldProperty
+		name="esercizio_siope" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_siope" />
+	<columnFieldProperty
+		name="ds_siope" />
+	<columnFieldProperty
+		name="importo" />
+<!-- 	<columnFieldProperty
+		name="tot_im_siope" />  -->
+	<columnFieldProperty
+		name="dt_emissione" />
+	<columnFieldProperty
+		name="dt_emissione_da" />
+	<columnFieldProperty
+		name="dt_emissione_a" />
+	<columnFieldProperty
+		name="dt_incasso" />
+	<columnFieldProperty
+		name="dt_incasso_da" />
+	<columnFieldProperty
+		name="dt_incasso_a" />
+	<columnFieldProperty
+		name="dt_trasmissione" />
+	<columnFieldProperty
+		name="dt_trasmissione_da" />
+	<columnFieldProperty
+		name="dt_trasmissione_a" />
+	
+	<columnSet name="BASE">
+			<columnFieldProperty name="cd_cds" />
+			<columnFieldProperty name="cd_siope" />
+			<columnFieldProperty name="ds_siope" />
+			<columnFieldProperty name="importo" />
+		</columnSet>
+		
+		<columnSet name="BASEDETT">
+			<columnFieldProperty name="cd_cds" />
+			<columnFieldProperty name="cd_siope" />
+			<columnFieldProperty name="ds_siope" />
+			<columnFieldProperty name="pg_reversale" />
+			<columnFieldProperty name="dt_emissione" />
+			<columnFieldProperty name="dt_trasmissione" />
+			<columnFieldProperty name="dt_incasso" />
+			<columnFieldProperty name="esercizio_accertamento" />
+			<columnFieldProperty name="esercizio_ori_accertamento" />
+			<columnFieldProperty name="pg_accertamento" />
+			<columnFieldProperty name="pg_accertamento_scadenzario" />
+			<columnFieldProperty name="cd_cds_doc_amm" />
+			<columnFieldProperty name="cd_uo_doc_amm" />
+			<columnFieldProperty name="esercizio_doc_amm" />
+			<columnFieldProperty name="ds_tipo_doc_amm" />
+			<columnFieldProperty name="pg_doc_amm" />
+			<columnFieldProperty name="importo" />
+			</columnSet>
+		
+</bulkInfo>

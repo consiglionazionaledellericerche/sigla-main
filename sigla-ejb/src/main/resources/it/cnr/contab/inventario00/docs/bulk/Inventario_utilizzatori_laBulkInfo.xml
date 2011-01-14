@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="percentuale_utilizzo_cdr"
+		property="percentuale_utilizzo_cdr"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PositivePercentFormat"
+		maxLength="7"
+		inputSize="7"
+		label="Percentuale Utilizzo" />
+	
+	<fieldProperty
+		name="percentuale_utilizzo_la"
+		property="percentuale_utilizzo_la"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PositivePercentFormat"
+		maxLength="7"
+		inputSize="7"
+		nullable="false"
+		label="Percentuale GAE" />
+	<fieldProperty
+		name="nr_inventario"
+		property="nr_inventario"
+		inputType="TEXT"
+		label="nr_inventario" />
+	<fieldProperty
+		name="pg_inventario"
+		property="pg_inventario"
+		inputType="TEXT"
+		label="pg_inventario" />
+	
+	<fieldProperty
+		name="progressivo"
+		property="progressivo"
+		inputType="TEXT"
+		label="progressivo" />
+
+/********** Linea di Attivita' ******************************/
+	<fieldProperty
+		name="find_linea_attivita"
+		property="linea_attivita"
+		inputType="SEARCHTOOL" 		
+		label="GAE"
+		formName="searchtool" 		
+		enabledOnSearch="true"  />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="linea_attivita.cd_linea_attivita"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="6"
+		label="GAE"
+		nullable="false"		
+		readonlyProperty="ROlinea_attivita"
+		caseSensitiveSearch="false" />
+	
+
+/********** CdR ******************************/
+	<fieldProperty
+		name="find_cdr"
+		property="cdr"
+		inputType="SEARCHTOOL" 		
+		formName="searchtool" 		
+		label="CdR Utilizzatore"
+		enabledOnSearch="true"  />
+	<fieldProperty
+		name="cd_cdr"
+		property="cdr.cd_centro_responsabilita"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="6"
+		label="CdR Utilizzatore"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		nullable="false"
+		caseSensitiveSearch="false" />	
+
+	<formFieldProperty
+		name="find_cdr" />
+	<formFieldProperty
+		name="cd_cdr" />
+		
+	<formFieldProperty
+		name="find_linea_attivita" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	
+	<formFieldProperty
+		name="percentuale_utilizzo_la" />
+	<formFieldProperty
+		name="nr_inventario" />
+	<formFieldProperty
+		name="pg_inventario" />
+	<formFieldProperty
+		name="percentuale_utilizzo_cdr" />
+	<formFieldProperty
+		name="progressivo" />
+
+	<columnFieldProperty
+		name="cd_utilizzatore_cdr" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="percentuale_utilizzo_la" />
+	<columnFieldProperty
+		name="nr_inventario" />
+	<columnFieldProperty
+		name="pg_inventario" />
+	<columnFieldProperty
+		name="percentuale_utilizzo_cdr" />
+	<columnFieldProperty
+		name="progressivo" />
+
+	<findFieldProperty
+		name="cd_utilizzatore_cdr" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="percentuale_utilizzo_la" />
+	<findFieldProperty
+		name="nr_inventario" />
+	<findFieldProperty
+		name="pg_inventario" />
+	<findFieldProperty
+		name="percentuale_utilizzo_cdr" />
+	<findFieldProperty
+		name="progressivo" />
+
+	<columnSet name="utilizzatoriSet">			
+		<columnFieldProperty
+			name="cd_linea_attivita" />
+		<columnFieldProperty
+			name="percentuale_utilizzo_la" />
+	</columnSet>
+		
+
+</bulkInfo>

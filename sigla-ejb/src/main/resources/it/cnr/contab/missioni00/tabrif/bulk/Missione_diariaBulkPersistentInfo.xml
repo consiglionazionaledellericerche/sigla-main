@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.tabrif.bulk.Missione_diariaBulk"
+	homeClassName="it.cnr.contab.missioni00.tabrif.bulk.Missione_diariaHome" >
+	
+	<defaultColumnMap
+		tableName="MISSIONE_DIARIA" >
+		
+		<columnMapping
+			columnName="PG_NAZIONE"
+			propertyName="nazione.pg_nazione" />
+		<columnMapping
+			columnName="CD_GRUPPO_INQUADRAMENTO"
+			propertyName="gruppoInquadramento.cd_gruppo_inquadramento" />		
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="divisa.cd_divisa" />		
+		
+	</defaultColumnMap>
+	
+	<persistentProperty
+		name="nazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="gruppoInquadramento"
+		partOfOid="true" />
+	<persistentProperty
+		name="divisa" />
+		
+</SQLPersistentInfo>

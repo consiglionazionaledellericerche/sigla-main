@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.logs.bulk.Batch_controlBase"
+	keyClassName="it.cnr.contab.logs.bulk.Batch_controlKey"
+	homeClassName="it.cnr.contab.logs.bulk.Batch_controlHome" >
+	<defaultColumnMap
+		tableName="BATCH_CONTROL" >
+		<columnMapping
+			columnName="INTERVALLO"
+			propertyName="intervallo"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_ATTIVATO"
+			propertyName="fl_attivato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_EXEC_CONC"
+			propertyName="fl_exec_conc"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="MESSAGE"
+			propertyName="message"
+			sqlTypeName="VARCHAR"
+			columnSize="4000" />
+		<columnMapping
+			columnName="UTENTE"
+			propertyName="utente"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_JOB"
+			propertyName="pg_job"
+			sqlTypeName="DECIMAL"
+			columnSize="38" />
+		<columnMapping
+			columnName="DS_BATCH"
+			propertyName="ds_batch"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_PARTENZA"
+			propertyName="dt_partenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="intervallo" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="fl_attivato" />
+	<persistentProperty
+		name="fl_exec_conc" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="message" />
+	<persistentProperty
+		name="utente" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_job" />
+	<persistentProperty
+		name="ds_batch" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="dt_partenza" />
+</SQLPersistentInfo>

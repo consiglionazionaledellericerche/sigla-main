@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo>
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="ti_entrata_spesa"
+		property="ti_entrata_spesa"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="ti_entrata_spesa" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS" />
+	<fieldProperty
+		name="cd_cds_origine"
+		property="cd_cds_origine"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS Assegnatario" />
+	<fieldProperty
+		name="cd_sospeso"
+		property="cd_sospeso"
+		inputType="TEXT"
+		inputSize="24"
+		maxLength="24"
+		label="Codice" />
+	<fieldProperty
+		name="livello"
+		property="livello"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="livello" />
+	<fieldProperty
+		name="dt_registrazione"
+		property="dt_registrazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Registrazione" />
+	<fieldProperty
+		name="ds_anagrafico"
+		property="ds_anagrafico"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Descrizione" />
+	<fieldProperty
+		name="causale"
+		property="causale"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Causale" />
+	<fieldProperty
+		name="ti_cc_bi"
+		property="ti_cc_bi"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="ti_cc_bi" />
+	<fieldProperty
+		name="des_ti_cc_bi"
+		property="des_ti_cc_bi"
+		inputType="TEXT"
+		inputSize="14"
+		maxLength="14"
+		label="des_ti_cc_bi" />
+	<fieldProperty
+		name="stato_validita"
+		property="stato_validita"
+		inputType="TEXT"
+		inputSize="9"
+		maxLength="9"
+		label="Stato Validita" />
+	<fieldProperty
+		name="dt_storno"
+		property="dt_storno"
+		inputType="TEXT"
+		formatName="date_short"
+		label="dt_storno" />
+	<fieldProperty
+		name="im_sospeso"
+		property="im_sospeso"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo" />
+	<fieldProperty
+		name="im_associato"
+		property="im_associato"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="im_associato" />
+	<fieldProperty
+		name="im_da_associare"
+		property="im_da_associare"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="im_da_associare" />
+	<fieldProperty
+		name="ds_stato_sospeso"
+		property="ds_stato_sospeso"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="35"
+		label="Stato Associazione" />
+	<fieldProperty
+		name="im_ass_mod_1210"
+		property="im_ass_mod_1210"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="im_ass_mod_1210" />
+	<fieldProperty
+		name="cd_sospeso_padre"
+		property="cd_sospeso_padre"
+		inputType="TEXT"
+		inputSize="24"
+		maxLength="24"
+		label="cd_sospeso_padre" />
+	<fieldProperty
+		name="pg_man_rev"
+		property="pg_man_rev"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="pg_man_rev" />
+		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="ti_entrata_spesa" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_cds_origine" />
+	<formFieldProperty
+		name="cd_sospeso" />
+	<formFieldProperty
+		name="livello" />
+	<formFieldProperty
+		name="dt_registrazione" />
+	<formFieldProperty
+		name="ds_anagrafico" />
+	<formFieldProperty
+		name="causale" />
+	<formFieldProperty
+		name="ti_cc_bi" />
+	<formFieldProperty
+		name="des_ti_cc_bi" />
+	<formFieldProperty
+		name="stato_validita" />
+	<formFieldProperty
+		name="dt_storno" />
+	<formFieldProperty
+		name="im_sospeso" />
+	<formFieldProperty
+		name="im_associato" />
+	<formFieldProperty
+		name="im_da_associare" />
+	<formFieldProperty
+		name="ds_stato_sospeso" />
+	<formFieldProperty
+		name="im_ass_mod_1210" />
+	<formFieldProperty
+		name="cd_sospeso_padre" />
+	<formFieldProperty
+		name="pg_man_rev" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="ti_entrata_spesa" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_cds_origine" />
+	<findFieldProperty
+		name="cd_sospeso" />
+	<findFieldProperty
+		name="livello" />
+	<findFieldProperty
+		name="dt_registrazione" />
+	<findFieldProperty
+		name="ds_anagrafico" />
+	<findFieldProperty
+		name="causale" />
+	<findFieldProperty
+		name="ti_cc_bi" />
+	<findFieldProperty
+		name="des_ti_cc_bi" />
+	<findFieldProperty
+		name="stato_validita" />
+	<findFieldProperty
+		name="dt_storno" />
+	<findFieldProperty
+		name="im_sospeso" />
+	<findFieldProperty
+		name="im_associato" />
+	<findFieldProperty
+		name="im_da_associare" />
+	<findFieldProperty
+		name="ds_stato_sospeso" />
+	<findFieldProperty
+		name="im_ass_mod_1210" />
+	<findFieldProperty
+		name="cd_sospeso_padre" />
+	<findFieldProperty
+		name="pg_man_rev" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="ti_entrata_spesa" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_cds_origine" />
+	<columnFieldProperty
+		name="cd_sospeso" />
+	<columnFieldProperty
+		name="livello" />
+	<columnFieldProperty
+		name="dt_registrazione" />
+	<columnFieldProperty
+		name="ds_anagrafico" />
+	<columnFieldProperty
+		name="causale" />
+	<columnFieldProperty
+		name="ti_cc_bi" />
+	<columnFieldProperty
+		name="des_ti_cc_bi" />
+	<columnFieldProperty
+		name="stato_validita" />
+	<columnFieldProperty
+		name="dt_storno" />
+	<columnFieldProperty
+		name="im_sospeso" />
+	<columnFieldProperty
+		name="im_associato" />
+	<columnFieldProperty
+		name="im_da_associare" />
+	<columnFieldProperty
+		name="ds_stato_sospeso" />
+	<columnFieldProperty
+		name="im_ass_mod_1210" />
+	<columnFieldProperty
+		name="cd_sospeso_padre" />
+	<columnFieldProperty
+		name="pg_man_rev" />
+		
+	<!-- Consultazione Sospesi di Entrata -->
+	
+	<columnSet name="SOSREV">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cd_cds" />
+			<columnFieldProperty name="cd_sospeso"/>
+			<columnFieldProperty name="cd_cds_origine"/>
+			<columnFieldProperty name="dt_registrazione"/>
+			<columnFieldProperty name="ds_anagrafico"/>
+			<columnFieldProperty name="causale"/>
+			<columnFieldProperty name="des_ti_cc_bi" label="Conto di Accredito" />
+			<columnFieldProperty name="stato_validita"/>
+			<columnFieldProperty name="ds_stato_sospeso"/>
+			<columnFieldProperty name="im_sospeso"/>
+			<columnFieldProperty name="im_associato" label="Importo Associato a Reversali" />
+			<columnFieldProperty name="im_da_associare" label="Importo da Associare a Reversali" />
+	</columnSet>
+	
+	<columnSet name="SOSREVRDETT">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cd_cds" />
+			<columnFieldProperty name="cd_sospeso"/>
+			<columnFieldProperty name="cd_cds_origine"/>
+			<columnFieldProperty name="dt_registrazione"/>
+			<columnFieldProperty name="ds_anagrafico"/>
+			<columnFieldProperty name="causale"/>
+			<columnFieldProperty name="des_ti_cc_bi" label="Conto di Accredito" />
+			<columnFieldProperty name="stato_validita"/>
+			<columnFieldProperty name="ds_stato_sospeso"/>
+			<columnFieldProperty name="im_sospeso"/>
+			<columnFieldProperty name="im_associato" label="Importo Associato a Reversali"/>
+			<columnFieldProperty name="im_da_associare" label="Importo da Associare a Reversali"/>
+	</columnSet>
+	
+	<columnSet name="SOSREVRDETTREV">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cd_cds" />
+			<columnFieldProperty name="cd_sospeso"/>
+			<columnFieldProperty name="stato_validita"/>
+			<columnFieldProperty name="ds_stato_sospeso"/>
+			<columnFieldProperty name="pg_man_rev" label="Numero Reversale"/>
+			<columnFieldProperty name="dt_registrazione" label="Data Emissione Reversale"/>
+			<columnFieldProperty name="causale" label="Descrizione Reversale"/>
+			<columnFieldProperty name="im_associato" label="Importo Associato a Reversale"/>
+	</columnSet>
+
+	<freeSearchSet name="SOSREV">	
+			<findFieldProperty name="esercizio" />	
+			<findFieldProperty name="cd_cds" />
+			<findFieldProperty name="cd_sospeso"/>
+			<findFieldProperty name="cd_cds_origine"/>
+			<findFieldProperty name="dt_registrazione"/>
+			<findFieldProperty name="ds_anagrafico"/>
+			<findFieldProperty name="causale"/>
+			<findFieldProperty name="des_ti_cc_bi" label="Conto di Accredito" />
+			<findFieldProperty name="stato_validita"/>
+			<findFieldProperty name="ds_stato_sospeso"/>
+			<findFieldProperty name="im_sospeso"/>
+			<findFieldProperty name="im_associato" label="Importo Associato a Reversali" />
+			<findFieldProperty name="im_da_associare" label="Importo da Associare a Reversali" />
+	</freeSearchSet>
+	
+	<freeSearchSet name="SOSREVRDETT">
+			<findFieldProperty name="esercizio" />
+			<findFieldProperty name="cd_cds" />
+			<findFieldProperty name="cd_sospeso"/>
+			<findFieldProperty name="cd_cds_origine"/>
+			<findFieldProperty name="dt_registrazione"/>
+			<findFieldProperty name="ds_anagrafico"/>
+			<findFieldProperty name="causale"/>
+			<findFieldProperty name="des_ti_cc_bi" label="Conto di Accredito" />
+			<findFieldProperty name="stato_validita"/>
+			<findFieldProperty name="ds_stato_sospeso"/>
+			<findFieldProperty name="im_sospeso"/>
+			<findFieldProperty name="im_associato" label="Importo Associato a Reversali"/>
+			<findFieldProperty name="im_da_associare" label="Importo da Associare a Reversali"/>
+	</freeSearchSet>
+	
+	<freeSearchSet name="SOSREVRDETTREV">
+			<findFieldProperty name="esercizio" />
+			<findFieldProperty name="cd_cds" />
+			<findFieldProperty name="cd_sospeso"/>
+			<findFieldProperty name="stato_validita"/>
+			<findFieldProperty name="ds_stato_sospeso"/>
+			<findFieldProperty name="pg_man_rev" label="Numero Reversale"/>
+			<findFieldProperty name="dt_registrazione" label="Data Emissione Reversale"/>
+			<findFieldProperty name="causale" label="Descrizione Reversale"/>
+			<findFieldProperty name="im_associato" label="Importo Associato a Reversale"/>
+	</freeSearchSet>
+	
+	<!-- Consultazione Sospesi di Spesa -->
+	
+	<columnSet name="SOSMAN">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cd_cds" />
+			<columnFieldProperty name="cd_sospeso"/>
+			<columnFieldProperty name="cd_cds_origine"/>
+			<columnFieldProperty name="dt_registrazione"/>
+			<columnFieldProperty name="ds_anagrafico"/>
+			<columnFieldProperty name="causale"/>
+			<columnFieldProperty name="des_ti_cc_bi" label="Conto di Addebito" />
+			<columnFieldProperty name="stato_validita"/>
+			<columnFieldProperty name="ds_stato_sospeso"/>
+			<columnFieldProperty name="im_sospeso"/>
+			<columnFieldProperty name="im_associato" label="Importo Associato a Mandati" />
+			<columnFieldProperty name="im_da_associare" label="Importo da Associare a Mandati" />
+	</columnSet>
+	
+	<columnSet name="SOSMANMDETT">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cd_cds" />
+			<columnFieldProperty name="cd_sospeso"/>
+			<columnFieldProperty name="cd_cds_origine"/>
+			<columnFieldProperty name="dt_registrazione"/>
+			<columnFieldProperty name="ds_anagrafico"/>
+			<columnFieldProperty name="causale"/>
+			<columnFieldProperty name="des_ti_cc_bi" label="Conto di Addebito" />
+			<columnFieldProperty name="stato_validita"/>
+			<columnFieldProperty name="ds_stato_sospeso"/>
+			<columnFieldProperty name="im_sospeso"/>
+			<columnFieldProperty name="im_associato" label="Importo Associato a Mandati"/>
+			<columnFieldProperty name="im_da_associare" label="Importo da Associare a Mandati"/>
+	</columnSet>
+	
+	<columnSet name="SOSMANMDETTMAN">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cd_cds" />
+			<columnFieldProperty name="cd_sospeso"/>
+			<columnFieldProperty name="stato_validita"/>
+			<columnFieldProperty name="ds_stato_sospeso"/>
+			<columnFieldProperty name="pg_man_rev" label="Numero Mandato"/>
+			<columnFieldProperty name="dt_registrazione" label="Data Emissione Mandato"/>
+			<columnFieldProperty name="causale" label="Descrizione Mandato"/>
+			<columnFieldProperty name="im_associato" label="Importo Associato a Mandato"/>
+	</columnSet>
+
+	<freeSearchSet name="SOSMAN">	
+			<findFieldProperty name="esercizio" />	
+			<findFieldProperty name="cd_cds" />
+			<findFieldProperty name="cd_sospeso"/>
+			<findFieldProperty name="cd_cds_origine"/>
+			<findFieldProperty name="dt_registrazione"/>
+			<findFieldProperty name="ds_anagrafico"/>
+			<findFieldProperty name="causale"/>
+			<findFieldProperty name="des_ti_cc_bi" label="Conto di Addebito" />
+			<findFieldProperty name="stato_validita"/>
+			<findFieldProperty name="ds_stato_sospeso"/>
+			<findFieldProperty name="im_sospeso"/>
+			<findFieldProperty name="im_associato" label="Importo Associato a Mandati" />
+			<findFieldProperty name="im_da_associare" label="Importo da Associare a Mandati" />
+	</freeSearchSet>
+	
+	<freeSearchSet name="SOSMANMDETT">
+			<findFieldProperty name="esercizio" />
+			<findFieldProperty name="cd_cds" />
+			<findFieldProperty name="cd_sospeso"/>
+			<findFieldProperty name="cd_cds_origine"/>
+			<findFieldProperty name="dt_registrazione"/>
+			<findFieldProperty name="ds_anagrafico"/>
+			<findFieldProperty name="causale"/>
+			<findFieldProperty name="des_ti_cc_bi" label="Conto di Addebito" />
+			<findFieldProperty name="stato_validita"/>
+			<findFieldProperty name="ds_stato_sospeso"/>
+			<findFieldProperty name="im_sospeso"/>
+			<findFieldProperty name="im_associato" label="Importo Associato a Mandati"/>
+			<findFieldProperty name="im_da_associare" label="Importo da Associare a Mandati"/>
+	</freeSearchSet>
+	
+	<freeSearchSet name="SOSMANMDETTMAN">
+			<findFieldProperty name="esercizio" />
+			<findFieldProperty name="cd_cds" />
+			<findFieldProperty name="cd_sospeso"/>
+			<findFieldProperty name="stato_validita"/>
+			<findFieldProperty name="ds_stato_sospeso"/>
+			<findFieldProperty name="pg_man_rev" label="Numero Mandato"/>
+			<findFieldProperty name="dt_registrazione" label="Data Emissione Mandato"/>
+			<findFieldProperty name="causale" label="Descrizione Mandato"/>
+			<findFieldProperty name="im_associato" label="Importo Associato a Mandato"/>
+	</freeSearchSet>
+	
+</bulkInfo>

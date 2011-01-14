@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBase"
+	keyClassName="it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestKey"
+	homeClassName="it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestHome">
+	<defaultColumnMap
+		tableName="PDG_MODULO_SPESE_GEST">
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DESCRIZIONE"
+			propertyName="descrizione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="ORIGINE"
+			propertyName="origine"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="CATEGORIA_DETTAGLIO"
+			propertyName="categoria_dettaglio"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_SOLA_LETTURA"
+			propertyName="fl_sola_lettura"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="IM_SPESE_GEST_DECENTRATA_INT"
+			propertyName="im_spese_gest_decentrata_int"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_SPESE_GEST_DECENTRATA_EST"
+			propertyName="im_spese_gest_decentrata_est"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_SPESE_GEST_ACCENTRATA_INT"
+			propertyName="im_spese_gest_accentrata_int"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_SPESE_GEST_ACCENTRATA_EST"
+			propertyName="im_spese_gest_accentrata_est"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_PAGAMENTI"
+			propertyName="im_pagamenti"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDR_ASSEGNATARIO_CLGS"
+			propertyName="cd_cdr_assegnatario_clgs"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA_CLGS"
+			propertyName="cd_linea_attivita_clgs"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_PROGETTO_CLGS"
+			propertyName="pg_progetto_clgs"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_PDG_VARIAZIONE"
+			propertyName="esercizio_pdg_variazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_VARIAZIONE_PDG"
+			propertyName="pg_variazione_pdg"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_registrazione" />
+	<persistentProperty
+		name="descrizione" />
+	<persistentProperty
+		name="origine" />
+	<persistentProperty
+		name="categoria_dettaglio" />
+	<persistentProperty
+		name="fl_sola_lettura" />
+	<persistentProperty
+		name="im_spese_gest_decentrata_int" />
+	<persistentProperty
+		name="im_spese_gest_decentrata_est" />
+	<persistentProperty
+		name="im_spese_gest_accentrata_int" />
+	<persistentProperty
+		name="im_spese_gest_accentrata_est" />
+	<persistentProperty
+		name="im_pagamenti" />
+	<persistentProperty
+		name="cd_cdr_assegnatario_clgs" />
+	<persistentProperty
+		name="cd_linea_attivita_clgs" />
+	<persistentProperty
+		name="pg_progetto_clgs" />
+	<persistentProperty
+		name="esercizio_pdg_variazione" />
+	<persistentProperty
+		name="pg_variazione_pdg" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

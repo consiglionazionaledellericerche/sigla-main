@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Dettaglio PDGP per Modulo/Classificazione"
+          longDescription="Dettaglio PDGP per Modulo-Classificazione">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" 
+        enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="30"
+		label="CDR" />
+	<fieldProperty
+		name="ds_cdr"
+		property="ds_cdr"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Descrizione" />
+	<fieldProperty
+		name="id_classificazione"
+		property="id_classificazione"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		label="Identificativo classificazione" 
+        enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="cd_classificazione"
+		property="cd_classificazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="30"
+		label="Codice Classificazione" />
+	<fieldProperty
+		name="ds_classificazione"
+		property="ds_classificazione"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Descrizione" />
+	<fieldProperty
+		name="cd_progetto"
+		property="cd_progetto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Modulo di Attività" />
+	<fieldProperty
+		name="ds_progetto"
+		property="ds_progetto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Descrizione" />
+	<fieldProperty
+		name="importo_ripartito"
+		property="importo_ripartito"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Importo ripartito" />
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="ds_cdr" />
+	<formFieldProperty
+		name="id_classificazione" />
+	<formFieldProperty
+		name="cd_classificazione" />
+	<formFieldProperty
+		name="ds_classificazione" />
+	<formFieldProperty
+		name="cd_progetto" />
+	<formFieldProperty
+		name="ds_progetto" />
+	<formFieldProperty
+		name="importo_ripartito" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="id_classificazione" />
+	<findFieldProperty
+		name="cd_classificazione" />
+	<findFieldProperty
+		name="ds_classificazione" 
+		label="Descrizione Classificazione"/>
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="ds_cdr" />
+	<findFieldProperty
+		name="cd_progetto" 
+		label="Modulo di Attività"/>
+	<findFieldProperty
+		name="ds_progetto" 
+		label="Descrizione Modulo"/>
+	<findFieldProperty
+		name="importo_ripartito" />
+
+	<columnFieldProperty
+		name="cd_classificazione" />
+	<columnFieldProperty
+		name="ds_classificazione" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="ds_cdr" />
+	<columnFieldProperty
+		name="cd_progetto" />
+	<columnFieldProperty
+		name="ds_progetto" />
+	<columnFieldProperty
+		name="importo_ripartito" />
+</bulkInfo>

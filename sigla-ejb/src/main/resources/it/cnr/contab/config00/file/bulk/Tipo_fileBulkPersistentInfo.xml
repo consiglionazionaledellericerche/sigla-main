@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.file.bulk.Tipo_fileBulk"
+	homeClassName="it.cnr.contab.config00.file.bulk.Tipo_fileHome">
+	<defaultColumnMap
+		tableName="TIPO_FILE">
+	</defaultColumnMap>
+</SQLPersistentInfo>

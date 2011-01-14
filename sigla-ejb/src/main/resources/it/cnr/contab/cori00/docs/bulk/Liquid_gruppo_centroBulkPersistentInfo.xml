@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.cori00.docs.bulk.Liquid_gruppo_centroBulk"
+	homeClassName="it.cnr.contab.cori00.docs.bulk.Liquid_gruppo_centroHome" >
+	<defaultColumnMap
+		tableName="LIQUID_GRUPPO_CENTRO">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_GRUPPO_CR"
+			propertyName="cd_gruppo_cr"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />		
+		<columnMapping
+			columnName="CD_REGIONE"
+			propertyName="cd_regione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />		
+		<columnMapping
+			columnName="PG_COMUNE"
+			propertyName="pg_comune"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />	
+		<columnMapping
+			columnName="PG_GRUPPO_CENTRO"
+			propertyName="pg_gruppo_centro"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />				
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />									
+		<columnMapping
+			columnName="CD_CDS_OBB_ACCENTR"
+			propertyName="cd_cds_obb_accentr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_OBB_ACCENTR"
+			propertyName="esercizio_obb_accentr"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBB_ACCENTR"
+			propertyName="esercizio_ori_obb_accentr"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBB_ACCENTR"
+			propertyName="pg_obb_accentr"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DA_ESERCIZIO_PRECEDENTE"
+			propertyName="da_esercizio_precedente"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />			
+	</defaultColumnMap>
+
+	<persistentProperty
+			name="esercizio" />
+	<persistentProperty
+			name="cd_gruppo_cr" />
+	<persistentProperty
+			name="cd_regione" />
+	<persistentProperty
+			name="pg_comune" />
+	<persistentProperty
+			name="pg_gruppo_centro" />
+	<persistentProperty
+			name="stato" />			
+	<persistentProperty
+			name="cd_cds_obb_accentr" />
+	<persistentProperty
+			name="esercizio_obb_accentr" />
+	<persistentProperty
+			name="esercizio_ori_obb_accentr" />
+	<persistentProperty
+			name="pg_obb_accentr" />	
+	<persistentProperty
+			name="da_esercizio_precedente" />												
+</SQLPersistentInfo>

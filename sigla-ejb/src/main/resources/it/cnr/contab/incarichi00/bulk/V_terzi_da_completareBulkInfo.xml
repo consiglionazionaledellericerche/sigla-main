@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" 
+		shortDescription="Terzi da completare"
+        longDescription="Terzi da completare">
+	<fieldProperty
+		name="cd_cds"	
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Unita' organizzativa" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Codice Terzo" />
+	<fieldProperty
+		name="denominazione"
+		property="denominazione"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		label="Denominazione" />
+				
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="denominazione" />
+
+	<findFieldProperty
+		name="cd_cds" />		
+	<findFieldProperty
+		name="cd_unita_organizzativa" />		
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="denominazione" />
+
+	<columnFieldProperty
+		name="cd_cds" />		
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="denominazione" />
+</bulkInfo>

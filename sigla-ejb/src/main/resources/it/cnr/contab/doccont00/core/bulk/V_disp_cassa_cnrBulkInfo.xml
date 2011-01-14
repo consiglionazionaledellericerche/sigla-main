@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="im_disponibilta_cassa"
+		property="im_disponibilta_cassa"
+		inputType="TEXT"
+		label="im_disponibilta_cassa" />
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="im_disponibilta_cassa" />
+
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="im_disponibilta_cassa" />
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="im_disponibilta_cassa" />
+
+</bulkInfo>

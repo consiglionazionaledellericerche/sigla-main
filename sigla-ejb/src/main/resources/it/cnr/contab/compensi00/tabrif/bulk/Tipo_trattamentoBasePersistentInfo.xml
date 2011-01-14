@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBase"
+	keyClassName="it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoKey"
+	homeClassName="it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoHome" >
+	<defaultColumnMap
+		tableName="TIPO_TRATTAMENTO" >
+		<columnMapping
+			columnName="FL_DEFAULT_CONGUAGLIO"
+			propertyName="fl_default_conguaglio"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_DETRAZIONI_DIPENDENTE"
+			propertyName="fl_detrazioni_dipendente"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_REGISTRA_FATTURA"
+			propertyName="fl_registra_fattura"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_SOGGETTO_CONGUAGLIO"
+			propertyName="fl_soggetto_conguaglio"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_TASSAZIONE_SEPARATA"
+			propertyName="fl_tassazione_separata"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="TI_COMMERCIALE"
+			propertyName="ti_commerciale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_SENZA_CALCOLI"
+			propertyName="fl_senza_calcoli"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_DETRAZIONI_FAMILIARI"
+			propertyName="fl_detrazioni_familiari"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_FIN_VALIDITA"
+			propertyName="dt_fin_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DS_TI_TRATTAMENTO"
+			propertyName="ds_ti_trattamento"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_DIARIA"
+			propertyName="fl_diaria"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_IRPEF_ANNUALIZZATA"
+			propertyName="fl_irpef_annualizzata"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="TI_ANAGRAFICO"
+			propertyName="ti_anagrafico"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_AGEVOLAZIONI_CERVELLI"
+			propertyName="fl_agevolazioni_cervelli"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_UTILIZZABILE_ART35"
+			propertyName="fl_utilizzabile_art35"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+		<columnMapping
+			columnName="FL_ANNO_PREC"
+			propertyName="fl_anno_prec"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+		<columnMapping
+			columnName="FL_DETRAZIONI_ALTRE"
+			propertyName="fl_detrazioni_altre"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_INCARICO"
+			propertyName="fl_incarico"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="TIPO_RAPP_IMPIEGO"
+			propertyName="tipo_rapp_impiego"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+
+	</defaultColumnMap>
+	<persistentProperty
+		name="fl_detrazioni_dipendente" />
+	<persistentProperty
+		name="fl_default_conguaglio" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="fl_registra_fattura" />
+	<persistentProperty
+		name="fl_soggetto_conguaglio" />
+	<persistentProperty
+		name="fl_tassazione_separata" />
+	<persistentProperty
+		name="fl_senza_calcoli" />
+	<persistentProperty
+		name="ti_commerciale" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="fl_detrazioni_familiari" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="dt_fin_validita" />
+	<persistentProperty
+		name="ds_ti_trattamento" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="fl_diaria" />
+	<persistentProperty
+		name="fl_irpef_annualizzata" />
+	<persistentProperty
+		name="ti_anagrafico" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="fl_agevolazioni_cervelli" />
+	<persistentProperty
+		name="fl_utilizzabile_art35" />		
+	<persistentProperty
+		name="fl_anno_prec" />		
+	<persistentProperty
+		name="fl_detrazioni_altre" />		
+	<persistentProperty
+		name="fl_incarico" />
+	<persistentProperty
+		name="tipo_rapp_impiego" />
+		
+</SQLPersistentInfo>

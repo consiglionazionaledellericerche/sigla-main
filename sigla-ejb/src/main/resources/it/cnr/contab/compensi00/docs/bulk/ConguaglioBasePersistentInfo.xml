@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.docs.bulk.ConguaglioBase"
+	keyClassName="it.cnr.contab.compensi00.docs.bulk.ConguaglioKey"
+	homeClassName="it.cnr.contab.compensi00.docs.bulk.ConguaglioHome" >
+	<defaultColumnMap
+		tableName="CONGUAGLIO" >
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dt_cancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="pg_banca"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_DEDUZIONE_DOVUTO"
+			propertyName="im_deduzione_dovuto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ADDPROV_ESTERNO"
+			propertyName="im_addprov_esterno"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_COMPENSO"
+			propertyName="cd_cds_compenso"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="PG_COMPENSO"
+			propertyName="pg_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="IM_IRPEF_DOVUTO"
+			propertyName="im_irpef_dovuto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_ACCANTONA_ADD_TERR"
+			propertyName="fl_accantona_add_terr"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="DETRAZIONI_FI_DOVUTO"
+			propertyName="detrazioni_fi_dovuto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ADDCOM_DOVUTO"
+			propertyName="im_addcom_dovuto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_DA_COMPETENZA_ESTERNO"
+			propertyName="dt_da_competenza_esterno"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="cd_modalita_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_ESCLUDI_QVARIA_DEDUZIONE"
+			propertyName="fl_escludi_qvaria_deduzione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="IM_ADDPROV_GODUTO"
+			propertyName="im_addprov_goduto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DETRAZIONI_AL_DOVUTO"
+			propertyName="detrazioni_al_dovuto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DETRAZIONI_AL_ESTERNO"
+			propertyName="detrazioni_al_esterno"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_LORDO_CONGUAGLIO"
+			propertyName="im_lordo_conguaglio"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERMINI_PAG"
+			propertyName="cd_termini_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CODICE_FISCALE_ESTERNO"
+			propertyName="codice_fiscale_esterno"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="IM_ADDCOM_ESTERNO"
+			propertyName="im_addcom_esterno"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="RAGIONE_SOCIALE"
+			propertyName="ragione_sociale"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="DETRAZIONI_LA_GODUTO"
+			propertyName="detrazioni_la_goduto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPONIBILE_FISCALE_ESTERNO"
+			propertyName="imponibile_fiscale_esterno"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DETRAZIONI_PE_ESTERNO"
+			propertyName="detrazioni_pe_esterno"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DETRAZIONI_PE_DOVUTO"
+			propertyName="detrazioni_pe_dovuto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_COMPENSO"
+			propertyName="cd_uo_compenso"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_REGIONE"
+			propertyName="cd_regione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_INTERA_QFISSA_DEDUZIONE"
+			propertyName="fl_intera_qfissa_deduzione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DETRAZIONI_CO_DOVUTO"
+			propertyName="detrazioni_co_dovuto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPONIBILE_IRPEF_LORDO"
+			propertyName="imponibile_irpef_lordo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_A_COMPETENZA_COGE"
+			propertyName="dt_a_competenza_coge"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_COMPENSO"
+			propertyName="esercizio_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="IM_ADDREG_GODUTO"
+			propertyName="im_addreg_goduto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ADDCOM_RATE_ESEPREC"
+			propertyName="im_addcom_rate_eseprec"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPONIBILE_IRPEF_NETTO"
+			propertyName="imponibile_irpef_netto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_DEDUZIONE_GODUTO"
+			propertyName="im_deduzione_goduto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IRPEF_GODUTO"
+			propertyName="im_irpef_goduto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ADDREG_RATE_ESEPREC"
+			propertyName="im_addreg_rate_eseprec"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ADDCOM_GODUTO"
+			propertyName="im_addcom_goduto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="PG_COMUNE"
+			propertyName="pg_comune"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DETRAZIONI_AL_GODUTO"
+			propertyName="detrazioni_al_goduto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DETRAZIONI_LA_ESTERNO"
+			propertyName="detrazioni_la_esterno"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="NUMERO_GIORNI"
+			propertyName="numero_giorni"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IRPEF_ESTERNO"
+			propertyName="im_irpef_esterno"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_ANAGRAFICO"
+			propertyName="ti_anagrafico"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ADDPROV_DOVUTO"
+			propertyName="im_addprov_dovuto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="CD_TRATTAMENTO"
+			propertyName="cd_trattamento"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_PROVINCIA"
+			propertyName="cd_provincia"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DETRAZIONI_PE_GODUTO"
+			propertyName="detrazioni_pe_goduto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_A_COMPETENZA_ESTERNO"
+			propertyName="dt_a_competenza_esterno"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DETRAZIONI_CO_GODUTO"
+			propertyName="detrazioni_co_goduto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DETRAZIONI_LA_DOVUTO"
+			propertyName="detrazioni_la_dovuto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_DA_COMPETENZA_COGE"
+			propertyName="dt_da_competenza_coge"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ADDPROV_RATE_ESEPREC"
+			propertyName="im_addprov_rate_eseprec"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DETRAZIONI_CO_ESTERNO"
+			propertyName="detrazioni_co_esterno"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_DETRAZIONE_PERSONALE_ANAG"
+			propertyName="im_detrazione_personale_anag"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DETRAZIONI_FI_GODUTO"
+			propertyName="detrazioni_fi_goduto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partita_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="DETRAZIONI_FI_ESTERNO"
+			propertyName="detrazioni_fi_esterno"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ADDREG_DOVUTO"
+			propertyName="im_addreg_dovuto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="IM_ADDREG_ESTERNO"
+			propertyName="im_addreg_esterno"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_CONGUAGLIO"
+			propertyName="ds_conguaglio"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="CD_TIPO_RAPPORTO"
+			propertyName="cd_tipo_rapporto"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_DEDUZIONE_FAMILY_DOVUTO"
+			propertyName="im_deduzione_family_dovuto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_FAMILY_DOVUTO"
+			propertyName="im_family_dovuto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_DEDUZIONE_FAMILY_GODUTO"
+			propertyName="im_deduzione_family_goduto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_FAMILY_GODUTO"
+			propertyName="im_family_goduto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_DETRAZIONI_FAM_INTERO_ANNO"
+			propertyName="fl_detrazioni_fam_intero_anno"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="NUMERO_GIORNI_ESTERNO"
+			propertyName="numero_giorni_esterno"
+			sqlTypeName="DECIMAL"
+			columnSize="3" />
+		<columnMapping
+			columnName="PG_COMUNE_ADDCOM_ESTERNO"
+			propertyName="pg_comune_addcom_esterno"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />			
+		<columnMapping
+			columnName="IM_CORI_SOSPESO"
+			propertyName="im_cori_sospeso"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />						
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_cancellazione" />
+	<persistentProperty
+		name="pg_banca" />
+	<persistentProperty
+		name="im_deduzione_dovuto" />
+	<persistentProperty
+		name="im_addprov_esterno" />
+	<persistentProperty
+		name="cd_cds_compenso" />
+	<persistentProperty
+		name="im_irpef_dovuto" />
+	<persistentProperty
+		name="pg_compenso" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="codice_fiscale" />
+	<persistentProperty
+		name="fl_accantona_add_terr" />
+	<persistentProperty
+		name="detrazioni_fi_dovuto" />
+	<persistentProperty
+		name="im_addcom_dovuto" />
+	<persistentProperty
+		name="dt_da_competenza_esterno" />
+	<persistentProperty
+		name="cd_modalita_pag" />
+	<persistentProperty
+		name="fl_escludi_qvaria_deduzione" />
+	<persistentProperty
+		name="detrazioni_al_dovuto" />
+	<persistentProperty
+		name="im_addprov_goduto" />
+	<persistentProperty
+		name="detrazioni_al_esterno" />
+	<persistentProperty
+		name="cd_termini_pag" />
+	<persistentProperty
+		name="im_lordo_conguaglio" />
+	<persistentProperty
+		name="codice_fiscale_esterno" />
+	<persistentProperty
+		name="im_addcom_esterno" />
+	<persistentProperty
+		name="cognome" />
+	<persistentProperty
+		name="ragione_sociale" />
+	<persistentProperty
+		name="imponibile_fiscale_esterno" />
+	<persistentProperty
+		name="detrazioni_la_goduto" />
+	<persistentProperty
+		name="detrazioni_pe_esterno" />
+	<persistentProperty
+		name="detrazioni_pe_dovuto" />
+	<persistentProperty
+		name="cd_regione" />
+	<persistentProperty
+		name="cd_uo_compenso" />
+	<persistentProperty
+		name="detrazioni_co_dovuto" />
+	<persistentProperty
+		name="fl_intera_qfissa_deduzione" />
+	<persistentProperty
+		name="imponibile_irpef_lordo" />
+	<persistentProperty
+		name="dt_a_competenza_coge" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="esercizio_compenso" />
+	<persistentProperty
+		name="im_addreg_goduto" />
+	<persistentProperty
+		name="im_addcom_rate_eseprec" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="imponibile_irpef_netto" />
+	<persistentProperty
+		name="im_deduzione_goduto" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="im_irpef_goduto" />
+	<persistentProperty
+		name="im_addreg_rate_eseprec" />
+	<persistentProperty
+		name="im_addcom_goduto" />
+	<persistentProperty
+		name="pg_comune" />
+	<persistentProperty
+		name="detrazioni_al_goduto" />
+	<persistentProperty
+		name="detrazioni_la_esterno" />
+	<persistentProperty
+		name="numero_giorni" />
+	<persistentProperty
+		name="im_irpef_esterno" />
+	<persistentProperty
+		name="ti_anagrafico" />
+	<persistentProperty
+		name="im_addprov_dovuto" />
+	<persistentProperty
+		name="nome" />
+	<persistentProperty
+		name="cd_trattamento" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="cd_provincia" />
+	<persistentProperty
+		name="detrazioni_pe_goduto" />
+	<persistentProperty
+		name="dt_a_competenza_esterno" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="detrazioni_co_goduto" />
+	<persistentProperty
+		name="detrazioni_la_dovuto" />
+	<persistentProperty
+		name="dt_da_competenza_coge" />
+	<persistentProperty
+		name="dt_registrazione" />
+	<persistentProperty
+		name="im_addprov_rate_eseprec" />
+	<persistentProperty
+		name="detrazioni_co_esterno" />
+	<persistentProperty
+		name="im_detrazione_personale_anag" />
+	<persistentProperty
+		name="partita_iva" />
+	<persistentProperty
+		name="detrazioni_fi_goduto" />
+	<persistentProperty
+		name="detrazioni_fi_esterno" />
+	<persistentProperty
+		name="im_addreg_dovuto" />
+	<persistentProperty
+		name="im_addreg_esterno" />
+	<persistentProperty
+		name="cd_tipo_rapporto" />
+	<persistentProperty
+		name="ds_conguaglio" />
+	<persistentProperty
+		name="im_deduzione_family_dovuto" />
+	<persistentProperty
+		name="im_family_dovuto" />
+	<persistentProperty
+		name="im_deduzione_family_goduto" />
+	<persistentProperty
+		name="im_family_goduto" />		
+	<persistentProperty
+		name="fl_detrazioni_fam_intero_anno" />			
+	<persistentProperty
+		name="numero_giorni_esterno" />			
+	<persistentProperty
+		name="pg_comune_addcom_esterno" />	
+	<persistentProperty
+		name="im_cori_sospeso" />		
+</SQLPersistentInfo>

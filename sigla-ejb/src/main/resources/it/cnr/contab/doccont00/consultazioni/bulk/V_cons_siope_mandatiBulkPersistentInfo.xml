@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_mandatiBulk"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_mandatiHome">
+	<defaultColumnMap
+		tableName="V_CONS_SIOPE_MANDATI">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pg_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="esercizio_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="esercizio_ori_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_DOC_AMM"
+			propertyName="cd_cds_doc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_DOC_AMM"
+			propertyName="cd_uo_doc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_DOC_AMM"
+			propertyName="esercizio_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_AMM"
+			propertyName="cd_tipo_documento_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_TIPO_DOC_AMM"
+			propertyName="ds_tipo_doc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_DOC_AMM"
+			propertyName="pg_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_SIOPE"
+			propertyName="esercizio_siope"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_SIOPE"
+			propertyName="cd_siope"
+			sqlTypeName="VARCHAR"
+			columnSize="45"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_SIOPE"
+			propertyName="ds_siope"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO"
+			propertyName="importo"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="TOT_IM_SIOPE"
+			propertyName="tot_im_siope"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_EMISSIONE"
+			propertyName="dt_emissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_EMISSIONE_DA"
+			propertyName="dt_emissione_da"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_EMISSIONE_A"
+			propertyName="dt_emissione_a"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_PAGAMENTO"
+			propertyName="dt_pagamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PAGAMENTO_DA"
+			propertyName="dt_pagamento_da"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PAGAMENTO_A"
+			propertyName="dt_pagamento_a"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_TRASMISSIONE"
+			propertyName="dt_trasmissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_TRASMISSIONE_DA"
+			propertyName="dt_trasmissione_da"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_TRASMISSIONE_DA"
+			propertyName="dt_trasmissione_da"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="pg_mandato" />
+	<persistentProperty
+		name="esercizio_obbligazione" />
+	<persistentProperty
+		name="esercizio_ori_obbligazione" />
+	<persistentProperty
+		name="pg_obbligazione" />
+	<persistentProperty
+		name="pg_obbligazione_scadenzario" />
+	<persistentProperty
+		name="cd_cds_doc_amm" />
+	<persistentProperty
+		name="cd_uo_doc_amm" />
+	<persistentProperty
+		name="esercizio_doc_amm" />
+	<persistentProperty
+		name="cd_tipo_documento_amm" />
+	<persistentProperty
+		name="ds_tipo_doc_amm" />
+	<persistentProperty
+		name="pg_doc_amm" />
+	<persistentProperty
+		name="esercizio_siope" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="cd_siope" />
+	<persistentProperty
+		name="ds_siope" />
+	<persistentProperty
+		name="importo" />
+<!--	<persistentProperty
+		name="tot_im_siope" /> -->
+	<persistentProperty
+		name="dt_emissione" />
+<!--	<persistentProperty
+		name="dt_emissione_da" />
+	<persistentProperty
+		name="dt_emissione_a" /> -->
+	<persistentProperty
+		name="dt_pagamento" />
+<!--	<persistentProperty
+		name="dt_pagamento_da" />
+	<persistentProperty
+		name="dt_pagamento_a" /> -->
+	<persistentProperty
+		name="dt_trasmissione" />
+<!--	<persistentProperty
+		name="dt_trasmissione_da" />
+	<persistentProperty
+		name="dt_trasmissione_a" /> -->
+		
+		<columnMap 
+		name="BASE"
+		tableName="V_CONS_SIOPE_MANDATI">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_SIOPE"
+			propertyName="cd_siope"
+			sqlTypeName="VARCHAR"
+			columnSize="45"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_SIOPE"
+			propertyName="ds_siope"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO"
+			propertyName="importo"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />	
+		</columnMap>
+		
+		<columnMap 
+		name="BASEDETT"
+		tableName="V_CONS_SIOPE_MANDATI">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pg_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="esercizio_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="esercizio_ori_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_DOC_AMM"
+			propertyName="cd_cds_doc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_DOC_AMM"
+			propertyName="cd_uo_doc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_DOC_AMM"
+			propertyName="esercizio_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_TIPO_DOC_AMM"
+			propertyName="ds_tipo_doc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_DOC_AMM"
+			propertyName="pg_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_SIOPE"
+			propertyName="esercizio_siope"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_SIOPE"
+			propertyName="cd_siope"
+			sqlTypeName="VARCHAR"
+			columnSize="45"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_SIOPE"
+			propertyName="ds_siope"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO"
+			propertyName="importo"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_EMISSIONE"
+			propertyName="dt_emissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_PAGAMENTO"
+			propertyName="dt_pagamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_TRASMISSIONE"
+			propertyName="dt_trasmissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		</columnMap>
+</SQLPersistentInfo>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="importoTotalePerObbligazioni"
+		property="importoTotalePerObbligazioni"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		readonlyProperty="ROImportoTotalePerObbligazioni"
+		label="Totale dettagli" />
+		
+	<fieldProperty
+		name="modalita_pagamento"
+		property="modalita_pagamento"
+		printProperty="cd_ds_modalita_pagamento"
+		optionsProperty="modalita"
+		readonlyProperty="ROModalitaPagamento"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		nullable="false"
+		label="Mod. pagamento" />
+	<fieldProperty
+		name="termini_pagamento"
+		property="termini_pagamento"
+		printProperty="cd_ds_termini_pagamento"
+		optionsProperty="termini"
+		readonlyProperty="ROTerminiPagamento"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		label="Term. pagamento" />
+		
+	<fieldProperty
+		name="listabanche"
+		property="banca"
+		inputType="BUTTON"
+		img="img/find16.gif"
+		readonlyProperty="abledToInsertBank"
+		label="Conto/i..."
+		href="javascript:submitForm('doSearch(main.listabanche)')" />
+	<fieldProperty
+		name="pg_banca"
+		property="banca.pg_banca"
+		inputType="TEXT"
+		label="" />
+			
+	<fieldProperty
+		name="contoA"
+		property="banca"
+		inputType="FORM"
+		formName="A"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoP"
+		property="banca"
+		inputType="FORM"
+		formName="P"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoB"
+		property="banca"
+		inputType="FORM"
+		formName="BdocAmm"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoQ"
+		property="banca"
+		inputType="FORM"
+		formName="Q"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoN"
+		property="banca"
+		inputType="FORM"
+		formName="N"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+			
+	<formFieldProperty
+		name="nr_fattura_fornitore"
+		label="N. Nota di Credito" />
+	<formFieldProperty
+		name="importoTotalePerAccertamenti" />
+
+	<formFieldProperty
+		name="modalita_pagamento"/>
+	<formFieldProperty
+		name="termini_pagamento"/>
+		
+	<formFieldProperty
+		name="listabanche"/>
+			
+	<formFieldProperty
+		name="contoA"/>
+	<formFieldProperty
+		name="contoB"/>
+	<formFieldProperty
+		name="contoQ"/>
+	<formFieldProperty
+		name="contoP"/>
+	<formFieldProperty
+		name="contoN" />
+
+	<formFieldProperty
+		name="nr_fattura_fornitore" />
+	<formFieldProperty
+		name="importoTotalePerObbligazioni" />		
+
+</bulkInfo>

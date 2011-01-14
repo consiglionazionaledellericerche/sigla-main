@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	>
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		readonlyProperty="ROmodalita_incasso"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_modalita_incasso"
+		property="cd_modalita_incasso"
+		readonlyProperty="ROmodalita_incasso"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnInsert="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice" />
+	<fieldProperty
+		name="ds_modalita_incasso"
+		property="ds_modalita_incasso"
+		inputType="TEXTAREA"
+		readonlyProperty="ROmodalita_incasso"
+		enabledOnInsert="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Descrizione" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_modalita_incasso" />
+	<formFieldProperty
+		name="ds_modalita_incasso" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_modalita_incasso" />
+	<findFieldProperty
+		name="ds_modalita_incasso" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_modalita_incasso" />
+	<columnFieldProperty
+		name="ds_modalita_incasso" />
+</bulkInfo>

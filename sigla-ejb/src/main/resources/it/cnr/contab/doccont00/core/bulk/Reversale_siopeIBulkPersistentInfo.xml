@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Reversale_siopeIBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Reversale_siopeIHome" >
+	<defaultColumnMap
+		tableName="REVERSALE_SIOPE" >
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="reversale_rigaI.reversaleI.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="reversale_rigaI.reversaleI.esercizio" />
+		<columnMapping
+			columnName="PG_REVERSALE"
+			propertyName="reversale_rigaI.reversaleI.pg_reversale" />
+		<columnMapping
+			columnName="ESERCIZIO_ACCERTAMENTO"
+			propertyName="reversale_rigaI.esercizio_accertamento" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ACCERTAMENTO"
+			propertyName="reversale_rigaI.esercizio_ori_accertamento" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="reversale_rigaI.pg_accertamento" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO_SCADENZARIO"
+			propertyName="reversale_rigaI.pg_accertamento_scadenzario" />
+		<columnMapping
+			columnName="CD_CDS_DOC_AMM"
+			propertyName="reversale_rigaI.cd_cds_doc_amm" />
+		<columnMapping
+			columnName="CD_UO_DOC_AMM"
+			propertyName="reversale_rigaI.cd_uo_doc_amm" />
+		<columnMapping
+			columnName="ESERCIZIO_DOC_AMM"
+			propertyName="reversale_rigaI.esercizio_doc_amm" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_AMM"
+			propertyName="reversale_rigaI.cd_tipo_documento_amm" />
+		<columnMapping
+			columnName="PG_DOC_AMM"
+			propertyName="reversale_rigaI.pg_doc_amm" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="reversale_rigaI"
+		partOfOid="true" />
+</SQLPersistentInfo>

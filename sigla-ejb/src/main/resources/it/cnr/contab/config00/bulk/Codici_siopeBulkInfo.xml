@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Gestione" />
+	<fieldProperty
+		name="cd_siope"
+		property="cd_siope"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Codice Siope" />
+	<fieldProperty
+		name="descrizione"
+		property="descrizione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Descrizione" />
+	
+		
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_siope"
+			enabledOnInsert = "true"
+			enabledOnEdit = "true"
+			enabledOnSearch = "true"
+			enabledOnFreeSearch = "true"
+			inputType="TEXT"
+			inputSize="4" />
+		<formFieldProperty
+			name="descrizione"
+			enabledOnInsert = "true"
+			enabledOnEdit = "true"
+			enabledOnSearch = "true"
+			enabledOnFreeSearch = "true"
+			inputType="TEXT"
+			inputSize="80" />
+	</form>
+	
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_siope" />
+	<formFieldProperty
+		name="descrizione" />
+	
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_siope" />
+	<findFieldProperty
+		name="descrizione" />
+	
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_siope" />
+	<columnFieldProperty
+		name="descrizione" />
+	
+	<columnSet name="collegaARigaDocCont">
+		<columnFieldProperty
+			name="cd_siope" />
+		<columnFieldProperty
+			name="descrizione" />
+	</columnSet>
+</bulkInfo>

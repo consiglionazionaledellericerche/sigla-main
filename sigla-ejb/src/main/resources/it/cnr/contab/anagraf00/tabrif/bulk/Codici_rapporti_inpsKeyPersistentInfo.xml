@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.tabrif.bulk.Codici_rapporti_inpsKey">
+	<defaultColumnMap
+		tableName="CODICI_RAPPORTI_INPS">
+		<columnMapping
+			columnName="CD_RAPPORTO_INPS"
+			propertyName="cd_rapporto_inps"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_rapporto_inps"
+		partOfOid="true" />
+</SQLPersistentInfo>

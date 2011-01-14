@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="findCdsForPrint"
+		property="cds_origine"
+		inputType="SEARCHTOOL"
+		completeOnSave = "true"
+		label="CDS Origine" />
+	<fieldProperty
+		name="cdCdsForPrint"
+		property="cds_origine.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROCdsForPrint"
+		label="Codice CDS" />
+	<fieldProperty
+		name="dsCdsForPrint"
+		property="cds_origine.ds_unita_organizzativa"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione CDS" />
+		
+	<fieldProperty
+		name="findUoForPrint"
+		property="uo_cds_origine"
+		inputType="SEARCHTOOL"
+		completeOnSave = "true"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="cdUoForPrint"
+		property="uo_cds_origine.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROUoForPrint"
+		label="Codice UO" />
+	<fieldProperty
+		name="dsUoForPrint"
+		property="uo_cds_origine.ds_unita_organizzativa"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione UO" />
+
+		
+	<fieldProperty
+		name="dataInizio"
+		property="dataInizio"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Data inizio"/>
+	<fieldProperty
+		name="dataFine"
+		property="dataFine"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Data fine" />
+	<fieldProperty
+		name="pgInizio"
+		property="pgInizio"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Numero Inizio" />
+	<fieldProperty
+		name="pgFine"
+		property="pgFine"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Numero Fine" />
+		
+	<fieldProperty
+		name="cd_tipo_documento_cont"
+		property="cd_tipo_documento_cont"
+		inputType="SELECT"
+		keysProperty="tipoCompetenzaResiduoKeys"
+		nullable="false"
+		label="Tipo" />
+	<fieldProperty
+		name="riporto"
+		property="riporto"
+		inputType="ROTEXT"
+		nullable="false"
+		label="Riportato" />
+		
+	<fieldProperty
+		name="cdUOCRForPrint"
+		property="cdUOCRForPrint"/>		
+	<fieldProperty
+		name="cdCdsCRForPrint"
+		property="cdCdsCRForPrint"/>		
+	<fieldProperty
+		name="cdCdsOrigCRForPrint"
+		property="cdCdsOrigCRForPrint"/>
+
+		
+	<formFieldProperty
+		name="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio" />
+	<formFieldProperty name="dataInizio" />
+	<formFieldProperty name="dataFine" />
+	<formFieldProperty name="pgInizio" />
+	<formFieldProperty name="pgFine" />
+	
+	<formFieldProperty name="findCdsForPrint" />
+	<formFieldProperty name="cdCdsForPrint" />
+	<formFieldProperty name="dsCdsForPrint" />
+	
+	<formFieldProperty name="findUoForPrint" />
+	<formFieldProperty name="cdUoForPrint" />
+	<formFieldProperty name="dsUoForPrint" />
+	<formFieldProperty name="cd_tipo_documento_cont" />
+	<formFieldProperty name="riporto" />
+	
+	<formFieldProperty name="cdUOCRForPrint" />
+	<formFieldProperty name="cdCdsCRForPrint" />	
+	<formFieldProperty name="cdCdsOrigCRForPrint" />
+	
+	<form
+		name="/cnrdoccont/doccont/regaccert.rpt">
+		<formFieldProperty
+			name="esercizio"
+			inputType="ROTEXT"
+			label="Esercizio" />
+		<formFieldProperty name="dataInizio" />
+		<formFieldProperty name="dataFine" />
+		<formFieldProperty name="pgInizio" />
+		<formFieldProperty name="pgFine" />
+	
+		<formFieldProperty name="findCdsForPrint" />
+		<formFieldProperty name="cdCdsForPrint" />
+		<formFieldProperty name="dsCdsForPrint" />
+		
+		<formFieldProperty name="findUoForPrint" />
+		<formFieldProperty name="cdUoForPrint" />
+		<formFieldProperty name="dsUoForPrint" />
+		<formFieldProperty name="stato_obbligazione" />
+		<formFieldProperty name="riporto" />
+	
+		<formFieldProperty name="cdUOCRForPrint" />
+		<formFieldProperty name="cdCdsCRForPrint" />	
+		<formFieldProperty name="cdCdsOrigCRForPrint" />
+	</form>
+
+	<form
+		name="/cnrdoccont/doccont/regaccert.jasper">
+		<formFieldProperty
+			name="esercizio"
+			inputType="ROTEXT"
+			label="Esercizio" />
+		<formFieldProperty name="dataInizio" />
+		<formFieldProperty name="dataFine" />
+		<formFieldProperty name="pgInizio" />
+		<formFieldProperty name="pgFine" />
+	
+		<formFieldProperty name="findCdsForPrint" />
+		<formFieldProperty name="cdCdsForPrint" />
+		<formFieldProperty name="dsCdsForPrint" />
+		
+		<formFieldProperty name="findUoForPrint" />
+		<formFieldProperty name="cdUoForPrint" />
+		<formFieldProperty name="dsUoForPrint" />
+		<formFieldProperty name="stato_obbligazione" />
+		<formFieldProperty name="riporto" />
+	
+		<formFieldProperty name="cdUOCRForPrint" />
+		<formFieldProperty name="cdCdsCRForPrint" />	
+		<formFieldProperty name="cdCdsOrigCRForPrint" />
+	</form>
+	
+	<printForm
+		name="/cnrdoccont/doccont/regaccert.rpt">
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="1"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdCdsCRForPrint"
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="pgInizio"
+			parameterPosition="3"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="pgFine"
+			parameterPosition="4"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="dataInizio"
+			parameterPosition="5"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="dataFine"
+			parameterPosition="6"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="cd_tipo_documento_cont"
+			parameterPosition="7"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="riporto"
+			parameterPosition="8"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdCdsOrigCRForPrint"
+			parameterPosition="9"
+			parameterType="STRING" />
+	</printForm>
+
+	<printForm
+		name="/cnrdoccont/doccont/regaccert.jasper">
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="UO_or"
+			paramTypeJR="java.lang.String"  />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="Esercizio"
+			paramTypeJR="java.lang.Integer"  />
+		<printFieldProperty 
+			name="cdCdsCRForPrint"
+			parameterPosition="2"
+			parameterType="STRING" 
+			paramNameJR="CDS"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+			name="pgInizio"
+			parameterPosition="3"
+			parameterType="STRING"
+			paramNameJR="DaNumero"
+			paramTypeJR="java.lang.Long"  />
+		<printFieldProperty 
+			name="pgFine"
+			parameterPosition="4"
+			parameterType="STRING" 
+			paramNameJR="ANumero"
+			paramTypeJR="java.lang.Long" />
+		<printFieldProperty 
+			name="dataInizio"
+			parameterPosition="5"
+			parameterType="DATE"
+			paramNameJR="DaData"
+			paramTypeJR="java.util.Date" />
+		<printFieldProperty 
+			name="dataFine"
+			parameterPosition="6"
+			parameterType="DATE"
+			paramNameJR="AData"
+			paramTypeJR="java.util.Date"  />
+		<printFieldProperty 
+			name="cd_tipo_documento_cont"
+			parameterPosition="7"
+			parameterType="STRING"
+			paramNameJR="Tipo"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cdCdsOrigCRForPrint"
+			parameterPosition="8"
+			parameterType="STRING"
+			paramNameJR="CDS_or"
+			paramTypeJR="java.lang.String" />
+	</printForm>
+</bulkInfo>

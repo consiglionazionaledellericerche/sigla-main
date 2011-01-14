@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Registro inventario beni">
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Unità organizzativa" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS" />
+	<fieldProperty
+		name="esercizio_carico_bene"
+		property="esercizio_carico_bene"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio carico bene" />
+	<fieldProperty
+		name="etichetta"
+		property="etichetta"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		label="Etichetta" />
+	<fieldProperty
+		name="ds_bene"
+		property="ds_bene"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1000"
+		label="Descrizione bene" />
+	<fieldProperty
+		name="valore_iniziale"
+		property="valore_iniziale"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Valore iniziale" />
+	<fieldProperty
+		name="categoria"
+		property="categoria"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Categoria" />
+	<fieldProperty
+		name="cd_categoria_gruppo"
+		property="cd_categoria_gruppo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Categoria gruppo" />
+	<fieldProperty
+		name="ds_categoria_gruppo"
+		property="ds_categoria_gruppo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Descrizione categoria gruppo" />
+	<fieldProperty
+		name="ds_ubicazione_bene"
+		property="ds_ubicazione_bene"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Ubicazione bene" />
+	<fieldProperty
+		name="cd_assegnatario"
+		property="cd_assegnatario"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Assegnatario" />
+	<fieldProperty
+		name="denominazione_sede"
+		property="denominazione_sede"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Denominazione sede" />
+	<fieldProperty
+		name="data_registrazione"
+		property="data_registrazione"
+		inputType="TEXT"
+                formatName="date_short"
+		label="Data registrazione" />
+	<fieldProperty
+		name="cd_tipo_carico_scarico"
+		property="cd_tipo_carico_scarico"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Tipo carico scarico" />
+	<fieldProperty
+		name="ds_tipo_carico_scarico"
+		property="ds_tipo_carico_scarico"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Tipo carico scarico" />
+	<fieldProperty
+		name="variazione_piu"
+		property="variazione_piu"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazione piu" />
+	<fieldProperty
+		name="variazione_meno"
+		property="variazione_meno"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazione meno" />
+	<fieldProperty
+		name="quantita"
+		property="quantita"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="Quantità" />
+	<fieldProperty
+		name="valore_unitario"
+		property="valore_unitario"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Valore unitario" />
+	<fieldProperty
+		name="imponibile_ammortamento"
+		property="imponibile_ammortamento"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Imponibile ammortamento" />
+	<fieldProperty
+		name="im_movimento_ammort"
+		property="im_movimento_ammort"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Quota ammortamento" />
+	<fieldProperty
+		name="numero_anni"
+		property="numero_anni"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Numero anni" />
+	<fieldProperty
+		name="perc_ammortamento"
+		property="perc_ammortamento"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Percentuale ammortamento" />
+	<fieldProperty
+		name="perc_primo_anno"
+		property="perc_primo_anno"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Percentuale primo anno" />
+	<fieldProperty
+		name="perc_successivi"
+		property="perc_successivi"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Percentuale anni successivi" />
+	<fieldProperty
+		name="pg_inventario"
+		property="pg_inventario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice Inventario" />
+	<fieldProperty
+		name="ti_documento"
+		property="ti_documento"
+		inputType="SELECT"
+		keysProperty="tipoMovimentoKey"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo documento" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_buono_c_s"
+		property="pg_buono_c_s"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo buono" />
+	<fieldProperty
+		name="nr_inventario"
+		property="nr_inventario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice Bene" />
+	<fieldProperty
+		name="progressivo"
+		property="progressivo"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="Progressivo" />
+	<fieldProperty
+		name="cd_utilizzatore_cdr"
+		property="cd_utilizzatore_cdr"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CdR Utilizzatore" />
+	<fieldProperty
+		name="percentuale_utilizzo_cdr"
+		property="percentuale_utilizzo_cdr"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PositivePercentFormat"
+		maxLength="7"
+		inputSize="7"
+		label="Percentuale Utilizzo" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="6"
+		label="G.a.e."/>
+	<fieldProperty
+		name="percentuale_utilizzo_la"
+		property="percentuale_utilizzo_la"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PositivePercentFormat"
+		maxLength="7"
+		inputSize="7"
+		label="Percentuale G.a.e." />		
+	<fieldProperty
+		name="esercizio_amm"
+		property="esercizio_amm"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Ammortamento" />
+	<fieldProperty
+		name="valore_ammortizzato"
+		property="valore_ammortizzato"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Valore Ammortizzato" />			
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="esercizio_carico_bene" />
+	<formFieldProperty
+		name="etichetta" />
+	<formFieldProperty
+		name="ds_bene" />
+	<formFieldProperty
+		name="valore_iniziale" />
+	<formFieldProperty
+		name="categoria" />
+	<formFieldProperty
+		name="cd_categoria_gruppo" />
+	<formFieldProperty
+		name="ds_categoria_gruppo" />
+	<formFieldProperty
+		name="ds_ubicazione_bene" />
+	<formFieldProperty
+		name="cd_assegnatario" />
+	<formFieldProperty
+		name="denominazione_sede" />
+	<formFieldProperty
+		name="data_registrazione" />
+	<formFieldProperty
+		name="cd_tipo_carico_scarico" />
+	<formFieldProperty
+		name="ds_tipo_carico_scarico" />
+	<formFieldProperty
+		name="variazione_piu" />
+	<formFieldProperty
+		name="variazione_meno" />
+	<!--<formFieldProperty
+		name="quantita" />
+	<formFieldProperty
+		name="valore_unitario" /> -->
+	<formFieldProperty
+		name="imponibile_ammortamento" />
+	<formFieldProperty
+		name="im_movimento_ammort" />
+	<formFieldProperty
+		name="numero_anni" />
+	<formFieldProperty
+		name="perc_ammortamento" />
+	<formFieldProperty
+		name="perc_primo_anno" />
+	<formFieldProperty
+		name="perc_successivi" />
+	<formFieldProperty
+		name="pg_inventario" />
+	<formFieldProperty
+		name="ti_documento" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_buono_c_s" />
+	<formFieldProperty
+		name="nr_inventario" />
+	<formFieldProperty
+		name="progressivo" />
+	<formFieldProperty
+		name="cd_utilizzatore_cdr" />
+	<formFieldProperty
+		name="percentuale_utilizzo_cdr" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="percentuale_utilizzo_la" />
+	<formFieldProperty
+		name="esercizio_amm" />
+	<formFieldProperty
+		name="valore_ammortizzato" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="esercizio_carico_bene" />
+	<findFieldProperty
+		name="etichetta" />
+	<findFieldProperty
+		name="ds_bene" />
+	<findFieldProperty
+		name="categoria" />
+	<findFieldProperty
+		name="cd_categoria_gruppo" />
+	<findFieldProperty
+		name="ds_categoria_gruppo" />
+	<findFieldProperty
+		name="ds_ubicazione_bene" />
+	<findFieldProperty
+		name="cd_assegnatario" />
+	<findFieldProperty
+		name="denominazione_sede" />
+	<findFieldProperty
+		name="data_registrazione" />
+	<findFieldProperty
+		name="ds_tipo_carico_scarico" />
+	<!--	<findFieldProperty
+		name="valore_unitario" /> -->
+	<findFieldProperty
+		name="valore_iniziale" />		
+	<findFieldProperty
+		name="variazione_piu" />
+	<findFieldProperty
+		name="variazione_meno" />
+	<!--	<findFieldProperty
+		name="quantita" />-->
+	<findFieldProperty
+		name="imponibile_ammortamento" />
+	<findFieldProperty
+		name="im_movimento_ammort" />
+	<findFieldProperty
+		name="numero_anni" />
+	<findFieldProperty
+		name="perc_ammortamento" />
+	<findFieldProperty
+		name="perc_primo_anno" />
+	<findFieldProperty
+		name="perc_successivi" />
+	<findFieldProperty
+		name="pg_inventario" />
+	<findFieldProperty
+		name="ti_documento" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_buono_c_s" />
+	<findFieldProperty
+		name="nr_inventario" />
+	<findFieldProperty
+		name="progressivo" />
+	<findFieldProperty
+		name="cd_utilizzatore_cdr" />
+	<findFieldProperty
+		name="percentuale_utilizzo_cdr" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="percentuale_utilizzo_la" />	
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="esercizio_carico_bene" />
+	<columnFieldProperty
+		name="etichetta" />
+	<columnFieldProperty
+		name="ds_bene" />
+	<columnFieldProperty
+		name="categoria" />
+	<columnFieldProperty
+		name="cd_categoria_gruppo" />
+	<columnFieldProperty
+		name="ds_categoria_gruppo" />
+	<columnFieldProperty
+		name="ds_ubicazione_bene" />
+	<columnFieldProperty
+		name="cd_assegnatario" />
+	<columnFieldProperty
+		name="denominazione_sede" />
+	<columnFieldProperty
+		name="data_registrazione" />
+	<columnFieldProperty
+		name="ds_tipo_carico_scarico" />
+	<!--	<columnFieldProperty
+		name="valore_unitario" />-->
+	<columnFieldProperty
+		name="valore_iniziale" />		
+	<columnFieldProperty
+		name="variazione_piu" />
+	<columnFieldProperty
+		name="variazione_meno" />
+<!--	<columnFieldProperty
+		name="quantita" /> -->
+	<columnFieldProperty
+		name="imponibile_ammortamento" />
+	<columnFieldProperty
+		name="im_movimento_ammort" />
+	<columnFieldProperty
+		name="numero_anni" />
+	<columnFieldProperty
+		name="perc_ammortamento" />
+	<columnFieldProperty
+		name="perc_primo_anno" />
+	<columnFieldProperty
+		name="perc_successivi" />
+	<columnFieldProperty
+		name="pg_inventario" />
+	<columnFieldProperty
+		name="ti_documento" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_buono_c_s" />
+	<columnFieldProperty
+		name="nr_inventario" />
+	<columnFieldProperty
+		name="progressivo" />
+	<columnFieldProperty
+		name="cd_utilizzatore_cdr" />
+	<columnFieldProperty
+		name="percentuale_utilizzo_cdr" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="percentuale_utilizzo_la" />	
+	<columnSet name="BASECONS">	
+		<columnFieldProperty 	name="cd_cds" />
+		<columnFieldProperty 	name="cd_unita_organizzativa" />
+		<columnFieldProperty  	name="esercizio_carico_bene" />
+		<columnFieldProperty	name="pg_inventario" />
+		<columnFieldProperty	name="nr_inventario" />
+		<columnFieldProperty	name="progressivo" />
+		<columnFieldProperty	name="etichetta" />
+		<columnFieldProperty	name="ds_bene" />
+		<columnFieldProperty	name="categoria" />
+		<columnFieldProperty	name="cd_categoria_gruppo" />
+		<columnFieldProperty	name="ds_categoria_gruppo" />
+		<columnFieldProperty	name="ds_ubicazione_bene" />	
+		<columnFieldProperty	name="cd_assegnatario" />
+		<columnFieldProperty	name="denominazione_sede" />
+		<columnFieldProperty	name="ti_documento" />
+		<columnFieldProperty	name="data_registrazione" />
+		<columnFieldProperty	name="esercizio" />
+		<columnFieldProperty	name="pg_buono_c_s" />
+		<columnFieldProperty	name="ds_tipo_carico_scarico" />
+		<columnFieldProperty	name="valore_iniziale" />		
+		<columnFieldProperty	name="variazione_piu" />
+		<columnFieldProperty	name="variazione_meno" />
+		<columnFieldProperty	name="valore_ammortizzato" />
+		<columnFieldProperty	name="imponibile_ammortamento" />		
+	</columnSet>	
+	<columnSet name="QUOTE">	
+		<columnFieldProperty	name="cd_cds" />
+		<columnFieldProperty	name="cd_unita_organizzativa" />
+		<columnFieldProperty	name="categoria" />
+		<columnFieldProperty	name="cd_categoria_gruppo" />
+		<columnFieldProperty	name="ds_categoria_gruppo" />
+		<columnFieldProperty	name="esercizio_carico_bene" />
+		<columnFieldProperty	name="pg_inventario" />
+		<columnFieldProperty	name="nr_inventario" />
+		<columnFieldProperty	name="progressivo" />
+		<columnFieldProperty	name="etichetta" />
+		<columnFieldProperty	name="ds_bene" />
+		<columnFieldProperty	name="esercizio_amm" />	
+		<columnFieldProperty	name="im_movimento_ammort" />
+		<columnFieldProperty	name="perc_ammortamento" />
+		<columnFieldProperty	name="perc_primo_anno" />
+		<columnFieldProperty	name="perc_successivi" />
+		<columnFieldProperty	name="cd_utilizzatore_cdr" />
+		<columnFieldProperty	name="percentuale_utilizzo_cdr" />
+		<columnFieldProperty	name="cd_linea_attivita" />
+		<columnFieldProperty	name="percentuale_utilizzo_la" />	
+	</columnSet>	
+	<freeSearchSet name="BASECONS">	
+		<findFieldProperty 	name="cd_unita_organizzativa" />
+		<findFieldProperty  name="esercizio_carico_bene" />
+		<findFieldProperty	name="pg_inventario" />
+		<findFieldProperty	name="nr_inventario" />
+		<findFieldProperty	name="progressivo" />
+		<findFieldProperty	name="etichetta" />
+		<findFieldProperty	name="ds_bene" />
+		<findFieldProperty	name="categoria" />
+		<findFieldProperty	name="cd_categoria_gruppo" />
+		<findFieldProperty	name="ds_categoria_gruppo" />
+		<findFieldProperty	name="ds_ubicazione_bene" />	
+		<findFieldProperty	name="cd_assegnatario" />
+		<findFieldProperty	name="denominazione_sede" />
+		<findFieldProperty	name="ti_documento" />
+		<findFieldProperty	name="data_registrazione" />
+		<findFieldProperty	name="esercizio" />
+		<findFieldProperty	name="pg_buono_c_s" />
+		<findFieldProperty	name="ds_tipo_carico_scarico" />
+		<findFieldProperty	name="valore_iniziale" />		
+		<findFieldProperty	name="variazione_piu" />
+		<findFieldProperty	name="variazione_meno" />
+		<findFieldProperty	name="valore_ammortizzato" />
+		<findFieldProperty	name="imponibile_ammortamento" />
+	</freeSearchSet>
+	<freeSearchSet name="QUOTE">	
+		<findFieldProperty	name="cd_unita_organizzativa" />
+		<findFieldProperty	name="esercizio_carico_bene" />
+		<findFieldProperty	name="pg_inventario" />
+		<findFieldProperty	name="nr_inventario" />
+		<findFieldProperty	name="progressivo" />
+		<findFieldProperty	name="etichetta" />
+		<findFieldProperty	name="ds_bene" />
+		<findFieldProperty	name="categoria" />
+		<findFieldProperty	name="cd_categoria_gruppo" />
+		<findFieldProperty	name="ds_categoria_gruppo" />
+		<findFieldProperty	name="esercizio_amm" />	
+		<findFieldProperty	name="im_movimento_ammort" />
+		<findFieldProperty	name="perc_ammortamento" />
+		<findFieldProperty	name="perc_primo_anno" />
+		<findFieldProperty	name="perc_successivi" />
+		<findFieldProperty	name="cd_utilizzatore_cdr" />
+		<findFieldProperty	name="percentuale_utilizzo_cdr" />
+		<findFieldProperty	name="cd_linea_attivita" />
+		<findFieldProperty	name="percentuale_utilizzo_la" />	
+	</freeSearchSet>	
+</bulkInfo>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.docs.bulk.BonusBase"
+	keyClassName="it.cnr.contab.compensi00.docs.bulk.BonusKey"
+	homeClassName="it.cnr.contab.compensi00.docs.bulk.BonusHome">
+	<defaultColumnMap
+		tableName="BONUS">
+	
+		<columnMapping
+			columnName="ESERCIZIO_IMPOSTA"
+			propertyName="esercizio_imposta"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TRATTAMENTO"
+			propertyName="cd_trattamento"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_REDDITO"
+			propertyName="im_reddito"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_REDDITO_NUCLEO_F"
+			propertyName="im_reddito_nucleo_f"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_BONUS"
+			propertyName="im_bonus"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />		
+		<columnMapping
+			columnName="DT_RICHIESTA"
+			propertyName="dt_richiesta"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_TRASMESSO"
+			propertyName="fl_trasmesso"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	
+	<persistentProperty
+		name="esercizio_imposta" />
+	<persistentProperty
+		name="dt_registrazione" />
+	<persistentProperty
+		name="codice_fiscale" />
+	<persistentProperty
+		name="cd_trattamento" />
+	<persistentProperty
+		name="im_reddito" />
+	<persistentProperty
+		name="im_reddito_nucleo_f" />
+	<persistentProperty
+		name="im_bonus" />	
+	<persistentProperty
+		name="dt_richiesta" />
+	<persistentProperty
+		name="fl_trasmesso" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

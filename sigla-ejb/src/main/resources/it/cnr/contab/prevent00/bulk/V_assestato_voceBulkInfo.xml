@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Situazione assestato per voce"
+          longDescription="Situazione assestato per voce">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="esercizio_res"
+		property="esercizio_res"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio residuo" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="true"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Centro di responsabilità" />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Appartenenza" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="gestione" />
+	<fieldProperty
+		name="cd_voce"
+		property="cd_voce"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		inputSize="50"		
+		maxLength="50"
+		label="Capitolo" />
+	<fieldProperty
+		name="ds_voce"
+		property="ds_voce"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		inputSize="50"		
+		maxLength="300"
+		label="Descrizione" />
+	<fieldProperty
+		name="im_obbl_res_pro"
+		property="im_obbl_res_pro"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Impegni residui propri" />
+	<fieldProperty
+		name="var_piu_obbl_res_pro"
+		property="var_piu_obbl_res_pro"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="true"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni positive agli Impegni residui propri" />
+	<fieldProperty
+		name="var_meno_obbl_res_pro"
+		property="var_meno_obbl_res_pro"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni negative agli Impegni residui propri" />
+	<fieldProperty
+		name="assestato"
+		property="assestato"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Disponibilità" />
+	<fieldProperty
+		name="im_mandati_reversali_pro"
+		property="im_mandati_reversali_pro"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Mandati/Reversali propri" />
+	<fieldProperty
+		name="im_pagamenti_incassi"
+		property="im_pagamenti_incassi"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Pagamenti/Incassi propri" />
+		
+	<findFieldProperty
+		name="esercizio"/>
+	<findFieldProperty
+		name="esercizio_res"/>
+	<findFieldProperty
+		name="cd_centro_responsabilita"/>
+	<findFieldProperty
+		name="ti_appartenenza"/>
+	<findFieldProperty
+		name="ti_gestione"/>
+	<findFieldProperty
+		name="cd_voce"/>
+	<findFieldProperty
+		name="ds_voce"/>
+	<findFieldProperty
+		name="im_obbl_res_pro"/>
+	<findFieldProperty
+		name="var_piu_obbl_res_pro"/>
+	<findFieldProperty
+		name="var_meno_obbl_res_pro"/>
+	<findFieldProperty
+		name="im_mandati_reversali_pro"/>
+	<findFieldProperty
+		name="assestato"/>
+	<findFieldProperty
+		name="im_pagamenti_incassi"/>
+		
+	<columnFieldProperty
+		name="esercizio"/>
+	<columnFieldProperty
+		name="esercizio_res"/>
+	<columnFieldProperty
+		name="cd_centro_responsabilita"/>
+	<columnFieldProperty
+		name="ti_appartenenza"/>
+	<columnFieldProperty
+		name="ti_gestione"/>
+	<columnFieldProperty
+		name="cd_voce"/>
+	<columnFieldProperty
+		name="ds_voce"/>
+	<columnFieldProperty
+		name="im_obbl_res_pro"/>
+	<columnFieldProperty
+		name="var_piu_obbl_res_pro"/>
+	<columnFieldProperty
+		name="var_meno_obbl_res_pro"/>
+	<columnFieldProperty
+		name="im_mandati_reversali_pro"/>
+	<columnFieldProperty
+		name="assestato"/>
+	<columnFieldProperty
+		name="im_pagamenti_incassi"/>
+
+    <columnSet
+        name ="var_bilancio">
+		<columnFieldProperty
+			name="cd_voce"/>
+		<columnFieldProperty
+			name="im_obbl_res_pro"/>
+		<columnFieldProperty
+			name="var_piu_obbl_res_pro"/>
+		<columnFieldProperty
+			name="var_meno_obbl_res_pro"/>
+		<columnFieldProperty
+			name="im_mandati_reversali_pro"/>
+		<columnFieldProperty
+			name="assestato"/>
+		<columnFieldProperty
+			name="im_pagamenti_incassi"/>
+    </columnSet>    		
+</bulkInfo>

@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+<!-- FIELD FIELD PROPERTY -->
+
+<fieldProperty
+		name="ti_associato_manrev"
+		property="ti_associato_manrev"
+		maxLength="1"
+		inputSize="20"
+		inputType="ROTEXT"
+		nullable="false"
+		keysProperty="ti_associato_manrevKeys"
+		label="Associazione man/rev"
+		caseSensitiveSearch="false" />
+<!-- banche -->
+	<fieldProperty
+		name="contoA"
+		property="banca"
+		inputType="FORM"
+		formName="A"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoP"
+		property="banca"
+		inputType="FORM"
+		formName="P"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoB"
+		property="banca"
+		inputType="FORM"
+		formName="BdocAmm"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoQ"
+		property="banca"
+		inputType="FORM"
+		formName="Q"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoN"
+		property="banca"
+		inputType="FORM"
+		formName="N"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+
+	<fieldProperty 
+		name="listabanche"
+		property="banca"
+		inputType="BUTTON"
+		img="img/find16.gif"
+		readonlyProperty="abledToInsertBank"
+		label="Conto/i"
+		href="javascript:submitForm('doSearch(main.Dettaglio.listabanche)')" />
+	<fieldProperty
+		name="pg_banca_uo_cds"
+		property="pg_banca_uo_cds"
+		inputType="TEXT"
+		label="banca" />
+	<fieldProperty
+		name="pg_banca"
+		property="pg_banca"
+		inputType="TEXT"
+		label="banca" />
+	<fieldProperty
+		name="cd_cessionario"
+		property="cessionario.cd_terzo"
+		maxLength="30"
+		inputSize="6"
+		inputType="ROTEXT"
+		label="Cessionario"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="denom_sede_cessionario"
+		property="cessionario.denominazione_sede"
+		inputSize="50"
+		inputType="ROTEXT"
+		label="Denom./Sede"
+		caseSensitiveSearch="false" />
+
+
+<!-- banche UO -->
+<fieldProperty
+		name="contoAUO"
+		property="banca_uo_cds"
+		inputType="FORM"
+		formName="A"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoPUO"
+		property="banca_uo_cds"
+		inputType="FORM"
+		formName="P"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoBUO"
+		property="banca_uo_cds"
+		inputType="FORM"
+		formName="BdocAmm"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoQUO"
+		property="banca_uo_cds"
+		inputType="FORM"
+		formName="Q"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoIUO"
+		property="banca_uo_cds"
+		inputType="FORM"
+		formName="I"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoNUO"
+		property="banca_uo_cds"
+		inputType="FORM"
+		formName="N"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="listabanche_uo_cds"
+		property="banca_uo_cds"
+		inputType="BUTTON"
+		img="img/find16.gif"
+		readonlyProperty="abledToInsertBankUOCDS"
+		label="Conto/i"
+		href="javascript:submitForm('doSearch(main.Dettaglio.listabanche)')" />
+		
+
+<!-- terzo -->
+	<fieldProperty
+		name="crea_terzo"
+		property="terzo"
+		inputType="CRUDTOOL"
+		label="Terzo"
+		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
+		readonlyProperty="ROTerzo"/>
+	<fieldProperty
+		name="ds_comune"
+		property="terzo.comune_sede.ds_comune"
+		maxLength="100"
+		inputSize="20"
+		inputType="ROTEXT"
+		label="Comune"/>
+	<fieldProperty
+		name="ds_provincia"
+		property="terzo.comune_sede.provincia.ds_provincia"
+		maxLength="100"
+		inputSize="20"
+		inputType="ROTEXT"
+		label="Provincia"/>
+	<fieldProperty
+		name="via_fiscale"
+		property="terzo.via_sede"
+		maxLength="20"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Via/P.za"/>
+	<fieldProperty
+		name="num_civico"
+		property="terzo.numero_civico_sede"
+		maxLength="10"
+		inputSize="5"
+		inputType="ROTEXT"
+		label="Numero"/>	
+	<fieldProperty
+		name="terzo"
+		property="terzo"
+		inputType="SEARCHTOOL"
+		label="Anagrafica"
+		readonlyProperty="ROTerzo"
+		enabledOnSearch="false"
+        enabledOnEdit="true" />	
+	<fieldProperty
+		name="cd_terzo"
+		property="terzo.cd_terzo"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		label="Anagrafica"
+		readonlyProperty="ROCd_terzo"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		nullable="false"
+        enabledOnEdit="true" />
+	<fieldProperty
+		name="cd_precedente"
+		property="terzo.cd_precedente"
+		maxLength="20"
+		inputSize="6"
+		inputType="TEXT"
+		label="Codice precedente"
+		readonlyProperty="ROCd_terzo"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="true" />
+    <fieldProperty
+		name="cd_terzo_uo_cds"
+		property="terzo_uo_cds.cd_terzo_uo_cds"
+		inputType="TEXT"
+		enabledOnSearch="false"
+		nullable="false"
+		enabledOnFreeSearch="false"
+        enabledOnEdit="false" />	
+	<fieldProperty
+		name="denominazione_sede"
+		property="terzo.denominazione_sede"
+		inputSize="15"
+		inputType="ROTEXT"
+		label=""
+		caseSensitiveSearch="false"	/>
+	<fieldProperty
+		name="nome"
+		property="nome"
+		maxLength="50"
+		inputSize="15"
+		inputType="TEXT"
+		label="Nome"
+		readonlyProperty="ROCd_terzo"
+		caseSensitiveSearch="false"
+		enabledOnEdit="true"/>
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		maxLength="50"
+		inputSize="15"
+		inputType="TEXT"
+		label="Cognome"
+		readonlyProperty="ROCd_terzo"
+		caseSensitiveSearch="false"
+		enabledOnEdit="true"/>
+	<fieldProperty
+		name="ragione_sociale"
+		property="ragione_sociale"
+		maxLength="100"
+		inputSize="30"
+		inputType="TEXT"
+		label="Ragione Sociale"
+		readonlyProperty="ROCd_terzo"
+		caseSensitiveSearch="false"
+		enabledOnEdit="true"/>
+	<fieldProperty
+		name="partita_iva"
+		property="partita_iva"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Partita IVA"
+		readonlyProperty="ROCd_terzo"
+		caseSensitiveSearch="false"
+		enabledOnEdit="true"/>
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Cod. Fiscale"
+		readonlyProperty="ROCd_terzo"
+		caseSensitiveSearch="false"
+		enabledOnEdit="true"/>
+
+<!-- importi -->
+	<fieldProperty
+		name="im_riga_divisa"
+		property="im_riga_divisa"
+		inputType="TEXT"
+		maxLength="15"
+		inputSize="15"		
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="true"
+		nullable="false"
+		label="In valuta" />	
+	<fieldProperty
+		name="im_riga_divisa_euro"
+		property="im_riga_divisa"
+		inputType="TEXT"
+		maxLength="15"
+		inputSize="15"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="true"
+		nullable="false"
+		label="Importo" />	
+	<fieldProperty
+		name="im_riga_sdoppia"
+		property="im_riga_sdoppia"
+		inputType="TEXT"
+		maxLength="15"
+		inputSize="15"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="true"
+		enabledOnView="true"
+		nullable="false"
+		label="Nuovo Importo" />	
+	<fieldProperty
+		name="im_riga"
+		property="im_riga"
+		inputType="TEXT"
+		maxLength="15"
+		inputSize="15"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Importo in EURO" 
+		enabledOnEdit="false"/>
+		
+<!-- modalita' e termini -->
+	<fieldProperty
+		name="modalita_pagamento"
+		property="modalita_pagamento"
+		printProperty="cd_ds_modalita_pagamento"
+		optionsProperty="modalita"
+		readonlyProperty="ROModalita_pagamento"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		nullable="false"
+		label="Mod. pagamento" />
+	<fieldProperty
+		name="modalita_pagamento_uo_cds"
+		property="modalita_pagamento_uo_cds"
+		printProperty="cd_ds_modalita_pagamento"
+		readonlyProperty="ROModalita_pagamento"
+		optionsProperty="modalita"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		nullable="false"
+		label="Mod. pagamento" />
+	<fieldProperty
+		name="termini_pagamento"
+		property="termini_pagamento"
+		printProperty="cd_ds_termini_pagamento"
+		optionsProperty="termini"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		label="Term. pagamento" />
+	<fieldProperty
+		name="termini_pagamento_uo_cds"
+		property="termini_pagamento_uo_cds"
+		printProperty="cd_ds_termini_pagamento"
+		optionsProperty="termini"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		label="Term. pagamento" />
+
+<!-- info CIR -->
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_tipo_documento_amm"
+		property="cd_tipo_documento_amm"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_tipo_documento_amm"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_unita_organizzativa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="progressivo_riga"
+		property="progressivo_riga"
+		inputType="TEXT"
+		label="Numero" />
+	<fieldProperty
+		name="pg_documento_generico"
+		property="pg_documento_generico"
+		inputType="TEXT"
+		label="pg_documento_generico" />	
+	<fieldProperty
+		name="ds_riga"
+		property="ds_riga"
+		maxLength="200"
+		inputSize="40"
+		inputType="TEXT"
+		label="Descrizione"
+		nullable="false"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="note"
+		property="note"
+		maxLength="300"
+		inputSize="300"
+		inputType="TEXT"
+		label="note"
+		caseSensitiveSearch="false" />
+
+<!-- contabilita' -->	
+	<fieldProperty
+		name="esercizio_ori_obbligazione"
+		property="esercizio_ori_obbligazione"
+		inputType="TEXT"
+		label="esercizio_ori_obbligazione" />
+	<fieldProperty
+		name="pg_obbligazione"
+		property="pg_obbligazione"
+		inputType="TEXT"
+		label="pg_obbligazione" />
+	<fieldProperty
+		name="pg_obbligazione_scadenzario"
+		property="pg_obbligazione_scadenzario"
+		inputType="TEXT"
+		label="pg_obbligazione_scadenzario" />
+
+<!-- cofi/coge -->
+	<fieldProperty
+		name="dt_da_competenza_coge"
+		property="dt_da_competenza_coge"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		nullable="false"
+		label="Data inizio competenza" />
+	<fieldProperty
+		name="dt_a_competenza_coge"
+		property="dt_a_competenza_coge"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		nullable="false"
+		label="Data fine competenza" />
+	<fieldProperty
+		name="stato_cofi" 
+		property="stato_cofi"
+		label="Stato" />
+
+<!--  FORM FIELD PROPERTY  -->
+	<formFieldProperty name="ti_associato_manrev"/>
+<!-- banche -->
+	<formFieldProperty name="contoA" />
+	<formFieldProperty name="contoB" />
+	<formFieldProperty name="contoP" />
+	<formFieldProperty name="contoQ" />
+	<formFieldProperty name="contoN" />
+	<formFieldProperty name="contoAUO" />
+	<formFieldProperty name="contoBUO" />
+	<formFieldProperty name="contoPUO" />
+	<formFieldProperty name="contoQUO" />
+	<formFieldProperty name="contoIUO" />
+	<formFieldProperty name="contoNUO" />
+	<formFieldProperty name="listabanche" />
+	<formFieldProperty name="listabanche_uo_cds" />
+	<formFieldProperty name="pg_banca" />
+	<formFieldProperty name="pg_banca_uo_cds" />
+	<formFieldProperty name="cd_cessionario" />
+	<formFieldProperty name="denom_sede_cessionario" />
+	
+<!-- terzo -->
+	<formFieldProperty name="crea_terzo" />
+	<formFieldProperty name="terzo" />
+	<formFieldProperty name="cd_terzo" />
+	<formFieldProperty name="cd_precedente" />
+	<formFieldProperty name="denominazione_sede" />
+	<formFieldProperty name="partita_iva" />
+	<formFieldProperty name="nome" />
+	<formFieldProperty name="via_fiscale" />
+	<formFieldProperty name="ragione_sociale" />
+	<formFieldProperty name="codice_fiscale" />
+	<formFieldProperty name="cognome" />
+	<formFieldProperty name="num_civico" />
+	<formFieldProperty name="ds_comune" />
+	<formFieldProperty name="ds_provincia" />
+	
+<!-- modalita' e termini-->
+	<formFieldProperty name="modalita_pagamento" />
+	<formFieldProperty name="termini_pagamento" />
+	<formFieldProperty name="modalita_pagamento_uo_cds" />
+	<formFieldProperty name="termini_pagamento_uo_cds" />
+	<formFieldProperty name="cd_modalita_pag" />
+	<formFieldProperty name="cd_termini_pag" />
+	<formFieldProperty name="cd_modalita_pag_uo_cds" />
+	<formFieldProperty name="cd_termini_pag_uo_cds" />
+
+<!-- info CIR -->
+	<formFieldProperty name="cd_cds" />
+	<formFieldProperty name="cd_tipo_documento_amm" />
+	<formFieldProperty name="cd_unita_organizzativa" />
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="pg_documento_generico" />
+	<formFieldProperty name="ds_riga" />
+	<formFieldProperty name="progressivo_riga" />
+	<formFieldProperty name="note" />
+	
+<!-- cofi/coge -->
+	<formFieldProperty name="dt_da_competenza_coge" />
+	<formFieldProperty name="dt_a_competenza_coge" />
+
+<!-- importi -->
+	<formFieldProperty name="im_riga" />
+	<formFieldProperty name="im_riga_divisa" 
+		command="doCalcolaTotaliDiRiga"/>		
+	<formFieldProperty name="im_riga_divisa_euro"
+		command="doCalcolaTotaliDiRiga"/>		
+	<formFieldProperty name="im_riga_sdoppia"
+		command="doConfirmSdoppiaDettaglio"/>		
+
+<!-- contabilita' -->
+	<formFieldProperty name="esercizio_ori_obbligazione" />
+	<formFieldProperty name="pg_obbligazione" />
+	<formFieldProperty name="pg_obbligazione_scadenzario" />
+
+<!--  COLUMN FIELD PROPERTY  -->
+
+	<columnFieldProperty name="ti_associato_manrev"/>
+	<columnFieldProperty name="cd_cds" />
+	<columnFieldProperty name="cd_tipo_documento_amm" />
+	<columnFieldProperty name="dt_da_competenza_coge" />
+	<columnFieldProperty name="partita_iva" />
+	<columnFieldProperty name="nome" />
+	<columnFieldProperty name="cd_unita_organizzativa" />
+	<columnFieldProperty name="esercizio" />
+	<columnFieldProperty name="im_riga" />
+	<columnFieldProperty name="esercizio_ori_obbligazione" />
+	<columnFieldProperty name="pg_obbligazione" />
+	<columnFieldProperty name="pg_obbligazione_scadenzario" />
+	<columnFieldProperty name="ragione_sociale" />
+	<columnFieldProperty name="pg_documento_generico" />
+	<columnFieldProperty name="cd_terzo" />
+	<columnFieldProperty name="codice_fiscale" />
+	<columnFieldProperty name="cd_modalita_pag" />
+	<columnFieldProperty name="cd_termini_pag" />
+	<columnFieldProperty name="cd_modalita_pag_uo_cds" />
+	<columnFieldProperty name="cd_termini_pag_uo_cds" />
+	<columnFieldProperty name="cognome" />
+	<columnFieldProperty name="ds_riga" />
+	<columnFieldProperty name="progressivo_riga" />
+	<columnFieldProperty name="pg_banca" />
+	<columnFieldProperty name="pg_banca_uo_cds" />
+	<columnFieldProperty name="note" />
+	<columnFieldProperty name="dt_a_competenza_coge" />
+
+<!--  FIND FIELD PROPERTY  -->
+
+	<findFieldProperty name="cd_cds" />
+	<findFieldProperty name="cd_tipo_documento_amm" />
+	<findFieldProperty name="dt_da_competenza_coge" />
+	<findFieldProperty name="partita_iva" />
+	<findFieldProperty name="nome" />
+	<findFieldProperty name="cd_unita_organizzativa" />
+	<findFieldProperty name="esercizio" />
+	<findFieldProperty name="im_riga" />
+	<findFieldProperty name="esercizio_ori_obbligazione" />
+	<findFieldProperty name="pg_obbligazione" />
+	<findFieldProperty name="pg_obbligazione_scadenzario" />
+	<findFieldProperty name="ragione_sociale" />
+	<findFieldProperty name="pg_documento_generico" />
+	<findFieldProperty name="terzo" />
+	<findFieldProperty name="cd_terzo" />
+	<findFieldProperty name="cd_precedente" />
+	<findFieldProperty name="codice_fiscale" />
+	<findFieldProperty name="cd_modalita_pag" />
+	<findFieldProperty name="cd_termini_pag" />
+	<findFieldProperty name="cd_modalita_pag_uo_cds" />
+	<findFieldProperty name="cd_termini_pag_uo_cds" />
+	<findFieldProperty name="cognome" />
+	<findFieldProperty name="ds_riga" />
+	<findFieldProperty name="progressivo_riga" />
+	<findFieldProperty name="pg_banca" />
+	<findFieldProperty name="pg_banca_uo_cds" />
+	<findFieldProperty name="note" />
+	<findFieldProperty name="dt_a_competenza_coge" />
+
+<!--  COLUMN SET  -->
+
+	<columnSet name="righiSet">
+		<columnFieldProperty name="progressivo_riga"/>
+		<columnFieldProperty name="ragione_sociale" />
+		<columnFieldProperty name="nome" />
+		<columnFieldProperty name="cognome" />
+		<columnFieldProperty name="im_riga"/>
+		<columnFieldProperty name="dt_da_competenza_coge" />
+		<columnFieldProperty name="dt_a_competenza_coge" />
+		<columnFieldProperty name="stato_cofi" />	
+		<columnFieldProperty name="ti_associato_manrev"	/>
+	</columnSet>
+	<columnSet name="inventarioSet">
+		<columnFieldProperty name="nome"/>
+		<columnFieldProperty name="cognome"/>
+		<columnFieldProperty name="ragione_sociale"/>
+		<columnFieldProperty name="ds_riga"/>
+		<columnFieldProperty name="im_riga"
+		label="Associare all'Inventario" />
+	</columnSet>	
+</bulkInfo>

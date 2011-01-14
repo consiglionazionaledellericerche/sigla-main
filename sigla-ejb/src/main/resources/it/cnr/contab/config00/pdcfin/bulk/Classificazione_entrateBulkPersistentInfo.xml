@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.Classificazione_entrateBulk"
+	homeClassName="it.cnr.contab.config00.pdcfin.bulk.Classificazione_entrateHome" >
+	<defaultColumnMap
+		tableName="CLASSIFICAZIONE_ENTRATE" >
+		<columnMapping
+			columnName="ESERCIZIO_PADRE"
+			propertyName="classificazione_entrate.esercizio" />
+		<columnMapping
+			columnName="CODICE_CLA_E_PADRE"
+			propertyName="classificazione_entrate.codice_cla_e" />
+	</defaultColumnMap>	
+	<persistentProperty
+		name="classificazione_entrate"/>
+</SQLPersistentInfo>

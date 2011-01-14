@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.cori00.views.bulk.V_liquid_capitoli_coriBase"
+	homeClassName="it.cnr.contab.cori00.views.bulk.V_liquid_capitoli_coriHome" >
+	<defaultColumnMap
+		tableName="V_LIQUID_CAPITOLI_CORI" >
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CONTRIBUTO_RITENUTA"
+			propertyName="cd_contributo_ritenuta"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_GRUPPO_CR"
+			propertyName="cd_gruppo_cr"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="ds_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="TI_ENTE_PERCEPIENTE"
+			propertyName="ti_ente_percepiente"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+			
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_elemento_voce" />
+	<persistentProperty
+		name="cd_gruppo_cr" />
+	<persistentProperty
+		name="cd_contributo_ritenuta" />
+	<persistentProperty
+		name="ds_elemento_voce" />
+	<persistentProperty
+		name="ti_ente_percepiente" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="ti_appartenenza" />
+		
+</SQLPersistentInfo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_limiteKey">
+	<defaultColumnMap
+		tableName="TIPO_LIMITE">
+		<columnMapping
+			columnName="CD_TIPO_LIMITE"
+			propertyName="cd_tipo_limite"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_tipo_limite"
+		partOfOid="true" />
+</SQLPersistentInfo>

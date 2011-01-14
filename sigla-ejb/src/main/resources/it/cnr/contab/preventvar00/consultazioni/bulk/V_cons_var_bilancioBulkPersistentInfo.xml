@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.preventvar00.consultazioni.bulk.V_cons_var_bilancioBulk"
+	homeClassName="it.cnr.contab.preventvar00.consultazioni.bulk.V_cons_var_bilancioHome">
+	<defaultColumnMap
+		tableName="V_CONS_VAR_BILANCIO">
+	</defaultColumnMap>
+</SQLPersistentInfo>

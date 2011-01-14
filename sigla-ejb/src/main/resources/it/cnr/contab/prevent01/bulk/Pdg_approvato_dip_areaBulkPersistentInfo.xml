@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent01.bulk.Pdg_approvato_dip_areaBulk"
+	homeClassName="it.cnr.contab.prevent01.bulk.Pdg_approvato_dip_areaHome">
+	<defaultColumnMap
+		tableName="PDG_APPROVATO_DIP_AREA">
+		<columnMapping
+			columnName="CD_DIPARTIMENTO"
+			propertyName="dipartimento.cd_dipartimento"
+			sqlTypeName="VARCHAR"
+			columnSize="15" />
+		<columnMapping
+			columnName="CD_CDS_AREA"
+			propertyName="area.cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dipartimento"		
+		partOfOid="true" />
+	<persistentProperty
+		name="area" />
+</SQLPersistentInfo>

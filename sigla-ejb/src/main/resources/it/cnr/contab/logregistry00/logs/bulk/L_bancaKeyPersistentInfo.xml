@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.logregistry00.logs.bulk.L_bancaKey" >
+	<defaultColumnMap
+		tableName="L_BANCA" >
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="pg_banca"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_STORICO_"
+			propertyName="pg_storico_"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_banca"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_storico_"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_terzo"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBase"
+	keyClassName="it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailKey"
+	homeClassName="it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome">
+	<defaultColumnMap
+		tableName="UTENTE_INDIRIZZI_MAIL">
+		<columnMapping
+			columnName="FL_ERR_APPR_VAR_BIL_CNR_RES"
+			propertyName="fl_err_appr_var_bil_cnr_res"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_COM_APP_VAR_STANZ_RES"
+			propertyName="fl_com_app_var_stanz_res"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+		<columnMapping
+			columnName="FL_ERR_APPR_VAR_BIL_CNR_COMP"
+			propertyName="fl_err_appr_var_bil_cnr_comp"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_COM_APP_VAR_STANZ_COMP"
+			propertyName="fl_com_app_var_stanz_comp"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="fl_err_appr_var_bil_cnr_res" />
+	<persistentProperty
+		name="fl_com_app_var_stanz_res" />		
+	<persistentProperty
+		name="fl_err_appr_var_bil_cnr_comp" />
+	<persistentProperty
+		name="fl_com_app_var_stanz_comp" />		
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

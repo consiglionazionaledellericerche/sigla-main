@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="voce"
+		property="voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Voce" />
+	<fieldProperty
+		name="descrizione"
+		property="descrizione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Descrizione" />
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Tipo di Spesa" />
+	<fieldProperty
+		name="ti_mandato"
+		property="ti_mandato"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Mandato" />
+	<fieldProperty
+		name="ds_tipo"
+		property="ds_tipo"
+		inputType="TEXT"
+		inputSize="16"
+		maxLength="16"
+		label="Descrizione Tipo Mandato" />
+	<fieldProperty
+		name="tot_pagato"
+		property="tot_pagato"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Pagato" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="voce" />
+	<formFieldProperty
+		name="descrizione" />
+	<formFieldProperty
+		name="tipo" />
+	<formFieldProperty
+		name="ti_mandato" />
+	<formFieldProperty
+		name="ds_tipo" />
+	<formFieldProperty
+		name="tot_pagato" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="voce" />
+	<findFieldProperty
+		name="descrizione" />
+	<findFieldProperty
+		name="tipo" />
+	<findFieldProperty
+		name="ti_mandato" />
+	<findFieldProperty
+		name="ds_tipo" />
+	<findFieldProperty
+		name="tot_pagato" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="voce" />
+	<columnFieldProperty
+		name="descrizione" />
+	<columnFieldProperty
+		name="tipo" />
+	<columnFieldProperty
+		name="ti_mandato" />
+	<columnFieldProperty
+		name="ds_tipo" />
+	<columnFieldProperty
+		name="tot_pagato" />
+</bulkInfo>

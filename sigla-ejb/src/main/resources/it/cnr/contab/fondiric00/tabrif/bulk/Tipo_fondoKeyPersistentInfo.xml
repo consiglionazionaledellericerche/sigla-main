@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.fondiric00.tabrif.bulk.Tipo_fondoKey" >
+	<defaultColumnMap
+		tableName="TIPO_FONDO" >
+		<columnMapping
+			columnName="CD_TIPO_FONDO"
+			propertyName="cd_tipo_fondo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_tipo_fondo"
+		partOfOid="true" />
+</SQLPersistentInfo>

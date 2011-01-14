@@ -1,0 +1,12 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.Dichiarazione_intentoBulk"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.Dichiarazione_intentoHome" >
+	<defaultColumnMap
+		tableName="DICHIARAZIONE_INTENTO" >
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="anagrafico.cd_anag" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="anagrafico" />
+</SQLPersistentInfo>

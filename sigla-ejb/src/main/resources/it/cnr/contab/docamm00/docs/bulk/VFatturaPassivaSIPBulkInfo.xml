@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="UO" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Codice terzo" />
+	<fieldProperty
+		name="denominazione"
+		property="denominazione"
+		inputType="TEXT"
+		maxLength="101"
+		label="Denominazione" />
+	<fieldProperty
+		name="indirizzo"
+		property="indirizzo"
+		inputType="TEXT"
+		maxLength="333"
+		label="Indirizzo" />
+	<fieldProperty
+		name="partita_iva"
+		property="partita_iva"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Partita iva" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Codice fiscale" />
+	<fieldProperty
+		name="nr_fattura_fornitore"
+		property="nr_fattura_fornitore"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="nr fattura fornitore" />
+	<fieldProperty
+		name="dt_fattura_fornitore"
+		property="dt_fattura_fornitore"
+		inputType="TEXT"
+		formatName="date_short"
+		label="data fattura fornitore" />
+	<fieldProperty
+		name="ds_fattura_passiva"
+		property="ds_fattura_passiva"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Desc. fattura" />
+	<fieldProperty
+		name="im_totale_fattura"
+		property="im_totale_fattura"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale fattura" />
+	<fieldProperty
+		name="pg_fattura"
+		property="pg_fattura"
+		inputType="TEXT"
+		maxLength="10"
+		label="Pg fattura" />	
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Voce" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cdr" />
+	<fieldProperty
+		name="gae"
+		property="gae"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Gae" />
+	<fieldProperty
+		name="dt_pagamento"
+		property="dt_pagamento"
+		inputType="TEXT"
+		formatName="date_short"
+		label="data pagamento" />	
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="denominazione" />
+	<formFieldProperty
+		name="indirizzo" />
+	<formFieldProperty
+		name="partita_iva" />
+	<formFieldProperty
+		name="codice_fiscale" />
+	<formFieldProperty
+		name="nr_fattura_fornitore" />
+	<formFieldProperty
+		name="dt_fattura_fornitore" />
+	<formFieldProperty
+		name="dt_pagamento" />
+	<formFieldProperty
+		name="pg_fattura" />	
+	<formFieldProperty
+		name="ds_fattura_passiva" />
+	<formFieldProperty
+		name="im_totale_fattura" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="gae" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="denominazione" />
+	<findFieldProperty
+		name="indirizzo" />
+	<findFieldProperty
+		name="partita_iva" />
+	<findFieldProperty
+		name="codice_fiscale" />
+	<findFieldProperty
+		name="nr_fattura_fornitore" />
+	<findFieldProperty
+		name="dt_fattura_fornitore" />
+	<findFieldProperty
+		name="dt_pagamento" />
+	<findFieldProperty
+		name="pg_fattura" />	
+	<findFieldProperty
+		name="ds_fattura_passiva" />
+	<findFieldProperty
+		name="im_totale_fattura" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="gae" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="denominazione" />
+	<columnFieldProperty
+		name="indirizzo" />
+	<columnFieldProperty
+		name="partita_iva" />
+	<columnFieldProperty
+		name="codice_fiscale" />
+	<columnFieldProperty
+		name="nr_fattura_fornitore" />
+	<columnFieldProperty
+		name="dt_fattura_fornitore" />
+	<columnFieldProperty
+		name="dt_pagamento" />
+	<columnFieldProperty
+		name="nr_fattura" />	
+	<columnFieldProperty
+		name="ds_fattura_passiva" />
+	<columnFieldProperty
+		name="im_totale_fattura" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="gae" />
+</bulkInfo>

@@ -1,0 +1,51 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.V_terzo_persona_fisicaBulk"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.V_terzo_persona_fisicaHome" >
+	<defaultColumnMap
+		tableName="V_TERZO_PERSONA_FISICA" >
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="DT_NASCITA"
+			propertyName="dt_nascita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="TI_SESSO"
+			propertyName="ti_sesso"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="codice_fiscale" />
+	<persistentProperty
+		name="cognome" />
+	<persistentProperty
+		name="dt_nascita" />
+	<persistentProperty
+		name="nome" />
+	<persistentProperty
+		name="ti_sesso" />
+
+	<fetchPolicy
+		name="default">
+		<exclude pattern="*" />
+		<include pattern="anagrafico"/>
+		<exclude pattern="anagrafico.*"/>		
+	</fetchPolicy>
+
+</SQLPersistentInfo>

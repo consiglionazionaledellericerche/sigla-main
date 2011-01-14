@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofiBase"
+	keyClassName="it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofiKey"
+	homeClassName="it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofiHome" >
+	<defaultColumnMap
+		tableName="STIPENDI_COFI" >
+		<columnMapping
+			columnName="PG_COMP"
+			propertyName="pg_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_COMP"
+			propertyName="cd_cds_comp"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_UO_DOC_GEN"
+			propertyName="cd_uo_doc_gen"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_DOC_GEN"
+			propertyName="cd_cds_doc_gen"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pg_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_DOC_GEN"
+			propertyName="pg_doc_gen"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_MANDATO"
+			propertyName="cd_cds_mandato"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_DOC_GEN"
+			propertyName="esercizio_doc_gen"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="ESERCIZIO_COMP"
+			propertyName="esercizio_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_MANDATO"
+			propertyName="esercizio_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_TIPO_DOC_GEN"
+			propertyName="cd_tipo_doc_gen"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_UO_COMP"
+			propertyName="cd_uo_comp"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_comp" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="cd_cds_comp" />
+	<persistentProperty
+		name="cd_uo_doc_gen" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="cd_cds_doc_gen" />
+	<persistentProperty
+		name="pg_mandato" />
+	<persistentProperty
+		name="pg_doc_gen" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="cd_cds_mandato" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="esercizio_doc_gen" />
+	<persistentProperty
+		name="esercizio_comp" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="esercizio_mandato" />
+	<persistentProperty
+		name="cd_tipo_doc_gen" />
+	<persistentProperty
+		name="cd_uo_comp" />
+</SQLPersistentInfo>

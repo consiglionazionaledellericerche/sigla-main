@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="tipo_db"
+		property="tipo_db"
+        keysProperty="tipoDBKeys"		
+        inputType="SELECT"
+		label="Database"	
+		enabledOnSearch="true"
+		caseSensitiveSearch="false"		
+		nullable="true" />
+	<fieldProperty
+		name="descrizione"
+		property="descrizione"
+		maxLength="2000"
+		inputSize="2000"
+		inputType="TEXTAREA"
+		cols="80"
+		rows="3"
+        enabledOnSearch="true"
+		label="Descrizione Ente"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="attivo"
+		property="attivo"
+		inputType="CHECKBOX"
+		inputSize="1"		
+		label="Attivo" 
+		nullable="false"/>
+	<fieldProperty
+		name="cancella_stampe"
+		property="cancella_stampe"
+		maxLength="3"
+		inputSize="3"
+		inputType="TEXT"
+		label="Intervallo di cancellazione delle stampe" />				
+	<fieldProperty
+		name="box_scadenze"
+		property="box_scadenze"
+		maxLength="2000"
+		inputSize="2000"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="6"
+        enabledOnSearch="true"
+		label="Scadenze"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="box_comunicazioni"
+		property="box_comunicazioni"
+		maxLength="2000"
+		inputSize="2000"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="6"
+        enabledOnSearch="true"
+		label="Comunicazioni"
+		caseSensitiveSearch="false" />				
+	<fieldProperty
+		name="ldap_user"
+		property="ldap_user"
+		maxLength="100"
+		inputSize="15"
+		inputType="TEXT"
+        enabledOnSearch="true"
+		label="Utente autenticazione LDAP" />
+	<fieldProperty
+		name="fl_autenticazione_ldap"
+		property="fl_autenticazione_ldap"
+		inputType="CHECKBOX"
+		inputSize="1"
+		maxLength="1"
+		label="Autenticazione su server LDAP" />
+	<fieldProperty
+		name="ldap_password"
+		property="ldap_password"
+		maxLength="100"
+		inputSize="15"
+		inputType="PASSWORD"
+        enabledOnSearch="true"
+		label="Password per utente autenticazione LDAP" />
+	<fieldProperty
+		name="ldap_base_dn"
+		property="ldap_base_dn"
+		maxLength="100"
+		inputSize="15"
+		inputType="TEXT"
+        enabledOnSearch="true"
+		label="DN base per interrogazione LDAP" />
+	<fieldProperty
+		name="ldap_app_name"
+		property="ldap_app_name"
+		maxLength="100"
+		inputSize="15"
+		inputType="TEXT"
+        enabledOnSearch="true"
+		label="Attributo LDAP codice applicazione SIGLA" />
+	<fieldProperty
+		name="dt_ldap_migrazione"
+		property="dt_ldap_migrazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data finale migrazione su LDAP" />
+	<fieldProperty
+		name="ldap_link_cambio_password"
+		property="ldap_link_cambio_password"
+		maxLength="200"
+		inputSize="15"
+		inputType="TEXT"
+        enabledOnSearch="true"
+		label="Link cambio password account LDAP" />
+	<formFieldProperty
+		name="descrizione" />
+	<formFieldProperty
+		name="tipo_db" />
+	<formFieldProperty
+		name="attivo" />		
+	<formFieldProperty
+		name="cancella_stampe" />
+	<formFieldProperty
+		name="box_comunicazioni" />
+	<formFieldProperty
+		name="box_scadenze" />						
+	<formFieldProperty
+		name="fl_autenticazione_ldap" />
+	<formFieldProperty
+		name="ldap_user" />						
+	<formFieldProperty
+		name="ldap_password" />						
+	<formFieldProperty
+		name="ldap_base_dn" />						
+	<formFieldProperty
+		name="ldap_app_name" />						
+	<formFieldProperty
+		name="dt_ldap_migrazione" />						
+	<formFieldProperty
+		name="ldap_link_cambio_password" />						
+	
+	<columnFieldProperty
+		name="descrizione" />
+	<columnFieldProperty
+		name="tipo_db" />
+	<columnFieldProperty
+		name="attivo" />
+	<columnFieldProperty
+		name="cancella_stampe" />
+	<columnFieldProperty
+		name="box_comunicazioni" />
+	<columnFieldProperty
+		name="box_scadenze" />
+	<columnFieldProperty
+		name="fl_autenticazione_ldap" />
+	<columnFieldProperty
+		name="ldap_user" />						
+	<columnFieldProperty
+		name="ldap_password" />						
+	<columnFieldProperty
+		name="ldap_base_dn" />						
+	<columnFieldProperty
+		name="ldap_app_name" />						
+	<columnFieldProperty
+		name="dt_ldap_migrazione" />						
+	<columnFieldProperty
+		name="ldap_link_cambio_password" />						
+	<findFieldProperty
+		name="descrizione" />			
+	<findFieldProperty
+		name="tipo_db" />			
+	<findFieldProperty
+		name="attivo" />		
+	<findFieldProperty
+		name="cancella_stampe" />
+	<findFieldProperty
+		name="box_comunicazioni" />
+	<findFieldProperty
+		name="box_scadenze" />		
+	<findFieldProperty
+		name="fl_autenticazione_ldap" />
+	<findFieldProperty
+		name="ldap_user" />						
+	<findFieldProperty
+		name="ldap_password" />						
+	<findFieldProperty
+		name="ldap_base_dn" />						
+	<findFieldProperty
+		name="ldap_app_name" />						
+	<findFieldProperty
+		name="dt_ldap_migrazione" />						
+	<findFieldProperty
+		name="ldap_link_cambio_password" />						
+</bulkInfo>

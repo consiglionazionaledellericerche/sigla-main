@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.tabrif.bulk.Classificazione_anagKey" >
+	<defaultColumnMap
+		tableName="CLASSIFICAZIONE_ANAG" >
+		<columnMapping
+			columnName="CD_CLASSIFIC_ANAG"
+			propertyName="cd_classific_anag"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_classific_anag"
+		partOfOid="true" />
+</SQLPersistentInfo>

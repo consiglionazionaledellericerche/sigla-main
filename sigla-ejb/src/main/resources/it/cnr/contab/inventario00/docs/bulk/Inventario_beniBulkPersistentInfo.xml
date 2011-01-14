@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk"
+	homeClassName="it.cnr.contab.inventario00.docs.bulk.Inventario_beniHome" >
+
+	<defaultColumnMap tableName="INVENTARIO_BENI" >	
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="inventario.pg_inventario" />
+		<columnMapping
+			columnName="CD_CATEGORIA_GRUPPO"
+			propertyName="categoria_Bene.cd_categoria_gruppo" />
+		<columnMapping
+			columnName="CD_ASSEGNATARIO"
+			propertyName="assegnatario.cd_terzo" />
+		<columnMapping
+			columnName="CD_UBICAZIONE"
+			propertyName="ubicazione.cd_ubicazione" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="ubicazione.cd_cds"  />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="ubicazione.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_CONDIZIONE_BENE"
+			propertyName="condizioneBene.cd_condizione_bene"/>
+
+		<addColumnMapping
+			propertyName="nuovo_bene_padre.inventario.pg_inventario" />
+		<addColumnMapping
+			propertyName="nuovo_bene_padre.nr_inventario" />
+		<addColumnMapping
+			propertyName="nuovo_bene_padre.progressivo" />				
+	</defaultColumnMap>
+	
+	<columnMap
+		name="V_INVENTARIO_BENI_APG"
+		extends="default"
+		tableName="V_INVENTARIO_BENI_APG">
+		<columnMapping
+			columnName="VARIAZIONE_MENO_INIZIALE"
+			propertyName="variazione_meno_iniziale"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6"
+			nullable="false" />
+		<columnMapping
+			columnName="VALORE_ALIENAZIONE_APG"
+			propertyName="valore_alienazione_apg"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_VISIBILE"
+			propertyName="fl_visibile"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			columnScale="1" />
+		<columnMapping
+			columnName="VARIAZIONE_PIU_INIZIALE"
+			propertyName="variazione_piu_iniziale"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_TRASF_COME_PRINCIPALE"
+			propertyName="fl_trasf_come_principale"
+			sqlTypeName="CHAR"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"
+			columnSize="1"
+			columnScale="1" />
+		<columnMapping
+			columnName="PG_INVENTARIO_PRINCIPALE"
+			propertyName="nuovo_bene_padre.inventario.pg_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="NR_INVENTARIO_PRINCIPALE"
+			propertyName="nuovo_bene_padre.nr_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="PROGRESSIVO_PRINCIPALE"
+			propertyName="nuovo_bene_padre.progressivo"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+	</columnMap>
+
+	<columnMap
+		name="V_AMMORTAMENTO_BENI"
+		extends="default"
+		tableName="V_AMMORTAMENTO_BENI">		
+	</columnMap>
+	<columnMap
+		name="V_BENI_BUONI"
+		extends="default"
+		tableName="V_BENI_BUONI">		
+	</columnMap>
+	
+	<persistentProperty
+		name="inventario"
+		partOfOid="true" />
+	<persistentProperty
+		name="categoria_Bene" />
+	<persistentProperty
+		name="assegnatario" />
+	<persistentProperty
+		name="ubicazione" />
+	<persistentProperty
+		name="condizioneBene" />
+	<persistentProperty
+		name="variazione_meno_iniziale" />
+	<persistentProperty
+		name="variazione_piu_iniziale" />
+	<persistentProperty
+		name="valore_alienazione_apg" />
+	<persistentProperty
+		name="fl_visibile" />
+	<persistentProperty
+		name="fl_trasf_come_principale" />
+	<persistentProperty
+		name="nuovo_bene_padre" />
+    <fetchPolicy
+		name="it.cnr.contab.inventario00.comp.Aggiornamento_inventarioComponent.findAssegnatarioCondizione">
+		<exclude pattern="*"/>
+		<include pattern="assegnatario"/>		
+		<include pattern="condizioneBene"/>
+	</fetchPolicy>		
+
+</SQLPersistentInfo>

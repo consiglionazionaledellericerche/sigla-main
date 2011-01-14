@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.V_sit_bil_cds_cnrBase"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.V_sit_bil_cds_cnrHome" >
+	<defaultColumnMap
+		tableName="V_SIT_BIL_CDS_CNR" >
+		<columnMapping
+			columnName="IM_RESIDUO_INIZIALE"
+			propertyName="im_residuo_iniziale"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_ASSESTATO"
+			propertyName="im_assestato"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_VARIAZIONI_MENO"
+			propertyName="im_variazioni_meno"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="cd_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="IM_STANZ_INIZIALE"
+			propertyName="im_stanz_iniziale"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_PAGATO_INCASSATO_COMPETENZA"
+			propertyName="im_pagato_incassato_competenza"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="IM_VARIAZIONI_PIU"
+			propertyName="im_variazioni_piu"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_PAGATO_INCASSATO_RESIDUO"
+			propertyName="im_pagato_incassato_residuo"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_ACCERTATO_IMPEGNATO"
+			propertyName="im_accertato_impegnato"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="IM_ACCREDITATO"
+			propertyName="im_accreditato"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="im_residuo_iniziale" />
+	<persistentProperty
+		name="im_assestato" />
+	<persistentProperty
+		name="im_variazioni_meno" />
+	<persistentProperty
+		name="cd_voce" />
+	<persistentProperty
+		name="im_stanz_iniziale" />
+	<persistentProperty
+		name="im_pagato_incassato_competenza" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="im_variazioni_piu" />
+	<persistentProperty
+		name="im_pagato_incassato_residuo" />
+	<persistentProperty
+		name="im_accertato_impegnato" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="im_accreditato" />
+</SQLPersistentInfo>

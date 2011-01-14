@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+						http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
+    <import resource="classpath*:it/cnr/contab/cmis/service/cmis-service-context.xml"/>
+
+	<jee:jndi-lookup id="offlineReportComponent"
+   			jndi-name="SIGLA/BREPORTS_EJB_OfflineReportComponentSession/remote"
+   			resource-ref="false">
+   	</jee:jndi-lookup>
+	<jee:jndi-lookup id="gestioneLoginComponent"
+   			jndi-name="SIGLA/CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession/remote"
+   			resource-ref="false">
+   	</jee:jndi-lookup>
+
+    <bean id="printService" class="it.cnr.contab.reports.service.PrintService">
+    	<property name="offlineReportComponent" ref="offlineReportComponent"/>
+    	<property name="gson" ref="gson"/>
+    	<property name="httpClient" ref="httpClient"/>
+    </bean>
+
+    <bean id="ldapService" class="it.cnr.contab.utenze00.service.LDAPService">
+    	<property name="gestioneLoginComponent" ref="gestioneLoginComponent"/>
+    </bean>
+</beans>

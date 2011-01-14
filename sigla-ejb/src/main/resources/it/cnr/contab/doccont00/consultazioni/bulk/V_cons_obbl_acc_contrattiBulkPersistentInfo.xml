@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_obbl_acc_contrattiBulk"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_obbl_acc_contrattiHome">
+	<defaultColumnMap
+		tableName="V_CONS_OBBL_ACC_CONTRATTI">
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="CHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_COMPETENZA"
+			propertyName="esercizio_competenza"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />			
+		<columnMapping
+			columnName="PG_DOC"
+			propertyName="pg_doc"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_DOC"
+			propertyName="ds_doc"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_COMMESSA"
+			propertyName="cd_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_COMMESSA"
+			propertyName="ds_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="400"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_CONTRATTO_PADRE"
+			propertyName="esercizio_contratto_padre"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_CONTRATTO_PADRE"
+			propertyName="stato_contratto_padre"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />			
+		<columnMapping
+			columnName="PG_CONTRATTO_PADRE"
+			propertyName="pg_contratto_padre"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_CONTRATTO"
+			propertyName="esercizio_contratto"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_CONTRATTO"
+			propertyName="stato_contratto"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />			
+		<columnMapping
+			columnName="PG_CONTRATTO"
+			propertyName="pg_contratto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="OGGETTO_CONTRATTO"
+			propertyName="oggetto_contratto"
+			sqlTypeName="VARCHAR"
+			columnSize="500"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ACCERTAMENTO"
+			propertyName="im_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_OBBLIGAZIONE"
+			propertyName="im_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipo" />
+	<persistentProperty
+		name="esercizio_competenza" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />		
+	<persistentProperty
+		name="pg_doc" />
+	<persistentProperty
+		name="dt_registrazione" />
+	<persistentProperty
+		name="ds_doc" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="cd_elemento_voce" />
+	<persistentProperty
+		name="cd_commessa" />
+	<persistentProperty
+		name="ds_commessa" />
+	<persistentProperty
+		name="esercizio_contratto_padre" />
+	<persistentProperty
+		name="stato_contratto_padre" />		
+	<persistentProperty
+		name="pg_contratto_padre" />
+	<persistentProperty
+		name="esercizio_contratto" />
+	<persistentProperty
+		name="stato_contratto" />				
+	<persistentProperty
+		name="pg_contratto" />
+	<persistentProperty
+		name="oggetto_contratto" />
+	<persistentProperty
+		name="im_accertamento" />
+	<persistentProperty
+		name="im_obbligazione" />
+</SQLPersistentInfo>

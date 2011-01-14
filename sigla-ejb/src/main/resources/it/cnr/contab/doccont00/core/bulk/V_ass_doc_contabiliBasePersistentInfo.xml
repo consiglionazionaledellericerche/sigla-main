@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.V_ass_doc_contabiliBase"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.V_ass_doc_contabiliHome" >
+	<defaultColumnMap
+		tableName="V_ASS_DOC_CONTABILI" >
+		<columnMapping
+			columnName="ESERCIZIO_COLL"
+			propertyName="esercizio_coll"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_CONT"
+			propertyName="cd_tipo_documento_cont"
+			sqlTypeName="CHAR"
+			columnSize="3" />
+		<columnMapping
+			columnName="PG_DOCUMENTO_CONT"
+			propertyName="pg_documento_cont"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_DOCUMENTO_CONT_COLL"
+			propertyName="pg_documento_cont_coll"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_CDS_COLL"
+			propertyName="cd_cds_coll"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_CONT_COLL"
+			propertyName="cd_tipo_documento_cont_coll"
+			sqlTypeName="CHAR"
+			columnSize="3" />
+		<columnMapping
+			columnName="FL_CON_MAN_PRC"
+			propertyName="fl_con_man_prc"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio_coll" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="cd_tipo_documento_cont" />
+	<persistentProperty
+		name="pg_documento_cont" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="pg_documento_cont_coll" />
+	<persistentProperty
+		name="cd_cds_coll" />
+	<persistentProperty
+		name="cd_tipo_documento_cont_coll" />
+	<persistentProperty
+		name="fl_con_man_prc" />
+	<persistentProperty
+		name="cd_cds" />
+</SQLPersistentInfo>

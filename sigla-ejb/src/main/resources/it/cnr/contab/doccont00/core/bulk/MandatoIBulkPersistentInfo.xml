@@ -1,0 +1,10 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.MandatoIBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.MandatoIHome" >
+
+	<columnMap
+		extends="default"
+		tableName="V_ASS_MANDATO_FONDO_ECO"
+		name="V_ASS_MANDATO_FONDO_ECO" />
+		
+</SQLPersistentInfo>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.MandatoAccreditamento_rigaBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.MandatoAccreditamento_rigaHome" >
+	<defaultColumnMap
+		tableName="MANDATO_RIGA" >
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="mandatoAccreditamento.pg_mandato"/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="mandatoAccreditamento.esercizio" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="mandatoAccreditamento.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="impegno.esercizio" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="impegno.cd_cds" 
+			fetchOnly="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="impegno.esercizio_originale" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="impegno.pg_obbligazione" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="impegno.pg_obbligazione_scadenzario" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="impegno"
+		partOfOid="true" />
+	<persistentProperty
+		name="mandatoAccreditamento"
+		partOfOid="true" />
+</SQLPersistentInfo>

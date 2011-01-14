@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_dip_fo_speBulk"
+	homeClassName="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_dipfo_speHome">
+	<defaultColumnMap
+		tableName="V_CONS_PDGG_SPE_BIL_IST_DIP_FO">
+		<columnMapping
+			columnName="CD_CDR_ASSEGNATARIO"
+			propertyName="cd_cdr_assegnatario"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />	
+		<columnMapping
+			columnName="DS_CDR_ASSEGNATARIO"
+			propertyName="ds_cdr_assegnatario"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_DEC_IST_INT"
+			propertyName="im_dec_ist_int"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="IM_DEC_IST_EST"
+			propertyName="im_dec_ist_est"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="IM_DEC_AREA_INT"
+			propertyName="im_dec_area_int"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="IM_DEC_AREA_EST"
+			propertyName="im_dec_area_est"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="IMP_TOT_DEC_INT"
+			propertyName="imp_tot_dec_int"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="IMP_TOT_DEC_EST"
+			propertyName="imp_tot_dec_est"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="IMP_TOT_DECENTRATO"
+			propertyName="imp_tot_decentrato"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="TRATT_ECON_INT"
+			propertyName="tratt_econ_int"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="TRATT_ECON_EST"
+			propertyName="tratt_econ_est"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="IM_ACC_ALTRE_SP_INT"
+			propertyName="im_acc_altre_sp_int"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="IMP_TOT_COMP_INT"
+			propertyName="imp_tot_comp_int"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="IMP_TOT_COMP_EST"
+			propertyName="imp_tot_comp_est"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="IM_PAGAMENTI"
+			propertyName="im_pagamenti"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_cdr_assegnatario" />
+	<persistentProperty
+		name="ds_cdr_assegnatario" />
+	<persistentProperty
+		name="im_dec_ist_int" />
+	<persistentProperty
+		name="im_dec_ist_est" />	
+	<persistentProperty
+		name="im_dec_area_int" />	
+	<persistentProperty
+		name="im_dec_area_est" />		
+	<persistentProperty
+		name="imp_tot_dec_int" />		
+	<persistentProperty
+		name="imp_tot_dec_est" />		
+	<persistentProperty
+		name="imp_tot_decentrato" />		
+	<persistentProperty
+		name="tratt_econ_int" />		
+	<persistentProperty
+		name="tratt_econ_est" />		
+	<persistentProperty
+		name="im_acc_altre_sp_int" />		
+	<persistentProperty
+		name="imp_tot_comp_int" />		
+	<persistentProperty
+		name="imp_tot_comp_est" />		
+	<persistentProperty
+		name="im_pagamenti" />		
+</SQLPersistentInfo>

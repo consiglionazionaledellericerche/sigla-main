@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.PrivilegioKey">
+	<defaultColumnMap
+		tableName="PRIVILEGIO">
+		<columnMapping
+			columnName="CD_PRIVILEGIO"
+			propertyName="cd_privilegio"
+			sqlTypeName="VARCHAR"
+			columnSize="6"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_privilegio"
+		partOfOid="true" />
+</SQLPersistentInfo>

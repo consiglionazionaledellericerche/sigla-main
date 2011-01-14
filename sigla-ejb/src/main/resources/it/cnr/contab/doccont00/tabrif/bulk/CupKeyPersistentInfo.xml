@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.tabrif.bulk.CupKey">
+	<defaultColumnMap
+		tableName="CUP">
+		<columnMapping
+			columnName="CD_CUP"
+			propertyName="cdCup"
+			sqlTypeName="VARCHAR"
+			columnSize="15"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdCup"
+		partOfOid="true" />
+</SQLPersistentInfo>

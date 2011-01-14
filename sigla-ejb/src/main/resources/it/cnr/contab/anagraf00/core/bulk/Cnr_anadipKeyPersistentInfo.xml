@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.Cnr_anadipKey">
+	<defaultColumnMap
+		tableName="cnr_anadip">
+		<columnMapping
+			columnName="MATRICOLA"
+			propertyName="matricola"
+			sqlTypeName="DECIMAL"
+			columnSize="9"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="matricola"
+		partOfOid="true" />
+</SQLPersistentInfo>

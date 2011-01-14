@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.UtenteKey" >
+	<defaultColumnMap
+		tableName="UTENTE" >
+		<columnMapping
+			columnName="CD_UTENTE"
+			propertyName="cd_utente"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_utente"
+		partOfOid="true" />
+</SQLPersistentInfo>

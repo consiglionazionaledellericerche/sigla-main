@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="codice_tributo"
+		property="codice_tributo"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="codice_tributo" />
+	<fieldProperty
+		name="prog"
+		property="prog"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="prog" />
+	<fieldProperty
+		name="codice_ente"
+		property="codice_ente"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="codice_ente" />
+	<fieldProperty
+		name="mese_rif"
+		property="mese_rif"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="mese_rif" />
+	<fieldProperty
+		name="anno_rif"
+		property="anno_rif"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="anno_rif" />
+	<fieldProperty
+		name="importo_debito"
+		property="importo_debito"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="importo_debito" />
+	<fieldProperty
+		name="pg_liquidazione"
+		property="pg_liquidazione"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="pg_liquidazione" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="cd_cds" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="cd_unita_organizzativa" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio" />
+	<formFieldProperty
+		name="codice_tributo" />
+	<formFieldProperty
+		name="prog" />
+	<formFieldProperty
+		name="codice_ente" />
+	<formFieldProperty
+		name="mese_rif" />
+	<formFieldProperty
+		name="anno_rif" />
+	<formFieldProperty
+		name="importo_debito" />
+	<formFieldProperty
+		name="pg_liquidazione" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="codice_tributo" />
+	<findFieldProperty
+		name="prog" />
+	<findFieldProperty
+		name="codice_ente" />
+	<findFieldProperty
+		name="mese_rif" />
+	<findFieldProperty
+		name="anno_rif" />
+	<findFieldProperty
+		name="importo_debito" />
+	<findFieldProperty
+		name="pg_liquidazione" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="codice_tributo" />
+	<columnFieldProperty
+		name="prog" />
+	<columnFieldProperty
+		name="codice_ente" />
+	<columnFieldProperty
+		name="mese_rif" />
+	<columnFieldProperty
+		name="anno_rif" />
+	<columnFieldProperty
+		name="importo_debito" />
+	<columnFieldProperty
+		name="pg_liquidazione" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="esercizio" />
+</bulkInfo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="mese"
+		property="mese"
+		inputType="TEXT"
+		label="Mese" />
+	<fieldProperty
+		name="fl_stato_scarico"
+		property="fl_stato_scarico"
+		inputType="TEXT"
+		label="Scaricato in analitica" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="mese" />
+	<columnFieldProperty
+		name="fl_stato_scarico" />
+
+</bulkInfo>

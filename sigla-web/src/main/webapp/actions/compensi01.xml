@@ -1,0 +1,17 @@
+<action-mappings>
+
+  <businessProcess
+      name="CRUDDetrazioniLavoroBP" className="it.cnr.contab.compensi00.bp.CRUDDetrazioniLavoroBP">
+      <forward name="default" path="/compensi00/detrazioni_lavoro.jsp"/>
+	  <init-param name="bulkClassName" value="it.cnr.contab.compensi00.tabrif.bulk.Detrazioni_lavoroBulk"/>	
+      <init-param name="componentSessionName" value="CNRCOMPENSI00_EJB_DetrazioniLavoroComponentSession"/>
+  </businessProcess>
+
+  <businessProcess
+      name="CRUDDetrazioniFamiliariBP" className="it.cnr.contab.compensi00.bp.CRUDDetrazioniFamiliariBP">
+      <forward name="default" path="/compensi00/detrazioni_familiari.jsp"/>
+	  <init-param name="bulkClassName" value="it.cnr.contab.compensi00.tabrif.bulk.Detrazioni_familiariBulk"/>	
+      <init-param name="componentSessionName" value="CNRCOMPENSI00_EJB_DetrazioniFamiliariComponentSession"/>
+  </businessProcess>
+
+</action-mappings>

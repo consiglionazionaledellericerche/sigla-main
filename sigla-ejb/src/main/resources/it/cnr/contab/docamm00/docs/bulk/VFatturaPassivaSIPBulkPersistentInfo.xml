@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.docs.bulk.VFatturaPassivaSIPBulk"
+	keyClassName="it.cnr.contab.docamm00.docs.bulk.VFatturaPassivaSIPKey"
+	homeClassName="it.cnr.contab.docamm00.docs.bulk.VFatturaPassivaSIPHome">
+	<defaultColumnMap
+		tableName="VFATTURAPASSIVASIP">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="DENOMINAZIONE"
+			propertyName="denominazione"
+			sqlTypeName="VARCHAR"
+			columnSize="101"
+			nullable="true" />
+		<columnMapping
+			columnName="INDIRIZZO"
+			propertyName="indirizzo"
+			sqlTypeName="VARCHAR"
+			columnSize="333"
+			nullable="true" />
+		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partita_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="NR_FATTURA_FORNITORE"
+			propertyName="nr_fattura_fornitore"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_FATTURA_FORNITORE"
+			propertyName="dt_fattura_fornitore"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_FATTURA"
+			propertyName="pg_fattura"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />	
+		<columnMapping
+			columnName="DS_FATTURA_PASSIVA"
+			propertyName="ds_fattura_passiva"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_TOTALE_FATTURA"
+			propertyName="im_totale_fattura"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="GAE"
+			propertyName="gae"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PAGAMENTO"
+			propertyName="dt_pagamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />	
+	</defaultColumnMap>
+	<columnMap
+		name="VFATTURAPASSIVASIP_RID"
+		tableName="VFATTURAPASSIVASIP">
+        <columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="DENOMINAZIONE"
+			propertyName="denominazione"
+			sqlTypeName="VARCHAR"
+			columnSize="101"
+			nullable="true" />
+		<columnMapping
+			columnName="INDIRIZZO"
+			propertyName="indirizzo"
+			sqlTypeName="VARCHAR"
+			columnSize="333"
+			nullable="true" />
+		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partita_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="NR_FATTURA_FORNITORE"
+			propertyName="nr_fattura_fornitore"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_FATTURA_FORNITORE"
+			propertyName="dt_fattura_fornitore"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_FATTURA"
+			propertyName="pg_fattura"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />		
+		<columnMapping
+			columnName="DS_FATTURA_PASSIVA"
+			propertyName="ds_fattura_passiva"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_TOTALE_FATTURA"
+			propertyName="im_totale_fattura"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PAGAMENTO"
+			propertyName="dt_pagamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />				
+	</columnMap>		
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="denominazione" />
+	<persistentProperty
+		name="indirizzo" />
+	<persistentProperty
+		name="partita_iva" />
+	<persistentProperty
+		name="codice_fiscale" />
+	<persistentProperty
+		name="nr_fattura_fornitore" />
+	<persistentProperty
+		name="dt_fattura_fornitore" />
+	<persistentProperty
+		name="dt_pagamento" />
+	<persistentProperty
+		name="pg_fattura" />	
+	<persistentProperty
+		name="ds_fattura_passiva" />
+	<persistentProperty
+		name="im_totale_fattura" />
+	<persistentProperty
+		name="cd_elemento_voce" />
+	<persistentProperty
+		name="cd_centro_responsabilita" />
+	<persistentProperty
+		name="gae" />
+</SQLPersistentInfo>

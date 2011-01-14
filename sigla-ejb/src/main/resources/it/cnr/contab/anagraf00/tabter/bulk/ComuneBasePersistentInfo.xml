@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.tabter.bulk.ComuneBase"
+	keyClassName="it.cnr.contab.anagraf00.tabter.bulk.ComuneKey"
+	homeClassName="it.cnr.contab.anagraf00.tabter.bulk.ComuneHome" >
+	<defaultColumnMap
+		tableName="COMUNE" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CATASTALE"
+			propertyName="cd_catastale"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_ITALIANO_ESTERO"
+			propertyName="ti_italiano_estero"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_COMUNE"
+			propertyName="cd_comune"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_NAZIONE"
+			propertyName="pg_nazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_PROVINCIA"
+			propertyName="cd_provincia"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CAP"
+			propertyName="cd_cap"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="DS_COMUNE"
+			propertyName="ds_comune"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_CANC"
+			propertyName="dt_canc"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />	
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="cd_catastale" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="ti_italiano_estero" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="cd_comune" />
+	<persistentProperty
+		name="pg_nazione" />
+	<persistentProperty
+		name="cd_provincia" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="cd_cap" />
+	<persistentProperty
+		name="ds_comune" />
+	<persistentProperty
+		name="dt_canc" />	
+</SQLPersistentInfo>

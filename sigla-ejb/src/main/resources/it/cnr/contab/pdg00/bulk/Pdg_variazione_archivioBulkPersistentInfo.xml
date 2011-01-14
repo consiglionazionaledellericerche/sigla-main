@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.bulk.Pdg_variazione_archivioBulk"
+	homeClassName="it.cnr.contab.pdg00.bulk.Pdg_variazione_archivioHome">
+	<defaultColumnMap
+		tableName="PDG_VARIAZIONE_ARCHIVIO">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="pdg_variazione.esercizio"/>
+		<columnMapping
+			columnName="PG_VARIAZIONE_PDG"
+			propertyName="pdg_variazione.pg_variazione_pdg"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="pdg_variazione"
+		partOfOid="true" />
+</SQLPersistentInfo>

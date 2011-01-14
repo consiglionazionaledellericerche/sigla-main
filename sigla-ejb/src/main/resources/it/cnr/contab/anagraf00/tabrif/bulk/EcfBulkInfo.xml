@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cl002001"
+		property="cl002001"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="cl002001" />
+	<fieldProperty
+		name="prog"
+		property="prog"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="prog" />
+	<fieldProperty
+		name="cl003001"
+		property="cl003001"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="cl003001" />
+	<fieldProperty
+		name="cl004001"
+		property="cl004001"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="cl004001" />
+	<fieldProperty
+		name="cl004002"
+		property="cl004002"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="cl004002" />
+	<fieldProperty
+		name="cl005001"
+		property="cl005001"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="cl005001" />
+	<fieldProperty
+		name="cl006001"
+		property="cl006001"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="cl006001" />
+	<fieldProperty
+		name="cl007001"
+		property="cl007001"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="cl007001" />
+	<fieldProperty
+		name="cl008001"
+		property="cl008001"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="cl008001" />
+	<fieldProperty
+		name="cl008002"
+		property="cl008002"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="cl008002" />
+	<fieldProperty
+		name="cl009001"
+		property="cl009001"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="cl009001" />
+	<fieldProperty
+		name="cl010001"
+		property="cl010001"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="cl010001" />
+	<fieldProperty
+		name="cl011001"
+		property="cl011001"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="cl011001" />
+	<fieldProperty
+		name="fr002001"
+		property="fr002001"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="fr002001" />
+	<fieldProperty
+		name="fr003001"
+		property="fr003001"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="fr003001" />
+	<fieldProperty
+		name="fr004001"
+		property="fr004001"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="fr004001" />
+	<fieldProperty
+		name="fr004002"
+		property="fr004002"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="fr004002" />
+	<fieldProperty
+		name="fr005001"
+		property="fr005001"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="fr005001" />
+	<fieldProperty
+		name="fr006001"
+		property="fr006001"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="fr006001" />
+	<fieldProperty
+		name="fr007001"
+		property="fr007001"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="fr007001" />
+	<fieldProperty
+		name="fr008001"
+		property="fr008001"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="fr008001" />
+	<fieldProperty
+		name="fr009001"
+		property="fr009001"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="fr009001" />
+	<fieldProperty
+		name="fr009002"
+		property="fr009002"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="fr009002" />
+	<fieldProperty
+		name="fr010001"
+		property="fr010001"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="fr010001" />
+	<fieldProperty
+		name="fr011001"
+		property="fr011001"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="fr011001" />
+	<fieldProperty
+		name="fr012001"
+		property="fr012001"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="fr012001" />
+	<fieldProperty
+		name="fr013001"
+		property="fr013001"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="fr013001" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio" />
+	<fieldProperty
+		name="prog_estrazione"
+		property="prog_estrazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="prog_estrazione" />	
+	<formFieldProperty
+		name="prog_estrazione" />	
+	<formFieldProperty
+		name="cl002001" />
+	<formFieldProperty
+		name="prog" />
+	<formFieldProperty
+		name="cl003001" />
+	<formFieldProperty
+		name="cl004001" />
+	<formFieldProperty
+		name="cl004002" />
+	<formFieldProperty
+		name="cl005001" />
+	<formFieldProperty
+		name="cl006001" />
+	<formFieldProperty
+		name="cl007001" />
+	<formFieldProperty
+		name="cl008001" />
+	<formFieldProperty
+		name="cl008002" />
+	<formFieldProperty
+		name="cl009001" />
+	<formFieldProperty
+		name="cl010001" />
+	<formFieldProperty
+		name="cl011001" />
+	<formFieldProperty
+		name="fr002001" />
+	<formFieldProperty
+		name="fr003001" />
+	<formFieldProperty
+		name="fr004001" />
+	<formFieldProperty
+		name="fr004002" />
+	<formFieldProperty
+		name="fr005001" />
+	<formFieldProperty
+		name="fr006001" />
+	<formFieldProperty
+		name="fr007001" />
+	<formFieldProperty
+		name="fr008001" />
+	<formFieldProperty
+		name="fr009001" />
+	<formFieldProperty
+		name="fr009002" />
+	<formFieldProperty
+		name="fr010001" />
+	<formFieldProperty
+		name="fr011001" />
+	<formFieldProperty
+		name="fr012001" />
+	<formFieldProperty
+		name="fr013001" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="prog_estrazione" />		
+	<findFieldProperty
+		name="cl002001" />
+	<findFieldProperty
+		name="prog" />
+	<findFieldProperty
+		name="cl003001" />
+	<findFieldProperty
+		name="cl004001" />
+	<findFieldProperty
+		name="cl004002" />
+	<findFieldProperty
+		name="cl005001" />
+	<findFieldProperty
+		name="cl006001" />
+	<findFieldProperty
+		name="cl007001" />
+	<findFieldProperty
+		name="cl008001" />
+	<findFieldProperty
+		name="cl008002" />
+	<findFieldProperty
+		name="cl009001" />
+	<findFieldProperty
+		name="cl010001" />
+	<findFieldProperty
+		name="cl011001" />
+	<findFieldProperty
+		name="fr002001" />
+	<findFieldProperty
+		name="fr003001" />
+	<findFieldProperty
+		name="fr004001" />
+	<findFieldProperty
+		name="fr004002" />
+	<findFieldProperty
+		name="fr005001" />
+	<findFieldProperty
+		name="fr006001" />
+	<findFieldProperty
+		name="fr007001" />
+	<findFieldProperty
+		name="fr008001" />
+	<findFieldProperty
+		name="fr009001" />
+	<findFieldProperty
+		name="fr009002" />
+	<findFieldProperty
+		name="fr010001" />
+	<findFieldProperty
+		name="fr011001" />
+	<findFieldProperty
+		name="fr012001" />
+	<findFieldProperty
+		name="fr013001" />
+	<findFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="prog_estrazione" />		
+	<columnFieldProperty
+		name="cl002001" />
+	<columnFieldProperty
+		name="prog" />
+	<columnFieldProperty
+		name="cl003001" />
+	<columnFieldProperty
+		name="cl004001" />
+	<columnFieldProperty
+		name="cl004002" />
+	<columnFieldProperty
+		name="cl005001" />
+	<columnFieldProperty
+		name="cl006001" />
+	<columnFieldProperty
+		name="cl007001" />
+	<columnFieldProperty
+		name="cl008001" />
+	<columnFieldProperty
+		name="cl008002" />
+	<columnFieldProperty
+		name="cl009001" />
+	<columnFieldProperty
+		name="cl010001" />
+	<columnFieldProperty
+		name="cl011001" />
+	<columnFieldProperty
+		name="fr002001" />
+	<columnFieldProperty
+		name="fr003001" />
+	<columnFieldProperty
+		name="fr004001" />
+	<columnFieldProperty
+		name="fr004002" />
+	<columnFieldProperty
+		name="fr005001" />
+	<columnFieldProperty
+		name="fr006001" />
+	<columnFieldProperty
+		name="fr007001" />
+	<columnFieldProperty
+		name="fr008001" />
+	<columnFieldProperty
+		name="fr009001" />
+	<columnFieldProperty
+		name="fr009002" />
+	<columnFieldProperty
+		name="fr010001" />
+	<columnFieldProperty
+		name="fr011001" />
+	<columnFieldProperty
+		name="fr012001" />
+	<columnFieldProperty
+		name="fr013001" />
+	<columnFieldProperty
+		name="esercizio" />
+</bulkInfo>

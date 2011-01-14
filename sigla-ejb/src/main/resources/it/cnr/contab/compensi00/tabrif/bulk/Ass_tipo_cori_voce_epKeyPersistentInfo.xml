@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Ass_tipo_cori_voce_epKey">
+	<defaultColumnMap
+		tableName="ASS_TIPO_CORI_VOCE_EP">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CONTRIBUTO_RITENUTA"
+			propertyName="cd_contributo_ritenuta"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TI_ENTE_PERCEPIENTE"
+			propertyName="ti_ente_percepiente"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="SEZIONE"
+			propertyName="sezione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_contributo_ritenuta"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_ente_percepiente"
+		partOfOid="true" />
+	<persistentProperty
+		name="sezione"
+		partOfOid="true" />
+</SQLPersistentInfo>

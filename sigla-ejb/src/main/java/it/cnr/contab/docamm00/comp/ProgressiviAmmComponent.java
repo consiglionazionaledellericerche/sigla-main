@@ -1,0 +1,79 @@
+package it.cnr.contab.docamm00.comp;
+
+import java.io.Serializable;
+
+import it.cnr.contab.docamm00.docs.bulk.*;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.comp.ICRUDMgr;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.util.RemoteIterator;
+
+public class ProgressiviAmmComponent extends it.cnr.jada.comp.CRUDComponent implements ICRUDMgr,INumerazioneDocAmmMgr,Cloneable,Serializable {
+
+
+
+    public  ProgressiviAmmComponent()
+    {
+
+        /*Default constructor*/
+
+
+    }
+//^^@@
+/** 
+  *  tutti i controlli superati.
+  *    PreCondition:
+  *      Il progressivo è stato generato senza errori.
+  *    PostCondition:
+  *      Viene consentita la registrazione del progressivo.
+  *  esistenza della tipologia della numerazione
+  *    PreCondition:
+  *      Non esiste la numerazione per il tipo di documento amministrativo
+  *    PostCondition:
+  *      Viene inserita una nuova numerazione per il tipo documento amministrativo, CDS, UO e esercizio correnti
+  */
+//^^@@
+
+public Long getNextPG (UserContext userContext,Numerazione_doc_ammBulk progressivo) 
+	throws ComponentException {
+
+
+	try {
+		String cds = progressivo.getCd_cds();
+		String cdUnitaOrg = progressivo.getCd_unita_organizzativa();
+		String tipoDoc = progressivo.getCd_tipo_documento_amm();
+		Integer es = progressivo.getEsercizio();
+		
+		Numerazione_doc_ammHome home = (Numerazione_doc_ammHome)getHome(userContext, progressivo);
+		try {
+			progressivo = (Numerazione_doc_ammBulk)home.findAndLock(progressivo);
+		} catch (it.cnr.jada.persistency.ObjectNotFoundException e) {
+			progressivo = null;
+		}
+		
+		Long pgCorrente = null;
+		if (progressivo == null) {
+			progressivo = new Numerazione_doc_ammBulk();
+			progressivo.setCd_cds(cds);
+			progressivo.setCd_tipo_documento_amm(tipoDoc);
+			progressivo.setCd_unita_organizzativa(cdUnitaOrg);
+			progressivo.setEsercizio(es);
+			progressivo.setUser(userContext.getUser());
+			pgCorrente = new Long(1);
+			progressivo.setCorrente(pgCorrente);
+			home.insert(progressivo, userContext);
+			return pgCorrente;
+		}
+		pgCorrente = new Long(progressivo.getCorrente().longValue()+1);
+		progressivo.setCorrente(pgCorrente);
+		progressivo.setUser(userContext.getUser());
+		home.lock(progressivo);
+		home.update(progressivo, userContext);
+		return pgCorrente;
+	} catch(Exception e) {
+		throw handleException(progressivo, e);
+	}
+}
+}

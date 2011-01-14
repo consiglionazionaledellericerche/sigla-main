@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.bulk.V_incarichi_uoBulk"
+	homeClassName="it.cnr.contab.incarichi00.bulk.V_incarichi_uoHome">
+	<defaultColumnMap
+		tableName="V_INCARICHI_UO">
+		<columnMapping
+			columnName="ESERCIZIO_LIMITE"
+			propertyName="esercizio_limite"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_UNITA_ORGANIZZATIVA"
+			propertyName="ds_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_LIMITE"
+			propertyName="cd_tipo_limite"
+			sqlTypeName="VARCHAR"
+			columnSize="5" 
+			nullable="false" />
+		<columnMapping
+			columnName="IM_INCARICHI"
+			propertyName="im_incarichi"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio_limite" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="ds_unita_organizzativa" />
+	<persistentProperty
+		name="cd_tipo_limite" />
+	<persistentProperty
+		name="im_incarichi" />
+</SQLPersistentInfo>

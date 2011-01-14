@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Accertamento_mod_voceBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Accertamento_mod_voceHome">
+	<defaultColumnMap
+		tableName="ACCERTAMENTO_MOD_VOCE">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="accertamento_modifica.cd_cds" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="accertamento_modifica.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="accertamento_modifica.esercizio" />
+		<columnMapping
+			columnName="PG_MODIFICA"
+			propertyName="accertamento_modifica.pg_modifica" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="voce_f.esercizio" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="voce_f.ti_appartenenza" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="voce_f.ti_gestione" />
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="voce_f.cd_voce" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="linea_attivita.centro_responsabilita.cd_centro_responsabilita" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="linea_attivita.cd_linea_attivita" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="accertamento_modifica"
+		partOfOid="true" />
+	<persistentProperty
+		name="voce_f"
+		partOfOid="true" />
+	<persistentProperty
+		name="linea_attivita"
+		partOfOid="true" />
+
+	<fetchPolicy
+		name="default">
+		<exclude pattern="*" />
+		<include pattern="voce_f"/>
+		<include pattern="voce_f.*"/>
+		<include pattern="linea_attivita"/>
+		<include pattern="linea_attivita.*"/>
+	</fetchPolicy>
+</SQLPersistentInfo>

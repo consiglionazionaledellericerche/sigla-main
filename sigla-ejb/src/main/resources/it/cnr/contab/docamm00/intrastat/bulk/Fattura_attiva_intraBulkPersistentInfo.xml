@@ -1,0 +1,87 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.intrastat.bulk.Fattura_attiva_intraBulk"
+	homeClassName="it.cnr.contab.docamm00.intrastat.bulk.Fattura_attiva_intraHome" >
+
+	<defaultColumnMap
+		tableName="FATTURA_ATTIVA_INTRA" >		
+		<columnMapping
+			columnName="ID_NATURA_TRANSAZIONE"
+			propertyName="natura_transazione.id_natura_transazione" />
+		<columnMapping
+			columnName="ID_NOMENCLATURA_COMBINATA"
+			propertyName="nomenclatura_combinata.id_nomenclatura_combinata" />
+		<columnMapping
+			columnName="ESERCIZIO_MOD_TRASPORTO"
+			propertyName="modalita_trasporto.esercizio" />
+		<columnMapping
+			columnName="CD_MODALITA_TRASPORTO"
+			propertyName="modalita_trasporto.cd_modalita_trasporto" />
+		<columnMapping
+			columnName="ESERCIZIO_COND_CONSEGNA"
+			propertyName="condizione_consegna.esercizio" />
+		<columnMapping
+			columnName="CD_INCOTERM"
+			propertyName="condizione_consegna.cd_incoterm" />
+		<columnMapping
+			columnName="PG_NAZIONE_DESTINAZIONE"
+			propertyName="nazione_destinazione.pg_nazione" />
+		<columnMapping
+			columnName="CD_PROVINCIA_ORIGINE"
+			propertyName="provincia_origine.cd_provincia" />
+
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="fattura_attiva.esercizio" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="fattura_attiva.cd_cds" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="fattura_attiva.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_FATTURA_ATTIVA"
+			propertyName="fattura_attiva.pg_fattura_attiva" />	
+		<columnMapping
+			columnName="ID_CPA"
+			propertyName="codici_cpa.id_cpa" />
+		<columnMapping
+			columnName="ESERCIZIO_MOD_INCASSO"
+			propertyName="modalita_incasso.esercizio" />
+		<columnMapping
+			columnName="CD_MODALITA_INCASSO"
+			propertyName="modalita_incasso.cd_modalita_incasso" />
+		<columnMapping
+			columnName="ESERCIZIO_MOD_EROGAZIONE"
+			propertyName="modalita_erogazione.esercizio" />
+		<columnMapping
+			columnName="CD_MODALITA_EROGAZIONE"
+			propertyName="modalita_erogazione.cd_modalita_erogazione" />		
+	</defaultColumnMap>		
+
+	<persistentProperty
+		name="natura_transazione" />
+	<persistentProperty
+		name="nomenclatura_combinata" />
+	<persistentProperty
+		name="modalita_trasporto" />
+	<persistentProperty
+		name="condizione_consegna" />
+	<persistentProperty
+		name="nazione_destinazione" />
+	<persistentProperty
+		name="provincia_origine" />
+	<persistentProperty
+		name="fattura_attiva"
+		partOfOid="true"/>
+	<persistentProperty
+		name="modalita_incasso" />
+	<persistentProperty
+		name="modalita_erogazione" />
+	<persistentProperty
+		name="codici_cpa" />
+	<fetchPolicy
+		name="NoFatturaAttivaBulk">
+		<exclude pattern="fattura_attiva" />
+	</fetchPolicy>
+	
+</SQLPersistentInfo>

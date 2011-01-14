@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_tipo_unita"
+		property="cd_tipo_unita"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="cd_tipo_unita" />
+	<fieldProperty
+		name="cd_conto"
+		property="cd_conto"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="cd_conto" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="cd_funzione"
+		property="cd_funzione"
+		maxLength="2"
+		inputSize="2"
+		inputType="TEXT"
+		label="cd_funzione" />
+
+	<formFieldProperty
+		name="cd_tipo_unita" />
+	<formFieldProperty
+		name="cd_conto" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_funzione" />
+
+	<columnFieldProperty
+		name="cd_tipo_unita" />
+	<columnFieldProperty
+		name="cd_conto" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_funzione" />
+
+	<findFieldProperty
+		name="cd_tipo_unita" />
+	<findFieldProperty
+		name="cd_conto" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_funzione" />
+
+</bulkInfo>

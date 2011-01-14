@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.RapportoKey" >
+	<defaultColumnMap
+		tableName="RAPPORTO" >
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="cd_anag"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="DT_INI_VALIDITA"
+			propertyName="dt_ini_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_TIPO_RAPPORTO"
+			propertyName="cd_tipo_rapporto"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_anag"
+		partOfOid="true" />
+	<persistentProperty
+		name="dt_ini_validita"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_tipo_rapporto"
+		partOfOid="true" />
+</SQLPersistentInfo>

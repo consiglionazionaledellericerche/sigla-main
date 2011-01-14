@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="tc"
+		property="tc" />
+	<fieldProperty
+		name="findCDSForPrint"
+		property="cdsForPrint"
+		inputType="SEARCHTOOL"
+		label="CDS" />
+	<fieldProperty
+		name="cdCDSForPrint"
+		property="cdsForPrint.cd_unita_organizzativa"
+		readonlyProperty="ROCdsForPrint"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="30"
+		label="Codice CDS" />
+	<fieldProperty
+		name="dsCDSForPrint"
+		property="cdsForPrint.ds_unita_organizzativa"
+		readonlyProperty="ROCdsForPrint"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="80"
+		label="Descrizione CDS" />
+	<fieldProperty
+		name="cdCDSCRForPrint"
+		property="cdCDSCRForPrint" />
+	<fieldProperty
+		name="findUOForPrint"
+		property="uoForPrint"
+		inputType="SEARCHTOOL"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="cdUOForPrint"
+		property="uoForPrint.cd_unita_organizzativa"
+		readonlyProperty="ROUoForPrint"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="30"
+		label="Codice UO" />
+	<fieldProperty
+		name="dsUOForPrint"
+		property="uoForPrint.ds_unita_organizzativa"
+		readonlyProperty="ROUoForPrint"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="80"
+		label="Descrizione UO" />
+	<fieldProperty
+		name="cdUOCRForPrint"
+		property="cdUOCRForPrint" />
+	<fieldProperty
+		name="ti_ist_com"
+		property="ti_ist_com"
+		keysProperty="ti_ist_comKeys"
+		inputType="SELECT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"
+		nullable="false"
+		label="Istituzionale/Commerciale" />
+	<fieldProperty
+		name="dettaglioConti"
+		property="dettaglioConti"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"
+		nullable="false"
+		label="Dettaglio conti" />
+	<fieldProperty
+		name="dettaglioContiYN"
+		property="dettaglioContiYN"/>
+
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		inputSize="2"
+		label="Esercizio" />
+	<formFieldProperty
+		name="findCDSForPrint" />
+	<formFieldProperty
+		name="cdCDSForPrint" />
+	<formFieldProperty
+		name="dsCDSForPrint" />
+	<formFieldProperty
+		name="cdCDSCRForPrint" />
+	<formFieldProperty
+		name="findUOForPrint" />
+	<formFieldProperty
+		name="cdUOForPrint" />
+	<formFieldProperty
+		name="dsUOForPrint" />
+	<formFieldProperty
+		name="cdUOCRForPrint" />
+	<formFieldProperty
+		name="ti_ist_com" />
+	<formFieldProperty
+		name="dettaglioConti" />
+</bulkInfo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.V_reversale_terzoBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.V_reversale_terzoHome" >
+	<defaultColumnMap
+		tableName="V_REVERSALE_TERZO" >
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"/>
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="cd_anag"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"/>
+		<columnMapping
+			columnName="DENOMINAZIONE_SEDE"
+			propertyName="denominazione_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="200"/>
+		<columnMapping
+			columnName="FL_ASSOCIAZIONE_SIOPE_COMPLETA"
+			propertyName="fl_associazione_siope_completa"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_terzo"/>		
+	<persistentProperty
+		name="cd_anag" />
+	<persistentProperty
+		name="denominazione_sede" />
+	<persistentProperty
+		name="fl_associazione_siope_completa" />
+</SQLPersistentInfo>

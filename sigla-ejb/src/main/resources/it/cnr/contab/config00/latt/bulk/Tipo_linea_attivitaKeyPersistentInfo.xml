@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.latt.bulk.Tipo_linea_attivitaKey" >
+	<defaultColumnMap
+		tableName="TIPO_LINEA_ATTIVITA" >
+		<columnMapping
+			columnName="CD_TIPO_LINEA_ATTIVITA"
+			propertyName="cd_tipo_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_tipo_linea_attivita"
+		partOfOid="true" />
+</SQLPersistentInfo>

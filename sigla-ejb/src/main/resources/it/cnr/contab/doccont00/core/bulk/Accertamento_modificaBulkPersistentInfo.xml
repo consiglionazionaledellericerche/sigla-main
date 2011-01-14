@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Accertamento_modificaHome">
+	<defaultColumnMap
+		tableName="ACCERTAMENTO_MODIFICA">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="accertamento.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="accertamento.esercizio"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE"
+			propertyName="accertamento.esercizio_originale" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="accertamento.pg_accertamento" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="variazione.esercizio"
+			fetchOnly="true" />
+		<columnMapping
+			columnName="PG_VARIAZIONE"
+			propertyName="variazione.pg_variazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cds"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="accertamento" />
+	<persistentProperty
+		name="variazione" />
+	<persistentProperty
+		name="esercizio_originale" />
+</SQLPersistentInfo>

@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Ripartizione PdG Preliminare - Entrate"
+          longDescription="Ripartizione PdG Preliminare - Entrate">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnFreeSearch="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cdr" />
+	<fieldProperty
+		name="ds_cdr"
+		property="ds_cdr"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione" />
+	<fieldProperty
+		name="pg_progetto"
+		property="pg_progetto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnFreeSearch="false"
+		label="Progressivo Modulo di attività" />
+	<fieldProperty
+		name="cd_progetto"
+		property="cd_progetto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Modulo di attività" />
+	<fieldProperty
+		name="ds_progetto"
+		property="ds_progetto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="433"
+		label="Descrizione" />
+	<fieldProperty
+		name="cd_natura"
+		property="cd_natura"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Natura" />
+	<fieldProperty
+		name="id_classificazione"
+		property="id_classificazione"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		enabledOnFreeSearch="false"
+		label="Identificativo classificazione" />
+	<fieldProperty
+		name="cd_classificazione"
+		property="cd_classificazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="34"
+		label="Classificazione Ufficiale" />
+	<fieldProperty
+		name="ds_classificazione"
+		property="ds_classificazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="250"
+		label="Descrizione" />
+	<fieldProperty
+		name="cd_cds_area"
+		property="cd_cds_area"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Area" />
+	<fieldProperty
+		name="pg_dettaglio"
+		property="pg_dettaglio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnFreeSearch="false"
+		label="Nr. dettaglio" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Contraente" />
+	<fieldProperty
+		name="ds_dettaglio"
+		property="ds_dettaglio"
+		inputType="TEXTAREA"
+		cols="80"
+		rows="1"
+		maxLength="300"
+		label="Oggetto del contratto" />
+	<fieldProperty
+		name="im_entrata_tot_pdgp"
+		property="im_entrata_tot_pdgp"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Imp.Tot.Contratto" />
+	<fieldProperty
+		name="im_entrata_pdgp"
+		property="im_entrata_pdgp"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Previsto" />
+	<fieldProperty
+		name="im_entrata_pdgg"
+		property="im_entrata_pdgg"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Ripartito" />
+	<fieldProperty
+		name="im_incassi_pdgg"
+		property="im_incassi_pdgg"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Previsione Cassa" />
+	<fieldProperty
+		name="im_entrata_da_rip"
+		property="im_entrata_da_rip"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Previsione da Ripartire" />
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="ds_cdr" />
+	<formFieldProperty
+		name="pg_progetto" />
+	<formFieldProperty
+		name="cd_progetto" />
+	<formFieldProperty
+		name="ds_progetto" />
+	<formFieldProperty
+		name="cd_natura" />
+	<formFieldProperty
+		name="id_classificazione" />
+	<formFieldProperty
+		name="cd_classificazione" />
+	<formFieldProperty
+		name="ds_classificazione" />
+	<formFieldProperty
+		name="cd_cds_area" />
+	<formFieldProperty
+		name="pg_dettaglio" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="ds_dettaglio" />
+	<formFieldProperty
+		name="im_entrata_tot_pdgp" />
+	<formFieldProperty
+		name="im_entrata_pdgp" />
+	<formFieldProperty
+		name="im_entrata_pdgg" />
+	<formFieldProperty
+		name="im_incassi_pdgg" />
+	<formFieldProperty
+		name="im_entrata_da_rip" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="ds_cdr" />
+	<findFieldProperty
+		name="pg_progetto" />
+	<findFieldProperty
+		name="cd_progetto" />
+	<findFieldProperty
+		name="ds_progetto" />
+	<findFieldProperty
+		name="cd_natura" />
+	<findFieldProperty
+		name="id_classificazione" />
+	<findFieldProperty
+		name="cd_classificazione" />
+	<findFieldProperty
+		name="ds_classificazione" />
+	<findFieldProperty
+		name="cd_cds_area" />
+	<findFieldProperty
+		name="pg_dettaglio" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="ds_dettaglio" />
+	<findFieldProperty
+		name="im_entrata_tot_pdgp" />
+	<findFieldProperty
+		name="im_entrata_pdgp" />
+	<findFieldProperty
+		name="im_entrata_pdgg" />
+	<findFieldProperty
+		name="im_incassi_pdgg" />
+	<findFieldProperty
+		name="im_entrata_da_rip" />
+
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="ds_cdr" />
+	<columnFieldProperty
+		name="cd_progetto" />
+	<columnFieldProperty
+		name="ds_progetto" />
+	<columnFieldProperty
+		name="cd_natura" />
+	<columnFieldProperty
+		name="cd_classificazione" />
+	<columnFieldProperty
+		name="ds_classificazione" />
+	<columnFieldProperty
+		name="cd_cds_area" />
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="ds_dettaglio" />
+	<columnFieldProperty
+		name="im_entrata_tot_pdgp" />
+	<columnFieldProperty
+		name="im_entrata_pdgp" />
+	<columnFieldProperty
+		name="im_entrata_pdgg" />
+	<columnFieldProperty
+		name="im_incassi_pdgg" />
+	<columnFieldProperty
+		name="im_entrata_da_rip" />
+	
+	<columnSet
+	        name="pdgModuloEntrateGest">
+		<columnFieldProperty
+			name="cd_progetto" />
+		<columnFieldProperty
+			name="cd_classificazione" />
+		<columnFieldProperty
+			name="ds_classificazione" />
+		<columnFieldProperty
+			name="cd_terzo" 
+		    headerLabel="DATI DEL CONTRATTO" />		
+		<columnFieldProperty
+			name="ds_dettaglio"
+			label="Oggetto" 
+		    headerLabel="DATI DEL CONTRATTO" />		
+		<columnFieldProperty
+			name="im_entrata_tot_pdgp"
+			label="Importo Totale"
+		    headerLabel="DATI DEL CONTRATTO" />		
+		<columnFieldProperty
+			name="im_entrata_pdgp" />
+		<columnFieldProperty
+			name="im_entrata_pdgg" />
+		<columnFieldProperty
+			name="im_incassi_pdgg" />
+	</columnSet>        		
+
+	<freeSearchSet
+	        name="pdgModuloEntrateGest">
+		<findFieldProperty
+			name="cd_progetto" />
+		<findFieldProperty
+			name="cd_classificazione" />
+		<findFieldProperty
+			name="ds_classificazione" 
+			label="Descrizione Classificazione Ufficiale"/>
+		<findFieldProperty
+			name="cd_terzo" />
+		<findFieldProperty
+			name="ds_dettaglio" />
+		<findFieldProperty
+			name="im_entrata_tot_pdgp" 
+			label="Importo Totale del Contratto"/>
+		<findFieldProperty
+			name="im_entrata_pdgp" />
+		<findFieldProperty
+			name="im_entrata_pdgg" />
+		<findFieldProperty
+			name="im_incassi_pdgg" />
+		<findFieldProperty
+			name="im_entrata_da_rip" />
+	</freeSearchSet>        		
+</bulkInfo>

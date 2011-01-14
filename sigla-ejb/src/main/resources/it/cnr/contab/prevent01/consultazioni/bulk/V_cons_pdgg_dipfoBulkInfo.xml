@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Centro Responsabilità" />
+	<fieldProperty
+		name="ds_cdr"
+		property="ds_cdr"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Desc. CdR" />
+	<fieldProperty
+		name="cd_classificazione"
+		property="cd_classificazione"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Classificazione" />
+	<fieldProperty
+		name="ds_classificazione"
+		property="ds_classificazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="250"
+		label="Descrizione clas." />
+	<fieldProperty
+		name="cd_livello1"
+		property="cd_livello1"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Titolo" />
+	<fieldProperty
+		name="cd_livello2"
+		property="cd_livello2"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Categoria" />
+	<fieldProperty
+		name="cd_livello3"
+		property="cd_livello3"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Capitolo" />	
+	<fieldProperty
+		name="pg_progetto"
+		property="pg_progetto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progetto" />	
+	<fieldProperty
+		name="cd_progetto"
+		property="cd_progetto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Progetto" />
+	<fieldProperty
+		name="ds_progetto"
+		property="ds_progetto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="8"
+		maxLength="433"
+		label="Desc. Progetto" />
+	<fieldProperty
+		name="cd_commessa"
+		property="cd_commessa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Commessa" />
+	<fieldProperty
+		name="ds_commessa"
+		property="ds_commessa"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="8"
+		maxLength="433"
+		label="Desc. Commessa" />
+	<fieldProperty
+		name="cd_dipartimento"
+		property="cd_dipartimento"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Dipartimento" />
+	<fieldProperty
+		name="ds_dipartimento"
+		property="ds_dipartimento"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="8"
+		maxLength="765"
+		label="Desc. Dipartimento" />		
+	<fieldProperty
+		name="cd_modulo"
+		property="cd_modulo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Modulo" />
+	<fieldProperty
+		name="ds_modulo"
+		property="ds_modulo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="8"
+		maxLength="433"
+		label="Desc. Modulo" />	
+	<fieldProperty
+		name="cd_tipo_modulo"
+		property="cd_tipo_modulo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Tipo Modulo" />
+	<fieldProperty
+		name="ds_tipo_modulo"
+		property="ds_tipo_modulo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="2"
+		maxLength="100"
+		label="Desc. Tipo Modulo" />		
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="GAE" />
+	<fieldProperty
+		name="ds_linea"
+		property="ds_linea"
+		inputType="TEXT"
+		inputSize="300"
+		maxLength="300"
+		label="Descrizione GAE" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Voce" />
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="ds_elemento_voce"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		label="Descrizione voce" />	
+	<fieldProperty
+		name="ds_dettaglio"
+		property="ds_dettaglio"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="8"
+		maxLength="433"
+		label="Dettaglio" />	
+		
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="cd_dipartimento" />
+	<formFieldProperty name="ds_dipartimento" />
+	<formFieldProperty name="cd_centro_responsabilita" />
+	<formFieldProperty name="ds_cdr" />
+	<formFieldProperty name="cd_classificazione" />
+	<formFieldProperty name="ds_classificazione" />
+	<formFieldProperty name="pg_progetto" />
+	<formFieldProperty name="cd_progetto" />
+	<formFieldProperty name="ds_progetto" />
+	<formFieldProperty name="cd_modulo" />
+	<formFieldProperty name="ds_modulo" />
+	<formFieldProperty name="cd_tipo_modulo" />
+	<formFieldProperty name="ds_tipo_modulo" />
+	<formFieldProperty name="cd_commessa" />
+	<formFieldProperty name="ds_commessa" />
+	<formFieldProperty name="cd_linea_attivita" />
+	<formFieldProperty name="ds_linea" />
+	<formFieldProperty name="cd_elemento_voce" />
+	<formFieldProperty name="ds_elemento_voce" />
+	<formFieldProperty name="ds_dettaglio" />
+	<formFieldProperty name="cd_livello1" />
+	<formFieldProperty name="cd_livello2" />
+	<formFieldProperty name="cd_livello3" />
+ 		
+	<columnFieldProperty name="esercizio" />
+	<columnFieldProperty name="cd_dipartimento" />
+	<columnFieldProperty name="ds_dipartimento" />
+	<columnFieldProperty name="cd_centro_responsabilita" />
+	<columnFieldProperty name="ds_cdr" />
+	<columnFieldProperty name="cd_classificazione" />
+	<columnFieldProperty name="ds_classificazione" />
+	<columnFieldProperty name="pg_progetto" />
+	<columnFieldProperty name="cd_progetto" />
+	<columnFieldProperty name="ds_progetto" />
+	<columnFieldProperty name="cd_modulo" />
+	<columnFieldProperty name="ds_modulo" />
+	<columnFieldProperty name="cd_tipo_modulo" />
+	<columnFieldProperty name="ds_tipo_modulo" />
+	<columnFieldProperty name="cd_commessa" />
+	<columnFieldProperty name="ds_commessa" />
+	<columnFieldProperty name="cd_linea_attivita" />
+	<columnFieldProperty name="ds_linea" />
+	<columnFieldProperty name="cd_elemento_voce" />
+	<columnFieldProperty name="ds_elemento_voce" />
+	<columnFieldProperty name="ds_dettaglio" />
+	<columnFieldProperty name="cd_livello1" />
+	<columnFieldProperty name="cd_livello2" />
+	<columnFieldProperty name="cd_livello3" />
+ 		
+	<findFieldProperty name="esercizio" />
+	<findFieldProperty name="cd_dipartimento" />
+	<findFieldProperty name="ds_dipartimento" />
+	<findFieldProperty name="cd_centro_responsabilita" />
+	<findFieldProperty name="ds_cdr" />
+	<findFieldProperty name="cd_classificazione" />
+	<findFieldProperty name="ds_classificazione" />
+	<findFieldProperty name="pg_progetto" />
+	<findFieldProperty name="cd_progetto" />
+	<findFieldProperty name="ds_progetto" />
+	<findFieldProperty name="cd_modulo" />
+	<findFieldProperty name="ds_modulo" />
+	<findFieldProperty name="cd_tipo_modulo" />
+	<findFieldProperty name="ds_tipo_modulo" />
+	<findFieldProperty name="cd_commessa" />
+	<findFieldProperty name="ds_commessa" />
+	<findFieldProperty name="cd_linea_attivita" />
+	<findFieldProperty name="ds_linea" />
+	<findFieldProperty name="cd_elemento_voce" />
+	<findFieldProperty name="ds_elemento_voce" />
+	<findFieldProperty name="ds_dettaglio" />
+	<findFieldProperty name="cd_livello1" />
+	<findFieldProperty name="cd_livello2" />
+	<findFieldProperty name="cd_livello3" />
+</bulkInfo>

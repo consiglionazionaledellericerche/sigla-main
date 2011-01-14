@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.bulk.Parametri_cdsBase"
+	keyClassName="it.cnr.contab.config00.bulk.Parametri_cdsKey"
+	homeClassName="it.cnr.contab.config00.bulk.Parametri_cdsHome" >
+	<defaultColumnMap
+		tableName="PARAMETRI_CDS" >
+		<columnMapping
+			columnName="FL_COMMESSA_OBBLIGATORIA"
+			propertyName="fl_commessa_obbligatoria"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+		<columnMapping
+			columnName="FL_RIBALTATO"
+			propertyName="fl_ribaltato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />						
+		<columnMapping
+			columnName="FL_OBBLIGO_PROTOCOLLO_INF"
+			propertyName="fl_obbligo_protocollo_inf"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_CONTRATTO_CESSATO"
+			propertyName="fl_contratto_cessato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="BLOCCO_IMPEGNI_CDR_GAE"
+			propertyName="blocco_impegni_cdr_gae"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"/>
+		<columnMapping
+			columnName="FL_APPROVA_VAR_PDG"
+			propertyName="fl_approva_var_pdg"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_APPROVA_VAR_STANZ_RES"
+			propertyName="fl_approva_var_stanz_res"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_PROGETTO_NUMERATORE"
+			propertyName="fl_progetto_numeratore"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+		<columnMapping
+			columnName="PROGETTO_NUMERATORE_CIFRE"
+			propertyName="progetto_numeratore_cifre"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_SOGLIA_CONTRATTO_S"
+			propertyName="im_soglia_contratto_s"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true"/>
+		<columnMapping
+			columnName="IM_SOGLIA_CONTRATTO_E"
+			propertyName="im_soglia_contratto_e"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true"/>
+		<columnMapping
+			columnName="IM_SOGLIA_CONSUMO_RESIDUO"
+			propertyName="im_soglia_consumo_residuo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true"/>
+		<columnMapping
+			columnName="FL_MOD_OBBL_RES"
+			propertyName="fl_mod_obbl_res"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+	
+	 <columnMapping
+			columnName="FL_RIPORTA_AVANTI"
+			propertyName="fl_riporta_avanti"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_RIPORTA_INDIETRO"
+			propertyName="fl_riporta_indietro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_LINEA_PGIRO_E_CDS"
+			propertyName="fl_linea_pgiro_e_cds"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" /> 
+	    <columnMapping
+			columnName="CD_CDR_LINEA_PGIRO_E"
+			propertyName="cd_cdr_linea_pgiro_e"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />	
+		<columnMapping
+			columnName="CD_LINEA_PGIRO_E"
+			propertyName="cd_linea_pgiro_e"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />		
+		<columnMapping
+			columnName="FL_LINEA_PGIRO_S_CDS"
+			propertyName="fl_linea_pgiro_s_cds"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+    	<columnMapping
+			columnName="CD_CDR_LINEA_PGIRO_S"
+			propertyName="cd_cdr_linea_pgiro_s"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />  
+		<columnMapping
+			columnName="CD_LINEA_PGIRO_S"
+			propertyName="cd_linea_pgiro_s"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />				
+		<columnMapping
+			columnName="FL_BLOCCO_IBAN"
+			propertyName="fl_blocco_iban"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+	</defaultColumnMap>
+	<persistentProperty
+		name="blocco_impegni_cdr_gae" />	
+	<persistentProperty
+		name="fl_commessa_obbligatoria" />	
+	<persistentProperty
+		name="fl_ribaltato" />			
+	<persistentProperty
+		name="fl_obbligo_protocollo_inf" />			
+	<persistentProperty
+		name="fl_contratto_cessato" />					
+	<persistentProperty
+		name="fl_approva_var_pdg" />							
+	<persistentProperty
+		name="fl_approva_var_stanz_res" />
+	<persistentProperty
+		name="fl_mod_obbl_res" />
+	<persistentProperty
+		name="fl_approva_var_stanz_res" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="fl_progetto_numeratore" />
+	<persistentProperty
+		name="progetto_numeratore_cifre" />
+	<persistentProperty
+		name="im_soglia_contratto_s" />
+	<persistentProperty
+		name="im_soglia_contratto_e" />
+	<persistentProperty
+		name="im_soglia_consumo_residuo" />
+  <persistentProperty
+		name="fl_riporta_avanti" />
+	<persistentProperty
+		name="fl_riporta_indietro" />
+	<persistentProperty
+		name="fl_linea_pgiro_e_cds" /> 
+ 	<persistentProperty
+		name="cd_cdr_linea_pgiro_e" /> 
+	<persistentProperty
+		name="cd_linea_pgiro_e" /> 
+	<persistentProperty
+		name="fl_linea_pgiro_s_cds" /> 
+	<persistentProperty
+		name="cd_cdr_linea_pgiro_s" />  
+	<persistentProperty
+		name="cd_linea_pgiro_s" /> 
+	<persistentProperty
+		name="fl_blocco_iban" />	
+</SQLPersistentInfo>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_appartenenza"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="esercizio_originale"
+		property="esercizio_originale"
+		inputType="TEXT"
+		label="esercizio_originale" />
+	<fieldProperty
+		name="pg_accertamento"
+		property="pg_accertamento"
+		inputType="TEXT"
+		label="pg_accertamento" />
+	<fieldProperty
+		name="pg_accertamento_scadenzario"
+		property="pg_accertamento_scadenzario"
+		inputType="TEXT"
+		label="pg_accertamento_scadenzario" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_centro_responsabilita"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_linea_attivita"
+		caseSensitiveSearch="false" />				
+	<fieldProperty
+		name="pg_old"
+		property="pg_old"
+		inputType="TEXT"
+		label="pg_old" />
+	<fieldProperty
+		name="im_delta_voce"
+		property="im_delta_voce"
+		inputType="TEXT"
+		label="im_delta_voce" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_gestione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_voce"
+		property="cd_voce"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="cd_voce"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_delta_inc_voce"
+		property="im_delta_inc_voce"
+		inputType="TEXT"
+		label="im_delta_inc_voce" />
+	<fieldProperty
+		name="im_delta_rev_voce"
+		property="im_delta_rev_voce"
+		inputType="TEXT"
+		label="im_delta_rev_voce" />
+	<fieldProperty
+		name="cd_tipo_documento_cont"
+		property="cd_tipo_documento_cont"
+		inputType="TEXT"/>
+
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="esercizio_originale" />
+	<formFieldProperty
+		name="pg_accertamento" />
+	<formFieldProperty
+		name="pg_accertamento_scadenzario" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="pg_old" />
+	<formFieldProperty
+		name="im_delta_voce" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_voce" />
+	<formFieldProperty
+		name="cd_tipo_documento_cont" />
+
+	<columnFieldProperty
+		name="ti_appartenenza" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="esercizio_originale" />
+	<columnFieldProperty
+		name="pg_accertamento" />
+	<columnFieldProperty
+		name="pg_accertamento_scadenzario" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />		
+	<columnFieldProperty
+		name="pg_old" />
+	<columnFieldProperty
+		name="im_delta_voce" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_voce" />
+	<columnFieldProperty
+		name="cd_tipo_documento_cont" />
+
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="esercizio_originale" />
+	<findFieldProperty
+		name="pg_accertamento" />
+	<findFieldProperty
+		name="pg_accertamento_scadenzario" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="cd_linea_attivita" />				
+	<findFieldProperty
+		name="pg_old" />
+	<findFieldProperty
+		name="im_delta_voce" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_voce" />
+	<findFieldProperty
+		name="cd_tipo_documento_cont" />
+
+</bulkInfo>

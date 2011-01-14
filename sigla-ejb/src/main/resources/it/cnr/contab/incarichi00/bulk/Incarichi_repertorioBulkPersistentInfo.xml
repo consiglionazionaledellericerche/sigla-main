@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk"
+	homeClassName="it.cnr.contab.incarichi00.bulk.Incarichi_repertorioHome">
+	<defaultColumnMap
+		tableName="INCARICHI_REPERTORIO">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_PROCEDURA"
+			propertyName="incarichi_procedura.esercizio" />
+		<columnMapping
+			columnName="PG_PROCEDURA"
+			propertyName="incarichi_procedura.pg_procedura" />
+		<columnMapping
+			columnName="CD_TIPO_RAPPORTO"
+			propertyName="tipo_rapporto.cd_tipo_rapporto" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzoForColumnMap.cd_terzo"
+			fetchOnly="true"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="cds" />
+	<persistentProperty
+		name="unita_organizzativa" />
+	<persistentProperty
+		name="incarichi_procedura" />
+	<persistentProperty
+		name="tipo_rapporto" />
+	<persistentProperty
+		name="terzoForColumnMap" />
+</SQLPersistentInfo>

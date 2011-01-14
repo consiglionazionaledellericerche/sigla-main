@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.bulk.V_stm_paramin_sit_sint_gaeKey">
+	<defaultColumnMap
+		tableName="V_STM_PARAMIN_SIT_SINT_GAE">
+		<columnMapping
+			columnName="ID_REPORT"
+			propertyName="id_report"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CDR"
+			propertyName="cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="GAE"
+			propertyName="gae"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+	</defaultColumnMap>
+	
+		<persistentProperty
+			name="id_report" />
+		<persistentProperty
+			name="cdr" />
+		<persistentProperty
+			name="gae" />
+</SQLPersistentInfo>

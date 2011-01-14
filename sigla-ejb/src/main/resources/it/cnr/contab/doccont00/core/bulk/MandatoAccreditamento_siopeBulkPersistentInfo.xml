@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.MandatoAccreditamento_siopeBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.MandatoAccreditamento_siopeHome" >
+	<defaultColumnMap
+		tableName="MANDATO_SIOPE" >
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="mandatoAccreditamento_riga.mandatoAccreditamento.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="mandatoAccreditamento_riga.mandatoAccreditamento.esercizio" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="mandatoAccreditamento_riga.mandatoAccreditamento.pg_mandato" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="mandatoAccreditamento_riga.impegno.esercizio" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="mandatoAccreditamento_riga.impegno.esercizio_originale" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="mandatoAccreditamento_riga.impegno.pg_obbligazione" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="mandatoAccreditamento_riga.impegno.pg_obbligazione_scadenzario" />
+		<columnMapping
+			columnName="CD_CDS_DOC_AMM"
+			propertyName="mandatoAccreditamento_riga.cd_cds_doc_amm" />
+		<columnMapping
+			columnName="CD_UO_DOC_AMM"
+			propertyName="mandatoAccreditamento_riga.cd_uo_doc_amm" />
+		<columnMapping
+			columnName="ESERCIZIO_DOC_AMM"
+			propertyName="mandatoAccreditamento_riga.esercizio_doc_amm" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_AMM"
+			propertyName="mandatoAccreditamento_riga.cd_tipo_documento_amm" />
+		<columnMapping
+			columnName="PG_DOC_AMM"
+			propertyName="mandatoAccreditamento_riga.pg_doc_amm" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="mandatoAccreditamento_riga"
+		partOfOid="true" />
+</SQLPersistentInfo>

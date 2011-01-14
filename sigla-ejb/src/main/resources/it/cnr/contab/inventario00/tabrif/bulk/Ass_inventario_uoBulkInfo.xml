@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_unita_organizzativa" />
+	<fieldProperty
+		name="dt_cancellazione"
+		property="dt_cancellazione"
+		inputType="TEXT"
+		label="dt_cancellazione" />
+	<fieldProperty
+		name="fl_responsabile"
+		property="fl_responsabile"
+		inputType="CHECKBOX"
+		label="fl_responsabile" />
+	<fieldProperty
+		name="pg_inventario"
+		property="pg_inventario"
+		inputType="TEXT"
+		label="pg_inventario" />
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="dt_cancellazione" />
+	<formFieldProperty
+		name="fl_responsabile" />
+	<formFieldProperty
+		name="pg_inventario" />
+
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="dt_cancellazione" />
+	<columnFieldProperty
+		name="fl_responsabile" />
+	<columnFieldProperty
+		name="pg_inventario" />
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="dt_cancellazione" />
+	<findFieldProperty
+		name="fl_responsabile" />
+	<findFieldProperty
+		name="pg_inventario" />
+
+</bulkInfo>

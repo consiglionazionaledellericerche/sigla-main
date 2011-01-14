@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_procedura"
+		property="cd_procedura"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="cd_procedura" />
+	<fieldProperty
+		name="ds_procedura"
+		property="ds_procedura"
+		maxLength="300"
+		inputSize="30"
+		inputType="TEXT"
+		label="ds_procedura"
+		caseSensitiveSearch="false" />
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_procedura"
+			enabledOnSearch="true" />
+		<formFieldProperty
+			name="ds_procedura"
+			enabledOnSearch="true" />
+	</form>
+
+	<formFieldProperty
+		name="cd_procedura" />
+	<formFieldProperty
+		name="ds_procedura" />
+
+	<columnFieldProperty
+		name="cd_procedura" />
+	<columnFieldProperty
+		name="ds_procedura" />
+
+	<findFieldProperty
+		name="cd_procedura" />
+	<findFieldProperty
+		name="ds_procedura" />
+
+</bulkInfo>

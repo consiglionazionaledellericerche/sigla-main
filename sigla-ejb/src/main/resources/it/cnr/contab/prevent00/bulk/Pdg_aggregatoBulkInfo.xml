@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cdr.cd_centro_responsabilita"
+		inputType="TEXT"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="Centro di responsabilità di Primo Livello o Area" />
+	<fieldProperty
+		name="ds_cdr"
+		property="cdr.ds_cdr"
+		inputType="TEXT"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="Descrizione Centro di responsabilità di Primo Livello o Area" />
+	<fieldProperty
+		name="cdr"
+		property="cdr"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Centro di responsabilità di Primo Livello o Area" />
+		
+	<fieldProperty
+		name="stato"
+		property="stato"
+		keysProperty = "statiKeys"
+		inputType="SELECT"
+		label="Stato attuale del piano"
+		nullable="false" />
+
+	<formFieldProperty
+		name="cdr" />
+	<formFieldProperty
+		name="stato" />
+
+</bulkInfo>

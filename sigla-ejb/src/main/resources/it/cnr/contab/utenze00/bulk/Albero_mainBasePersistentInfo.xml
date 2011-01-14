@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.Albero_mainBase"
+	keyClassName="it.cnr.contab.utenze00.bulk.Albero_mainKey"
+	homeClassName="it.cnr.contab.utenze00.bulk.Albero_mainHome" >
+	<defaultColumnMap
+		tableName="ALBERO_MAIN" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="URL_ICONA"
+			propertyName="url_icona"
+			sqlTypeName="VARCHAR"
+			columnSize="200" />
+		<columnMapping
+			columnName="URL_ICONA_OPEN"
+			propertyName="url_icona_open"
+			sqlTypeName="VARCHAR"
+			columnSize="200" />			
+		<columnMapping
+			columnName="DS_NODO"
+			propertyName="ds_nodo"
+			sqlTypeName="VARCHAR"
+			columnSize="200" />
+		<columnMapping
+			columnName="CD_PROPRIO_NODO"
+			propertyName="cd_proprio_nodo"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="BUSINESS_PROCESS"
+			propertyName="business_process"
+			sqlTypeName="VARCHAR"
+			columnSize="200" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_TERMINALE"
+			propertyName="fl_terminale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="LIVELLO"
+			propertyName="livello"
+			sqlTypeName="DECIMAL"
+			columnSize="2" />
+		<columnMapping
+			columnName="PG_ORDINAMENTO"
+			propertyName="pg_ordinamento"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_ACCESSO"
+			propertyName="cd_accesso"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_NODO_PADRE"
+			propertyName="cd_nodo_padre"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="url_icona" />
+	<persistentProperty
+		name="url_icona_open" />		
+	<persistentProperty
+		name="ds_nodo" />
+	<persistentProperty
+		name="cd_proprio_nodo" />
+	<persistentProperty
+		name="business_process" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="fl_terminale" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="livello" />
+	<persistentProperty
+		name="pg_ordinamento" />
+	<persistentProperty
+		name="cd_accesso" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="cd_nodo_padre" />
+</SQLPersistentInfo>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.cdip.bulk.V_dipendenteBase"
+	homeClassName="it.cnr.contab.pdg00.cdip.bulk.V_dipendenteHome" >
+	<defaultColumnMap
+		tableName="V_DIPENDENTE" >
+		<columnMapping
+			columnName="MESE"
+			propertyName="mese"
+			sqlTypeName="DECIMAL"
+			columnSize="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_LIVELLO_3"
+			propertyName="cd_livello_3"
+			sqlTypeName="VARCHAR"
+			columnSize="3" />
+		<columnMapping
+			columnName="CD_LIVELLO_2"
+			propertyName="cd_livello_2"
+			sqlTypeName="VARCHAR"
+			columnSize="3" />
+		<columnMapping
+			columnName="CD_LIVELLO_1"
+			propertyName="cd_livello_1"
+			sqlTypeName="VARCHAR"
+			columnSize="3" />
+		<columnMapping
+			columnName="TI_PREV_CONS"
+			propertyName="ti_prev_cons"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_PROFILO"
+			propertyName="cd_profilo"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="ID_MATRICOLA"
+			propertyName="id_matricola"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="DS_PROFILO"
+			propertyName="ds_profilo"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="NOMINATIVO"
+			propertyName="nominativo"
+			sqlTypeName="VARCHAR"
+			columnSize="60" />
+		<columnMapping
+			columnName="DT_SCAD_CONTRATTO"
+			propertyName="dt_scad_contratto"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="ORIGINE_FONTI"
+			propertyName="origine_fonti"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="mese" />
+	<persistentProperty
+		name="cd_livello_3" />
+	<persistentProperty
+		name="cd_livello_2" />
+	<persistentProperty
+		name="cd_livello_1" />
+	<persistentProperty
+		name="ti_prev_cons" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_profilo" />
+	<persistentProperty
+		name="id_matricola" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="ds_profilo" />
+	<persistentProperty
+		name="nominativo" />
+	<persistentProperty
+		name="dt_scad_contratto" />
+	<persistentProperty
+		name="origine_fonti" />
+</SQLPersistentInfo>

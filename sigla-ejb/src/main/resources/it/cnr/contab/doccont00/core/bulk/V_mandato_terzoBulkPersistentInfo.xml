@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.V_mandato_terzoBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.V_mandato_terzoHome" >
+	<defaultColumnMap
+		tableName="V_MANDATO_TERZO" >
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"/>
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="cd_anag"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"/>
+		<columnMapping
+			columnName="DENOMINAZIONE_SEDE"
+			propertyName="denominazione_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="200"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_terzo"/>		
+	<persistentProperty
+		name="cd_anag" />
+	<persistentProperty
+		name="denominazione_sede" />
+</SQLPersistentInfo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.logs.bulk.Batch_controlKey" >
+	<defaultColumnMap
+		tableName="BATCH_CONTROL" >
+		<columnMapping
+			columnName="PG_BATCH"
+			propertyName="pg_batch"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_batch"
+		partOfOid="true" />
+</SQLPersistentInfo>

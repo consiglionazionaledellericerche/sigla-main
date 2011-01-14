@@ -1,0 +1,208 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	
+	<fieldProperty
+		name="anagrafico"
+		property="anagrafico"
+		label="anagrafico"
+		inputType="TEXT"
+		/>
+		
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		readonlyPropertyOnEdit="anagrafico.dipendente"
+		label="Codice fiscale"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="dt_fin_validita"
+		property="dt_fin_validita"
+		readonlyPropertyOnEdit="anagrafico.dipendente"
+		label="Data fine validit&#224;"
+		formatName="date_short"
+		inputType="TEXT"
+		nullable="false"
+		command ="doOnDt_fin_validitaChange"
+		/>
+	<fieldProperty
+		name="dt_ini_validita"
+		property="dt_ini_validita"
+		label="Data inizio validit&#224;"
+		formatName="date_short"
+		inputType="TEXT"
+		readonlyProperty="notNew"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="dt_nascita_figlio"
+		property="dt_nascita_figlio"
+		readonlyPropertyOnEdit="anagrafico.dipendente"
+		label="Data di nascita"
+		formatName="date_short"
+		inputType="TEXT"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="pg_carico_anag"
+		property="pg_carico_anag"
+		label="pg_carico_anag"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="prc_carico"
+		property="prc_carico"
+		readonlyPropertyOnEdit="anagrafico.dipendente"
+		label="Perc. Carico"
+		inputType="TEXT"
+		maxLength="8"
+		formatName="it.cnr.contab.util.ConstrainedPercentFormat"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="ti_persona"
+		property="ti_persona"
+		readonlyPropertyOnEdit="anagrafico.dipendente"
+		label="Tipo persona"
+		keysProperty="ti_personaKeys"
+		inputType="SELECT"
+		command="doOnTi_personaChange"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="dt_fine_figlio_ha_treanni"
+		property="dt_fine_figlio_ha_treanni"
+		label="Data fine figlio ha tre anni"
+		inputType="ROTEXT"
+		formatName="date_short" />
+	<fieldProperty
+		name="fl_primo_figlio"
+		property="fl_primo_figlio"
+		readonlyPropertyOnEdit="anagrafico.dipendente"
+		label="Primo figlio"
+		inputType="CHECKBOX" />
+	<fieldProperty
+		name="fl_handicap"
+		property="fl_handicap"
+		readonlyPropertyOnEdit="anagrafico.dipendente"
+		label="Portatore di handicap"
+		inputType="CHECKBOX" />
+	<fieldProperty
+		name="fl_primo_figlio_manca_con"
+		property="fl_primo_figlio_manca_con"
+		readonlyPropertyOnEdit="anagrafico.dipendente"
+		label="Primo figlio in assenza di coniuge"
+		inputType="CHECKBOX" />
+	<fieldProperty
+		name="codice_fiscale_altro_gen"
+		property="codice_fiscale_altro_gen"
+		readonlyPropertyOnEdit="anagrafico.dipendente"
+		label="Codice fiscale altro genitore"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		inputType="TEXT"
+		/>
+	<columnFieldProperty
+		name="codice_fiscale"
+		/>
+	<columnFieldProperty
+		name="dt_fin_validita"
+		/>
+	<columnFieldProperty
+		name="dt_ini_validita"
+		/>
+	<columnFieldProperty
+		name="prc_carico"
+		/>
+	<columnFieldProperty
+		name="ti_persona"
+		/>
+	<columnFieldProperty
+		name="dt_fine_figlio_ha_treanni"
+		/>
+	<columnFieldProperty
+		name="fl_primo_figlio"
+		/>
+	<columnFieldProperty
+		name="fl_handicap"
+		/>
+	<columnFieldProperty
+		name="fl_primo_figlio_manca_con"
+		/>
+	<columnFieldProperty
+		name="codice_fiscale_altro_gen"
+		/>
+
+	<formFieldProperty
+		name="cd_anag"
+		/>
+	<formFieldProperty
+		name="codice_fiscale"
+		maxLength="16"
+		/>
+	<formFieldProperty
+		name="dt_fin_validita"
+		/>
+	<formFieldProperty
+		name="dt_ini_validita"
+		/>
+	<formFieldProperty
+		name="dt_nascita_figlio"
+		/>
+	<formFieldProperty
+		name="prc_carico"
+		/>
+	<formFieldProperty
+		name="ti_persona"
+		/>
+	<formFieldProperty
+		name="dt_fine_figlio_ha_treanni"
+		/>
+	<formFieldProperty
+		name="fl_primo_figlio"
+		/>
+	<formFieldProperty
+		name="fl_handicap"
+		/>
+	<formFieldProperty
+		name="fl_primo_figlio_manca_con"
+		/>
+	<formFieldProperty
+		name="codice_fiscale_altro_gen"
+		/>
+
+	<findFieldProperty
+		name="codice_fiscale"
+		/>
+	<findFieldProperty
+		name="dt_fin_validita"
+		/>
+	<findFieldProperty
+		name="dt_ini_validita"
+		/>
+	<findFieldProperty
+		name="prc_carico"
+		/>
+	<findFieldProperty
+		name="ti_persona"
+		/>
+	<findFieldProperty
+		name="dt_fine_figlio_ha_treanni"
+		/>
+	<findFieldProperty
+		name="fl_primo_figlio"
+		/>
+	<findFieldProperty
+		name="fl_handicap"
+		/>
+	<findFieldProperty
+		name="fl_primo_figlio_manca_con"
+		/>
+	<findFieldProperty
+		name="codice_fiscale_altro_gen"
+		/>
+
+</bulkInfo>

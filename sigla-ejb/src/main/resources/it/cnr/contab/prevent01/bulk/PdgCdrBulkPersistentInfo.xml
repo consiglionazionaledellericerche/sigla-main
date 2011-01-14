@@ -1,0 +1,4 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent01.bulk.PdgCdrBulk" >
+	homeClassName="it.cnr.contab.prevent01.bulk.PdgCdrHome">
+</SQLPersistentInfo>

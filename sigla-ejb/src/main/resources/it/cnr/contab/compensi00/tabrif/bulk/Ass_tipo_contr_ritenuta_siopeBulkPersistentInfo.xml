@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Ass_tipo_contr_ritenuta_siopeBulk"
+	homeClassName="it.cnr.contab.compensi00.tabrif.bulk.Ass_tipo_contr_ritenuta_siopeHome">
+	<defaultColumnMap
+		tableName="ASS_TIPO_CONTR_RITENUTA_SIOPE">
+		<columnMapping
+			columnName="CD_CONTRIBUTO_RITENUTA"
+			propertyName="tipo_contributo.cd_contributo_ritenuta"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="DT_INI_VALIDITA"
+			propertyName="tipo_contributo.dt_ini_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="ESERCIZIO_SIOPE_S"
+			propertyName="siope_spesa.esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="TI_GESTIONE_SIOPE_S"
+			propertyName="siope_spesa.ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_SIOPE_S"
+			propertyName="siope_spesa.cd_siope"
+			sqlTypeName="VARCHAR"
+			columnSize="45" />
+		<columnMapping
+			columnName="ESERCIZIO_SIOPE_E"
+			propertyName="siope_entrata.esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="TI_GESTIONE_SIOPE_E"
+			propertyName="siope_entrata.ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_SIOPE_E"
+			propertyName="siope_entrata.cd_siope"
+			sqlTypeName="VARCHAR"
+			columnSize="45" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipo_contributo"
+		partOfOid="true" />
+	<persistentProperty
+		name="siope_spesa"/>	
+	<persistentProperty
+		name="siope_entrata"/>
+</SQLPersistentInfo>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Trattamento_coriKey" >
+	<defaultColumnMap
+		tableName="TRATTAMENTO_CORI" >
+		<columnMapping
+			columnName="CD_CONTRIBUTO_RITENUTA"
+			propertyName="cd_contributo_ritenuta"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="DT_INIZIO_VALIDITA"
+			propertyName="dt_inizio_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_TRATTAMENTO"
+			propertyName="cd_trattamento"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_contributo_ritenuta"
+		partOfOid="true" />
+	<persistentProperty
+		name="dt_inizio_validita"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_trattamento"
+		partOfOid="true" />
+</SQLPersistentInfo>

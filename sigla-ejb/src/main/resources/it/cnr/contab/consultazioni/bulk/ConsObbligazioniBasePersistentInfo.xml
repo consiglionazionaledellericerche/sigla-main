@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.consultazioni.bulk.ConsObbligazioniBase"
+	homeClassName="it.cnr.contab.consultazioni.bulk.ConsObbligazioniHome">
+	<defaultColumnMap
+		tableName="V_CONS_OBBL_LINEE_ATTIVITA">
+		<columnMapping
+			columnName="CDS"
+			propertyName="cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"/>
+		<columnMapping
+			columnName="UO"
+			propertyName="uo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"/>
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"/>
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="DS_LINEA_ATTIVITA"
+			propertyName="ds_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE"
+			propertyName="esercizio_originale"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ORI_RIPORTO"
+			propertyName="esercizio_ori_ori_riporto"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_ORI_RIPORTO"
+			propertyName="pg_obbligazione_ori_riporto"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"/>
+		<columnMapping
+			columnName="ESERCIZIO_ORI_RIPORTO"
+			propertyName="esercizio_ori_riporto"
+			sqlTypeName="DECIMAL"
+			columnSize="4"/>
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"/>
+		<columnMapping
+			columnName="DS_SCADENZA"
+			propertyName="ds_scadenza"
+			sqlTypeName="VARCHAR"
+			columnSize="300"/>
+		<columnMapping
+			columnName="IM_SCADENZA"
+			propertyName="im_scadenza"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"/>
+		<columnMapping
+			columnName="IM_VOCE"
+			propertyName="im_voce"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"/>
+		<columnMapping
+			columnName="PG_DOC_AMM"
+			propertyName="pg_doc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="40" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pg_mandato"
+			sqlTypeName="VARCHAR"
+			columnSize="40" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="VARCHAR"
+			columnSize="40" />
+		<columnMapping
+			columnName="DENOMINAZIONE_SEDE"
+			propertyName="denominazione_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="200" />
+		<columnMapping
+			columnName="TI_FATTURA"
+			propertyName="ti_fattura"
+			sqlTypeName="VARCHAR"
+			columnSize="1"/>
+			<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE"
+			propertyName="esercizio_originale"
+			sqlTypeName="DECIMAL"
+			columnSize="4"/>
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"/>
+		<columnMapping
+			columnName="CDS"
+			propertyName="cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"/>
+		<columnMapping
+			columnName="PG_DOC_AMM"
+			propertyName="pg_doc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="40"/>
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pg_mandato"
+			sqlTypeName="VARCHAR"
+			columnSize="40"/>
+	</defaultColumnMap>	
+	<persistentProperty
+		name="pg_obbligazione_scadenzario" />
+	<persistentProperty
+		name="esercizio_originale" />
+	<persistentProperty
+		name="pg_obbligazione"/>
+	<persistentProperty
+		name="esercizio"/>
+	<persistentProperty
+		name="cds"/>
+	<persistentProperty
+		name="pg_doc_amm"/>
+	<persistentProperty
+		name="pg_mandato"/>
+	<persistentProperty
+		name="cds" />
+	<persistentProperty
+		name="uo" />
+	<persistentProperty
+		name="cd_centro_responsabilita" />
+	<persistentProperty
+		name="cd_linea_attivita" />
+	<persistentProperty
+		name="ds_linea_attivita" />
+	<persistentProperty
+		name="cd_elemento_voce" />
+	<persistentProperty
+		name="dt_registrazione" />
+	<persistentProperty
+		name="esercizio_originale" />
+	<persistentProperty
+		name="pg_obbligazione" />
+	<persistentProperty
+		name="esercizio_ori_ori_riporto" />
+	<persistentProperty
+		name="pg_obbligazione_ori_riporto" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="esercizio_ori_riporto" />
+	<persistentProperty
+		name="pg_obbligazione_scadenzario" />
+	<persistentProperty
+		name="ds_scadenza" />
+	<persistentProperty
+		name="im_scadenza" />
+	<persistentProperty
+		name="im_voce" />
+	<persistentProperty
+		name="pg_doc_amm" />
+	<persistentProperty
+		name="pg_mandato" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="denominazione_sede" />
+	<persistentProperty
+		name="ti_fattura" />
+</SQLPersistentInfo>

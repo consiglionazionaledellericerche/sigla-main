@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_contributo_ritenuta"
+		property="cd_contributo_ritenuta"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice CO/RI" />
+	<fieldProperty
+		name="cd_contributo_ritenutaForSearch"
+		property="cd_contributo_ritenuta"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice CO/RI" />
+	<fieldProperty
+		name="ds_contributo_ritenuta"
+		property="ds_contributo_ritenuta"
+		maxLength="100"
+		inputSize="60"
+		inputType="TEXT"
+		label="Descrizione"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_ini_validita"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Inizio Validita" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fin_validita"
+		formatName="date_short"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Fine Validita" />
+	<fieldProperty
+		name="dataFineValidita"
+		property="dataFineValidita"
+		maxLength="10"
+		inputSize = "10"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Fine Validita" />
+	<fieldProperty
+		name="ti_cassa_competenza"
+		property="ti_cassa_competenza"
+		keysProperty="ti_cassa_competenzaKeys"
+		label="Cassa Competenza"		
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"		
+		caseSensitiveSearch="false"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="cd_tributo_erario"
+		property="cd_tributo_erario"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnInsert="true"	
+		enabledOnEdit="true"	
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Cod. Tributo Erario"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="precisione"
+		property="precisione"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnInsert="true"	
+		enabledOnEdit="true"	
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Precisione" />
+	<fieldProperty
+		name="fl_assistenza_fiscale"
+		property="fl_assistenza_fiscale"
+		inputType="CHECKBOX"
+		enabledOnInsert="true"	
+		enabledOnEdit="true"	
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Assistenza Fiscale" />
+	<fieldProperty
+		name="fl_uso_in_lordizza"
+		property="fl_uso_in_lordizza"
+		inputType="CHECKBOX"
+		enabledOnInsert="true"	
+		enabledOnEdit="true"	
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Uso in lordizza" />
+	<fieldProperty
+		name="fl_scrivi_montanti"
+		property="fl_scrivi_montanti"
+		inputType="CHECKBOX"
+		enabledOnInsert="true"	
+		enabledOnEdit="true"	
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Scrivi montanti" />
+	<fieldProperty
+		name="pg_classificazione_montanti"
+		property="classificazioneMontanti"
+		printProperty="ds_classificazione_montanti"
+		optionsProperty="classificazioneMontantiColl"
+		inputType="SELECT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Classificazione montanti" />
+	<fieldProperty
+		name="cd_classificazione_cori"
+		property="classificazioneCori"
+		printProperty="ds_classificazione_cori"
+		optionsProperty="classificazioneCoriColl"
+		nullable="false"
+		inputType="SELECT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Classificazione cori" />
+	<fieldProperty
+		name="fl_gla"
+		property="fl_gla"
+		inputType="CHECKBOX"
+		enabledOnInsert="true"	
+		enabledOnEdit="true"	
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Da inserire nel GLA" />	
+	<fieldProperty
+		name="cd_ente_prev_sti"
+		property="cd_ente_prev_sti"
+		keysProperty="ente_prev_stiKeys"
+		label="Codice Ente Previdenziale Stipendi"		
+		inputType="SELECT"	
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />	
+	<fieldProperty
+		name="fl_sospensione_irpef"
+		property="fl_sospensione_irpef"
+		inputType="CHECKBOX"
+		enabledOnInsert="true"	
+		enabledOnEdit="true"	
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Soggetto a sospensione" />			
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_contributo_ritenutaForSearch"
+			inputType="TEXT"
+			nullable="false" />
+	</form>
+	<formFieldProperty
+		name="cd_contributo_ritenuta"
+		command="doCaricaIntervalli" />
+	<formFieldProperty name="cd_contributo_ritenutaForSearch" />
+		
+	<formFieldProperty name="ds_contributo_ritenuta" />
+	<formFieldProperty name="dt_inizio_validita" />
+	<formFieldProperty name="dt_fine_validita" />
+	<formFieldProperty name="dataFineValidita" />
+	<formFieldProperty name="ti_cassa_competenza" />
+	<formFieldProperty name="cd_tributo_erario" />
+	<formFieldProperty name="precisione" />
+	<formFieldProperty name="fl_assistenza_fiscale" />
+	<formFieldProperty name="fl_uso_in_lordizza" />
+	<formFieldProperty name="fl_scrivi_montanti" />
+	<formFieldProperty name="pg_classificazione_montanti" />
+	<formFieldProperty name="cd_classificazione_cori" />
+	<formFieldProperty name="fl_gla" />
+	<formFieldProperty name="cd_ente_prev_sti" />
+	<formFieldProperty name="fl_sospensione_irpef" />	
+	
+	<columnFieldProperty name="cd_contributo_ritenuta" />
+	<columnFieldProperty name="ds_contributo_ritenuta" />
+	<columnFieldProperty name="ti_cassa_competenza" />
+	<columnFieldProperty name="cd_tributo_erario" />
+	<columnFieldProperty name="precisione" />
+	<columnFieldProperty name="fl_assistenza_fiscale" />
+	<columnFieldProperty name="fl_uso_in_lordizza" />
+	<columnFieldProperty name="fl_scrivi_montanti" />
+	<columnFieldProperty name="pg_classificazione_montanti" />
+	<columnFieldProperty name="cd_classificazione_cori" />
+	<columnFieldProperty name="dt_inizio_validita" />
+	<columnFieldProperty name="dataFineValidita" />
+
+	<findFieldProperty name="cd_contributo_ritenuta" />
+	<findFieldProperty name="ds_contributo_ritenuta" />
+	<findFieldProperty name="dt_inizio_validita" />
+	<findFieldProperty name="dt_fine_validita" />
+	<findFieldProperty name="cd_tributo_erario" />
+	<findFieldProperty name="precisione" />
+	<findFieldProperty
+		name="ti_cassa_competenza" 
+		label="Tipo Cassa Competenza"
+	/>
+	
+	<findFieldProperty name="pg_classificazione_montanti" />
+	<findFieldProperty name="cd_classificazione_cori" />
+	<findFieldProperty name="fl_assistenza_fiscale" />
+	<findFieldProperty name="fl_uso_in_lordizza" />
+	<findFieldProperty name="fl_scrivi_montanti" />
+	<findFieldProperty name="cd_ente_prev_sti" />
+	<findFieldProperty name="fl_gla" />
+	<findFieldProperty name="fl_sospensione_irpef" />
+	
+</bulkInfo>

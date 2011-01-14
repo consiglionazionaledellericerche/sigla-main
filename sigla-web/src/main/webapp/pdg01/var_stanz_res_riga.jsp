@@ -1,0 +1,87 @@
+<%@ page 
+	import="it.cnr.jada.action.*,
+		it.cnr.jada.bulk.*,
+		it.cnr.jada.util.action.*,
+		it.cnr.jada.util.jsp.*,
+		it.cnr.contab.varstanz00.bp.*"
+%>
+<%
+	CRUDVar_stanz_resRigaBP bp = (CRUDVar_stanz_resRigaBP)BusinessProcess.getBusinessProcess(request);
+	SimpleDetailCRUDController controller = bp.getRigaVariazione();
+%>
+
+<html>
+<head>
+<% JSPUtils.printBaseUrl(pageContext); %>
+<script language="javascript" src="scripts/css.js"></script>
+<script language="JavaScript" src="scripts/util.js"></script>
+<title><%=bp.getBulkInfo().getLongDescription()%></title>
+</head>
+
+<body class="Form">
+<% bp.openFormWindow(pageContext); %>
+<div class="Group">
+	<table class="Panel">
+		<tr>
+	        <td><% bp.getController().writeFormLabel(out,"label_variazione_riga"); %></td>
+	        <td><% bp.getController().writeFormInput(out,"pg_variazione"); %>
+	            <% bp.getController().writeFormInput(out,"ds_variazione_riga"); %>
+	        </td>
+		</tr>
+		<tr>
+	        <td><% bp.getController().writeFormLabel(out,"cdr"); %></td>
+	        <td><% bp.getController().writeFormInput(out,"cdr"); %></td>
+		</tr>	
+	</table>
+</div>	
+<table class="Panel" width="100%">
+	<tr>
+        <td><%controller.writeHTMLTable(pageContext,"rigaVariazione",true,false,true,"100%","200px"); %></td>
+    </tr>
+</table>
+<table class="Panel" cellspacing=2 width="100%">
+   <tr valign="top">
+    <td>
+      <table class="Panel" cellspacing=2 align=right>
+			<tr>
+		                <td><% bp.getController().writeFormLabel(out,"totale_righe_variazione"); %></td>
+		                <td><% bp.getController().writeFormInput(out,"totale_righe_variazione"); %></td>
+			</tr>
+      </table>
+    </td>	
+  </tr>		
+  <tr valign="top">
+   <td>
+	<div class="Group">
+		<table class="Panel">
+			<tr>
+		        <td><% controller.writeFormLabel(out,"linea_di_attivita"); %></td>
+		        <td><% controller.writeFormInput(out,"linea_di_attivita"); %></td>
+			</tr>
+			<tr>
+		        <td><% controller.writeFormLabel(out,"modulo_di_attivita"); %></td>
+		        <td><% controller.writeFormInput(out,"modulo_di_attivita"); %></td>
+			</tr>
+			<tr>
+				<td><% controller.writeFormLabel(out,"elemento_voce"); %></td>
+				<td><% controller.writeFormInput(out,"elemento_voce"); %></td>
+			</tr>
+			<tr>
+				<td><% controller.writeFormLabel(out,"voce_f"); %></td>
+				<td><% controller.writeFormInput(out,"voce_f"); %></td>
+			</tr>
+			<tr>
+				<td><% controller.writeFormLabel(out,"disponibilita_stanz_res"); %></td>
+				<td><% controller.writeFormInput(out,"disponibilita_stanz_res"); %></td>
+			</tr>
+			<tr>
+				<td><% controller.writeFormLabel(out,"im_variazione"); %></td>
+				<td><% controller.writeFormInput(out,"im_variazione"); %></td>
+			</tr>
+		</table>
+	</div>
+   </td>
+  </tr>
+ </table>    	
+<% bp.closeFormWindow(pageContext); %>
+</body>

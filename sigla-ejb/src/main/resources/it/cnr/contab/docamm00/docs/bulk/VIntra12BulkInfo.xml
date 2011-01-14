@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cdTipoSezionale"
+		property="cdTipoSezionale"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Cod. Tipo Sezionale" />
+	<fieldProperty
+		name="dsTipoSezionale"
+		property="dsTipoSezionale"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Tipo Sezionale" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="mese"
+		property="mese"
+		keysProperty="meseKeys"
+		inputSize="30"
+		maxLength="30"
+		inputType="SELECT"
+		enabledOnEdit="false"
+		label="mese" />
+	<fieldProperty
+		name="imponibile"
+		property="imponibile"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="imponibile" />
+	<fieldProperty
+		name="iva"
+		property="iva"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="false"
+		label="iva" />
+	<fieldProperty
+		name="cdBeneServizio"
+		property="cdBeneServizio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Bene Servizio" />
+	<fieldProperty
+		name="flIntraUe"
+		property="flIntraUe"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Intra Ue" />
+	<fieldProperty
+		name="flExtraUe"
+		property="flExtraUe"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Extra Ue" />
+	
+	<formFieldProperty
+		name="cdTipoSezionale" />
+	<formFieldProperty
+		name="dsTipoSezionale" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="mese" />
+	<formFieldProperty
+		name="imponibile" />
+	<formFieldProperty
+		name="iva" />
+	<formFieldProperty
+		name="cdBeneServizio" />
+	<formFieldProperty
+		name="flIntraUe" />
+	<formFieldProperty
+		name="flExtraUe" />
+	<findFieldProperty
+		name="cdTipoSezionale" />
+	<findFieldProperty
+		name="dsTipoSezionale" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="mese" />
+	<findFieldProperty
+		name="imponibile" />
+	<findFieldProperty
+		name="iva" />
+	<findFieldProperty
+		name="cdBeneServizio" />
+	<findFieldProperty
+		name="flIntraUe" />
+	<findFieldProperty
+		name="flExtraUe" />
+	<columnFieldProperty
+		name="cdTipoSezionale" />
+	<columnFieldProperty
+		name="dsTipoSezionale" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="mese" />
+	<columnFieldProperty
+		name="imponibile" />
+	<columnFieldProperty
+		name="iva" />
+	<columnFieldProperty
+		name="cdBeneServizio" />
+	<columnFieldProperty
+		name="flIntraUe" />
+	<columnFieldProperty
+		name="flExtraUe" />
+</bulkInfo>

@@ -1,0 +1,61 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.AccertamentoBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.AccertamentoHome" >
+	<defaultColumnMap
+		tableName="ACCERTAMENTO" >
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cds.cd_unita_organizzativa"/>	
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa"
+			/>	
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="debitore.cd_terzo"
+			/>	
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="capitolo.esercizio"
+			fetchOnly="true"
+			/>
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="capitolo.cd_voce"
+		  	/>	
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="capitolo.ti_gestione"
+			/>		
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="capitolo.ti_appartenenza"
+			/>
+		<columnMapping
+			columnName="ESERCIZIO_CONTRATTO"
+			propertyName="contratto.esercizio"/>
+		<columnMapping
+			columnName="STATO_CONTRATTO"
+			propertyName="contratto.stato"/>			
+		<columnMapping
+			columnName="PG_CONTRATTO"
+			propertyName="contratto.pg_contratto"/>			
+	</defaultColumnMap>
+	<persistentProperty
+		name="cds"
+		partOfOid= "true"/>
+	<persistentProperty
+		name="debitore" />	
+	<persistentProperty
+		name="capitolo" />
+	<persistentProperty
+		name="unita_organizzativa" />
+	<persistentProperty
+		name="contratto" />
+
+	<columnMap 
+		name="V_ACCERTAMENTO_IM_REVERSALE"
+		tableName="V_ACCERTAMENTO_IM_REVERSALE"
+		extends="default" />
+		
+</SQLPersistentInfo>

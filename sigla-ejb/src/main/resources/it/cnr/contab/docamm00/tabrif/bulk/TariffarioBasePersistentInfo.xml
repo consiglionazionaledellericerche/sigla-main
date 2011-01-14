@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.tabrif.bulk.TariffarioBase"
+	keyClassName="it.cnr.contab.docamm00.tabrif.bulk.TariffarioKey"
+	homeClassName="it.cnr.contab.docamm00.tabrif.bulk.TariffarioHome" >
+	<defaultColumnMap
+		tableName="TARIFFARIO" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_VOCE_IVA"
+			propertyName="cd_voce_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_TARIFFARIO"
+			propertyName="im_tariffario"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_FINE_VALIDITA"
+			propertyName="dt_fine_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UNITA_MISURA"
+			propertyName="unita_misura"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_TARIFFARIO"
+			propertyName="ds_tariffario"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="cd_voce_iva" />
+	<persistentProperty
+		name="im_tariffario" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="dt_fine_validita" />
+	<persistentProperty
+		name="unita_misura" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="ds_tariffario" />
+</SQLPersistentInfo>

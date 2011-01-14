@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.consultazioni.bulk.V_estrai_glaBulk"
+	homeClassName="it.cnr.contab.docamm00.consultazioni.bulk.V_estrai_glaHome">
+<defaultColumnMap
+		tableName="V_ESTRAI_GLA">
+		<columnMapping
+			columnName="CD_UO_COMPENSO"
+			propertyName="cd_uo_compenso"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_CMP_DA_COMPENSO"
+			propertyName="dt_cmp_da_compenso"
+			sqlTypeName="VARCHAR"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_CMP_A_COMPENSO"
+			propertyName="dt_cmp_a_compenso"
+			sqlTypeName="VARCHAR"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_MANDATO"
+			propertyName="dt_mandato"
+			sqlTypeName="VARCHAR"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_PAGAMENTO"
+			propertyName="esercizio_pagamento"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="cd_anag"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPONIBILE"
+			propertyName="imponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ALIQUOTA"
+			propertyName="aliquota"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="AMMONTARE"
+			propertyName="ammontare"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_SESSO"
+			propertyName="ti_sesso"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_NASCITA"
+			propertyName="dt_nascita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="COMUNE_NASCITA"
+			propertyName="comune_nascita"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="PROVINCIA_NASCITA"
+			propertyName="provincia_nascita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="COMUNE_RESIDENZA"
+			propertyName="comune_residenza"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="PROVINCIA_RESIDENZA"
+			propertyName="provincia_residenza"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CAP_RESIDENZA"
+			propertyName="cap_residenza"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="VIA"
+			propertyName="via"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_CIVICO"
+			propertyName="num_civico"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DENOMINAZIONE_SEDE"
+			propertyName="denominazione_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false" />
+		<columnMapping
+			columnName="VIA_SEDE"
+			propertyName="via_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="CIVICO_SEDE"
+			propertyName="civico_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="CAP_SEDE"
+			propertyName="cap_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="COD_FIS_CNR"
+			propertyName="cod_fis_cnr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CNR"
+			propertyName="ds_cnr"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="COMUNE_CNR"
+			propertyName="comune_cnr"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="IND_CNR"
+			propertyName="ind_cnr"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="CIV_CNR"
+			propertyName="civ_cnr"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CAP_CNR"
+			propertyName="cap_cnr"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_F24"
+			propertyName="data_f24"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NOTA"
+			propertyName="nota"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_uo_compenso" />
+	<persistentProperty
+		name="dt_cmp_da_compenso" />
+	<persistentProperty
+		name="dt_cmp_a_compenso" />
+	<persistentProperty
+		name="dt_mandato" />
+	<persistentProperty
+		name="esercizio_pagamento" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="cd_anag" />
+	<persistentProperty
+		name="imponibile" />
+	<persistentProperty
+		name="aliquota" />
+	<persistentProperty
+		name="ammontare" />
+	<persistentProperty
+		name="codice_fiscale" />
+	<persistentProperty
+		name="nome" />
+	<persistentProperty
+		name="cognome" />
+	<persistentProperty
+		name="ti_sesso" />
+	<persistentProperty
+		name="dt_nascita" />
+	<persistentProperty
+		name="comune_nascita" />
+	<persistentProperty
+		name="provincia_nascita" />
+	<persistentProperty
+		name="comune_residenza" />
+	<persistentProperty
+		name="provincia_residenza" />
+	<persistentProperty
+		name="cap_residenza" />
+	<persistentProperty
+		name="via" />
+	<persistentProperty
+		name="num_civico" />
+	<persistentProperty
+		name="denominazione_sede" />
+	<persistentProperty
+		name="via_sede" />
+	<persistentProperty
+		name="civico_sede" />
+	<persistentProperty
+		name="cap_sede" />
+	<persistentProperty
+		name="cod_fis_cnr" />
+	<persistentProperty
+		name="ds_cnr" />
+	<persistentProperty
+		name="comune_cnr" />
+	<persistentProperty
+		name="ind_cnr" />
+	<persistentProperty
+		name="civ_cnr" />
+	<persistentProperty
+		name="cap_cnr" />
+	<persistentProperty
+		name="data_f24" />
+	<persistentProperty
+		name="nota" />	
+</SQLPersistentInfo>

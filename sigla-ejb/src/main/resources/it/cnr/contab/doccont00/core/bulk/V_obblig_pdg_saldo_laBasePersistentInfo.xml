@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.V_obblig_pdg_saldo_laBase"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.V_obblig_pdg_saldo_laHome" >
+	<defaultColumnMap
+		tableName="V_OBBLIG_PDG_SALDO_LA" >
+		<columnMapping
+			columnName="IM_OBB_A3"
+			propertyName="im_obb_a3"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_OBB_A2"
+			propertyName="im_obb_a2"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_OBB_A1"
+			propertyName="im_obb_a1"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="INTEGER"
+			columnSize="4"
+			nullable="false"			
+			primary="true"/>
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"			
+			primary="true"/>			
+		<columnMapping
+			columnName="IM_SPESE_A3"
+			propertyName="im_spese_a3"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_SPESE_A2"
+			propertyName="im_spese_a2"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_SPESE_A1"
+			propertyName="im_spese_a1"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />			
+	</defaultColumnMap>
+	<persistentProperty
+		name="im_obb_a3" />
+	<persistentProperty
+		name="im_obb_a2" />
+	<persistentProperty
+		name="im_obb_a1" />
+	<persistentProperty
+		name="esercizio" 
+		partOfOid="true" />			
+	<persistentProperty
+		name="cd_centro_responsabilita" 
+		partOfOid="true" />			
+	<persistentProperty
+		name="im_spese_a3" />
+	<persistentProperty
+		name="im_spese_a2" />
+	<persistentProperty
+		name="im_spese_a1" />
+	<persistentProperty
+		name="cd_linea_attivita"
+		partOfOid="true" />			
+</SQLPersistentInfo>

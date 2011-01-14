@@ -1,0 +1,65 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attiva_rigaBulk"
+	homeClassName="it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attiva_rigaHome" >
+
+	<defaultColumnMap
+		tableName="FATTURA_ATTIVA_RIGA" >		
+
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="notaDiCredito.esercizio" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="notaDiCredito.cd_cds" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="notaDiCredito.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_FATTURA_ATTIVA"
+			propertyName="notaDiCredito.pg_fattura_attiva" />	
+
+
+		<columnMapping
+			columnName="ESERCIZIO_ASSNCNA_FIN"
+			propertyName="riga_fattura_associata.fattura_attivaI.esercizio" />
+		<columnMapping
+			columnName="CD_CDS_ASSNCNA_FIN"
+			propertyName="riga_fattura_associata.fattura_attivaI.cd_cds" />
+		<columnMapping
+			columnName="CD_UO_ASSNCNA_FIN"
+			propertyName="riga_fattura_associata.fattura_attivaI.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_FATTURA_ASSNCNA_FIN"
+			propertyName="riga_fattura_associata.fattura_attivaI.pg_fattura_attiva" />	
+		<columnMapping
+			columnName="PG_RIGA_ASSNCNA_FIN"
+			propertyName="riga_fattura_associata.progressivo_riga" />	
+
+		<columnMapping
+			columnName="CD_CDS_OBBLIGAZIONE"
+			propertyName="obbligazione_scadenzario.obbligazione.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="obbligazione_scadenzario.obbligazione.esercizio" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="obbligazione_scadenzario.obbligazione.esercizio_originale" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="obbligazione_scadenzario.obbligazione.pg_obbligazione" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="obbligazione_scadenzario.pg_obbligazione_scadenzario" />
+
+	</defaultColumnMap>		
+
+	<persistentProperty
+		name="notaDiCredito"
+		partOfOid="true"/>
+
+	<persistentProperty
+		name="riga_fattura_associata" />
+	<persistentProperty
+		name="obbligazione_scadenzario" />
+
+</SQLPersistentInfo>

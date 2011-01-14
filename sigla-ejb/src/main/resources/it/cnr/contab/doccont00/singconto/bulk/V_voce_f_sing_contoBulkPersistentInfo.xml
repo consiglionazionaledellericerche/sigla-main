@@ -1,0 +1,70 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.singconto.bulk.V_voce_f_sing_contoBulk"
+	homeClassName="it.cnr.contab.doccont00.singconto.bulk.V_voce_f_sing_contoHome" >
+	<defaultColumnMap
+		tableName="V_VOCE_F_SING_CONTO" >
+	
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="elemento_voce.esercizio"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="elemento_voce.cd_elemento_voce"/>	
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="elemento_voce.ti_gestione"
+			fetchOnly="true"/>		
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="elemento_voce.ti_appartenenza"
+			fetchOnly="true"/>
+
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="voce_f.esercizio"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="voce_f.cd_voce"/>	
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="voce_f.ti_gestione"
+			fetchOnly="true"/>		
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="voce_f.ti_appartenenza"
+			fetchOnly="true"/>
+
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa"/>	
+
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="natura.cd_natura"/>	
+
+		<columnMapping
+			columnName="CD_FUNZIONE"
+			propertyName="funzione.cd_funzione"/>	
+
+		<columnMapping
+			columnName="CD_CDS_PROPRIO"
+			propertyName="cds.cd_unita_organizzativa"/>	
+
+		</defaultColumnMap>
+	
+	<persistentProperty
+		name="unita_organizzativa"/>
+	<persistentProperty
+		name="elemento_voce"/>
+	<persistentProperty
+		name="voce_f"/>
+	<persistentProperty
+		name="natura"/>
+	<persistentProperty
+		name="funzione"/>
+	<persistentProperty
+		name="cds"/>
+
+</SQLPersistentInfo>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcep.bulk.Voce_epBase"
+	keyClassName="it.cnr.contab.config00.pdcep.bulk.Voce_epKey"
+	homeClassName="it.cnr.contab.config00.pdcep.bulk.Voce_epHome" >
+	<defaultColumnMap
+		tableName="VOCE_EP" >
+		<columnMapping
+			columnName="RIEPILOGA_A"
+			propertyName="riepiloga_a"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="FL_MASTRINO"
+			propertyName="fl_mastrino"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="TI_VOCE_EP"
+			propertyName="ti_voce_ep"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_SEZIONE"
+			propertyName="ti_sezione"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_VOCE_EP_PADRE"
+			propertyName="cd_voce_ep_padre"
+			sqlTypeName="VARCHAR"
+			columnSize="45" />
+		<columnMapping
+			columnName="NATURA_VOCE"
+			propertyName="natura_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="LIVELLO"
+			propertyName="livello"
+			sqlTypeName="DECIMAL"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="RIAPRE_A_CONTO_ECONOMICO"
+			propertyName="riapre_a_conto_economico"
+			sqlTypeName="VARCHAR"
+			columnSize="45" />
+		<columnMapping
+			columnName="CD_PROPRIO_VOCE_EP"
+			propertyName="cd_proprio_voce_ep"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_A_PAREGGIO"
+			propertyName="fl_a_pareggio"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CONTO_SPECIALE"
+			propertyName="conto_speciale"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_VOCE_EP"
+			propertyName="ds_voce_ep"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="riepiloga_a" />
+	<persistentProperty
+		name="fl_mastrino" />
+	<persistentProperty
+		name="ti_voce_ep" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="ti_sezione" />
+	<persistentProperty
+		name="cd_voce_ep_padre" />
+	<persistentProperty
+		name="natura_voce" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="livello" />
+	<persistentProperty
+		name="cd_proprio_voce_ep" />
+	<persistentProperty
+		name="riapre_a_conto_economico" />
+	<persistentProperty
+		name="fl_a_pareggio" />
+	<persistentProperty
+		name="conto_speciale" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="ds_voce_ep" />
+</SQLPersistentInfo>

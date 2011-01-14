@@ -1,0 +1,652 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="annotazioni"
+		property="annotazioni"
+		maxLength="1000"
+		inputSize="1000"
+		inputType="TEXTAREA"
+		label="Annotazioni"
+		cols="80"
+		rows="6"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds" />
+	<fieldProperty
+		name="tipo_liquidazione"
+		property="tipo_liquidazione"
+		maxLength="1"
+		inputSize="3"
+		inputType="ROTEXT"
+		label="Tipo liquidazione" />
+	<fieldProperty
+		name="iva_credito_no_prorata"
+		property="iva_credito_no_prorata"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Iva credito no prorata" />
+	<fieldProperty
+		name="iva_intraue"
+		property="iva_intraue"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Iva dovuta ad acquisti IntraUE" />
+	<fieldProperty
+		name="iva_versata"
+		property="iva_versata"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Versamento Iva" />
+	<fieldProperty
+		name="esercizio_obb_accentr"
+		property="esercizio_obb_accentr"
+		inputType="TEXT"
+		label="esercizio_obb_accentr" />
+	<fieldProperty
+		name="cd_cds_obb_accentr"
+		property="cd_cds_obb_accentr"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds_obb_accentr"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_fine"
+		property="dt_fine"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data fine" />
+	<fieldProperty
+		name="dacr"
+		property="dacr"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data stampa" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_unita_organizzativa" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="stato"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="iva_da_versare"
+		property="iva_da_versare"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo da versare nel periodo" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="iva_acquisti"
+		property="iva_acquisti"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Iva sulle fatture di acquisto" />
+	<fieldProperty
+		name="iva_debito"
+		property="iva_debito"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Iva esigibile nel periodo" />
+	<fieldProperty
+		name="cd_cds_doc_amm"
+		property="cd_cds_doc_amm"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds_doc_amm"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cred_iva_infrann_rimb"
+		property="cred_iva_infrann_rimb"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Credito iva infrannuale chiesto a rimborso" />
+	<fieldProperty
+		name="cod_azienda"
+		property="cod_azienda"
+		maxLength="4"
+		inputSize="4"
+		inputType="TEXT"
+		label="Codice azienda"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio_ori_obb_accentr"
+		property="esercizio_ori_obb_accentr"
+		inputType="TEXT"
+		label="esercizio_ori_obb_accentr" />
+	<fieldProperty
+		name="pg_obb_accentr"
+		property="pg_obb_accentr"
+		inputType="TEXT"
+		label="pg_obb_accentr" />
+	<fieldProperty
+		name="cd_tipo_documento"
+		property="cd_tipo_documento"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_tipo_documento"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="iva_vendite"
+		property="iva_vendite"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Iva sulle fatture di vendita" />
+	<fieldProperty
+		name="cred_iva_infrann_comp"
+		property="cred_iva_infrann_comp"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Credito iva infrannuale destinato alla compensazione" />
+	<fieldProperty
+		name="var_imp_per_prec"
+		property="var_imp_per_prec"
+		inputType="TEXT"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni di imposta comprensive di eventuali interessi di periodi prec." />
+	<fieldProperty
+		name="pg_doc_amm"
+		property="pg_doc_amm"
+		inputType="TEXT"
+		label="pg_doc_amm" />
+	<fieldProperty
+		name="acconto_iva_vers"
+		property="acconto_iva_vers"
+		inputType="TEXT"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Acconto iva versato" />
+	<fieldProperty
+		name="iva_acq_non_detr"
+		property="iva_acq_non_detr"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Iva sulle fatture di acquisto non detraibile" />
+	<fieldProperty
+		name="iva_autofatt"
+		property="iva_autofatt"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Iva dovuta autofatture" />
+	<fieldProperty
+		name="dt_versamento"
+		property="dt_versamento"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Data versamento" />
+	<fieldProperty
+		name="iva_deb_cred"
+		property="iva_deb_cred"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Iva dovuta o a credito del periodo" />
+	<fieldProperty
+		name="iva_vend_diff_esig"
+		property="iva_vend_diff_esig"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Iva sulle fatture di vendita con esigibilità differita divenute esigibili nel periodo" />
+	<fieldProperty
+		name="iva_deb_cred_per_prec"
+		property="iva_deb_cred_per_prec"
+		inputType="TEXT"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Debito o credito di imposta derivante dal periodo precedente" />
+	<fieldProperty
+		name="iva_credito"
+		property="iva_credito"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Iva che si detrae nel periodo" />
+	<fieldProperty
+		name="iva_acq_diff_esig"
+		property="iva_acq_diff_esig"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Iva sulle fatture di acquisto divenute esigibili nel periodo" />
+	<fieldProperty
+		name="cred_iva_comp_detr"
+		property="cred_iva_comp_detr"
+		inputType="TEXT"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Credito iva compensabile portato in detrazione nella liquidazione periodica" />
+	<fieldProperty
+		name="iva_vendite_diff"
+		property="iva_vendite_diff"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Iva sulle fatture di vendita con esigibilità differita" />
+	<fieldProperty
+		name="report_id"
+		property="report_id"
+		inputType="TEXT"
+		label="report_id" />
+	<fieldProperty
+		name="iva_acquisti_diff"
+		property="iva_acquisti_diff"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Iva sulle fattire di acquisto con esigibilità differita" />
+	<fieldProperty
+		name="dt_inizio"
+		property="dt_inizio"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data inizio" />
+	<fieldProperty
+		name="cab"
+		property="cab"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		label="CAB"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="abi"
+		property="abi"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		label="ABI"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="perc_prorata_detraibile"
+		property="perc_prorata_detraibile"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		label="perc_prorata_detraibile" />
+	<fieldProperty
+		name="cd_uo_doc_amm"
+		property="cd_uo_doc_amm"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_uo_doc_amm"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="int_deb_liq_trim"
+		property="int_deb_liq_trim"
+		inputType="TEXT"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		label="Interessi dovuti su liquidazioni trimestrali" />
+	<fieldProperty
+		name="esercizio_doc_amm"
+		property="esercizio_doc_amm"
+		inputType="TEXT"
+		label="esercizio_doc_amm" />
+	<fieldProperty
+		name="cred_iva_spec_detr"
+		property="cred_iva_spec_detr"
+		inputType="TEXT"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Crediti iva speciali portati in detrazione nella liquidazione periodica" />
+	<fieldProperty
+		name="iva_non_vers_per_prec"
+		property="iva_non_vers_per_prec"
+		inputType="TEXT"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Iva non versata comprensiva degli interessi risultanti da dichiarazioni periodiche" />
+
+
+	<formFieldProperty
+		name="annotazioni" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="iva_credito_no_prorata" />
+	<formFieldProperty
+		name="iva_intraue" />
+	<formFieldProperty
+		name="iva_versata" />
+	<formFieldProperty
+		name="esercizio_obb_accentr" />
+	<formFieldProperty
+		name="cd_cds_obb_accentr" />
+	<formFieldProperty
+		name="dt_fine" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="iva_da_versare" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="iva_acquisti" />
+	<formFieldProperty
+		name="iva_debito" />
+	<formFieldProperty
+		name="cd_cds_doc_amm" />
+	<formFieldProperty
+		name="cred_iva_infrann_rimb" />
+	<formFieldProperty
+		name="cod_azienda" />
+	<formFieldProperty
+		name="esercizio_ori_obb_accentr" />
+	<formFieldProperty
+		name="pg_obb_accentr" />
+	<formFieldProperty
+		name="cd_tipo_documento" />
+	<formFieldProperty
+		name="iva_vendite" />
+	<formFieldProperty
+		name="cred_iva_infrann_comp" />
+	<formFieldProperty
+		name="var_imp_per_prec" />
+	<formFieldProperty
+		name="pg_doc_amm" />
+	<formFieldProperty
+		name="acconto_iva_vers" />
+	<formFieldProperty
+		name="iva_acq_non_detr" />
+	<formFieldProperty
+		name="iva_autofatt" />
+	<formFieldProperty
+		name="dt_versamento" />
+	<formFieldProperty
+		name="iva_deb_cred" />
+	<formFieldProperty
+		name="iva_vend_diff_esig" />
+	<formFieldProperty
+		name="iva_deb_cred_per_prec" />
+	<formFieldProperty
+		name="iva_credito" />
+	<formFieldProperty
+		name="iva_acq_diff_esig" />
+	<formFieldProperty
+		name="cred_iva_comp_detr" />
+	<formFieldProperty
+		name="iva_vendite_diff" />
+	<formFieldProperty
+		name="report_id" />
+	<formFieldProperty
+		name="iva_acquisti_diff" />
+	<formFieldProperty
+		name="dt_inizio" />
+	<formFieldProperty
+		name="abi" />
+	<formFieldProperty
+		name="cab" />
+	<formFieldProperty
+		name="perc_prorata_detraibile" />
+	<formFieldProperty
+		name="cd_uo_doc_amm" />
+	<formFieldProperty
+		name="int_deb_liq_trim" />
+	<formFieldProperty
+		name="esercizio_doc_amm" />
+	<formFieldProperty
+		name="cred_iva_spec_detr" />
+	<formFieldProperty
+		name="iva_non_vers_per_prec" />
+	<formFieldProperty
+		name="dacr"/>
+	<formFieldProperty
+		name="tipo_liquidazione"/>
+	
+
+	<columnFieldProperty
+		name="tipo_liquidazione"/>
+	<columnFieldProperty
+		name="annotazioni" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="iva_credito_no_prorata" />
+	<columnFieldProperty
+		name="iva_intraue" />
+	<columnFieldProperty
+		name="iva_versata" />
+	<columnFieldProperty
+		name="esercizio_obb_accentr" />
+	<columnFieldProperty
+		name="cd_cds_obb_accentr" />
+	<columnFieldProperty
+		name="dt_fine" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="iva_da_versare" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="iva_acquisti" />
+	<columnFieldProperty
+		name="iva_debito" />
+	<columnFieldProperty
+		name="cd_cds_doc_amm" />
+	<columnFieldProperty
+		name="cred_iva_infrann_rimb" />
+	<columnFieldProperty
+		name="cod_azienda" />
+	<columnFieldProperty
+		name="esercizio_ori_obb_accentr" />
+	<columnFieldProperty
+		name="pg_obb_accentr" />
+	<columnFieldProperty
+		name="cd_tipo_documento" />
+	<columnFieldProperty
+		name="iva_vendite" />
+	<columnFieldProperty
+		name="cred_iva_infrann_comp" />
+	<columnFieldProperty
+		name="var_imp_per_prec" />
+	<columnFieldProperty
+		name="pg_doc_amm" />
+	<columnFieldProperty
+		name="acconto_iva_vers" />
+	<columnFieldProperty
+		name="iva_acq_non_detr" />
+	<columnFieldProperty
+		name="iva_autofatt" />
+	<columnFieldProperty
+		name="dt_versamento" />
+	<columnFieldProperty
+		name="iva_deb_cred" />
+	<columnFieldProperty
+		name="iva_vend_diff_esig" />
+	<columnFieldProperty
+		name="iva_deb_cred_per_prec" />
+	<columnFieldProperty
+		name="iva_credito" />
+	<columnFieldProperty
+		name="iva_acq_diff_esig" />
+	<columnFieldProperty
+		name="cred_iva_comp_detr" />
+	<columnFieldProperty
+		name="iva_vendite_diff" />
+	<columnFieldProperty
+		name="report_id" />
+	<columnFieldProperty
+		name="iva_acquisti_diff" />
+	<columnFieldProperty
+		name="dt_inizio" />
+	<columnFieldProperty
+		name="cab" />
+	<columnFieldProperty
+		name="abi" />
+	<columnFieldProperty
+		name="perc_prorata_detraibile" />
+	<columnFieldProperty
+		name="cd_uo_doc_amm" />
+	<columnFieldProperty
+		name="int_deb_liq_trim" />
+	<columnFieldProperty
+		name="esercizio_doc_amm" />
+	<columnFieldProperty
+		name="cred_iva_spec_detr" />
+	<columnFieldProperty
+		name="iva_non_vers_per_prec" />
+
+	<findFieldProperty
+		name="annotazioni" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="iva_credito_no_prorata" />
+	<findFieldProperty
+		name="iva_intraue" />
+	<findFieldProperty
+		name="iva_versata" />
+	<findFieldProperty
+		name="esercizio_obb_accentr" />
+	<findFieldProperty
+		name="cd_cds_obb_accentr" />
+	<findFieldProperty
+		name="dt_fine" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="iva_da_versare" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="iva_acquisti" />
+	<findFieldProperty
+		name="iva_debito" />
+	<findFieldProperty
+		name="cd_cds_doc_amm" />
+	<findFieldProperty
+		name="cred_iva_infrann_rimb" />
+	<findFieldProperty
+		name="cod_azienda" />
+	<findFieldProperty
+		name="esercizio_ori_obb_accentr" />
+	<findFieldProperty
+		name="pg_obb_accentr" />
+	<findFieldProperty
+		name="cd_tipo_documento" />
+	<findFieldProperty
+		name="iva_vendite" />
+	<findFieldProperty
+		name="cred_iva_infrann_comp" />
+	<findFieldProperty
+		name="var_imp_per_prec" />
+	<findFieldProperty
+		name="pg_doc_amm" />
+	<findFieldProperty
+		name="acconto_iva_vers" />
+	<findFieldProperty
+		name="iva_acq_non_detr" />
+	<findFieldProperty
+		name="iva_autofatt" />
+	<findFieldProperty
+		name="dt_versamento" />
+	<findFieldProperty
+		name="iva_deb_cred" />
+	<findFieldProperty
+		name="iva_vend_diff_esig" />
+	<findFieldProperty
+		name="iva_deb_cred_per_prec" />
+	<findFieldProperty
+		name="iva_credito" />
+	<findFieldProperty
+		name="iva_acq_diff_esig" />
+	<findFieldProperty
+		name="cred_iva_comp_detr" />
+	<findFieldProperty
+		name="iva_vendite_diff" />
+	<findFieldProperty
+		name="report_id" />
+	<findFieldProperty
+		name="iva_acquisti_diff" />
+	<findFieldProperty
+		name="dt_inizio" />
+	<findFieldProperty
+		name="abi" />
+	<findFieldProperty
+		name="cab" />
+	<findFieldProperty
+		name="perc_prorata_detraibile" />
+	<findFieldProperty
+		name="cd_uo_doc_amm" />
+	<findFieldProperty
+		name="int_deb_liq_trim" />
+	<findFieldProperty
+		name="esercizio_doc_amm" />
+	<findFieldProperty
+		name="cred_iva_spec_detr" />
+	<findFieldProperty
+		name="iva_non_vers_per_prec" />
+	<findFieldProperty
+		name="tipo_liquidazione"/>
+
+	<columnSet name="prospetti_stampati">
+		<columnFieldProperty name="dt_inizio"/>
+		<columnFieldProperty name="dt_fine"/>
+		<columnFieldProperty name="annotazioni"/>
+		<columnFieldProperty name="dacr"/>
+		<columnFieldProperty name="tipo_liquidazione"/>
+	</columnSet>	
+</bulkInfo>

@@ -1,0 +1,42 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+		
+	<fieldProperty
+		name="cd_attivita_commerciale"
+		property="cd_attivita_commerciale"		
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="6"
+		enabledOnSearch="true"
+		label="Codice Attivita'"
+		nullable="false"
+		enabledOnEdit="false"/>
+	<fieldProperty
+		name="ds_attivita_commerciale"
+		property="ds_attivita_commerciale"		
+		inputType="TEXT"
+		maxLength="100"
+		nullable="false"
+		inputSize="50"
+		label="Descrizione"
+		 />
+
+	<formFieldProperty
+		name="cd_attivita_commerciale" />
+	<formFieldProperty
+		name="ds_attivita_commerciale" />
+
+	<columnFieldProperty
+		name="cd_attivita_commerciale" />
+	<columnFieldProperty
+		name="ds_attivita_commerciale" />
+
+	<findFieldProperty
+		name="cd_attivita_commerciale" />
+	<findFieldProperty
+		name="ds_attivita_commerciale" />
+
+</bulkInfo>

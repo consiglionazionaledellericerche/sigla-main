@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Mandato Accreditamento">
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputSize="8"
+		inputType="ROTEXT"
+		label="Terzo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_anag"
+		property="cd_anag"
+		inputSize="8"
+		inputType="ROTEXT"
+		label="Anag."
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="denominazione_sede"
+		property="denominazione_sede"
+		inputSize="50"
+		inputType="ROTEXT"
+		label="Denominazione"
+		caseSensitiveSearch="false" />
+
+		<columnFieldProperty
+			name="cd_terzo" />
+		<columnFieldProperty
+			name="cd_anag" />
+		<columnFieldProperty
+			name="denominazione_sede"/>			
+		
+</bulkInfo>

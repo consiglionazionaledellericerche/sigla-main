@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.docs.bulk.MinicarrieraBase"
+	keyClassName="it.cnr.contab.compensi00.docs.bulk.MinicarrieraKey"
+	homeClassName="it.cnr.contab.compensi00.docs.bulk.MinicarrieraHome" >
+	<defaultColumnMap
+		tableName="MINICARRIERA" >
+		<columnMapping
+			columnName="DT_FINE_MINICARRIERA"
+			propertyName="dt_fine_minicarriera"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_INIZIO_MINICARRIERA"
+			propertyName="dt_inizio_minicarriera"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="pg_banca"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_MINICARRIERA"
+			propertyName="ds_minicarriera"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="MESI_ANTICIPO_POSTICIPO"
+			propertyName="mesi_anticipo_posticipo"
+			sqlTypeName="DECIMAL"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="cd_modalita_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_ESCLUDI_QVARIA_DEDUZIONE"
+			propertyName="fl_escludi_qvaria_deduzione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_TERMINI_PAG"
+			propertyName="cd_termini_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="DT_RINNOVO"
+			propertyName="dt_rinnovo"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="PG_MINICARRIERA_ORI"
+			propertyName="pg_minicarriera_ori"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="RAGIONE_SOCIALE"
+			propertyName="ragione_sociale"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="FL_TASSAZIONE_SEPARATA"
+			propertyName="fl_tassazione_separata"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="NUMERO_RATE"
+			propertyName="numero_rate"
+			sqlTypeName="DECIMAL"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPONIBILE_IRPEF_ESEPREC2"
+			propertyName="imponibile_irpef_eseprec2"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPONIBILE_IRPEF_ESEPREC1"
+			propertyName="imponibile_irpef_eseprec1"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_MINICARRIERA_ORI"
+			propertyName="esercizio_minicarriera_ori"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_ISTITUZ_COMMERC"
+			propertyName="ti_istituz_commerc"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_MINICARRIERA_ORI"
+			propertyName="cd_uo_minicarriera_ori"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="ALIQUOTA_IRPEF_MEDIA"
+			propertyName="aliquota_irpef_media"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			columnScale="6"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_MINICARRIERA_ORI"
+			propertyName="cd_cds_minicarriera_ori"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO_ASS_COMPENSO"
+			propertyName="stato_ass_compenso"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_RIPRISTINO"
+			propertyName="dt_ripristino"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="TI_ANAGRAFICO"
+			propertyName="ti_anagrafico"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="DT_SOSPENSIONE"
+			propertyName="dt_sospensione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="CD_TRATTAMENTO"
+			propertyName="cd_trattamento"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_TOTALE_MINICARRIERA"
+			propertyName="im_totale_minicarriera"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_CESSAZIONE"
+			propertyName="dt_cessazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partita_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="TI_ANTICIPO_POSTICIPO"
+			propertyName="ti_anticipo_posticipo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_RAPPORTO"
+			propertyName="cd_tipo_rapporto"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_REP"
+			propertyName="esercizio_rep"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_REPERTORIO"
+			propertyName="pg_repertorio"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />			
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_fine_minicarriera" />
+	<persistentProperty
+		name="dt_inizio_minicarriera" />
+	<persistentProperty
+		name="pg_banca" />
+	<persistentProperty
+		name="ds_minicarriera" />
+	<persistentProperty
+		name="mesi_anticipo_posticipo" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="codice_fiscale" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="cd_modalita_pag" />
+	<persistentProperty
+		name="fl_escludi_qvaria_deduzione" />
+	<persistentProperty
+		name="cd_termini_pag" />
+	<persistentProperty
+		name="cognome" />
+	<persistentProperty
+		name="dt_rinnovo" />
+	<persistentProperty
+		name="pg_minicarriera_ori" />
+	<persistentProperty
+		name="ragione_sociale" />
+	<persistentProperty
+		name="fl_tassazione_separata" />
+	<persistentProperty
+		name="numero_rate" />
+	<persistentProperty
+		name="imponibile_irpef_eseprec2" />
+	<persistentProperty
+		name="imponibile_irpef_eseprec1" />
+	<persistentProperty
+		name="esercizio_minicarriera_ori" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="ti_istituz_commerc" />
+	<persistentProperty
+		name="cd_uo_minicarriera_ori" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="aliquota_irpef_media" />
+	<persistentProperty
+		name="cd_cds_minicarriera_ori" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="stato_ass_compenso" />
+	<persistentProperty
+		name="dt_ripristino" />
+	<persistentProperty
+		name="ti_anagrafico" />
+	<persistentProperty
+		name="nome" />
+	<persistentProperty
+		name="cd_trattamento" />
+	<persistentProperty
+		name="dt_sospensione" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="im_totale_minicarriera" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="dt_cessazione" />
+	<persistentProperty
+		name="dt_registrazione" />
+	<persistentProperty
+		name="partita_iva" />
+	<persistentProperty
+		name="ti_anticipo_posticipo" />
+	<persistentProperty
+		name="cd_tipo_rapporto" />
+	<persistentProperty
+		name="esercizio_rep" />		
+	<persistentProperty
+		name="pg_repertorio" />		
+</SQLPersistentInfo>

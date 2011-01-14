@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario01.bulk.Inventario_beni_apgBase"
+	keyClassName="it.cnr.contab.inventario01.bulk.Inventario_beni_apgKey"
+	homeClassName="it.cnr.contab.inventario01.bulk.Inventario_beni_apgHome">
+	<defaultColumnMap
+		tableName="INVENTARIO_BENI_APG">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_FATTURA"
+			propertyName="pg_fattura"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="PROGRESSIVO_RIGA"
+			propertyName="progressivo_riga"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="pg_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="NR_INVENTARIO"
+			propertyName="nr_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PROGRESSIVO"
+			propertyName="progressivo"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		
+		<columnMapping
+			columnName="VARIAZIONE_MENO"
+			propertyName="variazione_meno"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="FL_TOTALMENTE_SCARICATO"
+			propertyName="fl_totalmente_scaricato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_VISIBILE"
+			propertyName="fl_visibile"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="VALORE_ALIENAZIONE"
+			propertyName="valore_alienazione"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONE_PIU"
+			propertyName="variazione_piu"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ID_BENE_ORIGINE"
+			propertyName="id_bene_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="FL_MIGRATO"
+			propertyName="fl_migrato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_TRASF_COME_PRINCIPALE"
+			propertyName="fl_trasf_come_principale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="PG_INVENTARIO_PRINCIPALE"
+			propertyName="pg_inventario_principale"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="NR_INVENTARIO_PRINCIPALE"
+			propertyName="nr_inventario_principale"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="PROGRESSIVO_PRINCIPALE"
+			propertyName="progressivo_principale"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />	
+		<columnMapping
+			columnName="TI_DOCUMENTO"
+			propertyName="ti_documento"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="PG_BUONO_C_S"
+			propertyName="pg_buono_c_s"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />		
+		<columnMapping
+			columnName="DT_VALIDITA_VARIAZIONE"
+			propertyName="dt_validita_variazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />	
+		<columnMapping
+			columnName="IMP_FATTURA"
+			propertyName="imp_fattura"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_AMM"
+			propertyName="cd_tipo_documento_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />		
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="pg_fattura" />
+	<persistentProperty
+		name="progressivo_riga" />
+	<persistentProperty
+		name="pg_inventario" />
+	<persistentProperty
+		name="nr_inventario" />
+	<persistentProperty
+		name="progressivo" />
+	<persistentProperty
+		name="variazione_meno" />
+	<persistentProperty
+		name="fl_totalmente_scaricato" />
+	<persistentProperty
+		name="fl_visibile" />
+	<persistentProperty
+		name="valore_alienazione" />
+	<persistentProperty
+		name="variazione_piu" />
+	<persistentProperty
+		name="id_bene_origine" />
+	<persistentProperty
+		name="fl_migrato" />
+	<persistentProperty
+		name="fl_trasf_come_principale" />
+	<persistentProperty
+		name="pg_inventario_principale" />
+	<persistentProperty
+		name="nr_inventario_principale" />
+	<persistentProperty
+		name="progressivo_principale" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />	
+	<persistentProperty
+		name="ti_documento" />
+	<persistentProperty
+		name="pg_buono_c_s" />	
+	<persistentProperty
+		name="dt_validita_variazione" />	
+	<persistentProperty
+		name="imp_fattura" />	
+	<persistentProperty
+		name="cd_tipo_documento_amm" />	
+</SQLPersistentInfo>

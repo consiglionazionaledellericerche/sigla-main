@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_appartenenza" 
+		enabledOnFreeSearch="false"/>
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="ROTEXT"
+		label="Cds" 
+		enabledOnFreeSearch="false"/>
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio"
+		enabledOnFreeSearch="false"/>
+	<fieldProperty
+		name="dt_approvazione"
+		property="dt_approvazione"
+		label="Data approvazione"
+		inputType="ROTEXT"
+		formatName="date_short"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="stato"
+		property="stato"
+		keysProperty = "statiKeys"		
+		inputType="ROTEXT"
+		label="Stato"
+		caseSensitiveSearch="false" 
+		enabledOnSearch="true"/>
+
+
+	<formFieldProperty
+		name="esercizio" />			
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="dt_approvazione" />				
+	<formFieldProperty
+		name="stato" />
+
+	<columnFieldProperty
+		name="esercizio" />		
+	<columnFieldProperty
+		name="ti_appartenenza" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="dt_approvazione" />						
+	<columnFieldProperty
+		name="stato" />
+
+	<findFieldProperty
+		name="esercizio" />		
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="dt_approvazione" />								
+	<findFieldProperty
+		name="stato" />
+
+</bulkInfo>

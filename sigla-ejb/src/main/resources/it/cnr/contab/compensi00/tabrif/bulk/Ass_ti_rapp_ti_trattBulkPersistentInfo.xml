@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Ass_ti_rapp_ti_trattBulk"
+	keyClassName="it.cnr.contab.compensi00.tabrif.bulk.Ass_ti_rapp_ti_trattKey"
+	homeClassName="it.cnr.contab.compensi00.tabrif.bulk.Ass_ti_rapp_ti_trattHome" >
+
+	<defaultColumnMap
+		tableName="ASS_TI_RAPP_TI_TRATT" >
+
+		<columnMapping
+			columnName="CD_TIPO_RAPPORTO"
+			propertyName="tipoRapporto.cd_tipo_rapporto" />
+		<columnMapping
+			columnName="CD_TRATTAMENTO"
+			propertyName="tipoTrattamento.cd_trattamento" />
+
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="tipoRapporto"
+		partOfOid="true" />
+
+</SQLPersistentInfo>

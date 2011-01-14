@@ -1,0 +1,84 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk"
+	homeClassName="it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaHome" >
+
+	<defaultColumnMap
+		tableName="FATTURA_PASSIVA_RIGA" >		
+		<columnMapping
+			columnName="CD_BENE_SERVIZIO"
+			propertyName="bene_servizio.cd_bene_servizio" />
+		<columnMapping
+			columnName="CD_VOCE_IVA"
+			propertyName="voce_iva.cd_voce_iva" />
+			
+		<columnMapping
+			columnName="CD_CDS_OBBLIGAZIONE"
+			propertyName="obbligazione_scadenziario.obbligazione.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="obbligazione_scadenziario.obbligazione.cds.esercizio"
+			fetchOnly="true" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="obbligazione_scadenziario.obbligazione.esercizio" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="obbligazione_scadenziario.obbligazione.esercizio_originale" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="obbligazione_scadenziario.obbligazione.pg_obbligazione" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="obbligazione_scadenziario.pg_obbligazione_scadenzario" />
+
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="fornitore.cd_terzo" />
+
+		<columnMapping
+			columnName="CD_TERZO_CESSIONARIO"
+			propertyName="cessionario.cd_terzo" />
+	
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="modalita_pagamento.cd_modalita_pag" />
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="banca.pg_banca" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="banca.cd_terzo"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="banca.terzo.cd_terzo"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_TERMINI_PAG"
+			propertyName="termini_pagamento.cd_termini_pag" />
+	
+	</defaultColumnMap>		
+
+	<fetchPolicy
+		name="solo_voce_iva">
+		<exclude pattern="*" />
+		<include pattern="voce_iva" />
+	</fetchPolicy>
+
+	<persistentProperty
+		name="bene_servizio" />
+	<persistentProperty
+		name="voce_iva" />
+	<persistentProperty
+		name="obbligazione_scadenziario" />
+	<persistentProperty
+		name="fornitore" />
+	<persistentProperty
+		name="cessionario" />
+	<persistentProperty
+		name="banca" />
+	<persistentProperty
+		name="modalita_pagamento" />
+	<persistentProperty
+		name="termini_pagamento" />
+</SQLPersistentInfo>

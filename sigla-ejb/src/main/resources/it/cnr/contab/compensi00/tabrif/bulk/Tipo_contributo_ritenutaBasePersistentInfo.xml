@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Tipo_contributo_ritenutaBase"
+	keyClassName="it.cnr.contab.compensi00.tabrif.bulk.Tipo_contributo_ritenutaKey"
+	homeClassName="it.cnr.contab.compensi00.tabrif.bulk.Tipo_contributo_ritenutaHome" >
+	<defaultColumnMap
+		tableName="TIPO_CONTRIBUTO_RITENUTA" >
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE_CORI"
+			propertyName="cd_classificazione_cori"
+			sqlTypeName="CHAR"
+			columnSize="2"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_CONTRIBUTO_RITENUTA"
+			propertyName="ds_contributo_ritenuta"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TRIBUTO_ERARIO"
+			propertyName="cd_tributo_erario"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="DT_FIN_VALIDITA"
+			propertyName="dt_fin_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="TI_CASSA_COMPETENZA"
+			propertyName="ti_cassa_competenza"
+			sqlTypeName="CHAR"
+			columnSize="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PRECISIONE"
+			propertyName="precisione"
+			sqlTypeName="DECIMAL"
+			columnSize="9"
+			columnScale="6" />
+		<columnMapping
+			columnName="PG_CLASSIFICAZIONE_MONTANTI"
+			propertyName="pg_classificazione_montanti"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_USO_IN_LORDIZZA"
+			propertyName="fl_uso_in_lordizza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_ASSISTENZA_FISCALE"
+			propertyName="fl_assistenza_fiscale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_SCRIVI_MONTANTI"
+			propertyName="fl_scrivi_montanti"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_GLA"
+			propertyName="fl_gla"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="CD_ENTE_PREV_STI"
+			propertyName="cd_ente_prev_sti"
+			sqlTypeName="VARCHAR"
+			columnSize="20"/>
+		<columnMapping
+			columnName="FL_SOSPENSIONE_IRPEF"
+			propertyName="fl_sospensione_irpef"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+			
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_classificazione_cori" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="ds_contributo_ritenuta" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="cd_tributo_erario" />
+	<persistentProperty
+		name="ti_cassa_competenza" />
+	<persistentProperty
+		name="dt_fin_validita" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="precisione" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_classificazione_montanti" />
+	<persistentProperty
+		name="fl_uso_in_lordizza" />
+	<persistentProperty
+		name="fl_assistenza_fiscale" />
+	<persistentProperty
+		name="fl_scrivi_montanti" />
+	<persistentProperty
+		name="fl_gla" />
+	<persistentProperty
+		name="cd_ente_prev_sti" />
+	<persistentProperty
+		name="fl_sospensione_irpef" />			
+</SQLPersistentInfo>

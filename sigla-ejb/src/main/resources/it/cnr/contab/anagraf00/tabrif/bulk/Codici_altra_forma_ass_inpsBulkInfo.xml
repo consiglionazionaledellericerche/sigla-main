@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" 
+		shortDescription ="Codici Altra Assicurazione INPS"
+		longDescription ="Codici Altra Assicurazione INPS">
+	<fieldProperty
+		name="ds_altra_ass_previd_inps"
+		property="ds_altra_ass_previd_inps"
+		maxLength="200"
+		inputSize="200"
+		inputType="TEXT"
+		label="Descrizione"
+		caseSensitiveSearch="false"
+		enabledOnSearch = "true" />
+	<fieldProperty
+		name="altra_ass_previd_inps"
+		property="altra_ass_previd_inps"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		label="Codice" 
+		enabledOnSearch = "true"/>
+	<fieldProperty
+		name="fl_cancellato"
+		property="fl_cancellato"
+		inputType="CHECKBOX"
+		label="Cancellato" />
+
+  	<form name="searchtool">
+          <formFieldProperty
+                name="altra_ass_previd_inps" />
+          <formFieldProperty
+                name="ds_altra_ass_previd_inps"
+                inputType="TEXT"
+                inputSize="40" />
+    </form>		
+
+	<formFieldProperty
+		name="ds_altra_ass_previd_inps" />
+	<formFieldProperty
+		name="altra_ass_previd_inps" />
+	<formFieldProperty
+		name="fl_cancellato" />
+
+	<columnFieldProperty
+		name="altra_ass_previd_inps" />
+	<columnFieldProperty
+		name="ds_altra_ass_previd_inps" />
+
+	<findFieldProperty
+		name="altra_ass_previd_inps" />
+	<findFieldProperty
+		name="ds_altra_ass_previd_inps" />
+
+</bulkInfo>

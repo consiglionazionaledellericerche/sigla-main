@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Sospeso_det_uscBulk"
+	keyClassName="it.cnr.contab.doccont00.core.bulk.Sospeso_det_uscKey"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Sospeso_det_uscHome" >
+	<defaultColumnMap
+		tableName="SOSPESO_DET_USC" >
+		<columnMapping
+			columnName="CD_SOSPESO"
+			propertyName="sospeso.cd_sospeso"/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="sospeso.esercizio" />
+		<columnMapping
+			columnName="TI_ENTRATA_SPESA"
+			propertyName="sospeso.ti_entrata_spesa" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="sospeso.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="TI_SOSPESO_RISCONTRO"
+			propertyName="sospeso.ti_sospeso_riscontro" />	
+	</defaultColumnMap>
+	<persistentProperty
+		name="sospeso"
+		partOfOid="true" />		
+</SQLPersistentInfo>

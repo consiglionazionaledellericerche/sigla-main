@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Progetti scientifici"
+          longDescription="Progetti scientifici">
+          
+	<fieldProperty
+		name="cd_modulo"
+		property="cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Modulo di Attività"/>
+          
+	<fieldProperty
+		name="cd_commessa_modulo"
+		property="progettopadre.cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Commessa"/>
+		
+	<fieldProperty
+		name="cd_progetto_modulo"
+		property="progettopadre.progettopadre.cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Progetto"/>
+		
+	<fieldProperty
+		name="cd_dipartimento_modulo"
+		property="progettopadre.progettopadre.dipartimento.cd_dipartimento"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Dipartimento"/>
+
+	<fieldProperty
+		name="cd_commessa"
+		property="cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Commessa"/>
+		
+	<fieldProperty
+		name="cd_progetto_commessa"
+		property="progettopadre.cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Progetto"/>
+		
+	<fieldProperty
+		name="cd_dipartimento_commessa"
+		property="progettopadre.dipartimento.cd_dipartimento"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Dipartimento"/>
+
+	<fieldProperty
+		name="cd_progetto"
+		property="cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Progetto"/>
+		
+	<fieldProperty
+		name="cd_dipartimento"
+		property="dipartimento.cd_dipartimento"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Dipartimento"/>
+	<fieldProperty
+		name="ds_dipartimento"
+		property="dipartimento.ds_dipartimento"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Descrizione dipartimento"/>
+          
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="unita_organizzativa.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		label="UO Coordinatrice"/>
+	<fieldProperty
+		name="ds_unita_organizzativa"
+		property="unita_organizzativa.ds_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Descrizione UO Coordinatrice"/>
+	<fieldProperty
+		name="unita_organizzativa"
+		property="unita_organizzativa"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnFreeSearch="true"
+		label="UO Coordinatrice" />
+		
+	<fieldProperty
+		name="ds_progetto"
+		property="ds_progetto"
+		maxLength="400"
+		inputType="TEXTAREA"
+		cols="80"
+		rows="3"
+		label="Descrizione"
+		caseSensitiveSearch="false"
+		nullable="false" /> 
+	<fieldProperty
+		name="cd_responsabile_terzo"
+		property="responsabile.cd_terzo"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		label="Codice Responsabile" />
+	<fieldProperty
+		name="responsabile"
+		property="responsabile"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Responsabile"
+		nullable="false" />
+	<fieldProperty
+		name="dt_inizio"
+		property="dt_inizio"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Inizio"
+		nullable="false" />	
+	<form
+		name="form_searchtool_progetto" >
+		<formFieldProperty
+		    inputSize="30"
+			maxLength="30"
+			name="cd_progetto"/>
+		<formFieldProperty
+		    inputSize="60"
+			maxLength="60"
+			inputType="ROTEXT"
+			name="ds_progetto"/>
+	</form>
+					         
+	<columnSet
+		name="moduli_sip">
+		<columnFieldProperty
+			name="cd_modulo"/>
+		<columnFieldProperty
+			name="cd_commessa_modulo"/>
+		<columnFieldProperty
+			name="cd_progetto_modulo"/>				
+		<columnFieldProperty
+			name="cd_dipartimento_modulo"/>
+		<columnFieldProperty
+			name="cd_unita_organizzativa"
+			label="UO Responsabile" />
+		<columnFieldProperty
+			name="ds_progetto" />
+		<columnFieldProperty
+			name="cd_responsabile_terzo" />
+		<columnFieldProperty
+			name="dt_inizio" />
+	</columnSet>
+	<columnSet
+		name="commesse_sip">
+		<columnFieldProperty
+			name="cd_commessa"/>
+		<columnFieldProperty
+			name="cd_progetto_commessa"/>
+		<columnFieldProperty
+			name="cd_dipartimento_commessa"/>
+		<columnFieldProperty
+			name="cd_unita_organizzativa"
+			label="UO Responsabile" />
+		<columnFieldProperty
+			name="ds_progetto" />
+		<columnFieldProperty
+			name="cd_responsabile_terzo" />
+		<columnFieldProperty
+			name="dt_inizio" />
+	</columnSet>          
+	<columnSet
+		name="progetti_sip">
+		<columnFieldProperty
+			name="cd_progetto"/>
+		<columnFieldProperty
+			name="ds_progetto" />			
+		<columnFieldProperty
+			name="cd_dipartimento"/>
+		<columnFieldProperty
+			name="ds_dipartimento"/>			
+	</columnSet>          
+
+	<columnFieldProperty
+		name="cd_modulo"/>
+	<columnFieldProperty
+		name="cd_commessa_modulo"/>
+	<columnFieldProperty
+		name="cd_progetto_modulo"/>				
+	<columnFieldProperty
+		name="cd_dipartimento_modulo"/>
+	<columnFieldProperty
+		name="cd_unita_organizzativa"
+		label="UO Responsabile" />
+	<columnFieldProperty
+		name="ds_progetto" />
+	<columnFieldProperty
+		name="cd_responsabile_terzo" />
+	<columnFieldProperty
+		name="dt_inizio" />
+	
+</bulkInfo>

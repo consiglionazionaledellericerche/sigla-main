@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	shortDescription="Coda di stampa">
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		keysProperty="statoKeys"
+		label="Stato"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_visibilita"
+		property="tiVisibilita"
+		inputType="RADIOGROUP"
+		layout="HORIZONTAL"
+		keysProperty="ti_visibilitaKeys"
+		label="Visibilità" />
+	<fieldProperty
+		name="priorita"
+		property="priorita"
+		inputType="TEXT"
+		label="Priorità" />
+	<fieldProperty
+		name="ds_utente"
+		property="dsUtente"
+		maxLength="300"
+		cols="50"
+		rows="5"
+		inputType="TEXTAREA"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="nome_file"
+		property="nomeFile"
+		maxLength="300"
+		inputSize="300"
+		inputType="TEXT"
+		label="nome_file"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_stampa"
+		property="pgStampa"
+		inputType="TEXT"
+		label="pg_stampa" />
+	<fieldProperty
+		name="report"
+		property="report"
+		maxLength="300"
+		inputSize="300"
+		inputType="TEXT"
+		label="report"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_stampa"
+		property="dsStampa"
+		maxLength="300"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Titolo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_scadenza"
+		property="dtScadenza"
+		inputType="TEXT"
+		label="Data scadenza"
+		formatName="date_short" />
+	<fieldProperty
+		name="utcr"
+		property="utcr"
+		inputType="TEXT"
+		label="Utente" />
+	<fieldProperty
+		name="dacr"
+		property="dacr"
+		inputType="TEXT"
+		label="Data accodamento"
+		formatName="timestamp" />
+	<fieldProperty
+		name="duva"
+		property="duva"
+		inputType="TEXT"
+		label="Data esecuzione"
+		formatName="timestamp" />
+	<fieldProperty
+		name="intervallo_inizio"
+		property="intervalloInizio"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="4"
+		label="da pagina" />
+	<fieldProperty
+		name="intervallo_fine"
+		property="intervalloFine"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="4"
+		label="a pagina" />
+	<fieldProperty
+		name="fl_email"
+		property="flEmail"
+		inputType="CHECKBOX"
+		label="Invia E-Mail con la stampa allegata" />
+	<fieldProperty
+		name="email_a"
+		property="emailA"
+		inputType="TEXT"
+        inputSize="63"
+		maxLength="250"
+		nullable="false"
+		label="A:" />
+	<fieldProperty
+		name="email_cc"
+		property="emailCc"
+		inputType="TEXT"
+        inputSize="63"
+		maxLength="250"
+		label="Cc:" />
+	<fieldProperty
+		name="email_ccn"
+		property="emailCcn"
+		inputType="TEXT"
+        inputSize="63"
+		maxLength="250"
+		label="Ccn:" />
+	<fieldProperty
+		name="email_subject"
+		property="emailSubject"
+		inputType="TEXT"
+        inputSize="63"
+		maxLength="250"
+		nullable="false"
+		label="Oggetto:" />
+	<fieldProperty
+		name="email_body"
+		property="emailBody"
+		inputType="TEXTAREA"
+		cols="100"
+		rows="7"
+		maxLength="4000"
+		label="Corpo del testo" />
+	<fieldProperty
+		name="fl_attivato"
+		property="flAttivato"
+		inputType="CHECKBOX"
+		label="Attivo" />
+	<fieldProperty
+		name="dt_partenza"
+		property="dtPartenza"
+		inputSize="20"
+		inputType="TEXT"
+		label="Data e ora"
+		formatName="timestamp" />
+	<fieldProperty
+		name="intervallo"
+		property="intervallo"
+		inputSize="20"
+		inputType="TEXT"
+		label="Intervallo" />
+	<fieldProperty
+		name="ti_intervallo"
+		property="tiIntervallo"
+		keysProperty="tipo_intervalloKeys"
+		inputType="SELECT"
+		label="Unità intervallo" />
+	<fieldProperty
+		name="dt_prossima_esecuzione"
+		property="dtProssimaEsecuzione"
+		inputSize="20"
+		inputType="TEXT"
+		label="Data prossima esecuzione"
+		formatName="timestamp" />
+	<fieldProperty
+		name="cd_servizio_pec"
+		property="cd_servizio_pec"
+		inputSize="20"
+		inputType="TEXT"
+		label="Codice servizio PEC" />
+	<fieldProperty
+		name="ds_oggetto_pec"
+		property="ds_oggetto_pec"
+		inputSize="100"
+		maxLength="400"
+		inputType="TEXT"
+		label="Descrizione Oggetto PEC" />
+
+	<formFieldProperty
+		name="ds_stampa" />
+	<formFieldProperty
+		name="ds_utente" />
+	<formFieldProperty
+		name="ti_visibilita" />
+	<formFieldProperty
+		name="intervallo_inizio" />
+	<formFieldProperty
+		name="intervallo_fine" />
+	<formFieldProperty
+		name="fl_email"
+		command="doSendEMail"/>
+	<formFieldProperty
+		name="email_a"/>
+	<formFieldProperty
+		name="email_cc"/>
+	<formFieldProperty
+		name="email_ccn"/>
+	<formFieldProperty
+		name="email_subject"/>
+	<formFieldProperty
+		name="email_body"/>
+	<formFieldProperty
+		name="dt_partenza" />
+	<formFieldProperty
+		name="intervallo" />
+	<formFieldProperty
+		name="ti_intervallo" />
+	<formFieldProperty
+		name="cd_servizio_pec" />
+	<formFieldProperty
+		name="ds_oggetto_pec" />
+		
+	<columnFieldProperty
+		name="utcr" />
+	<columnFieldProperty
+		name="dacr" />
+	<columnFieldProperty
+		name="ds_stampa" />
+	<columnFieldProperty
+		name="ds_utente" />
+<!--
+	<columnFieldProperty
+		name="intervallo_inizio" />
+	<columnFieldProperty
+		name="intervallo_fine" />
+-->
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="duva" />
+	<columnFieldProperty
+		name="ti_visibilita" />
+	<columnFieldProperty
+		name="dt_partenza" />
+	<columnFieldProperty
+		name="intervallo" />
+	<columnFieldProperty
+		name="ti_intervallo" />
+	<columnFieldProperty
+		name="dt_prossima_esecuzione" />
+<!--
+	<columnFieldProperty
+		name="cd_servizio_pec" />
+-->
+</bulkInfo>

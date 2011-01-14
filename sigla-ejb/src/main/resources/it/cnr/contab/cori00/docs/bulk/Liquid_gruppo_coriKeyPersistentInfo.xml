@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.cori00.docs.bulk.Liquid_gruppo_coriKey" >
+	<defaultColumnMap
+		tableName="LIQUID_GRUPPO_CORI" >
+		<columnMapping
+			columnName="CD_UO_ORIGINE"
+			propertyName="cd_uo_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_LIQUIDAZIONE_ORIGINE"
+			propertyName="pg_liquidazione_origine"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_LIQUIDAZIONE"
+			propertyName="pg_liquidazione"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE"
+			propertyName="cd_cds_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_REGIONE"
+			propertyName="cd_regione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_GRUPPO_CR"
+			propertyName="cd_gruppo_cr"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_COMUNE"
+			propertyName="pg_comune"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_uo_origine"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_liquidazione_origine"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_liquidazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_cds_origine"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_regione"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_gruppo_cr"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_comune"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_unita_organizzativa"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_cds"
+		partOfOid="true" />
+</SQLPersistentInfo>

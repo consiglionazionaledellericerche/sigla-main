@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.docs.bulk.VMissioneSIPBulk"
+	keyClassName="it.cnr.contab.missioni00.docs.bulk.VMissioneSIPKey"
+	homeClassName="it.cnr.contab.missioni00.docs.bulk.VMissioneSIPHome" >
+	<defaultColumnMap
+		tableName="VMISSIONESIP" >
+		<columnMapping
+			columnName="IM_TOTALE_MISSIONE"
+			propertyName="im_totale_missione"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />	
+		<columnMapping
+			columnName="DT_INIZIO_MISSIONE"
+			propertyName="dt_inizio_missione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_PAGAMENTO"
+			propertyName="dt_pagamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />	
+		<columnMapping
+			columnName="DS_MISSIONE"
+			propertyName="ds_missione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_FINE_MISSIONE"
+			propertyName="dt_fine_missione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />	
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_ANAGRAFICO"
+			propertyName="ti_anagrafico"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />	
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />	
+		<columnMapping
+			columnName="RAGIONE_SOCIALE"
+			propertyName="ragione_sociale"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />	
+		<columnMapping
+			columnName="MATRICOLA"
+			propertyName="matricola"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />	
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partita_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />		
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="GAE"
+			propertyName="gae"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />	
+	</defaultColumnMap>
+	<columnMap
+		name="VMISSIONESIP_RID"
+		tableName="VMISSIONESIP">
+		<columnMapping
+			columnName="MATRICOLA"
+			propertyName="matricola"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />	
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"/>
+		<columnMapping
+			columnName="PG_MISSIONE"
+			propertyName="pg_missione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"/>
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"/>
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"/>
+		<columnMapping
+			columnName="DT_PAGAMENTO"
+			propertyName="dt_pagamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />		
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="IM_TOTALE_MISSIONE"
+			propertyName="im_totale_missione"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DENOMINAZIONE"
+			propertyName="denominazione"
+			sqlTypeName="VARCHAR"
+			columnSize="110" />
+		<columnMapping
+			columnName="DT_INIZIO_MISSIONE"
+			propertyName="dt_inizio_missione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_MISSIONE"
+			propertyName="ds_missione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_FINE_MISSIONE"
+			propertyName="dt_fine_missione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partita_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />	
+	</columnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="matricola" />	
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />	
+	<persistentProperty
+		name="pg_missione" />	
+	<persistentProperty
+		name="codice_fiscale" />
+	<persistentProperty
+		name="im_totale_missione" />
+	<persistentProperty
+		name="denominazione" />
+	<persistentProperty
+		name="dt_inizio_missione" />
+	<persistentProperty
+		name="dt_pagamento" />	
+	<persistentProperty
+		name="ds_missione" />
+	<persistentProperty
+		name="dt_fine_missione" />
+	<persistentProperty
+		name="tipo" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="partita_iva" />
+</SQLPersistentInfo>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_tipo_documento_amm"
+		property="cd_tipo_documento_amm"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_tipo_documento_amm" />
+	<fieldProperty
+		name="fl_doc_generico"
+		property="fl_doc_generico"
+		inputType="CHECKBOX"
+		label="fl_doc_generico" />
+	<fieldProperty
+		name="ti_entrata_spesa"
+		property="ti_entrata_spesa"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_entrata_spesa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_tipo_documento_amm"
+		property="ds_tipo_documento_amm"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="ds_tipo_documento_amm"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_utilizzo_doc_generico"
+		property="fl_utilizzo_doc_generico"
+		inputType="CHECKBOX"
+		label="fl_utilizzo_doc_generico" />
+
+	<formFieldProperty
+		name="cd_tipo_documento_amm" />
+	<formFieldProperty
+		name="fl_doc_generico" />
+	<formFieldProperty
+		name="ti_entrata_spesa" />
+	<formFieldProperty
+		name="ds_tipo_documento_amm" />
+	<formFieldProperty
+		name="fl_utilizzo_doc_generico" />
+
+	<columnFieldProperty
+		name="cd_tipo_documento_amm" />
+	<columnFieldProperty
+		name="fl_doc_generico" />
+	<columnFieldProperty
+		name="ti_entrata_spesa" />
+	<columnFieldProperty
+		name="ds_tipo_documento_amm" />
+	<columnFieldProperty
+		name="fl_utilizzo_doc_generico" />
+
+	<findFieldProperty
+		name="cd_tipo_documento_amm" />
+	<findFieldProperty
+		name="fl_doc_generico" />
+	<findFieldProperty
+		name="ti_entrata_spesa" />
+	<findFieldProperty
+		name="ds_tipo_documento_amm" />
+	<findFieldProperty
+		name="fl_utilizzo_doc_generico" />
+
+</bulkInfo>

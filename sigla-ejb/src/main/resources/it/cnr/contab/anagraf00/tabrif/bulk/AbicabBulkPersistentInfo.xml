@@ -1,0 +1,18 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.tabrif.bulk.AbicabBulk"
+	keyClassName="it.cnr.contab.anagraf00.tabrif.bulk.AbicabKey"
+	homeClassName="it.cnr.contab.anagraf00.tabrif.bulk.AbicabHome" >
+
+	<defaultColumnMap
+		tableName="ABICAB" >
+	
+		<columnMapping
+			columnName="PG_COMUNE"
+			propertyName="comune.pg_comune" />
+
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="comune" />
+
+</SQLPersistentInfo>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputSize="4"		
+		inputType="ROTEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="findProgettoForPrint"
+		property="progettoForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		formName="searchtool"
+		columnSet="filtro_ricerca_progetti"
+		freeSearchSet="filtro_ricerca_progetti"
+		nullable="true"		
+		label="Progetto" />
+	  <fieldProperty
+		name="cdProgettoForPrint"
+		 property="cdProgettoForPrint"/>
+		
+	<fieldProperty
+		name="findCommessaForPrint"
+		property="commessaForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		formName="searchtool"
+		columnSet="filtro_ricerca_commesse"
+		freeSearchSet="filtro_ricerca_commesse"
+		nullable="true"		
+		label="Commessa" />
+	<fieldProperty
+		name="cdCommessaForPrint"
+		property="cdCommessaForPrint"/>
+		
+	<fieldProperty
+		name="findModuloForPrint"
+		property="moduloForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		formName="searchtool"
+		columnSet="filtro_ricerca_moduli"
+		freeSearchSet="filtro_ricerca_moduli"
+		nullable="true"		
+		label="Modulo" />	
+	<fieldProperty
+		name="cdModuloForPrint"
+		property="cdModuloForPrint"/>
+		
+	<fieldProperty
+        name="flg_pdg"
+        property="flg_pdg"
+        inputType="SELECT"
+        keysProperty="ti_flg_pdgKeys"
+        nullable="false"
+        enabledOnSearch="true"
+        label="PdG" />
+
+	<fieldProperty
+        name="flg_impegno"
+        property="flg_impegno"
+        inputType="SELECT"
+        keysProperty="ti_flg_impegnoKeys"
+        nullable="false"
+        enabledOnSearch="true"
+        label="Impegno/Accertamento" />
+        
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="findProgettoForPrint" />
+	<formFieldProperty name="cdProgettoForPrint" />
+	<formFieldProperty name="findCommessaForPrint" />	
+	<formFieldProperty name="cdCommessaForPrint" />
+	<formFieldProperty name="findModuloForPrint" />	
+	<formFieldProperty name="cdModuloForPrint" />	
+	<formFieldProperty name="flg_pdg" />
+	<formFieldProperty name="flg_impegno" />
+	
+	<printForm
+		name="/progettiric/progettiric/elencoprogettila.rpt">
+			
+
+		<printFieldProperty 
+			name="cdProgettoForPrint"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdCommessaForPrint"
+			parameterPosition="1"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdModuloForPrint"   
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="flg_pdg"
+			property="flg_pdg"
+			parameterPosition="3"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="flg_impegno"
+			property="flg_impegno"
+			parameterPosition="4"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="5"
+			parameterType="STRING" />
+				
+	</printForm>
+		
+	
+	<printForm
+		name="/progettiric/progettiric/elencoprogettila.jasper">
+			
+
+		<printFieldProperty 
+			name="cdProgettoForPrint"
+			parameterPosition="0"
+			parameterType="STRING" 
+			paramNameJR="Progetto"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+			name="cdCommessaForPrint"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="Commessa"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cdModuloForPrint"   
+			parameterPosition="2"
+			parameterType="STRING" 
+			paramNameJR="Modulo"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+			name="flg_pdg"
+			property="flg_pdg"
+			parameterPosition="3"
+			parameterType="STRING" 
+			paramNameJR="Pdg"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+			name="flg_impegno"
+			property="flg_impegno"
+			parameterPosition="4"
+			parameterType="STRING" 
+			paramNameJR="Imp_Acc"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="5"
+			parameterType="STRING"
+			paramNameJR="Esercizio"
+			paramTypeJR="java.lang.Integer" />
+				
+	</printForm>
+		
+</bulkInfo>

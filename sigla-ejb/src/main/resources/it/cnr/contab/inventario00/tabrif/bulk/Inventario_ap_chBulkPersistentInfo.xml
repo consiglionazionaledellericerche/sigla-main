@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.tabrif.bulk.Inventario_ap_chBulk"
+	homeClassName="it.cnr.contab.inventario00.tabrif.bulk.Inventario_ap_chHome" >
+	<defaultColumnMap
+		tableName="INVENTARIO_AP_CH" >
+		
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="inventario.pg_inventario" />
+
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="inventario"
+		partOfOid="true" />
+	
+</SQLPersistentInfo>

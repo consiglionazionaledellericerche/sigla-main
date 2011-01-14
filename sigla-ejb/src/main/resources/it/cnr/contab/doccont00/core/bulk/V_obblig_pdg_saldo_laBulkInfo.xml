@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="GAE"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_spese_a3"
+		property="im_spese_a3"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		label="Spese 3°esercizio" />
+	<fieldProperty
+		name="im_spese_a2"
+		property="im_spese_a2"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		label="Spese 2°esercizio" />
+	<fieldProperty
+		name="im_spese_a1"
+		property="im_spese_a1"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		label="Spese 1°esercizio" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Centro di resp."
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_obb_a3"
+		property="im_obb_a3"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		label="Impegno 3°esercizio" />
+	<fieldProperty
+		name="im_obb_a2"
+		property="im_obb_a2"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		label="Impegno 2°esercizio" />
+	<fieldProperty
+		name="im_obb_a1"
+		property="im_obb_a1"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		label="Impegno 1°esercizio" />
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="im_spese_a3" />
+	<formFieldProperty
+		name="im_spese_a2" />
+	<formFieldProperty
+		name="im_spese_a1" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="im_obb_a3" />
+	<formFieldProperty
+		name="im_obb_a2" />
+	<formFieldProperty
+		name="im_obb_a1" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="im_spese_a1" 
+		columnStyle="text-align: right" />
+	<columnFieldProperty
+		name="im_spese_a2"
+		columnStyle="text-align: right" />
+	<columnFieldProperty
+		name="im_spese_a3"
+		columnStyle="text-align: right" />		
+	<columnFieldProperty
+		name="im_obb_a1"
+		columnStyle="text-align: right" />		
+	<columnFieldProperty
+		name="im_obb_a2"
+		columnStyle="text-align: right" />		
+	<columnFieldProperty
+		name="im_obb_a3"
+		columnStyle="text-align: right" />		
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="im_spese_a3" />
+	<findFieldProperty
+		name="im_spese_a2" />
+	<findFieldProperty
+		name="im_spese_a1" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="im_obb_a3" />
+	<findFieldProperty
+		name="im_obb_a2" />
+	<findFieldProperty
+		name="im_obb_a1" />
+
+</bulkInfo>

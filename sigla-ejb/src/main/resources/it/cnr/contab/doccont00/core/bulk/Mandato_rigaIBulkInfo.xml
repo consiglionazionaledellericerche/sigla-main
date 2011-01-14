@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ds_tipo_documento_amm"
+		property="ds_tipo_documento_amm"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Tipo doc.amm." />
+
+	<columnFieldProperty
+		name="ds_tipo_documento_amm"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="esercizio_doc_amm"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="pg_doc_amm"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="esercizio_ori_obbligazione"
+		columnStyle="padding-left:20px"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="pg_obbligazione"
+		columnStyle="padding-left:20px"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="cd_elemento_voce"
+		descProperty="elemento_voce.ds_elemento_voce"
+		inputType="DESCTOOL"/>
+	<columnFieldProperty
+		name="im_mandato_riga"
+		inputType="ROTEXT"
+		columnStyle="text-align: right"/>
+	<columnFieldProperty
+		name="im_ritenute_riga"
+		inputType="ROTEXT"
+		columnStyle="text-align: right"/>
+	<columnFieldProperty
+		name="stato"
+		columnStyle="text-align: center" />
+	<columnFieldProperty
+		name="fl_pgiro"
+		columnStyle="text-align: center" />
+	<columnFieldProperty
+		name="cd_modalita_pag"/>
+	<columnFieldProperty
+		name="banca_nr_conto" />
+	<columnFieldProperty
+		name="banca_intestazione"/>
+	<columnFieldProperty
+		name="banca_abi"/>
+	<columnFieldProperty
+		name="banca_cab"/>
+
+	<columnSet
+		name="columnSetConSiope">
+		<columnFieldProperty
+			name="ds_tipo_documento_amm"
+			inputType="ROTEXT"/>
+		<columnFieldProperty
+			name="esercizio_doc_amm"
+			inputType="ROTEXT"/>
+		<columnFieldProperty
+			name="pg_doc_amm"
+			inputType="ROTEXT"/>
+		<columnFieldProperty
+			name="esercizio_ori_obbligazione"
+			columnStyle="padding-left:20px"
+			inputType="ROTEXT"/>
+		<columnFieldProperty
+			name="pg_obbligazione"
+			columnStyle="padding-left:20px"
+			inputType="ROTEXT"/>
+		<columnFieldProperty
+			name="cd_elemento_voce"
+			descProperty="elemento_voce.ds_elemento_voce"
+			inputType="DESCTOOL"/>
+		<columnFieldProperty
+			name="im_mandato_riga"
+			inputType="ROTEXT"
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="im_ritenute_riga"
+			inputType="ROTEXT"
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="stato"
+			columnStyle="text-align: center" />
+		<columnFieldProperty
+			name="fl_pgiro"
+			columnStyle="text-align: center" />
+		<columnFieldProperty
+			name="tipoAssociazioneSiope"
+			columnStyle="text-align: center" />
+		<columnFieldProperty
+			name="cd_modalita_pag"/>
+		<columnFieldProperty
+			name="banca_nr_conto" />
+		<columnFieldProperty
+			name="banca_intestazione"/>
+		<columnFieldProperty
+			name="banca_abi"/>
+		<columnFieldProperty
+			name="banca_cab"/>
+	</columnSet>
+</bulkInfo>

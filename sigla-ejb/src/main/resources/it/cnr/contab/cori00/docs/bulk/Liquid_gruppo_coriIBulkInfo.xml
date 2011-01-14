@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	
+	<fieldProperty
+		name="terzo_versamento"
+		property="terzo_versamento"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Terzo Versamento" />
+	<fieldProperty
+		name="ds_gruppo_cr"
+		property="ds_gruppo_cr"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="Descrizione CORI" />
+
+	<formFieldProperty
+		name="terzo_versamento" />
+	<formFieldProperty
+		name="ds_gruppo_cr" />
+
+		
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="pg_doc" />
+	<findFieldProperty
+		name="im_liquidato" />
+	<findFieldProperty
+		name="pg_comune" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_liquidazione" />
+	<findFieldProperty
+		name="cd_regione" />
+	<findFieldProperty
+		name="cd_cds_doc" />
+	<findFieldProperty
+		name="cd_gruppo_cr" />
+
+	<columnSet name="v_liquid_gruppo">	
+		<columnFieldProperty
+			name="cd_gruppo_cr" />
+		<columnFieldProperty
+			name="ds_gruppo_cr" />	
+		<columnFieldProperty
+			name="terzo_versamento" />
+		<columnFieldProperty
+			name="fl_accentrato" />
+		<columnFieldProperty
+			name="cd_uo_origine" />
+		<columnFieldProperty
+			name="pg_liquidazione_origine" />
+		<columnFieldProperty
+			name="cd_regione" />
+		<columnFieldProperty
+			name="pg_comune" />
+		<columnFieldProperty
+			name="im_liquidato" />
+		<columnFieldProperty
+			name="pg_doc" />	
+	</columnSet>
+		
+	<columnSet name="v_liquid_centro_uo">	
+		<columnFieldProperty
+			name="cd_uo_origine" />
+		<columnFieldProperty
+			name="pg_liquidazione_origine" />
+		<columnFieldProperty
+			name="cd_gruppo_cr" />
+		<columnFieldProperty
+			name="cd_regione" />
+		<columnFieldProperty
+			name="pg_comune" />
+		<columnFieldProperty
+			name="im_liquidato" />
+	</columnSet>
+
+</bulkInfo>

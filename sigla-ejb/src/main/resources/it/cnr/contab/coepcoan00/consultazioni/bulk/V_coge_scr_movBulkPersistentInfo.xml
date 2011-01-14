@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.coepcoan00.consultazioni.bulk.V_coge_scr_movBulk"
+	homeClassName="it.cnr.contab.coepcoan00.consultazioni.bulk.V_coge_scr_movHome">
+	<defaultColumnMap
+		tableName="V_COGE_SCR_MOV">
+	</defaultColumnMap>
+</SQLPersistentInfo>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.V_mod_saldi_obblig_scad_voceBase"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.V_mod_saldi_obblig_scad_voceHome" >
+	<defaultColumnMap
+		tableName="V_MOD_SALDI_OBBLIG_SCAD_VOCE" >
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE"
+			propertyName="esercizio_originale"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />						
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="cd_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="IM_DELTA_PAG_VOCE"
+			propertyName="im_delta_pag_voce"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_DELTA_VOCE"
+			propertyName="im_delta_voce"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="IM_DELTA_MAN_VOCE"
+			propertyName="im_delta_man_voce"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="PG_OLD"
+			propertyName="pg_old"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_CONT"
+			propertyName="cd_tipo_documento_cont"
+			sqlTypeName="VARCHAR"
+			columnSize="10"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_obbligazione" />
+	<persistentProperty
+		name="pg_obbligazione_scadenzario" />
+	<persistentProperty
+		name="cd_centro_responsabilita" />
+	<persistentProperty
+		name="esercizio_originale" />
+	<persistentProperty
+		name="cd_linea_attivita" />		
+	<persistentProperty
+		name="cd_voce" />
+	<persistentProperty
+		name="im_delta_voce" />
+	<persistentProperty
+		name="im_delta_pag_voce" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="im_delta_man_voce" />
+	<persistentProperty
+		name="ti_appartenenza" />
+	<persistentProperty
+		name="pg_old" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="cd_tipo_documento_cont" />
+</SQLPersistentInfo>

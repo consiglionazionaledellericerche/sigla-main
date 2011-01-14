@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.gestiva00.core.bulk.Vp_liquid_iva_annualeKey" >
+	<defaultColumnMap
+		tableName="VP_LIQUID_IVA_ANNUALE" >
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="3"
+			primary="true" />
+		<columnMapping
+			columnName="ID"
+			propertyName="id"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="SEQUENZA"
+			propertyName="sequenza"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipo"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="id"
+		partOfOid="true" />
+	<persistentProperty
+		name="sequenza"
+		partOfOid="true" />
+</SQLPersistentInfo>

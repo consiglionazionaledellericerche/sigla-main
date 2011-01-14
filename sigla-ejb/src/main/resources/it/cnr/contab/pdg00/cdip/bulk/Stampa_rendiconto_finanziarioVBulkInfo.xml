@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	shortDescription="Rendiconto Finanziario Gestionale/Decisionale" >
+	<fieldProperty
+		name="findCDSForPrint"
+		property="cds"
+		inputType="SEARCHTOOL"
+		readonlyProperty="decisionale"
+		formName="searchtool"
+		label="CdS" />
+	<fieldProperty
+		name="cdCDSForPrint"
+		property="cdCDSForPrint" />
+	<fieldProperty
+		name="findDipartimento"
+		property="dipartimento"
+		inputType="SEARCHTOOL"
+		readonlyProperty="decisionale"
+		formName="searchtool"
+		label="Dipartimento" />
+	<fieldProperty
+		name="cdDipartimentoForPrint"
+		property="cdDipartimentoForPrint" />
+	<fieldProperty
+		name="ufficiale"
+		property="ufficiale"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Ufficiale" />
+	<fieldProperty
+		name="ti_etr_spe"
+		property="ti_etr_spe"
+		layout="HORIZONTAL"
+		keysProperty="ti_etr_speKeys"
+		inputType="RADIOGROUP"
+		nullable="false" />
+	<fieldProperty
+		name="tipo_stampa"
+		property="tipo_stampa"
+		keysProperty="rendicontoKeys"
+		inputType="SELECT"
+		nullable="false"
+		command="doDefault"
+		label="Tipo" />
+	<fieldProperty
+		name="ragrr_dipartimento"
+		property="ragrr_dipartimento"
+		readonlyProperty="decisionale"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Dipartimento" />
+	<fieldProperty
+		name="ragrr_cds"
+		property="ragrr_cds"
+		readonlyProperty="decisionale"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="CdS" />
+	<fieldProperty
+		name="ragrr_titolo"
+		property="ragrr_titolo"
+		readonlyProperty="decisionale"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Titolo" />
+	<fieldProperty
+		name="ragrr_categoria"
+		property="ragrr_categoria"
+		readonlyProperty="decisionale"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Categoria" />
+	<fieldProperty
+		name="ragrr_capitolo"
+		property="ragrr_capitolo"
+		readonlyProperty="decisionale"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Capitolo" />
+	<fieldProperty
+		name="seleziona"
+		property="esercizio"
+		readonlyProperty="decisionale"
+		inputType="BUTTON"
+		img="img/check10.gif"
+		href="javascript:submitForm('doSeleziona()')" />
+
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		inputSize="2"
+		label="Esercizio" />
+	<formFieldProperty
+		name="seleziona" />
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		inputSize="2"
+		label="Esercizio" />
+	<formFieldProperty
+		name="findCDSForPrint" />
+	<formFieldProperty
+		name="cdCDSForPrint" />
+	<formFieldProperty
+		name="findDipartimento" />
+	<formFieldProperty
+		name="cdDipartimentoForPrint" />
+	<formFieldProperty
+		name="ufficiale" />
+	<formFieldProperty
+		name="ti_etr_spe" />
+	<formFieldProperty
+		name="tipo_stampa"
+		command="" />
+	<formFieldProperty
+		name="ragrr_dipartimento" />
+	<formFieldProperty
+		name="ragrr_cds" />
+	<formFieldProperty
+		name="ragrr_titolo" />
+	<formFieldProperty
+		name="ragrr_categoria" />
+	<formFieldProperty
+		name="ragrr_capitolo" />
+
+	<printForm
+		name="/preventivo/preventivo/Rendiconto_finanziario_decisionale_Parte_Spese.jasper" >
+		<printFieldProperty
+			name="esercizio"
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty
+			name="ufficiale"
+			paramNameJR="ufficiale"
+			paramTypeJR="java.lang.Boolean" />
+	</printForm>
+	<printForm
+		name="/preventivo/preventivo/Rendiconto_finanziario_decisionale_Parte_Entrate.jasper" >
+		<printFieldProperty
+			name="esercizio"
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty
+			name="ufficiale"
+			paramNameJR="ufficiale"
+			paramTypeJR="java.lang.Boolean" />
+	</printForm>
+	<printForm
+		name="/preventivo/preventivo/Rendiconto_finanziario_gestionale_Parte_Entrate.jasper" >
+		<printFieldProperty
+			name="esercizio"
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty
+			name="cdCDSForPrint"
+			paramNameJR="cds"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty
+			name="cdDipartimentoForPrint"
+			paramNameJR="dip"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty
+			name="ufficiale"
+			paramNameJR="ufficiale"
+			paramTypeJR="java.lang.Boolean" />
+		<printFieldProperty
+			name="ragrr_dipartimento"
+			paramNameJR="raggrDIP"
+			paramTypeJR="java.lang.Boolean" />
+		<printFieldProperty
+			name="ragrr_cds"
+			paramNameJR="raggrCDS"
+			paramTypeJR="java.lang.Boolean" />
+		<printFieldProperty
+			name="ragrr_titolo"
+			paramNameJR="raggrTIT"
+			paramTypeJR="java.lang.Boolean" />
+		<printFieldProperty
+			name="ragrr_categoria"
+			paramNameJR="raggrCAT"
+			paramTypeJR="java.lang.Boolean" />
+		<printFieldProperty
+			name="ragrr_capitolo"
+			paramNameJR="raggrCAP"
+			paramTypeJR="java.lang.Boolean" />
+	</printForm>
+	<printForm
+		name="/preventivo/preventivo/Rendiconto_finanziario_gestionale_Parte_Spese.jasper" >
+		<printFieldProperty
+			name="esercizio"
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty
+			name="cdCDSForPrint"
+			paramNameJR="cds"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty
+			name="cdDipartimentoForPrint"
+			paramNameJR="dip"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty
+			name="ufficiale"
+			paramNameJR="ufficiale"
+			paramTypeJR="java.lang.Boolean" />
+		<printFieldProperty
+			name="ragrr_dipartimento"
+			paramNameJR="raggrDIP"
+			paramTypeJR="java.lang.Boolean" />
+		<printFieldProperty
+			name="ragrr_cds"
+			paramNameJR="raggrCDS"
+			paramTypeJR="java.lang.Boolean" />
+		<printFieldProperty
+			name="ragrr_titolo"
+			paramNameJR="raggrTIT"
+			paramTypeJR="java.lang.Boolean" />
+		<printFieldProperty
+			name="ragrr_categoria"
+			paramNameJR="raggrCAT"
+			paramTypeJR="java.lang.Boolean" />
+		<printFieldProperty
+			name="ragrr_capitolo"
+			paramNameJR="raggrCAP"
+			paramTypeJR="java.lang.Boolean" />
+	</printForm>
+</bulkInfo>

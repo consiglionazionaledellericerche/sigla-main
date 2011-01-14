@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk"
+	keyClassName="it.cnr.contab.compensi00.docs.bulk.ConguaglioKey"
+	homeClassName="it.cnr.contab.compensi00.docs.bulk.ConguaglioHome" >
+
+	<defaultColumnMap tableName="CONGUAGLIO" >
+
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="modalitaPagamento.cd_modalita_pag" />
+
+		<columnMapping
+			columnName="CD_TERMINI_PAG"
+			propertyName="terminiPagamento.cd_termini_pag" />
+
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="banca.pg_banca" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="banca.terzo.cd_terzo"
+			fetchOnly="true"/>
+
+		<columnMapping
+			columnName="CD_TIPO_RAPPORTO"
+			propertyName="tipoRapporto.cd_tipo_rapporto" />
+		<columnMapping
+			columnName="CD_TRATTAMENTO"
+			propertyName="tipoTrattamento.cd_trattamento" />
+
+		<columnMapping
+			columnName="CD_CDS_COMPENSO"
+			propertyName="compenso.cd_cds" />
+		<columnMapping
+			columnName="ESERCIZIO_COMPENSO"
+			propertyName="compenso.esercizio" />
+		<columnMapping
+			columnName="CD_UO_COMPENSO"
+			propertyName="compenso.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_COMPENSO"
+			propertyName="compenso.pg_compenso" />
+
+		<columnMapping
+			columnName="PG_COMUNE_ADDCOM_ESTERNO"
+			propertyName="comune_esterno.pg_comune" />
+
+	</defaultColumnMap>		
+
+	<persistentProperty
+		name="modalitaPagamento" />
+	<persistentProperty
+		name="terminiPagamento" />
+	<persistentProperty
+		name="banca" />
+	<persistentProperty
+		name="tipoRapporto" />
+	<persistentProperty
+		name="compenso" />
+	<persistentProperty
+		name="comune_esterno" />
+</SQLPersistentInfo>

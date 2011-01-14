@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio_limite"
+		property="esercizio_limite"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds" />
+	<fieldProperty
+		name="ds_cds"
+		property="ds_cds"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione" />
+	<fieldProperty
+		name="cd_tipo_limite"
+		property="cd_tipo_limite"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Tipo limite" />
+	<fieldProperty
+		name="im_incarichi"
+		property="im_incarichi"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Importo Incarichi" />
+	<fieldProperty
+		name="prc_utilizzato"
+		property="prc_utilizzato"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		formatName="it.cnr.contab.util.PercentFormat"
+		label="Percentuale" />
+
+	<formFieldProperty
+		name="esercizio_limite" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="ds_cds" />
+	<formFieldProperty
+		name="cd_tipo_limite" />
+	<formFieldProperty
+		name="im_incarichi" />
+	<formFieldProperty
+		name="prc_utilizzato" />
+
+	<findFieldProperty
+		name="esercizio_limite" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="ds_cds" />
+	<findFieldProperty
+		name="cd_tipo_limite" />
+	<findFieldProperty
+		name="im_incarichi" />
+
+	<columnFieldProperty
+		name="esercizio_limite" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="ds_cds" />
+	<columnFieldProperty
+		name="cd_tipo_limite" />
+	<columnFieldProperty
+		name="im_incarichi" />
+
+	<columnSet
+		name="incarichiCds">
+		<columnFieldProperty
+			name="cd_cds" />
+		<columnFieldProperty
+			name="ds_cds" 
+			inputType="TEXT"
+			inputSize="50"/>
+		<columnFieldProperty
+			name="im_incarichi" />
+		<columnFieldProperty
+			name="prc_utilizzato" />
+	</columnSet>
+</bulkInfo>

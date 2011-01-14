@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario01.bulk.Inventario_beni_apgKey">
+	<defaultColumnMap
+		tableName="INVENTARIO_BENI_APG">
+		<columnMapping
+			columnName="PG_RIGA"
+			propertyName="pg_riga"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="LOCAL_TRANSACTION_ID"
+			propertyName="local_transaction_id"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false" 
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_riga"
+		partOfOid="true" />
+	<persistentProperty
+		name="local_transaction_id" 
+		partOfOid="true" />
+</SQLPersistentInfo>

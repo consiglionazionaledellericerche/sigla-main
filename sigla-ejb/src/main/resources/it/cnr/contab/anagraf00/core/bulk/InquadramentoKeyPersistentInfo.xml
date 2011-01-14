@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.InquadramentoKey" >
+	<defaultColumnMap
+		tableName="INQUADRAMENTO" >
+		<columnMapping
+			columnName="PG_RIF_INQUADRAMENTO"
+			propertyName="pg_rif_inquadramento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="DT_INI_VALIDITA_RAPPORTO"
+			propertyName="dt_ini_validita_rapporto"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="cd_anag"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="DT_INI_VALIDITA"
+			propertyName="dt_ini_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_TIPO_RAPPORTO"
+			propertyName="cd_tipo_rapporto"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_rif_inquadramento"
+		partOfOid="true" />
+	<persistentProperty
+		name="dt_ini_validita_rapporto"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_anag"
+		partOfOid="true" />
+	<persistentProperty
+		name="dt_ini_validita"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_tipo_rapporto"
+		partOfOid="true" />
+</SQLPersistentInfo>

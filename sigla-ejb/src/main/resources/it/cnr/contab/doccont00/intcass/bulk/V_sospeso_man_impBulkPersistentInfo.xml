@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.intcass.bulk.V_sospeso_man_impBulk"
+	homeClassName="it.cnr.contab.doccont00.intcass.bulk.V_sospeso_man_impHome">
+	<defaultColumnMap
+		tableName="V_SOSPESO_MAN_IMP">
+	<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="esercizio_ori_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_OBBLIGAZIONE"
+			propertyName="im_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="cd_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_ORIGINE"
+			propertyName="cd_uo_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_SOSPESO"
+			propertyName="cd_sospeso"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pg_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ASSOCIATO"
+			propertyName="im_associato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_ENTRATA_SPESA"
+			propertyName="ti_entrata_spesa"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_SOSPESO_RISCONTRO"
+			propertyName="ti_sospeso_riscontro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_SOSPESO"
+			propertyName="im_sospeso"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_MANDATO"
+			propertyName="im_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />	
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_obbligazione" />
+	<persistentProperty
+		name="esercizio_ori_obbligazione" />
+	<persistentProperty
+		name="im_obbligazione" />
+	<persistentProperty
+		name="cd_voce" />
+	<persistentProperty
+		name="cd_uo_origine" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_sospeso" />
+	<persistentProperty
+		name="pg_mandato" />
+	<persistentProperty
+		name="im_associato" />
+	<persistentProperty
+		name="ti_entrata_spesa" />
+	<persistentProperty
+		name="ti_sospeso_riscontro" />
+	<persistentProperty
+		name="im_sospeso" />
+	<persistentProperty
+		name="im_mandato" />	
+	<persistentProperty
+		name="cd_cds" />
+</SQLPersistentInfo>

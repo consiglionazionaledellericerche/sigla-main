@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.coepcoan00.tabrif.bulk.Ass_anag_voce_epKey" >
+	<defaultColumnMap
+		tableName="ASS_ANAG_VOCE_EP" >
+		<columnMapping
+			columnName="TI_ENTITA"
+			propertyName="ti_entita"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ITALIANO_ESTERO"
+			propertyName="italiano_estero"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CLASSIFIC_ANAG"
+			propertyName="cd_classific_anag"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TI_TERZO"
+			propertyName="ti_terzo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ENTE_ALTRO"
+			propertyName="ente_altro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ti_entita"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="italiano_estero"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_classific_anag"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_terzo"
+		partOfOid="true" />
+	<persistentProperty
+		name="ente_altro"
+		partOfOid="true" />
+</SQLPersistentInfo>

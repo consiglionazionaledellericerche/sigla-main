@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	
+	<fieldProperty
+		name="cd_divisa"
+		property="cd_divisa"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice Divisa"
+		nullable="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"/>
+	
+	<fieldProperty
+		name="ds_divisa"
+		property="ds_divisa"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Descrizione"
+		nullable="false"
+		caseSensitiveSearch="false" />
+	
+	<fieldProperty
+		name="precisione"
+		property="precisione"
+		nullable="false"
+		inputType="TEXT"
+		label="Precisione" />
+		
+	<fieldProperty
+		name="fl_calcola_con_diviso"
+		property="fl_calcola_con_diviso"
+		inputType="CHECKBOX"
+		label="Calcola con diviso" />
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_divisa" />
+		<formFieldProperty
+			name="ds_divisa"
+			inputSize="30" />
+	</form>
+	
+	<formFieldProperty
+		name="precisione" />
+	<formFieldProperty
+		name="ds_divisa" />
+	<formFieldProperty
+		name="cd_divisa" />
+	<formFieldProperty
+		name="fl_calcola_con_diviso" />
+
+	<columnFieldProperty
+		name="cd_divisa" />	
+	<columnFieldProperty
+		name="ds_divisa" />
+	<columnFieldProperty
+		name="precisione" />	
+	<columnFieldProperty
+		name="fl_calcola_con_diviso" />
+
+	<findFieldProperty
+		name="precisione" />
+	<findFieldProperty
+		name="ds_divisa" />
+	<findFieldProperty
+		name="cd_divisa" />
+	<findFieldProperty
+		name="fl_calcola_con_diviso" />
+
+</bulkInfo>

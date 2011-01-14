@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.Anagrafico_esercizioBase"
+	keyClassName="it.cnr.contab.anagraf00.core.bulk.Anagrafico_esercizioKey"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.Anagrafico_esercizioHome" >
+	<defaultColumnMap
+		tableName="ANAGRAFICO_ESERCIZIO" >
+		<columnMapping
+			columnName="FL_NOTAXAREA"
+			propertyName="fl_notaxarea"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_NOFAMILYAREA"
+			propertyName="fl_nofamilyarea"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_DETRAZIONE_PERSONALE_ANAG"
+			propertyName="im_detrazione_personale_anag"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_DEDUZIONE_FAMILY_AREA"
+			propertyName="im_deduzione_family_area"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />					
+		<columnMapping
+			columnName="FL_NO_DETRAZIONI_ALTRE"
+			propertyName="fl_no_detrazioni_altre"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" 
+			nullable="false"/>	
+		<columnMapping
+			columnName="FL_NO_DETRAZIONI_FAMILY"
+			propertyName="fl_no_detrazioni_family"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" 
+			nullable="false"/>	
+		<columnMapping
+			columnName="IM_REDDITO_COMPLESSIVO"
+			propertyName="im_reddito_complessivo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />		
+		<columnMapping
+			columnName="IM_REDDITO_ABITAZ_PRINC"
+			propertyName="im_reddito_abitaz_princ"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="FL_APPLICA_DETR_PERS_MAX"
+			propertyName="fl_applica_detr_pers_max"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" 
+			nullable="false"/>									
+	</defaultColumnMap>
+	<persistentProperty
+		name="fl_notaxarea" />
+	<persistentProperty
+		name="fl_nofamilyarea" />		
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="im_detrazione_personale_anag" />
+	<persistentProperty
+		name="im_deduzione_family_area" />	
+	<persistentProperty
+		name="fl_no_detrazioni_altre" />	
+	<persistentProperty
+		name="fl_no_detrazioni_family" />				
+	<persistentProperty
+		name="im_reddito_complessivo" />		
+	<persistentProperty
+		name="im_reddito_abitaz_princ" />			
+	<persistentProperty
+		name="fl_applica_detr_pers_max" />					
+</SQLPersistentInfo>

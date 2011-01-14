@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ente"
+		property="ente"
+		maxLength="2"
+		inputSize="2"
+		inputType="TEXT"
+		label="ente"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="sede"
+		property="sede"
+		maxLength="6"
+		inputSize="6"
+		inputType="TEXT"
+		label="sede"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="rapporto"
+		property="rapporto"
+		maxLength="2"
+		inputSize="2"
+		inputType="TEXT"
+		label="rapporto"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="matricola"
+		property="matricola"
+		inputType="TEXT"
+		label="matricola" />
+	<fieldProperty
+		name="nominativo"
+		property="nominativo"
+		maxLength="60"
+		inputSize="60"
+		inputType="TEXT"
+		label="nominativo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		label="cd_terzo" />
+
+	<formFieldProperty
+		name="ente" />
+	<formFieldProperty
+		name="sede" />
+	<formFieldProperty
+		name="rapporto" />
+	<formFieldProperty
+		name="matricola" />
+	<formFieldProperty
+		name="nominativo" />
+	<formFieldProperty
+		name="cd_terzo" />
+
+	<columnFieldProperty
+		name="ente" />
+	<columnFieldProperty
+		name="sede" />
+	<columnFieldProperty
+		name="rapporto" />
+	<columnFieldProperty
+		name="matricola" />
+	<columnFieldProperty
+		name="nominativo" />
+	<columnFieldProperty
+		name="cd_terzo" />
+
+	<findFieldProperty
+		name="ente" />
+	<findFieldProperty
+		name="sede" />
+	<findFieldProperty
+		name="rapporto" />
+	<findFieldProperty
+		name="matricola" />
+	<findFieldProperty
+		name="nominativo" />
+	<findFieldProperty
+		name="cd_terzo" />
+
+</bulkInfo>

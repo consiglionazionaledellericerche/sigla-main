@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.consultazioni.bulk.V_cons_commesse_contrattiBulk"
+	homeClassName="it.cnr.contab.config00.consultazioni.bulk.V_cons_commesse_contrattiHome">
+	<defaultColumnMap
+		tableName="V_CONS_COMMESSE_CONTRATTI">
+		<columnMapping
+			columnName="CD_COMMESSA"
+			propertyName="cd_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_COMMESSA"
+			propertyName="ds_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="400"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="ds_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="400"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_CONTRATTO_PADRE"
+			propertyName="esercizio_contratto_padre"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_CONTRATTO_PADRE"
+			propertyName="stato_contratto_padre"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />						
+		<columnMapping
+			columnName="PG_CONTRATTO_PADRE"
+			propertyName="pg_contratto_padre"
+			sqlTypeName="DECIMAL"
+			columnSize="9"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_CONTRATTO"
+			propertyName="esercizio_contratto"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_CONTRATTO"
+			propertyName="stato_contratto"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />						
+		<columnMapping
+			columnName="PG_CONTRATTO"
+			propertyName="pg_contratto"
+			sqlTypeName="DECIMAL"
+			columnSize="9"
+			nullable="true" />
+		<columnMapping
+			columnName="OGGETTO_CONTRATTO"
+			propertyName="oggetto_contratto"
+			sqlTypeName="VARCHAR"
+			columnSize="500"
+			nullable="true" />
+		<columnMapping
+			columnName="TOTALE_ENTRATE"
+			propertyName="totale_entrate"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TOTALE_SPESE"
+			propertyName="totale_spese"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_commessa" />
+	<persistentProperty
+		name="ds_commessa" />
+	<persistentProperty
+		name="cd_progetto" />
+	<persistentProperty
+		name="ds_progetto" />
+	<persistentProperty
+		name="esercizio_contratto_padre" />
+	<persistentProperty
+		name="stato_contratto_padre" />				
+	<persistentProperty
+		name="pg_contratto_padre" />
+	<persistentProperty
+		name="esercizio_contratto" />
+	<persistentProperty
+		name="stato_contratto" />				
+	<persistentProperty
+		name="pg_contratto" />
+	<persistentProperty
+		name="oggetto_contratto" />
+	<persistentProperty
+		name="totale_entrate" />
+	<persistentProperty
+		name="totale_spese" />
+</SQLPersistentInfo>

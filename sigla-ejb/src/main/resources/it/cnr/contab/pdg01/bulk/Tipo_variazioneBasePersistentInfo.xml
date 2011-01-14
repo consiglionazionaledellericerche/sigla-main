@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg01.bulk.Tipo_variazioneBase"
+	keyClassName="it.cnr.contab.pdg01.bulk.Tipo_variazioneKey"
+	homeClassName="it.cnr.contab.pdg01.bulk.Tipo_variazioneHome">
+	<defaultColumnMap
+		tableName="TIPO_VARIAZIONE">
+		<columnMapping
+			columnName="DS_TIPO_VARIAZIONE"
+			propertyName="ds_tipo_variazione"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_TIPO_VARIAZIONE"
+			propertyName="ti_tipo_variazione"
+			sqlTypeName="VARCHAR"
+			columnSize="15"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_UTILIZZABILE_ENTE"
+			propertyName="fl_utilizzabile_ente"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_UTILIZZABILE_AREA"
+			propertyName="fl_utilizzabile_area"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_UTILIZZABILE_CDS"
+			propertyName="fl_utilizzabile_cds"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="TI_APPROVAZIONE"
+			propertyName="ti_approvazione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ds_tipo_variazione" />
+	<persistentProperty
+		name="ti_tipo_variazione" />
+	<persistentProperty
+		name="fl_utilizzabile_ente" />
+	<persistentProperty
+		name="fl_utilizzabile_area" />
+	<persistentProperty
+		name="fl_utilizzabile_cds" />
+	<persistentProperty
+		name="ti_approvazione" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

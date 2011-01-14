@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Stipendi Parte Spesa"
+          longDescription="Stipendi Parte Spesa">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="mese"
+		property="stipendi_cofi"
+		printProperty="mese"
+		optionsProperty="tipoStipendi_cofi"
+		keysProperty="meseKeys"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		nullable="false"
+	 	enabledOnSearch="false"
+		label="Mese"/>
+	<fieldProperty
+		name="meseFind"
+		property="mese"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		nullable="true"
+		enabledOnSearch="true"
+        keysProperty="meseKeys"
+		label="Mese"/>		
+	<fieldProperty
+		name="find_stipendi_obb"
+		property="stipendi_cofi_obb"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Impegno" 
+		caseSensitiveSearch="false"		
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"		
+		nullable="false"/>
+	<fieldProperty
+		name="cd_cds_obbligazione"
+		property="cd_cds_obbligazione"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds obbligazione" />
+	<fieldProperty
+		name="esercizio_obbligazione"
+		property="esercizio_obbligazione"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio obbligazione" />
+	<fieldProperty
+		name="esercizio_ori_obbligazione"
+		property="esercizio_ori_obbligazione"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio origine obbligazione" />
+	<fieldProperty
+		name="pg_obbligazione"
+		property="pg_obbligazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo obbligazione" />
+	<fieldProperty
+		name="im_totale"
+		property="im_totale"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		label="Importo" />
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="esercizio"
+			inputType="TEXT" />
+		<formFieldProperty
+			name="mese"
+			inputType="TEXT" />			
+	</form>	
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="mese" />
+	<formFieldProperty
+		name="find_stipendi_obb" />
+	<formFieldProperty
+		name="cd_cds_obbligazione" />
+	<formFieldProperty
+		name="esercizio_obbligazione" />
+	<formFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<formFieldProperty
+		name="pg_obbligazione" />
+	<formFieldProperty
+		name="im_totale" />
+	<findFieldProperty
+		name="meseFind" />
+	<findFieldProperty
+		name="cd_cds_obbligazione" />
+	<findFieldProperty
+		name="esercizio_obbligazione" />
+	<findFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<findFieldProperty
+		name="pg_obbligazione" />
+	<findFieldProperty
+		name="im_totale" />
+	<columnFieldProperty
+		name="esercizio" />		
+	<columnFieldProperty
+		name="meseFind" />
+	<columnFieldProperty
+		name="cd_cds_obbligazione" />
+	<columnFieldProperty
+		name="esercizio_obbligazione" />
+	<columnFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<columnFieldProperty
+		name="pg_obbligazione" />
+	<columnFieldProperty
+		name="im_totale" />
+	<columnSet name="elaborazione_flussi">
+		<columnFieldProperty name="cd_cds_obbligazione"/>
+		<columnFieldProperty name="esercizio_obbligazione"/>
+		<columnFieldProperty name="esercizio_ori_obbligazione"/>
+		<columnFieldProperty name="pg_obbligazione"/>
+		<columnFieldProperty name="im_totale"/>
+	</columnSet>		
+</bulkInfo>

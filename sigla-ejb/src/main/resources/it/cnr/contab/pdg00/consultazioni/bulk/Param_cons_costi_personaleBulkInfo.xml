@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Ripartizione costi" longDescription="Ripartizione costi">
+	
+	<fieldProperty 
+		name="esercizio" 
+		property="esercizio" 
+		inputType="ROTEXT" 
+		inputSize="4" 
+		maxLength="4" 
+		label="Esercizio"/>
+	<fieldProperty 
+		name="mese" 
+		property="mese" 
+		inputType="SELECT" 
+		label="Mese" 
+		keysProperty="meseKeys"
+		nullable="false"/>
+	<fieldProperty 
+		name="cds" 
+		property="cds" 
+		inputType="ROTEXT" 
+		inputSize="10" 
+		maxLength="10" 
+		label="CDS"/>
+	
+
+	 <fieldProperty
+		name="find_uo"
+		property="v_uo"
+		inputType="SEARCHTOOL"
+		formName="searchtoolUO"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		readonlyProperty="ROFindV_uo"
+		label="Unità organizzativa"/>
+	<fieldProperty
+		name="cd_uo"
+		property="v_uo.cd_unita_organizzativa"
+		readonlyProperty="ROFindV_uo"/>	
+	<fieldProperty
+		name="ds_uo"
+		property="v_uo.ds_unita_organizzativa"/>
+		
+	<fieldProperty
+		name="find_commessa"
+		property="v_commessa"
+		inputType="SEARCHTOOL"
+		formName="searchtool_commessa"
+		enabledOnSearch="true"
+		completeOnSave="true"
+		columnSet="filtro_ricerca_commesse"
+		freeSearchSet="filtro_ricerca_commesse"
+		label="Commessa"/>
+	<fieldProperty
+		name="cd_commessa"
+		property="v_commessa.cd_progetto"/>
+	<fieldProperty
+		name="ds_commessa"
+		property="v_commessa.ds_progetto" />
+	
+	<fieldProperty
+		name="find_modulo"
+		property="v_modulo"
+		inputType="SEARCHTOOL"
+		formName="searchtool_modulo"
+		completeOnSave="true"
+		columnSet="filtro_ricerca_moduli"
+		freeSearchSet="filtro_ricerca_moduli"	
+		enabledOnSearch="true" 
+		label="Modulo"/>
+	<fieldProperty
+		name="cd_modulo"
+		property="v_modulo.cd_progetto"/>
+	<fieldProperty
+		name="ds_modulo"
+		property="v_modulo.ds_progetto"/>
+		
+	<fieldProperty
+		name="find_dipendente"
+		property="v_dipendente"
+		inputType="SEARCHTOOL"
+		formName="searchtool_dipendente"
+		columnSet="nominativo"
+		freeSearchSet="nominativo"
+		enabledOnSearch="true" 
+		label="Dipendente"/>
+	<fieldProperty
+		name="id_matricola"
+		property="v_dipendente.id_matricola"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="nominativo"
+		property="v_dipendente.nominativo"
+		maxLength="60"
+		inputSize="20"
+		inputType="ROTEXT"
+		enabledOnEdit="false"
+		enabledOnSearch="true" />	
+
+	
+	<formFieldProperty name="esercizio"/>
+	<formFieldProperty name="mese"/>
+	<formFieldProperty name="uo"/>
+	<formFieldProperty name="cds"/>
+
+	<formFieldProperty name="find_uo" />
+	<formFieldProperty name="cd_uo" />
+	<formFieldProperty name="ds_uo" />
+	
+	<formFieldProperty name="find_commessa" />
+	<formFieldProperty name="cd_commessa" />
+	<formFieldProperty name="ds_commessa" />
+	
+	<formFieldProperty name="find_modulo" />
+	<formFieldProperty name="cd_modulo" />
+	<formFieldProperty name="ds_modulo" />
+	
+		
+	<formFieldProperty name="find_dipendente" />
+	<formFieldProperty name="id_matricola" />
+	<formFieldProperty name="nominativo" />
+		
+</bulkInfo>

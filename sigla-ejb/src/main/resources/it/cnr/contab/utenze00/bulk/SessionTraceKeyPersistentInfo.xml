@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.SessionTraceKey">
+	<defaultColumnMap
+		tableName="SESSION_TRACE">
+		<columnMapping
+			columnName="ID_SESSIONE"
+			propertyName="id_sessione"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="id_sessione"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<!-- ************************** FIELD PROPERTY *********************** -->
+	<fieldProperty
+		name="modificaDocAmm"
+		inputType="BUTTON"
+		label="Gestisci"
+		href="javascript:submitForm('doModificaDocumentoAmministrativo')" />	
+
+	<fieldProperty
+		name="modificaDocCont"
+		inputType="BUTTON"
+		label="Gestisci"
+		href="javascript:submitForm('doModificaDocumentoContabile')" />	
+
+	<!-- ************************ FORM FIELD PROPERTY ******************** -->
+	<formFieldProperty name="modificaDocAmm" />
+	<formFieldProperty name="modificaDocCont" />
+
+	<!-- ************************ FIND FIELD PROPERTY ******************** -->
+
+	<!-- ************************ COLUMN FIELD PROPERTY ****************** -->
+
+	<!-- ************************ COLUMN SET ***************************** -->
+
+</bulkInfo>

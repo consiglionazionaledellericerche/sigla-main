@@ -1,0 +1,19 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.MandatoBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.MandatoHome" >
+	<defaultColumnMap
+		tableName="MANDATO" >
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cds.cd_unita_organizzativa"/>
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa"/>
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="cds"
+		partOfOid= "true"/>			
+	<persistentProperty
+		name="unita_organizzativa" />	
+</SQLPersistentInfo>

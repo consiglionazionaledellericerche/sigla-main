@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.Pagamento_esternoBase"
+	keyClassName="it.cnr.contab.anagraf00.core.bulk.Pagamento_esternoKey"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.Pagamento_esternoHome" >
+	<defaultColumnMap
+		tableName="PAGAMENTO_ESTERNO" >
+		<columnMapping
+			columnName="DT_PAGAMENTO"
+			propertyName="dt_pagamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" 
+			nullable="false"/>
+		<columnMapping
+			columnName="IM_PAGAMENTO"
+			propertyName="im_pagamento"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" 
+			nullable="false" />
+		<columnMapping
+			columnName="IM_SPESE"
+			propertyName="im_spese"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="DS_PAGAMENTO"
+			propertyName="ds_pagamento"
+			sqlTypeName="VARCHAR"
+			columnSize="300" 
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_RAPPORTO"
+			propertyName="cd_tipo_rapporto"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />			
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_tipo_rapporto" />	
+	<persistentProperty
+		name="dt_pagamento" />
+	<persistentProperty
+		name="im_pagamento" />
+	<persistentProperty
+		name="im_spese" />
+	<persistentProperty
+		name="ds_pagamento" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

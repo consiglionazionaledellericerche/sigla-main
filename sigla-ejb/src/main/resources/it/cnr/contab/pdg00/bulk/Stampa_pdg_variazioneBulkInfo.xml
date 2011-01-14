@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Stampa Variazioni PdG">
+
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputSize="2"		
+		inputType="ROTEXT"
+		label="Esercizio" />
+
+	<fieldProperty
+		name="findpdg_variazioneForPrint"
+		property="pdg_variazioneForPrint"
+		inputType="SEARCHTOOL"
+		formName="searchtool_stampa"
+		nullable="false"
+		enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"	
+		readonlyProperty="pdg_variazioneForPrintEnabled"
+		completeOnSave="true"
+		label="Variazione"
+		/>
+	<fieldProperty
+		name="pg_variazione_pdgForPrint"
+		property="pg_variazione_pdgForPrint"/>
+		
+	<!-- <fieldProperty
+		name="pg_variazione_pdg"
+		property="pdg_variazioneForPrint.pg_variazione_pdg"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"	 />	
+	<fieldProperty
+		name="ds_variazione"
+		property="pdg_variazioneForPrint.ds_variazione"
+		maxLength="50"
+		inputSize="50"
+		inputType="ROTEXT"
+		nullable="true"
+		enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"	 />	 -->
+
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="findpdg_variazioneForPrint" />
+	<formFieldProperty name="pg_variazione_pdgForPrint" />
+	<formFieldProperty name="ds_variazione" /> 
+	<!-- <formFieldProperty name="pg_Variazione_pdgForPrint" /> -->
+	
+	<printForm
+		name="/cnrpreventivo/pdg/stampa_variazioni_pdg.rpt">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="pdg_variazioneForPrint.pg_variazione_pdg"
+			parameterPosition="1"
+			parameterType="STRING" />			
+	</printForm>
+	
+	
+	<printForm
+		name="/cnrpreventivo/pdg/stampa_variazioni_pdg.jasper">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING" 
+			paramNameJR="Esercizio"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="pg_variazione_pdgForPrint"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="Variazione"
+			paramTypeJR="java.lang.Integer" />			
+	</printForm>
+	
+		
+	
+</bulkInfo>

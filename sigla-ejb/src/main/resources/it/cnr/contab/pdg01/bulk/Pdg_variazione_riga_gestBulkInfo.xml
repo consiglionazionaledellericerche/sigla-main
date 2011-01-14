@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnFreeSearch="false"
+		nullable="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_variazione_pdg"
+		property="pg_variazione_pdg"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero Variazione" />
+	<fieldProperty
+		name="pg_riga"
+		property="pg_riga"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Riga Variazione" />
+	<fieldProperty
+		name="cd_cdr_assegnatario"
+		property="cd_cdr_assegnatario"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Cdr assegnatario" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+		label="G.a.e." />
+	<fieldProperty
+		name="ds_linea_attivita"
+		property="linea_attivita.ds_linea_attivita"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione" />
+	<fieldProperty
+		name="cd_cds_area"
+		property="cd_cds_area"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Istituto/Area" />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		nullable="false"
+		label="Appartenenza voce" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		nullable="false"
+		label="E/S" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		nullable="false"
+		label="Voce del Piano" />
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="elemento_voce.ds_elemento_voce"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione" />
+	<fieldProperty
+		name="dt_registrazione"
+		property="dt_registrazione"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		label="Data registrazione" />
+	<fieldProperty
+		name="descrizione"
+		property="descrizione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		nullable="true"
+		label="Descrizione" />
+	<fieldProperty
+		name="categoria_dettaglio"
+		property="categoria_dettaglio"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		nullable="false"
+		label="Categoria/Dettaglio" />
+	<fieldProperty
+		name="im_spese_gest_decentrata_int"
+		property="im_spese_gest_decentrata_int"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		nullable="false"
+		readonlyProperty="RODecentrataInterna"							
+		label="Spese Decentrate Interne" />
+	<fieldProperty
+		name="im_spese_gest_decentrata_est"
+		property="im_spese_gest_decentrata_est"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		nullable="false"
+		readonlyProperty="RODecentrataEsterna"
+		label="Spese Decentrate Esterne" />
+	<fieldProperty
+		name="im_spese_gest_accentrata_int"
+		property="im_spese_gest_accentrata_int"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		nullable="false"
+		readonlyProperty="ROAccentrataInterna"
+		label="Spese Accentrate Interne" />
+	<fieldProperty
+		name="im_spese_gest_accentrata_est"
+		property="im_spese_gest_accentrata_est"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		nullable="false"
+		readonlyProperty="ROAccentrataEsterna"
+		label="Spese Accentrate Esterne" />
+	<fieldProperty
+		name="im_entrata"
+		property="im_entrata"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		nullable="false"
+		readonlyProperty="ROImportoEntrata"
+		label="Importo" />
+	<fieldProperty
+		name="pg_riga_clgs"
+		property="pg_riga_clgs"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Progressivo riga di variazione collegato" />
+	<fieldProperty
+		name="cd_cdr_assegnatario_clgs"
+		property="cd_cdr_assegnatario_clgs"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cdr collegato" />
+	<fieldProperty
+		name="cd_linea_attivita_clgs"
+		property="cd_linea_attivita_clgs"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="G.a.e. collegato" />
+	<fieldProperty
+		name="fl_visto_dip_variazioni"
+		property="fl_visto_dip_variazioni"
+		inputType="CHECKBOX"
+		label="Visto" />
+	<fieldProperty
+		name="iconaVistoDipartimento"
+		property="iconaVistoDipartimento"
+		inputType="TEXT"
+		label="Visto" />
+
+	<fieldProperty
+		name="dipartimento"
+		property="linea_attivita.progetto.progettopadre.progettopadre.cd_dipartimento"
+		descProperty="linea_attivita.progetto.progettopadre.progettopadre.dipartimento.ds_dipartimento"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="5"
+		maxLength="10"
+		label="Dipartimento" />		
+	<fieldProperty
+		name="progetto"
+		property="linea_attivita.progetto.progettopadre.progettopadre.cd_progetto"
+		descProperty="linea_attivita.progetto.progettopadre.progettopadre.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="10"
+		maxLength="10"
+		label="Progetto" />
+	<fieldProperty
+		name="commessa"
+		property="linea_attivita.progetto.progettopadre.cd_progetto"
+		descProperty="linea_attivita.progetto.progettopadre.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="15"
+		maxLength="10"
+		label="Commessa" />
+	<fieldProperty
+		name="modulo"
+		property="linea_attivita.progetto.cd_progetto"
+		descProperty="linea_attivita.progetto.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="20"
+		maxLength="10"
+		label="Modulo di Commessa" />
+
+	<fieldProperty
+		name="find_linea_attivita"
+		property="linea_attivita"
+		inputType="SEARCHTOOL"
+		formName="searchtool_denominazione"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		readonlyProperty="ROLinea_attivita"
+		nullable="false"
+		label="G.a.e." />
+	<fieldProperty
+		name="find_elemento_voce"
+		property="elemento_voce"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		readonlyProperty="ROElemento_voce"
+		nullable="false"
+		label="Voce del Piano" />
+	<fieldProperty
+		name="searchtool_progetto"
+		property="linea_attivita.progetto"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROprogetto"
+		formName="form_searchtool_progetto"
+		label="Modulo di attivit&#224;"
+		/>
+	<fieldProperty
+        name="searchtool_area"
+        property="area"
+        inputType="SEARCHTOOL"
+        formName="searchtool"
+        enabledOnInsert="true"
+        enabledOnSearch="true"
+        nullable="false"
+     	readonlyPropertyOnEdit="ROCd_cds_area"
+        label="Area" />		
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_variazione_pdg" />
+	<formFieldProperty
+		name="pg_riga" />
+	<formFieldProperty
+		name="cd_cdr_assegnatario" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="cd_cds_area" />
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="dt_registrazione" />
+	<formFieldProperty
+		name="descrizione" />
+	<formFieldProperty
+		name="categoria_dettaglio" />
+	<formFieldProperty
+		name="im_spese_gest_decentrata_int" />
+	<formFieldProperty
+		name="im_spese_gest_decentrata_est" />
+	<formFieldProperty
+		name="im_spese_gest_accentrata_int" />
+	<formFieldProperty
+		name="im_spese_gest_accentrata_est" />
+	<formFieldProperty
+		name="im_entrata" />
+	<formFieldProperty
+		name="pg_riga_clgs" />
+	<formFieldProperty
+		name="cd_cdr_assegnatario_clgs" />
+	<formFieldProperty
+		name="cd_linea_attivita_clgs" />
+	<formFieldProperty
+		name="fl_visto_dip_variazioni" />
+
+	<formFieldProperty
+		name="dipartimento" />	
+	<formFieldProperty
+		name="progetto" />	
+	<formFieldProperty
+		name="commessa" />	
+	<formFieldProperty
+		name="modulo" />	
+
+	<formFieldProperty
+		name="find_elemento_voce" />
+	<formFieldProperty
+		name="find_linea_attivita" />
+	<formFieldProperty
+		name="searchtool_progetto" />
+	<formFieldProperty
+		name="searchtool_area" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_variazione_pdg" />
+	<findFieldProperty
+		name="pg_riga" />
+	<findFieldProperty
+		name="cd_cdr_assegnatario" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="cd_cds_area" />
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="dt_registrazione" />
+	<findFieldProperty
+		name="descrizione" />
+	<findFieldProperty
+		name="categoria_dettaglio" />
+	<findFieldProperty
+		name="im_spese_gest_decentrata_int" />
+	<findFieldProperty
+		name="im_spese_gest_decentrata_est" />
+	<findFieldProperty
+		name="im_spese_gest_accentrata_int" />
+	<findFieldProperty
+		name="im_spese_gest_accentrata_est" />
+	<findFieldProperty
+		name="im_entrata" />
+	<findFieldProperty
+		name="pg_riga_clgs" />
+	<findFieldProperty
+		name="cd_cdr_assegnatario_clgs" />
+	<findFieldProperty
+		name="cd_linea_attivita_clgs" />
+	<findFieldProperty
+		name="fl_visto_dip_variazioni" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_variazione_pdg" />
+	<columnFieldProperty
+		name="pg_riga" />
+	<columnFieldProperty
+		name="cd_cdr_assegnatario" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="cd_cds_area" />
+	<columnFieldProperty
+		name="ti_appartenenza" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="dt_registrazione" />
+	<columnFieldProperty
+		name="descrizione" />
+	<columnFieldProperty
+		name="categoria_dettaglio" />
+	<columnFieldProperty
+		name="im_spese_gest_decentrata_int" />
+	<columnFieldProperty
+		name="im_spese_gest_decentrata_est" />
+	<columnFieldProperty
+		name="im_spese_gest_accentrata_int" />
+	<columnFieldProperty
+		name="im_spese_gest_accentrata_est" />
+	<columnFieldProperty
+		name="im_entrata" />
+	<columnFieldProperty
+		name="pg_riga_clgs" />
+	<columnFieldProperty
+		name="cd_cdr_assegnatario_clgs" />
+	<columnFieldProperty
+		name="cd_linea_attivita_clgs" />
+</bulkInfo>

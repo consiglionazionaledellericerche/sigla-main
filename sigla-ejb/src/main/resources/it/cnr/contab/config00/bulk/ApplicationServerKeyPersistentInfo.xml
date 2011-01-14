@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.bulk.ApplicationServerKey">
+	<defaultColumnMap
+		tableName="APPLICATION_SERVER">
+		<columnMapping
+			columnName="HOSTNAME"
+			propertyName="hostname"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="SESSION_ID"
+			propertyName="session_id"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="hostname"
+		partOfOid="true" />
+	<persistentProperty
+		name="session_id"
+		partOfOid="true" />
+</SQLPersistentInfo>

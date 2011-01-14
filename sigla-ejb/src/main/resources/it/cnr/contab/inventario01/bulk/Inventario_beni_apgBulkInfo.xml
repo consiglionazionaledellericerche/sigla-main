@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice identificativo dell'unità organizzativa o CDS" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice identificativo del centro di responsabilità" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio di riferimento" />
+	<fieldProperty
+		name="pg_riga"
+		property="pg_riga"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo inserimento" />	
+	<fieldProperty
+		name="pg_fattura"
+		property="pg_fattura"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Protocollo interno di numerazione delle fatture passive o attive" />
+	<fieldProperty
+		name="progressivo_riga"
+		property="progressivo_riga"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo numerazione righe all'interno di una fattura" />
+	<fieldProperty
+		name="pg_inventario"
+		property="pg_inventario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice del'inventario" />
+	<fieldProperty
+		name="nr_inventario"
+		property="nr_inventario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero che identifica il bene all'interno di un inventario" />
+	<fieldProperty
+		name="progressivo"
+		property="progressivo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero che identifica il bene accesorio all'interno di un inventario" />
+	<fieldProperty
+		name="local_transaction_id"
+		property="local_transaction_id"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Identificativo univoco della transazione proprietaria dei dati" />
+	<fieldProperty
+		name="variazione_meno"
+		property="variazione_meno"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo relativo alla somma di variazioni che diminuiscono il" />
+	<fieldProperty
+		name="fl_totalmente_scaricato"
+		property="fl_totalmente_scaricato"
+		inputType="TEXT"
+		label="Flag che indica se il bene risulta totalmente scaricato" />
+	<fieldProperty
+		name="fl_visibile"
+		property="fl_visibile"
+		inputType="CHECKBOX"
+		label="Flag ad uso applicativo che indica se il bene deve essere visualizzato" />
+	<fieldProperty
+		name="valore_alienazione"
+		property="valore_alienazione"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Valore di alienazione del bene" />
+	<fieldProperty
+		name="variazione_piu"
+		property="variazione_piu"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo relativo alla somma di variazioni che aumentano il valore del bene" />
+	<fieldProperty
+		name="id_bene_origine"
+		property="id_bene_origine"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Identificativo originale del bene nel sistema di provenienza. E' valorizzato solo per i beni provenienti da migrazione." />
+	<fieldProperty
+		name="fl_migrato"
+		property="fl_migrato"
+		inputType="TEXT"
+		label="Indicatore di bene recuperato da migrazione." />
+	<fieldProperty
+		name="fl_trasf_come_principale"
+		property="fl_trasf_come_principale"
+		inputType="TEXT"
+		label="Indicatore di bene accessorio che viene trasferito come bene principale." />
+	<fieldProperty
+		name="pg_inventario_principale"
+		property="pg_inventario_principale"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Identificativo inventario del bene principale di riferimento per il trasferimento di un bene (accessorio o principale) come accessorio." />
+	<fieldProperty
+		name="nr_inventario_principale"
+		property="nr_inventario_principale"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero che identifica il bene principale di riferimento per il trasferimento di un bene (accessorio o principale) come accessorio (utilizzato solo per trasferimento intra-inventario)." />
+	<fieldProperty
+		name="progressivo_principale"
+		property="progressivo_principale"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero che identifica il bene accessorio di riferimento per il trasferimento di un bene (accessorio o principale) come accessorio (utilizzato solo per trasferimento intra-inventario)." />
+	<fieldProperty
+		name="ti_documento"
+		property="ti_documento"
+		maxLength="1"
+		inputSize="1"
+		inputType="ROTEXT"
+		label="Tipo Documento" />
+	<fieldProperty
+		name="pg_buono_c_s"
+		property="pg_buono_c_s"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero Buono" />	
+	<fieldProperty
+		name="dt_validita_variazione"
+		property="dt_validita_variazione"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short" />	
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="pg_riga" />	
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_fattura" />
+	<formFieldProperty
+		name="progressivo_riga" />
+	<formFieldProperty
+		name="pg_inventario" />
+	<formFieldProperty
+		name="nr_inventario" />
+	<formFieldProperty
+		name="progressivo" />
+	<formFieldProperty
+		name="local_transaction_id" />
+	<formFieldProperty
+		name="variazione_meno" />
+	<formFieldProperty
+		name="fl_totalmente_scaricato" />
+	<formFieldProperty
+		name="fl_visibile" />
+	<formFieldProperty
+		name="valore_alienazione" />
+	<formFieldProperty
+		name="variazione_piu" />
+	<formFieldProperty
+		name="id_bene_origine" />
+	<formFieldProperty
+		name="fl_migrato" />
+	<formFieldProperty
+		name="fl_trasf_come_principale" />
+	<formFieldProperty
+		name="pg_inventario_principale" />
+	<formFieldProperty
+		name="nr_inventario_principale" />
+	<formFieldProperty
+		name="progressivo_principale" />
+	<formFieldProperty
+		name="ti_documento" />
+	<formFieldProperty
+		name="pg_buono_c_s" />	
+	<formFieldProperty
+		name="dt_validita_variazione" />			
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_fattura" />
+	<findFieldProperty
+		name="progressivo_riga" />
+	<findFieldProperty
+		name="pg_inventario" />
+	<findFieldProperty
+		name="nr_inventario" />
+	<findFieldProperty
+		name="progressivo" />
+	<findFieldProperty
+		name="local_transaction_id" />
+	<findFieldProperty
+		name="variazione_meno" />
+	<findFieldProperty
+		name="fl_totalmente_scaricato" />
+	<findFieldProperty
+		name="fl_visibile" />
+	<findFieldProperty
+		name="valore_alienazione" />
+	<findFieldProperty
+		name="variazione_piu" />
+	<findFieldProperty
+		name="id_bene_origine" />
+	<findFieldProperty
+		name="fl_migrato" />
+	<findFieldProperty
+		name="fl_trasf_come_principale" />
+	<findFieldProperty
+		name="pg_inventario_principale" />
+	<findFieldProperty
+		name="nr_inventario_principale" />
+	<findFieldProperty
+		name="progressivo_principale" />
+	<findFieldProperty
+		name="ti_documento" />
+	<findFieldProperty
+		name="pg_buono_c_s" />		
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_fattura" />
+	<columnFieldProperty
+		name="progressivo_riga" />
+	<columnFieldProperty
+		name="pg_inventario" />
+	<columnFieldProperty
+		name="nr_inventario" />
+	<columnFieldProperty
+		name="progressivo" />
+	<columnFieldProperty
+		name="local_transaction_id" />
+	<columnFieldProperty
+		name="variazione_meno" />
+	<columnFieldProperty
+		name="fl_totalmente_scaricato" />
+	<columnFieldProperty
+		name="fl_visibile" />
+	<columnFieldProperty
+		name="valore_alienazione" />
+	<columnFieldProperty
+		name="variazione_piu" />
+	<columnFieldProperty
+		name="id_bene_origine" />
+	<columnFieldProperty
+		name="fl_migrato" />
+	<columnFieldProperty
+		name="fl_trasf_come_principale" />
+	<columnFieldProperty
+		name="pg_inventario_principale" />
+	<columnFieldProperty
+		name="nr_inventario_principale" />
+	<columnFieldProperty
+		name="progressivo_principale" />
+	<columnFieldProperty
+		name="ti_documento" />
+	<columnFieldProperty
+		name="pg_buono_c_s" />	
+</bulkInfo>

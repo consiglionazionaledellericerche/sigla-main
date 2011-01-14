@@ -1,0 +1,41 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_termini_pag"
+		property="cd_termini_pag"
+		label="Codice"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="ds_termini_pag"
+		property="ds_termini_pag"
+		label="Descrizione"
+		inputType="TEXT" />
+
+	<columnFieldProperty
+		name="cd_termini_pag"
+		/>
+	<columnFieldProperty
+		name="ds_termini_pag"
+		/>
+
+	<formFieldProperty
+		name="cd_termini_pag"
+		/>
+	<formFieldProperty
+		name="ds_termini_pag"
+		/>
+
+	<findFieldProperty
+		name="cd_termini_pag"
+		/>
+	<findFieldProperty
+		name="ds_termini_pag"
+		/>
+
+
+</bulkInfo>

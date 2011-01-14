@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	
+	<form
+		name="/cnrdoccont/doccont/stampariscontri.rpt">
+		<formFieldProperty 
+			name="esercizio"
+			inputType="ROTEXT" />
+		<formFieldProperty 
+			name="cd_cds"
+			inputType="ROTEXT" />
+		<formFieldProperty 
+			name="dataInizio" />
+		<formFieldProperty 
+			name="dataFine" />
+		<formFieldProperty
+			name="ti_entrata_spesa" />
+	</form>
+
+	<printForm
+		name="/cnrdoccont/doccont/stampariscontri.rpt">
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="dataInizio"
+			parameterPosition="1"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="dataFine"
+			parameterPosition="2"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="ti_entrata_spesa"
+			parameterPosition="3"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="4"
+			parameterType="STRING" />
+	</printForm>
+	<printForm
+		name="/cnrdoccont/doccont/stampariscontri.jasper">
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="cds"
+			paramTypeJR="java.lang.String"  />
+		<printFieldProperty 
+			name="dataInizio"
+			parameterPosition="1"
+			parameterType="DATE" 
+			paramNameJR="da_data"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty 
+			name="dataFine"
+			parameterPosition="2"
+			parameterType="DATE" 
+			paramNameJR="a_data"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty 
+			name="ti_entrata_spesa"
+			parameterPosition="3"
+			parameterType="STRING" 
+			paramNameJR="tipo"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="4"
+			parameterType="STRING" 
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer" />
+	</printForm>
+
+</bulkInfo>

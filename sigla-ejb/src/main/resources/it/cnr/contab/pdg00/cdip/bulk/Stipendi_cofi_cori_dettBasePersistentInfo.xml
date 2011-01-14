@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofi_cori_dettBase"
+	homeClassName="it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofi_cori_dettHome">
+	<defaultColumnMap
+		tableName="STIPENDI_COFI_CORI_DETT">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="MESE"
+			propertyName="mese"
+			sqlTypeName="DECIMAL"
+			columnSize="2"
+			nullable="false" />
+		<columnMapping
+			columnName="TIPO_FLUSSO"
+			propertyName="tipo_flusso"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CONTRIBUTO_RITENUTA"
+			propertyName="cd_contributo_ritenuta"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_ENTE_PERCIPIENTE"
+			propertyName="ti_ente_percipiente"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="AMMONTARE"
+			propertyName="ammontare"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_DA_COMPETENZA_COGE"
+			propertyName="dt_da_competenza_coge"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_A_COMPETENZA_COGE"
+			propertyName="dt_a_competenza_coge"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="SALDO"
+			propertyName="saldo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_CATASTALE"
+			propertyName="cd_catastale"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />	
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="mese" />
+	<persistentProperty
+		name="tipo_flusso" />
+	<persistentProperty
+		name="cd_contributo_ritenuta" />
+	<persistentProperty
+		name="ti_ente_percipiente" />
+	<persistentProperty
+		name="ammontare" />
+	<persistentProperty
+		name="dt_da_competenza_coge" />
+	<persistentProperty
+		name="dt_a_competenza_coge" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="cd_catastale" />	
+	<persistentProperty
+		name="saldo" />	
+</SQLPersistentInfo>

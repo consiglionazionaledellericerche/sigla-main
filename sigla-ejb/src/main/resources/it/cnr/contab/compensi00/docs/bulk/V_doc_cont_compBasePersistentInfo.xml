@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.docs.bulk.V_doc_cont_compBase"
+	homeClassName="it.cnr.contab.compensi00.docs.bulk.V_doc_cont_compHome" >
+	<defaultColumnMap
+		tableName="V_DOC_CONT_COMP" >
+		<columnMapping
+			columnName="CD_CDS_COMPENSO"
+			propertyName="cd_cds_compenso"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="PG_COMPENSO"
+			propertyName="pg_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="PRINCIPALE"
+			propertyName="principale"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_UO_COMPENSO"
+			propertyName="cd_uo_compenso"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="ESERCIZIO_COMPENSO"
+			propertyName="esercizio_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="DS_DOC_CONT"
+			propertyName="ds_doc_cont"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="TIPO_DOC_CONT"
+			propertyName="tipo_doc_cont"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_CDS_DOC_CONT"
+			propertyName="cd_cds_doc_cont"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="PG_DOC_CONT"
+			propertyName="pg_doc_cont"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="ESERCIZIO_DOC_CONT"
+			propertyName="esercizio_doc_cont"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_cds_compenso" />
+	<persistentProperty
+		name="pg_compenso" />
+	<persistentProperty
+		name="principale" />
+	<persistentProperty
+		name="cd_uo_compenso" />
+	<persistentProperty
+		name="esercizio_compenso" />
+	<persistentProperty
+		name="ds_doc_cont" />
+	<persistentProperty
+		name="tipo_doc_cont" />
+	<persistentProperty
+		name="cd_cds_doc_cont" />
+	<persistentProperty
+		name="pg_doc_cont" />
+	<persistentProperty
+		name="esercizio_doc_cont" />
+</SQLPersistentInfo>

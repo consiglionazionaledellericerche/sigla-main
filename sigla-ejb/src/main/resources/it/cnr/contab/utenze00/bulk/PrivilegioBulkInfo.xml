@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_privilegio"
+		property="cd_privilegio"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		label="Codice del tipo di privilegio" />
+	<fieldProperty
+		name="ds_privilegio"
+		property="ds_privilegio"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		label="Descrizione del tipo di privilegio" />
+	<fieldProperty
+		name="ti_privilegio"
+		property="ti_privilegio"
+		label="tipo privilegio"
+		inputType="TEXT"
+		/>
+	<formFieldProperty
+		name="cd_privilegio" />
+	<formFieldProperty
+		name="ds_privilegio" />
+	<formFieldProperty
+		name="ti_privilegio"/>
+	<findFieldProperty
+		name="cd_privilegio" />
+	<findFieldProperty
+		name="ds_privilegio" />
+	<findFieldProperty
+		name="ti_privilegio" />
+	<columnFieldProperty
+		name="cd_privilegio" />
+	<columnFieldProperty
+		name="ds_privilegio" />
+</bulkInfo>

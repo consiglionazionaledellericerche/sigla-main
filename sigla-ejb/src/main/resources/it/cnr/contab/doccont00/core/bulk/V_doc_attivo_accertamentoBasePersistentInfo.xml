@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.V_doc_attivo_accertamentoBase"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.V_doc_attivo_accertamentoHome" >
+	<defaultColumnMap
+		tableName="V_DOC_ATTIVO_ACCERTAMENTO" >
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="pg_banca"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="CD_TERZO_UO_CDS"
+			propertyName="cd_terzo_uo_cds"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_IVA_DOC_AMM"
+			propertyName="im_iva_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ACCERTAMENTO"
+			propertyName="esercizio_ori_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="pg_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="cd_modalita_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_CONT"
+			propertyName="cd_tipo_documento_cont"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_PGIRO"
+			propertyName="fl_pgiro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_UO_ORIGINE"
+			propertyName="cd_uo_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO_SCADENZARIO"
+			propertyName="pg_accertamento_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_IMPONIBILE_DOC_AMM"
+			propertyName="im_imponibile_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_SCADENZA"
+			propertyName="im_scadenza"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="CD_CDS_ACCERTAMENTO"
+			propertyName="cd_cds_accertamento"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE"
+			propertyName="cd_cds_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="STATO_COFI"
+			propertyName="stato_cofi"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="FL_SELEZIONE"
+			propertyName="fl_selezione"
+			sqlTypeName="VARCHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_AMM"
+			propertyName="cd_tipo_documento_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="IM_TOTALE_DOC_AMM"
+			propertyName="im_totale_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="PG_DOCUMENTO_AMM"
+			propertyName="pg_documento_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_ASSOCIATO_DOC_CONTABILE"
+			propertyName="im_associato_doc_contabile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_FATTURA"
+			propertyName="ti_fattura"
+			sqlTypeName="VARCHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="TI_PAGAMENTO"
+			propertyName="ti_pagamento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_ACCERTAMENTO"
+			propertyName="esercizio_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="DT_SCADENZA"
+			propertyName="dt_scadenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_banca" />
+	<persistentProperty
+		name="cd_terzo_uo_cds" />
+	<persistentProperty
+		name="im_iva_doc_amm" />
+	<persistentProperty
+		name="esercizio_ori_accertamento" />
+	<persistentProperty
+		name="pg_accertamento" />
+	<persistentProperty
+		name="cd_tipo_documento_cont" />
+	<persistentProperty
+		name="cd_modalita_pag" />
+	<persistentProperty
+		name="fl_pgiro" />
+	<persistentProperty
+		name="cd_uo_origine" />
+	<persistentProperty
+		name="pg_accertamento_scadenzario" />
+	<persistentProperty
+		name="im_imponibile_doc_amm" />
+	<persistentProperty
+		name="im_scadenza" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_cds_accertamento" />
+	<persistentProperty
+		name="cd_cds_origine" />
+	<persistentProperty
+		name="stato_cofi" />
+	<persistentProperty
+		name="fl_selezione" />
+	<persistentProperty
+		name="cd_tipo_documento_amm" />
+	<persistentProperty
+		name="im_totale_doc_amm" />
+	<persistentProperty
+		name="pg_documento_amm" />
+	<persistentProperty
+		name="im_associato_doc_contabile" />
+	<persistentProperty
+		name="ti_fattura" />
+	<persistentProperty
+		name="ti_pagamento" />
+	<persistentProperty
+		name="esercizio_accertamento" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="dt_scadenza" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

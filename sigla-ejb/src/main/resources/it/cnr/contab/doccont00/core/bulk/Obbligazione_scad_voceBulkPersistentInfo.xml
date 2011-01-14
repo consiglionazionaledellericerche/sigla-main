@@ -1,0 +1,93 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceHome" >
+		<defaultColumnMap
+		tableName="OBBLIGAZIONE_SCAD_VOCE" >
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE"
+			propertyName="obbligazione_scadenzario.obbligazione.esercizio_originale"
+			/>
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="obbligazione_scadenzario.obbligazione.pg_obbligazione"
+			/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="obbligazione_scadenzario.obbligazione.esercizio"
+			/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="obbligazione_scadenzario.esercizio"
+			fetchOnly="true"						
+			/>			
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="voce_f.cd_voce"
+			fetchOnly="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="voce_f.esercizio"
+			fetchOnly="true" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="voce_f.ti_gestione"
+			fetchOnly="true" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="voce_f.ti_appartenenza"
+			fetchOnly="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="obbligazione_scadenzario.pg_obbligazione_scadenzario"
+			/>
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="obbligazione_scadenzario.obbligazione.cds.cd_unita_organizzativa"
+			/>
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="linea_attivita.centro_responsabilita.cd_centro_responsabilita"
+			/>			
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="linea_attivita.cd_linea_attivita"
+			/>			
+	</defaultColumnMap>
+	<persistentProperty
+		name="obbligazione_scadenzario"
+		partOfOid="true" />
+	<persistentProperty
+		name="linea_attivita"
+		partOfOid="true" />
+	<persistentProperty
+		name="voce_f" />
+    <columnMap 
+		name="CDR_LINEA_VOCE"
+		tableName="OBBLIGAZIONE_SCAD_VOCE">
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="cd_voce"/>	
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"/>	
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"/>	
+	</columnMap>		
+	<fetchPolicy
+		name="it.cnr.contab.doccont00.comp.ObbligazioneComponent.edit">
+		<include pattern="linea_attivita"/>		
+		<exclude pattern="linea_attivita.*"/>
+		<include pattern="linea_attivita.centro_responsabilita"/>
+		<exclude pattern="linea_attivita.centro_responsabilita.*"/>				
+	</fetchPolicy>
+	<fetchPolicy
+		name="it.cnr.contab.docamm00.comp.FatturaPassivaComponent.findForInventario">
+		<exclude pattern="*"/>
+		<include pattern="obbligazione_scadenzario"/>		
+		<include pattern="obbligazione_scadenzario.*"/>				
+		<include pattern="obbligazione_scadenzario.obbligazione"/>		
+		<include pattern="obbligazione_scadenzario.obbligazione.*"/>		
+	</fetchPolicy>
+
+</SQLPersistentInfo>

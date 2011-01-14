@@ -1,0 +1,87 @@
+package it.cnr.contab.config00.bulk;
+
+import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
+import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.action.CRUDBP;
+
+/**
+ * Creation date: (09/11/2004)
+ * @author Aurelio D'Amico
+ * @version 1.0
+ */
+public class Parametri_cnrBulk extends Parametri_cnrBase {
+
+	private Tipo_rapportoBulk tipo_rapporto = new Tipo_rapportoBulk();
+	private Tipo_rapportoBulk tipo_rapporto_prof = new Tipo_rapportoBulk();
+
+	public Parametri_cnrBulk() {
+		super();
+	}
+	public Parametri_cnrBulk(java.lang.Integer esercizio) {
+		super(esercizio);
+	}
+	public OggettoBulk initialize(CRUDBP bp, ActionContext context){
+		setEsercizio(CNRUserInfo.getEsercizio(context) );
+	  return this;
+	}
+	
+	public void validate() throws ValidationException {
+
+		super.validate();
+		if (getLivello_contratt_pdg_spe() != null && getLivello_contratt_pdg_spe().compareTo(getLivello_pdg_decis_spe())>0)
+			throw new ValidationException("Il livello di contrattazione Piano di Gestione Spese non può essere\n"+
+				"maggiore del livello di classificazione Spesa PDG Decisionale");
+	}
+
+	/**
+	 * Restituisce il <code>Tipo_rapportoBulk</code> a cui l'oggetto è correlato.
+	 *
+	 * @return it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk
+	 */
+	public Tipo_rapportoBulk getTipo_rapporto() {
+		return tipo_rapporto;
+	}
+	/**
+	 * Imposta il <code>Tipo_rapportoBulk</code> a cui l'oggetto è correlato.
+	 *
+	 * @param newTipo_rapporto il tipo di rapporto.
+	 */
+
+	public void setTipo_rapporto(Tipo_rapportoBulk newTipo_rapporto) {
+		tipo_rapporto = newTipo_rapporto;
+	}
+	public String getCd_tipo_rapporto() {
+		if(getTipo_rapporto() == null)
+		  return null;
+		return getTipo_rapporto().getCd_tipo_rapporto();
+	}
+
+	public void setCd_tipo_rapporto(String string) {
+		getTipo_rapporto().setCd_tipo_rapporto(string);
+	}	
+
+	public Tipo_rapportoBulk getTipo_rapporto_prof() {
+		return tipo_rapporto_prof;
+	}
+	/**
+	 * Imposta il <code>Tipo_rapportoBulk</code> a cui l'oggetto è correlato.
+	 *
+	 * @param newTipo_rapporto il tipo di rapporto.
+	 */
+
+	public void setTipo_rapporto_prof(Tipo_rapportoBulk newTipo_rapporto) {
+		tipo_rapporto_prof = newTipo_rapporto;
+	}
+	public String getCd_tipo_rapporto_prof() {
+		if(getTipo_rapporto_prof() == null)
+		  return null;
+		return getTipo_rapporto_prof().getCd_tipo_rapporto();
+	}
+
+	public void setCd_tipo_rapporto_prof(String string) {
+		getTipo_rapporto_prof().setCd_tipo_rapporto(string);
+	}	
+}

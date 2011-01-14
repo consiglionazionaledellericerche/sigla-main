@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.ContattoBase"
+	keyClassName="it.cnr.contab.anagraf00.core.bulk.ContattoKey"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.ContattoHome" >
+	<defaultColumnMap
+		tableName="CONTATTO" >
+		<columnMapping
+			columnName="EMAIL"
+			propertyName="email"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="MOTIVO"
+			propertyName="motivo"
+			sqlTypeName="VARCHAR"
+			columnSize="40" />
+		<columnMapping
+			columnName="DS_CONTATTO"
+			propertyName="ds_contatto"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="TELEFONO"
+			propertyName="telefono"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="FAX"
+			propertyName="fax"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="email" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="motivo" />
+	<persistentProperty
+		name="ds_contatto" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="telefono" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="fax" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

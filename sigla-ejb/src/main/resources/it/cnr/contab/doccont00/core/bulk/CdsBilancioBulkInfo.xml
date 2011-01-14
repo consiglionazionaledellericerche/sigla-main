@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="5"
+		inputSize="5"		
+		inputType="ROTEXT"
+		label="Cds" />
+	<fieldProperty
+		name="ds_cds"
+		property="ds_cds"
+		maxLength="15"
+		inputType="ROTEXT"
+		label="Cds" />
+	<fieldProperty
+		name="totAccreditato"
+		property="totAccreditato"
+		maxLength="15"
+		inputSize="15"				
+		inputType="ROTEXT"
+		label="Tot.Accreditato"
+		formatName = "it.cnr.contab.util.EuroFormat"/>
+	<fieldProperty
+		name="totIncassatoMenoAccreditato"
+		property="totIncassatoMenoAccreditato"
+		maxLength="15"
+		inputSize="15"						
+		inputType="ROTEXT"
+		label="Tot.Incassato - Accreditato" 
+		formatName = "it.cnr.contab.util.EuroFormat"/>
+	<fieldProperty
+		name="totAccertatoMenoAccreditato"
+		property="totAccertatoMenoAccreditato"
+		maxLength="15"
+		inputSize="15"						
+		inputType="ROTEXT"
+		label="Tot.Accertato - Accreditato" 
+		formatName = "it.cnr.contab.util.EuroFormat"/>
+		
+
+		
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="ds_cds" />
+	<formFieldProperty
+		name="totAccreditato" />
+	<formFieldProperty
+		name="totIncassatoMenoAccreditato" />
+	<formFieldProperty
+		name="totAccertatoMenoAccreditato" />
+		
+
+	<columnFieldProperty
+		name="cd_cds" />
+
+	<findFieldProperty
+		name="cd_cds" />
+</bulkInfo>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.singconto.bulk.V_stm_paramin_sing_contoKey"
+	homeClassName="it.cnr.contab.doccont00.singconto.bulk.V_stm_paramin_sing_contoHome" >
+	<defaultColumnMap
+		tableName="V_STM_PARAMIN_SING_CONTO" >
+		<columnMapping
+			columnName="ID_REPORT"
+			propertyName="id_report"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="cd_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="3"
+			primary="true" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			primary="true" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="id_report"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_voce"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_gestione"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_appartenenza"
+		partOfOid="true" />
+
+</SQLPersistentInfo>

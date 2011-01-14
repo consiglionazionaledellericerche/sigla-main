@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<!-- ************************** FIELD PROPERTY ************************ -->
+
+	<fieldProperty
+		name="unita_organizzativa"
+		property="unita_organizzativa"
+		inputType="SEARCHTOOL" 		
+		label="Unità organizzativa"
+        enabledOnEdit="true"
+        enabledOnSearch="true"/>	
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="unita_organizzativa.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		label="Unità organizzativa"
+		readonlyProperty="ROuo"
+		nullable="false"
+        enabledOnEdit="true"
+        enabledOnSearch="true"/>	
+	<fieldProperty
+		name="ds_unita_organizzativa"
+		property="unita_organizzativa.ds_unita_organizzativa"
+		inputSize="15"
+		inputType="ROTEXT"
+		label="Unità organizzativa"
+        enabledOnEdit="true"
+        enabledOnSearch="true"/>	
+
+
+	<fieldProperty
+		name="data_da"
+		property="data_da"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		nullable="false"
+		label="Data inizio" />
+	<fieldProperty
+		name="data_a"
+		property="data_a"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		nullable="false"
+		label="Data fine" />
+
+	<fieldProperty
+		name="mese"
+		property="mese"
+		maxLength="20"
+		inputSize="20"
+		inputType="SELECT"
+		nullable="false"
+		keysProperty="mesi"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Mese"/>
+
+	<fieldProperty
+		name="tipo_sezionale"
+		property="tipo_sezionale"
+		printProperty="cd_ds_tipo_sezionale"
+		optionsProperty="tipi_sezionali"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Tipo Sezionale"/>
+
+	<fieldProperty
+		name="pageNumber"
+		property="pageNumber"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		formatName="it.cnr.jada.bulk.PrimitiveNumberFormat"
+		nullable="false"
+		readonlyProperty="ROPageNumber"
+		enabledOnFreeSearch="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Da pagina"/>
+
+	<!-- ************************ FORM FIELD PROPERTY ******************** -->
+
+
+	<formFieldProperty name="data_da" />
+	<formFieldProperty name="data_a" />
+	<formFieldProperty name="mese" />
+	<formFieldProperty name="tipo_sezionale" />
+	<formFieldProperty name="cd_unita_organizzativa" />
+	<formFieldProperty name="ds_unita_organizzativa" />
+	<formFieldProperty name="unita_organizzativa" />
+	<formFieldProperty name="pageNumber" />
+	
+	<!-- ************************ FIND FIELD PROPERTY ******************** -->
+
+	<findFieldProperty name="data_da" />
+	<findFieldProperty name="data_a" />
+	<findFieldProperty name="mese" />	
+	<findFieldProperty name="tipo_sezionale" />
+	
+	<!-- ************************ COLUMN FIELD PROPERTY ****************** -->
+
+	<!-- ************************ COLUMN SET ***************************** -->
+
+</bulkInfo>

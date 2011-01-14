@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_contributo_ritenuta"
+		property="contributo_ritenuta.cd_contributo_ritenuta"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		label="Codice CORI" />
+	<fieldProperty
+		name="find_contributo_ritenuta"
+		property="contributo_ritenuta"
+		label="Contributo Ritenuta"		
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_contributo_ritenuta"
+		property="contributo_ritenuta.ds_contributo_ritenuta"
+		label="Descrizione"
+		inputSize="100"
+		inputType="ROTEXT" />	
+	<fieldProperty
+		name="esercizio"
+		property="gruppo.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="gruppo"
+		property="gruppo"
+		formName="searchtool"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"		
+		label="Gruppo CORI" />	
+	<fieldProperty
+		name="cd_gruppo_cr"
+		property="gruppo.cd_gruppo_cr"
+		inputType="TEXT"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		label="Codice gruppo CORI" />
+	<fieldProperty
+		name="ds_gruppo_cr"
+		property="gruppo.ds_gruppo_cr"
+		inputType="ROTEXT"
+		inputSize="100"
+		maxLength="100"
+		label="Descr. gruppo CORI" />	
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_gruppo_cr" />
+	<formFieldProperty
+		name="ds_gruppo_cr" />	
+	<formFieldProperty
+		name="gruppo" />	
+	<formFieldProperty
+		name="cd_contributo_ritenuta" />
+	<formFieldProperty
+		name="ds_contributo_ritenuta" />
+	<formFieldProperty
+		name="find_contributo_ritenuta" />		
+			
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_contributo_ritenuta" />
+	<findFieldProperty
+		name="cd_gruppo_cr" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_contributo_ritenuta" />
+	<columnFieldProperty
+		name="cd_gruppo_cr" />
+	<columnFieldProperty
+		name="ds_gruppo_cr" />
+		
+</bulkInfo>

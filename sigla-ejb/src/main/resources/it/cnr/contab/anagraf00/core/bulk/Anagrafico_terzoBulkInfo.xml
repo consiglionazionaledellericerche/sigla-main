@@ -1,0 +1,76 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_anag"
+		property="anagrafico.cd_anag"
+		label="Codice anagrafica"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="cd_terzo"
+		property="terzo.cd_terzo"
+		label="Codice terzo"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="8"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="ti_legame"
+		property="ti_legame"
+		label="Tipo Legame"
+		inputType="TEXT" />
+	<fieldProperty
+		name="dt_canc"
+		property="dt_canc"
+		label="Data cancellazione"
+		inputType="TEXT"
+		formatName="date_short" />
+	<fieldProperty 
+		name="find_terzo" 
+		property="terzo" 
+		inputType="SEARCHTOOL" 
+		enabledOnSearch="true" 
+		label="Associato" />
+	<fieldProperty
+		name="ds_terzo"
+		property="ds_terzo"
+		inputType="ROTEXT"
+		inputSize="30"
+		label="Nominativo" />
+
+	<formFieldProperty
+		name="cd_anag" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="ti_legame" />
+	<formFieldProperty
+		name="dt_canc" />
+	<formFieldProperty
+		name="find_terzo" />
+	<formFieldProperty
+		name="ds_terzo" />
+
+	<columnFieldProperty
+	    headerLabel="Dati Associato"
+	    label="Codice Terzo"
+		name="cd_terzo" />
+	<columnFieldProperty
+	    headerLabel="Dati Associato"
+	    label="Nominativo"
+		name="ds_terzo" />
+	<columnFieldProperty
+		name="dt_canc" />
+
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="dt_canc" />
+</bulkInfo>

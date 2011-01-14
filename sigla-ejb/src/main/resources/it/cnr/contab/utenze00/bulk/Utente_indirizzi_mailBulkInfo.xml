@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_utente"
+		property="cd_utente"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Codice dell'utente" />
+	<fieldProperty
+		name="indirizzo_mail"
+		property="indirizzo_mail"
+		inputType="TEXT"
+		maxLength="100"
+		nullable="false"
+		label="Indirizzo E-Mail" />
+	<fieldProperty
+		name="fl_err_appr_var_bil_cnr_res"
+		property="fl_err_appr_var_bil_cnr_res"
+		readonlyProperty="cdrEnte"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Invia errore di mancata approvazione Variazioni al Bilancio dell'Ente generate da Variazioni agli Stanziamenti Residui" />
+	<fieldProperty
+		name="fl_com_app_var_stanz_res"
+		property="fl_com_app_var_stanz_res"
+		readonlyProperty="cdrEnte"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Comunica avvenuta approvazione Variazioni Residui" />
+	<fieldProperty
+		name="fl_err_appr_var_bil_cnr_comp"
+		property="fl_err_appr_var_bil_cnr_comp"
+		readonlyProperty="cdrEnte"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Invia errore di mancata approvazione Variazioni al Bilancio dell'Ente" />
+	<fieldProperty
+		name="fl_com_app_var_stanz_comp"
+		property="fl_com_app_var_stanz_comp"
+		readonlyProperty="cdrEnte"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="omunica avvenuta approvazione Variazioni Competenza" />
+
+	<formFieldProperty
+		name="cd_utente" />
+	<formFieldProperty
+		name="indirizzo_mail" />
+	<formFieldProperty
+		name="fl_err_appr_var_bil_cnr_res" />
+	<formFieldProperty
+		name="fl_com_app_var_stanz_res" />
+	<formFieldProperty
+		name="fl_err_appr_var_bil_cnr_comp" />
+	<formFieldProperty
+		name="fl_com_app_var_stanz_comp" />
+		
+	<columnFieldProperty
+		name="indirizzo_mail" />
+	<columnFieldProperty
+		name="fl_err_appr_var_bil_cnr_res"
+		label="Invia errore di mancata approvazione Variazioni al Bilancio dell'Ente"
+		headerLabel="Variazioni Residui" />
+	<columnFieldProperty
+		name="fl_com_app_var_stanz_res"
+		label="Comunica avvenuta approvazione"
+		headerLabel="Variazioni Residui" />
+	<columnFieldProperty
+		name="fl_err_appr_var_bil_cnr_comp"
+		label="Invia errore di mancata approvazione Variazioni al Bilancio dell'Ente"
+		headerLabel="Variazioni Competenza" />
+	<columnFieldProperty
+		name="fl_com_app_var_stanz_comp"
+		label="Comunica avvenuta approvazione"
+		headerLabel="Variazioni Competenza" />
+
+	<findFieldProperty
+		name="cd_utente" />
+	<findFieldProperty
+		name="indirizzo_mail" />
+	<findFieldProperty
+		name="fl_err_appr_var_bil_cnr_res" />
+	<findFieldProperty
+		name="fl_com_app_var_stanz_res" />
+	<findFieldProperty
+		name="fl_err_appr_var_bil_cnr_comp" />
+	<findFieldProperty
+		name="fl_com_app_var_stanz_comp" />
+</bulkInfo>

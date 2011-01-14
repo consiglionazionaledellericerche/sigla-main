@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="nome_file"
+		property="nome_file"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Nome File"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_rec"
+		property="pg_rec"
+		inputType="TEXT"
+		label="Pg Riga" />	
+	<fieldProperty
+		name="tr"
+		property="tr"
+		maxLength="2"
+		inputSize="2"
+		inputType="TEXT"
+		label="Tipo"
+		caseSensitiveSearch="false" />	
+	<fieldProperty
+		name="stato"
+		property="stato"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Stato"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="data"
+		property="data"
+		maxLength="1000"
+		inputSize="1000"
+		inputType="TEXTAREA"
+		rows="10"
+		cols="150"
+		label="Data"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dacr"
+		property="dacr"
+		inputType="TEXT"
+		label="Data Caricamento"/>
+
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="nome_file" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="tr" />
+	<formFieldProperty
+		name="data" />
+	<formFieldProperty
+		name="pg_rec" />
+	<formFieldProperty
+		name="dacr" />
+
+	<columnFieldProperty
+		name="pg_rec" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="tr" />
+	<columnFieldProperty
+		name="dacr" />
+
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="nome_file" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="tr" />
+	<findFieldProperty
+		name="data" />
+	<findFieldProperty
+		name="pg_rec" />
+
+</bulkInfo>

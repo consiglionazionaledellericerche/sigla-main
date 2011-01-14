@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.gestiva00.core.bulk.Liquid_iva_interfBase"
+	keyClassName="it.cnr.contab.gestiva00.core.bulk.Liquid_iva_interfKey"
+	homeClassName="it.cnr.contab.gestiva00.core.bulk.Liquid_iva_interfHome" >
+	<defaultColumnMap
+		tableName="LIQUID_IVA_INTERF" >
+		<columnMapping
+			columnName="IVA_DEBITO"
+			propertyName="iva_debito"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />	
+		<columnMapping
+			columnName="IVA_CREDITO"
+			propertyName="iva_credito"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />	
+		<columnMapping
+			columnName="NOTE"
+			propertyName="note"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />	
+		<columnMapping
+			columnName="FL_GIA_ELEBORATA"
+			propertyName="fl_gia_eleborata"
+			sqlTypeName="CHAR"
+            converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"			
+			columnSize="1"
+			nullable="false" />							
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="iva_debito" />
+	<persistentProperty
+		name="iva_credito" />
+	<persistentProperty
+		name="note" />
+	<persistentProperty
+		name="fl_gia_eleborata" />	
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

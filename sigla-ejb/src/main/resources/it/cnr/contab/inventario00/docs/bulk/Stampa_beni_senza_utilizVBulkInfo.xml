@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		maxLength="10"
+		inputSize="10"
+		label="Esercizio"/>
+
+	<fieldProperty
+		name="dataInizio"
+		property="dataInizio"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Dalla data"/>
+	<fieldProperty
+		name="dataFine"
+		property="dataFine"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Alla data" />
+
+	<fieldProperty
+		name="findUoForPrint"
+		property="uoForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave = "true"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="cdUoForPrint"
+		property="uoForPrint.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROUoForPrint"
+		label="Codice UO" />
+	<fieldProperty
+		name="dsUoForPrint"
+		property="uoForPrint.ds_unita_organizzativa"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione UO" />
+
+	<fieldProperty
+		name="cdUOCRForPrint"
+		property="cdUOCRForPrint"/>		
+
+	
+	
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="dataInizio" />
+	<formFieldProperty name="dataFine" />
+
+	<formFieldProperty name="findUoForPrint" />
+	<formFieldProperty name="cdUoForPrint" />
+	<formFieldProperty name="dsUoForPrint" />
+
+	<form
+		name="/cnrdocamm/docamm/stampa_beni_senza_utilizzatori.rpt">
+		<formFieldProperty
+			name="esercizio"
+			inputType="ROTEXT" />
+		<formFieldProperty name="findUoForPrint" />
+		<formFieldProperty name="cdUoForPrint" />
+		<formFieldProperty name="dsUoForPrint" />
+	</form>
+
+	<printForm
+		name="/cnrdocamm/docamm/stampa_beni_senza_utilizzatori.rpt">
+		<printFieldProperty 
+			name="dataInizio"
+			parameterPosition="0"
+			parameterType="DATE" />
+		<printFieldProperty
+			name="dataFine"
+			parameterPosition="1"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="2"
+			parameterType="STRING" />
+	</printForm>	
+<printForm
+		name="/cnrdocamm/docamm/stampa_beni_senza_utilizzatori.jasper">
+		<printFieldProperty 
+			name="dataInizio"
+			parameterPosition="0"
+			parameterType="DATE" 
+			paramNameJR="data_da"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty
+			name="dataFine"
+			parameterPosition="1"
+			parameterType="DATE" 
+			paramNameJR="data_a"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="2"
+			parameterType="STRING" 
+			paramNameJR="uo"
+			paramTypeJR="java.lang.String"/>
+	</printForm>	
+</bulkInfo>

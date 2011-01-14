@@ -1,0 +1,16 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.V_obbligazione_im_mandatoBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.V_obbligazione_im_mandatoHome" >
+	<defaultColumnMap
+		tableName="V_OBBLIGAZIONE_IM_MANDATO" >
+		<columnMapping
+			columnName="IM_MANDATO"
+			propertyName="im_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="im_mandato"/>			
+		
+
+</SQLPersistentInfo>

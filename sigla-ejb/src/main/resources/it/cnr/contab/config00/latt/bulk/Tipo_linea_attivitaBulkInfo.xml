@@ -1,0 +1,148 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_tipo_linea_attivita"
+		property="cd_tipo_linea_attivita"
+		maxLength="10"
+		inputSize="6"
+		inputType="TEXT"
+		label="Codice"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"  />
+
+	<fieldProperty
+		name="cd_cdr_creatore"
+		property="cd_cdr_creatore"
+		inputSize="10"
+		maxLength="30"
+		inputType="ROTEXT"
+		label="CDR creatore" />
+
+	<fieldProperty
+		name="ds_tipo_linea_attivita"
+		property="ds_tipo_linea_attivita"
+		maxLength="100"
+		inputSize="30"
+		cols="70"
+		rows="2"
+		inputType="TEXTAREA"
+		label="Denominazione"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true"  />
+
+	<fieldProperty
+		name="ti_tipo_la"
+		property="ti_tipo_la"
+		keysProperty="ti_tipo_laKeys"
+		inputType="RADIOGROUP" 
+		enabledOnSearch="true"
+		enabledOnEdit="false"  />
+
+	<fieldProperty
+		name="funzione"
+		property="funzione"
+		printProperty="cd_ds_funzione"
+		optionsProperty="funzioni"
+		inputType="SELECT"
+		label="Funzione"
+		enabledOnSearch="true" 
+		enabledOnEdit="false"/>
+		
+	<fieldProperty
+		name="cd_funzione"
+		property="funzione.cd_funzione"
+		label="Codice funzione"
+		inputType="TEXT"
+		inputSize="6" 
+		enabledOnSearch="true"
+		enabledOnEdit="false"/>
+
+	<fieldProperty
+		name="natura"
+		property="natura"
+		printProperty="cd_ds_natura"
+		optionsProperty="nature"
+		inputType="SELECT"
+		label="Natura"
+		enabledOnSearch="true"
+		enabledOnEdit="false"/>
+
+	<fieldProperty
+		name="cd_natura"
+		property="natura.cd_natura"
+		label="Codice natura"
+		inputType="TEXT"
+		inputSize="6"
+		enabledOnSearch="true"
+		enabledOnEdit="false"/>
+
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		label="Gestione"
+		inputType="RADIOGROUP"
+		keysProperty="ti_gestioneKeys"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		layout="HORIZONTAL" />
+
+	<formFieldProperty
+		name="cd_tipo_linea_attivita" />
+	<formFieldProperty
+		name="ds_tipo_linea_attivita" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="funzione" />
+	<formFieldProperty
+		name="natura" />
+	<formFieldProperty
+		name="cd_cdr_creatore" />
+		
+	<columnFieldProperty
+		name="cd_tipo_linea_attivita"
+		label="Codice tipo"/>
+	<columnFieldProperty
+		name="ds_tipo_linea_attivita" 
+		label="Denominazione"/>
+	<columnFieldProperty
+		name="ti_tipo_la"
+		label="Comune"/>
+	<columnFieldProperty
+		name="funzione"
+		label="Funzione"/>
+	<columnFieldProperty
+		name="natura"
+		label="Natura"/>
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_cdr_creatore" />
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_tipo_linea_attivita"
+			inputType="TEXT" />
+		<formFieldProperty
+			name="ds_tipo_linea_attivita"
+			inputType="TEXT"
+			inputSize="20" />
+	</form>
+		
+	<findFieldProperty
+		name="cd_tipo_linea_attivita" />
+	<findFieldProperty
+		name="ds_tipo_linea_attivita" />
+	<findFieldProperty
+		name="cd_funzione" />
+	<findFieldProperty
+		name="cd_natura" />
+	<findFieldProperty
+		name="ti_gestione" />
+
+</bulkInfo>

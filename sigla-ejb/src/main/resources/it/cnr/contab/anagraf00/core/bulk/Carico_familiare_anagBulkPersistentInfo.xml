@@ -1,0 +1,12 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.Carico_familiare_anagBulk"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.Carico_familiare_anagHome" >
+	<defaultColumnMap
+		tableName="CARICO_FAMILIARE_ANAG" >
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="anagrafico.cd_anag" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="anagrafico" />
+</SQLPersistentInfo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-mappings>
+	<action path="/ArchiviaStampaPdgVariazioneAction"
+		actionClass="it.cnr.contab.pdg00.action.ArchiviaStampaPdgVariazioneAction">
+	</action>
+
+	<businessProcess name="ArchiviaStampaPdgVariazioneBP"
+		className="it.cnr.contab.pdg00.bp.ArchiviaStampaPdgVariazioneBP">
+		<forward name="default" path="/pdg00/archivia_stampa_variazione_pdg.jsp" />
+		<forward name="scaricaFile" path="/config00/responseResource.jsp" />
+		<init-param name="bulkClassName"
+			value="it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk" />
+		<init-param name="defaultAction" value="ArchiviaStampaPdgVariazioneAction" />
+		<init-param name="componentSessionName"
+			value="CNRPDG00_EJB_PdGVariazioniComponentSession" />
+		<init-param name="reportName"
+			value="/cnrpreventivo/pdg/stampa_variazioni_pdg.jasper" />
+	</businessProcess>
+
+	<action path="/SelezionatoreArchiviaStampaPdgVariazioneAction"
+		actionClass="it.cnr.contab.pdg00.action.SelezionatoreArchiviaStampaPdgVariazioneAction">
+	</action>
+	
+	<businessProcess name="SelezionatorePdgVariazioniBP"
+		className="it.cnr.jada.util.action.SelezionatoreListaBP">
+		<forward name="default" path="/pdg00/selezionatore_archivia_variazione_pdg.jsp" />
+		<init-param name="defaultAction" value="SelezionatoreArchiviaStampaPdgVariazioneAction" />
+	</businessProcess>
+
+	<action path="/FirmaDigitaleStampaPdgVariazioneAction"
+		actionClass="it.cnr.contab.pdg00.action.FirmaDigitaleStampaPdgVariazioneAction">
+	</action>
+
+	<businessProcess name="FirmaDigitalePdgVariazioniBP"
+		className="it.cnr.contab.pdg00.bp.FirmaDigitalePdgVariazioniBP">
+		<forward name="default" path="/pdg00/firma_digitale_variazione_pdg.jsp" />
+		<init-param name="defaultAction" value="FirmaDigitaleStampaPdgVariazioneAction" />
+	</businessProcess>
+
+</action-mappings>

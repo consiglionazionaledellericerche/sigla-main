@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk"
+	homeClassName="it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaHome" >
+	<defaultColumnMap
+		tableName="MISSIONE_TIPO_SPESA" >
+		
+		<columnMapping
+			columnName="PG_NAZIONE"
+			propertyName="nazione.pg_nazione" />
+		<columnMapping
+			columnName="PG_RIF_INQUADRAMENTO"
+			propertyName="rifInquadramento.pg_rif_inquadramento" />
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="divisa.cd_divisa" />
+		
+	</defaultColumnMap>
+	
+	<persistentProperty
+		name="nazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="rifInquadramento"
+		partOfOid="true" />
+	<persistentProperty
+		name="divisa" />		
+
+</SQLPersistentInfo>

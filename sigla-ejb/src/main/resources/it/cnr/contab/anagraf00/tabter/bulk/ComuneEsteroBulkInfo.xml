@@ -1,0 +1,33 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<formFieldProperty
+		name="cd_cap"
+		label="Zip" />
+	
+	<columnSet name="comuneEstero">
+		<columnFieldProperty name="pg_comune" />
+		<columnFieldProperty name="ds_comune" />
+		<columnFieldProperty name="cd_comune" />
+		<columnFieldProperty
+			name="cd_cap"
+			label="Zip" />
+		<columnFieldProperty
+			name="ds_nazione"
+			label="Nazione" />
+	</columnSet>
+
+	<freeSearchSet name="comuneEsteroFreeSearchSet">
+		<findFieldProperty name="pg_comune" />
+		<findFieldProperty name="ds_comune" />
+		<findFieldProperty name="pg_nazione" />
+		<findFieldProperty
+			name="cd_cap"
+			label="Zip" />
+		<findFieldProperty name="cd_comune" />
+		<findFieldProperty name="dt_canc" />
+	</freeSearchSet>
+
+</bulkInfo>

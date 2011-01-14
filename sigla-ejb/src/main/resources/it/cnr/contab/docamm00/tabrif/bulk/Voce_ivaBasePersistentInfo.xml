@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBase"
+	keyClassName="it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaKey"
+	homeClassName="it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome" >
+	<defaultColumnMap
+		tableName="VOCE_IVA" >
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dt_cancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="PERCENTUALE"
+			propertyName="percentuale"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_INTRA"
+			propertyName="fl_intra"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_DETRAIBILE"
+			propertyName="fl_detraibile"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_NON_SOGGETTO"
+			propertyName="fl_non_soggetto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_ESCLUSO"
+			propertyName="fl_escluso"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_NON_IMPONIBILE"
+			propertyName="fl_non_imponibile"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="TI_APPLICAZIONE"
+			propertyName="ti_applicazione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_INIZIO_VALIDITA"
+			propertyName="dt_inizio_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_GRUPPO_IVA"
+			propertyName="cd_gruppo_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PERCENTUALE_DETRAIBILITA"
+			propertyName="percentuale_detraibilita"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_ESENTE"
+			propertyName="fl_esente"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_BOLLA_DOGANALE"
+			propertyName="fl_bolla_doganale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_AUTOFATTURA"
+			propertyName="fl_autofattura"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_DEFAULT_ISTITUZIONALE"
+			propertyName="fl_default_istituzionale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DS_VOCE_IVA"
+			propertyName="ds_voce_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_IVA_NON_RECUPERABILE"
+			propertyName="fl_iva_non_recuperabile"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_cancellazione" />
+	<persistentProperty
+		name="percentuale" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="fl_detraibile" />
+	<persistentProperty
+		name="fl_intra" />
+	<persistentProperty
+		name="fl_non_soggetto" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="fl_escluso" />
+	<persistentProperty
+		name="fl_non_imponibile" />
+	<persistentProperty
+		name="ti_applicazione" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="dt_inizio_validita" />
+	<persistentProperty
+		name="cd_gruppo_iva" />
+	<persistentProperty
+		name="percentuale_detraibilita" />
+	<persistentProperty
+		name="fl_esente" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="fl_bolla_doganale" />
+	<persistentProperty
+		name="fl_autofattura" />
+	<persistentProperty
+		name="fl_default_istituzionale" />
+	<persistentProperty
+		name="ds_voce_iva" />
+	<persistentProperty
+		name="fl_iva_non_recuperabile" />	
+</SQLPersistentInfo>

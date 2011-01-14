@@ -1,0 +1,19 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.RapportoBulk"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.RapportoHome" >
+	<defaultColumnMap
+		tableName="RAPPORTO" >
+		<columnMapping
+			columnName="CD_TIPO_RAPPORTO"
+			propertyName="tipo_rapporto.cd_tipo_rapporto" />
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="anagrafico.cd_anag" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipo_rapporto"
+		partOfOid="true" />
+	<persistentProperty
+		name="anagrafico"
+		partOfOid="true" />
+</SQLPersistentInfo>

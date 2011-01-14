@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo	persistentClassName="it.cnr.contab.inventario00.tabrif.bulk.Ubicazione_beneBulk"
+	homeClassName="it.cnr.contab.inventario00.tabrif.bulk.Ubicazione_beneHome" >
+	<defaultColumnMap
+		tableName="UBICAZIONE_BENE" >
+		<columnMapping
+			columnName="CD_UBICAZIONE_PADRE"
+			propertyName="nodoPadre.cd_ubicazione" />
+		<columnMapping
+			columnName="CD_UO_PADRE"
+			propertyName="nodoPadre.cd_unita_organizzativa"/>
+		<columnMapping
+			columnName="CD_CDS_PADRE"
+			propertyName="nodoPadre.cd_cds"/>
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="nodoPadre" />
+	
+</SQLPersistentInfo>

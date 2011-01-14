@@ -1,0 +1,42 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" 
+		shortDescription="Macro linee di attivita'"
+		longDescription="Macro linee di attivita'">
+	<fieldProperty
+		name="cd_gruppo_linea_attivita"
+		property="cd_gruppo_linea_attivita"
+		maxLength="10"
+		inputSize="6"
+		inputType="TEXT"
+		label="Codice"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="ds_gruppo_linea_attivita"
+		property="ds_gruppo_linea_attivita"
+		maxLength="200"
+		cols="80"
+		rows="3"
+		inputType="TEXTAREA"		
+		label="Descrizione"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true" />
+
+	<formFieldProperty
+		name="cd_gruppo_linea_attivita" />
+	<formFieldProperty
+		name="ds_gruppo_linea_attivita" />
+
+	<columnFieldProperty
+		name="cd_gruppo_linea_attivita" />
+	<columnFieldProperty
+		name="ds_gruppo_linea_attivita" />
+
+	<findFieldProperty
+		name="cd_gruppo_linea_attivita" />
+	<findFieldProperty
+		name="ds_gruppo_linea_attivita" />
+
+</bulkInfo>

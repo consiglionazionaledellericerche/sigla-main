@@ -1,0 +1,847 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_disp_comp_res_entBulk"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_disp_comp_res_entHome">
+	<defaultColumnMap
+		tableName="V_CONS_DISP_COMP_RES_ENT">
+		<columnMapping
+			columnName="PROGETTO"
+			propertyName="progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="ds_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="COMMESSA"
+			propertyName="commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_COMMESSA"
+			propertyName="ds_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="MODULO"
+			propertyName="modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="DIPARTIMENTO"
+			propertyName="dipartimento"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_DIPARTIMENTO"
+			propertyName="ds_dipartimento"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="CDS"
+			propertyName="cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CDS"
+			propertyName="ds_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="UO"
+			propertyName="uo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CDR"
+			propertyName="cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CDR"
+			propertyName="ds_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="LDA"
+			propertyName="lda"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_LDA"
+			propertyName="ds_lda"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_RES"
+			propertyName="esercizio_res"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="cd_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_VOCE"
+			propertyName="ds_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="STANZ_INI"
+			propertyName="stanz_ini"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_PIU"
+			propertyName="var_piu"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_MENO"
+			propertyName="var_meno"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ASSESTATO_COMP"
+			propertyName="assestato_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="ACC_COMP"
+			propertyName="acc_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DISP_COMP"
+			propertyName="disp_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="RISCOSSO_COMP"
+			propertyName="riscosso_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="RIMASTI_DA_RISCUOTERE_COMP"
+			propertyName="rimasti_da_riscuotere_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="ACC_RES_PRO"
+			propertyName="acc_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_PIU_RES_PRO"
+			propertyName="var_piu_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_MENO_RES_PRO"
+			propertyName="var_meno_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ACC_RES_ASS"
+			propertyName="acc_res_ASS"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="RISCOSSO_RES"
+			propertyName="riscosso_res"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="RIMASTI_DA_RISCUOTERE_RES"
+			propertyName="rimasti_da_riscuotere_res"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="cd_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_NATURA"
+			propertyName="ds_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="progetto" />
+	<persistentProperty
+		name="ds_progetto" />
+	<persistentProperty
+		name="commessa" />
+	<persistentProperty
+		name="ds_commessa" />
+	<persistentProperty
+		name="modulo" />
+	<persistentProperty
+		name="ds_modulo" />
+	<persistentProperty
+		name="dipartimento" />
+	<persistentProperty
+		name="ds_dipartimento" />
+	<persistentProperty
+		name="cds" />
+	<persistentProperty
+		name="ds_cds" />
+	<persistentProperty
+		name="uo" />
+	<persistentProperty
+		name="cdr" />
+	<persistentProperty
+		name="ds_cdr" />
+	<persistentProperty
+		name="lda" />
+	<persistentProperty
+		name="ds_lda" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="esercizio_res" />
+	<persistentProperty
+		name="cd_voce" />
+	<persistentProperty
+		name="cd_elemento_voce" />
+	<persistentProperty
+		name="ds_voce" />
+	<persistentProperty
+		name="stanz_ini" />
+	<persistentProperty
+		name="var_piu" />
+	<persistentProperty
+		name="var_meno" />
+	<persistentProperty
+		name="assestato_comp" />
+	<persistentProperty
+		name="acc_comp" />
+	<persistentProperty
+		name="disp_comp" />
+	<persistentProperty
+		name="riscosso_comp" />
+	<persistentProperty
+		name="acc_res_pro" />
+	<persistentProperty
+		name="var_piu_res_pro" />
+	<persistentProperty
+		name="var_meno_res_pro" />
+	<persistentProperty
+		name="riscosso_res" />
+	<persistentProperty
+		name="cd_natura" />
+	<persistentProperty
+		name="ds_natura" />
+	<persistentProperty
+		name="tipo" />
+	<persistentProperty
+		name="acc_res_ass" />
+	<persistentProperty
+		name="rimasti_da_riscuotere_comp" />
+	<persistentProperty
+		name="rimasti_da_riscuotere_res" />
+	
+	<columnMap 
+		name="ENTCDS"
+		tableName="V_CONS_DISP_COMP_RES_ENT">
+		<columnMapping
+			columnName="CDS"
+			propertyName="cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CDS"
+			propertyName="ds_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="UO"
+			propertyName="uo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_RES"
+			propertyName="esercizio_res"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="STANZ_INI"
+			propertyName="stanz_ini"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_PIU"
+			propertyName="var_piu"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_MENO"
+			propertyName="var_meno"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ASSESTATO_COMP"
+			propertyName="assestato_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ACC_COMP"
+			propertyName="acc_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DISP_COMP"
+			propertyName="disp_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="RISCOSSO_COMP"
+			propertyName="riscosso_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="RIMASTI_DA_RISCUOTERE_COMP"
+			propertyName="rimasti_da_riscuotere_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ACC_RES_PRO"
+			propertyName="acc_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_PIU_RES_PRO"
+			propertyName="var_piu_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_MENO_RES_PRO"
+			propertyName="var_meno_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ACC_RES_ASS"
+			propertyName="acc_res_ass"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="RISCOSSO_RES"
+			propertyName="riscosso_res"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="RIMASTI_DA_RISCUOTERE_RES"
+			propertyName="rimasti_da_riscuotere_res"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+	</columnMap>
+
+<!-- CDS / Progetto / Commessa / Modulo / Cdr / GAE / Voce -->	
+	<columnMap 
+		name="ENTCDSPROG"
+		tableName="V_CONS_DISP_COMP_RES_ENT"
+		extends="ENTCDS" >
+		<columnMapping
+			columnName="PROGETTO"
+			propertyName="progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="ds_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+	</columnMap>
+	
+	<columnMap 
+		name="ENTCDSPROGCOMM"
+		tableName="V_CONS_DISP_COMP_RES_ENT"
+		extends="ENTCDSPROG" >
+		<columnMapping
+			columnName="COMMESSA"
+			propertyName="commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_COMMESSA"
+			propertyName="ds_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+	</columnMap>
+			
+	<columnMap 
+		name="ENTCDSPROGCOMMMOD"
+		tableName="V_CONS_DISP_COMP_RES_ENT"
+		extends="ENTCDSPROGCOMM" >
+		<columnMapping
+			columnName="MODULO"
+			propertyName="modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+	</columnMap>
+			
+	<columnMap 
+		name="ENTCDSPROGCOMMMODCDR"
+		tableName="V_CONS_DISP_COMP_RES_ENT"
+		extends="ENTCDSPROGCOMMMOD" >
+		<columnMapping
+			columnName="CDR"
+			propertyName="cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CDR"
+			propertyName="ds_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+	</columnMap>
+			
+	<columnMap 
+		name="ENTCDSPROGCOMMMODCDRGAE"
+		tableName="V_CONS_DISP_COMP_RES_ENT"
+		extends="ENTCDSPROGCOMMMODCDR" >
+		<columnMapping
+			columnName="LDA"
+			propertyName="lda"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_LDA"
+			propertyName="ds_lda"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="cd_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_NATURA"
+			propertyName="ds_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+	</columnMap>
+	
+	<columnMap 
+		name="ENTCDSPROGCOMMMODCDRGAEDET"
+		tableName="V_CONS_DISP_COMP_RES_ENT"
+		extends="ENTCDSPROGCOMMMODCDRGAE" >
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="cd_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_VOCE"
+			propertyName="ds_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+	</columnMap>
+	
+<!-- CDS / Cdr / GAE / Voce -->	
+	<columnMap 
+		name="ENTCDSCDR"
+		tableName="V_CONS_DISP_COMP_RES_ENT"
+		extends="ENTCDS" >
+		<columnMapping
+			columnName="CDR"
+			propertyName="cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CDR"
+			propertyName="ds_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+	</columnMap>
+			
+	<columnMap 
+		name="ENTCDSCDRGAE"
+		tableName="V_CONS_DISP_COMP_RES_ENT"
+		extends="ENTCDSCDR" >
+		<columnMapping
+			columnName="LDA"
+			propertyName="lda"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_LDA"
+			propertyName="ds_lda"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="cd_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_NATURA"
+			propertyName="ds_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+	</columnMap>
+	
+	<columnMap 
+		name="ENTCDSCDRGAEDET"
+		tableName="V_CONS_DISP_COMP_RES_ENT"
+		extends="ENTCDSCDRGAE" >
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="cd_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_VOCE"
+			propertyName="ds_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+	</columnMap>
+	
+<!-- CDS / Voce / Progetto / Commessa / Modulo / Cdr / GAE -->	
+	<columnMap 
+		name="ENTCDSVOCE"
+		tableName="V_CONS_DISP_COMP_RES_ENT"
+		extends="ENTCDS" >
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="cd_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_VOCE"
+			propertyName="ds_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+	</columnMap>
+	
+	<columnMap 
+		name="ENTCDSVOCEPROG"
+		tableName="V_CONS_DISP_COMP_RES_ENT"
+		extends="ENTCDSVOCE" >
+		<columnMapping
+			columnName="PROGETTO"
+			propertyName="progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="ds_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+	</columnMap>
+	
+	<columnMap 
+		name="ENTCDSVOCEPROGCOMM"
+		tableName="V_CONS_DISP_COMP_RES_ENT"
+		extends="ENTCDSVOCEPROG" >
+		<columnMapping
+			columnName="COMMESSA"
+			propertyName="commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_COMMESSA"
+			propertyName="ds_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+	</columnMap>
+			
+	<columnMap 
+		name="ENTCDSVOCEPROGCOMMMOD"
+		tableName="V_CONS_DISP_COMP_RES_ENT"
+		extends="ENTCDSVOCEPROGCOMM" >
+		<columnMapping
+			columnName="MODULO"
+			propertyName="modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+	</columnMap>
+			
+	<columnMap 
+		name="ENTCDSVOCEPROGCOMMMODCDR"
+		tableName="V_CONS_DISP_COMP_RES_ENT"
+		extends="ENTCDSVOCEPROGCOMMMOD" >
+		<columnMapping
+			columnName="CDR"
+			propertyName="cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CDR"
+			propertyName="ds_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+	</columnMap>
+			
+	<columnMap 
+		name="ENTCDSVOCEPROGCOMMMODCDRGAE"
+		tableName="V_CONS_DISP_COMP_RES_ENT"
+		extends="ENTCDSVOCEPROGCOMMMODCDR" >
+		<columnMapping
+			columnName="LDA"
+			propertyName="lda"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_LDA"
+			propertyName="ds_lda"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="cd_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_NATURA"
+			propertyName="ds_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+	</columnMap>	
+	
+<!-- CDS / Voce / Cdr / GAE -->	
+	<columnMap 
+		name="ENTCDSVOCECDR"
+		tableName="V_CONS_DISP_COMP_RES_ENT"
+		extends="ENTCDSVOCE" >
+		<columnMapping
+			columnName="CDR"
+			propertyName="cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CDR"
+			propertyName="ds_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+	</columnMap>
+	
+	<columnMap 
+		name="ENTCDSVOCECDRGAE"
+		tableName="V_CONS_DISP_COMP_RES_ENT"
+		extends="ENTCDSVOCECDR" >
+		<columnMapping
+			columnName="LDA"
+			propertyName="lda"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_LDA"
+			propertyName="ds_lda"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="cd_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_NATURA"
+			propertyName="ds_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+	</columnMap>	
+	
+	
+</SQLPersistentInfo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk"
+	homeClassName="it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpHome" >
+	
+	<defaultColumnMap 
+	tableName="VOCE_F_SALDI_CMP" >
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="voce.esercizio"
+			fetchOnly="true"
+			/>
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="voce.ti_gestione"
+			fetchOnly="true"			
+			/>		
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="voce.ti_appartenenza"
+			fetchOnly="true"
+			/>
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="voce.cd_voce"
+		  	/>
+	</defaultColumnMap>
+	
+	<persistentProperty
+		partOfOid = "true"
+		name="voce" />
+</SQLPersistentInfo>

@@ -1,0 +1,34 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcep.bulk.ContoBulk"
+	homeClassName="it.cnr.contab.config00.pdcep.bulk.ContoHome" >
+
+	<defaultColumnMap
+		tableName="VOCE_EP" >
+		
+		<columnMapping
+			columnName="CD_VOCE_EP_PADRE"
+			propertyName="voce_ep_padre.cd_voce_ep"
+    	/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="voce_ep_padre.esercizio"
+			fetchOnly="true"
+			/>
+		<columnMapping
+			columnName="RIAPRE_A_CONTO_ECONOMICO"
+			propertyName="riapre_a_conto.cd_voce_ep"
+		  />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="riapre_a_conto.esercizio"
+			fetchOnly="true"
+			/>
+
+	</defaultColumnMap>
+	
+	<persistentProperty
+		name="voce_ep_padre" />
+	<persistentProperty
+		name="riapre_a_conto" />
+
+</SQLPersistentInfo>

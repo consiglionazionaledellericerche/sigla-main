@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="find_comune"
+		property="comune"
+		label="Comune"		
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		enabledOnEdit="true" />
+	<fieldProperty
+		name="pg_comune"
+		property="comune.pg_comune"
+		label="Comune"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="true" />
+	<fieldProperty
+		name="ds_comune"
+		property="comune.ds_comune"
+		label="Descrizione"
+		inputSize="50"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="cd_catastale"
+		property="comune.cd_catastale"
+		label="Codice Catastale"
+		inputSize="10"
+		enabledOnSearch="true"
+		inputType="TEXT" />		
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_inizio_validita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnSearch="true"
+		label="Inizio Validità" />
+	<fieldProperty
+		name="importo"
+		property="importo"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Esenzione" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Fine validità" />
+	<fieldProperty
+		name="dataFineValidita"
+		property="dataFineValidita"
+		formatName="date_short"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Fine Validita" />	
+	<formFieldProperty
+		name="find_comune" />
+	<formFieldProperty
+		name="cd_catastale" />
+	<formFieldProperty
+		name="ds_comune" />	
+	<formFieldProperty
+		name="dt_inizio_validita" />
+	<formFieldProperty
+		name="importo" />
+	<formFieldProperty
+		name="dt_fine_validita" />
+	<formFieldProperty
+		name="dataFineValidita" />	
+	<formFieldProperty
+		name="pg_comune" />
+	<findFieldProperty
+		name="cd_catastale" />
+	<findFieldProperty
+		name="dt_inizio_validita" />
+	<findFieldProperty
+		name="importo" />
+	<findFieldProperty
+		name="dt_fine_validita" />
+	<findFieldProperty
+		name="pg_comune" />
+	<columnFieldProperty
+		name="cd_catastale" />
+	<columnFieldProperty
+		name="dt_inizio_validita" />
+	<columnFieldProperty
+		name="importo" />
+	<columnFieldProperty
+		name="dt_fine_validita" />
+	<columnFieldProperty
+		name="pg_comune" />
+</bulkInfo>

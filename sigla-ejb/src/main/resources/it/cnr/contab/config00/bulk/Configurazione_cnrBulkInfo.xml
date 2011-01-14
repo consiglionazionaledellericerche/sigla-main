@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="im02"
+		property="im02"
+		inputType="TEXT"
+		label="im02" />
+	<fieldProperty
+		name="im01"
+		property="im01"
+		inputType="TEXT"
+		label="im01" />
+	<fieldProperty
+		name="dt02"
+		property="dt02"
+		inputType="TEXT"
+		label="dt02" />
+	<fieldProperty
+		name="dt01"
+		property="dt01"
+		inputType="TEXT"
+		label="dt01" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="cd_chiave_secondaria"
+		property="cd_chiave_secondaria"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="cd_chiave_secondaria" />
+	<fieldProperty
+		name="cd_unita_funzionale"
+		property="cd_unita_funzionale"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_unita_funzionale" />
+	<fieldProperty
+		name="cd_chiave_primaria"
+		property="cd_chiave_primaria"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="cd_chiave_primaria" />
+	<fieldProperty
+		name="val04"
+		property="val04"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="val04"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="val03"
+		property="val03"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="val03"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="val02"
+		property="val02"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="val02"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="val01"
+		property="val01"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="val01"
+		caseSensitiveSearch="false" />
+
+	<formFieldProperty
+		name="im02" />
+	<formFieldProperty
+		name="im01" />
+	<formFieldProperty
+		name="dt02" />
+	<formFieldProperty
+		name="dt01" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_chiave_secondaria" />
+	<formFieldProperty
+		name="cd_unita_funzionale" />
+	<formFieldProperty
+		name="cd_chiave_primaria" />
+	<formFieldProperty
+		name="val04" />
+	<formFieldProperty
+		name="val03" />
+	<formFieldProperty
+		name="val02" />
+	<formFieldProperty
+		name="val01" />
+
+	<columnFieldProperty
+		name="im02" />
+	<columnFieldProperty
+		name="im01" />
+	<columnFieldProperty
+		name="dt02" />
+	<columnFieldProperty
+		name="dt01" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_chiave_secondaria" />
+	<columnFieldProperty
+		name="cd_unita_funzionale" />
+	<columnFieldProperty
+		name="cd_chiave_primaria" />
+	<columnFieldProperty
+		name="val04" />
+	<columnFieldProperty
+		name="val03" />
+	<columnFieldProperty
+		name="val02" />
+	<columnFieldProperty
+		name="val01" />
+
+	<findFieldProperty
+		name="im02" />
+	<findFieldProperty
+		name="im01" />
+	<findFieldProperty
+		name="dt02" />
+	<findFieldProperty
+		name="dt01" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_chiave_secondaria" />
+	<findFieldProperty
+		name="cd_unita_funzionale" />
+	<findFieldProperty
+		name="cd_chiave_primaria" />
+	<findFieldProperty
+		name="val04" />
+	<findFieldProperty
+		name="val03" />
+	<findFieldProperty
+		name="val02" />
+	<findFieldProperty
+		name="val01" />
+
+</bulkInfo>

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Mandato">
+	<fieldProperty
+		name="find_doc_passivi"
+		property="find_doc_passivi.terzoAnag"
+		inputType="SEARCHTOOL" />
+	<fieldProperty
+		name="find_cd_terzo"
+		property="find_doc_passivi.cd_terzo"
+		readonlyProperty="ROFind_terzoAnag"
+		inputSize="5"
+		inputType="TEXT"
+		label="Codice Beneficiario" />
+	<fieldProperty
+		name="find_partita_iva"
+		property="find_doc_passivi.partita_iva"
+		inputType="TEXT"
+		readonlyProperty="ROFind_terzoAnag"		
+		formatName="it.cnr.jada.util.UppercaseStringFormat"				
+		label="Partita IVA" />
+	<fieldProperty
+		name="find_codice_fiscale"
+		property="find_doc_passivi.codice_fiscale"
+		inputType="TEXT"
+		readonlyProperty="ROFind_terzoAnag"		
+		formatName="it.cnr.jada.util.UppercaseStringFormat"				
+		label="Codice Fiscale" />
+	<fieldProperty
+		name="find_pg_doc_passivo"
+		property="find_doc_passivi.pg_documento_amm"
+		inputType="TEXT"
+		label="Progressivo Documento" />
+	<fieldProperty
+		name="find_nr_fattura_fornitore"
+		property="find_doc_passivi.nr_fattura_fornitore"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Nr. Fattura Fornitore"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="find_ragione_sociale"
+		property="find_doc_passivi.ragione_sociale"
+		inputType="TEXT"
+		inputSize="50"		
+		readonlyProperty="ROFind_terzoAnag"		
+		formatName="it.cnr.jada.util.UppercaseStringFormat"				
+		label="Ragione sociale" />
+	<fieldProperty
+		name="find_cognome"
+		property="find_doc_passivi.cognome"
+		inputType="TEXT"
+		readonlyProperty="ROFind_terzoAnag"		
+		formatName="it.cnr.jada.util.UppercaseStringFormat"				
+		label="Cognome" />
+	<fieldProperty
+		name="find_nome"
+		property="find_doc_passivi.nome"
+		inputType="TEXT"
+		readonlyProperty="ROFind_terzoAnag"		
+		formatName="it.cnr.jada.util.UppercaseStringFormat"				
+		label="Nome" />
+	<fieldProperty
+		name="find_cd_precedente"
+		property="find_doc_passivi.cd_precedente"
+		inputType="TEXT"
+		maxLength="20"
+		readonlyProperty="ROFind_terzoAnag"		
+		label="Codice precedente" />
+	<fieldProperty
+		name="find_cd_tipo_documento_amm"
+		property="find_doc_passivi.cd_tipo_documento_amm"
+		inputType="SELECT"
+		keysProperty="tipoDocumentoPerRicercaKeys"
+		label="Tipo Documento" />
+	<fieldProperty
+		name="cd_tipo_documento_amm"
+		property="find_doc_passivi.cd_tipo_documento_amm"
+		inputType="SELECT"
+		keysProperty="tipoDocumentoKeys"
+		label="Tipo Documento" />
+	<fieldProperty
+		name="find_pg_obbligazione"
+		property="find_doc_passivi.pg_obbligazione"
+		inputType="TEXT"
+		label="Num. impegno" />
+	<fieldProperty
+		name="find_dt_scadenza"
+		property="find_doc_passivi.dt_scadenza"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data scadenza imp."/>
+	<fieldProperty
+		name="find_im_scadenza"
+		property="find_doc_passivi.im_scadenza"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="Importo scadenza" />
+	<fieldProperty
+		name="find_ti_pagamento"
+		property="find_doc_passivi.ti_pagamento"
+		inputType="SELECT"
+		keysProperty="classeDiPagamentoKeys"
+		label="Classe di pagamento" />
+	<fieldProperty
+		name="terzo_tipo_bollo"
+		property="mandato_terzo.tipoBollo"
+		inputType="SELECT"
+		optionsProperty="tipoBolloOptions"
+		label="Bollo"
+		printProperty="printProperty"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="terzo_im_tipo_bollo"
+		property="mandato_terzo.tipoBollo.im_tipo_bollo"
+		inputType="ROTEXT"
+		label="Importo"		
+		/>
+	<fieldProperty
+		name="esercizio_ori_accertamento"
+		property="accertamentoPerRegolarizzazione.esercizio_originale"
+		inputType="TEXT"
+		label="Esercizio Accertamento"
+		maxLength="4"
+		inputSize="4"
+		readonlyProperty="ROPg_accertamento"		
+		/>
+	<fieldProperty
+		name="pg_accertamento"
+		property="accertamentoPerRegolarizzazione.pg_accertamento"
+		inputType="TEXT"
+		label="Accertamento"
+		maxLength="10"
+		inputSize="10"
+		readonlyProperty="ROPg_accertamento"		
+		/>
+	<fieldProperty
+		name="ds_accertamento"
+		property="accertamentoPerRegolarizzazione.ds_accertamento"
+		inputType="ROTEXT"
+		inputSize="40"		
+		label="Accertamento"
+		/>
+	<fieldProperty
+		name="find_accertamento"
+		property="accertamentoPerRegolarizzazione"
+		readonlyProperty="ROFind_accertamento"
+		inputType="SEARCHTOOL"
+		label="Accertamento"
+		/>
+	<fieldProperty
+		name="pg_variazione_bilancio"
+		property="var_bilancio.pg_variazione"
+		inputType="ROTEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Variazione" />
+	<fieldProperty
+		name="ds_variazione_bilancio"
+		property="var_bilancio.ds_variazione"
+		inputType="ROTEXT"
+        inputSize="100"
+		maxLength="300"
+		label="Descrizione" />		
+
+	<formFieldProperty
+		name="find_doc_passivi" />
+	<formFieldProperty
+		name="find_codice_fiscale" />
+	<formFieldProperty
+		name="find_partita_iva" />
+	<formFieldProperty
+		name="find_cd_terzo" />
+	<formFieldProperty
+		name="find_pg_doc_passivo" />
+	<formFieldProperty
+		name="find_nr_fattura_fornitore" />
+	<formFieldProperty
+		name="find_ragione_sociale" />
+	<formFieldProperty
+		name="find_cognome" />
+	<formFieldProperty
+		name="find_nome" />
+	<formFieldProperty
+		name="find_cd_precedente" />
+	<formFieldProperty
+		name="find_cd_tipo_documento_amm" />
+	<formFieldProperty
+		name="find_pg_obbligazione" />
+	<formFieldProperty
+		name="find_dt_scadenza" />
+	<formFieldProperty
+		name="find_im_scadenza" />
+	<formFieldProperty
+		name="find_ti_pagamento" />
+	<formFieldProperty
+		name="terzo_tipo_bollo"/>
+	<formFieldProperty
+		name="terzo_im_tipo_bollo"/>
+	<formFieldProperty
+		name="esercizio_ori_accertamento"/>
+	<formFieldProperty
+		name="pg_accertamento"/>
+	<formFieldProperty
+		name="ds_accertamento"/>		
+	<formFieldProperty
+		name="find_accertamento"/>
+	<formFieldProperty
+		name="pg_variazione_bilancio" />
+	<formFieldProperty
+		name="ds_variazione_bilancio" />		
+
+</bulkInfo>

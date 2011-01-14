@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="fl_default"
+		property="fl_default"
+		inputType="CHECKBOX"
+		label="fl_default" />
+	<fieldProperty
+		name="cd_gruppo_inquadramento"
+		property="cd_gruppo_inquadramento"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_gruppo_inquadramento" />
+	<fieldProperty
+		name="ds_gruppo_inquadramento"
+		property="ds_gruppo_inquadramento"
+		maxLength="200"
+		inputSize="200"
+		inputType="TEXT"
+		label="ds_gruppo_inquadramento"
+		caseSensitiveSearch="false" />
+
+	<formFieldProperty
+		name="fl_default" />
+	<formFieldProperty
+		name="cd_gruppo_inquadramento" />
+	<formFieldProperty
+		name="ds_gruppo_inquadramento" />
+
+	<columnFieldProperty
+		name="fl_default" />
+	<columnFieldProperty
+		name="cd_gruppo_inquadramento" />
+	<columnFieldProperty
+		name="ds_gruppo_inquadramento" />
+
+	<findFieldProperty
+		name="fl_default" />
+	<findFieldProperty
+		name="cd_gruppo_inquadramento" />
+	<findFieldProperty
+		name="ds_gruppo_inquadramento" />
+
+</bulkInfo>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Esenzioni_addizionaliBase"
+	keyClassName="it.cnr.contab.compensi00.tabrif.bulk.Esenzioni_addizionaliKey"
+	homeClassName="it.cnr.contab.compensi00.tabrif.bulk.Esenzioni_addizionaliHome">
+	<defaultColumnMap
+		tableName="ESENZIONI_ADDIZIONALI">
+		<columnMapping
+			columnName="DS_COMUNE"
+			propertyName="ds_comune"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_PROVINCIA"
+			propertyName="cd_provincia"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO"
+			propertyName="importo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="OLD_IMPORTO"
+			propertyName="old_importo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="NOTA"
+			propertyName="nota"
+			sqlTypeName="VARCHAR"
+			columnSize="500"
+			nullable="true" />	
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ds_comune" />
+	<persistentProperty
+		name="cd_provincia" />
+	<persistentProperty
+		name="importo" />
+	<persistentProperty
+		name="old_importo" />
+	<persistentProperty
+		name="nota" />	
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

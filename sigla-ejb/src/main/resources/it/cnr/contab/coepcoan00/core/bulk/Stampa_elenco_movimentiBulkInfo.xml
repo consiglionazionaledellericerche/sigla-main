@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		inputSize="2"
+        label="Esercizio" />
+		
+<!-- <formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputSize="2"		
+		inputType="ROTEXT"
+		label="Esercizio" />  -->
+		
+	<fieldProperty
+		name="findCDSForPrint"
+		property="cdsForPrint"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		completeOnSave="true"
+		readonlyProperty="cdsForPrintEnabled"
+		label="CDS" />
+	<fieldProperty
+		name="cdCdsForPrint"
+		property="cdCdsForPrint"/>
+
+	<fieldProperty
+		name="findUOForPrint"
+		property="uoForPrint"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		completeOnSave="true"
+		readonlyProperty="uoForPrintEnabled"
+		label="Unità Organizzativa" />
+	<fieldProperty
+		name="cdUoForPrint"
+		property="cdUoForPrint"/>
+		
+	<fieldProperty
+		name="findTerzoForPrint"
+		property="terzoForPrint"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		completeOnSave="true"
+		label="Codice Terzo" />
+	<fieldProperty
+		name="cdTerzoForPrint"
+		property="cdTerzoForPrint"/>
+	
+	<fieldProperty
+        name="attiva"
+        property="attiva"
+        inputType="SELECT"
+        keysProperty="ti_attivaKeys"
+        nullable="false"
+        enabledOnSearch="true"
+        label="Attiva" />
+        
+    <fieldProperty
+		name="findContoForPrint"
+		property="contoForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		enabledOnSearch="true"
+		label="Conto" />
+	<fieldProperty
+		name="cd_voce_ep"
+		property="contoForPrint.cd_voce_ep"
+		nullable="false"
+		enabledOnSearch="true"
+		readonlyProperty="ROContoForPrint"
+		inputType="TEXT"/>
+	<fieldProperty
+		name="ds_voce_ep"
+		property="contoForPrint.ds_voce_ep"
+		maxLength="100"
+		inputSize="50"		
+		readonlyProperty="ROContoForPrint"/>    
+					
+    <fieldProperty
+        name="tipologia"
+        property="tipologia"
+        inputType="SELECT"
+        keysProperty="ti_tipologiaKeys"
+        nullable="false"
+        enabledOnSearch="true"
+        label="Tipologia" />
+        
+    <fieldProperty
+		name="ragr_causale"
+		property="ragr_causale"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Causale"
+		nullable="false"/>
+		
+	<fieldProperty
+		name="ragr_chiusura"
+		property="ragr_chiusura"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Chiusura"
+		nullable="false"/>
+	
+	<fieldProperty
+		name="ragr_doc_amm"
+		property="ragr_doc_amm"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Doc. Amministrativi"
+		nullable="false"/>
+	
+	<fieldProperty
+		name="ragr_doc_cont"
+		property="ragr_doc_cont"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Doc. Contabili"
+		nullable="false"/>
+	
+	<fieldProperty
+		name="ragr_liquid_iva"
+		property="ragr_liquid_iva"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Liquidazione Iva"
+		nullable="false"/>
+		
+	<fieldProperty
+		name="ragr_mig_beni"
+		property="ragr_mig_beni"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Migrazione Bene"
+		nullable="false"/>
+	
+	<fieldProperty
+		name="ragr_stipendi"
+		property="ragr_stipendi"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		label="Stipendi"
+		nullable="false"/>
+			
+	<fieldProperty
+		name="seleziona"
+		property="esercizio"
+		inputType="BUTTON"
+		img="img/check10.gif"
+		href="javascript:submitForm('doSeleziona()')" />
+	
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="findCDSForPrint" />
+	<formFieldProperty name="cdCdsForPrint" />
+	<formFieldProperty name="findUOForPrint" />	
+	<formFieldProperty name="cdUoForPrint" />
+	<formFieldProperty name="findTerzoForPrint" />	
+	<formFieldProperty name="cdTerzoForPrint" />	
+	<formFieldProperty name="attiva" />	
+	<formFieldProperty name="findContoForPrint" />
+	<formFieldProperty name="cd_voce_ep" />	
+	<formFieldProperty name="cd_voce_ep" />	
+	<formFieldProperty name="ds_voce_ep" />	
+	<formFieldProperty name="tipologia"/>
+	<formFieldProperty name="seleziona" />
+	<formFieldProperty name="ragr_causale" /> 
+	<formFieldProperty name="ragr_chiusura" />
+	<formFieldProperty name="ragr_doc_amm" /> 
+	<formFieldProperty name="ragr_doc_cont" /> 
+	<formFieldProperty name="ragr_liquid_iva" /> 
+	<formFieldProperty name="ragr_mig_beni" /> 
+	<formFieldProperty name="ragr_stipendi" /> 
+	
+	<printForm
+		name="/registanaeco/movimenti/elencomovimentiperconto.rpt">
+			
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdCdsForPrint"
+			parameterPosition="1"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdUoForPrint"
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdTerzoForPrint"   
+			parameterPosition="3"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="attiva"
+			property="attiva"
+			parameterPosition="4"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cd_voce_ep"   
+			parameterPosition="5"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="tipologia"
+			property="tipologia"
+			parameterPosition="6"
+			parameterType="STRING" />
+		 <printFieldProperty 
+        	name="ragr_causale"
+			parameterPosition="7"
+			parameterType="STRING" />
+		<printFieldProperty 
+        	name="ragr_chiusura"
+			parameterPosition="8"
+			parameterType="STRING" />
+		<printFieldProperty 
+        	name="ragr_doc_amm"
+			parameterPosition="9"
+			parameterType="STRING" />
+		<printFieldProperty 
+        	name="ragr_doc_cont"
+			parameterPosition="10"
+			parameterType="STRING" /> 
+		<printFieldProperty 
+        	name="ragr_liquid_iva"
+			parameterPosition="11"
+			parameterType="STRING" />  
+		<printFieldProperty 
+        	name="ragr_mig_beni"
+			parameterPosition="12"
+			parameterType="STRING" />
+		<printFieldProperty 
+        	name="ragr_stipendi"
+			parameterPosition="13"
+			parameterType="STRING" />
+			
+	</printForm>
+	
+	
+	<printForm
+		name="/registanaeco/movimenti/elencomovimentiperconto.jasper">
+			
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="Esercizio"
+			paramTypeJR="java.lang.Integer"  />
+		<printFieldProperty 
+			name="cdCdsForPrint"
+			parameterPosition="1"
+			parameterType="STRING" 
+			paramNameJR="CDS"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cdUoForPrint"
+			parameterPosition="2"
+			parameterType="STRING" 
+			paramNameJR="UO"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cdTerzoForPrint"   
+			parameterPosition="3"
+			parameterType="STRING"
+			paramNameJR="Terzo"
+			paramTypeJR="java.lang.String"  />
+		<printFieldProperty 
+			name="attiva"
+			property="attiva"
+			parameterPosition="4"
+			parameterType="STRING"
+			paramNameJR="Attiva"
+			paramTypeJR="java.lang.String"  />
+		<printFieldProperty 
+			name="cd_voce_ep"   
+			parameterPosition="5"
+			parameterType="STRING" 
+			paramNameJR="Conto"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="tipologia"
+			property="tipologia"
+			parameterPosition="6"
+			parameterType="STRING"
+			paramNameJR="Ist_Comm"
+			paramTypeJR="java.lang.String"  />
+		 <printFieldProperty 
+        	name="ragr_causale"
+			parameterPosition="7"
+			parameterType="STRING" 
+			paramNameJR="Ragr_causale"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+        	name="ragr_chiusura"
+			parameterPosition="8"
+			parameterType="STRING" 
+			paramNameJR="Ragr_chiusura"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+        	name="ragr_doc_amm"
+			parameterPosition="9"
+			parameterType="STRING"
+			paramNameJR="Ragr_doc_amm"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+        	name="ragr_doc_cont"
+			parameterPosition="10"
+			parameterType="STRING" 
+			paramNameJR="Ragr_doc_cont"
+			paramTypeJR="java.lang.String"/> 
+		<printFieldProperty 
+        	name="ragr_liquid_iva"
+			parameterPosition="11"
+			parameterType="STRING" 
+			paramNameJR="Ragr_liquid_iva"
+			paramTypeJR="java.lang.String"/>  
+		<printFieldProperty 
+        	name="ragr_mig_beni"
+			parameterPosition="12"
+			parameterType="STRING" 
+			paramNameJR="Ragr_mig_bene"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+        	name="ragr_stipendi"
+			parameterPosition="13"
+			parameterType="STRING"
+			paramNameJR="Ragr_stipendi"
+			paramTypeJR="java.lang.String" />
+			
+	</printForm>
+
+</bulkInfo>

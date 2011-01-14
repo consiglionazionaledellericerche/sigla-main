@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="progressivo_riga"
+		property="progressivo_riga"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="Progressivo interno" />
+	<fieldProperty
+		name="nome_file"
+		property="nome_file"
+		inputType="TEXT"
+		inputSize="40"
+		maxLength="400"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"
+		label="Nome del File" />
+	<fieldProperty
+		name="ds_file"
+		property="ds_file"
+		inputType="TEXTAREA"
+		inputSize="2000"
+		maxLength="2000"
+		cols="80"
+		rows="3"
+		caseSensitiveSearch="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="blob"
+		property="blob"
+		inputType="FILE"
+		inputSize="40"
+		maxLength="400"
+		caseSensitiveSearch="false"
+		nullable="false"
+		label="File" />
+	<fieldProperty
+		name="tipo_archivio"
+		property="tipo_archivio"
+		keysProperty="tipo_archivioKeys"
+		inputType="SELECT"
+		inputSize="50"
+		maxLength="50"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		command="doDefault"
+		label="Tipologia del file archiviato" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		keysProperty="statoKeys"
+		inputType="SELECT"
+		inputSize="50"
+		maxLength="50"
+		label="Stato del file archiviato" />
+	<fieldProperty
+		name="data_creazione"
+		property="data_creazione"
+		inputSize="20"
+		maxLength="20"
+		label="Data di Archiviazione" />
+	<fieldProperty
+		name="utcr"
+		property="utcr"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Utente di Archiviazione" />
+	<fieldProperty
+		name="attivaFile_blob"
+		property="blob"
+		readonlyProperty="ROAttivaFileBlob"
+		inputType="BUTTON"
+		enabledOnView="true"
+		img="img/import24.gif"
+		href="javascript:doScaricaFile()"
+		label="Apri File" />
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_procedura" />
+	<formFieldProperty
+		name="progressivo_riga" />
+	<formFieldProperty
+		name="nome_file" />
+	<formFieldProperty
+		name="ds_file"
+		label="Descrizione del File" />
+	<formFieldProperty
+		name="blob" />
+	<formFieldProperty
+		name="tipo_archivio" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="data_creazione" />
+	<formFieldProperty
+		name="utcr" />
+	<formFieldProperty
+		name="attivaFile_blob" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_procedura" />
+	<columnFieldProperty
+		name="progressivo_riga" />
+	<columnFieldProperty
+		name="nome_file" />
+	<columnFieldProperty
+		name="ds_file" />
+	<columnFieldProperty
+		name="tipo_archivio" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="data_creazione" />
+	<columnFieldProperty
+		name="utcr" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_procedura" />
+	<findFieldProperty
+		name="progressivo_riga" />
+	<findFieldProperty
+		name="nome_file" />
+	<findFieldProperty
+		name="ds_file" />
+	<findFieldProperty
+		name="tipo_archivio" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="data_creazione" />
+	<findFieldProperty
+		name="utcr" />
+
+	<columnSet
+		name="archivioAllegati" >
+		<columnFieldProperty
+			name="tipo_archivio" />
+		<columnFieldProperty
+			name="stato" />
+		<columnFieldProperty
+			name="nome_file" />
+		<columnFieldProperty
+			name="ds_file"
+			inputType="TEXT"
+			inputSize="100" />
+	</columnSet>
+</bulkInfo>

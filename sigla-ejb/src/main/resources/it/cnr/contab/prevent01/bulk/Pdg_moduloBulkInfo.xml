@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cdr.cd_centro_responsabilita"
+		inputType="TEXT"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="Centro di responsabilità di Primo Livello" />
+	<fieldProperty
+		name="ds_cdr"
+		property="cdr.ds_cdr"
+		inputType="TEXT"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="Descrizione Centro di responsabilità di Primo Livello" />
+		
+	
+	<fieldProperty
+		name="cdr"
+		property="cdr"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Centro di responsabilità di Primo Livello" />
+		
+	<fieldProperty
+		name="stato"
+		property="stato"
+		keysProperty = "statiKeys"
+		inputType="SELECT"
+		label="Stato attuale del piano"
+		nullable="false" />
+
+	<fieldProperty
+		name="cambia_stato"
+		property="cambia_stato"
+		keysProperty = "statiKeys"
+		inputType="SELECT"
+		label="Nuovo Stato"
+		nullable="false" />
+
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio contabile" />
+
+	<fieldProperty
+		name="pg_progetto"
+		property="pg_progetto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo del modulo di attivit&#224;" />
+
+	<fieldProperty
+		name="cd_progetto_padre"
+		property="progettopadre.cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Codice Commessa"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"		
+		enabledOnEdit="true"/>		
+	<fieldProperty
+		name="cd_progetto_nonno"
+		property="progettononno.cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Codice Progetto"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"		
+		enabledOnEdit="true"/>		
+	<fieldProperty
+		name="ds_progetto_padre"
+		property="progettononno.ds_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		enabledOnEdit="true"		
+		caseSensitiveSearch="false"/>		
+
+	<fieldProperty
+		name="cd_dipartimento"
+		property="progettononno.cd_dipartimento"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice Dipartimento" />
+
+	<fieldProperty
+		name="find_progetto"
+		property="progetto"
+		inputType="SEARCHTOOL"
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"/>
+	<fieldProperty
+		name="find_progettopadre"
+		property="progettopadre"
+		inputType="SEARCHTOOL"
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"
+		label="Progetto"/>
+	<fieldProperty
+		name="cd_progetto"
+		property="progetto.cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		readonlyProperty="ROprogetto"
+		label="Codice Modulo di Attivit&#224;"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"		
+		enabledOnEdit="true"/>		
+	<fieldProperty
+		name="ds_progetto"
+		property="progetto.ds_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		enabledOnEdit="true"		
+		caseSensitiveSearch="false"/>		
+
+	<fieldProperty
+		name="searchtool_progetto"
+		property="progetto"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROprogetto"
+		formName="form_searchtool_progetto"
+		label="Modulo di attivit&#224;"
+		/>
+<!-- r.p. campi per la visualizzazione della testata nella mappa di dettaglio-->
+	<fieldProperty
+		name="esercizio_ro"
+		property="esercizio"
+		inputType="ROTEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cdr_ro"
+		property="cdr.cd_centro_responsabilita"
+		inputType="ROTEXT"
+		enabledOnEdit="true"
+		inputSize="25"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="CdR" />
+	<fieldProperty
+		name="ds_centro_responsabilita"
+		property="cdr.ds_cdr"
+		inputType="ROTEXT"
+		inputSize="80"
+		maxLength="300"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="CdR" />
+	
+	<fieldProperty
+		name="dipartimento"
+		property="progetto.progettopadre.progettopadre.cd_dipartimento"
+		descProperty="progetto.progettopadre.progettopadre.dipartimento.ds_dipartimento"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		maxLength="25"
+		inputSize="10"
+		label="Dipartimento" />		
+	<fieldProperty
+		name="progetto"
+		property="progetto.progettopadre.progettopadre.cd_progetto"
+		descProperty="progetto.progettopadre.progettopadre.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="15"
+		maxLength="25"
+		label="Progetto" />
+	<fieldProperty
+		name="commessa"
+		property="progetto.progettopadre.cd_progetto"
+		descProperty="progetto.progettopadre.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="15"
+		maxLength="25"
+		label="Commessa" />
+	<fieldProperty
+		name="modulo"
+		property="progetto.cd_progetto"
+		descProperty="progetto.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="25"
+		maxLength="30"
+		label="Modulo di Commessa" />	
+	<fieldProperty
+		name="importo_totale"
+		property="importo_progetto"
+		inputType="ROTEXT"
+		maxLength="50"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Tot.Risorse per&lt;BR&gt;Modulo di Commessa" />				
+	<formFieldProperty
+		name="esercizio_ro" />
+	<formFieldProperty
+		name="cdr_ro" />	
+	<formFieldProperty
+		name="ds_centro_responsabilita" />	
+	<formFieldProperty
+		name="dipartimento" />	
+	<formFieldProperty
+		name="progetto" />	
+	<formFieldProperty
+		name="commessa" />	
+	<formFieldProperty
+		name="modulo" />	
+	<formFieldProperty
+		name="importo_totale" />	
+	<formFieldProperty
+		name="esercizio_ro" />
+	<formFieldProperty
+		name="cdr_ro" />	
+	<formFieldProperty
+		name="ds_centro_responsabilita" />	
+	<formFieldProperty
+		name="dipartimento" />	
+	<formFieldProperty
+		name="progetto" />	
+	<formFieldProperty
+		name="commessa" />	
+	<formFieldProperty
+		name="modulo" />	
+	<formFieldProperty
+		name="importo_totale" />	
+					
+<!-- fine r.p.-->		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="ds_centro_responsabilita" />	
+	<formFieldProperty
+		name="pg_progetto" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="cambia_stato" />
+	<formFieldProperty
+		name="searchtool_progetto" />
+
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="pg_progetto" />
+	<findFieldProperty
+		name="stato" />
+
+	<columnFieldProperty
+		name="cd_progetto"
+		headerStyle="width: 180px"
+		label="Modulo di attivit&#224;" />
+	<columnFieldProperty
+		name="cd_progetto_padre"
+		headerStyle="width: 160px"
+		label="Commessa" />
+	<columnFieldProperty
+		name="cd_progetto_nonno"
+		headerStyle="width: 160px"
+		label="Progetto" />
+	<columnFieldProperty
+		name="cd_dipartimento"
+		headerStyle="width: 100px"
+		label="Dipartimento" />
+	<columnFieldProperty
+		name="stato"
+		label="Stato attuale" />
+
+</bulkInfo>

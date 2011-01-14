@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.fondecon00.core.bulk.Fondo_spesaBulk"
+	homeClassName="it.cnr.contab.fondecon00.core.bulk.Fondo_spesaHome" >
+	<defaultColumnMap
+		tableName="FONDO_SPESA" >
+
+<!-- Fondo Economale -->
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="fondo_economale.esercizio" />
+		<columnMapping
+			columnName="CD_CODICE_FONDO"
+			propertyName="fondo_economale.cd_codice_fondo" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="fondo_economale.unita_organizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="fondo_economale.cds.cd_unita_organizzativa" />
+
+<!-- Fornitore -->
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="fornitore.cd_terzo"
+			fetchOnly="false" />
+
+<!-- Città -->
+		<columnMapping
+			columnName="PG_COMUNE"
+			propertyName="citta.pg_comune"
+			fetchOnly="false" />
+
+<!-- Obbligazione Scadenzario -->
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="obb_scad.obbligazione.esercizio_originale"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="obb_scad.obbligazione.pg_obbligazione"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="CD_CDS_OBBLIGAZIONE"
+			propertyName="obb_scad.obbligazione.cds.cd_unita_organizzativa"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="obb_scad.pg_obbligazione_scadenzario"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="obb_scad.obbligazione.esercizio"
+			fetchOnly="false" />
+
+	</defaultColumnMap>
+
+	<columnMap
+		extends="default"
+		tableName="V_ASS_OBBSCAD_FONDO_SPESA"
+		name="V_ASS_OBBSCAD_FONDO_SPESA" />
+
+	<persistentProperty
+		name="fondo_economale"
+		partOfOid="true" />
+	<persistentProperty
+		name="fornitore"
+		partOfOid="false" />
+	<persistentProperty
+		name="citta"
+		partOfOid="false" />
+	<persistentProperty
+		name="obb_scad"
+		partOfOid="false" />
+
+</SQLPersistentInfo>

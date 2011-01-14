@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.AnagraficoBase"
+	keyClassName="it.cnr.contab.anagraf00.core.bulk.AnagraficoKey"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.AnagraficoHome" >
+	<defaultColumnMap
+		tableName="ANAGRAFICO" >
+		<columnMapping
+			columnName="PG_NAZIONE_NAZIONALITA"
+			propertyName="pg_nazione_nazionalita"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="TI_ENTITA"
+			propertyName="ti_entita"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_CANC"
+			propertyName="dt_canc"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="NUM_ISCRIZ_ALBO"
+			propertyName="num_iscriz_albo"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CAP_COMUNE_FISCALE"
+			propertyName="cap_comune_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_ENTE_APPARTENENZA"
+			propertyName="cd_ente_appartenenza"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="PG_COMUNE_FISCALE"
+			propertyName="pg_comune_fiscale"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="CONTO_NUMERARIO_CREDITO"
+			propertyName="conto_numerario_credito"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="VIA_FISCALE"
+			propertyName="via_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="RAGIONE_SOCIALE"
+			propertyName="ragione_sociale"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="NUM_ISCRIZ_CCIAA"
+			propertyName="num_iscriz_cciaa"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CAUSALE_FINE_RAPPORTO"
+			propertyName="causale_fine_rapporto"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="MATRICOLA_INAIL"
+			propertyName="matricola_inail"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_CLASSIFIC_ANAG"
+			propertyName="cd_classific_anag"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_ITALIANO_ESTERO"
+			propertyName="ti_italiano_estero"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_NAZIONE_FISCALE"
+			propertyName="pg_nazione_fiscale"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="FRAZIONE_FISCALE"
+			propertyName="frazione_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="CD_ATTIVITA_INPS"
+			propertyName="cd_attivita_inps"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="TI_ENTITA_GIURIDICA"
+			propertyName="ti_entita_giuridica"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="NOTE"
+			propertyName="note"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="DENOMINAZIONE_CAF"
+			propertyName="denominazione_caf"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="DT_NASCITA"
+			propertyName="dt_nascita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DT_FINE_RAPPORTO"
+			propertyName="dt_fine_rapporto"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="FL_OCCASIONALE"
+			propertyName="fl_occasionale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="ALIQUOTA_FISCALE"
+			propertyName="aliquota_fiscale"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			columnScale="3" />
+		<columnMapping
+			columnName="SEDE_INAIL"
+			propertyName="sede_inail"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="FL_SOGGETTO_IVA"
+			propertyName="fl_soggetto_iva"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="ALTRA_ASS_PREVID_INPS"
+			propertyName="altra_ass_previd_inps"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CODICE_FISCALE_CAF"
+			propertyName="codice_fiscale_caf"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="PG_COMUNE_NASCITA"
+			propertyName="pg_comune_nascita"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="DT_ANTIMAFIA"
+			propertyName="dt_antimafia"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="NUM_CIVICO_FISCALE"
+			propertyName="num_civico_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="ID_FISCALE_ESTERO"
+			propertyName="id_fiscale_estero"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="CONTO_NUMERARIO_DEBITO"
+			propertyName="conto_numerario_debito"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="TI_ENTITA_FISICA"
+			propertyName="ti_entita_fisica"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partita_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="FL_FATTURAZIONE_DIFFERITA"
+			propertyName="fl_fatturazione_differita"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="TI_SESSO"
+			propertyName="ti_sesso"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="FL_CERVELLONE"
+			propertyName="fl_cervellone"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+		<columnMapping
+			columnName="DT_INIZIO_RES_ITALIA"
+			propertyName="dt_inizio_res_italia"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />	
+		<columnMapping
+			columnName="DT_FINE_RES_ITALIA"
+			propertyName="dt_fine_res_italia"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="ANNO_INIZIO_RES_FIS"
+			propertyName="anno_inizio_res_fis"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />	
+		<columnMapping
+			columnName="ANNO_FINE_AGEVOLAZIONI"
+			propertyName="anno_fine_agevolazioni"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />											
+		<columnMapping
+			columnName="FL_NON_OBBLIG_P_IVA"
+			propertyName="fl_non_obblig_p_iva"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="PG_TIPOLOGIA"
+			propertyName="pg_tipologia"
+			sqlTypeName="DECIMAL"
+			columnSize="5"/>
+		<columnMapping
+			columnName="FL_STUDIO_ASSOCIATO"
+			propertyName="fl_studio_associato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_SPECIALE"
+			propertyName="fl_speciale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_SOSPENSIONE_IRPEF"
+			propertyName="fl_sospensione_irpef"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="TITOLO_STUDIO"
+			propertyName="titolo_studio"
+			sqlTypeName="VARCHAR"
+			columnSize="6" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_nazione_nazionalita" />
+	<persistentProperty
+		name="ti_entita" />
+	<persistentProperty
+		name="num_iscriz_albo" />
+	<persistentProperty
+		name="dt_canc" />
+	<persistentProperty
+		name="cap_comune_fiscale" />
+	<persistentProperty
+		name="pg_comune_fiscale" />
+	<persistentProperty
+		name="cd_ente_appartenenza" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="codice_fiscale" />
+	<persistentProperty
+		name="conto_numerario_credito" />
+	<persistentProperty
+		name="cognome" />
+	<persistentProperty
+		name="via_fiscale" />
+	<persistentProperty
+		name="ragione_sociale" />
+	<persistentProperty
+		name="num_iscriz_cciaa" />
+	<persistentProperty
+		name="causale_fine_rapporto" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="matricola_inail" />
+	<persistentProperty
+		name="cd_classific_anag" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="ti_italiano_estero" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_nazione_fiscale" />
+	<persistentProperty
+		name="frazione_fiscale" />
+	<persistentProperty
+		name="cd_attivita_inps" />
+	<persistentProperty
+		name="ti_entita_giuridica" />
+	<persistentProperty
+		name="note" />
+	<persistentProperty
+		name="dt_nascita" />
+	<persistentProperty
+		name="denominazione_caf" />
+	<persistentProperty
+		name="fl_occasionale" />
+	<persistentProperty
+		name="dt_fine_rapporto" />
+	<persistentProperty
+		name="aliquota_fiscale" />
+	<persistentProperty
+		name="sede_inail" />
+	<persistentProperty
+		name="fl_soggetto_iva" />
+	<persistentProperty
+		name="nome" />
+	<persistentProperty
+		name="altra_ass_previd_inps" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_comune_nascita" />
+	<persistentProperty
+		name="codice_fiscale_caf" />
+	<persistentProperty
+		name="num_civico_fiscale" />
+	<persistentProperty
+		name="dt_antimafia" />
+	<persistentProperty
+		name="id_fiscale_estero" />
+	<persistentProperty
+		name="conto_numerario_debito" />
+	<persistentProperty
+		name="ti_entita_fisica" />
+	<persistentProperty
+		name="partita_iva" />
+	<persistentProperty
+		name="fl_fatturazione_differita" />
+	<persistentProperty
+		name="ti_sesso" />
+	<persistentProperty
+		name="fl_cervellone" />
+	<persistentProperty
+		name="dt_inizio_res_italia" />
+	<persistentProperty
+		name="dt_fine_res_italia" />						
+	<persistentProperty
+		name="anno_inizio_res_fis" />
+	<persistentProperty
+		name="anno_fine_agevolazioni" />	
+	<persistentProperty
+		name ="fl_non_obblig_p_iva"	/>	
+	<persistentProperty
+		name ="pg_tipologia"	/>				
+	<persistentProperty
+		name ="fl_studio_associato"	/>
+	<persistentProperty
+		name ="fl_speciale"	/>					
+	<persistentProperty
+		name ="fl_sospensione_irpef" />
+	<persistentProperty
+		name ="titolo_studio"	/>		
+</SQLPersistentInfo>

@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" 
+		shortDescription="Documento contabile"
+		longDescription="Documento contabile">
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_appartenenza"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Cds"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_pgiro"
+		property="fl_pgiro"
+		inputType="CHECKBOX"
+		label="P.giro" />
+	<fieldProperty
+		name="cd_uo_origine"
+		property="cd_uo_origine"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_uo_origine"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_acc_obb"
+		property="im_acc_obb"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="16"
+		inputSize="10"
+		enabledOnSearch="true"		
+		label="Importo doc." />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="elemento_voce.cd_elemento_voce"
+		label="Voce del piano"
+		readonlyProperty="ROElemento_voce"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="10"
+		enabledOnSearch="true"
+		nullable="true"
+		/>
+	<fieldProperty
+		name="cd_voce"
+		property="cd_voce"
+		label="Codice completo capitolo (solo Ente)"
+		inputType="TEXT"
+		maxLength="50"
+		inputSize="10"
+		enabledOnSearch="true"
+		nullable="true"
+		/>
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="elemento_voce.ds_elemento_voce"
+		label=""
+		inputType="ROTEXT"
+		inputSize="60"
+		/>
+	<fieldProperty
+		name="find_elemento_voce"
+		property="elemento_voce"
+		inputType="SEARCHTOOL"
+		label="Voce del piano"
+		enabledOnSearch="true"
+		completeOnSave="true"
+		/>
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="riportato"
+		property="riportato"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Riportato"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_cds_origine"
+		property="cd_cds_origine"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds_origine"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio_competenza"
+		property="esercizio_competenza"
+		inputType="TEXT"
+		label="Esercizio competenza" />
+	<fieldProperty
+		name="esercizio_ori_riporto"
+		property="esercizio_ori_riporto"
+		inputType="TEXT"
+		label="Esercizio di origine" />
+	<fieldProperty
+		name="cd_cds_ori_riporto"
+		property="cd_cds_ori_riporto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Cds di origine"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="find_terzo"
+		property="terzo"
+		inputType="SEARCHTOOL"
+		label="Terzo"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_terzo"
+		property="terzo.cd_terzo"
+		readonlyProperty="ROTerzo"
+		label="Terzo"
+		inputType="TEXT"
+		maxLength="8"
+		inputSize="10"
+		enabledOnSearch="true"
+		nullable="true"
+		/>
+	<fieldProperty
+		name="ds_terzo"
+		property="terzo.denominazione_sede"
+		label="Terzo"
+		inputType="ROTEXT"
+		inputSize="60"
+		enabledOnSearch="true"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="cd_tipo_documento_cont"
+		property="cd_tipo_documento_cont"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Tipo documento"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio_ori_acc_obb"
+		property="esercizio_ori_acc_obb"
+		inputType="TEXT"
+		label="Esercizio originale" />
+	<fieldProperty
+		name="pg_acc_obb"
+		property="pg_acc_obb"
+		inputType="TEXT"
+		label="Progressivo" />
+	<fieldProperty
+		name="pg_doc_da"
+		property="pg_doc_da"
+		inputType="TEXT"
+		inputSize="10"		
+		label="Progressivo doc. Da" />
+	<fieldProperty
+		name="pg_doc_a"
+		property="pg_doc_a"
+		inputType="TEXT"
+		inputSize="10"		
+		label="   A " />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		inputType="SELECT"
+		label="Entrata/Spesa"
+		keysProperty="ti_gestioneKeys"
+		enabledOnSearch="true"		
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio_ori_ori_riporto"
+		property="esercizio_ori_ori_riporto"
+		inputType="TEXT"
+		label="Esercizio di origine" />
+	<fieldProperty
+		name="pg_acc_obb_ori_riporto"
+		property="pg_acc_obb_ori_riporto"
+		inputType="TEXT"
+		label="Progressivo di origine" />
+	<fieldProperty
+		name="fl_ente"
+		property="fl_ente"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"		
+		label="Ente" />
+	<fieldProperty
+		name="ti_competenza_residuo"
+		property="ti_competenza_residuo"
+		inputType="SELECT"
+		label="Competenza/Residuo"
+		keysProperty="ti_competenza_residuoKeys"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_nuovo_ev"
+		property="nuovo_ev.cd_elemento_voce"
+		label="Nuova Voce del piano"
+		readonlyProperty="RONuovo_ev"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="10"
+		enabledOnSearch="true"
+		nullable="true"
+		/>
+	<fieldProperty
+		name="ds_nuovo_ev"
+		property="nuovo_ev.ds_elemento_voce"
+		label=""
+		inputType="ROTEXT"
+		inputSize="60"
+		/>
+	<fieldProperty
+		name="find_nuovo_ev"
+		property="nuovo_ev"
+		inputType="SEARCHTOOL"
+		label="Nuova Voce del piano"
+		enabledOnSearch="true"
+		completeOnSave="true"
+		/>
+	<fieldProperty
+		name="cd_nuova_voce"
+		property="nuova_voce.cd_voce"
+		label="Nuovo Capitolo Finanz."
+		readonlyProperty="RONuova_voce"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="20"
+		enabledOnSearch="true"
+		nullable="true"
+		/>
+	<fieldProperty
+		name="ds_nuova_voce"
+		property="nuova_voce.ds_voce"
+		label=""
+		inputType="ROTEXT"
+		inputSize="60"
+		/>
+	<fieldProperty
+		name="find_nuova_voce"
+		property="nuova_voce"
+		inputType="SEARCHTOOL"
+		label="Nuovo Capitolo Finanz."
+		enabledOnSearch="true"
+		completeOnSave="true"
+		/>
+		
+		
+		
+
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="fl_pgiro" />
+	<formFieldProperty
+		name="cd_uo_origine" />
+	<formFieldProperty
+		name="im_acc_obb" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="cd_voce" />
+	<formFieldProperty
+		name="ds_elemento_voce" />
+	<formFieldProperty
+		name="find_elemento_voce" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="riportato" />
+	<formFieldProperty
+		name="cd_cds_origine" />
+	<formFieldProperty
+		name="esercizio_competenza" />
+	<formFieldProperty
+		name="esercizio_ori_riporto" />
+	<formFieldProperty
+		name="cd_cds_ori_riporto" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="ds_terzo" />
+	<formFieldProperty
+		name="find_terzo" />
+	<formFieldProperty
+		name="cd_tipo_documento_cont" />
+	<formFieldProperty
+		name="esercizio_ori_acc_obb" />
+	<formFieldProperty
+		name="pg_acc_obb" />
+	<formFieldProperty
+		name="pg_doc_da" />
+	<formFieldProperty
+		name="pg_doc_a" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="esercizio_ori_ori_riporto" />
+	<formFieldProperty
+		name="pg_acc_obb_ori_riporto" />
+	<formFieldProperty
+		name="fl_ente" />
+	<formFieldProperty
+		name="ti_competenza_residuo"/>
+	<formFieldProperty
+		name="cd_nuovo_ev" />
+	<formFieldProperty
+		name="ds_nuovo_ev" />
+	<formFieldProperty
+		name="find_nuovo_ev" />
+	<formFieldProperty
+		name="cd_nuova_voce" />
+	<formFieldProperty
+		name="ds_nuova_voce" />
+	<formFieldProperty
+		name="find_nuova_voce" />
+		
+		
+		
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="esercizio_ori_acc_obb" />
+	<columnFieldProperty
+		name="pg_acc_obb" />
+	<columnFieldProperty
+		name="fl_pgiro" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="cd_voce" />
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="im_acc_obb" />
+	<columnFieldProperty
+		name="cd_tipo_documento_cont" />
+	<columnFieldProperty
+		name="esercizio_competenza" />
+	<columnFieldProperty
+		name="esercizio_ori_riporto" />
+	<columnFieldProperty
+		name="cd_cds_ori_riporto" />
+	<columnFieldProperty
+		name="cd_tipo_documento_cont" />
+	<columnFieldProperty
+		name="esercizio_ori_ori_riporto" />
+	<columnFieldProperty
+		name="pg_acc_obb_ori_riporto" />
+
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="fl_pgiro" />
+	<findFieldProperty
+		name="cd_uo_origine" />
+	<findFieldProperty
+		name="im_acc_obb" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="cd_voce" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="riportato" />
+	<findFieldProperty
+		name="cd_cds_origine" />
+	<findFieldProperty
+		name="esercizio_competenza" />
+	<findFieldProperty
+		name="esercizio_ori_riporto" />
+	<findFieldProperty
+		name="cd_cds_ori_riporto" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="cd_tipo_documento_cont" />
+	<findFieldProperty
+		name="esercizio_ori_acc_obb" />
+	<findFieldProperty
+		name="pg_acc_obb" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="esercizio_ori_ori_riporto" />
+	<findFieldProperty
+		name="pg_acc_obb_ori_riporto" />
+
+</bulkInfo>

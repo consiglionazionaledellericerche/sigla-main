@@ -1,0 +1,30 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Reversale_terzoBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Reversale_terzoHome" >
+	<defaultColumnMap
+		tableName="REVERSALE_TERZO" >
+		<columnMapping
+			columnName="PG_REVERSALE"
+			propertyName="reversaleI.pg_reversale"/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="reversaleI.esercizio" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="reversaleI.cds.cd_unita_organizzativa" />		
+		<columnMapping
+			columnName="CD_TIPO_BOLLO"
+			propertyName="tipoBollo.cd_tipo_bollo" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzo.cd_terzo" />			
+	</defaultColumnMap>
+	<persistentProperty
+		name="reversaleI" 
+		partOfOid="true"/>	
+	<persistentProperty
+		name="terzo" 
+		partOfOid="true"/>
+	<persistentProperty
+		name="tipoBollo" />
+</SQLPersistentInfo>

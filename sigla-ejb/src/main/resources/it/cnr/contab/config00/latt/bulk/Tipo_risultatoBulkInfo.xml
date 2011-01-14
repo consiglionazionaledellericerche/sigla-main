@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_tipo_risultato"
+		property="cd_tipo_risultato"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice tipo risultato"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_tipo_risultato"
+		property="ds_tipo_risultato"
+		cols="40"
+		rows="2"
+		inputType="TEXTAREA"
+		label="Descrizione tipo risultato"
+		caseSensitiveSearch="false" />
+
+	<formFieldProperty
+		name="cd_tipo_risultato" />
+	<formFieldProperty
+		name="ds_tipo_risultato" />
+
+	<form
+		name="SEARCHTOOL" >
+		<formFieldProperty
+			name="cd_tipo_risultato" />
+		<formFieldProperty
+			name="ds_tipo_risultato"
+			inputSize="30"
+			inputType="TEXT" />
+	</form>
+
+	<columnFieldProperty
+		name="cd_tipo_risultato" />
+	<columnFieldProperty
+		name="ds_tipo_risultato" />
+
+	<findFieldProperty
+		name="cd_tipo_risultato" />
+
+</bulkInfo>

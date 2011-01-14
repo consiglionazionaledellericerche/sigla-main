@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.cdip.bulk.V_dipendenteBulk"
+	homeClassName="it.cnr.contab.pdg00.cdip.bulk.V_dipendenteHome" >
+	<defaultColumnMap
+		tableName="V_DIPENDENTE" >
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ID_MATRICOLA"
+			propertyName="id_matricola"
+			primary="true" />
+		<columnMapping
+			columnName="MESE"
+			propertyName="mese"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="unita_organizzativa" />
+	<persistentProperty
+		name="id_matricola"
+		partOfOid="true" />
+	<persistentProperty
+		name="mese"
+		partOfOid="true" />
+</SQLPersistentInfo>

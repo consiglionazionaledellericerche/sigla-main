@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ti_competenza_residuo"
+		property="ti_competenza_residuo"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Competenza / Residui"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"		
+		/>
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Appartenenza CNR-CDS"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"		
+		/>
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="ROTEXT"
+		label="CDS/ENTE"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"		
+		/>
+
+	<fieldProperty
+		name="im_1210"
+		property="im_1210"
+		label="Saldo 1210"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="false"				
+		/>
+		
+	<fieldProperty
+		name="im_stanz_iniziale_a1"
+		property="im_stanz_iniziale_a1"
+		label="Stanziamento iniziale"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"				
+		/>
+	<fieldProperty
+		name="im_stanz_iniziale_a2"
+		property="im_stanz_iniziale_a2"
+		label="Stanziamento iniziale secondo anno"
+		inputType="TEXT"				
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"				
+		/>
+	<fieldProperty
+		name="im_stanz_iniziale_a3"
+		property="im_stanz_iniziale_a3"
+		label="Stanziamento iniziale terzo anno"
+		inputType="TEXT"		
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"				
+		/>
+	<fieldProperty
+		name="im_mandati_reversali"
+		property="im_mandati_reversali"
+		label="Saldo mandati"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="16"
+		inputSize="16"
+		/>
+	<fieldProperty
+		name="im_pagamenti_incassi"
+		property="im_pagamenti_incassi"
+		label="Saldo pagamenti"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="16"
+		inputSize="16"
+		/>
+	<fieldProperty
+		name="variazioni_piu"
+		property="variazioni_piu"
+		label="Variazioni +"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="16"
+		inputSize="16"
+		/>
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		label="Esercizio"
+		inputType="ROTEXT"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"		
+		/>
+	<fieldProperty
+		name="im_obblig_imp_acr"
+		property="im_obblig_imp_acr"
+		label="Saldo impegni"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="16"
+		inputSize="16"
+		/>
+	<fieldProperty
+		name="variazioni_meno"
+		property="variazioni_meno"
+		label="Variazioni -"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="16"
+		inputSize="16"
+		/>
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		inputType="ROTEXT"
+		label="Gestione Entrate-Spese"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"		
+		/>
+	<fieldProperty
+		name="find_voce"
+		property="voce"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		enabledOnEdit="false"		
+		/>
+	<fieldProperty
+		name="cd_voce"
+		property="voce.cd_voce"
+		readonlyProperty="ROVoce"
+		label="Capitolo/Articolo"
+		inputType="TEXT"
+		maxLength="50"
+		inputSize="20"
+		enabledOnSearch="true"
+		enabledOnEdit="false"		
+		/>
+	<fieldProperty
+		name="ds_voce"
+		property="voce.ds_voce"
+		readonlyProperty="ROVoce"
+		label=""
+		inputSize="20"
+		inputType="ROTEXT"
+		/>
+	<fieldProperty
+		name="cd_parte"
+		property="voce.cd_parte"
+		readonlyProperty="ROParte"		
+		label="Codice Parte"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="20"
+		enabledOnSearch="true"		
+		/>
+	<fieldProperty
+		name="cd_categoria"
+		property="voce.cd_categoria"
+		readonlyProperty="ROPerRicercaVoce"		
+		label="Codice Categoria"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="20"
+		enabledOnSearch="true"		
+		/>
+	<fieldProperty
+		name="cd_funzione"
+		property="voce.cd_funzione"
+		readonlyProperty="ROPerRicercaVoce"				
+		label="Codice Sezione"
+		inputType="TEXT"
+		maxLength="2"
+		inputSize="2"
+		enabledOnSearch="true"		
+		/>
+	<fieldProperty
+		name="cd_natura"
+		property="voce.cd_natura"
+		readonlyProperty="ROPerRicercaVoce"				
+		label="Codice Natura"
+		inputType="TEXT"
+		maxLength="1"
+		inputSize="1"
+		enabledOnSearch="true"		
+		/>
+	<fieldProperty
+		name="origine"
+		property="origine"				
+		label="Origine"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="fl_sola_lettura"
+		property="fl_sola_lettura"				
+		label="Sola lettura"
+		inputType="TEXT"
+		/>										
+
+<!-- residui field -->
+	<fieldProperty
+		name="im_1210_r"
+		property="residui.im_1210"
+		label="Saldo 1210"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="16"
+		inputSize="16"
+		/>
+	<fieldProperty
+		name="im_stanz_iniziale_a1_r"
+		property="residui.im_stanz_iniziale_a1"
+		label="Residuo iniziale"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="16"
+		inputSize="16"
+		/>
+	<fieldProperty
+		name="variazioni_piu_r"
+		property="residui.variazioni_piu"
+		label="Variazioni +"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="16"
+		inputSize="16"
+		/>
+	<fieldProperty
+		name="variazioni_meno_r"
+		property="residui.variazioni_meno"
+		label="Variazioni -"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="16"
+		inputSize="16"
+		/>
+	<fieldProperty
+		name="im_mandati_reversali_r"
+		property="residui.im_mandati_reversali"
+		label="Saldo mandati"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="16"
+		inputSize="16"
+		/>
+	<fieldProperty
+		name="im_pagamenti_incassi_r"
+		property="residui.im_pagamenti_incassi"
+		label="Saldo pagamenti"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="16"
+		inputSize="16"
+		/>
+
+<!-- end residui field -->
+	<fieldProperty
+		name="im_disp_cassa_mandato"
+		property="im_disp_cassa_mandato"
+		label="Disp.cassa mandati"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="false"				
+		/>
+
+	
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="im_stanz_iniziale_a1" />
+	<formFieldProperty
+		name="im_stanz_iniziale_a2" />
+	<formFieldProperty
+		name="im_stanz_iniziale_a3" />
+	<formFieldProperty
+		name="im_mandati_reversali" />
+	<formFieldProperty
+		name="im_pagamenti_incassi" />
+	<formFieldProperty
+		name="variazioni_piu" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="im_obblig_imp_acr" />
+	<formFieldProperty
+		name="variazioni_meno" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_voce" />
+	<formFieldProperty
+		name="ds_voce" />
+	<formFieldProperty
+		name="find_voce" />				
+
+	<formFieldProperty
+		name="cd_parte" />
+	<formFieldProperty
+		name="cd_categoria" />
+	<formFieldProperty
+		name="cd_funzione" />
+	<formFieldProperty
+		name="cd_natura" />						
+	<formFieldProperty
+		name="im_stanz_iniziale_a1_r" />
+	<formFieldProperty
+		name="variazioni_piu_r" />
+	<formFieldProperty
+		name="variazioni_meno_r" />
+	<formFieldProperty
+		name="im_mandati_reversali_r" />
+	<formFieldProperty
+		name="im_pagamenti_incassi_r" />
+
+	<formFieldProperty
+		name="im_1210" />
+
+	<formFieldProperty
+		name="im_1210_r" />
+			
+	<columnFieldProperty
+		name="ti_appartenenza" />		
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_voce" />
+	<columnFieldProperty
+		name="im_stanz_iniziale_a1" />
+	<columnFieldProperty
+		name="variazioni_piu" />
+	<columnFieldProperty
+		name="variazioni_meno" />
+	<columnFieldProperty
+		name="im_stanz_iniziale_a2" />
+	<columnFieldProperty
+		name="im_stanz_iniziale_a3" />
+	<columnFieldProperty
+		name="im_obblig_imp_acr" />
+	<columnFieldProperty
+		name="im_mandati_reversali" />
+	<columnFieldProperty
+		name="im_pagamenti_incassi" />
+	<columnFieldProperty
+		name="esercizio" />
+
+	<columnSet name="mandato">		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_voce" />
+	<columnFieldProperty
+		name="im_disp_cassa_mandato" />
+	</columnSet>				
+		
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="ti_appartenenza" />		
+	<findFieldProperty
+		name="cd_cds" />		
+	<findFieldProperty
+		name="ti_gestione" />		
+		
+	<findFieldProperty
+		name="cd_voce" />
+	<findFieldProperty
+		name="im_stanz_iniziale_a1" />
+	<findFieldProperty
+		name="im_stanz_iniziale_a2" />
+	<findFieldProperty
+		name="im_stanz_iniziale_a3" />
+
+</bulkInfo>

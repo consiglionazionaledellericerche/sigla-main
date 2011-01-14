@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Class-Path: Base64.jar 
+ jasperreports.jar 
+ commons-digester.jar 
+ iText-2.1.0.jar 
+ poi-jakarta.jar 
+ commons-beanutils.jar 
+ commons-codec.jar 
+ commons-collections.jar 
+ commons-lang.jar
+

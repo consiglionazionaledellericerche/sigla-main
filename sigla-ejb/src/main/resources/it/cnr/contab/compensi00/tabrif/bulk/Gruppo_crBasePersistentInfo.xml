@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Gruppo_crBase"
+	keyClassName="it.cnr.contab.compensi00.tabrif.bulk.Gruppo_crKey"
+	homeClassName="it.cnr.contab.compensi00.tabrif.bulk.Gruppo_crHome" >
+	<defaultColumnMap
+		tableName="GRUPPO_CR" >
+		<columnMapping
+			columnName="DS_GRUPPO_CR"
+			propertyName="ds_gruppo_cr"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_ACCENTRATO"
+			propertyName="fl_accentrato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+		<columnMapping
+			columnName="FL_ANNO_PREC"
+			propertyName="fl_anno_prec"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+		<columnMapping
+			columnName="FL_F24ONLINE"
+			propertyName="fl_f24online"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />							
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_F24ONLINE_PREVID"
+			propertyName="fl_f24online_previd"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_TRIBUTO_ERARIO"
+			propertyName="cd_tributo_erario"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_TIPO_RIGA_F24"
+			propertyName="cd_tipo_riga_f24"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_MATRICOLA_INPS"
+			propertyName="cd_matricola_inps"
+			sqlTypeName="VARCHAR"
+			columnSize="17"
+			nullable="true" />		
+	</defaultColumnMap>
+	<persistentProperty
+		name="ds_gruppo_cr" />
+	<persistentProperty
+		name="fl_accentrato" />		
+	<persistentProperty
+		name="fl_anno_prec" />	
+	<persistentProperty
+		name="fl_f24online" />	
+	<persistentProperty
+		name="fl_f24online_previd" />		
+	<persistentProperty
+		name="cd_tributo_erario" />		
+	<persistentProperty
+		name="cd_tipo_riga_f24" />	
+	<persistentProperty
+		name="cd_matricola_inps" />								
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

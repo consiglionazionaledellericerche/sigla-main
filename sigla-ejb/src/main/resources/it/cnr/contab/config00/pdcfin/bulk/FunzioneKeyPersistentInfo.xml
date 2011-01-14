@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.FunzioneKey" >
+	<defaultColumnMap
+		tableName="FUNZIONE" >
+		<columnMapping
+			columnName="CD_FUNZIONE"
+			propertyName="cd_funzione"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_funzione"
+		partOfOid="true" />
+</SQLPersistentInfo>

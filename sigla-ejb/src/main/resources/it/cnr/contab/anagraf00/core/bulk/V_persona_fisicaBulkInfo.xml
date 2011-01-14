@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+
+	<columnFieldProperty
+		name="cd_anag" />
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="nome" 
+		columnStyle="text-align: left; padding-left:7px"		/>
+	<columnFieldProperty
+		name="cognome" 
+		columnStyle="text-align: left; padding-left:7px"		/>
+	<columnFieldProperty
+		name="codice_fiscale"
+		columnStyle="text-align: left; padding-left:7px"		/>
+	<columnFieldProperty
+		name="ti_sesso"
+		columnStyle="text-align: left; padding-left:7px"		/>		
+	<columnFieldProperty
+		name="dt_nascita"
+		columnStyle="text-align: left; padding-left:7px"		/>		
+
+	<findFieldProperty
+		name="cd_anag" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="nome" />
+	<findFieldProperty
+		name="cognome" />		
+	<findFieldProperty
+		name="codice_fiscale" />
+	<findFieldProperty
+		name="ti_sesso" />
+	<findFieldProperty
+		name="dt_nascita" />
+		
+</bulkInfo>

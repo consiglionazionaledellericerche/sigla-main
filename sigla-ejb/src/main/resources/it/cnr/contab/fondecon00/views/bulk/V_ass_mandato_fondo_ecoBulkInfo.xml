@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_codice_fondo"
+		property="cd_codice_fondo"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_codice_fondo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_unita_organizzativa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_pagato"
+		property="im_pagato"
+		inputType="TEXT"
+		label="im_pagato" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="ti_apertura_incremento"
+		property="ti_apertura_incremento"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_apertura_incremento"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_mandato"
+		property="pg_mandato"
+		inputType="TEXT"
+		label="pg_mandato" />
+	<fieldProperty
+		name="im_mandato"
+		property="im_mandato"
+		inputType="TEXT"
+		label="im_mandato" />
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_codice_fondo" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="im_pagato" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="ti_apertura_incremento" />
+	<formFieldProperty
+		name="pg_mandato" />
+	<formFieldProperty
+		name="im_mandato" />
+
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_codice_fondo" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="im_pagato" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="ti_apertura_incremento" />
+	<columnFieldProperty
+		name="pg_mandato" />
+	<columnFieldProperty
+		name="im_mandato" />
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_codice_fondo" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="im_pagato" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="ti_apertura_incremento" />
+	<findFieldProperty
+		name="pg_mandato" />
+	<findFieldProperty
+		name="im_mandato" />
+
+</bulkInfo>

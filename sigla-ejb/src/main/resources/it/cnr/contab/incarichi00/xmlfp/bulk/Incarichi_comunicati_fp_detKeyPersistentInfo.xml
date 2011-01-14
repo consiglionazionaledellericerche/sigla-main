@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fp_detKey">
+	<defaultColumnMap
+		tableName="INCARICHI_COMUNICATI_FP_DET">
+		<columnMapping
+			columnName="ESERCIZIO_REPERTORIO"
+			propertyName="esercizio_repertorio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_REPERTORIO"
+			propertyName="pg_repertorio"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TIPO_RECORD"
+			propertyName="tipo_record"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_RECORD"
+			propertyName="pg_record"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ANNO_PAG"
+			propertyName="anno_pag"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="SEMESTRE_PAG"
+			propertyName="semestre_pag"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio_repertorio"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_repertorio"
+		partOfOid="true" />
+	<persistentProperty
+		name="tipo_record"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_record"
+		partOfOid="true" />
+	<persistentProperty
+		name="anno_pag"
+		partOfOid="true" />
+	<persistentProperty
+		name="semestre_pag"
+		partOfOid="true" />
+</SQLPersistentInfo>

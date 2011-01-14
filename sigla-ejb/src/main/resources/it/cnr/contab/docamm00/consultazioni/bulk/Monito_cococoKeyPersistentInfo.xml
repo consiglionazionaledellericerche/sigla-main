@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.consultazioni.bulk.Monito_cococoKey">
+	<defaultColumnMap
+		tableName="MONITORAGGIO_COCOCO">
+		<columnMapping
+			columnName="ID_REPORT"
+			propertyName="id_report"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CHIAVE"
+			propertyName="chiave"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="SEQUENZA"
+			propertyName="sequenza"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />	
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="id_report"
+		partOfOid="true" />
+	<persistentProperty
+		name="chiave"
+		partOfOid="true" />
+	<persistentProperty
+		name="sequenza"
+		partOfOid="true" />
+	<persistentProperty
+		name="tipo"
+		partOfOid="true" />
+</SQLPersistentInfo>

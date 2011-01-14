@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="pg_fattura_associata"
+		property="riga_fattura_associata.fattura_attivaI.pg_fattura_attiva"
+		maxLength="200"
+		inputSize="50"
+		inputType="ROTEXT"
+		label="N. fattura associata"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_fattura_associata"
+		property="riga_fattura_associata.fattura_attivaI.dt_registrazione"
+		maxLength="200"
+		inputSize="50"
+		inputType="ROTEXT"
+		formatName="date_short"
+		label="Data fattura associata"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_fattura_associata"
+		property="riga_fattura_associata.fattura_attivaI.ds_fattura_attiva"
+		maxLength="200"
+		inputSize="50"
+		inputType="ROTEXT"
+		label="Descr. fattura associata"
+		caseSensitiveSearch="false" />
+
+	<formFieldProperty
+		name="pg_fattura_associata" />
+	<formFieldProperty
+		name="dt_fattura_associata" />
+	<formFieldProperty
+		name="ds_fattura_associata" />
+
+	<columnFieldProperty
+		name="pg_fattura_associata" />
+	<columnFieldProperty
+		name="dt_fattura_associata" />
+	<columnFieldProperty
+		name="ds_fattura_associata" />
+
+	<columnSet
+		name="righeNdCSet">
+		<columnFieldProperty
+			name="cd_bene_servizio"
+			/>
+		<columnFieldProperty
+			name="ds_riga_fattura"
+			/>
+		<columnFieldProperty
+			name="pg_fattura_associata"
+			/>
+		<columnFieldProperty
+			name="dt_fattura_associata"
+			/>
+		<columnFieldProperty
+			name="ds_fattura_associata"
+			/>
+		<columnFieldProperty
+			name="quantita"
+			/>
+		<columnFieldProperty
+			name="prezzo_unitario"
+			/>
+		<columnFieldProperty
+			name="im_imponibile"
+			/>
+		<columnFieldProperty
+			name="im_iva"
+			/>
+		<columnFieldProperty
+			name="stato_cofi"
+			/>
+	</columnSet>
+</bulkInfo>

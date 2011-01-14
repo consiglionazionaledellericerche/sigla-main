@@ -1,0 +1,275 @@
+package it.cnr.contab.config00.bulk;
+
+import java.math.BigDecimal;
+
+import it.cnr.jada.persistency.Keyed;
+
+/**
+ * Creation date: (09/11/2004)
+ * @author Aurelio D'Amico
+ * @version 1.0
+ */
+public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
+	// CD_TIPO_RAPPORTO VARCHAR(10) NULL
+	private String cd_tipo_rapporto;
+    //	IMPORTO_FRANCHIGIA_OCCA NUMBER(15,2) NOT NULL
+	private BigDecimal importo_franchigia_occa;
+	private Boolean fl_versamenti_cori;
+	private Integer versamenti_cori_giorno;
+	private String cd_tipo_rapporto_prof;
+	private Integer livello_pdg_decis_spe;
+	private Integer livello_pdg_decis_etr;
+	private Integer livello_contratt_pdg_spe;
+	private Boolean fl_regolamento_2006;
+	private Boolean fl_diaria_miss_italia;
+	private Boolean fl_motivazione_su_imp;
+	private Boolean fl_approvato_definitivo;
+	private BigDecimal importo_max_imp;
+	private Boolean fl_deduzione_irpef;
+	private Boolean fl_deduzione_family;
+	private Boolean fl_detrazioni_altre;
+	private Boolean fl_detrazioni_family;
+	private Boolean fl_siope;
+	private Boolean fl_obb_intrastat;
+	private Integer ricerca_prof_int_giorni_pubbl;
+	private Integer ricerca_prof_int_giorni_scad;
+	private Boolean fl_incarico;
+	private String oggettoEmailTerziCongua;
+	private String corpoEmailTerziCongua;
+	private String oggettoEmail;
+	private String corpoEmail;
+	private Boolean fl_cup;
+	private String clausolaOrdine;
+	
+	
+	public Boolean getFl_incarico() {
+		return fl_incarico;
+	}
+	public void setFl_incarico(Boolean fl_incarico) {
+		this.fl_incarico = fl_incarico;
+	}
+
+	public Parametri_cnrBase() {
+		super();
+	}
+	public Parametri_cnrBase(java.lang.Integer esercizio) {
+		super(esercizio);
+	}
+
+	public String getCd_tipo_rapporto() {
+		return cd_tipo_rapporto;
+	}
+
+	public void setCd_tipo_rapporto(String string) {
+		cd_tipo_rapporto = string;
+	}
+
+	/**
+	 * @return
+	 */
+	public BigDecimal getImporto_franchigia_occa() {
+		return importo_franchigia_occa;
+	}
+
+	/**
+	 * @param decimal
+	 */
+	public void setImporto_franchigia_occa(BigDecimal decimal) {
+		importo_franchigia_occa = decimal;
+	}
+
+	/**
+	 * @return
+	 */
+	public Boolean getFl_versamenti_cori() {
+		return fl_versamenti_cori;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getVersamenti_cori_giorno() {
+		return versamenti_cori_giorno;
+	}
+
+	/**
+	 * @param boolean1
+	 */
+	public void setFl_versamenti_cori(Boolean boolean1) {
+		fl_versamenti_cori = boolean1;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setVersamenti_cori_giorno(Integer integer) {
+		versamenti_cori_giorno = integer;
+	}
+
+	public String getCd_tipo_rapporto_prof() {
+		return cd_tipo_rapporto_prof;
+	}
+
+	public void setCd_tipo_rapporto_prof(String string) {
+		cd_tipo_rapporto_prof = string;
+	}
+
+	public Integer getLivello_pdg_decis_etr() {
+		return livello_pdg_decis_etr;
+	}
+
+	public Integer getLivello_pdg_decis_spe() {
+		return livello_pdg_decis_spe;
+	}
+
+	public void setLivello_pdg_decis_etr(Integer integer) {
+		livello_pdg_decis_etr = integer;
+	}
+
+	public void setLivello_pdg_decis_spe(Integer integer) {
+		livello_pdg_decis_spe = integer;
+	}
+	/**
+	 * @return
+	 */
+	public Integer getLivello_contratt_pdg_spe() {
+		return livello_contratt_pdg_spe;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setLivello_contratt_pdg_spe(Integer integer) {
+		livello_contratt_pdg_spe = integer;
+	}
+
+	/**
+	 * @return
+	 */
+	public Boolean getFl_regolamento_2006() {
+		return fl_regolamento_2006;
+	}
+
+	/**
+	 * @param boolean1
+	 */
+	public void setFl_regolamento_2006(Boolean boolean1) {
+		fl_regolamento_2006 = boolean1;
+	}
+
+	/**
+	 * @return
+	 */
+	public Boolean getFl_diaria_miss_italia() {
+		return fl_diaria_miss_italia;
+	}
+
+	/**
+	 * @param boolean1
+	 */
+	public void setFl_diaria_miss_italia(Boolean boolean1) {
+		fl_diaria_miss_italia = boolean1;
+	}
+	public Boolean getFl_motivazione_su_imp() {
+		return fl_motivazione_su_imp;
+	}
+	public void setFl_motivazione_su_imp(Boolean fl_motivazione_su_imp) {
+		this.fl_motivazione_su_imp = fl_motivazione_su_imp;
+	}
+	public BigDecimal getImporto_max_imp() {
+		return importo_max_imp;
+	}
+	public void setImporto_max_imp(BigDecimal importo_max_imp) {
+		this.importo_max_imp = importo_max_imp;
+	}
+	public Boolean getFl_approvato_definitivo() {
+		return fl_approvato_definitivo;
+	}
+	public void setFl_approvato_definitivo(Boolean fl_approvato_definitivo) {
+		this.fl_approvato_definitivo = fl_approvato_definitivo;
+	}
+	public Boolean getFl_deduzione_family() {
+		return fl_deduzione_family;
+	}
+	public void setFl_deduzione_family(Boolean fl_deduzione_family) {
+		this.fl_deduzione_family = fl_deduzione_family;
+	}
+	public Boolean getFl_deduzione_irpef() {
+		return fl_deduzione_irpef;
+	}
+	public void setFl_deduzione_irpef(Boolean fl_deduzione_irpef) {
+		this.fl_deduzione_irpef = fl_deduzione_irpef;
+	}
+	public Boolean getFl_detrazioni_altre() {
+		return fl_detrazioni_altre;
+	}
+	public void setFl_detrazioni_altre(Boolean fl_detrazioni_altre) {
+		this.fl_detrazioni_altre = fl_detrazioni_altre;
+	}
+	public Boolean getFl_detrazioni_family() {
+		return fl_detrazioni_family;
+	}
+	public void setFl_detrazioni_family(Boolean fl_detrazioni_family) {
+		this.fl_detrazioni_family = fl_detrazioni_family;
+	}
+	public Boolean getFl_siope() {
+		return fl_siope;
+	}
+	public void setFl_siope(Boolean fl_siope) {
+		this.fl_siope = fl_siope;
+	}
+	public Integer getRicerca_prof_int_giorni_pubbl() {
+		return ricerca_prof_int_giorni_pubbl;
+	}
+	public void setRicerca_prof_int_giorni_pubbl(Integer ricerca_prof_int_giorni_pubbl) {
+		this.ricerca_prof_int_giorni_pubbl = ricerca_prof_int_giorni_pubbl;
+	}
+	public Integer getRicerca_prof_int_giorni_scad() {
+		return ricerca_prof_int_giorni_scad;
+	}
+	public void setRicerca_prof_int_giorni_scad(Integer ricerca_prof_int_giorni_scad) {
+		this.ricerca_prof_int_giorni_scad = ricerca_prof_int_giorni_scad;
+	}
+	public String getOggettoEmailTerziCongua() {
+		return oggettoEmailTerziCongua;
+	}
+	public void setOggettoEmailTerziCongua(String oggettoEmailTerziCongua) {
+		this.oggettoEmailTerziCongua = oggettoEmailTerziCongua;
+	}
+	public String getCorpoEmailTerziCongua() {
+		return corpoEmailTerziCongua;
+	}
+	public void setCorpoEmailTerziCongua(String corpoEmailTerziCongua) {
+		this.corpoEmailTerziCongua = corpoEmailTerziCongua;
+	}
+	public String getOggettoEmail() {
+		return oggettoEmail;
+	}
+	public void setOggettoEmail(String oggettoEmail) {
+		this.oggettoEmail = oggettoEmail;
+	}
+	public String getCorpoEmail() {
+		return corpoEmail;
+	}
+	public void setCorpoEmail(String corpoEmail) {
+		this.corpoEmail = corpoEmail;
+	}
+	public Boolean getFl_obb_intrastat() {
+		return fl_obb_intrastat;
+	}
+	public void setFl_obb_intrastat(Boolean fl_obb_intrastat) {
+		this.fl_obb_intrastat = fl_obb_intrastat;
+	}
+	public Boolean getFl_cup() {
+		return fl_cup;
+	}
+	public void setFl_cup(Boolean fl_cup) {
+		this.fl_cup = fl_cup;
+	}
+	public String getClausolaOrdine() {
+		return clausolaOrdine;
+	}
+	public void setClausolaOrdine(String clausolaOrdine) {
+		this.clausolaOrdine = clausolaOrdine;
+	}
+}

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBase"
+	keyClassName="it.cnr.contab.config00.pdcfin.bulk.Elemento_voceKey"
+	homeClassName="it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome" >
+	<defaultColumnMap
+		tableName="ELEMENTO_VOCE"  >
+		<columnMapping
+			columnName="CD_CAPOCONTO_FIN"
+			propertyName="cd_capoconto_fin"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="FL_PARTITA_GIRO"
+			propertyName="fl_partita_giro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_VOCE_SAC"
+			propertyName="fl_voce_sac"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_ELEMENTO_VOCE"
+			propertyName="ti_elemento_voce"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="ds_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="CD_ELEMENTO_PADRE"
+			propertyName="cd_elemento_padre"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="FL_LIMITE_ASS_OBBLIG"
+			propertyName="fl_limite_ass_obblig"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_PARTE"
+			propertyName="cd_parte"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="CD_PROPRIO_ELEMENTO"
+			propertyName="cd_proprio_elemento"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="FL_VOCE_PERSONALE"
+			propertyName="fl_voce_personale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_VOCE_NON_SOGG_IMP_AUT"
+			propertyName="fl_voce_non_sogg_imp_aut"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="ESERCIZIO_CLA_E"
+			propertyName="esercizio_cla_e"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="COD_CLA_E"
+			propertyName="cod_cla_e"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="ESERCIZIO_CLA_S"
+			propertyName="esercizio_cla_s"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="COD_CLA_S"
+			propertyName="cod_cla_s"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="FL_RECON"
+			propertyName="fl_recon"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_INV_BENI_PATR"
+			propertyName="fl_inv_beni_patr"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="ID_CLASSIFICAZIONE"
+			propertyName="id_classificazione"
+			sqlTypeName="DECIMAL"
+			columnSize="7" />
+		<columnMapping
+			columnName="FL_VOCE_FONDO"
+			propertyName="fl_voce_fondo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_CHECK_TERZO_SIOPE"
+			propertyName="fl_check_terzo_siope"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_INV_BENI_COMP"
+			propertyName="fl_inv_beni_comp"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="cd_capoconto_fin" />
+	<persistentProperty
+		name="fl_partita_giro" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="fl_voce_sac" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="ti_elemento_voce" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="ds_elemento_voce" />
+	<persistentProperty
+		name="cd_elemento_padre" />
+	<persistentProperty
+		name="fl_limite_ass_obblig" />
+	<persistentProperty
+		name="cd_parte" />
+	<persistentProperty
+		name="cd_proprio_elemento" />
+	<persistentProperty
+		name="fl_voce_personale" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="fl_voce_non_sogg_imp_aut" />
+	<persistentProperty
+		name="esercizio_cla_e" />			
+	<persistentProperty
+		name="cod_cla_e" />
+	<persistentProperty
+		name="esercizio_cla_s" />			
+	<persistentProperty
+		name="cod_cla_s" />		
+	<persistentProperty
+		name="fl_recon" />				
+	<persistentProperty
+		name="fl_inv_beni_patr" />				
+	<persistentProperty
+		name="id_classificazione" />
+	<persistentProperty
+		name="fl_voce_fondo" />
+	<persistentProperty
+		name="fl_check_terzo_siope" />
+	<persistentProperty
+		name="fl_inv_beni_comp" />	
+</SQLPersistentInfo>

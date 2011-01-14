@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk"
+	homeClassName="it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestHome">
+	<defaultColumnMap
+		tableName="PDG_MODULO_ENTRATE_GEST">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="pdg_modulo_entrate.testata.esercizio" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="pdg_modulo_entrate.testata.cdr.cd_centro_responsabilita" />
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="pdg_modulo_entrate.testata.progetto.pg_progetto" />
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="pdg_modulo_entrate.natura.cd_natura" />
+		<columnMapping
+			columnName="ID_CLASSIFICAZIONE"
+			propertyName="pdg_modulo_entrate.classificazione_voci.id_classificazione" />
+		<columnMapping
+			columnName="CD_CDS_AREA"
+			propertyName="pdg_modulo_entrate.area.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_DETTAGLIO"
+			propertyName="pdg_modulo_entrate.pg_dettaglio" />
+		<columnMapping
+			columnName="CD_CDR_ASSEGNATARIO"
+			propertyName="cdr_assegnatario.cd_centro_responsabilita" />
+		<columnMapping
+			columnName="CD_CDR_ASSEGNATARIO"
+			propertyName="linea_attivita.centro_responsabilita.cd_centro_responsabilita" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="linea_attivita.cd_linea_attivita" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="elemento_voce.esercizio" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="elemento_voce.ti_appartenenza" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="elemento_voce.ti_gestione" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="elemento_voce.cd_elemento_voce" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pdg_modulo_entrate"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdr_assegnatario"
+		partOfOid="true" />
+	<persistentProperty
+		name="linea_attivita"
+		partOfOid="true" />
+	<persistentProperty
+		name="elemento_voce"
+		partOfOid="true" />
+</SQLPersistentInfo>

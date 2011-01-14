@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="livello"
+		property="livello"
+	    inputType="TEXT"
+	    enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="livello" />
+	<fieldProperty
+		name="ds_nomenclatura_combinata"
+		property="ds_nomenclatura_combinata"
+		maxLength="1500"
+		inputType="TEXTAREA"
+		cols="100"
+		rows="3"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_nomenclatura_combinata"
+		property="cd_nomenclatura_combinata"
+		maxLength="8"
+		inputSize="8"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROnomenclatura_combinata"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice" />
+	<fieldProperty
+		name="id_nomenclatura_combinata"
+		property="id_nomenclatura_combinata"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROnomenclatura_combinata"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		enabledOnInsert="false"
+		label="Prog. Nomenclatura" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROnomenclatura_combinata"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		enabledOnInsert="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="esercizio_inizio"
+		property="esercizio_inizio"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Esercizio inizio" />		
+	<fieldProperty
+		name="esercizio_fine"
+		property="esercizio_fine"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Esercizio fine" />
+	<fieldProperty
+		name="unita_supplementari"
+		property="unita_supplementari"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="unita supplementari"  />		
+	<formFieldProperty
+		name="id_nomenclatura_combinata" />
+	<formFieldProperty
+		name="esercizio" />	
+	<formFieldProperty
+		name="cd_nomenclatura_combinata" />
+	<formFieldProperty
+		name="ds_nomenclatura_combinata" />
+	<formFieldProperty
+		name="livello" />
+	<formFieldProperty
+		name="esercizio_inizio" />
+	<formFieldProperty
+		name="esercizio_fine" />
+	<formFieldProperty
+		name="unita_supplementari" />
+		
+	<columnFieldProperty
+		name="esercizio" />	
+	<columnFieldProperty
+		name="cd_nomenclatura_combinata" />
+	<columnFieldProperty
+		name="ds_nomenclatura_combinata" />
+	<columnFieldProperty
+		name="livello" />
+	<columnFieldProperty
+		name="esercizio_inizio" />
+	<columnFieldProperty
+		name="esercizio_fine" />
+	<columnFieldProperty
+		name="unita_supplementari" />
+	
+	<findFieldProperty
+		name="id_nomenclatura_combinata" />
+	<findFieldProperty
+		name="esercizio" />		
+	<findFieldProperty
+		name="cd_nomenclatura_combinata" />
+	<findFieldProperty
+		name="ds_nomenclatura_combinata" />
+	<findFieldProperty
+		name="livello" />
+	<findFieldProperty
+		name="esercizio_inizio" />
+	<findFieldProperty
+		name="esercizio_fine" />
+	<findFieldProperty
+		name="unita_supplementari" />
+	
+		
+		
+</bulkInfo>

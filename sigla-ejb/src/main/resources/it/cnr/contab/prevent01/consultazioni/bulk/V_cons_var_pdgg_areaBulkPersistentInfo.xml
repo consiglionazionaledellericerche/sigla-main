@@ -1,0 +1,1546 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_var_pdgg_areaBulk"
+	homeClassName="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_var_pdgg_areaHome">
+	<defaultColumnMap
+		tableName="V_CONS_VAR_PDGG_AREA">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_AREA"
+			propertyName="cd_cds_area"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_UNITA_ORGANIZZATIVA"
+			propertyName="ds_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDR_ASSEGNATARIO"
+			propertyName="cd_cdr_assegnatario"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CDR"
+			propertyName="ds_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE"
+			propertyName="cd_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="34"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="ds_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LIVELLO3"
+			propertyName="cd_livello3"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ENTRATA"
+			propertyName="im_entrata"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="ds_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />		
+		<columnMapping
+			columnName="DS_LINEA_CDR_ORIGINE"
+			propertyName="ds_linea_cdr_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />		
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_cds_area" />
+	<persistentProperty
+		name="ds_unita_organizzativa" />
+	<persistentProperty
+		name="cd_cdr_assegnatario" />
+	<persistentProperty
+		name="ds_cdr" />
+	<persistentProperty
+		name="cd_classificazione" />
+	<persistentProperty
+		name="ds_classificazione" />
+	<persistentProperty
+		name="cd_progetto" />
+	<persistentProperty
+		name="ds_progetto" />
+	<persistentProperty
+		name="cd_modulo" />
+	<persistentProperty
+		name="ds_modulo" />
+	<persistentProperty
+		name="cd_commessa" />
+	<persistentProperty
+		name="ds_commessa" />	
+	<persistentProperty
+		name="cd_livello1" />
+	<persistentProperty
+		name="cd_livello2" />
+	<persistentProperty
+		name="cd_livello3" />	
+	<persistentProperty
+		name="cd_linea_attivita" />
+	<persistentProperty
+		name="ti_appartenenza" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="cd_elemento_voce" />
+	<persistentProperty
+		name="im_entrata" />
+	<persistentProperty
+		name="im_dec_fonte_int" />
+	<persistentProperty
+		name="im_dec_fonte_est" />
+	<persistentProperty
+		name="pg_variazione_pdg" />			
+	<persistentProperty
+		name="ds_variazione"/>			
+	<persistentProperty
+		name="dt_approvazione"/>	
+	<persistentProperty
+		name="dt_app_formale" />	
+	<persistentProperty
+		name="ds_delibera"/>	
+	<persistentProperty
+		name="ds_tipo_variazione" />		
+	<persistentProperty
+		name="ds_tipologia_fin" />	
+	<persistentProperty
+		name="dt_registrazione" />		
+	<persistentProperty
+		name="ds_elemento_voce" />		
+	<persistentProperty
+		name="ds_linea_cdr_origine" />		
+	<columnMap 
+		name="BASECDR"
+		tableName="V_CONS_VAR_PDGG_AREA">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDR_ASSEGNATARIO"
+			propertyName="cd_cdr_assegnatario"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ENTRATA"
+			propertyName="im_entrata"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</columnMap>
+
+	<columnMap 
+		name="BASECDRAREA"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASECDR" >
+		<columnMapping
+			columnName="CD_CDS_AREA"
+			propertyName="cd_cds_area"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+
+	<columnMap 
+		name="BASECDRAREALIV1"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASECDRAREA" >
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+
+	<columnMap 
+		name="BASECDRAREALIV1LIV2"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASECDRAREALIV1" >
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />	
+	</columnMap>
+	<columnMap 
+		name="BASECDRAREALIV1LIV2LIV3"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASECDRAREALIV1LIV2" >
+		<columnMapping
+			columnName="CD_LIVELLO3"
+			propertyName="cd_livello3"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />	
+	</columnMap>
+	<columnMap 
+		name="BASECDRAREALIV1LIV2LIV3LIN"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASECDRAREALIV1LIV2LIV3" >
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="BASECDRAREALIV1LIV2LIV3LINVOC"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASECDRAREALIV1LIV2LIV3LIN" >
+			<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+	</columnMap>
+<!-- ENTRATE -->
+	<columnMap 
+		name="ETRCDR"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASECDR" >
+		<columnMapping
+			columnName="DS_CDR"
+			propertyName="ds_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+	</columnMap>
+
+<!--  ENTRATE : PRIMO PERCORSO DI CONSULTAZIONE (CDR\AREA\TITOLO(liv1)\CATEGORIA(liv2)\CAPITOLO(liv3)\GAE\Voce\DETTAGLI)-->
+	<columnMap 
+		name="ETRCDRAREA"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASECDRAREA" >
+		<columnMapping
+				columnName="DS_UNITA_ORGANIZZATIVA"
+				propertyName="ds_unita_organizzativa"
+				sqlTypeName="VARCHAR"
+				columnSize="300"
+				nullable="true" />
+	</columnMap>
+
+	<columnMap 
+		name="ETRCDRAREALIV1"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASECDRAREALIV1" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />	
+	</columnMap>
+	<columnMap 
+		name="ETRCDRAREALIV1LIV2"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASECDRAREALIV1LIV2" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />		
+	</columnMap>
+	<columnMap 
+		name="ETRCDRAREALIV1LIV2LIV3"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASECDRAREALIV1LIV2LIV3" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="ETRCDRAREALIV1LIV2LIV3LIN"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASECDRAREALIV1LIV2LIV3LIN" >
+		<columnMapping
+			columnName="DS_LINEA_CDR_ORIGINE"
+			propertyName="ds_linea_cdr_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />	
+	</columnMap>
+	<columnMap 
+		name="ETRCDRAREALIV1LIV2LIV3LINVOC"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASECDRAREALIV1LIV2LIV3LINVOC" >
+			<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="ds_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />	
+	</columnMap>
+	<columnMap 
+		name="ETRCDRAREALIV1LIV2LIV3LINVOCDET"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASECDRAREALIV1LIV2LIV3LINVOC" >
+		<columnMapping
+			columnName="CD_COMMESSA"
+			propertyName="cd_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_VARIAZIONE_PDG"
+			propertyName="pg_variazione_pdg"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />			
+		<columnMapping
+			columnName="DS_VARIAZIONE"
+			propertyName="ds_variazione"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />			
+		<columnMapping
+			columnName="DT_APPROVAZIONE"
+			propertyName="dt_approvazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />	
+		<columnMapping
+			columnName="DT_APP_FORMALE"
+			propertyName="dt_app_formale"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />	
+		<columnMapping
+			columnName="DS_DELIBERA"
+			propertyName="ds_delibera"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />		
+		<columnMapping
+			columnName="DS_TIPO_VARIAZIONE"
+			propertyName="ds_tipo_variazione"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />			
+		<columnMapping
+			columnName="DS_TIPOLOGIA_FIN"
+			propertyName="ds_tipologia_fin"
+			sqlTypeName="VARCHAR"
+			columnSize="13"
+			nullable="true" />	
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />		
+	</columnMap>
+
+<!-- ENTRATE : SECONDO PERCORSO DI CONSULTAZIONE (CDR\AREA\MODULO\TITOLO(liv1)\CATEGORIA(liv2)\CAPITOLO(liv3)\GAE\Voce\DETTAGLI)-->
+	<columnMap 
+		name="ETRCDRAREAMOD"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASECDRAREA" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+	</columnMap>
+
+	<columnMap 
+		name="ETRCDRAREAMODLIV1"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="ETRCDRAREALIV1" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />	
+	</columnMap>		
+	
+	<columnMap 
+		name="ETRCDRAREAMODLIV1LIV2"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="ETRCDRAREALIV1LIV2" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="ETRCDRAREAMODLIV1LIV2LIV3"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="ETRCDRAREALIV1LIV2LIV3" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="ETRCDRAREAMODLIV1LIV2LIV3LIN"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="ETRCDRAREALIV1LIV2LIV3LIN" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="ETRCDRAREAMODLIV1LIV2LIV3LINVOC"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="ETRCDRAREALIV1LIV2LIV3LINVOC" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="ETRCDRAREAMODLIV1LIV2LIV3LINVOCDET"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="ETRCDRAREALIV1LIV2LIV3LINVOCDET" >
+	</columnMap>
+	
+	<!--SPESE-->
+	<columnMap 
+		name="BASESPECDR"
+		tableName="V_CONS_VAR_PDGG_AREA" >
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDR_ASSEGNATARIO"
+			propertyName="cd_cdr_assegnatario"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_DEC_FONTE_INT"
+			propertyName="im_dec_fonte_int"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_DEC_FONTE_EST"
+			propertyName="im_dec_fonte_est"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</columnMap>
+	
+	<!--  SPESE : PRIMO PERCORSO DI CONSULTAZIONE (CDR\AREA\TITOLO(liv1)\CATEGORIA(liv2)\CAPITOLO(liv3)\GAE\Voce\DETTAGLI)-->
+	<columnMap 
+		name="BASESPECDRAREA"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPECDR" >
+		<columnMapping
+			columnName="CD_CDS_AREA"
+			propertyName="cd_cds_area"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+	
+	<columnMap 
+		name="BASESPECDRAREALIV1"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPECDRAREA" >
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		
+	</columnMap>
+	
+	<columnMap 
+		name="BASESPECDRAREALIV1LIV2"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPECDRAREALIV1" >
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="BASESPECDRAREALIV1LIV2LIV3"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPECDRAREALIV1LIV2" >
+		<columnMapping
+			columnName="CD_LIVELLO3"
+			propertyName="cd_livello3"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="BASESPECDRAREALIV1LIV2LIV3LIN"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPECDRAREALIV1LIV2LIV3" >
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="BASESPECDRAREALIV1LIV2LIV3LINVOC"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPECDRAREALIV1LIV2LIV3LIN" >
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+	</columnMap>
+<!-- SPESE -->
+	<columnMap 
+		name="SPECDR"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPECDR" >
+		<columnMapping
+			columnName="DS_CDR"
+			propertyName="ds_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+	</columnMap>
+
+<!-- SPESE : SECONDO PERCORSO DI CONSULTAZIONE (CDR\AREA\TITOLO(liv1)\CATEGORIA(liv2)\CAPITOLO(liv3)\GAE\Voce\DETTAGLI)-->
+	<columnMap 
+		name="SPECDRAREA"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPECDRAREA" >
+		<columnMapping
+			columnName="DS_UNITA_ORGANIZZATIVA"
+			propertyName="ds_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+	</columnMap>
+	
+	<columnMap 
+		name="SPECDRAREALIV1"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPECDRAREALIV1" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />	
+	</columnMap>
+	
+	<columnMap 
+		name="SPECDRAREALIV1LIV2"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPECDRAREALIV1LIV2" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />	
+	</columnMap>
+	<columnMap 
+		name="SPECDRAREALIV1LIV2LIV3"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPECDRAREALIV1LIV2LIV3" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />	
+	</columnMap>
+	<columnMap 
+		name="SPECDRAREALIV1LIV2LIV3LIN"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPECDRAREALIV1LIV2LIV3LIN" >
+		<columnMapping
+			columnName="DS_LINEA_CDR_ORIGINE"
+			propertyName="ds_linea_cdr_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />	
+	</columnMap>
+		<columnMap 
+		name="SPECDRAREALIV1LIV2LIV3LINVOC"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPECDRAREALIV1LIV2LIV3LINVOC" >
+		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="ds_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />	
+	</columnMap>
+	<columnMap 
+		name="SPECDRAREALIV1LIV2LIV3LINVOCDET"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPECDRAREALIV1LIV2LIV3LINVOC" >
+		<columnMapping
+			columnName="CD_COMMESSA"
+			propertyName="cd_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_VARIAZIONE_PDG"
+			propertyName="pg_variazione_pdg"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />			
+		<columnMapping
+			columnName="DS_VARIAZIONE"
+			propertyName="ds_variazione"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />			
+		<columnMapping
+			columnName="DT_APPROVAZIONE"
+			propertyName="dt_approvazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />	
+		<columnMapping
+			columnName="DT_APP_FORMALE"
+			propertyName="dt_app_formale"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />	
+		<columnMapping
+			columnName="DS_DELIBERA"
+			propertyName="ds_delibera"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />	
+		<columnMapping
+			columnName="DS_TIPO_VARIAZIONE"
+			propertyName="ds_tipo_variazione"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />		
+		<columnMapping
+			columnName="DS_TIPOLOGIA_FIN"
+			propertyName="ds_tipologia_fin"
+			sqlTypeName="VARCHAR"
+			columnSize="13"
+			nullable="true" />	
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />				
+	</columnMap>
+
+<!-- ENTRATE : SECONDO PERCORSO DI CONSULTAZIONE (CDR\AREA\MODULO\TITOLO(liv1)\CATEGORIA(liv2)\CAPITOLO(liv3)\GAE\Voce\DETTAGLI)-->
+	<columnMap 
+		name="SPECDRAREAMOD"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPECDRAREA" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+	</columnMap>
+	
+	<columnMap 
+		name="SPECDRAREAMODLIV1"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="SPECDRAREALIV1" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	
+	</columnMap>
+
+	<columnMap 
+		name="SPECDRAREAMODLIV1LIV2"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="SPECDRAREALIV1LIV2" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	
+	</columnMap>
+	<columnMap 
+		name="SPECDRAREAMODLIV1LIV2LIV3"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="SPECDRAREALIV1LIV2LIV3" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="SPECDRAREAMODLIV1LIV2LIV3LIN"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="SPECDRAREALIV1LIV2LIV3LIN" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="SPECDRAREAMODLIV1LIV2LIV3LINVOC"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="SPECDRAREALIV1LIV2LIV3LINVOC" >
+	<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="SPECDRAREAMODLIV1LIV2LIV3LINVOCDET"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="SPECDRAREALIV1LIV2LIV3LINVOCDET" >
+	<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+
+	<columnMap 
+		name="BASEAREA"
+		tableName="V_CONS_VAR_PDGG_AREA">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_AREA"
+			propertyName="cd_cds_area"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ENTRATA"
+			propertyName="im_entrata"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</columnMap>
+
+	<columnMap 
+		name="BASEAREACDR"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASEAREA" >
+		<columnMapping
+			columnName="CD_CDR_ASSEGNATARIO"
+			propertyName="cd_cdr_assegnatario"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+
+	<columnMap 
+		name="BASEAREACDRLIV1"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASEAREACDR" >
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+
+	<columnMap 
+		name="BASEAREACDRLIV1LIV2"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASEAREACDRLIV1" >
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />	
+	</columnMap>
+    <columnMap name="BASEAREACDRLIV1LIV2LIV3"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASEAREACDRLIV1LIV2" >
+		<columnMapping
+			columnName="CD_LIVELLO3"
+			propertyName="cd_livello3"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />	
+	</columnMap>
+	<columnMap 
+		name="BASEAREACDRLIV1LIV2LIV3LIN"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASEAREACDRLIV1LIV2LIV3" >
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+	</columnMap>
+	<columnMap 
+		name="BASEAREACDRLIV1LIV2LIV3LINVOC"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASEAREACDRLIV1LIV2LIV3LIN" >
+			<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+	</columnMap>
+<!-- ENTRATE -->
+	<columnMap 
+		name="ETRAREA"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASEAREA" >
+		<columnMapping
+			columnName="DS_UNITA_ORGANIZZATIVA"
+			propertyName="ds_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+	</columnMap>
+
+<!--  ENTRATE : PRIMO PERCORSO DI CONSULTAZIONE (AREA\CDR\TITOLO(liv1)\CATEGORIA(liv2)\CAPITOLO(liv3)\DETTAGLI)-->
+	<columnMap 
+		name="ETRAREACDR"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASEAREACDR" >
+		<columnMapping
+				columnName="DS_CDR"
+				propertyName="ds_cdr"
+				sqlTypeName="VARCHAR"
+				columnSize="300"
+				nullable="true" />
+	</columnMap>
+
+	<columnMap 
+		name="ETRAREACDRLIV1"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASEAREACDRLIV1" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />	
+	</columnMap>
+
+	<columnMap 
+		name="ETRAREACDRLIV1LIV2"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASEAREACDRLIV1LIV2" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />		
+	</columnMap>
+	<columnMap 
+		name="ETRAREACDRLIV1LIV2LIV3"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASEAREACDRLIV1LIV2LIV3" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />		
+	</columnMap>
+	<columnMap 
+		name="ETRAREACDRLIV1LIV2LIV3LIN"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASEAREACDRLIV1LIV2LIV3LIN" >
+		<columnMapping
+			columnName="DS_LINEA_CDR_ORIGINE"
+			propertyName="ds_linea_cdr_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />	
+	</columnMap>		
+	<columnMap 
+		name="ETRAREACDRLIV1LIV2LIV3LINVOC"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASEAREACDRLIV1LIV2LIV3LINVOC" >
+		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="ds_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />		
+	</columnMap>
+	<columnMap 
+		name="ETRAREACDRLIV1LIV2LIV3LINVOCDET"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASEAREACDRLIV1LIV2LIV3LINVOC" >
+		<columnMapping
+			columnName="CD_COMMESSA"
+			propertyName="cd_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_VARIAZIONE_PDG"
+			propertyName="pg_variazione_pdg"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />			
+		<columnMapping
+			columnName="DS_VARIAZIONE"
+			propertyName="ds_variazione"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />			
+		<columnMapping
+			columnName="DT_APPROVAZIONE"
+			propertyName="dt_approvazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />	
+		<columnMapping
+			columnName="DT_APP_FORMALE"
+			propertyName="dt_app_formale"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />	
+		<columnMapping
+			columnName="DS_DELIBERA"
+			propertyName="ds_delibera"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />		
+		<columnMapping
+			columnName="DS_TIPO_VARIAZIONE"
+			propertyName="ds_tipo_variazione"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />			
+		<columnMapping
+			columnName="DS_TIPOLOGIA_FIN"
+			propertyName="ds_tipologia_fin"
+			sqlTypeName="VARCHAR"
+			columnSize="13"
+			nullable="true" />	
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />				
+	</columnMap>
+
+<!-- ENTRATE : SECONDO PERCORSO DI CONSULTAZIONE (AREA\CDR\MODULO\TITOLO(liv1)\CATEGORIA(liv2)\CAPITOLO(liv3)\DETTAGLI)-->
+	<columnMap 
+		name="ETRAREACDRMOD"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASEAREACDR" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+	</columnMap>
+
+	<columnMap 
+		name="ETRAREACDRMODLIV1"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="ETRAREACDRLIV1" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />	
+	</columnMap>		
+	
+	<columnMap 
+		name="ETRAREACDRMODLIV1LIV2"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="ETRAREACDRLIV1LIV2" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	
+	</columnMap>
+	<columnMap 
+		name="ETRAREACDRMODLIV1LIV2LIV3"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="ETRAREACDRLIV1LIV2LIV3" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	
+	</columnMap>
+		<columnMap 
+		name="ETRAREACDRMODLIV1LIV2LIV3LIN"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="ETRAREACDRLIV1LIV2LIV3LIN" >
+        <columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="ETRAREACDRMODLIV1LIV2LIV3LINVOC"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="ETRAREACDRLIV1LIV2LIV3LINVOC" >
+        <columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="ETRAREACDRMODLIV1LIV2LIV3LINVOCDET"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="ETRAREACDRLIV1LIV2LIV3LINVOCDET" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+	
+	<!--SPESE-->
+	<columnMap 
+		name="BASESPEAREA"
+		tableName="V_CONS_VAR_PDGG_AREA" >
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_AREA"
+			propertyName="cd_cds_area"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_DEC_FONTE_INT"
+			propertyName="im_dec_fonte_int"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_DEC_FONTE_EST"
+			propertyName="im_dec_fonte_est"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</columnMap>
+	
+	<!--  SPESE : PRIMO PERCORSO DI CONSULTAZIONE (AREA\CDR\TITOLO(liv1)\CATEGORIA(liv2)\CAPITOLO(liv3)\DETTAGLI)-->
+	<columnMap 
+		name="BASESPEAREACDR"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPEAREA" >
+		<columnMapping
+			columnName="CD_CDR_ASSEGNATARIO"
+			propertyName="cd_cdr_assegnatario"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+	
+	<columnMap 
+		name="BASESPEAREACDRLIV1"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPEAREACDR" >
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		
+	</columnMap>
+	
+	<columnMap 
+		name="BASESPEAREACDRLIV1LIV2"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPEAREACDRLIV1" >
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="BASESPEAREACDRLIV1LIV2LIV3"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPEAREACDRLIV1LIV2" >
+		<columnMapping
+			columnName="CD_LIVELLO3"
+			propertyName="cd_livello3"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="BASESPEAREACDRLIV1LIV2LIV3LIN"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPEAREACDRLIV1LIV2LIV3" >
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="BASESPEAREACDRLIV1LIV2LIV3LINVOC"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPEAREACDRLIV1LIV2LIV3LIN" >
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+	</columnMap>
+<!-- SPESE -->
+	<columnMap 
+		name="SPEAREA"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPEAREA" >
+		<columnMapping
+			columnName="DS_UNITA_ORGANIZZATIVA"
+			propertyName="ds_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+	</columnMap>
+
+<!-- SPESE : PRIMO PERCORSO DI CONSULTAZIONE (AREA\CDR\TITOLO(liv1)\CATEGORIA(liv2)\CAPITOLO(liv3)\DETTAGLI)-->
+	<columnMap 
+		name="SPEAREACDR"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPEAREACDR" >
+		<columnMapping
+			columnName="DS_CDR"
+			propertyName="ds_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+	</columnMap>
+	
+	<columnMap 
+		name="SPEAREACDRLIV1"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPEAREACDRLIV1" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />	
+	</columnMap>
+	
+	<columnMap 
+		name="SPEAREACDRLIV1LIV2"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPEAREACDRLIV1LIV2" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />	
+	</columnMap>
+	<columnMap 
+		name="SPEAREACDRLIV1LIV2LIV3"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPEAREACDRLIV1LIV2LIV3" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />	
+	</columnMap>
+	<columnMap 
+		name="SPEAREACDRLIV1LIV2LIV3LIN"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPEAREACDRLIV1LIV2LIV3LIN" >
+		<columnMapping
+			columnName="DS_LINEA_CDR_ORIGINE"
+			propertyName="ds_linea_cdr_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />	
+	</columnMap>
+	<columnMap 
+		name="SPEAREACDRLIV1LIV2LIV3LINVOC"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPEAREACDRLIV1LIV2LIV3LINVOC" >
+		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="ds_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />	
+	</columnMap>
+	<columnMap 
+		name="SPEAREACDRLIV1LIV2LIV3LINVOCDET"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPEAREACDRLIV1LIV2LIV3LINVOC" >
+		<columnMapping
+			columnName="CD_COMMESSA"
+			propertyName="cd_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_VARIAZIONE_PDG"
+			propertyName="pg_variazione_pdg"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />			
+		<columnMapping
+			columnName="DS_VARIAZIONE"
+			propertyName="ds_variazione"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />			
+		<columnMapping
+			columnName="DT_APPROVAZIONE"
+			propertyName="dt_approvazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />	
+		<columnMapping
+			columnName="DT_APP_FORMALE"
+			propertyName="dt_app_formale"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />	
+		<columnMapping
+			columnName="DS_DELIBERA"
+			propertyName="ds_delibera"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />		
+		<columnMapping
+			columnName="DS_TIPO_VARIAZIONE"
+			propertyName="ds_tipo_variazione"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />			
+		<columnMapping
+			columnName="DS_TIPOLOGIA_FIN"
+			propertyName="ds_tipologia_fin"
+			sqlTypeName="VARCHAR"
+			columnSize="13"
+			nullable="true" />	
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />			
+	</columnMap>
+
+<!-- ENTRATE : SECONDO PERCORSO DI CONSULTAZIONE (AREA\CDR\MODULO\TITOLO(liv1)\CATEGORIA(liv2)\CAPITOLO(liv3)\DETTAGLI)-->
+	<columnMap 
+		name="SPEAREACDRMOD"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="BASESPEAREACDR" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+	</columnMap>
+	
+	<columnMap 
+		name="SPEAREACDRMODLIV1"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="SPEAREACDRLIV1" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	
+	</columnMap>
+
+	<columnMap 
+		name="SPEAREACDRMODLIV1LIV2"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="SPEAREACDRLIV1LIV2" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="SPEAREACDRMODLIV1LIV2LIV3"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="SPEAREACDRLIV1LIV2LIV3" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+	
+	<columnMap 
+		name="SPEAREACDRMODLIV1LIV2LIV3LIN"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="SPEAREACDRLIV1LIV2LIV3LIN" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	
+	</columnMap>
+	<columnMap 
+		name="SPEAREACDRMODLIV1LIV2LIV3LINVOC"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="SPEAREACDRLIV1LIV2LIV3LINVOC" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+	
+	<columnMap 
+		name="SPEAREACDRMODLIV1LIV2LIV3LINVOCDET"
+		tableName="V_CONS_VAR_PDGG_AREA"
+		extends="SPEAREACDRLIV1LIV2LIV3LINVOCDET" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+	</columnMap>
+</SQLPersistentInfo>

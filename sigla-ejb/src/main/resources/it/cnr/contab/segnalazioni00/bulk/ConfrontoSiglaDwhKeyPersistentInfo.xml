@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.segnalazioni00.bulk.ConfrontoSiglaDwhKey">
+	<defaultColumnMap
+		tableName="CONFRONTO_SIGLA_DWH">
+	</defaultColumnMap>
+</SQLPersistentInfo>

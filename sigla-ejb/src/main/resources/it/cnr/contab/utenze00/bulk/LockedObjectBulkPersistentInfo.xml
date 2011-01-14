@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.LockedObjectBulk"
+	homeClassName="it.cnr.contab.utenze00.bulk.LockedObjectHome">
+	<defaultColumnMap
+		tableName="LOCKED_OBJECT">
+		<columnMapping
+			columnName="ID_SESSIONE"
+			propertyName="idSessione"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" 
+			primary="true"/>
+		<columnMapping
+			columnName="SERVER_URL"
+			propertyName="serverUrl"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="OBJECT_NAME"
+			propertyName="objectName"
+			sqlTypeName="VARCHAR"
+			columnSize="128"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="COMMENTS"
+			propertyName="comments"
+			sqlTypeName="VARCHAR"
+			columnSize="4000"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UTENTE"
+			propertyName="utente.cd_utente"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cds.cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true"/>
+			
+	</defaultColumnMap>
+	<persistentProperty
+		name="utente" />
+	<persistentProperty
+		name="cds" />
+	<persistentProperty
+		name="idSessione" />
+	<persistentProperty
+		name="serverUrl" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="objectName" />
+	<persistentProperty
+		name="comments" />
+</SQLPersistentInfo>

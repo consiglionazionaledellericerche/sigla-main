@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.logs.bulk.Batch_log_tstaKey" >
+	<defaultColumnMap
+		tableName="BATCH_LOG_TSTA" >
+		<columnMapping
+			columnName="PG_ESECUZIONE"
+			propertyName="pg_esecuzione"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_esecuzione"
+		partOfOid="true" />
+</SQLPersistentInfo>

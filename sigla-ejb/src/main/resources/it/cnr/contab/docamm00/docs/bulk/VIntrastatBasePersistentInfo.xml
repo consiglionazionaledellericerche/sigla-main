@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.docs.bulk.VIntrastatBase"
+	keyClassName="it.cnr.contab.docamm00.docs.bulk.VIntrastatKey"
+	homeClassName="it.cnr.contab.docamm00.docs.bulk.VIntrastatHome">
+	<defaultColumnMap
+		tableName="V_INTRASTAT">
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_BENE_SERVIZIO"
+			propertyName="tiBeneServizio"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_FATTURA"
+			propertyName="tiFattura"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />	
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dtRegistrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NR_FATTURA"
+			propertyName="nrFattura"
+			sqlTypeName="VARCHAR"
+			columnSize="40"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_FATTURA"
+			propertyName="dtFattura"
+			sqlTypeName="VARCHAR"
+			columnSize="6"
+			nullable="true" />
+		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partitaIva"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_NATURA_TRANSAZIONE"
+			propertyName="cdNaturaTransazione"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_NOMENCLATURA_COMBINATA"
+			propertyName="cdNomenclaturaCombinata"
+			sqlTypeName="VARCHAR"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="AMMONTARE_EURO"
+			propertyName="ammontareEuro"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="AMMONTARE_DIVISA"
+			propertyName="ammontareDivisa"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="MASSA_NETTA"
+			propertyName="massaNetta"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="UNITA_SUPPLEMENTARI"
+			propertyName="unitaSupplementari"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VALORE_STATISTICO"
+			propertyName="valoreStatistico"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CONSEGNA"
+			propertyName="cdConsegna"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODALITA_TRASPORTO"
+			propertyName="cdModalitaTrasporto"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CPA"
+			propertyName="cdCpa"
+			sqlTypeName="VARCHAR"
+			columnSize="6"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODALITA_INCASSO"
+			propertyName="cdModalitaIncasso"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODALITA_EROGAZIONE"
+			propertyName="cdModalitaErogazione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="PROVENIENZA"
+			propertyName="provenienza"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="ORIGINE"
+			propertyName="origine"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DEST"
+			propertyName="dest"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROVINCIA_DESTINAZIONE"
+			propertyName="cdProvinciaDestinazione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROVINCIA_ORIGINE"
+			propertyName="cdProvinciaOrigine"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="MESE"
+			propertyName="mese"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />		
+		<columnMapping
+			columnName="NAZ_FISCALE"
+			propertyName="nazFiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />		
+		<columnMapping
+			columnName="NR_PROTOCOLLO"
+			propertyName="nrProtocollo"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="NR_PROGRESSIVO"
+			propertyName="nrProgressivo"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />		
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipo" />
+	<persistentProperty
+		name="tiBeneServizio" />
+	<persistentProperty
+		name="tiFattura" />	
+	<persistentProperty
+		name="dtRegistrazione" />
+	<persistentProperty
+		name="nrFattura" />
+	<persistentProperty
+		name="dtFattura" />
+	<persistentProperty
+		name="partitaIva" />
+	<persistentProperty
+		name="cdNaturaTransazione" />
+	<persistentProperty
+		name="cdNomenclaturaCombinata" />
+	<persistentProperty
+		name="ammontareEuro" />
+	<persistentProperty
+		name="ammontareDivisa" />
+	<persistentProperty
+		name="massaNetta" />
+	<persistentProperty
+		name="unitaSupplementari" />
+	<persistentProperty
+		name="valoreStatistico" />
+	<persistentProperty
+		name="cdConsegna" />
+	<persistentProperty
+		name="cdModalitaTrasporto" />
+	<persistentProperty
+		name="cdCpa" />
+	<persistentProperty
+		name="cdModalitaIncasso" />
+	<persistentProperty
+		name="cdModalitaErogazione" />
+	<persistentProperty
+		name="provenienza" />
+	<persistentProperty
+		name="origine" />
+	<persistentProperty
+		name="dest" />
+	<persistentProperty
+		name="cdProvinciaDestinazione" />
+	<persistentProperty
+		name="cdProvinciaOrigine" />
+	<persistentProperty
+		name="mese" />	
+	<persistentProperty
+		name="nazFiscale" />	
+	<persistentProperty
+		name="nrProtocollo" />	
+	<persistentProperty
+		name="nrProgressivo" />				
+</SQLPersistentInfo>

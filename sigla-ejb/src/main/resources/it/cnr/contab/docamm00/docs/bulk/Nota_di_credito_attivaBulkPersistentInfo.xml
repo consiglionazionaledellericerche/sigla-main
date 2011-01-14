@@ -1,0 +1,33 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk"
+	homeClassName="it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaHome" >
+
+	<defaultColumnMap
+		tableName="FATTURA_ATTIVA" >
+
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="modalita_pagamento.cd_modalita_pag" />
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="banca.pg_banca" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="banca.cd_terzo"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="banca.terzo.cd_terzo"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_TERMINI_PAG"
+			propertyName="termini_pagamento.cd_termini_pag" />
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="banca" />
+	<persistentProperty
+		name="modalita_pagamento" />
+	<persistentProperty
+		name="termini_pagamento" />
+</SQLPersistentInfo>

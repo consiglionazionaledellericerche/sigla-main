@@ -1,0 +1,40 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="dt_scadenza_obbligazioni"
+		property="dt_scadenza_obbligazioni"
+		inputType="TEXT"
+		formatName="date_short"
+		inputSize="10"		
+		label="Data scadenza obbligazioni"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="im_disp_cassa_CNR"
+		property="im_disp_cassa_CNR"
+		inputType="ROTEXT"
+		label="Disponibilit&#224; di Cassa CNR"
+		maxLength="13"
+		inputSize="15"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"/>
+	
+	<formFieldProperty
+		name="dt_scadenza_obbligazioni" />
+	<formFieldProperty
+		name="im_disp_cassa_CNR" />
+
+	<columnFieldProperty
+		name="dt_scadenza_obbligazioni"/>
+	<columnFieldProperty
+		name="im_disp_cassa_CNR"/>
+
+	<findFieldProperty
+		name="dt_scadenza_obbligazioni"/>
+	<findFieldProperty
+		name="im_disp_cassa_CNR"/>
+
+</bulkInfo>

@@ -1,0 +1,22 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.ContattoBulk"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.ContattoHome" >
+
+	<defaultColumnMap
+		tableName="CONTATTO" >
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzo.cd_terzo" />
+	</defaultColumnMap>
+
+	<columnMap
+		name="V_CONTATTO_ANAG"
+		extends="default"
+		tableName="V_CONTATTO_ANAG" >
+	</columnMap>
+
+	<persistentProperty
+		name="terzo"
+		partOfOid="true" />
+
+</SQLPersistentInfo>

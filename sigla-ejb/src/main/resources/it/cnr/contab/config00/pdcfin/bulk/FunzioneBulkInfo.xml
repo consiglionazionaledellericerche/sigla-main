@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ds_funzione"
+		property="ds_funzione"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_funzione"
+		property="cd_funzione"
+		maxLength="2"
+		inputSize="2"
+		inputType="TEXT"
+		label="Codice" />
+
+	<formFieldProperty
+		name="ds_funzione" />
+	<formFieldProperty
+		name="cd_funzione" />
+
+	<columnFieldProperty
+		name="ds_funzione" />
+	<columnFieldProperty
+		name="cd_funzione" />
+
+	<findFieldProperty
+		name="ds_funzione" />
+	<findFieldProperty
+		name="cd_funzione" />
+
+	<form
+		name="find_funzione" >
+		<formFieldProperty
+			name="cd_funzione"
+			inputSize="2"/>
+		<formFieldProperty
+			name="ds_funzione"
+			inputSize="30"/>
+	</form>
+
+</bulkInfo>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.ordine.bulk.OrdineBulk"
+	homeClassName="it.cnr.contab.doccont00.ordine.bulk.OrdineHome" >
+	<defaultColumnMap
+		tableName="ORDINE" >
+
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="obbligazione.esercizio"/>
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="obbligazione.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="obbligazione.esercizio_originale"/>
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="obbligazione.pg_obbligazione" />
+
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="elementoVoce.cd_elemento_voce"/>	
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="elementoVoce.ti_gestione"/>		
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="elementoVoce.ti_appartenenza"/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="elementoVoce.esercizio"
+			fetchOnly = "true" />
+	
+		<columnMapping
+			columnName="CD_TIPO_CONSEGNA"
+			propertyName="tipoConsegna.cd_tipo_consegna"/>
+
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzo.cd_terzo"/>
+
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="modalitaPagamento.cd_modalita_pag" />
+		<columnMapping
+			columnName="CD_TERMINI_PAG"
+			propertyName="terminiPagamento.cd_termini_pag" />
+			
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="banca.pg_banca" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="banca.terzo.cd_terzo"
+			fetchOnly="true"/>
+
+	</defaultColumnMap>
+
+
+	<persistentProperty
+		name="obbligazione" />
+	<persistentProperty
+		name="elementoVoce" />
+	<persistentProperty
+		name="tipoConsegna" />
+	<persistentProperty
+		name="terzo" />
+	<persistentProperty
+		name="modalitaPagamento" />
+	<persistentProperty
+		name="terminiPagamento" />
+	<persistentProperty
+		name="banca" />
+
+</SQLPersistentInfo>

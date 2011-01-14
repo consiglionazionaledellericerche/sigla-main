@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.cdip.bulk.Cnr_estrazione_coriKey">
+	<defaultColumnMap
+		tableName="CNR_ESTRAZIONE_CORI">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_LIQUIDAZIONE"
+			propertyName="pg_liquidazione"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="MATRICOLA"
+			propertyName="matricola"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TI_PAGAMENTO"
+			propertyName="ti_pagamento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_COMPENSO"
+			propertyName="esercizio_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_IMPONIBILE"
+			propertyName="cd_imponibile"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TI_ENTE_PERCIPIENTE"
+			propertyName="ti_ente_percipiente"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CONTRIBUTO_RITENUTA"
+			propertyName="cd_contributo_ritenuta"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_cds"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_unita_organizzativa"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_liquidazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="matricola"
+		partOfOid="true" />
+	<persistentProperty
+		name="codice_fiscale"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_pagamento"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio_compenso"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_imponibile"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_ente_percipiente"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_contributo_ritenuta"
+		partOfOid="true" />
+</SQLPersistentInfo>

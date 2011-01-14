@@ -1,0 +1,96 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.sto.bulk.CdrBulk" >
+	<defaultColumnMap
+		tableName="CDR" >
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_padre.cd_unita_organizzativa"
+			/>
+		<columnMapping
+			columnName="CD_RESPONSABILE"
+			propertyName="responsabile.cd_terzo"
+			/>			
+	</defaultColumnMap>
+
+	<columnMap 
+		name="V_CDR_VALIDO"
+		tableName="V_CDR_VALIDO"
+		extends="default" />
+
+	<columnMap 
+		name="V_CDR_TIPO_LINEA_ATTIVITA"
+		tableName="V_CDR_TIPO_LINEA_ATTIVITA"
+		extends="default" />
+		
+	<columnMap 
+		name="V_CDR_PDG_AGGREGATO"
+		tableName="V_CDR_PDG_AGGREGATO"
+		extends="default" />
+		
+	<columnMap
+		name="V_CDR_CDS_PER_UO"
+		extends="default"
+		tableName="V_CDR_CDS_PER_UO" >
+	</columnMap>
+
+	<columnMap
+		name="V_PDG_CDR_FIGLI"
+		extends="default"
+		tableName="V_PDG_CDR_FIGLI" >
+	</columnMap>
+
+	<columnMap
+		name="V_PDG_CDR_FIGLI_PADRE"
+		extends="default"
+		tableName="V_PDG_CDR_FIGLI_PADRE" >
+	</columnMap>
+
+	<columnMap
+		name="V_PDG_CDR_GESTIBILI"
+		extends="default"
+		tableName="V_PDG_CDR_GESTIBILI" >
+	</columnMap>
+	
+	<columnMap
+		name="V_CDR_VALIDO_CDS"
+		extends="default"
+		tableName="V_CDR_VALIDO_CDS" >
+	</columnMap>
+
+	<columnMap
+		name="V_PDG_CDR_PADRE"
+		extends="default"
+		tableName="V_PDG_CDR_PADRE" >
+	</columnMap>
+
+	<columnMap 
+		name="V_CDR_VALIDO_LIV1"
+		tableName="V_CDR_VALIDO_LIV1"
+		extends="default" />
+
+	<persistentProperty
+		name="unita_padre" />
+	<persistentProperty
+		name="responsabile" />		
+		
+	<fetchPolicy
+		name="it.cnr.contab.config00.comp.CDRComponent.find">
+		<exclude pattern="*"/>
+		<include pattern="unita_padre"/>
+	</fetchPolicy>
+	<fetchPolicy
+		name="it.cnr.contab.utente00.nav.comp.GestioneLoginComponent.findUO">
+		<exclude pattern="*"/>
+		<include pattern="unita_padre"/>
+	</fetchPolicy>
+	<fetchPolicy
+		name="it.cnr.contab.utente00.comp.UtenteComponent.findCdr">
+		<exclude pattern="*"/>
+		<include pattern="unita_padre"/>
+	</fetchPolicy>
+	<fetchPolicy
+		name="it.cnr.contab.utente00.nav.comp.GestioneLoginComponent.listaCdrPerUtente">
+		<exclude pattern="*" />
+		<include pattern="unita_padre"/>
+	</fetchPolicy>
+</SQLPersistentInfo>

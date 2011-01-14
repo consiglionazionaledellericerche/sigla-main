@@ -1,0 +1,40 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcep.bulk.Ass_ev_voceepBulk"
+	homeClassName="it.cnr.contab.config00.pdcep.bulk.Ass_ev_voceepHome" >
+	<defaultColumnMap
+		tableName="ASS_EV_VOCEEP" >
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="elemento_voce.cd_elemento_voce"
+		  />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="elemento_voce.esercizio"
+			fetchOnly="true"
+			/> 
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="elemento_voce.ti_appartenenza"
+		  />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="elemento_voce.ti_gestione"
+			/>
+		<columnMapping
+			columnName="CD_VOCE_EP"
+			propertyName="voce_ep.cd_voce_ep"
+			/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="voce_ep.esercizio"
+			fetchOnly="true"
+			/> 
+	</defaultColumnMap>
+	
+	<persistentProperty
+		name="elemento_voce" 
+		partOfOid="true"/>
+	<persistentProperty
+		name="voce_ep" 
+		partOfOid="true"/>
+</SQLPersistentInfo>

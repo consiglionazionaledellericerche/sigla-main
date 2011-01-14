@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_dipfo_etrBulk"
+	homeClassName="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_dipfo_etrHome">
+	<defaultColumnMap
+		tableName="V_CONS_PDGG_ETR_BIL_IST_DIP_FO">
+		<columnMapping
+			columnName="DS_DETTAGLIO"
+			propertyName="ds_dettaglio"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="TOT_ENT_IST_A1"
+			propertyName="tot_ent_ist_a1"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="TOT_ENT_AREE_A1"
+			propertyName="tot_ent_aree_a1"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="TOT_ENT_A1"
+			propertyName="tot_ent_a1"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="TOT_INC_IST_A1"
+			propertyName="tot_inc_ist_a1"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="TOT_INC_AREE_A1"
+			propertyName="tot_inc_aree_a1"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="TOT_INC_A1"
+			propertyName="tot_inc_a1"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ds_dettaglio" />
+	<persistentProperty
+		name="tot_ent_ist_a1" />
+	<persistentProperty
+		name="tot_ent_aree_a1" />
+	<persistentProperty
+		name="tot_ent_a1" />
+	<persistentProperty
+		name="tot_inc_ist_a1" />
+	<persistentProperty
+		name="tot_inc_aree_a1" />
+	<persistentProperty
+		name="tot_inc_a1" />
+</SQLPersistentInfo>

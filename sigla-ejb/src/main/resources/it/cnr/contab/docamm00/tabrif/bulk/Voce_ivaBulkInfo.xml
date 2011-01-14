@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="gruppo_iva"
+		property="gruppo_iva"
+		inputType="SEARCHTOOL" 		
+		label="Gruppo Iva"
+		enabledOnSearch="false"
+		enabledOnEdit="true" />	
+	<fieldProperty
+		name="cd_gruppo_iva"
+		property="gruppo_iva.cd_gruppo_iva"
+		maxLength="30"
+		inputSize="6"
+		nullable="false"
+	 	inputType="TEXT"
+	 	readonlyProperty="ROCd_gruppo_iva"
+		label="Gruppo Iva"
+		enabledOnEdit="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_gruppo_iva"
+		property="gruppo_iva.ds_gruppo_iva"
+		inputSize="15"
+		inputType="ROTEXT"
+		label="Gruppo Iva"
+		caseSensitiveSearch="false" />
+		
+	<fieldProperty
+		name="cd_voce_iva"
+		property="cd_voce_iva"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		nullable="false"
+	 	label="Codice IVA" />
+	<fieldProperty
+		name="ds_voce_iva"
+		property="ds_voce_iva"
+		maxLength="300"
+		inputSize="300"
+		inputType="TEXTAREA"
+		label="Descrizione"
+		nullable="false"
+	 	caseSensitiveSearch="false" />
+	<fieldProperty
+		name="percentuale"
+		property="percentuale"
+		formatName="it.cnr.contab.util.ConstrainedPercentFormat"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		nullable="false"
+		label="Percentuale" />
+
+	<fieldProperty
+		name="fl_non_soggetto"
+		property="fl_non_soggetto"
+		inputType="CHECKBOX"
+		label="Non Soggetto"
+		enabledOnFreeSearch="false"
+		enabledOnSearch="false"/>
+	<fieldProperty
+		name="fl_default_istituzionale"
+		property="fl_default_istituzionale"
+		inputType="CHECKBOX"
+		label="Default Istituzionale"
+		enabledOnFreeSearch="false"
+		enabledOnSearch="false"/>
+	<fieldProperty
+		name="fl_detraibile"
+		property="fl_detraibile"
+		inputType="CHECKBOX"
+		label="Detraibile"
+		enabledOnFreeSearch="false"
+		enabledOnSearch="false"/>
+	<fieldProperty
+		name="fl_escluso"
+		property="fl_escluso"
+		inputType="CHECKBOX"
+		label="Escluso"
+		enabledOnFreeSearch="false"
+		enabledOnSearch="false"/>	
+	<fieldProperty
+		name="fl_non_imponibile"
+		property="fl_non_imponibile"
+		inputType="CHECKBOX"
+		label="Non Imponibile"
+		enabledOnFreeSearch="false"
+		enabledOnSearch="false"/>
+	<fieldProperty
+		name="fl_esente"
+		property="fl_esente"
+		inputType="CHECKBOX"
+		label="Esente"
+		enabledOnFreeSearch="false"
+		enabledOnSearch="false"/>
+		
+	<fieldProperty
+		name="ti_applicazione"
+		property="ti_applicazione"
+		keysProperty="ti_applicazioneKeys"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+	 	label="Applicazione"/>
+	<fieldProperty
+		name="percentuale_detraibilita"
+		property="percentuale_detraibilita"
+		formatName="it.cnr.contab.util.ConstrainedPercentFormat"
+		nullable="false"
+		inputType="TEXT"
+		maxLength="7"
+		inputSize="7"
+		label="Percentuale Detraibilita'" />	
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_inizio_validita"
+		inputType="TEXT"
+		nullable="false"
+	 	formatName="date_short"
+		label="Inizio Validita'" />
+	<fieldProperty
+		name="fl_iva_non_recuperabile"
+		property="fl_iva_non_recuperabile"
+		inputType="CHECKBOX"
+		label="Iva recuperabile"
+		enabledOnFreeSearch="false"
+		enabledOnSearch="false"/>	
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_voce_iva"
+			inputType="TEXT" 
+			inputSize="10" />
+		<formFieldProperty
+			name="ds_voce_iva"
+			inputType="TEXT"
+			inputSize="20" />
+	</form>
+
+		
+
+	<formFieldProperty
+		name="cd_voce_iva" />	
+	<formFieldProperty
+		name="fl_non_soggetto" />
+	<formFieldProperty
+		name="fl_detraibile" />
+	<formFieldProperty
+		name="ds_voce_iva" />
+	<formFieldProperty
+		name="fl_escluso" />
+	<formFieldProperty
+		name="ti_applicazione" />
+	<formFieldProperty
+		name="percentuale_detraibilita" />
+	<formFieldProperty
+		name="fl_non_imponibile" />
+	<formFieldProperty
+		name="cd_gruppo_iva" />
+	<formFieldProperty
+		name="gruppo_iva" />
+	<formFieldProperty
+		name="ds_gruppo_iva" />
+	<formFieldProperty
+		name="percentuale" />
+	<formFieldProperty
+		name="dt_inizio_validita" />
+	<formFieldProperty
+		name="fl_esente" />
+	<formFieldProperty
+		name="fl_default_istituzionale" />
+	<formFieldProperty
+		name="fl_iva_non_recuperabile" />	
+
+	<columnFieldProperty
+		name="cd_voce_iva" />
+	<columnFieldProperty
+		name="ds_voce_iva" />
+	<columnFieldProperty
+		name="percentuale" />
+	<columnFieldProperty
+		name="dt_inizio_validita" />
+	<columnFieldProperty
+		name="fl_detraibile" />		
+	<columnFieldProperty
+		name="percentuale_detraibilita" />
+	<columnFieldProperty
+		name="fl_non_imponibile" />
+	<columnFieldProperty
+		name="fl_esente" />
+	<columnFieldProperty
+		name="fl_non_soggetto" />
+	<columnFieldProperty
+		name="fl_escluso" />
+	<columnFieldProperty
+		name="ti_applicazione" />
+	<columnFieldProperty
+		name="cd_gruppo_iva" />	
+	<columnFieldProperty
+		name="fl_default_istituzionale" />
+	<columnFieldProperty
+		name="fl_iva_non_recuperabile" />
+		
+	<findFieldProperty
+		name="cd_voce_iva" />	
+
+	<findFieldProperty
+		name="ds_voce_iva" />
+	<findFieldProperty
+		name="ti_applicazione" />
+	<findFieldProperty
+		name="percentuale_detraibilita" />	
+	<findFieldProperty
+		name="percentuale" />
+	<findFieldProperty
+		name="dt_inizio_validita" />
+</bulkInfo>

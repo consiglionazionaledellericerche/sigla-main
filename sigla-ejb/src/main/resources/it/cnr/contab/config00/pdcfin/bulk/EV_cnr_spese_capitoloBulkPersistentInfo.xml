@@ -1,0 +1,4 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.EV_cnr_spese_capitoloBulk"
+	homeClassName="it.cnr.contab.config00.pdcfin.bulk.EV_cnr_spese_capitoloHome" >
+</SQLPersistentInfo>

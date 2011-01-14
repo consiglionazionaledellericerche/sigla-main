@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Parametri Livelli"
+          longDescription="Parametri Livelli">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		label="Esercizio di riferimento" />
+	<fieldProperty
+		name="livelli_entrata"
+		property="livelli_entrata"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		label="Numero di livelli entrata" />
+	<fieldProperty
+		name="lung_livello1e"
+		property="lung_livello1e"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza primo livello entrata (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello1e"
+		property="ds_livello1e"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione primo livello entrata" />
+	<fieldProperty
+		name="lung_livello2e"
+		property="lung_livello2e"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza secondo livello entrata (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello2e"
+		property="ds_livello2e"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione secondo livello entrata" />
+	<fieldProperty
+		name="lung_livello3e"
+		property="lung_livello3e"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza terzo livello entrata (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello3e"
+		property="ds_livello3e"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione terzo livello entrata" />
+	<fieldProperty
+		name="lung_livello4e"
+		property="lung_livello4e"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza quarto livello entrata (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello4e"
+		property="ds_livello4e"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione quarto livello entrata" />
+	<fieldProperty
+		name="lung_livello5e"
+		property="lung_livello5e"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza quinto livello entrata (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello5e"
+		property="ds_livello5e"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione quinto livello entrata" />
+	<fieldProperty
+		name="lung_livello6e"
+		property="lung_livello6e"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza sesto livello entrata (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello6e"
+		property="ds_livello6e"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione sesto livello entrata" />
+	<fieldProperty
+		name="lung_livello7e"
+		property="lung_livello7e"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza settimo livello entrata (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello7e"
+		property="ds_livello7e"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione settimo livello entrata" />
+	<fieldProperty
+		name="livelli_spesa"
+		property="livelli_spesa"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		label="Numero di livelli spesa" />
+	<fieldProperty
+		name="lung_livello1s"
+		property="lung_livello1s"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza primo livello spesa (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello1s"
+		property="ds_livello1s"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione primo livello spesa" />
+	<fieldProperty
+		name="lung_livello2s"
+		property="lung_livello2s"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza secondo livello spesa (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello2s"
+		property="ds_livello2s"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione secondo livello spesa" />
+	<fieldProperty
+		name="lung_livello3s"
+		property="lung_livello3s"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza terzo livello spesa (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello3s"
+		property="ds_livello3s"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione terzo livello spesa" />
+	<fieldProperty
+		name="lung_livello4s"
+		property="lung_livello4s"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza quarto livello spesa (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello4s"
+		property="ds_livello4s"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione quarto livello spesa" />
+	<fieldProperty
+		name="lung_livello5s"
+		property="lung_livello5s"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza quinto livello spesa (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello5s"
+		property="ds_livello5s"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione quinto livello spesa" />
+	<fieldProperty
+		name="lung_livello6s"
+		property="lung_livello6s"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza sesto livello spesa (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello6s"
+		property="ds_livello6s"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione sesto livello spesa" />
+	<fieldProperty
+		name="lung_livello7s"
+		property="lung_livello7s"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Lunghezza settimo livello spesa (valori possibili da 1 a 4)" />
+	<fieldProperty
+		name="ds_livello7s"
+		property="ds_livello7s"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Descrizione settimo livello spesa" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="livelli_entrata" 
+		command="doCambiaLivelliEntrata" />
+	<formFieldProperty
+		name="lung_livello1e" />
+	<formFieldProperty
+		name="ds_livello1e" />
+	<formFieldProperty
+		name="lung_livello2e" />
+	<formFieldProperty
+		name="ds_livello2e" />
+	<formFieldProperty
+		name="lung_livello3e" />
+	<formFieldProperty
+		name="ds_livello3e" />
+	<formFieldProperty
+		name="lung_livello4e" />
+	<formFieldProperty
+		name="ds_livello4e" />
+	<formFieldProperty
+		name="lung_livello5e" />
+	<formFieldProperty
+		name="ds_livello5e" />
+	<formFieldProperty
+		name="lung_livello6e" />
+	<formFieldProperty
+		name="ds_livello6e" />
+	<formFieldProperty
+		name="lung_livello7e" />
+	<formFieldProperty
+		name="ds_livello7e" />
+	<formFieldProperty
+		name="livelli_spesa" 
+		command="doCambiaLivelliSpesa" />
+	<formFieldProperty
+		name="lung_livello1s" />
+	<formFieldProperty
+		name="ds_livello1s" />
+	<formFieldProperty
+		name="lung_livello2s" />
+	<formFieldProperty
+		name="ds_livello2s" />
+	<formFieldProperty
+		name="lung_livello3s" />
+	<formFieldProperty
+		name="ds_livello3s" />
+	<formFieldProperty
+		name="lung_livello4s" />
+	<formFieldProperty
+		name="ds_livello4s" />
+	<formFieldProperty
+		name="lung_livello5s" />
+	<formFieldProperty
+		name="ds_livello5s" />
+	<formFieldProperty
+		name="lung_livello6s" />
+	<formFieldProperty
+		name="ds_livello6s" />
+	<formFieldProperty
+		name="lung_livello7s" />
+	<formFieldProperty
+		name="ds_livello7s" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="livelli_entrata" />
+	<findFieldProperty
+		name="lung_livello1e" />
+	<findFieldProperty
+		name="ds_livello1e" />
+	<findFieldProperty
+		name="lung_livello2e" />
+	<findFieldProperty
+		name="ds_livello2e" />
+	<findFieldProperty
+		name="lung_livello3e" />
+	<findFieldProperty
+		name="ds_livello3e" />
+	<findFieldProperty
+		name="lung_livello4e" />
+	<findFieldProperty
+		name="ds_livello4e" />
+	<findFieldProperty
+		name="lung_livello5e" />
+	<findFieldProperty
+		name="ds_livello5e" />
+	<findFieldProperty
+		name="lung_livello6e" />
+	<findFieldProperty
+		name="ds_livello6e" />
+	<findFieldProperty
+		name="lung_livello7e" />
+	<findFieldProperty
+		name="ds_livello7e" />
+	<findFieldProperty
+		name="livelli_spesa" />
+	<findFieldProperty
+		name="lung_livello1s" />
+	<findFieldProperty
+		name="ds_livello1s" />
+	<findFieldProperty
+		name="lung_livello2s" />
+	<findFieldProperty
+		name="ds_livello2s" />
+	<findFieldProperty
+		name="lung_livello3s" />
+	<findFieldProperty
+		name="ds_livello3s" />
+	<findFieldProperty
+		name="lung_livello4s" />
+	<findFieldProperty
+		name="ds_livello4s" />
+	<findFieldProperty
+		name="lung_livello5s" />
+	<findFieldProperty
+		name="ds_livello5s" />
+	<findFieldProperty
+		name="lung_livello6s" />
+	<findFieldProperty
+		name="ds_livello6s" />
+	<findFieldProperty
+		name="lung_livello7s" />
+	<findFieldProperty
+		name="ds_livello7s" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="livelli_entrata" />
+	<columnFieldProperty
+		name="lung_livello1e" />
+	<columnFieldProperty
+		name="ds_livello1e" />
+	<columnFieldProperty
+		name="lung_livello2e" />
+	<columnFieldProperty
+		name="ds_livello2e" />
+	<columnFieldProperty
+		name="lung_livello3e" />
+	<columnFieldProperty
+		name="ds_livello3e" />
+	<columnFieldProperty
+		name="lung_livello4e" />
+	<columnFieldProperty
+		name="ds_livello4e" />
+	<columnFieldProperty
+		name="lung_livello5e" />
+	<columnFieldProperty
+		name="ds_livello5e" />
+	<columnFieldProperty
+		name="lung_livello6e" />
+	<columnFieldProperty
+		name="ds_livello6e" />
+	<columnFieldProperty
+		name="lung_livello7e" />
+	<columnFieldProperty
+		name="ds_livello7e" />
+	<columnFieldProperty
+		name="livelli_spesa" />
+	<columnFieldProperty
+		name="lung_livello1s" />
+	<columnFieldProperty
+		name="ds_livello1s" />
+	<columnFieldProperty
+		name="lung_livello2s" />
+	<columnFieldProperty
+		name="ds_livello2s" />
+	<columnFieldProperty
+		name="lung_livello3s" />
+	<columnFieldProperty
+		name="ds_livello3s" />
+	<columnFieldProperty
+		name="lung_livello4s" />
+	<columnFieldProperty
+		name="ds_livello4s" />
+	<columnFieldProperty
+		name="lung_livello5s" />
+	<columnFieldProperty
+		name="ds_livello5s" />
+	<columnFieldProperty
+		name="lung_livello6s" />
+	<columnFieldProperty
+		name="ds_livello6s" />
+	<columnFieldProperty
+		name="lung_livello7s" />
+	<columnFieldProperty
+		name="ds_livello7s" />
+</bulkInfo>

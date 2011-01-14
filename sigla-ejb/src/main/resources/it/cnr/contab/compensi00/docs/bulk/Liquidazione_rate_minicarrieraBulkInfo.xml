@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="nrMinicarrieraDa"
+		property="nrMinicarrieraDa"
+		inputType="TEXT"
+		inputSize="10"
+		label="Nr. minicarriera da:"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="nrMinicarrieraA"
+		property="nrMinicarrieraA"
+		inputType="TEXT"
+		inputSize="10"
+		label="a:"
+		enabledOnSearch="true"
+		/>
+
+	<fieldProperty
+		name="dtRegistrazioneDa"
+		property="dtRegistrazioneDa"
+		formatName="date_short"
+		inputSize="10"
+		inputType="TEXT"
+		label="Data registrazione da:"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="dtRegistrazioneA"
+		property="dtRegistrazioneA"
+		formatName="date_short"
+		inputSize="10"
+		inputType="TEXT"
+		label="a:"
+		enabledOnSearch="true"
+		/>
+
+	<fieldProperty
+		name="dtInizioMinicarrieraDa"
+		property="dtInizioMinicarrieraDa"
+		formatName="date_short"
+		inputSize="10"
+		inputType="TEXT"
+		label="Inizio minicarriera da:"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="dtInizioMinicarrieraA"
+		property="dtInizioMinicarrieraA"
+		formatName="date_short"
+		inputSize="10"
+		inputType="TEXT"
+		label="a:"
+		enabledOnSearch="true"
+		/>
+
+	<fieldProperty
+		name="findTerzo"
+		property="terzo"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		label="Terzo"
+		/>
+	<fieldProperty
+		name="cdTerzo"
+		property="terzo.cd_terzo"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		label="Terzo"
+		/>
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnSearch="false"
+		label="Terzo"
+		/>
+		
+	<fieldProperty
+		name="dtScadenzaDa"
+		property="dtScadenzaDa"
+		formatName="date_short"
+		inputSize="10"
+		inputType="TEXT"
+		label="Data scadenza da:"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="dtScadenzaA"
+		property="dtScadenzaA"
+		formatName="date_short"
+		inputSize="10"
+		inputType="TEXT"
+		label="a:"
+		enabledOnSearch="true"
+		/>
+
+	<fieldProperty
+		name="findElementoVoce"
+		property="elementoVoce"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		label="Elemento voce"
+		/>
+	<fieldProperty
+		name="cdElementoVoce"
+		property="elementoVoce.cd_elemento_voce"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		style="background: #F5F5DC"
+		readonlyProperty="ROElementoVoce"
+		enabledOnSearch="true"
+		label="Codice"
+		/>
+	<fieldProperty
+		name="dsElementoVoce"
+		property="elementoVoce.ds_elemento_voce"
+		inputSize="80"
+		inputType="ROTEXT"
+		label="Descrizione"
+		/>
+	<fieldProperty
+		name="tipoGestione"
+		property="tipoGestione"
+		inputSize="20"
+		inputType="ROTEXT"
+		label="Tipo gestione"
+		/>
+	<fieldProperty
+		name="tipoAppartenenza"
+		property="tipoAppartenenza"
+		inputSize="20"
+		inputType="ROTEXT"
+		label="Tipo appartenenza"
+		/>
+	<fieldProperty
+		name="findLineaAttivita"
+		property="lineaAttivita"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		label="GAE"
+		/>
+	<fieldProperty
+		name="cdLineaAttivita"
+		property="lineaAttivita.cd_linea_attivita"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		style="background: #F5F5DC"
+		readonlyProperty="ROLineaAttivita"
+		enabledOnSearch="true"
+		label="Codice"
+		/>
+	<fieldProperty
+		name="dsLineaAttivita"
+		property="lineaAttivita.ds_linea_attivita"
+		inputSize="80"
+		inputType="ROTEXT"
+		label="Descrizione"
+		/>
+	<fieldProperty
+		name="cdCentroResponsabilita"
+		property="lineaAttivita.cd_centro_responsabilita"
+		inputSize="30"
+		inputType="TEXT"
+		nullable="false"
+		style="background: #F5F5DC"
+		readonlyProperty="ROLineaAttivita"
+		enabledOnSearch="true"
+		label="Cdr"
+		/>
+	<fieldProperty
+		name="cdVoce"
+		property="voceF.cd_voce"
+		inputSize="50"
+		inputType="ROTEXT"
+		label="Capitolo"
+		/>
+
+	<formFieldProperty name="nrMinicarrieraDa" />
+	<formFieldProperty name="nrMinicarrieraA" />
+	<formFieldProperty name="dtRegistrazioneDa" />
+	<formFieldProperty name="dtRegistrazioneA" />
+	<formFieldProperty name="dtInizioMinicarrieraDa" />
+	<formFieldProperty name="dtInizioMinicarrieraA" />
+	<formFieldProperty name="cdTerzo" />
+	<formFieldProperty name="cd_terzo" />
+	<formFieldProperty name="findTerzo" />
+	<formFieldProperty name="dtScadenzaDa" />
+	<formFieldProperty name="dtScadenzaA" />
+	<formFieldProperty name="cdElementoVoce" />
+	<formFieldProperty name="dsElementoVoce" />
+	<formFieldProperty name="tipoGestione" />
+	<formFieldProperty name="tipoAppartenenza" />
+	<formFieldProperty name="findElementoVoce" />
+	<formFieldProperty name="cdLineaAttivita" />
+	<formFieldProperty name="dsLineaAttivita" />
+	<formFieldProperty name="cdCentroResponsabilita" />
+	<formFieldProperty name="findLineaAttivita" />
+	<formFieldProperty name="cdVoce" />
+
+	<findFieldProperty name="nrMinicarrieraDa" />
+	<findFieldProperty name="nrMinicarrieraA" />
+	<findFieldProperty name="dtRegistrazioneDa" />
+	<findFieldProperty name="dtRegistrazioneA" />
+	<findFieldProperty name="dtInizioMinicarrieraDa" />
+	<findFieldProperty name="dtInizioMinicarrieraA" />
+	<findFieldProperty name="cdTerzo" />
+	<findFieldProperty name="dtScadenzaDa" />
+	<findFieldProperty name="dtScadenzaA" />
+	<findFieldProperty name="cdElementoVoce" />
+	<findFieldProperty name="cdLineaAttivita" />
+	<findFieldProperty name="cdCentroResponsabilita" />
+
+	<columnSet name="LIQUIDAZIONE_RATE_COLUMN_SET">
+		<columnFieldProperty
+			name="pg_minicarriera"
+			label="Nr. minicarriera" />
+		<columnFieldProperty
+			name="pg_rata"
+			label="Nr. rata" />
+		<columnFieldProperty name="im_rata" />
+		<columnFieldProperty name="dt_inizio_rata" />
+		<columnFieldProperty name="dt_fine_rata" />
+		<columnFieldProperty name="dt_scadenza" />
+		<columnFieldProperty name="cd_terzo" />
+	</columnSet>
+
+	<freeSearchSet name="LIQUIDAZIONE_RATE_FREE_SEARCH_SET">
+		<findFieldProperty name="pg_rata" />
+	</freeSearchSet>
+
+</bulkInfo>

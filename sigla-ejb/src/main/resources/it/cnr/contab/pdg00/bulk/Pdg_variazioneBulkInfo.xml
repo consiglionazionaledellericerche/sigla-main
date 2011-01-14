@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Variazioni al Piano di Gestione"
+          longDescription="Variazioni al PDG">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		nullable="false"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_variazione_pdg"
+		property="pg_variazione_pdg"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		label="Numero Variazione" />
+    <fieldProperty
+         name="centro_responsabilita"
+         property="centro_responsabilita"
+         inputType="SEARCHTOOL"
+         formName="searchtool"
+         enabledOnInsert="false"
+         enabledOnEdit="false"
+         enabledOnSearch="true"
+         label="CDR proponente" />		
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="centro_responsabilita.cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		enabledOnFreeSearch="false"
+		label="CDR proponente" />
+	<fieldProperty
+		name="ds_centro_responsabilita"
+		property="centro_responsabilita.ds_cdr"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="50"
+		nullable="false"
+		label="Descrizione" />
+ 	 <fieldProperty
+		name="ds_cdr"
+		property="ds_cdr"
+		inputType="TEXT"
+		inputSize="80"
+		maxLength="80"
+		nullable="false"
+		enabledOnEdit="false"
+        enabledOnSearch="true"
+        enabledOnInsert="false"
+		label="Descrizione CdR proponente" />	
+	<fieldProperty
+		name="dt_apertura"
+		property="dt_apertura"
+		inputType="TEXT"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		formatName="date_short"
+		inputSize="8"
+		nullable="false"
+		label="Data di registrazione" />
+	<fieldProperty
+		name="dt_chiusura"
+		property="dt_chiusura"
+		inputType="TEXT"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		formatName="date_short"
+		inputSize="8"
+		label="Data della Proposta definitiva" />
+	<fieldProperty
+		name="dt_approvazione"
+		property="dt_approvazione"
+		inputType="TEXT"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		formatName="date_short"
+		inputSize="8"
+		label="Data di lavorazione della sede centrale" />
+	<fieldProperty
+		name="dt_annullamento"
+		property="dt_annullamento"
+		inputType="TEXT"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		formatName="date_short"
+		inputSize="8"
+		label="Data di cancellazione" />
+	<fieldProperty
+		name="ds_variazione"
+		property="ds_variazione"
+		inputType="TEXTAREA"
+		cols="80"
+		rows="4"
+        enabledOnSearch="true"		
+		maxLength="1000"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="ds_delibera"
+		property="ds_delibera"
+		inputType="TEXTAREA"
+		cols="80"
+		rows="3"
+        enabledOnSearch="true"		
+		maxLength="200"
+		nullable="false"
+		label="Motivazione" />
+	<fieldProperty
+		name="tipo_variazione"
+		property="tipo_variazione"
+		printProperty="ds_tipo_variazione"
+		inputSize="100"
+		maxLength="100"
+		nullable="false"
+		optionsProperty="tipologie_variazione"
+		inputType="SELECT"		
+		command="doOnChangeTipologia"
+		readonlyProperty="ROTipologia"
+		enabledOnInsert="true"
+        enabledOnSearch="true"		
+        enabledOnEdit="true"                
+		label="Tipologia" />
+	<fieldProperty
+		name="tipologia_fin"
+		property="tipologia_fin"
+		inputType="SELECT"
+		keysProperty="ti_tipologia_finKeys"
+		readonlyProperty="ROTipologia"
+		maxLength="10"
+		enabledOnInsert="true"
+        enabledOnSearch="true"		
+        enabledOnEdit="true"                
+		nullable="false"
+		label="Origine delle Fonti" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="SELECT"
+		keysProperty="ti_statoKeys"
+		inputSize="3"
+		maxLength="3"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		nullable="true"
+		label="Stato" />
+	<fieldProperty
+		name="riferimenti"
+		property="riferimenti"
+		inputType="TEXTAREA"
+		cols="80"
+		rows="3"
+        enabledOnSearch="true"		
+		maxLength="200"
+		nullable="true"
+		label="Riferimenti" />
+	<fieldProperty
+		name="cd_causale_respinta"
+		property="cd_causale_respinta"
+		inputType="SELECT"
+		keysProperty="ti_causale_respintaKeys"
+        enabledOnSearch="true"		
+		inputSize="100"
+		maxLength="100"
+		nullable="true"
+		label="Causale" />
+	<fieldProperty
+		name="ds_causale_respinta"
+		property="ds_causale_respinta"
+		inputType="TEXTAREA"
+		cols="80"
+		rows="3"
+        enabledOnSearch="true"		
+		maxLength="200"
+		nullable="true"
+		label="Motivazione" />
+	<fieldProperty
+		name="dt_app_formale"
+		property="dt_app_formale"
+		inputType="TEXT"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		formatName="date_short"
+		inputSize="8"
+		label="Data di approvazione formale" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="elemento_voce.cd_elemento_voce"
+		label="Voce del piano"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="10"
+		enabledOnSearch="true"
+		nullable="true" />
+	<fieldProperty
+		name="find_fondo_spesa"
+		property="elemento_voce"
+		inputType="SEARCHTOOL"
+		formName="searchtool"		
+		label="Fondo di Spesa"
+		readonlyProperty="ROFondo_spesa"
+        enabledOnInsert="true"
+        enabledOnEdit="true"
+		enabledOnSearch="true"
+		completeOnSave="false" />
+	<fieldProperty
+		name="somma_spesa_var_piu"
+		property="somma_spesa_var_piu"
+		inputSize="20"
+		maxLength="18"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Somma dei dettagli di spesa" />
+	<fieldProperty
+		name="somma_spesa_var_meno"
+		property="somma_spesa_var_meno"
+		inputSize="20"
+		maxLength="18"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Somma dei dettagli di spesa" />
+	<fieldProperty
+		name="somma_spesa_diff"
+		property="somma_spesa_diff"
+		inputSize="20"
+		maxLength="18"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Somma dei dettagli di spesa" />
+	<fieldProperty
+		name="somma_costi_var_piu"
+		property="somma_costi_var_piu"
+		inputSize="20"
+		maxLength="18"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Somma dei dettagli di costo" />
+	<fieldProperty
+		name="somma_costi_var_meno"
+		property="somma_costi_var_meno"
+		inputSize="20"
+		maxLength="18"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Somma dei dettagli di costo" />
+	<fieldProperty
+		name="somma_costi_diff"
+		property="somma_costi_diff"
+		inputSize="20"
+		maxLength="18"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Somma dei dettagli di costo" />
+	<fieldProperty
+		name="somma_entrata_var_piu"
+		property="somma_entrata_var_piu"
+		inputSize="20"
+		maxLength="18"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Somma dei dettagli di entrata" />
+	<fieldProperty
+		name="somma_entrata_var_meno"
+		property="somma_entrata_var_meno"
+		inputSize="20"
+		maxLength="18"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Somma dei dettagli di entrata" />
+	<fieldProperty
+		name="somma_entrata_diff"
+		property="somma_entrata_diff"
+		inputSize="20"
+		maxLength="18"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Somma dei dettagli di entrata" />
+	<fieldProperty
+		name="somma_ricavi_var_piu"
+		property="somma_ricavi_var_piu"
+		inputSize="20"
+		maxLength="18"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Somma dei dettagli di ricavo" />
+	<fieldProperty
+		name="somma_ricavi_var_meno"
+		property="somma_ricavi_var_meno"
+		inputSize="20"
+		maxLength="18"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Somma dei dettagli di ricavo" />
+	<fieldProperty
+		name="somma_ricavi_diff"
+		property="somma_ricavi_diff"
+		inputSize="20"
+		maxLength="18"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Somma dei dettagli di ricavo" />				
+	<fieldProperty
+		name="assestatoSpese"
+		property="centro_responsabilita"
+		inputType="BUTTON"
+		img="img/edit16.gif"
+		style="align: center;"
+		readonlyProperty="consultazioneAssestatoDisabled"
+		enabledOnView="true"
+		href="javascript:submitForm('doConsAssestatoSpeseModuloPDG')" />		
+	<fieldProperty
+		name="assestatoEntrate"
+		property="centro_responsabilita"
+		inputType="BUTTON"
+		img="img/edit16.gif"
+		style="align: center;"
+		readonlyProperty="consultazioneAssestatoDisabled"
+		enabledOnView="true"
+		href="javascript:submitForm('doConsAssestatoEntrateModuloPDG')" />		
+	<fieldProperty
+		name="assestatoCosti"
+		property="centro_responsabilita"
+		inputType="BUTTON"
+		img="img/edit16.gif"
+		style="align: center;"
+		readonlyProperty="consultazioneAssestatoDisabled"
+		enabledOnView="true"
+		href="javascript:submitForm('doConsAssestatoCostiModuloPDG')" />		
+	<fieldProperty
+		name="assestatoRicavi"
+		property="centro_responsabilita"
+		inputType="BUTTON"
+		img="img/edit16.gif"
+		style="align: center;"
+		readonlyProperty="consultazioneAssestatoDisabled"
+		enabledOnView="true"
+		href="javascript:submitForm('doConsAssestatoRicaviModuloPDG')" />
+	<fieldProperty
+		name="desTipoVariazione"
+		property="desTipoVariazione"
+		inputSize="40"
+		maxLength="40"
+		inputType="ROTEXT"
+		label = "Descrizione Tipologia Variazione" />	
+	<fieldProperty
+		name="pg_variazione_bilancio"
+		property="var_bilancio.pg_variazione"
+		inputType="ROTEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Variazione" />
+	<fieldProperty
+		name="ds_variazione_bilancio"
+		property="var_bilancio.ds_variazione"
+		inputType="ROTEXT"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+        inputSize="100"
+		maxLength="300"
+		label="Descrizione" />		
+	<fieldProperty
+		name="fl_visto_dip_variazioni"
+		property="fl_visto_dip_variazioni"
+		inputType="CHECKBOX"
+		label="Visto" />
+		
+    <form
+        name="searchtool">
+	 	<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="pg_variazione_pdg"
+			nullable="false"/>       
+		<formFieldProperty
+			name="ds_variazione"
+			inputType="TEXT"
+			inputSize="50" />			
+    </form>    	
+    
+    <form
+        name="searchtool_stampa">
+		<formFieldProperty
+			name="pg_variazione_pdg" />       
+		<formFieldProperty
+			name="ds_variazione"
+			inputType="TEXT"
+			inputSize="50" />			
+    </form>    		
+    	
+	<form name="variazioniEnte">
+    	<formFieldProperty
+    		name="pg_variazione_pdg"
+    		maxLength="10"
+			inputSize="10"
+			inputType="TEXT" />	
+		<formFieldProperty
+			name="ds_variazione"
+			maxLength="300"
+			inputSize="70"
+			inputType="TEXT" />
+	</form>	
+    
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_variazione_pdg" />
+	<formFieldProperty
+		name="centro_responsabilita" />		
+ 	<formFieldProperty
+		name="ds_cdr" /> 
+	<formFieldProperty
+		name="dt_apertura" />
+	<formFieldProperty
+		name="dt_chiusura" />
+	<formFieldProperty
+		name="dt_approvazione" 
+		label="Data di lavorazione&lt;BR&gt;della sede centrale" />
+	<formFieldProperty
+		name="dt_annullamento" />
+	<formFieldProperty
+		name="ds_variazione" />
+	<formFieldProperty
+		name="ds_delibera" />
+	<formFieldProperty
+		name="tipo_variazione" />
+	<formFieldProperty
+		name="tipologia_fin" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="riferimenti" />
+	<formFieldProperty
+		name="cd_causale_respinta" />
+	<formFieldProperty
+		name="ds_causale_respinta" />
+	<formFieldProperty
+		name="dt_app_formale" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="find_fondo_spesa" />
+	<formFieldProperty
+		name="somma_spesa_var_piu"/>
+	<formFieldProperty
+		name="somma_spesa_var_meno"/>
+	<formFieldProperty
+		name="somma_spesa_diff"/>
+	<formFieldProperty
+		name="somma_costi_var_piu"/>
+	<formFieldProperty
+		name="somma_costi_var_meno"/>
+	<formFieldProperty
+		name="somma_costi_diff"/>
+	<formFieldProperty
+		name="somma_entrata_var_piu"/>
+	<formFieldProperty
+		name="somma_entrata_var_meno"/>
+	<formFieldProperty
+		name="somma_entrata_diff"/>
+	<formFieldProperty
+		name="somma_ricavi_var_piu"/>
+	<formFieldProperty
+		name="somma_ricavi_var_meno"/>
+	<formFieldProperty
+		name="somma_ricavi_diff"/>		
+	<formFieldProperty
+		name="assestatoSpese"/>		
+	<formFieldProperty
+		name="assestatoEntrate"/>		
+	<formFieldProperty
+		name="assestatoCosti"/>		
+	<formFieldProperty
+		name="assestatoRicavi"/>
+	<formFieldProperty
+		name="desTipoVariazione" />
+	<formFieldProperty
+		name="pg_variazione_bilancio" />
+	<formFieldProperty
+		name="ds_variazione_bilancio" />		
+	<formFieldProperty
+		name="fl_visto_dip_variazioni" />
+				
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_variazione_pdg" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />	
+    <findFieldProperty
+		name="ds_cdr"	 />	 
+	<findFieldProperty
+		name="dt_apertura" />
+	<findFieldProperty
+		name="dt_chiusura" />
+	<findFieldProperty
+		name="dt_approvazione" />
+	<findFieldProperty
+		name="dt_annullamento" />
+	<findFieldProperty
+		name="ds_variazione" />
+	<findFieldProperty
+		name="ds_delibera" />
+	<findFieldProperty
+		name="tipo_variazione" />
+	<findFieldProperty
+		name="tipologia_fin" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="riferimenti" />
+	<findFieldProperty
+		name="cd_causale_respinta" />
+	<findFieldProperty
+		name="ds_causale_respinta" />
+	<findFieldProperty
+		name="dt_app_formale" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="fl_visto_dip_variazioni" />
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_variazione_pdg" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />	
+	<columnFieldProperty
+		name="dt_apertura" />
+	<columnFieldProperty
+		name="dt_chiusura" />
+	<columnFieldProperty
+		name="dt_approvazione" />
+	<columnFieldProperty
+		name="dt_annullamento" />
+	<columnFieldProperty
+		name="ds_variazione" />
+	<columnFieldProperty
+		name="ds_delibera" />
+	<columnFieldProperty
+		name="tipo_variazione" />
+	<columnFieldProperty
+		name="tipologia_fin" />		
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="riferimenti" />
+	<columnFieldProperty
+		name="cd_causale_respinta" />
+	<columnFieldProperty
+		name="ds_causale_respinta" />
+	<columnFieldProperty
+		name="dt_app_formale" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+			
+	<columnSet
+	        name="RiepilogoVariazioni">
+        	<columnFieldProperty
+        		name="pg_variazione_pdg"/>
+        	<columnFieldProperty
+        		name="cd_centro_responsabilita"/>
+        	<columnFieldProperty
+        		name="ds_variazione"/> 
+        	<columnFieldProperty
+        		name="stato"/> 
+	</columnSet> 
+	
+	<columnSet
+		name="approvazione_formale">
+        	<columnFieldProperty
+        		name="pg_variazione_pdg"/>
+        	<columnFieldProperty
+        		name="cd_centro_responsabilita"/>
+        	<columnFieldProperty
+        		name="ds_variazione"/> 
+        	<columnFieldProperty
+        		name="stato"/> 
+	</columnSet>
+	
+  	<columnSet
+		name="vp_pdg_variazione">
+		    <columnFieldProperty
+				name="esercizio" />
+			<columnFieldProperty
+				name="pg_variazione_pdg" />
+			<columnFieldProperty
+				name="cd_centro_responsabilita" />	
+		  	<columnFieldProperty
+				name="ds_cdr" /> 
+			<columnFieldProperty
+				name="dt_apertura" />
+			<columnFieldProperty
+				name="dt_chiusura" />
+			<columnFieldProperty
+				name="dt_approvazione" />
+			<columnFieldProperty
+				name="dt_annullamento" />
+			<columnFieldProperty
+				name="ds_variazione" />
+			<columnFieldProperty
+				name="ds_delibera" />
+			<columnFieldProperty
+				name="tipo_variazione" />
+			<columnFieldProperty
+				name="tipologia_fin" />		
+			<columnFieldProperty
+				name="stato" />
+			<columnFieldProperty
+				name="riferimenti" />
+			<columnFieldProperty
+				name="cd_causale_respinta" />
+			<columnFieldProperty
+				name="ds_causale_respinta" />
+			<columnFieldProperty
+				name="dt_app_formale" />
+			<columnFieldProperty
+				name="cd_elemento_voce" />
+	</columnSet>
+	
+	
+	<form name="lista" >
+		<formFieldProperty
+			name="pg_variazione_pdg" 
+			property="RiepilogoVariazioni"/>       
+	</form> 
+		 
+
+</bulkInfo>

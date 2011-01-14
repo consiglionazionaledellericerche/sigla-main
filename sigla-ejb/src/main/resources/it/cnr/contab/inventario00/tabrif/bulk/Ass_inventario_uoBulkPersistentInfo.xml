@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.tabrif.bulk.Ass_inventario_uoBulk"
+	homeClassName="it.cnr.contab.inventario00.tabrif.bulk.Ass_inventario_uoHome" >
+	<defaultColumnMap
+		tableName="ASS_INVENTARIO_UO" >
+
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="inventario.pg_inventario" />
+
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="unita_organizzativa"
+		partOfOid="true" />
+	<persistentProperty
+		name="inventario"
+		partOfOid="true" />
+	
+</SQLPersistentInfo>

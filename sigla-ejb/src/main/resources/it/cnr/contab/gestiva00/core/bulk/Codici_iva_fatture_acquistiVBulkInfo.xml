@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<!-- ************************** FIELD PROPERTY ************************ -->
+
+	
+	<fieldProperty
+		name="importo"
+		property="importo"
+		maxLength="24"
+		inputSize="24"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.Importo2CifreFormat"
+		label="Totale"/>
+		
+	<!-- ************************ FORM FIELD PROPERTY ******************** -->
+
+
+	<formFieldProperty name="importo" />
+	
+	
+	<!-- ************************ FIND FIELD PROPERTY ******************** -->
+
+	<findFieldProperty name="importo" />
+
+</bulkInfo>

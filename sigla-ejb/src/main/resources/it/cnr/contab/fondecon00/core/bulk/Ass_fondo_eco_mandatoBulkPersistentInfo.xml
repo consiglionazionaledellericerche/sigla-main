@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.fondecon00.core.bulk.Ass_fondo_eco_mandatoBulk"
+	homeClassName="it.cnr.contab.fondecon00.core.bulk.Ass_fondo_eco_mandatoHome" >
+	<defaultColumnMap
+		tableName="ASS_FONDO_ECO_MANDATO" >
+
+		//Mandato di incrementali
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="mandato.pg_mandato" />
+		<columnMapping
+			columnName="ESERCIZIO_MANDATO"
+			propertyName="mandato.esercizio" />
+		<columnMapping
+			columnName="CD_CDS_MANDATO"
+			propertyName="mandato.cds.cd_unita_organizzativa" />
+
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="mandato"
+		partOfOid="true" />
+		
+</SQLPersistentInfo>

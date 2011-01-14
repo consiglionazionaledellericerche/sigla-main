@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent00.bulk.V_assestatoBulk"
+	homeClassName="it.cnr.contab.prevent00.bulk.V_assestatoHome">
+	<defaultColumnMap
+		tableName="V_ASSESTATO">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" 
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_RES"
+			propertyName="esercizio_res"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" 
+			primary="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" 
+			primary="true" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" 
+			primary="true" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" 
+			primary="true" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" 
+			primary="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true"  
+			primary="true" />
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="cd_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="40" />	
+		<columnMapping
+			columnName="DS_LINEA_ATTIVITA"
+			propertyName="ds_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true"/>
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="cd_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true"/>
+		<columnMapping
+			columnName="STANZIAMENTO_INIZIALE"
+			propertyName="stanziamento_iniziale"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONI_POSITIVE"
+			propertyName="variazioni_positive"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONI_NEGATIVE"
+			propertyName="variazioni_negative"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONI_RESIDUI_PROPRI"
+			propertyName="variazioni_residui_propri"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="ASSESTATO_INIZIALE"
+			propertyName="assestato_iniziale"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_UTILIZZATO"
+			propertyName="importo_utilizzato"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_DISPONIBILE"
+			propertyName="importo_disponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONI_PROVVISORIE"
+			propertyName="variazioni_provvisorie"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONI_DEFINITIVE"
+			propertyName="variazioni_definitive"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="ASSESTATO_FINALE"
+			propertyName="assestato_finale"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" 
+		partOfOid="true"/>
+	<persistentProperty
+		name="esercizio_res" 
+		partOfOid="true"/>
+	<persistentProperty
+		name="cd_centro_responsabilita" 
+		partOfOid="true"/>
+	<persistentProperty
+		name="cd_linea_attivita" 
+		partOfOid="true"/>
+	<persistentProperty
+		name="ti_appartenenza" 
+		partOfOid="true"/>
+	<persistentProperty
+		name="ti_gestione" 
+		partOfOid="true"/>
+	<persistentProperty
+		name="cd_elemento_voce" 
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_voce" />
+	<persistentProperty
+		name="cd_modulo" />
+	<persistentProperty
+		name="ds_linea_attivita" />
+	<persistentProperty
+		name="cd_natura" />
+	<persistentProperty
+		name="stanziamento_iniziale" />
+	<persistentProperty
+		name="variazioni_positive" />
+	<persistentProperty
+		name="variazioni_negative" />
+	<persistentProperty
+		name="variazioni_residui_propri" />
+	<persistentProperty
+		name="assestato_iniziale" />
+	<persistentProperty
+		name="importo_utilizzato" />
+	<persistentProperty
+		name="importo_disponibile" />
+	<persistentProperty
+		name="variazioni_provvisorie" />
+	<persistentProperty
+		name="variazioni_definitive" />
+	<persistentProperty
+		name="assestato_finale" />
+</SQLPersistentInfo>

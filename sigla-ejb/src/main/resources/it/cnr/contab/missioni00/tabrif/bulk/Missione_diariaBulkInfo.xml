@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="gruppo_inquadramento"
+		property="gruppoInquadramento"
+		printProperty="ds_gruppo_inquadramento"
+		optionsProperty="gruppiInquadramento"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Inquadramento" />
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_inizio_validita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Data Inizio Validita" />
+/*********************************/
+/*********** NAZIONE *************/
+	<fieldProperty
+		name="find_nazione"
+		property="nazione"
+		inputType="SEARCHTOOL"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Nazione" />
+	<fieldProperty
+		name="pg_nazione"
+		property="pg_nazione"
+		readonlyProperty="RONazione"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Nazione" />
+	<fieldProperty
+		name="ds_nazione"
+		property="nazione.ds_nazione"
+		maxLength="50"
+		inputSize="50"
+		inputType="ROTEXT"
+		label="Nazione" />
+/*********************************/
+/*********** DIVISA **************/
+	<fieldProperty
+		name="find_divisa"
+		property="divisa"
+		inputType="SEARCHTOOL"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Valuta" />
+	<fieldProperty
+		name="cd_divisa"
+		property="cd_divisa"
+		readonlyProperty="RODivisa"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Valuta" />
+	<fieldProperty
+		name="ds_divisa"
+		property="divisa.ds_divisa"
+		inputSize="50"
+		maxLength="50"
+		inputType="ROTEXT"
+		label="Divisa" />
+/*********************************/
+	<fieldProperty
+		name="im_diaria"
+		property="im_diaria"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"								
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Importo Diaria" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		inputType="TEXT"
+		formatName="date_short"					
+		label="Data Fine Validita"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="dtFineValidita"
+		property="dataFineValidita"
+		inputType="TEXT"
+		formatName="date_short"					
+		label="Data Fine Validita"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
+
+	<formFieldProperty name="gruppo_inquadramento" />
+	<formFieldProperty name="pg_nazione" />
+	<formFieldProperty name="ds_nazione" />				
+	<formFieldProperty name="find_nazione" />
+	<formFieldProperty name="cd_divisa" />
+	<formFieldProperty name="ds_divisa" />				
+	<formFieldProperty name="find_divisa" />
+	<formFieldProperty name="im_diaria" />
+	<formFieldProperty name="dt_inizio_validita" />
+	<formFieldProperty name="dt_fine_validita" />
+	<formFieldProperty name="dtFineValidita" />
+
+	<columnFieldProperty name="gruppo_inquadramento" />
+	<columnFieldProperty name="pg_nazione" />
+	<columnFieldProperty name="cd_divisa" />
+	<columnFieldProperty name="im_diaria" />
+	<columnFieldProperty name="dt_inizio_validita" />
+	<columnFieldProperty name="dtFineValidita" />
+
+	<findFieldProperty name="pg_nazione" />
+	<findFieldProperty name="cd_divisa" />
+	<findFieldProperty name="gruppo_inquadramento" />
+	<findFieldProperty name="im_diaria" />
+	<findFieldProperty name="dt_inizio_validita" />
+	<findFieldProperty name="dt_fine_validita" />
+
+</bulkInfo>

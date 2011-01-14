@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Mandato_rigaBase"
+	keyClassName="it.cnr.contab.doccont00.core.bulk.Mandato_rigaKey"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Mandato_rigaHome" >
+	<defaultColumnMap
+		tableName="MANDATO_RIGA" >
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="pg_banca"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="DS_MANDATO_RIGA"
+			propertyName="ds_mandato_riga"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="cd_modalita_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="FL_PGIRO"
+			propertyName="fl_pgiro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="IM_RITENUTE_RIGA"
+			propertyName="im_ritenute_riga"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_MANDATO_RIGA"
+			propertyName="im_mandato_riga"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO_CEDENTE"
+			propertyName="cd_terzo_cedente"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_banca" />
+	<persistentProperty
+		name="ds_mandato_riga" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="cd_modalita_pag" />
+	<persistentProperty
+		name="fl_pgiro" />
+	<persistentProperty
+		name="im_ritenute_riga" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="im_mandato_riga" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="cd_terzo_cedente" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

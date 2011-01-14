@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="spesaDocumentataRadioGroup"
+		property="spesaDocumentata"
+		keysProperty="spesaDocumentataKeys"
+		inputType="RADIOGROUP"
+		layout = "VERTICAL"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Spesa documentata"
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="spesaAssociataRadioGroup"
+		property="spesaAssociata"
+		keysProperty="spesaAssociataKeys"
+		inputType="RADIOGROUP"
+		layout = "VERTICAL"
+		readonlyProperty="spesa_documentata_in_search"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Spesa Associata"
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="dt_a_competenza_coge"
+		property="dt_a_competenza_coge"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		label="Competenza al" />		
+	<fieldProperty
+		name="dt_da_competenza_coge"
+		property="dt_da_competenza_coge"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		label="Competenza dal" />
+
+	<fieldProperty
+		name="spesaReintegrataRadioGroup"
+		property="spesaReintegrata"
+		keysProperty="spesaReintegrataKeys"
+		inputType="RADIOGROUP"
+		layout = "VERTICAL"	
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Spesa reintegrata"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fornitoreSaltuarioRadioGroup"
+		property="fornitoreSaltuario"
+		readonlyProperty="spesa_documentata"
+		keysProperty="fornitoreSaltuarioKeys"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"	
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Fornitore saltuario" />
+<!-- Comune / Città -->
+	<fieldProperty
+		name="pg_comune"
+		property="citta.pg_comune"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice Comune" />
+	<fieldProperty
+		name="citta_provincia"
+		property="citta.provincia.ds_provincia"
+		inputSize="30"
+		label="Provincia"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="citta_nazione"
+		property="citta.nazione.ds_nazione"
+		inputSize="30"
+		label="Nazione"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="citta"
+		property="citta"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		readonlyProperty="fornitore_non_saltuario"
+		enabledOnSearch="true"
+		label="Città" />	
+
+<!-- Fornitore -->
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		maxLength="8"
+		inputSize="8"
+		inputType="TEXT"
+		label="Codice Terzo" />
+	<fieldProperty
+		name="partita_iva"
+		property="partita_iva"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="P. IVA"
+		readonlyProperty="ROFornitoreData"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="tel_fornitore"
+		property="tel_fornitore"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		readonlyProperty="fornitore_non_saltuario"
+		label="Tel."
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Codice Fiscale"
+		readonlyProperty="ROFornitoreData"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="indirizzo_fornitore"
+		property="indirizzo_fornitore"
+		maxLength="200"
+		inputSize="100"
+		inputType="TEXT"
+		label="Via"
+		readonlyProperty="fornitore_non_saltuario"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cap_fornitore_saltuario"
+		property="cap_fornitore"
+		maxLength="5"
+		inputSize="5"
+		inputType="SELECT"
+		optionsProperty="caps_fornitore"
+		label="CAP"
+		readonlyProperty="fornitore_non_saltuario"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cap_fornitore_non_saltuario"
+		property="cap_fornitore"
+		maxLength="5"
+		inputSize="5"
+		inputType="ROTEXT"
+		label="CAP"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="denominazione_fornitore"
+		property="denominazione_fornitore"
+		maxLength="200"
+		inputSize="50"
+		inputType="TEXT"
+		label="Denominazione / Ragione Soc."
+		readonlyProperty="fornitore_non_saltuario"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_fornitore"
+		property="ds_fornitore"
+		maxLength="300"
+		inputSize="100"
+		cols="80"
+		inputType="TEXTAREA"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fornitore"
+		property="fornitore"
+		inputType="SEARCHTOOL"
+		formName="fondoEconSearchtool"
+		readonlyProperty="ROSearchToolFornitore"
+		enabledOnSearch="true"
+		completeOnSave="false"
+		label="Fornitore" />
+	<fieldProperty
+		name="cd_precedente"
+		property="fornitore.cd_precedente"
+		maxLength="20"
+		inputSize="6"
+		inputType="TEXT"
+		label="Codice precedente"
+		readonlyProperty="ROCd_precedente"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />
+		
+	<fieldProperty
+		name="fl_fornitore_saltuario"
+		property="fl_fornitore_saltuario"
+		inputType="CHECKBOX"
+		command="doOnFlFornitoreSaltuarioChange"
+		readonlyProperty="spesa_documentata"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		label="Fornitore saltuario" />
+
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnFreeSearch="false"
+		label="Cds" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnFreeSearch="false"
+		label="Unità Organizzativa" />
+	<fieldProperty
+		name="dt_spesa"
+		property="dt_spesa"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		label="Data Spesa" />
+	<fieldProperty
+		name="cd_codice_fondo"
+		property="cd_codice_fondo"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnFreeSearch="false"
+		label="Codice fondo" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Esercizio" />
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_ammontare_spesa"
+		property="im_ammontare_spesa"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		nullable="false"
+		readonlyProperty="spesa_documentata"
+		label="Ammontare Spesa" />
+	<fieldProperty
+		name="importoNettoSpesa"
+		property="importoNettoSpesa"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnFreeSearch="false"
+		nullable="false"
+		label="Netto Spesa" />
+	<fieldProperty
+		name="pg_fondo_spesa"
+		property="pg_fondo_spesa"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Numero Spesa" />
+	<fieldProperty
+		name="fl_documentata"
+		property="fl_documentata"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		enabledOnInsert="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		command="doOnFlSpesaDocumentataChange"
+		label="Spesa Documentata" />
+	<fieldProperty
+		name="ds_spesa"
+		property="ds_spesa"
+		maxLength="300"
+		inputSize="100"
+		cols="80"
+		nullable="true"
+		inputType="TEXTAREA"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_reintegrata"
+		property="fl_reintegrata"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Spesa reintegrata" />
+
+<!-- Obbligazione Scadenzario -->
+	<fieldProperty
+		name="esercizio_ori_obbligazione"
+		property="esercizio_ori_obbligazione"
+		maxLength="4"
+		inputSize="4"
+		inputType="ROTEXT"
+		label="Es. Impegno" />
+	<fieldProperty
+		name="pg_obbligazione"
+		property="pg_obbligazione"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="N. Impegno" />
+	<fieldProperty
+		name="fl_obbligazione"
+		property="fl_obbligazione"
+		inputType="CHECKBOX"
+		label="Impegno" />
+	<fieldProperty
+		name="cd_cds_obbligazione"
+		property="cd_cds_obbligazione"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="CdS" />
+	<fieldProperty
+		name="pg_obbligazione_scadenzario"
+		property="pg_obbligazione_scadenzario"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="N. Impegno Scadenzario" />
+	<fieldProperty
+		name="esercizio_obbligazione"
+		property="esercizio_obbligazione"
+		maxLength="4"
+		inputSize="4"
+		inputType="ROTEXT"
+		label="Esercizio Impegno" />
+
+	<fieldProperty
+		name="dt_scadenza"
+		property="obb_scad.dt_scadenza"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		formatName="date_short"
+		label="Data Scadenza" />
+	<fieldProperty
+		name="ds_scadenza"
+		property="obb_scad.ds_scadenza"
+		maxLength="300"
+		inputSize="100"
+		inputType="TEXTAREA"
+		enabledOnEdit="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="im_scadenza"
+		property="obb_scad.im_scadenza"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Importo" />
+
+
+<!-- DocAmm -->
+	<fieldProperty
+		name="cd_tipo_documento_amm"
+		property="cd_tipo_documento_amm"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Tipo DocAmm" />
+	<fieldProperty
+		name="pg_documento_amm"
+		property="pg_documento_amm"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="N. documento" />
+	<fieldProperty
+		name="cd_uo_doc_amm"
+		property="cd_uo_doc_amm"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="UO documento" />
+	<fieldProperty
+		name="cd_cds_doc_amm"
+		property="cd_cds_doc_amm"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="CdS documento" />
+
+	<fieldProperty
+		name="tipoDocumentoRadioGroup"
+		property="tipoDocumento"
+		keysProperty="tipiDocumentoKeys"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"	
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Tipo documento"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cercaDocumento"
+		property="documento"
+		inputType="BUTTON"
+		img="img/find16.gif"
+		label="Cerca documento"
+		readonlyProperty="ROCercaDocumento"
+		href="javascript:submitForm('doCercaDocumento')" />
+		
+	<formFieldProperty
+		name="cd_tipo_documento_amm" />
+	<formFieldProperty
+		name="pg_documento_amm" />
+	<formFieldProperty
+		name="cd_uo_doc_amm" />
+	<formFieldProperty
+		name="cd_cds_doc_amm" />
+	<formFieldProperty
+		name="tipoDocumentoRadioGroup" />
+	<formFieldProperty
+		name="cercaDocumento" />
+
+	<formFieldProperty
+		name="fornitore" />
+	<formFieldProperty
+		name="cd_precedente" />
+	<formFieldProperty
+		name="citta_provincia" />
+	<formFieldProperty
+		name="citta_nazione" />
+	<formFieldProperty
+		name="citta" />
+	<formFieldProperty
+		name="pg_comune" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="partita_iva" />
+	<formFieldProperty
+		name="fl_fornitore_saltuario" />
+	<formFieldProperty
+		name="dt_spesa" />
+	<formFieldProperty
+		name="cd_codice_fondo" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="tel_fornitore" />
+	<formFieldProperty
+		name="im_ammontare_spesa" />
+	<formFieldProperty
+		name="importoNettoSpesa" />
+	<formFieldProperty
+		name="denominazione_fornitore" />
+	<formFieldProperty
+		name="pg_fondo_spesa" />
+	<formFieldProperty
+		name="fl_documentata" />
+	<formFieldProperty
+		name="codice_fiscale" />
+	<formFieldProperty
+		name="indirizzo_fornitore" />
+	<formFieldProperty
+		name="cap_fornitore_non_saltuario" />
+	<formFieldProperty
+		name="cap_fornitore_saltuario" />
+	<formFieldProperty
+		name="ds_fornitore" />
+	<formFieldProperty
+		name="ds_spesa" />
+	<formFieldProperty
+		name="fl_reintegrata" />
+	<formFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<formFieldProperty
+		name="pg_obbligazione" />
+	<formFieldProperty
+		name="dt_scadenza" />
+	<formFieldProperty
+		name="ds_scadenza" />
+	<formFieldProperty
+		name="im_scadenza" />
+	<formFieldProperty
+		name="spesaDocumentataRadioGroup" />
+	<formFieldProperty
+		name="spesaAssociataRadioGroup" />
+	<formFieldProperty
+		name="spesaReintegrataRadioGroup" />
+	<formFieldProperty
+		name="fornitoreSaltuarioRadioGroup" />
+	<formFieldProperty
+		name="dt_a_competenza_coge" />		
+	<formFieldProperty
+		name="dt_da_competenza_coge" />
+
+	<columnFieldProperty
+		name="pg_fondo_spesa" />
+	<columnFieldProperty
+		name="dt_spesa" />
+	<columnFieldProperty
+		name="ds_spesa" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="importoNettoSpesa" />
+	<columnFieldProperty
+		name="im_ammontare_spesa" />
+	<columnFieldProperty
+		name="denominazione_fornitore" />
+	<columnFieldProperty
+		name="fl_fornitore_saltuario" />
+	<columnFieldProperty
+		name="fl_documentata" />
+	<columnFieldProperty
+		name="fl_reintegrata" />
+	<columnFieldProperty
+		name="fl_obbligazione" />
+	<columnFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<columnFieldProperty
+		name="pg_obbligazione" />
+
+	<findFieldProperty
+		name="fl_documentata" />
+	<findFieldProperty
+		name="fl_reintegrata" />
+	<findFieldProperty
+		name="fl_obbligazione" />
+	<findFieldProperty
+		name="fornitoreSaltuarioRadioGroup" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="partita_iva" />
+	<findFieldProperty
+		name="fl_fornitore_saltuario" />
+	<findFieldProperty
+		name="dt_spesa" />
+	<findFieldProperty
+		name="cd_codice_fondo" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="importoNettoSpesa" />
+	<findFieldProperty
+		name="im_ammontare_spesa" />
+	<findFieldProperty
+		name="denominazione_fornitore" />
+	<findFieldProperty
+		name="pg_fondo_spesa" />
+	<findFieldProperty
+		name="fl_documentata" />
+	<findFieldProperty
+		name="codice_fiscale" />
+	<findFieldProperty
+		name="fl_reintegrata" />
+	<findFieldProperty
+		name="cd_precedente" />
+
+</bulkInfo>

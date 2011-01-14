@@ -1,0 +1,595 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="valore_statistico"
+		property="valore_statistico"
+		inputType="TEXT"
+		readonlyPropertyOnEdit="inviato"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Valore statistico" />
+	<fieldProperty
+		name="ds_bene"
+		property="ds_bene"
+		maxLength="300"
+		inputType="TEXTAREA"
+		readonlyPropertyOnEdit="inviato"
+		cols="100"
+		rows="3"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CDS" />
+	<fieldProperty
+		name="pg_riga_intra"
+		property="pg_riga_intra"
+		inputType="TEXT"
+		label="Progressivo" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Unita organizzativa" />	
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="ammontare_divisa"
+		property="ammontare_divisa"
+		inputType="TEXT"
+		readonlyPropertyOnEdit="inviato"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Ammontare in divisa" />
+	<fieldProperty
+		name="pg_fattura_passiva"
+		property="pg_fattura_passiva"
+		inputType="TEXT"
+		label="Prog. documento" />
+	<fieldProperty
+		name="cd_provincia_destinazione"
+		property="provincia_destinazione.cd_provincia"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		readonlyPropertyOnEdit="inviato"
+		readonlyProperty="ROprovincia_destinazione"
+		label="Prov. destinazione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_provincia_destinazione"
+		property="provincia_destinazione.ds_provincia"
+		maxLength="10"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Prov. destinazione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="id_nomenclatura_combinata"
+		property="nomenclatura_combinata.id_nomenclatura_combinata"
+		inputType="TEXT"
+		inputSize="10"
+		readonlyProperty="ROnomenclatura_combinata"
+		label="Nomenclatura combinata"
+		caseSensitiveSearch="false" />	
+	<fieldProperty
+		name="esercizio_nomenclatura_combinata"
+		property="nomenclatura_combinata.esercizio"
+		inputType="TEXT"
+		readonlyProperty="ROnomenclatura_combinata"
+		label="Nomenclatura combinata"
+		caseSensitiveSearch="false" />	
+	<fieldProperty
+		name="cd_nomenclatura_combinata"
+		property="nomenclatura_combinata.cd_nomenclatura_combinata"
+		inputType="TEXT"
+		inputSize="8"
+		readonlyPropertyOnEdit="inviato"
+		readonlyProperty="ROnomenclatura_combinata"
+		label="Nomenclatura combinata"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_nomenclatura_combinata"
+		property="nomenclatura_combinata.ds_nomenclatura_combinata"
+		maxLength="1500"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Nomenclatura combinata"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_nazione_provenienza"
+		property="nazione_provenienza.pg_nazione"
+		inputType="TEXT"
+		inputSize="10"
+		readonlyPropertyOnEdit="inviato"
+		readonlyProperty="ROnazione_provenienza"
+		label="Nazione provenienza"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_iso_nazione_provenienza"
+		property="nazione_provenienza.cd_iso"
+		inputType="TEXT"
+		inputSize="10"
+		readonlyPropertyOnEdit="inviato"
+		readonlyProperty="ROnazione_provenienza"
+		label="Nazione pagamento"
+		caseSensitiveSearch="false" />	
+	<fieldProperty
+		name="ds_nazione_provenienza"
+		property="nazione_provenienza.ds_nazione"
+		maxLength="10"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Nazione provenienza"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ammontare_euro"
+		property="ammontare_euro"
+		inputType="TEXT"
+		nullable="false"
+		readonlyPropertyOnEdit="inviato"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Ammontare in euro" />
+	<fieldProperty
+		name="pg_nazione_origine"
+		property="nazione_origine.pg_nazione"
+		inputType="TEXT"
+		inputSize="10"
+		readonlyPropertyOnEdit="inviato"
+		readonlyProperty="ROnazione_origine"
+		label="Nazione origine"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_iso_nazione_origine"
+		property="nazione_origine.cd_iso"
+		inputType="TEXT"
+		inputSize="10"
+		readonlyPropertyOnEdit="inviato"
+		readonlyProperty="ROnazione_origine"
+		label="Nazione origine"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_nazione_origine"
+		property="nazione_origine.ds_nazione"
+		maxLength="10"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Nazione origine"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="unita_supplementari"
+		property="unita_supplementari"
+		inputType="TEXT"
+		inputSize="10"
+		readonlyPropertyOnEdit="inviato"
+		label="Unita supplementari" />
+	<fieldProperty
+		name="id_natura_transazione"
+		property="natura_transazione.id_natura_transazione"
+		inputType="TEXT"
+		readonlyProperty="ROnatura_transazione"
+		label="Natura transazione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio_natura_transazione"
+		property="natura_transazione.esercizio"
+		inputType="TEXT"
+		readonlyProperty="ROnatura_transazione"
+		label="Natura transazione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_natura_transazione"
+		property="natura_transazione.cd_natura_transazione"
+		inputType="TEXT"
+		readonlyPropertyOnEdit="inviato"
+		readonlyProperty="ROnatura_transazione"
+		label="Natura transazione"
+		caseSensitiveSearch="false" />	
+	<fieldProperty
+		name="ds_natura_transazione"
+		property="natura_transazione.ds_natura_transazione"
+		maxLength="10"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Natura transazione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_oper_triangolare"
+		property="natura_transazione.cd_oper_triangolare"
+		maxLength="1"
+		inputSize="1"
+		inputType="ROTEXT"
+		label="Cod.Oper.triangolari"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="massa_netta"
+		property="massa_netta"
+		inputType="TEXT"
+		readonlyPropertyOnEdit="inviato"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		label="Massa netta" />
+
+	<fieldProperty
+		name="natura_transazione"
+		property="natura_transazione"
+		inputType="SEARCHTOOL" 		
+		enabledOnSearch="false"
+		readonlyPropertyOnEdit="inviato"
+        enabledOnFreeSearch="false"
+        enabledOnInsert="true"
+        enabledOnEdit="true" />
+	<fieldProperty
+		name="nomenclatura_combinata"
+		property="nomenclatura_combinata"
+		inputType="SEARCHTOOL" 		
+		enabledOnSearch="false"
+		readonlyPropertyOnEdit="inviato"
+        enabledOnFreeSearch="false"
+        enabledOnInsert="true"
+        enabledOnEdit="true" />	
+	<fieldProperty
+		name="modalita_trasporto"
+		property="modalita_trasporto"
+		printProperty="ds_modalita_trasporto"
+		optionsProperty="modalita_trasportoColl"
+		readonlyPropertyOnEdit="inviato"
+		inputType="SELECT"
+		nullable ="true"
+		maxLength="30"
+		label="Mod. trasporto"
+		enabledOnSearch="false"
+        enabledOnFreeSearch="false"
+        enabledOnInsert="true"
+        enabledOnEdit="true" />
+     <fieldProperty
+		name="cd_modalita_trasporto"
+		property="modalita_trasporto.cd_modalita_trasporto"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_modalita_trasporto"
+		property="modalita_trasporto.ds_modalita_trasporto"
+		maxLength="300"
+		inputSize="30"
+		inputType="ROTEXT"
+		caseSensitiveSearch="false" />
+    <fieldProperty
+		name="esercizio_modalita_trasporto"
+		property="modalita_trasporto.esercizio"
+		inputType="TEXT"
+		caseSensitiveSearch="false" />	    
+	<fieldProperty
+		name="condizione_consegna"
+		property="condizione_consegna"
+		printProperty="cd_ds_condizione_consegna"
+		optionsProperty="condizione_consegnaColl"
+		readonlyPropertyOnEdit="inviato"
+		inputType="SELECT"
+		maxLength="30"
+		label="Condizione cons."
+		enabledOnSearch="false"
+        enabledOnFreeSearch="false"
+        enabledOnInsert="true"
+        enabledOnEdit="true" />
+    <fieldProperty
+		name="cd_condizione_consegna"
+		property="condizione_consegna.cd_incoterm"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		readonlyProperty="ROcondizione_consegna"
+		label="Condizione consegna"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_condizione_consegna"
+		property="condizione_consegna.ds_condizione_consegna"
+		maxLength="300"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Condizione consegna"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_ds_condizione_consegna"
+		property="condizione_consegna.cd_ds_condizione_consegna"
+		maxLength="300"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Condizione consegna"
+		caseSensitiveSearch="false" />	
+    <fieldProperty
+		name="esercizio_condizione_consegna"
+		property="condizione_consegna.esercizio"
+		inputType="TEXT"
+		caseSensitiveSearch="false" />	
+	<fieldProperty
+		name="nazione_origine"
+		property="nazione_origine"
+		inputType="SEARCHTOOL" 		
+		readonlyPropertyOnEdit="inviato"
+		enabledOnSearch="false"
+        enabledOnFreeSearch="false"
+        enabledOnInsert="true"
+        enabledOnEdit="true" />
+	<fieldProperty
+		name="nazione_provenienza"
+		property="nazione_provenienza"
+		inputType="SEARCHTOOL" 		
+		readonlyPropertyOnEdit="inviato"
+		enabledOnSearch="false"
+        enabledOnFreeSearch="false"
+        enabledOnInsert="true"
+        enabledOnEdit="true" />
+	<fieldProperty
+		name="provincia_destinazione"
+		property="provincia_destinazione"
+		inputType="SEARCHTOOL" 		
+		readonlyPropertyOnEdit="inviato"
+		enabledOnSearch="false"
+        enabledOnFreeSearch="false"
+        enabledOnInsert="true"
+        enabledOnEdit="true"
+        label="Prov. destinazione"
+        caseSensitiveSearch="false" />
+     <fieldProperty
+		name="id_cpa"
+		property="codici_cpa.id_cpa"
+		inputType="TEXT"
+		inputSize="10"
+		readonlyProperty="ROcpa"
+		label="Cpa"
+		caseSensitiveSearch="false" />	
+	<fieldProperty
+		name="esercizio_cpa"
+		property="codici_cpa.esercizio"
+		inputType="TEXT"
+		readonlyProperty="ROcpa"
+		caseSensitiveSearch="false" />	
+	<fieldProperty
+		name="cd_cpa"
+		property="codici_cpa.cd_cpa"
+		inputType="TEXT"
+		readonlyPropertyOnEdit="inviato"
+		inputSize="6"
+		readonlyProperty="ROcpa"
+		label="Codice servizio (Cpa)"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_cpa"
+		property="codici_cpa.ds_cpa"
+		maxLength="500"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Cpa"
+		caseSensitiveSearch="false" />   
+	<fieldProperty
+		name="codici_cpa"
+		property="codici_cpa"
+		inputType="SEARCHTOOL" 		
+		readonlyPropertyOnEdit="inviato"
+		enabledOnSearch="false"
+        enabledOnFreeSearch="false"
+        enabledOnInsert="true"
+        enabledOnEdit="true" />		
+   	<fieldProperty
+		name="modalita_incasso"
+		property="modalita_incasso"
+		printProperty="ds_modalita_incasso"
+		optionsProperty="modalita_incassoColl"
+		readonlyPropertyOnEdit="inviato"
+		inputType="SELECT"
+		nullable ="true"
+		maxLength="30"
+		label="Mod. incasso"
+		enabledOnSearch="false"
+        enabledOnFreeSearch="false"
+        enabledOnInsert="true"
+        enabledOnEdit="true" />
+     <fieldProperty
+		name="cd_modalita_incasso"
+		property="modalita_incasso.cd_modalita_incasso"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_modalita_incasso"
+		property="modalita_incasso.ds_modalita_incasso"
+		maxLength="300"
+		inputSize="30"
+		inputType="ROTEXT"
+		caseSensitiveSearch="false" />
+    <fieldProperty
+		name="esercizio_modalita_incasso"
+		property="modalita_incasso.esercizio"
+		inputType="TEXT"
+		caseSensitiveSearch="false" />	
+			
+	<fieldProperty
+		name="modalita_erogazione"
+		property="modalita_erogazione"
+		printProperty="ds_modalita_erogazione"
+		optionsProperty="modalita_erogazioneColl"
+		readonlyPropertyOnEdit="inviato"
+		inputType="SELECT"
+		nullable ="true"
+		maxLength="30"
+		label="Mod. erogazione"
+		enabledOnSearch="false"
+        enabledOnFreeSearch="false"
+        enabledOnInsert="true"
+        enabledOnEdit="true" />
+     <fieldProperty
+		name="cd_modalita_erogazione"
+		property="modalita_erogazione.cd_modalita_erogazione"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_modalita_erogazione"
+		property="modalita_erogazione.ds_modalita_erogazione"
+		maxLength="300"
+		inputSize="30"
+		inputType="ROTEXT"
+		caseSensitiveSearch="false" />
+    <fieldProperty
+		name="esercizio_modalita_erogazione"
+		property="modalita_erogazione.esercizio"
+		inputType="TEXT"
+		caseSensitiveSearch="false" />	  
+     <fieldProperty
+		name="fl_inviato"
+		property="fl_inviato"
+		inputType="CHECKBOX"
+		label="inviato"
+		enabledOnSearch="false"/>
+	<fieldProperty
+		name="nr_protocollo"
+		property="nr_protocollo"
+		inputType="TEXT"
+		label="Protocollo" />
+	<fieldProperty
+		name="nr_progressivo"
+		property="nr_progressivo"
+		inputType="TEXT"
+		label="Progressivo" />		
+		       
+	<formFieldProperty
+		name="valore_statistico" />
+	<formFieldProperty
+		name="ds_bene" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="pg_riga_intra" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="ammontare_divisa" />
+	<formFieldProperty
+		name="pg_fattura_passiva" />
+	<formFieldProperty
+		name="cd_provincia_destinazione" />
+	<formFieldProperty
+		name="ds_provincia_destinazione" />
+	<formFieldProperty
+		name="id_nomenclatura_combinata" />
+	<formFieldProperty
+		name="esercizio_nomenclatura_combinata" />		
+	<formFieldProperty
+		name="cd_nomenclatura_combinata" />
+	<formFieldProperty
+		name="ds_nomenclatura_combinata" />
+	<formFieldProperty
+		name="pg_nazione_provenienza" />
+	<formFieldProperty
+		name="cd_iso_nazione_provenienza" />	
+	<formFieldProperty
+		name="ds_nazione_provenienza" />
+	<formFieldProperty
+		name="ammontare_euro" />
+	<formFieldProperty
+		name="pg_nazione_origine" />
+	<formFieldProperty
+		name="cd_iso_nazione_origine" />	
+	<formFieldProperty
+		name="ds_nazione_origine" />
+	<formFieldProperty
+		name="unita_supplementari" />
+	<formFieldProperty
+		name="esercizio_natura_transazione" />	
+	<formFieldProperty
+		name="id_natura_transazione" />
+	<formFieldProperty
+		name="cd_natura_transazione" />
+	<formFieldProperty
+		name="ds_natura_transazione" />
+	<formFieldProperty
+		name="cd_oper_triangolare" />		
+	<formFieldProperty
+		name="massa_netta" />
+	<formFieldProperty
+		name="natura_transazione" />
+	<formFieldProperty
+		name="nomenclatura_combinata" />
+	<formFieldProperty
+		name="modalita_trasporto" />
+	<formFieldProperty
+		name="condizione_consegna" />
+	<formFieldProperty
+		name="nazione_origine" />
+	<formFieldProperty
+		name="nazione_provenienza" />
+	<formFieldProperty
+		name="provincia_destinazione" />
+	<formFieldProperty
+		name="id_cpa" />
+	<formFieldProperty
+		name="esercizio_cpa" />		
+	<formFieldProperty
+		name="cd_cpa" />
+	<formFieldProperty
+		name="ds_cpa" />
+	<formFieldProperty
+		name="codici_cpa" />	
+	<formFieldProperty
+		name="modalita_incasso" />
+	<formFieldProperty
+		name="modalita_erogazione" />		
+	<formFieldProperty
+		name="fl_inviato" />
+	<formFieldProperty
+		name="nr_protocollo" />
+	<formFieldProperty
+		name="nr_progressivo" />			
+<columnSet
+	name="BeneSet">		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_fattura_passiva" />
+	<columnFieldProperty
+		name="ammontare_euro" />
+	<columnFieldProperty
+		name="ds_nomenclatura_combinata" />
+	<columnFieldProperty
+		name="ds_natura_transazione" />
+	<columnFieldProperty
+		name="ds_provincia_destinazione" />
+	<columnFieldProperty
+		name="ds_nazione_provenienza" />
+	<columnFieldProperty
+		name="ds_nazione_origine" />
+	<columnFieldProperty
+		name="ds_bene" />	
+</columnSet>
+<columnSet
+	name="ServizioSet">		
+	<columnFieldProperty
+		name="esercizio" />	
+	<columnFieldProperty
+		name="pg_fattura_passiva" />	
+	<columnFieldProperty
+		name="ammontare_euro" />
+	<columnFieldProperty
+		name="ds_cpa" />
+	<columnFieldProperty
+		name="ds_bene" />
+</columnSet>
+	
+
+</bulkInfo>

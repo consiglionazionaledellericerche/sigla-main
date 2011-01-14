@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Piano di gestione per commessa(SPESA)"
+          longDescription="PDG per commessa(SPESA)">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_dipartimento"
+		property="cd_dipartimento"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice Dipartimento" />
+	<fieldProperty
+		name="ds_dipartimento"
+		property="ds_dipartimento"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione Dipartimento" />
+	<fieldProperty
+		name="cd_progetto"
+		property="cd_progetto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice Progetto" />
+	<fieldProperty
+		name="ds_progetto"
+		property="ds_progetto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="400"
+		label="Descrizione Progetto" />
+	<fieldProperty
+		name="cd_commessa"
+		property="cd_commessa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice Commessa" />
+	<fieldProperty
+		name="ds_commessa"
+		property="ds_commessa"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="400"
+		label="Descrizione Commessa" />
+	<fieldProperty
+		name="cd_modulo"
+		property="cd_modulo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice Modulo di attività" />
+	<fieldProperty
+		name="ds_modulo"
+		property="ds_modulo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="400"
+		label="Descrizione Modulo di attività" />
+	<fieldProperty
+		name="tipo_progetto"
+		property="tipo_progetto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Tipo" />
+	<fieldProperty
+		name="cds"
+		property="cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS" />
+	<fieldProperty
+		name="ds_cds"
+		property="ds_cds"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione CDS" />
+	<fieldProperty
+		name="uo"
+		property="uo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Unità organizzativa" />
+	<fieldProperty
+		name="cdr"
+		property="cdr"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Centro di Responsabilità" />
+	<fieldProperty
+		name="titolo"
+		property="titolo"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Titolo" />
+	<fieldProperty
+		name="ds_titolo"
+		property="ds_titolo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Descrizione Titolo" />
+	<fieldProperty
+		name="codice_clas_spesa"
+		property="codice_clas_spesa"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Riclassificazione Spese per categoria" />
+	<fieldProperty
+		name="ds_classificazione_spesa"
+		property="ds_classificazione_spesa"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="400"
+		label="Descrizione Riclassificazione" />
+	<fieldProperty
+		name="elemento_voce"
+		property="elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Voce del Piano" />
+	<fieldProperty
+		name="origine"
+		property="origine"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="Origine" />
+	<fieldProperty
+		name="categoria_dettaglio"
+		property="categoria_dettaglio"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="Categoria del dettaglio" />
+	<fieldProperty
+		name="natura"
+		property="natura"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Natura" />
+	<fieldProperty
+		name="im_ri_ccs_spese_odc"
+		property="im_ri_ccs_spese_odc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Obbligazioni Propria UO (I)" />
+	<fieldProperty
+		name="im_rk_ccs_spese_ogc"
+		property="im_rk_ccs_spese_ogc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Obbligazioni Propria UO (K)" />
+	<fieldProperty
+		name="im_rq_ssc_costi_odc"
+		property="im_rq_ssc_costi_odc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Obbligazioni Propria UO (Q)" />
+	<fieldProperty
+		name="im_rs_ssc_costi_ogc"
+		property="im_rs_ssc_costi_ogc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Obbligazioni Propria UO (S)" />
+	<fieldProperty
+		name="im_rj_ccs_spese_odc_altra_uo"
+		property="im_rj_ccs_spese_odc_altra_uo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Obbligazioni Altra UO (J)" />
+	<fieldProperty
+		name="im_rl_ccs_spese_ogc_altra_uo"
+		property="im_rl_ccs_spese_ogc_altra_uo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Obbligazioni Altra UO (L)" />
+	<fieldProperty
+		name="im_rr_ssc_costi_odc_altra_uo"
+		property="im_rr_ssc_costi_odc_altra_uo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Obbligazioni Altra UO (R)" />
+	<fieldProperty
+		name="im_rt_ssc_costi_ogc_altra_uo"
+		property="im_rt_ssc_costi_ogc_altra_uo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Obbligazioni Altra UO (T)" />
+	<fieldProperty
+		name="im_rm_css_ammortamenti"
+		property="im_rm_css_ammortamenti"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Costi - Ammortamenti" />
+	<fieldProperty
+		name="im_rn_css_rimanenze"
+		property="im_rn_css_rimanenze"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Costi - Rimanenze" />
+	<fieldProperty
+		name="im_ro_css_altri_costi"
+		property="im_ro_css_altri_costi"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Costi - Altri Costi" />
+	<fieldProperty
+		name="im_rp_css_verso_altro_cdr"
+		property="im_rp_css_verso_altro_cdr"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Costi - Verso altri CDR" />
+	<fieldProperty
+		name="im_ru_spese_costi_altrui"
+		property="im_ru_spese_costi_altrui"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Spese per Costi Altrui" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_dipartimento" />
+	<findFieldProperty
+		name="ds_dipartimento" />
+	<findFieldProperty
+		name="cd_progetto" />
+	<findFieldProperty
+		name="ds_progetto" />
+	<findFieldProperty
+		name="cd_commessa" />
+	<findFieldProperty
+		name="ds_commessa" />
+	<findFieldProperty
+		name="cd_modulo" />
+	<findFieldProperty
+		name="ds_modulo" />
+	<findFieldProperty
+		name="tipo_progetto" />
+	<findFieldProperty
+		name="cds" />
+	<findFieldProperty
+		name="ds_cds" />
+	<findFieldProperty
+		name="uo" />
+	<findFieldProperty
+		name="cdr" />
+	<findFieldProperty
+		name="titolo" />
+	<findFieldProperty
+		name="ds_titolo" />
+	<findFieldProperty
+		name="codice_clas_spesa" />
+	<findFieldProperty
+		name="ds_classificazione_spesa" />
+	<findFieldProperty
+		name="elemento_voce" />
+	<findFieldProperty
+		name="origine" />
+	<findFieldProperty
+		name="categoria_dettaglio" />
+	<findFieldProperty
+		name="natura" />
+	<findFieldProperty
+		name="im_ri_ccs_spese_odc" />
+	<findFieldProperty
+		name="im_rk_ccs_spese_ogc" />
+	<findFieldProperty
+		name="im_rq_ssc_costi_odc" />
+	<findFieldProperty
+		name="im_rs_ssc_costi_ogc" />
+	<findFieldProperty
+		name="im_rj_ccs_spese_odc_altra_uo" />
+	<findFieldProperty
+		name="im_rl_ccs_spese_ogc_altra_uo" />
+	<findFieldProperty
+		name="im_rr_ssc_costi_odc_altra_uo" />
+	<findFieldProperty
+		name="im_rt_ssc_costi_ogc_altra_uo" />
+	<findFieldProperty
+		name="im_rm_css_ammortamenti" />
+	<findFieldProperty
+		name="im_rn_css_rimanenze" />
+	<findFieldProperty
+		name="im_ro_css_altri_costi" />
+	<findFieldProperty
+		name="im_rp_css_verso_altro_cdr" />
+	<findFieldProperty
+		name="im_ru_spese_costi_altrui" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_dipartimento" />
+	<columnFieldProperty
+		name="ds_dipartimento" />
+	<columnFieldProperty
+		name="cd_progetto" />
+	<columnFieldProperty
+		name="ds_progetto" />
+	<columnFieldProperty
+		name="cd_commessa" />
+	<columnFieldProperty
+		name="ds_commessa" />
+	<columnFieldProperty
+		name="cd_modulo" />
+	<columnFieldProperty
+		name="ds_modulo" />
+	<columnFieldProperty
+		name="tipo_progetto" />
+	<columnFieldProperty
+		name="cds" />
+	<columnFieldProperty
+		name="ds_cds" />
+	<columnFieldProperty
+		name="uo" />
+	<columnFieldProperty
+		name="cdr" />
+	<columnFieldProperty
+		name="titolo" />
+	<columnFieldProperty
+		name="ds_titolo" />
+	<columnFieldProperty
+		name="codice_clas_spesa" />
+	<columnFieldProperty
+		name="ds_classificazione_spesa" />
+	<columnFieldProperty
+		name="elemento_voce" />
+	<columnFieldProperty
+		name="natura" />
+	<columnFieldProperty
+		name="im_ri_ccs_spese_odc" />
+	<columnFieldProperty
+		name="im_rk_ccs_spese_ogc" />
+	<columnFieldProperty
+		name="im_rq_ssc_costi_odc" />
+	<columnFieldProperty
+		name="im_rs_ssc_costi_ogc" />
+	<columnFieldProperty
+		name="im_rj_ccs_spese_odc_altra_uo" />
+	<columnFieldProperty
+		name="im_rl_ccs_spese_ogc_altra_uo" />
+	<columnFieldProperty
+		name="im_rr_ssc_costi_odc_altra_uo" />
+	<columnFieldProperty
+		name="im_rt_ssc_costi_ogc_altra_uo" />
+	<columnFieldProperty
+		name="im_rm_css_ammortamenti" />
+	<columnFieldProperty
+		name="im_rn_css_rimanenze" />
+	<columnFieldProperty
+		name="im_ro_css_altri_costi" />
+	<columnFieldProperty
+		name="im_rp_css_verso_altro_cdr" />
+	<columnFieldProperty
+		name="im_ru_spese_costi_altrui" />
+</bulkInfo>

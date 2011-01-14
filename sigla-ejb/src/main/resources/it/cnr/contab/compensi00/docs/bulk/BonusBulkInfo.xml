@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<bulkInfo 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xmlns="http://contab.cnr.it/schema/SIGLA" 
+			xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_bonus"
+		property="pg_bonus"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Progressivo" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Terzo richiedente" />
+	<fieldProperty
+		name="esercizio_imposta"
+		property="esercizio_imposta"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio imposta" />
+	<fieldProperty
+		name="dt_registrazione"
+		property="dt_registrazione"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Registrazione" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		enabledOnEdit="false"
+		command="doOnCodice_fiscaleChange"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false"
+		inputSize="20"
+		maxLength="20"
+		label="Codice Fiscale richiedente" />
+	<fieldProperty
+		name="cognome"
+		property="terzo.anagrafico.cognome"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		maxLength="50"
+		caseSensitiveSearch="false"
+		label="Cognome" />
+		
+	<fieldProperty
+		name="nome"
+		property="terzo.anagrafico.nome"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"
+		maxLength="50"
+		label="Nome" />
+	<fieldProperty
+		name="ti_sesso"
+		property="terzo.anagrafico.ti_sesso"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		keysProperty="ti_sessoKeys"
+		inputType="RADIOGROUP"
+		layout="HORIZONTAL" 
+		inputSize="1"
+		maxLength="1"
+		label="Sesso" />
+	<fieldProperty
+		name="dt_nascita"
+		property="terzo.anagrafico.dt_nascita"
+		inputType="ROTEXT"
+		formatName="date_short"
+		label="Data Nascita" />
+	<fieldProperty
+		name="pg_comune_nascita"
+		property="terzo.anagrafico.comune_nascita.pg_comune"
+		inputType="ROTEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Comune Nascita" />
+	<fieldProperty
+		name="ds_comune"
+		property="terzo.anagrafico.comune_nascita.ds_comune"
+		inputType="ROTEXT"
+		maxLength="100"
+		label="Comune Nascita" />	
+	<fieldProperty
+		name="cd_provincia"
+		property="terzo.anagrafico.comune_nascita.cd_provincia"
+		inputType="ROTEXT"
+		maxLength="5"
+		label="Prov" />		
+	<fieldProperty
+		name="cd_tipo_rapporto"
+		property="tipo_rapporto.cd_tipo_rapporto"
+		inputType="ROTEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Tipo Rapporto" />
+	<fieldProperty
+		name="ds_tipo_rapporto"
+		property="tipo_rapporto.ds_tipo_rapporto"
+		maxLength="100"
+		inputSize="100"
+	    inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false" 
+		label="Tipo Rapporto" />	
+	<fieldProperty
+		name="cd_trattamento"
+		property="cd_trattamento"
+		inputType="ROTEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Trattamento" />
+	<fieldProperty
+		name="im_reddito"
+		property="im_reddito"
+		inputType="TEXT"
+		readonlyProperty="ROBonus"
+		command="doOnImRedditoChange"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Reddito richiedente" />
+	<fieldProperty
+		name="im_reddito_nucleo_f"
+		property="im_reddito_nucleo_f"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Tot Reddito nucleo familiare" />
+	<fieldProperty
+		name="im_bonus"
+		property="im_bonus"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Bonus" />
+	<fieldProperty
+		name="ds_condizione"
+		property="bonus_condizioni.ds_condizione"
+	    maxLength="100"
+	    inputSize="100"
+	    inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false" 
+		label="Condizione" />
+	<fieldProperty
+		name="cd_condizione"
+		property="bonus_condizioni.cd_condizione"
+		enabledOnInsert="true"
+		enabledOnEdit="false" 
+		label="Condizione" />
+	<fieldProperty
+		name="dt_richiesta"
+		property="dt_richiesta"
+		inputType="TEXT"
+		readonlyProperty="ROBonus"
+		formatName="date_short"
+		label="Data Richiesta" />
+	<fieldProperty
+		name="fl_trasmesso"
+		property="fl_trasmesso"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Trasmesso" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_bonus" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="esercizio_imposta" />
+	<formFieldProperty
+		name="dt_registrazione" />
+	<formFieldProperty
+		name="codice_fiscale" />
+	<formFieldProperty
+		name="cognome" />
+	<formFieldProperty
+		name="nome" />
+	<formFieldProperty
+		name="ti_sesso" />
+	<formFieldProperty
+		name="dt_nascita" />
+	<formFieldProperty
+		name="pg_comune_nascita" />		
+	<formFieldProperty
+		name="ds_comune" />
+	<formFieldProperty
+		name="cd_provincia" />		
+	<formFieldProperty
+		name="cd_tipo_rapporto" />
+	<formFieldProperty
+		name="ds_tipo_rapporto" />	
+	<formFieldProperty
+		name="cd_trattamento" />
+	<formFieldProperty
+		name="im_reddito" />
+	<formFieldProperty
+		name="im_reddito_nucleo_f" />
+	<formFieldProperty
+		name="im_bonus" />
+	<formFieldProperty
+		name="cd_condizione" />
+	<formFieldProperty
+		name="ds_condizione" />	
+	<formFieldProperty
+		name="dt_richiesta" />
+	<formFieldProperty
+		name="fl_trasmesso" />
+		
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_bonus" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="esercizio_imposta" />
+	<findFieldProperty
+		name="dt_registrazione" />
+	<findFieldProperty
+		name="codice_fiscale" />
+	<findFieldProperty
+		name="cognome" />
+	<findFieldProperty
+		name="nome" />
+	<findFieldProperty
+		name="ti_sesso" />
+	<findFieldProperty
+		name="dt_nascita" />
+	<findFieldProperty
+		name="dt_richiesta" />
+	<findFieldProperty
+		name="fl_trasmesso" />
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_bonus" />
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="esercizio_imposta" />
+	<columnFieldProperty
+		name="dt_registrazione" />
+	<columnFieldProperty
+		name="codice_fiscale" />
+	<columnFieldProperty
+		name="cognome" />
+	<columnFieldProperty
+		name="nome" />
+	<columnFieldProperty
+		name="ti_sesso" />
+	<columnFieldProperty
+		name="dt_nascita" />
+	<columnFieldProperty
+		name="pg_comune_nascita" />
+	<columnFieldProperty
+		name="cd_tipo_rapporto" />
+	<columnFieldProperty
+		name="cd_trattamento" />
+	<columnFieldProperty
+		name="im_reddito" />
+	<columnFieldProperty
+		name="im_reddito_nucleo_f" />
+	<columnFieldProperty
+		name="im_bonus" />
+	<columnFieldProperty
+		name="cd_condizione" />
+	<columnFieldProperty
+		name="dt_richiesta" />
+	<columnFieldProperty
+		name="fl_trasmesso" />
+</bulkInfo>

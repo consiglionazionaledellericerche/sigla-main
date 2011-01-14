@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.cori00.views.bulk.Vsx_liquidazione_coriBase"
+	keyClassName="it.cnr.contab.cori00.views.bulk.Vsx_liquidazione_coriKey"
+	homeClassName="it.cnr.contab.cori00.views.bulk.Vsx_liquidazione_coriHome" >
+	<defaultColumnMap
+		tableName="VSX_LIQUIDAZIONE_CORI" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_ORIGINE"
+			propertyName="cd_uo_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="PG_LIQUIDAZIONE_ORIGINE"
+			propertyName="pg_liquidazione_origine"
+			sqlTypeName="DECIMAL"
+			columnSize="9" />
+		<columnMapping
+			columnName="PG_LIQUIDAZIONE"
+			propertyName="pg_liquidazione"
+			sqlTypeName="DECIMAL"
+			columnSize="9" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="9" />
+		<columnMapping
+			columnName="MESSAGETOUSER"
+			propertyName="messagetouser"
+			sqlTypeName="VARCHAR"
+			columnSize="200" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE"
+			propertyName="cd_cds_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_GRUPPO_CR"
+			propertyName="cd_gruppo_cr"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PROC_NAME"
+			propertyName="proc_name"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="PG_COMUNE"
+			propertyName="pg_comune"
+			sqlTypeName="DECIMAL"
+			columnSize="19" />
+		<columnMapping
+			columnName="CD_REGIONE"
+			propertyName="cd_regione"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="cd_uo_origine" />
+	<persistentProperty
+		name="pg_liquidazione_origine" />
+	<persistentProperty
+		name="pg_liquidazione" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="messagetouser" />
+	<persistentProperty
+		name="cd_cds_origine" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="cd_gruppo_cr" />
+	<persistentProperty
+		name="duva" />
+	
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="proc_name" />
+	
+	<persistentProperty
+		name="cd_cds" />		
+	<persistentProperty
+		name="cd_regione" />
+	<persistentProperty
+		name="pg_comune" />
+</SQLPersistentInfo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="last_date"
+		property="last_date"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Data ult. esecuzione"
+		formatName="timestamp"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="broken"
+		property="broken"
+		inputType="TEXT"
+		label="Difettoso" />
+	<fieldProperty
+		name="next_date"
+		property="next_date"
+		inputType="TEXT"
+		formatName="timestamp"
+		label="Data pross. esecuzione" />
+	<fieldProperty
+		name="failures"
+		property="failures"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="N. errori" />
+
+	<columnFieldProperty
+		name="broken" />
+	<columnFieldProperty
+		name="failures" />
+	<columnFieldProperty
+		name="last_date" />
+	<columnFieldProperty
+		name="next_date" />
+
+</bulkInfo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.bulk.Ass_incarico_uoBulk"
+	homeClassName="it.cnr.contab.incarichi00.bulk.Ass_incarico_uoHome">
+	<defaultColumnMap
+		tableName="ASS_INCARICO_UO">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="incaricoRepertorio.esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_REPERTORIO"
+			propertyName="incaricoRepertorio.pg_repertorio"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="incaricoRepertorio"
+		partOfOid="true" />
+	<persistentProperty
+		name="unita_organizzativa"
+		partOfOid="true" />
+</SQLPersistentInfo>

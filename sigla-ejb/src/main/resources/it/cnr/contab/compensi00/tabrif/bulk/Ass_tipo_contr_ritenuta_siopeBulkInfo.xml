@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio di Bilancio" />
+	<fieldProperty
+		name="find_contributo_ritenuta"
+		property="tipo_contributo"
+		label="Contributo Ritenuta"		
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="cd_contributo_ritenuta"
+		property="tipo_contributo.cd_contributo_ritenuta"
+		label="Contributo Ritenuta"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="ds_contributo_ritenuta"
+		property="tipo_contributo.ds_contributo_ritenuta"
+		label="Descrizione"
+		inputSize="50"
+		inputType="ROTEXT" />	
+
+	<fieldProperty
+		name="dt_ini_validita"
+		property="tipo_contributo.dt_ini_validita"
+		inputType="ROTEXT"
+		formatName="date_short"
+		label="Data inizio validità" />
+
+
+	<fieldProperty
+		name="find_siope_spesa"
+		property="siope_spesa"
+		readonlyPropertyOnEdit="ROGiaAssociato"
+		label="Siope Spesa"		
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />	
+	<fieldProperty
+		name="esercizio_siope_s"
+		property="siope_spesa.esercizio"
+		inputType="ROTEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Siope di Spesa" />
+
+	<fieldProperty
+		name="ti_gestione_siope_s"
+		property="siope_spesa.ti_gestione"
+		readonlyPropertyOnEdit="ROGiaAssociato"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"		
+		label="Tipo" />
+
+	<fieldProperty
+		name="cd_siope_s"
+		property="siope_spesa.cd_siope"
+		readonlyPropertyOnEdit="ROGiaAssociato"
+		inputType="TEXT"
+		maxLength="45"
+		label="Codice Siope Spesa" />
+
+	<fieldProperty
+		name="ds_siope_s"
+		property="siope_spesa.descrizione"
+		inputType="ROTEXT"
+		inputSize="80"
+		label="Descrizione"
+		enabledOnSearch="true" />		
+
+	<fieldProperty
+		name="find_siope_entrata"
+		property="siope_entrata"
+		readonlyPropertyOnEdit="ROGiaAssociato"
+		label="Siope Entrata"		
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />	
+	<fieldProperty
+		name="esercizio_siope_e"
+		property="siope_entrata.esercizio"
+		inputType="ROTEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Siope di Entrata" />
+	<fieldProperty
+		name="ti_gestione_siope_e"
+		property="siope_entrata.ti_gestione"
+		readonlyPropertyOnEdit="ROGiaAssociato"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"		
+		label="Tipo" />
+	<fieldProperty
+		name="cd_siope_e"
+		property="siope_entrata.cd_siope"
+		inputType="TEXT"
+		readonlyPropertyOnEdit="ROGiaAssociato"
+		maxLength="45"
+		label="Codice Siope Entrata" />
+	<fieldProperty
+		name="ds_siope_e"
+		property="siope_entrata.descrizione"
+		inputType="ROTEXT"
+		inputSize="80"
+		label="Descrizione"
+		enabledOnSearch="true" />	
+	<formFieldProperty
+		name="find_contributo_ritenuta" />
+	<formFieldProperty
+		name="esercizio" />	
+	<formFieldProperty
+		name="cd_contributo_ritenuta" />
+	<formFieldProperty
+		name="ds_contributo_ritenuta" />	
+	<formFieldProperty
+		name="dt_ini_validita" />
+	<formFieldProperty
+		name="find_siope_spesa" />	
+	<formFieldProperty
+		name="esercizio_siope_s" />
+	<formFieldProperty
+		name="ti_gestione_siope_s" />
+	<formFieldProperty
+		name="cd_siope_s" />
+	<formFieldProperty
+		name="ds_siope_s" />	
+	<formFieldProperty
+		name="find_siope_entrata" />	
+	<formFieldProperty
+		name="esercizio_siope_e" />
+	<formFieldProperty
+		name="ti_gestione_siope_e" />
+	<formFieldProperty
+		name="cd_siope_e" />
+	<formFieldProperty
+		name="ds_siope_e" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_contributo_ritenuta" />
+	<findFieldProperty
+		name="dt_ini_validita" />
+	<findFieldProperty
+		name="esercizio_siope_s" />
+	<findFieldProperty
+		name="ti_gestione_siope_s" />
+	<findFieldProperty
+		name="cd_siope_s" />
+	<findFieldProperty
+		name="esercizio_siope_e" />
+	<findFieldProperty
+		name="ti_gestione_siope_e" />
+	<findFieldProperty
+		name="cd_siope_e" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_contributo_ritenuta" />
+	<columnFieldProperty
+		name="dt_ini_validita" />
+	<columnFieldProperty
+		name="esercizio_siope_s" />
+	<columnFieldProperty
+		name="ti_gestione_siope_s" />
+	<columnFieldProperty
+		name="cd_siope_s" />
+	<columnFieldProperty
+		name="esercizio_siope_e" />
+	<columnFieldProperty
+		name="ti_gestione_siope_e" />
+	<columnFieldProperty
+		name="cd_siope_e" />
+</bulkInfo>

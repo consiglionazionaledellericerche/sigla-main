@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.Classificazione_speseBase"
+	keyClassName="it.cnr.contab.config00.pdcfin.bulk.Classificazione_speseKey"
+	homeClassName="it.cnr.contab.config00.pdcfin.bulk.Classificazione_speseHome" >
+	<defaultColumnMap
+		tableName="CLASSIFICAZIONE_SPESE" >
+		<columnMapping
+			columnName="DESCRIZIONE"
+			propertyName="descrizione"
+			sqlTypeName="VARCHAR"
+			columnSize="400"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_PADRE"
+			propertyName="esercizio_padre"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_CLA_S_PADRE"
+			propertyName="codice_cla_s_padre"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />						
+		<columnMapping
+			columnName="FL_MASTRINO"
+			propertyName="fl_mastrino"
+			sqlTypeName="CHAR"
+            converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"			
+			columnSize="1"
+			nullable="false" />			
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />			
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	
+	<persistentProperty
+		name="descrizione" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />	
+	<persistentProperty		
+		name="pg_ver_rec" />	
+	<persistentProperty
+		name="esercizio_padre" />
+	<persistentProperty
+		name="codice_cla_s_padre" />
+	<persistentProperty
+		name="fl_mastrino" />									
+</SQLPersistentInfo>

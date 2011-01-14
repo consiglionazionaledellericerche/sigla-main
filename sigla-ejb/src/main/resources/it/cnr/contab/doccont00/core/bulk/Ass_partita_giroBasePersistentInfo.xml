@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Ass_partita_giroBase"
+	keyClassName="it.cnr.contab.doccont00.core.bulk.Ass_partita_giroKey"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Ass_partita_giroHome" >
+	<defaultColumnMap
+		tableName="ASS_PARTITA_GIRO" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="CD_VOCE_CLG"
+			propertyName="cd_voce_clg"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="TI_APPARTENENZA_CLG"
+			propertyName="ti_appartenenza_clg"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="TI_GESTIONE_CLG"
+			propertyName="ti_gestione_clg"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="cd_voce_clg" />
+	<persistentProperty
+		name="ti_appartenenza_clg" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="ti_gestione_clg" />
+</SQLPersistentInfo>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Cds" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="esercizio_originale"
+		property="esercizio_originale"
+		inputType="TEXT"
+		label="Es. Accertamento" />
+	<fieldProperty
+		name="pg_accertamento"
+		property="pg_accertamento"
+		inputType="TEXT"
+		label="N. Accertamento" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Codice GAE" />
+	<fieldProperty
+		name="prc"
+		property="prc"
+		label="%"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.PercentFormat"
+		/>
+	<fieldProperty
+		name="im_voce"
+		property="im_voce"
+		label="Importo"
+		inputType="TEXT"
+		maxLength="13"
+		inputSize="13"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		/>
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Centro Responsabilita" />
+	<fieldProperty
+		name="cd_fondo_ricerca"
+		property="cd_fondo_ricerca"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Fondo Ricerca"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_accertamento_scadenzario"
+		property="pg_accertamento_scadenzario"
+		inputType="TEXT"
+		label="N. Accertamento Scadenzario" />
+	<fieldProperty
+		name="cd_natura"
+		property="cd_natura"
+		label="Natura"
+		inputType="ROTEXT"
+		/>
+	<fieldProperty
+		name="cd_voce"
+		property="cd_voce"
+		label="Capitolo"
+		inputType="ROTEXT"
+		/>
+		
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="esercizio_originale" />
+	<formFieldProperty
+		name="pg_accertamento" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="im_voce" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="cd_fondo_ricerca" />
+	<formFieldProperty
+		name="pg_accertamento_scadenzario" />
+
+	<columnFieldProperty
+		name="cd_voce"
+		enabledOnEdit="false"		
+		/>
+	<columnFieldProperty
+		name="cd_centro_responsabilita"
+		enabledOnEdit="false"				
+		/>
+	<columnFieldProperty
+		name="cd_linea_attivita"
+		enabledOnEdit="false"				
+		/>
+	<columnFieldProperty
+		name="cd_natura"
+		enabledOnEdit="false"		
+		/>
+	<columnFieldProperty
+		name="prc"
+		headerStyle="text-align: center"
+		columnStyle="width:50px; text-align: right"
+		enabledOnEdit="false"		
+		/>
+	<columnFieldProperty
+		name="im_voce"
+		enabledOnEdit="true"
+		enabledOnInsert="true"						
+		/>
+						
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="esercizio_originale" />
+	<findFieldProperty
+		name="pg_accertamento" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="im_voce" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="cd_fondo_ricerca" />
+	<findFieldProperty
+		name="pg_accertamento_scadenzario" />
+
+</bulkInfo>

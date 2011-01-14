@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fpBase"
+	keyClassName="it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fpKey"
+	homeClassName="it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fpHome">
+	<defaultColumnMap
+		tableName="INCARICHI_COMUNICATI_FP">
+		<columnMapping
+			columnName="ID_INCARICO"
+			propertyName="id_incarico"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			nullable="true" />
+		<columnMapping
+			columnName="ANNO_RIFERIMENTO"
+			propertyName="anno_riferimento"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="SEMESTRE_RIFERIMENTO"
+			propertyName="semestre_riferimento"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_ENTE"
+			propertyName="codice_ente"
+			sqlTypeName="VARCHAR"
+			columnSize="15"
+			nullable="true" />
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_NASCITA"
+			propertyName="data_nascita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_SESSO"
+			propertyName="ti_sesso"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="FL_ESTERO"
+			propertyName="fl_estero"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CODICE_FISCALE_PARTITA_IVA"
+			propertyName="codice_fiscale_partita_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="16"
+			nullable="true" />
+		<columnMapping
+			columnName="DESCRIZIONE_INCARICO"
+			propertyName="descrizione_incarico"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONI_INCARICO"
+			propertyName="variazioni_incarico"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_INIZIO"
+			propertyName="dt_inizio"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_FINE"
+			propertyName="dt_fine"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_PREVISTO"
+			propertyName="importo_previsto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_RIFERIMENTO_REGOLAMENTO"
+			propertyName="fl_riferimento_regolamento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_SALDO"
+			propertyName="fl_saldo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="ATTIVITA_ECONOMICA"
+			propertyName="attivita_economica"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_RAPPORTO"
+			propertyName="tipo_rapporto"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="MODALITA_ACQUISIZIONE"
+			propertyName="modalita_acquisizione"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPOLOGIA_CONSULENTE"
+			propertyName="tipologia_consulente"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="ESITO_INCARICO"
+			propertyName="esito_incarico"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_ID"
+			propertyName="err_id"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_ANNO_RIFERIMENTO"
+			propertyName="err_anno_riferimento"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_SEMESTRE_RIFERIMENTO"
+			propertyName="err_semestre_riferimento"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_CODICE_ENTE"
+			propertyName="err_codice_ente"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_DESCRIZIONE_INCARICO"
+			propertyName="err_descrizione_incarico"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_ATTIVITA_ECONOMICA"
+			propertyName="err_attivita_economica"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_DT_INIZIO"
+			propertyName="err_dt_inizio"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_DT_FINE"
+			propertyName="err_dt_fine"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_IMPORTO_PREVISTO"
+			propertyName="err_importo_previsto"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_SALDO"
+			propertyName="err_saldo"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_MODALITA_ACQUISIZIONE"
+			propertyName="err_modalita_acquisizione"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_TIPO_RAPPORTO"
+			propertyName="err_tipo_rapporto"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_VARIAZIONI_INCARICO"
+			propertyName="err_variazioni_incarico"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ESITO_INCARICO_PERSONA"
+			propertyName="esito_incarico_persona"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_COGNOME"
+			propertyName="err_cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_NOME"
+			propertyName="err_nome"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_DATA_NASCITA"
+			propertyName="err_data_nascita"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_SESSO"
+			propertyName="err_sesso"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_ESTERO"
+			propertyName="err_estero"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_CODICE_FISCALE_PARTITA_IVA"
+			propertyName="err_codice_fiscale_partita_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="id_incarico" />
+	<persistentProperty
+		name="anno_riferimento" />
+	<persistentProperty
+		name="semestre_riferimento" />
+	<persistentProperty
+		name="codice_ente" />
+	<persistentProperty
+		name="cognome" />
+	<persistentProperty
+		name="nome" />
+	<persistentProperty
+		name="data_nascita" />
+	<persistentProperty
+		name="ti_sesso" />
+	<persistentProperty
+		name="fl_estero" />
+	<persistentProperty
+		name="codice_fiscale_partita_iva" />
+	<persistentProperty
+		name="variazioni_incarico" />
+	<persistentProperty
+		name="descrizione_incarico" />
+	<persistentProperty
+		name="dt_inizio" />
+	<persistentProperty
+		name="dt_fine" />
+	<persistentProperty
+		name="importo_previsto" />
+	<persistentProperty
+		name="fl_riferimento_regolamento" />
+	<persistentProperty
+		name="fl_saldo" />
+	<persistentProperty
+		name="attivita_economica" />
+	<persistentProperty
+		name="tipo_rapporto" />
+	<persistentProperty
+		name="modalita_acquisizione" />
+	<persistentProperty
+		name="tipologia_consulente" />
+	<persistentProperty
+		name="esito_incarico" />
+	<persistentProperty
+		name="err_id" />
+	<persistentProperty
+		name="err_anno_riferimento" />
+	<persistentProperty
+		name="err_semestre_riferimento" />
+	<persistentProperty
+		name="err_codice_ente" />
+	<persistentProperty
+		name="err_descrizione_incarico" />
+	<persistentProperty
+		name="err_attivita_economica" />
+	<persistentProperty
+		name="err_dt_inizio" />
+	<persistentProperty
+		name="err_dt_fine" />
+	<persistentProperty
+		name="err_importo_previsto" />
+	<persistentProperty
+		name="err_saldo" />
+	<persistentProperty
+		name="err_modalita_acquisizione" />
+	<persistentProperty
+		name="err_tipo_rapporto" />
+	<persistentProperty
+		name="err_variazioni_incarico" />
+	<persistentProperty
+		name="esito_incarico_persona" />
+	<persistentProperty
+		name="err_cognome" />
+	<persistentProperty
+		name="err_nome" />
+	<persistentProperty
+		name="err_data_nascita" />
+	<persistentProperty
+		name="err_sesso" />
+	<persistentProperty
+		name="err_estero" />
+	<persistentProperty
+		name="err_codice_fiscale_partita_iva" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

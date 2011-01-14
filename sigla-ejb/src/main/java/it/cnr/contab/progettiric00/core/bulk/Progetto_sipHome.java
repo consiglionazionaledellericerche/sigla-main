@@ -1,0 +1,183 @@
+/*
+ * Created on Oct 25, 2005
+ *
+ * To change the template for this generated file go to
+ * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ */
+package it.cnr.contab.progettiric00.core.bulk;
+
+import it.cnr.contab.config00.sto.bulk.Ass_uo_areaBulk;
+import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
+import it.cnr.contab.config00.sto.bulk.DipartimentoHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.Persistent;
+import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+
+import java.sql.Connection;
+
+/**
+ * @author mspasiano
+ *
+ * To change the template for this generated type comment go to
+ * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ */
+public class Progetto_sipHome extends BulkHome {
+
+	public Progetto_sipHome(java.sql.Connection conn,PersistentCache persistentCache) {
+		super(Progetto_sipBulk.class,conn,persistentCache);
+	}
+	protected Progetto_sipHome(Class class1, java.sql.Connection connection, PersistentCache persistentcache)
+	{
+		super(class1, connection, persistentcache);
+	}
+	public SQLBuilder createSQLBuilder() {
+		SQLBuilder sql = super.createSQLBuilder();
+		sql.addClause("AND","tipo_fase",SQLBuilder.EQUALS,ProgettoBulk.TIPO_FASE_PREVISIONE);
+		return sql;
+	}
+	public SQLBuilder createSQLBuilderAll() {
+		return super.createSQLBuilder();
+	}
+	
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (27/07/2004 11.23.36)
+	 * @return ProgettoBulk
+	 * @param bulk ProgettoBulk
+	 */
+	public ProgettoBulk getParent(Progetto_sipBulk bulk) throws PersistencyException, IntrospectionException{
+    
+		if (bulk == null)
+			return null;
+    	
+		SQLBuilder sql = createSQLBuilder();
+		sql.addSQLClause("AND","ESERCIZIO",SQLBuilder.EQUALS,bulk.getEsercizio_progetto_padre());
+		sql.addSQLClause("AND","PG_PROGETTO",SQLBuilder.EQUALS,bulk.getPg_progetto_padre());
+		sql.addSQLClause("AND","TIPO_FASE",SQLBuilder.EQUALS,bulk.getTipo_fase_progetto_padre());
+		
+		java.util.Collection coll = this.fetchAll(sql);
+		if (coll.size() != 1)
+			return null;
+    
+		return (ProgettoBulk)coll.iterator().next();
+	}
+
+	/**
+	 * Recupera i figli dell'oggetto bulk
+	 * Creation date: (27/07/2004 11.23.36)
+	 * @return it.cnr.jada.persistency.sql.SQLBuilder
+	 * @param bulk ProgettoBulk
+	 */
+    
+	public SQLBuilder selectChildrenFor(it.cnr.jada.UserContext aUC, Progetto_sipBulk ubi){
+		Progetto_sipHome progettohome = (Progetto_sipHome)getHomeCache().getHome(Progetto_sipBulk.class,"V_PROGETTO_PADRE");
+		SQLBuilder sql = progettohome.createSQLBuilder();
+		sql.addSQLClause("AND","ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(aUC));
+		if (ubi == null){
+			sql.addSQLClause("AND","ESERCIZIO_PROGETTO_PADRE",sql.ISNULL,null);
+			sql.addSQLClause("AND","PG_PROGETTO_PADRE",sql.ISNULL,null);
+			sql.addSQLClause("AND","TIPO_FASE_PROGETTO_PADRE",sql.ISNULL,null);
+		}else{
+			sql.addSQLClause("AND","ESERCIZIO_PROGETTO_PADRE",sql.EQUALS,ubi.getEsercizio());
+			sql.addSQLClause("AND","PG_PROGETTO_PADRE",sql.EQUALS,ubi.getPg_progetto());
+			sql.addSQLClause("AND","TIPO_FASE_PROGETTO_PADRE",sql.EQUALS,ubi.getTipo_fase());
+			if (ubi.isCommessa())
+				sql.addClause("AND", "fl_utilizzabile", sql.EQUALS, Boolean.TRUE);				
+		}
+		try{	
+		  // Se uo 999.000 in scrivania: visualizza tutti i progetti
+		  Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk)  getHomeCache().getHome(Unita_organizzativa_enteBulk.class).findAll().get(0);
+		  if (!((CNRUserContext) aUC).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
+			if (ubi == null)
+			  sql.addSQLExistsClause("AND",abilitazioniProgetti(aUC));
+			if (ubi != null && ubi.getLivello().equals(ProgettoBulk.LIVELLO_PROGETTO_PRIMO))
+			  sql.addSQLExistsClause("AND",abilitazioniCommesse(aUC));
+			else if (ubi != null && ubi.getLivello().equals(ProgettoBulk.LIVELLO_PROGETTO_SECONDO))
+			  sql.addSQLExistsClause("AND",abilitazioniModuli(aUC)); 
+		  }            				
+		}catch (PersistencyException ex){}
+		return sql;
+	}    
+	public SQLBuilder abilitazioniProgetti(it.cnr.jada.UserContext aUC) throws PersistencyException{
+		SQLBuilder sql = abilitazioni(aUC);    	
+		sql.addSQLJoin("V_ABIL_PROGETTI.ESERCIZIO_PROGETTO","V_PROGETTO_PADRE.ESERCIZIO");
+		sql.addSQLJoin("V_ABIL_PROGETTI.PG_PROGETTO","V_PROGETTO_PADRE.PG_PROGETTO");
+		sql.addSQLJoin("V_ABIL_PROGETTI.TIPO_FASE_PROGETTO","V_PROGETTO_PADRE.TIPO_FASE");
+		return sql;    	
+	}	
+	public SQLBuilder abilitazioniCommesse(it.cnr.jada.UserContext aUC) throws PersistencyException{
+		SQLBuilder sql = abilitazioni(aUC);    	
+		sql.addSQLJoin("V_ABIL_PROGETTI.ESERCIZIO_COMMESSA","V_PROGETTO_PADRE.ESERCIZIO");
+		sql.addSQLJoin("V_ABIL_PROGETTI.PG_COMMESSA","V_PROGETTO_PADRE.PG_PROGETTO");
+		sql.addSQLJoin("V_ABIL_PROGETTI.TIPO_FASE_COMMESSA","V_PROGETTO_PADRE.TIPO_FASE");
+		return sql;    	
+	}
+	public SQLBuilder abilitazioniModuli(it.cnr.jada.UserContext aUC) throws PersistencyException{
+		SQLBuilder sql = abilitazioni(aUC);    	
+		sql.addSQLJoin("V_ABIL_PROGETTI.ESERCIZIO_MODULO","V_PROGETTO_PADRE.ESERCIZIO");
+		sql.addSQLJoin("V_ABIL_PROGETTI.PG_MODULO","V_PROGETTO_PADRE.PG_PROGETTO");
+		sql.addSQLJoin("V_ABIL_PROGETTI.TIPO_FASE_MODULO","V_PROGETTO_PADRE.TIPO_FASE");
+		return sql;    	
+	}
+	public SQLBuilder abilitazioni(it.cnr.jada.UserContext aUC,String campo) throws PersistencyException{
+		SQLBuilder sql = abilitazioni(aUC);    	
+		sql.addSQLJoin("V_ABIL_PROGETTI.PG_MODULO",campo);
+		return sql;    	
+	}	    
+	private SQLBuilder abilitazioni(it.cnr.jada.UserContext aUC) throws PersistencyException{
+		Unita_organizzativaBulk uo = (Unita_organizzativaBulk)getHomeCache().getHome(Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(aUC)));
+		Progetto_sipHome progettohome = (Progetto_sipHome)getHomeCache().getHome(Progetto_sipBulk.class,"V_ABIL_PROGETTI");    	
+		SQLBuilder sql = progettohome.createSQLBuilder();
+		sql.addTableToHeader("UNITA_ORGANIZZATIVA");
+		sql.addSQLJoin("UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA", "V_ABIL_PROGETTI.CD_UNITA_ORGANIZZATIVA");
+		sql.openParenthesis("AND");		  
+		sql.addSQLClause("AND","UNITA_ORGANIZZATIVA.CD_UNITA_PADRE",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(aUC));
+		if (uo.getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_AREA)==0){
+			SQLBuilder sqlArea = getHomeCache().getHome(Ass_uo_areaBulk.class).createSQLBuilder();
+			sqlArea.addTableToHeader("UNITA_ORGANIZZATIVA UO");
+			sqlArea.addSQLJoin("UNITA_ORGANIZZATIVA.CD_UNITA_PADRE", "UO.CD_UNITA_PADRE");
+			sqlArea.addSQLJoin("ASS_UO_AREA.CD_UNITA_ORGANIZZATIVA", "UO.CD_UNITA_ORGANIZZATIVA");
+			sqlArea.addSQLClause("AND","ASS_UO_AREA.CD_AREA_RICERCA",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(aUC));
+			sqlArea.addSQLClause("AND","ASS_UO_AREA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(aUC));
+			sql.addSQLExistsClause("OR",sqlArea);
+		}
+		sql.closeParenthesis();
+		return sql;    	
+	}
+    public Persistent findByPrimaryKey(UserContext userContext,Object persistent) throws PersistencyException {
+    	return findByPrimaryKey(userContext,(Persistent)persistent);
+    }
+	@Override
+    public Persistent findByPrimaryKey(UserContext userContext,Persistent persistent) throws PersistencyException {
+    	Progetto_sipBulk progetto = ((Progetto_sipBulk)persistent);
+    	if (progetto.getEsercizio() == null)
+    		progetto.setEsercizio(CNRUserContext.getEsercizio(userContext));
+    	if (progetto.getTipo_fase() == null)        	    	
+    		progetto.setTipo_fase(ProgettoBulk.TIPO_FASE_PREVISIONE);
+    	return super.findByPrimaryKey(persistent);
+    }
+	public DipartimentoBulk findDipartimento(UserContext userContext, Progetto_sipBulk bulk) throws it.cnr.jada.comp.ComponentException, PersistencyException {
+		Progetto_sipHome prgHome = (Progetto_sipHome)getHomeCache().getHome(Progetto_sipBulk.class);
+		DipartimentoHome dipHome = (DipartimentoHome)getHomeCache().getHome(DipartimentoBulk.class);
+		Progetto_sipBulk commessa = null, progetto = null;
+		
+		if (bulk.isModulo())
+			commessa = (Progetto_sipBulk)prgHome.findByPrimaryKey(userContext, bulk.getProgettopadre());
+		else if (bulk.isCommessa()) 
+			commessa = (Progetto_sipBulk)prgHome.findByPrimaryKey(userContext, bulk);
+			
+		if (bulk.isProgetto()) 
+			progetto = (Progetto_sipBulk)prgHome.findByPrimaryKey(userContext, bulk);
+		else
+			progetto = (Progetto_sipBulk)prgHome.findByPrimaryKey(userContext, commessa.getProgettopadre());
+
+		return (DipartimentoBulk)dipHome.findByPrimaryKey(progetto.getDipartimento());
+	} 
+}

@@ -1,0 +1,44 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_gruppo_iva"
+		property="cd_gruppo_iva"
+		maxLength="10"
+		inputSize="6"
+		inputType="TEXT"
+		label="Codice"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		nullable="false"
+		enabledOnFreeSearch="true"/>
+
+	<fieldProperty
+		name="ds_gruppo_iva"
+		property="ds_gruppo_iva"
+		maxLength="100"
+		inputSize="50"
+		inputType="TEXT"
+		label="Descrizione"
+		nullable="false"
+		caseSensitiveSearch="false"
+		enabledOnFreeSearch="true"/>
+		
+	<formFieldProperty
+		name="cd_gruppo_iva" />
+	<formFieldProperty
+		name="ds_gruppo_iva" />
+
+	<columnFieldProperty
+		name="cd_gruppo_iva" />
+	<columnFieldProperty
+		name="ds_gruppo_iva" />
+
+	<findFieldProperty
+		name="cd_gruppo_iva" />
+	<findFieldProperty
+		name="ds_gruppo_iva" />
+
+</bulkInfo>

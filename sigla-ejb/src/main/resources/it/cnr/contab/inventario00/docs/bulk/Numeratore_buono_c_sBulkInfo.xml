@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="iniziale"
+		property="iniziale"
+		inputType="TEXT"
+		label="iniziale" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="corrente"
+		property="corrente"
+		inputType="TEXT"
+		label="corrente" />
+	<fieldProperty
+		name="ti_carico_scarico"
+		property="ti_carico_scarico"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_carico_scarico" />
+	<fieldProperty
+		name="pg_inventario"
+		property="pg_inventario"
+		inputType="TEXT"
+		label="pg_inventario" />
+
+	<formFieldProperty
+		name="iniziale" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="corrente" />
+	<formFieldProperty
+		name="ti_carico_scarico" />
+	<formFieldProperty
+		name="pg_inventario" />
+
+	<columnFieldProperty
+		name="iniziale" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="corrente" />
+	<columnFieldProperty
+		name="ti_carico_scarico" />
+	<columnFieldProperty
+		name="pg_inventario" />
+
+	<findFieldProperty
+		name="iniziale" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="corrente" />
+	<findFieldProperty
+		name="ti_carico_scarico" />
+	<findFieldProperty
+		name="pg_inventario" />
+
+</bulkInfo>

@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_uo_compenso"
+		property="cd_uo_compenso"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Uo" />
+	<fieldProperty
+		name="dt_cmp_da_compenso"
+		property="dt_cmp_da_compenso"
+		inputType="TEXT"
+		label="Data inizio competenza" />
+	<fieldProperty
+		name="dt_cmp_a_compenso"
+		property="dt_cmp_a_compenso"
+		inputType="TEXT"
+		label="Data fine competenza" />
+	<fieldProperty
+		name="dt_mandato"
+		property="dt_mandato"
+		inputType="TEXT"
+		label="Data mandato" />
+	<fieldProperty
+		name="esercizio_pagamento"
+		property="esercizio_pagamento"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="Esercizio pagamento" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Codice terzo" />
+	<fieldProperty
+		name="cd_anag"
+		property="cd_anag"
+		inputType="TEXT"
+		nullable="false"
+		maxLength="8"
+		inputSize="8" 
+		label="Codice Anagrafico" />
+	<fieldProperty
+		name="imponibile"
+		property="imponibile"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Imponibile" />
+	<fieldProperty
+		name="aliquota"
+		property="aliquota"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="Aliquota" />
+	<fieldProperty
+		name="ammontare"
+		property="ammontare"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Contributi versati" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Codice fiscale" />
+	<fieldProperty
+		name="nome"
+		property="nome"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		label="Nome" />
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		inputType="TEXT"
+		maxLength="50"
+		label="Cognome" />
+	<fieldProperty
+		name="ti_sesso"
+		property="ti_sesso"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Sesso" />
+	<fieldProperty
+		name="dt_nascita"
+		property="dt_nascita"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data nascita" />
+	<fieldProperty
+		name="comune_nascita"
+		property="comune_nascita"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Comune nascita" />
+	<fieldProperty
+		name="provincia_nascita"
+		property="provincia_nascita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Provincia nascita" />
+	<fieldProperty
+		name="comune_residenza"
+		property="comune_residenza"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Comune residenza" />
+	<fieldProperty
+		name="provincia_residenza"
+		property="provincia_residenza"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Provincia residenza" />
+	<fieldProperty
+		name="cap_residenza"
+		property="cap_residenza"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Cap residenza" />
+	<fieldProperty
+		name="via"
+		property="via"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Via" />
+	<fieldProperty
+		name="num_civico"
+		property="num_civico"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero civico" />
+	<fieldProperty
+		name="denominazione_sede"
+		property="denominazione_sede"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Sede" />
+	<fieldProperty
+		name="via_sede"
+		property="via_sede"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Via sede" />
+	<fieldProperty
+		name="civico_sede"
+		property="civico_sede"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Civico sede" />
+	<fieldProperty
+		name="cap_sede"
+		property="cap_sede"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Cap sede" />
+	<fieldProperty
+		name="cod_fis_cnr"
+		property="cod_fis_cnr"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Codice Fiscale Cnr" />
+	<fieldProperty
+		name="ds_cnr"
+		property="ds_cnr"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Descrizione Cnr" />
+	<fieldProperty
+		name="comune_cnr"
+		property="comune_cnr"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Comune Cnr" />
+	<fieldProperty
+		name="ind_cnr"
+		property="ind_cnr"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Indirizzo Cnr" />
+	<fieldProperty
+		name="civ_cnr"
+		property="civ_cnr"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Civico Cnr" />
+	<fieldProperty
+		name="cap_cnr"
+		property="cap_cnr"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="CAP Cnr" />
+	<fieldProperty
+		name="data_f24"
+		property="data_f24"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data F24" />
+	<fieldProperty
+		name="nota"
+		property="nota"
+		inputType="TEXT"
+		inputSize="1000"
+		maxLength="1000"
+		label="Nota" />
+	<fieldProperty
+		name="findAnagrafico"
+		property="anagrafico"
+		inputType="SEARCHTOOL"
+		label="Anagrafico" />
+	
+	<fieldProperty
+		name="cd_anagrafico"
+		property="anagrafico.cd_anag"
+		inputType="TEXT"
+		inputSize="30" 
+		label="Codice anagrafico" />
+	<fieldProperty
+		name="ragione_sociale"
+		property="ragione_sociale"
+		inputType="ROTEXT"
+		inputSize="30" 
+		label="Ragione sociale" />
+	
+	<formFieldProperty name="cd_anagrafico" />	
+	<formFieldProperty name="findAnagrafico" />
+	<formFieldProperty name="ragione_sociale" />	
+	
+	<formFieldProperty
+		name="cd_uo_compenso" />
+	<formFieldProperty
+		name="dt_cmp_da_compenso" />
+	<formFieldProperty
+		name="dt_cmp_a_compenso" />
+	<formFieldProperty
+		name="dt_mandato" />
+	<formFieldProperty
+		name="esercizio_pagamento" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="cd_anag" />
+	<formFieldProperty
+		name="imponibile" />
+	<formFieldProperty
+		name="aliquota" />
+	<formFieldProperty
+		name="ammontare" />
+	<formFieldProperty
+		name="codice_fiscale" />
+	<formFieldProperty
+		name="nome" />
+	<formFieldProperty
+		name="cognome" />
+	<formFieldProperty
+		name="ti_sesso" />
+	<formFieldProperty
+		name="dt_nascita" />
+	<formFieldProperty
+		name="comune_nascita" />
+	<formFieldProperty
+		name="provincia_nascita" />
+	<formFieldProperty
+		name="comune_residenza" />
+	<formFieldProperty
+		name="provincia_residenza" />
+	<formFieldProperty
+		name="cap_residenza" />
+	<formFieldProperty
+		name="via" />
+	<formFieldProperty
+		name="num_civico" />
+	<formFieldProperty
+		name="denominazione_sede" />
+	<formFieldProperty
+		name="via_sede" />
+	<formFieldProperty
+		name="civico_sede" />
+	<formFieldProperty
+		name="cap_sede" />
+	<formFieldProperty
+		name="cod_fis_cnr" />
+	<formFieldProperty
+		name="ds_cnr" />
+	<formFieldProperty
+		name="comune_cnr" />
+	<formFieldProperty
+		name="ind_cnr" />
+	<formFieldProperty
+		name="civ_cnr" />
+	<formFieldProperty
+		name="cap_cnr" />
+	<formFieldProperty
+		name="data_f24" />
+	<formFieldProperty
+		name="nota" />
+	
+	<findFieldProperty
+		name="cd_uo_compenso" />
+	<findFieldProperty
+		name="dt_cmp_da_compenso" />
+	<findFieldProperty
+		name="dt_cmp_a_compenso" />
+	<findFieldProperty
+		name="dt_mandato" />
+	<findFieldProperty
+		name="esercizio_pagamento" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="cd_anag" />
+	<findFieldProperty
+		name="codice_fiscale" />
+	<findFieldProperty
+		name="nome" />
+	<findFieldProperty
+		name="cognome" />
+
+	<columnFieldProperty
+		name="cd_uo_compenso" />	
+	<columnFieldProperty
+		name="dt_cmp_da_compenso" />
+	<columnFieldProperty
+		name="dt_cmp_a_compenso" />
+	<columnFieldProperty
+		name="dt_mandato" />
+	<columnFieldProperty
+		name="esercizio_pagamento" />
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="cd_anag" />
+	<columnFieldProperty
+		name="imponibile" />
+	<columnFieldProperty
+		name="aliquota" />
+	<columnFieldProperty
+		name="ammontare" />
+	<columnFieldProperty
+		name="codice_fiscale" />
+	<columnFieldProperty
+		name="nome" />
+	<columnFieldProperty
+		name="cognome" />
+	<columnFieldProperty
+		name="ti_sesso" />
+	<columnFieldProperty
+		name="dt_nascita" />
+	<columnFieldProperty
+		name="comune_nascita" />
+	<columnFieldProperty
+		name="provincia_nascita" />
+	<columnFieldProperty
+		name="comune_residenza" />
+	<columnFieldProperty
+		name="provincia_residenza" />
+	<columnFieldProperty
+		name="cap_residenza" />
+	<columnFieldProperty
+		name="via" />
+	<columnFieldProperty
+		name="num_civico" />
+	<columnFieldProperty
+		name="denominazione_sede" />
+	<columnFieldProperty
+		name="via_sede" />
+	<columnFieldProperty
+		name="civico_sede" />
+	<columnFieldProperty
+		name="cap_sede" />
+	<columnFieldProperty
+		name="cod_fis_cnr" />
+	<columnFieldProperty
+		name="ds_cnr" />
+	<columnFieldProperty
+		name="comune_cnr" />
+	<columnFieldProperty
+		name="ind_cnr" />
+	<columnFieldProperty
+		name="civ_cnr" />
+	<columnFieldProperty
+		name="cap_cnr" />
+	<columnFieldProperty
+		name="data_f24" />
+	<columnFieldProperty
+		name="nota" />	
+</bulkInfo>

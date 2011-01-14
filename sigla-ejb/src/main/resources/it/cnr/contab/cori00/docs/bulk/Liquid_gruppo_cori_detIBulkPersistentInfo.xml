@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.cori00.docs.bulk.Liquid_gruppo_cori_detIBulk"
+	homeClassName="it.cnr.contab.cori00.docs.bulk.Liquid_gruppo_cori_detIHome" >
+
+	<defaultColumnMap tableName="LIQUID_GRUPPO_CORI_DET" >			
+				
+	</defaultColumnMap>
+	
+	<columnMap
+		name="V_LIQUID_GRUPPO_CORI_DET"
+		tableName="V_LIQUID_GRUPPO_CORI_DET">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE"
+			propertyName="cd_cds_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UO_ORIGINE"
+			propertyName="cd_uo_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_LIQUIDAZIONE"
+			propertyName="pg_liquidazione"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_LIQUIDAZIONE_ORIGINE"
+			propertyName="pg_liquidazione_origine"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_COMPENSO"
+			propertyName="pg_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="DS_TERZO"
+			propertyName="ds_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="144" />
+		<columnMapping
+			columnName="DT_EMISSIONE_MANDATO"
+			propertyName="dt_emissione_mandato"
+			sqlTypeName="DATE" />
+		<columnMapping
+			columnName="CD_CONTRIBUTO_RITENUTA"
+			propertyName="cd_contributo_ritenuta"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TI_ENTE_PERCIPIENTE"
+			propertyName="ti_ente_percipiente"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="IM_CORI"
+			propertyName="im_cori"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_GRUPPO_CR"
+			propertyName="cd_gruppo_cr"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_REGIONE"
+			propertyName="cd_regione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_COMUNE"
+			propertyName="pg_comune"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_CONTRIBUTO_RITENUTA"
+			propertyName="esercizio_contributo_ritenuta"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+	</columnMap>
+		
+	<persistentProperty
+		name="ds_terzo" />
+	<persistentProperty
+		name="dt_emissione_mandato" />
+	<persistentProperty
+		name="im_cori" />
+
+</SQLPersistentInfo>

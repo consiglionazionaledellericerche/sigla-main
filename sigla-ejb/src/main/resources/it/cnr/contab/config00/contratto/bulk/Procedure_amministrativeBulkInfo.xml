@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_proc_amm"
+		property="cd_proc_amm"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="ds_proc_amm"
+		property="ds_proc_amm"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="fl_ricerca_incarico"
+		property="fl_ricerca_incarico"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		enabledOnInsert="true"		
+		label="Ricerca Professionalità Interne Obbligatorio" />
+	<fieldProperty
+		name="ti_proc_amm"
+		property="ti_proc_amm"
+		maxLength="2"
+		inputSize="2"
+		inputType="SELECT"
+		enabledOnEdit="false"
+		keysProperty="ti_proc_ammKeys"
+		label="Tipologia"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="fl_cancellato"
+		property="fl_cancellato"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"		
+		label="Cancellato" />
+	<fieldProperty
+		name="incarico_ric_giorni_pubbl"
+		property="incarico_ric_giorni_pubbl"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		nullable="false"
+		label="Giorni di pubblicazione di richiesta incarico per collaborazione" />
+	<fieldProperty
+		name="incarico_ric_giorni_scad"
+		property="incarico_ric_giorni_scad"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		nullable="false"
+		label="Giorni di validità di richiesta incarico per collaborazione dopo la pubblicazione" />
+	<fieldProperty
+		name="cd_gruppo_file"
+		property="gruppo_file.cd_gruppo_file"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice gruppo file associabili" />
+	<fieldProperty
+		name="find_gruppo_file"
+		property="gruppo_file"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		completeOnSave="true"
+		label="Gruppo file associabili" />
+	<fieldProperty
+		name="fl_meramente_occasionale"
+		property="fl_meramente_occasionale"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		enabledOnInsert="true"		
+		label="Gestione dei Collaboratori Meramente Occasionali" />
+		
+    <form name="searchtool">
+	  <formFieldProperty
+		name="cd_proc_amm" />	
+	  <formFieldProperty
+		name="ds_proc_amm"
+		inputType="TEXT"
+		inputSize="30"
+		 />           
+	</form>
+	
+	<formFieldProperty
+		name="cd_proc_amm" />
+	<formFieldProperty
+		name="ds_proc_amm" />
+	<formFieldProperty
+		name="ti_proc_amm" />
+	<formFieldProperty
+		name="fl_ricerca_incarico" />
+	<formFieldProperty
+		name="fl_cancellato" />
+	<formFieldProperty
+		name="incarico_ric_giorni_pubbl" 
+		label="Giorni di pubblicazione di&lt;BR&gt;richiesta incarico per collaborazione" />
+	<formFieldProperty
+		name="incarico_ric_giorni_scad" 
+		label="Giorni di validità di&lt;BR&gt;richiesta incarico per collaborazione&lt;BR&gt;dopo la pubblicazione" />
+	<formFieldProperty
+		name="cd_gruppo_file" />
+	<formFieldProperty
+		name="find_gruppo_file" />
+	<formFieldProperty
+		name="fl_meramente_occasionale" />
+
+	<findFieldProperty
+		name="cd_proc_amm" />
+	<findFieldProperty
+		name="ds_proc_amm" />
+	<findFieldProperty
+		name="ti_proc_amm" />
+	<findFieldProperty
+		name="fl_ricerca_incarico" />
+	<findFieldProperty
+		name="incarico_ric_giorni_pubbl" />
+	<findFieldProperty
+		name="incarico_ric_giorni_scad" />
+	<findFieldProperty
+		name="fl_cancellato" />
+	<findFieldProperty
+		name="cd_gruppo_file" />
+	<findFieldProperty
+		name="fl_meramente_occasionale" />
+
+	<columnFieldProperty
+		name="cd_proc_amm" />
+	<columnFieldProperty
+		name="ds_proc_amm" />
+	<columnFieldProperty
+		name="fl_cancellato" />
+</bulkInfo>

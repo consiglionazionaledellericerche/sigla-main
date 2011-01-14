@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.tabrif.bulk.Gruppo_inquadramentoKey" >
+	<defaultColumnMap
+		tableName="GRUPPO_INQUADRAMENTO" >
+		<columnMapping
+			columnName="CD_GRUPPO_INQUADRAMENTO"
+			propertyName="cd_gruppo_inquadramento"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_gruppo_inquadramento"
+		partOfOid="true" />
+</SQLPersistentInfo>

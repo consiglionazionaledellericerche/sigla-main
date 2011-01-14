@@ -1,0 +1,44 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_provincia"
+		property="cd_provincia"
+		inputType="TEXT"
+		label="Codice provincia"
+		/>
+	<fieldProperty
+		name="cd_regione"
+		property="cd_regione"
+		inputType="TEXT"
+		label="Codice regione"
+		/>
+	<fieldProperty
+		name="ds_provincia"
+		property="ds_provincia"
+		inputType="TEXT"
+		label="Descrizione provincia"
+		caseSensitiveSearch="false"
+		/>
+	<fieldProperty
+		name="regione"
+		property="regione"
+		inputType="TEXT"
+		/>
+
+	<columnFieldProperty name="cd_provincia" />
+	<columnFieldProperty name="cd_regione" />
+	<columnFieldProperty name="ds_provincia" />
+
+	<formFieldProperty name="cd_provincia" />
+	<formFieldProperty name="cd_regione" />
+	<formFieldProperty name="ds_provincia" />
+	<formFieldProperty name="regione" />
+
+	<findFieldProperty name="cd_provincia" />
+	<findFieldProperty name="cd_regione" />
+	<findFieldProperty name="ds_provincia" />
+
+</bulkInfo>

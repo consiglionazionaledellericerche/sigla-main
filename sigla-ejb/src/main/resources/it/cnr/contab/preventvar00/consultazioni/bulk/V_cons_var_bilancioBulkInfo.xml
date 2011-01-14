@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Variazioni di bilancio"
+          longDescription="Variazioni di bilancio">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Appartenenza" />
+	<fieldProperty
+		name="pg_variazione"
+		property="pg_variazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo" />
+	<fieldProperty
+		name="ds_variazione"
+		property="ds_variazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione" />
+	<fieldProperty
+		name="ds_delibera"
+		property="ds_delibera"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Delibera" />
+	<fieldProperty
+		name="ti_variazione"
+		property="ti_variazione"
+		keysProperty = "tipiVariazioneKeys"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Tipo Variazione" />
+	<fieldProperty
+		name="cd_causale_var_bilancio"
+		property="cd_causale_var_bilancio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Causale Variazione" />
+	<fieldProperty
+		name="ds_causale_var_bilancio"
+		property="ds_causale_var_bilancio"
+		inputType="TEXTAREA"
+		cols="50"
+		rows="4"
+		maxLength="200"
+		label="Descrizione Causale Variazione" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		keysProperty="statoKeys"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="stato" />
+	<fieldProperty
+		name="esercizio_importi"
+		property="esercizio_importi"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio residuo" />
+	<fieldProperty
+		name="esercizio_pdg_variazione"
+		property="esercizio_pdg_variazione"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Anno Variazione Pdg" />
+	<fieldProperty
+		name="pg_variazione_pdg"
+		property="pg_variazione_pdg"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero Variazione Pdg" />
+	<fieldProperty
+		name="esercizio_var_stanz_res"
+		property="esercizio_var_stanz_res"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Anno Variazione Stanz. Res." />
+	<fieldProperty
+		name="pg_var_stanz_res"
+		property="pg_var_stanz_res"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero Variazione Stanz. Res." />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		keysProperty="tipoGestioneKeys"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Gestione" />
+	<fieldProperty
+		name="cd_voce"
+		property="cd_voce"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		label="Voce" />
+	<fieldProperty
+		name="im_variazione"
+		property="im_variazione"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo variazione" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="pg_variazione" />
+	<formFieldProperty
+		name="ds_variazione" />
+	<formFieldProperty
+		name="ds_delibera" />
+	<formFieldProperty
+		name="ti_variazione" />
+	<formFieldProperty
+		name="cd_causale_var_bilancio" />
+	<formFieldProperty
+		name="ds_causale_var_bilancio" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="esercizio_importi" />
+	<formFieldProperty
+		name="esercizio_pdg_variazione" />
+	<formFieldProperty
+		name="pg_variazione_pdg" />
+	<formFieldProperty
+		name="esercizio_var_stanz_res" />
+	<formFieldProperty
+		name="pg_var_stanz_res" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_voce" />
+	<formFieldProperty
+		name="im_variazione" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="pg_variazione" />
+	<findFieldProperty
+		name="ds_variazione" />
+	<findFieldProperty
+		name="ds_delibera" />
+	<findFieldProperty
+		name="ti_variazione" />
+	<findFieldProperty
+		name="cd_causale_var_bilancio" />
+	<findFieldProperty
+		name="ds_causale_var_bilancio" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="esercizio_importi" />
+	<findFieldProperty
+		name="esercizio_pdg_variazione" />
+	<findFieldProperty
+		name="pg_variazione_pdg" />
+	<findFieldProperty
+		name="esercizio_var_stanz_res" />
+	<findFieldProperty
+		name="pg_var_stanz_res" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_voce" />
+	<findFieldProperty
+		name="im_variazione" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="esercizio_importi" />
+	<columnFieldProperty
+		name="pg_variazione" />
+	<columnFieldProperty
+		name="ds_variazione" />
+	<columnFieldProperty
+		name="cd_causale_var_bilancio" />
+	<columnFieldProperty
+		name="ds_causale_var_bilancio" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="pg_variazione_pdg" />
+	<columnFieldProperty
+		name="pg_var_stanz_res" />
+	<columnFieldProperty
+		name="cd_voce" />
+	<columnFieldProperty
+		name="im_variazione" />
+</bulkInfo>

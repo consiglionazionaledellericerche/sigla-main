@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_variazione_pdg"
+		property="pg_variazione_pdg"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero Variazione" />
+    <fieldProperty
+        name="centro_responsabilita"
+        property="centro_responsabilita"
+        inputType="SEARCHTOOL"
+        formName="searchtool"
+        enabledOnSearch="true"
+        label="Centro di Responsabilità" />		
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="centro_responsabilita.cd_centro_responsabilita"
+		inputType="ROTEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Centro di Responsabilità" />
+	<fieldProperty
+		name="ds_centro_responsabilita"
+		property="centro_responsabilita.ds_cdr"
+		inputType="ROTEXT"
+		inputSize="50"
+		maxLength="50"
+		nullable="false"
+		label="Descrizione" />
+		
+	<fieldProperty
+		name="im_entrata"
+		property="im_entrata"
+		inputType="TEXT"
+		readonlyProperty="ROIm_entrata"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Quota di entrata assegnata" />
+	<fieldProperty
+		name="entrata_ripartita"
+		property="entrata_ripartita"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Quota di entrata ripartita" />		
+	<fieldProperty
+		name="entrata_diff"
+		property="entrata_diff"
+		inputType="ROTEXT"
+		style="text-align: right"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Differenza" />		
+	<fieldProperty
+		name="im_spesa"
+		property="im_spesa"
+		inputType="TEXT"
+		readonlyProperty="ROIm_spesa"
+		formatName="it.cnr.contab.util.EuroFormat"		
+		label="Quota di spesa assegnata" />
+	<fieldProperty
+		name="spesa_ripartita"
+		property="spesa_ripartita"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Quota di spesa ripartita" />		
+	<fieldProperty
+		name="spesa_diff"
+		property="spesa_diff"
+		inputType="ROTEXT"
+		style="text-align: right"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Differenza" />		
+	<fieldProperty
+		name="dettagliSpese"
+		inputType="BUTTON"
+		img="img/edit16.gif"
+		style="align: center;"
+		label="Dettagli Spese"
+		readonlyProperty="abledDettagliSpese"
+		readonlyPropertyOnView="abledDettagliSpese"
+		enabledOnView="true"
+		href="javascript:submitForm('doDettagliSpePdG')" />		
+	<fieldProperty
+		name="dettagliEntrate"
+		inputType="BUTTON"
+		img="img/edit16.gif"
+		style="align: center;"
+		label="Dettagli Entrate"
+		readonlyProperty="abledDettagliEntrate"
+		readonlyPropertyOnView="abledDettagliEntrate"
+		enabledOnView="true"
+		href="javascript:submitForm('doDettagliEtrPdG')" />		
+	<fieldProperty
+		name="iconaVistoDipartimento"
+		property="iconaVistoDipartimento"
+		inputType="TEXT"
+		label="Visto" />
+	<fieldProperty
+		name="totale_quota_spesa"
+		property="totale_quota_spesa"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale" />
+		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_variazione_pdg" />
+	<formFieldProperty
+		name="centro_responsabilita" />		
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="ds_centro_responsabilita" />
+	<formFieldProperty
+		name="im_entrata" />
+	<formFieldProperty
+		name="entrata_ripartita" />
+	<formFieldProperty
+		name="entrata_diff" />		
+	<formFieldProperty
+		name="im_spesa" />
+	<formFieldProperty
+		name="spesa_ripartita" />
+	<formFieldProperty
+		name="spesa_diff" />		
+	<formFieldProperty
+		name="dettagliSpese" />
+	<formFieldProperty
+		name="dettagliEntrate" />
+	<formFieldProperty
+		name="totale_quota_spesa"/>
+		
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_variazione_pdg" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="im_entrata" />
+	<findFieldProperty
+		name="im_spesa" />		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_variazione_pdg" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="im_entrata" />
+	<columnFieldProperty
+		name="im_spesa" />
+	<columnSet
+	        name="associazioneCDR">
+        	<columnFieldProperty
+        		name="cd_centro_responsabilita" />
+        	<columnFieldProperty
+        		name="ds_centro_responsabilita" />
+        	<columnFieldProperty
+        		name="im_entrata" />
+        	<columnFieldProperty
+        		name="im_spesa" />        		
+	</columnSet>
+	<columnSet
+	        name="dipAssociazioneCDR">
+        	<columnFieldProperty
+        		name="cd_centro_responsabilita" />
+        	<columnFieldProperty
+        		name="ds_centro_responsabilita" />
+        	<columnFieldProperty
+        		name="im_entrata" />
+        	<columnFieldProperty
+        		name="im_spesa" />        		
+			<columnFieldProperty
+				name="iconaVistoDipartimento"
+				label="" />
+	</columnSet>
+</bulkInfo>

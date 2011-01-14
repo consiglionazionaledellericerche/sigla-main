@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Registro delle Partite di Giro"
+          longDescription="Registro delle Partite di Giro">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_cds_obb"
+		property="cd_cds_obb"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS" />
+	<fieldProperty
+		name="cd_unita_organizzativa_obb"
+		property="cd_unita_organizzativa_obb"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Unità organizzativa" />
+	<fieldProperty
+		name="cd_cds_origine_obb"
+		property="cd_cds_origine_obb"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS" />
+	<fieldProperty
+		name="cd_uo_origine_obb"
+		property="cd_uo_origine_obb"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Unità organizzativa" />
+	<fieldProperty
+		name="cd_elemento_voce_obb"
+		property="cd_elemento_voce_obb"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Voce del piano di Spesa" />
+	<fieldProperty
+		name="im_scadenza_comp_obb"
+		property="im_scadenza_comp_obb"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Annotazioni di Spesa Anno Corrente" />
+	<fieldProperty
+		name="im_scadenza_res_obb"
+		property="im_scadenza_res_obb"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Annotazioni di Spesa Anno Precedente" />
+	<fieldProperty
+		name="im_associato_doc_amm_comp_obb"
+		property="im_associato_doc_amm_comp_obb"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Documenti Amministrativi Anno Corrente" />
+	<fieldProperty
+		name="im_associato_doc_amm_res_obb"
+		property="im_associato_doc_amm_res_obb"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Documenti Amministrativi Anno Precedente" />
+	<fieldProperty
+		name="im_pagato_comp"
+		property="im_pagato_comp"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Pagato Anno Corrente" />
+	<fieldProperty
+		name="im_pagato_res"
+		property="im_pagato_res"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Pagato Anno Precedente" />
+	<fieldProperty
+		name="cd_elemento_voce_acr"
+		property="cd_elemento_voce_acr"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Voce del piano di Entrata" />
+	<fieldProperty
+		name="im_scadenza_comp_acr"
+		property="im_scadenza_comp_acr"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Annotazioni di Entrata Anno Corrente" />
+	<fieldProperty
+		name="im_scadenza_res_acr"
+		property="im_scadenza_res_acr"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Annotazioni di Entrata Anno Precedente" />
+	<fieldProperty
+		name="im_associato_doc_comp_acr"
+		property="im_associato_doc_comp_acr"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Documenti Amministrativi Anno Corrente" />
+	<fieldProperty
+		name="im_associato_doc_res_acr"
+		property="im_associato_doc_res_acr"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Documenti Amministrativi Anno Precedente" />
+	<fieldProperty
+		name="im_incassato_comp"
+		property="im_incassato_comp"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Incassato Anno Corrente" />
+	<fieldProperty
+		name="im_incassato_res"
+		property="im_incassato_res"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Incassato Anno Precedente" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_cds_obb" />
+	<formFieldProperty
+		name="cd_unita_organizzativa_obb" />
+	<formFieldProperty
+		name="cd_cds_origine_obb" />
+	<formFieldProperty
+		name="cd_uo_origine_obb" />
+	<formFieldProperty
+		name="cd_elemento_voce_obb" />
+	<formFieldProperty
+		name="im_scadenza_comp_obb" />
+	<formFieldProperty
+		name="im_scadenza_res_obb" />
+	<formFieldProperty
+		name="im_associato_doc_amm_comp_obb" />
+	<formFieldProperty
+		name="im_associato_doc_amm_res_obb" />
+	<formFieldProperty
+		name="im_pagato_comp" />
+	<formFieldProperty
+		name="im_pagato_res" />
+	<formFieldProperty
+		name="cd_elemento_voce_acr" />
+	<formFieldProperty
+		name="im_scadenza_comp_acr" />
+	<formFieldProperty
+		name="im_scadenza_res_acr" />
+	<formFieldProperty
+		name="im_associato_doc_comp_acr" />
+	<formFieldProperty
+		name="im_associato_doc_res_acr" />
+	<formFieldProperty
+		name="im_incassato_comp" />
+	<formFieldProperty
+		name="im_incassato_res" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_cds_obb" />
+	<findFieldProperty
+		name="cd_unita_organizzativa_obb" />
+	<findFieldProperty
+		name="cd_cds_origine_obb" />
+	<findFieldProperty
+		name="cd_uo_origine_obb" />
+	<findFieldProperty
+		name="cd_elemento_voce_obb" />
+	<findFieldProperty
+		name="im_scadenza_comp_obb" />
+	<findFieldProperty
+		name="im_scadenza_res_obb" />
+	<findFieldProperty
+		name="im_associato_doc_amm_comp_obb" />
+	<findFieldProperty
+		name="im_associato_doc_amm_res_obb" />
+	<findFieldProperty
+		name="im_pagato_comp" />
+	<findFieldProperty
+		name="im_pagato_res" />
+	<findFieldProperty
+		name="cd_elemento_voce_acr" />
+	<findFieldProperty
+		name="im_scadenza_comp_acr" />
+	<findFieldProperty
+		name="im_scadenza_res_acr" />
+	<findFieldProperty
+		name="im_associato_doc_comp_acr" />
+	<findFieldProperty
+		name="im_associato_doc_res_acr" />
+	<findFieldProperty
+		name="im_incassato_comp" />
+	<findFieldProperty
+		name="im_incassato_res" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_cds_obb" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa_obb" />
+	<columnFieldProperty
+		name="cd_cds_origine_obb" />
+	<columnFieldProperty
+		name="cd_uo_origine_obb" />
+	<columnFieldProperty
+		name="cd_elemento_voce_obb" />
+	<columnFieldProperty
+		name="im_scadenza_comp_obb" />
+	<columnFieldProperty
+		name="im_scadenza_res_obb" />
+	<columnFieldProperty
+		name="im_associato_doc_amm_comp_obb" />
+	<columnFieldProperty
+		name="im_associato_doc_amm_res_obb" />
+	<columnFieldProperty
+		name="im_pagato_comp" />
+	<columnFieldProperty
+		name="im_pagato_res" />
+	<columnFieldProperty
+		name="cd_elemento_voce_acr" />
+	<columnFieldProperty
+		name="im_scadenza_comp_acr" />
+	<columnFieldProperty
+		name="im_scadenza_res_acr" />
+	<columnFieldProperty
+		name="im_associato_doc_comp_acr" />
+	<columnFieldProperty
+		name="im_associato_doc_res_acr" />
+	<columnFieldProperty
+		name="im_incassato_comp" />
+	<columnFieldProperty
+		name="im_incassato_res" />
+	<columnSet	
+	     name="registroParGiro">
+		<columnFieldProperty
+			name="esercizio" />
+		<columnFieldProperty
+			name="cd_cds_origine_obb" />
+		<columnFieldProperty
+			name="cd_uo_origine_obb" />
+		<columnFieldProperty
+			name="cd_elemento_voce_obb" />
+		<columnFieldProperty
+			name="im_scadenza_comp_obb" />
+		<columnFieldProperty
+			name="im_associato_doc_amm_comp_obb" />
+		<columnFieldProperty
+			name="im_pagato_comp" />
+		<columnFieldProperty
+			name="im_scadenza_res_obb" />
+		<columnFieldProperty
+			name="im_associato_doc_amm_res_obb" />
+		<columnFieldProperty
+			name="im_pagato_res" />
+		<columnFieldProperty
+			name="cd_elemento_voce_acr" />
+		<columnFieldProperty
+			name="im_scadenza_comp_acr" />
+		<columnFieldProperty
+			name="im_associato_doc_comp_acr" />
+		<columnFieldProperty
+			name="im_incassato_comp" />
+		<columnFieldProperty
+			name="im_scadenza_res_acr" />
+		<columnFieldProperty
+			name="im_associato_doc_res_acr" />
+		<columnFieldProperty
+			name="im_incassato_res" />
+	</columnSet>
+	<freeSearchSet	
+	     name="registroParGiro">
+		<findFieldProperty
+			name="esercizio"/>
+		<findFieldProperty
+			name="cd_cds_origine_obb" label = "CDS"	/>
+		<findFieldProperty
+			name="cd_uo_origine_obb" label = "Unità Organizzativa" />
+		<findFieldProperty
+			name="cd_elemento_voce_obb" label = "Voce del Piano di Spesa"/>
+		<findFieldProperty
+			name="im_scadenza_comp_obb" label = "Totale Annotazioni di Spesa Anno Corrente"/>
+		<findFieldProperty
+			name="im_associato_doc_amm_comp_obb" label = "Totale Documenti Amministrativi (Obbligazione) Anno Corrente"/>
+		<findFieldProperty
+			name="im_pagato_comp" label = "Totale Pagato Anno Corrente"/>
+		<findFieldProperty
+			name="im_scadenza_res_obb" label = "Totale Annotazioni di Spesa Anno Precedente"/>
+		<findFieldProperty
+			name="im_associato_doc_amm_res_obb" label="Totale Documenti Amministrativi (Obbligazioni) Anno Precedente" />
+		<findFieldProperty
+			name="im_pagato_res" label="Totale Pagato Anno Precedente" />
+		<findFieldProperty
+			name="cd_elemento_voce_acr" label="Voce del piano di Entrata" />
+		<findFieldProperty
+			name="im_scadenza_comp_acr" label="Totale Annotazioni di Entrata Anno Corrente" />
+		<findFieldProperty
+			name="im_associato_doc_comp_acr" label="Totale Documenti Amministrativi (Accertamenti) Anno Corrente" />
+		<findFieldProperty
+			name="im_incassato_comp" label="Totale Incassato Anno Corrente" />
+		<findFieldProperty
+			name="im_scadenza_res_acr" label="Totale Annotazioni di Entrata Anno Precedente" />
+		<findFieldProperty
+			name="im_associato_doc_res_acr" label="Totale Documenti Amministrativi (Accertamenti) Anno Precedente" />
+		<findFieldProperty
+			name="im_incassato_res" label="Totale Incassato Anno Precedente" />
+	</freeSearchSet>
+</bulkInfo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaBulk"
+	homeClassName="it.cnr.contab.coepcoan00.core.bulk.Scrittura_partita_doppiaHome" >
+	<defaultColumnMap
+		tableName="SCRITTURA_PARTITA_DOPPIA" >
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="uo.cd_unita_organizzativa"/>
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cds.cd_unita_organizzativa"/>
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzo.cd_terzo"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="cds" 
+		partOfOid="true"/>
+	<persistentProperty
+		name="uo" 
+		partOfOid="true"/>		
+</SQLPersistentInfo>

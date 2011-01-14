@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.logregistry00.logs.bulk.L_abicabKey" >
+	<defaultColumnMap
+		tableName="L_ABICAB" >
+		<columnMapping
+			columnName="PG_STORICO_"
+			propertyName="pg_storico_"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CAB"
+			propertyName="cab"
+			sqlTypeName="CHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ABI"
+			propertyName="abi"
+			sqlTypeName="CHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_storico_"
+		partOfOid="true" />
+	<persistentProperty
+		name="cab"
+		partOfOid="true" />
+	<persistentProperty
+		name="abi"
+		partOfOid="true" />
+</SQLPersistentInfo>

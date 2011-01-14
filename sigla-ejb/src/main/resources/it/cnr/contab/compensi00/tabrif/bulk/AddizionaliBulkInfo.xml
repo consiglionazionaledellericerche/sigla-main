@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_catastale"
+		property="cd_catastale"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice catastale" />
+	<fieldProperty
+		name="ds_comune"
+		property="ds_comune"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Comune" />
+	<fieldProperty
+		name="cd_provincia"
+		property="cd_provincia"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Provincia" />
+	<fieldProperty
+		name="aliquota"
+		property="aliquota"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Aliquota" />
+	<fieldProperty
+		name="old_aliquota"
+		property="old_aliquota"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Aliquota Precedente" />
+		
+		
+	<formFieldProperty
+		name="cd_catastale" />
+	<formFieldProperty
+		name="ds_comune" />
+	<formFieldProperty
+		name="cd_provincia" />
+	<formFieldProperty
+		name="aliquota" />
+	<formFieldProperty
+		name="old_aliquota" />	
+	<findFieldProperty
+		name="cd_catastale" />
+	<findFieldProperty
+		name="ds_comune" />
+	<findFieldProperty
+		name="cd_provincia" />
+	<findFieldProperty
+		name="aliquota" />
+	<findFieldProperty
+		name="old_aliquota" />	
+	<columnFieldProperty
+		name="cd_catastale" />
+	<columnFieldProperty
+		name="ds_comune" />
+	<columnFieldProperty
+		name="cd_provincia" />
+	<columnFieldProperty
+		name="aliquota" />
+	<columnFieldProperty
+		name="old_aliquota" />	
+</bulkInfo>

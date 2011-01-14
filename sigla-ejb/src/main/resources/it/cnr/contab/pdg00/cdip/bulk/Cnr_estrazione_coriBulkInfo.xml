@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo>
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Centro di spesa" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Anno del flusso" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Uo della liquidazione cori" />
+	<fieldProperty
+		name="pg_liquidazione"
+		property="pg_liquidazione"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="pg_liquidazione" />
+	<fieldProperty
+		name="matricola"
+		property="matricola"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Matricola dipendente" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Codice fiscale (per controllare i numeri matricola provenienti da Pisa)" />
+	<fieldProperty
+		name="ti_pagamento"
+		property="ti_pagamento"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="1 = missioni 2 = altri pagamenti 3 = attività convenzione SSN (solo Pisa)" />
+	<fieldProperty
+		name="esercizio_compenso"
+		property="esercizio_compenso"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Anno compenso (per contributo aggiuntivo CPDEL e CPS)  per ora anno della data di inizio del compenso" />
+	<fieldProperty
+		name="cd_imponibile"
+		property="cd_imponibile"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		label="CD-IMPONIBILE =" />
+	<fieldProperty
+		name="ti_ente_percipiente"
+		property="ti_ente_percipiente"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="E=ente P=percipiente" />
+	<fieldProperty
+		name="cd_contributo_ritenuta"
+		property="cd_contributo_ritenuta"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Vedi tabella codici ritenute CIR ( anche ritenute a carico ente )" />
+	<fieldProperty
+		name="dt_inizio"
+		property="dt_inizio"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data inizio liquidazione CORI" />
+	<fieldProperty
+		name="dt_fine"
+		property="dt_fine"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data fine liquidazione CORI" />
+	<fieldProperty
+		name="im_lordo"
+		property="im_lordo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo lordo pagato complessivo per tipo-pagamento (lordo percipiente)" />
+	<fieldProperty
+		name="imponibile"
+		property="imponibile"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Imponibile" />
+	<fieldProperty
+		name="im_ritenuta"
+		property="im_ritenuta"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Ammontare CORI" />
+	<fieldProperty
+		name="dt_scarico_verso_stipendi"
+		property="dt_scarico_verso_stipendi"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Timestamp di scarico verso stipendi dei dati di interfaccia" />
+	<fieldProperty
+		name="dt_inizio_compenso"
+		property="dt_inizio_compenso"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data di inizio competenza dei Compensi" />
+	<fieldProperty
+		name="dt_fine_compenso"
+		property="dt_fine_compenso"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data di fine competenza dei Compensi" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="pg_liquidazione" />
+	<formFieldProperty
+		name="matricola" />
+	<formFieldProperty
+		name="codice_fiscale" />
+	<formFieldProperty
+		name="ti_pagamento" />
+	<formFieldProperty
+		name="esercizio_compenso" />
+	<formFieldProperty
+		name="cd_imponibile" />
+	<formFieldProperty
+		name="ti_ente_percipiente" />
+	<formFieldProperty
+		name="cd_contributo_ritenuta" />
+	<formFieldProperty
+		name="dt_inizio" />
+	<formFieldProperty
+		name="dt_fine" />
+	<formFieldProperty
+		name="im_lordo" />
+	<formFieldProperty
+		name="imponibile" />
+	<formFieldProperty
+		name="im_ritenuta" />
+	<formFieldProperty
+		name="dt_scarico_verso_stipendi" />
+	<formFieldProperty
+		name="dt_inizio_compenso" />
+	<formFieldProperty
+		name="dt_fine_compenso" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="pg_liquidazione" />
+	<findFieldProperty
+		name="matricola" />
+	<findFieldProperty
+		name="codice_fiscale" />
+	<findFieldProperty
+		name="ti_pagamento" />
+	<findFieldProperty
+		name="esercizio_compenso" />
+	<findFieldProperty
+		name="cd_imponibile" />
+	<findFieldProperty
+		name="ti_ente_percipiente" />
+	<findFieldProperty
+		name="cd_contributo_ritenuta" />
+	<findFieldProperty
+		name="dt_inizio" />
+	<findFieldProperty
+		name="dt_fine" />
+	<findFieldProperty
+		name="im_lordo" />
+	<findFieldProperty
+		name="imponibile" />
+	<findFieldProperty
+		name="im_ritenuta" />
+	<findFieldProperty
+		name="dt_scarico_verso_stipendi" />
+	<findFieldProperty
+		name="dt_inizio_compenso" />
+	<findFieldProperty
+		name="dt_fine_compenso" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="pg_liquidazione" />
+	<columnFieldProperty
+		name="matricola" />
+	<columnFieldProperty
+		name="codice_fiscale" />
+	<columnFieldProperty
+		name="ti_pagamento" />
+	<columnFieldProperty
+		name="esercizio_compenso" />
+	<columnFieldProperty
+		name="cd_imponibile" />
+	<columnFieldProperty
+		name="ti_ente_percipiente" />
+	<columnFieldProperty
+		name="cd_contributo_ritenuta" />
+	<columnFieldProperty
+		name="dt_inizio" />
+	<columnFieldProperty
+		name="dt_fine" />
+	<columnFieldProperty
+		name="im_lordo" />
+	<columnFieldProperty
+		name="imponibile" />
+	<columnFieldProperty
+		name="im_ritenuta" />
+	<columnFieldProperty
+		name="dt_scarico_verso_stipendi" />
+	<columnFieldProperty
+		name="dt_inizio_compenso" />
+	<columnFieldProperty
+		name="dt_fine_compenso" />
+</bulkInfo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk"
+	homeClassName="it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriHome">
+	<defaultColumnMap
+		tableName="INCARICHI_PARAMETRI">
+		<columnMapping
+			columnName="CD_GRUPPO_FILE"
+			propertyName="gruppo_file.cd_gruppo_file" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="gruppo_file" />
+</SQLPersistentInfo>

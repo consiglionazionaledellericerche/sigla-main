@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<!-- ************************** FORNITORE **************************** -->
+	<fieldProperty
+		name="fornitore"
+		property="fornitore"
+		inputType="SEARCHTOOL" 		
+		formName="searchtool"
+		readonlyProperty="ROfornitoretool"
+		enabledOnSearch="true" />	
+	<fieldProperty
+		name="cd_fornitore"
+		property="fornitore.cd_terzo"
+		maxLength="6"
+		inputSize="6"
+		inputType="ROTEXT"
+		label="Creditore"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cognome"
+		property="fornitore.anagrafico.cognome"
+		maxLength="50"
+		inputSize="50"
+		inputType="ROTEXT"
+		label="Cognome"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="nome"
+		property="fornitore.anagrafico.nome"
+		maxLength="50"
+		inputSize="50"
+		inputType="ROTEXT"
+		enabledOnSearch="true"
+		label="Nome"/>
+	<fieldProperty
+		name="ragione_sociale"
+		property="fornitore.anagrafico.ragione_sociale"
+		maxLength="100"
+		inputSize="100"
+		inputType="ROTEXT"
+		enabledOnSearch="true"
+		label="Ragione Sociale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="denominazione_sede"
+		property="fornitore.denominazione_sede"
+		inputSize="100"
+		inputType="ROTEXT"
+		label="Denom./Sede"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="fornitore.anagrafico.codice_fiscale"
+		maxLength="16"
+		inputSize="16"
+		inputType="ROTEXT"
+		label="Cod. Fiscale"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="partita_iva"
+		property="fornitore.anagrafico.partita_iva"
+		maxLength="11"
+		inputSize="11"
+		inputType="ROTEXT"
+		label="Partita IVA"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+
+	<!-- ************************** IMPORTO **************************** -->
+	<fieldProperty
+		name="im_importo"
+		property="im_importo"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		readonlyProperty="ROimporto"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+		
+	<!-- ************************ DATA SCADENZA ************************** -->
+	<fieldProperty
+		name="data_scadenziario"
+		property="data_scadenziario"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		formatName="date_short"
+		readonlyProperty="ROdatascadenza"
+		label="Data scadenza"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+		
+	<!-- ************************ NR OBBLIGAZIONE ************************ -->
+	<fieldProperty
+		name="nr_obbligazione"
+		property="nr_obbligazione"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		readonlyProperty="ROnrobbligazione"
+		label="Nr. impegno"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="nr_scadenza"
+		property="nr_scadenza"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		readonlyProperty="ROnrobbligazione"
+		label="Nr. scadenza"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+			
+	<!-- ************************ FLAGS RICERCA ************************ -->
+	<fieldProperty
+		name="fl_fornitore"
+		property="fl_fornitore"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		label="Abilita filtro" />
+	<fieldProperty
+		name="fl_importo"
+		property="fl_importo"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		label="Abilita filtro" />
+	<fieldProperty
+		name="fl_data_scadenziario"
+		property="fl_data_scadenziario"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		label="Abilita filtro" />
+	<fieldProperty
+		name="fl_nr_obbligazione"
+		property="fl_nr_obbligazione"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		label="Abilita filtro" />
+	<fieldProperty
+		name="fl_associate"
+		property="fl_associate"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		label="Solo già associate" />
+	
+	<!-- ************************ FORM FIELD PROPERTY ******************** -->
+	<formFieldProperty name="fornitore" />
+	<formFieldProperty name="cd_fornitore" />
+	<formFieldProperty name="cognome" />
+	<formFieldProperty name="nome" />
+	<formFieldProperty name="ragione_sociale" />
+	<formFieldProperty name="denominazione_sede" />
+	<formFieldProperty name="codice_fiscale" />
+	<formFieldProperty name="partita_iva" />
+	<formFieldProperty name="im_importo" />
+	<formFieldProperty name="data_scadenziario" />
+	<formFieldProperty name="nr_obbligazione" />
+	<formFieldProperty name="nr_scadenza" />
+	<formFieldProperty name="fl_fornitore" />
+	<formFieldProperty name="fl_importo" />
+	<formFieldProperty name="fl_data_scadenziario" />
+	<formFieldProperty name="fl_nr_obbligazione" />
+	<formFieldProperty name="fl_associate" />
+
+	<!-- ************************ FIND FIELD PROPERTY ******************** -->
+	<findFieldProperty name="cd_fornitore" />
+	<findFieldProperty name="cognome" />
+	<findFieldProperty name="nome" />
+	<findFieldProperty name="ragione_sociale" />
+	<findFieldProperty name="codice_fiscale" />
+	<findFieldProperty name="partita_iva" />
+	<findFieldProperty name="im_importo" />
+	<findFieldProperty name="data_scadenziario" />
+	<findFieldProperty name="nr_obbligazione" />
+	<findFieldProperty name="nr_scadenza" />
+	<findFieldProperty name="fl_associate" />
+
+	<!-- ************************ COLUMN FIELD PROPERTY ****************** -->
+	<columnFieldProperty name="nr_obbligazione" />
+	<columnFieldProperty name="data_scadenziario" />
+	<columnFieldProperty name="im_importo" />
+	<columnFieldProperty name="ragione_sociale" />
+	<columnFieldProperty name="cognome" />
+	<columnFieldProperty name="nome" />
+	<columnFieldProperty name="denominazione_sede" />
+	<columnFieldProperty name="codice_fiscale" />
+	<columnFieldProperty name="partita_iva" />
+
+	<!-- ************************ COLUMN SET ***************************** -->
+	<columnSet
+		name="obbligazioneSet">
+		<columnFieldProperty name="nr_obbligazione" />
+		<columnFieldProperty name="nr_scadenza" />
+		<columnFieldProperty name="data_scadenziario" />
+		<columnFieldProperty name="im_importo" />
+		<columnFieldProperty name="ragione_sociale" />
+		<columnFieldProperty name="cognome" />
+		<columnFieldProperty name="nome" />
+		<columnFieldProperty name="denominazione_sede" />
+		<columnFieldProperty name="codice_fiscale" />
+		<columnFieldProperty name="partita_iva" />
+	</columnSet>
+
+</bulkInfo>

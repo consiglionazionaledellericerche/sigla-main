@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.tabrif.bulk.Tipologie_istatKey">
+	<defaultColumnMap
+		tableName="TIPOLOGIE_ISTAT">
+		<columnMapping
+			columnName="PG_TIPOLOGIA"
+			propertyName="pg_tipologia"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_tipologia"
+		partOfOid="true" />
+</SQLPersistentInfo>

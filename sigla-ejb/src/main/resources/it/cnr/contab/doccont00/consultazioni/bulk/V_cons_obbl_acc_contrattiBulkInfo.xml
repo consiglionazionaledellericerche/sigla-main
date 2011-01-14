@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Doc. Contabili per Commessa/Contratto"
+          longDescription="Doc. Cont. Commessa-Contratto">
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="Tipo" />
+	<fieldProperty
+		name="esercizio_competenza"
+		property="esercizio_competenza"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio competenza" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Unità Organizzativa" />
+		
+	<fieldProperty
+		name="pg_doc"
+		property="pg_doc"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Num Impegno/Num Accert." />
+	<fieldProperty
+		name="dt_registrazione"
+		property="dt_registrazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data registazione" />
+	<fieldProperty
+		name="ds_doc"
+		property="ds_doc"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione Impegno/Descrizione Accertamento" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Creditore/Debitore" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Voce del piano" />
+	<fieldProperty
+		name="cd_commessa"
+		property="cd_commessa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice Commessa" />
+	<fieldProperty
+		name="ds_commessa"
+		property="ds_commessa"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="400"
+		label="Descrizione Commessa" />
+	<fieldProperty
+		name="esercizio_contratto_padre"
+		property="esercizio_contratto_padre"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio contratto di riferimento" />
+	<fieldProperty
+		name="pg_contratto_padre"
+		property="pg_contratto_padre"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo contratto di riferimento" />
+	<fieldProperty
+		name="esercizio_contratto"
+		property="esercizio_contratto"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio contratto" />
+	<fieldProperty
+		name="pg_contratto"
+		property="pg_contratto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo contratto" />
+	<fieldProperty
+		name="oggetto_contratto"
+		property="oggetto_contratto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="500"
+		label="Oggetto contratto" />
+	<fieldProperty
+		name="im_accertamento"
+		property="im_accertamento"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo" />
+	<fieldProperty
+		name="im_obbligazione"
+		property="im_obbligazione"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo" />
+	<findFieldProperty
+		name="esercizio_competenza" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />		
+	<findFieldProperty
+		name="pg_doc" />
+	<findFieldProperty
+		name="dt_registrazione" />
+	<findFieldProperty
+		name="ds_doc" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="cd_commessa" />
+	<findFieldProperty
+		name="ds_commessa" />
+	<findFieldProperty
+		name="esercizio_contratto_padre" />
+	<findFieldProperty
+		name="pg_contratto_padre" />
+	<findFieldProperty
+		name="esercizio_contratto" />
+	<findFieldProperty
+		name="pg_contratto" />
+	<findFieldProperty
+		name="oggetto_contratto" />
+	<findFieldProperty
+		name="im_accertamento" />
+	<findFieldProperty
+		name="im_obbligazione" />
+	<columnFieldProperty
+		name="esercizio_competenza" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />				
+	<columnFieldProperty
+		name="pg_doc" />
+	<columnFieldProperty
+		name="dt_registrazione" />
+	<columnFieldProperty
+		name="ds_doc" />
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="cd_commessa" />
+	<columnFieldProperty
+		name="ds_commessa" />
+	<columnFieldProperty
+		name="esercizio_contratto_padre" />
+	<columnFieldProperty
+		name="pg_contratto_padre" />
+	<columnFieldProperty
+		name="esercizio_contratto" />
+	<columnFieldProperty
+		name="pg_contratto" />
+	<columnFieldProperty
+		name="oggetto_contratto" />
+	<columnFieldProperty
+		name="im_accertamento" />
+	<columnFieldProperty
+		name="im_obbligazione" />
+		
+	<columnSet
+	        name="Accertamenti">
+	<columnFieldProperty
+		name="esercizio_competenza" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />						
+	<columnFieldProperty
+		name="pg_doc"
+		label="Num Accert." />
+	<columnFieldProperty
+		name="dt_registrazione" />
+	<columnFieldProperty
+		name="ds_doc"
+		label="Descrizione Accertamento" />
+	<columnFieldProperty
+		name="cd_terzo"
+		label="Debitore" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="cd_commessa" />
+	<columnFieldProperty
+		name="ds_commessa" />
+	<columnFieldProperty
+		name="im_accertamento" />
+	</columnSet>
+
+	<columnSet
+	        name="AccertamentiContratti">
+	<columnFieldProperty
+		name="esercizio_competenza" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />						
+	<columnFieldProperty
+		name="pg_doc"
+		label="Num Accert." />
+	<columnFieldProperty
+		name="dt_registrazione" />
+	<columnFieldProperty
+		name="ds_doc"
+		label="Descrizione Accertamento" />
+	<columnFieldProperty
+		name="cd_terzo"
+		label="Debitore" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="cd_commessa" />
+	<columnFieldProperty
+		name="ds_commessa" />
+	<columnFieldProperty
+		name="esercizio_contratto" />
+	<columnFieldProperty
+		name="pg_contratto" />
+	<columnFieldProperty
+		name="oggetto_contratto" />		
+	<columnFieldProperty
+		name="im_accertamento" />
+	</columnSet>
+		
+	<columnSet
+	        name="Obbligazioni">
+	<columnFieldProperty
+		name="esercizio_competenza" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />						
+	<columnFieldProperty
+		name="pg_doc"
+		label="Num Impegno" />
+	<columnFieldProperty
+		name="dt_registrazione" />
+	<columnFieldProperty
+		name="ds_doc"
+		label="Descrizione Impegno" />
+	<columnFieldProperty
+		name="cd_terzo"
+		label="Creditore" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="cd_commessa" />
+	<columnFieldProperty
+		name="ds_commessa" />
+	<columnFieldProperty
+		name="im_obbligazione" />
+	</columnSet>
+		
+	<columnSet
+	        name="ObbligazioniContratti">
+	<columnFieldProperty
+		name="esercizio_competenza" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />						
+	<columnFieldProperty
+		name="pg_doc"
+		label="Num Impegno" />
+	<columnFieldProperty
+		name="dt_registrazione" />
+	<columnFieldProperty
+		name="ds_doc"
+		label="Descrizione Impegno" />
+	<columnFieldProperty
+		name="cd_terzo"
+		label="Creditore" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="cd_commessa" />
+	<columnFieldProperty
+		name="ds_commessa" />
+	<columnFieldProperty
+		name="esercizio_contratto" />
+	<columnFieldProperty
+		name="pg_contratto" />
+	<columnFieldProperty
+		name="oggetto_contratto" />				
+	<columnFieldProperty
+		name="im_obbligazione" />
+	</columnSet>	
+</bulkInfo>

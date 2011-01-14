@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.TerzoBase"
+	keyClassName="it.cnr.contab.anagraf00.core.bulk.TerzoKey"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.TerzoHome" >
+	<defaultColumnMap
+		tableName="TERZO" >
+		<columnMapping
+			columnName="NUMERO_CIVICO_SEDE"
+			propertyName="numero_civico_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="DT_CANC"
+			propertyName="dt_canc"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="CAP_COMUNE_SEDE"
+			propertyName="cap_comune_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="DENOMINAZIONE_SEDE"
+			propertyName="denominazione_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false" />
+		<columnMapping
+			columnName="FRAZIONE_SEDE"
+			propertyName="frazione_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="cd_anag"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_COMUNE_SEDE"
+			propertyName="pg_comune_sede"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_TERZO"
+			propertyName="ti_terzo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="NOTE"
+			propertyName="note"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="DT_FINE_RAPPORTO"
+			propertyName="dt_fine_rapporto"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="CD_PRECEDENTE"
+			propertyName="cd_precedente"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="PG_RAPP_LEGALE"
+			propertyName="pg_rapp_legale"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="60" />
+		<columnMapping
+			columnName="NOME_UNITA_ORGANIZZATIVA"
+			propertyName="nome_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="VIA_SEDE"
+			propertyName="via_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="numero_civico_sede" />
+	<persistentProperty
+		name="dt_canc" />
+	<persistentProperty
+		name="cap_comune_sede" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="frazione_sede" />
+	<persistentProperty
+		name="denominazione_sede" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="cd_anag" />
+	<persistentProperty
+		name="pg_comune_sede" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="ti_terzo" />
+	<persistentProperty
+		name="note" />
+	<persistentProperty
+		name="dt_fine_rapporto" />
+	<persistentProperty
+		name="cd_precedente" />
+	<persistentProperty
+		name="pg_rapp_legale" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="nome_unita_organizzativa" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="via_sede" />
+</SQLPersistentInfo>

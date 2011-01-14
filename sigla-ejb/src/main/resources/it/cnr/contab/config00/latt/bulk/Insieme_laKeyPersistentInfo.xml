@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.latt.bulk.Insieme_laKey" >
+	<defaultColumnMap
+		tableName="INSIEME_LA" >
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_INSIEME_LA"
+			propertyName="cd_insieme_la"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_centro_responsabilita"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_insieme_la"
+		partOfOid="true" />
+</SQLPersistentInfo>

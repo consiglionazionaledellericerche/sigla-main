@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">	
+	<formFieldProperty
+		name="im_obblig_imp_acr" 
+	    label="Saldo obbligazioni"
+	/>
+	<formFieldProperty
+		name="im_mandati_reversali" 
+	    label="Saldo mandati"
+	/>
+	<formFieldProperty
+		name="im_pagamenti_incassi" 
+	    label="Saldo pagamenti"
+	/>
+
+	<columnFieldProperty
+		name="im_obblig_imp_acr" 
+	    label="Saldo obbligazioni"
+	/>
+	<columnFieldProperty
+		name="im_mandati_reversali" 
+	    label="Saldo mandati"
+	/>
+	<columnFieldProperty
+		name="im_pagamenti_incassi" 
+	    label="Saldo pagamenti"
+	/>
+
+</bulkInfo>

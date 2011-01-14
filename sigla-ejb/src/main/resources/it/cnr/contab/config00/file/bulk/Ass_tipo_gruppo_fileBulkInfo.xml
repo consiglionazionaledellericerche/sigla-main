@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_tipo_file"
+		property="tipo_file.cd_tipo_file"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice file" />
+	<fieldProperty
+		name="cd_gruppo_file"
+		property="gruppo_file.cd_gruppo_file"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice gruppo file" />
+
+	<formFieldProperty
+		name="cd_tipo_file" />
+	<formFieldProperty
+		name="cd_gruppo_file" />
+
+	<findFieldProperty
+		name="cd_tipo_file" />
+	<findFieldProperty
+		name="cd_gruppo_file" />
+
+	<columnFieldProperty
+		name="cd_tipo_file" />
+	<columnFieldProperty
+		name="cd_gruppo_file" />
+</bulkInfo>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.logregistry00.logs.bulk.L_ass_comp_doc_cont_nmpBulkKey">
+	<defaultColumnMap
+		tableName="L_ASS_COMP_DOC_CONT_NMP">
+		<columnMapping
+			columnName="PG_STORICO_"
+			propertyName="pg_storico_"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS_COMPENSO"
+			propertyName="cd_cds_compenso"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_COMPENSO"
+			propertyName="esercizio_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UO_COMPENSO"
+			propertyName="cd_uo_compenso"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_COMPENSO"
+			propertyName="pg_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS_DOC"
+			propertyName="cd_cds_doc"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_DOC"
+			propertyName="esercizio_doc"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_DOC"
+			propertyName="pg_doc"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_TIPO_DOC"
+			propertyName="cd_tipo_doc"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_storico_"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_cds_compenso"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio_compenso"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_uo_compenso"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_compenso"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_cds_doc"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio_doc"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_doc"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_tipo_doc"
+		partOfOid="true" />
+</SQLPersistentInfo>

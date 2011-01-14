@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.intrastat.bulk.Nomenclatura_combinataBase"
+	keyClassName="it.cnr.contab.docamm00.intrastat.bulk.Nomenclatura_combinataKey"
+	homeClassName="it.cnr.contab.docamm00.intrastat.bulk.Nomenclatura_combinataHome" >
+	<defaultColumnMap
+		tableName="NOMENCLATURA_COMBINATA" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />	
+		<columnMapping
+			columnName="CD_NOMENCLATURA_COMBINATA"
+			propertyName="cd_nomenclatura_combinata"
+			sqlTypeName="VARCHAR"
+			columnSize="8"
+			nullable="false" />	
+			
+		<columnMapping
+			columnName="DS_NOMENCLATURA_COMBINATA"
+			propertyName="ds_nomenclatura_combinata"
+			sqlTypeName="VARCHAR"
+			columnSize="1500"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="LIVELLO"
+			propertyName="livello"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false"/>
+		<columnMapping
+			columnName="ESERCIZIO_INIZIO"
+			propertyName="esercizio_inizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />		
+		<columnMapping
+			columnName="ESERCIZIO_FINE"
+			propertyName="esercizio_fine"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="UNITA_SUPPLEMENTARI"
+			propertyName="unita_supplementari"
+			sqlTypeName="VARCHAR"
+			columnSize="60"
+			nullable="true" />					
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="ds_nomenclatura_combinata" />
+	<persistentProperty
+		name="cd_nomenclatura_combinata" />
+	<persistentProperty
+		name="esercizio" />			
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="livello" />
+	<persistentProperty
+		name="esercizio_inizio" />	
+	<persistentProperty
+		name="esercizio_fine" />	
+	<persistentProperty
+		name="unita_supplementari" />			
+</SQLPersistentInfo>

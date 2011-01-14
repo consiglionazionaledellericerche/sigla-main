@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_partite_giro_detBulk"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_partite_giro_detHome">
+	<defaultColumnMap
+		tableName="V_CONS_PARTITE_GIRO_DET">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_ORIGINE"
+			propertyName="ti_origine"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_OBB"
+			propertyName="cd_cds_obb"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_OBB"
+			propertyName="esercizio_obb"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA_OBB"
+			propertyName="cd_unita_organizzativa_obb"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE_OBB"
+			propertyName="cd_cds_origine_obb"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UO_ORIGINE_OBB"
+			propertyName="cd_uo_origine_obb"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE_OBB"
+			propertyName="cd_elemento_voce_obb"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="esercizio_ori_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SCADENZA_COMP_OBB"
+			propertyName="im_scadenza_comp_obb"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SCADENZA_RES_OBB"
+			propertyName="im_scadenza_res_obb"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ASSOCIATO_DOC_AMM_COMP_OBB"
+			propertyName="im_associato_doc_amm_comp_obb"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ASSOCIATO_DOC_AMM_RES_OBB"
+			propertyName="im_associato_doc_amm_res_obb"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_PAGATO_COMP"
+			propertyName="im_pagato_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_PAGATO_RES"
+			propertyName="im_pagato_res"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_ACR"
+			propertyName="cd_cds_acr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ACR"
+			propertyName="esercizio_acr"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA_ACR"
+			propertyName="cd_unita_organizzativa_acr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE_ACR"
+			propertyName="cd_cds_origine_acr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UO_ORIGINE_ACR"
+			propertyName="cd_uo_origine_acr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE_ACR"
+			propertyName="cd_elemento_voce_acr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ACCERTAMENTO"
+			propertyName="esercizio_ori_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="pg_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SCADENZA_COMP_ACR"
+			propertyName="im_scadenza_comp_acr"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SCADENZA_RES_ACR"
+			propertyName="im_scadenza_res_acr"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ASSOCIATO_DOC_COMP_ACR"
+			propertyName="im_associato_doc_comp_acr"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ASSOCIATO_DOC_RES_ACR"
+			propertyName="im_associato_doc_res_acr"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_INCASSATO_COMP"
+			propertyName="im_incassato_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_INCASSATO_RES"
+			propertyName="im_incassato_res"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="ti_origine" />
+	<persistentProperty
+		name="cd_cds_obb" />
+	<persistentProperty
+		name="esercizio_obb" />
+	<persistentProperty
+		name="cd_unita_organizzativa_obb" />
+	<persistentProperty
+		name="cd_cds_origine_obb" />
+	<persistentProperty
+		name="cd_uo_origine_obb" />
+	<persistentProperty
+		name="cd_elemento_voce_obb" />
+	<persistentProperty
+		name="esercizio_ori_obbligazione" />
+	<persistentProperty
+		name="pg_obbligazione" />
+	<persistentProperty
+		name="im_scadenza_comp_obb" />
+	<persistentProperty
+		name="im_scadenza_res_obb" />
+	<persistentProperty
+		name="im_associato_doc_amm_comp_obb" />
+	<persistentProperty
+		name="im_associato_doc_amm_res_obb" />
+	<persistentProperty
+		name="im_pagato_comp" />
+	<persistentProperty
+		name="im_pagato_res" />
+	<persistentProperty
+		name="cd_cds_acr" />
+	<persistentProperty
+		name="esercizio_acr" />
+	<persistentProperty
+		name="cd_unita_organizzativa_acr" />
+	<persistentProperty
+		name="cd_cds_origine_acr" />
+	<persistentProperty
+		name="cd_uo_origine_acr" />
+	<persistentProperty
+		name="cd_elemento_voce_acr" />
+	<persistentProperty
+		name="esercizio_ori_accertamento" />
+	<persistentProperty
+		name="pg_accertamento" />
+	<persistentProperty
+		name="im_scadenza_comp_acr" />
+	<persistentProperty
+		name="im_scadenza_res_acr" />
+	<persistentProperty
+		name="im_associato_doc_comp_acr" />
+	<persistentProperty
+		name="im_associato_doc_res_acr" />
+	<persistentProperty
+		name="im_incassato_comp" />
+	<persistentProperty
+		name="im_incassato_res" />
+</SQLPersistentInfo>

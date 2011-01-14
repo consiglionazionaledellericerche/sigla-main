@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.reports.bulk.Print_spoolerBase"
+	keyClassName="it.cnr.contab.reports.bulk.Print_spoolerKey"
+	homeClassName="it.cnr.contab.reports.bulk.Print_spoolerHome" >
+	<defaultColumnMap
+		tableName="PRINT_SPOOLER" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="PRIORITA_SERVER"
+			propertyName="prioritaServer"
+			sqlTypeName="DECIMAL"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="ID_REPORT_GENERICO"
+			propertyName="idReportGenerico"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="REPORT"
+			propertyName="report"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="TI_VISIBILITA"
+			propertyName="tiVisibilita"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_SCADENZA"
+			propertyName="dtScadenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DS_STAMPA"
+			propertyName="dsStampa"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PRIORITA"
+			propertyName="priorita"
+			sqlTypeName="DECIMAL"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="NOME_FILE"
+			propertyName="nomeFile"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="INTERVALLO_FINE"
+			propertyName="intervalloFine"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="SERVER"
+			propertyName="server"
+			sqlTypeName="VARCHAR"
+			columnSize="200" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="VISIBILITA"
+			propertyName="visibilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="INTERVALLO_INIZIO"
+			propertyName="intervalloInizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="DS_UTENTE"
+			propertyName="dsUtente"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="FL_EMAIL"
+			propertyName="flEmail"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="EMAIL_A"
+			propertyName="emailA"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="EMAIL_CC"
+			propertyName="emailCc"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="EMAIL_CCN"
+			propertyName="emailCcn"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="EMAIL_SUBJECT"
+			propertyName="emailSubject"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="EMAIL_BODY"
+			propertyName="emailBody"
+			sqlTypeName="VARCHAR"
+			columnSize="4000"
+			nullable="true" />			
+		<columnMapping
+			columnName="DT_PARTENZA"
+			propertyName="dtPartenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="INTERVALLO"
+			propertyName="intervallo"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_INTERVALLO"
+			propertyName="tiIntervallo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROSSIMA_ESECUZIONE"
+			propertyName="dtProssimaEsecuzione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_SERVIZIO_PEC"
+			propertyName="cd_servizio_pec"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />			
+		<columnMapping
+			columnName="DS_OGGETTO_PEC"
+			propertyName="ds_oggetto_pec"
+			sqlTypeName="VARCHAR"
+			columnSize="400"
+			nullable="true" />			
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="prioritaServer" />
+	<persistentProperty
+		name="idReportGenerico" />
+	<persistentProperty
+		name="report" />
+	<persistentProperty
+		name="tiVisibilita" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dtScadenza" />
+	<persistentProperty
+		name="dsStampa" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="priorita" />
+	<persistentProperty
+		name="nomeFile" />
+	<persistentProperty
+		name="intervalloFine" />
+	<persistentProperty
+		name="server" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="visibilita" />
+	<persistentProperty
+		name="intervalloInizio" />
+	<persistentProperty
+		name="dsUtente" />
+	<persistentProperty
+		name="flEmail" />
+	<persistentProperty
+		name="emailA" />
+	<persistentProperty
+		name="emailCc" />
+	<persistentProperty
+		name="emailCcn" />
+	<persistentProperty
+		name="emailSubject" />
+	<persistentProperty
+		name="emailBody" />
+	<persistentProperty
+		name="dtPartenza" />
+	<persistentProperty
+		name="intervallo" />
+	<persistentProperty
+		name="tiIntervallo" />
+	<persistentProperty
+		name="dtProssimaEsecuzione" />
+	<persistentProperty
+		name="cd_servizio_pec" />
+	<persistentProperty
+		name="ds_oggetto_pec" />
+</SQLPersistentInfo>

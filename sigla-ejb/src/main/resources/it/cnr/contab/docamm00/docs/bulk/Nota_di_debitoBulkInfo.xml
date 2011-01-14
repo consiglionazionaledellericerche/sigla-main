@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="im_importo_totale_fattura_fornitore_euro"
+		label="Totale nota di debito fornitore euro" />
+	<fieldProperty
+		name="nr_fattura_fornitore"
+		property="nr_fattura_fornitore"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		label="N. Nota di Debito"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+		
+	<formFieldProperty
+		name="nr_fattura_fornitore"
+		label="N. Nota di Debito" />
+
+	<columnFieldProperty
+		name="nr_fattura_fornitore"
+		label="Numero documento" />
+
+</bulkInfo>

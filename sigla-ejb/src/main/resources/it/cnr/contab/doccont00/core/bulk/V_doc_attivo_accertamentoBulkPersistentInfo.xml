@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.V_doc_attivo_accertamentoBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.V_doc_attivo_accertamentoHome" >
+	<defaultColumnMap
+		tableName="V_DOC_ATTIVO_ACCERTAMENTO" >
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzoAnag.cd_terzo"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="terzoAnag" />
+
+</SQLPersistentInfo>

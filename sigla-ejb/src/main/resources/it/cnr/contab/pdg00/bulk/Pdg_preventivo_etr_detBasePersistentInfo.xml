@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBase"
+	keyClassName="it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detKey"
+	homeClassName="it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detHome" >
+	<defaultColumnMap
+		tableName="PDG_PREVENTIVO_ETR_DET" >
+		<columnMapping
+			columnName="IM_RC_ESR"
+			propertyName="im_rc_esr"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE_CLGS"
+			propertyName="cd_elemento_voce_clgs"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="cd_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CATEGORIA_DETTAGLIO"
+			propertyName="categoria_dettaglio"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="ORIGINE"
+			propertyName="origine"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="DESCRIZIONE"
+			propertyName="descrizione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_SPESA_CLGS"
+			propertyName="pg_spesa_clgs"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA_CLGS"
+			propertyName="cd_linea_attivita_clgs"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="IM_RB_RSE"
+			propertyName="im_rb_rse"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_GESTIONE_CLGS"
+			propertyName="ti_gestione_clgs"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RG_A3_ENTRATE"
+			propertyName="im_rg_a3_entrate"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RE_A2_ENTRATE"
+			propertyName="im_re_a2_entrate"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA_CLGS"
+			propertyName="cd_centro_responsabilita_clgs"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="TI_APPARTENENZA_CLGS"
+			propertyName="ti_appartenenza_clgs"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_FUNZIONE"
+			propertyName="cd_funzione"
+			sqlTypeName="VARCHAR"
+			columnSize="2" />
+		<columnMapping
+			columnName="IM_RD_A2_RICAVI"
+			propertyName="im_rd_a2_ricavi"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RF_A3_RICAVI"
+			propertyName="im_rf_a3_ricavi"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_SOLA_LETTURA"
+			propertyName="fl_sola_lettura"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RA_RCE"
+			propertyName="im_ra_rce"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_PDG_VARIAZIONE"
+			propertyName="esercizio_pdg_variazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />			
+		<columnMapping
+			columnName="PG_VARIAZIONE_PDG"
+			propertyName="pg_variazione_pdg"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />			
+			
+	</defaultColumnMap>
+	<persistentProperty
+		name="im_rc_esr" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="cd_elemento_voce_clgs" />
+	<persistentProperty
+		name="cd_natura" />
+	<persistentProperty
+		name="categoria_dettaglio" />
+	<persistentProperty
+		name="origine" />
+	<persistentProperty
+		name="descrizione" />
+	<persistentProperty
+		name="pg_spesa_clgs" />
+	<persistentProperty
+		name="cd_linea_attivita_clgs" />
+	<persistentProperty
+		name="im_rb_rse" />
+	<persistentProperty
+		name="ti_gestione_clgs" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="im_rg_a3_entrate" />
+	<persistentProperty
+		name="im_re_a2_entrate" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="cd_centro_responsabilita_clgs" />
+	<persistentProperty
+		name="ti_appartenenza_clgs" />
+	<persistentProperty
+		name="cd_funzione" />
+	<persistentProperty
+		name="im_rd_a2_ricavi" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="im_rf_a3_ricavi" />
+	<persistentProperty
+		name="fl_sola_lettura" />
+	<persistentProperty
+		name="dt_registrazione" />
+	<persistentProperty
+		name="im_ra_rce" />
+	<persistentProperty
+		name="esercizio_pdg_variazione" />
+	<persistentProperty
+		name="pg_variazione_pdg" />				
+</SQLPersistentInfo>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.coepcoan00.core.bulk.Scrittura_analiticaBase"
+	keyClassName="it.cnr.contab.coepcoan00.core.bulk.Scrittura_analiticaKey"
+	homeClassName="it.cnr.contab.coepcoan00.core.bulk.Scrittura_analiticaHome" >
+	<defaultColumnMap
+		tableName="SCRITTURA_ANALITICA" >
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dt_cancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="CD_COMP_DOCUMENTO"
+			propertyName="cd_comp_documento"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="CD_UO_DOCUMENTO"
+			propertyName="cd_uo_documento"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="VARCHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_CDS_DOCUMENTO"
+			propertyName="cd_cds_documento"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="ORIGINE_SCRITTURA"
+			propertyName="origine_scrittura"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="DS_SCRITTURA"
+			propertyName="ds_scrittura"
+			sqlTypeName="VARCHAR"
+			columnSize="250" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_NUMERO_DOCUMENTO"
+			propertyName="pg_numero_documento"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_SCRITTURA_ANNULLATA"
+			propertyName="pg_scrittura_annullata"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_DOCUMENTO_AMM"
+			propertyName="esercizio_documento_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="TI_SCRITTURA"
+			propertyName="ti_scrittura"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="IM_SCRITTURA"
+			propertyName="im_scrittura"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="DT_CONTABILIZZAZIONE"
+			propertyName="dt_contabilizzazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="ATTIVA"
+			propertyName="attiva"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO"
+			propertyName="cd_tipo_documento"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_cancellazione" />
+	<persistentProperty
+		name="cd_comp_documento" />
+	<persistentProperty
+		name="cd_uo_documento" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="cd_cds_documento" />
+	<persistentProperty
+		name="origine_scrittura" />
+	<persistentProperty
+		name="ds_scrittura" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="pg_numero_documento" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="pg_scrittura_annullata" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="esercizio_documento_amm" />
+	<persistentProperty
+		name="ti_scrittura" />
+	<persistentProperty
+		name="im_scrittura" />
+	<persistentProperty
+		name="dt_contabilizzazione" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="attiva" />
+	<persistentProperty
+		name="cd_tipo_documento" />
+</SQLPersistentInfo>

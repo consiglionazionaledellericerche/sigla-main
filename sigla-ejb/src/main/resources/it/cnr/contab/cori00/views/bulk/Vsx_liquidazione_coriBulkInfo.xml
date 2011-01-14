@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="cd_cds"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="proc_name"
+		property="proc_name"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="proc_name"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="pg_liquidazione"
+		property="pg_liquidazione"
+		inputType="TEXT"
+		label="pg_liquidazione" />
+	<fieldProperty
+		name="par_num"
+		property="par_num"
+		inputType="TEXT"
+		label="par_num" />
+	<fieldProperty
+		name="pg_call"
+		property="pg_call"
+		inputType="TEXT"
+		label="pg_call" />
+	<fieldProperty
+		name="messagetouser"
+		property="messagetouser"
+		maxLength="200"
+		inputSize="200"
+		inputType="TEXT"
+		label="messagetouser"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_gruppo_cr"
+		property="cd_gruppo_cr"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="cd_gruppo_cr"
+		caseSensitiveSearch="false" />
+		
+	<fieldProperty
+		name="cd_regione"
+		property="cd_regione"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="cd_regione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_comune"
+		property="pg_comune"
+		maxLength="19"
+		inputSize="19"
+		inputType="TEXT"
+		label="pg_comune"
+		caseSensitiveSearch="false" />
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="proc_name" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_liquidazione" />
+	<formFieldProperty
+		name="par_num" />
+	<formFieldProperty
+		name="pg_call" />
+	<formFieldProperty
+		name="messagetouser" />
+	<formFieldProperty
+		name="cd_gruppo_cr" />
+	<formFieldProperty
+		name="cd_regione" />
+	<formFieldProperty
+		name="pg_comune" />
+
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="proc_name" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_liquidazione" />
+	<columnFieldProperty
+		name="par_num" />
+	<columnFieldProperty
+		name="pg_call" />
+	<columnFieldProperty
+		name="messagetouser" />
+	<columnFieldProperty
+		name="cd_gruppo_cr" />
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="proc_name" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_liquidazione" />
+	<findFieldProperty
+		name="par_num" />
+	<findFieldProperty
+		name="pg_call" />
+	<findFieldProperty
+		name="messagetouser" />
+	<findFieldProperty
+		name="cd_gruppo_cr" />
+
+</bulkInfo>

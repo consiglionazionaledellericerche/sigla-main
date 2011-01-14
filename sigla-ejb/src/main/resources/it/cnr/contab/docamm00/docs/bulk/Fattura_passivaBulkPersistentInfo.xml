@@ -1,0 +1,86 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk"
+	homeClassName="it.cnr.contab.docamm00.docs.bulk.Fattura_passivaHome" >
+
+	<defaultColumnMap
+		tableName="FATTURA_PASSIVA" >		
+		<columnMapping
+			columnName="CD_TIPO_SEZIONALE"
+			propertyName="tipo_sezionale.cd_tipo_sezionale" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="sezionale.cd_unita_organizzativa"
+			fetchOnly="true" />
+
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="valuta.cd_divisa" />
+			
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="fornitore.cd_terzo" />
+
+		<columnMapping
+			columnName="CD_TERZO_CESSIONARIO"
+			propertyName="cessionario.cd_terzo" />
+	
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="modalita_pagamento.cd_modalita_pag" />
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="banca.pg_banca" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="banca.cd_terzo"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="banca.terzo.cd_terzo"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_TERMINI_PAG"
+			propertyName="termini_pagamento.cd_termini_pag" />
+
+		<columnMapping
+			columnName="PG_LETTERA"
+			propertyName="lettera_pagamento_estero.pg_lettera" />
+		<columnMapping
+			columnName="ESERCIZIO_LETTERA"
+			propertyName="lettera_pagamento_estero.esercizio" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="lettera_pagamento_estero.cd_cds"
+			fetchOnly="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="lettera_pagamento_estero.cd_unita_organizzativa"
+			fetchOnly="true" />
+
+
+		<columnMapping
+			columnName="TI_BENE_SERVIZIO"
+			propertyName="ti_bene_servizio"
+			converterClassName="it.cnr.contab.util.AsteriskToNullConverter"
+			nullable="true" />
+
+	</defaultColumnMap>		
+
+	<persistentProperty
+		name="tipo_sezionale" />
+	<persistentProperty
+		name="valuta" />
+	<persistentProperty
+		name="fornitore" />
+	<persistentProperty
+		name="cessionario" />
+	<persistentProperty
+		name="banca" />
+	<persistentProperty
+		name="modalita_pagamento" />
+	<persistentProperty
+		name="termini_pagamento" />
+	<persistentProperty
+		name="lettera_pagamento_estero" />
+			
+</SQLPersistentInfo>

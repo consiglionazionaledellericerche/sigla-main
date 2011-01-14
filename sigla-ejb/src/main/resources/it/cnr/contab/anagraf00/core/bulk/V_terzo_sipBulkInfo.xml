@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Codice Terzo" />
+	<fieldProperty
+		name="cd_anag"
+		property="cd_anag"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Codice Anagrafico" />
+	<fieldProperty
+		name="denominazione_sede"
+		property="denominazione_sede"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Denominazione" />
+	<fieldProperty
+		name="ti_entita"
+		property="ti_entita"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipologia" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Codice fiscale" />
+	<fieldProperty
+		name="partita_iva"
+		property="partita_iva"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Partita iva" />
+	<fieldProperty
+		name="nome"
+		property="nome"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		label="Nome" />
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		label="Cognome" />
+	<fieldProperty
+		name="matricola"
+		property="matricola"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="Matricola" />
+	<fieldProperty
+		name="qualifica"
+		property="qualifica"
+		inputType="TEXT"
+		maxLength="10"
+		label="Qualifica" />
+	<fieldProperty
+		name="desc_qualifica"
+		property="desc_qualifica"
+		inputType="TEXT"
+		maxLength="100"
+		label="Desc. Qualifica" />	
+	<fieldProperty
+		name="tipo_rapporto"
+		property="tipo_rapporto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="tipo rapporto" />
+	<fieldProperty
+		name="uo"
+		property="uo"
+		inputType="TEXT"
+		inputSize="19"
+		maxLength="19"
+		label="Uo" />
+	<fieldProperty
+		name="anno_rif"
+		property="anno_rif"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="Anno riferimento" />
+	<fieldProperty
+		name="mese_rif"
+		property="mese_rif"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="Mese riferimento" />
+	<fieldProperty
+	 	name="data_cessazione"
+		property="data_cessazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		formatName="date_short"
+		label="Data cessazione" />	
+	<fieldProperty
+		name="livello_1"
+		property="livello_1"
+		inputType="TEXT"
+		maxLength="3"
+		label="livello_1" />	
+	<fieldProperty
+		name="fascia"
+		property="fascia"
+		inputType="TEXT"
+		maxLength="22"
+		label="fascia" />	
+	<fieldProperty
+		name="perc_part_time"
+		property="perc_part_time"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PositivePercentFormat"
+		maxLength="7"
+		inputSize="7"
+		nullable="false"
+		label="Percentuale Part-time" />	
+	<fieldProperty
+		name="costo"
+		property="costo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PositivePercentFormat"
+		nullable="false"
+		label="Costo" />		
+		
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="cd_anag" />
+	<formFieldProperty
+		name="denominazione_sede" />
+	<formFieldProperty
+		name="ti_entita" />
+	<formFieldProperty
+		name="codice_fiscale" />
+	<formFieldProperty
+		name="partita_iva" />
+	<formFieldProperty
+		name="nome" />
+	<formFieldProperty
+		name="cognome" />
+	<formFieldProperty
+		name="matricola" />
+	<formFieldProperty
+		name="qualifica" />
+	<formFieldProperty
+		name="desc_qualifica" />	
+	<formFieldProperty
+		name="tipo_rapporto" />
+	<formFieldProperty
+		name="uo" />
+	<formFieldProperty
+		name="anno_rif" />
+	<formFieldProperty
+		name="mese_rif" />
+	<formFieldProperty
+		name="data_cessazione" />	
+	<formFieldProperty
+		name="livello_1" />		
+	<formFieldProperty
+		name="fascia" />
+	<formFieldProperty
+		name="fascia" />	
+	<formFieldProperty
+		name="perc_part_time" />	
+	<formFieldProperty
+		name="costo" />				
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="cd_anag" />
+	<findFieldProperty
+		name="denominazione_sede" />
+	<findFieldProperty
+		name="ti_entita" />
+	<findFieldProperty
+		name="codice_fiscale" />
+	<findFieldProperty
+		name="partita_iva" />
+	<findFieldProperty
+		name="nome" />
+	<findFieldProperty
+		name="cognome" />
+	<findFieldProperty
+		name="matricola" />
+	<findFieldProperty
+		name="qualifica" />
+	<findFieldProperty
+		name="desc_qualifica" />
+	<findFieldProperty
+		name="tipo_rapporto" />
+	<findFieldProperty
+		name="uo" />
+	<findFieldProperty
+		name="anno_rif" />
+	<findFieldProperty
+		name="mese_rif" />
+	<findFieldProperty
+		name="data_cessazione" />
+	<findFieldProperty
+		name="livello_1" />		
+	<findFieldProperty
+		name="perc_part_time" />		
+	<findFieldProperty
+		name="costo" />		
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="cd_anag" />
+	<columnFieldProperty
+		name="denominazione_sede" />
+	<columnFieldProperty
+		name="ti_entita" />
+	<columnFieldProperty
+		name="codice_fiscale" />
+	<columnFieldProperty
+		name="partita_iva" />
+	<columnFieldProperty
+		name="nome" />
+	<columnFieldProperty
+		name="cognome" />
+	<columnFieldProperty
+		name="matricola" />
+	<columnFieldProperty
+		name="qualifica" />
+	<columnFieldProperty
+		name="desc_qualifica" />
+	<columnFieldProperty
+		name="tipo_rapporto" />
+	<columnFieldProperty
+		name="uo" />
+	<columnFieldProperty
+		name="anno_rif" />
+	<columnFieldProperty
+		name="mese_rif" />
+	<columnFieldProperty
+		name="data_cessazione" />	
+	<columnFieldProperty
+		name="livello_1" />		
+	<columnFieldProperty
+		name="fascia" />		
+	<columnFieldProperty
+		name="perc_part_time" />		
+	<columnFieldProperty
+		name="costo" />	
+</bulkInfo>

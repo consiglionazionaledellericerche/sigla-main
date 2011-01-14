@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_voce_iva"
+		property="cd_voce_iva"
+		maxLength="200"
+		inputSize="200"
+		inputType="TEXT"
+		label="Codice IVA"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="im_iva"
+		property="im_iva"
+		inputType="TEXT"
+		label="Imp. IVA" />
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Tipo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="sequenza"
+		property="sequenza"
+		inputType="TEXT"
+		label="Sequenza" />
+	<fieldProperty
+		name="im_totale"
+		property="im_totale"
+		inputType="TEXT"
+		label="IMp totale" />
+	<fieldProperty
+		name="ds_voce_iva"
+		property="ds_voce_iva"
+		maxLength="200"
+		inputSize="200"
+		inputType="TEXT"
+		label="Descr. IVA"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="chiave"
+		property="chiave"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="Chiave"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="imponibile"
+		property="imponibile"
+		inputType="TEXT"
+		label="Imponibile" />
+	<fieldProperty
+		name="ds_mese"
+		property="ds_mese"
+		maxLength="200"
+		inputSize="200"
+		inputType="TEXT"
+		label="Mese"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="id"
+		property="id"
+		inputType="TEXT"
+		label="Id" />
+
+	<formFieldProperty
+		name="cd_voce_iva" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="im_iva" />
+	<formFieldProperty
+		name="tipo" />
+	<formFieldProperty
+		name="sequenza" />
+	<formFieldProperty
+		name="im_totale" />
+	<formFieldProperty
+		name="ds_voce_iva" />
+	<formFieldProperty
+		name="chiave" />
+	<formFieldProperty
+		name="imponibile" />
+	<formFieldProperty
+		name="ds_mese" />
+	<formFieldProperty
+		name="id" />
+
+	<columnFieldProperty
+		name="cd_voce_iva" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="im_iva" />
+	<columnFieldProperty
+		name="tipo" />
+	<columnFieldProperty
+		name="sequenza" />
+	<columnFieldProperty
+		name="im_totale" />
+	<columnFieldProperty
+		name="ds_voce_iva" />
+	<columnFieldProperty
+		name="chiave" />
+	<columnFieldProperty
+		name="imponibile" />
+	<columnFieldProperty
+		name="ds_mese" />
+	<columnFieldProperty
+		name="id" />
+
+	<findFieldProperty
+		name="cd_voce_iva" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="im_iva" />
+	<findFieldProperty
+		name="tipo" />
+	<findFieldProperty
+		name="sequenza" />
+	<findFieldProperty
+		name="im_totale" />
+	<findFieldProperty
+		name="ds_voce_iva" />
+	<findFieldProperty
+		name="chiave" />
+	<findFieldProperty
+		name="imponibile" />
+	<findFieldProperty
+		name="ds_mese" />
+	<findFieldProperty
+		name="id" />
+
+	<columnSet name="elenco_liq_ann">
+		<columnFieldProperty name="ds_mese"/>
+		<columnFieldProperty name="im_iva"/>
+	</columnSet>
+	<columnSet name="elenco_cod_fat_acq">
+		<columnFieldProperty name="cd_voce_iva"/>
+		<columnFieldProperty name="ds_voce_iva"/>
+		<columnFieldProperty name="imponibile"/>
+	</columnSet>
+	<columnSet name="elenco_cod_fat_ven">
+		<columnFieldProperty name="cd_voce_iva"/>
+		<columnFieldProperty name="ds_voce_iva"/>
+		<columnFieldProperty name="imponibile"/>
+	</columnSet>
+	<columnSet name="elenco_va_vf">
+		<columnFieldProperty name="cd_voce_iva"/>
+		<columnFieldProperty name="ds_voce_iva"/>
+		<columnFieldProperty name="imponibile"/>
+		<columnFieldProperty name="im_iva"/>
+		<columnFieldProperty name="im_totale"/>
+	</columnSet>
+	<columnSet name="elenco_sec_va_vf">
+		<columnFieldProperty name="ds_voce_iva"/>
+		<columnFieldProperty name="imponibile"/>
+		<columnFieldProperty name="im_iva"/>
+		<columnFieldProperty name="im_totale"/>
+	</columnSet>
+	<columnSet name="elenco_va_ve">
+		<columnFieldProperty name="cd_voce_iva"/>
+		<columnFieldProperty name="ds_voce_iva"/>
+		<columnFieldProperty name="imponibile"/>
+		<columnFieldProperty name="im_iva"/>
+		<columnFieldProperty name="im_totale"/>
+	</columnSet>
+	<columnSet name="elenco_sec_va_ve">
+		<columnFieldProperty name="ds_voce_iva"/>
+		<columnFieldProperty name="imponibile"/>
+		<columnFieldProperty name="im_iva"/>
+		<columnFieldProperty name="im_totale"/>
+	</columnSet>
+		
+</bulkInfo>

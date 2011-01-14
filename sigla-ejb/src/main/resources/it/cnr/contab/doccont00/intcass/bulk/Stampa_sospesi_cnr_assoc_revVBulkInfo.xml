@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="findUOForPrint"
+		property="uoForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave = "true"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="cdUOForPrint"
+		property="uoForPrint.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROCdUOForPrint"
+		label="Codice UO" />
+	<fieldProperty
+		name="dsUOForPrint"
+		property="uoForPrint.ds_unita_organizzativa"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione UO" />
+	<fieldProperty
+		name="cdUOCRForPrint"
+		property="cdUOCRForPrint"/>
+		
+	<formFieldProperty name="findUOForPrint" />
+	<formFieldProperty name="cdUOForPrint" />
+	<formFieldProperty name="dsUOForPrint" />
+	<formFieldProperty name="cdUOCRForPrint" />
+
+	
+	<form
+		name="/cnrdoccont/doccont/stampasospesiassreversali.rpt">
+		<formFieldProperty 
+			name="cdUOForPrint" />
+		<formFieldProperty 
+			name="dataInizio" />
+		<formFieldProperty 
+			name="dataFine" />
+	</form>
+	
+	<form
+		name="/cnrdoccont/doccont/stampasospesiassreversali.jasper">
+		<formFieldProperty 
+			name="cdUOForPrint" />
+		<formFieldProperty 
+			name="dataInizio" />
+		<formFieldProperty 
+			name="dataFine" />
+	</form>
+
+	<printForm
+		name="/cnrdoccont/doccont/stampasospesiassreversali.jasper">
+		<printFieldProperty 
+			name="dataInizio"
+			parameterPosition="0"
+			parameterType="DATE" 
+			paramNameJR="DaData"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty 
+			name="dataFine"
+			parameterPosition="1"
+			parameterType="DATE" 
+			paramNameJR="AData"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="2"
+			parameterType="STRING" 
+			paramNameJR="UO"
+			paramTypeJR="java.lang.String"/>
+	</printForm>
+
+	<printForm
+		name="/cnrdoccont/doccont/stampasospesiassreversali.rpt">
+		<printFieldProperty 
+			name="dataInizio"
+			parameterPosition="0"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="dataFine"
+			parameterPosition="1"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="2"
+			parameterType="STRING" />
+	</printForm>
+</bulkInfo>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.bulk.V_stm_paramin_sit_sint_gaeBase"
+	keyClassName="it.cnr.contab.pdg00.bulk.V_stm_paramin_sit_sint_gaeKey"
+	homeClassName="it.cnr.contab.pdg00.bulk.V_stm_paramin_sit_sint_gaeHome">
+	<defaultColumnMap
+		tableName="V_STM_PARAMIN_SIT_SINT_GAE">
+		<columnMapping
+			columnName="CHIAVE"
+			propertyName="chiave"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="SEQUENZA"
+			propertyName="sequenza"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="3"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="UO"
+			propertyName="uo"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+	</defaultColumnMap>
+	
+	<persistentProperty
+		name="chiave" />
+	<persistentProperty
+		name="tipo" />
+	<persistentProperty
+		name="sequenza" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="uo" />
+	
+</SQLPersistentInfo>

@@ -1,0 +1,35 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk"
+	homeClassName="it.cnr.contab.config00.pdcfin.bulk.Voce_fHome" >
+
+	<columnMap
+		name="accertamento"
+		tableName="VOCE_F" 
+		extends="default">
+		
+		<columnMapping
+			columnName="TI_VOCE"
+			propertyName="ti_voce"/>
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="cd_voce"/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"/>
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"/>
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"/>
+		<columnMapping
+			columnName="DS_VOCE"
+			propertyName="ds_voce"/>
+	</columnMap>
+
+	<columnMap 
+		name="V_VOCE_F_PARTITA_GIRO"
+		tableName="V_VOCE_F_PARTITA_GIRO"
+		extends="default" >
+	</columnMap>
+</SQLPersistentInfo>

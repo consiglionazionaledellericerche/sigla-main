@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CDS"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio"
+		enabledOnFreeSearch="false"/>
+	<fieldProperty
+		name="esercizio_res"
+		property="esercizio_res"
+		printProperty="esercizio"
+		optionsProperty="esercizi_res"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		style="width:15em"
+		label="Esercizio residuo" />	
+	<fieldProperty
+		name="esercizio_importi"
+		property="esercizio_importi"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		style="width:15em"
+		label="Esercizio residuo" />				
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Tipo Appartenenza" 
+		enabledOnFreeSearch="false"/>
+	<fieldProperty
+		name="pg_variazione"
+		property="pg_variazione"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Progressivo" />
+	<fieldProperty
+		name="ds_variazione"
+		property="ds_variazione"
+		maxLength="300"
+		inputSize="100"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_delibera"
+		property="ds_delibera"
+		maxLength="300"
+		inputSize="100"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Delibera"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_variazione"
+		property="ti_variazione"
+		keysProperty = "tipiVariazioneKeys"
+		inputType="SELECT"
+		nullable="false"
+		readonlyProperty="tipoVariazioneRO"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		style="width:15em"
+		label="Tipo Variazione" />		
+	<fieldProperty
+		name="ti_variazioneForSearch"
+		property="ti_variazione"
+		keysProperty = "tipiVariazioneKeys"
+		inputType="SELECT"
+		nullable="true"
+		readonlyProperty="tipoVariazioneRO"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		style="width:15em"
+		label="Tipo Variazione" />		
+/* ********** CAUSALE VARIAZIONE ************ */
+	<fieldProperty
+		name="cd_causale_var_bilancio"
+		property="cd_causale_var_bilancio"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Causale Variazione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_causale_var_bilancio"
+		property="causaleVariazione.ds_causale_var_bilancio"
+		maxLength="200"
+		inputSize="70"
+		inputType="ROTEXT"
+		label="Causale Variazione" />
+	<fieldProperty
+		name="find_causale"
+		property="causaleVariazione"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Causale Variazione"
+		caseSensitiveSearch="false" />
+/* ********** NR. VARIAZIONE PROGETTO ************ */
+	<fieldProperty
+		name="esercizio_pdg_variazione"
+		property="esercizio_pdg_variazione"
+		maxLength="4"
+		inputSize="4"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Anno Variazione Pdg"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_variazione_pdg"
+		property="pg_variazione_pdg"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Numero Variazione Pdg"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_variazione_pdg"
+		property="pdg_variazione.ds_variazione"
+		maxLength="1000"
+		inputSize="70"
+		inputType="ROTEXT"
+		label="Descrizione Variazione Pdg" />
+	<fieldProperty
+		name="find_pdg_variazione"
+		property="pdg_variazione"
+		inputType="SEARCHTOOL"
+		formName="variazioniEnte"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Numero Variazione Pdg"
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="esercizio_var_stanz_res"
+		property="esercizio_var_stanz_res"
+		maxLength="4"
+		inputSize="4"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Anno Variazione Stanz. Res."
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_var_stanz_res"
+		property="pg_var_stanz_res"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Numero Variazione Stanz. Res."
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_variazione_stanz_res"
+		property="var_stanz_res.ds_variazione"
+		maxLength="1000"
+		inputSize="70"
+		inputType="ROTEXT"
+		label="Descrizione Variazione Stanz. Res." />
+	<fieldProperty
+		name="find_variazione_stanz_res"
+		property="var_stanz_res"
+		inputType="SEARCHTOOL"
+		formName="variazioniEnte"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Numero Variazione Stanz. Res."
+		caseSensitiveSearch="false" />		
+
+/* ******* MANDATO DI REGOLARIZZAZIONE ******* */
+	<fieldProperty
+		name="cd_cds_mandato"
+		property="cd_cds_mandato"
+   		maxLength="10"
+		inputSize="10"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		inputType="TEXT"
+		label="CDS Mandato"/>
+	<fieldProperty
+		name="ds_cds_mandato"
+		property="mandato.cds.ds_unita_organizzativa"
+		maxLength="300"
+		inputSize="70"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		inputType="TEXT"
+		label="Descrizione CDS Mandato"/>
+	<fieldProperty
+		name="find_cds_mandato"
+		property="mandato.cds"
+		inputType="SEARCHTOOL"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="CDS Mandato Regolarizzazione"
+		caseSensitiveSearch="false" />		
+
+	<fieldProperty
+		name="esercizio_mandato"
+		property="esercizio_mandato"
+		inputType="TEXT"
+		label="Es. mandato"/>
+	<fieldProperty
+		name="pg_mandato"
+		property="pg_mandato"
+   		maxLength="10"
+		inputSize="10"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		inputType="TEXT"
+		label="Nr. mandato"/>
+	<fieldProperty
+		name="ds_mandato"
+		property="mandato.ds_mandato"
+		maxLength="300"
+		inputSize="70"
+		inputType="ROTEXT"
+		label="Descrizione Mandato" />
+	<fieldProperty
+		name="find_mandato"
+		property="mandato"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Mandato Regolarizzazione"
+		caseSensitiveSearch="false" />		
+
+/* ****************************************** */
+	<fieldProperty
+		name="stato"
+		property="stato"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Stato"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="totaleEntrate"
+		property="totaleEntrate"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Entrate" />
+	<fieldProperty
+		name="totaleSpese"
+		property="totaleSpese"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Spese" />
+
+
+	<formFieldProperty name="cd_cds" />
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="esercizio_importi" />
+	<formFieldProperty name="esercizio_res" />
+	<formFieldProperty name="ti_appartenenza" />
+	<formFieldProperty name="pg_variazione" />
+	<formFieldProperty name="ds_variazione" />
+	<formFieldProperty name="ds_delibera" />
+	<formFieldProperty name="ti_variazione" />
+	<formFieldProperty name="ti_variazioneForSearch" />
+	<formFieldProperty name="cd_causale_var_bilancio" />
+	<formFieldProperty name="ds_causale_var_bilancio" />
+	<formFieldProperty name="find_causale" />
+	<formFieldProperty name="esercizio_pdg_variazione" />
+	<formFieldProperty name="pg_variazione_pdg" />
+	<formFieldProperty name="ds_variazione_pdg" />
+	<formFieldProperty name="find_pdg_variazione" />
+	<formFieldProperty name="esercizio_var_stanz_res" />
+	<formFieldProperty name="pg_var_stanz_res" />
+	<formFieldProperty name="ds_variazione_stanz_res" />
+	<formFieldProperty name="find_variazione_stanz_res" />	
+	<formFieldProperty name="cd_cds_mandato" />
+	<formFieldProperty name="ds_cds_mandato" />
+	<formFieldProperty name="find_cds_mandato" />
+	<formFieldProperty name="esercizio_mandato" />
+	<formFieldProperty name="pg_mandato" />
+	<formFieldProperty name="ds_mandato" />
+	<formFieldProperty name="find_mandato" />
+	<formFieldProperty name="stato" />
+	<formFieldProperty name="totaleEntrate" />
+	<formFieldProperty name="totaleSpese" />
+	
+	<columnFieldProperty name="cd_cds" />
+	<columnFieldProperty name="esercizio" />
+	<columnFieldProperty name="esercizio_importi" />
+	<columnFieldProperty name="ti_appartenenza" />
+	<columnFieldProperty name="pg_variazione" />
+	<columnFieldProperty name="ds_variazione" />
+	<columnFieldProperty name="ds_delibera" />
+	<columnFieldProperty name="ti_variazione" />
+	<columnFieldProperty name="cd_causale_var_bilancio" />
+	<columnFieldProperty name="esercizio_pdg_variazione" />
+	<columnFieldProperty name="pg_variazione_pdg" />
+	<columnFieldProperty name="esercizio_var_stanz_res" />
+	<columnFieldProperty name="pg_var_stanz_res" />	
+	<columnFieldProperty name="cd_cds_mandato" />
+	<columnFieldProperty name="esercizio_mandato" />
+	<columnFieldProperty name="pg_mandato" />
+	<columnFieldProperty name="stato" />
+
+	<findFieldProperty name="cd_cds" />
+	<findFieldProperty name="esercizio" />
+	<findFieldProperty name="esercizio_res" />
+	<findFieldProperty name="pg_variazione" />
+	<findFieldProperty name="ti_appartenenza" />
+	<findFieldProperty name="ds_variazione" />
+	<findFieldProperty name="ds_delibera" />
+	<findFieldProperty name="ti_variazioneForSearch" />
+	<findFieldProperty name="cd_causale_var_bilancio" />
+	<findFieldProperty name="esercizio_pdg_variazione" />
+	<findFieldProperty name="pg_variazione_pdg" />
+	<findFieldProperty name="esercizio_var_stanz_res" />
+	<findFieldProperty name="pg_var_stanz_res" />		
+	<findFieldProperty name="cd_cds_mandato" />
+	<findFieldProperty name="esercizio_mandato" />
+	<findFieldProperty name="pg_mandato" />
+	<findFieldProperty name="stato" />
+
+</bulkInfo>

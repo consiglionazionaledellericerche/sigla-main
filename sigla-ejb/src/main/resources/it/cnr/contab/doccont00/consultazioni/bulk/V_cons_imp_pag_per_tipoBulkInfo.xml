@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Impegnato/Pagato per Tipo di Spesa"
+          longDescription="Impegnato-Pagato per Tipo di Spesa">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="voce"
+		property="voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Voce" />
+	<fieldProperty
+		name="descrizione"
+		property="descrizione"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		label="Descrizione" />
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		label="Tipo di Spesa" />				
+	<fieldProperty
+		name="impegnato"
+		property="impegnato"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Impegnato" />
+	<fieldProperty
+		name="pagato"
+		property="pagato"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Pagato" />
+		
+	<findFieldProperty
+		name="voce" />
+	<findFieldProperty
+		name="descrizione" />
+	<findFieldProperty
+		name="tipo" />
+	<findFieldProperty
+		name="impegnato" />
+	<findFieldProperty
+		name="pagato" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="voce" />
+	<columnFieldProperty
+		name="descrizione" />
+	<columnFieldProperty
+		name="tipo" />
+	<columnFieldProperty
+		name="impegnato" />
+	<columnFieldProperty
+		name="pagato" />
+</bulkInfo>

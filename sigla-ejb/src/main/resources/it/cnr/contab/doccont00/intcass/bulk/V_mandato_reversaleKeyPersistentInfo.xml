@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleKey" >
+	<defaultColumnMap
+		tableName="V_MANDATO_REVERSALE" >
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_CONT"
+			propertyName="cd_tipo_documento_cont"
+			primary="true"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_DOCUMENTO_CONT"
+			propertyName="pg_documento_cont"
+			sqlTypeName="DECIMAL"
+			primary="true"			
+			columnSize="10" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			primary="true"			
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			primary="true"			
+			columnSize="30" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_tipo_documento_cont" 
+		partOfOid = "true"/>
+	<persistentProperty
+		name="pg_documento_cont" 
+		partOfOid = "true"/>
+	<persistentProperty
+		name="esercizio" 
+		partOfOid = "true"/>
+	<persistentProperty
+		name="cd_cds" 
+		partOfOid = "true"/>
+</SQLPersistentInfo>

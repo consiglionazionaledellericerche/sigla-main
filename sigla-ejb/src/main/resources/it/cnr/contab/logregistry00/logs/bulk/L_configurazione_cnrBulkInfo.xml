@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_storico_"
+		property="pg_storico_"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="pg_storico_" />
+	<fieldProperty
+		name="im02"
+		property="im02"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="im02" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio" />
+	<fieldProperty
+		name="dt01"
+		property="dt01"
+		inputType="TEXT"
+		formatName="date_short"
+		label="dt01" />
+	<fieldProperty
+		name="cd_unita_funzionale"
+		property="cd_unita_funzionale"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="cd_unita_funzionale" />
+	<fieldProperty
+		name="dt02"
+		property="dt02"
+		inputType="TEXT"
+		formatName="date_short"
+		label="dt02" />
+	<fieldProperty
+		name="cd_chiave_primaria"
+		property="cd_chiave_primaria"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		label="cd_chiave_primaria" />
+	<fieldProperty
+		name="cd_chiave_secondaria"
+		property="cd_chiave_secondaria"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="cd_chiave_secondaria" />
+	<fieldProperty
+		name="val01"
+		property="val01"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="val01" />
+	<fieldProperty
+		name="val02"
+		property="val02"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="val02" />
+	<fieldProperty
+		name="val03"
+		property="val03"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="val03" />
+	<fieldProperty
+		name="val04"
+		property="val04"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="val04" />
+	<fieldProperty
+		name="im01"
+		property="im01"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="im01" />
+	<fieldProperty
+		name="user_"
+		property="user_"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="user_" />
+	<fieldProperty
+		name="dt_transaction_"
+		property="dt_transaction_"
+		inputType="TEXT"
+		formatName="date_short"
+		label="dt_transaction_" />
+	<fieldProperty
+		name="action_"
+		property="action_"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="action_" />
+	<formFieldProperty
+		name="pg_storico_" />
+	<formFieldProperty
+		name="im02" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="dt01" />
+	<formFieldProperty
+		name="cd_unita_funzionale" />
+	<formFieldProperty
+		name="dt02" />
+	<formFieldProperty
+		name="cd_chiave_primaria" />
+	<formFieldProperty
+		name="cd_chiave_secondaria" />
+	<formFieldProperty
+		name="val01" />
+	<formFieldProperty
+		name="val02" />
+	<formFieldProperty
+		name="val03" />
+	<formFieldProperty
+		name="val04" />
+	<formFieldProperty
+		name="im01" />
+	<formFieldProperty
+		name="user_" />
+	<formFieldProperty
+		name="dt_transaction_" />
+	<formFieldProperty
+		name="action_" />
+	<findFieldProperty
+		name="pg_storico_" />
+	<findFieldProperty
+		name="im02" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="dt01" />
+	<findFieldProperty
+		name="cd_unita_funzionale" />
+	<findFieldProperty
+		name="dt02" />
+	<findFieldProperty
+		name="cd_chiave_primaria" />
+	<findFieldProperty
+		name="cd_chiave_secondaria" />
+	<findFieldProperty
+		name="val01" />
+	<findFieldProperty
+		name="val02" />
+	<findFieldProperty
+		name="val03" />
+	<findFieldProperty
+		name="val04" />
+	<findFieldProperty
+		name="im01" />
+	<findFieldProperty
+		name="user_" />
+	<findFieldProperty
+		name="dt_transaction_" />
+	<findFieldProperty
+		name="action_" />
+	<columnFieldProperty
+		name="pg_storico_" />
+	<columnFieldProperty
+		name="im02" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="dt01" />
+	<columnFieldProperty
+		name="cd_unita_funzionale" />
+	<columnFieldProperty
+		name="dt02" />
+	<columnFieldProperty
+		name="cd_chiave_primaria" />
+	<columnFieldProperty
+		name="cd_chiave_secondaria" />
+	<columnFieldProperty
+		name="val01" />
+	<columnFieldProperty
+		name="val02" />
+	<columnFieldProperty
+		name="val03" />
+	<columnFieldProperty
+		name="val04" />
+	<columnFieldProperty
+		name="im01" />
+	<columnFieldProperty
+		name="user_" />
+	<columnFieldProperty
+		name="dt_transaction_" />
+	<columnFieldProperty
+		name="action_" />
+</bulkInfo>

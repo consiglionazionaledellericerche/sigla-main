@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_progetto"
+		property="pg_progetto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo della commessa del fondo" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Anno di riferimento" />
+	<fieldProperty
+		name="generale_affitto"
+		property="generale_affitto"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Spese generali e di affitto" />
+	<fieldProperty
+		name="gestione_nave"
+		property="gestione_nave"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Spese per gestione Nave URANIA" />
+	<fieldProperty
+		name="cc_brev_pi"
+		property="cc_brev_pi"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Spese per brevetti" />
+	<fieldProperty
+		name="edilizia"
+		property="edilizia"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Spese per edilizia ivi compresa manutenzione straordinaria di immobili in proprietà" />
+	<fieldProperty
+		name="amm_immobili"
+		property="amm_immobili"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Costi figurativi per ammortamento immobili in proprietà, in uso all'Istituto" />
+	<fieldProperty
+		name="acc_tfr"
+		property="acc_tfr"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="acc_tfr" />
+	<fieldProperty
+		name="amm_tecnico"
+		property="amm_tecnico"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Costi figurativi per apparecchiature tecnico-scientifiche rilevanti" />
+	<fieldProperty
+		name="amm_altri_beni"
+		property="amm_altri_beni"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Costi figurativi per altri beni durevoli di proprietà acquisite negli esercizi precedenti" />
+	<fieldProperty
+		name="res_fo"
+		property="res_fo"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Risorse presunte da Fininziamento Ordinario" />
+	<fieldProperty
+		name="res_min"
+		property="res_min"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Risorse presunte da Ministeri e altri soggetti pubblici" />
+	<fieldProperty
+		name="res_ue_int"
+		property="res_ue_int"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Risorse presunte da UE e altri organismi internazionali" />
+	<fieldProperty
+		name="res_privati"
+		property="res_privati"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Risorse presunte da Privati" />
+
+	<formFieldProperty
+		name="pg_progetto" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="generale_affitto" />
+	<formFieldProperty
+		name="gestione_nave" />
+	<formFieldProperty
+		name="cc_brev_pi" />
+	<formFieldProperty
+		name="edilizia" />
+	<formFieldProperty
+		name="amm_immobili" />
+	<formFieldProperty
+		name="acc_tfr" />
+	<formFieldProperty
+		name="amm_tecnico" />
+	<formFieldProperty
+		name="amm_altri_beni" />
+	<formFieldProperty
+		name="res_fo" />
+	<formFieldProperty
+		name="res_min" />
+	<formFieldProperty
+		name="res_ue_int" />
+	<formFieldProperty
+		name="res_privati" />
+
+	<columnFieldProperty
+		name="generale_affitto" />
+	<columnFieldProperty
+		name="gestione_nave" />
+	<columnFieldProperty
+		name="cc_brev_pi" />
+	<columnFieldProperty
+		name="edilizia" />
+	<columnFieldProperty
+		name="amm_immobili" />
+	<columnFieldProperty
+		name="acc_tfr" />
+	<columnFieldProperty
+		name="amm_tecnico" />
+	<columnFieldProperty
+		name="amm_altri_beni" />
+	<columnFieldProperty
+		name="res_fo" />
+	<columnFieldProperty
+		name="res_min" />
+	<columnFieldProperty
+		name="res_ue_int" />
+	<columnFieldProperty
+		name="res_privati" />
+	<columnFieldProperty
+		name="pg_progetto" />
+	<columnFieldProperty
+		name="esercizio" />
+
+	<findFieldProperty
+		name="pg_progetto" />
+	<findFieldProperty
+		name="esercizio" />
+</bulkInfo>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk"
+	homeClassName="it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateHome">
+	<defaultColumnMap
+		tableName="PDG_MODULO_ENTRATE">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="testata.esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="testata.cdr.cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="testata.progetto.pg_progetto"/>
+<!--		<columnMapping
+			columnName="CDR_LINEA"
+			propertyName="cdr_linea"
+			sqlTypeName="VARCHAR"
+			columnSize="30" /> 
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />-->
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="natura.cd_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="ID_CLASSIFICAZIONE"
+			propertyName="classificazione_voci.id_classificazione"
+			sqlTypeName="DECIMAL"
+			columnSize="7" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="contraente.cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="CD_CDS_AREA"
+			propertyName="area.cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="testata"
+		partOfOid="true" />
+<!--	<persistentProperty
+		name="cdr_linea"/>
+	<persistentProperty
+		name="cd_linea_attivita"/>-->
+	<persistentProperty
+		name="natura"
+		partOfOid="true" />
+	<persistentProperty
+		name="classificazione_voci"
+		partOfOid="true" />
+	<persistentProperty
+		name="contraente" />
+	<persistentProperty
+		name="area" 
+		partOfOid="true" />
+</SQLPersistentInfo>

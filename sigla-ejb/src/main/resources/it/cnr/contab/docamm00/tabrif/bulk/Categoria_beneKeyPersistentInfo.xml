@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.tabrif.bulk.Categoria_beneKey" >
+	<defaultColumnMap
+		tableName="CATEGORIA_BENE" >
+		<columnMapping
+			columnName="CD_CATEGORIA_BENE"
+			propertyName="cd_categoria_bene"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_categoria_bene"
+		partOfOid="true" />
+</SQLPersistentInfo>

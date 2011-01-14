@@ -1,0 +1,35 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="codice"
+		property="codice"
+		label="Codice"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="dt_scadenza"
+		property="dt_scadenza"
+		label="Scadenza"
+		formatName="date_short"		
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="importo"
+		property="importo"
+		label="Importo"
+		inputType="TEXT"
+		/>
+
+	<columnFieldProperty
+		name="codice"
+		/>
+	<columnFieldProperty
+		name="dt_scadenza"
+		/>
+	<columnFieldProperty
+		name="importo"
+		/>
+</bulkInfo>

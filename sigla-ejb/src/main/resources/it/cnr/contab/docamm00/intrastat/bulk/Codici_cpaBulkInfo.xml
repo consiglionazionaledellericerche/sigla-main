@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Tabella di decodifica per i codici cpa"
+	longDescription="Tabella di decodifica per i codici cpa">
+	<fieldProperty
+		name="id_cpa"
+		property="id_cpa"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		nullable="false"
+		readonlyProperty="ROcpa"
+		label="Id" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		nullable="false"
+		readonlyProperty="ROcpa"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_cpa"
+		property="cd_cpa"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnInsert="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		readonlyProperty="ROcpa"
+		label="Codice" />
+	<fieldProperty
+		name="ds_cpa"
+		property="ds_cpa"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="500"
+		readonlyProperty="ROcpa"
+		enabledOnInsert="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="livello"
+		property="livello"
+		readonlyProperty="ROcpa"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnInsert="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Livello" />
+	<fieldProperty
+		name="fl_utilizzabile"
+		property="fl_utilizzabile"
+		inputType="CHECKBOX"
+		label="Utilizzabile"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="ti_bene_servizio"
+		property="ti_bene_servizio"
+		maxLength="1"
+		inputSize="20"
+		inputType="SELECT"
+		nullable="false"
+		keysProperty="ti_bene_servizioKeys"
+		readonlyProperty="ROcpa"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		label="Servizio/Bene"
+		caseSensitiveSearch="false" />
+	<formFieldProperty
+		name="id_cpa" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_cpa" />
+	<formFieldProperty
+		name="ds_cpa" />
+	<formFieldProperty
+		name="livello" />
+	<formFieldProperty
+		name="ti_bene_servizio" />
+	<formFieldProperty
+		name="fl_utilizzabile" />
+			
+	<findFieldProperty
+		name="id_cpa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_cpa" />
+	<findFieldProperty
+		name="ds_cpa" />
+	<findFieldProperty
+		name="livello" />
+	<findFieldProperty
+		name="ti_bene_servizio" />
+	<findFieldProperty
+		name="fl_utilizzabile" />
+		
+	
+	<columnFieldProperty
+		name="cd_cpa" />
+	<columnFieldProperty
+		name="ds_cpa" />
+	
+</bulkInfo>

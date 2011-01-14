@@ -1,0 +1,114 @@
+package it.cnr.contab.doccont00.bp;
+
+import it.cnr.contab.doccont00.core.bulk.Stampa_registro_annotazione_entrate_pgiroBulk;
+import it.cnr.contab.config00.ejb.*;
+import it.cnr.jada.action.*;
+/**
+ * Insert the type's description here.
+ * Creation date: (23/01/2003 10.53.46)
+ * @author: Simonetta Costa
+ */
+public class StampaRegistroAnnotazioneEntratePGiroBP extends it.cnr.contab.reports.bp.ParametricPrintBP {
+	
+	private boolean ente = false;
+
+	private final String CDS = "CDS";
+	private final String CNR = "CNR";
+
+	private boolean stampa_cds;
+	private boolean stampa_cnr;
+/**
+ * StampaRegistroAnnotazioneEntratePGiroBP constructor comment.
+ */
+public StampaRegistroAnnotazioneEntratePGiroBP() {
+	super();
+}
+/**
+ * StampaRegistroAnnotazioneEntratePGiroBP constructor comment.
+ * @param function java.lang.String
+ */
+public StampaRegistroAnnotazioneEntratePGiroBP(String function) {
+	super(function);
+}
+public String getJSPTitle(){
+
+	//if (isEnte())
+		//return "Stampa Registro Annotazioni di Entrata su Pgiro - CNR";
+	//else
+		//return "Stampa Registro Annotazioni di Entrata su Pgiro - CDS";
+
+	if (isStampa_cnr())
+		return "Stampa Registro Annotazioni di Entrata su Pgiro - CNR";
+	else // (isStampa_cds())
+		return "Stampa Registro Annotazioni di Entrata su Pgiro - CDS";
+}
+/**
+ * Imposta come attivi i tab di default.
+ *
+ * @param context <code>ActionContext</code>
+ */
+
+protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
+
+		
+	String type = config.getInitParameter("CDS_CNR");
+	//Stampa_registro_annotazione_entrate_pgiroBulk stampa = (Stampa_registro_annotazione_entrate_pgiroBulk)getModel();
+	
+	if (type != null && type.equals(CDS)){		
+		setStampa_cds(true);
+		//prima.setStampa_cds(true);
+	} else if (type != null && type.equals(CNR)){
+		setStampa_cnr(true);
+		//prima.setStampa_cnr(true);
+	}
+
+	super.init(config,context);
+
+
+	
+}
+public it.cnr.jada.bulk.OggettoBulk initializeBulkForPrint(ActionContext context,it.cnr.jada.bulk.OggettoBulk bulk) throws BusinessProcessException {
+
+	Stampa_registro_annotazione_entrate_pgiroBulk stampa = (Stampa_registro_annotazione_entrate_pgiroBulk)bulk;
+
+	if (stampa != null && isStampa_cds()){
+		stampa.setStampa_cds(true);
+	} else if (stampa != null && isStampa_cnr()){
+		stampa.setStampa_cnr(true);
+	}
+
+	return super.initializeBulkForPrint(context,stampa);
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (01/04/2003 10.21.11)
+ * @return boolean
+ */
+public boolean isStampa_cds() {
+	return stampa_cds;
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (01/04/2003 10.21.11)
+ * @return boolean
+ */
+public boolean isStampa_cnr() {
+	return stampa_cnr;
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (01/04/2003 10.21.11)
+ * @param newStampa_cds boolean
+ */
+public void setStampa_cds(boolean newStampa_cds) {
+	stampa_cds = newStampa_cds;
+}
+/**
+ * Insert the method's description here.
+ * Creation date: (01/04/2003 10.21.11)
+ * @param newStampa_cnr boolean
+ */
+public void setStampa_cnr(boolean newStampa_cnr) {
+	stampa_cnr = newStampa_cnr;
+}
+}

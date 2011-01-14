@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="" />
+	<fieldProperty
+		name="stato_cofi"
+		property="stato_cofi"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="20"
+		keysProperty="stato_cofiKeys"
+		label="Stato"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_associato_manrev"
+		property="ti_associato_manrev"
+		maxLength="20"
+		inputSize="20"
+		inputType="ROTEXT"
+		nullable="false"
+		keysProperty="ti_associato_manrevKeys"
+		label="Associazione man/rev"
+		caseSensitiveSearch="false" />
+		
+	<fieldProperty
+		name="bene_servizio"
+		property="bene_servizio"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROBeneServizioSearchTool"
+		enabledOnSearch="false"
+        enabledOnEdit="true" />	
+	<fieldProperty
+		name="cd_bene_servizio"
+		property="bene_servizio.cd_bene_servizio"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="RObeneservizio"
+		label="Bene/Servizio"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_bene_servizio"
+		property="bene_servizio.ds_bene_servizio"
+		maxLength="300"
+		inputSize="32"
+		inputType="ROTEXT"
+		label="Bene/Servizio"
+		caseSensitiveSearch="false" />
+		
+	
+	<fieldProperty
+		name="voce_iva"
+		property="voce_iva"
+		inputType="SEARCHTOOL" 		
+		enabledOnSearch="false"
+        enabledOnEdit="true" />	
+	<fieldProperty
+		name="cd_voce_iva"
+		property="voce_iva.cd_voce_iva"
+		readonlyProperty="ROvoceiva"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		nullable="false"
+		label="I.V.A."
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_voce_iva"
+		property="voce_iva.ds_voce_iva"
+		inputSize="30"
+		inputType="ROTEXT"
+		label=""
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="percentuale_voce_iva"
+		property="voce_iva.percentuale"
+		maxLength="6"
+		inputSize="6"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.PercentFormat"
+		label="%" />
+	
+	<fieldProperty
+		name="ds_riga_fattura"
+		property="ds_riga_fattura"
+		maxLength="200"
+		inputSize="50"
+		inputType="TEXT"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_a_competenza_coge"
+		property="dt_a_competenza_coge"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		formatName="date_short"
+		label="Competenza al" />		
+	<fieldProperty
+		name="dt_da_competenza_coge"
+		property="dt_da_competenza_coge"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		formatName="date_short"
+		label="Competenza dal" />
+
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="" />
+	<fieldProperty
+		name="im_iva"
+		property="im_iva"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="true"
+		nullable="false"
+		readonlyProperty="ROdetail"
+		label="Importo IVA" />
+	<fieldProperty
+		name="ti_istituz_commerc"
+		property="ti_istituz_commerc"
+		maxLength="20"
+		inputSize="20"
+		inputType="ROTEXT"
+		label="Tipo"
+		caseSensitiveSearch="false"
+		keysProperty="ti_promiscuoKeys"/>
+	<fieldProperty
+		name="ti_promiscuo"
+		property="ti_istituz_commerc"
+		inputType="SELECT"
+		label="Tipo"
+		nullable="false"
+		keysProperty="ti_promiscuoKeys" />	
+	<fieldProperty
+		name="im_totale_divisa"
+		property="im_totale_divisa"
+		inputType="TEXT"
+		nullable="false"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
+		enabledOnEdit="false"
+		label="Imponibile" />
+	<fieldProperty
+		name="im_totale_inventario"
+		property="im_totale_inventario"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
+		enabledOnEdit="false"
+		label="Associare all'Inventario" />
+	<fieldProperty
+		name="pg_fattura_passiva"
+		property="pg_fattura_passiva"
+		inputType="TEXT"
+		label="pg_fattura_passiva" />
+	<fieldProperty
+		name="im_imponibile"
+		property="im_imponibile"
+		inputType="TEXT"
+		nullable="false"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Imponibile EURO" />
+	<fieldProperty
+		name="prezzo_unitario"
+		property="prezzo_unitario"
+		inputType="TEXT"
+		nullable="false"
+		formatName="it.cnr.contab.util.GenericPrezzoUnitarioFormat"
+		readonlyProperty="ROdetail"
+		label="Prezzo Unitario" />
+	<fieldProperty
+		name="progressivo_riga"
+		property="progressivo_riga"
+		inputType="TEXT"
+		label="progressivo_riga" />
+	<fieldProperty
+		name="quantita"
+		property="quantita"
+		inputType="TEXT"
+		inputSize="10"
+		nullable="false"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		readonlyProperty="ROdetail"
+		label="Quantita'" />
+	<fieldProperty
+		name="fornitore"
+		property="fornitore"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROFornitoreSearchTool"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		completeOnSave="false"
+		label="fornitore"/>
+	<fieldProperty
+		name="cd_fornitore"
+		property="fornitore.cd_terzo"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		label="Fornitore"
+		nullable="false"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="cd_cessionario"
+		property="cessionario.cd_terzo"
+		maxLength="30"
+		inputSize="6"
+		inputType="ROTEXT"
+		label="Cessionario"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="modalita_pagamento"
+		property="modalita_pagamento"
+		printProperty="cd_ds_modalita_pagamento"
+		optionsProperty="modalita"
+		readonlyProperty="ROModalita_pagamento_dett"
+		maxLength="30"
+		inputSize="30"
+		enabledOnView="true"
+		inputType="SELECT"
+		nullable="false"
+		label="Mod. pagamento" />
+	<fieldProperty
+		name="termini_pagamento"
+		property="termini_pagamento"
+		printProperty="cd_ds_termini_pagamento"
+		optionsProperty="termini"
+		readonlyProperty="ROModalita_pagamento_dett"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		enabledOnView="true"
+		label="Term. pagamento" />
+	<fieldProperty
+		name="contoA"
+		property="banca"
+		inputType="FORM"
+		formName="A"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoP"
+		property="banca"
+		inputType="FORM"
+		formName="P"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoB"
+		property="banca"
+		inputType="FORM"
+		formName="BdocAmm"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoQ"
+		property="banca"
+		inputType="FORM"
+		formName="Q"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoN"
+		property="banca"
+		inputType="FORM"
+		formName="N"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="pg_banca"
+		property="pg_banca"
+		inputType="TEXT"
+		label="pg_banca" />
+	<fieldProperty
+		name="listabanchedett"
+		property="banca"
+		inputType="BUTTON"
+		img="img/find16.gif"
+		readonlyProperty="abledToInsertBank"
+		enabledOnView="true"
+		label="Conto/i..."
+		href="javascript:submitForm('doSearch(main.Dettaglio.listabanchedett)')" />
+	<fieldProperty
+		name="data_esigibilita_iva"
+		property="data_esigibilita_iva"
+		inputType="TEXT"
+		label="data_esigibilita_iva" />
+		
+	<formFieldProperty
+		name="voce_iva" />
+	<formFieldProperty
+		name="cd_voce_iva" />
+	<formFieldProperty
+		name="ds_voce_iva" />
+	<formFieldProperty
+		name="percentuale_voce_iva" />
+		
+	<formFieldProperty
+		name="bene_servizio" />
+	<formFieldProperty
+		name="cd_bene_servizio" />
+	<formFieldProperty
+		name="ds_bene_servizio" />
+		
+	<formFieldProperty
+		name="ds_riga_fattura" />
+	<formFieldProperty
+		name="dt_da_competenza_coge"
+		label="Competenza dal" />
+	<formFieldProperty
+		name="dt_a_competenza_coge"
+		label="al" />
+		
+	<formFieldProperty
+		name="im_iva" 
+		command="doForzaIVA" />
+		
+	<formFieldProperty
+		name="ti_istituz_commerc" />
+	<formFieldProperty
+		name="ti_promiscuo" />
+		
+	<formFieldProperty
+		name="im_totale_divisa" />
+	<formFieldProperty
+		name="im_imponibile" />
+	<formFieldProperty
+		name="prezzo_unitario"
+		command="doCalcolaTotaliDiRiga" />
+	<formFieldProperty
+		name="quantita"
+		command="doOnQuantitaChange" />
+	<formFieldProperty
+		name="stato_cofi" />
+	<formFieldProperty
+		name="ti_associato_manrev" />
+
+	<formFieldProperty
+		name="cd_fornitore" />
+
+	<formFieldProperty
+		name="cd_cessionario" />
+
+	<formFieldProperty
+		name="contoA" />
+	<formFieldProperty
+		name="contoB" />
+	<formFieldProperty
+		name="contoP" />
+	<formFieldProperty
+		name="contoQ" />
+	<formFieldProperty
+		name="contoN" />
+	<formFieldProperty
+		name="listabanchedett" 
+		label="Conto/i..." />
+
+	<formFieldProperty
+		name="modalita_pagamento" />
+	<formFieldProperty
+		name="termini_pagamento" />
+	<formFieldProperty
+		name="pg_banca" />
+
+	<formFieldProperty
+		name="data_esigibilita_iva" />
+	
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="stato_cofi" />
+	<columnFieldProperty
+		name="ti_associato_manrev" />
+	<columnFieldProperty
+		name="cd_voce_iva" />
+	<columnFieldProperty
+		name="cd_bene_servizio" />
+	<columnFieldProperty
+		name="ds_riga_fattura" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="im_iva" />
+	<columnFieldProperty
+		name="ti_istituz_commerc" />
+	<columnFieldProperty
+		name="im_totale_divisa" />
+	<columnFieldProperty
+		name="pg_fattura_passiva" />
+	<columnFieldProperty
+		name="im_imponibile" />
+	<columnFieldProperty
+		name="prezzo_unitario" />
+	<columnFieldProperty
+		name="progressivo_riga" />
+	<columnFieldProperty
+		name="quantita" />
+	<columnFieldProperty
+		name="cd_fornitore" />
+	<columnFieldProperty
+		name="modalita_pagamento" />	
+	<columnFieldProperty
+		name="data_esigibilita_iva" />
+
+	<columnSet
+		name="righiSet">
+		<columnFieldProperty
+			name="cd_bene_servizio"
+			/>
+		<columnFieldProperty
+			name="ds_riga_fattura"
+			/>
+		<columnFieldProperty
+			name="quantita"
+			/>
+		<columnFieldProperty
+			name="prezzo_unitario"
+			/>
+		<columnFieldProperty
+			name="im_imponibile"
+			/>
+		<columnFieldProperty
+			name="im_iva"
+			/>
+		<columnFieldProperty
+			name="stato_cofi"
+			/>
+		<columnFieldProperty
+			name="ti_associato_manrev"
+			/>
+		<columnFieldProperty
+			name="cd_fornitore" />
+		<columnFieldProperty
+			name="modalita_pagamento" />			
+	</columnSet>
+	<columnSet
+		name="inventarioSet">
+		<columnFieldProperty
+			name="ds_riga_fattura"
+			/>
+		<columnFieldProperty
+			name="quantita"
+			/>
+		<columnFieldProperty
+			name="prezzo_unitario"
+			/>
+		<columnFieldProperty
+			name="im_totale_inventario"
+			/>
+	</columnSet>	
+</bulkInfo>

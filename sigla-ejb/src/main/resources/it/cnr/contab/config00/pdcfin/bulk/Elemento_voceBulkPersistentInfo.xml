@@ -1,0 +1,88 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk"
+	homeClassName="it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome" >
+	<defaultColumnMap
+		tableName="ELEMENTO_VOCE"  >
+		<columnMapping
+			columnName="CD_ELEMENTO_PADRE"
+			propertyName="elemento_padre.cd_elemento_voce"
+			/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="elemento_padre.esercizio"
+			fetchOnly="true"
+			/>
+			<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="elemento_padre.ti_appartenenza"
+			fetchOnly="true"			
+			/>		
+			<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="elemento_padre.ti_gestione"
+			fetchOnly="true"			 
+			/>
+		<columnMapping
+			columnName="CD_CAPOCONTO_FIN"
+			propertyName="capoconto_fin.cd_capoconto_fin"/>
+		<columnMapping
+			columnName="ESERCIZIO_CLA_E"
+			propertyName="classificazione_entrate.esercizio" />
+		<columnMapping
+			columnName="COD_CLA_E"
+			propertyName="classificazione_entrate.codice_cla_e" />			
+		<columnMapping
+			columnName="ESERCIZIO_CLA_S"
+			propertyName="classificazione_spese.esercizio" />
+		<columnMapping
+			columnName="COD_CLA_S"
+			propertyName="classificazione_spese.codice_cla_s" />			
+		<columnMapping
+			columnName="ID_CLASSIFICAZIONE"
+			propertyName="v_classificazione_voci.id_classificazione"
+			sqlTypeName="DECIMAL"
+			columnSize="7" />
+	</defaultColumnMap>
+
+	<columnMap
+		name="V_ELEMENTO_VOCE_PDG_ETR"
+		extends="default"
+		tableName="V_ELEMENTO_VOCE_PDG_ETR" >
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE"
+			propertyName="v_classificazione_voci.cd_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="34" 
+			nullable="true"/>
+	</columnMap>
+
+	<columnMap
+		name="V_ELEMENTO_VOCE_PDG_SPE"
+		extends="default"
+		tableName="V_ELEMENTO_VOCE_PDG_SPE" >
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE"
+			propertyName="v_classificazione_voci.cd_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="34" 
+			nullable="true"/>
+	</columnMap>
+			
+	<persistentProperty
+		name="elemento_padre" />
+	<persistentProperty
+		name="capoconto_fin" />
+	<persistentProperty
+		name="classificazione_entrate" />
+	<persistentProperty
+		name="classificazione_spese" />				
+	<persistentProperty
+		name="v_classificazione_voci" />				
+	<persistentProperty
+		name="v_classificazione_voci.cd_classificazione" />				
+	<fetchPolicy
+		name="it.cnr.contab.doccont00.comp.ObbligazioneComponent.find.elemento_voce">
+		<exclude pattern="*" />
+	</fetchPolicy>
+	
+</SQLPersistentInfo>

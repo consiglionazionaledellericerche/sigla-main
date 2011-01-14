@@ -1,0 +1,71 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Annotazione residua di Spesa su Partita di Giro">
+	<fieldProperty
+		name="esercizio_ori_ori_riporto"
+		property="esercizio_ori_ori_riporto"
+		label="Es. Impegno origine"
+		inputType="TEXT"
+		maxLength="4"
+		inputSize="4"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		/>		
+	<fieldProperty
+		name="pg_obbligazione_ori_riporto"
+		property="pg_obbligazione_ori_riporto"
+		label="Nr. Annotazione origine"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="unita_organizzativa"
+		property="unita_organizzativa"
+		inputType="SELECT"
+		optionsProperty="unitaOrganizzativaOptions"
+		printProperty="ds_estesa"
+		nullable="false"
+		inputSize="40"
+		label="Unit&#224; organizzativa"
+		enabledOnSearch="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"				
+		caseSensitiveSearch="false" />
+		
+		
+
+	<formFieldProperty
+		name="esercizio_ori_ori_riporto"
+		/>
+	<formFieldProperty
+		name="pg_obbligazione_ori_riporto"
+		/>
+	<formFieldProperty
+		name="unita_organizzativa" />
+		
+		
+
+	<columnFieldProperty
+		name="esercizio_ori_ori_riporto"
+		columnStyle="padding-left:5px"
+		/>
+
+	<columnFieldProperty
+		name="pg_obbligazione_ori_riporto"
+		columnStyle="padding-left:5px"
+		/>
+
+	<findFieldProperty
+		name="esercizio_ori_ori_riporto"
+		/>
+	<findFieldProperty
+		name="pg_obbligazione_ori_riporto"
+		/>
+
+</bulkInfo>

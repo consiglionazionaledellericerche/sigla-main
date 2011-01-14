@@ -1,0 +1,91 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="find_cds"
+		property="cds"
+		inputType="SEARCHTOOL" />
+	<fieldProperty
+		name="cds_configuratore_cd"
+		property="cds.cd_unita_organizzativa"
+		readonlyProperty="ROCds"
+		label="Codice CDS amministrato"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="cds_configuratore_ds"
+		property="cds.ds_unita_organizzativa"
+		readonlyProperty="ROCds"
+		label=""
+		inputSize="30"
+		inputType="TEXT" />
+
+	<columnFieldProperty
+		name="cognome"
+		/>
+	<columnFieldProperty
+		name="nome"
+		/>
+	<columnFieldProperty
+		name="indirizzo"
+		/>
+	<columnFieldProperty
+		name="cd_gestore"
+		/>
+	<columnFieldProperty
+		name="dt_inizio_validita"
+		/>
+	<columnFieldProperty
+		name="dt_fine_validita"
+		/>
+	<columnFieldProperty
+		name="fl_password_change"
+		/>
+	<columnFieldProperty
+		name="cd_cds_configuratore"
+		/>
+		
+	<formFieldProperty
+		name="cds_configuratore_cd"
+		/>
+	<formFieldProperty
+		name="cds_configuratore_ds"
+		/>
+	<formFieldProperty
+		name="find_cds"
+		/>	
+
+	<findFieldProperty
+		name="cds_configuratore_cd"
+		/>
+	<findFieldProperty
+		name="cd_utente"
+		/>
+	<findFieldProperty
+		name="cognome"
+		/>
+	<findFieldProperty
+		name="ds_utente"
+		inputSize="40"
+		/>
+	<findFieldProperty
+		name="dt_fine_validita"
+		/>
+	<findFieldProperty
+		name="dt_inizio_validita"
+		/>
+	<findFieldProperty
+		name="fl_password_change"
+		/>
+	<findFieldProperty
+		name="indirizzo"
+		inputSize="40"
+		/>
+	<findFieldProperty
+		name="nome"
+		/>
+
+	
+</bulkInfo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofi_obbBulk"
+	homeClassName="it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofi_obbHome">
+	<defaultColumnMap
+		tableName="STIPENDI_COFI_OBB">
+		<columnMapping
+			columnName="CD_CDS_OBBLIGAZIONE"
+			propertyName="obbligazioni.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="obbligazioni.esercizio" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="obbligazioni.esercizio_originale" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="obbligazioni.pg_obbligazione" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="obbligazioni"
+		partOfOid="true" />
+</SQLPersistentInfo>

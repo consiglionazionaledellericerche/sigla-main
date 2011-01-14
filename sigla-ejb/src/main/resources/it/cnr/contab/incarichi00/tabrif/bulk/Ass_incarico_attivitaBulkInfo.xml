@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	shortDescription="Associazione incarico/attività"
+	longDescription="Associazione incarico/attività" >
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="find_tipo_incarico"
+		property="tipo_incarico"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Tipo Incarico" />
+	<fieldProperty
+		name="cd_tipo_incarico"
+		property="tipo_incarico.cd_tipo_incarico"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Codice incarico" />
+	<fieldProperty
+		name="ds_tipo_incarico"
+		property="tipo_incarico.ds_tipo_incarico" 
+		label="Tipo Incarico" />
+	<fieldProperty
+		name="find_tipo_attivita"
+		property="tipo_attivita"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Tipo Attività" />
+	<fieldProperty
+		name="cd_tipo_attivita"
+		property="tipo_attivita.cd_tipo_attivita"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Codice attivita'" />
+	<fieldProperty
+		name="ds_tipo_attivita"
+		property="tipo_attivita.ds_tipo_attivita"
+		label="Tipo Attività" />
+	<fieldProperty
+		name="tipo_natura"
+		property="tipo_natura"
+		keysProperty="tipo_naturaKeys"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Natura" />
+	<fieldProperty
+		name="find_tipo_limite"
+		property="tipo_limite"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Tipo Limite" />
+	<fieldProperty
+		name="cd_tipo_limite"
+		property="tipo_limite.cd_tipo_limite"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Codice limite" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Stato" />
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_tipo_incarico" />
+	<formFieldProperty
+		name="ds_tipo_incarico" />
+	<formFieldProperty
+		name="find_tipo_incarico" />
+	<formFieldProperty
+		name="cd_tipo_attivita" />
+	<formFieldProperty
+		name="ds_tipo_attivita" />
+	<formFieldProperty
+		name="find_tipo_attivita" />
+	<formFieldProperty
+		name="tipo_natura" />
+	<formFieldProperty
+		name="cd_tipo_limite" />
+	<formFieldProperty
+		name="find_tipo_limite" />
+	<formFieldProperty
+		name="stato" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="ds_tipo_incarico" />
+	<columnFieldProperty
+		name="ds_tipo_attivita" />
+	<columnFieldProperty
+		name="tipo_natura" />
+	<columnFieldProperty
+		name="cd_tipo_limite" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_tipo_incarico" />
+	<findFieldProperty
+		name="cd_tipo_attivita" />
+	<findFieldProperty
+		name="tipo_natura" />
+	<findFieldProperty
+		name="cd_tipo_limite" />
+</bulkInfo>

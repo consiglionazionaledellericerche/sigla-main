@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="prc_copertura_obblig_3"
+		property="prc_copertura_obblig_3"
+		label="Perc. di copertura obbligazioni 3&#176; esercizio"
+		inputType="TEXT"
+		maxLength="6"
+		inputSize="6"
+		formatName = "it.cnr.contab.util.PercentFormat"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="prc_copertura_obblig_2"
+		property="prc_copertura_obblig_2"
+		label="Perc. di copertura obbligazioni 2&#176; esercizio"
+		inputType="TEXT"
+		maxLength="6"
+		inputSize="6"
+		formatName = "it.cnr.contab.util.PercentFormat"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cds.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_unita_organizzativa" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		label="Esercizio"
+		inputType="TEXT"
+		maxLength="4"
+		inputSize="4"
+		/>
+
+	<formFieldProperty
+		name="prc_copertura_obblig_3" />
+	<formFieldProperty
+		name="prc_copertura_obblig_2" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="esercizio" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="prc_copertura_obblig_2"
+		label="Perc. 2&#176; esercizio"/>
+	<columnFieldProperty
+		name="prc_copertura_obblig_3" 
+		label="Perc. 3&#176; esercizio"/>
+
+	<findFieldProperty
+		name="prc_copertura_obblig_3" />
+	<findFieldProperty
+		name="prc_copertura_obblig_2" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="esercizio" />
+
+</bulkInfo>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.V_disp_cassa_cdsBase"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.V_disp_cassa_cdsHome" >
+	<defaultColumnMap
+		tableName="V_DISP_CASSA_CDS" >
+		<columnMapping
+			columnName="IM_ACCREDITAMENTI_IC"
+			propertyName="im_accreditamenti_ic"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_ACCREDITAMENTI"
+			propertyName="im_accreditamenti"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_CASSA_INIZIALE"
+			propertyName="im_cassa_iniziale"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_MANDATI"
+			propertyName="im_mandati"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_REVERSALI"
+			propertyName="im_reversali"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="IM_DISPONIBILITA_CASSA"
+			propertyName="im_disponibilita_cassa"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />	
+	</defaultColumnMap>
+	<persistentProperty
+		name="im_accreditamenti_ic" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="im_accreditamenti" />
+	<persistentProperty
+		name="im_cassa_iniziale" />
+	<persistentProperty
+		name="im_mandati" />
+	<persistentProperty
+		name="im_reversali" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="im_disponibilita_cassa" />	
+</SQLPersistentInfo>

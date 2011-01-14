@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent00.bulk.V_assestato_voceBulk"
+	homeClassName="it.cnr.contab.prevent00.bulk.V_assestato_voceHome">
+	<defaultColumnMap
+		tableName="V_ASSESTATO_VOCE">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" 
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_RES"
+			propertyName="esercizio_res"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" 
+			primary="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" 
+			primary="true" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" 
+			primary="true" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" 
+			primary="true" />
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="cd_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="false" 
+			primary="true" />
+		<columnMapping
+			columnName="DS_VOCE"
+			propertyName="ds_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />			
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="30"/>		
+		<columnMapping
+			columnName="IM_OBBL_RES_PRO"
+			propertyName="im_obbl_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"/>
+		<columnMapping
+			columnName="ASSESTATO"
+			propertyName="assestato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"/>
+		<columnMapping
+			columnName="VAR_PIU_OBBL_RES_PRO"
+			propertyName="var_piu_obbl_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"/>
+		<columnMapping
+			columnName="VAR_MENO_OBBL_RES_PRO"
+			propertyName="var_meno_obbl_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"/>
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_PRO"
+			propertyName="im_mandati_reversali_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"/>
+		<columnMapping
+			columnName="IM_PAGAMENTI_INCASSI"
+			propertyName="im_pagamenti_incassi"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"/>			
+	</defaultColumnMap>
+	
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true"/>
+	<persistentProperty
+		name="esercizio_res"
+		partOfOid="true"/>
+	<persistentProperty
+		name="cd_centro_responsabilita"
+		partOfOid="true"/>
+	<persistentProperty
+		name="ti_appartenenza"
+		partOfOid="true"/>
+	<persistentProperty
+		name="ti_gestione"
+		partOfOid="true"/>
+	<persistentProperty
+		name="cd_voce"
+		partOfOid="true"/>
+	<persistentProperty
+		name="ds_voce"/>
+	<persistentProperty
+		name="cd_elemento_voce"/>
+	<persistentProperty
+		name="im_obbl_res_pro"/>
+	<persistentProperty
+		name="assestato"/>
+	<persistentProperty
+		name="var_piu_obbl_res_pro"/>
+	<persistentProperty
+		name="var_meno_obbl_res_pro"/>
+	<persistentProperty
+		name="im_mandati_reversali_pro"/>
+	<persistentProperty
+		name="im_pagamenti_incassi"/>
+		
+</SQLPersistentInfo>

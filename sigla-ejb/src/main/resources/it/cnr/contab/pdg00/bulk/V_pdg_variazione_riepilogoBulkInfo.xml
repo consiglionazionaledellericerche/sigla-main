@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_variazione_pdg"
+		property="pg_variazione_pdg"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero Variazione" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Entrate/Spese" />
+	<fieldProperty
+		name="cd_cdr_assegnatario"
+		property="cd_cdr_assegnatario"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Centro di Responsabilità" />
+	<fieldProperty
+		name="ds_cdr"
+		property="ds_cdr"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione" />
+	<fieldProperty
+		name="cd_dipartimento"
+		property="cd_dipartimento"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Dipartimento" />
+	<fieldProperty
+		name="ds_dipartimento"
+		property="ds_dipartimento"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione" />
+	<fieldProperty
+		name="im_totale"
+		property="im_totale"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Totale" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_variazione_pdg" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_cdr_assegnatario" />
+	<formFieldProperty
+		name="ds_cdr" />
+	<formFieldProperty
+		name="cd_dipartimento" />
+	<formFieldProperty
+		name="ds_dipartimento" />
+	<formFieldProperty
+		name="im_totale" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_variazione_pdg" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_cdr_assegnatario" />
+	<findFieldProperty
+		name="ds_cdr" />
+	<findFieldProperty
+		name="cd_dipartimento" />
+	<findFieldProperty
+		name="ds_dipartimento" />
+	<findFieldProperty
+		name="im_totale" />
+	<columnFieldProperty
+		name="cd_cdr_assegnatario" />
+	<columnFieldProperty
+		name="ds_cdr" />
+	<columnFieldProperty
+		name="cd_dipartimento" />
+	<columnFieldProperty
+		name="ds_dipartimento" />
+	<columnFieldProperty
+		name="im_totale" />
+	<columnSet name="entrate">
+		<columnFieldProperty name="cd_cdr_assegnatario" />
+		<columnFieldProperty name="ds_cdr" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="ds_dipartimento" />
+		<columnFieldProperty name="im_totale" label="Importo Totale Entrate" />
+	</columnSet>
+	<columnSet name="spese">
+		<columnFieldProperty name="cd_cdr_assegnatario" />
+		<columnFieldProperty name="ds_cdr" />
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="ds_dipartimento" />
+		<columnFieldProperty name="im_totale" label="Importo Totale Spese" />
+	</columnSet>
+</bulkInfo>

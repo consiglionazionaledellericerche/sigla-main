@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo shortDescription="Addizionali Rateizzate"
+          longDescription="Addizionali Rateizzate">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />		          
+	<fieldProperty
+		name="cd_anag"
+		property="cd_anag"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Codice Anagrafico" />
+	<fieldProperty
+		name="denominazione"
+		property="denominazione"
+		inputType="TEXT"
+		inputSize="101"
+		maxLength="101"
+		label="Denominazione" />
+	<fieldProperty
+		name="ds_classificazione_cori"
+		property="ds_classificazione_cori"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		label="Tipo" />		
+	<fieldProperty
+		name="im_da_rateizzare"
+		property="im_da_rateizzare"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo da Rateizzare" />
+	<fieldProperty
+		name="im_rateizzato"
+		property="im_rateizzato"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo trattenuto" />
+	<fieldProperty
+		name="im_residuo"
+		property="im_residuo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo residuo da trattenere" />	
+	<fieldProperty
+		name="cd_cds_conguaglio"
+		property="cd_cds_conguaglio"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS Conguaglio" />		
+	<fieldProperty
+		name="cd_uo_conguaglio"
+		property="cd_uo_conguaglio"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="UO Conguaglio" />		
+	<fieldProperty
+		name="pg_conguaglio"
+		property="pg_conguaglio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo Conguaglio" />		
+				
+	<formFieldProperty
+		name="esercizio" />	
+	<formFieldProperty
+		name="cd_anag" />
+	<formFieldProperty
+		name="denominazione" />		
+	<formFieldProperty
+		name="ds_classificazione_cori" />
+	<formFieldProperty
+		name="im_da_rateizzare" />
+	<formFieldProperty
+		name="im_rateizzato" />
+	<formFieldProperty
+		name="im_residuo" />
+	<formFieldProperty
+		name="cd_cds_conguaglio" />		
+	<formFieldProperty
+		name="cd_uo_conguaglio" />		
+	<formFieldProperty
+		name="pg_conguaglio" />	
+
+	<findFieldProperty
+		name="cd_anag" />
+	<findFieldProperty
+		name="denominazione" />		
+	<findFieldProperty
+		name="ds_classificazione_cori" />
+	<findFieldProperty
+		name="im_da_rateizzare" />
+	<findFieldProperty
+		name="im_rateizzato" />
+	<findFieldProperty
+		name="im_residuo" />
+	<findFieldProperty
+		name="cd_cds_conguaglio" />		
+	<findFieldProperty
+		name="cd_uo_conguaglio" />		
+	<findFieldProperty
+		name="pg_conguaglio" />	
+		
+	<columnFieldProperty
+		name="esercizio" />	
+	<columnFieldProperty
+		name="cd_anag" />
+	<columnFieldProperty
+		name="denominazione" />		
+	<columnFieldProperty
+		name="ds_classificazione_cori" />
+	<columnFieldProperty
+		name="im_da_rateizzare" />
+	<columnFieldProperty
+		name="im_rateizzato" />
+	<columnFieldProperty
+		name="im_residuo" />
+	<columnFieldProperty
+		name="cd_cds_conguaglio" />		
+	<columnFieldProperty
+		name="cd_uo_conguaglio" />		
+	<columnFieldProperty
+		name="pg_conguaglio" />		
+</bulkInfo>

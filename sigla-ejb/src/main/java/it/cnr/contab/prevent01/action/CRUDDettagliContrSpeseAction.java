@@ -1,0 +1,103 @@
+package it.cnr.contab.prevent01.action;
+
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.prevent01.bp.CRUDDettagliContrSpeseBP;
+import it.cnr.contab.prevent01.bulk.Contrattazione_speseVirtualBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_approvato_dip_areaBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_contrattazione_speseBulk;
+import it.cnr.contab.prevent01.ejb.PdgContrSpeseComponentSession;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.Forward;
+import it.cnr.jada.util.action.CRUDAction;
+
+public class CRUDDettagliContrSpeseAction extends CRUDAction {
+ 
+	public Forward doTab(ActionContext context, String tabName, String pageName) 
+	{
+		try
+		{
+			fillModel( context );
+			CRUDDettagliContrSpeseBP bp = (CRUDDettagliContrSpeseBP)getBusinessProcess(context);
+			Contrattazione_speseVirtualBulk contr_spese = (Contrattazione_speseVirtualBulk) bp.getModel();
+			//bp.getModel().validate();
+			if (bp.isDirty())
+			{
+				getBusinessProcess(context).setErrorMessage("Salvare le modifiche prima di cambiare pagina.");
+				return context.findDefaultForward();
+			}
+			if (pageName.equals("tabDettagli")) {
+				Pdg_approvato_dip_areaBulk pdg_dip_area = (Pdg_approvato_dip_areaBulk) bp.getCrudDettagliDipArea().getModel();
+				if (pdg_dip_area==null) {
+					getBusinessProcess(context).setErrorMessage("Selezionare una riga Dipartimento/Area per visualizzare i dettagli.");
+					return context.findDefaultForward();
+				}
+				if (!contr_spese.getDettagliContrSpese().isEmpty()) {
+					if (!pdg_dip_area.equalsByPrimaryKey(((Pdg_contrattazione_speseBulk)contr_spese.getDettagliContrSpese().get(0)).getPdg_dip_area()))
+						bp.caricaDettagli(context, contr_spese, pdg_dip_area);
+				}
+				else
+					bp.caricaDettagli(context, contr_spese, pdg_dip_area);			
+			}
+		}		
+		catch(Throwable e) 
+		{
+			return handleException(context,e);
+		}
+		return super.doTab(context, tabName, pageName);
+	}
+
+	public Forward doBlankSearchSearchtool_progetto(ActionContext actioncontext, String s) {
+		CRUDDettagliContrSpeseBP bp = (CRUDDettagliContrSpeseBP)actioncontext.getBusinessProcess();
+		Pdg_contrattazione_speseBulk pdg_contr_spese = (Pdg_contrattazione_speseBulk)bp.getModel();
+		pdg_contr_spese.setCdr(null);
+		return super.doBlankSearch(actioncontext, s);
+	}
+
+	public it.cnr.jada.action.Forward doBringBackSearchSearchtool_progetto(ActionContext context,Pdg_contrattazione_speseBulk pdg_contr_spese, Progetto_sipBulk progetto) {
+		try {
+			CRUDDettagliContrSpeseBP bp = (CRUDDettagliContrSpeseBP)context.getBusinessProcess();
+		
+			if (progetto != null) {
+				if (progetto.getUnita_organizzativa().getCd_tipo_unita().equalsIgnoreCase( it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC )) 
+				{
+					bp.setErrorMessage("Non è possibile inserire o modificare moduli di attività afferenti a CDS appartenenti alla SAC.");
+					return context.findDefaultForward();
+				}
+				
+				CdrBulk cdr = ((PdgContrSpeseComponentSession)bp.createComponentSession()).caricaCdrAfferenzaDaUo(context.getUserContext(), progetto.getUnita_organizzativa());
+				pdg_contr_spese.setProgetto(progetto);
+				pdg_contr_spese.setCdr(cdr);
+			}
+			return context.findDefaultForward();
+		} catch(Throwable e) {
+			return handleException(context,e);
+		}
+	}
+	
+	public it.cnr.jada.action.Forward doApprova(ActionContext context) {
+		try {
+			fillModel( context );
+			CRUDDettagliContrSpeseBP bp = (CRUDDettagliContrSpeseBP)context.getBusinessProcess();
+			if (bp.isDirty())
+			{
+				bp.setErrorMessage("Salvare le modifiche prima eseguire il comando richiesto.");
+				return context.findDefaultForward();
+			}
+			bp.approvaDefinitivamente(context);
+			return context.findDefaultForward();
+		} catch(Throwable e) {
+			return handleException(context,e);
+		}
+	}
+
+	public it.cnr.jada.action.Forward doUndoApprova(ActionContext context) {
+		try {
+			CRUDDettagliContrSpeseBP bp = (CRUDDettagliContrSpeseBP)context.getBusinessProcess();
+			bp.undoApprovazioneDefinitiva(context);
+			return context.findDefaultForward();
+		} catch(Throwable e) {
+			return handleException(context,e);
+		}
+	}
+}

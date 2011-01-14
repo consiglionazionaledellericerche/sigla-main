@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="im_cassa_iniziale"
+		property="im_cassa_iniziale"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		label="im_cassa_iniziale" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="CdS"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_accreditamenti"
+		property="im_accreditamenti"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		label="im_accreditamenti" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="im_accreditamenti_ic"
+		property="im_accreditamenti_ic"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		label="im_accreditamenti_ic" />
+	<fieldProperty
+		name="im_mandati"
+		property="im_mandati"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		label="im_mandati" />
+	<fieldProperty
+		name="im_obbligazioni"
+		property="im_obbligazioni"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		label="Obbligazioni non pagate" />
+	<fieldProperty
+		name="im_disponibilita_cassa"
+		property="im_disponibilita_cassa"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		label="Disponibilita Cassa" />
+	<fieldProperty
+		name="im_da_trasferire"
+		property="im_da_trasferire"
+		inputType="TEXT"
+		label="Importo"
+		maxLength="13"
+		inputSize="13"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		nullable="false" />		
+		
+
+	<formFieldProperty
+		name="im_da_trasferire" />		
+	<formFieldProperty
+		name="im_cassa_iniziale" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="im_accreditamenti" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="im_accreditamenti_ic" />
+	<formFieldProperty
+		name="im_mandati" />
+
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="im_disponibilita_cassa" />
+	<columnFieldProperty
+		name="im_obbligazioni" />
+	<columnFieldProperty
+		name="im_da_trasferire" />		
+		
+
+	<findFieldProperty
+		name="im_cassa_iniziale" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="im_accreditamenti" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="im_accreditamenti_ic" />
+	<findFieldProperty
+		name="im_mandati" />
+
+</bulkInfo>

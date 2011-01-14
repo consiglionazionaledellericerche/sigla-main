@@ -1,0 +1,704 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Situazione Assestato per Moduli"
+          longDescription="Situazione Assestato per Moduli">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_variazione_pdg"
+		property="pg_variazione_pdg"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo Variazione Progetto" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Gestione" />
+	<fieldProperty
+		name="dipart"
+		property="dipart"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Dipartimento" />
+	<fieldProperty
+		name="progetto"
+		property="progetto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Progetto" />
+	<fieldProperty
+		name="commessa"
+		property="commessa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Commessa" />
+	<fieldProperty
+		name="modulo"
+		property="modulo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Modulo" />
+	<fieldProperty
+		name="ds_modulo"
+		property="ds_modulo"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="400"
+		label="Descrizione Modulo" />
+	<fieldProperty
+		name="tipo_progetto"
+		property="tipo_progetto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Tipo Progetto" />
+	<fieldProperty
+		name="spese_ini"
+		property="spese_ini"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Spese Iniziali" />
+	<fieldProperty
+		name="costi_ini"
+		property="costi_ini"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Costi Iniziali" />
+	<fieldProperty
+		name="pre_spese_var_app"
+		property="pre_spese_var_app"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni spese già approvate" />
+	<fieldProperty
+		name="pre_costi_var_app"
+		property="pre_costi_var_app"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni costi già approvati" />
+	<fieldProperty
+		name="pre_spese_var_prd"
+		property="pre_spese_var_prd"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni spese già da approvare" />
+	<fieldProperty
+		name="pre_costi_var_prd"
+		property="pre_costi_var_prd"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni costi già da approvare" />
+	<fieldProperty
+		name="spese_var_app"
+		property="spese_var_app"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazione spese approvate" />
+	<fieldProperty
+		name="costi_var_app"
+		property="costi_var_app"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni costi approvati" />
+	<fieldProperty
+		name="spese_var_prd"
+		property="spese_var_prd"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni spese da approvare" />
+	<fieldProperty
+		name="costi_var_prd"
+		property="costi_var_prd"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni costi da approvare" />
+	<fieldProperty
+		name="post_spese_var_app"
+		property="post_spese_var_app"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Variazioni spese approvate" />
+	<fieldProperty
+		name="post_costi_var_app"
+		property="post_costi_var_app"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Variazioni costi approvati" />
+	<fieldProperty
+		name="post_spese_var_prd"
+		property="post_spese_var_prd"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Variazioni spese da approvare" />
+	<fieldProperty
+		name="post_costi_var_prd"
+		property="post_costi_var_prd"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Variazioni costi da approvare" />
+	<fieldProperty
+		name="spese_assestato_app"
+		property="spese_assestato_app"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato Spese" />
+	<fieldProperty
+		name="costi_assestato_app"
+		property="costi_assestato_app"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato Costi" />
+	<fieldProperty
+		name="entrate_ini"
+		property="entrate_ini"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Entrate Iniziali" />
+	<fieldProperty
+		name="ricavi_ini"
+		property="ricavi_ini"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Ricavi Iniziali" />
+	<fieldProperty
+		name="pre_entrate_var_app"
+		property="pre_entrate_var_app"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni entrate già approvate" />
+	<fieldProperty
+		name="pre_ricavi_var_app"
+		property="pre_ricavi_var_app"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni ricavi già approvati" />
+	<fieldProperty
+		name="pre_entrate_var_prd"
+		property="pre_entrate_var_prd"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni entrate già da approvare" />
+	<fieldProperty
+		name="pre_ricavi_var_prd"
+		property="pre_ricavi_var_prd"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni ricavi già da approvare" />
+	<fieldProperty
+		name="entrate_var_app"
+		property="entrate_var_app"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni entrate approvate" />
+	<fieldProperty
+		name="ricavi_var_app"
+		property="ricavi_var_app"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni ricavi approvati" />
+	<fieldProperty
+		name="entrate_var_prd"
+		property="entrate_var_prd"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni entrate da approvare" />
+	<fieldProperty
+		name="ricavi_var_prd"
+		property="ricavi_var_prd"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni ricavi da approvare" />
+	<fieldProperty
+		name="post_entrate_var_app"
+		property="post_entrate_var_app"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Variazioni entrate approvate" />
+	<fieldProperty
+		name="post_ricavi_var_app"
+		property="post_ricavi_var_app"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Variazioni ricavi approvate" />
+	<fieldProperty
+		name="post_entrate_var_prd"
+		property="post_entrate_var_prd"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Variazioni entrate da approvare" />
+	<fieldProperty
+		name="post_ricavi_var_prd"
+		property="post_ricavi_var_prd"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Variazioni ricavi da approvare" />
+	<fieldProperty
+		name="entrate_assestato_app"
+		property="entrate_assestato_app"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato Entrate" />
+	<fieldProperty
+		name="ricavi_assestato_app"
+		property="ricavi_assestato_app"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato Ricavi" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_variazione_pdg" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="dipart" />
+	<formFieldProperty
+		name="progetto" />
+	<formFieldProperty
+		name="commessa" />
+	<formFieldProperty
+		name="modulo" />
+	<formFieldProperty
+		name="ds_modulo" />
+	<formFieldProperty
+		name="tipo_progetto" />
+	<formFieldProperty
+		name="spese_ini" />
+	<formFieldProperty
+		name="costi_ini" />
+	<formFieldProperty
+		name="pre_spese_var_app" />
+	<formFieldProperty
+		name="pre_costi_var_app" />
+	<formFieldProperty
+		name="pre_spese_var_prd" />
+	<formFieldProperty
+		name="pre_costi_var_prd" />
+	<formFieldProperty
+		name="spese_var_app" />
+	<formFieldProperty
+		name="costi_var_app" />
+	<formFieldProperty
+		name="spese_var_prd" />
+	<formFieldProperty
+		name="costi_var_prd" />
+	<formFieldProperty
+		name="post_spese_var_app" />
+	<formFieldProperty
+		name="post_costi_var_app" />
+	<formFieldProperty
+		name="post_spese_var_prd" />
+	<formFieldProperty
+		name="post_costi_var_prd" />
+	<formFieldProperty
+		name="spese_assestato_app" />
+	<formFieldProperty
+		name="costi_assestato_app" />
+	<formFieldProperty
+		name="entrate_ini" />
+	<formFieldProperty
+		name="ricavi_ini" />
+	<formFieldProperty
+		name="pre_entrate_var_app" />
+	<formFieldProperty
+		name="pre_ricavi_var_app" />
+	<formFieldProperty
+		name="pre_entrate_var_prd" />
+	<formFieldProperty
+		name="pre_ricavi_var_prd" />
+	<formFieldProperty
+		name="entrate_var_app" />
+	<formFieldProperty
+		name="ricavi_var_app" />
+	<formFieldProperty
+		name="entrate_var_prd" />
+	<formFieldProperty
+		name="ricavi_var_prd" />
+	<formFieldProperty
+		name="post_entrate_var_app" />
+	<formFieldProperty
+		name="post_ricavi_var_app" />
+	<formFieldProperty
+		name="post_entrate_var_prd" />
+	<formFieldProperty
+		name="post_ricavi_var_prd" />
+	<formFieldProperty
+		name="entrate_assestato_app" />
+	<formFieldProperty
+		name="ricavi_assestato_app" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_variazione_pdg" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="dipart" />
+	<findFieldProperty
+		name="progetto" />
+	<findFieldProperty
+		name="commessa" />
+	<findFieldProperty
+		name="modulo" />
+	<findFieldProperty
+		name="ds_modulo" />
+	<findFieldProperty
+		name="tipo_progetto" />
+	<findFieldProperty
+		name="spese_ini" />
+	<findFieldProperty
+		name="costi_ini" />
+	<findFieldProperty
+		name="pre_spese_var_app" />
+	<findFieldProperty
+		name="pre_costi_var_app" />
+	<findFieldProperty
+		name="pre_spese_var_prd" />
+	<findFieldProperty
+		name="pre_costi_var_prd" />
+	<findFieldProperty
+		name="spese_var_app" />
+	<findFieldProperty
+		name="costi_var_app" />
+	<findFieldProperty
+		name="spese_var_prd" />
+	<findFieldProperty
+		name="costi_var_prd" />
+	<findFieldProperty
+		name="post_spese_var_app" />
+	<findFieldProperty
+		name="post_costi_var_app" />
+	<findFieldProperty
+		name="post_spese_var_prd" />
+	<findFieldProperty
+		name="post_costi_var_prd" />
+	<findFieldProperty
+		name="spese_assestato_app" />
+	<findFieldProperty
+		name="costi_assestato_app" />
+	<findFieldProperty
+		name="entrate_ini" />
+	<findFieldProperty
+		name="ricavi_ini" />
+	<findFieldProperty
+		name="pre_entrate_var_app" />
+	<findFieldProperty
+		name="pre_ricavi_var_app" />
+	<findFieldProperty
+		name="pre_entrate_var_prd" />
+	<findFieldProperty
+		name="pre_ricavi_var_prd" />
+	<findFieldProperty
+		name="entrate_var_app" />
+	<findFieldProperty
+		name="ricavi_var_app" />
+	<findFieldProperty
+		name="entrate_var_prd" />
+	<findFieldProperty
+		name="ricavi_var_prd" />
+	<findFieldProperty
+		name="post_entrate_var_app" />
+	<findFieldProperty
+		name="post_ricavi_var_app" />
+	<findFieldProperty
+		name="post_entrate_var_prd" />
+	<findFieldProperty
+		name="post_ricavi_var_prd" />
+	<findFieldProperty
+		name="entrate_assestato_app" />
+	<findFieldProperty
+		name="ricavi_assestato_app" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_variazione_pdg" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="dipart" />
+	<columnFieldProperty
+		name="progetto" />
+	<columnFieldProperty
+		name="commessa" />
+	<columnFieldProperty
+		name="modulo" />
+	<columnFieldProperty
+		name="ds_modulo" />
+	<columnFieldProperty
+		name="tipo_progetto" />
+	<columnFieldProperty
+		name="spese_ini" />
+	<columnFieldProperty
+		name="costi_ini" />
+	<columnFieldProperty
+		name="pre_spese_var_app" />
+	<columnFieldProperty
+		name="pre_costi_var_app" />
+	<columnFieldProperty
+		name="pre_spese_var_prd" />
+	<columnFieldProperty
+		name="pre_costi_var_prd" />
+	<columnFieldProperty
+		name="spese_var_app" />
+	<columnFieldProperty
+		name="costi_var_app" />
+	<columnFieldProperty
+		name="spese_var_prd" />
+	<columnFieldProperty
+		name="costi_var_prd" />
+	<columnFieldProperty
+		name="post_spese_var_app" />
+	<columnFieldProperty
+		name="post_costi_var_app" />
+	<columnFieldProperty
+		name="post_spese_var_prd" />
+	<columnFieldProperty
+		name="post_costi_var_prd" />
+	<columnFieldProperty
+		name="spese_assestato_app" />
+	<columnFieldProperty
+		name="costi_assestato_app" />
+	<columnFieldProperty
+		name="entrate_ini" />
+	<columnFieldProperty
+		name="ricavi_ini" />
+	<columnFieldProperty
+		name="pre_entrate_var_app" />
+	<columnFieldProperty
+		name="pre_ricavi_var_app" />
+	<columnFieldProperty
+		name="pre_entrate_var_prd" />
+	<columnFieldProperty
+		name="pre_ricavi_var_prd" />
+	<columnFieldProperty
+		name="entrate_var_app" />
+	<columnFieldProperty
+		name="ricavi_var_app" />
+	<columnFieldProperty
+		name="entrate_var_prd" />
+	<columnFieldProperty
+		name="ricavi_var_prd" />
+	<columnFieldProperty
+		name="post_entrate_var_app" />
+	<columnFieldProperty
+		name="post_ricavi_var_app" />
+	<columnFieldProperty
+		name="post_entrate_var_prd" />
+	<columnFieldProperty
+		name="post_ricavi_var_prd" />
+	<columnFieldProperty
+		name="entrate_assestato_app" />
+	<columnFieldProperty
+		name="ricavi_assestato_app" />
+	<columnSet
+	        name="assestatoSpese">
+			<columnFieldProperty
+				name="dipart" />
+			<columnFieldProperty
+				name="progetto" />
+			<columnFieldProperty
+				name="commessa" />
+			<columnFieldProperty
+				name="modulo" />
+			<columnFieldProperty
+				name="ds_modulo" />
+			<columnFieldProperty
+				name="tipo_progetto" />
+			<columnFieldProperty
+				name="spese_ini" 
+				label="Previsione Iniziale (a)"/>
+			<columnFieldProperty
+				name="post_spese_var_app"
+				label="Variazioni Approvate (b)"/>
+			<columnFieldProperty
+				name="spese_assestato_app" 
+				label="Assestato     (a + b)"/>
+			<columnFieldProperty
+				name="pre_spese_var_prd" 
+				label="Variazioni Definitive"/>
+			<columnFieldProperty
+				name="spese_var_app" 
+				label="Variazione Corrente Approvata"/>
+			<columnFieldProperty
+				name="spese_var_prd" 
+				label="Variazione Corrente Definitiva"/>
+	</columnSet>        	
+	<columnSet
+	        name="assestatoCosti">
+			<columnFieldProperty
+				name="dipart" />
+			<columnFieldProperty
+				name="progetto" />
+			<columnFieldProperty
+				name="commessa" />
+			<columnFieldProperty
+				name="modulo" />
+			<columnFieldProperty
+				name="ds_modulo" />
+			<columnFieldProperty
+				name="tipo_progetto" />
+			<columnFieldProperty
+				name="costi_ini" 
+				label="Previsione Iniziale (a)"/>
+			<columnFieldProperty
+				name="post_costi_var_app"
+				label="Variazioni Approvate (b)"/>
+			<columnFieldProperty
+				name="costi_assestato_app" 
+				label="Assestato     (a + b)"/>
+			<columnFieldProperty
+				name="pre_costi_var_prd" 
+				label="Variazioni Definitive"/>
+			<columnFieldProperty
+				name="costi_var_app" 
+				label="Variazione Corrente Approvata"/>
+			<columnFieldProperty
+				name="costi_var_prd" 
+				label="Variazione Corrente Definitiva"/>
+	</columnSet>        	
+	<columnSet
+	        name="assestatoEntrate">
+			<columnFieldProperty
+				name="dipart" />
+			<columnFieldProperty
+				name="progetto" />
+			<columnFieldProperty
+				name="commessa" />
+			<columnFieldProperty
+				name="modulo" />
+			<columnFieldProperty
+				name="ds_modulo" />
+			<columnFieldProperty
+				name="tipo_progetto" />
+			<columnFieldProperty
+				name="entrate_ini" 
+				label="Previsione Iniziale (a)"/>
+			<columnFieldProperty
+				name="post_entrate_var_app"
+				label="Variazioni Approvate (b)"/>
+			<columnFieldProperty
+				name="entrate_assestato_app" 
+				label="Assestato     (a + b)"/>
+			<columnFieldProperty
+				name="pre_entrate_var_prd" 
+				label="Variazioni Definitive"/>
+			<columnFieldProperty
+				name="entrate_var_app" 
+				label="Variazione Corrente Approvata"/>
+			<columnFieldProperty
+				name="entrate_var_prd" 
+				label="Variazione Corrente Definitiva"/>
+	</columnSet>        	
+	<columnSet
+	        name="assestatoRicavi">
+			<columnFieldProperty
+				name="dipart" />
+			<columnFieldProperty
+				name="progetto" />
+			<columnFieldProperty
+				name="commessa" />
+			<columnFieldProperty
+				name="modulo" />
+			<columnFieldProperty
+				name="ds_modulo" />
+			<columnFieldProperty
+				name="tipo_progetto" />
+			<columnFieldProperty
+				name="ricavi_ini" 
+				label="Previsione Iniziale (a)"/>
+			<columnFieldProperty
+				name="post_ricavi_var_app"
+				label="Variazioni Approvate (b)"/>
+			<columnFieldProperty
+				name="ricavi_assestato_app" 
+				label="Assestato     (a + b)"/>
+			<columnFieldProperty
+				name="pre_ricavi_var_prd" 
+				label="Variazioni Definitive"/>
+			<columnFieldProperty
+				name="ricavi_var_app" 
+				label="Variazione Corrente Approvata"/>
+			<columnFieldProperty
+				name="ricavi_var_prd" 
+				label="Variazione Corrente Definitiva"/>
+	</columnSet>        	
+</bulkInfo>

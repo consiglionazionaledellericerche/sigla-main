@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.logs.bulk.V_batch_control_jobsBulk"
+	homeClassName="it.cnr.contab.logs.bulk.V_batch_control_jobsHome" >
+	<defaultColumnMap
+		tableName="V_BATCH_CONTROL_JOBS" >
+		<columnMapping
+			columnName="NEXT_DATE"
+			propertyName="next_date"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="FAILURES"
+			propertyName="failures"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="BROKEN"
+			propertyName="broken"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="LAST_DATE"
+			propertyName="last_date"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="next_date" />
+	<persistentProperty
+		name="failures" />
+	<persistentProperty
+		name="broken" />
+	<persistentProperty
+		name="last_date" />
+</SQLPersistentInfo>

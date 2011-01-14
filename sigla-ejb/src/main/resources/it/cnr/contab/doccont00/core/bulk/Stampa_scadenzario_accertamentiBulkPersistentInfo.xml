@@ -1,0 +1,5 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Stampa_scadenzario_accertamentiBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Stampa_scadenzario_accertamentiHome" >
+
+</SQLPersistentInfo>

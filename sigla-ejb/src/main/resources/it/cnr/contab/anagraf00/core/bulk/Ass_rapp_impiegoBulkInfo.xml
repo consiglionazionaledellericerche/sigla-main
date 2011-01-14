@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo>
+	<fieldProperty
+		name="cd_rapp_impiego_sti"
+		property="cd_rapp_impiego_sti"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		label="Codice Rapporto di Impiego" />
+	<fieldProperty
+		name="ds_rapp_impiego_sti"
+		property="ds_rapp_impiego_sti"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		label="Descrizione Rapporto di Impiego" />
+	<fieldProperty
+		name="tipo_rapp_impiego"
+		property="tipo_rapp_impiego"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="Tipologia del Rapporto di Impiego" />
+	<formFieldProperty
+		name="cd_rapp_impiego_sti" />
+	<formFieldProperty
+		name="ds_rapp_impiego_sti" />
+	<formFieldProperty
+		name="tipo_rapp_impiego" />
+	<findFieldProperty
+		name="cd_rapp_impiego_sti" />
+	<findFieldProperty
+		name="ds_rapp_impiego_sti" />
+	<findFieldProperty
+		name="tipo_rapp_impiego" />
+	<columnFieldProperty
+		name="cd_rapp_impiego_sti" />
+	<columnFieldProperty
+		name="ds_rapp_impiego_sti" />
+	<columnFieldProperty
+		name="tipo_rapp_impiego" />
+</bulkInfo>

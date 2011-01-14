@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+/********** TIPO_TRATTAMENTO **********/
+	<fieldProperty
+		name="cd_trattamento"
+		property="cd_trattamento"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		readonlyProperty="ROTipoTrattamento"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false"
+		nullable="false"
+		label="Trattamento" />
+	<fieldProperty
+		name="ds_trattamento"
+		property="tipoTrattamento.ds_ti_trattamento"
+		maxLength="100"
+		inputSize="65"
+		inputType="ROTEXT"
+		label="Descrizione" />
+	<fieldProperty
+		name="find_trattamento"
+		property="tipoTrattamento"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="Trattamento" />
+/********** **************** **********/
+/****** TIPO_CONTRIBUTO_RITENUTA ******/
+	<fieldProperty
+		name="cd_contributo_ritenuta"
+		property="cd_contributo_ritenuta"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		readonlyProperty="ROContributoRintenuta"
+		nullable="false"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false"
+		label="Codice CO/RI" />
+	<fieldProperty
+		name="ds_contributo_ritenuta"
+		property="tipoContributoRitenuta.ds_contributo_ritenuta"
+		maxLength="100"
+		inputSize="65"
+		inputType="TEXT"
+		label="Descrizione CO/RI" />
+	<fieldProperty
+		name="find_contributo_ritenuta"
+		property="tipoContributoRitenuta"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="Codice CO/RI" />
+/****** ************************ ******/
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_inizio_validita"
+		maxLength="10"
+		inputSize="20"
+		formatName="date_short"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		enabledOnInsert="true"
+		nullable="false"
+		label="Inizio Validita" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		maxLength="10"
+		inputSize="20"
+		formatName="date_short"
+		inputType="TEXT"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Fine Validita" />
+	<fieldProperty
+		name="dataFineValidita"
+		property="dataFineValidita"
+		maxLength="10"
+		inputSize="20"
+		formatName="date_short"
+		inputType="TEXT"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Fine Validita" />
+	<fieldProperty
+		name="segno"
+		property="segno"
+		optionsProperty="segni"
+		style="width:5em"
+		inputType="SELECT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Segno"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="id_riga"
+		property="id_riga"
+		maxLength="3"
+		inputSize="5"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="ID Riga"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="algoritmo"
+		property="calcolo_imponibile"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Algoritmo"
+		caseSensitiveSearch="false" />
+
+	<formFieldProperty name="id_riga" />
+	<formFieldProperty name="cd_contributo_ritenuta" />
+	<formFieldProperty name="ds_contributo_ritenuta" />
+	<formFieldProperty name="find_contributo_ritenuta" />
+	<formFieldProperty name="cd_trattamento" />
+	<formFieldProperty name="ds_trattamento" />
+	<formFieldProperty name="find_trattamento" />
+	<formFieldProperty name="dt_inizio_validita" />
+	<formFieldProperty name="dt_fine_validita" />
+	<formFieldProperty name="dataFineValidita" />
+	<formFieldProperty name="segno" />
+	<formFieldProperty name="algoritmo" />
+
+	<columnFieldProperty name="id_riga" />
+	<columnFieldProperty name="cd_contributo_ritenuta" />
+	<columnFieldProperty name="cd_trattamento" />
+	<columnFieldProperty name="segno" style="text-align:center" />
+	<columnFieldProperty name="algoritmo" />
+	<columnFieldProperty name="dt_inizio_validita" />
+	<columnFieldProperty name="dataFineValidita" />
+
+	<columnSet name="righe">
+		<columnFieldProperty
+			name="id_riga"
+			style="width:60px" />
+		<columnFieldProperty
+			name="cd_contributo_ritenuta"
+			style="width:90px" />
+		<columnFieldProperty
+			name="ds_contributo_ritenuta"
+			style="width:210px" />
+		<columnFieldProperty
+			name="segno"
+			style="width:40px; text-align:center" />
+		<columnFieldProperty
+			name="algoritmo"
+			style="width:150px" />
+		<columnFieldProperty
+			name="dt_inizio_validita"
+			style="width:60px text-align:right" />
+		<columnFieldProperty
+			name="dataFineValidita"
+			style="width:60px text-align:right" />
+	</columnSet>
+	
+	<findFieldProperty name="id_riga" />
+	<findFieldProperty name="cd_contributo_ritenuta" />
+	<findFieldProperty name="cd_trattamento" />
+	<findFieldProperty name="segno" />
+	<findFieldProperty name="algoritmo" />
+	<findFieldProperty name="dt_inizio_validita" />
+	<findFieldProperty name="dt_fine_validita" />
+
+</bulkInfo>

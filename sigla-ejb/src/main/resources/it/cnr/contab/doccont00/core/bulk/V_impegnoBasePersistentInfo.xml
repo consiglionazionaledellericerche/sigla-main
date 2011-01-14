@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.V_impegnoBase"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.V_impegnoHome" >
+	<defaultColumnMap
+		tableName="V_IMPEGNO" >
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE"
+			propertyName="esercizio_originale"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			primary="true" 
+			nullable="false" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			primary="true" 
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ASSOCIATO_DOC_AMM"
+			propertyName="im_associato_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_CONT"
+			propertyName="cd_tipo_documento_cont"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="cd_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_PGIRO"
+			propertyName="fl_pgiro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_UO_ORIGINE"
+			propertyName="cd_uo_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_SCADENZA"
+			propertyName="im_scadenza"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			primary="true" 			
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE"
+			propertyName="cd_cds_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_SCADENZA"
+			propertyName="dt_scadenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ASSOCIATO_DOC_CONTABILE"
+			propertyName="im_associato_doc_contabile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			primary="true" 			
+			nullable="false" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			primary="true" 			
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC_SCADENZA"
+			propertyName="pg_ver_rec_scadenza"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio_originale"
+		partOfOid="true" />		
+	<persistentProperty
+		name="pg_obbligazione"
+		partOfOid="true" />		
+	<persistentProperty
+		name="im_associato_doc_amm" />
+	<persistentProperty
+		name="cd_tipo_documento_cont" />
+	<persistentProperty
+		name="cd_voce" />
+	<persistentProperty
+		name="fl_pgiro" />
+	<persistentProperty
+		name="cd_uo_origine" />
+	<persistentProperty
+		name="im_scadenza" />
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />		
+	<persistentProperty
+		name="cd_cds_origine" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="dt_scadenza" />
+	<persistentProperty
+		name="im_associato_doc_contabile" />
+	<persistentProperty
+		name="pg_obbligazione_scadenzario"
+		partOfOid="true" />		
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="ti_appartenenza" />
+	<persistentProperty
+		name="cd_cds" 
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_ver_rec"/>
+	<persistentProperty
+		name="pg_ver_rec_scadenza"/>
+		
+</SQLPersistentInfo>

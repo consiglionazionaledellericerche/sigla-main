@@ -1,0 +1,12 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.Rappresentante_legaleBulk"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.Rappresentante_legaleHome" >
+	<defaultColumnMap
+		tableName="RAPPRESENTANTE_LEGALE" >
+		<columnMapping
+			columnName="PG_COMUNE_NASCITA"
+			propertyName="comune_nascita.pg_comune" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="comune_nascita" />
+</SQLPersistentInfo>

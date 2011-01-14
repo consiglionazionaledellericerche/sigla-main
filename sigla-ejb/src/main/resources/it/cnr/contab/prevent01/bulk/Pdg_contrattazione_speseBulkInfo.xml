@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cdr.cd_centro_responsabilita"
+		inputType="TEXT"
+		readonlyProperty="ROrigadet"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="CdR" />
+	<fieldProperty
+		name="ds_cdr"
+		property="cdr.ds_cdr"
+		inputType="TEXT"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="Descrizione CdR" />
+	<fieldProperty
+		name="cdr"
+		property="cdr"
+		readonlyProperty="ROrigadet"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="CdR" />
+	<fieldProperty
+		name="pg_progetto"
+		property="progetto.pg_progetto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo identificativo del modulo di attività" />
+	<fieldProperty
+		name="cd_progetto"
+		property="progetto.cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		readonlyProperty="ROrigadet"
+		label="Modulo di Attivit&#224;"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"		
+		enabledOnEdit="true"/>		
+	<fieldProperty
+		name="ds_progetto"
+		property="progetto.ds_progetto"
+		maxLength="30"
+		inputSize="30"
+		label="Descrizione Modulo di Attivit&#224;"
+		inputType="ROTEXT"
+		enabledOnEdit="true"		
+		caseSensitiveSearch="false"/>		
+
+	<fieldProperty
+		name="searchtool_progetto"
+		property="progetto"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROrigadet"
+		formName="form_searchtool_progetto"
+		label="Modulo di attivit&#224;"
+		/>
+
+	<fieldProperty
+        name="classificazione"
+        property="classificazione"
+        inputType="SEARCHTOOL"
+        formName="searchtool"
+        columnSet="searchtool"
+        freeSearchSet="searchtool"
+		readonlyProperty="ROrigadet"
+	    enabledOnInsert="true"
+		enabledOnEdit="true"		
+        enabledOnSearch="true"
+        label="Livello contrattazione" />		
+	<fieldProperty
+		name="id_classificazione"
+		property="classificazione.id_classificazione"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		label="Identificativo univoco della classificazione ufficiale" />
+	<fieldProperty
+		name="cd_classificazione"
+		property="classificazione.cd_classificazione"
+		readonlyProperty="ROrigadet"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		label="Classificazione" />
+	<fieldProperty
+		name="cd_dipartimento"
+		property="pdg_dip_area.dipartimento.cd_dipartimento"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Dipartimento"/>
+	<fieldProperty
+		name="ds_dipartimento"
+		property="pdg_dip_area.dipartimento.ds_dipartimento"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Descrizione dipartimento"/>
+	<fieldProperty
+		name="cd_cds_area"
+		property="area.cd_unita_organizzativa"
+		inputType="ROTEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Area" />
+	<fieldProperty
+		name="ds_cds_area"
+		property="area.ds_unita_organizzativa"
+		inputType="ROTEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Descrizione Area" />
+	<fieldProperty
+		name="tot_spese_decentr_int"
+		property="tot_spese_decentr_int"
+		inputType="TEXT"
+        maxLength="15"
+		inputSize="15"	
+		nullable="false"
+		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale proposto Fonti interne" />
+	<fieldProperty
+		name="tot_spese_decentr_est"
+		property="tot_spese_decentr_est"
+		inputType="TEXT"
+        maxLength="15"
+		inputSize="15"	
+		nullable="false"
+		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale proposto Fonti esterne" />
+	<fieldProperty
+		name="appr_tot_spese_decentr_int"
+		property="appr_tot_spese_decentr_int"
+		inputType="TEXT"
+		maxLength="15"
+		inputSize="15"
+		nullable="false"
+		enabledOnView="true"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale Approvato Fonti Interne" />
+	<fieldProperty
+		name="appr_tot_spese_decentr_est"
+		property="appr_tot_spese_decentr_est"
+		inputType="TEXT"
+		maxLength="15"
+		inputSize="15"
+		nullable="false"
+		enabledOnView="true"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale Approvato Fonti Esterne" />
+		
+	<fieldProperty
+		name="appr_tot_spese_decentr_int_disabled"
+		property="appr_tot_spese_decentr_int"
+		inputType="TEXT"
+		maxLength="15"
+		inputSize="15"
+		nullable="false"
+		enabledOnEdit = "false"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale Approvato Fonti Interne" />
+	<fieldProperty
+		name="appr_tot_spese_decentr_est_disabled"
+		property="appr_tot_spese_decentr_est"
+		inputType="TEXT"
+		maxLength="15"
+		inputSize="15"
+		nullable="false"
+		enabledOnEdit = "false"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale Approvato Fonti Esterne" />
+
+	<fieldProperty
+		name="totalePropostoModificatoFI"
+		property="totalePropostoModificatoFI"
+		inputType="TEXT"
+        maxLength="15"
+		inputSize="15"	
+		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale Proposto Modificato" />
+
+	<fieldProperty
+		name="differenzaFI"
+		property="differenzaFI"
+		inputType="TEXT"
+        maxLength="15"
+		inputSize="15"	
+		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Differenza" />
+
+	<fieldProperty
+		name="daApprovareFI"
+		property="daApprovareFI"
+		inputType="TEXT"
+        maxLength="15"
+		inputSize="15"	
+		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Differenza" />
+
+	<fieldProperty
+		name="totalePropostoModificatoFE"
+		property="totalePropostoModificatoFE"
+		inputType="TEXT"
+        maxLength="15"
+		inputSize="15"	
+		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale Proposto Modificato" />
+
+	<fieldProperty
+		name="differenzaFE"
+		property="differenzaFE"
+		inputType="TEXT"
+        maxLength="15"
+		inputSize="15"	
+		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Differenza" />
+
+	<fieldProperty
+		name="daApprovareFE"
+		property="daApprovareFE"
+		inputType="TEXT"
+        maxLength="15"
+		inputSize="15"	
+		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Differenza" />
+
+	<formFieldProperty
+		name="appr_tot_spese_decentr_int_disabled"
+		label="Totale Approvato" />
+	<formFieldProperty
+		name="appr_tot_spese_decentr_est_disabled"
+		label="Totale Approvato" />
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="cdr" />
+	<formFieldProperty
+		name="pg_progetto" />
+	<formFieldProperty
+		name="cd_progetto" />
+	<formFieldProperty
+		name="ds_progetto" />
+	<formFieldProperty
+		name="searchtool_progetto" />
+	<formFieldProperty
+        name="classificazione"/>		
+	<formFieldProperty
+		name="id_classificazione" />
+	<formFieldProperty
+		name="tot_spese_decentr_int" />
+	<formFieldProperty
+		name="tot_spese_decentr_est" />
+	<formFieldProperty
+		name="appr_tot_spese_decentr_int"
+		label="Totale Approvato" />
+	<formFieldProperty
+		name="appr_tot_spese_decentr_est"
+		label="Totale Approvato" />
+	<formFieldProperty
+		name="totalePropostoModificatoFI" />
+	<formFieldProperty
+		name="differenzaFI" />
+	<formFieldProperty
+		name="daApprovareFI" />
+	<formFieldProperty
+		name="totalePropostoModificatoFE" />
+	<formFieldProperty
+		name="differenzaFE" />
+	<formFieldProperty
+		name="daApprovareFE" />
+	<formFieldProperty
+		name="cd_dipartimento" />
+	<formFieldProperty
+		name="ds_dipartimento" />
+	<formFieldProperty
+		name="cd_cds_area" />
+	<formFieldProperty
+		name="ds_cds_area" />
+		
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="cd_progetto" />
+	<findFieldProperty
+		name="cd_classificazione" />
+	<findFieldProperty
+		name="tot_spese_decentr_int" />
+	<findFieldProperty
+		name="tot_spese_decentr_est" />
+	<findFieldProperty
+		name="appr_tot_spese_decentr_int" />
+	<findFieldProperty
+		name="appr_tot_spese_decentr_est" />
+		
+	<columnFieldProperty
+		name="cd_classificazione"
+		descProperty="classificazione.ds_classificazione"
+		label="Livello contrattazione"
+		inputType="DESCTOOL"/>		
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="cd_progetto" />
+	<columnFieldProperty
+		name="ds_progetto" />
+	<columnFieldProperty
+		name="tot_spese_decentr_int"
+		label="Totale Proposto"
+		headerLabel="Fonti Interne"/>
+	<columnFieldProperty
+		name="appr_tot_spese_decentr_int"
+		label="Totale Approvato"
+		headerLabel="Fonti Interne" />
+	<columnFieldProperty
+		name="tot_spese_decentr_est"
+		label="Totale Proposto"
+		headerLabel="Fonti Esterne" />
+	<columnFieldProperty
+		name="appr_tot_spese_decentr_est"
+		label="Totale Approvato"
+		headerLabel="Fonti Esterne" />
+
+	<columnSet
+        name="csContrattazioneSenzaVoce">
+		<columnFieldProperty
+			name="cd_centro_responsabilita" />
+		<columnFieldProperty
+			name="cd_progetto" />
+		<columnFieldProperty
+			name="ds_progetto" />
+		<columnFieldProperty
+			name="tot_spese_decentr_int"
+			label="Totale Proposto"
+			headerLabel="Fonti Interne"/>
+		<columnFieldProperty
+			name="appr_tot_spese_decentr_int"
+			label="Totale Approvato"
+			headerLabel="Fonti Interne" />
+		<columnFieldProperty
+			name="tot_spese_decentr_est"
+			label="Totale Proposto"
+			headerLabel="Fonti Esterne" />
+		<columnFieldProperty
+			name="appr_tot_spese_decentr_est"
+			label="Totale Approvato"
+			headerLabel="Fonti Esterne" />
+	</columnSet>
+
+	<columnSet
+        name="csPdgP">
+		<columnFieldProperty
+			name="cd_classificazione"
+			descProperty="classificazione.ds_classificazione"
+			label="Livello contrattazione"
+			inputType="DESCTOOL"/>		
+		<columnFieldProperty
+			name="cd_cds_area" />
+		<columnFieldProperty
+			name="tot_spese_decentr_int"
+			label="Totale Proposto"
+			headerLabel="Fonti Interne"/>
+		<columnFieldProperty
+			name="appr_tot_spese_decentr_int"
+			label="Totale Approvato"
+			headerLabel="Fonti Interne" />
+		<columnFieldProperty
+			name="tot_spese_decentr_est"
+			label="Totale Proposto"
+			headerLabel="Fonti Esterne" />
+		<columnFieldProperty
+			name="appr_tot_spese_decentr_est"
+			label="Totale Approvato"
+			headerLabel="Fonti Esterne" />
+	</columnSet>
+	<columnSet
+        name="csPdgPSenzaVoce">
+		<columnFieldProperty
+			name="cd_cds_area" />
+		<columnFieldProperty
+			name="tot_spese_decentr_int"
+			label="Totale Proposto"
+			headerLabel="Fonti Interne"/>
+		<columnFieldProperty
+			name="appr_tot_spese_decentr_int"
+			label="Totale Approvato"
+			headerLabel="Fonti Interne" />
+		<columnFieldProperty
+			name="tot_spese_decentr_est"
+			label="Totale Proposto"
+			headerLabel="Fonti Esterne" />
+		<columnFieldProperty
+			name="appr_tot_spese_decentr_est"
+			label="Totale Approvato"
+			headerLabel="Fonti Esterne" />
+	</columnSet>
+</bulkInfo>

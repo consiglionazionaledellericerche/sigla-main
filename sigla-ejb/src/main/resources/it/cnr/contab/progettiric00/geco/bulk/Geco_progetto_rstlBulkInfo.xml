@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="id_prog"
+		property="id_prog"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="id_prog" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="esercizio" />
+	<fieldProperty
+		name="fase"
+		property="fase"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="fase" />
+	<fieldProperty
+		name="cod_prog"
+		property="cod_prog"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="cod_prog" />
+	<fieldProperty
+		name="id_dip"
+		property="id_dip"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="id_dip" />
+	<fieldProperty
+		name="tipo_prog"
+		property="tipo_prog"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="tipo_prog" />
+	<fieldProperty
+		name="descr_prog"
+		property="descr_prog"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="255"
+		label="descr_prog" />
+	<fieldProperty
+		name="data_istituzione_prog"
+		property="data_istituzione_prog"
+		inputType="TEXT"
+		formatName="date_short"
+		label="data_istituzione_prog" />
+	<fieldProperty
+		name="ordine_prog"
+		property="ordine_prog"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="ordine_prog" />
+	<formFieldProperty
+		name="id_prog" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="fase" />
+	<formFieldProperty
+		name="cod_prog" />
+	<formFieldProperty
+		name="id_dip" />
+	<formFieldProperty
+		name="tipo_prog" />
+	<formFieldProperty
+		name="descr_prog" />
+	<formFieldProperty
+		name="data_istituzione_prog" />
+	<formFieldProperty
+		name="ordine_prog" />
+	<findFieldProperty
+		name="id_prog" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="fase" />
+	<findFieldProperty
+		name="cod_prog" />
+	<findFieldProperty
+		name="id_dip" />
+	<findFieldProperty
+		name="tipo_prog" />
+	<findFieldProperty
+		name="descr_prog" />
+	<findFieldProperty
+		name="data_istituzione_prog" />
+	<findFieldProperty
+		name="ordine_prog" />
+	<columnFieldProperty
+		name="id_prog" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="fase" />
+	<columnFieldProperty
+		name="cod_prog" />
+	<columnFieldProperty
+		name="id_dip" />
+	<columnFieldProperty
+		name="tipo_prog" />
+	<columnFieldProperty
+		name="descr_prog" />
+	<columnFieldProperty
+		name="data_istituzione_prog" />
+	<columnFieldProperty
+		name="ordine_prog" />
+</bulkInfo>

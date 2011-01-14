@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBase"
+	keyClassName="it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestKey"
+	homeClassName="it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestHome">
+	<defaultColumnMap
+		tableName="PDG_MODULO_ENTRATE_GEST">
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DESCRIZIONE"
+			propertyName="descrizione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="ORIGINE"
+			propertyName="origine"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="CATEGORIA_DETTAGLIO"
+			propertyName="categoria_dettaglio"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_SOLA_LETTURA"
+			propertyName="fl_sola_lettura"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="IM_ENTRATA"
+			propertyName="im_entrata"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_INCASSI"
+			propertyName="im_incassi"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDR_ASSEGNATARIO_CLGE"
+			propertyName="cd_cdr_assegnatario_clge"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA_CLGE"
+			propertyName="cd_linea_attivita_clge"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_PDG_VARIAZIONE"
+			propertyName="esercizio_pdg_variazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_VARIAZIONE_PDG"
+			propertyName="pg_variazione_pdg"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_registrazione" />
+	<persistentProperty
+		name="descrizione" />
+	<persistentProperty
+		name="origine" />
+	<persistentProperty
+		name="categoria_dettaglio" />
+	<persistentProperty
+		name="fl_sola_lettura" />
+	<persistentProperty
+		name="im_entrata" />
+	<persistentProperty
+		name="im_incassi" />
+	<persistentProperty
+		name="cd_cdr_assegnatario_clge" />
+	<persistentProperty
+		name="cd_linea_attivita_clge" />
+	<persistentProperty
+		name="esercizio_pdg_variazione" />
+	<persistentProperty
+		name="pg_variazione_pdg" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

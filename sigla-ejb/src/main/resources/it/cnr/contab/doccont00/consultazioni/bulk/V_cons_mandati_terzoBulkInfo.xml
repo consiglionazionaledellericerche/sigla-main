@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Consultazione Mandati"
+          longDescription="Consultazione Mandati">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cds"
+		property="cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS" />
+	<fieldProperty
+		name="cds_origine"
+		property="cds_origine"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS Origine" />
+	<fieldProperty
+		name="ds_cds_origine"
+		property="ds_cds_origine"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione CDS" />
+	<fieldProperty
+		name="uo"
+		property="uo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="UO" />
+	<fieldProperty
+		name="pg_mandato"
+		property="pg_mandato"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Mandato" />
+	<fieldProperty
+		name="ds_mandato"
+		property="ds_mandato"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione Mandato" />
+	<fieldProperty
+		name="natura_mandato"
+		property="natura_mandato"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Oggetto Mandato" />
+	<fieldProperty
+		name="ti_mandato"
+		property="ti_mandato"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Mandato" />
+	<fieldProperty
+		name="stato_mandato"
+		property="stato_mandato"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Stato" />
+	<fieldProperty
+		name="pg_distinta"
+		property="pg_distinta"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero Distinta" />
+	<fieldProperty
+		name="uo_distinta"
+		property="uo_distinta"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="UO Distinta" />
+	<fieldProperty
+		name="dt_emissione"
+		property="dt_emissione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Emissione" />
+	<fieldProperty
+		name="dt_trasmissione"
+		property="dt_trasmissione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Trasmissione" />
+	<fieldProperty
+		name="dt_pagamento"
+		property="dt_pagamento"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Pagamento" />
+	<fieldProperty
+		name="dt_annullamento"
+		property="dt_annullamento"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Annullamento" />
+	<fieldProperty
+		name="esercizio_obbligazione"
+		property="esercizio_obbligazione"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Obbligazione" />
+	<fieldProperty
+		name="esercizio_ori_obbligazione"
+		property="esercizio_ori_obbligazione"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Es. Obbligazione" />
+	<fieldProperty
+		name="pg_obbligazione"
+		property="pg_obbligazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Obbligazione" />
+	<fieldProperty
+		name="ds_obbligazione"
+		property="ds_obbligazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione Obbligazione" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Voce" />
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="ds_elemento_voce"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Descrizione Voce" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Terzo" />
+	<fieldProperty
+		name="denominazione_sede"
+		property="denominazione_sede"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Ragione Sociale" />
+	<fieldProperty
+		name="pg_banca"
+		property="pg_banca"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo Banca" />
+	<fieldProperty
+		name="abi"
+		property="abi"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Abi" />
+	<fieldProperty
+		name="cab"
+		property="cab"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Cab" />
+	<fieldProperty
+		name="numero_conto"
+		property="numero_conto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Numero c/c" />
+	<fieldProperty
+		name="intestazione"
+		property="intestazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Intestazione" />
+	<fieldProperty
+		name="ti_pagamento"
+		property="ti_pagamento"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Pagamento" />
+	<fieldProperty
+		name="ds_ti_pagamento"
+		property="ds_ti_pagamento"
+		inputType="TEXT"
+		inputSize="9"
+		maxLength="9"
+		label="Descrizione Tipo Pagamento" />
+	<fieldProperty
+		name="im_mandato_riga"
+		property="im_mandato_riga"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Mandato" />
+	<fieldProperty
+		name="im_ritenute_riga"
+		property="im_ritenute_riga"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Ritenute" />
+	<fieldProperty
+		name="netto_riga"
+		property="netto_riga"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Netto" />
+	<fieldProperty
+		name="stato_coge"
+		property="stato_coge"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Stato Co.Ge." />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cds" />
+	<formFieldProperty
+		name="cds_origine" />
+	<formFieldProperty
+		name="ds_cds_origine" />
+	<formFieldProperty
+		name="uo" />
+	<formFieldProperty
+		name="pg_mandato" />
+	<formFieldProperty
+		name="ds_mandato" />
+	<formFieldProperty
+		name="natura_mandato" />
+	<formFieldProperty
+		name="ti_mandato" />
+	<formFieldProperty
+		name="stato_mandato" />
+	<formFieldProperty
+		name="pg_distinta" />
+	<formFieldProperty
+		name="uo_distinta" />
+	<formFieldProperty
+		name="dt_emissione" />
+	<formFieldProperty
+		name="dt_trasmissione" />
+	<formFieldProperty
+		name="dt_pagamento" />
+	<formFieldProperty
+		name="dt_annullamento" />
+	<formFieldProperty
+		name="esercizio_obbligazione" />
+	<formFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<formFieldProperty
+		name="pg_obbligazione" />
+	<formFieldProperty
+		name="ds_obbligazione" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="ds_elemento_voce" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="denominazione_sede" />
+	<formFieldProperty
+		name="pg_banca" />
+	<formFieldProperty
+		name="abi" />
+	<formFieldProperty
+		name="cab" />
+	<formFieldProperty
+		name="numero_conto" />
+	<formFieldProperty
+		name="intestazione" />
+	<formFieldProperty
+		name="ti_pagamento" />
+	<formFieldProperty
+		name="ds_ti_pagamento" />
+	<formFieldProperty
+		name="im_mandato_riga" />
+	<formFieldProperty
+		name="im_ritenute_riga" />
+	<formFieldProperty
+		name="netto_riga" />
+	<formFieldProperty
+		name="stato_coge" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cds" />
+	<findFieldProperty
+		name="cds_origine" />
+	<findFieldProperty
+		name="ds_cds_origine" />
+	<findFieldProperty
+		name="uo" />
+	<findFieldProperty
+		name="pg_mandato" />
+	<findFieldProperty
+		name="ds_mandato" />
+	<findFieldProperty
+		name="natura_mandato" />
+	<findFieldProperty
+		name="ti_mandato" />
+	<findFieldProperty
+		name="stato_mandato" />
+	<findFieldProperty
+		name="pg_distinta" />
+	<findFieldProperty
+		name="uo_distinta" />
+	<findFieldProperty
+		name="dt_emissione" />
+	<findFieldProperty
+		name="dt_trasmissione" />
+	<findFieldProperty
+		name="dt_pagamento" />
+	<findFieldProperty
+		name="dt_annullamento" />
+	<findFieldProperty
+		name="esercizio_obbligazione" />
+	<findFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<findFieldProperty
+		name="pg_obbligazione" />
+	<findFieldProperty
+		name="ds_obbligazione" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="ds_elemento_voce" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="denominazione_sede" />
+	<findFieldProperty
+		name="pg_banca" />
+	<findFieldProperty
+		name="abi" />
+	<findFieldProperty
+		name="cab" />
+	<findFieldProperty
+		name="numero_conto" />
+	<findFieldProperty
+		name="intestazione" />
+	<findFieldProperty
+		name="ti_pagamento" />
+	<findFieldProperty
+		name="ds_ti_pagamento" />
+	<findFieldProperty
+		name="im_mandato_riga" />
+	<findFieldProperty
+		name="im_ritenute_riga" />
+	<findFieldProperty
+		name="netto_riga" />
+	<findFieldProperty
+		name="stato_coge" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cds" />
+	<columnFieldProperty
+		name="cds_origine" />
+	<columnFieldProperty
+		name="ds_cds_origine" />
+	<columnFieldProperty
+		name="uo" />
+	<columnFieldProperty
+		name="pg_mandato" />
+	<columnFieldProperty
+		name="ds_mandato" />
+	<columnFieldProperty
+		name="natura_mandato" />
+	<columnFieldProperty
+		name="ti_mandato" />
+	<columnFieldProperty
+		name="stato_mandato" />
+	<columnFieldProperty
+		name="pg_distinta" />
+	<columnFieldProperty
+		name="uo_distinta" />
+	<columnFieldProperty
+		name="dt_emissione" />
+	<columnFieldProperty
+		name="dt_trasmissione" />
+	<columnFieldProperty
+		name="dt_pagamento" />
+	<columnFieldProperty
+		name="dt_annullamento" />
+	<columnFieldProperty
+		name="esercizio_obbligazione" />
+	<columnFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<columnFieldProperty
+		name="pg_obbligazione" />
+	<columnFieldProperty
+		name="ds_obbligazione" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="ds_elemento_voce" />
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="denominazione_sede" />
+	<columnFieldProperty
+		name="pg_banca" />
+	<columnFieldProperty
+		name="abi" />
+	<columnFieldProperty
+		name="cab" />
+	<columnFieldProperty
+		name="numero_conto" />
+	<columnFieldProperty
+		name="intestazione" />
+	<columnFieldProperty
+		name="ti_pagamento" />
+	<columnFieldProperty
+		name="ds_ti_pagamento" />
+	<columnFieldProperty
+		name="im_mandato_riga" />
+	<columnFieldProperty
+		name="im_ritenute_riga" />
+	<columnFieldProperty
+		name="netto_riga" />
+	<columnFieldProperty
+		name="stato_coge" />
+</bulkInfo>

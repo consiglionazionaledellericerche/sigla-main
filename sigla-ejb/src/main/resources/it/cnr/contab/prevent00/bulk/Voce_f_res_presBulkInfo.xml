@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		maxLength="1"
+		inputSize="1"
+		inputType="ROTEXT"
+		label="Tipo appartenenza" 
+		/>
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"					
+		/>
+	<fieldProperty
+		name="im_residui_presunti"
+		property="im_residui_presunti"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"				
+		label="Importo residuo presunto"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"									
+		/>
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Tipo gestione"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"							
+		/>
+	<fieldProperty
+		name="find_voce"
+		property="voce"
+		inputType="SEARCHTOOL"
+		enabledOnEdit="false"				
+		/>
+	<fieldProperty
+		name="cd_voce"
+		property="voce.cd_voce"
+		label="Capitolo"
+		inputType="TEXT"
+		readonlyProperty="ROVoce"	
+		maxLength="20"
+		inputSize="10"
+		enabledOnInsert="true"
+		enabledOnEdit="false"		
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"							
+		nullable="false"
+		/>
+	<fieldProperty
+		name="ds_voce"
+		property="voce.ds_voce"
+		label="Descrizione voce"
+		inputSize="50"
+		maxLength="50"
+		inputType="ROTEXT" 
+		/>		
+
+	<formFieldProperty name="ti_appartenenza" />
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="im_residui_presunti" />
+	<formFieldProperty name="ti_gestione" />
+	<formFieldProperty name="find_voce" />	
+	<formFieldProperty name="cd_voce" />
+	<formFieldProperty name="ds_voce" />	
+
+	<columnFieldProperty name="esercizio" />
+	<columnFieldProperty name="cd_voce" />
+	<columnFieldProperty name="ti_appartenenza" />
+	<columnFieldProperty name="ti_gestione" />	
+	<columnFieldProperty name="im_residui_presunti" />
+
+	<findFieldProperty name="ti_gestione" />
+	<findFieldProperty name="cd_voce" />
+	<findFieldProperty name="im_residui_presunti" />
+		
+</bulkInfo>

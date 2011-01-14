@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_scartiBase"
+	keyClassName="it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_scartiKey"
+	homeClassName="it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_scartiHome">
+	<defaultColumnMap
+		tableName="EXT_CASSIERE00_SCARTI">
+		<columnMapping
+			columnName="DT_GIORNALIERA"
+			propertyName="dt_giornaliera"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_ELABORAZIONE"
+			propertyName="dt_elaborazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_ESECUZIONE"
+			propertyName="dt_esecuzione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_SR"
+			propertyName="cd_cds_sr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_SR"
+			propertyName="esercizio_sr"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_ENTRATA_SPESA_SR"
+			propertyName="ti_entrata_spesa_sr"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_SOSPESO_RISCONTRO_SR"
+			propertyName="ti_sospeso_riscontro_sr"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_SR"
+			propertyName="cd_sr"
+			sqlTypeName="VARCHAR"
+			columnSize="24"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_MOV"
+			propertyName="tipo_mov"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_MANREV"
+			propertyName="cd_cds_manrev"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_MANREV"
+			propertyName="esercizio_manrev"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_MANREV"
+			propertyName="pg_manrev"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="ANOMALIA"
+			propertyName="anomalia"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_giornaliera" />
+	<persistentProperty
+		name="dt_elaborazione" />
+	<persistentProperty
+		name="dt_esecuzione" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="cd_cds_sr" />
+	<persistentProperty
+		name="esercizio_sr" />
+	<persistentProperty
+		name="ti_entrata_spesa_sr" />
+	<persistentProperty
+		name="ti_sospeso_riscontro_sr" />
+	<persistentProperty
+		name="cd_sr" />
+	<persistentProperty
+		name="tipo_mov" />
+	<persistentProperty
+		name="cd_cds_manrev" />
+	<persistentProperty
+		name="esercizio_manrev" />
+	<persistentProperty
+		name="pg_manrev" />
+	<persistentProperty
+		name="anomalia" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+		
+		
+</SQLPersistentInfo>

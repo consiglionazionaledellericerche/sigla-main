@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk"
+	homeClassName="it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestHome">
+	<defaultColumnMap
+		tableName="PDG_VARIAZIONE_RIGA_GEST">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="pdg_variazione.esercizio" />
+		<columnMapping
+			columnName="PG_VARIAZIONE_PDG"
+			propertyName="pdg_variazione.pg_variazione_pdg" />
+		<columnMapping
+			columnName="CD_CDR_ASSEGNATARIO"
+			propertyName="cdr_assegnatario.cd_centro_responsabilita" />
+		<columnMapping
+			columnName="CD_CDR_ASSEGNATARIO"
+			propertyName="linea_attivita.centro_responsabilita.cd_centro_responsabilita" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="linea_attivita.cd_linea_attivita" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="elemento_voce.esercizio" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="elemento_voce.ti_appartenenza" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="elemento_voce.ti_gestione" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="elemento_voce.cd_elemento_voce" />
+		<columnMapping
+			columnName="CD_CDS_AREA"
+			propertyName="area.cd_unita_organizzativa" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pdg_variazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdr_assegnatario" />
+	<persistentProperty
+		name="linea_attivita" />
+	<persistentProperty
+		name="elemento_voce" />
+	<persistentProperty
+		name="area" />
+</SQLPersistentInfo>

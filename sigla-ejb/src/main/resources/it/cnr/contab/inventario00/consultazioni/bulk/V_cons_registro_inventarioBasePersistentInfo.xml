@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.consultazioni.bulk.V_cons_registro_inventarioBase"
+	homeClassName="it.cnr.contab.inventario00.consultazioni.bulk.V_cons_registro_inventarioHome">	
+	<defaultColumnMap
+		tableName="V_CONS_REGISTRO_INVENTARIO">
+			<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="pg_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"/>
+		<columnMapping
+			columnName="TI_DOCUMENTO"
+			propertyName="ti_documento"
+			sqlTypeName="CHAR"
+			columnSize="1"/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"/>
+		<columnMapping
+			columnName="PG_BUONO_C_S"
+			propertyName="pg_buono_c_s"
+			sqlTypeName="DECIMAL"
+			columnSize="10"/>
+		<columnMapping
+			columnName="NR_INVENTARIO"
+			propertyName="nr_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"/>
+		<columnMapping
+			columnName="PROGRESSIVO"
+			propertyName="progressivo"
+			sqlTypeName="DECIMAL"
+			columnSize="3" />
+		<columnMapping
+			columnName="CD_UTILIZZATORE_CDR"
+			propertyName="cd_utilizzatore_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"/>
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"/>	
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_CARICO_BENE"
+			propertyName="esercizio_carico_bene"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="ETICHETTA"
+			propertyName="etichetta"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_BENE"
+			propertyName="ds_bene"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />
+		<columnMapping
+			columnName="VALORE_INIZIALE"
+			propertyName="valore_iniziale"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="CATEGORIA"
+			propertyName="categoria"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CATEGORIA_GRUPPO"
+			propertyName="cd_categoria_gruppo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CATEGORIA_GRUPPO"
+			propertyName="ds_categoria_gruppo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_UBICAZIONE_BENE"
+			propertyName="ds_ubicazione_bene"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ASSEGNATARIO"
+			propertyName="cd_assegnatario"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="DENOMINAZIONE_SEDE"
+			propertyName="denominazione_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_REGISTRAZIONE"
+			propertyName="data_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TIPO_CARICO_SCARICO"
+			propertyName="cd_tipo_carico_scarico"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_TIPO_CARICO_SCARICO"
+			propertyName="ds_tipo_carico_scarico"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONE_PIU"
+			propertyName="variazione_piu"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONE_MENO"
+			propertyName="variazione_meno"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="QUANTITA"
+			propertyName="quantita"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VALORE_UNITARIO"
+			propertyName="valore_unitario"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPONIBILE_AMMORTAMENTO"
+			propertyName="imponibile_ammortamento"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MOVIMENTO_AMMORT"
+			propertyName="im_movimento_ammort"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="NUMERO_ANNI"
+			propertyName="numero_anni"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PERC_AMMORTAMENTO"
+			propertyName="perc_ammortamento"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="PERC_PRIMO_ANNO"
+			propertyName="perc_primo_anno"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="PERC_SUCCESSIVI"
+			propertyName="perc_successivi"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="PERCENTUALE_UTILIZZO_CDR"
+			propertyName="percentuale_utilizzo_cdr"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="false" />		
+		<columnMapping
+			columnName="PERCENTUALE_UTILIZZO_LA"
+			propertyName="percentuale_utilizzo_la"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="false" />	
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_inventario"/>
+	<persistentProperty
+		name="ti_documento"/>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="pg_buono_c_s" />
+	<persistentProperty
+		name="nr_inventario" />
+	<persistentProperty
+		name="progressivo" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="esercizio_carico_bene" />
+	<persistentProperty
+		name="etichetta" />
+	<persistentProperty
+		name="ds_bene" />
+	<persistentProperty
+		name="valore_iniziale" />
+	<persistentProperty
+		name="categoria" />
+	<persistentProperty
+		name="cd_categoria_gruppo" />
+	<persistentProperty
+		name="ds_categoria_gruppo" />
+	<persistentProperty
+		name="ds_ubicazione_bene" />
+	<persistentProperty
+		name="cd_assegnatario" />
+	<persistentProperty
+		name="denominazione_sede" />
+	<persistentProperty
+		name="data_registrazione" />
+	<persistentProperty
+		name="cd_tipo_carico_scarico" />
+	<persistentProperty
+		name="ds_tipo_carico_scarico" />
+	<persistentProperty
+		name="variazione_piu" />
+	<persistentProperty
+		name="variazione_meno" />
+	<persistentProperty
+		name="quantita" />
+	<persistentProperty
+		name="valore_unitario" />
+	<persistentProperty
+		name="imponibile_ammortamento" />
+	<persistentProperty
+		name="im_movimento_ammort" />
+	<persistentProperty
+		name="numero_anni" />
+	<persistentProperty
+		name="perc_ammortamento" />
+	<persistentProperty
+		name="perc_primo_anno" />
+	<persistentProperty
+		name="perc_successivi" />
+	<persistentProperty
+		name="cd_utilizzatore_cdr"/>
+	<persistentProperty
+		name="cd_linea_attivita"/>		
+	<persistentProperty
+		name="percentuale_utilizzo_cdr" />
+	<persistentProperty
+		name="percentuale_utilizzo_la" />		
+</SQLPersistentInfo>

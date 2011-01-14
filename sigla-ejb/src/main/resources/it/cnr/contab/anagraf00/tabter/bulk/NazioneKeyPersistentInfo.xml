@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.tabter.bulk.NazioneKey" >
+	<defaultColumnMap
+		tableName="NAZIONE" >
+		<columnMapping
+			columnName="PG_NAZIONE"
+			propertyName="pg_nazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_nazione"
+		partOfOid="true" />
+</SQLPersistentInfo>

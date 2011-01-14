@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBase"
+	keyClassName="it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaKey"
+	homeClassName="it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome">
+	<defaultColumnMap
+		tableName="VOCE_F_SALDI_CDR_LINEA">
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />		
+		<columnMapping
+			columnName="IM_STANZ_INIZIALE_A1"
+			propertyName="im_stanz_iniziale_a1"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_STANZ_INIZIALE_A2"
+			propertyName="im_stanz_iniziale_a2"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_STANZ_INIZIALE_A3"
+			propertyName="im_stanz_iniziale_a3"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="VARIAZIONI_PIU"
+			propertyName="variazioni_piu"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="VARIAZIONI_MENO"
+			propertyName="variazioni_meno"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_STANZ_INIZIALE_CASSA"
+			propertyName="im_stanz_iniziale_cassa"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="VARIAZIONI_PIU_CASSA"
+			propertyName="variazioni_piu_cassa"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="VARIAZIONI_MENO_CASSA"
+			propertyName="variazioni_meno_cassa"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_OBBL_ACC_COMP"
+			propertyName="im_obbl_acc_comp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_STANZ_RES_IMPROPRIO"
+			propertyName="im_stanz_res_improprio"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="VAR_PIU_STANZ_RES_IMP"
+			propertyName="var_piu_stanz_res_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="VAR_MENO_STANZ_RES_IMP"
+			propertyName="var_meno_stanz_res_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_OBBL_RES_IMP"
+			propertyName="im_obbl_res_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="VAR_PIU_OBBL_RES_IMP"
+			propertyName="var_piu_obbl_res_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="VAR_MENO_OBBL_RES_IMP"
+			propertyName="var_meno_obbl_res_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_OBBL_RES_PRO"
+			propertyName="im_obbl_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="VAR_PIU_OBBL_RES_PRO"
+			propertyName="var_piu_obbl_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="VAR_MENO_OBBL_RES_PRO"
+			propertyName="var_meno_obbl_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_PRO"
+			propertyName="im_mandati_reversali_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_IMP"
+			propertyName="im_mandati_reversali_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_PAGAMENTI_INCASSI"
+			propertyName="im_pagamenti_incassi"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_elemento_voce" />	
+	<persistentProperty
+		name="im_stanz_iniziale_a1" />
+	<persistentProperty
+		name="im_stanz_iniziale_a2" />
+	<persistentProperty
+		name="im_stanz_iniziale_a3" />
+	<persistentProperty
+		name="variazioni_piu" />
+	<persistentProperty
+		name="variazioni_meno" />
+	<persistentProperty
+		name="im_stanz_iniziale_cassa" />
+	<persistentProperty
+		name="variazioni_piu_cassa" />
+	<persistentProperty
+		name="variazioni_meno_cassa" />
+	<persistentProperty
+		name="im_obbl_acc_comp" />
+	<persistentProperty
+		name="im_stanz_res_improprio" />
+	<persistentProperty
+		name="var_piu_stanz_res_imp" />
+	<persistentProperty
+		name="var_meno_stanz_res_imp" />
+	<persistentProperty
+		name="im_obbl_res_imp" />
+	<persistentProperty
+		name="var_piu_obbl_res_imp" />
+	<persistentProperty
+		name="var_meno_obbl_res_imp" />
+	<persistentProperty
+		name="im_obbl_res_pro" />
+	<persistentProperty
+		name="var_piu_obbl_res_pro" />
+	<persistentProperty
+		name="var_meno_obbl_res_pro" />
+	<persistentProperty
+		name="im_mandati_reversali_pro" />
+	<persistentProperty
+		name="im_mandati_reversali_imp" />
+	<persistentProperty
+		name="im_pagamenti_incassi" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

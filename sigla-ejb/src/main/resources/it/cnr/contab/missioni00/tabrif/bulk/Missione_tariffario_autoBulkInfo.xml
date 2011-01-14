@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_tariffa_auto"
+		property="cd_tariffa_auto"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice" />
+	<fieldProperty
+		name="ds_tariffa_auto"
+		property="ds_tariffa_auto"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_inizio_validita"
+		formatName="date_short"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Inizio validita" />
+	<fieldProperty
+		name="indennita_chilometrica"
+		property="indennita_chilometrica"
+		maxLength="16"
+		inputType="TEXT"
+		nullable="false"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Indennità Chilometrica" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		formatName="date_short"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Fine validita" />
+	<fieldProperty
+		name="dataFineValidita"
+		property="dataFineValidita"
+		formatName="date_short"
+		inputType="ROTEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Fine validita" />
+	<fieldProperty
+		name="dt_cancellazione"
+		property="dt_cancellazione"
+		formatName="date_short"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Data Cancellazione" />
+
+	<formFieldProperty name="dt_fine_validita" />
+	<formFieldProperty name="dataFineValidita" />
+	<formFieldProperty name="indennita_chilometrica" />
+	<formFieldProperty name="ds_tariffa_auto" />
+	<formFieldProperty name="dt_cancellazione" />
+	<formFieldProperty name="cd_tariffa_auto" />
+	<formFieldProperty name="dt_inizio_validita" />
+
+	<columnFieldProperty name="cd_tariffa_auto" />
+	<columnFieldProperty name="ds_tariffa_auto" />
+	<columnFieldProperty name="indennita_chilometrica" />
+	<columnFieldProperty name="dt_inizio_validita" />
+	<columnFieldProperty name="dataFineValidita" />
+	<columnFieldProperty name="dt_cancellazione" />
+
+	<findFieldProperty name="cd_tariffa_auto" />
+	<findFieldProperty name="ds_tariffa_auto" />
+	<findFieldProperty name="indennita_chilometrica" />
+	<findFieldProperty name="dt_inizio_validita" />
+	<findFieldProperty name="dt_fine_validita" />
+	<findFieldProperty name="dt_cancellazione" />
+
+</bulkInfo>

@@ -1,0 +1,149 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="ti_fattura"
+		property="ti_fattura"
+		label="Tipo Fattura"
+		keysProperty="ti_fatturaKeys"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		enabledOnEdit="false"/>
+		
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		label="Unita' Organizzativa"
+		inputType="TEXT"
+		maxLength="30"
+		inputSize="6"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		/>
+		
+	<fieldProperty
+		name="tipo_sezionale"
+		property="tipo_sezionale"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label=""
+		nullable="false"
+		enabledOnSearch="true"		
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="cd_tipo_sezionale"
+		property="tipo_sezionale.cd_tipo_sezionale"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROTipo_sezionale"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="Tipo Sezionale"/>	
+	<fieldProperty
+		name="ds_tipo_sezionale"
+		property="tipo_sezionale.ds_tipo_sezionale"
+		inputSize="15"
+		label=""
+		inputType="ROTEXT"/>
+	
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	
+	<fieldProperty
+		name="corrente"
+		property="corrente"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Corrente"
+		nullable="false"
+		caseSensitiveSearch="false" 
+		enabledOnEdit="false"
+		enabledOnInsert="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"/>
+		
+	<fieldProperty
+		name="primo"
+		property="primo"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		label="Primo"
+		caseSensitiveSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="ultimo"
+		property="ultimo"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		label="Ultimo"
+		caseSensitiveSearch="false" />
+		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_tipo_sezionale" />	
+	<formFieldProperty
+		name="ds_tipo_sezionale" />
+	<formFieldProperty
+		name="tipo_sezionale" />	
+	<formFieldProperty
+		name="primo" />
+	<formFieldProperty
+		name="corrente" />	
+	<formFieldProperty
+		name="ultimo" />
+	<formFieldProperty
+		name="ti_fattura"
+		/>
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="ti_fattura"/>	
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />	
+	<columnFieldProperty
+		name="cd_tipo_sezionale" />			
+	<columnFieldProperty
+		name="primo" />
+	<columnFieldProperty
+		name="corrente" />
+	<columnFieldProperty
+		name="ultimo" />
+		
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="cd_tipo_sezionale" />
+	<findFieldProperty
+		name="esercizio" />	
+	<findFieldProperty
+		name="ti_fattura" />	
+
+</bulkInfo>

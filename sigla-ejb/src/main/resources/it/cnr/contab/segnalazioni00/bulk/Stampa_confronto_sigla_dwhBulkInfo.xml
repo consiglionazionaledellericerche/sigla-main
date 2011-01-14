@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo>
+
+	<fieldProperty
+		name="data"
+		property="data"
+		optionsProperty="date"	
+		printProperty="dt_elaborazione"
+		inputType="select"
+		nullable="false"
+		formatName="date_short"
+		inputSize="10"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Data Elaborazione" />
+	
+		<fieldProperty
+			name="dt_elaborazioneForPrint"
+			property="dt_elaborazioneForPrint"/>	
+	
+		<formFieldProperty 
+			name="data"/>
+		<formFieldProperty name="dt_elaborazioneForPrint"/>
+	<printForm
+		name="/Sigla_Dwh/confronto_SIGLA_DWH.jasper">
+		<printFieldProperty 
+			name="dt_elaborazioneForPrint"
+			parameterPosition="0"
+			parameterType="DATE"
+			paramNameJR="Data"
+			paramTypeJR="java.util.Date" />
+	</printForm>
+		
+</bulkInfo>

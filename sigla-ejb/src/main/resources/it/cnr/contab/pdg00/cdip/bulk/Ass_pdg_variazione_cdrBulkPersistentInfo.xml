@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk"
+	homeClassName="it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrHome">
+	<defaultColumnMap
+		tableName="ASS_PDG_VARIAZIONE_CDR">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="pdg_variazione.esercizio"/>
+		<columnMapping
+			columnName="PG_VARIAZIONE_PDG"
+			propertyName="pdg_variazione.pg_variazione_pdg"/>
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="centro_responsabilita.cd_centro_responsabilita"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="pdg_variazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="centro_responsabilita"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription = "Associazione U.O./Aree di Ricerca"
+		  longDescription = "Associazione U.O.-Aree di Ricerca">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="unita_organizzativa.cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		label="Codice Unita' Organizzativa" />
+	<fieldProperty
+		name="find_cds_area_ricerca"
+		property="cds_area_ricerca"
+		inputType="SEARCHTOOL" 
+		formName="searchtool" 
+		enabledOnSearch="true"
+        enabledOnEdit="true"
+		label="Area Ricerca"
+		readonlyProperty="ROArea_ricerca" />
+	<fieldProperty
+		name="cd_area_ricerca"
+		property="cds_area_ricerca.cd_unita_organizzativa"
+		label="Area Ricerca"
+		inputType="TEXT"
+		maxLength="30"
+		inputSize="6"
+        enabledOnEdit="true"
+		enabledOnSearch="true"
+		readonlyProperty="ROArea_ricerca" />
+	<fieldProperty
+		name="ds_area_ricerca"
+		property="cds_area_ricerca.ds_unita_organizzativa"
+		readonlyProperty="ROArea_ricerca"
+		inputSize="20"
+		label="Descrizione"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="fl_presidente_area"
+		property="fl_presidente_area"
+		label="Presidente dell'area"
+		inputType="CHECKBOX"
+        enabledOnEdit="true"
+		enabledOnSearch="false"
+        enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="crea_cds_area_ricerca"
+		property="cds_area_ricerca"
+        readonlyProperty="ROArea_ricerca"
+		inputType="CRUDTOOL" 
+        enabledOnEdit="true"
+		CRUDBusinessProcessName="CRUDConfigCdSBP" />
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_area_ricerca" />
+	<formFieldProperty
+		name="ds_area_ricerca" />
+	<formFieldProperty
+		name="fl_presidente_area" />
+	<formFieldProperty
+		name="find_cds_area_ricerca" />
+	<formFieldProperty
+		name="crea_cds_area_ricerca" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="cd_area_ricerca" />
+	<findFieldProperty
+		name="fl_presidente_area" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="cd_area_ricerca" />
+	<formFieldProperty
+		name="ds_area_ricerca" />
+	<columnFieldProperty
+		name="fl_presidente_area" />
+
+	<columnSet
+	        name="associazioneUoArea">
+		<columnFieldProperty
+			name="cd_area_ricerca" />
+		<columnFieldProperty
+			name="ds_area_ricerca" />
+		<columnFieldProperty
+			name="fl_presidente_area" />
+	</columnSet>        	
+</bulkInfo>

@@ -1,0 +1,16 @@
+<action-mappings>
+
+	<action
+		path="/StampaVpgFondoEconomaleAction" actionClass="it.cnr.contab.fondecon00.action.Stampa_vpg_fondo_economaleAction">
+	</action>
+
+	<businessProcess name="StampaVpgFondoEconomaleBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+	    <forward name="default" path="/fondecon00/stampa_vpg_fondo_economale.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.fondecon00.core.bulk.Stampa_vpg_fondo_economaleBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaVpgFondoEconomaleAction" />
+	    <init-param name="componentSessionName" value="CNRFONDECON00_EJB_FondoEconomaleComponentSession" />
+	    <init-param name="reportName" value="/docamm/docamm/vpg_fondo_economale.jasper" />
+	</businessProcess>
+
+</action-mappings>

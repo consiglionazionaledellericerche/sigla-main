@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_archivio_xml_fpKey">
+	<defaultColumnMap
+		tableName="INCARICHI_ARCHIVIO_XML_FP">
+		<columnMapping
+			columnName="ID_ARCHIVIO"
+			propertyName="id_archivio"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="id_archivio"
+		partOfOid="true" />
+</SQLPersistentInfo>

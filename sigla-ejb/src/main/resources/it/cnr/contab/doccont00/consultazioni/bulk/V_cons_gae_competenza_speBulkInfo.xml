@@ -1,0 +1,726 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio" />
+	<fieldProperty
+		name="cd_dipartimento"
+		property="cd_dipartimento"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cod. Dipartimento" />
+	<fieldProperty
+		name="pg_progetto"
+		property="pg_progetto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label=" Prog. Progetto" />
+	<fieldProperty
+		name="cd_progetto"
+		property="cd_progetto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cod. Progetto" />
+	<fieldProperty
+		name="ds_progetto"
+		property="ds_progetto"
+		inputType="TEXT"
+		maxLength="433"
+		label="Descr. Progetto" />
+	<fieldProperty
+		name="pg_commessa"
+		property="pg_commessa"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Prog. Commessa" />
+	<fieldProperty
+		name="cd_commessa"
+		property="cd_commessa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cod. Commessa" />
+	<fieldProperty
+		name="ds_commessa"
+		property="ds_commessa"
+		inputType="TEXT"
+		maxLength="433"
+		label="Desc. Commessa" />
+	<fieldProperty
+		name="pg_modulo"
+		property="pg_modulo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label=" Prog. Modulo" />
+	<fieldProperty
+		name="cd_modulo"
+		property="cd_modulo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cod. Modulo" />
+	<fieldProperty
+		name="ds_modulo"
+		property="ds_modulo"
+		inputType="TEXT"
+		maxLength="433"
+		label="Desc. Modulo" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDR" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="GAE" />
+	<fieldProperty
+		name="ds_linea_attivita"
+		property="ds_linea_attivita"
+		inputType="TEXT"
+		maxLength="300"
+		label="Desc. GAE" />
+	<fieldProperty
+		name="ds_natura"
+		property="ds_natura"
+		inputType="TEXT"
+		maxLength="20"
+		label="Origine delle fonti" />	
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="ti_appartenenza" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="ti_gestione" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Cod. Voce" />
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="ds_elemento_voce"
+		inputType="TEXT"
+		maxLength="100"
+		label="Desc. Voce" />
+	<fieldProperty
+		name="im_stanz_iniziale_a1"
+		property="im_stanz_iniziale_a1"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Stanziamento iniziale" />
+	<fieldProperty
+		name="pg_variazione_pdg"
+		property="pg_variazione_pdg"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="Prog. Variazione" />
+	<fieldProperty
+		name="ds_variazione"
+		property="ds_variazione"
+		inputType="TEXT"
+		maxLength="1000"
+		label="Desc. Variazione" />
+	<fieldProperty
+		name="variazioni_piu"
+		property="variazioni_piu"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazione Più" />
+	<fieldProperty
+		name="variazioni_meno"
+		property="variazioni_meno"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni Meno" />
+	<fieldProperty
+		name="cd_cds_obb"
+		property="cd_cds_obb"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds Impegno" />
+	<fieldProperty
+		name="pg_obbligazione"
+		property="pg_obbligazione"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="Prog. Impegno" />
+	<fieldProperty
+		name="pg_obbligazione_scadenzario"
+		property="pg_obbligazione_scadenzario"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="Prog. Impegno scad" />
+	<fieldProperty
+		name="ds_scadenza"
+		property="ds_scadenza"
+		inputType="TEXT"
+		maxLength="300"
+		label="Desc. Scadenza" />
+	<fieldProperty
+		name="impegni_comp"
+		property="impegni_comp"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Impegnato" />
+	<fieldProperty
+		name="cd_cds_man"
+		property="cd_cds_man"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds Mandato" />
+	<fieldProperty
+		name="pg_mandato"
+		property="pg_mandato"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="Prog. Mandato" />
+	<fieldProperty
+		name="ds_mandato"
+		property="ds_mandato"
+		inputType="TEXT"
+		maxLength="300"
+		label="Desc. Mandato" />
+	<fieldProperty
+		name="mandati_comp"
+		property="mandati_comp"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Pagato" />
+	<fieldProperty
+		name="da_pagare"
+		property="da_pagare"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Da Pagare" />	
+	<fieldProperty
+		name="assestato"
+		property="assestato"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato" />		
+	<fieldProperty
+		name="disponibile"
+		property="disponibile"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Da impegnare" />			
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_dipartimento" />
+	<formFieldProperty
+		name="pg_progetto" />
+	<formFieldProperty
+		name="cd_progetto" />
+	<formFieldProperty
+		name="ds_progetto" />
+	<formFieldProperty
+		name="pg_commessa" />
+	<formFieldProperty
+		name="cd_commessa" />
+	<formFieldProperty
+		name="ds_commessa" />
+	<formFieldProperty
+		name="pg_modulo" />
+	<formFieldProperty
+		name="cd_modulo" />
+	<formFieldProperty
+		name="ds_modulo" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="ds_linea_attivita" />
+	<formFieldProperty 
+		name="ds_natura"/>	
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="ds_elemento_voce" />
+	<formFieldProperty
+		name="im_stanz_iniziale_a1" />
+	<formFieldProperty
+		name="pg_variazione_pdg" />
+	<formFieldProperty
+		name="ds_variazione" />
+	<formFieldProperty
+		name="variazioni_piu" />
+	<formFieldProperty
+		name="variazioni_meno" />
+	<formFieldProperty
+		name="cd_cds_obb" />
+	<formFieldProperty
+		name="pg_obbligazione" />
+	<formFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<formFieldProperty
+		name="ds_scadenza" />
+	<formFieldProperty
+		name="impegni_comp" />
+	<formFieldProperty
+		name="cd_cds_man" />
+	<formFieldProperty
+		name="pg_mandato" />
+	<formFieldProperty
+		name="ds_mandato" />
+	<formFieldProperty
+		name="mandati_comp" />
+	
+	<formFieldProperty
+		name="assestato" />
+	<formFieldProperty
+		name="da_pagare" />
+	<formFieldProperty
+		name="disponibile" />	
+		
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_dipartimento" />
+	<findFieldProperty
+		name="pg_progetto" />
+	<findFieldProperty
+		name="cd_progetto" />
+	<findFieldProperty
+		name="ds_progetto" />
+	<findFieldProperty
+		name="pg_commessa" />
+	<findFieldProperty
+		name="cd_commessa" />
+	<findFieldProperty
+		name="ds_commessa" />
+	<findFieldProperty
+		name="pg_modulo" />
+	<findFieldProperty
+		name="cd_modulo" />
+	<findFieldProperty
+		name="ds_modulo" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="ds_linea_attivita" />
+	<findFieldProperty
+		name="ds_natura" />	
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="ds_elemento_voce" />
+	<findFieldProperty
+		name="im_stanz_iniziale_a1" />
+	<findFieldProperty
+		name="pg_variazione_pdg" />
+	<findFieldProperty
+		name="ds_variazione" />
+	<findFieldProperty
+		name="variazioni_piu" />
+	<findFieldProperty
+		name="variazioni_meno" />
+	<findFieldProperty
+		name="cd_cds_obb" />
+	<findFieldProperty
+		name="pg_obbligazione" />
+	<findFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<findFieldProperty
+		name="ds_scadenza" />
+	<findFieldProperty
+		name="impegni_comp" />
+	<findFieldProperty
+		name="cd_cds_man" />
+	<findFieldProperty
+		name="pg_mandato" />
+	<findFieldProperty
+		name="ds_mandato" />
+	<findFieldProperty
+		name="mandati_comp" />
+		
+	<findFieldProperty
+		name="assestato" />
+	<findFieldProperty
+		name="da_pagare" />
+	<findFieldProperty
+		name="disponibile" />	
+			
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_dipartimento" />
+	<columnFieldProperty
+		name="pg_progetto" />
+	<columnFieldProperty
+		name="cd_progetto" />
+	<columnFieldProperty
+		name="ds_progetto" />
+	<columnFieldProperty
+		name="pg_commessa" />
+	<columnFieldProperty
+		name="cd_commessa" />
+	<columnFieldProperty
+		name="ds_commessa" />
+	<columnFieldProperty
+		name="pg_modulo" />
+	<columnFieldProperty
+		name="cd_modulo" />
+	<columnFieldProperty
+		name="ds_modulo" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="ds_linea_attivita" />
+	<columnFieldProperty
+		name="ds_natura" />	
+	<columnFieldProperty
+		name="ti_appartenenza" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="ds_elemento_voce" />	
+	<columnFieldProperty
+		name="im_stanz_iniziale_a1" />
+	<columnFieldProperty
+		name="pg_variazione_pdg" />
+	<columnFieldProperty
+		name="ds_variazione" />
+	<columnFieldProperty
+		name="variazioni_piu" />
+	<columnFieldProperty
+		name="variazioni_meno" />
+	<columnFieldProperty
+		name="cd_cds_obb" />
+	<columnFieldProperty
+		name="pg_obbligazione" />
+	<columnFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<columnFieldProperty
+		name="ds_scadenza" />
+	<columnFieldProperty
+		name="impegni_comp" />
+	<columnFieldProperty
+		name="cd_cds_man" />
+	<columnFieldProperty
+		name="pg_mandato" />
+	<columnFieldProperty
+		name="ds_mandato" />
+	<columnFieldProperty
+		name="mandati_comp" />
+			
+	<columnFieldProperty
+		name="assestato" />
+	<columnFieldProperty
+		name="da_pagare" />
+	<columnFieldProperty
+		name="disponibile" />	
+		
+		
+		<columnSet name="SPELIN">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cd_centro_responsabilita" />
+			<columnFieldProperty name="cd_linea_attivita" />
+			<columnFieldProperty name="ds_linea_attivita" />
+			<columnFieldProperty name="cd_dipartimento" />
+			<columnFieldProperty name="cd_progetto" />
+			<columnFieldProperty name="ds_progetto" />
+			<columnFieldProperty name="cd_commessa" />
+			<columnFieldProperty name="ds_commessa" />
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="ds_modulo" />
+			<columnFieldProperty name="ds_natura" />
+			<columnFieldProperty name="im_stanz_iniziale_a1" />
+			<columnFieldProperty name="variazioni_piu" />
+			<columnFieldProperty name="variazioni_meno" />
+			<columnFieldProperty name="assestato" />
+			<columnFieldProperty name="impegni_comp" />
+			<columnFieldProperty name="disponibile" />
+			<columnFieldProperty name="mandati_comp" />
+			<columnFieldProperty name="da_pagare" />		
+		</columnSet>
+		<columnSet name="SPELINVOC">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cd_centro_responsabilita" />
+			<columnFieldProperty name="cd_linea_attivita" />
+			<columnFieldProperty name="ds_linea_attivita" />
+			<columnFieldProperty name="cd_dipartimento" />
+			<columnFieldProperty name="cd_progetto" />
+			<columnFieldProperty name="ds_progetto" />
+			<columnFieldProperty name="cd_commessa" />
+			<columnFieldProperty name="ds_commessa" />
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="ds_modulo" />
+			<columnFieldProperty name="ds_natura" />
+			<columnFieldProperty name="cd_elemento_voce" />
+			<columnFieldProperty name="ds_elemento_voce" />
+			<columnFieldProperty name="im_stanz_iniziale_a1" />
+			<columnFieldProperty name="variazioni_piu" />
+			<columnFieldProperty name="variazioni_meno" />
+			<columnFieldProperty name="assestato" />
+			<columnFieldProperty name="impegni_comp" />
+			<columnFieldProperty name="disponibile" />
+			<columnFieldProperty name="mandati_comp" />
+			<columnFieldProperty name="da_pagare" />		
+		</columnSet>
+		<columnSet name="SPELINVOCVARP">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cd_centro_responsabilita" />
+			<columnFieldProperty name="cd_linea_attivita" />
+			<columnFieldProperty name="cd_dipartimento" />
+			<columnFieldProperty name="cd_progetto" />
+			<columnFieldProperty name="cd_commessa" />
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="ds_natura" />
+			<columnFieldProperty name="cd_elemento_voce" />
+			<columnFieldProperty name="pg_variazione_pdg" />
+			<columnFieldProperty name="ds_variazione" />
+			<columnFieldProperty name="variazioni_piu" />
+		</columnSet>
+		<columnSet name="SPELINVOCVARM">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cd_centro_responsabilita" />
+			<columnFieldProperty name="cd_linea_attivita" />
+			<columnFieldProperty name="cd_dipartimento" />
+			<columnFieldProperty name="cd_progetto" />
+			<columnFieldProperty name="cd_commessa" />
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="ds_natura" />
+			<columnFieldProperty name="cd_elemento_voce" />
+			<columnFieldProperty name="pg_variazione_pdg" />
+			<columnFieldProperty name="ds_variazione" />
+			<columnFieldProperty name="variazioni_meno" />
+		</columnSet>
+		<columnSet name="SPELINVOCIMP">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cd_centro_responsabilita" />
+			<columnFieldProperty name="cd_linea_attivita" />
+			<columnFieldProperty name="cd_dipartimento" />
+			<columnFieldProperty name="cd_progetto" />
+			<columnFieldProperty name="cd_commessa" />
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="ds_natura" />
+			<columnFieldProperty name="cd_elemento_voce" />
+			<columnFieldProperty name="cd_cds_obb" />
+			<columnFieldProperty name="pg_obbligazione" />
+			<columnFieldProperty name="pg_obbligazione_scadenzario" />
+			<columnFieldProperty name="ds_scadenza" />
+			<columnFieldProperty name="impegni_comp" />
+			<columnFieldProperty name="mandati_comp" />
+			<columnFieldProperty name="da_pagare" />	
+		</columnSet>
+		<columnSet name="SPELINVOCIMPMAN">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cd_centro_responsabilita" />
+			<columnFieldProperty name="cd_linea_attivita" />
+			<columnFieldProperty name="cd_dipartimento" />
+			<columnFieldProperty name="cd_progetto" />
+			<columnFieldProperty name="cd_commessa" />
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="ds_natura" />
+			<columnFieldProperty name="cd_elemento_voce" />
+			<columnFieldProperty name="cd_cds_obb" />
+			<columnFieldProperty name="pg_obbligazione" />
+			<columnFieldProperty name="pg_obbligazione_scadenzario" />
+			<columnFieldProperty name="ds_scadenza" />
+			<columnFieldProperty name="cd_cds_man" />
+			<columnFieldProperty name="pg_mandato" />
+			<columnFieldProperty name="ds_mandato" />
+			<columnFieldProperty name="mandati_comp" />
+		</columnSet>
+		<columnSet name="SPELINVOCMAN">
+			<columnFieldProperty name="esercizio" />
+			<columnFieldProperty name="cd_centro_responsabilita" />
+			<columnFieldProperty name="cd_linea_attivita" />
+			<columnFieldProperty name="cd_dipartimento" />
+			<columnFieldProperty name="cd_progetto" />
+			<columnFieldProperty name="cd_commessa" />
+			<columnFieldProperty name="cd_modulo" />
+			<columnFieldProperty name="ds_natura" />
+			<columnFieldProperty name="cd_elemento_voce" />
+			<columnFieldProperty name="cd_cds_man" />
+			<columnFieldProperty name="pg_mandato" />
+			<columnFieldProperty name="ds_mandato" />
+			<columnFieldProperty name="mandati_comp" />
+		</columnSet>
+		
+		<freeSearchSet name="SPELIN">
+			<findFieldProperty name="cd_centro_responsabilita" />
+			<findFieldProperty name="cd_linea_attivita" />
+			<findFieldProperty name="ds_linea_attivita" />
+			<findFieldProperty name="cd_dipartimento" />
+			<findFieldProperty name="cd_progetto" />
+			<findFieldProperty name="ds_progetto" />
+			<findFieldProperty name="cd_commessa" />
+			<findFieldProperty name="ds_commessa" />	
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="ds_modulo" />
+			<findFieldProperty name="ds_natura" />
+			<findFieldProperty name="im_stanz_iniziale_a1" />
+			<findFieldProperty name="variazioni_piu" />
+			<findFieldProperty name="variazioni_meno" />
+			<findFieldProperty name="assestato" />
+			<findFieldProperty name="impegni_comp" />
+			<findFieldProperty name="disponibile" />
+			<findFieldProperty name="mandati_comp" />
+			<findFieldProperty name="da_pagare" />		
+		</freeSearchSet>
+		<freeSearchSet name="SPELINVOC">
+			<findFieldProperty name="cd_centro_responsabilita" />
+			<findFieldProperty name="cd_linea_attivita" />
+			<findFieldProperty name="ds_linea_attivita" />
+			<findFieldProperty name="cd_dipartimento" />
+			<findFieldProperty name="cd_progetto" />
+			<findFieldProperty name="ds_progetto" />
+			<findFieldProperty name="cd_commessa" />
+			<findFieldProperty name="ds_commessa" />	
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="ds_modulo" />
+			<findFieldProperty name="ds_natura" />
+			<findFieldProperty name="cd_elemento_voce" />
+			<findFieldProperty name="ds_elemento_voce" />
+			<findFieldProperty name="im_stanz_iniziale_a1" />
+			<findFieldProperty name="variazioni_piu" />
+			<findFieldProperty name="variazioni_meno" />
+			<findFieldProperty name="assestato" />
+			<findFieldProperty name="impegni_comp" />
+			<findFieldProperty name="disponibile" />
+			<findFieldProperty name="mandati_comp" />
+			<findFieldProperty name="da_pagare" />		
+		</freeSearchSet>
+		<freeSearchSet name="SPELINVOCVARP">
+			<findFieldProperty name="cd_centro_responsabilita" />
+			<findFieldProperty name="cd_linea_attivita" />
+			<findFieldProperty name="cd_dipartimento" />
+			<findFieldProperty name="cd_progetto" />	
+			<findFieldProperty name="cd_commessa" />					
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="ds_natura" />
+			<findFieldProperty name="cd_elemento_voce" />
+			<findFieldProperty name="pg_variazione_pdg" />
+			<findFieldProperty name="ds_variazione" />
+			<findFieldProperty name="variazioni_piu" />
+		</freeSearchSet>
+		<freeSearchSet name="SPELINVOCVARM">
+			<findFieldProperty name="cd_centro_responsabilita" />
+			<findFieldProperty name="cd_linea_attivita" />
+			<findFieldProperty name="cd_dipartimento" />
+			<findFieldProperty name="cd_progetto" />	
+			<findFieldProperty name="cd_commessa" />					
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="ds_natura" />
+			<findFieldProperty name="cd_elemento_voce" />
+			<findFieldProperty name="pg_variazione_pdg" />
+			<findFieldProperty name="ds_variazione" />
+			<findFieldProperty name="variazioni_meno" />
+		</freeSearchSet>
+		<freeSearchSet name="SPELINVOCIMP">
+			<findFieldProperty name="cd_centro_responsabilita" />
+			<findFieldProperty name="cd_linea_attivita" />
+			<findFieldProperty name="cd_dipartimento" />
+			<findFieldProperty name="cd_progetto" />	
+			<findFieldProperty name="cd_commessa" />					
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="ds_natura" />
+			<findFieldProperty name="cd_elemento_voce" />
+			<findFieldProperty name="cd_cds_obb" />
+			<findFieldProperty name="pg_obbligazione" />
+			<findFieldProperty name="pg_obbligazione_scadenzario" />
+			<findFieldProperty name="ds_scadenza" />
+			<findFieldProperty name="impegni_comp" />
+			<findFieldProperty name="mandati_comp" />
+			<findFieldProperty name="da_pagare" />		
+		</freeSearchSet>
+		<freeSearchSet name="SPELINVOCIMPMAN">
+			<findFieldProperty name="cd_centro_responsabilita" />
+			<findFieldProperty name="cd_linea_attivita" />
+			<findFieldProperty name="cd_dipartimento" />
+			<findFieldProperty name="cd_progetto" />	
+			<findFieldProperty name="cd_commessa" />					
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="ds_natura" />
+			<findFieldProperty name="cd_elemento_voce" />
+			<findFieldProperty name="cd_cds_obb" />
+			<findFieldProperty name="pg_obbligazione" />
+			<findFieldProperty name="pg_obbligazione_scadenzario" />
+			<findFieldProperty name="ds_scadenza" />
+			<findFieldProperty name="cd_cds_man" />
+			<findFieldProperty name="pg_mandato" />
+			<findFieldProperty name="ds_mandato" />
+			<findFieldProperty name="mandati_comp" />
+		</freeSearchSet>
+		<freeSearchSet name="SPELINVOCMAN">
+			<findFieldProperty name="cd_centro_responsabilita" />
+			<findFieldProperty name="cd_linea_attivita" />
+			<findFieldProperty name="cd_dipartimento" />
+			<findFieldProperty name="cd_progetto" />	
+			<findFieldProperty name="cd_commessa" />					
+			<findFieldProperty name="cd_modulo" />
+			<findFieldProperty name="ds_natura" />
+			<findFieldProperty name="cd_elemento_voce" />
+			<findFieldProperty name="cd_cds_man" />
+			<findFieldProperty name="pg_mandato" />
+			<findFieldProperty name="ds_mandato" />
+			<findFieldProperty name="mandati_comp" />
+		</freeSearchSet>
+</bulkInfo>

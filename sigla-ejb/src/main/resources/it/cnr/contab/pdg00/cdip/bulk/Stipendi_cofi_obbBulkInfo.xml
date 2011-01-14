@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="find_obbligazioni"
+		property="obbligazioni"		
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnInsert = "false"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		label="Impegno (Cds/Es./Es.Orgine/Prog.)" />
+		
+	<fieldProperty
+		name="cd_cds_obbligazione"
+		property="obbligazioni.cds.cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds impegno" />
+	<fieldProperty
+		name="esercizio_obbligazione"
+		property="obbligazioni.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio impegno" />
+	<fieldProperty
+		name="esercizio_ori_obbligazione"
+		property="obbligazioni.esercizio_originale"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio origine impegno" />
+	<fieldProperty
+		name="pg_obbligazione"
+		property="obbligazioni.pg_obbligazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo impegno" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="find_obbligazioni" />
+	<formFieldProperty
+		name="cd_cds_obbligazione" />
+	<formFieldProperty
+		name="esercizio_obbligazione" />
+	<formFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<formFieldProperty
+		name="pg_obbligazione" />		
+	<form name="searchtool">
+        <formFieldProperty
+              name="cd_cds_obbligazione" />
+        <formFieldProperty
+              name="esercizio_obbligazione" />
+        <formFieldProperty
+              name="esercizio_ori_obbligazione" />
+        <formFieldProperty
+              name="pg_obbligazione" />                                                        
+    </form>
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_cds_obbligazione" />
+	<findFieldProperty
+		name="esercizio_obbligazione" />
+	<findFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<findFieldProperty
+		name="pg_obbligazione" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_cds_obbligazione" />
+	<columnFieldProperty
+		name="esercizio_obbligazione" />
+	<columnFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<columnFieldProperty
+		name="pg_obbligazione" />
+</bulkInfo>

@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="im_rah_a3_costi_finali_mod"
+		property="spe_modificato.im_rah_a3_costi_finali"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Finali" />
+	<fieldProperty
+		name="im_rai_a3_costi_altro_cdr_mod"
+		property="spe_modificato.im_rai_a3_costi_altro_cdr"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Verso altro CDR" />
+	<fieldProperty
+		name="im_rs_ssc_costi_ogc_mod"
+		property="spe_modificato.im_rs_ssc_costi_ogc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="relativa UO" />
+	<fieldProperty
+		name="im_ram_a3_spese_odc_altra_uo_mod"
+		property="spe_modificato.im_ram_a3_spese_odc_altra_uo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="altra UO" />
+	<fieldProperty
+		name="im_raa_a2_costi_finali_mod"
+		property="spe_modificato.im_raa_a2_costi_finali"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Finali" />
+	<fieldProperty
+		name="im_rm_css_ammortamenti_mod"
+		property="spe_modificato.im_rm_css_ammortamenti"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Ammortamenti" />
+	<fieldProperty
+		name="im_ri_ccs_spese_odc_mod"
+		property="spe_modificato.im_ri_ccs_spese_odc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="relativa UO" />
+	<fieldProperty
+		name="im_rk_ccs_spese_ogc_mod"
+		property="spe_modificato.im_rk_ccs_spese_ogc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="relativa UO" />
+	<fieldProperty
+		name="im_rv_pagamenti_mod"
+		property="spe_modificato.im_rv_pagamenti"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Pagamenti" />
+	<fieldProperty
+		name="im_rr_ssc_costi_odc_altra_uo_mod"
+		property="spe_modificato.im_rr_ssc_costi_odc_altra_uo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="altra UO" />
+	<fieldProperty
+		name="im_rp_css_verso_altro_cdr_mod"
+		property="spe_modificato.im_rp_css_verso_altro_cdr"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Verso altro CDR" />
+	<fieldProperty
+		name="im_rab_a2_costi_altro_cdr_mod"
+		property="spe_modificato.im_rab_a2_costi_altro_cdr"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Verso altro CDR" />
+	<fieldProperty
+		name="im_rn_css_rimanenze_mod"
+		property="spe_modificato.im_rn_css_rimanenze"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Rimanenze" />
+	<fieldProperty
+		name="im_rh_ccs_costi_mod"
+		property="spe_modificato.im_rh_ccs_costi"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Costi" />
+	<fieldProperty
+		name="im_rt_ssc_costi_ogc_altra_uo_mod"
+		property="spe_modificato.im_rt_ssc_costi_ogc_altra_uo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="altra UO" />
+	<fieldProperty
+		name="im_rag_a2_spese_costi_altrui_mod"
+		property="spe_modificato.im_rag_a2_spese_costi_altrui"
+		inputType="TEXT"
+		label="im_rag_a2_spese_costi_altrui" />
+	<fieldProperty
+		name="im_raf_a2_spese_ogc_altra_uo_mod"
+		property="spe_modificato.im_raf_a2_spese_ogc_altra_uo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="altra UO" />
+	<fieldProperty
+		name="im_rap_a3_spese_costi_altrui_mod"
+		property="spe_modificato.im_rap_a3_spese_costi_altrui"
+		inputType="TEXT"
+		label="im_rap_a3_spese_costi_altrui" />
+	<fieldProperty
+		name="im_rao_a3_spese_ogc_altra_uo_mod"
+		property="spe_modificato.im_rao_a3_spese_ogc_altra_uo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="altra UO" />
+	<fieldProperty
+		name="im_rq_ssc_costi_odc_mod"
+		property="spe_modificato.im_rq_ssc_costi_odc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="relativa UO" />
+	<fieldProperty
+		name="im_rj_ccs_spese_odc_altra_uo_mod"
+		property="spe_modificato.im_rj_ccs_spese_odc_altra_uo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="altra UO" />
+	<fieldProperty
+		name="im_rae_a2_spese_ogc_mod"
+		property="spe_modificato.im_rae_a2_spese_ogc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="relativa UO" />
+	<fieldProperty
+		name="im_rac_a2_spese_odc_mod"
+		property="spe_modificato.im_rac_a2_spese_odc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="relativa UO" />
+	<fieldProperty
+		name="im_ro_css_altri_costi_mod"
+		property="spe_modificato.im_ro_css_altri_costi"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Altri Costi" />
+	<fieldProperty
+		name="im_rl_ccs_spese_ogc_altra_uo_mod"
+		property="spe_modificato.im_rl_ccs_spese_ogc_altra_uo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="altra uo" />
+	<fieldProperty
+		name="im_ran_a3_spese_ogc_mod"
+		property="spe_modificato.im_ran_a3_spese_ogc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="relativa UO" />
+	<fieldProperty
+		name="im_ral_a3_spese_odc_mod"
+		property="spe_modificato.im_ral_a3_spese_odc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="relativa UO" />
+	<fieldProperty
+		name="im_ru_spese_costi_altrui_mod"
+		property="spe_modificato.im_ru_spese_costi_altrui"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Spese per costi altrui" />
+	<fieldProperty
+		name="im_rad_a2_spese_odc_altra_uo_mod"
+		property="spe_modificato.im_rad_a2_spese_odc_altra_uo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="altra UO" />
+ 
+	<formFieldProperty
+		name="im_rao_a3_spese_ogc_altra_uo_mod" />		
+	<formFieldProperty
+		name="im_ran_a3_spese_ogc_mod" />		
+	<formFieldProperty
+		name="im_ram_a3_spese_odc_altra_uo_mod" />		
+	<formFieldProperty
+		name="im_ral_a3_spese_odc_mod" />
+	<formFieldProperty
+		name="im_rai_a3_costi_altro_cdr_mod" />		
+	<formFieldProperty
+		name="im_rah_a3_costi_finali_mod" />
+	<formFieldProperty
+		name="im_raf_a2_spese_ogc_altra_uo_mod" /> 
+	<formFieldProperty
+		name="im_rae_a2_spese_ogc_mod" />
+	<formFieldProperty
+		name="im_rad_a2_spese_odc_altra_uo_mod" />
+	<formFieldProperty
+		name="im_rac_a2_spese_odc_mod" />		
+	<formFieldProperty
+		name="im_rab_a2_costi_altro_cdr_mod" />	
+	<formFieldProperty
+		name="im_raa_a2_costi_finali_mod" />		
+	<formFieldProperty
+		name="im_rt_ssc_costi_ogc_altra_uo_mod" /> 		
+	<formFieldProperty
+		name="im_rs_ssc_costi_ogc_mod" />
+	<formFieldProperty
+		name="im_rr_ssc_costi_odc_altra_uo_mod" />		
+	<formFieldProperty
+		name="im_rq_ssc_costi_odc_mod" />
+	<formFieldProperty
+		name="im_rp_css_verso_altro_cdr_mod" />
+	<formFieldProperty
+		name="im_ro_css_altri_costi_mod" />
+	<formFieldProperty
+		name="im_rn_css_rimanenze_mod" />
+	<formFieldProperty
+		name="im_rm_css_ammortamenti_mod" />
+	<formFieldProperty
+		name="im_rl_ccs_spese_ogc_altra_uo_mod" />
+	<formFieldProperty
+		name="m_rl_ccs_spese_ogc_altra_uo_mod" />
+	<formFieldProperty
+		name="im_rk_ccs_spese_ogc_mod" />
+	<formFieldProperty
+		name="im_rj_ccs_spese_odc_altra_uo_mod" />
+	<formFieldProperty
+		name="im_ru_spese_costi_altrui_mod" /> 
+	<formFieldProperty
+		name="im_rh_ccs_costi_mod" />	
+	<formFieldProperty
+		name="im_ri_ccs_spese_odc_mod" />
+	<formFieldProperty
+		name="im_rv_pagamenti_mod" />
+	<formFieldProperty
+		name="im_rao_a3_spese_ogc_altra_uo" 
+		enabledOnEdit="false" />		
+	<formFieldProperty
+		name="im_ran_a3_spese_ogc" 
+		enabledOnEdit="false" />		
+	<formFieldProperty
+		name="im_ram_a3_spese_odc_altra_uo" 
+		enabledOnEdit="false" />		
+	<formFieldProperty
+		name="im_ral_a3_spese_odc" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rai_a3_costi_altro_cdr" 
+		enabledOnEdit="false" />		
+	<formFieldProperty
+		name="im_rah_a3_costi_finali" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_raf_a2_spese_ogc_altra_uo" 
+		enabledOnEdit="false" /> 
+	<formFieldProperty
+		name="im_rae_a2_spese_ogc" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rad_a2_spese_odc_altra_uo" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rac_a2_spese_odc" 
+		enabledOnEdit="false" />		
+	<formFieldProperty
+		name="im_rab_a2_costi_altro_cdr" 
+		enabledOnEdit="false" />	
+	<formFieldProperty
+		name="im_raa_a2_costi_finali" 
+		enabledOnEdit="false" />		
+	<formFieldProperty
+		name="im_rt_ssc_costi_ogc_altra_uo" 
+		enabledOnEdit="false" /> 		
+	<formFieldProperty
+		name="im_rs_ssc_costi_ogc" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rr_ssc_costi_odc_altra_uo" 
+		enabledOnEdit="false" />		
+	<formFieldProperty
+		name="im_rq_ssc_costi_odc" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rp_css_verso_altro_cdr" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_ro_css_altri_costi" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rn_css_rimanenze" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rm_css_ammortamenti" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rl_ccs_spese_ogc_altra_uo" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rl_ccs_spese_ogc_altra_uo" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rk_ccs_spese_ogc" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rj_ccs_spese_odc_altra_uo" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_ru_spese_costi_altrui" 
+		enabledOnEdit="false" /> 
+	<formFieldProperty
+		name="im_rh_ccs_costi" 
+		enabledOnEdit="false" />	
+	<formFieldProperty
+		name="im_ri_ccs_spese_odc" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="titolo" />
+	<formFieldProperty
+		name="im_rv_pagamenti" 
+		enabledOnEdit="false" />
+
+</bulkInfo>

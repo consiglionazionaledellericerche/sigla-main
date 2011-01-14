@@ -1,0 +1,38 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="find_fondo_ricerca"
+		property="fondo_ricerca"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_fondo_ricerca"
+		property="cd_fondo_ricerca"
+		label="Fondo di ricerca"
+		inputType="TEXT"
+		inputSize="6" 
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_fondo_ricerca"
+		property="ds_fondo_ricerca"
+		maxLength="100"
+		inputSize="30"
+		inputType="TEXT"
+		label="Descrizione"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true" />
+
+	<columnFieldProperty
+		name="find_fondo_ricerca"
+		/>
+	<columnFieldProperty
+		name="cd_fondo_ricerca"
+		/>
+	<columnFieldProperty
+		name="ds_fondo_ricerca"
+		/>
+		
+</bulkInfo>

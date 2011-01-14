@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Detrazioni_familiariKey" >
+	<defaultColumnMap
+		tableName="DETRAZIONI_FAMILIARI" >
+		<columnMapping
+			columnName="TI_PERSONA"
+			propertyName="ti_persona"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="IM_INFERIORE"
+			propertyName="im_inferiore"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="DT_INIZIO_VALIDITA"
+			propertyName="dt_inizio_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="NUMERO"
+			propertyName="numero"
+			sqlTypeName="DECIMAL"
+			columnSize="3"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ti_persona"
+		partOfOid="true" />
+	<persistentProperty
+		name="im_inferiore"
+		partOfOid="true" />
+	<persistentProperty
+		name="dt_inizio_validita"
+		partOfOid="true" />
+	<persistentProperty
+		name="numero"
+		partOfOid="true" />
+</SQLPersistentInfo>

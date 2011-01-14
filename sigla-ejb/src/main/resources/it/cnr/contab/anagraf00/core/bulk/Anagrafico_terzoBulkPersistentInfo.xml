@@ -1,0 +1,19 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.Anagrafico_terzoBase"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.Anagrafico_terzoHome" >
+	<defaultColumnMap
+		tableName="ANAGRAFICO_TERZO" >
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="anagrafico.cd_anag" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzo.cd_terzo" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="anagrafico" 
+		partOfOid="true" />
+	<persistentProperty
+		name="terzo" 
+		partOfOid="true" />
+</SQLPersistentInfo>

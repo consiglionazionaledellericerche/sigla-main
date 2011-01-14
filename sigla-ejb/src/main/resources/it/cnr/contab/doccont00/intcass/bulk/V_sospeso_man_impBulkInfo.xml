@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CdS"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_uo_origine"
+		property="cd_uo_origine"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="UO origine"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="im_associato"
+		property="im_associato"
+		inputType="TEXT"
+		label="Importo Associato"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"/>
+	<fieldProperty
+		name="im_sospeso"
+		property="im_sospeso"
+		inputType="TEXT"
+		label="Importo Sospeso"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"/>
+	<fieldProperty
+		name="ti_sospeso_riscontro"
+		property="ti_sospeso_riscontro"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Tipo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_entrata_spesa"
+		property="ti_entrata_spesa"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Entrata/Spesa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_sospeso"
+		property="cd_sospeso"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="N.Sospeso"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_voce"
+		property="cd_voce"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Voce di Bilancio"
+		caseSensitiveSearch="false" />	
+	<fieldProperty
+		name="esercizio_ori_obbligazione"
+		property="esercizio_ori_obbligazione"
+		inputType="TEXT"
+		label="Esercizio Imp." />
+	<fieldProperty
+		name="pg_obbligazione"
+		property="pg_obbligazione"
+		inputType="TEXT"
+		label="Num. Imp." />
+	<fieldProperty
+		name="im_obbligazione"
+		property="im_obbligazione"
+		inputType="TEXT"
+		label="Importo Imp."
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"/>
+	<fieldProperty
+		name="pg_mandato"
+		property="pg_mandato"
+		inputType="TEXT"
+		label="Num. Mandato" />	
+	<fieldProperty
+		name="im_mandato"
+		property="im_mandato"
+		inputType="TEXT"
+		label="Imp. Mandato"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"/>	
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="ti_entrata_spesa" />
+	<formFieldProperty
+		name="ti_sospeso_riscontro" />
+	<formFieldProperty
+		name="cd_sospeso" />
+	<formFieldProperty
+		name="cd_sospeso_padre" />
+	<formFieldProperty
+		name="im_sospeso" />
+	<formFieldProperty
+		name="pg_mandato" />
+	<formFieldProperty
+		name="cd_uo_origine" />
+	<formFieldProperty
+		name="im_associato" />
+	<formFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<formFieldProperty
+		name="pg_obbligazione" />
+	<formFieldProperty
+		name="cd_voce" />
+	<formFieldProperty
+		name="im_obbligazione" />
+	<formFieldProperty
+		name="im_mandato" />
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_uo_origine" />
+	<columnFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<columnFieldProperty
+		name="pg_obbligazione"
+		columnStyle="text-align:left; padding-left:5px"/>
+	<columnFieldProperty
+		name="im_obbligazione"
+		columnStyle="width:130px; text-align: right; padding-right:5px"/>
+	<columnFieldProperty
+		name="pg_mandato" 
+		columnStyle="text-align:left; padding-left:5px"/>
+	<columnFieldProperty
+		name="im_mandato" />	
+	<columnFieldProperty
+		name="im_associato"
+		columnStyle="width:130px; text-align: right; padding-right:5px"/>
+	<columnFieldProperty
+		name="cd_voce" />
+			
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_uo_origine" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="esercizio_ori_obbligazione" />
+	<findFieldProperty
+		name="pg_obbligazione" />
+	<findFieldProperty
+		name="im_obbligazione" />
+	<findFieldProperty
+		name="pg_mandato" />
+	<findFieldProperty
+		name="im_associato" />
+	<findFieldProperty
+		name="ti_sospeso_riscontro" />
+	<findFieldProperty
+		name="ti_entrata_spesa" />
+	<findFieldProperty
+		name="cd_sospeso" />
+	<findFieldProperty
+		name="im_sospeso" />
+	<findFieldProperty
+		name="cd_voce" />
+	<findFieldProperty
+		name="im_mandato" />	
+</bulkInfo>

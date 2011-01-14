@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="user_"
+		property="user_"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="user_"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_transaction_"
+		property="dt_transaction_"
+		inputType="TEXT"
+		label="dt_transaction_" />
+	<fieldProperty
+		name="intestazione"
+		property="intestazione"
+		maxLength="200"
+		inputSize="200"
+		inputType="TEXT"
+		label="intestazione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_banca_delegato"
+		property="pg_banca_delegato"
+		inputType="TEXT"
+		label="pg_banca_delegato" />
+	<fieldProperty
+		name="numero_conto"
+		property="numero_conto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="numero_conto"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="action_"
+		property="action_"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="action_"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_terzo_delegato"
+		property="cd_terzo_delegato"
+		inputType="TEXT"
+		label="cd_terzo_delegato" />
+	<fieldProperty
+		name="codice_iban"
+		property="codice_iban"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="codice_iban"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="quietanza"
+		property="quietanza"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="quietanza"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_storico_"
+		property="pg_storico_"
+		inputType="TEXT"
+		label="pg_storico_" />
+	<fieldProperty
+		name="abi"
+		property="abi"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		label="abi"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_pagamento"
+		property="ti_pagamento"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_pagamento"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_cc_cds"
+		property="fl_cc_cds"
+		inputType="CHECKBOX"
+		label="fl_cc_cds" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		label="cd_terzo" />
+	<fieldProperty
+		name="origine"
+		property="origine"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="origine"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="codice_swift"
+		property="codice_swift"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="codice_swift"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cab"
+		property="cab"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		label="cab"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_cancellato"
+		property="fl_cancellato"
+		inputType="CHECKBOX"
+		label="fl_cancellato" />
+	<fieldProperty
+		name="pg_banca"
+		property="pg_banca"
+		inputType="TEXT"
+		label="pg_banca" />
+
+	<formFieldProperty
+		name="pg_storico_" />
+	<formFieldProperty
+		name="user_" />
+	<formFieldProperty
+		name="dt_transaction_" />
+	<formFieldProperty
+		name="action_" />
+	<formFieldProperty
+		name="origine" />
+	<formFieldProperty
+		name="fl_cc_cds" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="pg_banca" />
+	<formFieldProperty
+		name="cab" />
+	<formFieldProperty
+		name="abi" />
+	<formFieldProperty
+		name="intestazione" />
+	<formFieldProperty
+		name="quietanza" />
+	<formFieldProperty
+		name="numero_conto" />
+	<formFieldProperty
+		name="ti_pagamento" />
+	<formFieldProperty
+		name="codice_iban" />
+	<formFieldProperty
+		name="codice_swift" />
+	<formFieldProperty
+		name="fl_cancellato" />
+	<formFieldProperty
+		name="cd_terzo_delegato" />
+	<formFieldProperty
+		name="pg_banca_delegato" />
+
+	<columnFieldProperty
+		name="user_" />
+	<columnFieldProperty
+		name="dt_transaction_" />
+	<columnFieldProperty
+		name="action_" />
+	<columnFieldProperty
+		name="origine" />
+	<columnFieldProperty
+		name="fl_cc_cds" />
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="pg_banca" />
+	<columnFieldProperty
+		name="cab" />
+	<columnFieldProperty
+		name="abi" />
+	<columnFieldProperty
+		name="intestazione" />
+	<columnFieldProperty
+		name="quietanza" />
+	<columnFieldProperty
+		name="numero_conto" />
+	<columnFieldProperty
+		name="ti_pagamento" />
+	<columnFieldProperty
+		name="codice_iban" />
+	<columnFieldProperty
+		name="codice_swift" />
+	<columnFieldProperty
+		name="fl_cancellato" />
+	<columnFieldProperty
+		name="cd_terzo_delegato" />
+	<columnFieldProperty
+		name="pg_banca_delegato" />
+
+	<findFieldProperty
+		name="pg_storico_" />
+	<findFieldProperty
+		name="user_" />
+	<findFieldProperty
+		name="dt_transaction_" />
+	<findFieldProperty
+		name="action_" />
+	<findFieldProperty
+		name="origine" />
+	<findFieldProperty
+		name="fl_cc_cds" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="pg_banca" />
+	<findFieldProperty
+		name="cab" />
+	<findFieldProperty
+		name="abi" />
+	<findFieldProperty
+		name="intestazione" />
+	<findFieldProperty
+		name="quietanza" />
+	<findFieldProperty
+		name="numero_conto" />
+	<findFieldProperty
+		name="ti_pagamento" />
+	<findFieldProperty
+		name="codice_iban" />
+	<findFieldProperty
+		name="codice_swift" />
+	<findFieldProperty
+		name="fl_cancellato" />
+	<findFieldProperty
+		name="cd_terzo_delegato" />
+	<findFieldProperty
+		name="pg_banca_delegato" />
+
+</bulkInfo>

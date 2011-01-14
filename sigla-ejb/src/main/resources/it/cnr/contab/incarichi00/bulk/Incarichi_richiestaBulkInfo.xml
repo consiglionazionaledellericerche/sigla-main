@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_richiesta"
+		property="pg_richiesta"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="N. richiesta" />
+	<fieldProperty
+		name="idRichiestaText"
+		property="idRichiestaText"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		label="N. richiesta" />
+	<fieldProperty
+		name="cd_cds"
+		property="cds.cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="30"
+		label="Istituto" />
+	<fieldProperty
+		name="ds_cds"
+		property="cds.ds_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="300"
+		label="Istituto" />
+	<fieldProperty
+		name="cds"
+		property="cds"
+		readonlyProperty="ROCds"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Istituto" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="unita_organizzativa.cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="30"
+		label="Unità organizzativa" />
+	<fieldProperty
+		name="ds_unita_organizzativa"
+		property="unita_organizzativa.ds_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="300"
+		label="Unità organizzativa" />
+	<fieldProperty
+		name="indirizzo_unita_organizzativa"
+		property="indirizzo_unita_organizzativa"
+		inputType="ROTEXT"
+		inputSize="70"
+		maxLength="70"
+		label="Unità organizzativa" />
+	<fieldProperty
+		name="unita_organizzativa"
+		property="unita_organizzativa"
+		inputType="SEARCHTOOL"
+		formName="searchtoolUO"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Unità organizzativa" />
+	<fieldProperty
+		name="attivita"
+		property="attivita"
+		inputType="TEXTAREA"
+		inputSize="800"
+		maxLength="800"
+		cols="80"
+		rows="5"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Oggetto" />
+	<fieldProperty
+		name="attivita_breve"
+		property="attivita_breve"
+		inputType="TEXTAREA"
+		maxLength="100"
+		cols="60"
+		rows="5"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Attività sintetica" />
+	<fieldProperty
+		name="competenze"
+		property="competenze"
+		inputType="TEXTAREA"
+		maxLength="800"
+		cols="80"
+		rows="3"
+		enabledOnSearch="true"
+		label="Competenze richieste" />
+	<fieldProperty
+		name="durata"
+		property="durata"
+		inputType="TEXTAREA"
+		maxLength="200"
+		cols="80"
+		rows="2"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Durata" />
+	<fieldProperty
+		name="sede_lavoro"
+		property="sede_lavoro"
+		inputType="TEXTAREA"
+		maxLength="200"
+		cols="80"
+		rows="2"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Luogo di svolgimento" />
+	<fieldProperty
+		name="note"
+		property="note"
+		inputType="TEXTAREA"
+		maxLength="500"
+		cols="80"
+		rows="3"
+		enabledOnSearch="true"
+		label="Altre Informazioni" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		keysProperty="ti_statoKeys"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Stato richiesta" />
+	<fieldProperty
+		name="statoText"
+		property="statoText"
+		inputType="TEXT"
+		maxLength="30"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Stato richiesta" />
+	<fieldProperty
+		name="data_pubblicazione"
+		property="data_pubblicazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		label="Data pubblicazione" />
+	<fieldProperty
+		name="data_fine_pubblicazione"
+		property="data_fine_pubblicazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		label="Data fine pubblicazione" />
+	<fieldProperty
+		name="data_scadenza"
+		property="data_scadenza"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		label="Data scadenza" />
+	<fieldProperty
+		name="personale_interno"
+		property="personale_interno"
+		keysProperty="personale_internoKeys"
+		inputType="SELECT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnSearch="true"
+		enabledOnView="true"
+		command="doOnPersonaleInternoChange"
+		label="Professionalità interne" />
+	<fieldProperty
+		name="personale_interno_ro"
+		property="personale_interno"
+		keysProperty="personale_internoKeys"
+		inputType="SELECT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnSearch="true"
+		label="Professionalità interne" />
+	<fieldProperty
+		name="email_risposte"
+		property="email_risposte"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Indirizzo e_mail per risposte " />
+	<fieldProperty
+		name="cd_tematica_attivita"
+		property="tematica_attivita.cd_tematica_attivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Tematica Attivita'" />
+	<fieldProperty
+		name="tematica_attivita"
+		property="tematica_attivita"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Tematica Attivita'" />
+	<fieldProperty
+		name="ds_tematica_attivita"
+		property="tematica_attivita.ds_tematica_attivita"
+		label="Tematica Attivita'" />
+	<fieldProperty
+		name="nr_risorse_da_trovare"
+		property="nr_risorse_da_trovare"
+		label="Nr. Risorse Richieste"
+		inputType="TEXT"
+		nullable="false"		
+		maxLength="3"
+		enabledOnSearch="true"
+		inputSize="3"/>
+	<fieldProperty
+		name="nr_risorse_trovate_si"
+		property="nr_risorse_trovate_si"
+		label="conformi alla richiesta"
+		optionsProperty="nrRisorseTrovateList"
+		command="doDefault"
+		inputType="SELECT"
+		nullable="false"
+		maxLength="3"
+		inputSize="3"
+		enabledOnSearch="true"
+		enabledOnView="true"/>
+	<fieldProperty
+		name="nr_risorse_trovate_no"
+		property="nr_risorse_trovate_no"
+		label="non pervenute candidature"
+		optionsProperty="nrRisorseTrovateList"
+		command="doDefault"
+		inputType="SELECT"
+		nullable="false"
+		maxLength="3"
+		inputSize="3"
+		enabledOnSearch="true"
+		enabledOnView="true"/>
+	<fieldProperty
+		name="nr_risorse_trovate_na"
+		property="nr_risorse_trovate_na"
+		label="non conformi alla richiesta"
+		optionsProperty="nrRisorseTrovateList"
+		command="doDefault"
+		inputType="SELECT"
+		nullable="false"
+		maxLength="3"
+		inputSize="3"
+		enabledOnSearch="true"
+		enabledOnView="true"/>
+	<fieldProperty
+		name="nr_risorse_trovate_si_ro"
+		property="nr_risorse_trovate_si"
+		label="conformi alla richiesta"
+		inputType="TEXT"
+		maxLength="3"
+		inputSize="3"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="nr_risorse_trovate_no_ro"
+		property="nr_risorse_trovate_no"
+		label="non pervenute candidature"
+		inputType="TEXT"
+		maxLength="3"
+		inputSize="3"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="nr_risorse_trovate_na_ro"
+		property="nr_risorse_trovate_na"
+		label="non conformi alla richiesta"
+		inputType="TEXT"
+		maxLength="3"
+		inputSize="3"
+		enabledOnSearch="true"/>
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_richiesta" />
+	<formFieldProperty
+		name="idRichiestaText" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="ds_cds" />
+	<formFieldProperty
+		name="cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="ds_unita_organizzativa" />
+	<formFieldProperty
+		name="indirizzo_unita_organizzativa" />
+	<formFieldProperty
+		name="unita_organizzativa" />
+	<formFieldProperty
+		name="attivita" 
+		label="Oggetto&lt;BR&gt;&lt;/span&gt;&lt;span class=&quot;FormInput&quot;&gt;(Max 800 caratteri)"/>
+	<formFieldProperty
+		name="attivita_breve"
+		label="Attività sintetica&lt;BR&gt;&lt;/span&gt;&lt;span class=&quot;FormInput&quot;&gt;(Max 100 caratteri)"/>
+	<formFieldProperty
+		name="competenze"
+		label="Competenze richieste&lt;BR&gt;&lt;/span&gt;&lt;span class=&quot;FormInput&quot;&gt;(Max 800 caratteri)" />
+	<formFieldProperty
+		name="durata" 
+		label="Durata&lt;BR&gt;&lt;/span&gt;&lt;span class=&quot;FormInput&quot;&gt;(Max 200 caratteri)" />
+	<formFieldProperty
+		name="sede_lavoro"
+		label="Luogo di svolgimento&lt;BR&gt;&lt;/span&gt;&lt;span class=&quot;FormInput&quot;&gt;(Max 200 caratteri)" />
+	<formFieldProperty
+		name="note"
+		label="Altre Informazioni&lt;BR&gt;&lt;/span&gt;&lt;span class=&quot;FormInput&quot;&gt;(Max 500 caratteri)" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="statoText" />
+	<formFieldProperty
+		name="data_pubblicazione"
+		label="Data&lt;BR&gt;pubblicazione" />
+	<formFieldProperty
+		name="data_fine_pubblicazione"
+		label="Data fine&lt;BR&gt;pubblicazione" />
+	<formFieldProperty
+		name="data_scadenza"
+		label="Data&lt;BR&gt;scadenza" />
+	<formFieldProperty
+		name="personale_interno" />
+	<formFieldProperty
+		name="personale_interno_ro" />
+	<formFieldProperty
+		name="email_risposte" />
+	<formFieldProperty
+		name="cd_tematica_attivita" />
+	<formFieldProperty
+		name="tematica_attivita" />
+	<formFieldProperty
+		name="nr_risorse_da_trovare" />
+	<formFieldProperty
+		name="nr_risorse_trovate_si" />
+	<formFieldProperty
+		name="nr_risorse_trovate_no" />
+	<formFieldProperty
+		name="nr_risorse_trovate_na" />
+	<formFieldProperty
+		name="nr_risorse_trovate_si_ro" />
+	<formFieldProperty
+		name="nr_risorse_trovate_no_ro" /> 
+	<formFieldProperty
+		name="nr_risorse_trovate_na_ro" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_richiesta" />
+	<columnFieldProperty
+		name="statoText" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="data_pubblicazione" />
+	<columnFieldProperty
+		name="data_fine_pubblicazione" />
+	<columnFieldProperty
+		name="data_scadenza" />
+	<columnFieldProperty
+		name="ds_tematica_attivita" />
+	<columnFieldProperty
+		name="attivita" />
+	<columnFieldProperty
+		name="competenze" />
+	<columnFieldProperty
+		name="durata" />
+	<columnFieldProperty
+		name="sede_lavoro" />
+	<columnFieldProperty
+		name="personale_interno" />
+	<columnFieldProperty
+		name="nr_risorse_da_trovare" />
+	<columnFieldProperty
+		name="nr_risorse_trovate_si" />
+	<columnFieldProperty
+		name="nr_risorse_trovate_no" /> 
+	<columnFieldProperty
+		name="nr_risorse_trovate_na" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_richiesta" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="data_pubblicazione" />
+	<findFieldProperty
+		name="data_fine_pubblicazione" />
+	<findFieldProperty
+		name="data_scadenza" />
+	<findFieldProperty
+		name="ds_tematica_attivita" />
+	<findFieldProperty
+		name="attivita" />
+	<findFieldProperty
+		name="competenze" />
+	<findFieldProperty
+		name="durata" />
+	<findFieldProperty
+		name="sede_lavoro" />
+	<findFieldProperty
+		name="personale_interno" />
+	<findFieldProperty
+		name="note" />
+	<findFieldProperty
+		name="email_risposte" />
+	<findFieldProperty
+		name="nr_risorse_da_trovare" />
+	<findFieldProperty
+		name="nr_risorse_trovate_si" />
+	<findFieldProperty
+		name="nr_risorse_trovate_no" /> 
+	<findFieldProperty
+		name="nr_risorse_trovate_na" />
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="pg_richiesta" />
+		<formFieldProperty
+			name="attivita"
+			inputType="TEXT"
+			inputSize="40" />
+	</form>
+</bulkInfo>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk"
+	keyClassName="it.cnr.contab.compensi00.docs.bulk.MinicarrieraKey"
+	homeClassName="it.cnr.contab.compensi00.docs.bulk.MinicarrieraHome" >
+
+	<defaultColumnMap tableName="MINICARRIERA" >
+
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="modalita_pagamento.cd_modalita_pag" />
+		<columnMapping
+			columnName="CD_TERMINI_PAG"
+			propertyName="termini_pagamento.cd_termini_pag" />
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="banca.pg_banca" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="banca.terzo.cd_terzo"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_TIPO_RAPPORTO"
+			propertyName="tipo_rapporto.cd_tipo_rapporto" />
+		<columnMapping
+			columnName="CD_TRATTAMENTO"
+			propertyName="tipo_trattamento.cd_trattamento" />
+		<columnMapping
+			columnName="CD_CDS_MINICARRIERA_ORI"
+			propertyName="minicarriera_origine.cd_cds" />
+		<columnMapping
+			columnName="ESERCIZIO_MINICARRIERA_ORI"
+			propertyName="minicarriera_origine.esercizio" />
+		<columnMapping
+			columnName="CD_UO_MINICARRIERA_ORI"
+			propertyName="minicarriera_origine.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_MINICARRIERA_ORI"
+			propertyName="minicarriera_origine.pg_minicarriera" />
+		<columnMapping
+			columnName="ESERCIZIO_REP"
+			propertyName="incarichi_repertorio.esercizio" />
+		<columnMapping
+			columnName="PG_REPERTORIO"
+			propertyName="incarichi_repertorio.pg_repertorio" />
+
+	</defaultColumnMap>		
+
+	<persistentProperty
+		name="modalita_pagamento" />
+	<persistentProperty
+		name="termini_pagamento" />
+	<persistentProperty
+		name="banca" />
+	<persistentProperty
+		name="tipo_rapporto" />
+	<persistentProperty
+		name="minicarriera_origine" />
+	<persistentProperty
+		name="incarichi_repertorio" />
+</SQLPersistentInfo>

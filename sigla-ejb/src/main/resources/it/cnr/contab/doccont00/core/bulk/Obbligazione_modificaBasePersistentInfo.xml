@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBase"
+	keyClassName="it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaKey"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaHome">
+	<defaultColumnMap
+		tableName="OBBLIGAZIONE_MODIFICA">
+		<columnMapping
+			columnName="DS_MODIFICA"
+			propertyName="ds_modifica"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_MODIFICA"
+			propertyName="dt_modifica"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE"
+			propertyName="esercizio_originale"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"/>
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="MOTIVAZIONE"
+			propertyName="motivazione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ds_modifica" />
+	<persistentProperty
+		name="dt_modifica" />
+	<persistentProperty
+		name="esercizio_originale" />
+	<persistentProperty
+		name="pg_obbligazione" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="motivazione" />		
+</SQLPersistentInfo>

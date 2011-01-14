@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.docs.bulk.V_impegni_inventario_dettBase"
+	homeClassName="it.cnr.contab.inventario00.docs.bulk.V_impegni_inventario_dettHome">
+	<defaultColumnMap
+		tableName="V_IMPEGNI_INVENTARIO_DETT">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_DOCUMENTO"
+			propertyName="pg_documento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="PROGRESSIVO_RIGA"
+			propertyName="progressivo_riga"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_IMPONIBILE"
+			propertyName="im_imponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_IVA"
+			propertyName="im_iva"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="pg_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="NR_INVENTARIO"
+			propertyName="nr_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="PROGRESSIVO"
+			propertyName="progressivo"
+			sqlTypeName="DECIMAL"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="VALORE_UNITARIO"
+			propertyName="valore_unitario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_DOCUMENTO"
+			propertyName="ti_documento"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_BUONO_C_S"
+			propertyName="pg_buono_c_s"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_IMP"
+			propertyName="esercizio_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CDS_IMP"
+			propertyName="cds_imp"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE"
+			propertyName="esercizio_originale"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SCADENZA"
+			propertyName="im_scadenza"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="pg_documento" />
+	<persistentProperty
+		name="progressivo_riga" />
+	<persistentProperty
+		name="tipo" />
+	<persistentProperty
+		name="im_imponibile" />
+	<persistentProperty
+		name="im_iva" />
+	<persistentProperty
+		name="pg_inventario" />
+	<persistentProperty
+		name="nr_inventario" />
+	<persistentProperty
+		name="progressivo" />
+	<persistentProperty
+		name="valore_unitario" />
+	<persistentProperty
+		name="ti_documento" />
+	<persistentProperty
+		name="pg_buono_c_s" />
+	<persistentProperty
+		name="esercizio_imp" />
+	<persistentProperty
+		name="cds_imp" />
+	<persistentProperty
+		name="esercizio_originale" />
+	<persistentProperty
+		name="pg_obbligazione" />
+	<persistentProperty
+		name="pg_obbligazione_scadenzario" />
+	<persistentProperty
+		name="im_scadenza" />
+</SQLPersistentInfo>

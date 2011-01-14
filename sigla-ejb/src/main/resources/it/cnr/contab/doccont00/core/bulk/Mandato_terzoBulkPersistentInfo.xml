@@ -1,0 +1,18 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Mandato_terzoBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Mandato_terzoHome" >
+	<defaultColumnMap
+		tableName="MANDATO_TERZO" >
+		<columnMapping
+			columnName="CD_TIPO_BOLLO"
+			propertyName="tipoBollo.cd_tipo_bollo" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzo.cd_terzo" />			
+	</defaultColumnMap>
+	<persistentProperty
+		name="terzo" 
+		partOfOid="true"/>
+	<persistentProperty
+		name="tipoBollo" />
+</SQLPersistentInfo>

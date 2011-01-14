@@ -1,0 +1,95 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="find_uo_per_ruolo"
+		property="unita_org_per_ruolo"
+		optionsProperty="unita_org_per_ruolo"
+		readonlyProperty="ROFind_unita_org_per_ruolo"
+		inputType="SEARCHTOOL" 
+		enabledOnView="true"
+		/>
+	<fieldProperty
+		name="cd_uo_per_ruolo"
+		property="unita_org_per_ruolo.cd_unita_organizzativa"
+		readonlyProperty="ROUnita_org_per_ruolo"
+		label="Unit&#224; organizzativa"
+		inputType="TEXT"
+		enabledOnView="true"
+		/>
+	<fieldProperty
+		name="ds_uo_per_ruolo"
+		property="unita_org_per_ruolo.ds_unita_organizzativa"
+		label=""
+		inputSize="30"
+		inputType="ROTEXT" 
+		/>
+	<fieldProperty
+		name="find_uo_per_accesso"
+		property="unita_org_per_accesso"
+		optionsProperty="unita_org_per_accesso"
+		readonlyProperty="ROFind_unita_org_per_accesso"
+		inputType="SEARCHTOOL" 
+		enabledOnView="true"
+		/>
+	<fieldProperty
+		name="cd_uo_per_accesso"
+		property="unita_org_per_accesso.cd_unita_organizzativa"
+		readonlyProperty="ROUnita_org_per_accesso"
+		label="Unit&#224; organizzativa"
+		inputType="TEXT"
+		enabledOnView="true"
+		/>
+	<fieldProperty
+		name="ds_uo_per_accesso"
+		property="unita_org_per_accesso.ds_unita_organizzativa"
+		label=""
+		inputSize="30"
+		inputType="ROTEXT" 
+		/>
+	<columnFieldProperty
+		name="dt_inizio_validita"
+		/>
+	<columnFieldProperty
+		name="dt_fine_validita"
+		/>
+	<columnFieldProperty
+		name="cd_gestore"
+		/>
+
+
+	<findFieldProperty
+		name="cd_utente"
+		/>
+	<findFieldProperty
+		name="ds_utente"
+		inputSize="40"
+		/>
+	<findFieldProperty
+		name="dt_fine_validita"
+		/>
+	<findFieldProperty
+		name="dt_inizio_validita"
+		/>
+
+	<formFieldProperty
+		name="find_uo_per_accesso"
+		/>
+	<formFieldProperty
+		name="cd_uo_per_accesso"
+		/>
+	<formFieldProperty
+		name="ds_uo_per_accesso"
+		/>
+	<formFieldProperty
+		name="find_uo_per_ruolo"
+		/>
+	<formFieldProperty
+		name="cd_uo_per_ruolo"
+		/>
+	<formFieldProperty
+		name="ds_uo_per_ruolo"
+		/>
+</bulkInfo>

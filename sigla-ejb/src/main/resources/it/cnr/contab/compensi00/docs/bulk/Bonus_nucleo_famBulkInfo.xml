@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="bonus.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_bonus"
+		property="bonus.pg_bonus"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo" />
+	<fieldProperty
+		name="cf_componente_nucleo"
+		property="cf_componente_nucleo"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		command="doOnCf_componente_nucleoChange"
+		readonlyProperty="bonus.ROBonus"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Codice Fiscale componente nucleo" />
+	<fieldProperty
+		name="tipo_componente_nucleo"
+		property="tipo_componente_nucleo"
+		keysProperty="tipo_componente_nucleoKeys"
+		readonlyProperty="bonus.ROBonus"
+		inputType="SELECT"
+		label="Relazione parentela" />
+	<fieldProperty
+		name="im_reddito_componente"
+		property="im_reddito_componente"
+		command="doOnIm_reddito_componenteChange"
+		readonlyProperty="bonus.ROBonus"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Reddito componente nucleo" />
+	<fieldProperty
+		name="fl_handicap"
+		property="fl_handicap"
+		inputType="CHECKBOX"
+		readonlyProperty="bonus.ROBonus"
+		label="Handicap"  />	
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_bonus" />
+	<formFieldProperty
+		name="cf_componente_nucleo" />
+	<formFieldProperty
+		name="tipo_componente_nucleo" />
+	<formFieldProperty
+		name="im_reddito_componente" />
+	<formFieldProperty		
+		name="fl_handicap" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_bonus" />
+	<findFieldProperty
+		name="cf_componente_nucleo" />
+	<findFieldProperty
+		name="tipo_componente_nucleo" />
+	<findFieldProperty
+		name="im_reddito_componente" />
+	<findFieldProperty		
+		name="fl_handicap" />	
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_bonus" />
+	<columnFieldProperty
+		name="cf_componente_nucleo" />
+	<columnFieldProperty
+		name="tipo_componente_nucleo" />
+	<columnFieldProperty
+		name="im_reddito_componente" />
+	<columnFieldProperty		
+		name="fl_handicap" />
+		
+</bulkInfo>

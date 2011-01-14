@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_ti_spesa"
+		property="cd_ti_spesa"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="ds_ti_spesa"
+		property="ds_ti_spesa"
+		maxLength="100"
+		inputSize="85"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		caseSensitiveSearch="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="ti_area_geografica"
+		property="ti_area_geografica"
+		keysProperty="ti_area_geograficaKeys"
+		maxLength="20"
+		inputSize="20"		
+		inputType="SELECT"
+		label="Area Geografica"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
+/************ NAZIONE **************/
+	<fieldProperty
+		name="find_nazione"
+		property="nazione"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROFindNazione"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Nazione" />
+	<fieldProperty
+		name="pg_nazione"
+		property="nazione.pg_nazione"
+		readonlyProperty="RONazione"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Nazione" />
+	<fieldProperty
+		name="ds_nazione"
+		property="nazione.ds_nazione"
+		inputSize="50"
+		maxLength="50"
+		inputType="ROTEXT"
+		label="Nazione" />
+/***********************************/
+	<fieldProperty
+		name="rif_inquadramento"
+		property="rifInquadramento"
+		printProperty="descrRifInquadramento"
+		optionsProperty="rifInquadramenti"
+		inputType="SELECT"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Inquadramento" 
+		/>
+	<fieldProperty
+		name="pg_rif_inquadramento"
+		property="pg_rif_inquadramento"
+		inputType="TEXT"
+		label="Inquadramento"		
+		maxLength="10"
+		inputSize="20"	
+		enabledOnInsert="false"
+		enabledOnEdit="false"		
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"								
+		/>				
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_inizio_validita"
+		formatName="date_short"				
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Data Inizio Validita" />
+/************ FLAG ***************/
+	<fieldProperty
+		name="fl_giustificativo_richiesto"
+		property="fl_giustificativo_richiesto"
+		inputType="CHECKBOX"
+		label="Giustificativo Richiesto"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="fl_pasto"
+		property="fl_pasto"
+		inputType="CHECKBOX"
+		label="Pasto"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="fl_trasporto"
+		property="fl_trasporto"
+		inputType="CHECKBOX"
+		label="Trasporto"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="fl_rimborso_km"
+		property="fl_rimborso_km"
+		inputType="CHECKBOX"
+		label="Rimborso Km"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="fl_alloggio"
+		property="fl_alloggio"
+		inputType="CHECKBOX"
+		label="Alloggio"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true" />
+/****************** DIVISA ****************/
+	<fieldProperty
+		name="find_divisa"
+		property="divisa"
+		inputType="SEARCHTOOL"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Valuta" />
+	<fieldProperty
+		name="cd_divisa"
+		property="cd_divisa"
+		readonlyProperty="RODivisa"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Valuta" />
+	<fieldProperty
+		name="ds_divisa"
+		property="divisa.ds_divisa"
+		maxLength="50"
+		inputSize="50"
+		inputType="ROTEXT"
+		label="Valuta" />
+/******************************************/
+	<fieldProperty
+		name="limite_max_spesa"
+		property="limite_max_spesa"
+		maxLength="16"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Limite di Spesa" />
+	<fieldProperty
+		name="percentuale_maggiorazione"
+		property="percentuale_maggiorazione"
+		maxLength="6"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Perc. Maggiorazione" />
+	<fieldProperty
+		name="dataFineValidita"
+		property="dataFineValidita"
+		formatName="date_short"		
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Data Fine Validita" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		formatName="date_short"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Data Fine Validita" />
+	<fieldProperty
+		name="dt_cancellazione"
+		property="dt_cancellazione"
+		formatName="date_short"				
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Data Cancellazione" />
+/**************************/
+	<fieldProperty
+		name="tipoSpeseRadioGroup"
+		property="flag_tipo_spese"
+		keysProperty="flag_tipo_speseKeys"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"	
+		label=""
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		/>
+/**************************/			
+
+	<formFieldProperty name="cd_ti_spesa" />
+	<formFieldProperty name="ti_area_geografica" />
+	<formFieldProperty name="pg_nazione" />
+	<formFieldProperty name="ds_nazione" />
+	<formFieldProperty name="find_nazione" />
+	<formFieldProperty name="rif_inquadramento" />
+	<formFieldProperty name="dt_inizio_validita" />
+	<formFieldProperty name="ds_ti_spesa" />
+	<formFieldProperty name="fl_giustificativo_richiesto" />
+	<formFieldProperty name="fl_pasto" />
+	<formFieldProperty name="fl_trasporto" />
+	<formFieldProperty name="fl_rimborso_km" />
+	<formFieldProperty name="fl_alloggio" />
+	<formFieldProperty name="cd_divisa" />
+	<formFieldProperty name="ds_divisa" />
+	<formFieldProperty name="find_divisa" />			
+	<formFieldProperty name="limite_max_spesa" />
+	<formFieldProperty name="percentuale_maggiorazione" />
+	<formFieldProperty name="dataFineValidita" />
+	<formFieldProperty name="dt_cancellazione" />
+	<formFieldProperty name="tipoSpeseRadioGroup" />	
+
+	<columnFieldProperty name="cd_ti_spesa" />
+	<columnFieldProperty name="ds_ti_spesa" />
+	<columnFieldProperty name="ti_area_geografica" />
+	<columnFieldProperty name="pg_nazione" />
+	<columnFieldProperty name="ds_nazione" />
+	<columnFieldProperty name="rif_inquadramento" />
+	<columnFieldProperty name="dt_inizio_validita" />
+	<columnFieldProperty name="dataFineValidita" />
+	<columnFieldProperty name="fl_giustificativo_richiesto" />
+	<columnFieldProperty name="fl_pasto" />
+	<columnFieldProperty name="fl_trasporto" />
+	<columnFieldProperty name="fl_rimborso_km" />
+	<columnFieldProperty name="fl_alloggio" />
+	<columnFieldProperty name="cd_divisa" />
+	<columnFieldProperty name="ds_divisa" />
+	<columnFieldProperty name="percentuale_maggiorazione" />
+	<columnFieldProperty name="limite_max_spesa" />
+	<columnFieldProperty name="dt_cancellazione" />
+
+	<findFieldProperty name="cd_ti_spesa" />
+	<findFieldProperty name="ds_ti_spesa" />
+	<findFieldProperty name="ti_area_geografica" />
+	<findFieldProperty name="pg_rif_inquadramento" />	
+	<findFieldProperty name="pg_nazione" />
+	<findFieldProperty name="cd_divisa" />		
+	<findFieldProperty name="percentuale_maggiorazione" />
+	<findFieldProperty name="limite_max_spesa" />
+	<findFieldProperty name="dt_inizio_validita" />
+	<findFieldProperty name="dt_fine_validita" />
+	<findFieldProperty name="dt_cancellazione" />
+	<findFieldProperty name="fl_giustificativo_richiesto" />
+	<findFieldProperty name="fl_pasto" />
+	<findFieldProperty name="fl_trasporto" />
+	<findFieldProperty name="fl_rimborso_km" />
+	<findFieldProperty name="fl_alloggio" />
+
+</bulkInfo>

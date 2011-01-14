@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.coepcoan00.core.bulk.Movimento_coanBulk"
+	homeClassName="it.cnr.contab.coepcoan00.core.bulk.Movimento_coanHome" >
+	<defaultColumnMap
+		tableName="MOVIMENTO_COAN" >
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="scrittura.esercizio"/>
+		<columnMapping
+			columnName="PG_SCRITTURA"
+			propertyName="scrittura.pg_scrittura"/>
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="scrittura.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="scrittura.uo.cd_unita_organizzativa" />			
+		<columnMapping
+			columnName="CD_VOCE_EP"
+			propertyName="conto.cd_voce_ep"/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="conto.esercizio"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzo.cd_terzo" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="latt.cd_linea_attivita" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="latt.centro_responsabilita.cd_centro_responsabilita" />
+		<columnMapping
+			columnName="CD_FUNZIONE"
+			propertyName="latt.cd_funzione" />
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="latt.cd_natura" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="scrittura" 
+		partOfOid="true"/>
+	<persistentProperty
+		name="conto" />
+	<persistentProperty
+		name="latt" />
+	<persistentProperty
+		name="terzo" />		
+</SQLPersistentInfo>

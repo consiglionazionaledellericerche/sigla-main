@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Contiene l'indirizzo email PEC ufficiale per l'unità organizzativa"
+	longDescription="Contiene l'indirizzo email PEC ufficiale per l'unità organizzativa">
+	<fieldProperty
+		name="cdUnitaOrganizzativa"
+		property="cdUnitaOrganizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Codice Unita Organizzativa" />
+	<fieldProperty
+		name="sigla"
+		property="sigla"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="true"
+		label="Codice Unita Organizzativa" />
+	<fieldProperty
+		name="emailPec"
+		property="emailPec"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		nullable="true"
+		label="email PEC Istituto/Ufficio" />
+	<fieldProperty
+		name="emailPecDirettore"
+		property="emailPecDirettore"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		nullable="true"
+		label="email PEC Direttore" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdUnitaOrganizzativa" />
+	</form>
+	<formFieldProperty
+		name="sigla" />
+	<formFieldProperty
+		name="emailPec" />
+	<formFieldProperty
+		name="emailPecDirettore" />
+	<findFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<findFieldProperty
+		name="sigla" />
+	<findFieldProperty
+		name="emailPec" />
+	<findFieldProperty
+		name="emailPecDirettore" />
+	<columnFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<columnFieldProperty
+		name="sigla" />
+	<columnFieldProperty
+		name="emailPec" />
+	<columnFieldProperty
+		name="emailPecDirettore" />
+</bulkInfo>

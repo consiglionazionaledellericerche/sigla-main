@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="cd_cds" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="cd_unita_organizzativa" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="cd_terzo" />
+	<fieldProperty
+		name="denominazione"
+		property="denominazione"
+		inputType="TEXT"
+		maxLength="110"
+		label="denominazione" />
+	<fieldProperty
+		name="partita_iva"
+		property="partita_iva"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="partita_iva" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="codice_fiscale" />
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="tipo" />
+	<fieldProperty
+		name="matricola"
+		property="matricola"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="matricola" />
+	<fieldProperty
+		name="ds_compenso"
+		property="ds_compenso"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="ds_compenso" />
+	<fieldProperty
+		name="im_totale_compenso"
+		property="im_totale_compenso"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="im_totale_compenso" />
+	<fieldProperty
+		name="pg_compenso"
+		property="pg_compenso"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="pg_compenso" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="cd_elemento_voce" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="cd_centro_responsabilita" />
+	<fieldProperty
+		name="gae"
+		property="gae"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="gae" />
+	<fieldProperty
+		name="dt_pagamento"
+		property="dt_pagamento"
+		inputType="TEXT"
+		formatName="date_short"
+		label="dt_pagamento" />
+	<fieldProperty
+		name="dt_da_competenza_coge"
+		property="dt_da_competenza_coge"
+		inputType="TEXT"
+		formatName="date_short"
+		label="dt_da_competenza_coge" />	
+	<fieldProperty
+		name="dt_a_competenza_coge"
+		property="dt_a_competenza_coge"
+		inputType="TEXT"
+		formatName="date_short"
+		label="dt_a_competenza_coge" />				
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="denominazione" />
+	<formFieldProperty
+		name="partita_iva" />
+	<formFieldProperty
+		name="codice_fiscale" />
+	<formFieldProperty
+		name="tipo" />
+	<formFieldProperty
+		name="matricola" />
+	<formFieldProperty
+		name="ds_compenso" />
+	<formFieldProperty
+		name="im_totale_compenso" />
+	<formFieldProperty
+		name="pg_compenso" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="gae" />
+	<formFieldProperty
+		name="dt_pagamento" />
+	<formFieldProperty
+		name="dt_da_competenza_coge" />
+        <formFieldProperty
+		name="dt_a_competenza_coge" />			
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="denominazione" />
+	<findFieldProperty
+		name="partita_iva" />
+	<findFieldProperty
+		name="codice_fiscale" />
+	<findFieldProperty
+		name="tipo" />
+	<findFieldProperty
+		name="matricola" />
+	<findFieldProperty
+		name="ds_compenso" />
+	<findFieldProperty
+		name="im_totale_compenso" />
+	<findFieldProperty
+		name="pg_compenso" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="gae" />
+	<findFieldProperty
+		name="dt_pagamento" />
+	<findFieldProperty
+		name="dt_da_competenza_coge" />
+        <findFieldProperty
+		name="dt_a_competenza_coge" />		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="denominazione" />
+	<columnFieldProperty
+		name="partita_iva" />
+	<columnFieldProperty
+		name="codice_fiscale" />
+	<columnFieldProperty
+		name="tipo" />
+	<columnFieldProperty
+		name="matricola" />
+	<columnFieldProperty
+		name="ds_compenso" />
+	<columnFieldProperty
+		name="im_totale_compenso" />
+	<columnFieldProperty
+		name="pg_compenso" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="gae" />
+	<columnFieldProperty
+		name="dt_pagamento" />
+	<columnFieldProperty
+		name="dt_da_competenza_coge" />
+        <columnFieldProperty
+		name="dt_a_competenza_coge" />	
+</bulkInfo>

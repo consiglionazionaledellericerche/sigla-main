@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.Cnr_anadipBase"
+	keyClassName="it.cnr.contab.anagraf00.core.bulk.Cnr_anadipKey"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.Cnr_anadipHome">
+	<defaultColumnMap
+		tableName="cnr_anadip">
+		<columnMapping
+			columnName="NOMINATIVO"
+			propertyName="nominativo"
+			sqlTypeName="VARCHAR"
+			columnSize="60"
+			nullable="false" />
+		<columnMapping
+			columnName="SESSO"
+			propertyName="sesso"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="DIP_COD_FIS"
+			propertyName="dip_cod_fis"
+			sqlTypeName="VARCHAR"
+			columnSize="16"
+			nullable="false" />
+		<columnMapping
+			columnName="DATA_NASCITA"
+			propertyName="data_nascita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="COMUNE_NASC"
+			propertyName="comune_nasc"
+			sqlTypeName="VARCHAR"
+			columnSize="40"
+			nullable="false" />
+		<columnMapping
+			columnName="PROV_NASC"
+			propertyName="prov_nasc"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IND_RESID"
+			propertyName="ind_resid"
+			sqlTypeName="VARCHAR"
+			columnSize="80"
+			nullable="false" />
+		<columnMapping
+			columnName="COM_RESID"
+			propertyName="com_resid"
+			sqlTypeName="VARCHAR"
+			columnSize="40"
+			nullable="false" />
+		<columnMapping
+			columnName="CAP_RESID"
+			propertyName="cap_resid"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false" />
+		<columnMapping
+			columnName="PRO_RESID"
+			propertyName="pro_resid"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="false" />
+		<columnMapping
+			columnName="COD_COMUNE"
+			propertyName="cod_comune"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_CIVILE"
+			propertyName="stato_civile"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="DEC_STAT_CIV"
+			propertyName="dec_stat_civ"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="TIT_ONORIF"
+			propertyName="tit_onorif"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DESC_TIT_ONORIF"
+			propertyName="desc_tit_onorif"
+			sqlTypeName="VARCHAR"
+			columnSize="35"
+			nullable="true" />
+		<columnMapping
+			columnName="TIT_STUDIO"
+			propertyName="tit_studio"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DESC_TIT_STUDIO"
+			propertyName="desc_tit_studio"
+			sqlTypeName="VARCHAR"
+			columnSize="35"
+			nullable="true" />
+		<columnMapping
+			columnName="COD_SPEC"
+			propertyName="cod_spec"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="DESC_SPEC"
+			propertyName="desc_spec"
+			sqlTypeName="VARCHAR"
+			columnSize="35"
+			nullable="true" />
+		<columnMapping
+			columnName="ANNO_SPEC"
+			propertyName="anno_spec"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="LUOGO_SPEC"
+			propertyName="luogo_spec"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="ABILITAZIONE"
+			propertyName="abilitazione"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="ANNO_ABILITAZIONE"
+			propertyName="anno_abilitazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="FASCICOLO"
+			propertyName="fascicolo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DATA_ASSUNZIONE"
+			propertyName="data_assunzione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DATA_CESSAZIONE"
+			propertyName="data_cessazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="CAUSA_CESS"
+			propertyName="causa_cess"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="DESC_CAUSA_CESS"
+			propertyName="desc_causa_cess"
+			sqlTypeName="VARCHAR"
+			columnSize="35"
+			nullable="true" />
+		<columnMapping
+			columnName="RAPP_IMPIEGO"
+			propertyName="rapp_impiego"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="false" />
+		<columnMapping
+			columnName="LIVELLO_1"
+			propertyName="livello_1"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="LIVELLO_2"
+			propertyName="livello_2"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="LIVELLO_3"
+			propertyName="livello_3"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="PROFILO"
+			propertyName="profilo"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CONTRATTO"
+			propertyName="contratto"
+			sqlTypeName="VARCHAR"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DESC_PROFILO"
+			propertyName="desc_profilo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="LIVPREC_1"
+			propertyName="livprec_1"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="LIVPREC_2"
+			propertyName="livprec_2"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="LIVPREC_3"
+			propertyName="livprec_3"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="PROFILO_PREC"
+			propertyName="profilo_prec"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="DESC_PROF_PREC"
+			propertyName="desc_prof_prec"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="CONTRATTO_PREC"
+			propertyName="contratto_prec"
+			sqlTypeName="VARCHAR"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="PROFILO_PREC_FINE"
+			propertyName="profilo_prec_fine"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_CONTRATTO"
+			propertyName="tipo_contratto"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DESC_TIPO_CONTRATTO"
+			propertyName="desc_tipo_contratto"
+			sqlTypeName="VARCHAR"
+			columnSize="35"
+			nullable="true" />
+		<columnMapping
+			columnName="ENTE_PREV"
+			propertyName="ente_prev"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="UNITA_OPER"
+			propertyName="unita_oper"
+			sqlTypeName="VARCHAR"
+			columnSize="6"
+			nullable="false" />
+		<columnMapping
+			columnName="SEDE_LAVORO"
+			propertyName="sede_lavoro"
+			sqlTypeName="VARCHAR"
+			columnSize="6"
+			nullable="false" />
+		<columnMapping
+			columnName="DEC_INIZIO"
+			propertyName="dec_inizio"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DEC_FINE"
+			propertyName="dec_fine"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_PRES"
+			propertyName="tipo_pres"
+			sqlTypeName="VARCHAR"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DESC_TIPO_PRES"
+			propertyName="desc_tipo_pres"
+			sqlTypeName="VARCHAR"
+			columnSize="35"
+			nullable="true" />
+		<columnMapping
+			columnName="TIT_AFFEREN"
+			propertyName="tit_afferen"
+			sqlTypeName="VARCHAR"
+			columnSize="6"
+			nullable="true" />
+		<columnMapping
+			columnName="MOD_PAG"
+			propertyName="mod_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="ABI_PAG"
+			propertyName="abi_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="CAB_PAG"
+			propertyName="cab_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="NRC_PAG"
+			propertyName="nrc_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="12"
+			nullable="true" />
+		<columnMapping
+			columnName="IMP_FISC"
+			propertyName="imp_fisc"
+			sqlTypeName="DECIMAL"
+			columnSize="16"
+			columnScale="3"
+			nullable="false" />
+		<columnMapping
+			columnName="IMP_PREV"
+			propertyName="imp_prev"
+			sqlTypeName="DECIMAL"
+			columnSize="16"
+			columnScale="3"
+			nullable="false" />
+		<columnMapping
+			columnName="IMP_IMPO1"
+			propertyName="imp_impo1"
+			sqlTypeName="DECIMAL"
+			columnSize="16"
+			columnScale="3"
+			nullable="false" />
+		<columnMapping
+			columnName="IMP_IMPO2"
+			propertyName="imp_impo2"
+			sqlTypeName="DECIMAL"
+			columnSize="16"
+			columnScale="3"
+			nullable="false" />
+		<columnMapping
+			columnName="SINDACATO"
+			propertyName="sindacato"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="ANZ_RAPP_PREC"
+			propertyName="anz_rapp_prec"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="3"
+			nullable="false" />
+		<columnMapping
+			columnName="ANZ_RISCATTI"
+			propertyName="anz_riscatti"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="3"
+			nullable="false" />
+		<columnMapping
+			columnName="TOT_ANNI"
+			propertyName="tot_anni"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="3"
+			nullable="false" />
+		<columnMapping
+			columnName="DATA_RIF"
+			propertyName="data_rif"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="ANNO_RIF"
+			propertyName="anno_rif"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="MESE_RIF"
+			propertyName="mese_rif"
+			sqlTypeName="DECIMAL"
+			columnSize="2"
+			nullable="false" />
+		<columnMapping
+			columnName="TIPO_ASS"
+			propertyName="tipo_ass"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DES_TIPO_ASS"
+			propertyName="des_tipo_ass"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="RIF_CONC"
+			propertyName="rif_conc"
+			sqlTypeName="VARCHAR"
+			columnSize="15"
+			nullable="true" />
+		<columnMapping
+			columnName="TAB_COD_COMNAS"
+			propertyName="tab_cod_comnas"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="TAB_CAP_COMNAS"
+			propertyName="tab_cap_comnas"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="PARTIME"
+			propertyName="partime"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="ATT_RID_STIP"
+			propertyName="att_rid_stip"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="GIU_DEC_INIZIO"
+			propertyName="giu_dec_inizio"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NAZ_NAS"
+			propertyName="naz_nas"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="NCAR_COGN"
+			propertyName="ncar_cogn"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="UO_TIT"
+			propertyName="uo_tit"
+			sqlTypeName="VARCHAR"
+			columnSize="6"
+			nullable="true" />
+		<columnMapping
+			columnName="FL_GESTIONE_MANUALE"
+			propertyName="fl_gestione_manuale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="nominativo" />
+	<persistentProperty
+		name="sesso" />
+	<persistentProperty
+		name="dip_cod_fis" />
+	<persistentProperty
+		name="data_nascita" />
+	<persistentProperty
+		name="comune_nasc" />
+	<persistentProperty
+		name="prov_nasc" />
+	<persistentProperty
+		name="ind_resid" />
+	<persistentProperty
+		name="com_resid" />
+	<persistentProperty
+		name="cap_resid" />
+	<persistentProperty
+		name="pro_resid" />
+	<persistentProperty
+		name="cod_comune" />
+	<persistentProperty
+		name="stato_civile" />
+	<persistentProperty
+		name="dec_stat_civ" />
+	<persistentProperty
+		name="tit_onorif" />
+	<persistentProperty
+		name="desc_tit_onorif" />
+	<persistentProperty
+		name="tit_studio" />
+	<persistentProperty
+		name="desc_tit_studio" />
+	<persistentProperty
+		name="cod_spec" />
+	<persistentProperty
+		name="desc_spec" />
+	<persistentProperty
+		name="anno_spec" />
+	<persistentProperty
+		name="luogo_spec" />
+	<persistentProperty
+		name="abilitazione" />
+	<persistentProperty
+		name="anno_abilitazione" />
+	<persistentProperty
+		name="fascicolo" />
+	<persistentProperty
+		name="data_assunzione" />
+	<persistentProperty
+		name="data_cessazione" />
+	<persistentProperty
+		name="causa_cess" />
+	<persistentProperty
+		name="desc_causa_cess" />
+	<persistentProperty
+		name="rapp_impiego" />
+	<persistentProperty
+		name="livello_1" />
+	<persistentProperty
+		name="livello_2" />
+	<persistentProperty
+		name="livello_3" />
+	<persistentProperty
+		name="profilo" />
+	<persistentProperty
+		name="contratto" />
+	<persistentProperty
+		name="desc_profilo" />
+	<persistentProperty
+		name="livprec_1" />
+	<persistentProperty
+		name="livprec_2" />
+	<persistentProperty
+		name="livprec_3" />
+	<persistentProperty
+		name="profilo_prec" />
+	<persistentProperty
+		name="desc_prof_prec" />
+	<persistentProperty
+		name="contratto_prec" />
+	<persistentProperty
+		name="profilo_prec_fine" />
+	<persistentProperty
+		name="tipo_contratto" />
+	<persistentProperty
+		name="desc_tipo_contratto" />
+	<persistentProperty
+		name="ente_prev" />
+	<persistentProperty
+		name="unita_oper" />
+	<persistentProperty
+		name="sede_lavoro" />
+	<persistentProperty
+		name="dec_inizio" />
+	<persistentProperty
+		name="dec_fine" />
+	<persistentProperty
+		name="tipo_pres" />
+	<persistentProperty
+		name="desc_tipo_pres" />
+	<persistentProperty
+		name="tit_afferen" />
+	<persistentProperty
+		name="mod_pag" />
+	<persistentProperty
+		name="abi_pag" />
+	<persistentProperty
+		name="cab_pag" />
+	<persistentProperty
+		name="nrc_pag" />
+	<persistentProperty
+		name="imp_fisc" />
+	<persistentProperty
+		name="imp_prev" />
+	<persistentProperty
+		name="imp_impo1" />
+	<persistentProperty
+		name="imp_impo2" />
+	<persistentProperty
+		name="sindacato" />
+	<persistentProperty
+		name="anz_rapp_prec" />
+	<persistentProperty
+		name="anz_riscatti" />
+	<persistentProperty
+		name="tot_anni" />
+	<persistentProperty
+		name="data_rif" />
+	<persistentProperty
+		name="anno_rif" />
+	<persistentProperty
+		name="mese_rif" />
+	<persistentProperty
+		name="tipo_ass" />
+	<persistentProperty
+		name="des_tipo_ass" />
+	<persistentProperty
+		name="rif_conc" />
+	<persistentProperty
+		name="tab_cod_comnas" />
+	<persistentProperty
+		name="tab_cap_comnas" />
+	<persistentProperty
+		name="partime" />
+	<persistentProperty
+		name="att_rid_stip" />
+	<persistentProperty
+		name="giu_dec_inizio" />
+	<persistentProperty
+		name="naz_nas" />
+	<persistentProperty
+		name="ncar_cogn" />
+	<persistentProperty
+		name="uo_tit" />
+	<persistentProperty
+		name="fl_gestione_manuale" />
+</SQLPersistentInfo>

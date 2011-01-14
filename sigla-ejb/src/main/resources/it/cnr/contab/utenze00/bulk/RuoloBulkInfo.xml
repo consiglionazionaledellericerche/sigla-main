@@ -1,0 +1,134 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_ruolo"
+		property="cd_ruolo"
+		label="Codice ruolo"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		/>
+	<fieldProperty
+		name="ds_ruolo"
+		property="ds_ruolo"
+		label="Descrizione"
+		inputType="TEXT"
+		maxLength="200"
+		inputSize="70"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="find_cds"
+		property="cds"
+		label="Codice CdS"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_cds"
+		property="cds.cd_unita_organizzativa"
+		label="Codice CdS"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="ds_cds"
+		property="cds.ds_unita_organizzativa"
+		readonlyProperty="ROCds"
+		label=""
+		inputSize="20"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="tipo_ruolo"
+		property="tipo_ruolo"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		label="Tipo"/>
+	<fieldProperty
+		name="tipo"
+		property="tipo_ruolo.tipo"
+		inputSize="6"
+		label="Tipo"
+		inputType="TEXT"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		nullable="true"/>
+	<fieldProperty
+		name="crea_tipo_ruolo"
+		property="tipo_ruolo"
+		inputType="CRUDTOOL"
+		CRUDBusinessProcessName="CRUDTipoRuoloBP" />
+
+	<columnFieldProperty
+		name="cd_ruolo"
+		/>
+	<columnFieldProperty
+		name="ds_ruolo"
+		/>
+	<columnFieldProperty
+		name="cd_cds"
+		/>
+	<columnFieldProperty
+		name="tipo"
+		/>
+	<formFieldProperty
+		name="cd_ruolo"
+		/>
+	<formFieldProperty
+		name="ds_ruolo"
+		inputSize="40"
+		/>
+	<formFieldProperty
+		name="cd_cds"
+		/>
+	<formFieldProperty
+		name="ds_cds"
+		/>
+	<formFieldProperty
+		name="find_cds"
+		/>
+	<formFieldProperty
+		name="tipo"
+		/>
+	<formFieldProperty
+		name="tipo_ruolo"
+		/>
+	<formFieldProperty
+		name="crea_tipo_ruolo"
+		/>
+
+	<findFieldProperty
+		name="cd_ruolo"
+		/>
+	<findFieldProperty
+		name="ds_ruolo"
+		/>
+	<findFieldProperty
+		name="tipo"
+		/>
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_ruolo"
+			inputType="TEXT" />
+		<formFieldProperty
+			name="ds_ruolo"
+			inputType="TEXT"
+			inputSize="30" />
+	</form>
+
+</bulkInfo>

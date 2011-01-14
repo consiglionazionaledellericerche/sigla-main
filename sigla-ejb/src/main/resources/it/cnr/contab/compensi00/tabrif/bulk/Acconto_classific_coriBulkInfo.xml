@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_anag"
+		property="anagrafico.cd_anag"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Codice Anagrafico" />
+	<fieldProperty
+		name="descrizioneAnagrafica"
+		property="anagrafico.descrizioneAnagrafica"
+		label="Denominazione"
+		inputSize="100"
+		enabledOnSearch="true"
+		inputType="TEXT" />			
+	<fieldProperty
+		name="cd_classificazione_cori"
+		property="cd_classificazione_cori"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		label="Codice classificazione tipo contributo ritenuta" />
+	<fieldProperty
+		name="imponibile"
+		property="imponibile"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Imponibile" />
+	<fieldProperty
+		name="aliquota"
+		property="aliquota"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Aliquota" />
+	<fieldProperty
+		name="im_acconto_calcolato"
+		property="im_acconto_calcolato"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Acconto calcolato" />
+	<fieldProperty
+		name="im_acconto_trattenuto"
+		property="im_acconto_trattenuto"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Acconto trattenuto" />
+	<fieldProperty
+		name="pg_comune"
+		property="comune.pg_comune"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo Comune" />
+	<fieldProperty
+		name="cd_catastale"
+		property="comune.cd_catastale"
+		label="Codice Catastale"
+		inputSize="10"
+		enabledOnSearch="true"
+		inputType="TEXT" />		
+	<fieldProperty
+		name="ds_comune"
+		property="comune.ds_comune"
+		label="Descrizione Comune"
+		inputSize="100"
+		enabledOnSearch="true"
+		inputType="TEXT" />			
+	<fieldProperty
+		name="cd_cds_conguaglio"
+		property="cd_cds_conguaglio"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS Conguaglio" />		
+	<fieldProperty
+		name="cd_uo_conguaglio"
+		property="cd_uo_conguaglio"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="UO Conguaglio" />		
+	<fieldProperty
+		name="pg_conguaglio"
+		property="pg_conguaglio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo Conguaglio" />		
+	<fieldProperty
+		name="percentuale"
+		property="percentuale"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		formatName="it.cnr.contab.util.ConstrainedPercentFormat"
+		label="Percentuale per il calcolo dell'Acconto" />		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_anag" />
+	<formFieldProperty
+		name="descrizioneAnagrafica" />		
+	<formFieldProperty
+		name="cd_classificazione_cori" />
+	<formFieldProperty
+		name="imponibile" />
+	<formFieldProperty
+		name="aliquota" />
+	<formFieldProperty
+		name="im_acconto_calcolato" />
+	<formFieldProperty
+		name="im_acconto_trattenuto" />
+	<formFieldProperty
+		name="pg_comune" />
+	<formFieldProperty
+		name="cd_catastale" />		
+	<formFieldProperty
+		name="ds_comune" />			
+	<formFieldProperty
+		name="cd_cds_conguaglio" />
+	<formFieldProperty
+		name="cd_uo_conguaglio" />
+	<formFieldProperty
+		name="pg_conguaglio" />						
+	<formFieldProperty
+		name="percentuale" 
+		command="doOnPercentualeChange" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_anag" />
+	<findFieldProperty
+		name="descrizioneAnagrafica" />		
+	<findFieldProperty
+		name="cd_classificazione_cori" />
+	<findFieldProperty
+		name="imponibile" />
+	<findFieldProperty
+		name="aliquota" />
+	<findFieldProperty
+		name="im_acconto_calcolato" />
+	<findFieldProperty
+		name="im_acconto_trattenuto" />
+	<findFieldProperty
+		name="pg_comune" />
+	<findFieldProperty
+		name="cd_catastale" />	
+	<findFieldProperty
+		name="ds_comune" />				
+	<findFieldProperty
+		name="cd_cds_conguaglio" />
+	<findFieldProperty
+		name="cd_uo_conguaglio" />
+	<findFieldProperty
+		name="pg_conguaglio" />		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_anag" />
+	<columnFieldProperty
+		name="descrizioneAnagrafica" />		
+	<columnFieldProperty
+		name="imponibile" />
+	<columnFieldProperty
+		name="aliquota" />
+	<columnFieldProperty
+		name="im_acconto_calcolato" />
+	<columnFieldProperty
+		name="im_acconto_trattenuto" />
+	<columnFieldProperty
+		name="pg_comune" />
+	<columnFieldProperty
+		name="cd_catastale" />	
+	<columnFieldProperty
+		name="ds_comune" />				
+	<columnFieldProperty
+		name="cd_cds_conguaglio" />
+	<columnFieldProperty
+		name="cd_uo_conguaglio" />
+	<columnFieldProperty
+		name="pg_conguaglio" />			
+</bulkInfo>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Stampa Variazioni PdG Riepilogo">
+
+	<fieldProperty
+		name="cur"
+		property="cur" />
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputSize="2"		
+		inputType="ROTEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="findCDSForPrint"
+		property="cdsForPrint"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		completeOnSave="true"
+		readonlyProperty="cdsForPrintEnabled"
+		label="CDS" />
+	<fieldProperty
+		name="cdCdsForPrint"
+		property="cdCdsForPrint"/> 
+	<fieldProperty
+		name="findUOForPrint"
+		property="uoForPrint"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		completeOnSave="true"
+		readonlyProperty="uoForPrintEnabled"
+		label="Unità Organizzativa" />
+	 <fieldProperty
+		name="cdUoForPrint"
+		property="cdUoForPrint"/> 
+	<fieldProperty
+        name="stato"
+        property="stato"
+        inputType="SELECT"
+        keysProperty="ti_statoKeys"
+        nullable="false"
+        enabledOnSearch="true"        
+        label="Stato" />
+    <fieldProperty
+        name="DataApprovazione_da"
+        property="dataApprovazione_da"
+        inputType="TEXT"
+        formatName="date_short"
+        enabledOnInsert="true"
+        readonlyProperty="dataApprovazione_daEnabled"
+        label="Data di Approvazione da" />
+   <fieldProperty
+        name="DataApprovazione_a"
+        property="dataApprovazione_a"
+        inputType="TEXT"
+        formatName="date_short"
+        enabledOnInsert="true"
+        readonlyProperty="dataApprovazione_aEnabled"
+        label="Data di Approvazione a" /> 
+	<fieldProperty
+		name="pg_stampa"
+		property="pg_stampa"/>	
+    
+	
+	
+	
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="findCDSForPrint" /> 
+	<formFieldProperty name="cdCdsForPrint" /> 
+	<formFieldProperty name="findUOForPrint" /> 
+	<formFieldProperty name="cdUoForPrint" /> 
+	<formFieldProperty name="stato" command="doCambiaStato" /> 
+	<formFieldProperty name="progressivi_variazione"/>
+	<formFieldProperty name="DataApprovazione_da"/>
+    <formFieldProperty name="DataApprovazione_a"/>
+	
+	<form
+		name="/cnrpreventivo/pdg/stampa_variazioni_pdg_riepilogo.jasper">
+		<formFieldProperty name="esercizio" />
+		<formFieldProperty name="findCDSForPrint" /> 
+		<formFieldProperty name="cdCdsForPrint" /> 
+		<formFieldProperty name="findUOForPrint" /> 
+		<formFieldProperty name="cdUoForPrint" /> 
+		<formFieldProperty name="stato" command="doCambiaStato" /> 
+		<formFieldProperty name="pg_stampa"/>
+		<formFieldProperty name="DataApprovazione_da"/>
+	    <formFieldProperty name="DataApprovazione_a"/>
+	</form>
+	
+	<printForm
+		name="/cnrpreventivo/pdg/stampa_variazioni_pdg_riepilogo.jasper">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING" 
+			paramNameJR="Esercizio"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="cdCdsForPrint"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="CDS"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cdUoForPrint"
+			parameterPosition="2"
+			parameterType="STRING" 
+			paramNameJR="UO"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="stato"
+			parameterPosition="3"
+			parameterType="STRING"
+			paramNameJR="Stato"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="pg_stampa"
+			parameterPosition="5"
+			parameterType="STRING"
+			paramNameJR="Pg"
+			paramTypeJR="java.lang.String" />
+	</printForm>	
+</bulkInfo>

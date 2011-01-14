@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="gruppo.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio contabile" />
+	<fieldProperty
+		name="gruppo"
+		property="gruppo"
+		formName="searchtool"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"		
+		label="Gruppo CORI" />	
+	<fieldProperty
+		name="cd_gruppo_cr"
+		property="gruppo.cd_gruppo_cr"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"		
+		label="Codice del gruppo cori" />
+	<fieldProperty
+		name="ds_gruppo_cr"
+		property="gruppo.ds_gruppo_cr"
+		inputType="ROTEXT"
+		inputSize="80"
+		maxLength="80"
+		label="Descr. gruppo cori" />	
+	<fieldProperty
+		name="unita_organizzativa"
+		property="unita_organizzativa"
+		formName="searchtool"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"		
+		label="Unità Organizzativa" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="unita_organizzativa.cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice Unità Organizzativa" />
+		
+	<fieldProperty
+		name="fl_accentrato"
+		property="fl_accentrato"
+		inputType="CHECKBOX"
+		label="Accentrato" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_gruppo_cr" />
+	<formFieldProperty
+		name="ds_gruppo_cr" />	
+	<formFieldProperty
+		name="gruppo" />	
+	<formFieldProperty
+		name="unita_organizzativa" />	
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	
+	<formFieldProperty
+		name="fl_accentrato" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_gruppo_cr" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="fl_accentrato" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_gruppo_cr" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="fl_accentrato" />
+		
+</bulkInfo>

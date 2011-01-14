@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.tabrif.bulk.Missione_abbattimentiKey" >
+	<defaultColumnMap
+		tableName="MISSIONE_ABBATTIMENTI" >
+		<columnMapping
+			columnName="FL_VITTO_GRATUITO"
+			propertyName="fl_vitto_gratuito"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_PASTO"
+			propertyName="fl_pasto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DURATA_ORE"
+			propertyName="durata_ore"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_RIF_INQUADRAMENTO"
+			propertyName="pg_rif_inquadramento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="FL_TRASPORTO"
+			propertyName="fl_trasporto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DT_INIZIO_VALIDITA"
+			propertyName="dt_inizio_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TI_AREA_GEOGRAFICA"
+			propertyName="ti_area_geografica"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="FL_ALLOGGIO"
+			propertyName="fl_alloggio"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="PG_NAZIONE"
+			propertyName="pg_nazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="FL_NAVIGAZIONE"
+			propertyName="fl_navigazione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_ALLOGGIO_GRATUITO"
+			propertyName="fl_alloggio_gratuito"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_VITTO_ALLOGGIO_GRATUITO"
+			propertyName="fl_vitto_alloggio_gratuito"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="fl_vitto_gratuito"
+		partOfOid="true" />
+	<persistentProperty
+		name="fl_pasto"
+		partOfOid="true" />
+	<persistentProperty
+		name="durata_ore"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_rif_inquadramento"
+		partOfOid="true" />
+	<persistentProperty
+		name="fl_trasporto"
+		partOfOid="true" />
+	<persistentProperty
+		name="dt_inizio_validita"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_area_geografica"
+		partOfOid="true" />
+	<persistentProperty
+		name="fl_alloggio"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_nazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="fl_navigazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="fl_alloggio_gratuito"
+		partOfOid="true" />
+	<persistentProperty
+		name="fl_vitto_alloggio_gratuito"
+		partOfOid="true" />
+</SQLPersistentInfo>

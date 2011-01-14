@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.messaggio00.bulk.MessaggioKey" >
+	<defaultColumnMap
+		tableName="MESSAGGIO" >
+		<columnMapping
+			columnName="PG_MESSAGGIO"
+			propertyName="pg_messaggio"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_messaggio"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -1,0 +1,14 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.tabrif.bulk.CambioBase"
+	homeClassName="it.cnr.contab.docamm00.tabrif.bulk.CambioHome" >
+	<defaultColumnMap
+		tableName="CAMBIO" >
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="divisa.cd_divisa"
+			fetchOnly="true" />
+	</defaultColumnMap>
+	
+	<persistentProperty
+		name="divisa" />
+</SQLPersistentInfo>

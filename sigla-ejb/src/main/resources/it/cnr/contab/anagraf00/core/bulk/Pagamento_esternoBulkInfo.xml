@@ -1,0 +1,107 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="dt_pagamento"
+		property="dt_pagamento"
+		label="Data pagamento"
+		inputType="TEXT"
+		formatName="date_short" 
+		nullable="false" />
+	<fieldProperty
+		name="im_pagamento"
+		property="im_pagamento"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"		
+		label="Importo al netto delle spese"
+		nullable="false" />
+	<fieldProperty
+		name="im_spese"
+		property="im_spese"
+		inputType="TEXT"		
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Spese addebitate al committente"/>	
+	<fieldProperty
+		name="im_totale"
+		property="im_totale"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Totale"/>		
+	<fieldProperty
+		name="ds_pagamento"
+		property="ds_pagamento"
+		label="Descrizione"
+		style="width: 35em"
+		inputType="TEXTAREA" 
+		nullable="false" />		
+	<fieldProperty
+		name="tipo_rapporto"
+		property="tipo_rapporto"
+		formName="searchtool"
+		inputType="SEARCHTOOL"
+		label="Codice Tipo Rapporto"
+		nullable="false" />	
+	<fieldProperty
+		name="cd_tipo_rapporto"
+		property="tipo_rapporto.cd_tipo_rapporto"
+		inputType="TEXT"
+		label="Codice Tipo Rapporto"
+		nullable="false" />
+	
+	<fieldProperty
+		name="ds_tipo_rapporto"
+		property="tipo_rapporto.ds_tipo_rapporto"
+		inputType="TEXT"
+		label="Descrizione Tipo Rapporto"
+		nullable="false" />
+		
+	<columnFieldProperty 
+	    name="cd_tipo_rapporto"
+	    label="Tipo Rapporto" />				
+	<columnFieldProperty
+		name="dt_pagamento" />
+	<columnFieldProperty
+		name="im_pagamento"
+		label="Importo" />
+	<columnFieldProperty
+		name="im_spese"
+		label="Spese" />
+	<columnFieldProperty
+		name="im_totale" />		
+	<columnFieldProperty
+		name="ds_pagamento" />
+	<formFieldProperty
+		name="dt_pagamento"
+		command="doOnDt_pagamentoChange"		
+		/>
+	<formFieldProperty
+		name="tipo_rapporto"
+		/>		
+	<formFieldProperty
+		name="im_pagamento"
+		command="doOnIm_pagamentoChange"
+		/>
+	<formFieldProperty
+		name="im_spese"
+		command="doOnIm_speseChange"
+		/>
+	<formFieldProperty
+		name="im_totale"
+		/>		
+	<formFieldProperty 
+		name="ds_pagamento"
+		/>
+
+	<findFieldProperty
+		name="dt_pagamento" />
+	<findFieldProperty
+		name="im_pagamento" />
+	<findFieldProperty
+		name="im_spese" />
+	<findFieldProperty
+		name="ds_pagamento" />
+</bulkInfo>

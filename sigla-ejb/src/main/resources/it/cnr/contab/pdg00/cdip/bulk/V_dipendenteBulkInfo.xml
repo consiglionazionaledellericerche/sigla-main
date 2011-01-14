@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="7"
+		inputSize="7"
+		inputType="TEXT"
+		label="Unità org."
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="unita_organizzativa"
+		property="unita_organizzativa"
+		formName="searchtool"
+		inputType="SEARCHTOOL"
+		label="Unità org."
+		enabledOnInsert="false"
+		enabledOnEdit="true"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		maxLength="4"
+		inputSize="4"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="id_matricola"
+		property="id_matricola"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Matricola"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="nominativo"
+		property="nominativo"
+		maxLength="60"
+		inputSize="20"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Nominativo" />
+	<fieldProperty
+		name="dt_scad_contratto"
+		property="dt_scad_contratto"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		formatName="date_short"
+		label="Data scad. contratto" />
+	<fieldProperty
+		name="cd_livello_1"
+		property="cd_livello_1"
+		maxLength="3"
+		inputSize="3"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Cod. livello 1" />
+	<fieldProperty
+		name="cd_livello_2"
+		property="cd_livello_2"
+		maxLength="3"
+		inputSize="3"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		inputType="TEXT"
+		label="Cod. livello 2" />
+	<fieldProperty
+		name="cd_livello_3"
+		property="cd_livello_3"
+		maxLength="3"
+		inputSize="3"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Cod. livello 3" />
+	<fieldProperty
+		name="cd_profilo"
+		property="cd_profilo"
+		maxLength="4"
+		inputSize="4"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Cod. profilo" />
+	<fieldProperty
+		name="mese"
+		property="mese"
+		maxLength="3"
+		inputSize="3"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Mensilità" />
+	<fieldProperty
+		name="ds_profilo"
+		property="ds_profilo"
+		maxLength="100"
+		inputSize="20"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Descr. profilo" />
+	<fieldProperty
+		name="origine_fonti"
+		property="origine_fonti"
+		label="Origine"
+		keysProperty="tipo_naturaKeys"
+		inputType="SELECT"
+		nullable="true"
+		/>
+
+	<formFieldProperty
+		name="mese" />
+	<formFieldProperty
+		name="unita_organizzativa" />
+	<formFieldProperty
+		name="id_matricola" />
+	<formFieldProperty
+		name="nominativo" />
+	<formFieldProperty
+		name="dt_scad_contratto" />
+	<formFieldProperty
+		name="cd_livello_1" />
+	<formFieldProperty
+		name="cd_livello_2" />
+	<formFieldProperty
+		name="cd_livello_3" />
+	<formFieldProperty
+		name="cd_profilo" />
+	<formFieldProperty
+		name="ds_profilo" />
+	<formFieldProperty
+		name="origine_fonti" />
+
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="ds_unita_organizzativa"
+		property="unita_organizzativa.ds_unita_organizzativa"
+		inputType="ROTEXT" />
+	<columnFieldProperty
+		name="id_matricola" />
+	<columnFieldProperty
+		name="nominativo" />
+	<columnFieldProperty
+		name="dt_scad_contratto" />
+	<columnFieldProperty
+		name="cd_livello_1" />
+	<columnFieldProperty
+		name="cd_livello_2" />
+	<columnFieldProperty
+		name="cd_livello_3" />
+	<columnFieldProperty
+		name="cd_profilo" />
+	<columnFieldProperty
+		name="ds_profilo" />
+	<columnFieldProperty
+		name="origine_fonti" />
+
+	<columnSet
+		name="costiStipendialiMensili">
+		<columnFieldProperty
+			name="mese" />
+		<columnFieldProperty
+			name="cd_unita_organizzativa" />
+		<columnFieldProperty
+			name="ds_unita_organizzativa"
+			property="unita_organizzativa.ds_unita_organizzativa"
+			inputType="ROTEXT" />
+		<columnFieldProperty
+			name="id_matricola" />
+		<columnFieldProperty
+			name="nominativo" />
+		<columnFieldProperty
+			name="dt_scad_contratto" />
+		<columnFieldProperty
+			name="cd_livello_1" />
+		<columnFieldProperty
+			name="cd_livello_2" />
+		<columnFieldProperty
+			name="cd_livello_3" />
+		<columnFieldProperty
+			name="cd_profilo" />
+		<columnFieldProperty
+			name="ds_profilo" />
+	</columnSet>
+	<columnSet
+		name="nominativo">
+		<columnFieldProperty
+			name="id_matricola" />
+		<columnFieldProperty
+			name="nominativo" />
+	</columnSet>
+
+	<findFieldProperty
+		name="id_matricola" />
+	<findFieldProperty
+		name="mese"
+		enabledOnFreeSearch="false" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="nominativo" />
+	<findFieldProperty
+		name="dt_scad_contratto" />
+	<findFieldProperty
+		name="cd_livello_1" />
+	<findFieldProperty
+		name="cd_livello_2" />
+	<findFieldProperty
+		name="cd_livello_3" />
+	<findFieldProperty
+		name="cd_profilo" />
+	<findFieldProperty
+		name="ds_profilo" />
+	<findFieldProperty
+		name="origine_fonti" />
+
+	<freeSearchSet
+		name="costiStipendialiMensili">
+		<findFieldProperty
+			name="id_matricola" />
+		<findFieldProperty
+			name="mese"
+			enabledOnFreeSearch="true" />
+		<findFieldProperty
+			name="cd_unita_organizzativa" />
+		<findFieldProperty
+			name="nominativo" />
+		<findFieldProperty
+			name="dt_scad_contratto" />
+		<findFieldProperty
+			name="cd_livello_1" />
+		<findFieldProperty
+			name="cd_livello_2" />
+		<findFieldProperty
+			name="cd_livello_3" />
+		<findFieldProperty
+			name="cd_profilo" />
+		<findFieldProperty
+			name="ds_profilo" />
+	</freeSearchSet>
+	<freeSearchSet
+		name="nominativo">
+		<findFieldProperty
+			name="id_matricola" />
+		<findFieldProperty
+			name="nominativo" />
+	</freeSearchSet>
+	
+	<form
+		name="searchtool_dipendente" >
+		<formFieldProperty
+			name="id_matricola"
+		    inputSize="4" 
+		    label="Dipendente"/>
+		<formFieldProperty
+			name="nominativo" 
+			inputType="TEXT"
+		    inputSize="20" />
+	</form>
+	
+</bulkInfo>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		inputSize="4"
+        maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="findCDSForPrint"
+		property="cdsForPrint"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		completeOnSave="true"
+		readonlyProperty="ROCdsForPrint"
+		label="CDS" />
+	<fieldProperty
+		name="cdCdsForPrint"
+		property="cdCdsForPrint"/>
+
+	<fieldProperty
+		name="findUOForPrint"
+		property="uoForPrint"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		completeOnSave="true"
+		readonlyProperty="ROUoForPrint"
+		label="Unità Organizzativa" />
+	<fieldProperty
+		name="cdUoForPrint"
+		property="cdUoForPrint"/>
+
+    <fieldProperty
+        name="tipologia"
+        property="tipologia"
+        inputType="SELECT"
+        keysProperty="ti_tipologiaKeys"
+        nullable="false"
+        enabledOnSearch="true"
+        label="Tipologia" />
+
+    <fieldProperty
+        name="intestazione"
+        property="intestazione"
+        inputType="TEXT"
+        nullable="false"
+        label="Intestazione" />
+	
+	<fieldProperty
+        name="da_contabilizzazione"
+        property="da_contabilizzazione"
+        inputType="TEXT"
+		formatName="date_short"
+		inputSize="10"
+		maxLength="10"
+		label="Da Contabilizzazione" />
+        
+   <fieldProperty
+        name="a_contabilizzazione"
+        property="a_contabilizzazione"
+        inputType="TEXT"
+		formatName="date_short"
+		inputSize="10"
+		maxLength="10"
+		label="A Contabilizzazione" />
+	
+	<fieldProperty
+		name="da_contabilizzazioneForPrint"
+		property="da_contabilizzazioneForPrint"/>
+	<fieldProperty
+		name="a_contabilizzazioneForPrint"
+		property="a_contabilizzazioneForPrint"/>	
+			   
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="findCDSForPrint" />
+	<formFieldProperty name="findUOForPrint" />	
+	<formFieldProperty name="tipologia" />
+	<formFieldProperty name="da_contabilizzazione" />
+	<formFieldProperty name="a_contabilizzazione" />
+
+	<printForm
+		name="/cnrpreventivo/pdg/libro_giornale.rpt">
+		<printFieldProperty 
+			name="intestazione"
+			parameterPosition="0"
+			parameterType="STRING" />		
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="1"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdCdsForPrint"
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdUoForPrint"
+			parameterPosition="3"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="tipologia"
+			property="tipologia"
+			parameterPosition="4"
+			parameterType="STRING" />
+	</printForm>
+	<printForm
+		name="/cnrpreventivo/pdg/libro_giornale.jasper">
+		<printFieldProperty 
+			name="intestazione"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="stampa"
+			paramTypeJR="java.lang.String" />		
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="cdCdsForPrint"
+			parameterPosition="2"
+			parameterType="STRING"
+			paramNameJR="cds"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cdUoForPrint"
+			parameterPosition="3"
+			parameterType="STRING"
+			paramNameJR="uo"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="tipologia"
+			property="tipologia"
+			parameterPosition="4"
+			parameterType="STRING"
+			paramNameJR="tipologia"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="da_contabilizzazioneForPrint"
+			parameterPosition="5"
+			parameterType="DATE" 
+			paramNameJR="da_contabilizzazione"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty 
+			name="a_contabilizzazioneForPrint"
+			parameterPosition="6"
+			parameterType="DATE" 
+			paramNameJR="a_contabilizzazione"
+			paramTypeJR="java.util.Date"/>
+	</printForm>
+</bulkInfo>

@@ -1,0 +1,20 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.TelefonoBulk"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.TelefonoHome" >
+	<defaultColumnMap
+		tableName="TELEFONO" >
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzo.cd_terzo" />
+	</defaultColumnMap>
+
+	<columnMap
+		name="V_TELEFONO_ANAG"
+		tableName="V_TELEFONO_ANAG"
+		extends="default" >
+	</columnMap>
+
+	<persistentProperty
+		name="terzo"
+		partOfOid="true" />
+</SQLPersistentInfo>

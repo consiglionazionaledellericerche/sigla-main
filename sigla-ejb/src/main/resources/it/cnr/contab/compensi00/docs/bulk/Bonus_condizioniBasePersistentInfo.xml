@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.docs.bulk.Bonus_condizioniBase"
+	keyClassName="it.cnr.contab.compensi00.docs.bulk.Bonus_condizioniKey"
+	homeClassName="it.cnr.contab.compensi00.docs.bulk.Bonus_condizioniHome">
+	<defaultColumnMap
+		tableName="BONUS_CONDIZIONI">
+		<columnMapping
+			columnName="DS_CONDIZIONE"
+			propertyName="ds_condizione"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="NUMERO_COMPONENTI"
+			propertyName="numero_componenti"
+			sqlTypeName="DECIMAL"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_REDDITO_LIMITE"
+			propertyName="im_reddito_limite"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_BONUS"
+			propertyName="im_bonus"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ds_condizione" />
+	<persistentProperty
+		name="numero_componenti" />
+	<persistentProperty
+		name="im_reddito_limite" />
+	<persistentProperty
+		name="im_bonus" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

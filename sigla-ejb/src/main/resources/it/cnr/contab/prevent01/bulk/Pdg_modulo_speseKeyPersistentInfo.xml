@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent01.bulk.Pdg_modulo_speseKey">
+	<defaultColumnMap
+		tableName="PDG_MODULO_SPESE">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="pg_progetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ID_CLASSIFICAZIONE"
+			propertyName="id_classificazione"
+			sqlTypeName="DECIMAL"
+			columnSize="7"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS_AREA"
+			propertyName="cd_cds_area"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_centro_responsabilita"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_progetto"
+		partOfOid="true" />
+	<persistentProperty
+		name="id_classificazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_cds_area"
+		partOfOid="true" />
+</SQLPersistentInfo>

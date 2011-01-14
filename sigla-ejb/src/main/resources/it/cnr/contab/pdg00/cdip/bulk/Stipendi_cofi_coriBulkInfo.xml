@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Stipendi Parte Entrata"
+          longDescription="Stipendi Parte Entrata">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="mese"
+		property="stipendi_cofi"
+		printProperty="mese"
+		optionsProperty="tipoStipendi_cofi"
+		keysProperty="meseKeys"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnSearch="false"
+		label="Mese"/>
+	<fieldProperty
+		name="meseFind"
+		property="mese"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		nullable="true"
+		enabledOnSearch="true"
+        keysProperty="meseKeys"
+		label="Mese"/>
+		
+	/***********************************************************
+	* Searchtool per la ricerca del codice contributo_ritenuta *
+	***********************************************************/
+	<fieldProperty
+		name="find_tipo_contributo_ritenuta"
+		property="tipo_contributo_ritenuta"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Codice CO/RI"
+		caseSensitiveSearch="false"		
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="true" 
+		enabledOnFreeSearch="true"		
+		nullable="false" />	
+	<fieldProperty
+		name="cd_contributo_ritenuta"
+		property="cd_contributo_ritenuta"
+		inputType="TEXT"
+		label="Codice CO/RI" 
+		readonlyProperty="ROTipo_contributo_ritenuta"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		nullable="false"/>
+	<fieldProperty
+		name="ti_ente_percipiente"
+		property="ti_ente_percipiente"
+		keysProperty="tipoKeys" 
+		inputType="SELECT"
+		label="Tipo" 
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		nullable="false"/>
+	<fieldProperty
+		name="ammontare"
+		property="ammontare"
+		label="Ammontare" 
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat" 
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		enabledOnEdit="true" />
+	<fieldProperty
+		name="dt_da_competenza_coge"
+		property="dt_da_competenza_coge"
+		formatName="date_short"
+		inputType="TEXT"
+		label="Competenza dal: " 
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="dt_a_competenza_coge"
+		property="dt_a_competenza_coge"
+		formatName="date_short"
+		inputType="TEXT"
+		label="al: " 
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		nullable="false" />
+					
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="esercizio"
+			inputType="TEXT" />
+		<formFieldProperty
+			name="mese"
+			inputType="TEXT" />			
+	</form>	
+		
+
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="mese" />
+	<formFieldProperty name="find_tipo_contributo_ritenuta" />
+	<formFieldProperty name="ti_ente_percipiente" />
+	<formFieldProperty name="ammontare" />
+	<formFieldProperty name="dt_da_competenza_coge" />
+	<formFieldProperty name="dt_a_competenza_coge" />
+			
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="meseFind" />
+	<columnFieldProperty
+		name="cd_contributo_ritenuta" />
+	<columnFieldProperty
+		name="ti_ente_percipiente" />
+	<columnFieldProperty
+		name="ammontare" />
+	<columnFieldProperty
+		name="dt_da_competenza_coge" />
+	<columnFieldProperty
+		name="dt_a_competenza_coge" />
+
+	<columnSet name="elaborazione_flussi">
+		<columnFieldProperty name="cd_contributo_ritenuta"/>
+		<columnFieldProperty name="ti_ente_percipiente"/>
+		<columnFieldProperty name="ammontare"/>
+		<columnFieldProperty name="dt_da_competenza_coge"/>
+		<columnFieldProperty name="dt_a_competenza_coge"/>
+	</columnSet>		
+
+	<findFieldProperty name="meseFind" />	
+	<findFieldProperty name="cd_contributo_ritenuta" />
+	<findFieldProperty name="ti_ente_percipiente" />		
+	<findFieldProperty name="ammontare" />		
+	<findFieldProperty name="dt_da_competenza_coge" />		
+	<findFieldProperty name="dt_a_competenza_coge" />		
+
+</bulkInfo>

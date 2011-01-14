@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Gruppi CORI"
+          longDescription="Gruppi CORI">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		nullable="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_gruppo_cr"
+		property="cd_gruppo_cr"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="Codice Gruppo" />
+	<fieldProperty
+		name="ds_gruppo_cr"
+		property="ds_gruppo_cr"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="fl_accentrato"
+		property="fl_accentrato"
+		inputType="CHECKBOX"
+		label="Accentrato" />
+	<fieldProperty
+		name="fl_anno_prec"
+		property="fl_anno_prec"
+		inputType="CHECKBOX"
+		label="Anno precedente" />
+	<fieldProperty
+		name="fl_f24online"
+		property="fl_f24online"
+		inputType="CHECKBOX"
+		label="F24 Enti Pubblici" />
+	<fieldProperty
+		name="fl_f24online_previd"
+		property="fl_f24online_previd"
+		inputType="CHECKBOX"
+		label="F24 Enti Pubblici Previdenziale" />
+	<fieldProperty
+		name="cd_tributo_erario"
+		property="cd_tributo_erario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice Tributo" />
+	<fieldProperty
+		name="cd_tipo_riga_f24"
+		property="cd_tipo_riga_f24"
+		keysProperty="tipo_riga_f24Keys"
+		inputType="SELECT"
+		nullable="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="true"
+		label="Tipo Riga F24 EP"/>		
+	<fieldProperty
+		name="cd_matricola_inps"
+		property="cd_matricola_inps"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		label="Matricola Inps" />	
+	<formFieldProperty
+		name="esercizio"/>
+	<formFieldProperty
+		name="cd_gruppo_cr"/>
+	<formFieldProperty
+		name="ds_gruppo_cr" />
+	<formFieldProperty
+		name="fl_accentrato" />
+	<formFieldProperty
+		name="fl_anno_prec" />
+	<formFieldProperty
+		name="fl_f24online" />
+	<formFieldProperty
+		name="fl_f24online_previd" />	
+	<formFieldProperty
+		name="cd_tributo_erario" />
+	<formFieldProperty
+		name="cd_tipo_riga_f24" />
+	<formFieldProperty
+		name="cd_matricola_inps" />
+					
+	<columnFieldProperty
+		name="cd_gruppo_cr"/>
+	<columnFieldProperty
+		name="ds_gruppo_cr" />
+	<columnFieldProperty
+		name="fl_accentrato" />
+	<columnFieldProperty
+		name="fl_anno_prec" />
+	<columnFieldProperty
+		name="fl_f24online" />	
+	<columnFieldProperty
+		name="fl_f24online_previd" />		
+	<columnFieldProperty
+		name="cd_tributo_erario" />
+	<columnFieldProperty
+		name="cd_tipo_riga_f24" />
+	<columnFieldProperty
+		name="cd_matricola_inps" />
+	
+	<findFieldProperty
+		name="cd_gruppo_cr" />		
+	<findFieldProperty
+		name="ds_gruppo_cr" />
+	<findFieldProperty
+		name="fl_accentrato" />
+	<findFieldProperty
+		name="fl_anno_prec" />
+	<findFieldProperty
+		name="fl_f24online" />
+	<findFieldProperty
+		name="fl_f24online_previd" />	
+	<findFieldProperty
+		name="cd_tributo_erario" />
+	<findFieldProperty
+		name="cd_tipo_riga_f24" />
+	<findFieldProperty
+		name="cd_matricola_inps" />	
+</bulkInfo>

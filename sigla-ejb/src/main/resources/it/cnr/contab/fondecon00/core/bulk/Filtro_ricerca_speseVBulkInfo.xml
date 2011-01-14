@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+<!-- Fornitore -->
+	<fieldProperty
+		name="partita_iva"
+		property="partita_iva"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="P. IVA"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Codice Fiscale"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="denominazione_fornitore"
+		property="denominazione_fornitore"
+		maxLength="200"
+		inputSize="50"
+		inputType="TEXT"
+		label="Denominazione / Ragione Soc."
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="im_ammontare_spesa"
+		property="im_ammontare_spesa"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Ammontare Spesa" />
+	<fieldProperty
+		name="dt_spesa"
+		property="dt_spesa"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnSearch="true"
+		label="Data Spesa" />
+	<fieldProperty
+		name="fl_reintegrata"
+		property="fl_reintegrata"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		label="Spesa reintegrata" />
+	<fieldProperty
+		name="fl_documentata"
+		property="fl_documentata"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		label="Spesa Documentata" />
+	<fieldProperty
+		name="pg_fondo_spesa"
+		property="pg_fondo_spesa"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		label="Numero Spesa" />
+		
+	<formFieldProperty
+		name="partita_iva" />
+	<formFieldProperty
+		name="codice_fiscale" />
+	<formFieldProperty
+		name="denominazione_fornitore" />
+	<formFieldProperty
+		name="im_ammontare_spesa" />
+	<formFieldProperty
+		name="dt_spesa" />
+	<formFieldProperty
+		name="fl_reintegrata" />
+	<formFieldProperty
+		name="fl_documentata" />
+	<formFieldProperty
+		name="pg_fondo_spesa" />
+
+	<findFieldProperty
+		name="partita_iva" />
+	<findFieldProperty
+		name="codice_fiscale" />
+	<findFieldProperty
+		name="denominazione_fornitore" />
+	<findFieldProperty
+		name="im_ammontare_spesa" />
+	<findFieldProperty
+		name="dt_spesa" />
+	<findFieldProperty
+		name="fl_reintegrata" />
+	<findFieldProperty
+		name="fl_documentata" />
+	<findFieldProperty
+		name="pg_fondo_spesa" />
+
+	<columnFieldProperty
+		name="pg_fondo_spesa" />
+	<columnFieldProperty
+		name="denominazione_fornitore" />
+	<columnFieldProperty
+		name="im_ammontare_spesa" />
+	<columnFieldProperty
+		name="dt_spesa" />
+	<columnFieldProperty
+		name="fl_reintegrata" />
+	<columnFieldProperty
+		name="fl_documentata" />
+
+</bulkInfo>

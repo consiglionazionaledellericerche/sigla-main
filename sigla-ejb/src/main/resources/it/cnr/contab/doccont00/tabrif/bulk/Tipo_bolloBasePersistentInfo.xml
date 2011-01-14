@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.tabrif.bulk.Tipo_bolloBase"
+	keyClassName="it.cnr.contab.doccont00.tabrif.bulk.Tipo_bolloKey"
+	homeClassName="it.cnr.contab.doccont00.tabrif.bulk.Tipo_bolloHome" >
+	<defaultColumnMap
+		tableName="TIPO_BOLLO" >
+		<columnMapping
+			columnName="DS_TIPO_BOLLO"
+			propertyName="ds_tipo_bollo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CLASSE_TIPO_BOLLO"
+			propertyName="classe_tipo_bollo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_TIPO_BOLLO"
+			propertyName="im_tipo_bollo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_ENTRATA_SPESA"
+			propertyName="ti_entrata_spesa"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_DEFAULT"
+			propertyName="fl_default"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_CANCELLATO"
+			propertyName="fl_cancellato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ds_tipo_bollo" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="classe_tipo_bollo" />
+	<persistentProperty
+		name="im_tipo_bollo" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="ti_entrata_spesa" />
+	<persistentProperty
+		name="fl_default" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="fl_cancellato" />
+</SQLPersistentInfo>

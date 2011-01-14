@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.tabrif.bulk.Condizione_beneKey" >
+	<defaultColumnMap
+		tableName="CONDIZIONE_BENE" >
+		<columnMapping
+			columnName="CD_CONDIZIONE_BENE"
+			propertyName="cd_condizione_bene"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_condizione_bene"
+		partOfOid="true" />
+</SQLPersistentInfo>

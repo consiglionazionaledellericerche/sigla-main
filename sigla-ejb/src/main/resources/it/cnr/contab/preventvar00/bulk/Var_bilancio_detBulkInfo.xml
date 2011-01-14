@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CDS" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Tipo Appart." />
+	<fieldProperty
+		name="pg_variazione"
+		property="pg_variazione"
+		inputType="TEXT"
+		label="Progressivo" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Tipo Gestione" />
+	<fieldProperty
+		name="tipoGestione"
+		property="tipoGestione"
+		keysProperty="tipoGestioneKeys"
+		inputType="RADIOGROUP"
+		layout="HORIZONTAL"	
+		readonlyProperty="tipoGestioneRO"
+		label="Tipo Gestione" />
+/* *********** VOCE ************ */
+	<fieldProperty
+		name="cd_voce"
+		property="cd_voce"
+		maxLength="50"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="cdVoceRO"
+		label="Voce" />
+	<fieldProperty
+		name="ds_voce"
+		property="voceFSaldi.ds_voce"
+		maxLength="100"
+		inputSize="70"
+		inputType="ROTEXT"
+		label="Descrizione Voce" />
+	<fieldProperty
+		name="find_voce"
+		property="voceFSaldi"
+		inputType="SEARCHTOOL"
+		columnSet="var_bilancio"
+		readonlyProperty="voceRO"
+		label="Voce" />
+	<fieldProperty
+		name="importoAssestato"
+		property="assestato"
+		maxLength="50"
+		inputSize="20"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Disponibilità" />
+/* ****************************** */
+	<fieldProperty
+		name="im_variazione"
+		property="im_variazione"
+		maxLength="16"
+		inputSize="20"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		label="Importo var." />
+	<fieldProperty
+		name="importoEntrata"
+		property="importoEntrata"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Entrate" />
+	<fieldProperty
+		name="importoSpesa"
+		property="importoSpesa"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Spese" />
+
+	<formFieldProperty name="cd_cds" />
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="ti_appartenenza" />
+	<formFieldProperty name="pg_variazione" />
+	<formFieldProperty name="ti_gestione" />
+	<formFieldProperty name="tipoGestione" />
+	<formFieldProperty name="cd_voce" />
+	<formFieldProperty name="ds_voce" />
+	<formFieldProperty name="find_voce" />
+	<formFieldProperty name="im_variazione" />
+	<formFieldProperty name="importoEntrata" />
+	<formFieldProperty name="importoSpesa" />
+
+	<formFieldProperty name="importoAssestato" />
+	
+	<columnFieldProperty
+		name="cd_voce"
+		style="width:120px" />
+	<columnFieldProperty
+		name="ds_voce"
+		style="width:320px" />
+	<columnFieldProperty
+		name="ti_appartenenza"
+		style="width:50px; text-align:center" />
+	<columnFieldProperty
+		name="importoAssestato"
+		style="width:100px" />
+	<columnFieldProperty
+		name="importoEntrata"
+		style="width:100px" />
+	<columnFieldProperty
+		name="importoSpesa"
+		style="width:100px" />
+	
+	<findFieldProperty name="cd_cds" />
+	<findFieldProperty name="esercizio" />
+	<findFieldProperty name="ti_appartenenza" />
+	<findFieldProperty name="pg_variazione" />
+	<findFieldProperty name="ti_gestione" />
+	<findFieldProperty name="im_variazione" />
+	<findFieldProperty name="cd_voce" />
+
+</bulkInfo>

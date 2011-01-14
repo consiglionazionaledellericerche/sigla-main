@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		
+	<formFieldProperty
+		name="esercizio"
+		inputType="ROTEXT" />
+	<formFieldProperty
+		name="cd_cds"
+		inputType="ROTEXT" 
+		label="CdS" />
+	
+	<fieldProperty
+		name="pgInizioMand"
+		property="pgInizioMand"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Dal Mandato N." />
+	<fieldProperty
+		name="pgFineMand"
+		property="pgFineMand"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Al Mandato N." />
+	<fieldProperty
+		name="pgInizioDist"
+		property="pgInizioDist"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Dalla Distinta N." />
+	<fieldProperty
+		name="pgFineDist"
+		property="pgFineDist"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Alla Distinta N." />
+		
+	
+	<fieldProperty
+		name="findUOEmittente"
+		property="uoEmittenteForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave = "true"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="cdUOEmittente"
+		property="uoEmittenteForPrint.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROCdUOForPrint"
+		label="Codice UO" />
+	<fieldProperty
+		name="dsUOEmittente"
+		property="uoEmittenteForPrint.ds_unita_organizzativa"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione UO" />
+		
+	<fieldProperty
+		name="cdUOCRForPrint"
+		property="cdUOCRForPrint" />
+		
+	<formFieldProperty name="pgInizioMand" />
+	<formFieldProperty name="pgFineMand" />
+	<formFieldProperty name="pgInizioDist" />
+	<formFieldProperty name="pgFineDist" />
+	<formFieldProperty name="findUOEmittente" />
+	<formFieldProperty
+		name="cdUOEmittente"
+		nullable="false" />
+	<formFieldProperty name="dsUOEmittente" />
+	
+
+	<form
+		name="/cnrdoccont/doccont/avvpagmnd.rpt">
+		<formFieldProperty 
+			name="esercizio"
+			inputType="ROTEXT" />
+		<formFieldProperty 
+			name="cd_cds"
+			inputType="ROTEXT" />
+		<formFieldProperty 
+			name="cdUOEmittente" />
+		<formFieldProperty 
+			name="pgInizioMand" />
+		<formFieldProperty 
+			name="pgFineMand" />
+		<formFieldProperty 
+			name="pgInizioDist" />
+		<formFieldProperty 
+			name="pgFineDist" />
+	</form>
+	
+	<form
+		name="/cnrdoccont/doccont/avvpagmnd.jasper">
+		<formFieldProperty 
+			name="esercizio"
+			inputType="ROTEXT" />
+		<formFieldProperty 
+			name="cd_cds"
+			inputType="ROTEXT" />
+		<formFieldProperty 
+			name="cdUOEmittente" />
+		<formFieldProperty 
+			name="pgInizioMand" />
+		<formFieldProperty 
+			name="pgFineMand" />
+		<formFieldProperty 
+			name="pgInizioDist" />
+		<formFieldProperty 
+			name="pgFineDist" />
+	</form>
+	
+
+	<printForm
+		name="/cnrdoccont/doccont/avvpagmnd.rpt">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="1"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="pgFineMand"
+			parameterPosition="3"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="pgInizioMand"
+			parameterPosition="4"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="pgInizioDist"
+			parameterPosition="5"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="pgFineDist"
+			parameterPosition="6"
+			parameterType="STRING" />
+	</printForm>
+
+	<printForm
+		name="/cnrdoccont/doccont/avvpagmnd.jasper">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="Esercizio"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="CDS"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="2"
+			parameterType="STRING" 
+			paramNameJR="UO"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+			name="pgFineMand"
+			parameterPosition="3"
+			parameterType="STRING" 
+			paramNameJR="ANumeroMnd"
+			paramTypeJR="java.lang.Integer"/>
+		<printFieldProperty 
+			name="pgInizioMand"
+			parameterPosition="4"
+			parameterType="STRING"
+			paramNameJR="DaNumeroMnd"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="pgInizioDist"
+			parameterPosition="5"
+			parameterType="STRING"
+			paramNameJR="DaNumeroDist"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="pgFineDist"
+			parameterPosition="6"
+			parameterType="STRING" 
+			paramNameJR="ANumeroDist"
+			paramTypeJR="java.lang.Integer"/>
+	</printForm>
+</bulkInfo>

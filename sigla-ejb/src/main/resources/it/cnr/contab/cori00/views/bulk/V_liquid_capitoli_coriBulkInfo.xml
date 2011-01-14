@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Capitolo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_contributo_ritenuta"
+		property="cd_contributo_ritenuta"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Contributo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="ds_elemento_voce"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="Descrizione Capitolo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_gruppo_cr"
+		property="cd_gruppo_cr"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Gruppo CORI"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="ti_ente_percepiente"
+		property="ti_ente_percepiente"
+		inputType="TEXT"
+		label="Ente/Percepiente" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Tipo Gestione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Tipo Appartenenza"/>
+
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="cd_contributo_ritenuta" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="ds_elemento_voce" />
+	<formFieldProperty
+		name="cd_gruppo_cr" />
+		
+	
+	<columnFieldProperty
+		name="cd_gruppo_cr" />
+	<columnFieldProperty
+		name="cd_contributo_ritenuta" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="ds_elemento_voce" />		
+	<columnFieldProperty
+		name="ti_ente_percepiente" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="ti_appartenenza" />
+
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="cd_contributo_ritenuta" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="ds_elemento_voce" />
+	<findFieldProperty
+		name="cd_gruppo_cr" />
+
+</bulkInfo>

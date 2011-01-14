@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_storico_"
+		property="pg_storico_"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="pg_storico_" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="cd_cds" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio" />
+	<fieldProperty
+		name="ds_esercizio"
+		property="ds_esercizio"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="ds_esercizio" />
+	<fieldProperty
+		name="st_apertura_chiusura"
+		property="st_apertura_chiusura"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="st_apertura_chiusura" />
+	<fieldProperty
+		name="im_cassa_iniziale"
+		property="im_cassa_iniziale"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="im_cassa_iniziale" />
+	<fieldProperty
+		name="user_"
+		property="user_"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="user_" />
+	<fieldProperty
+		name="dt_transaction_"
+		property="dt_transaction_"
+		inputType="TEXT"
+		formatName="date_short"
+		label="dt_transaction_" />
+	<fieldProperty
+		name="action_"
+		property="action_"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="action_" />
+	<formFieldProperty
+		name="pg_storico_" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="ds_esercizio" />
+	<formFieldProperty
+		name="st_apertura_chiusura" />
+	<formFieldProperty
+		name="im_cassa_iniziale" />
+	<formFieldProperty
+		name="user_" />
+	<formFieldProperty
+		name="dt_transaction_" />
+	<formFieldProperty
+		name="action_" />
+	<findFieldProperty
+		name="pg_storico_" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="ds_esercizio" />
+	<findFieldProperty
+		name="st_apertura_chiusura" />
+	<findFieldProperty
+		name="im_cassa_iniziale" />
+	<findFieldProperty
+		name="user_" />
+	<findFieldProperty
+		name="dt_transaction_" />
+	<findFieldProperty
+		name="action_" />
+	<columnFieldProperty
+		name="pg_storico_" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="ds_esercizio" />
+	<columnFieldProperty
+		name="st_apertura_chiusura" />
+	<columnFieldProperty
+		name="im_cassa_iniziale" />
+	<columnFieldProperty
+		name="user_" />
+	<columnFieldProperty
+		name="dt_transaction_" />
+	<columnFieldProperty
+		name="action_" />
+</bulkInfo>

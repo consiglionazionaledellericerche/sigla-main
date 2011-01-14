@@ -1,0 +1,939 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		longDescription="Anagrafico"
+		shortDescription="Anagrafico"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="aliquota_fiscale"
+		property="aliquota_fiscale"
+		readonlyPropertyOnEdit="dipendente"		
+		label="Aliquota fiscale"
+		inputType="TEXT"
+		maxLength="8"
+		formatName="it.cnr.contab.util.ConstrainedPercentFormat"
+		/>
+/************ ALTRA ASS PREVID INPS ****************/
+	<fieldProperty
+		name="altra_ass_previd_inps"
+		property="altraAssPrevidInps.altra_ass_previd_inps"
+		readonlyProperty="ROaltra_ass_previd_inps"
+		maxLength="5"
+		inputSize="5"
+		nullable="false"
+		inputType="TEXT"
+		label="Codice altra Ass./Prev."
+	/>
+	<fieldProperty
+		name="ds_altra_ass_previd_inps"
+		property="altraAssPrevidInps.ds_altra_ass_previd_inps"
+		inputType="ROTEXT"
+		maxLength="50"
+		inputSize="50"
+		label="Descrizione"
+	/>
+	<fieldProperty
+		name="find_altra_ass_previd_inps"
+		property="altraAssPrevidInps"
+		readonlyPropertyOnEdit="dipendente"	
+		inputType="SEARCHTOOL"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+	/>
+/*********************************************/
+	<fieldProperty
+		name="cap_comune_fiscale"
+		property="cap_comune_fiscale"
+		readonlyPropertyOnEdit="dipendente"
+		label="CAP"
+		inputSize="20"
+		optionsProperty="caps_comune"
+		inputType="SELECT"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="causale_fine_rapporto"
+		property="causale_fine_rapporto"
+		readonlyPropertyOnEdit="dipendente"
+		label="Causale Fine Rapporto"
+		inputType="TEXT" />
+	<fieldProperty
+		name="cd_anag"
+		property="cd_anag"
+		label="Codice Anagrafico"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		/>
+/*************** ATTIVITA INPS ****************/
+	<fieldProperty
+		name="cd_attivita_inps"
+		property="attivitaInps.cd_attivita_inps"
+		readonlyProperty="ROcd_attivita_inps"
+		maxLength="5"
+		inputSize="5"
+		nullable="false"
+		inputType="TEXT"
+		label="Codice attivit&#224; INPS"
+	/>
+	<fieldProperty
+		name="ds_attivita_inps"
+		property="attivitaInps.ds_attivita_inps"
+		inputType="ROTEXT"
+		maxLength="50"
+		inputSize="50"
+		label="Descrizione"
+	/>
+	<fieldProperty
+		name="find_attivita_inps"
+		property="attivitaInps"		
+		readonlyPropertyOnEdit="dipendente"
+		inputType="SEARCHTOOL"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+	/>
+/*********************************************/
+	<fieldProperty
+		name="classificazione_anag"
+		property="classificazione_anag"
+		readonlyPropertyOnEdit="dipendente"
+		label="Classificazione anagrafica"
+		optionsProperty="classificazioni_anag"
+		printProperty="ds_classific_anag"
+		inputType="SELECT"
+		/>
+	<fieldProperty
+		name="ente_appartenenza"
+		property="cd_ente_app.cd_anag"
+		readonlyProperty="ROcd_ente_appartenenza"
+		label="Codice Anagrafico Correlato: "
+		inputType="TEXT" />
+	<fieldProperty
+		name="descrizioneAnagrafica"
+		property="cd_ente_app.descrizioneAnagrafica"
+		readonlyPropertyOnEdit="dipendente"
+		label="Anagrafica"
+		inputType="ROTEXT"
+		/>
+	<fieldProperty
+		name="find_cd_ente_app"
+		property="cd_ente_app"
+		readonlyPropertyOnEdit="dipendente"
+		label="Codice Anagrafico Correlato"
+		inputType="SEARCHTOOL" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		readonlyPropertyOnEdit="dipendente"
+		readonlyProperty="ROcodice_fiscale"
+		label="Codice fiscale"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		inputType="TEXT" />
+	<fieldProperty
+		name="codice_fiscale_caf"
+		property="codice_fiscale_caf"
+		readonlyPropertyOnEdit="dipendente"
+		label="Codice fiscale CAF"
+		inputType="TEXT" />
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		readonlyPropertyOnEdit="dipendente"
+		label="Cognome"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" 
+		nullable="false" />
+	<fieldProperty
+		name="conto_numerario_credito"
+		property="conto_numerario_credito"
+		readonlyPropertyOnEdit="dipendente"
+		label="Conto Numerario Credito"
+		inputType="TEXT" />
+	<fieldProperty
+		name="conto_numerario_debito"
+		property="conto_numerario_debito"
+		readonlyPropertyOnEdit="dipendente"
+		label="Conto Numerario Debito"
+		inputType="TEXT" />
+	<fieldProperty
+		name="denominazione_caf"
+		property="denominazione_caf"
+		readonlyPropertyOnEdit="dipendente"
+		label="Denominazione CAF"
+		inputType="TEXT" />
+	<fieldProperty
+		name="ds_comune_fiscale"
+		property="comune_fiscale.ds_comune"
+		readonlyProperty="ROds_comune_fiscale"
+		inputSize="30"
+		label="Citt&#224;/comune"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="find_comune_fiscale"
+		property="comune_fiscale"
+		readonlyPropertyOnEdit="dipendente"
+		label="Citt&#224;/comune fiscale"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_comune_nascita"
+		property="comune_nascita.ds_comune"
+		readonlyProperty="ROds_comune_nascita"
+		label="Citt&#224;/comune di Nascita"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="find_comune_nascita"
+		property="comune_nascita"
+		readonlyPropertyOnEdit="dipendente"
+		label="Citt&#224;/comune di Nascita"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_provincia_fiscale"
+		property="comune_fiscale.provincia.ds_provincia"
+		label="Provincia"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="ds_provincia_nascita"
+		property="comune_nascita.provincia.ds_provincia"
+		label="Provincia di Nascita"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="dt_antimafia"
+		property="dt_antimafia"
+		readonlyPropertyOnEdit="dipendente"
+		label="Data Scadenza Antimafia"
+		inputType="TEXT"
+		formatName="date_short"
+		/>
+	<fieldProperty
+		name="dt_canc"
+		property="dt_canc"
+		readonlyPropertyOnEdit="dipendente"
+		label="dt_canc"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="dt_fine_rapporto"
+		property="dt_fine_rapporto"
+		readonlyPropertyOnEdit="dipendente"
+		label="Data Fine Rapporto"
+		inputType="TEXT"
+		formatName="date_short"
+		/>
+	<fieldProperty
+		name="dt_nascita"
+		property="dt_nascita"
+		readonlyPropertyOnEdit="dipendente"
+		label="Data di nascita"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="fl_fatturazione_differita"
+		property="fl_fatturazione_differita"
+		readonlyPropertyOnEdit="dipendente"
+		label="Ente a fatturazione differita art.6 DPR633/72" 
+		inputType="CHECKBOX" />
+	<fieldProperty
+		name="fl_occasionale"
+		property="fl_occasionale"
+		readonlyPropertyOnEdit="dipendente"
+		label="Occasionale"
+		inputType="CHECKBOX" />
+	<fieldProperty
+		name="fl_soggetto_iva"
+		property="fl_soggetto_iva"
+		readonlyPropertyOnEdit="dipendente"
+		label="Soggetto I.V.A."
+		inputType="CHECKBOX" />
+	<fieldProperty
+		name="frazione_fiscale"
+		property="frazione_fiscale"
+		readonlyPropertyOnEdit="dipendente"
+		inputSize="30"
+		label="Frazione"
+		inputType="TEXT" />
+	<fieldProperty
+		name="id_fiscale_estero"
+		property="id_fiscale_estero"
+		readonlyPropertyOnEdit="dipendente"
+		inputSize="30"
+		label="Id Fiscale Estero"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="matricola_inail"
+		property="matricola_inail"
+		readonlyPropertyOnEdit="dipendente"
+		label="Matricola INAIL"
+		inputType="TEXT" />
+	<fieldProperty
+		name="nome"
+		property="nome"
+		readonlyPropertyOnEdit="dipendente"
+		label="Nome"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" 
+		nullable="false" 
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="note"
+		property="note"
+		readonlyPropertyOnEdit="dipendente"
+		label="Note"
+		style="width: 35em"
+		inputType="TEXTAREA" />
+	<fieldProperty
+		name="num_civico_fiscale"
+		property="num_civico_fiscale"
+		readonlyPropertyOnEdit="dipendente"
+		inputSize="10"
+		label="N. civico"
+		inputType="TEXT" />
+	<fieldProperty
+		name="num_iscriz_albo"
+		property="num_iscriz_albo"
+		readonlyPropertyOnEdit="dipendente"
+		label="Num. Iscrizione Albo"
+		inputType="TEXT" />
+	<fieldProperty
+		name="num_iscriz_cciaa"
+		property="num_iscriz_cciaa"
+		readonlyPropertyOnEdit="dipendente"
+		label="N.Iscrizione Registro delle Imprese"
+		inputType="TEXT" />
+	<fieldProperty
+		name="partita_iva"
+		property="partita_iva"
+		readonlyPropertyOnEdit="dipendente"
+		readonlyProperty="ROpartita_iva"
+		label="P.IVA"
+		inputType="TEXT" />
+	<fieldProperty
+		name="codice_iso"
+		property="comune_fiscale.nazione.cd_iso"
+		inputSize="10"
+		label="Codice Iso"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="ds_nazione_fiscale"
+		property="comune_fiscale.nazione.ds_nazione"
+		inputSize="30"
+		label="Nazione"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="ds_nazione_nascita"
+		property="comune_nascita.nazione.ds_nazione"
+		label="Nazione di Nascita"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="cd_nazione_nazionalita"
+		property="nazionalita.cd_nazione"
+		label="Nazionalita"
+		readonlyProperty="ROds_nazione_nazionalita"
+		inputType="TEXT"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_nazione_nazionalita"
+		property="nazionalita.nazionalita"
+		label="Nazionalita"
+		inputType="ROTEXT"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="find_nazione_nazionalita"
+		readonlyPropertyOnEdit="dipendente"
+		property="nazionalita"
+		label="Nazionalita"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ragione_sociale"
+		property="ragione_sociale"
+		readonlyPropertyOnEdit="dipendente"
+		label="Ragione sociale"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" 
+		nullable="false" />
+	<fieldProperty
+		name="sede_inail"
+		property="sede_inail"
+		readonlyPropertyOnEdit="dipendente"
+		label="Sede INAIL"
+		inputType="TEXT" />
+	<fieldProperty
+		name="ti_entita"
+		property="ti_entita"
+		readonlyPropertyOnEdit="dipendente"
+		keysProperty="ti_entitaKeys"
+		label="Tipo entita'" 
+		inputType="RADIOGROUP"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		layout="HORIZONTAL" />
+	<fieldProperty
+		name="ti_entita_fisica"
+		property="ti_entita_fisica"
+		readonlyPropertyOnEdit="dipendente"
+		keysProperty="ti_entita_fisicaKeys"
+		label="Tipo entita' fisica" 
+		inputType="RADIOGROUP"
+		enabledOnSearch="true"
+		layout="HORIZONTAL" />
+	<fieldProperty
+		name="ti_entita_giuridica"
+		property="ti_entita_giuridica"
+		readonlyPropertyOnEdit="dipendente"
+		keysProperty="ti_entita_giuridicaKeys"
+		label="Tipo entita' giuridica" 
+		inputType="RADIOGROUP"
+		enabledOnSearch="true"
+		layout="HORIZONTAL" />
+	<fieldProperty
+		name="ti_italiano_estero"
+		property="ti_italiano_estero"
+		readonlyPropertyOnEdit="dipendente"
+		label="Italiano/Estero" 
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ti_italiano_estero_anag"
+		property="ti_italiano_estero_anag"
+		readonlyPropertyOnEdit="dipendente"
+		keysProperty="ti_italiano_esteroKeys"
+		label="Italiano/Estero" 
+		inputType="RADIOGROUP"
+		enabledOnSearch="true"
+		layout="HORIZONTAL" />
+	<fieldProperty
+		name="ti_sesso"
+		property="ti_sesso"
+		readonlyPropertyOnEdit="dipendente"
+		label="Sesso"
+		keysProperty="ti_sessoKeys"
+		inputType="RADIOGROUP"
+		layout="HORIZONTAL" 
+		nullable="false" />
+	<fieldProperty
+		name="via_fiscale"
+		property="via_fiscale"
+		readonlyPropertyOnEdit="dipendente"
+		inputSize="30"
+		label="Indirizzo"
+		inputType="TEXT" 		
+		nullable="false" />
+	<fieldProperty
+		name="fl_notaxarea"
+		property="anagrafico_esercizio.fl_notaxarea"
+		inputType="CHECKBOX"
+		label="No TAX Area disattiva" 		
+		nullable="false" />
+	<fieldProperty
+		name="fl_nofamilyarea"
+		property="anagrafico_esercizio.fl_nofamilyarea"
+		inputType="CHECKBOX"
+		label="No FAMILY Area disattiva" 		
+		nullable="false" />		
+	<fieldProperty
+		name="fl_no_detrazioni_altre"
+		property="anagrafico_esercizio.fl_no_detrazioni_altre"
+		inputType="CHECKBOX"
+		label="No Detrazioni art.13 TUIR" 		
+		nullable="false" />
+	<fieldProperty
+		name="fl_no_detrazioni_family"
+		property="anagrafico_esercizio.fl_no_detrazioni_family"
+		inputType="CHECKBOX"
+		label="No Detrazioni per carichi di famiglia" 		
+		nullable="false" />		
+	<fieldProperty
+		name="im_detrazione_personale_anag"
+		property="anagrafico_esercizio.im_detrazione_personale_anag"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo detrazione personale" 		
+		nullable="false" />
+	<fieldProperty
+		name="im_deduzione_family_area"
+		property="anagrafico_esercizio.im_deduzione_family_area"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo deduzione FAMILY Area" 		
+		nullable="false" />	
+	<fieldProperty
+		name="fl_cervellone"
+		property="fl_cervellone"
+		readonlyPropertyOnEdit="dipendente"
+		label="Soggetto ad Agevolazioni Fiscali 'Rientro dei cervelli'"
+		inputType="CHECKBOX" 
+		nullable="false"/>
+	<fieldProperty
+		name="dt_inizio_res_italia"
+		property="dt_inizio_res_italia"
+		readonlyPropertyOnEdit="dipendente"
+		label="Data Inizio res./dom. in Italia"
+		inputType="TEXT"
+		inputSize="8"		
+		formatName="date_short" />
+	<fieldProperty
+		name="dt_fine_res_italia"
+		property="dt_fine_res_italia"
+		readonlyPropertyOnEdit="dipendente"
+		label="Data Fine res./dom. in Italia"
+		inputType="TEXT"
+		inputSize="8"
+		formatName="date_short" />
+	<fieldProperty
+		name="anno_inizio_res_fis"
+		property="anno_inizio_res_fis"
+		readonlyPropertyOnEdit="dipendente"
+		label="Anno Inizio residenza fiscale"
+		inputSize="4"
+		inputType="TEXT" 
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "false"
+		enabledOnFreeSearch = "false" />				
+	<fieldProperty
+		name="anno_fine_agevolazioni"
+		property="anno_fine_agevolazioni"
+		readonlyPropertyOnEdit="dipendente"
+		label="Anno Fine agevolazioni"
+		inputSize="4"
+		inputType="TEXT"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "false"
+		enabledOnFreeSearch = "false" />						
+	<fieldProperty
+		name="im_reddito_complessivo"
+		property="anagrafico_esercizio.im_reddito_complessivo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Reddito Complessivo (escluso Reddito CNR&lt;BR&gt;e Reddito Abitazione Principale)" 		
+		nullable="true" />
+	<fieldProperty
+		name="im_reddito_abitaz_princ"
+		property="anagrafico_esercizio.im_reddito_abitaz_princ"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Reddito Abitazione Principale e sue pertinenze" 		
+		nullable="true" />
+	<fieldProperty
+		name="fl_applica_detr_pers_max"
+		property="anagrafico_esercizio.fl_applica_detr_pers_max"
+		inputType="CHECKBOX"
+		label="Applica Detrazione Personale massima" 		
+		nullable="false" />					
+	<fieldProperty
+		name="fl_non_obblig_p_iva"
+		property="fl_non_obblig_p_iva"
+		label="Partita IVA non obbligatoria"
+		inputType="CHECKBOX" />	
+	<fieldProperty
+		name="pg_tipologia_istat"
+		property="tipologia_istat.pg_tipologia"
+		inputSize="5"
+		label="Tipologia Istat"
+		inputType="TEXT"
+		readonlyProperty="ROds_tipologia_istat"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_tipologia_istat"
+		property="tipologia_istat.ds_tipologia"
+		inputSize="60"
+		label="Descrizione"
+		inputType="ROTEXT"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />  
+	<fieldProperty
+		name="find_tipologia_istat"
+		property="tipologia_istat"
+		label="Tipologia_Istat"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_studio_associato"
+		property="fl_studio_associato"
+		readonlyProperty="ROFl_studio_associato"
+		label="Studio Associato"
+		command="doDefault"
+		inputType="CHECKBOX" />
+	<fieldProperty
+		name="fl_speciale"
+		property="fl_speciale"
+		label="Anagrafica speciale non modificabile"
+		inputType="CHECKBOX" />	
+	<fieldProperty
+		name="fl_sospensione_irpef"
+		property="fl_sospensione_irpef"
+		label="Soggetto a sospensione IRPEF"
+		command="doDefault"
+		inputType="CHECKBOX" />
+	<fieldProperty
+		name="titolo_studio"
+		property="titolo_studio"
+		label="Titolo di Studio"
+		keysProperty="ti_titoloStudioKeys"
+		inputType="SELECT"
+		/>
+
+		
+	<columnFieldProperty
+		name="cd_anag"
+		label="Codice anagrafico"
+		/>
+	<columnFieldProperty
+		name="cognome"
+		label="Cognome"
+		/>
+	<columnFieldProperty
+		name="nome"
+		label="Nome"
+		/>
+	<columnFieldProperty
+		name="ragione_sociale"
+		label="Ragione Sociale"
+		/>
+	<columnFieldProperty
+		name="codice_fiscale"
+		label="Codice fiscale"
+		/>
+	<columnFieldProperty
+		name="partita_iva"
+		label="Partita I.V.A."
+		/>
+	<columnFieldProperty
+		name="ds_comune_fiscale"
+		label="Citt&#224;/comune"
+		/>
+	<columnFieldProperty
+		name="via_fiscale"
+		label="Indirizzo"
+		style="width: 20ex"
+		/>
+	<columnFieldProperty
+		name="ti_italiano_estero_anag"
+		label="Italiano/Estero" 
+		/>
+	<columnFieldProperty
+		name="dt_fine_rapporto"
+		label="Data Fine Rapporto"
+		/>
+	<columnFieldProperty
+		name="fl_cervellone"
+		label="Cervellone"
+		/>
+ <!--   <columnFieldProperty
+		name="pg_tipologia_istat"
+		label="Tipologia Istat"/>
+	<columnFieldProperty
+		name="ds_tipologia_istat"
+		label="Tipologia Istat"/>  
+	<columnFieldProperty
+		name="find_tipologia_istat"
+		label="Tipologia Istat"/>  -->
+	
+	<formFieldProperty
+		name="aliquota_fiscale"
+		/>
+	<formFieldProperty
+		name="altra_ass_previd_inps"
+		/>
+	<formFieldProperty
+		name="ds_altra_ass_previd_inps"
+		/>
+	<formFieldProperty 
+		name="find_altra_ass_previd_inps"
+		/>
+	<formFieldProperty
+		name="cap_comune_fiscale"
+		/>
+	<formFieldProperty
+		name="codice_iso"
+		/>
+	<formFieldProperty
+		name="causale_fine_rapporto"
+		inputSize="65"
+		/>
+	<formFieldProperty
+		name="cd_anag"
+		/>
+	<formFieldProperty
+		name="cd_attivita_inps"
+		/>
+	<formFieldProperty
+		name="ds_attivita_inps"
+		/>
+	<formFieldProperty
+		name="find_attivita_inps"
+		/>
+	<formFieldProperty
+		name="classificazione_anag"
+		/>
+	<formFieldProperty
+		name="cd_ente_appartenenza"
+		inputSize="15" 
+		/>
+	<formFieldProperty
+		name="descrizioneAnagrafica"
+		/>
+	<formFieldProperty
+		name="codice_fiscale"
+		inputSize="20"
+		maxLength="16"
+		/>
+	<formFieldProperty
+		name="codice_fiscale_caf"
+		/>
+	<formFieldProperty
+		name="cognome"
+		inputSize="65"
+		/>
+	<formFieldProperty
+		name="conto_numerario_credito"
+		inputSize="50"
+		/>
+	<formFieldProperty
+		name="conto_numerario_debito"
+		inputSize="50"
+		/>
+	<formFieldProperty
+		name="denominazione_caf"
+		/>
+	<formFieldProperty
+		name="dt_antimafia"
+		/>
+	<formFieldProperty
+		name="dt_canc"
+		/>
+	<formFieldProperty
+		name="dt_fine_rapporto"
+		/>
+	<formFieldProperty
+		name="dt_nascita"
+		inputSize="10"
+		/>
+	<formFieldProperty
+		name="fl_fatturazione_differita"
+		/>
+	<formFieldProperty
+		name="fl_occasionale"
+		/>
+	<formFieldProperty
+		name="fl_studio_associato"
+		/>
+	<formFieldProperty
+		name="fl_soggetto_iva"
+		/>
+	<formFieldProperty
+		name="frazione_fiscale"
+		/>
+	<formFieldProperty
+		name="id_fiscale_estero"
+		/>
+	<formFieldProperty
+		name="matricola_inail"
+		/>
+	<formFieldProperty
+		name="nome"
+		inputSize="65"
+		/>
+	<formFieldProperty
+		name="note"
+		inputSize="65"
+		/>
+	<formFieldProperty
+		name="num_civico_fiscale"
+		/>
+	<formFieldProperty
+		name="num_iscriz_albo"
+		/>
+	<formFieldProperty
+		name="num_iscriz_cciaa"
+		/>
+	<formFieldProperty
+		name="partita_iva"
+		/>
+	<formFieldProperty
+		name="ds_comune_fiscale"
+		/>
+	<formFieldProperty
+		name="ds_comune_nascita"
+		/>
+	<formFieldProperty
+		name="ds_nazione_fiscale"
+		/>
+	<formFieldProperty
+		name="ds_nazione_nascita"
+		/>
+	<formFieldProperty
+		name="ds_nazione_nazionalita"
+		inputSize="20" 
+		/>
+	<formFieldProperty
+		name="cd_nazione_nazionalita"
+		/>
+	<formFieldProperty
+		name="ds_provincia_fiscale"
+		/>
+	<formFieldProperty
+		name="ds_provincia_nascita"
+		/>
+	<formFieldProperty
+		name="ragione_sociale"
+		inputSize="65"
+		/>
+	<formFieldProperty
+		name="sede_inail"
+		/>
+	<formFieldProperty
+		name="ti_entita"
+		/>
+	<formFieldProperty
+		name="ti_entita_fisica"
+		/>
+	<formFieldProperty
+		name="ti_entita_giuridica"
+		/>
+	<formFieldProperty
+		name="ti_italiano_estero_anag"
+		/>
+	<formFieldProperty
+		name="ti_sesso"
+		/>
+	<formFieldProperty
+		name="via_fiscale"
+		/>
+	<formFieldProperty
+		name="find_comune_nascita"
+		/>
+	<formFieldProperty
+		name="find_comune_fiscale"
+		/>
+	<formFieldProperty
+		name="find_nazione_nazionalita"
+		/>
+	<formFieldProperty
+		name="find_cd_ente_app"
+		/>
+	<formFieldProperty
+		name="ente_appartenenza"
+		/>
+	<formFieldProperty
+		name="fl_notaxarea" />
+	<formFieldProperty
+		name="fl_nofamilyarea" />	
+	<formFieldProperty
+		name="fl_no_detrazioni_altre" />
+	<formFieldProperty
+		name="fl_no_detrazioni_family" />			
+	<formFieldProperty
+		name="im_detrazione_personale_anag" />
+	<formFieldProperty
+		name="im_deduzione_family_area" />
+	<formFieldProperty
+		name="fl_cervellone" />		
+	<formFieldProperty
+		name="dt_inizio_res_italia" 
+		command="doCambiaDateRes"/>		
+	<formFieldProperty
+		name="dt_fine_res_italia" 
+		command="doCambiaDateRes"/>									
+	<formFieldProperty
+		name="anno_inizio_res_fis" />		
+	<formFieldProperty
+		name="anno_fine_agevolazioni" />						
+	<formFieldProperty
+		name="im_reddito_complessivo" />
+	<formFieldProperty
+		name="im_reddito_abitaz_princ" />		
+	<formFieldProperty
+		name="fl_applica_detr_pers_max" />
+	<formFieldProperty
+		name="fl_non_obblig_p_iva"/>
+	<formFieldProperty
+		name="pg_tipologia_istat"/>
+	<formFieldProperty
+		name="ds_tipologia_istat"/>   
+	<formFieldProperty
+		name="find_tipologia_istat"/>
+	<formFieldProperty
+		name="fl_speciale"/>	
+	<formFieldProperty
+		name="fl_sospensione_irpef"/>		
+	<formFieldProperty
+		name="titolo_studio"/>
+		
+	<findFieldProperty
+		name="cd_anag"
+		label="Codice anagrafico"
+		/>
+	<findFieldProperty
+		name="cognome"
+		label="Cognome"
+		/>
+	<findFieldProperty
+		name="nome"
+		label="Nome"
+		/>
+	<findFieldProperty
+		name="ragione_sociale"
+		label="Ragione Sociale"
+		/>
+	<findFieldProperty
+		name="codice_fiscale"
+		label="Codice fiscale"
+		/>
+	<findFieldProperty
+		name="partita_iva"
+		label="Partita I.V.A."
+		/>
+	<findFieldProperty
+		name="via_fiscale"
+		label="Indirizzo"
+		/>
+	<findFieldProperty
+		name="ti_italiano_estero_anag"
+		label="Italiano/Estero" 
+		/>
+	<findFieldProperty
+		name="dt_fine_rapporto"
+		label="Data Fine Rapporto"
+		/>
+	<findFieldProperty
+		name="ti_entita"
+		/>
+	<findFieldProperty
+		name="fl_cervellone"
+		/>
+	<findFieldProperty
+		name="fl_studio_associato"
+		/>
+	
+ 	<findFieldProperty
+		name="pg_tipologia_istat"/>
+	<findFieldProperty
+		name="ds_tipologia_istat"/> 
+	<findFieldProperty
+		name="fl_sospensione_irpef"/>		
+</bulkInfo>

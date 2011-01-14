@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	/**********************************************************
+	**	Search tool utilizzato per la ricerca elemento voce f **
+	**********************************************************/
+	<fieldProperty
+		name="voce_f"
+		property="voce_f"
+		inputType="SEARCHTOOL" 		
+		enabledOnSearch="false"
+		enabledOnEdit="false"
+		readonlyProperty="ROFindVoce_f"
+		label="Elemento Voce"/>	
+	<fieldProperty
+		name="cd_voce"
+		property="voce_f.cd_elemento_voce"
+		maxLength="50"
+		inputSize="6"
+		inputType="TEXT"
+		readonlyProperty="ROVoce_f"
+		label="Elemento Voce"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="false"
+		nullable="false"/>
+	<fieldProperty
+		name="ds_voce"
+		property="voce_f.ds_elemento_voce"
+		inputSize="15"
+		inputType="ROTEXT"
+		label="Elemento Voce"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_voceForSearch"
+		property="voce_f.cd_elemento_voce"
+		maxLength="50"
+		inputSize="6"
+		inputType="TEXT"
+		label="Elemento Voce"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="false"
+		nullable="false"/>
+	/**********************************************************/
+
+	/**********************************************************
+	**	Search tool utilizzato per la ricerca del nodo padre **
+	**********************************************************/
+	<fieldProperty
+		name="find_nodo_padre"
+		property="nodoPadre"
+		inputType="SEARCHTOOL"
+		enabledOnInsert="true"
+      	label="Nodo Padre"
+		enabledOnEdit="false"
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="cd_nodo_padre"
+		property="nodoPadre.cd_categoria_gruppo"
+		maxLength="30"
+		inputSize="15"
+		inputType="TEXT"
+		readonlyProperty="RONodoPadre"
+		label="Nodo Padre"
+		caseSensitiveSearch="false"
+		enabledOnEdit="false"/>
+	<fieldProperty
+		name="ds_nodo_padre"
+		property="nodoPadre.ds_categoria_gruppo"
+		maxLength="100"
+		inputSize="60"
+		label="Nodo Padre"
+		inputType="ROTEXT"
+		enabledOnEdit="true"
+		caseSensitiveSearch="false" />
+	/*********************************************************/
+
+	
+	<fieldProperty
+		name="livello"
+		property="livello"
+		inputType="TEXT"
+		label="livello" />
+	<fieldProperty
+		name="fl_gestione_magazzino"
+		property="fl_gestione_magazzino"
+		inputType="CHECKBOX"
+		label="Gestione Magazzino" 
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="cd_categoria_gruppo"
+		property="cd_categoria_gruppo"
+		maxLength="10"
+		inputSize="10"		
+		inputType="TEXT"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice Categoria-Gruppo" />
+	<fieldProperty
+		name="cd_proprio"
+		property="cd_proprio"
+		maxLength="4"
+		inputSize="4"
+		inputType="TEXT"
+		label="Codice"
+		enabledOnInsert="true"
+      	enabledOnEdit="false"
+		enabledOnSearch="true"
+		nullable="false"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_categoria_padre"
+		property="cd_categoria_padre"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_categoria_padre"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="data_cancellazione"
+		property="data_cancellazione"
+		inputType="TEXT"
+		label="data_cancellazione" />
+	<fieldProperty
+		name="fl_gestione_inventario"
+		property="fl_gestione_inventario"
+		inputType="CHECKBOX"
+		label="Gestione Inventario"
+		enabledOnEdit="false" />
+	
+	<fieldProperty
+		name="fl_ammortamento"
+		property="fl_ammortamento"
+		inputType="CHECKBOX"
+		label="Ammortamento"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="ds_categoria_gruppo"
+		property="ds_categoria_gruppo"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="Descrizione"
+		nullable="false"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_gestione_targa"
+		property="fl_gestione_targa"
+		inputType="CHECKBOX"
+		label="Gestione Targa" />
+		
+	<formFieldProperty
+		name="livello" />
+	<formFieldProperty
+		name="fl_gestione_magazzino" />
+	<formFieldProperty
+		name="cd_categoria_gruppo" />
+	<formFieldProperty
+		name="cd_proprio" />
+	<formFieldProperty
+		name="cd_categoria_padre" />
+	<formFieldProperty
+		name="data_cancellazione" />
+	<formFieldProperty
+		name="fl_gestione_inventario" />
+	<formFieldProperty
+		name="fl_gestione_targa" />
+	<formFieldProperty
+		name="fl_ammortamento" />
+	<formFieldProperty
+		name="ds_categoria_gruppo" />
+	<formFieldProperty
+		name="cd_voce" />
+	<formFieldProperty
+		name="ds_voce" />
+	<formFieldProperty
+		name="voce_f" />
+	<formFieldProperty
+		name="find_nodo_padre" />
+	<formFieldProperty
+		name="cd_nodo_padre" />
+	<formFieldProperty
+		name="ds_nodo_padre" />
+	<formFieldProperty
+		name="esercizio" />
+		
+	<columnFieldProperty
+		name="cd_proprio" />
+	<columnFieldProperty
+		name="ds_categoria_gruppo" />
+	<columnFieldProperty
+		name="cd_categoria_gruppo" />
+	<columnFieldProperty
+		name="cd_nodo_padre" />
+	
+	
+	<findFieldProperty
+		name="livello" />
+	<findFieldProperty
+		name="fl_gestione_magazzino" />
+	<findFieldProperty
+		name="cd_categoria_gruppo" />
+	<findFieldProperty
+		name="cd_proprio" />
+	<findFieldProperty
+		name="cd_categoria_padre" />
+	<findFieldProperty
+		name="fl_gestione_inventario" />
+	<findFieldProperty
+		name="fl_gestione_targa" />
+	<findFieldProperty
+		name="fl_ammortamento" />
+	<findFieldProperty
+		name="ds_categoria_gruppo" />
+	<findFieldProperty
+		name="cd_voceForSearch" />
+
+	<columnSet name="categorie">		
+		<columnFieldProperty
+			name="cd_proprio" 
+			style="width:80px"/>		
+		<columnFieldProperty
+			name="ds_categoria_gruppo" 
+			style="width:300px"/>				
+		<columnFieldProperty
+			name="livello" 
+			style="width:300px"/>			
+	</columnSet>
+	  <form name="searchtool">
+		<formFieldProperty
+			name="cd_categoria_gruppo"/>
+		<formFieldProperty
+			name="ds_categoria_gruppo"
+			enabledOnFreeSearch="true"
+			enabledOnSearch="true"
+			inputType="TEXT"
+			inputSize="50"
+		 />
+    </form>    	
+</bulkInfo>

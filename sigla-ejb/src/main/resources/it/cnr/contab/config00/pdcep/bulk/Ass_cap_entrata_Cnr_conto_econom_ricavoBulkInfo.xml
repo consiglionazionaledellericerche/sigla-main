@@ -1,0 +1,91 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="find_elemento_voce"
+		property="elemento_voce"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="elemento_voce.cd_elemento_voce"
+		readonlyProperty="ROElemento_voce"
+		label="Capitolo Entrata CNR"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="10"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="elemento_voce.ds_elemento_voce"
+		readonlyProperty="ROElemento_voce"
+		label=""
+		inputType="ROTEXT"
+		inputSize="20"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="find_voce_ep"
+		property="voce_ep"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_voce_ep"
+		property="voce_ep.cd_voce_ep"
+		readonlyProperty="ROVoce_ep"
+		label="Conto EP Ricavo"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="10"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="ds_voce_ep"
+		property="voce_ep.ds_voce_ep"
+		readonlyProperty="ROVoce_ep"
+		label=""
+		inputType="ROTEXT"
+		inputSize="20"
+		enabledOnSearch="true"
+		/>
+	
+	<columnFieldProperty
+		name="cd_elemento_voce"
+		/>
+	<columnFieldProperty
+		name="cd_voce_ep"
+		/>
+	
+	<formFieldProperty
+		name="find_elemento_voce"
+		/>
+	<formFieldProperty
+		name="cd_elemento_voce"
+		/>
+	<formFieldProperty
+		name="ds_elemento_voce"
+		/>
+	<formFieldProperty
+		name="find_voce_ep"
+		/>
+	<formFieldProperty
+		name="cd_voce_ep"
+		/>
+	<formFieldProperty
+		name="ds_voce_ep"
+		/>
+	
+	<findFieldProperty
+		name="cd_elemento_voce"
+		/>
+	<findFieldProperty
+		name="cd_voce_ep"
+		/>
+
+</bulkInfo>

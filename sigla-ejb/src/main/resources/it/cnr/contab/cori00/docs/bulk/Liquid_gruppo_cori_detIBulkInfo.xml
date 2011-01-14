@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">	
+	
+	<fieldProperty
+		name="ds_terzo"
+		property="ds_terzo"
+		inputType="TEXT"
+		maxLength="144"
+		inputSize="144"
+		label="Terzo" />
+	<fieldProperty
+		name="dt_emissione_mandato"
+		property="dt_emissione_mandato"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"
+		label="Data Liquidazione" />
+	<fieldProperty
+		name="im_cori"
+		property="im_cori"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		label="Importo" />
+
+	<formFieldProperty
+		name="ds_terzo" />
+	<formFieldProperty
+		name="dt_emissione_mandato" />
+	<formFieldProperty
+		name="im_cori" />
+
+	<findFieldProperty
+		name="ds_terzo" />
+	<findFieldProperty
+		name="ds_terzo" />
+	<findFieldProperty
+		name="ds_terzo" />
+			
+	<columnFieldProperty
+		name="im_cori" />
+		
+	<columnSet name="v_liquid_gruppo_det">	
+		<columnFieldProperty
+			name="pg_compenso" />
+		<columnFieldProperty
+			name="cd_contributo_ritenuta" />	
+		<columnFieldProperty
+			name="ds_terzo" />
+		<columnFieldProperty
+			name="ti_ente_percipiente" />
+		<columnFieldProperty
+			name="dt_emissione_mandato" />	
+		<columnFieldProperty
+			name="im_cori" />
+	</columnSet>
+		
+
+</bulkInfo>

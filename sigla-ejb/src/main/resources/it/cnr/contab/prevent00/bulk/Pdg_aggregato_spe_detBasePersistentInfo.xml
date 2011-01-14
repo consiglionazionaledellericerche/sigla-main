@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent00.bulk.Pdg_aggregato_spe_detBase"
+	keyClassName="it.cnr.contab.prevent00.bulk.Pdg_aggregato_spe_detKey"
+	homeClassName="it.cnr.contab.prevent00.bulk.Pdg_aggregato_spe_detHome" >
+	<defaultColumnMap
+		tableName="PDG_AGGREGATO_SPE_DET" >
+		<columnMapping
+			columnName="IM_RQ_SSC_COSTI_ODC"
+			propertyName="im_rq_ssc_costi_odc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RN_CSS_RIMANENZE"
+			propertyName="im_rn_css_rimanenze"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RAF_A2_SPESE_OGC_ALTRA_UO"
+			propertyName="im_raf_a2_spese_ogc_altra_uo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RV_PAGAMENTI"
+			propertyName="im_rv_pagamenti"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RAB_A2_COSTI_ALTRO_CDR"
+			propertyName="im_rab_a2_costi_altro_cdr"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RAO_A3_SPESE_OGC_ALTRA_UO"
+			propertyName="im_rao_a3_spese_ogc_altra_uo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RAD_A2_SPESE_ODC_ALTRA_UO"
+			propertyName="im_rad_a2_spese_odc_altra_uo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RAC_A2_SPESE_ODC"
+			propertyName="im_rac_a2_spese_odc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RU_SPESE_COSTI_ALTRUI"
+			propertyName="im_ru_spese_costi_altrui"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RO_CSS_ALTRI_COSTI"
+			propertyName="im_ro_css_altri_costi"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RAL_A3_SPESE_ODC"
+			propertyName="im_ral_a3_spese_odc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RL_CCS_SPESE_OGC_ALTRA_UO"
+			propertyName="im_rl_ccs_spese_ogc_altra_uo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RS_SSC_COSTI_OGC"
+			propertyName="im_rs_ssc_costi_ogc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RM_CSS_AMMORTAMENTI"
+			propertyName="im_rm_css_ammortamenti"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RAI_A3_COSTI_ALTRO_CDR"
+			propertyName="im_rai_a3_costi_altro_cdr"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RP_CSS_VERSO_ALTRO_CDR"
+			propertyName="im_rp_css_verso_altro_cdr"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RI_CCS_SPESE_ODC"
+			propertyName="im_ri_ccs_spese_odc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RAM_A3_SPESE_ODC_ALTRA_UO"
+			propertyName="im_ram_a3_spese_odc_altra_uo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RR_SSC_COSTI_ODC_ALTRA_UO"
+			propertyName="im_rr_ssc_costi_odc_altra_uo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RH_CCS_COSTI"
+			propertyName="im_rh_ccs_costi"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RJ_CCS_SPESE_ODC_ALTRA_UO"
+			propertyName="im_rj_ccs_spese_odc_altra_uo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RAH_A3_COSTI_FINALI"
+			propertyName="im_rah_a3_costi_finali"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RAE_A2_SPESE_OGC"
+			propertyName="im_rae_a2_spese_ogc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RAA_A2_COSTI_FINALI"
+			propertyName="im_raa_a2_costi_finali"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RK_CCS_SPESE_OGC"
+			propertyName="im_rk_ccs_spese_ogc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RAN_A3_SPESE_OGC"
+			propertyName="im_ran_a3_spese_ogc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RT_SSC_COSTI_OGC_ALTRA_UO"
+			propertyName="im_rt_ssc_costi_ogc_altra_uo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RAG_A2_SPESE_COSTI_ALTRUI"
+			propertyName="im_rag_a2_spese_costi_altrui"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RAP_A3_SPESE_COSTI_ALTRUI"
+			propertyName="im_rap_a3_spese_costi_altrui"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="im_rq_ssc_costi_odc" />
+	<persistentProperty
+		name="im_rn_css_rimanenze" />
+	<persistentProperty
+		name="im_raf_a2_spese_ogc_altra_uo" />
+	<persistentProperty
+		name="im_rv_pagamenti" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="im_rab_a2_costi_altro_cdr" />
+	<persistentProperty
+		name="im_rao_a3_spese_ogc_altra_uo" />
+	<persistentProperty
+		name="im_rad_a2_spese_odc_altra_uo" />
+	<persistentProperty
+		name="im_rac_a2_spese_odc" />
+	<persistentProperty
+		name="im_ru_spese_costi_altrui" />
+	<persistentProperty
+		name="im_ro_css_altri_costi" />
+	<persistentProperty
+		name="im_ral_a3_spese_odc" />
+	<persistentProperty
+		name="im_rl_ccs_spese_ogc_altra_uo" />
+	<persistentProperty
+		name="im_rs_ssc_costi_ogc" />
+	<persistentProperty
+		name="im_rm_css_ammortamenti" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="im_rai_a3_costi_altro_cdr" />
+	<persistentProperty
+		name="im_rp_css_verso_altro_cdr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="im_ri_ccs_spese_odc" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="im_ram_a3_spese_odc_altra_uo" />
+	<persistentProperty
+		name="im_rr_ssc_costi_odc_altra_uo" />
+	<persistentProperty
+		name="im_rh_ccs_costi" />
+	<persistentProperty
+		name="im_rj_ccs_spese_odc_altra_uo" />
+	<persistentProperty
+		name="im_rah_a3_costi_finali" />
+	<persistentProperty
+		name="im_rae_a2_spese_ogc" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="im_rk_ccs_spese_ogc" />
+	<persistentProperty
+		name="im_raa_a2_costi_finali" />
+	<persistentProperty
+		name="im_ran_a3_spese_ogc" />
+	<persistentProperty
+		name="im_rt_ssc_costi_ogc_altra_uo" />
+	<persistentProperty
+		name="im_rag_a2_spese_costi_altrui" />
+	<persistentProperty
+		name="im_rap_a3_spese_costi_altrui" />
+</SQLPersistentInfo>

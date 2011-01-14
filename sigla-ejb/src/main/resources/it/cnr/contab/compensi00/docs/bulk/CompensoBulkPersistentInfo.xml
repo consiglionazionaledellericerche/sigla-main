@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.docs.bulk.CompensoBulk"
+	keyClassName="it.cnr.contab.compensi00.docs.bulk.CompensoKey"
+	homeClassName="it.cnr.contab.compensi00.docs.bulk.CompensoHome" >
+
+	<defaultColumnMap tableName="COMPENSO" >
+
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="modalitaPagamento.cd_modalita_pag" />
+		<columnMapping
+			columnName="CD_TERMINI_PAG"
+			propertyName="terminiPagamento.cd_termini_pag" />
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="banca.pg_banca" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="banca.terzo.cd_terzo"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_TIPO_RAPPORTO"
+			propertyName="tipoRapporto.cd_tipo_rapporto" />
+		<columnMapping
+			columnName="CD_TRATTAMENTO"
+			propertyName="tipoTrattamento.cd_trattamento" />
+
+		<columnMapping
+			columnName="CD_CDS_OBBLIGAZIONE"
+			propertyName="obbligazioneScadenzario.obbligazione.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="obbligazioneScadenzario.obbligazione.esercizio" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="obbligazioneScadenzario.obbligazione.esercizio_originale" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="obbligazioneScadenzario.obbligazione.pg_obbligazione" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="obbligazioneScadenzario.pg_obbligazione_scadenzario" />
+
+		<columnMapping
+			columnName="CD_REGIONE_IRAP"
+			propertyName="regioneIrap.cd_regione" />
+		<columnMapping
+			columnName="CD_VOCE_IVA"
+			propertyName="voceIva.cd_voce_iva" />
+
+		<columnMapping
+			columnName="CD_CDS_MISSIONE"
+			propertyName="missione.cd_cds" />
+		<columnMapping
+			columnName="ESERCIZIO_MISSIONE"
+			propertyName="missione.esercizio" />
+		<columnMapping
+			columnName="CD_UO_MISSIONE"
+			propertyName="missione.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_MISSIONE"
+			propertyName="missione.pg_missione" />
+
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA_GENRC"
+			propertyName="lineaAttivita.cd_linea_attivita" />
+		<columnMapping
+			columnName="CD_CDR_GENRC"
+			propertyName="lineaAttivita.centro_responsabilita.cd_centro_responsabilita" />
+		<columnMapping
+			columnName="CD_RAPPORTO_INPS"
+			propertyName="codici_rapporti_inps.cd_rapporto_inps"/>				
+		<columnMapping
+			columnName="CD_ATTIVITA_INPS"
+			propertyName="codici_attivita_inps.cd_attivita_inps"/>				
+		<columnMapping
+			columnName="CD_ALTRA_ASS_INPS"
+			propertyName="codici_altra_forma_ass_inps.altra_ass_previd_inps" />			
+		<columnMapping
+			columnName="PG_COMUNE_INPS"
+			propertyName="comune_inps.pg_comune" />	
+
+		<columnMapping
+			columnName="ESERCIZIO_REP"
+			propertyName="incarichi_repertorio_anno.incarichi_repertorio.esercizio" />
+		<columnMapping
+			columnName="PG_REPERTORIO"
+			propertyName="incarichi_repertorio_anno.incarichi_repertorio.pg_repertorio" />
+		<columnMapping
+			columnName="ESERCIZIO_LIMITE_REP"
+			propertyName="incarichi_repertorio_anno.esercizio_limite" />
+		<columnMapping
+			columnName="ESERCIZIO_BONUS"
+			propertyName="bonus.esercizio" />
+		<columnMapping
+			columnName="PG_BONUS"
+			propertyName="bonus.pg_bonus" />			
+	</defaultColumnMap>		
+
+	<persistentProperty
+		name="modalitaPagamento" />
+	<persistentProperty
+		name="terminiPagamento" />
+	<persistentProperty
+		name="banca" />
+	<persistentProperty
+		name="tipoRapporto" />
+	<persistentProperty
+		name="obbligazioneScadenzario" />
+	<persistentProperty
+		name="missione" />
+	<persistentProperty
+		name="regioneIrap" />
+	<persistentProperty
+		name="voceIva" />
+	<persistentProperty
+		name="lineaAttivita" />	
+	<persistentProperty
+		name="codici_rapporti_inps" />	
+	<persistentProperty
+		name="codici_attivita_inps" />		
+	<persistentProperty
+		name="codici_altra_forma_ass_inps" />	
+	<persistentProperty
+		name="comune_inps" />		
+	<persistentProperty
+		name="incarichi_repertorio_anno" />
+	<persistentProperty
+		name="bonus" />			
+	<columnMap 
+		name="V_COMPENSO"
+		tableName="V_COMPENSO">
+		<columnMapping
+			columnName="PG_COMPENSO"
+			propertyName="pg_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+	</columnMap>		
+	<persistentProperty
+		name="esercizio" />	
+	<persistentProperty
+		name="cd_cds" />	
+	<persistentProperty
+		name="cd_unita_organizzativa" />	
+	<persistentProperty
+		name="pg_compenso" />
+</SQLPersistentInfo>

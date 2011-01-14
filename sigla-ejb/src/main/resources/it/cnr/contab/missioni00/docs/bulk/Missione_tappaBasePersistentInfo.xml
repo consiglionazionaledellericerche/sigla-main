@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.docs.bulk.Missione_tappaBase"
+	keyClassName="it.cnr.contab.missioni00.docs.bulk.Missione_tappaKey"
+	homeClassName="it.cnr.contab.missioni00.docs.bulk.Missione_tappaHome" >
+	<defaultColumnMap
+		tableName="MISSIONE_TAPPA" >
+		<columnMapping
+			columnName="FL_VITTO_GRATUITO"
+			propertyName="fl_vitto_gratuito"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_NO_DIARIA"
+			propertyName="fl_no_diaria"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_COMUNE_ALTRO"
+			propertyName="fl_comune_altro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_COMUNE_ESTERO"
+			propertyName="fl_comune_estero"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CAMBIO_TAPPA"
+			propertyName="cambio_tappa"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="4"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_USCITA_ESTERO"
+			propertyName="dt_uscita_estero"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DT_INGRESSO_ESTERO"
+			propertyName="dt_ingresso_estero"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="PG_NAZIONE"
+			propertyName="pg_nazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_DIVISA_TAPPA"
+			propertyName="cd_divisa_tappa"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_NAVIGAZIONE"
+			propertyName="fl_navigazione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_ALLOGGIO_GRATUITO"
+			propertyName="fl_alloggio_gratuito"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_COMUNE_PROPRIO"
+			propertyName="fl_comune_proprio"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_VITTO_ALLOGGIO_GRATUITO"
+			propertyName="fl_vitto_alloggio_gratuito"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DT_FINE_TAPPA"
+			propertyName="dt_fine_tappa"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="fl_vitto_gratuito" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="fl_no_diaria" />
+	<persistentProperty
+		name="fl_comune_altro" />
+	<persistentProperty
+		name="fl_comune_estero" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="cambio_tappa" />
+	<persistentProperty
+		name="dt_uscita_estero" />
+	<persistentProperty
+		name="dt_ingresso_estero" />
+	<persistentProperty
+		name="pg_nazione" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="cd_divisa_tappa" />
+	<persistentProperty
+		name="fl_navigazione" />
+	<persistentProperty
+		name="fl_alloggio_gratuito" />
+	<persistentProperty
+		name="fl_comune_proprio" />
+	<persistentProperty
+		name="dt_fine_tappa" />
+	<persistentProperty
+		name="fl_vitto_alloggio_gratuito" />
+</SQLPersistentInfo>

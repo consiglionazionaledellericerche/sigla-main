@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Reversale_rigaIBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Reversale_rigaIHome" >
+	<defaultColumnMap
+		tableName="REVERSALE_RIGA" >
+		<columnMapping
+			columnName="PG_REVERSALE"
+			propertyName="reversaleI.pg_reversale"/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="reversaleI.esercizio" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="reversaleI.cds.cd_unita_organizzativa" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="reversaleI"
+		partOfOid="true" />
+</SQLPersistentInfo>

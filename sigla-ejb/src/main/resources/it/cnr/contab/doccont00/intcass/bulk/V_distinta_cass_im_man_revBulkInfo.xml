@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CDS"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_reversali_annullate"
+		property="im_reversali_annullate"
+		inputType="TEXT"
+		label="im_reversali_annullate" />
+	<fieldProperty
+		name="im_reversali"
+		property="im_reversali"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="Tot. reversali" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="UO"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="dt_emissione"
+		property="dt_emissione"
+		inputType="TEXT"
+		label="Data emissione"
+		formatName="date_short"/>
+	<fieldProperty
+		name="pg_distinta"
+		property="pg_distinta"
+		inputType="TEXT"
+		label="N. Distinta" />
+	<fieldProperty
+		name="im_mandati_annullati"
+		property="im_mandati_annullati"
+		inputType="TEXT"
+		label="im_mandati_annullati" />
+	<fieldProperty
+		name="im_mandati"
+		property="im_mandati"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="Tot. mandati" />
+	<fieldProperty
+		name="dt_invio"
+		property="dt_invio"
+		inputType="TEXT"
+		label="dt_invio"
+		formatName="date_short"/>
+	<fieldProperty
+		name="pg_distinta_def"
+		property="pg_distinta_def"
+		inputType="TEXT"
+		label="N. Distinta Definitiva" />
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="im_reversali_annullate" />
+	<formFieldProperty
+		name="im_reversali" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="dt_emissione" />
+	<formFieldProperty
+		name="pg_distinta" />
+	<formFieldProperty
+		name="im_mandati_annullati" />
+	<formFieldProperty
+		name="im_mandati" />
+	<formFieldProperty
+		name="dt_invio" />
+	<formFieldProperty
+		name="pg_distinta_def" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="pg_distinta"
+		columnStyle="padding-left:5px"/>
+	<columnFieldProperty
+		name="dt_emissione" />
+	<columnFieldProperty
+		name="im_mandati"
+		columnStyle="text-align: right; padding-right:5px"/>
+	<columnFieldProperty
+		name="im_reversali"
+		columnStyle="text-align: right; padding-right:5px" />
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="im_reversali_annullate" />
+	<findFieldProperty
+		name="im_reversali" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="dt_emissione" />
+	<findFieldProperty
+		name="pg_distinta" />
+	<findFieldProperty
+		name="im_mandati_annullati" />
+	<findFieldProperty
+		name="im_mandati" />
+	<findFieldProperty
+		name="dt_emissione" />
+	<findFieldProperty
+		name="pg_distinta_def" />
+
+</bulkInfo>

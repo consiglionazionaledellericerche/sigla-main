@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.tabrif.bulk.Tipologie_istatBulk"
+	homeClassName="it.cnr.contab.anagraf00.tabrif.bulk.Tipologie_istatHome">
+	<defaultColumnMap
+		tableName="TIPOLOGIE_ISTAT">
+	</defaultColumnMap>
+</SQLPersistentInfo>

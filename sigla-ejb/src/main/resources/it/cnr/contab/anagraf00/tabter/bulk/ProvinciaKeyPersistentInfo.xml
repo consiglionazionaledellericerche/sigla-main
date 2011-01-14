@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.tabter.bulk.ProvinciaKey" >
+	<defaultColumnMap
+		tableName="PROVINCIA" >
+		<columnMapping
+			columnName="CD_PROVINCIA"
+			propertyName="cd_provincia"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_provincia"
+		partOfOid="true" />
+</SQLPersistentInfo>

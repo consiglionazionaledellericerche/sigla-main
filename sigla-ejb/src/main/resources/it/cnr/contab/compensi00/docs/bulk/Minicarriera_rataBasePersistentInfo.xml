@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.docs.bulk.Minicarriera_rataBase"
+	keyClassName="it.cnr.contab.compensi00.docs.bulk.Minicarriera_rataKey"
+	homeClassName="it.cnr.contab.compensi00.docs.bulk.Minicarriera_rataHome" >
+	<defaultColumnMap
+		tableName="MINICARRIERA_RATA" >
+		<columnMapping
+			columnName="CD_CDS_COMPENSO"
+			propertyName="cd_cds_compenso"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="PG_COMPENSO"
+			propertyName="pg_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RATA"
+			propertyName="im_rata"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_COMPENSO"
+			propertyName="cd_uo_compenso"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_COMPENSO"
+			propertyName="esercizio_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="DT_SCADENZA"
+			propertyName="dt_scadenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO_ASS_COMPENSO"
+			propertyName="stato_ass_compenso"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_FINE_RATA"
+			propertyName="dt_fine_rata"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_INIZIO_RATA"
+			propertyName="dt_inizio_rata"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_cds_compenso" />
+	<persistentProperty
+		name="pg_compenso" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="im_rata" />
+	<persistentProperty
+		name="cd_uo_compenso" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dt_scadenza" />
+	<persistentProperty
+		name="esercizio_compenso" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="stato_ass_compenso" />
+	<persistentProperty
+		name="dt_fine_rata" />
+	<persistentProperty
+		name="dt_inizio_rata" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" 
+        enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="centro_responsabilita.cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="30"
+		label="CDR" />
+	<fieldProperty
+		name="ds_cdr"
+		property="centro_responsabilita.ds_cdr"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Descrizione" />
+	<fieldProperty
+		name="id_classificazione"
+		property="v_classificazione_voci.id_classificazione"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		label="Identificativo classificazione" 
+        enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Stato" 
+        enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="im_tot_spese_acc"
+		property="im_tot_spese_acc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Importo da ripartire" />
+	<fieldProperty
+		name="find_centro_responsabilita"
+		property="centro_responsabilita"
+		inputType="SEARCHTOOL" 
+		formName="searchtool" 
+		enabledOnSearch="true"
+        enabledOnEdit="true"
+		label="Centro di Responsabilità"
+		readonlyProperty="ROCentroResponsabilita" />
+	<fieldProperty
+		name="tot_imp_piano_riparto_spese"
+		property="v_classificazione_voci.tot_imp_piano_riparto_spese"
+		inputSize="20"
+		maxLength="18"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Somma Totale Spese Accentrate" 
+        enabledOnFreeSearch="true" />
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="ds_cdr" />
+	<formFieldProperty
+		name="id_classificazione" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="im_tot_spese_acc" />
+	<formFieldProperty
+		name="find_centro_responsabilita" />
+	<formFieldProperty
+		name="tot_imp_piano_riparto_spese" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" 
+		label="Centro di Responsabilità"/>
+	<findFieldProperty
+		name="id_classificazione" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="im_tot_spese_acc" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="ds_cdr" />
+	<columnFieldProperty
+		name="id_classificazione" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="im_tot_spese_acc" />
+	<columnSet
+	        name="pdgPianoRipartoSpese">
+		<columnFieldProperty
+			name="cd_centro_responsabilita" />
+		<columnFieldProperty
+			name="ds_cdr" />
+		<columnFieldProperty
+			name="im_tot_spese_acc" />
+	</columnSet>        	
+</bulkInfo>

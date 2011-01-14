@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		maxLength="8"
+		inputSize="8"
+		label="Cds"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"		
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="ds_cds"
+		property="cds.ds_unita_organizzativa"
+		label=""
+		inputType="ROTEXT"
+		inputSize="50" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio"
+		maxLength="4"
+		inputSize="4"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"		
+		enabledOnFreeSearch="false"	/>
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="uo.cd_unita_organizzativa"
+		inputSize="8"
+		inputType="ROTEXT"
+		enabledOnFreeSearch="false"
+		label="Unit&#224; organizzativa"/>		
+	<fieldProperty
+		name="ds_unita_organizzativa"
+		property="uo.ds_unita_organizzativa"
+		inputSize="60"
+		inputType="ROTEXT"
+		enabledOnFreeSearch="false"								
+		label="Unit&#224; organizzativa" />		
+	<fieldProperty
+		name="tot_dare"
+		property="tot_dare"
+		inputType="TEXT"
+		label="Importo Dare"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="tot_avere"
+		property="tot_avere"
+		inputType="TEXT"
+		label="Importo Avere"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="latt.cd_linea_attivita"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Moduli di Attività"
+		enabledOnSearch="true"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"		
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_linea_attivita"
+		property="latt.ds_linea_attivita"
+		inputSize="60"
+		inputType="ROTEXT"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="find_linea_attivita"
+		property="latt"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		/>		
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="latt.centro_responsabilita.cd_centro_responsabilita"
+		maxLength="15"
+		inputSize="15"
+		inputType="TEXT"
+		label="CDR"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="find_conto"
+		property="conto"
+		inputType="SEARCHTOOL" 
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_voce_ep"
+		property="conto.cd_voce_ep"
+		maxLength="8"
+		inputSize="8"
+		inputType="TEXT"
+		label="Conto"
+		enabledOnSearch="true"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_conto"
+		property="conto.ds_voce_ep"
+		label=""
+		inputSize="30"
+		inputType="ROTEXT" 
+		/>
+	<fieldProperty
+		name="ti_istituz_commerc"
+		property="ti_istituz_commerc"
+		inputType="SELECT"
+		label="Tipo"
+		nullable="false"
+		keysProperty="ti_istituz_commercKeys" />	
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="ds_cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="ds_unita_organizzativa" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="tot_dare" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="ds_linea_attivita" />
+	<formFieldProperty
+		name="find_linea_attivita" />
+	<formFieldProperty
+		name="tot_avere" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="cd_voce_ep" />
+	<formFieldProperty
+		name="ds_conto" />
+	<formFieldProperty
+		name="find_conto" />
+	<formFieldProperty
+		name="ti_istituz_commerc" />
+
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="tot_dare" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="tot_avere" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="cd_voce_ep" />
+	<columnFieldProperty
+		name="ti_istituz_commerc" />
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa"
+		inputType="TEXT"/>
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_voce_ep" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="ti_istituz_commerc" />		
+	<findFieldProperty
+		name="tot_avere" />
+	<findFieldProperty
+		name="tot_dare" />
+
+
+</bulkInfo>

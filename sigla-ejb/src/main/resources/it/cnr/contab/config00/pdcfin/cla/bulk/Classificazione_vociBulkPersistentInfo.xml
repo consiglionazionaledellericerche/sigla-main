@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk"
+	homeClassName="it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociHome">
+	<defaultColumnMap
+		tableName="CLASSIFICAZIONE_VOCI">
+		<columnMapping
+			columnName="ID_CLASS_PADRE"
+			propertyName="classificazione_voci.id_classificazione" />
+		<columnMapping
+			columnName="CDR_ACCENTRATORE"
+			propertyName="centro_responsabilita.cd_centro_responsabilita" />
+	</defaultColumnMap>
+
+	<persistentProperty name="classificazione_voci"/>
+	<persistentProperty name="centro_responsabilita"/>
+
+	<columnMap 
+		name="V_CLASSIFICAZIONE_VOCI"
+		tableName="V_CLASSIFICAZIONE_VOCI"
+		extends="default" >
+	</columnMap>
+	<columnMap 
+		name="V_CLASSIFICAZIONE_VOCI_ALL"
+		tableName="V_CLASSIFICAZIONE_VOCI_ALL"
+		extends="default" >
+	</columnMap>	
+</SQLPersistentInfo>

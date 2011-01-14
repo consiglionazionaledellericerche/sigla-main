@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg01.consultazioni.bulk.V_cons_pdgp_pdgg_speBulk"
+	homeClassName="it.cnr.contab.pdg01.consultazioni.bulk.V_cons_pdgp_pdgg_speHome">
+	<defaultColumnMap
+		tableName="V_CONS_PDGP_PDGG_SPE">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_CDR"
+			propertyName="ds_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="pg_progetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="ds_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="ID_CLASSIFICAZIONE"
+			propertyName="id_classificazione"
+			sqlTypeName="DECIMAL"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE"
+			propertyName="cd_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="34"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_AREA"
+			propertyName="cd_cds_area"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_SPESE_GEST_DEC_INT_PDGP"
+			propertyName="im_spese_gest_dec_int_pdgp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SPESE_GEST_DEC_EST_PDGP"
+			propertyName="im_spese_gest_dec_est_pdgp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SPESE_GEST_ACC_INT_PDGP"
+			propertyName="im_spese_gest_acc_int_pdgp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SPESE_GEST_ACC_EST_PDGP"
+			propertyName="im_spese_gest_acc_est_pdgp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SPESE_GEST_DEC_INT_PDGG"
+			propertyName="im_spese_gest_dec_int_pdgg"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SPESE_GEST_DEC_EST_PDGG"
+			propertyName="im_spese_gest_dec_est_pdgg"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SPESE_GEST_ACC_INT_PDGG"
+			propertyName="im_spese_gest_acc_int_pdgg"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SPESE_GEST_ACC_EST_PDGG"
+			propertyName="im_spese_gest_acc_est_pdgg"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_PAGAMENTI_PDGG"
+			propertyName="im_pagamenti_pdgg"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SPESE_GEST_DEC_INT_DA_RIP"
+			propertyName="im_spese_gest_dec_int_da_rip"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SPESE_GEST_DEC_EST_DA_RIP"
+			propertyName="im_spese_gest_dec_est_da_rip"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SPESE_GEST_ACC_INT_DA_RIP"
+			propertyName="im_spese_gest_acc_int_da_rip"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SPESE_GEST_ACC_EST_DA_RIP"
+			propertyName="im_spese_gest_acc_est_da_rip"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_centro_responsabilita" />
+	<persistentProperty
+		name="ds_cdr" />
+	<persistentProperty
+		name="pg_progetto" />
+	<persistentProperty
+		name="cd_progetto" />
+	<persistentProperty
+		name="ds_progetto" />
+	<persistentProperty
+		name="id_classificazione" />
+	<persistentProperty
+		name="cd_classificazione" />
+	<persistentProperty
+		name="ds_classificazione" />
+	<persistentProperty
+		name="cd_cds_area" />
+	<persistentProperty
+		name="im_spese_gest_dec_int_pdgp" />
+	<persistentProperty
+		name="im_spese_gest_dec_est_pdgp" />
+	<persistentProperty
+		name="im_spese_gest_acc_int_pdgp" />
+	<persistentProperty
+		name="im_spese_gest_acc_est_pdgp" />
+	<persistentProperty
+		name="im_spese_gest_dec_int_pdgg" />
+	<persistentProperty
+		name="im_spese_gest_dec_est_pdgg" />
+	<persistentProperty
+		name="im_spese_gest_acc_int_pdgg" />
+	<persistentProperty
+		name="im_spese_gest_acc_est_pdgg" />
+	<persistentProperty
+		name="im_pagamenti_pdgg" />
+	<persistentProperty
+		name="im_spese_gest_dec_int_da_rip" />
+	<persistentProperty
+		name="im_spese_gest_dec_est_da_rip" />
+	<persistentProperty
+		name="im_spese_gest_acc_int_da_rip" />
+	<persistentProperty
+		name="im_spese_gest_acc_est_da_rip" />
+</SQLPersistentInfo>

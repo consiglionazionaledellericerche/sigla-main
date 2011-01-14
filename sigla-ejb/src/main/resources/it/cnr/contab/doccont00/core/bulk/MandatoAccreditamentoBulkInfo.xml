@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="fl_imputazione_manuale"
+		property="fl_imputazione_manuale"
+		inputType="CHECKBOX"
+		label="Imputazione manuale" />
+	<fieldProperty
+		name="cd_modalita_pag"
+		property="modalita_pagamento"
+		maxLength="10"
+		inputSize="10"
+		inputType="SELECT"
+		optionsProperty="modalita_pagamentoOptions"
+		printProperty="cd_modalita_pag"
+		label="Modalita pag."
+		nullable="false"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="banca"
+		property="banca"
+		inputType="SELECT"
+		optionsProperty="bancaOptions"
+		printProperty="ds_estesa"
+		label="Coordinate"
+		nullable="false"/>
+	<fieldProperty
+		name="im_righe_mandato"
+		property="im_righe_mandato"
+		inputType="ROTEXT"
+		label="Importo Mandato"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		enabledOnInsert="false"/>
+	<fieldProperty
+		name="codice_cds"
+		property="codice_cds"
+		inputType="ROTEXT"
+		inputSize="4"
+		label="Cds Beneficiario"/>
+		
+		
+	<formFieldProperty
+		name="im_righe_mandato" />
+	<formFieldProperty
+		name="cd_modalita_pag" />
+	<formFieldProperty
+		name="banca" />
+	<formFieldProperty
+		name="fl_imputazione_manuale" />
+	<formFieldProperty
+		name="codice_cds" />		
+</bulkInfo>

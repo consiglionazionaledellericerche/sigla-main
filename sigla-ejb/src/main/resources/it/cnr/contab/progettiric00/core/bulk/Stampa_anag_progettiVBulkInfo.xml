@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="tc"
+		property="tc" />	
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="unita_organizzativaForPrint.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Codice UO Coordinatrice"
+		caseSensitiveSearch="false"
+		nullable="false" />
+	<fieldProperty
+		name="unita_organizzativaForPrint"
+		property="unita_organizzativaForPrint"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		readonlyProperty="ROunita_organizzativaForPrint"		
+		enabledOnSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnFreeSearch="true"
+		label="UO Partecipanti" />
+	<fieldProperty
+		name="cdUnita_organizzativaCRForPrint"
+		property="cdUnita_organizzativaCRForPrint"/>						
+	<fieldProperty
+		name="stato"
+		property="stato"
+		keysProperty="statoKeys"
+		label="Stato del progetto" 
+		inputType="RADIOGROUP"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		layout="HORIZONTAL" />
+	<fieldProperty
+		name="livello"
+		property="livello"
+		keysProperty="livello_progettoKeys"
+		label="Fino al livello" 
+		inputType="RADIOGROUP"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		layout="HORIZONTAL"
+		nullable="false" />		
+	<fieldProperty
+		name="tipo_fase"
+		property="tipo_fase"
+		keysProperty="tipo_faseKeys"
+		label="Fase" 
+		inputType="RADIOGROUP"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		layout="HORIZONTAL"
+		nullable="false" />		
+	<fieldProperty
+		name="esercizioForPrint"
+		property="esercizioForPrint"
+		/>			
+	/***************************************************************
+	 **  Search tool utilizzato per la ricerca del progetto padre **
+	 ***************************************************************/
+		
+	<fieldProperty
+		name="find_nodo_padre"
+		property="progettoForPrint"
+		inputType="SEARCHTOOL"
+		label="Progetto"	/>
+	<fieldProperty
+		name="cd_progetto"
+		property="progettoForPrint.cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+        readonlyProperty="ROProgettoForPrint"		
+		label="Codice progetto"/>		
+	<fieldProperty
+		name="ds_progetto"
+		property="progettoForPrint.ds_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"/>		
+	<fieldProperty
+		name="cdProgettoCRForPrint"
+		property="cdProgettoCRForPrint"/>		
+		
+	/*********************************************************/		
+	<formFieldProperty
+		name="progettoForPrint"/>
+	<formFieldProperty
+		name="unita_organizzativaForPrint"/>		
+	<formFieldProperty
+		name="cd_progetto"/>		
+	<formFieldProperty
+		name="cd_unita_organizzativa"/>
+	<formFieldProperty
+		name="ds_progetto"/>
+	<formFieldProperty
+		name="find_nodo_padre" />		
+	<formFieldProperty 
+	        name="cdProgettoCRForPrint" />
+	<formFieldProperty 
+	        name="cdUnita_organizzativaCRForPrint" />	        	        	        
+	<formFieldProperty 
+	        name="stato" />			
+	<formFieldProperty 
+	        name="livello" />		
+	<formFieldProperty 
+	        name="tipo_fase" />	       
+	<printForm
+		name="/progettiric/progettiric/anagrafica_progetti.rpt">
+		<printFieldProperty 
+			name="tc"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdUnita_organizzativaCRForPrint"
+			parameterPosition="1"
+			parameterType="STRING" />			
+		<printFieldProperty 
+			name="cdProgettoCRForPrint"
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="livello"
+			parameterPosition="3"
+			parameterType="STRING" />						
+		<printFieldProperty 
+			name="stato"
+			parameterPosition="4"
+			parameterType="STRING" />						
+	</printForm>
+	<printForm
+		name="/progettiric/progettiric/anagrafica_progetti.jasper">
+		<printFieldProperty 
+			name="cdUnita_organizzativaCRForPrint"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="uo"
+			paramTypeJR="java.lang.String"/>			
+		<printFieldProperty 
+			name="cdProgettoCRForPrint"
+			parameterPosition="2"
+			parameterType="STRING"
+			paramNameJR="progetto"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="livello"
+			parameterPosition="3"
+			parameterType="STRING"
+			paramNameJR="livello"
+			paramTypeJR="java.lang.Integer" />						
+		<printFieldProperty 
+			name="stato"
+			parameterPosition="4"
+			parameterType="STRING"
+			paramNameJR="stato"
+			paramTypeJR="java.lang.String" />						
+		<printFieldProperty 
+			name="tipo_fase"
+			parameterPosition="5"
+			parameterType="STRING"
+			paramNameJR="fase"
+			paramTypeJR="java.lang.String" />	
+		<printFieldProperty 
+			name="esercizioForPrint"
+			parameterPosition="6"
+			parameterType="STRING"
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer" />											
+	</printForm>
+
+</bulkInfo>

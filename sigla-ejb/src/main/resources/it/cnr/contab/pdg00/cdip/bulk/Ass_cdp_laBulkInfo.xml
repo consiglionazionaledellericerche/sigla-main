@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="stato"
+		property="stato"
+		keysProperty="stato_keys"
+		inputType="TEXT"
+		label="Stato"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="statoMese"
+		property="stato"
+		keysProperty="stato_mese_keys"
+		inputType="TEXT"
+		label="Stato"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="id_matricola"
+		property="id_matricola"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="id_matricola" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="GAE" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CDR" />
+	<fieldProperty
+		name="prc_la_a1"
+		property="prc_la_a1"
+		readonlyProperty="ROPrc"
+		inputType="TEXT"
+		label="Perc. anno 1"
+		inputSize="6"
+		maxLength="6"
+		href="submitForm('doCalcolaGiorni_la(1)')"
+		formatName="it.cnr.contab.util.ConstrainedPercentFormat" />
+	<fieldProperty
+		name="prc_la_a2"
+		property="prc_la_a2"
+		readonlyProperty="ROPrc"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		label="Perc. anno 2"
+		href="submitForm('doCalcolaGiorni_la(2)')"
+		formatName="it.cnr.contab.util.ConstrainedPercentFormat" />
+	<fieldProperty
+		name="prc_la_a3"
+		property="prc_la_a3"
+		readonlyProperty="ROPrc"
+		inputType="TEXT"
+		label="Perc. anno 3"
+		inputSize="6"
+		maxLength="6"
+		href="submitForm('doCalcolaGiorni_la(3)')"
+		formatName="it.cnr.contab.util.ConstrainedPercentFormat" />
+	<fieldProperty
+		name="giorni_la_a1"
+		property="giorni_la_a1"
+		readonlyProperty="ROGiorni"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		href="submitForm('doCalcolaPrc_la(1)')"
+		label="Gg. anno 1" />
+	<fieldProperty
+		name="giorni_la_a2"
+		property="giorni_la_a2"
+		readonlyProperty="ROGiorni"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		href="submitForm('doCalcolaPrc_la(2)')"
+		label="Gg. anno 2" />
+	<fieldProperty
+		name="giorni_la_a3"
+		property="giorni_la_a3"
+		readonlyProperty="ROGiorni"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		href="submitForm('doCalcolaPrc_la(3)')"
+		label="Gg. anno 3" />
+	<fieldProperty
+		name="linea_attivita"
+		property="linea_attivita" />
+
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="statoMese" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="id_matricola" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="prc_la_a3" />
+	<formFieldProperty
+		name="prc_la_a2" />
+	<formFieldProperty
+		name="prc_la_a1" />
+	<formFieldProperty
+		name="giorni_la_a3" />
+	<formFieldProperty
+		name="giorni_la_a2" />
+	<formFieldProperty
+		name="giorni_la_a1" />
+
+	<columnFieldProperty
+		name="stato"
+		enabledOnEdit="false" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita"
+		enabledOnEdit="false"  />
+	<columnFieldProperty
+		name="cd_linea_attivita"
+		enabledOnEdit="false"  />
+	<columnFieldProperty
+		name="giorni_la_a1" />
+	<columnFieldProperty
+		name="prc_la_a1" />
+	<columnFieldProperty
+		name="giorni_la_a2" />
+	<columnFieldProperty
+		name="prc_la_a2" />
+	<columnFieldProperty
+		name="giorni_la_a3" />
+	<columnFieldProperty
+		name="prc_la_a3" />
+
+	<columnSet name="mese">
+		<columnFieldProperty
+			name="statoMese"
+			enabledOnEdit="false" />
+		<columnFieldProperty
+			name="cd_centro_responsabilita"
+			enabledOnEdit="false"  />
+		<columnFieldProperty
+			name="cd_linea_attivita"
+			enabledOnEdit="false"  />
+		<columnFieldProperty
+			name="prc_la_a1" 
+			label="Perc. mese"/>
+	</columnSet>			
+</bulkInfo>

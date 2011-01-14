@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Mandato_rigaHome" >
+	<defaultColumnMap
+		tableName="MANDATO_RIGA" >
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="modalita_pagamento.terzo.cd_terzo" 
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="modalita_pagamento.rif_modalita_pagamento.cd_modalita_pag" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="banca.terzo.cd_terzo" />
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="banca.pg_banca"/>
+		<columnMapping
+			columnName="CD_TERZO_CEDENTE"
+			propertyName="terzo_cedente.cd_terzo"/>																		
+	</defaultColumnMap>
+	<persistentProperty
+		name="banca"/>
+	<persistentProperty
+		name="modalita_pagamento"/>
+	<persistentProperty
+		name="terzo_cedente"/>						
+</SQLPersistentInfo>

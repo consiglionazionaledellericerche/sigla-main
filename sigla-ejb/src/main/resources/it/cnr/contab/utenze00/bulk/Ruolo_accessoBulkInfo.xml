@@ -1,0 +1,41 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_accesso"
+		property="accesso.cd_accesso"
+		label="cd_accesso"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="cd_ruolo"
+		property="cd_ruolo"
+		label="cd_ruolo"
+		inputType="TEXT"
+		/>
+
+	<columnFieldProperty
+		name="cd_accesso"
+		/>
+	<columnFieldProperty
+		name="cd_ruolo"
+		/>
+
+	<formFieldProperty
+		name="cd_accesso"
+		/>
+	<formFieldProperty
+		name="cd_ruolo"
+		/>
+
+	<findFieldProperty
+		name="cd_accesso"
+		/>
+	<findFieldProperty
+		name="cd_ruolo"
+		/>
+
+
+</bulkInfo>

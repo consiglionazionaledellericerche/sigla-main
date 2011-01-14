@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Impegni">
+	<fieldProperty
+		name="cds"
+		property="cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds" />
+	<fieldProperty
+		name="uo"
+		property="uo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="U.O." />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cdr" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="GAE" />
+	<fieldProperty
+		name="ds_linea_attivita"
+		property="ds_linea_attivita"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione GAE" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Voce" />
+	<fieldProperty
+		name="dt_registrazione"
+		property="dt_registrazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		formatName="date_short"
+		label="Data di registrazione" />
+	<fieldProperty
+		name="esercizio_originale"
+		property="esercizio_originale"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Es. Impegno" />
+	<fieldProperty
+		name="pg_obbligazione"
+		property="pg_obbligazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero impegno" />
+	<fieldProperty
+		name="esercizio_ori_ori_riporto"
+		property="esercizio_ori_ori_riporto"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Es. originario impegno" />
+	<fieldProperty
+		name="pg_obbligazione_ori_riporto"
+		property="pg_obbligazione_ori_riporto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero originario impegno" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="esercizio_ori_riporto"
+		property="esercizio_ori_riporto"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio originario" />
+	<fieldProperty
+		name="pg_obbligazione_scadenzario"
+		property="pg_obbligazione_scadenzario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Scad. imp." />
+	<fieldProperty
+		name="ds_scadenza"
+		property="ds_scadenza"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione scadenza" />
+	<fieldProperty
+		name="im_scadenza"
+		property="im_scadenza"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Importo scadenza" />
+	<fieldProperty
+		name="im_voce"
+		property="im_voce"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Importo dettaglio scadenza" />
+	<fieldProperty
+		name="pg_doc_amm"
+		property="pg_doc_amm"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="40"
+		label="Num. doc. amm." />
+	<fieldProperty
+		name="pg_mandato"
+		property="pg_mandato"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="40"
+		label="N. mandato" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="40"
+		label="Beneficiario impegno" />
+	<fieldProperty
+		name="denominazione_sede"
+		property="denominazione_sede"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Denominazione sede" />
+	<fieldProperty
+		name="ti_fattura"
+		property="ti_fattura"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo fattura" />
+	<formFieldProperty
+		name="cds" />
+	<formFieldProperty
+		name="uo" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="ds_linea_attivita" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="dt_registrazione" />
+	<formFieldProperty
+		name="esercizio_originale" />
+	<formFieldProperty
+		name="pg_obbligazione" />
+	<formFieldProperty
+		name="esercizio_ori_ori_riporto" />
+	<formFieldProperty
+		name="pg_obbligazione_ori_riporto" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="esercizio_ori_riporto" />
+	<formFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<formFieldProperty
+		name="ds_scadenza" />
+	<formFieldProperty
+		name="im_scadenza" />
+	<formFieldProperty
+		name="im_voce" />
+	<formFieldProperty
+		name="pg_doc_amm" />
+	<formFieldProperty
+		name="pg_mandato" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="denominazione_sede" />
+	<formFieldProperty
+		name="ti_fattura" />
+
+	<columnFieldProperty
+		name="cds" />
+	<columnFieldProperty
+		name="uo" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="ds_linea_attivita"
+		label="Descrizione&#160;GAE&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="dt_registrazione" />
+	<columnFieldProperty
+		name="esercizio_originale" />
+	<columnFieldProperty
+		name="pg_obbligazione" />
+	<columnFieldProperty
+		name="esercizio_ori_ori_riporto" />
+	<columnFieldProperty
+		name="pg_obbligazione_ori_riporto" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="esercizio_ori_riporto" />
+	<columnFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<columnFieldProperty
+		name="ds_scadenza" 		
+		label="Descrizione&#160;scadenza&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+	<columnFieldProperty
+		name="im_scadenza" />
+	<columnFieldProperty
+		name="im_voce" />
+	<columnFieldProperty
+		name="pg_doc_amm" />
+	<columnFieldProperty
+		name="pg_mandato" />
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="denominazione_sede"
+		label="Denominazione&#160;sede&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+
+	<findFieldProperty
+		name="cds" />
+	<findFieldProperty
+		name="uo" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="ds_linea_attivita" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="dt_registrazione" />
+	<findFieldProperty
+		name="esercizio_originale" />
+	<findFieldProperty
+		name="pg_obbligazione" />
+	<findFieldProperty
+		name="esercizio_ori_ori_riporto" />
+	<findFieldProperty
+		name="pg_obbligazione_ori_riporto" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="esercizio_ori_riporto" />
+	<findFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<findFieldProperty
+		name="ds_scadenza" />
+	<findFieldProperty
+		name="im_scadenza" />
+	<findFieldProperty
+		name="im_voce" />
+	<findFieldProperty
+		name="pg_doc_amm" />
+	<findFieldProperty
+		name="pg_mandato" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="denominazione_sede" />
+</bulkInfo>

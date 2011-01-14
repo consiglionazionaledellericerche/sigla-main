@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.consultazioni.bulk.V_rateizza_classific_coriBulk"
+	homeClassName="it.cnr.contab.docamm00.consultazioni.bulk.V_rateizza_classific_coriHome">
+	<defaultColumnMap
+		tableName="V_RATEIZZA_CLASSIFIC_CORI">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />			
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="cd_anag"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="DENOMINAZIONE"
+			propertyName="denominazione"
+			sqlTypeName="VARCHAR"
+			columnSize="101"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE_CORI"
+			propertyName="ds_classificazione_cori"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_DA_RATEIZZARE"
+			propertyName="im_da_rateizzare"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RATEIZZATO"
+			propertyName="im_rateizzato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RESIDUO"
+			propertyName="im_residuo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />			
+		<columnMapping
+			columnName="CD_CDS_CONGUAGLIO"
+			propertyName="cd_cds_conguaglio"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_CONGUAGLIO"
+			propertyName="cd_uo_conguaglio"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_CONGUAGLIO"
+			propertyName="pg_conguaglio"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+	</defaultColumnMap>
+
+	<persistentProperty
+			name="esercizio" />
+	<persistentProperty
+			name="cd_anag" />
+	<persistentProperty
+			name="denominazione" />			
+	<persistentProperty
+			name="ds_classificazione_cori" />
+	<persistentProperty
+			name="im_da_rateizzare" />
+	<persistentProperty
+			name="im_rateizzato" />			
+	<persistentProperty
+			name="im_residuo" />			
+	<persistentProperty
+			name="cd_cds_conguaglio" />
+	<persistentProperty
+			name="cd_uo_conguaglio" />
+	<persistentProperty
+			name="pg_conguaglio" />									
+</SQLPersistentInfo>

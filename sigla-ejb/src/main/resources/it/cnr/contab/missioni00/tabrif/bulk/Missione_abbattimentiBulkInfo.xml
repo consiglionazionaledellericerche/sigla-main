@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="ti_area_geografica"
+		property="ti_area_geografica"
+		keysProperty="ti_area_geograficaKeys"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Area Geografica" />
+/************ NAZIONE **************/
+	<fieldProperty
+		name="find_nazione"
+		property="nazione"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROFindNazione"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Nazione" />
+	<fieldProperty
+		name="pg_nazione"
+		property="pg_nazione"
+		readonlyProperty="RONazione"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Nazione" />
+	<fieldProperty
+		name="ds_nazione"
+		property="nazione.ds_nazione"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Nazione" />
+/***********************************/
+	<fieldProperty
+		name="rif_inquadramento"
+		property="rifInquadramento"
+		printProperty="descrRifInquadramento"
+		optionsProperty="rifInquadramenti"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Inquadramento" />
+	<fieldProperty
+		name="fl_pasto"
+		property="fl_pasto"
+		inputType="CHECKBOX"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Pasto" />
+	<fieldProperty
+		name="fl_alloggio"
+		property="fl_alloggio"
+		inputType="CHECKBOX"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Alloggio" />
+	<fieldProperty
+		name="fl_trasporto"
+		property="fl_trasporto"
+		inputType="CHECKBOX"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Trasporto" />
+	<fieldProperty
+		name="fl_navigazione"
+		property="fl_navigazione"
+		inputType="CHECKBOX"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Navigazione" />
+	<fieldProperty
+		name="fl_vitto_gratuito"
+		property="fl_vitto_gratuito"
+		inputType="CHECKBOX"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Vitto gratuito" />
+	<fieldProperty
+		name="fl_alloggio_gratuito"
+		property="fl_alloggio_gratuito"
+		inputType="CHECKBOX"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Alloggio gratuito" />
+	<fieldProperty
+		name="fl_vitto_alloggio_gratuito"
+		property="fl_vitto_alloggio_gratuito"
+		inputType="CHECKBOX"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Vitto Alloggio Gratuito" />
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_inizio_validita"
+		formatName="date_short"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"		
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Inizio validita" />
+	<fieldProperty
+		name="percentuale_abbattimento"
+		property="percentuale_abbattimento"
+		maxLength="10"
+		formatName="it.cnr.contab.util.Importo6CifreFormat"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"		
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Percentuale Abbattimento" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		formatName="date_short"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"		
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Fine validita" />
+	<fieldProperty
+		name="dataFineValidita"
+		property="dataFineValidita"
+		formatName="date_short"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Fine validita" />
+	<fieldProperty
+		name="dt_cancellazione"
+		property="dt_cancellazione"
+		formatName="date_short"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Data Cancellazione" />
+	<fieldProperty
+		name="durata_ore"
+		property="durata_ore"
+		keysProperty="durata_oreKeys"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnInsert="true"		
+		enabledOnEdit="false"		
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Durata Ore" />		
+	<fieldProperty
+		name="operatore"
+		property="operatore"
+		keysProperty="operatoreDurataOreKeys"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnInsert="true"		
+		enabledOnEdit="false"		
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Durata Ore" />		
+	<fieldProperty
+		name="ore"
+		property="ore"
+		keysProperty="operatoreDurataOreKeys"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnInsert="true"		
+		enabledOnEdit="false"		
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Ore" />
+
+/**********************/
+	<fieldProperty
+		name="tipoSpeseRadioGroup"
+		property="flag_tipo_spese"
+		keysProperty="flag_tipo_speseKeys"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"	
+		label=""
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		/>
+	<fieldProperty
+		name="vittoAlloggioNavigazioneRadioGroup"
+		property="flag_spese_gratuite"
+		keysProperty="flag_spese_gratuiteKeys"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"	
+		label=""
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		/>
+/**********************/		
+		
+	<formFieldProperty name="ti_area_geografica" />
+	<formFieldProperty name="pg_nazione" />
+	<formFieldProperty name="ds_nazione" />
+	<formFieldProperty name="find_nazione" />
+	<formFieldProperty name="rif_inquadramento" />
+	<formFieldProperty name="fl_pasto" />
+	<formFieldProperty name="fl_alloggio" />
+	<formFieldProperty name="fl_trasporto" />
+	<formFieldProperty name="fl_navigazione" />
+	<formFieldProperty name="fl_vitto_gratuito" />
+	<formFieldProperty name="fl_alloggio_gratuito" />
+	<formFieldProperty name="fl_vitto_alloggio_gratuito" />
+	<formFieldProperty name="durata_ore" />
+	<formFieldProperty name="dt_inizio_validita" />
+	<formFieldProperty name="percentuale_abbattimento" />
+	<formFieldProperty name="dataFineValidita" />
+	<formFieldProperty name="dt_cancellazione" />
+	<formFieldProperty name="operatore" />
+	<formFieldProperty name="ore" />
+	<formFieldProperty name="tipoSpeseRadioGroup" />		
+	<formFieldProperty name="vittoAlloggioNavigazioneRadioGroup" />	
+		
+	<columnFieldProperty name="ti_area_geografica" />
+	<columnFieldProperty name="pg_nazione" />
+	<columnFieldProperty name="ds_nazione" />
+	<columnFieldProperty name="rif_inquadramento" />
+	<columnFieldProperty name="fl_pasto" />
+	<columnFieldProperty name="fl_alloggio" />
+	<columnFieldProperty name="fl_trasporto" />
+	<columnFieldProperty name="fl_navigazione" />
+	<columnFieldProperty name="fl_vitto_gratuito" />
+	<columnFieldProperty name="fl_alloggio_gratuito" />
+	<columnFieldProperty name="fl_vitto_alloggio_gratuito" />
+	<columnFieldProperty name="percentuale_abbattimento" />
+	<columnFieldProperty name="durata_ore" />
+	<columnFieldProperty name="dt_inizio_validita" />
+	<columnFieldProperty name="dataFineValidita" />
+	<columnFieldProperty name="dt_cancellazione" />
+
+	<findFieldProperty name="ti_area_geografica" />
+	<findFieldProperty name="pg_nazione" />
+	<findFieldProperty name="rif_inquadramento" />
+	<findFieldProperty name="fl_pasto" />
+	<findFieldProperty name="fl_vitto_alloggio_gratuito" />
+	<findFieldProperty name="fl_navigazione" />
+	<findFieldProperty name="fl_alloggio" />
+	<findFieldProperty name="fl_trasporto" />
+	<findFieldProperty name="fl_vitto_gratuito" />
+	<findFieldProperty name="fl_alloggio_gratuito" />
+	<findFieldProperty name="durata_ore" />
+	<findFieldProperty name="percentuale_abbattimento" />
+	<findFieldProperty name="dt_inizio_validita" />
+	<findFieldProperty name="dt_fine_validita" />
+	<findFieldProperty name="dt_cancellazione" />
+	
+</bulkInfo>

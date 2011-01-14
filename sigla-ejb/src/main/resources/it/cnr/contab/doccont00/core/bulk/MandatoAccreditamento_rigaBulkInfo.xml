@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_obbligazione_scadenzario"
+		property="impegno.pg_obbligazione_scadenzario"
+		inputType="TEXT"
+		label="pg_obbligazione_scadenzario" />
+	<fieldProperty
+		name="esercizio_obbligazione"
+		property="impegno.esercizio"
+		inputType="TEXT"
+		label="esercizio_obbligazione" />
+	<fieldProperty
+		name="esercizio_ori_obbligazione"
+		property="impegno.esercizio_originale"
+		inputType="TEXT"
+		label="Es.impegno" />
+	<fieldProperty
+		name="pg_obbligazione"
+		property="impegno.pg_obbligazione"
+		inputType="TEXT"
+		label="Nr.impegno" />
+	<fieldProperty
+		name="dt_scadenza"
+		property="impegno.dt_scadenza"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Scadenza" />
+	<fieldProperty
+		name="im_scadenza"
+		property="impegno.im_scadenza"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="Importo" />
+	<fieldProperty
+		name="findVoce"
+		property="impegno"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROFindVoce"		
+		label="Voce" />
+	<fieldProperty
+		name="cd_voce"
+		property="impegno.cd_voce"
+		inputType="TEXT"
+		readonlyProperty="ROVoce"
+		label="Voce" />
+	<fieldProperty
+		name="im_disponibile"
+		property="impegno.im_disponibile"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		label="Importo Impegno" />
+	<fieldProperty
+		name="im_mandato_riga"
+		property="im_mandato_riga"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		label="Importo" />
+		
+		
+		
+
+	<formFieldProperty
+		name="pg_obbligazione_scadenzario"/>
+	<formFieldProperty
+		name="esercizio_obbligazione"/>
+	<formFieldProperty
+		name="esercizio_ori_obbligazione"/>
+	<formFieldProperty
+		name="pg_obbligazione"/>
+	<formFieldProperty
+		name="dt_scadenza"/>
+	<formFieldProperty
+		name="im_scadenza"/>
+	<formFieldProperty
+		name="im_disponibile"/>
+	<formFieldProperty
+		name="findVoce"/>
+	<formFieldProperty
+		name="cd_voce"/>
+	<formFieldProperty
+		name="im_mandato_riga"/>
+		
+		
+		
+	<columnFieldProperty
+		name="esercizio_ori_obbligazione"
+		label="Es. impegno"
+		columnStyle="padding-left:20px"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="pg_obbligazione"
+		label="Nr. impegno"
+		columnStyle="padding-left:20px"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="cd_voce"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="im_disponibile"
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="im_mandato_riga"
+		inputType="ROTEXT"
+		columnStyle="text-align: right"/>
+	<columnFieldProperty
+		name="stato"
+		inputType="ROTEXT"		
+		columnStyle="text-align: center" />
+	<columnFieldProperty
+		name="cd_modalita_pag"
+		inputType="ROTEXT"		
+		/>
+	<columnFieldProperty
+		name="banca_nr_conto" />
+	<columnFieldProperty
+		name="banca_intestazione"/>
+	<columnFieldProperty
+		name="banca_abi"/>
+	<columnFieldProperty
+		name="banca_cab"/>
+</bulkInfo>

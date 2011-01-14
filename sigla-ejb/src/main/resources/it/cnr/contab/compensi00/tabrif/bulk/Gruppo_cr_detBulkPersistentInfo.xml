@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Gruppo_cr_detBulk"
+	homeClassName="it.cnr.contab.compensi00.tabrif.bulk.Gruppo_cr_detHome">
+	<defaultColumnMap
+		tableName="GRUPPO_CR_DET">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="gruppo.esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_GRUPPO_CR"
+			propertyName="gruppo.cd_gruppo_cr"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_REGIONE"
+			propertyName="regione.cd_regione"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_COMUNE"
+			propertyName="comune.pg_comune"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_TERZO_VERSAMENTO"
+			propertyName="terzo.cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="CD_MODALITA_PAGAMENTO"
+			propertyName="modalitaPagamento.cd_modalita_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="10"/>	
+		<columnMapping
+			columnName="CD_TERZO_VERSAMENTO"
+			propertyName="modalitaPagamento.cd_terzo"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="banca.pg_banca" 
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="CD_TERZO_VERSAMENTO"
+			propertyName="banca.cd_terzo"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_TERZO_VERSAMENTO"
+			propertyName="banca.terzo.cd_terzo"
+			fetchOnly="true"/>
+		
+		</defaultColumnMap>	
+	<persistentProperty
+		name="gruppo" 
+		partOfOid="true"/>	
+	<persistentProperty
+		name="regione"
+		partOfOid="true"/>
+	<persistentProperty
+		name="comune" 
+		partOfOid="true"/>
+	<persistentProperty
+		name="terzo"
+		partOfOid="false" />
+	<persistentProperty
+		name="modalitaPagamento"
+		partOfOid="false" />
+	<persistentProperty
+		name="banca"
+		partOfOid="false" />
+</SQLPersistentInfo>

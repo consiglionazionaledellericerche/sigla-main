@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="tipoDocumentoGenerico"
+		property="tipoDocumentoGenerico"
+		inputType="TEXT"
+		label="Tipo documento" />
+
+	<columnSet name="filtro_ricerca_documenti">	
+		<columnFieldProperty
+			name="pg_documento_generico" />
+		<columnFieldProperty
+			name="data_registrazione" />
+		<columnFieldProperty
+			name="ds_documento_generico" />
+		<columnFieldProperty
+			name="stato_cofi" />
+		<columnFieldProperty
+			name="cd_uo_origine" />
+		<columnFieldProperty
+			name="cd_unita_organizzativa" />
+		<columnFieldProperty
+			name="tipoDocumentoGenerico" />
+		<columnFieldProperty
+			name="ti_associato_manrev"/>
+	</columnSet>
+</bulkInfo>

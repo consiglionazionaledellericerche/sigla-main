@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="elemento_voce.esercizio"
+		inputType="ROTEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="esercizio_scrivania"
+		property="esercizio_scrivania"
+		inputType="ROTEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="elemento_voce.ti_appartenenza"
+		keysProperty="ti_appartenenzaKeys"
+		readonlyPropertyOnEdit="ROGiaAssociato"
+		inputType="SELECT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Appartenenza" />
+	<fieldProperty
+		name="ti_gestione"
+		property="elemento_voce.ti_gestione"
+		keysProperty="ti_gestioneKeys"
+		readonlyPropertyOnEdit="ROGiaAssociato"	
+		inputType="SELECT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Gestione" />
+	<fieldProperty
+		name="find_elemento_voce"
+		property="elemento_voce"
+		inputType="SEARCHTOOL"
+		readonlyPropertyOnEdit="ROGiaAssociato"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="elemento_voce.cd_elemento_voce"
+		readonlyPropertyOnEdit="ROGiaAssociato"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="10"
+		enabledOnSearch="true"
+		label="Elemento voce"/>
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="elemento_voce.ds_elemento_voce"
+		label="Descrizione"
+		inputType="ROTEXT"
+		inputSize="80"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="find_codici_siope"
+		property="codici_siope"
+		inputType="SEARCHTOOL"
+		readonlyPropertyOnEdit="ROGiaAssociato"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="cd_siope"
+		property="codici_siope.cd_siope"
+		label="Codice Siope" 
+		readonlyPropertyOnEdit="ROGiaAssociato"
+		inputType="TEXT"
+		maxLength="4"
+		inputSize="4"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="ds_siope"
+		property="codici_siope.descrizione"
+		inputType="ROTEXT"
+		inputSize="80"
+		label="Descrizione"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="esercizio_siope"
+		property="codici_siope.esercizio"
+		inputType="ROTEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Siope" />
+	<fieldProperty
+		name="ti_gestione_siope"
+		property="codici_siope.ti_gestione"
+		keysProperty="ti_gestione_siopeKeys"
+		inputType="SELECT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Gestione Siope" />
+			
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="esercizio_scrivania" />
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="ds_elemento_voce" />
+	<formFieldProperty
+		name="find_elemento_voce" />
+	<formFieldProperty
+		name="cd_siope" />
+	<formFieldProperty
+		name="ds_siope" />
+	<formFieldProperty
+		name="find_codici_siope" />
+	<formFieldProperty
+		name="esercizio_siope" />
+	<formFieldProperty
+		name="ti_gestione_siope" />
+		
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="cd_siope" />
+	<findFieldProperty
+		name="esercizio_siope" />
+	<findFieldProperty
+		name="ti_gestione_siope" />
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="ti_appartenenza" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="ds_elemento_voce" />
+	<columnFieldProperty
+		name="cd_siope" />
+	<columnFieldProperty
+		name="esercizio_siope" />
+	<columnFieldProperty
+		name="ti_gestione_siope" />
+	
+</bulkInfo>

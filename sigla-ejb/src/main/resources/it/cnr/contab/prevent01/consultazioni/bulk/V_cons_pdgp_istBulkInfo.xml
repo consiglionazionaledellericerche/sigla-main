@@ -1,0 +1,1156 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio" />
+	<fieldProperty
+		name="cd_cds_area"
+		property="cd_cds_area"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Area" />
+	<fieldProperty
+		name="ds_unita_organizzativa"
+		property="ds_unita_organizzativa"
+		inputType="TEXTAREA"
+		inputSize="300"
+		maxLength="300"
+		cols="60"
+		rows="5"
+		label="Desc. Area" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Centro Responsabilità" />
+	<fieldProperty
+		name="ds_cdr"
+		property="ds_cdr"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Desc. CdR" />
+	<fieldProperty
+		name="cd_classificazione"
+		property="cd_classificazione"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Classificazione" />
+	<fieldProperty
+		name="ds_classificazione"
+		property="ds_classificazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="250"
+		label="Descrizione clas." />
+	<fieldProperty
+		name="cd_livello1"
+		property="cd_livello1"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Titolo" />
+	<fieldProperty
+		name="cd_livello2"
+		property="cd_livello2"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Categoria" />
+	<fieldProperty
+		name="cd_livello3"
+		property="cd_livello3"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Capitolo" />	
+	<fieldProperty
+		name="cd_progetto"
+		property="cd_progetto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Progetto" />
+	<fieldProperty
+		name="ds_progetto"
+		property="ds_progetto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="8"
+		maxLength="433"
+		label="Desc. Progetto" />
+	<fieldProperty
+		name="cd_commessa"
+		property="cd_commessa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Commessa" />
+	<fieldProperty
+		name="ds_commessa"
+		property="ds_commessa"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="8"
+		maxLength="433"
+		label="Desc. Commessa" />	
+	<fieldProperty
+		name="cd_modulo"
+		property="cd_modulo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Modulo" />
+	<fieldProperty
+		name="ds_modulo"
+		property="ds_modulo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="8"
+		maxLength="433"
+		label="Desc. Modulo" />	
+	<fieldProperty
+		name="cd_terzo_finanziatore"
+		property="cd_terzo_finanziatore"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Codice Terzo" />
+	<fieldProperty
+		name="ds_dettaglio"
+		property="ds_dettaglio"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="8"
+		maxLength="433"
+		label="Dettaglio" />	
+	<fieldProperty
+		name="tot_finanziamento"
+		property="tot_finanziamento"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Tot.Finanziamento" />
+	<fieldProperty
+		name="im_entrata"
+		property="im_entrata"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Previsione anno corrente" />
+	<fieldProperty
+		name="im_entrata_a2"
+		property="im_entrata_a2"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Previsione anno successivo" />
+	<fieldProperty
+		name="im_entrata_a3"
+		property="im_entrata_a3"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Previsione anno +2" />	
+	<fieldProperty
+		name="im_dec_fonte_int"
+		property="im_dec_fonte_int"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Fonti Interne" />
+	<fieldProperty
+		name="im_dec_fonte_est"
+		property="im_dec_fonte_est"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Fonti Esterne" />		
+	<fieldProperty
+		name="im_acc_fonte_int"
+		property="im_acc_fonte_int"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Fonti Interne" />
+	<fieldProperty
+		name="im_acc_fonte_est"
+		property="im_acc_fonte_est"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Fonti Esterne" />		
+	<fieldProperty
+		name="im_tot_fonte_int"
+		property="im_tot_fonte_int"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Fonti Interne" />
+	<fieldProperty
+		name="im_tot_fonte_est"
+		property="im_tot_fonte_est"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Fonti Esterne" />	
+		<fieldProperty
+		name="im_tot_decentrato"
+		property="im_tot_decentrato"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Tot.decentrato" />			
+	<fieldProperty
+		name="im_spese_a2"
+		property="im_spese_a2"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale competenza anno successivo" />		
+	<fieldProperty
+		name="im_spese_a3"
+		property="im_spese_a3"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale competenza anno +2" />
+
+
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="cd_cds_area" />
+	<formFieldProperty name="ds_unita_organizzativa" />
+	<formFieldProperty name="cd_centro_responsabilita" />
+	<formFieldProperty name="ds_cdr" />
+	<formFieldProperty name="cd_classificazione" />
+	<formFieldProperty name="ds_classificazione" />
+	<formFieldProperty name="cd_progetto" />
+	<formFieldProperty name="ds_progetto" />
+	<formFieldProperty name="cd_modulo" />
+	<formFieldProperty name="ds_modulo" />
+	<formFieldProperty name="cd_commessa" />
+	<formFieldProperty name="ds_commessa" />
+	<formFieldProperty name="cd_terzo_finanziatore" />
+	<formFieldProperty name="ds_dettaglio" />
+	<formFieldProperty name="cd_livello1" />
+	<formFieldProperty name="cd_livello2" />
+	<formFieldProperty name="cd_livello3" />
+	<formFieldProperty name="tot_finanziamento" />
+	<formFieldProperty name="im_entrata" />
+	<formFieldProperty name="im_entrata_a2" />
+	<formFieldProperty name="im_entrata_a3" />
+	<formFieldProperty name="im_dec_fonte_int" />
+	<formFieldProperty name="im_dec_fonte_est" />
+	<formFieldProperty name="im_acc_fonte_int" />
+	<formFieldProperty name="im_acc_fonte_est" />
+	<formFieldProperty name="im_tot_fonte_int" />
+	<formFieldProperty name="im_tot_fonte_est" />
+	<formFieldProperty name="im_tot_decentrato" />
+	<formFieldProperty name="im_spese_a2" />
+	<formFieldProperty name="im_spese_a3" />
+ 
+ 	<columnFieldProperty name="esercizio" />
+	<columnFieldProperty name="cd_cds_area" />
+	<columnFieldProperty name="ds_unita_organizzativa" />
+	<columnFieldProperty name="cd_centro_responsabilita" />
+	<columnFieldProperty name="ds_cdr" />
+	<columnFieldProperty name="cd_classificazione" />
+	<columnFieldProperty name="ds_classificazione" />
+	<columnFieldProperty name="cd_progetto" />
+	<columnFieldProperty name="ds_progetto" />
+	<columnFieldProperty name="cd_modulo" />
+	<columnFieldProperty name="ds_modulo" />
+	<columnFieldProperty name="cd_commessa" />
+	<columnFieldProperty name="ds_commessa" />
+	<columnFieldProperty name="cd_terzo_finanziatore" />
+	<columnFieldProperty name="ds_dettaglio" />
+	<columnFieldProperty name="cd_livello1" />
+	<columnFieldProperty name="cd_livello2" />
+	<columnFieldProperty name="cd_livello3" />
+	<columnFieldProperty name="tot_finanziamento" />
+	<columnFieldProperty name="im_entrata" />
+	<columnFieldProperty name="im_entrata_a2" />
+	<columnFieldProperty name="im_entrata_a3" />
+	<columnFieldProperty name="im_dec_fonte_int" 
+		label="Fonti Interne"
+		headerLabel="Gestione Decentrata"/>
+	<columnFieldProperty name="im_dec_fonte_est" 
+		label="Fonti Esterne"
+		headerLabel="Gestione Decentrata"/>
+	<columnFieldProperty name="im_acc_fonte_int" 
+		label="Fonti Interne"
+		headerLabel="Gestione Accentrata"/>
+	<columnFieldProperty name="im_acc_fonte_est" 
+		label="Fonti Esterne"
+		headerLabel="Gestione Accentrata"/>
+	<columnFieldProperty name="im_tot_fonte_int" 
+		label="Fonti Interne"
+		headerLabel="Totale Competenza"/>
+	<columnFieldProperty name="im_tot_fonte_est" 
+		label="Fonti Esterne"
+		headerLabel="Totale Competenza"/>
+	<columnFieldProperty name="im_tot_decentrato" />
+	<columnFieldProperty name="im_spese_a2" />
+	<columnFieldProperty name="im_spese_a3" />
+ 	
+	<findFieldProperty name="cd_cds_area" />
+	<findFieldProperty name="ds_unita_organizzativa" />
+	<findFieldProperty name="cd_centro_responsabilita" />
+	<findFieldProperty name="ds_cdr" />
+	<findFieldProperty name="cd_classificazione" />
+	<findFieldProperty name="ds_classificazione" />
+	<findFieldProperty name="cd_progetto" />
+	<findFieldProperty name="cd_modulo" />
+	<findFieldProperty name="ds_modulo" />
+	<findFieldProperty name="cd_commessa" />
+	<findFieldProperty name="cd_terzo_finanziatore" />
+	<findFieldProperty name="ds_dettaglio" />
+	<findFieldProperty name="cd_livello1" />
+	<findFieldProperty name="cd_livello2" />
+	<findFieldProperty name="cd_livello3" />
+	<findFieldProperty name="tot_finanziamento" />
+	<findFieldProperty name="im_entrata" />
+	<findFieldProperty name="im_entrata_a2" />
+	<findFieldProperty name="im_entrata_a3" />
+	<findFieldProperty name="im_dec_fonte_int" />
+	<findFieldProperty name="im_dec_fonte_est" />
+	<findFieldProperty name="im_acc_fonte_int" />
+	<findFieldProperty name="im_acc_fonte_est" />
+	<findFieldProperty name="im_tot_fonte_int" />
+	<findFieldProperty name="im_tot_fonte_est" />
+	<findFieldProperty name="im_tot_decentrato" />
+	<findFieldProperty name="im_spese_a2" />
+	<findFieldProperty name="im_spese_a3" />
+	 
+	<columnSet name="ETRAREA">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="ds_unita_organizzativa" />
+		<columnFieldProperty name="im_entrata" />
+		<columnFieldProperty name="im_entrata_a2" />
+		<columnFieldProperty name="im_entrata_a3" />
+	</columnSet>
+
+	<columnSet name="ETRAREACDR">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="ds_cdr" />
+		<columnFieldProperty name="im_entrata" />
+		<columnFieldProperty name="im_entrata_a2" />
+		<columnFieldProperty name="im_entrata_a3" />
+	</columnSet>
+	
+	<columnSet name="ETRAREACDRLIV1">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="im_entrata" />
+		<columnFieldProperty name="im_entrata_a2" />
+		<columnFieldProperty name="im_entrata_a3" />
+	</columnSet>
+	<columnSet name="ETRAREACDRLIV1LIV2">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />	
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="im_entrata" />
+		<columnFieldProperty name="im_entrata_a2" />
+		<columnFieldProperty name="im_entrata_a3" />
+	</columnSet>
+	<columnSet name="ETRAREACDRLIV1LIV2LIV3">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />	
+		<columnFieldProperty name="cd_livello3" />	
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="im_entrata" />
+		<columnFieldProperty name="im_entrata_a2" />
+		<columnFieldProperty name="im_entrata_a3" />
+	</columnSet>
+	<columnSet name="ETRAREACDRLIV1LIV2LIV3DET">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="cd_classificazione" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="cd_modulo" />
+		<columnFieldProperty name="ds_modulo" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_progetto" />	
+		<!--<columnFieldProperty name="ds_commessa" />-->
+		<columnFieldProperty name="cd_terzo_finanziatore" />
+		<columnFieldProperty name="ds_dettaglio" />
+		<columnFieldProperty name="tot_finanziamento" />
+		<!--<columnFieldProperty name="ds_progetto" />-->
+		<columnFieldProperty name="im_entrata" />
+		<columnFieldProperty name="im_entrata_a2" />
+		<columnFieldProperty name="im_entrata_a3" />
+	</columnSet>
+	
+	<columnSet name="ETRAREACDRMOD">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_modulo" />
+		<columnFieldProperty name="ds_modulo" />	
+		<columnFieldProperty name="im_entrata" />
+		<columnFieldProperty name="im_entrata_a2" />
+		<columnFieldProperty name="im_entrata_a3" />
+	</columnSet>
+	
+	<columnSet name="ETRAREACDRMODLIV1">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_modulo" />	
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="im_entrata" />
+		<columnFieldProperty name="im_entrata_a2" />
+		<columnFieldProperty name="im_entrata_a3" />
+		
+	</columnSet>
+	<columnSet name="ETRAREACDRMODLIV1LIV2">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_modulo" />		
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="ds_classificazione" />	
+		<columnFieldProperty name="im_entrata" />
+		<columnFieldProperty name="im_entrata_a2" />
+		<columnFieldProperty name="im_entrata_a3" />
+	
+	</columnSet>
+	<columnSet name="ETRAREACDRMODLIV1LIV2LIV3">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_modulo" />		
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="ds_classificazione" />	
+		<columnFieldProperty name="im_entrata" />
+		<columnFieldProperty name="im_entrata_a2" />
+		<columnFieldProperty name="im_entrata_a3" />
+	</columnSet>
+	<columnSet name="ETRAREACDRMODLIV1LIV2LIV3DET">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />	
+		<columnFieldProperty name="cd_classificazione" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="cd_modulo" />		
+		<columnFieldProperty name="ds_modulo" />			
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_progetto" />	
+		<!--<columnFieldProperty name="ds_commessa" />-->
+		<columnFieldProperty name="cd_terzo_finanziatore" />
+		<columnFieldProperty name="ds_dettaglio" />
+		<columnFieldProperty name="tot_finanziamento" />
+		<!--<columnFieldProperty name="ds_progetto" />-->
+		<columnFieldProperty name="im_entrata" />
+		<columnFieldProperty name="im_entrata_a2" />
+		<columnFieldProperty name="im_entrata_a3" />
+		
+	</columnSet>
+	
+		<columnSet name="SPEAREACDRMODLIV1LIV2LIV3DET">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="cd_classificazione" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="cd_modulo" />
+		<columnFieldProperty name="ds_modulo" />	
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_progetto" />	
+		<!--<columnFieldProperty name="ds_commessa" />-->
+		<columnFieldProperty name="im_dec_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Decentrata"/>
+		<columnFieldProperty name="im_dec_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Decentrata"/>
+	<!--	<columnFieldProperty name="im_acc_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_acc_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_tot_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Totale Competenza"/>
+		<columnFieldProperty name="im_tot_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Totale Competenza"/> -->
+		<columnFieldProperty name="im_tot_decentrato" 
+			label="Totale Decentrato"/> 
+			
+		<columnFieldProperty name="im_spese_a2" />
+		<columnFieldProperty name="im_spese_a3" />
+	</columnSet>
+		<columnSet name="SPEAREACDRMODLIV1LIV2LIV3">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_modulo" />			
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="ds_classificazione" />			
+		<columnFieldProperty name="im_dec_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Decentrata"/>
+		<columnFieldProperty name="im_dec_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Decentrata"/>
+		<!--<columnFieldProperty name="im_acc_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_acc_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_tot_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Totale Competenza"/>
+		<columnFieldProperty name="im_tot_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Totale Competenza"/>-->
+		<columnFieldProperty name="im_tot_decentrato" 
+			label="Totale Decentrato"/> 	
+		<columnFieldProperty name="im_spese_a2" />
+		<columnFieldProperty name="im_spese_a3" />
+	</columnSet>
+	
+	<columnSet name="SPEAREACDRMODLIV1LIV2">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_modulo" />			
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="ds_classificazione" />			
+		<columnFieldProperty name="im_dec_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Decentrata"/>
+		<columnFieldProperty name="im_dec_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Decentrata"/>
+		<!--<columnFieldProperty name="im_acc_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_acc_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_tot_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Totale Competenza"/>
+		<columnFieldProperty name="im_tot_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Totale Competenza"/>-->
+		<columnFieldProperty name="im_tot_decentrato" 
+			label="Totale Decentrato"/> 	
+		<columnFieldProperty name="im_spese_a2" />
+		<columnFieldProperty name="im_spese_a3" />
+	</columnSet>
+	<columnSet name="SPEAREACDRMODLIV1">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_modulo" />	
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="ds_classificazione" />		
+		<columnFieldProperty name="im_dec_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Decentrata"/>
+		<columnFieldProperty name="im_dec_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Decentrata"/>
+		<!--<columnFieldProperty name="im_acc_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_acc_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_tot_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Totale Competenza"/>
+		<columnFieldProperty name="im_tot_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Totale Competenza"/>-->
+		<columnFieldProperty name="im_tot_decentrato" 
+			label="Totale Decentrato"/> 
+
+		<columnFieldProperty name="im_spese_a2" />
+		<columnFieldProperty name="im_spese_a3" />
+	</columnSet>
+	<columnSet name="SPEAREACDRMOD">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_modulo" />
+		<columnFieldProperty name="ds_modulo" />
+	
+		<columnFieldProperty name="im_dec_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Decentrata"/>
+		<columnFieldProperty name="im_dec_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Decentrata"/>
+<!--		<columnFieldProperty name="im_acc_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_acc_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_tot_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Totale Competenza"/>
+		<columnFieldProperty name="im_tot_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Totale Competenza"/>-->
+		<columnFieldProperty name="im_tot_decentrato" 
+			label="Totale Decentrato"/> 
+			
+		<columnFieldProperty name="im_spese_a2" />
+		<columnFieldProperty name="im_spese_a3" />
+	</columnSet>
+	
+	<columnSet name="SPEAREACDR">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="ds_cdr" />
+	
+		<columnFieldProperty name="im_dec_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Decentrata"/>
+		<columnFieldProperty name="im_dec_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Decentrata"/>
+		<!--<columnFieldProperty name="im_acc_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_acc_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_tot_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Totale Competenza"/>
+		<columnFieldProperty name="im_tot_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Totale Competenza"/>-->
+		<columnFieldProperty name="im_tot_decentrato" 
+			label="Totale Decentrato"/> 
+			
+		<columnFieldProperty name="im_spese_a2" />
+		<columnFieldProperty name="im_spese_a3" />
+	</columnSet>
+	
+		<columnSet name="SPEAREA">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="ds_unita_organizzativa" />
+	
+		<columnFieldProperty name="im_dec_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Decentrata"/>
+		<columnFieldProperty name="im_dec_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Decentrata"/>
+		<!--<columnFieldProperty name="im_acc_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_acc_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_tot_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Totale Competenza"/>
+		<columnFieldProperty name="im_tot_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Totale Competenza"/>-->
+		<columnFieldProperty name="im_tot_decentrato" 
+		label="Totale Decentrato"/> 		
+		<columnFieldProperty name="im_spese_a2" />
+		<columnFieldProperty name="im_spese_a3" />
+	</columnSet>
+	<columnSet name="SPEAREACDRLIV1LIV2LIV3DET">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="cd_classificazione" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="cd_modulo" />
+		<columnFieldProperty name="ds_modulo" /> 	
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_progetto" />	
+		<!--<columnFieldProperty name="ds_commessa" />-->
+	
+		<columnFieldProperty name="im_dec_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Decentrata"/>
+		<columnFieldProperty name="im_dec_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Decentrata"/>
+		<columnFieldProperty name="im_tot_decentrato" 
+			label="Totale Decentrato"/> 
+			
+		<!--<columnFieldProperty name="im_acc_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_acc_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_tot_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Totale Competenza"/>
+		<columnFieldProperty name="im_tot_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Totale Competenza"/>-->
+
+		<columnFieldProperty name="im_spese_a2" />
+		<columnFieldProperty name="im_spese_a3" />
+	</columnSet>
+	<columnSet name="SPEAREACDRLIV1LIV2LIV3">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="ds_classificazione" />	
+		<columnFieldProperty name="im_dec_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Decentrata"/>
+		<columnFieldProperty name="im_dec_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Decentrata"/>
+		<!--<columnFieldProperty name="im_acc_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_acc_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_tot_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Totale Competenza"/>
+		<columnFieldProperty name="im_tot_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Totale Competenza"/>-->
+		<columnFieldProperty name="im_tot_decentrato" 
+			label="Totale Decentrato"/> 
+
+		<columnFieldProperty name="im_spese_a2" />
+		<columnFieldProperty name="im_spese_a3" />
+	</columnSet>
+	
+	<columnSet name="SPEAREACDRLIV1LIV2">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="ds_classificazione" />	
+		<columnFieldProperty name="im_dec_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Decentrata"/>
+		<columnFieldProperty name="im_dec_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Decentrata"/>
+		<!--<columnFieldProperty name="im_acc_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_acc_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_tot_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Totale Competenza"/>
+		<columnFieldProperty name="im_tot_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Totale Competenza"/>-->
+		<columnFieldProperty name="im_tot_decentrato" 
+			label="Totale Decentrato"/> 
+
+		<columnFieldProperty name="im_spese_a2" />
+		<columnFieldProperty name="im_spese_a3" />
+	</columnSet>
+	
+	<columnSet name="SPEAREACDRLIV1">
+		<columnFieldProperty name="cd_cds_area" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="ds_classificazione" />	
+		<columnFieldProperty name="im_dec_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Decentrata"/>
+		<columnFieldProperty name="im_dec_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Decentrata"/>
+		<!--<columnFieldProperty name="im_acc_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_acc_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Gestione Accentrata"/>
+		<columnFieldProperty name="im_tot_fonte_int" 
+			label="Fonti Interne"
+			headerLabel="Totale Competenza"/>
+		<columnFieldProperty name="im_tot_fonte_est" 
+			label="Fonti Esterne"
+			headerLabel="Totale Competenza"/>-->
+		<columnFieldProperty name="im_tot_decentrato" 
+			label="Totale Decentrato"/> 
+
+		<columnFieldProperty name="im_spese_a2" />
+		<columnFieldProperty name="im_spese_a3" />
+	</columnSet>
+	
+	<freeSearchSet name="ETRAREA">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="ds_unita_organizzativa" />
+		<findFieldProperty name="im_entrata" />
+		<findFieldProperty name="im_entrata_a2"/>
+		<findFieldProperty name="im_entrata_a3"/>
+	</freeSearchSet>
+
+	<freeSearchSet name="ETRAREACDR">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="ds_cdr" />
+		<findFieldProperty name="im_entrata" />
+		<findFieldProperty name="im_entrata_a2"/>
+		<findFieldProperty name="im_entrata_a3"/>
+			
+	</freeSearchSet>
+	
+	<freeSearchSet name="ETRAREACDRLIV1">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="ds_classificazione" />	
+		<findFieldProperty name="im_entrata" />
+		<findFieldProperty name="im_entrata_a2" />
+		<findFieldProperty name="im_entrata_a3" />
+	</freeSearchSet>
+	<freeSearchSet name="ETRAREACDRLIV1LIV2">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="ds_classificazione" />		
+		<findFieldProperty name="im_entrata" />
+		<findFieldProperty name="im_entrata_a2"/>
+		<findFieldProperty name="im_entrata_a3"/>
+	</freeSearchSet>
+	<freeSearchSet name="ETRAREACDRLIV1LIV2LIV3">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="cd_livello3" label="Capitolo" />
+		<findFieldProperty name="ds_classificazione" />		
+		<findFieldProperty name="im_entrata" />
+		<findFieldProperty name="im_entrata_a2"/>
+		<findFieldProperty name="im_entrata_a3"/>
+	</freeSearchSet>
+	<freeSearchSet name="ETRAREACDRLIV1LIV2LIV3DET">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="cd_livello3" label="Capitolo" />
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="cd_modulo" />	
+		<findFieldProperty name="ds_modulo" />	
+		<findFieldProperty name="cd_commessa" />
+		<findFieldProperty name="cd_progetto" />	
+		<findFieldProperty name="cd_terzo_finanziatore" />
+		<findFieldProperty name="ds_dettaglio" />
+		<findFieldProperty name="im_entrata" />
+		<findFieldProperty name="im_entrata_a2"/>
+		<findFieldProperty name="im_entrata_a3"/>
+		</freeSearchSet>
+	
+	<freeSearchSet name="ETRAREACDRMOD">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_modulo" />
+		<findFieldProperty name="ds_modulo" />
+		<findFieldProperty name="im_entrata" />
+		<findFieldProperty name="im_entrata_a2"/>
+		<findFieldProperty name="im_entrata_a3"/>
+	</freeSearchSet>
+	
+	<freeSearchSet name="ETRAREACDRMODLIV1">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_modulo" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="ds_classificazione" />	
+		<findFieldProperty name="im_entrata" />
+		<findFieldProperty name="im_entrata_a2"/>
+		<findFieldProperty name="im_entrata_a3"/>			
+	</freeSearchSet>
+	<freeSearchSet name="ETRAREACDRMODLIV1LIV2">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_modulo" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="im_entrata" />
+		<findFieldProperty name="im_entrata_a2"/>
+		<findFieldProperty name="im_entrata_a3"/>
+	</freeSearchSet>
+	<freeSearchSet name="ETRAREACDRMODLIV1LIV2LIV3">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_modulo" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="cd_livello3" label="Capitolo" />
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="im_entrata" />
+		<findFieldProperty name="im_entrata_a2"/>
+		<findFieldProperty name="im_entrata_a3"/>
+	</freeSearchSet>
+	<freeSearchSet name="ETRAREACDRMODLIV1LIV2LIV3DET">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_modulo" />	
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="cd_livello3" />
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="cd_commessa" />
+		<findFieldProperty name="cd_progetto" />	
+		<findFieldProperty name="cd_terzo_finanziatore" />
+		<findFieldProperty name="ds_dettaglio" />
+		<findFieldProperty name="im_entrata" />
+		<findFieldProperty name="im_entrata_a2"/>
+		<findFieldProperty name="im_entrata_a3"/>
+		</freeSearchSet>
+
+	<freeSearchSet name="SPEAREACDRMODLIV1LIV2LIV3DET">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_modulo" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="cd_livello3" label="Sottocategoria"/>
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="cd_commessa" />
+		<!--<findFieldProperty name="ds_commessa" /> -->
+		<findFieldProperty name="cd_progetto" />
+		<findFieldProperty name="im_dec_fonte_int" label="Gestione Decentrata - Fonti Interne"/>
+		<findFieldProperty name="im_dec_fonte_est" label="Gestione Decentrata - Fonti Esterne"/>
+		<!--<findFieldProperty name="im_acc_fonte_int"/>
+		<findFieldProperty name="im_acc_fonte_est"/>
+		<findFieldProperty name="im_tot_fonte_int"/>
+		<findFieldProperty name="im_tot_fonte_est"/>-->
+		<findFieldProperty name="im_tot_decentrato" label="Totale Decentrato"/> 
+		<findFieldProperty name="im_spese_a2"/>
+		<findFieldProperty name="im_spese_a3"/>
+	</freeSearchSet>
+		<freeSearchSet name="SPEAREACDRMODLIV1LIV2LIV3">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_modulo" />
+		<findFieldProperty name="ds_modulo" /> 		
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="cd_livello3" label="Sottocategoria"/>
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="im_dec_fonte_int" label="Gestione Decentrata - Fonti Interne"/>
+		<findFieldProperty name="im_dec_fonte_est" label="Gestione Decentrata - Fonti Esterne"/>
+		<!--<findFieldProperty name="im_acc_fonte_int"/>
+		<findFieldProperty name="im_acc_fonte_est"/>
+		<findFieldProperty name="im_tot_fonte_int"/>
+		<findFieldProperty name="im_tot_fonte_est"/>-->
+		<findFieldProperty name="im_tot_decentrato" label="Totale Decentrato"/> 
+		<findFieldProperty name="im_spese_a2"/>
+		<findFieldProperty name="im_spese_a3"/>
+	</freeSearchSet>
+	
+	<freeSearchSet name="SPEAREACDRMODLIV1LIV2">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_modulo" />
+		<findFieldProperty name="ds_modulo" /> 		
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="im_dec_fonte_int" label="Gestione Decentrata - Fonti Interne"/>
+		<findFieldProperty name="im_dec_fonte_est" label="Gestione Decentrata - Fonti Esterne"/>
+		<!--<findFieldProperty name="im_acc_fonte_int"/>
+		<findFieldProperty name="im_acc_fonte_est"/>
+		<findFieldProperty name="im_tot_fonte_int"/>
+		<findFieldProperty name="im_tot_fonte_est"/>-->
+		<findFieldProperty name="im_tot_decentrato" label="Totale Decentrato"/> 
+		<findFieldProperty name="im_spese_a2"/>
+		<findFieldProperty name="im_spese_a3"/>
+	</freeSearchSet>
+	<freeSearchSet name="SPEAREACDRMODLIV1">
+		<findFieldProperty name="cd_cds_area" />	
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_modulo" />
+		<findFieldProperty name="ds_modulo" /> 		
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="im_dec_fonte_int" label="Gestione Decentrata - Fonti Interne"/>
+		<findFieldProperty name="im_dec_fonte_est" label="Gestione Decentrata - Fonti Esterne"/>
+		<!--<findFieldProperty name="im_acc_fonte_int"/>
+		<findFieldProperty name="im_acc_fonte_est"/>
+		<findFieldProperty name="im_tot_fonte_int"/>
+		<findFieldProperty name="im_tot_fonte_est"/>-->
+		<findFieldProperty name="im_tot_decentrato" label="Totale Decentrato"/> 
+		<findFieldProperty name="im_spese_a2"/>
+		<findFieldProperty name="im_spese_a3"/>
+	</freeSearchSet>
+	<freeSearchSet name="SPEAREACDRMOD">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_modulo"/>
+		<findFieldProperty name="ds_modulo"/>
+		<findFieldProperty name="im_dec_fonte_int" label="Gestione Decentrata - Fonti Interne"/>
+		<findFieldProperty name="im_dec_fonte_est" label="Gestione Decentrata - Fonti Esterne"/>
+		<!--<findFieldProperty name="im_acc_fonte_int"/>
+		<findFieldProperty name="im_acc_fonte_est"/>
+		<findFieldProperty name="im_tot_fonte_int"/>
+		<findFieldProperty name="im_tot_fonte_est"/>-->
+		<findFieldProperty name="im_tot_decentrato" label="Totale Decentrato"/> 
+		<findFieldProperty name="im_spese_a2"/>
+		<findFieldProperty name="im_spese_a3"/>
+	</freeSearchSet>
+	
+	<freeSearchSet name="SPEAREACDR">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="ds_cdr" />
+		<findFieldProperty name="im_dec_fonte_int" label="Gestione Decentrata - Fonti Interne"/>
+		<findFieldProperty name="im_dec_fonte_est" label="Gestione Decentrata - Fonti Esterne"/>
+		<!--<findFieldProperty name="im_acc_fonte_int"/>
+		<findFieldProperty name="im_acc_fonte_est"/>
+		<findFieldProperty name="im_tot_fonte_int"/>
+		<findFieldProperty name="im_tot_fonte_est"/>-->
+		<findFieldProperty name="im_tot_decentrato" label="Totale Decentrato"/> 
+		<findFieldProperty name="im_spese_a2"/>
+		<findFieldProperty name="im_spese_a3"/>
+	</freeSearchSet>
+	
+	<freeSearchSet name="SPEAREA">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="ds_unita_organizzativa" />
+		<findFieldProperty name="im_dec_fonte_int" label="Gestione Decentrata - Fonti Interne"/>
+		<findFieldProperty name="im_dec_fonte_est" label="Gestione Decentrata - Fonti Esterne"/>
+		<!--<findFieldProperty name="im_acc_fonte_int"/>
+		<findFieldProperty name="im_acc_fonte_est"/>
+		<findFieldProperty name="im_tot_fonte_int"/>
+		<findFieldProperty name="im_tot_fonte_est"/>-->
+		<findFieldProperty name="im_tot_decentrato" label="Totale Decentrato"/> 
+		<findFieldProperty name="im_spese_a2"/>
+		<findFieldProperty name="im_spese_a3"/>
+	</freeSearchSet>
+	<freeSearchSet name="SPEAREACDRLIV1LIV2LIV3DET">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="cd_livello3" label="Sottocategoria"/>
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="cd_modulo" />
+		<findFieldProperty name="ds_modulo" /> 	
+		<findFieldProperty name="cd_commessa" />
+	<!--<findFieldProperty name="ds_commessa" /> -->
+		<findFieldProperty name="cd_progetto" />
+	<!--<findFieldProperty name="ds_progetto" /> -->
+		<findFieldProperty name="im_dec_fonte_int" label="Gestione Decentrata - Fonti Interne"/>
+		<findFieldProperty name="im_dec_fonte_est" label="Gestione Decentrata - Fonti Esterne"/>
+		<!--<findFieldProperty name="im_acc_fonte_int"/>
+		<findFieldProperty name="im_acc_fonte_est"/>
+		<findFieldProperty name="im_tot_fonte_int"/>
+		<findFieldProperty name="im_tot_fonte_est"/>-->
+		<findFieldProperty name="im_tot_decentrato" label="Totale Decentrato"/> 
+		<findFieldProperty name="im_spese_a2"/>
+		<findFieldProperty name="im_spese_a3"/>
+	</freeSearchSet>
+	<freeSearchSet name="SPEAREACDRLIV1LIV2LIV3">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="cd_livello3" label="Sottocategoria"/>
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="im_dec_fonte_int" label="Gestione Decentrata - Fonti Interne"/>
+		<findFieldProperty name="im_dec_fonte_est" label="Gestione Decentrata - Fonti Esterne"/>
+		<!--<findFieldProperty name="im_acc_fonte_int"/>
+		<findFieldProperty name="im_acc_fonte_est"/>
+		<findFieldProperty name="im_tot_fonte_int"/>
+		<findFieldProperty name="im_tot_fonte_est"/>-->
+		<findFieldProperty name="im_tot_decentrato" label="Totale Decentrato"/> 
+		<findFieldProperty name="im_spese_a2"/>
+		<findFieldProperty name="im_spese_a3"/>
+	</freeSearchSet>
+	<freeSearchSet name="SPEAREACDRLIV1LIV2">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="cd_livello2" />
+		<findFieldProperty name="ds_classificazione" />
+		<findFieldProperty name="im_dec_fonte_int" label="Gestione Decentrata - Fonti Interne"/>
+		<findFieldProperty name="im_dec_fonte_est" label="Gestione Decentrata - Fonti Esterne"/>
+		<!--<findFieldProperty name="im_acc_fonte_int"/>
+		<findFieldProperty name="im_acc_fonte_est"/>
+		<findFieldProperty name="im_tot_fonte_int"/>
+		<findFieldProperty name="im_tot_fonte_est"/>-->
+		<findFieldProperty name="im_tot_decentrato" label="Totale Decentrato"/> 
+		<findFieldProperty name="im_spese_a2"/>
+		<findFieldProperty name="im_spese_a3"/>
+	</freeSearchSet>
+	
+	<freeSearchSet name="SPEAREACDRLIV1">
+		<findFieldProperty name="cd_cds_area" />
+		<findFieldProperty name="cd_centro_responsabilita" />
+		<findFieldProperty name="cd_livello1" />
+		<findFieldProperty name="ds_classificazione" />	
+		<findFieldProperty name="im_dec_fonte_int" label="Gestione Decentrata - Fonti Interne"/>
+		<findFieldProperty name="im_dec_fonte_est" label="Gestione Decentrata - Fonti Esterne"/>
+		<!--<findFieldProperty name="im_acc_fonte_int"/>
+		<findFieldProperty name="im_acc_fonte_est"/>
+		<findFieldProperty name="im_tot_fonte_int"/>
+		<findFieldProperty name="im_tot_fonte_est"/>-->
+		<findFieldProperty name="im_tot_decentrato" label="Totale Decentrato"/> 
+		<findFieldProperty name="im_spese_a2"/>
+		<findFieldProperty name="im_spese_a3"/>
+	</freeSearchSet>
+
+</bulkInfo> 

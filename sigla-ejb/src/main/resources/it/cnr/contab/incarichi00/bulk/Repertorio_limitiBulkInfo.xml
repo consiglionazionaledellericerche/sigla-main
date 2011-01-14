@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="find_tipo_limite"
+		property="tipo_limite"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Tipo Limite" />
+	<fieldProperty
+		name="cd_tipo_limite"
+		property="tipo_limite.cd_tipo_limite"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Tipo limite" />
+	<fieldProperty
+		name="importo_limite"
+		property="importo_limite"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Importo limite" />
+	<fieldProperty
+		name="importo_utilizzato"
+		property="importo_utilizzato"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Importo utilizzato" />
+	<fieldProperty
+		name="fl_raggiunto_limite"
+		property="fl_raggiunto_limite"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Limite di spesa raggiunto" />
+	<fieldProperty
+		name="tot_incarichi_x_cds"
+		property="tot_incarichi_x_cds"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Totale Importi Utilizzati" />
+	<fieldProperty
+		name="tot_prc_x_cds"
+		property="tot_prc_x_cds"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		formatName="it.cnr.contab.util.PercentFormat"
+		label="Totale Percentuale Utilizzata" />
+	<fieldProperty
+		name="tot_incarichi_assegnati"
+		property="tot_incarichi_assegnati"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Assegnati" />
+	<fieldProperty
+		name="tot_incarichi_validi"
+		property="tot_incarichi_validi"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		nullable="false"
+		label="In Corso" />
+	<fieldProperty
+		name="tot_incarichi_scaduti"
+		property="tot_incarichi_scaduti"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Scaduti" />
+		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="find_tipo_limite" />
+	<formFieldProperty
+		name="importo_limite" />
+	<formFieldProperty
+		name="importo_utilizzato" />
+	<formFieldProperty
+		name="fl_raggiunto_limite" />
+	<formFieldProperty
+		name="tot_incarichi_x_cds" />
+	<formFieldProperty
+		name="tot_prc_x_cds" />
+	<formFieldProperty
+		name="tot_incarichi_assegnati" />
+	<formFieldProperty
+		name="tot_incarichi_validi" />
+	<formFieldProperty
+		name="tot_incarichi_scaduti" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="importo_limite" 
+		headerLabel="IMPORTI COMPLESSIVI"/>
+	<columnFieldProperty
+		name="importo_utilizzato" 
+		headerLabel="IMPORTI COMPLESSIVI"/>
+	<columnFieldProperty
+		name="tot_incarichi_assegnati" 
+		headerLabel="INCARICHI ASSOCIATI CDS"/>
+	<columnFieldProperty
+		name="tot_incarichi_validi" 
+		headerLabel="INCARICHI ASSOCIATI CDS"/>
+	<columnFieldProperty
+		name="tot_incarichi_scaduti" 
+		headerLabel="INCARICHI ASSOCIATI CDS"/>
+	<columnFieldProperty
+		name="fl_raggiunto_limite" />
+	
+	<columnSet
+		name="columnsUoEnte">
+		<columnFieldProperty
+			name="esercizio" />
+		<columnFieldProperty
+			name="importo_limite" />
+		<columnFieldProperty
+			name="tot_incarichi_assegnati" 
+			headerLabel="INCARICHI ASSOCIATI"/>
+		<columnFieldProperty
+			name="tot_incarichi_validi" 
+			headerLabel="INCARICHI ASSOCIATI"/>
+		<columnFieldProperty
+			name="tot_incarichi_scaduti" 
+			headerLabel="INCARICHI ASSOCIATI"/>
+		<columnFieldProperty
+			name="importo_utilizzato" 
+			label="Totale"
+			headerLabel="INCARICHI ASSOCIATI"/>
+		<columnFieldProperty
+			name="tot_prc_x_cds" />
+		<columnFieldProperty
+			name="fl_raggiunto_limite" />
+	</columnSet>
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="importo_limite" />
+	<findFieldProperty
+		name="importo_utilizzato" />
+	<findFieldProperty
+		name="fl_raggiunto_limite" />
+</bulkInfo>

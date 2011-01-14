@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	shortDescription="Tipologie Variazione"
+	longDescription="Tipologie Variazione" >
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio contabile" />
+	<fieldProperty
+		name="cd_tipo_variazione"
+		property="cd_tipo_variazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Codice variazione" />
+	<fieldProperty
+		name="ds_tipo_variazione"
+		property="ds_tipo_variazione"
+		inputType="TEXTAREA"
+		maxLength="100"
+		cols="60"
+		rows="5"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="ti_tipo_variazione"
+		property="ti_tipo_variazione"
+		keysProperty="ti_tipologieKeys"
+		inputType="SELECT"
+		inputSize="20"
+		maxLength="1"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Tipo di variazione" />
+	<fieldProperty
+		name="fl_utilizzabile_ente"
+		property="fl_utilizzabile_ente"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Utilizzabile dall'Ente" />
+	<fieldProperty
+		name="fl_utilizzabile_area"
+		property="fl_utilizzabile_area"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Utilizzabile dalle Aree" />
+	<fieldProperty
+		name="fl_utilizzabile_cds"
+		property="fl_utilizzabile_cds"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Utilizzabile dai CdS" />
+	<fieldProperty
+		name="ti_approvazione"
+		property="ti_approvazione"
+		keysProperty="ti_approvazioneKeys"
+		inputType="SELECT"
+		inputSize="20"
+		maxLength="1"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Livello approvazione" />
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_tipo_variazione" />
+	<formFieldProperty
+		name="ds_tipo_variazione" />
+	<formFieldProperty
+		name="ti_tipo_variazione" />
+	<formFieldProperty
+		name="fl_utilizzabile_ente" />
+	<formFieldProperty
+		name="fl_utilizzabile_area" />
+	<formFieldProperty
+		name="fl_utilizzabile_cds" />
+	<formFieldProperty
+		name="ti_approvazione" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_tipo_variazione" />
+	<columnFieldProperty
+		name="ds_tipo_variazione" />
+	<columnFieldProperty
+		name="ti_tipo_variazione" />
+	<columnFieldProperty
+		name="fl_utilizzabile_ente" />
+	<columnFieldProperty
+		name="fl_utilizzabile_area" />
+	<columnFieldProperty
+		name="fl_utilizzabile_cds" />
+	<columnFieldProperty
+		name="ti_approvazione" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_tipo_variazione" />
+	<findFieldProperty
+		name="ds_tipo_variazione" />
+	<findFieldProperty
+		name="ti_tipo_variazione" />
+	<findFieldProperty
+		name="fl_utilizzabile_ente" />
+	<findFieldProperty
+		name="fl_utilizzabile_area" />
+	<findFieldProperty
+		name="fl_utilizzabile_cds" />
+	<findFieldProperty
+		name="ti_approvazione" />
+</bulkInfo>

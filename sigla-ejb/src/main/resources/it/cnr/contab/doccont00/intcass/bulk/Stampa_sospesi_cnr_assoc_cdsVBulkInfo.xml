@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	
+	<fieldProperty
+		name="findCdsForPrint"
+		property="cdsForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave = "true"
+		label="CDS" />
+	<fieldProperty
+		name="cdCdsForPrint"
+		property="cdsForPrint.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROCdCdsForPrint"
+		label="Codice CDS" />
+	<fieldProperty
+		name="dsCdsForPrint"
+		property="cdsForPrint.ds_unita_organizzativa"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione CDS" />
+	<fieldProperty
+		name="cdCdsCRForPrint"
+		property="cdCdsCRForPrint"/>
+		
+	<formFieldProperty name="findCdsForPrint" />
+	<formFieldProperty name="cdCdsForPrint" />
+	<formFieldProperty name="dsCdsForPrint" />
+	<formFieldProperty name="cdCdsCRForPrint" />
+
+
+
+	<form
+		name="/cnrdoccont/doccont/sospesiasscds.rpt">
+		<formFieldProperty 
+			name="cdCdsForPrint"
+			inputType="ROTEXT" />
+		<formFieldProperty 
+			name="dataInizio" />
+		<formFieldProperty 
+			name="dataFine" />
+		<formFieldProperty
+			name="ti_entrata_spesa" />
+	</form>
+
+	<printForm
+		name="/cnrdoccont/doccont/sospesiasscds.rpt">
+		<printFieldProperty 
+			name="cdCdsCRForPrint"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="dataInizio"
+			parameterPosition="1"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="dataFine"
+			parameterPosition="2"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="ti_entrata_spesa"
+			parameterPosition="3"
+			parameterType="STRING" />
+	</printForm>
+	<printForm
+		name="/cnrdoccont/doccont/sospesiasscds.jasper">
+		<printFieldProperty 
+			name="cdCdsCRForPrint"
+			parameterPosition="0"
+			parameterType="STRING" 
+			paramNameJR="cds"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="dataInizio"
+			parameterPosition="1"
+			parameterType="DATE"
+			paramNameJR="da_data"
+			paramTypeJR="java.util.Date"  />
+		<printFieldProperty 
+			name="dataFine"
+			parameterPosition="2"
+			parameterType="DATE" 
+			paramNameJR="a_data"
+			paramTypeJR="java.util.Date" />
+		<printFieldProperty 
+			name="ti_entrata_spesa"
+			parameterPosition="3"
+			parameterType="STRING" 
+			paramNameJR="tipo"
+			paramTypeJR="java.lang.String" />
+	</printForm>
+</bulkInfo>

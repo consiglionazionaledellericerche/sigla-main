@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="ti_auto"
+		property="ti_auto"
+		keysProperty="tipoAutoKeys"
+		inputType="RADIOGROUP"
+		layout = "HORIZONTAL"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Tipo Auto" />
+	<fieldProperty
+		name="ti_area_geografica"
+		property="ti_area_geografica"
+		keysProperty="ti_area_geograficaKeys"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Area Geografica" />
+/************ NAZIONE **************/
+	<fieldProperty
+		name="find_nazione"
+		property="nazione"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROFindNazione"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Nazione" />
+	<fieldProperty
+		name="pg_nazione"
+		property="pg_nazione"
+		readonlyProperty="RONazione"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Nazione" />
+	<fieldProperty
+		name="ds_nazione"
+		property="nazione.ds_nazione"
+		inputSize="60"
+		maxLength="60"
+		label="Nazione"
+		inputType="ROTEXT" />
+/***********************************/
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_inizio_validita"
+		formatName="date_short"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Inizio validita" />
+	<fieldProperty
+		name="indennita_chilometrica"
+		property="indennita_chilometrica"
+		maxLength="16"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Indennità Chilometrica" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		formatName="date_short"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Fine validita" />
+	<fieldProperty
+		name="dataFineValidita"
+		property="dataFineValidita"
+		formatName="date_short"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Fine validita" />
+	<fieldProperty
+		name="dt_cancellazione"
+		property="dt_cancellazione"
+		formatName="date_short"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Data Cancellazione" />
+
+	<formFieldProperty name="ti_auto" />
+	<formFieldProperty name="ti_area_geografica" />
+	<formFieldProperty name="pg_nazione" />
+	<formFieldProperty name="ds_nazione" />
+	<formFieldProperty name="find_nazione" />
+	<formFieldProperty name="dt_inizio_validita" />
+	<formFieldProperty name="indennita_chilometrica" />
+	<formFieldProperty name="dataFineValidita" />
+	<formFieldProperty name="dt_cancellazione" />
+
+	<columnFieldProperty name="ti_auto" />
+	<columnFieldProperty name="ti_area_geografica" />
+	<columnFieldProperty name="pg_nazione" />
+	<columnFieldProperty name="ds_nazione" />
+	<columnFieldProperty name="indennita_chilometrica" />
+	<columnFieldProperty name="dt_inizio_validita" />
+	<columnFieldProperty name="dataFineValidita" />
+	<columnFieldProperty name="dt_cancellazione" />
+
+	<findFieldProperty name="ti_auto" />
+	<findFieldProperty name="ti_area_geografica" />
+	<findFieldProperty name="pg_nazione" />
+	<findFieldProperty name="dt_inizio_validita" />
+	<findFieldProperty name="dt_fine_validita" />
+	<findFieldProperty name="indennita_chilometrica" />
+	<findFieldProperty name="dt_cancellazione" />
+
+</bulkInfo>

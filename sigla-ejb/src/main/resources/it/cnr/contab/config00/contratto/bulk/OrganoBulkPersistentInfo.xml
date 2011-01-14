@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.contratto.bulk.OrganoBulk"
+	homeClassName="it.cnr.contab.config00.contratto.bulk.OrganoHome">
+	<defaultColumnMap
+		tableName="ORGANO">
+	</defaultColumnMap>
+</SQLPersistentInfo>

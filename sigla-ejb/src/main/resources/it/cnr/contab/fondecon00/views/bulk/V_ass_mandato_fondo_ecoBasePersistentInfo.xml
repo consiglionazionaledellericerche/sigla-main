@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.fondecon00.views.bulk.V_ass_mandato_fondo_ecoBase"
+	homeClassName="it.cnr.contab.fondecon00.views.bulk.V_ass_mandato_fondo_ecoHome" >
+	<defaultColumnMap
+		tableName="V_ASS_MANDATO_FONDO_ECO" >
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pg_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="IM_MANDATO"
+			propertyName="im_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="IM_PAGATO"
+			propertyName="im_pagato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="CD_CODICE_FONDO"
+			propertyName="cd_codice_fondo"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="TI_APERTURA_INCREMENTO"
+			propertyName="ti_apertura_incremento"
+			sqlTypeName="VARCHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="pg_mandato" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="im_mandato" />
+	<persistentProperty
+		name="im_pagato" />
+	<persistentProperty
+		name="cd_codice_fondo" />
+	<persistentProperty
+		name="ti_apertura_incremento" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="cd_cds" />
+</SQLPersistentInfo>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.logs.bulk.Batch_procedura_parametroBase"
+	keyClassName="it.cnr.contab.logs.bulk.Batch_procedura_parametroKey"
+	homeClassName="it.cnr.contab.logs.bulk.Batch_procedura_parametroHome" >
+	<defaultColumnMap
+		tableName="BATCH_PROCEDURA_PARAMETRO" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="VALORE_NUMBER"
+			propertyName="valore_number"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="VALORE_DATE"
+			propertyName="valore_date"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="VALORE_VARCHAR"
+			propertyName="valore_varchar"
+			sqlTypeName="VARCHAR"
+			columnSize="200" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="valore_number" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="valore_date" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="valore_varchar" />
+</SQLPersistentInfo>

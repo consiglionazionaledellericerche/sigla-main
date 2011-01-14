@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cdCup"
+		property="cdCup"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="descrizione"
+		property="descrizione"
+		inputType="TEXTAREA"
+		enabledOnSearch="true"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="dt_canc"
+		property="dt_canc"
+		inputType="TEXT"
+		inputSize="8"
+		formatName="date_short"
+		label="Data Cancellazione"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true" />	
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdCup" />
+		<formFieldProperty
+			name="descrizione"
+			inputType="TEXT" />	
+	</form>
+	<formFieldProperty
+		name="cdCup" />
+	<formFieldProperty
+		name="descrizione" />
+	<formFieldProperty
+		name="dt_canc" />	
+	<findFieldProperty
+		name="cdCup" />
+	<findFieldProperty
+		name="descrizione" />
+	<findFieldProperty
+		name="dt_canc" />	
+	<columnFieldProperty
+		name="cdCup" />
+	<columnFieldProperty
+		name="descrizione" />
+	<columnFieldProperty
+		name="dt_canc" />	
+</bulkInfo>

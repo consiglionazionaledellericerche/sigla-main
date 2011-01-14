@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk"
+	homeClassName="it.cnr.contab.docamm00.tabrif.bulk.TariffarioHome" >
+	<defaultColumnMap
+		tableName="TARIFFARIO" >
+
+		
+<!--    chiave di accesso alla tabella VOCE_IVA    -->	
+			
+		<columnMapping
+			columnName="CD_VOCE_IVA"
+			propertyName="voce_iva.cd_voce_iva" 
+			fetchOnly = "false"/>		
+
+
+	</defaultColumnMap>
+	<persistentProperty
+		name="voce_iva"
+		partOfOid="false" />
+</SQLPersistentInfo>

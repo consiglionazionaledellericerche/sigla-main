@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_tipo_ammortamento"
+		property="cd_tipo_ammortamento"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnSearch="true" 
+		label="Codice" />
+	<fieldProperty
+		name="ti_ammortamento"
+		property="ti_ammortamento"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnSearch="true" 
+		label="Tipo Ammortamento" />
+	<fieldProperty
+		name="ti_ammortamentoSearch"
+		property="ti_ammortamento"
+		inputType="RADIOGROUP"
+		keysProperty="tiAmmortamentoKeys"
+		layout="HORIZONTAL"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		label="Tipo Documento" />
+	<fieldProperty
+		name="ds_tipo_ammortamento"
+		property="ds_tipo_ammortamento"
+		maxLength="100"
+		inputSize="50"
+		inputType="TEXT"
+		nullable="false"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio_competenza"
+		property="esercizio_competenza"
+		inputType="ROTEXT"
+		inputSize="6"
+		label="Esercizio di Competenza" />
+	<fieldProperty
+		name="fl_ordinario"
+		property="fl_ordinario"
+		inputType="CHECKBOX"
+		label="Ammortamento Ordinario" />
+	<fieldProperty
+		name="fl_anticipato"
+		property="fl_anticipato"
+		inputType="CHECKBOX"
+		label="Ammortamento Anticipato" />
+	<fieldProperty
+		name="fl_altro"
+		property="fl_altro"
+		inputType="CHECKBOX"
+		label="Altro Ammortamento" />
+		
+/**************** PERCENTUALI ****************/
+	<fieldProperty
+		name="perc_primo_anno"
+		property="perc_primo_anno"		
+		maxLength="5"
+		inputSize="5"
+		formatName="it.cnr.contab.util.PositivePercentFormat"
+		inputType="TEXT"
+		label="Perc. Primo Anno" />
+	<fieldProperty
+		name="perc_successivi"
+		property="perc_successivi"	
+		maxLength="5"
+		inputSize="5"
+		formatName="it.cnr.contab.util.PositivePercentFormat"
+		inputType="TEXT"
+		label="Perc. Successivi" />
+		
+	<fieldProperty
+		name="perc_primo_anno_ord"
+		property="perc_primo_anno_ord"		
+		maxLength="7"
+		inputSize="7"
+		formatName="it.cnr.contab.util.PositivePercentFormat"					
+		readonlyProperty="ROperc_primoAnno_ord"
+		inputType="TEXT"
+		nullable="false"
+		label="Perc. Primo Anno" />
+	<fieldProperty
+		name="perc_successivi_ord"
+		property="perc_successivi_ord"	
+		maxLength="7"
+		inputSize="7"
+		formatName="it.cnr.contab.util.PositivePercentFormat"					
+		readonlyProperty="ROperc_primoAnno_ord"
+		inputType="TEXT"
+		label="Perc. Successivi" />
+
+	<fieldProperty
+		name="perc_primo_anno_ant"
+		property="perc_primo_anno_ant"		
+		maxLength="7"
+		inputSize="7"
+		formatName="it.cnr.contab.util.PositivePercentFormat"					
+		readonlyProperty="ROperc_primoAnno_ant"
+		inputType="TEXT"
+		nullable="false"
+		label="Perc. Primo Anno" />
+	<fieldProperty
+		name="perc_successivi_ant"
+		property="perc_successivi_ant"	
+		maxLength="7"
+		inputSize="7"
+		formatName="it.cnr.contab.util.PositivePercentFormat"					
+		readonlyProperty="ROperc_primoAnno_ant"
+		inputType="TEXT"
+		label="Perc. Successivi" />
+
+	<fieldProperty
+		name="perc_primo_anno_altro"
+		property="perc_primo_anno_altro"		
+		maxLength="7"
+		inputSize="7"
+		formatName="it.cnr.contab.util.PositivePercentFormat"					
+		readonlyProperty="ROperc_primoAnno_altro"
+		inputType="TEXT"
+		nullable="false"
+		label="Perc. Primo Anno" />
+	<fieldProperty
+		name="perc_successivi_altro"
+		property="perc_successivi_altro"	
+		maxLength="7"
+		inputSize="7"
+		formatName="it.cnr.contab.util.PositivePercentFormat"					
+		readonlyProperty="ROperc_primoAnno_altro"
+		inputType="TEXT"
+		label="Perc. Successivi" />		
+/********************************************/	
+	
+/**************** TIPO AMMORTAMENTO RIASSOCIATO ****************/
+	<fieldProperty
+		name="cd_tipo_ammortamento_associato"
+		property="ammortamento_associato.cd_tipo_ammortamento"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Ammortamento Associato" />
+	<fieldProperty
+		name="ds_tipo_ammortamento_associato"
+		property="ammortamento_associato.ds_tipo_ammortamento"
+		maxLength="100"
+		inputSize="50"
+		inputType="TEXT"
+		label="Ammortamento Associato"
+		caseSensitiveSearch="false" />
+/**************************************************************/
+		
+	<fieldProperty
+		name="numero_anni"
+		property="numero_anni"		
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		label="Anni" />
+
+	<formFieldProperty
+		name="cd_tipo_ammortamento" />
+	<formFieldProperty
+		name="ds_tipo_ammortamento" />
+	<formFieldProperty
+		name="esercizio_competenza" />
+	<formFieldProperty
+		name="fl_ordinario" />
+	<formFieldProperty
+		name="fl_anticipato" />
+	<formFieldProperty
+		name="fl_altro" />
+	<formFieldProperty
+		name="numero_anni" />
+	<formFieldProperty
+		name="cd_tipo_ammortamento_associato" />
+	<formFieldProperty
+		name="ds_tipo_ammortamento_associato" />
+
+	
+	<formFieldProperty
+		name="perc_primo_anno" />
+	<formFieldProperty
+		name="perc_successivi" />
+	<formFieldProperty
+		name="perc_primo_anno_ord" />
+	<formFieldProperty
+		name="perc_successivi_ord" />
+	<formFieldProperty
+		name="perc_primo_anno_ant" />
+	<formFieldProperty
+		name="perc_successivi_ant" />
+	<formFieldProperty
+		name="perc_primo_anno_altro" />
+	<formFieldProperty
+		name="perc_successivi_altro" />
+	<formFieldProperty
+		name="ti_ammortamentoSearch" />
+
+	<columnFieldProperty
+		name="cd_tipo_ammortamento" />
+	<columnFieldProperty
+		name="ds_tipo_ammortamento" />
+	<columnFieldProperty
+		name="ti_ammortamento" 		
+		keysProperty="tiAmmortamentoKeys"/>
+	<columnFieldProperty
+		name="perc_primo_anno" />
+	<columnFieldProperty
+		name="perc_successivi" />
+
+	<findFieldProperty
+		name="cd_tipo_ammortamento" />
+	<findFieldProperty
+		name="ds_tipo_ammortamento" />
+	<findFieldProperty
+		name="ti_ammortamentoSearch" />
+	<findFieldProperty
+		name="perc_successivi" />
+	<findFieldProperty
+		name="perc_primo_anno" />
+
+</bulkInfo>

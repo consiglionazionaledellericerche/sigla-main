@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="causale_fine_rapporto"
+		property="causale_fine_rapporto"
+		readonlyPropertyOnEdit="anagrafico.dipendente"
+		label="Causale fine rapporto"
+		inputType="TEXT"
+		maxLength="300" />
+	<fieldProperty
+		name="cd_tipo_rapporto"
+		property="tipo_rapporto.cd_tipo_rapporto"
+		readonlyProperty="ROTipo_rapporto"
+		label="Codice tipo rapporto"
+		inputType="TEXT" />
+	<fieldProperty
+		name="ds_tipo_rapporto"
+		property="tipo_rapporto.ds_tipo_rapporto"
+		readonlyProperty="ROTipo_rapporto"
+		label="Codice tipo rapporto"
+		inputType="TEXT" />
+	<fieldProperty
+		name="find_tipo_rapporto"
+		label="Codice tipo rapporto"
+		property="tipo_rapporto"
+		inputType="SEARCHTOOL"
+		readonlyProperty="notNew" />
+	<fieldProperty
+		name="matricola_dipendente"
+		property="matricola_dipendente"
+		readonlyPropertyOnEdit="anagrafico.dipendente"
+		label="Matricola dipendente"
+		inputType="TEXT" />
+	<fieldProperty
+		name="dt_fin_validita"
+		property="dt_fin_validita"
+		readonlyPropertyOnEdit="anagrafico.dipendente"
+		label="Data fine validit&#224;"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="dt_ini_validita"
+		property="dt_ini_validita"
+		label="Data inizio validit&#224;"
+		inputType="TEXT"
+		formatName="date_short"
+		readonlyProperty="notNew"
+		nullable="false"
+		/>
+
+	<columnFieldProperty
+		name="causale_fine_rapporto"
+		label="Causale Fine Rapporto"
+		/>
+	<columnFieldProperty
+		name="cd_tipo_rapporto"
+		label="Codice"
+		/>
+	<columnFieldProperty
+		name="matricola_dipendente"
+		label="Matricola dipendente"
+		/>
+	<columnFieldProperty
+		name="dt_ini_validita"
+		label="Data inizio validit&#224;"
+		/>
+	<columnFieldProperty
+		name="dt_fin_validita"
+		label="Data fine validit&#224;"
+		/>
+
+	<formFieldProperty
+		name="causale_fine_rapporto"
+		/>
+	<formFieldProperty
+		name="cd_tipo_rapporto"
+		/>
+	<formFieldProperty
+		name="ds_tipo_rapporto"
+		/>
+	<formFieldProperty
+		name="find_tipo_rapporto"
+		/>
+	<formFieldProperty
+		name="matricola_dipendente"
+		/>
+	<formFieldProperty
+		name="dt_fin_validita"
+		/>
+	<formFieldProperty
+		name="dt_ini_validita"
+		/>
+
+	<findFieldProperty
+		name="cd_tipo_rapporto"
+		label="Codice"
+		/>
+	<findFieldProperty
+		name="matricola_dipendente"
+		label="Matricola dipendente"
+		/>
+	<findFieldProperty
+		name="dt_fin_validita"
+		label="Data fine validit&#224;"
+		/>
+	<findFieldProperty
+		name="dt_ini_validita"
+		label="Data inizio validit&#224;"
+		/>
+
+
+</bulkInfo>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.gestiva00.core.bulk.Vp_liquid_iva_annualeBase"
+	keyClassName="it.cnr.contab.gestiva00.core.bulk.Vp_liquid_iva_annualeKey"
+	homeClassName="it.cnr.contab.gestiva00.core.bulk.Vp_liquid_iva_annualeHome" >
+	<defaultColumnMap
+		tableName="VP_LIQUID_IVA_ANNUALE" >
+		<columnMapping
+			columnName="IMPONIBILE"
+			propertyName="imponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="3" />
+		<columnMapping
+			columnName="IM_TOTALE"
+			propertyName="im_totale"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="3" />
+		<columnMapping
+			columnName="CD_VOCE_IVA"
+			propertyName="cd_voce_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="200" />
+		<columnMapping
+			columnName="DS_MESE"
+			propertyName="ds_mese"
+			sqlTypeName="VARCHAR"
+			columnSize="200" />
+		<columnMapping
+			columnName="CHIAVE"
+			propertyName="chiave"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_VOCE_IVA"
+			propertyName="ds_voce_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="200" />
+		<columnMapping
+			columnName="IM_IVA"
+			propertyName="im_iva"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="3" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="imponibile" />
+	<persistentProperty
+		name="im_totale" />
+	<persistentProperty
+		name="cd_voce_iva" />
+	<persistentProperty
+		name="ds_mese" />
+	<persistentProperty
+		name="chiave" />
+	<persistentProperty
+		name="ds_voce_iva" />
+	<persistentProperty
+		name="im_iva" />
+</SQLPersistentInfo>

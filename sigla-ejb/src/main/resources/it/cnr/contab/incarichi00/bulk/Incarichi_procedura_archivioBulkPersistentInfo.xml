@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk"
+	keyClassName="it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioKey"
+	homeClassName="it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioHome">
+	<defaultColumnMap
+		tableName="INCARICHI_PROCEDURA_ARCHIVIO">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="incarichi_procedura.esercizio" />
+		<columnMapping
+			columnName="PG_PROCEDURA"
+			propertyName="incarichi_procedura.pg_procedura" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="incarichi_procedura"
+		partOfOid="true" />
+</SQLPersistentInfo>

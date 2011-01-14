@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.cdip.bulk.Costo_del_dipendenteBase"
+	keyClassName="it.cnr.contab.pdg00.cdip.bulk.Costo_del_dipendenteKey"
+	homeClassName="it.cnr.contab.pdg00.cdip.bulk.Costo_del_dipendenteHome" >
+	<defaultColumnMap
+		tableName="COSTO_DEL_DIPENDENTE" >
+		<columnMapping
+			columnName="IM_A3"
+			propertyName="im_a3"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_A2"
+			propertyName="im_a2"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_A1"
+			propertyName="im_a1"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_LIVELLO_3"
+			propertyName="cd_livello_3"
+			sqlTypeName="VARCHAR"
+			columnSize="3" />
+		<columnMapping
+			columnName="CD_LIVELLO_2"
+			propertyName="cd_livello_2"
+			sqlTypeName="VARCHAR"
+			columnSize="3" />
+		<columnMapping
+			columnName="CD_LIVELLO_1"
+			propertyName="cd_livello_1"
+			sqlTypeName="VARCHAR"
+			columnSize="3" />
+		<columnMapping
+			columnName="DT_SCARICO"
+			propertyName="dt_scarico"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="IM_ONERI_CNR_A3"
+			propertyName="im_oneri_cnr_a3"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ONERI_CNR_A2"
+			propertyName="im_oneri_cnr_a2"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ONERI_CNR_A1"
+			propertyName="im_oneri_cnr_a1"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_PROFILO"
+			propertyName="cd_profilo"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="TI_RAPPORTO"
+			propertyName="ti_rapporto"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="DS_PROFILO"
+			propertyName="ds_profilo"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="NOMINATIVO"
+			propertyName="nominativo"
+			sqlTypeName="VARCHAR"
+			columnSize="60" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_TFR_A3"
+			propertyName="im_tfr_a3"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_TFR_A2"
+			propertyName="im_tfr_a2"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_TFR_A1"
+			propertyName="im_tfr_a1"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_SCAD_CONTRATTO"
+			propertyName="dt_scad_contratto"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="ORIGINE_FONTI"
+			propertyName="origine_fonti"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="im_a3" />
+	<persistentProperty
+		name="im_a2" />
+	<persistentProperty
+		name="im_a1" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="cd_livello_3" />
+	<persistentProperty
+		name="cd_livello_2" />
+	<persistentProperty
+		name="cd_livello_1" />
+	<persistentProperty
+		name="dt_scarico" />
+	<persistentProperty
+		name="im_oneri_cnr_a3" />
+	<persistentProperty
+		name="im_oneri_cnr_a2" />
+	<persistentProperty
+		name="im_oneri_cnr_a1" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="cd_profilo" />
+	<persistentProperty
+		name="ti_rapporto" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="ds_profilo" />
+	<persistentProperty
+		name="nominativo" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="im_tfr_a3" />
+	<persistentProperty
+		name="im_tfr_a2" />
+	<persistentProperty
+		name="im_tfr_a1" />
+	<persistentProperty
+		name="dt_scad_contratto" />
+	<persistentProperty
+		name="origine_fonti" />
+</SQLPersistentInfo>

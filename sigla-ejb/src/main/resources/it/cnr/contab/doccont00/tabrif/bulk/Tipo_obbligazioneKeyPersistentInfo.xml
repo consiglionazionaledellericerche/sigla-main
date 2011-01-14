@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.tabrif.bulk.Tipo_obbligazioneKey" >
+	<defaultColumnMap
+		tableName="TIPO_OBBLIGAZIONE" >
+		<columnMapping
+			columnName="CD_TIPO_OBBLIGAZIONE"
+			propertyName="cd_tipo_obbligazione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_tipo_obbligazione"
+		partOfOid="true" />
+</SQLPersistentInfo>

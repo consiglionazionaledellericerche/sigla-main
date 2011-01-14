@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+			
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT" 
+		inputSize="8"
+		maxLength="8"
+		label="Esercizio"/>
+	<formFieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="ROTEXT" 
+		inputSize="10"
+		label="CdS Appartenenza"/>
+	<formFieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="ROTEXT" 
+		inputSize="10"
+		label="UO Appartenenza"/>
+		
+	<fieldProperty
+		name="dataInizio"
+		property="dataInizio"
+		inputType="TEXT"
+		formatName="date_short"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+		label="Data inizio"/>
+	<fieldProperty
+		name="dataFine"
+		property="dataFine"
+		inputType="TEXT"
+		formatName="date_short"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+		label="Data fine" />
+	<fieldProperty
+		name="findAnagraficoForPrint"
+		property="anagraficoForPrint"
+		inputType="SEARCHTOOL"
+		label="Anagrafico" />
+	<fieldProperty
+		name="cd_anag"
+		property="anagraficoForPrint.cd_anag"
+		inputType="TEXT"
+		readonlyProperty="ROAnagraficoForPrint"
+		nullable="false"
+		maxLength="8"
+		inputSize="8" 
+		label="Codice" />
+	<fieldProperty
+		name="ragione_sociale"
+		property="anagraficoForPrint.ragione_sociale"
+		inputType="ROTEXT"
+		inputSize="30" 
+		label="Ragione sociale" />
+	<fieldProperty
+		name="cognome"
+		property="anagraficoForPrint.cognome"
+		inputType="ROTEXT"
+		maxLength="50"
+		inputSize="30" 
+		label="Ragione sociale" />
+
+	<formFieldProperty name="cd_unita_organizzativa" />
+	<formFieldProperty name="cd_cds" />
+	<formFieldProperty name="esercizio" />
+	
+	<formFieldProperty name="dataInizio" />
+	<formFieldProperty name="dataFine" />
+	<formFieldProperty name="cd_anag" />
+	<formFieldProperty name="ragione_sociale" />
+	<formFieldProperty name="cognome" />	
+	<formFieldProperty name="findAnagraficoForPrint" />
+
+	<form
+		name="/docamm/docamm/partitario_compensi.rpt">
+		<formFieldProperty name="cd_unita_organizzativa" />
+		<formFieldProperty name="cd_cds" />
+		<formFieldProperty name="esercizio" />
+		
+		<formFieldProperty name="dataInizio" />
+		<formFieldProperty name="dataFine" />
+		<formFieldProperty name="cd_anag" />
+		<formFieldProperty name="ragione_sociale" />
+		<formFieldProperty name="cognome" />	
+		<formFieldProperty name="findAnagraficoForPrint" />
+	</form>
+	
+	<form
+		name="/docamm/docamm/partitario_compensi.jasper">
+		<formFieldProperty name="cd_unita_organizzativa" />
+		<formFieldProperty name="cd_cds" />
+		<formFieldProperty name="esercizio" />
+		
+		<formFieldProperty name="dataInizio" />
+		<formFieldProperty name="dataFine" />
+		<formFieldProperty name="cd_anag" />
+		<formFieldProperty name="ragione_sociale" />
+		<formFieldProperty name="cognome" />	
+		<formFieldProperty name="findAnagraficoForPrint" />
+	</form>
+
+	<printForm
+		name="/docamm/docamm/partitario_compensi.rpt">
+		<printFieldProperty 
+			name="cd_anag"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="1"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cd_unita_organizzativa"
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="3"
+			parameterType="STRING" />
+		<printFieldProperty
+			name="dataInizio"
+			parameterPosition="4"
+			parameterType="DATE" />
+		<printFieldProperty
+			name="dataFine"
+			parameterPosition="5"
+			parameterType="DATE" />
+	</printForm>
+	
+	<printForm
+		name="/docamm/docamm/partitario_compensi.jasper">
+		<printFieldProperty 
+			name="cd_anag"
+			parameterPosition="0"
+			parameterType="STRING" 
+			paramNameJR="Cd_anag"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="CDS"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cd_unita_organizzativa"
+			parameterPosition="2"
+			parameterType="STRING" 
+			paramNameJR="UO"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="3"
+			parameterType="STRING" 
+			paramNameJR="Esercizio"
+			paramTypeJR="java.lang.Integer"/>
+		<printFieldProperty
+			name="dataInizio"
+			parameterPosition="4"
+			parameterType="DATE"
+			paramNameJR="DaData"
+			paramTypeJR="java.util.Date" />
+		<printFieldProperty
+			name="dataFine"
+			parameterPosition="5"
+			parameterType="DATE"
+			paramNameJR="AData"
+			paramTypeJR="java.util.Date" />
+	</printForm>
+
+</bulkInfo>

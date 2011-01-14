@@ -1,0 +1,90 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="find_elemento_voce"
+		property="elemento_voce"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="elemento_voce.cd_elemento_voce"
+		readonlyProperty="ROElemento_voce"
+		label="Titolo Spesa CNR"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="10"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="elemento_voce.ds_elemento_voce"
+		readonlyProperty="ROElemento_voce"
+		label=""
+		inputType="ROTEXT"
+		inputSize="20"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="find_elemento_voce_coll"
+		property="elemento_voce_coll"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_elemento_voce_coll"
+		property="elemento_voce_coll.cd_elemento_voce"
+		readonlyProperty="ROElemento_voce_coll"
+		label="Titolo Spesa CDS"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="10"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="ds_elemento_voce_coll"
+		property="elemento_voce_coll.ds_elemento_voce"
+		readonlyProperty="ROElemento_voce_coll"
+		label=""
+		inputType="ROTEXT"
+		inputSize="20"
+		enabledOnSearch="true"
+		/>
+	
+	<columnFieldProperty
+		name="cd_elemento_voce"
+		/>
+	<columnFieldProperty
+		name="cd_elemento_voce_coll"
+		/>
+	
+	<formFieldProperty
+		name="find_elemento_voce"
+		/>
+	<formFieldProperty
+		name="cd_elemento_voce"
+		/>
+	<formFieldProperty
+		name="ds_elemento_voce"
+		/>
+	<formFieldProperty
+		name="find_elemento_voce_coll"
+		/>
+	<formFieldProperty
+		name="cd_elemento_voce_coll"
+		/>
+	<formFieldProperty
+		name="ds_elemento_voce_coll"
+		/>
+
+	<findFieldProperty
+		name="cd_elemento_voce"
+		/>
+	<findFieldProperty
+		name="cd_elemento_voce_coll"
+		/>
+		
+</bulkInfo>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" 
+		shortDescription ="Codici Rapporti INPS"
+		longDescription ="Codici Rapporti INPS">
+	<fieldProperty
+		name="cd_rapporto_inps"
+		property="cd_rapporto_inps"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Codice"
+		enabledOnSearch = "true" />
+	<fieldProperty
+		name="ds_rapporto_inps"
+		property="ds_rapporto_inps"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Descrizione" 
+		enabledOnSearch = "true"/>
+	<fieldProperty
+		name="fl_attivita_obbl"
+		property="fl_attivita_obbl"
+		inputType="CHECKBOX"
+		label="Attivita' obbligatoria" />
+	<fieldProperty
+		name="fl_cancellato"
+		property="fl_cancellato"
+		inputType="CHECKBOX"
+		label="Cancellato" />
+		
+  	<form name="searchtool">
+          <formFieldProperty
+                name="cd_rapporto_inps" />
+          <formFieldProperty
+                name="ds_rapporto_inps"
+                inputType="TEXT"
+                inputSize="40" />
+    </form>	
+    		
+	<formFieldProperty
+		name="cd_rapporto_inps" />
+	<formFieldProperty
+		name="ds_rapporto_inps" />
+	<formFieldProperty
+		name="fl_attivita_obbl" />
+	<formFieldProperty
+		name="fl_cancellato" />
+	<findFieldProperty
+		name="cd_rapporto_inps" />
+	<findFieldProperty
+		name="ds_rapporto_inps" />
+	<findFieldProperty
+		name="fl_attivita_obbl" />
+	<columnFieldProperty
+		name="cd_rapporto_inps" />
+	<columnFieldProperty
+		name="ds_rapporto_inps" />
+	<columnFieldProperty
+		name="fl_attivita_obbl" />
+</bulkInfo>

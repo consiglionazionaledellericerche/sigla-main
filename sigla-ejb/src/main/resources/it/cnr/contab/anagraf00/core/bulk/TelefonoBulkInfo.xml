@@ -1,0 +1,88 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_anag"
+		property="cd_anag"
+		label="Codice angrafico"
+		inputType="TEXT" />
+	<fieldProperty
+		name="ds_riferimento"
+		property="ds_riferimento"
+		label="Descrizione"
+		inputType="TEXT"
+		nullable="false"
+		maxLength="100"  
+		readonlyPropertyOnEdit="terzo.dipendente" />
+	<fieldProperty
+		name="riferimento"
+		property="riferimento"
+		label="Riferimento"
+		inputType="TEXT"
+		nullable="false"
+		maxLength="50"  
+		readonlyPropertyOnEdit="terzo.dipendente" />
+		
+	<formFieldProperty
+		name="ds_riferimento"
+		/>
+	<formFieldProperty
+		name="riferimento"
+		/>
+
+	<form name="telefono">
+		<formFieldProperty
+			name="ds_riferimento"
+			/>
+		<formFieldProperty
+			name="riferimento"
+			label="Telefono"
+			/>
+	</form>
+
+	<form name="email">
+		<formFieldProperty
+			name="ds_riferimento"
+			/>
+		<formFieldProperty
+			name="riferimento"
+			label="Email"
+			/>
+	</form>
+
+	<form name="fax">
+		<formFieldProperty
+			name="ds_riferimento"
+			/>
+		<formFieldProperty
+			name="riferimento"
+			label="Fax"
+			/>
+	</form>
+
+	<columnSet name="telefono">
+		<columnFieldProperty
+			name="ds_riferimento" />
+		<columnFieldProperty
+			name="riferimento"
+			label="Telefono" />
+	</columnSet>
+
+	<columnSet name="email">
+		<columnFieldProperty
+			name="ds_riferimento" />
+		<columnFieldProperty
+			name="riferimento"
+			label="Email" />
+	</columnSet>
+
+	<columnSet name="fax">
+		<columnFieldProperty
+			name="ds_riferimento" />
+		<columnFieldProperty
+			name="riferimento"
+			label="Fax" />
+	</columnSet>
+</bulkInfo>

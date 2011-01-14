@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_appartenenza" />
+	<fieldProperty
+		name="ti_appartenenza_clg"
+		property="ti_appartenenza_clg"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_appartenenza_clg"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_voce_clg"
+		property="cd_voce_clg"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="cd_voce_clg"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="ti_gestione_clg"
+		property="ti_gestione_clg"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_gestione_clg"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_gestione" />
+	<fieldProperty
+		name="cd_voce"
+		property="cd_voce"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="cd_voce" />
+
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="ti_appartenenza_clg" />
+	<formFieldProperty
+		name="cd_voce_clg" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="ti_gestione_clg" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_voce" />
+
+	<columnFieldProperty
+		name="ti_appartenenza" />
+	<columnFieldProperty
+		name="ti_appartenenza_clg" />
+	<columnFieldProperty
+		name="cd_voce_clg" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="ti_gestione_clg" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_voce" />
+
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="ti_appartenenza_clg" />
+	<findFieldProperty
+		name="cd_voce_clg" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="ti_gestione_clg" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_voce" />
+
+</bulkInfo>

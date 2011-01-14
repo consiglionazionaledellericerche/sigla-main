@@ -1,0 +1,56 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_accesso"
+		property="accesso.cd_accesso"
+		label="cd_accesso"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		label="cd_unita_organizzativa"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="cd_utente"
+		property="cd_utente"
+		label="cd_utente"
+		inputType="TEXT"
+		/>
+
+	<columnFieldProperty
+		name="cd_accesso"
+		/>
+	<columnFieldProperty
+		name="cd_unita_organizzativa"
+		/>
+	<columnFieldProperty
+		name="cd_utente"
+		/>
+
+	<formFieldProperty
+		name="cd_accesso"
+		/>
+	<formFieldProperty
+		name="cd_unita_organizzativa"
+		/>
+	<formFieldProperty
+		name="cd_utente"
+		/>
+
+	<findFieldProperty
+		name="cd_accesso"
+		/>
+	<findFieldProperty
+		name="cd_unita_organizzativa"
+		/>
+	<findFieldProperty
+		name="cd_utente"
+		/>
+
+
+</bulkInfo>

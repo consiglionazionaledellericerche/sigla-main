@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.file.bulk.Ass_tipo_gruppo_fileBulk"
+	homeClassName="it.cnr.contab.config00.file.bulk.Ass_tipo_gruppo_fileHome">
+	<defaultColumnMap
+		tableName="ASS_TIPO_FILE_GRUPPO">
+		<columnMapping
+			columnName="CD_TIPO_FILE"
+			propertyName="tipo_file.cd_tipo_file" />
+		<columnMapping
+			columnName="CD_GRUPPO_FILE"
+			propertyName="gruppo_file.cd_gruppo_file" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipo_file"
+		partOfOid="true" />
+	<persistentProperty
+		name="gruppo_file"
+		partOfOid="true" />
+</SQLPersistentInfo>

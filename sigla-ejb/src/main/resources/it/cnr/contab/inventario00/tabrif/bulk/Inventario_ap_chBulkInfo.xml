@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="dt_apertura"
+		property="dt_apertura"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		readonlyProperty="ROdt_apertura"		
+		label="Data Apertura" />
+	<fieldProperty
+		name="dt_aperturaForSearch"
+		property="dt_apertura"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		label="Data Apertura" />
+	<fieldProperty
+		name="dt_chiusura"
+		property="dt_chiusura"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"		
+		label="Data Chiusura" />
+	<fieldProperty
+		name="dataChiusura"
+		property="dataChiusura"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"	
+		nullable="false"
+		readonlyProperty="ROdt_chiusura"
+		label="Data Chiusura" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Stato"
+		caseSensitiveSearch="false" />
+
+	/********************************
+	****** Attributi Complessi ******
+	********************************/
+
+	// --> INVENTARIO
+	<fieldProperty
+		name="pg_inventario"
+		property="inventario.pg_inventario"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Inventario" />
+	<fieldProperty
+		name="ds_inventario"
+		property="inventario.ds_inventario"
+		maxLength="100"
+		inputSize="70"
+		inputType="ROTEXT"
+		label="Descrizione Inventario" />
+	<fieldProperty
+		name="nr_bene_iniziale"
+		property="inventario.nr_inventario_iniziale"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Nr. bene iniziale" />
+
+	// --> INVENTARIO_CONSEGNATARIO
+	//		--> CONSEGNATARIO
+	<fieldProperty
+		name="cd_consegnatario"
+		property="inventarioConsegnatario.cd_consegnatario"
+		maxLength="8"
+		inputSize="10"
+		inputType="TEXT"		
+		nullable="false"
+		label="Consegnatario" />
+	<fieldProperty
+		name="ds_consegnatario"
+		property="inventarioConsegnatario.ds_consegnatario"
+		maxLength="100"
+		inputSize="70"
+		inputType="ROTEXT"
+		label="Descrizione Consegnatario" />
+
+	//		--> DELEGATO
+	<fieldProperty
+		name="cd_delegato"
+		property="inventarioConsegnatario.cd_delegato"
+		maxLength="8"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Delegato" />
+	<fieldProperty
+		name="ds_delegato"
+		property="inventarioConsegnatario.ds_delegato"
+		maxLength="100"
+		inputSize="70"
+		inputType="ROTEXT"
+		label="Descrizione Delegato" />
+
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="inventarioConsegnatario.dt_inizio_validita"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		label="Data Inizio Validita" />
+
+	<fieldProperty
+		name="dt_fine_validita"
+		property="inventarioConsegnatario.dt_fine_validita"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		formatName="date_short"
+		nullable="false"
+		label="Data Fine Validita" />		
+
+	<formFieldProperty
+		name="pg_inventario" />
+	<formFieldProperty
+		name="ds_inventario" />
+	<formFieldProperty
+		name="dt_apertura" />
+	<formFieldProperty
+		name="dataChiusura" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="cd_consegnatario" />
+	<formFieldProperty
+		name="ds_consegnatario" />
+	<formFieldProperty
+		name="cd_delegato" />
+	<formFieldProperty
+		name="ds_delegato" />
+	<formFieldProperty
+		name="dt_inizio_validita" />
+	<formFieldProperty
+		name="dt_fine_validita" />
+	<formFieldProperty
+		name="nr_bene_iniziale" />
+
+	<columnFieldProperty
+		name="pg_inventario" />
+	<columnFieldProperty
+		name="ds_inventario" />
+	<columnFieldProperty
+		name="dt_apertura" />
+	<columnFieldProperty
+		name="dataChiusura" />
+	<columnFieldProperty
+		name="stato" />
+
+	
+	<findFieldProperty
+		name="dt_aperturaForSearch" />
+	<findFieldProperty
+		name="dt_chiusura" />
+	<findFieldProperty
+		name="stato" />
+
+</bulkInfo>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent01.bulk.Pdg_contrattazione_speseBulk"
+	homeClassName="it.cnr.contab.prevent01.bulk.Pdg_contrattazione_speseHome">
+	<defaultColumnMap
+		tableName="PDG_CONTRATTAZIONE_SPESE">
+		<columnMapping
+			columnName="ESERCIZIO_DIP"
+			propertyName="pdg_dip_area.esercizio" />
+		<columnMapping
+			columnName="CD_DIPARTIMENTO"
+			propertyName="pdg_dip_area.dipartimento.cd_dipartimento" />
+		<columnMapping
+			columnName="PG_DETTAGLIO_DIP"
+			propertyName="pdg_dip_area.pg_dettaglio" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cdr.cd_centro_responsabilita"/>
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="progetto.pg_progetto"/>
+		<columnMapping
+			columnName="ID_CLASSIFICAZIONE"
+			propertyName="classificazione.id_classificazione"/>
+		<columnMapping
+			columnName="CD_CDS_AREA"
+			propertyName="area.cd_unita_organizzativa"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="pdg_dip_area" />
+	<persistentProperty
+		name="cdr" 		
+		partOfOid="true" />
+	<persistentProperty
+		name="progetto" 		
+		partOfOid="true" />
+	<persistentProperty
+		name="classificazione" />
+	<persistentProperty
+		name="area"/>
+	<fetchPolicy
+		name="it.cnr.contab.prevent01.comp.PdgContrSpeseComponent.findCdr">
+		<exclude pattern="*"/>
+		<include pattern="unita_padre"/>
+	</fetchPolicy>				
+</SQLPersistentInfo>

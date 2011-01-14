@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_condizione_bene"
+		property="cd_condizione_bene"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		label="Codice"
+		enabledOnInsert = "true"
+		enabledOnEdit = "false"
+		enabledOnSearch = "true" />
+	<fieldProperty
+		name="ds_condizione_bene"
+		property="ds_condizione_bene"
+		maxLength="100"
+		inputSize="70"
+		inputType="TEXT"
+		nullable="false"
+		label="Descrizione"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		caseSensitiveSearch="false" />
+
+	<formFieldProperty
+		name="cd_condizione_bene"/>
+	<formFieldProperty
+		name="ds_condizione_bene" />
+
+	<columnFieldProperty
+		name="cd_condizione_bene"
+		style="width:80px" />
+	<columnFieldProperty
+		name="ds_condizione_bene"
+		style="width:300px" />
+
+	<findFieldProperty
+		name="cd_condizione_bene" />
+	<findFieldProperty
+		name="ds_condizione_bene" />
+
+</bulkInfo>

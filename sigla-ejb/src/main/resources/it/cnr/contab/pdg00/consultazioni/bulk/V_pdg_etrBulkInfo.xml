@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Piano di gestione per commessa(ENTRATA)"
+          longDescription="PDG per commessa(ENTRATA)">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_dipartimento"
+		property="cd_dipartimento"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice Dipartimento" />
+	<fieldProperty
+		name="cd_progetto"
+		property="cd_progetto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice Progetto" />
+	<fieldProperty
+		name="ds_progetto"
+		property="ds_progetto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="400"
+		label="Descrizione Progetto" />
+	<fieldProperty
+		name="cd_commessa"
+		property="cd_commessa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice Commessa" />
+	<fieldProperty
+		name="ds_commessa"
+		property="ds_commessa"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="400"
+		label="Descrizione Commessa" />
+	<fieldProperty
+		name="cd_modulo"
+		property="cd_modulo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice Modulo di attività" />
+	<fieldProperty
+		name="ds_modulo"
+		property="ds_modulo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="400"
+		label="Descrizione Modulo di attività" />
+	<fieldProperty
+		name="tipo_progetto"
+		property="tipo_progetto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Tipo" />
+	<fieldProperty
+		name="cds"
+		property="cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS" />
+	<fieldProperty
+		name="ds_cds"
+		property="ds_cds"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione CDS" />
+	<fieldProperty
+		name="uo"
+		property="uo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Unità organizzativa" />
+	<fieldProperty
+		name="titolo"
+		property="titolo"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Titolo" />
+	<fieldProperty
+		name="ds_titolo"
+		property="ds_titolo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Descrizione Titolo" />
+	<fieldProperty
+		name="codice_clas_entrata"
+		property="codice_clas_entrata"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Riclassificazione Entrate per Categoria" />
+	<fieldProperty
+		name="ds_classificazione_entrata"
+		property="ds_classificazione_entrata"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="400"
+		label="Descrizione Riclassificazione" />
+	<fieldProperty
+		name="elemento_voce"
+		property="elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Voce del piano" />
+	<fieldProperty
+		name="natura"
+		property="natura"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Natura" />
+	<fieldProperty
+		name="im_entrate_ricavi"
+		property="im_entrate_ricavi"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Entrate con Ricavi (A)" />
+	<fieldProperty
+		name="im_entrate_senza_ricavi"
+		property="im_entrate_senza_ricavi"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Entrate senza Ricavi (C)" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_dipartimento" />
+	<findFieldProperty
+		name="cd_progetto" />
+	<findFieldProperty
+		name="ds_progetto" />
+	<findFieldProperty
+		name="cd_commessa" />
+	<findFieldProperty
+		name="ds_commessa" />
+	<findFieldProperty
+		name="cd_modulo" />
+	<findFieldProperty
+		name="ds_modulo" />
+	<findFieldProperty
+		name="tipo_progetto" />
+	<findFieldProperty
+		name="cds" />
+	<findFieldProperty
+		name="ds_cds" />
+	<findFieldProperty
+		name="uo" />
+	<findFieldProperty
+		name="titolo" />
+	<findFieldProperty
+		name="ds_titolo" />
+	<findFieldProperty
+		name="codice_clas_entrata" />
+	<findFieldProperty
+		name="ds_classificazione_entrata" />
+	<findFieldProperty
+		name="elemento_voce" />
+	<findFieldProperty
+		name="natura" />
+	<findFieldProperty
+		name="im_entrate_ricavi" />
+	<findFieldProperty
+		name="im_entrate_senza_ricavi" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_dipartimento" />
+	<columnFieldProperty
+		name="cd_progetto" />
+	<columnFieldProperty
+		name="ds_progetto" />
+	<columnFieldProperty
+		name="cd_commessa" />
+	<columnFieldProperty
+		name="ds_commessa" />
+	<columnFieldProperty
+		name="cd_modulo" />
+	<columnFieldProperty
+		name="ds_modulo" />
+	<columnFieldProperty
+		name="tipo_progetto" />
+	<columnFieldProperty
+		name="cds" />
+	<columnFieldProperty
+		name="ds_cds" />
+	<columnFieldProperty
+		name="uo" />
+	<columnFieldProperty
+		name="titolo" />
+	<columnFieldProperty
+		name="ds_titolo" />
+	<columnFieldProperty
+		name="codice_clas_entrata" />
+	<columnFieldProperty
+		name="ds_classificazione_entrata" />
+	<columnFieldProperty
+		name="elemento_voce" />
+	<columnFieldProperty
+		name="natura" />
+	<columnFieldProperty
+		name="im_entrate_ricavi" />
+	<columnFieldProperty
+		name="im_entrate_senza_ricavi" />
+</bulkInfo>

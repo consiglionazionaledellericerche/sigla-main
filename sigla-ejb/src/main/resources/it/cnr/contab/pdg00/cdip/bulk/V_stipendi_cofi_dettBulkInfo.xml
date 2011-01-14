@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="mese"
+		property="mese"
+		keysProperty="meseKeys"
+		inputSize="30"
+		maxLength="30"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"		
+		label="Mese" />
+	<fieldProperty
+		name="tipo_flusso"
+		property="tipo_flusso"
+		keysProperty="tipo_flussoKeys"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipologia Flusso" />
+	<fieldProperty
+		name="entrata_spesa"
+		property="entrata_spesa"
+		keysProperty="entrata_spesaKeys"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Entrata/Spesa" />
+	<fieldProperty
+		name="pg_exec"
+		property="pg_exec"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"  
+		enabledOnFreeSearch="true"			
+		enabledOnSearch="true"
+		label="Progressivo Elaborazione" />		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="mese" />
+	<formFieldProperty
+		name="tipo_flusso" />
+	<formFieldProperty
+		name="entrata_spesa" />
+	<formFieldProperty 
+	    name="pg_exec" />		
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="mese" />
+	<findFieldProperty
+		name="tipo_flusso" />
+	<findFieldProperty
+		name="entrata_spesa" />
+	<findFieldProperty 
+	    name="pg_exec" />
+	<columnFieldProperty
+		name="tipo_flusso" />
+	<columnFieldProperty
+		name="entrata_spesa" />
+</bulkInfo>

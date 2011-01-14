@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+<!-- I campi im_entrata_tot - esercizo_inizio - esercizio_fine - im_spese_vive - ds_spese_vive
+	 possono essere null -->
+	 
+	<fieldProperty
+		name="esercizio"
+		property="testata.esercizio"
+		inputType="ROTEXT"
+		inputSize="4"
+		maxLength="4"
+		nullable="false"
+		label="Esercizio" />
+		
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="testata.cdr.cd_centro_responsabilita"
+		inputType="ROTEXT"
+		nullable="false"
+		inputSize="20"
+		maxLength="30"
+		label="CdR" />
+
+	<fieldProperty
+		name="ds_centro_responsabilita"
+		property="testata.cdr.ds_cdr"
+		inputType="ROTEXT"
+		inputSize="80"
+		maxLength="300"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="CdR" />
+
+	<fieldProperty
+		name="pg_progetto"
+		property="testata.progetto.pg_progetto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+		label="Progetto" />
+	<fieldProperty
+		name="cdr_linea"
+		property="cdr_linea_att.cd_centro_responsabilita"
+		inputType="ROTEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CdR" />
+	<fieldProperty
+		name="ds_cdr_linea"
+		property="cdr_linea_att.ds_cdr"
+		inputType="ROTEXT"
+		inputSize="50"
+		maxLength="300"
+		label="CdR" />		
+	<fieldProperty
+		name="find_linea_attivita"
+		property="linea_attivita"
+		inputType="SEARCHTOOL" 	
+		label="G.a.e."		
+		enabledOnSearch="true"		
+		enabledOnEdit="true" />	
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="linea_attivita.cd_linea_attivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable ="false"
+		label="G.a.e." 
+		caseSensitiveSearch="false" 
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="ds_linea_attivita"
+		property="linea_attivita.denominazione"
+		maxLength="300"
+		inputSize="50"
+		inputType="TEXT"
+		label="G.a.e."
+		caseSensitiveSearch="false" />	
+	
+	<fieldProperty
+		name="natura"
+		property="natura"		
+		optionsProperty="nature"
+		printProperty="cd_ds_natura"
+		maxLength="30"
+		inputSize="10"
+		inputType="SELECT"
+		nullable="false"
+		label="Fonte"  
+		readonlyPropertyOnEdit="RONatura"
+		enabledOnFreeSearch="true"   
+		enabledOnSearch="true" />
+	<fieldProperty
+		name ="cd_ds_natura"
+		property="natura.cd_ds_natura"	
+		nullable="false"
+		inputType="TEXT" />		
+	<fieldProperty
+		name="cd_natura"
+		property="natura.cd_natura"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		nullable="false"
+		label="Fonte"
+		caseSensitiveSearch="false"  
+		enabledOnFreeSearch="true"   
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_natura"
+		property="natura.ds_natura"
+		maxLength="100"
+		inputSize="10"
+		inputType="TEXT"
+		label="Fonte"
+		caseSensitiveSearch="false"/>
+		
+	<fieldProperty
+		name="find_classificazione_voci"
+		property="classificazione_voci"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		columnSet="searchtool"
+		freeSearchSet="searchtool"
+		nullable="false"
+		completeOnSave = "true"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		readonlyPropertyOnEdit="ROClassificazione_voci"
+		label="Classificazione Ufficiale" />		
+	<fieldProperty
+		name="cd_classificazione"
+		property="classificazione_voci.cd_classificazione"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		label="Classificazione ufficiale" />
+		
+	<fieldProperty
+		name="pg_dettaglio"
+		property="pg_dettaglio"
+		inputType="TEXT"
+		inputSize="10"
+		nullable="false"
+		maxLength="10"
+		label="Progressivo dett." />	
+	<fieldProperty
+		name="find_contraente"
+		property="contraente"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		nullable="false"
+		completeOnSave = "true"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		label="Contraente"/>
+	<fieldProperty
+		name="cd_terzo"
+		property="contraente.cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Contraente" />
+				
+	<fieldProperty
+		name="ds_dettaglio"
+		property="ds_dettaglio"
+		inputType="TEXTAREA"
+		cols="80"
+		nullable="false"
+		rows="1"
+		maxLength="300"
+		label="Oggetto del contratto" />
+	<fieldProperty
+		name="im_entrata_tot"
+		property="im_entrata_tot"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Imp.Tot.Contratto" />
+	<fieldProperty
+		name="esercizio_inizio"
+		property="esercizio_inizio"
+		inputType="TEXT"
+		inputSize="4"		
+		maxLength="4"
+		label="Anno di Inizio" />
+	<fieldProperty
+		name="esercizio_fine"
+		property="esercizio_fine"		
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Anno di Fine" />
+	<fieldProperty
+		name="im_entrata"
+		property="im_entrata"
+		inputType="TEXT"
+		nullable="false"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Previsione anno corrente" />
+	<fieldProperty
+		name="im_entrata_app"
+		property="im_entrata_app"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Approvato anno corrente" />	
+	<fieldProperty
+		name="im_entrata_a2"
+		property="im_entrata_a2"
+		inputType="TEXT"
+		nullable="false"	
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Previsione anno successivo" />
+	<fieldProperty
+		name="im_entrata_a3"
+		property="im_entrata_a3"
+		inputType="TEXT"
+		nullable="false"	
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Previsione anno corrente +2" />
+	<fieldProperty
+		name="im_spese_vive"
+		property="im_spese_vive"
+		inputType="TEXT"		
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Imp.Spese&lt;BR&gt;vive correlate&lt;BR&gt;all'entrata anno corrente " />	
+	<fieldProperty
+		name="ds_spese_vive"
+		property="ds_spese_vive"
+		inputType="TEXTAREA"	
+		cols="50"
+		rows="1"
+		maxLength="300"
+		label="Desc.Spese&lt;BR&gt;vive correlate&lt;BR&gt;all'entrata anno corrente" />	
+	<fieldProperty
+        name="area"
+        property="area"
+        inputType="SEARCHTOOL"
+        formName="searchtool"
+        enabledOnInsert="true"
+        enabledOnSearch="true"
+        nullable="false"
+     	readonlyPropertyOnEdit="ROCd_cds_area"
+        label="Area" />		
+	<fieldProperty
+		name="cd_cds_area"
+		property="area.cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Area" />
+
+	<fieldProperty
+		name="dipartimento"
+		property="testata.progetto.progettopadre.progettopadre.cd_dipartimento"
+		descProperty="testata.progetto.progettopadre.progettopadre.dipartimento.ds_dipartimento"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		maxLength="25"
+		inputSize="10"
+		label="Dipartimento" />		
+	<fieldProperty
+		name="progetto"
+		property="testata.progetto.progettopadre.progettopadre.cd_progetto"
+		descProperty="testata.progetto.progettopadre.progettopadre.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="15"
+		maxLength="25"
+		label="Progetto" />
+	<fieldProperty
+		name="commessa"
+		property="testata.progetto.progettopadre.cd_progetto"
+		descProperty="testata.progetto.progettopadre.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="15"
+		maxLength="25"
+		label="Commessa" />
+	<fieldProperty
+		name="modulo"
+		property="testata.progetto.cd_progetto"
+		descProperty="testata.progetto.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="25"
+		maxLength="30"
+		label="Modulo di Commessa" />	
+	<fieldProperty
+		name="classificazione"
+		property="classificazione_voci.cd_classificazione"
+		descProperty="classificazione_voci.ds_classificazione"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="25"
+		maxLength="30"
+		label="Classificazione Ufficiale" />	
+	<fieldProperty
+		name="desctool_area"
+		property="area.cd_unita_organizzativa"
+		descProperty="area.ds_unita_organizzativa"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Area" />	
+	<fieldProperty
+		name="previsione_anno_corrente"
+		property="im_entrata"
+		inputType="ROTEXT"
+		nullable="false"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo di Previsione" />
+	<fieldProperty
+		name="dettagli_gestionali_tot"
+		property="dettagli_gestionali_tot"
+		inputType="ROTEXT"
+		nullable="false"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Ripartito" />
+	<fieldProperty
+		name="dettagli_gestionali_res"
+		property="dettagli_gestionali_res"
+		inputType="ROTEXT"
+		nullable="false"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo da Ripartire" />
+
+
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="ds_centro_responsabilita" />	
+	<formFieldProperty
+		name="pg_progetto" />
+	<formFieldProperty
+		name="im_entrata_app" />
+	<formFieldProperty
+		name="cdr_linea" />
+	<formFieldProperty
+		name="ds_cdr_linea" />	
+	<formFieldProperty
+		name="find_linea_attivita" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="ds_linea_attivita" />	
+	<formFieldProperty
+		name="natura" />	
+	<formFieldProperty
+		name="cd_ds_natura" />		
+	<formFieldProperty
+		name="cd_natura" />
+	<formFieldProperty
+		name="ds_natura" />
+	<formFieldProperty
+		name="find_classificazione_voci" /> 
+	<formFieldProperty
+		name="pg_dettaglio" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="find_contraente" />
+	<formFieldProperty
+		name="ds_dettaglio" />
+	<formFieldProperty
+		name="im_entrata_tot" />
+	<formFieldProperty
+		name="esercizio_inizio" />
+	<formFieldProperty
+		name="esercizio_fine" />
+	<formFieldProperty
+		name="im_entrata" />
+	<formFieldProperty
+		name="im_entrata_a2" />
+	<formFieldProperty
+		name="im_entrata_a3" />
+	<formFieldProperty
+		name="im_spese_vive" />	
+	<formFieldProperty
+		name="ds_spese_vive" />	
+	<formFieldProperty
+		name="cd_cds_area" />
+	<formFieldProperty
+		name="area" />		
+	<formFieldProperty
+		name="dipartimento" />	
+	<formFieldProperty
+		name="progetto" />	
+	<formFieldProperty
+		name="commessa" />	
+	<formFieldProperty
+		name="modulo" />	
+	<formFieldProperty
+		name="importo_totale" />	
+	<formFieldProperty
+		name="ds_centro_responsabilita" />	
+	<formFieldProperty
+		name="dipartimento" />	
+	<formFieldProperty
+		name="progetto" />	
+	<formFieldProperty
+		name="commessa" />	
+	<formFieldProperty
+		name="modulo" />	
+	<formFieldProperty
+		name="classificazione" />	
+	<formFieldProperty
+		name="desctool_area" />	
+	<formFieldProperty
+		name="previsione_anno_corrente" />	
+	<formFieldProperty
+		name="dettagli_gestionali_tot" />
+	<formFieldProperty
+		name="dettagli_gestionali_res" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="pg_progetto" />
+	<findFieldProperty
+		name="im_entrata_app" />
+	<findFieldProperty
+		name="cdr_linea" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="cd_natura" />
+	<findFieldProperty
+		name="natura" />
+	<findFieldProperty
+		name="find_classificazione_voci" />
+	<findFieldProperty
+		name="pg_dettaglio" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="ds_dettaglio" />
+	<findFieldProperty
+		name="im_entrata_tot" />
+	<findFieldProperty
+		name="esercizio_inizio" />
+	<findFieldProperty
+		name="esercizio_fine" />
+	<findFieldProperty
+		name="im_entrata" />
+	<findFieldProperty
+		name="im_entrata_a2" />
+	<findFieldProperty
+		name="im_entrata_a3" />
+	<findFieldProperty
+		name="im_spese_vive" />
+	<findFieldProperty
+		name="ds_spese_vive" />
+<!--<columnFieldProperty
+		name="cdr_linea" />
+	<columnFieldProperty
+		name="cd_linea_attivita" /> 
+-->
+	<columnFieldProperty
+		name="cd_classificazione" />	
+	<columnFieldProperty
+		name="natura" />	
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="ds_dettaglio" />	
+	<columnFieldProperty
+		name="im_entrata_tot" />
+	<columnFieldProperty
+		name="esercizio_inizio" />
+	<columnFieldProperty
+		name="esercizio_fine" />
+	<columnFieldProperty
+		name="im_entrata"
+		label="Proposta"
+		headerLabel="PREVISIONE anno corrente"/>
+	<columnFieldProperty
+		name="im_entrata_app" 		
+		label="Approvato"
+		headerLabel="PREVISIONE anno corrente"/>
+	<columnFieldProperty
+		name="im_entrata_a2" />
+	<columnFieldProperty
+		name="im_entrata_a3" />
+	<columnFieldProperty
+		name="cd_cds_area"/>
+</bulkInfo>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_appartenenza" />
+	<fieldProperty
+		name="pg_spesa"
+		property="pg_spesa"
+		inputType="TEXT"
+		label="pg_spesa" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="cd_elemento_voce" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="id_matricola"
+		property="id_matricola"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="id_matricola" />
+	<fieldProperty
+		name="ti_prev_cons"
+		property="ti_prev_cons"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="ti_prev_cons" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_linea_attivita" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_centro_responsabilita" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_gestione" />
+
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="pg_spesa" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="id_matricola" />
+	<formFieldProperty
+		name="ti_prev_cons" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="ti_gestione" />
+
+	<columnFieldProperty
+		name="ti_appartenenza" />
+	<columnFieldProperty
+		name="pg_spesa" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="id_matricola" />
+	<columnFieldProperty
+		name="ti_prev_cons" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="ti_gestione" />
+
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="pg_spesa" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="id_matricola" />
+	<findFieldProperty
+		name="ti_prev_cons" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="ti_gestione" />
+
+</bulkInfo>

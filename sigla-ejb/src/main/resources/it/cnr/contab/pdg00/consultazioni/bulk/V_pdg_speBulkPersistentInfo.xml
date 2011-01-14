@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.consultazioni.bulk.V_pdg_speBulk"
+	homeClassName="it.cnr.contab.pdg00.consultazioni.bulk.V_pdg_speHome">
+	<defaultColumnMap
+		tableName="V_PDG_SPE">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_DIPARTIMENTO"
+			propertyName="cd_dipartimento"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_DIPARTIMENTO"
+			propertyName="ds_dipartimento"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="ds_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="400"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_COMMESSA"
+			propertyName="cd_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_COMMESSA"
+			propertyName="ds_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="400"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="400"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_PROGETTO"
+			propertyName="tipo_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CDS"
+			propertyName="cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CDS"
+			propertyName="ds_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="UO"
+			propertyName="uo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CDR"
+			propertyName="cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="TITOLO"
+			propertyName="titolo"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_TITOLO"
+			propertyName="ds_titolo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_CLAS_SPESA"
+			propertyName="codice_clas_spesa"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE_SPESA"
+			propertyName="ds_classificazione_spesa"
+			sqlTypeName="VARCHAR"
+			columnSize="400"
+			nullable="true" />
+		<columnMapping
+			columnName="ELEMENTO_VOCE"
+			propertyName="elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="ORIGINE"
+			propertyName="origine"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="CATEGORIA_DETTAGLIO"
+			propertyName="categoria_dettaglio"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="NATURA"
+			propertyName="natura"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RI_CCS_SPESE_ODC"
+			propertyName="im_ri_ccs_spese_odc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RK_CCS_SPESE_OGC"
+			propertyName="im_rk_ccs_spese_ogc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RQ_SSC_COSTI_ODC"
+			propertyName="im_rq_ssc_costi_odc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RS_SSC_COSTI_OGC"
+			propertyName="im_rs_ssc_costi_ogc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RJ_CCS_SPESE_ODC_ALTRA_UO"
+			propertyName="im_rj_ccs_spese_odc_altra_uo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RL_CCS_SPESE_OGC_ALTRA_UO"
+			propertyName="im_rl_ccs_spese_ogc_altra_uo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RR_SSC_COSTI_ODC_ALTRA_UO"
+			propertyName="im_rr_ssc_costi_odc_altra_uo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RT_SSC_COSTI_OGC_ALTRA_UO"
+			propertyName="im_rt_ssc_costi_ogc_altra_uo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RM_CSS_AMMORTAMENTI"
+			propertyName="im_rm_css_ammortamenti"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RN_CSS_RIMANENZE"
+			propertyName="im_rn_css_rimanenze"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RO_CSS_ALTRI_COSTI"
+			propertyName="im_ro_css_altri_costi"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RP_CSS_VERSO_ALTRO_CDR"
+			propertyName="im_rp_css_verso_altro_cdr"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RU_SPESE_COSTI_ALTRUI"
+			propertyName="im_ru_spese_costi_altrui"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_dipartimento" />
+	<persistentProperty
+		name="ds_dipartimento" />
+	<persistentProperty
+		name="cd_progetto" />
+	<persistentProperty
+		name="ds_progetto" />
+	<persistentProperty
+		name="cd_commessa" />
+	<persistentProperty
+		name="ds_commessa" />
+	<persistentProperty
+		name="cd_modulo" />
+	<persistentProperty
+		name="ds_modulo" />
+	<persistentProperty
+		name="tipo_progetto" />
+	<persistentProperty
+		name="cds" />
+	<persistentProperty
+		name="ds_cds" />
+	<persistentProperty
+		name="uo" />
+	<persistentProperty
+		name="cdr" />
+	<persistentProperty
+		name="titolo" />
+	<persistentProperty
+		name="ds_titolo" />
+	<persistentProperty
+		name="codice_clas_spesa" />
+	<persistentProperty
+		name="ds_classificazione_spesa" />
+	<persistentProperty
+		name="elemento_voce" />
+	<persistentProperty
+		name="origine" />
+	<persistentProperty
+		name="categoria_dettaglio" />
+	<persistentProperty
+		name="natura" />
+	<persistentProperty
+		name="im_ri_ccs_spese_odc" />
+	<persistentProperty
+		name="im_rk_ccs_spese_ogc" />
+	<persistentProperty
+		name="im_rq_ssc_costi_odc" />
+	<persistentProperty
+		name="im_rs_ssc_costi_ogc" />
+	<persistentProperty
+		name="im_rj_ccs_spese_odc_altra_uo" />
+	<persistentProperty
+		name="im_rl_ccs_spese_ogc_altra_uo" />
+	<persistentProperty
+		name="im_rr_ssc_costi_odc_altra_uo" />
+	<persistentProperty
+		name="im_rt_ssc_costi_ogc_altra_uo" />
+	<persistentProperty
+		name="im_rm_css_ammortamenti" />
+	<persistentProperty
+		name="im_rn_css_rimanenze" />
+	<persistentProperty
+		name="im_ro_css_altri_costi" />
+	<persistentProperty
+		name="im_rp_css_verso_altro_cdr" />
+	<persistentProperty
+		name="im_ru_spese_costi_altrui" />
+</SQLPersistentInfo>

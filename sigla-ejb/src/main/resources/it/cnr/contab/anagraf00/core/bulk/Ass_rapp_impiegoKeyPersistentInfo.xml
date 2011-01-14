@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.Ass_rapp_impiegoKey">
+	<defaultColumnMap
+		tableName="ASS_RAPP_IMPIEGO">
+		<columnMapping
+			columnName="CD_RAPP_IMPIEGO_STI"
+			propertyName="cd_rapp_impiego_sti"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_rapp_impiego_sti"
+		partOfOid="true" />
+</SQLPersistentInfo>

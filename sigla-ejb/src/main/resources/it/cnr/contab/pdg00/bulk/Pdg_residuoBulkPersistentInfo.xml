@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.bulk.Pdg_residuoBulk"
+	homeClassName="it.cnr.contab.pdg00.bulk.Pdg_residuoHome">
+	<defaultColumnMap
+		tableName="PDG_RESIDUO">
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="centro_responsabilita.cd_centro_responsabilita"
+			fetchOnly="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="centro_responsabilita"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -1,0 +1,66 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_natura"
+		property="cd_natura"
+		label="Natura"
+		keysProperty="naturaKeys"
+		inputType="SELECT"
+		/>
+	<fieldProperty
+		name="find_elemento_voce"
+		property="elemento_voce"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="elemento_voce.cd_elemento_voce"
+		readonlyProperty="ROElemento_voce"
+		label="Capitolo di Entrata CNR"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="10"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="elemento_voce.ds_elemento_voce"
+		readonlyProperty="ROElemento_voce"
+		label=""
+		inputType="ROTEXT"
+		inputSize="20"
+		enabledOnSearch="true"
+		/>
+		
+	<columnFieldProperty
+		name="cd_natura"
+		/>
+	<columnFieldProperty
+		name="cd_elemento_voce"
+		/>
+	
+	<formFieldProperty
+		name="cd_natura"
+		/>
+	<formFieldProperty
+		name="find_elemento_voce"
+		/>
+	<formFieldProperty
+		name="cd_elemento_voce"
+		/>
+	<formFieldProperty
+		name="ds_elemento_voce"
+		/>
+
+	<findFieldProperty
+		name="cd_natura"
+		/>
+	<findFieldProperty
+		name="cd_elemento_voce"
+		/>
+	
+</bulkInfo>

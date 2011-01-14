@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.docs.bulk.RimborsoBase"
+	keyClassName="it.cnr.contab.missioni00.docs.bulk.RimborsoKey"
+	homeClassName="it.cnr.contab.missioni00.docs.bulk.RimborsoHome" >
+	<defaultColumnMap
+		tableName="RIMBORSO" >
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dt_cancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="CD_TERZO_UO_CDS"
+			propertyName="cd_terzo_uo_cds"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ACCERTAMENTO"
+			propertyName="esercizio_ori_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="pg_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="STATO_COGE"
+			propertyName="stato_coge"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_ORIGINE"
+			propertyName="cd_uo_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO_SCADENZARIO"
+			propertyName="pg_accertamento_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_CDS_ACCERTAMENTO"
+			propertyName="cd_cds_accertamento"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="TI_ASSOCIATO_MANREV"
+			propertyName="ti_associato_manrev"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_RIMBORSO"
+			propertyName="ds_rimborso"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE"
+			propertyName="cd_cds_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO_COFI"
+			propertyName="stato_cofi"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="DT_A_COMPETENZA_COGE"
+			propertyName="dt_a_competenza_coge"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RIMBORSO"
+			propertyName="im_rimborso"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_ANTICIPO"
+			propertyName="cd_cds_anticipo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_ANTICIPO"
+			propertyName="pg_anticipo"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_ANAGRAFICO"
+			propertyName="ti_anagrafico"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_MODALITA_PAG_UO_CDS"
+			propertyName="cd_modalita_pag_uo_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_ACCERTAMENTO"
+			propertyName="esercizio_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_ANTICIPO"
+			propertyName="cd_uo_anticipo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO_COAN"
+			propertyName="stato_coan"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_ANTICIPO"
+			propertyName="esercizio_anticipo"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="DT_DA_COMPETENZA_COGE"
+			propertyName="dt_da_competenza_coge"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="PG_BANCA_UO_CDS"
+			propertyName="pg_banca_uo_cds"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_cancellazione" />
+	<persistentProperty
+		name="cd_terzo_uo_cds" />
+	<persistentProperty
+		name="stato_coge" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="esercizio_ori_accertamento" />
+	<persistentProperty
+		name="pg_accertamento" />
+	<persistentProperty
+		name="cd_uo_origine" />
+	<persistentProperty
+		name="pg_accertamento_scadenzario" />
+	<persistentProperty
+		name="cd_cds_accertamento" />
+	<persistentProperty
+		name="ti_associato_manrev" />
+	<persistentProperty
+		name="ds_rimborso" />
+	<persistentProperty
+		name="cd_cds_origine" />
+	<persistentProperty
+		name="stato_cofi" />
+	<persistentProperty
+		name="dt_a_competenza_coge" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="im_rimborso" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="cd_cds_anticipo" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_anticipo" />
+	<persistentProperty
+		name="ti_anagrafico" />
+	<persistentProperty
+		name="cd_modalita_pag_uo_cds" />
+	<persistentProperty
+		name="esercizio_accertamento" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="cd_uo_anticipo" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="stato_coan" />
+	<persistentProperty
+		name="esercizio_anticipo" />
+	<persistentProperty
+		name="dt_da_competenza_coge" />
+	<persistentProperty
+		name="dt_registrazione" />
+	<persistentProperty
+		name="pg_banca_uo_cds" />
+</SQLPersistentInfo>

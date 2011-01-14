@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeKey">
+	<defaultColumnMap
+		tableName="PROCEDURE_AMMINISTRATIVE">
+		<columnMapping
+			columnName="CD_PROC_AMM"
+			propertyName="cd_proc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_proc_amm"
+		partOfOid="true" />
+</SQLPersistentInfo>

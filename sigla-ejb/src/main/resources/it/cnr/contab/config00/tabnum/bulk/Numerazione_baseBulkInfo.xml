@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_corrente"
+		property="cd_corrente"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_corrente"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="colonna"
+		property="colonna"
+		maxLength="35"
+		inputSize="35"
+		inputType="TEXT"
+		label="colonna" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="cd_iniziale"
+		property="cd_iniziale"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_iniziale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_massimo"
+		property="cd_massimo"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="cd_massimo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="tabella"
+		property="tabella"
+		maxLength="35"
+		inputSize="35"
+		inputType="TEXT"
+		label="tabella" />
+
+	<formFieldProperty
+		name="cd_corrente" />
+	<formFieldProperty
+		name="colonna" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_iniziale" />
+	<formFieldProperty
+		name="cd_massimo" />
+	<formFieldProperty
+		name="tabella" />
+
+	<columnFieldProperty
+		name="cd_corrente" />
+	<columnFieldProperty
+		name="colonna" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_iniziale" />
+	<columnFieldProperty
+		name="cd_massimo" />
+	<columnFieldProperty
+		name="tabella" />
+
+	<findFieldProperty
+		name="cd_corrente" />
+	<findFieldProperty
+		name="colonna" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_iniziale" />
+	<findFieldProperty
+		name="cd_massimo" />
+	<findFieldProperty
+		name="tabella" />
+
+</bulkInfo>

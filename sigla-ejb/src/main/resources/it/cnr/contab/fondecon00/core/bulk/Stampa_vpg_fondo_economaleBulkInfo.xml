@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="tc"
+		property="tc" />
+
+
+<!--  Fondo Economale -->	
+	<fieldProperty
+		name="fondoForPrint"
+		property="fondoForPrint"
+		inputType="SEARCHTOOL"
+		freeSearchSet="fondoForPrint"
+		label="Fondo Economale"/>
+	<fieldProperty
+		name="cd_fondoForPrint"
+		property="fondoForPrint.cd_codice_fondo"
+		readonlyProperty="ROFondoSearchTool"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+		label="Fondo Economale"/>
+	<fieldProperty
+		name="ds_fondoForPrint"
+		property="fondoForPrint.ds_fondo"
+		inputType="ROTEXT"
+		inputSize="70"
+		maxLength="300"
+		label="Fondo Economale" />
+
+	<formFieldProperty
+		name="cd_cds_fondo"
+		property="fondoForPrint.cd_cds"
+		inputType="ROTEXT"/>
+	<fieldProperty
+		name="cd_uo_fondo"
+		property="fondoForPrint.cd_unita_organizzativa"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="esercizio_fondo"
+		property="fondoForPrint.esercizio"
+		inputType="ROTEXT" />
+
+	<fieldProperty
+		name="dataInizio"
+		property="dataInizio"
+		inputType="TEXT"
+		formatName="date_short"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+		label="Data inizio"/>
+	<fieldProperty
+		name="dataFine"
+		property="dataFine"
+		inputType="TEXT"
+		formatName="date_short"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+		label="Data fine" />
+		
+	<formFieldProperty
+		name="cdCDSForPrint"
+		property="cd_cds"
+		inputType="ROTEXT"
+		label="CDS" />
+	<fieldProperty
+		name="cdUOForPrint"
+		property="unita_organizzativa.cd_unita_organizzativa"
+		inputType="ROTEXT"
+		maxLength="30"
+		inputSize="20"
+		label="Unita organizzativa" />
+	<fieldProperty
+		name="dsUOForPrint"
+		property="unita_organizzativa.ds_unita_organizzativa"
+		inputType="ROTEXT"
+		maxLength="300"
+		inputSize="70"
+		label="Unita organizzativa" />
+	<fieldProperty
+		name="cdTerzoCRParameter"
+		property="cdTerzoCRParameter" />
+		
+	<formFieldProperty name="fondoForPrint" />
+	<formFieldProperty name="cd_fondoForPrint" />
+	<formFieldProperty name="ds_fondoForPrint" />
+
+	
+	<formFieldProperty name="cdCDSForPrint" />
+	<formFieldProperty name="cdUOForPrint" />
+	<formFieldProperty name="dsUOForPrint" />
+	<formFieldProperty name="dataInizio" />
+	<formFieldProperty name="dataFine" />	
+		
+	<form name="/docamm/docamm/vpg_fondo_economale.rpt">
+		<formFieldProperty name="fondoForPrint" />
+		<formFieldProperty name="cd_fondoForPrint" />
+		<formFieldProperty name="ds_fondoForPrint" />
+		<formFieldProperty name="cdCDSForPrint" />
+		<formFieldProperty name="cdUOForPrint" />
+		<formFieldProperty name="dsUOForPrint" />
+		<formFieldProperty name="dataInizio" />
+		<formFieldProperty name="dataFine" />	
+	</form>
+	
+	<form name="/docamm/docamm/vpg_fondo_economale.jasper">
+		<formFieldProperty name="fondoForPrint" />
+		<formFieldProperty name="cd_fondoForPrint" />
+		<formFieldProperty name="ds_fondoForPrint" />
+		<formFieldProperty name="cdCDSForPrint" />
+		<formFieldProperty name="cdUOForPrint" />
+		<formFieldProperty name="dsUOForPrint" />
+		<formFieldProperty name="dataInizio" />
+		<formFieldProperty name="dataFine" />	
+	</form>
+
+	<printForm
+		name="/docamm/docamm/vpg_fondo_economale.rpt">
+		<printFieldProperty 
+			name="tc"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cd_cds_fondo"
+			parameterPosition="1"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cd_uo_fondo"
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="esercizio_fondo"
+			parameterPosition="3"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cd_fondoForPrint"
+			parameterPosition="4"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="dataInizio"
+			parameterPosition="5"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="dataFine"
+			parameterPosition="6"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="cdTerzoCRParameter"
+			parameterPosition="7"
+			parameterType="STRING" />
+	</printForm>
+
+	<printForm
+		name="/docamm/docamm/vpg_fondo_economale.jasper">
+		<printFieldProperty 
+			name="cd_cds_fondo"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="CDS"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cd_uo_fondo"
+			parameterPosition="1"
+			parameterType="STRING" 
+			paramNameJR="UO"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+			name="esercizio_fondo"
+			parameterPosition="2"
+			parameterType="NUMBER" 
+			paramNameJR="Esercizio"
+			paramTypeJR="java.lang.Integer"/>
+		<printFieldProperty 
+			name="cd_fondoForPrint"
+			parameterPosition="3"
+			parameterType="STRING"
+			paramNameJR="Cd_codice_fondo"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="dataInizio"
+			parameterPosition="4"
+			parameterType="DATE" 
+			paramNameJR="DaData"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+			name="dataFine"
+			parameterPosition="5"
+			parameterType="DATE" 
+			paramNameJR="AData"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+			name="cdTerzoCRParameter"
+			parameterPosition="6"
+			parameterType="STRING" 
+			paramNameJR="Utcr"
+			paramTypeJR="java.lang.String"/>
+	</printForm>	
+
+</bulkInfo>

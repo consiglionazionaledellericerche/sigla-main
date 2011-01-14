@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent00.bulk.Pdg_aggregato_etr_detBase"
+	keyClassName="it.cnr.contab.prevent00.bulk.Pdg_aggregato_etr_detKey"
+	homeClassName="it.cnr.contab.prevent00.bulk.Pdg_aggregato_etr_detHome" >
+	<defaultColumnMap
+		tableName="PDG_AGGREGATO_ETR_DET" >
+		<columnMapping
+			columnName="IM_RC_ESR"
+			propertyName="im_rc_esr"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RB_RSE"
+			propertyName="im_rb_rse"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RG_A3_ENTRATE"
+			propertyName="im_rg_a3_entrate"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RE_A2_ENTRATE"
+			propertyName="im_re_a2_entrate"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RD_A2_RICAVI"
+			propertyName="im_rd_a2_ricavi"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RF_A3_RICAVI"
+			propertyName="im_rf_a3_ricavi"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RA_RCE"
+			propertyName="im_ra_rce"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="im_rc_esr" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="im_rb_rse" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="im_rg_a3_entrate" />
+	<persistentProperty
+		name="im_re_a2_entrate" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="im_rd_a2_ricavi" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="im_rf_a3_ricavi" />
+	<persistentProperty
+		name="im_ra_rce" />
+</SQLPersistentInfo>

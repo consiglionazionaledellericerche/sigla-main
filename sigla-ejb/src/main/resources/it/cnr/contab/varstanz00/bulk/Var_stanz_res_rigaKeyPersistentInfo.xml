@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaKey">
+	<defaultColumnMap
+		tableName="VAR_STANZ_RES_RIGA">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_VARIAZIONE"
+			propertyName="pg_variazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_RIGA"
+			propertyName="pg_riga"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_variazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_riga"
+		partOfOid="true" />
+</SQLPersistentInfo>

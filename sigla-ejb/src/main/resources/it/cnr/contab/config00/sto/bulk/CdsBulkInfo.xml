@@ -1,0 +1,243 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_proprio_unita"
+		property="cd_proprio_unita"
+		label="Codice"
+		inputType="TEXT"
+		maxLength="30"
+		inputSize="6"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_tipo_unita"
+		property="cd_tipo_unita"
+		label="Tipologia"
+		keysProperty="tipologiaKeys"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		label="Codice completo"
+		inputType="ROTEXT"
+		maxLength="30"
+		inputSize="6"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="ds_unita_organizzativa"
+		property="ds_unita_organizzativa"
+		label="Descrizione"
+		inputType="TEXTAREA"
+		maxLength="300"
+		cols="60"
+		rows="5"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="esercizio_inizio"
+		property="esercizio_inizio"
+		label="Esercizio di creazione"
+		inputType="TEXT"
+		maxLength="4"
+		inputSize="6"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" 
+		/>
+	<fieldProperty
+		name="livello"
+		property="livello"
+		label="Livello"
+		inputType="TEXT"
+		maxLength="2"
+		inputSize="2"
+		/>
+	<fieldProperty
+		name="find_responsabile"
+		property="responsabile"
+		inputType="SEARCHTOOL" 
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_responsabile"
+		property="responsabile.cd_terzo"
+		readonlyProperty="ROResponsabile"
+		label="Responsabile"
+		inputType="TEXT"
+		maxLength="8"
+		inputSize="6"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="ds_responsabile"
+		property="ds_responsabile"
+		readonlyProperty="ROResponsabile"
+		label=""
+		inputSize="20"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="crea_responsabile"
+		property="responsabile"
+		inputType="CRUDTOOL" 
+		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
+		/>
+	<fieldProperty
+		name="esercizio_fine"
+		property="esercizio_fine"
+		label="Esercizio di terminazione"
+		inputType="TEXT"
+		maxLength="4"
+		inputSize="4"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="area_scientifica"
+		property="area_scientifica"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Area scientifica"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false" />
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_proprio_unita"
+			inputType="TEXT" />
+		<formFieldProperty
+			name="ds_unita_organizzativa"
+			inputType="TEXT"
+			inputSize="60" />
+	</form>
+	<form
+		name="searchtool_login" >
+		<formFieldProperty
+			name="cd_proprio_unita"
+			inputType="TEXT" />
+		<formFieldProperty
+			name="ds_unita_organizzativa"
+			enabledOnSearch="false"
+			inputType="ROTEXT"
+			inputSize="80" />
+	</form>
+	<columnSet
+		name="scrivania" >
+		<columnFieldProperty
+			name="cd_proprio_unita"
+			inputType="TEXT" />
+		<columnFieldProperty
+			name="ds_unita_organizzativa"
+			inputType="TEXT"
+			inputSize="60" />
+	</columnSet>
+	<columnSet
+		name="basic" >
+		<columnFieldProperty
+			name="cd_unita_organizzativa"
+			label="Codice CdS"/>
+		<columnFieldProperty
+			name="ds_unita_organizzativa"/>
+	</columnSet>
+	
+	<columnSet
+		name="basic" >
+		<columnFieldProperty
+			name="cd_unita_organizzativa"
+			label="Codice CdS"/>
+		<columnFieldProperty
+			name="ds_unita_organizzativa"/>
+	</columnSet>
+	<columnFieldProperty
+		name="esercizio_inizio"
+		/>
+	<columnFieldProperty
+		name="cd_proprio_unita"
+		/>
+	<columnFieldProperty
+		name="ds_unita_organizzativa"
+		/>
+	<columnFieldProperty
+		name="cd_tipo_unita"
+		inputType="ROTEXT"
+		/>
+	<columnFieldProperty
+		name="cd_responsabile"
+		/>
+	<columnFieldProperty
+		name="esercizio_fine"
+		/>
+
+
+	<formFieldProperty
+		name="ds_unita_padre"
+		/>
+	<formFieldProperty		
+		name="ds_responsabile"
+		/>				
+	<formFieldProperty
+		name="cd_proprio_unita"
+		/>
+	<formFieldProperty
+		name="cd_responsabile"
+		/>
+	<formFieldProperty
+		name="find_responsabile"
+		/>
+	<formFieldProperty
+		name="crea_responsabile"
+		/>
+	<formFieldProperty
+		name="cd_tipo_unita"
+		/>
+	<formFieldProperty
+		name="cd_unita_organizzativa"
+		/>
+	<formFieldProperty
+		name="ds_unita_organizzativa"
+		/>
+	<formFieldProperty
+		name="esercizio_inizio"
+		/>
+	<formFieldProperty
+		name="livello"
+		/>
+	<formFieldProperty
+		name="esercizio_fine"
+		/>
+	<formFieldProperty
+		name="area_scientifica" />
+
+
+	<findFieldProperty
+		name="esercizio_inizio"
+		/>
+	<findFieldProperty
+		name="cd_proprio_unita"
+		/>
+	<findFieldProperty
+		name="cd_responsabile"
+		/>
+	<findFieldProperty
+		name="cd_tipo_unita"
+		inputType="TEXT"
+		/>
+	<findFieldProperty
+		name="ds_unita_organizzativa"
+		/>
+	<findFieldProperty
+		name="cd_unita_organizzativa"
+		inputType="TEXT"
+		/>
+	<findFieldProperty
+		name="esercizio_fine"
+		/>
+	<findFieldProperty
+		name="area_scientifica"
+		/>
+</bulkInfo>

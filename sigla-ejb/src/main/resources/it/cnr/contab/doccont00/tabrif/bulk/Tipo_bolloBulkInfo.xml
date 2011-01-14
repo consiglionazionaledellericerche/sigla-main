@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="fl_default"
+		property="fl_default"
+		inputType="CHECKBOX"
+		label="Default"
+		keysProperty="fl_defaultKeys"
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="im_tipo_bollo"
+		property="im_tipo_bollo"
+		inputType="TEXT"
+		label="Importo"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnEdit="false"						
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="cd_tipo_bollo"
+		property="cd_tipo_bollo"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		label="Codice"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		enabledOnEdit="false"				
+		nullable="false" />
+	<fieldProperty
+		name="classe_tipo_bollo"
+		property="classe_tipo_bollo"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		enabledOnEdit="false"						
+		keysProperty="classe_tipo_bolloKeys"
+		label="Classe"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="ti_entrata_spesa"
+		property="ti_entrata_spesa"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		enabledOnEdit="false"						
+		keysProperty="ti_entrata_spesaKeys"
+		label="Entrata/Spesa"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="fl_cancellato"
+		property="fl_cancellato"
+		inputType="CHECKBOX"
+		label="fl_cancellato" />
+	<fieldProperty
+		name="ds_tipo_bollo"
+		property="ds_tipo_bollo"
+		maxLength="100"
+		inputSize="50"
+		inputType="TEXT"
+		label="Descrizione"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true"
+		nullable="false" />
+
+	<formFieldProperty
+		name="fl_default" />
+	<formFieldProperty
+		name="im_tipo_bollo" />
+	<formFieldProperty
+		name="cd_tipo_bollo" />
+	<formFieldProperty
+		name="classe_tipo_bollo" />
+	<formFieldProperty
+		name="ti_entrata_spesa" />
+	<formFieldProperty
+		name="fl_cancellato" />
+	<formFieldProperty
+		name="ds_tipo_bollo" />
+
+	<columnFieldProperty
+		name="cd_tipo_bollo" />
+	<columnFieldProperty
+		name="ds_tipo_bollo" />
+	<columnFieldProperty
+		name="classe_tipo_bollo" />
+	<columnFieldProperty
+		name="ti_entrata_spesa" />
+	<columnFieldProperty
+		name="im_tipo_bollo" />
+	<columnFieldProperty
+		name="fl_default"/>
+
+	<findFieldProperty
+		name="cd_tipo_bollo" />
+	<findFieldProperty
+		name="ds_tipo_bollo" />
+	<findFieldProperty
+		name="classe_tipo_bollo" />
+	<findFieldProperty
+		name="ti_entrata_spesa" />
+	<findFieldProperty
+		name="im_tipo_bollo" />
+	<findFieldProperty
+		name="fl_default"
+		inputType="SELECT"/>
+
+</bulkInfo>

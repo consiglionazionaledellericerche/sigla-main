@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio" />
+	<fieldProperty
+		name="nome_file"
+		property="nome_file"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="nome file" />
+	<fieldProperty
+		name="pg_rec"
+		property="pg_rec"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="pg_rec" />
+	<fieldProperty
+		name="tr"
+		property="tr"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		label="tr" />
+	<fieldProperty
+		name="data_giornaliera"
+		property="data_giornaliera"
+		inputType="TEXT"
+		formatName="date_short"
+		label="data giornaliera" />
+	<fieldProperty
+		name="data_movimento"
+		property="data_movimento"
+		inputType="TEXT"
+		formatName="date_short"
+		label="data movimento" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="cds" />
+	<fieldProperty
+		name="pg_mandato"
+		property="pg_mandato"
+		inputType="TEXT"
+		inputSize="39"
+		maxLength="39"
+		label="n° mandato" />
+	<fieldProperty
+		name="pg_reversale"
+		property="pg_reversale"
+		inputType="TEXT"
+		inputSize="39"
+		maxLength="39"
+		label="n° reversale" />
+	<fieldProperty
+		name="cd_sospeso_e"
+		property="cd_sospeso_e"
+		inputType="TEXTAREA"
+		maxLength="54"
+		label="Sospeso entrata" />
+	<fieldProperty
+		name="cd_sospeso_s"
+		property="cd_sospeso_s"
+		inputType="TEXTAREA"
+		maxLength="54"
+		label="Sospeso spesa" />
+	<fieldProperty
+		name="im_sos_e_aperti"
+		property="im_sos_e_aperti"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale accrediti sospesi registrati" />
+	<fieldProperty
+		name="im_sos_e_storni"
+		property="im_sos_e_storni"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale accrediti sospesi stornati" />
+	<fieldProperty
+		name="im_rev_sospesi"
+		property="im_rev_sospesi"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale accrediti sospesi regolati" />
+	<fieldProperty
+		name="im_reversali"
+		property="im_reversali"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale reversali regolate" />
+	<fieldProperty
+		name="im_rev_storni"
+		property="im_rev_storni"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale reversali stornate" />
+	<fieldProperty
+		name="im_sos_s_aperti"
+		property="im_sos_s_aperti"
+		inputType="TEXT"
+		inputSize="22"	
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale addebiti sospesi registrati" />
+	<fieldProperty
+		name="im_sos_s_storni"
+		property="im_sos_s_storni"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale addebiti sospesi stornati" />
+	<fieldProperty
+		name="im_mandati"
+		property="im_mandati"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"		
+		label="Totale mandati regolati" />
+	<fieldProperty
+		name="im_man_storni"
+		property="im_man_storni"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale mandati stornati" />
+	<fieldProperty
+		name="im_man_sospesi"
+		property="im_man_sospesi"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale addebiti sospesi regolati" />	
+	<fieldProperty
+		name="tot_sbilancio"
+		property="tot_sbilancio"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Sbilancio giornata" />	
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="nome_file" />
+	<formFieldProperty
+		name="pg_rec" />
+	<formFieldProperty
+		name="tr" />
+	<formFieldProperty
+		name="data_giornaliera" />
+	<formFieldProperty
+		name="data_movimento" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="pg_mandato" />
+	<formFieldProperty
+		name="pg_reversale" />
+	<formFieldProperty
+		name="cd_sospeso_e" />
+	<formFieldProperty
+		name="cd_sospeso_s" />
+	<formFieldProperty
+		name="im_sos_e_aperti" />
+	<formFieldProperty
+		name="im_sos_e_storni" />
+	<formFieldProperty
+		name="im_rev_sospesi" />
+	<formFieldProperty
+		name="im_reversali" />
+	<formFieldProperty
+		name="im_rev_storni" />
+	<formFieldProperty
+		name="im_sos_s_aperti" />
+	<formFieldProperty
+		name="im_sos_s_storni" />
+	<formFieldProperty
+		name="im_mandati" />
+	<formFieldProperty
+		name="im_man_storni" />
+	<formFieldProperty
+		name="im_man_sospesi" />	
+	<formFieldProperty
+		name="tot_sbilancio" />	
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="nome_file" />
+	<findFieldProperty
+		name="pg_rec" />
+	<findFieldProperty
+		name="tr" />
+	<findFieldProperty
+		name="data_giornaliera" />
+	<findFieldProperty
+		name="data_movimento" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="pg_mandato" />
+	<findFieldProperty
+		name="pg_reversale" />
+	<findFieldProperty
+		name="cd_sospeso_e" />
+	<findFieldProperty
+		name="cd_sospeso_s" />
+	<findFieldProperty
+		name="im_sos_e_aperti" />
+	<findFieldProperty
+		name="im_sos_e_storni" />
+	<findFieldProperty
+		name="im_rev_sospesi" />
+	<findFieldProperty
+		name="im_reversali" />
+	<findFieldProperty
+		name="im_rev_storni" />
+	<findFieldProperty
+		name="im_sos_s_aperti" />
+	<findFieldProperty
+		name="im_sos_s_storni" />
+	<findFieldProperty
+		name="im_mandati" />
+	<findFieldProperty
+		name="im_man_storni" />
+	<findFieldProperty
+		name="im_man_sospesi" />	
+	<findFieldProperty
+		name="tot_sbilancio" />			
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="nome_file" />
+	<columnFieldProperty
+		name="pg_rec" />
+	<columnFieldProperty
+		name="tr" />
+	<columnFieldProperty
+		name="data_giornaliera" />
+	<columnFieldProperty
+		name="data_movimento" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="pg_mandato" />
+	<columnFieldProperty
+		name="pg_reversale" />
+	<columnFieldProperty
+		name="cd_sospeso_e" />
+	<columnFieldProperty
+		name="cd_sospeso_s" />
+	<columnFieldProperty
+		name="im_sos_e_aperti" />
+	<columnFieldProperty
+		name="im_sos_e_storni" />
+	<columnFieldProperty
+		name="im_rev_sospesi" />
+	<columnFieldProperty
+		name="im_reversali" />
+	<columnFieldProperty
+		name="im_rev_storni" />
+	<columnFieldProperty
+		name="im_sos_s_aperti" />
+	<columnFieldProperty
+		name="im_sos_s_storni" />
+	<columnFieldProperty
+		name="im_mandati" />
+	<columnFieldProperty
+		name="im_man_storni" />
+	<columnFieldProperty
+		name="im_man_sospesi" />	
+	<columnFieldProperty
+		name="tot_sbilancio" />			
+		
+	<columnSet name="FILENAME">
+		<columnFieldProperty 
+			name="esercizio"/>
+		<columnFieldProperty 
+			name="nome_file"/>
+	</columnSet>			
+	<freeSearchSet name="FILENAME">
+		<findFieldProperty 
+			name="esercizio"/>
+		<findFieldProperty 
+			name="nome_file"/>
+	</freeSearchSet>
+	<columnSet name="BASE">
+		<columnFieldProperty 
+			name="esercizio"/>
+		<columnFieldProperty 
+			name="nome_file"/>
+		<columnFieldProperty 
+			name="data_giornaliera"/>
+		<columnFieldProperty 
+			name="data_movimento"/>	
+		<columnFieldProperty 
+			name="cd_cds"/>				
+		<columnFieldProperty 
+			name="im_sos_e_aperti" headerLabel="Sospesi Entrata"/>
+		<columnFieldProperty 
+			name="im_sos_e_storni" headerLabel="Sospesi Entrata"/>	
+		<columnFieldProperty 
+			name="im_rev_sospesi" headerLabel="Sospesi Entrata"/>		
+		<columnFieldProperty 
+			name="im_reversali" headerLabel="Reversali"/>
+		<columnFieldProperty 
+			name="im_rev_storni" headerLabel="Reversali"/>
+		<columnFieldProperty 
+			name="im_sos_s_aperti" headerLabel="Sospesi Spesa"/>
+		<columnFieldProperty 
+			name="im_sos_s_storni" headerLabel="Sospesi Spesa"/>
+		<columnFieldProperty 
+			name="im_man_sospesi" headerLabel="Sospesi Spesa"/>		
+		<columnFieldProperty 
+			name="im_mandati" headerLabel="Mandati"/>
+		<columnFieldProperty 
+			name="im_man_storni" headerLabel="Mandati"/>	
+		
+		<columnFieldProperty
+			name="tot_sbilancio" />				
+	</columnSet>
+	<freeSearchSet name="BASE">
+		<findFieldProperty 
+			name="esercizio"/>
+		<findFieldProperty 
+			name="nome_file"/>
+		<findFieldProperty 
+			name="data_giornaliera"/>
+		<findFieldProperty 
+			name="data_movimento"/>		
+		<findFieldProperty 
+			name="cd_cds"/>				
+		<findFieldProperty 
+			name="im_sos_e_aperti"/>
+		<findFieldProperty 
+			name="im_sos_e_storni"/>	
+		<findFieldProperty
+			name="im_rev_sospesi"/>		
+		<findFieldProperty 
+			name="im_reversali"/>
+		<findFieldProperty
+			name="im_rev_storni"/>
+		<findFieldProperty
+			name="im_sos_s_aperti"/>
+		<findFieldProperty
+			name="im_sos_s_storni"/>
+		<findFieldProperty
+			name="im_mandati"/>
+		<findFieldProperty
+			name="im_man_storni"/>	
+		<findFieldProperty
+			name="im_man_sospesi"/>		
+		<findFieldProperty
+			name="tot_sbilancio" />				
+	</freeSearchSet>
+	<!-- Bottone "Dettaglio Accrediti Sospesi Registrati" -->
+	<columnSet name="BOTT1">
+		<columnFieldProperty 
+			name="cd_sospeso_e"/>
+		<columnFieldProperty 
+			name="im_sos_e_aperti" label="Imp. Sospesi Entrata Registrati"/>	
+	</columnSet>
+	<freeSearchSet name="BOTT1">
+		<findFieldProperty 
+			name="cd_sospeso_e"/>
+		<findFieldProperty 
+			name="im_sos_e_aperti" label="Imp. Sospesi Entrata Registrati"/>	
+	</freeSearchSet>
+	<!-- Bottone "Dettaglio Accrediti Sospesi Stornati" -->
+	<columnSet name="BOTT2">
+		<columnFieldProperty 
+			name="cd_sospeso_e"/>
+		<columnFieldProperty 
+			name="im_sos_e_storni" label="Imp. Sospesi Entrata Stornati"/>	
+	</columnSet>
+	<freeSearchSet name="BOTT2">
+		<findFieldProperty 
+			name="cd_sospeso_e"/>
+		<findFieldProperty 
+			name="im_sos_e_storni" label="Imp. Sospesi Entrata Stornati"/>	
+	</freeSearchSet>
+<!-- Bottone "Dettaglio Accrediti Sospesi Regolati" -->
+	<columnSet name="BOTT3">
+		<columnFieldProperty 
+			name="pg_reversale"/>	
+		<columnFieldProperty 
+			name="cd_sospeso_e"/>
+		<columnFieldProperty 
+			name="im_rev_sospesi" label="Imp. Sospesi Entrata Regolati"/>	
+	</columnSet>
+	<freeSearchSet name="BOTT3">
+		<findFieldProperty 
+			name="pg_reversale"/>	
+		<findFieldProperty 
+			name="cd_sospeso_e"/>
+		<findFieldProperty 
+			name="im_rev_sospesi" label="Imp. Sospesi Entrata Regolati"/>	
+	</freeSearchSet>
+<!-- Bottone "Dettaglio Reversali Regolate" -->
+	<columnSet name="BOTT4">
+		<columnFieldProperty 
+			name="pg_reversale"/>	
+		<columnFieldProperty 
+			name="im_reversali" label="Imp. Reversali Regolate"/>	
+	</columnSet>
+	<freeSearchSet name="BOTT4">
+		<findFieldProperty 
+			name="pg_reversale"/>	
+		<findFieldProperty 
+			name="im_reversali" label="Imp. Reversali Regolate"/>	
+	</freeSearchSet>
+<!-- Bottone "Dettaglio Reversali Stornate" -->
+	<columnSet name="BOTT5">
+		<columnFieldProperty 
+			name="pg_reversale"/>	
+		<columnFieldProperty 
+			name="im_rev_storni" label="Imp. Reversali Stornate"/>	
+	</columnSet>
+	<freeSearchSet name="BOTT5">
+		<findFieldProperty 
+			name="pg_reversale"/>	
+		<findFieldProperty 
+			name="im_rev_storni" label="Imp. Reversali Stornate"/>	
+	</freeSearchSet>
+	<!-- Bottone "Dettaglio Addebiti Sospesi Registrati" -->
+	<columnSet name="BOTT6">
+		<columnFieldProperty 
+			name="cd_sospeso_s"/>	
+		<columnFieldProperty 
+			name="im_sos_s_aperti" label="Imp. Sospesi Spesa Registrati"/>	
+	</columnSet>
+	<freeSearchSet name="BOTT6">
+		<findFieldProperty 
+			name="cd_sospeso_s"/>	
+		<findFieldProperty 
+			name="im_sos_s_aperti" label="Imp. Sospesi Spesa Registrati"/>	
+	</freeSearchSet>
+<!-- Bottone "Dettaglio Addebiti Sospesi Stornati" -->
+	<columnSet name="BOTT7">
+		<columnFieldProperty 
+			name="cd_sospeso_s"/>	
+		<columnFieldProperty 
+			name="im_sos_s_storni" label="Imp. Sospesi Spesa Stornati"/>	
+	</columnSet>
+	<freeSearchSet name="BOTT7">
+		<findFieldProperty 
+			name="cd_sospeso_s"/>	
+		<findFieldProperty 
+			name="im_sos_s_storni" label="Imp. Sospesi Spesa Stornati"/>	
+	</freeSearchSet>
+	<!-- Bottone "Dettaglio Addediti Sospesi Regolati" -->
+	<columnSet name="BOTT8">
+		<columnFieldProperty 
+			name="pg_mandato"/>	
+		<columnFieldProperty 
+			name="cd_sospeso_s"/>
+		<columnFieldProperty 
+			name="im_man_sospesi" label="Imp. Sospesi Spesa Regolati"/>	
+	</columnSet>
+	<freeSearchSet name="BOTT8">
+		<findFieldProperty 
+			name="pg_mandato"/>	
+		<findFieldProperty 
+			name="cd_sospeso_s"/>
+		<findFieldProperty 
+			name="im_man_sospesi" label="Imp. Sospesi Spesa Regolati"/>	
+	</freeSearchSet>
+<!-- Bottone "Dettaglio Mandati Regolati" -->
+	<columnSet name="BOTT9">
+		<columnFieldProperty 
+			name="pg_mandato"/>	
+		<columnFieldProperty 
+			name="im_mandati" label="Imp. Mandati Regolati"/>	
+	</columnSet>
+	<freeSearchSet name="BOTT9">
+		<findFieldProperty 
+			name="pg_mandato"/>	
+		<findFieldProperty 
+			name="im_mandati" label="Imp. Mandati Regolati"/>	
+	</freeSearchSet>
+<!-- Bottone "Dettaglio Mandati Stornati" -->
+	<columnSet name="BOTT10">
+		<columnFieldProperty 
+			name="pg_mandato"/>	
+		<columnFieldProperty 
+			name="im_man_storni" label="Imp. Mandati Stornati"/>	
+	</columnSet>
+	<freeSearchSet name="BOTT10">
+		<findFieldProperty 
+			name="pg_mandato"/>	
+		<findFieldProperty 
+			name="im_man_storni" label="Imp. Mandati Stornati"/>	
+	</freeSearchSet>
+</bulkInfo>

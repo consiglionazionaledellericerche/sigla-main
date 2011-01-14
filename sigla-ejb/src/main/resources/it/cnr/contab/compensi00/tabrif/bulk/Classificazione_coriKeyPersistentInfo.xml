@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Classificazione_coriKey" >
+	<defaultColumnMap
+		tableName="CLASSIFICAZIONE_CORI" >
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE_CORI"
+			propertyName="cd_classificazione_cori"
+			sqlTypeName="CHAR"
+			columnSize="2"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_classificazione_cori"
+		partOfOid="true" />
+</SQLPersistentInfo>

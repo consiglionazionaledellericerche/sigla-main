@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.preventvar00.consultazioni.bulk.V_cons_var_pdggBulk"
+	homeClassName="it.cnr.contab.preventvar00.consultazioni.bulk.V_cons_var_pdggHome">
+	<defaultColumnMap
+		tableName="V_CONS_VAR_PDGG">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VARIAZIONE_PDG"
+			propertyName="pg_variazione_pdg"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_VARIAZIONE"
+			propertyName="ds_variazione"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_APERTURA"
+			propertyName="dt_apertura"
+			sqlTypeName="DATE"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_CHIUSURA"
+			propertyName="dt_chiusura"
+			sqlTypeName="DATE"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_APPROVAZIONE"
+			propertyName="dt_approvazione"
+			sqlTypeName="DATE"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_ANNULLAMENTO"
+			propertyName="dt_annullamento"
+			sqlTypeName="DATE"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_DELIBERA"
+			propertyName="ds_delibera"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="CHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_STATO"
+			propertyName="ds_stato"
+			sqlTypeName="CHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="RIFERIMENTI"
+			propertyName="riferimenti"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CAUSALE_RESPINTA"
+			propertyName="cd_causale_respinta"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CAUSALE_RESPINTA"
+			propertyName="ds_causale_respinta"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_APP_FORMALE"
+			propertyName="dt_app_formale"
+			sqlTypeName="DATE"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPOLOGIA"
+			propertyName="tipologia"
+			sqlTypeName="VARCHAR"
+			columnSize="15"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_TIPO_VARIAZIONE"
+			propertyName="ds_tipo_variazione"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="TIPOLOGIA_FIN"
+			propertyName="tipologia_fin"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_TIPOLOGIA_FIN"
+			propertyName="ds_tipologia_fin"
+			sqlTypeName="VARCHAR"
+			columnSize="13"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_RIGA"
+			propertyName="pg_riga"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDR_ASSEGNATARIO"
+			propertyName="cd_cdr_assegnatario"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_CDR_ASSEGNATARIO"
+			propertyName="ds_cdr_assegnatario"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE"
+			propertyName="cd_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="34"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="false" />
+		<columnMapping
+			columnName="NR_LIVELLO"
+			propertyName="nr_livello"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LIVELLO3"
+			propertyName="cd_livello3"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LIVELLO4"
+			propertyName="cd_livello4"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LIVELLO5"
+			propertyName="cd_livello5"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LIVELLO6"
+			propertyName="cd_livello6"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LIVELLO7"
+			propertyName="cd_livello7"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_MODULO"
+			propertyName="pg_modulo"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TIPO_MODULO"
+			propertyName="cd_tipo_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_TIPO_MODULO"
+			propertyName="ds_tipo_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_COMMESSA"
+			propertyName="pg_commessa"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_COMMESSA"
+			propertyName="cd_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_COMMESSA"
+			propertyName="ds_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="pg_progetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="ds_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_DIPARTIMENTO"
+			propertyName="cd_dipartimento"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_DIPARTIMENTO"
+			propertyName="ds_dipartimento"
+			sqlTypeName="VARCHAR"
+			columnSize="765"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_AREA"
+			propertyName="cd_cds_area"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="ds_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="DATE"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DESCRIZIONE"
+			propertyName="descrizione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SPESE_GEST_DECENTRATA_INT"
+			propertyName="im_spese_gest_decentrata_int"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_SPESE_GEST_DECENTRATA_EST"
+			propertyName="im_spese_gest_decentrata_est"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_SPESE_GEST_ACCENTRATA_INT"
+			propertyName="im_spese_gest_accentrata_int"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_SPESE_GEST_ACCENTRATA_EST"
+			propertyName="im_spese_gest_accentrata_est"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_ENTRATA"
+			propertyName="im_entrata"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="ABS_TOT_VARIAZIONE"
+			propertyName="abs_tot_variazione"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="pg_variazione_pdg" />
+	<persistentProperty
+		name="ds_variazione" />
+	<persistentProperty
+		name="dt_apertura" />
+	<persistentProperty
+		name="dt_chiusura" />
+	<persistentProperty
+		name="dt_approvazione" />
+	<persistentProperty
+		name="dt_annullamento" />
+	<persistentProperty
+		name="ds_delibera" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="ds_stato" />
+	<persistentProperty
+		name="riferimenti" />
+	<persistentProperty
+		name="cd_causale_respinta" />
+	<persistentProperty
+		name="ds_causale_respinta" />
+	<persistentProperty
+		name="dt_app_formale" />
+	<persistentProperty
+		name="tipologia" />
+	<persistentProperty
+		name="ds_tipo_variazione" />
+	<persistentProperty
+		name="tipologia_fin" />
+	<persistentProperty
+		name="ds_tipologia_fin" />
+	<persistentProperty
+		name="pg_riga" />
+	<persistentProperty
+		name="cd_cdr_assegnatario" />
+	<persistentProperty
+		name="ds_cdr_assegnatario" />
+	<persistentProperty
+		name="cd_linea_attivita" />
+	<persistentProperty
+		name="cd_classificazione" />
+	<persistentProperty
+		name="ds_classificazione" />
+	<persistentProperty
+		name="nr_livello" />
+	<persistentProperty
+		name="cd_livello1" />
+	<persistentProperty
+		name="cd_livello2" />
+	<persistentProperty
+		name="cd_livello3" />
+	<persistentProperty
+		name="cd_livello4" />
+	<persistentProperty
+		name="cd_livello5" />
+	<persistentProperty
+		name="cd_livello6" />
+	<persistentProperty
+		name="cd_livello7" />
+	<persistentProperty
+		name="pg_modulo" />
+	<persistentProperty
+		name="cd_modulo" />
+	<persistentProperty
+		name="ds_modulo" />
+	<persistentProperty
+		name="cd_tipo_modulo" />
+	<persistentProperty
+		name="ds_tipo_modulo" />
+	<persistentProperty
+		name="pg_commessa" />
+	<persistentProperty
+		name="cd_commessa" />
+	<persistentProperty
+		name="ds_commessa" />
+	<persistentProperty
+		name="pg_progetto" />
+	<persistentProperty
+		name="cd_progetto" />
+	<persistentProperty
+		name="ds_progetto" />
+	<persistentProperty
+		name="cd_dipartimento" />
+	<persistentProperty
+		name="ds_dipartimento" />
+	<persistentProperty
+		name="cd_cds_area" />
+	<persistentProperty
+		name="ti_appartenenza" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="cd_elemento_voce" />
+	<persistentProperty
+		name="ds_elemento_voce" />
+	<persistentProperty
+		name="dt_registrazione" />
+	<persistentProperty
+		name="descrizione" />
+	<persistentProperty
+		name="im_spese_gest_decentrata_int" />
+	<persistentProperty
+		name="im_spese_gest_decentrata_est" />
+	<persistentProperty
+		name="im_spese_gest_accentrata_int" />
+	<persistentProperty
+		name="im_spese_gest_accentrata_est" />
+	<persistentProperty
+		name="im_entrata" />
+	<persistentProperty
+		name="abs_tot_variazione" />
+</SQLPersistentInfo>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.Voce_fBase"
+	keyClassName="it.cnr.contab.config00.pdcfin.bulk.Voce_fKey"
+	homeClassName="it.cnr.contab.config00.pdcfin.bulk.Voce_fHome" >
+	<defaultColumnMap
+		tableName="VOCE_F" >
+		<columnMapping
+			columnName="FL_MASTRINO"
+			propertyName="fl_mastrino"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_PROPRIO_VOCE"
+			propertyName="cd_proprio_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_VOCE"
+			propertyName="ti_voce"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="cd_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_TITOLO_CAPITOLO"
+			propertyName="cd_titolo_capitolo"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="LIVELLO"
+			propertyName="livello"
+			sqlTypeName="DECIMAL"
+			columnSize="2" />
+		<columnMapping
+			columnName="CD_PARTE"
+			propertyName="cd_parte"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="CD_CATEGORIA"
+			propertyName="cd_categoria"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="CD_FUNZIONE"
+			propertyName="cd_funzione"
+			sqlTypeName="VARCHAR"
+			columnSize="2" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_VOCE_PADRE"
+			propertyName="cd_voce_padre"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="CD_SEZIONE_CAPITOLO"
+			propertyName="cd_sezione_capitolo"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="DS_VOCE"
+			propertyName="ds_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="fl_mastrino" />
+	<persistentProperty
+		name="cd_proprio_voce" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="ti_voce" />
+	<persistentProperty
+		name="cd_natura" />
+	<persistentProperty
+		name="cd_titolo_capitolo" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="cd_centro_responsabilita" />
+	<persistentProperty
+		name="livello" />
+	<persistentProperty
+		name="cd_parte" />
+	<persistentProperty
+		name="cd_categoria" />
+	<persistentProperty
+		name="cd_funzione" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="cd_voce_padre" />
+	<persistentProperty
+		name="cd_sezione_capitolo" />
+	<persistentProperty
+		name="ds_voce" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="cd_elemento_voce" />
+</SQLPersistentInfo>

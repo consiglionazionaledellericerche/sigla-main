@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.tabrif.bulk.Ass_incarico_attivitaBulk"
+	homeClassName="it.cnr.contab.incarichi00.tabrif.bulk.Ass_incarico_attivitaHome">
+	<defaultColumnMap
+		tableName="ASS_INCARICO_ATTIVITA">
+		<columnMapping
+			columnName="CD_TIPO_INCARICO"
+			propertyName="tipo_incarico.cd_tipo_incarico"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="CD_TIPO_ATTIVITA"
+			propertyName="tipo_attivita.cd_tipo_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="CD_TIPO_LIMITE"
+			propertyName="tipo_limite.cd_tipo_limite"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipo_incarico"
+		partOfOid="true" />
+	<persistentProperty
+		name="tipo_attivita"
+		partOfOid="true" />
+	<persistentProperty
+		name="tipo_limite" />
+</SQLPersistentInfo>

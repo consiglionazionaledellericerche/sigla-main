@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Piano di Gestione preliminare - Spese"
+          longDescription="Piano di Gestione preliminare - Spese">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio contabile" />
+	 <fieldProperty
+        name="ds_centro_di_responsabilita"
+        property="pdg_modulo.cdr.ds_cdr"
+        inputType="ROTEXT"
+		inputSize="70"
+		maxLength="30"        
+        label="Centro di Responsabilità" />		
+	<fieldProperty
+		name="cd_centro_di_responsabilita"
+		property="pdg_modulo.cdr.cd_centro_responsabilita"
+		inputType="ROTEXT"
+		inputSize="10"
+		maxLength="30"
+		nullable="false"
+		label="Centro di Responsabilità" />
+	<fieldProperty
+		name="pg_progetto"
+		property="pdg_modulo.pg_progetto"
+		inputType="ROTEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo del modulo di attivita'" />
+	<fieldProperty
+		name="cd_dipartimento"
+		property="pdg_modulo.progetto.progettopadre.progettopadre.cd_dipartimento"
+		descProperty="pdg_modulo.progetto.progettopadre.progettopadre.dipartimento.ds_dipartimento"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="5"
+		maxLength="10"
+		label="Dipartimento" />		
+	<fieldProperty
+		name="cd_progetto"
+		property="pdg_modulo.progetto.progettopadre.progettopadre.cd_progetto"
+		descProperty="pdg_modulo.progetto.progettopadre.progettopadre.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="10"
+		maxLength="10"
+		label="Progetto" />
+	<fieldProperty
+		name="cd_commessa"
+		property="pdg_modulo.progetto.progettopadre.cd_progetto"
+		descProperty="pdg_modulo.progetto.progettopadre.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="15"
+		maxLength="10"
+		label="Commessa" />
+	<fieldProperty
+		name="cd_modulo"
+		property="pdg_modulo.progetto.cd_progetto"
+		descProperty="pdg_modulo.progetto.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="20"
+		maxLength="10"
+		label="Modulo di Commessa" />
+		
+	<fieldProperty
+		name="ris_es_prec_tit_i"
+		property="ris_es_prec_tit_i"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+        maxLength="15"
+		inputSize="15"
+		nullable="false"		
+		label="Totale Titolo I - Spese Funzionamento" />
+	<fieldProperty
+		name="ris_es_prec_tit_ii"
+		property="ris_es_prec_tit_ii"
+		inputType="TEXT"
+        maxLength="15"
+		inputSize="15"	
+		nullable="false"			
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale Titolo II - Spese di Investimento" />
+	<fieldProperty
+		name="ris_pres_es_prec_tit_i"
+		property="ris_pres_es_prec_tit_i"
+		inputType="TEXT"
+        maxLength="15"
+		inputSize="15"	
+		nullable="false"					
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Risorse presunte provenienti dall'esercizio precedente, Titolo I" />
+	<fieldProperty
+		name="ris_pres_es_prec_tit_ii"
+		property="ris_pres_es_prec_tit_ii"
+		inputType="TEXT"
+		maxLength="15"
+		inputSize="15"
+		nullable="false"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Risorse presunte provenienti dall'esercizio precedente, Titolo II" />
+	<fieldProperty
+		name="im_costi_generali"
+		property="im_costi_generali"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		nullable="false"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Costi generali dell'Ente" />
+	<fieldProperty
+		name="im_cf_tfr"
+		property="im_cf_tfr"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		nullable="false"
+		labelStyle="font-style:italic"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Quota dell'esercizio per l'accantonamento TFR&lt;BR&gt;a tempo indeterminato" />
+	<fieldProperty
+		name="im_cf_tfr_det"
+		property="im_cf_tfr_det"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		nullable="false"
+		labelStyle="font-style:italic"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Quota dell'esercizio per l'accantonamento TFR&lt;BR&gt;a tempo determinato" />		
+	<fieldProperty
+		name="im_cf_amm_immobili"
+		property="im_cf_amm_immobili"
+		inputType="TEXT"
+		maxLength="15"
+		inputSize="15"
+		nullable="false"
+		labelStyle="font-style:italic"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Quote di ammortamento immobili in proprietà&lt;BR&gt;all'Istituto" />
+	<fieldProperty
+		name="im_cf_amm_attrezz"
+		property="im_cf_amm_attrezz"
+		inputType="TEXT"
+		maxLength="15"
+		inputSize="15"
+		nullable="false"
+		labelStyle="font-style:italic"		
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Quote di ammortamento apparecchiature&lt;BR&gt;tecnico-scientifiche di proprietà acquisite negli&lt;BR&gt;anni precedenti" />
+	<fieldProperty
+		name="im_cf_amm_altro"
+		property="im_cf_amm_altro"
+		inputType="TEXT"
+		maxLength="15"
+		inputSize="15"
+		nullable="false"
+		labelStyle="font-style:italic"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Quota di ammortamento di altri beni durevoli di&lt;BR&gt;proprietà acquisite negli esercizi precedenti" />
+	<fieldProperty
+		name="tot_massa_spendibile_anno_prec"
+		property="tot_massa_spendibile_anno_prec"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		nullable="false"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Massa Spendibile presunta anno precedente" />
+	<fieldProperty
+		name="tot_massa_spendibile_anno_in_corso"
+		property="tot_massa_spendibile_anno_in_corso"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		nullable="false"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Massa Spendibile presunta anno corrente" />
+	<fieldProperty
+		name="valore_presunto_anno_in_corso"
+		property="valore_presunto_anno_in_corso"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		nullable="false"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Valore presunto delle attività anno corrente" />
+	<fieldProperty
+		name="tot_entr_fonti_est_anno_in_corso"
+		property="tot_entr_fonti_est_anno_in_corso"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Entrate da fonti esterne&lt;BR&gt;previste per il anno corrente" />
+	<fieldProperty
+		name="tot_spese_coperte_fonti_esterne_anno_in_corso"
+		property="tot_spese_coperte_fonti_esterne_anno_in_corso"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Spese coperte da fonti Esterne&lt;BR&gt;previste per il anno corrente" />
+	<fieldProperty
+		name="differenza"
+		property="differenza"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Differenza" />
+	<fieldProperty
+		name="tot_costi_figurativi"
+		property="tot_costi_figurativi"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="&lt;U&gt;Totale Costi Figurativi&lt;/U&gt;" />
+	<fieldProperty
+		name="tot_costi"
+		property="tot_costi"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="&lt;U&gt;Totale Costi&lt;/U&gt;" />
+	<fieldProperty
+		name="tot_risorse_provenienti_es_prec"
+		property="tot_risorse_provenienti_es_prec"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale" />
+	<fieldProperty
+		name="tot_risorse_presunte_es_prec"
+		property="tot_risorse_presunte_es_prec"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale" />
+	<fieldProperty
+		name="spese_decentrate_fonti_interne_istituto"
+		property="spese_decentrate_fonti_interne_istituto"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Istituto" />
+	<fieldProperty
+		name="spese_decentrate_fonti_interne_aree"
+		property="spese_decentrate_fonti_interne_aree"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Aree" />
+	<fieldProperty
+		name="totale_spese_decentrate_fonti_interne"
+		property="totale_spese_decentrate_fonti_interne"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale" />
+	<fieldProperty
+		name="spese_accentrate_fonti_interne_istituto"
+		property="spese_accentrate_fonti_interne_istituto"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Istituto" />
+	<fieldProperty
+		name="spese_accentrate_fonti_interne_aree"
+		property="spese_accentrate_fonti_interne_aree"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Aree" />
+	<fieldProperty
+		name="totale_spese_accentrate_fonti_interne"
+		property="totale_spese_accentrate_fonti_interne"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale" />
+	<fieldProperty
+		name="totale_spese_da_fonti_interne_istituto"
+		property="totale_spese_da_fonti_interne_istituto"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Istituto" />
+	<fieldProperty
+		name="totale_spese_da_fonti_interne_aree"
+		property="totale_spese_da_fonti_interne_aree"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Aree" />
+	<fieldProperty
+		name="totale_spese_da_fonti_interne_totale"
+		property="totale_spese_da_fonti_interne_totale"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale" />		
+
+
+	<fieldProperty
+		name="label_titolo"
+		labelStyle="color:blue;font : bold 14px;"
+		label="Previsione e destinazione della massa Spendibile&lt;BR&gt;valore totale presunto delle attività per Modulo di Commessa" />
+				
+	<fieldProperty
+		name="label_costi_figurativi"
+		labelStyle="color:blue"
+		label="Costi Figurativi" />
+
+	<fieldProperty
+		name="label_risorse_es_prec"
+		labelStyle="color:blue"
+		label="Risorse provenienti da&lt;BR&gt;esercizi precedenti al anno precedente" />
+
+	<fieldProperty
+		name="label_risorse_presunte_es_prec"
+		labelStyle="color:blue"
+		label="Risorse presunte&lt;BR&gt;provenienti dal anno precedente" />
+
+	<fieldProperty
+		name="label_fonti_esterne"
+		labelStyle="color:blue"
+		label="Fonti Esterne" />
+
+	<fieldProperty
+		name="label_fonti_interne"
+		labelStyle="color:blue"
+		label="Fonti Interne" />
+
+	<fieldProperty
+		name="label_totali_generali"
+		labelStyle="color:blue"
+		label="Totali Generali" />
+
+	<fieldProperty
+		name="label_spese_decentrate_fonti_interne"
+		labelStyle="color:blue"
+		label="Spese Decentrate Fonti Interne" />
+
+	<fieldProperty
+		name="label_spese_accentrate_fonti_interne"
+		labelStyle="color:blue"
+		label="Spese Accentrate Fonti Interne" />
+
+	<fieldProperty
+		name="label_totale_spese_da_fonti_interne"
+		labelStyle="color:blue"
+		label="Totale Spese da Fonti Interne" />
+		
+	<fieldProperty
+		name="label_contrattazione"
+		labelStyle="color:blue"
+		label="Destinazione massa spendibile" />
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_centro_di_responsabilita" />
+	<formFieldProperty
+		name="ds_centro_di_responsabilita" />		
+	<formFieldProperty
+		name="pg_progetto" />
+	<formFieldProperty
+		name="cd_dipartimento" />
+	<formFieldProperty
+		name="cd_progetto" />
+	<formFieldProperty
+		name="cd_commessa" />
+	<formFieldProperty
+		name="cd_modulo" />		
+	<formFieldProperty
+		name="ris_es_prec_tit_i" 
+		command="doOnRis_es_prec_tit_iChange"/>
+	<formFieldProperty
+		name="ris_es_prec_tit_ii" 
+		command="doOnRis_es_prec_tit_iiChange" />
+	<formFieldProperty
+		name="ris_pres_es_prec_tit_i" 
+		command="doOnRis_pres_es_prec_tit_iChange" />
+	<formFieldProperty
+		name="ris_pres_es_prec_tit_ii" 
+		command="doOnRis_pres_es_prec_tit_iiChange" />
+	<formFieldProperty
+		name="im_costi_generali" 
+		command="doOnIm_costi_generaliChange" />
+	<formFieldProperty
+		name="im_cf_tfr" />
+	<formFieldProperty
+		name="im_cf_tfr_det" />		
+	<formFieldProperty
+		name="im_cf_amm_immobili" 
+		command="doOnIm_cf_amm_immobiliChange" />
+	<formFieldProperty
+		name="im_cf_amm_attrezz" 
+		command="doOnIm_cf_amm_attrezzChange" />
+	<formFieldProperty
+		name="im_cf_amm_altro" 
+		command="doOnIm_cf_amm_altroChange" />
+	<formFieldProperty
+		name="tot_massa_spendibile_anno_prec"/>
+	<formFieldProperty
+		name="tot_massa_spendibile_anno_in_corso"/>
+	<formFieldProperty
+		name="valore_presunto_anno_in_corso"/>
+	<formFieldProperty
+		name="tot_entr_fonti_est_anno_in_corso"/>
+	<formFieldProperty
+		name="tot_spese_coperte_fonti_esterne_anno_in_corso"/>
+	<formFieldProperty
+		name="differenza"/>
+	<formFieldProperty
+		name="tot_costi_figurativi"/>
+	<formFieldProperty
+		name="tot_costi"/>				
+	<formFieldProperty
+		name="label_costi_figurativi" />
+	<formFieldProperty
+		name="label_titolo" />
+	<formFieldProperty
+		name="label_risorse_es_prec"/>
+	<formFieldProperty
+		name="label_risorse_presunte_es_prec"/>
+	<formFieldProperty
+		name="tot_risorse_provenienti_es_prec"/>
+	<formFieldProperty
+		name="tot_risorse_presunte_es_prec"/>
+	<formFieldProperty
+		name="label_fonti_esterne"/>
+	<formFieldProperty
+		name="label_fonti_interne"/>		
+	<formFieldProperty
+		name="label_totali_generali"/>
+	<formFieldProperty
+		name="label_spese_decentrate_fonti_interne"/>
+	<formFieldProperty
+		name="label_spese_accentrate_fonti_interne"/>
+	<formFieldProperty
+		name="label_totale_spese_da_fonti_interne"/>
+	<formFieldProperty
+		name="spese_decentrate_fonti_interne_istituto"/>
+	<formFieldProperty
+		name="spese_decentrate_fonti_interne_aree"/>
+	<formFieldProperty
+		name="totale_spese_decentrate_fonti_interne"/>
+	<formFieldProperty
+		name="spese_accentrate_fonti_interne_istituto"/>
+	<formFieldProperty
+		name="spese_accentrate_fonti_interne_aree"/>
+	<formFieldProperty
+		name="totale_spese_accentrate_fonti_interne"/>
+	<formFieldProperty
+		name="totale_spese_da_fonti_interne_istituto"/>
+	<formFieldProperty
+		name="totale_spese_da_fonti_interne_aree"/>
+	<formFieldProperty
+		name="totale_spese_da_fonti_interne_totale"/>		
+	<formFieldProperty
+		name="label_contrattazione"/>
+
+		
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="cd_modulo" />
+	<findFieldProperty
+		name="ris_es_prec_tit_i" />
+	<findFieldProperty
+		name="ris_es_prec_tit_ii" />
+	<findFieldProperty
+		name="ris_pres_es_prec_tit_i" />
+	<findFieldProperty
+		name="ris_pres_es_prec_tit_ii" />
+	<findFieldProperty
+		name="im_costi_generali" />
+	<findFieldProperty
+		name="im_cf_tfr" />
+	<findFieldProperty
+		name="im_cf_tfr_det" />		
+	<findFieldProperty
+		name="im_cf_amm_immobili" />
+	<findFieldProperty
+		name="im_cf_amm_attrezz" />
+	<findFieldProperty
+		name="im_cf_amm_altro" />
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="cd_modulo" />
+	<columnFieldProperty
+		name="ris_es_prec_tit_i" />
+	<columnFieldProperty
+		name="ris_es_prec_tit_ii" />
+	<columnFieldProperty
+		name="ris_pres_es_prec_tit_i" />
+	<columnFieldProperty
+		name="ris_pres_es_prec_tit_ii" />
+	<columnFieldProperty
+		name="im_costi_generali" />
+	<columnFieldProperty
+		name="im_cf_tfr" />
+	<columnFieldProperty
+		name="im_cf_tfr_det" />		
+	<columnFieldProperty
+		name="im_cf_amm_immobili" />
+	<columnFieldProperty
+		name="im_cf_amm_attrezz" />
+	<columnFieldProperty
+		name="im_cf_amm_altro" />
+</bulkInfo>

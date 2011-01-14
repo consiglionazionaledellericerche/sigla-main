@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo												
+	persistentClassName="it.cnr.contab.prevent00.consultazioni.bulk.V_cons_disp_elem_voceBulk"
+	homeClassName="it.cnr.contab.prevent00.consultazioni.bulk.V_cons_disp_elem_voceHome" >
+		<defaultColumnMap
+			tableName="V_CONS_DISP_ELEM_VOCE">
+			<columnMapping
+				columnName="ESERCIZIO"
+				propertyName="esercizio"
+				sqlTypeName="DECIMAL"
+				columnSize="4"
+				nullable="true" />
+			<columnMapping
+				columnName="ESERCIZIO_RES"
+				propertyName="esercizio_res"
+				sqlTypeName="DECIMAL"
+				columnSize="4"
+				nullable="true" />
+			<columnMapping
+				columnName="CD_CENTRO_RESPONSABILITA"
+				propertyName="cd_centro_responsabilita"
+				sqlTypeName="VARCHAR"
+				columnSize="30" />
+			<columnMapping
+				columnName="CD_UNITA_ORGANIZZATIVA"
+				propertyName="cd_unita_organizzativa"
+				sqlTypeName="VARCHAR"
+				columnSize="30" />
+			<columnMapping
+				columnName="CD_LINEA_ATTIVITA"
+				propertyName="cd_linea_attivita"
+				sqlTypeName="VARCHAR"
+				columnSize="10" />
+			<columnMapping
+				columnName="CD_MODULO"
+				propertyName="cd_modulo"
+				sqlTypeName="VARCHAR"
+				columnSize="40" />	
+			<columnMapping
+				columnName="CD_ELEMENTO_VOCE"
+				propertyName="cd_elemento_voce"
+				sqlTypeName="VARCHAR"
+				columnSize="50" />
+			<columnMapping
+				columnName="CD_VOCE"
+				propertyName="cd_voce"
+				sqlTypeName="VARCHAR"
+				columnSize="50" />
+			<columnMapping
+				columnName="IM_STANZ_INIZIALE_A1"
+				propertyName="im_stanz_iniziale_a1"
+				sqlTypeName="DECIMAL"
+				columnSize="22" />
+			<columnMapping
+				columnName="VARIAZIONI_PIU"
+				propertyName="variazioni_piu"
+				sqlTypeName="DECIMAL"
+				columnSize="22" />
+			<columnMapping
+				columnName="VARIAZIONI_MENO"
+				propertyName="variazioni_meno"
+				sqlTypeName="DECIMAL"
+				columnSize="22" />
+			<columnMapping
+				columnName="ASSESTATO"
+				propertyName="assestato"
+				sqlTypeName="DECIMAL"
+				columnSize="22" />	
+			<columnMapping
+				columnName="IM_OBBL_ACC_COMP"
+				propertyName="im_obbl_acc_comp"
+				sqlTypeName="DECIMAL"
+				columnSize="22" />
+			<columnMapping
+				columnName="DISPONIBILITA"
+				propertyName="disponibilita"
+				sqlTypeName="DECIMAL"
+				columnSize="22" />		
+	</defaultColumnMap>
+		
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="esercizio_res" />
+	<persistentProperty
+		name="cd_centro_responsabilita"/>
+	<persistentProperty
+		name="cd_unita_organizzativa"/>
+	<persistentProperty
+		name="cd_linea_attivita"/>
+	<persistentProperty
+		name="cd_modulo"/>
+	<persistentProperty
+		name="cd_elemento_voce"/>
+	<persistentProperty
+		name="cd_voce" />
+	<persistentProperty
+		name="im_stanz_iniziale_a1" />
+	<persistentProperty
+		name="variazioni_piu" />
+	<persistentProperty
+		name="variazioni_meno" />
+	<persistentProperty
+		name="assestato" />
+	<persistentProperty
+		name="im_obbl_acc_comp" />
+	<persistentProperty
+		name="disponibilita" />
+		
+</SQLPersistentInfo>

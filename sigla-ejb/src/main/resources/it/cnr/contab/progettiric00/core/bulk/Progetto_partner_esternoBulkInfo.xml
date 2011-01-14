@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_partner_esterno"
+		property="partner_esterno.cd_terzo"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		label="Codice Terzo" />
+	<fieldProperty
+		name="partner_esterno"
+		property="partner_esterno"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		readonlyProperty="notNew"
+		enabledOnSearch="true"
+		label="Partner esterno" />	
+		
+	<fieldProperty
+		name="pg_progetto"
+		property="pg_progetto"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice Progetto" />
+			
+	<fieldProperty
+		name="importo"
+		property="importo"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo" />
+		
+	<fieldProperty
+		name="n_persone"
+		property="n_persone"
+		maxLength="9"
+		inputSize="9"
+		inputType="TEXT"
+		label="Unità di Personale" />
+		
+	<fieldProperty
+		name="note"
+		property="note"
+		maxLength="400"
+		inputSize="400"
+		inputType="TEXTAREA"
+		cols="80"
+		rows="3"
+		label="Descrizione" />				
+
+	<form name="partner_esterno">
+		<formFieldProperty
+			name="cd_terzo"
+			property="partner_esterno.cd_terzo"
+			label="Codice Partner esterno"
+			/>
+		<formFieldProperty
+			name="denominazione_sede"
+			property="partner_esterno.denominazione_sede"
+			label="Descrizione Partner esterno"
+			/>
+			
+		<formFieldProperty
+			name="importo"
+			/>
+			
+		<formFieldProperty
+			name="n_persone"
+			/>			
+
+		<formFieldProperty
+			name="note"
+			/>			
+	</form>
+	<columnSet name="partner_esterno">
+		<columnFieldProperty
+			name="cd_terzo"
+			property="partner_esterno.cd_terzo"
+			label="Codice Partner esterno"/>
+		<columnFieldProperty
+			name="denominazione_sede"
+			property="partner_esterno.denominazione_sede"
+			label="Descrizione Partner esterno"/>
+		<columnFieldProperty
+			name="importo"/>
+		<columnFieldProperty
+			name="n_persone"/>			
+		<columnFieldProperty
+			name="note"
+			inputType="TEXT"
+			maxLength="40"
+			/>						
+	</columnSet>
+	
+	<formFieldProperty
+		name="pg_progetto" />
+	<formFieldProperty
+		name="partner_esterno" />
+	<formFieldProperty
+		name="cd_partner_esterno" />
+	<formFieldProperty
+		name="importo" />
+	<formFieldProperty
+		name="n_persone" />
+	<formFieldProperty
+		name="note" />
+		
+	<columnFieldProperty
+		name="cd_partner_esterno" />
+	<columnFieldProperty
+		name="pg_progetto" />	
+	<columnFieldProperty
+		name="importo" />
+	<columnFieldProperty
+		name="n_persone" />
+	<columnFieldProperty
+		name="note" />				
+
+	<findFieldProperty
+		name="pg_progetto" />
+	<findFieldProperty
+		name="cd_partner_esterno" />
+	<findFieldProperty
+		name="importo" />
+	<findFieldProperty
+		name="n_persone" />
+	<findFieldProperty
+		name="note" />				
+
+</bulkInfo>

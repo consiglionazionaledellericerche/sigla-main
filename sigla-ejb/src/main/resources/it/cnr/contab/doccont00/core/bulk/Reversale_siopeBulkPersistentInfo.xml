@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Reversale_siopeBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Reversale_siopeHome">
+	<defaultColumnMap
+		tableName="REVERSALE_SIOPE">
+		<columnMapping
+			columnName="ESERCIZIO_SIOPE"
+			propertyName="codice_siope.esercizio" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="codice_siope.ti_gestione" />
+		<columnMapping
+			columnName="CD_SIOPE"
+			propertyName="codice_siope.cd_siope" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="codice_siope"
+		partOfOid="true" />
+</SQLPersistentInfo>

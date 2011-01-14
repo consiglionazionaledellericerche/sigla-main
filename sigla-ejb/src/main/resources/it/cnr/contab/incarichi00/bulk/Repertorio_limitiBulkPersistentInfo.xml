@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.bulk.Repertorio_limitiBulk"
+	homeClassName="it.cnr.contab.incarichi00.bulk.Repertorio_limitiHome">
+	<defaultColumnMap
+		tableName="REPERTORIO_LIMITI">
+		<columnMapping
+			columnName="CD_TIPO_LIMITE"
+			propertyName="tipo_limite.cd_tipo_limite"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipo_limite"
+		partOfOid="true" />
+</SQLPersistentInfo>

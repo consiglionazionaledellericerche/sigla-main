@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk"
+	homeClassName="it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoHome">
+	<defaultColumnMap
+		tableName="ASS_CONTRATTO_UO">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="contratto.esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="STATO_CONTRATTO"
+			propertyName="contratto.stato"
+			sqlTypeName="CHAR"
+			columnSize="1" />			
+		<columnMapping
+			columnName="PG_CONTRATTO"
+			propertyName="contratto.pg_contratto"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="contratto"
+		partOfOid="true" />
+	<persistentProperty
+		name="unita_organizzativa"
+		partOfOid="true" />
+</SQLPersistentInfo>

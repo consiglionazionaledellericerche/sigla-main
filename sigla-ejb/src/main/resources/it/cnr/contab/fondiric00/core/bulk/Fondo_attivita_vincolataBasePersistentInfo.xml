@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.fondiric00.core.bulk.Fondo_attivita_vincolataBase"
+	keyClassName="it.cnr.contab.fondiric00.core.bulk.Fondo_attivita_vincolataKey"
+	homeClassName="it.cnr.contab.fondiric00.core.bulk.Fondo_attivita_vincolataHome" >
+	<defaultColumnMap
+		tableName="FONDO_ATTIVITA_VINCOLATA" >
+		<columnMapping
+			columnName="DT_FINE"
+			propertyName="dt_fine"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO_DIVISA"
+			propertyName="importo_divisa"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6" />
+		<columnMapping
+			columnName="DT_PROROGA"
+			propertyName="dt_proroga"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DT_INIZIO"
+			propertyName="dt_inizio"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="cd_divisa"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="NOTE"
+			propertyName="note"
+			sqlTypeName="VARCHAR"
+			columnSize="2000" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_FONDO"
+			propertyName="ds_fondo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_RESPONSABILE_TERZO"
+			propertyName="cd_responsabile_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_ENTE_FIN"
+			propertyName="cd_ente_fin"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO_FONDO"
+			propertyName="importo_fondo"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_FONDO"
+			propertyName="cd_tipo_fondo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_fine" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="importo_divisa" />
+	<persistentProperty
+		name="dt_proroga" />
+	<persistentProperty
+		name="dt_inizio" />
+	<persistentProperty
+		name="cd_divisa" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="note" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="ds_fondo" />
+	<persistentProperty
+		name="cd_responsabile_terzo" />
+	<persistentProperty
+		name="cd_ente_fin" />
+	<persistentProperty
+		name="cd_tipo_fondo" />
+	<persistentProperty
+		name="importo_fondo" />
+</SQLPersistentInfo>

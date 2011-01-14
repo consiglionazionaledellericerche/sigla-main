@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.chiusura00.bulk.V_obb_acc_xxxBase"
+	homeClassName="it.cnr.contab.chiusura00.bulk.V_obb_acc_xxxHome" >
+	<defaultColumnMap
+		tableName="V_OBB_ACC_XXX" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_CONT"
+			propertyName="cd_tipo_documento_cont"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="FL_PGIRO"
+			propertyName="fl_pgiro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_UO_ORIGINE"
+			propertyName="cd_uo_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ACC_OBB"
+			propertyName="esercizio_ori_acc_obb"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_ACC_OBB"
+			propertyName="pg_acc_obb"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE"
+			propertyName="cd_cds_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="cd_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="RIPORTATO"
+			propertyName="riportato"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="ESERCIZIO_COMPETENZA"
+			propertyName="esercizio_competenza"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_RIPORTO"
+			propertyName="esercizio_ori_riporto"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_CDS_ORI_RIPORTO"
+			propertyName="cd_cds_ori_riporto"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ORI_RIPORTO"
+			propertyName="esercizio_ori_ori_riporto"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_ACC_OBB_ORI_RIPORTO"
+			propertyName="pg_acc_obb_ori_riporto"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="IM_ACC_OBB"
+			propertyName="im_acc_obb"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="cd_tipo_documento_cont" />
+	<persistentProperty
+		name="fl_pgiro" />
+	<persistentProperty
+		name="cd_uo_origine" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="esercizio_ori_acc_obb" />
+	<persistentProperty
+		name="pg_acc_obb" />
+	<persistentProperty
+		name="cd_cds_origine" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="cd_elemento_voce" />
+	<persistentProperty
+		name="cd_voce" />
+	<persistentProperty
+		name="riportato" />
+	<persistentProperty
+		name="esercizio_competenza" />
+	<persistentProperty
+		name="esercizio_ori_riporto" />
+	<persistentProperty
+		name="cd_cds_ori_riporto" />
+	<persistentProperty
+		name="esercizio_ori_ori_riporto" />
+	<persistentProperty
+		name="pg_acc_obb_ori_riporto" />
+	<persistentProperty
+		name="im_acc_obb" />
+	<persistentProperty
+		name="ti_appartenenza" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="cd_cds" />
+</SQLPersistentInfo>

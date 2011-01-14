@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_classificazione_montanti"
+		property="pg_classificazione_montanti"
+		inputType="TEXT"
+		label="pg_classificazione_montanti" />
+	<fieldProperty
+		name="ds_classificazione_montanti"
+		property="ds_classificazione_montanti"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="ds_classificazione_montanti"
+		caseSensitiveSearch="false" />
+
+	<formFieldProperty
+		name="pg_classificazione_montanti" />
+	<formFieldProperty
+		name="ds_classificazione_montanti" />
+
+	<columnFieldProperty
+		name="pg_classificazione_montanti" />
+	<columnFieldProperty
+		name="ds_classificazione_montanti" />
+
+	<findFieldProperty
+		name="pg_classificazione_montanti" />
+	<findFieldProperty
+		name="ds_classificazione_montanti" />
+
+</bulkInfo>

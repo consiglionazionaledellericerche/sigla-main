@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		maxLength="4"
+		inputSize="4"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROcondizione_consegna"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_incoterm"
+		property="cd_incoterm"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROcondizione_consegna"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice" />
+	<fieldProperty
+		name="ds_condizione_consegna"
+		property="ds_condizione_consegna"
+		maxLength="300"
+		inputType="TEXTAREA"
+		cols="100"
+		rows="3"
+		nullable="false"
+		label="Descrizione"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false" />
+    <fieldProperty
+		name="cd_gruppo"
+		property="cd_gruppo"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROcondizione_consegna"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice Gruppo" />
+		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_incoterm" />
+	<formFieldProperty
+		name="cd_gruppo" />
+	<formFieldProperty
+		name="ds_condizione_consegna" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_incoterm" />
+	<columnFieldProperty
+		name="cd_gruppo" />
+	<columnFieldProperty
+		name="ds_condizione_consegna" />		
+	
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_incoterm" />
+	<findFieldProperty
+		name="cd_gruppo" />
+	<findFieldProperty
+		name="ds_condizione_consegna" />
+</bulkInfo>

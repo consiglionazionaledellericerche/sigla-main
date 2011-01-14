@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnFreeSearch="false"
+		nullable="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnFreeSearch="false"
+		nullable="false"
+		label="Cdr" />
+	<fieldProperty
+		name="pg_progetto"
+		property="pg_progetto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+		label="Progr. progetto" />
+	<fieldProperty
+		name="cd_natura"
+		property="cd_natura"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		nullable="false"
+		label="Natura" />
+	<fieldProperty
+		name="id_classificazione"
+		property="id_classificazione"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		nullable="false"
+		label="Id. classificazione" />
+	<fieldProperty
+		name="cd_cds_area"
+		property="cd_cds_area"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Istituto/Area" />
+	<fieldProperty
+		name="pg_dettaglio"
+		property="pg_dettaglio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+		label="Progr. dettaglio" />
+	<fieldProperty
+		name="cd_cdr_assegnatario"
+		property="cd_cdr_assegnatario"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Cdr assegnatario" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+		label="G.a.e." />
+	<fieldProperty
+		name="ds_linea_attivita"
+		property="linea_attivita.ds_linea_attivita"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione" />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		nullable="false"
+		label="Appartenenza voce" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		nullable="false"
+		label="E/S" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		nullable="false"
+		label="Voce del Piano" />
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="elemento_voce.ds_elemento_voce"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione" />
+	<fieldProperty
+		name="dt_registrazione"
+		property="dt_registrazione"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		label="Data registrazione" />
+	<fieldProperty
+		name="descrizione"
+		property="descrizione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		nullable="true"
+		label="Descrizione" />
+	<fieldProperty
+		name="origine"
+		property="origine"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		nullable="false"
+		label="Origine" />
+	<fieldProperty
+		name="categoria_dettaglio"
+		property="categoria_dettaglio"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		nullable="false"
+		label="Categoria/Dettaglio" />
+	<fieldProperty
+		name="fl_sola_lettura"
+		property="fl_sola_lettura"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Sola lettura" />
+	<fieldProperty
+		name="im_entrata"
+		property="im_entrata"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		nullable="false"
+		label="Importo Ripartito" />
+	<fieldProperty
+		name="im_incassi"
+		property="im_incassi"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		nullable="false"
+		label="Previsione di Cassa" />
+	<fieldProperty
+		name="cd_cdr_assegnatario_clge"
+		property="cd_cdr_assegnatario_clge"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cdr collegato" />
+	<fieldProperty
+		name="cd_linea_attivita_clge"
+		property="cd_linea_attivita_clge"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="G.a.e. collegato" />
+	<fieldProperty
+		name="esercizio_pdg_variazione"
+		property="esercizio_pdg_variazione"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio variazione PDG" />
+	<fieldProperty
+		name="pg_variazione_pdg"
+		property="pg_variazione_pdg"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progr. variazione PDG" />
+	<fieldProperty
+		name="find_cdr_assegnatario"
+		property="cdr_assegnatario"
+		inputType="SEARCHTOOL" 
+		formName="searchtool" 
+		enabledOnSearch="true"
+        enabledOnEdit="true"
+		readonlyProperty="ROCdr_assegnatario"
+		nullable="false"
+		label="Cdr assegnatario"/>
+	<fieldProperty
+		name="find_linea_attivita"
+		property="linea_attivita"
+		inputType="SEARCHTOOL"
+		formName="searchtool_denominazione"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		readonlyProperty="ROLinea_attivita"
+		nullable="false"
+		label="G.a.e." />
+	<fieldProperty
+		name="find_elemento_voce"
+		property="elemento_voce"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		readonlyProperty="ROElemento_voce"
+		nullable="false"
+		label="Voce del Piano" />
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="pg_progetto" />
+	<formFieldProperty
+		name="cd_natura" />
+	<formFieldProperty
+		name="id_classificazione" />
+	<formFieldProperty
+		name="cd_cds_area" />
+	<formFieldProperty
+		name="pg_dettaglio" />
+	<formFieldProperty
+		name="cd_cdr_assegnatario" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="ds_linea_attivita" />
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="ds_elemento_voce" />
+	<formFieldProperty
+		name="dt_registrazione" />
+	<formFieldProperty
+		name="descrizione" />
+	<formFieldProperty
+		name="origine" />
+	<formFieldProperty
+		name="categoria_dettaglio" />
+	<formFieldProperty
+		name="fl_sola_lettura" />
+	<formFieldProperty
+		name="im_entrata" />
+	<formFieldProperty
+		name="im_incassi" />
+	<formFieldProperty
+		name="cd_cdr_assegnatario_clge" />
+	<formFieldProperty
+		name="cd_linea_attivita_clge" />
+	<formFieldProperty
+		name="esercizio_pdg_variazione" />
+	<formFieldProperty
+		name="pg_variazione_pdg" />
+	<formFieldProperty
+		name="find_elemento_voce" />
+	<formFieldProperty
+		name="find_linea_attivita" />
+	<formFieldProperty
+		name="find_cdr_assegnatario" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="pg_progetto" />
+	<findFieldProperty
+		name="cd_natura" />
+	<findFieldProperty
+		name="id_classificazione" />
+	<findFieldProperty
+		name="cd_cds_area" />
+	<findFieldProperty
+		name="pg_dettaglio" />
+	<findFieldProperty
+		name="cd_cdr_assegnatario" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="ds_linea_attivita" />
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="ds_elemento_voce" />
+	<findFieldProperty
+		name="dt_registrazione" />
+	<findFieldProperty
+		name="descrizione" />
+	<findFieldProperty
+		name="origine" />
+	<findFieldProperty
+		name="categoria_dettaglio" />
+	<findFieldProperty
+		name="fl_sola_lettura" />
+	<findFieldProperty
+		name="im_entrata" />
+	<findFieldProperty
+		name="im_incassi" />
+	<findFieldProperty
+		name="cd_cdr_assegnatario_clge" />
+	<findFieldProperty
+		name="cd_linea_attivita_clge" />
+	<findFieldProperty
+		name="esercizio_pdg_variazione" />
+	<findFieldProperty
+		name="pg_variazione_pdg" />
+
+	<freeSearchSet name="default">
+		<findFieldProperty
+			name="cd_cdr_assegnatario" />
+		<findFieldProperty
+			name="cd_linea_attivita" />
+		<findFieldProperty
+			name="ds_linea_attivita" 
+			label="Descrizione G.a.e."/>
+		<findFieldProperty
+			name="dt_registrazione" />
+		<findFieldProperty
+			name="cd_elemento_voce" />
+		<findFieldProperty
+			name="ds_elemento_voce" 
+			label="Descrizione Voce del Piano"/>
+		<findFieldProperty
+			name="descrizione" 
+			label="Descrizione Movimento"/>
+		<findFieldProperty
+			name="im_entrata" />
+		<findFieldProperty
+			name="im_incassi" />
+	</freeSearchSet>
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="pg_progetto" />
+	<columnFieldProperty
+		name="cd_natura" />
+	<columnFieldProperty
+		name="id_classificazione" />
+	<columnFieldProperty
+		name="cd_cds_area" />
+	<columnFieldProperty
+		name="pg_dettaglio" />
+	<columnFieldProperty
+		name="cd_cdr_assegnatario" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="ds_linea_attivita" />
+	<columnFieldProperty
+		name="ti_appartenenza" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="ds_elemento_voce" />
+	<columnFieldProperty
+		name="dt_registrazione" />
+	<columnFieldProperty
+		name="descrizione" />
+	<columnFieldProperty
+		name="origine" />
+	<columnFieldProperty
+		name="categoria_dettaglio" />
+	<columnFieldProperty
+		name="fl_sola_lettura" />
+	<columnFieldProperty
+		name="im_entrata" />
+	<columnFieldProperty
+		name="im_incassi" />
+	<columnFieldProperty
+		name="cd_cdr_assegnatario_clge" />
+	<columnFieldProperty
+		name="cd_linea_attivita_clge" />
+	<columnFieldProperty
+		name="esercizio_pdg_variazione" />
+	<columnFieldProperty
+		name="pg_variazione_pdg" />
+
+	<columnSet name="insertGestionale">
+		<columnFieldProperty
+			name="cd_cdr_assegnatario" />
+		<columnFieldProperty
+			name="cd_linea_attivita" 
+			descProperty="linea_attivita.ds_linea_attivita"
+			inputType="DESCTOOL"/>
+		<columnFieldProperty
+			name="cd_elemento_voce"
+			descProperty="elemento_voce.ds_elemento_voce"
+			inputType="DESCTOOL"/>
+		<columnFieldProperty
+			name="descrizione" />
+		<columnFieldProperty
+			name="im_entrata" />
+		<columnFieldProperty
+			name="im_incassi" />
+	</columnSet>
+</bulkInfo>

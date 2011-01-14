@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.consultazioni.bulk.V_dpdg_aggregato_spe_det_dBase"
+	homeClassName="it.cnr.contab.pdg00.consultazioni.bulk.V_dpdg_aggregato_spe_det_dHome">
+	<defaultColumnMap
+		tableName="V_DPDG_AGGREGATO_SPE_DET_D">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_FUNZIONE"
+			propertyName="cd_funzione"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="cd_natura"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RH_CCS_COSTI"
+			propertyName="im_rh_ccs_costi"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RI_CCS_SPESE_ODC"
+			propertyName="im_ri_ccs_spese_odc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RJ_CCS_SPESE_ODC_ALTRA_UO"
+			propertyName="im_rj_ccs_spese_odc_altra_uo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RK_CCS_SPESE_OGC"
+			propertyName="im_rk_ccs_spese_ogc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RL_CCS_SPESE_OGC_ALTRA_UO"
+			propertyName="im_rl_ccs_spese_ogc_altra_uo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RM_CSS_AMMORTAMENTI"
+			propertyName="im_rm_css_ammortamenti"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RN_CSS_RIMANENZE"
+			propertyName="im_rn_css_rimanenze"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RO_CSS_ALTRI_COSTI"
+			propertyName="im_ro_css_altri_costi"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RP_CSS_VERSO_ALTRO_CDR"
+			propertyName="im_rp_css_verso_altro_cdr"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RQ_SSC_COSTI_ODC"
+			propertyName="im_rq_ssc_costi_odc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RR_SSC_COSTI_ODC_ALTRA_UO"
+			propertyName="im_rr_ssc_costi_odc_altra_uo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RS_SSC_COSTI_OGC"
+			propertyName="im_rs_ssc_costi_ogc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RT_SSC_COSTI_OGC_ALTRA_UO"
+			propertyName="im_rt_ssc_costi_ogc_altra_uo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RU_SPESE_COSTI_ALTRUI"
+			propertyName="im_ru_spese_costi_altrui"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_RV_PAGAMENTI"
+			propertyName="im_rv_pagamenti"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_centro_responsabilita" />
+	<persistentProperty
+		name="cd_elemento_voce" />
+	<persistentProperty
+		name="cd_funzione" />
+	<persistentProperty
+		name="cd_natura" />
+	<persistentProperty
+		name="im_rh_ccs_costi" />
+	<persistentProperty
+		name="im_ri_ccs_spese_odc" />
+	<persistentProperty
+		name="im_rj_ccs_spese_odc_altra_uo" />
+	<persistentProperty
+		name="im_rk_ccs_spese_ogc" />
+	<persistentProperty
+		name="im_rl_ccs_spese_ogc_altra_uo" />
+	<persistentProperty
+		name="im_rm_css_ammortamenti" />
+	<persistentProperty
+		name="im_rn_css_rimanenze" />
+	<persistentProperty
+		name="im_ro_css_altri_costi" />
+	<persistentProperty
+		name="im_rp_css_verso_altro_cdr" />
+	<persistentProperty
+		name="im_rq_ssc_costi_odc" />
+	<persistentProperty
+		name="im_rr_ssc_costi_odc_altra_uo" />
+	<persistentProperty
+		name="im_rs_ssc_costi_ogc" />
+	<persistentProperty
+		name="im_rt_ssc_costi_ogc_altra_uo" />
+	<persistentProperty
+		name="im_ru_spese_costi_altrui" />
+	<persistentProperty
+		name="im_rv_pagamenti" />
+</SQLPersistentInfo>

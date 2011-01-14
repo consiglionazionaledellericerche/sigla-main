@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.logregistry00.core.bulk.Log_registryBase"
+	keyClassName="it.cnr.contab.logregistry00.core.bulk.Log_registryKey"
+	homeClassName="it.cnr.contab.logregistry00.core.bulk.Log_registryHome" >
+	<defaultColumnMap
+		tableName="LOG_REGISTRY" >
+		<columnMapping
+			columnName="NOME_TRG_AI"
+			propertyName="nome_trg_ai"
+			sqlTypeName="VARCHAR"
+			columnSize="40"
+			nullable="false" />
+		<columnMapping
+			columnName="NOME_PKG"
+			propertyName="nome_pkg"
+			sqlTypeName="VARCHAR"
+			columnSize="40"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_ULTIMO_START_AU"
+			propertyName="dt_ultimo_start_au"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="NOME_TRG_AD"
+			propertyName="nome_trg_ad"
+			sqlTypeName="VARCHAR"
+			columnSize="40"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_DISATTIVAZIONE_AU"
+			propertyName="dt_disattivazione_au"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DT_ULTIMO_START_AI"
+			propertyName="dt_ultimo_start_ai"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DT_ULTIMO_START_AD"
+			propertyName="dt_ultimo_start_ad"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DT_DISATTIVAZIONE_AI"
+			propertyName="dt_disattivazione_ai"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="STATO_TRG_AU"
+			propertyName="stato_trg_au"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_DISATTIVAZIONE_AD"
+			propertyName="dt_disattivazione_ad"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DT_ATTIVAZIONE_AU"
+			propertyName="dt_attivazione_au"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="STATO_TRG_AI"
+			propertyName="stato_trg_ai"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO_TRG_AD"
+			propertyName="stato_trg_ad"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_ATTIVAZIONE_AI"
+			propertyName="dt_attivazione_ai"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_ATTIVAZIONE_AD"
+			propertyName="dt_attivazione_ad"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_TABLE_LOG"
+			propertyName="ds_table_log"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="NUM_RIGHE_IN_TABLE_LOG"
+			propertyName="num_righe_in_table_log"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="NUM_MAX_RIGHE_TABLE_LOG"
+			propertyName="num_max_righe_table_log"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="NOME_TRG_AU"
+			propertyName="nome_trg_au"
+			sqlTypeName="VARCHAR"
+			columnSize="40"
+			nullable="false" />
+		<columnMapping
+			columnName="NOME_TABLE_LOG"
+			propertyName="nome_table_log"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="nome_trg_ai" />
+	<persistentProperty
+		name="dt_ultimo_start_au" />
+	<persistentProperty
+		name="nome_pkg" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="nome_trg_ad" />
+	<persistentProperty
+		name="dt_disattivazione_au" />
+	<persistentProperty
+		name="dt_ultimo_start_ai" />
+	<persistentProperty
+		name="dt_ultimo_start_ad" />
+	<persistentProperty
+		name="dt_disattivazione_ai" />
+	<persistentProperty
+		name="stato_trg_au" />
+	<persistentProperty
+		name="dt_disattivazione_ad" />
+	<persistentProperty
+		name="dt_attivazione_au" />
+	<persistentProperty
+		name="stato_trg_ai" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="stato_trg_ad" />
+	<persistentProperty
+		name="dt_attivazione_ai" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="dt_attivazione_ad" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="ds_table_log" />
+	<persistentProperty
+		name="num_righe_in_table_log" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="num_max_righe_table_log" />
+	<persistentProperty
+		name="nome_trg_au" />
+	<persistentProperty
+		name="nome_table_log" />
+</SQLPersistentInfo>

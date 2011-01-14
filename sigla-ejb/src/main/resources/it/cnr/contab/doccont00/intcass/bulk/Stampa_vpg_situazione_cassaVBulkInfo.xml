@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="tc"
+		property="tc" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="ROTEXT"
+		maxLength="10"
+		inputSize="10"
+		label="CDS"/>		
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio" />
+
+	<fieldProperty
+		name="dataInizio"
+		property="dataInizio"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Dalla data"/>
+	<fieldProperty
+		name="dataFine"
+		property="dataFine"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Alla data" />
+	<fieldProperty
+		name="ti_stato"
+		property="ti_stato"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		label="Stato"
+		keysProperty="ti_statoKeys"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"/>
+
+	<fieldProperty
+		name="findUOForPrint"
+		property="uoForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="cdUOForPrint"
+		property="uoForPrint.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROUoForPrint"
+		label="Codice UO" />
+	<fieldProperty
+		name="dsUOForPrint"
+		property="uoForPrint.ds_unita_organizzativa"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione UO" />		
+		
+	<fieldProperty
+		name="cdUOCRForPrint"
+		property="cdUOCRForPrint"/>		
+		
+	<formFieldProperty name="cd_cds" />		
+	<formFieldProperty name="dataInizio" />
+	<formFieldProperty name="dataFine" />
+	<formFieldProperty name="ti_stato" />
+	<formFieldProperty name="esercizio" />
+
+	<formFieldProperty name="findUOForPrint" />
+	<formFieldProperty
+		name="cdUOForPrint"
+		nullable="false" />
+	<formFieldProperty name="dsUOForPrint" />
+	<formFieldProperty name="cdUOCRForPrint" />
+	
+	<form
+		name="/cnrdoccont/doccont/situazionedicassa.rpt">
+		<formFieldProperty 
+			name="esercizio"
+			inputType="ROTEXT" />
+		<formFieldProperty 
+			name="cd_cds"
+			inputType="ROTEXT" />
+		<formFieldProperty 
+			name="dataInizio" />
+		<formFieldProperty 
+			name="dataFine" />
+		<formFieldProperty
+			name="ti_stato" />
+	</form>
+
+	<printForm
+		name="/cnrdoccont/doccont/situazionedicassa.rpt">
+		<printFieldProperty 
+			name="tc"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="1"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="3"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="ti_stato"
+			parameterPosition="4"
+			parameterType="STRING" />		
+		<printFieldProperty 
+			name="dataInizio"
+			parameterPosition="5"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="dataFine"
+			parameterPosition="6"
+			parameterType="DATE" />
+	</printForm>
+
+	<form
+		name="/cnrdoccont/doccont/situazionedicassa.jasper">
+		<formFieldProperty 
+			name="esercizio"
+			inputType="ROTEXT" />
+		<formFieldProperty 
+			name="cd_cds"
+			inputType="ROTEXT" />
+		<formFieldProperty 
+			name="dataInizio" />
+		<formFieldProperty 
+			name="dataFine" />
+		<formFieldProperty
+			name="ti_stato" />
+	</form>
+
+	<printForm
+		name="/cnrdoccont/doccont/situazionedicassa.jasper">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="inEs"
+			paramTypeJR="java.lang.Integer"/>
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="2"
+			parameterType="STRING"
+			paramNameJR="CDS"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="3"
+			parameterType="STRING"
+			paramNameJR="uo"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="ti_stato"
+			parameterPosition="4"
+			parameterType="STRING"
+			paramNameJR="EM_INV_RIS"
+			paramTypeJR="java.lang.String" />		
+		<printFieldProperty 
+			name="dataInizio"
+			parameterPosition="5"
+			parameterType="DATE"
+			paramNameJR="DA_DATA"
+			paramTypeJR="java.util.Date" />
+		<printFieldProperty 
+			name="dataFine"
+			parameterPosition="6"
+			parameterType="DATE"
+			paramNameJR="A_DATA"
+			paramTypeJR="java.util.Date" />
+	</printForm>
+
+</bulkInfo>

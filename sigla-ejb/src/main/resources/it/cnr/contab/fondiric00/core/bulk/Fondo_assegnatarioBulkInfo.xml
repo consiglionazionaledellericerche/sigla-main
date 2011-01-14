@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="unita_organizzativa.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Codice Unità Organizzativa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="unita_organizzativa"
+		property="unita_organizzativa"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		readonlyProperty="notNew"
+		enabledOnSearch="true"
+		label="Unità Organizzativa" />	
+
+	<fieldProperty
+		name="cd_responsabile_terzo"
+		property="responsabile.cd_terzo"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		label="Codice Terzo" />
+	<fieldProperty
+		name="responsabile"
+		property="responsabile"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Terzo" />	
+
+	<fieldProperty
+		name="cd_fondo"
+		property="cd_fondo"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice Fondo" />
+	<fieldProperty
+		name="importo"
+		property="importo"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo" />
+
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_fondo" />
+	<formFieldProperty
+		name="unita_organizzativa" />
+	<formFieldProperty
+		name="responsabile" />
+	<formFieldProperty
+		name="cd_responsabile_terzo" />
+	<formFieldProperty
+		name="importo" />
+
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="cd_fondo" />
+	<columnFieldProperty
+		name="cd_responsabile_terzo" />
+	<columnFieldProperty
+		name="importo" />
+
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="cd_fondo" />
+	<findFieldProperty
+		name="cd_responsabile_terzo" />
+	<findFieldProperty
+		name="importo" />
+
+</bulkInfo>

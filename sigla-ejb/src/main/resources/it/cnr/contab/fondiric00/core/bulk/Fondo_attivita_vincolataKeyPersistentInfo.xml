@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.fondiric00.core.bulk.Fondo_attivita_vincolataKey" >
+	<defaultColumnMap
+		tableName="FONDO_ATTIVITA_VINCOLATA" >
+		<columnMapping
+			columnName="CD_FONDO"
+			propertyName="cd_fondo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_fondo"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -1,0 +1,47 @@
+<action-mappings>
+
+	<action
+		path="/EstrazioneCUDAction" actionClass="it.cnr.contab.compensi00.actions.EstrazioneCUDAction">
+	</action>
+
+	<businessProcess name="EstrazioneCUDBP" className="it.cnr.contab.compensi00.bp.EstrazioneCUDBP">
+	    <forward name="default" path="/compensi00/estrazione_cud.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.compensi00.docs.bulk.EstrazioneCUDBulk" />
+	    <init-param name="defaultAction" value="EstrazioneCUDAction" />
+	    <init-param name="componentSessionName" value="CNRCOMPENSI00_EJB_CompensoComponentSession" />
+	</businessProcess>
+
+	<action
+		path="/EstrazioneINPSAction" actionClass="it.cnr.contab.compensi00.actions.EstrazioneINPSAction">
+	</action>
+
+	<businessProcess name="EstrazioneINPSBP" className="it.cnr.contab.compensi00.bp.EstrazioneINPSBP">
+	    <forward name="default" path="/compensi00/estrazione_inps.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.compensi00.docs.bulk.EstrazioneINPSBulk" />
+	    <init-param name="defaultAction" value="EstrazioneINPSAction" />
+	    <init-param name="componentSessionName" value="CNRCOMPENSI00_EJB_CompensoComponentSession" />
+	</businessProcess>
+
+    <action
+		path="/Estrazione770Action" actionClass="it.cnr.contab.compensi00.actions.Estrazione770Action">
+	</action>
+
+	<businessProcess name="Estrazione770BP" className="it.cnr.contab.compensi00.bp.Estrazione770BP">
+	    <forward name="default" path="/compensi00/estrazione_770.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.compensi00.docs.bulk.Estrazione770Bulk" />
+	    <init-param name="defaultAction" value="Estrazione770Action" />
+	    <init-param name="componentSessionName" value="CNRCOMPENSI00_EJB_CompensoComponentSession" />
+	</businessProcess>	
+	
+	<action
+		path="/EstrazioneINPSMensileAction" actionClass="it.cnr.contab.compensi00.actions.EstrazioneINPSMensileAction">
+	</action>
+
+	<businessProcess name="EstrazioneINPSMensileBP" className="it.cnr.contab.compensi00.bp.EstrazioneINPSMensileBP">
+	    <forward name="default" path="/compensi00/estrazione_inps_mensile.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.compensi00.docs.bulk.EstrazioneINPSMensileBulk" />
+	    <init-param name="defaultAction" value="EstrazioneINPSMensileAction" />
+	    <init-param name="componentSessionName" value="CNRCOMPENSI00_EJB_CompensoComponentSession" />
+	</businessProcess>
+	
+</action-mappings>

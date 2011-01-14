@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.TelefonoKey" >
+	<defaultColumnMap
+		tableName="TELEFONO" >
+		<columnMapping
+			columnName="PG_RIFERIMENTO"
+			propertyName="pg_riferimento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_riferimento"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_terzo"
+		partOfOid="true" />
+</SQLPersistentInfo>

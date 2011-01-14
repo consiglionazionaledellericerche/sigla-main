@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo shortDescription="Stampa Variazioni PdG">
+
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputSize="2"		
+		inputType="ROTEXT"
+		label="Esercizio" />
+
+	<fieldProperty
+		name="findvariazioneForPrint"
+		property="variazioneForPrint"
+		inputType="SEARCHTOOL"
+		nullable="true"
+		readonlyProperty="variazioneForPrintEnabled"
+		completeOnSave="true"
+		label="Variazione" />
+	<fieldProperty
+		name="pg_variazione"
+		property="variazioneForPrint.pg_variazione"
+		maxLength="30"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false" />	
+	<fieldProperty
+		name="ds_variazione"
+		property="variazioneForPrint.ds_variazione"
+		maxLength="30"
+		inputSize="100"
+		inputType="TEXT"
+		nullable="true" />	
+
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="findvariazioneForPrint" />
+	<formFieldProperty name="pg_variazione" />
+	<formFieldProperty name="ds_variazione" /> 
+	
+	
+	<printForm
+		name="/cnrpreventivo/pdg/stampa_var_stanziamento_res.jasper">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING" 
+			paramNameJR="Esercizio"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="pg_variazione"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="Variazione"
+			paramTypeJR="java.lang.Integer" />			
+	</printForm>
+	
+		
+	
+</bulkInfo>

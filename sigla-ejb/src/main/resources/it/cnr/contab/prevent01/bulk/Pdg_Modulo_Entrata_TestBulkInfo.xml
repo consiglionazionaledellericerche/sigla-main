@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="centro_responsabilita.cd_centro_responsabilita"
+		inputType="ROTEXT"
+		inputSize="15"
+		maxLength="30"
+		label="CdR" />
+		
+	<fieldProperty
+		name="ds_centro_responsabilita"
+		property="centro_responsabilita.ds_cdr"
+		inputType="ROTEXT"
+		inputSize="80"
+		maxLength="300"
+		label="CdR" />
+	<fieldProperty
+		name="pg_progetto"
+		property="modulo.pg_progetto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progetto" />	
+	<fieldProperty
+		name="dipartimento"
+		property="modulo.progettopadre.progettopadre.cd_dipartimento"
+		inputType="ROTEXT"
+		maxLength="25"
+		inputSize="15"
+		label="Dipartimento" />	
+	<fieldProperty
+		name="progetto"
+		property="modulo.progettopadre.progettopadre.cd_progetto"
+		inputType="ROTEXT"
+		inputSize="15"
+		maxLength="25"
+		label="Progetto" />	
+	<fieldProperty
+		name="commessa"
+		property="modulo.progettopadre.cd_progetto"
+		inputType="ROTEXT"
+		inputSize="15"
+		maxLength="25"
+		label="Commessa" />	
+	<fieldProperty
+		name="modulo"
+		property="modulo.cd_progetto"
+		inputType="ROTEXT"
+		maxLength="30"
+		label="Modulo di Commessa" />	
+	<fieldProperty
+		name="importo_totale"
+		property="importo_totale"
+		inputType="ROTEXT"
+		maxLength="50"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Tot.Risorse per&lt;BR&gt;Modulo di Commessa" />				
+		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="ds_centro_responsabilita" />
+	<formFieldProperty
+		name="dipartimento" />	
+	<formFieldProperty
+		name="progetto" />	
+	<formFieldProperty
+		name="commessa" />	
+	<formFieldProperty
+		name="modulo" />	
+	<formFieldProperty
+		name="importo_totale" />				
+	<formFieldProperty
+		name="pg_progetto" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="pg_progetto" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="pg_progetto" />
+</bulkInfo>

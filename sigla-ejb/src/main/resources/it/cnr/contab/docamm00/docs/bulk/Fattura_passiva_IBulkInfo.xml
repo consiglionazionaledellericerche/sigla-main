@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<findFieldProperty name="stato_pagamento_fondo_ecoForSearch"/>
+	<fieldProperty
+		name="fatturaEstera"
+		property="fattura_estera"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROFattura_esteraSearchTool"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		completeOnSave="true"
+		label="Fattura estera"/>
+	<fieldProperty
+		name="pg_fattura_estera"
+		property="fattura_estera.pg_fattura_passiva"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		label="Fattura estera"
+		readonlyProperty="ROFattura_estera"
+		nullable="false"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+
+	<formFieldProperty
+		name="fatturaEstera" />
+	<formFieldProperty
+		name="pg_fattura_estera" />
+
+	<findFieldProperty
+		name="pg_fattura_estera" />
+
+</bulkInfo>

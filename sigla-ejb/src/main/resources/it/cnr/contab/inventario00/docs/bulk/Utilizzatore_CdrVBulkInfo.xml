@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">	
+	
+	<fieldProperty
+		name="percentuale_utilizzo_cdr"
+		property="percentuale_utilizzo_cdr"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PositivePercentFormat"
+		maxLength="7"
+		inputSize="7"
+		nullable="false"
+		label="Percentuale Utilizzo" />
+	
+/********** CdR ******************************/
+	<fieldProperty
+		name="find_cdr"
+		property="cdr"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="CdR Utilizzatore"
+		enabledOnSearch="true"  />
+	<fieldProperty
+		name="cd_cdr"
+		property="cdr.cd_centro_responsabilita"
+		inputType="TEXT"
+		maxLength="30"
+		inputSize="6"		
+		readonlyProperty="ROcdr"
+		nullable="false"
+		label="CdR Utilizzatore"
+		caseSensitiveSearch="false" />
+		
+			
+	<formFieldProperty
+		name="find_cdr" />
+	<formFieldProperty
+		name="cd_cdr" />
+	<formFieldProperty
+		name="percentuale_utilizzo_cdr" />
+	
+	<columnFieldProperty
+		name="cd_cdr" />
+	<columnFieldProperty
+		name="percentuale_utilizzo_cdr" />
+
+	<findFieldProperty
+		name="cd_cdr" />
+	<findFieldProperty
+		name="percentuale_utilizzo_cdr" />
+
+	<columnSet name="utilizzatoriSet">	
+		<columnFieldProperty
+			name="cd_cdr" />
+		<columnFieldProperty
+			name="percentuale_utilizzo_cdr" />
+	</columnSet>
+		
+
+</bulkInfo>

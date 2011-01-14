@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CdS"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_uo_origine"
+		property="cd_uo_origine"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="UO origine"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="esercizio_ori_accertamento"
+		property="esercizio_ori_accertamento"
+		inputType="TEXT"
+		label="Esercizio Accert." />
+	<fieldProperty
+		name="pg_accertamento"
+		property="pg_accertamento"
+		inputType="TEXT"
+		label="Num. Accert" />
+	<fieldProperty
+		name="im_accertamento"
+		property="im_accertamento"
+		inputType="TEXT"
+		label="Importo Accert"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"/>
+	<fieldProperty
+		name="pg_reversale"
+		property="pg_reversale"
+		inputType="TEXT"
+		label="Num. Reversale" />
+	<fieldProperty
+		name="im_associato"
+		property="im_associato"
+		inputType="TEXT"
+		label="Importo Associato"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"/>
+	<fieldProperty
+		name="im_sospeso"
+		property="im_sospeso"
+		inputType="TEXT"
+		label="Importo Sospeso"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"/>
+	<fieldProperty
+		name="ti_sospeso_riscontro"
+		property="ti_sospeso_riscontro"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Tipo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_entrata_spesa"
+		property="ti_entrata_spesa"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Entrata/Spesa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_sospeso"
+		property="cd_sospeso"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="N.Sospeso"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_voce"
+		property="cd_voce"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Voce di Bilancio"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_reversale"
+		property="im_reversale"
+		inputType="TEXT"
+		label="Importo Reversale"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"/>
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_uo_origine" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="esercizio_ori_accertamento" />
+	<formFieldProperty
+		name="pg_accertamento" />
+	<formFieldProperty
+		name="im_accertamento" />
+	<formFieldProperty
+		name="pg_reversale" />
+	<formFieldProperty
+		name="im_associato" />
+	<formFieldProperty
+		name="im_sospeso" />
+	<formFieldProperty
+		name="ti_sospeso_riscontro" />
+	<formFieldProperty
+		name="ti_entrata_spesa" />
+	<formFieldProperty
+		name="cd_sospeso" />
+	<formFieldProperty
+		name="cd_voce" />
+	<formFieldProperty
+		name="im_reversale" />	
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_uo_origine" />
+	<columnFieldProperty
+		name="esercizio_ori_accertamento" />
+	<columnFieldProperty
+		name="pg_accertamento"
+		columnStyle="text-align:left; padding-left:5px"/>
+	<columnFieldProperty
+		name="im_accertamento"
+		columnStyle="width:130px; text-align: right; padding-right:5px"/>
+	<columnFieldProperty
+		name="pg_reversale" 
+		columnStyle="text-align:left; padding-left:5px"/>
+	<columnFieldProperty
+		name="im_reversale" />		
+	<columnFieldProperty
+		name="im_associato"
+		columnStyle="width:130px; text-align: right; padding-right:5px"/>
+	<columnFieldProperty
+		name="cd_voce" />
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_uo_origine" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="esercizio_ori_accertamento" />
+	<findFieldProperty
+		name="pg_accertamento" />
+	<findFieldProperty
+		name="im_accertamento" />
+	<findFieldProperty
+		name="pg_reversale" />
+	<findFieldProperty
+		name="im_reversale" />		
+	<findFieldProperty
+		name="im_associato" />
+	<findFieldProperty
+		name="ti_sospeso_riscontro" />
+	<findFieldProperty
+		name="ti_entrata_spesa" />
+	<findFieldProperty
+		name="cd_sospeso" />
+	<findFieldProperty
+		name="im_sospeso" />
+	<findFieldProperty
+		name="cd_voce" />
+
+</bulkInfo>

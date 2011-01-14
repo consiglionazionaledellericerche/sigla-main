@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+    <import resource="classpath*:it/cnr/cmisdl/ws-service-context.xml"/>
+    
+    <bean id="cmis.converter.defaultConverter" class="it.cnr.contab.cmis.converter.DefaultConverter"/>
+    <bean id="cmis.converter.timestampToCalendarConverter" class="it.cnr.contab.cmis.converter.TimestampToCalendarConverter"/>
+    <bean id="cmis.converter.longToIntegerConverter" class="it.cnr.contab.cmis.converter.LongToIntegerConverter"/>
+    <bean id="cmisBulkInfo" class="it.cnr.contab.cmis.service.CMISBulkInfo">
+    	<property name="dictionaryService" ref="dictionaryService"/>
+    </bean>
+    
+    <bean id="cmisService" class="it.cnr.contab.cmis.service.CMISService" init-method="init">
+    	<property name="nodeService" ref="nodeService"/>
+    	<property name="searchService" ref="searchService"/>
+    	<property name="authenticationService" ref="authenticationService"/>
+    	<property name="dictionaryService" ref="dictionaryService"/>
+    	<property name="contentService" ref="contentService"/>
+    	<property name="cmisBulkInfo" ref="cmisBulkInfo"/>
+    </bean>
+
+    <bean id="cmisPathConcFormazReddito" class="it.cnr.contab.cmis.service.CMISPath">
+    	<property name="path" value="/Altri pagamenti C.N.R/Concorrenti alla formazione del reddito (inclusi nel CUD)"/>
+    </bean>
+    <bean id="cmisPathNonConcFormazReddito" class="it.cnr.contab.cmis.service.CMISPath">
+    	<property name="path" value="/Altri pagamenti C.N.R/Non concorrenti alla formazione del reddito"/>
+    </bean>
+    <bean id="cmisPathIndAnzianita" class="it.cnr.contab.cmis.service.CMISPath">
+    	<property name="path" value="/Altri pagamenti C.N.R/Indennità di anzianità"/>
+    </bean>
+    <bean id="cmisPathVariazioniAlPianoDiGestione" class="it.cnr.contab.cmis.service.CMISPath">
+    	<property name="path" value="/Variazioni Al Piano di Gestione"/>
+    </bean>
+    <!-- Pemission Beans -->
+    <bean id="permission.consumer" class="it.cnr.contab.cmis.acl.Role">
+    	<constructor-arg>
+    		<value>{http://www.alfresco.org/model/content/1.0}cmobject.Consumer</value>
+    	</constructor-arg>
+    </bean>
+    <bean id="permission.editor" class="it.cnr.contab.cmis.acl.Role">
+    	<constructor-arg>
+    		<value>{http://www.alfresco.org/model/content/1.0}cmobject.Editor</value>
+    	</constructor-arg>
+	</bean>
+    <bean id="permission.coordinator" class="it.cnr.contab.cmis.acl.Role">
+    	<constructor-arg>
+    		<value>{http://www.alfresco.org/model/content/1.0}cmobject.Coordinator</value>
+    	</constructor-arg>
+	</bean>
+    <bean id="permission.collaborator" class="it.cnr.contab.cmis.acl.Role">
+    	<constructor-arg>
+    		<value>{http://www.alfresco.org/model/content/1.0}cmobject.Collaborator</value>
+    	</constructor-arg>
+	</bean>
+    <bean id="pdgVariazioniService" class="it.cnr.contab.pdg00.service.PdgVariazioniService" parent="cmisService"/>
+
+</beans>

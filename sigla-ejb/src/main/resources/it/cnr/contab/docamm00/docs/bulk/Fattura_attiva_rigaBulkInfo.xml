@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+
+	<fieldProperty
+		name="ti_associato_manrev"
+		property="ti_associato_manrev"
+		maxLength="1"
+		inputSize="20"
+		inputType="ROTEXT"
+		nullable="false"
+		keysProperty="ti_associato_manrevKeys"
+		label="Associazione man/rev"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_a_competenza_coge"
+		property="dt_a_competenza_coge"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		nullable="false"
+		label="Competenza al" />		
+	<fieldProperty
+		name="dt_da_competenza_coge"
+		property="dt_da_competenza_coge"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		nullable="false"
+		label="Competenza dal" />
+
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="" />
+	<fieldProperty
+		name="percentuale"
+		property="voce_iva.percentuale"
+		maxLength="4"
+		inputSize="4"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		label="Percentuale IVA" />
+	<fieldProperty
+		name="unita_misura"
+		property="tariffario.unita_misura"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		enabledOnEdit="true"
+		label="Unità di misura" />
+
+	<fieldProperty
+		name="stato_cofi"
+		property="stato_cofi"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		keysProperty="stato_cofiKeys"
+		label="Stato"
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="tariffario"
+		property="tariffario"
+		inputType="SEARCHTOOL" 		
+		enabledOnSearch="false"
+		label="Tariffario"
+        enabledOnEdit="true" />	
+	<fieldProperty
+		name="cd_tariffario"
+		property="tariffario.cd_tariffario"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		label="Tariffario"
+		nullable="false"
+		readonlyProperty="ROtariffario"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_tariffario"
+		property="tariffario.ds_tariffario"
+		inputSize="50"
+		inputType="ROTEXT"
+		label=""
+		caseSensitiveSearch="false" />
+		
+	<fieldProperty
+		name="bene_servizio"
+		property="bene_servizio"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROBeneServizioSearchTool"
+		enabledOnSearch="true"
+        enabledOnEdit="true" />	
+	<fieldProperty
+		name="cd_bene_servizio"
+		property="bene_servizio.cd_bene_servizio"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="RObeneservizio"
+		label="Bene/Servizio"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_bene_servizio"
+		property="bene_servizio.ds_bene_servizio"
+		maxLength="300"
+		inputSize="32"
+		inputType="ROTEXT"
+		label="Bene/Servizio"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="voce_iva"
+		property="voce_iva"
+		inputType="SEARCHTOOL" 		
+		enabledOnSearch="false"
+		label="I.V.A."
+        enabledOnEdit="true" />	
+	<fieldProperty
+		name="cd_voce_iva"
+		property="voce_iva.cd_voce_iva"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		label="I.V.A."
+		enabledOnEdit="true"
+		readonlyProperty="ROvoce_iva"
+		nullable="false"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_voce_iva"
+		property="voce_iva.ds_voce_iva"
+		inputSize="50"
+		inputType="ROTEXT"
+		label=""
+		caseSensitiveSearch="false" />
+	
+	<fieldProperty
+		name="ds_riga_fattura"
+		property="ds_riga_fattura"
+		maxLength="1000"
+		inputType="TEXTAREA"
+		cols="80"
+		rows="5"
+		label="Descrizione"
+		nullable="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="" />
+	
+	<fieldProperty
+		name="pg_fattura_attiva"
+		property="pg_fattura_attiva"
+		inputType="TEXT"
+		label="pg_fattura_attiva" />
+	<fieldProperty
+		name="im_imponibile"
+		property="im_imponibile"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Imponibile" />
+	<fieldProperty
+		name="im_totale_divisa"
+		property="im_totale_divisa"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Totale" />		
+	<fieldProperty
+		name="im_totale_inventario"
+		property="im_totale_inventario"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.GenericImportoFormat"
+		enabledOnEdit="false"
+		label="Associare all'Inventario"/>
+	<fieldProperty
+		name="prezzo_unitario"
+		property="prezzo_unitario"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		nullable="false"
+		label="Prezzo Unitario" />
+	<fieldProperty
+		name="im_iva"
+		property="im_iva"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		nullable="false"
+		label="Importo IVA" />	
+	<fieldProperty
+		name="progressivo_riga"
+		property="progressivo_riga"
+		inputType="TEXT"
+		label="N." />
+	<fieldProperty
+		name="quantita"
+		property="quantita"
+		inputType="TEXT"
+		inputSize="10"
+		nullable="false"
+		label="Quantita'" />
+	<fieldProperty
+		name="data_esigibilita_iva"
+		property="data_esigibilita_iva"
+		inputType="TEXT"
+		label="data_esigibilita_iva" />
+
+	<formFieldProperty
+		name="dt_da_competenza_coge"
+		label="Competenza dal" />
+	<formFieldProperty
+		name="dt_a_competenza_coge" 
+		label="al" />
+
+	<formFieldProperty
+		name="ti_associato_manrev" />
+		
+	<formFieldProperty
+		name="percentuale"
+		command="doCalcolaTotaliDiRiga"/>
+	<formFieldProperty
+		name="unita_misura" />
+	
+	<formFieldProperty
+		name="voce_iva" />
+	<formFieldProperty
+		name="cd_voce_iva" />
+	<formFieldProperty
+		name="ds_voce_iva" />
+		
+	<formFieldProperty
+		name="tariffario" />
+	<formFieldProperty
+		name="cd_tariffario" />
+	<formFieldProperty
+		name="ds_tariffario" />
+	
+	<formFieldProperty
+		name="bene_servizio" />
+	<formFieldProperty
+		name="cd_bene_servizio" />
+	<formFieldProperty
+		name="ds_bene_servizio" />
+			
+	<formFieldProperty
+		name="ds_riga_fattura" />
+	<formFieldProperty
+		name="im_iva"
+		command="doForzaIVA"/>
+	<formFieldProperty
+		name="progressivo_riga" />
+		
+	<formFieldProperty
+		name="im_imponibile" />
+	<formFieldProperty
+		name="prezzo_unitario"
+		command="doCalcolaTotaliDiRiga"/>
+	<formFieldProperty
+		name="quantita"
+		command="doOnQuantitaChange"/>
+	<formFieldProperty
+		name="stato_cofi" />
+	<formFieldProperty
+		name="im_totale_divisa" />	
+	<formFieldProperty
+		name="data_esigibilita_iva" />
+			
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="stato_cofi" />
+	<columnFieldProperty
+		name="cd_voce_iva" />
+	<columnFieldProperty
+		name="cd_tariffario" />
+	<columnFieldProperty
+		name="cd_bene_servizio" />	
+	<columnFieldProperty
+		name="ds_riga_fattura" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="im_iva" />
+	<columnFieldProperty
+		name="pg_fattura_attiva" />
+	<columnFieldProperty
+		name="im_imponibile" />
+	<columnFieldProperty
+		name="prezzo_unitario" />
+	<columnFieldProperty
+		name="progressivo_riga" />
+	<columnFieldProperty
+		name="quantita" />
+	<columnFieldProperty
+		name="ti_associato_manrev" />
+
+	<columnSet
+		name="righiSet">
+		<columnFieldProperty
+			name="cd_bene_servizio" />
+		<columnFieldProperty
+			name="progressivo_riga"/>		
+		<columnFieldProperty
+			name="ds_riga_fattura"/>
+		<columnFieldProperty
+			name="quantita"/>
+		<columnFieldProperty
+			name="prezzo_unitario"/>
+		<columnFieldProperty
+			name="im_imponibile"/>
+		<columnFieldProperty
+			name="im_iva"/>
+		<columnFieldProperty
+			name="im_totale_divisa" />	
+		<columnFieldProperty
+			name="stato_cofi"/>		
+	</columnSet>
+	<columnSet
+		name="inventarioSet">
+		<columnFieldProperty
+			name="ds_riga_fattura"
+			/>
+		<columnFieldProperty
+			name="quantita"
+			/>
+		<columnFieldProperty
+			name="prezzo_unitario"
+			/>
+		<columnFieldProperty
+			name="im_totale_inventario"
+			/>
+	</columnSet>
+
+</bulkInfo>

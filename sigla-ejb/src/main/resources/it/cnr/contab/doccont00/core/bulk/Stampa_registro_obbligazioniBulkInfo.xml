@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="dataInizio"
+		property="dataInizio"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Data inizio"/>
+	<fieldProperty
+		name="dataFine"
+		property="dataFine"
+		inputType="TEXT"
+		formatName="date_short"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Data fine" />
+	<fieldProperty
+		name="pgInizio"
+		property="pgInizio"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Numero Inizio" />
+	<fieldProperty
+		name="pgFine"
+		property="pgFine"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		label="Numero Fine" />
+	<fieldProperty
+		name="findUoForPrint"
+		property="uoForPrint"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROUoForPrintSearchTool"
+		completeOnSave = "true"
+		label="UO emittente" />
+	<fieldProperty
+		name="cdUoForPrint"
+		property="uoForPrint.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="true"
+		readonlyProperty="ROUoForPrint"
+		label="Codice UO" />
+	<fieldProperty
+		name="dsUoForPrint"
+		property="uoForPrint.ds_unita_organizzativa"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione UO" />
+	<fieldProperty
+		name="stato_obbligazione"
+		property="stato_obbligazione"
+		inputType="SELECT"
+		keysProperty="statoObbligazioneKeys"
+		nullable="false"
+		label="Stato" />
+	<fieldProperty
+		name="cd_tipo_documento_cont"
+		property="cd_tipo_documento_cont"
+		inputType="SELECT"
+		keysProperty="tipoCompetenzaResiduoKeys"
+		nullable="false"
+		label="Tipo" />
+		
+	<formFieldProperty
+		name="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio" />
+	<formFieldProperty
+		name="cd_cds"
+		inputType="ROTEXT"
+		label="CDS" />
+	<formFieldProperty name="dataInizio" />
+	<formFieldProperty name="dataFine" />
+	<formFieldProperty name="pgInizio" />
+	<formFieldProperty name="pgFine" />
+	<formFieldProperty name="findUoForPrint" />
+	<formFieldProperty name="cdUoForPrint" />
+	<formFieldProperty name="dsUoForPrint" />
+	<formFieldProperty name="stato_obbligazione" />
+	<formFieldProperty name="cd_tipo_documento_cont" />
+
+	<form
+		name="/cnrdoccont/doccont/regobblig.rpt">
+		<formFieldProperty
+			name="esercizio"
+			inputType="ROTEXT"
+			label="Esercizio" />
+		<formFieldProperty 
+			name="cd_cds"
+			inputType="ROTEXT"
+			label="CDS" />
+		<formFieldProperty name="dataInizio" />
+		<formFieldProperty name="dataFine" />
+		<formFieldProperty name="pgInizio" />
+		<formFieldProperty name="pgFine" />
+		<formFieldProperty name="findUoForPrint" />
+		<formFieldProperty name="cdUoForPrint" />
+		<formFieldProperty name="dsUoForPrint" />
+		<formFieldProperty name="stato_obbligazione" />
+	</form>
+	
+	
+	<form
+		name="/cnrdoccont/doccont/regobblig.jasper">
+		<formFieldProperty
+			name="esercizio"
+			inputType="ROTEXT"
+			label="Esercizio" />
+		<formFieldProperty 
+			name="cd_cds"
+			inputType="ROTEXT"
+			label="CDS" />
+		<formFieldProperty name="dataInizio" />
+		<formFieldProperty name="dataFine" />
+		<formFieldProperty name="pgInizio" />
+		<formFieldProperty name="pgFine" />
+		<formFieldProperty name="findUoForPrint" />
+		<formFieldProperty name="cdUoForPrint" />
+		<formFieldProperty name="dsUoForPrint" />
+		<formFieldProperty name="stato_obbligazione" />
+		<formFieldProperty name="cd_tipo_documento_cont" />
+	</form>
+
+	<printForm
+		name="/cnrdoccont/doccont/regobblig.rpt">
+		<printFieldProperty 
+			name="cdUoForPrint"
+			property="cdUoNullableForPrint"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="1"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="stato_obbligazione"
+			parameterPosition="3"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="pgInizio"
+			parameterPosition="4"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="pgFine"
+			parameterPosition="5"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="dataInizio"
+			parameterPosition="6"
+			parameterType="DATE" />
+		<printFieldProperty 
+			name="dataFine"
+			parameterPosition="7"
+			parameterType="DATE" />
+	</printForm>
+
+<printForm
+		name="/cnrdoccont/doccont/regobblig.jasper">
+		<printFieldProperty 
+			name="cdUoForPrint"
+			property="cdUoNullableForPrint"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="UO"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="1"
+			parameterType="STRING" 
+			paramNameJR="Esercizio"
+			paramTypeJR="java.lang.Integer"/>
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="2"
+			parameterType="STRING" 
+			paramNameJR="CDS"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+			name="stato_obbligazione"
+			parameterPosition="3"
+			parameterType="STRING" 
+			paramNameJR="Stato"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+			name="pgInizio"
+			parameterPosition="4"
+			parameterType="STRING" 
+			paramNameJR="DaNumero"
+			paramTypeJR="java.lang.Long"/>
+		<printFieldProperty 
+			name="pgFine"
+			parameterPosition="5"
+			parameterType="STRING"
+			paramNameJR="ANumero"
+			paramTypeJR="java.lang.Long" />
+		<printFieldProperty 
+			name="dataInizio"
+			parameterPosition="6"
+			parameterType="DATE" 
+			paramNameJR="DaData"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty 
+			name="dataFine"
+			parameterPosition="7"
+			parameterType="DATE" 
+			paramNameJR="AData"
+			paramTypeJR="java.util.Date"/>
+		<printFieldProperty 
+			name="cd_tipo_documento_cont"
+			parameterPosition="8"
+			parameterType="STRING" 
+			paramNameJR="Tipo"
+			paramTypeJR="java.lang.String"/>
+	</printForm>
+
+</bulkInfo>

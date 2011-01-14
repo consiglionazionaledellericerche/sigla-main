@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.messaggio00.bulk.MessaggioBulk"
+	homeClassName="it.cnr.contab.messaggio00.bulk.MessaggioHome" >
+	
+	<defaultColumnMap tableName="MESSAGGIO">
+	</defaultColumnMap>		
+
+	<columnMap
+		name="V_MESSAGGI_UTENTE"
+		tableName="V_MESSAGGI_UTENTE"
+		extends="default" >
+		<columnMapping
+			columnName="VISIONATO"
+			propertyName="visionato"
+			sqlTypeName="CHAR"
+            converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"			
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="LETTO"
+			propertyName="letto"
+			sqlTypeName="CHAR"
+            converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"			
+			columnSize="1"
+			nullable="false" />
+	</columnMap>
+
+	<persistentProperty
+		name="visionato" />
+</SQLPersistentInfo>

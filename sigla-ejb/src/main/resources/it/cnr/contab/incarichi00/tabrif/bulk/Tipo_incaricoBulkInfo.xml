@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_tipo_incarico"
+		property="cd_tipo_incarico"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="ds_tipo_incarico"
+		property="ds_tipo_incarico"
+		inputType="TEXTAREA"
+		maxLength="200"
+		cols="60"
+		rows="5"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="prc_incremento"
+		property="prc_incremento"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		formatName="it.cnr.contab.util.PercentFormat"
+		enabledOnSearch="true"
+		label="Perc. di incremento importo lordo incarico" />
+	<fieldProperty
+		name="prc_incremento_var"
+		property="prc_incremento_var"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		formatName="it.cnr.contab.util.PercentFormat"
+		enabledOnSearch="true"
+		label="Perc. di incremento variazione importo lordo incarico" />
+	<fieldProperty
+		name="find_tipo_rapporto"
+		property="tipoRapporto"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Rapporto" />
+	<fieldProperty
+		name="cd_tipo_rapporto"
+		property="cd_tipo_rapporto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Rapporto" />
+	<fieldProperty
+		name="ds_tipo_rapporto"
+		property="tipoRapporto.ds_tipo_rapporto"
+		inputType="ROTEXT"
+		inputSize="60"
+		maxLength="100"
+		nullable="false"
+		label="Descrizione tipo rapporto" />
+	<fieldProperty
+		name="fl_cancellato"
+		property="fl_cancellato"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Eliminato" />
+
+	<formFieldProperty
+		name="cd_tipo_incarico" />
+	<formFieldProperty
+		name="ds_tipo_incarico" />
+	<formFieldProperty
+		name="prc_incremento" />
+	<formFieldProperty
+		name="prc_incremento_var" />
+	<formFieldProperty
+		name="prc_incremento" />
+	<formFieldProperty
+		name="find_tipo_rapporto" />
+	<formFieldProperty
+		name="fl_cancellato" />
+
+	<columnFieldProperty
+		name="cd_tipo_incarico" />
+	<columnFieldProperty
+		name="ds_tipo_incarico" />
+	<columnFieldProperty
+		name="prc_incremento" />
+	<columnFieldProperty
+		name="prc_incremento" />
+	<columnFieldProperty
+		name="cd_tipo_rapporto" />
+	<columnFieldProperty
+		name="ds_tipo_rapporto" />
+	<columnFieldProperty
+		name="fl_cancellato" />
+	<columnFieldProperty
+		name="cd_tipo_rapporto" />
+
+	<findFieldProperty
+		name="cd_tipo_incarico" />
+	<findFieldProperty
+		name="ds_tipo_incarico" />
+	<findFieldProperty
+		name="prc_incremento" />
+	<findFieldProperty
+		name="prc_incremento" />
+	<findFieldProperty
+		name="fl_cancellato" />
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_tipo_incarico" />
+		<formFieldProperty
+			name="ds_tipo_incarico"
+			inputType="TEXT"
+			inputSize="30" />
+	</form>
+</bulkInfo>

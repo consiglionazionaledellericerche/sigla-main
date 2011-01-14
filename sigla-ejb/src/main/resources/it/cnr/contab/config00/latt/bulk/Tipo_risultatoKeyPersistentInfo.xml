@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.latt.bulk.Tipo_risultatoKey" >
+	<defaultColumnMap
+		tableName="TIPO_RISULTATO" >
+		<columnMapping
+			columnName="CD_TIPO_RISULTATO"
+			propertyName="cd_tipo_risultato"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_tipo_risultato"
+		partOfOid="true" />
+</SQLPersistentInfo>

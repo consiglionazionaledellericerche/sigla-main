@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_valore_parametro"
+		property="pg_valore_parametro"
+		inputType="TEXT"
+		label="pg_valore_parametro" />
+	<fieldProperty
+		name="cd_procedura"
+		property="cd_procedura"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="cd_procedura" />
+	<fieldProperty
+		name="nome_parametro"
+		property="nome_parametro"
+		maxLength="20"
+		inputSize="20"
+		inputType="ROTEXT"
+		label="Parametro" />
+	<fieldProperty
+		name="valore"
+		property="valore"
+		inputType="TEXT"
+		inputSize="20"
+		label="Valore" />
+	<fieldProperty
+		name="valoreRiutilizzato"
+		property="valoreRiutilizzato"
+		printProperty="valore"
+		optionsProperty="valoriRiutilizzabili"
+		inputType="SELECT"
+		label="Valore" />
+
+	<formFieldProperty
+		name="nome_parametro" />
+	<formFieldProperty
+		name="valore" />
+	<formFieldProperty
+		name="valoreRiutilizzato" />
+
+	<columnFieldProperty
+		name="nome_parametro" />
+	<columnFieldProperty
+		name="valore" />
+	<columnFieldProperty
+		name="valoreRiutilizzato" />
+
+</bulkInfo>

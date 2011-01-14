@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		label="U.org."
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="im_a3"
+		property="im_a3"
+		inputType="TEXT"
+		label="Imp. anno 3"
+		formatName="it.cnr.contab.util.EuroFormat" />
+	<fieldProperty
+		name="im_a2"
+		property="im_a2"
+		inputType="TEXT"
+		label="Imp. anno 2"
+		formatName="it.cnr.contab.util.EuroFormat" />
+	<fieldProperty
+		name="im_a1"
+		property="im_a1"
+		inputType="TEXT"
+		label="Imp. anno 1"
+		formatName="it.cnr.contab.util.EuroFormat" />
+	<fieldProperty
+		name="id_matricola"
+		property="id_matricola"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Matricola" />
+	<fieldProperty
+		name="stato_carico"
+		property="stato_carico"
+		keysProperty="stato_keys"
+		inputType="ROTEXT"
+		label="Stato" />
+	<fieldProperty
+		name="ti_rapporto"
+		property="ti_rapporto"
+		inputType="SELECT"
+		keysProperty="ti_rapportoKeys"
+		label="Tipo rapporto" />
+	<fieldProperty
+		name="nominativo"
+		property="nominativo"
+		maxLength="60"
+		inputSize="20"
+		inputType="ROTEXT"
+		label="Nominativo" />
+	<fieldProperty
+		name="dt_scad_contratto"
+		property="dt_scad_contratto"
+		inputType="ROTEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data scad. contratto" />
+	<fieldProperty
+		name="cd_livello_1"
+		property="cd_livello_1"
+		maxLength="3"
+		inputSize="3"
+		inputType="ROTEXT"
+		label="Cod. livello 1" />
+	<fieldProperty
+		name="cd_livello_2"
+		property="cd_livello_2"
+		maxLength="3"
+		inputSize="3"
+		inputType="ROTEXT"
+		label="Cod. livello 2" />
+	<fieldProperty
+		name="cd_livello_3"
+		property="cd_livello_3"
+		maxLength="3"
+		inputSize="3"
+		inputType="ROTEXT"
+		label="Cod. livello 3" />
+	<fieldProperty
+		name="cd_profilo"
+		property="cd_profilo"
+		maxLength="4"
+		inputSize="4"
+		inputType="ROTEXT"
+		label="Cod. profilo" />
+	<fieldProperty
+		name="ds_profilo"
+		property="ds_profilo"
+		maxLength="100"
+		inputSize="20"
+		inputType="ROTEXT"
+		label="Descr. profilo" />
+	<fieldProperty
+		name="origine_fonti"
+		property="origine_fonti"
+		label="Origine"
+		keysProperty="tipo_naturaKeys"
+		inputType="SELECT"
+		nullable="true"
+		/>
+	<fieldProperty
+		name="stato_costo_caricato"
+		property="costoCaricato.stato"
+		keysProperty="costoCaricato.stato_keys"
+		readonlyProperty="costoCaricato.ROStato"
+		inputType="SELECT"
+		nullable="false"
+		label="Stato contrattazione costo caricato" />
+	<fieldProperty
+		name="totale_prc_la_a1"
+		property="totale_prc_la_a1"
+		inputType="ROTEXT"
+		inputSize="6"
+		label="Tot. % anno 1" />
+	<fieldProperty
+		name="totale_prc_la_a2"
+		property="totale_prc_la_a2"
+		inputType="ROTEXT"
+		inputSize="6"
+		label="Tot. % anno 2" />
+	<fieldProperty
+		name="totale_prc_la_a3"
+		property="totale_prc_la_a3"
+		inputType="ROTEXT"
+		inputSize="6"
+		label="Tot. % anno 3" />
+	<fieldProperty
+		name="totale_prc_ripartito_a1"
+		property="totale_prc_ripartito_a1"
+		inputType="ROTEXT"
+		inputSize="6"
+		label="Tot. % ripartito anno 1" 
+		formatName="it.cnr.contab.util.ConstrainedPercentFormat" />
+	<fieldProperty
+		name="totale_prc_ripartito_a2"
+		property="totale_prc_ripartito_a2"
+		inputType="ROTEXT"
+		inputSize="6"
+		label="Tot. % ripartito anno 2" 
+		formatName="it.cnr.contab.util.ConstrainedPercentFormat" />
+	<fieldProperty
+		name="totale_prc_ripartito_a3"
+		property="totale_prc_ripartito_a3"
+		inputType="ROTEXT"
+		inputSize="6"
+		label="Tot. % ripartito anno 3" 
+		formatName="it.cnr.contab.util.ConstrainedPercentFormat" />
+
+	<formFieldProperty
+		name="im_a3" />
+	<formFieldProperty
+		name="im_a2" />
+	<formFieldProperty
+		name="im_a1" />
+	<formFieldProperty
+		name="id_matricola" />
+	<formFieldProperty
+		name="ti_rapporto" />
+	<formFieldProperty
+		name="origine_fonti" />
+	<formFieldProperty
+		name="stato_costo_caricato" />
+	<formFieldProperty
+		name="totale_prc_la_a1" />
+	<formFieldProperty
+		name="totale_prc_la_a2" />
+	<formFieldProperty
+		name="totale_prc_la_a3" />
+	<formFieldProperty
+		name="totale_prc_ripartito_a1" />
+	<formFieldProperty
+		name="totale_prc_ripartito_a2" />
+	<formFieldProperty
+		name="totale_prc_ripartito_a3" />
+
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="id_matricola" />
+	<columnFieldProperty
+		name="im_a1" />
+	<columnFieldProperty
+		name="im_a2" />
+	<columnFieldProperty
+		name="im_a3" />
+	<columnFieldProperty
+		name="stato_carico" />
+	<columnFieldProperty
+		name="ti_rapporto" />
+	<columnFieldProperty
+		name="nominativo" />
+	<columnFieldProperty
+		name="dt_scad_contratto" />
+	<columnFieldProperty
+		name="ds_profilo" />
+	<columnFieldProperty
+		name="origine_fonti" />
+	<columnFieldProperty
+		name="totale_prc_ripartito_a1"/>
+	<columnFieldProperty
+		name="totale_prc_ripartito_a2"/>
+	<columnFieldProperty
+		name="totale_prc_ripartito_a3"/>
+
+	<columnSet name="mese">
+		<columnFieldProperty
+			name="cd_unita_organizzativa" />
+		<columnFieldProperty
+			name="id_matricola" />
+		<columnFieldProperty
+			name="im_a1" label="Importo Mese"/>
+		<columnFieldProperty
+			name="stato_carico" />
+		<columnFieldProperty
+			name="ti_rapporto" />
+		<columnFieldProperty
+			name="nominativo" />
+		<columnFieldProperty
+			name="dt_scad_contratto" />
+		<columnFieldProperty
+			name="ds_profilo" />
+		<columnFieldProperty
+			name="origine_fonti" />
+		<columnFieldProperty
+			name="totale_prc_ripartito_a1" 
+			label="Tot. % ripartito"/>
+	</columnSet>
+</bulkInfo>

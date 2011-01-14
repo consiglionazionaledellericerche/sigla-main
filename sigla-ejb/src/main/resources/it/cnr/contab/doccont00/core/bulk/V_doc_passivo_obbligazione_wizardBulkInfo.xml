@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_mandato"
+		property="mandatoRiga.pg_mandato"
+		inputType="TEXT"
+		label="Nr. mandato"/>
+		
+	<formFieldProperty
+		name="pg_mandato" />
+
+    <columnSet name="mandatoAutomatico">
+       <columnFieldProperty
+			name="pg_documento_amm"
+			label="Nr. Documento"
+			inputType="ROTEXT"/>
+  	   <columnFieldProperty
+			name="nr_fattura_fornitore"
+			label="Nr. Fattura"
+			inputType="ROTEXT"/>		
+	   <columnFieldProperty
+			name="ds_tipo_documento_amm"
+			inputType="ROTEXT"/>
+	   <columnFieldProperty
+			name="cd_terzo"
+			columnStyle="padding-left:20px"
+			inputType="ROTEXT"/>
+	   <columnFieldProperty
+			name="cd_terzo_cessionario"
+			columnStyle="padding-left:20px"
+			inputType="ROTEXT"/>
+	   <columnFieldProperty
+			name="esercizio_ori_obbligazione"
+			columnStyle="padding-left:20px"
+			inputType="ROTEXT"/>
+	   <columnFieldProperty
+			name="pg_obbligazione"
+			columnStyle="padding-left:20px"
+			inputType="ROTEXT"/>
+	   <columnFieldProperty
+			name="pg_mandato"
+			columnStyle="padding-left:20px"
+			inputType="ROTEXT"/>
+	   <columnFieldProperty
+			name="fl_pgiro"
+			inputType="ROTEXT"
+			columnStyle="text-align: center"/>
+	   <columnFieldProperty
+			name="dt_scadenza"
+			inputType="ROTEXT"
+			columnStyle="width:80px"/>
+	   <columnFieldProperty
+			name="im_mandato_riga"
+			inputType="ROTEXT"
+			columnStyle="text-align: right"/>
+	   <columnFieldProperty
+			name="ti_pagamento"
+			columnStyle="padding-left:20px"
+			inputType="ROTEXT"/>
+    </columnSet>
+</bulkInfo>

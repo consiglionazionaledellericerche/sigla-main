@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametri_configKey">
+	<defaultColumnMap
+		tableName="INCARICHI_PARAMETRI_CONFIG">
+		<columnMapping
+			columnName="CD_CONFIG"
+			propertyName="cd_config"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_config"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio" />
+	<fieldProperty
+		name="esercizio_res"
+		property="esercizio_res"
+		inputType="TEXT"
+		label="esercizio accertamento" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CdR"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="ti_appartenenza" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="ti_gestione" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="cd_elemento_voce" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice GAE"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_progetto"
+		property="cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Modulo di Attivita'"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="cd_progetto_padre"
+		property="cd_progetto_padre"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="cd_progetto_padre" />
+	<fieldProperty
+		name="cd_funzione"
+		property="cd_funzione"
+		inputType="TEXT"
+		label="Funzione" />
+	<fieldProperty
+		name="cd_natura"
+		property="cd_natura"
+		inputType="TEXT"
+		label="Natura" />
+	<fieldProperty
+		name="ds_linea_attivita"
+		property="ds_linea_attivita"
+		inputType="TEXT"
+		label="Descrizione" />
+	<fieldProperty
+		name="im_ra_rce"
+		property="im_ra_rce"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="im_ra_rce" />
+	<fieldProperty
+		name="im_rb_rse"
+		property="im_rb_rse"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="im_rb_rse" />
+	<fieldProperty
+		name="im_rc_esr"
+		property="im_rc_esr"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="im_rc_esr" />
+	<fieldProperty
+		name="im_rd_a2_ricavi"
+		property="im_rd_a2_ricavi"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="im_rd_a2_ricavi" />
+	<fieldProperty
+		name="im_re_a2_entrate"
+		property="im_re_a2_entrate"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="im_re_a2_entrate" />
+	<fieldProperty
+		name="im_rf_a3_ricavi"
+		property="im_rf_a3_ricavi"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="im_rf_a3_ricavi" />
+	<fieldProperty
+		name="im_rg_a3_entrate"
+		property="im_rg_a3_entrate"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="im_rg_a3_entrate" />
+	<fieldProperty
+		name="cd_centro_responsabilita_clgs"
+		property="cd_centro_responsabilita_clgs"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="cd_centro_responsabilita_clgs" />
+	<fieldProperty
+		name="cd_linea_attivita_clgs"
+		property="cd_linea_attivita_clgs"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="cd_linea_attivita_clgs" />
+	<fieldProperty
+		name="ti_appartenenza_clgs"
+		property="ti_appartenenza_clgs"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="ti_appartenenza_clgs" />
+	<fieldProperty
+		name="ti_gestione_clgs"
+		property="ti_gestione_clgs"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="ti_gestione_clgs" />
+	<fieldProperty
+		name="cd_elemento_voce_clgs"
+		property="cd_elemento_voce_clgs"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="cd_elemento_voce_clgs" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="stato" />
+	<fieldProperty
+		name="categoria_dettaglio"
+		property="categoria_dettaglio"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="categoria_dettaglio" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="esercizio_res" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="cd_progetto" />
+	<formFieldProperty
+		name="cd_progetto_padre" />
+	<formFieldProperty
+		name="cd_funzione" />
+	<formFieldProperty
+		name="cd_natura" />
+	<formFieldProperty
+		name="ds_linea_attivita" />
+	<formFieldProperty
+		name="im_ra_rce" />
+	<formFieldProperty
+		name="im_rb_rse" />
+	<formFieldProperty
+		name="im_rc_esr" />
+	<formFieldProperty
+		name="im_rd_a2_ricavi" />
+	<formFieldProperty
+		name="im_re_a2_entrate" />
+	<formFieldProperty
+		name="im_rf_a3_ricavi" />
+	<formFieldProperty
+		name="im_rg_a3_entrate" />
+	<formFieldProperty
+		name="cd_centro_responsabilita_clgs" />
+	<formFieldProperty
+		name="cd_linea_attivita_clgs" />
+	<formFieldProperty
+		name="ti_appartenenza_clgs" />
+	<formFieldProperty
+		name="ti_gestione_clgs" />
+	<formFieldProperty
+		name="cd_elemento_voce_clgs" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="categoria_dettaglio" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita"
+		columnStyle="width:80px; text-align:left"
+		/>
+	<columnFieldProperty
+		name="cd_progetto"
+		columnStyle="width:80px; text-align:left"
+		/>		
+	<columnFieldProperty
+		name="cd_linea_attivita"
+		columnStyle="padding-left:10px"/>		
+	<columnFieldProperty
+		name="cd_funzione" 
+		columnStyle="padding-left:10px"/>
+	<columnFieldProperty
+		name="cd_natura" />
+	<columnFieldProperty
+		name="ds_linea_attivita" />
+</bulkInfo>

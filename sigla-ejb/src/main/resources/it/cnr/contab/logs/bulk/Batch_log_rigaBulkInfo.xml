@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ti_messaggio"
+		property="ti_messaggio"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		label="Stato"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="messaggio"
+		property="messaggio"
+		cols="100"
+		rows="5"
+		inputType="TEXTAREA"
+		label="Programma"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_esecuzione"
+		property="pg_esecuzione"
+		inputType="TEXT"
+		label="Progressivo esecuzione" />
+	<fieldProperty
+		name="trace"
+		property="trace"
+		cols="100"
+		rows="5"
+		inputType="TEXTAREA"
+		label="Traccia"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_riga"
+		property="pg_riga"
+		inputType="TEXT"
+		label="Progressivo di riga" />
+	<fieldProperty
+		name="note"
+		property="note"
+		cols="100"
+		rows="5"
+		inputType="TEXTAREA"
+		label="Note"
+		caseSensitiveSearch="false" />
+
+	<formFieldProperty
+		name="pg_esecuzione" />
+	<formFieldProperty
+		name="pg_riga" />
+	<formFieldProperty
+		name="ti_messaggio" />
+	<formFieldProperty
+		name="note" />
+	<formFieldProperty
+		name="messaggio" />
+	<formFieldProperty
+		name="trace" />
+
+	<columnFieldProperty
+		name="pg_riga" />
+	<columnFieldProperty
+		name="ti_messaggio" />
+	<columnFieldProperty
+		name="note" />
+	<columnFieldProperty
+		name="messaggio" />
+	<columnFieldProperty
+		name="trace"/>
+
+	<columnSet name="LIQUID_CORI_MASSA_COLUMN_SET">
+		<columnFieldProperty
+			name="pg_riga" 
+			label = "Riga"/>
+		<columnFieldProperty
+			name="ti_messaggio" />
+		<columnFieldProperty
+			name="messaggio" 
+			label = "U.O."/>	
+		<columnFieldProperty
+			name="trace" 
+			label = "Errore"/>			
+	</columnSet>
+	
+	<columnSet name="ELAB_FILE_STIP_COLUMN_SET">
+		<columnFieldProperty
+			name="pg_riga" 
+			label = "Riga"/>
+		<columnFieldProperty
+			name="ti_messaggio" />
+		<columnFieldProperty
+			name="trace" 
+			label = "Messaggio"/>			
+	</columnSet>
+
+	<findFieldProperty
+		name="pg_esecuzione" />
+	<findFieldProperty
+		name="pg_riga" />
+	<findFieldProperty
+		name="ti_messaggio" />
+	<findFieldProperty
+		name="note" />
+	<findFieldProperty
+		name="messaggio" />
+	<findFieldProperty
+		name="trace" />
+
+</bulkInfo>

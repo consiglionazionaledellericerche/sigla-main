@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ds_tipo_progetto"
+		property="ds_tipo_progetto"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="Descrizione"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_tipo_progetto"
+		property="cd_tipo_progetto"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="Codice" />
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_tipo_progetto" />
+		<formFieldProperty
+			name="ds_tipo_progetto"
+			inputSize="30" />
+	</form>
+	
+	<formFieldProperty
+		name="ds_tipo_progetto" />
+	<formFieldProperty
+		name="cd_tipo_progetto" />
+
+	<columnFieldProperty
+		name="ds_tipo_progetto" />
+	<columnFieldProperty
+		name="cd_tipo_progetto" />
+
+	<findFieldProperty
+		name="ds_tipo_progetto" />
+	<findFieldProperty
+		name="cd_tipo_progetto" />
+
+</bulkInfo>

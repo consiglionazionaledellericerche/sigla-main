@@ -1,0 +1,125 @@
+<action-mappings>
+  <action 
+      path="/CRUDAnagraficaAction" actionClass="it.cnr.contab.anagraf00.action.CRUDAnagraficaAction">
+  </action>
+  <action 
+      path="/CRUDTerzoAction" actionClass="it.cnr.contab.anagraf00.action.CRUDTerzoAction">
+  </action>
+  <action 
+      path="/CRUDTipoRapportoAction" actionClass="it.cnr.contab.anagraf00.action.CRUDTipoRapportoAction">
+  </action>
+
+  <action 
+      path="/CRUDRifInquadramentoAction" actionClass="it.cnr.jada.util.action.CRUDAction">
+  </action>
+  
+ <!--   <action 
+      path="/CRUDTipologieIstatAction" actionClass="it.cnr.contab.anagraf00.action.CRUDTipologieIstatAction">
+  </action> -->
+  
+  <action 
+      path="/CRUDTipologieIstatAction" actionClass="it.cnr.contab.anagraf00.action.CRUDTipologieIstatAction">
+  </action>
+  
+  <businessProcess
+      name="CRUDAnagraficaBP" className="it.cnr.contab.anagraf00.bp.CRUDAnagraficaBP">
+    <forward name="default" path="/anagraf00/anagrafica.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk"/>
+    <init-param name="componentSessionName" value="CNRANAGRAF00_EJB_AnagraficoComponentSession"/>
+	<init-param name="defaultAction" value="CRUDAnagraficaAction"/>		
+  </businessProcess>
+
+  <businessProcess
+      name="CRUDTerzoBP" className="it.cnr.contab.anagraf00.bp.CRUDTerzoBP">
+    <forward name="default" path="/anagraf00/terzo.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.anagraf00.core.bulk.TerzoBulk"/>
+    <init-param name="componentSessionName" value="CNRANAGRAF00_EJB_TerzoComponentSession"/>
+	<init-param name="defaultAction" value="CRUDTerzoAction"/>		
+  </businessProcess>
+
+  <businessProcess
+      name="CRUDAnagraficaPersonaBP" className="it.cnr.contab.anagraf00.bp.CRUDAnagraficaPersonaBP">
+    <forward name="default" path="/anagraf00/anagrafica.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk"/>
+    <init-param name="componentSessionName" value="CNRANAGRAF00_EJB_AnagraficoComponentSession"/>
+	<init-param name="defaultAction" value="CRUDAnagraficaAction"/>		
+  </businessProcess>
+
+  <businessProcess
+      name="CRUDAnagraficaStrutturaCNRBP" className="it.cnr.contab.anagraf00.bp.CRUDAnagraficaStrutturaCNRBP">
+    <forward name="default" path="/anagraf00/anagrafica.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk"/>
+    <init-param name="componentSessionName" value="CNRANAGRAF00_EJB_AnagraficoComponentSession"/>
+	<init-param name="defaultAction" value="CRUDAnagraficaAction"/>		
+  </businessProcess>
+
+  <businessProcess
+      name="CRUDModalitaPagamento" className="it.cnr.jada.util.action.SimpleCRUDBP">
+    <forward name="default" path="/anagraf00/modalita_pagamento.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk"/>
+    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+  </businessProcess>
+
+  <businessProcess
+      name="CRUDClassificazioneAnag" className="it.cnr.jada.util.action.SimpleCRUDBP">
+    <forward name="default" path="/anagraf00/classificazione_anag.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.anagraf00.tabrif.bulk.Classificazione_anagBulk"/>
+    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+  </businessProcess>
+
+   <businessProcess
+      name="CRUDTerminiPagamento" className="it.cnr.jada.util.action.SimpleCRUDBP">
+    <forward name="default" path="/anagraf00/termini_pagamento.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk"/>
+    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+  </businessProcess>
+
+  <businessProcess
+      name="CRUDTipoRapporto" className="it.cnr.jada.util.action.SimpleCRUDBP">
+    <forward name="default" path="/anagraf00/tipo_rapporto.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk"/>
+    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+	<init-param name="defaultAction" value="CRUDTipoRapportoAction"/>		
+  </businessProcess>
+
+  <businessProcess
+      name="CRUDRappresentanteLegale" className="it.cnr.jada.util.action.SimpleCRUDBP">
+    <forward name="default" path="/anagraf00/rappresentante_legale.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.anagraf00.core.bulk.Rappresentante_legaleBulk"/>
+    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+  </businessProcess>
+
+  <businessProcess
+      name="CRUDComuniEsteri" className="it.cnr.contab.anagraf00.bp.CRUDComuneBP">
+    <forward name="default" path="/anagraf00/comune_estero.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.anagraf00.tabter.bulk.ComuneEsteroBulk"/>
+		<init-param name="componentSessionName" value="CNRANAGRAF00_EJB_ComuneComponentSession"/>"/>
+    <init-param name="searchResultColumnSet" value="comuneEstero"/>
+    <init-param name="freeSearchSet" value="comuneEsteroFreeSearchSet"/>
+  </businessProcess>
+
+  <businessProcess
+      name="CRUDRifInquadramentoBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+    <forward name="default" path="/anagraf00/rif_inquadramento.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBulk"/>
+    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+	<init-param name="defaultAction" value="CRUDRifInquadramentoAction"/>		
+  </businessProcess>
+  
+  <!-- <businessProcess
+      name="CRUDTipologieIstatBP" className="it.cnr.contab.anagraf00.bp.CRUDTipologieIstatBP">
+    <forward name="default" path="/util/form.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.anagraf00.tabrif.bulk.Tipologie_istatBulk"/>
+    <init-param name="componentSessionName" value="CNRANAGRAF00_EJB_Tipologie_istatComponentSession"/>
+	<init-param name="defaultAction" value="CRUDTipologieIstatAction"/>		
+  </businessProcess> -->
+	
+  <businessProcess
+      name="CRUDTipologieIstatBP" className="it.cnr.contab.anagraf00.bp.CRUDTipologieIstatBP">
+    <forward name="default" path="/util/form.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.anagraf00.tabrif.bulk.Tipologie_istatBulk"/>
+    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+	<init-param name="defaultAction" value="CRUDTipologieIstatAction"/>		
+  </businessProcess>
+  
+</action-mappings>

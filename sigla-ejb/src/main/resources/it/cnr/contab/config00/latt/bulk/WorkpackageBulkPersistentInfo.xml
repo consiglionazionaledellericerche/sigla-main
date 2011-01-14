@@ -1,0 +1,147 @@
+<SQLPersistentInfo
+	 persistentClassName="it.cnr.contab.config00.latt.bulk.WorkpackageBulk"
+	 homeClassName="it.cnr.contab.config00.latt.bulk.WorkpackageHome" >
+	<defaultColumnMap
+		tableName="LINEA_ATTIVITA" >
+		<columnMapping
+			columnName="CD_GRUPPO_LINEA_ATTIVITA"
+			propertyName="gruppo_linea_attivita.cd_gruppo_linea_attivita"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="CD_TIPO_LINEA_ATTIVITA"
+			propertyName="tipo_linea_attivita.cd_tipo_linea_attivita"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="natura.cd_natura"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="CD_FUNZIONE"
+			propertyName="funzione.cd_funzione"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="centro_responsabilita.cd_centro_responsabilita"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="insieme_la.centro_responsabilita.cd_centro_responsabilita"
+			fetchOnly="true" />
+		<columnMapping
+			columnName="CD_INSIEME_LA"
+			propertyName="insieme_la.cd_insieme_la" />
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="progetto.pg_progetto"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="CD_RESPONSABILE_TERZO"
+			propertyName="responsabile.cd_terzo"
+			fetchOnly="false" />			
+	</defaultColumnMap>
+	<columnMap 
+		name="V_LINEA_ATTIVITA_VALIDA"
+		tableName="V_LINEA_ATTIVITA_VALIDA"
+		extends="default">
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="progetto.cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true"/>
+		<columnMapping
+			columnName="CD_PROGETTO_PADRE"
+			propertyName="progettopadre.cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />									
+	</columnMap>		  		
+	<columnMap 
+		name="V_LINEA_ATT_NOT_IN_PDG"
+		tableName="V_LINEA_ATT_NOT_IN_PDG"
+		extends="default" >
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="progetto.cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true"/>
+		<columnMapping
+			columnName="CD_PROGETTO_PADRE"
+			propertyName="progettopadre.cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />						
+	</columnMap>		  		
+	<columnMap 
+		name="V_LINEA_ATT_NOT_IN_PDG_ETR"
+		tableName="V_LINEA_ATT_NOT_IN_PDG_ETR"
+		extends="default" >
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="progetto.cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true"/>
+		<columnMapping
+			columnName="CD_PROGETTO_PADRE"
+			propertyName="progettopadre.cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />						
+	</columnMap>		  		
+	<columnMap
+		name="V_LINEA_ATTIVITA_PROGETTO"
+		tableName="V_LINEA_ATTIVITA_PROGETTO"
+		extends="default" >
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="progetto.cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true"/>
+		<columnMapping
+			columnName="CD_PROGETTO_PADRE"
+			propertyName="progettopadre.cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />			
+	</columnMap>		
+	<persistentProperty
+		name="gruppo_linea_attivita" />
+	<persistentProperty
+		name="tipo_linea_attivita" />
+	<persistentProperty
+		name="centro_responsabilita"
+		partOfOid="true" />
+	<persistentProperty
+		name="natura" />
+	<persistentProperty
+		name="funzione" />
+	<persistentProperty
+		name="insieme_la" />
+	<persistentProperty
+		name="progetto" />
+	<persistentProperty
+		name="responsabile" />		
+	<fetchPolicy name="it.cnr.contab.pdg00.comp.StampaSituazioneSinteticaGAEComponent.find">
+		<exclude pattern="*" />
+		<include pattern="progetto"/>	
+		<include pattern="progetto.*"/>
+	</fetchPolicy>	
+	<fetchPolicy
+		name="it.cnr.contab.doccont00.comp.ObbligazioneComponent.find.linea_att">
+		<exclude pattern="*" />
+		<include pattern="progetto"/>		
+		<include pattern="progetto.*"/>		
+		<include pattern="natura"/>
+		<include pattern="funzione"/>
+		<include pattern="centro_responsabilita"/>
+		<exclude pattern="centro_responsabilita.*"/>
+	</fetchPolicy>					
+	<fetchPolicy name="it.cnr.contab.doccont00.comp.AccertamentoComponent.find.linea_att">
+		<include pattern="progetto"/>	
+		<include pattern="progetto.*"/>			
+	</fetchPolicy>
+
+</SQLPersistentInfo>

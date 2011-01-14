@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBase"
+	keyClassName="it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaKey"
+	homeClassName="it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaHome" >
+	<defaultColumnMap
+		tableName="MISSIONE_TIPO_SPESA" >
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dt_cancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="FL_RIMBORSO_KM"
+			propertyName="fl_rimborso_km"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_PASTO"
+			propertyName="fl_pasto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_GIUSTIFICATIVO_RICHIESTO"
+			propertyName="fl_giustificativo_richiesto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="cd_divisa"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="LIMITE_MAX_SPESA"
+			propertyName="limite_max_spesa"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_TRASPORTO"
+			propertyName="fl_trasporto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_ALLOGGIO"
+			propertyName="fl_alloggio"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DT_FINE_VALIDITA"
+			propertyName="dt_fine_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_TI_SPESA"
+			propertyName="ds_ti_spesa"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="PERCENTUALE_MAGGIORAZIONE"
+			propertyName="percentuale_maggiorazione"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="fl_rimborso_km" />
+	<persistentProperty
+		name="dt_cancellazione" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="fl_pasto" />
+	<persistentProperty
+		name="fl_giustificativo_richiesto" />
+	<persistentProperty
+		name="cd_divisa" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="limite_max_spesa" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="fl_trasporto" />
+	<persistentProperty
+		name="fl_alloggio" />
+	<persistentProperty
+		name="dt_fine_validita" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="ds_ti_spesa" />
+	<persistentProperty
+		name="percentuale_maggiorazione" />
+</SQLPersistentInfo>

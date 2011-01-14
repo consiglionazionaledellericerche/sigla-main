@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.consultazioni.bulk.Monito_cococoBase"
+	keyClassName="it.cnr.contab.docamm00.consultazioni.bulk.Monito_cococoKey"
+	homeClassName="it.cnr.contab.docamm00.consultazioni.bulk.Monito_cococoHome">
+	<defaultColumnMap
+		tableName="MONITORAGGIO_COCOCO">
+
+		<columnMapping
+			columnName="DESCRIZIONE"
+			propertyName="descrizione"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="DENOMINAZIONE"
+			propertyName="denominazione"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_DA_COMPETENZA_COGE"
+			propertyName="dt_da_competenza_coge"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_A_COMPETENZA_COGE"
+			propertyName="dt_a_competenza_coge"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="ATTIVITA"
+			propertyName="attivita"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="NUMERO_GIORNI"
+			propertyName="numero_giorni"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_TOTALE_COMPENSO"
+			propertyName="im_totale_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_LORDO_PERCIPIENTE"
+			propertyName="im_lordo_percipiente"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_NETTO_PERCIPIENTE"
+			propertyName="im_netto_percipiente"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_CR_PERCIPIENTE"
+			propertyName="im_cr_percipiente"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_CR_ENTE"
+			propertyName="im_cr_ente"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_TOTALE_COMPENSO_PERIODO"
+			propertyName="im_totale_compenso_periodo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />		
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="descrizione" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="denominazione" />
+	<persistentProperty
+		name="dt_da_competenza_coge" />
+	<persistentProperty
+		name="dt_a_competenza_coge" />
+	<persistentProperty
+		name="attivita" />		
+	<persistentProperty
+		name="numero_giorni" />
+	<persistentProperty
+		name="im_totale_compenso" />
+	<persistentProperty
+		name="im_lordo_percipiente" />
+	<persistentProperty
+		name="im_netto_percipiente" />
+	<persistentProperty
+		name="im_cr_percipiente" />
+	<persistentProperty
+		name="im_cr_ente" />
+	<persistentProperty
+		name="im_totale_compenso_periodo" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />	
+</SQLPersistentInfo>

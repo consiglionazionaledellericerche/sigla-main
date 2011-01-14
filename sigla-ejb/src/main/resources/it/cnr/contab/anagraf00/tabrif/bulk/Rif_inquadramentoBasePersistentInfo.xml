@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBase"
+	keyClassName="it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoKey"
+	homeClassName="it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoHome" >
+	<defaultColumnMap
+		tableName="RIF_INQUADRAMENTO" >
+		<columnMapping
+			columnName="CD_GRUPPO_INQUADRAMENTO"
+			propertyName="cd_gruppo_inquadramento"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_PROFILO"
+			propertyName="cd_profilo"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="TI_DIPENDENTE_ALTRO"
+			propertyName="ti_dipendente_altro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_LIVELLO"
+			propertyName="cd_livello"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="DS_INQUADRAMENTO"
+			propertyName="ds_inquadramento"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="CD_PROGRESSIONE"
+			propertyName="cd_progressione"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_gruppo_inquadramento" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="cd_profilo" />
+	<persistentProperty
+		name="ti_dipendente_altro" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="cd_livello" />
+	<persistentProperty
+		name="ds_inquadramento" />
+	<persistentProperty
+		name="cd_progressione" />
+</SQLPersistentInfo>

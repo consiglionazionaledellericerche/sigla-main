@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.ReversaleCupKey">
+	<defaultColumnMap
+		tableName="REVERSALE_CUP">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cdCds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_REVERSALE"
+			propertyName="pgReversale"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ACCERTAMENTO"
+			propertyName="esercizioAccertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ACCERTAMENTO"
+			propertyName="esercizioOriAccertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="pgAccertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO_SCADENZARIO"
+			propertyName="pgAccertamentoScadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS_DOC_AMM"
+			propertyName="cdCdsDocAmm"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UO_DOC_AMM"
+			propertyName="cdUoDocAmm"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_DOC_AMM"
+			propertyName="esercizioDocAmm"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_AMM"
+			propertyName="cdTipoDocumentoAmm"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_DOC_AMM"
+			propertyName="pgDocAmm"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CUP"
+			propertyName="cdCup"
+			sqlTypeName="VARCHAR"
+			columnSize="15"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdCds"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="pgReversale"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizioAccertamento"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizioOriAccertamento"
+		partOfOid="true" />
+	<persistentProperty
+		name="pgAccertamento"
+		partOfOid="true" />
+	<persistentProperty
+		name="pgAccertamentoScadenzario"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdCdsDocAmm"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdUoDocAmm"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizioDocAmm"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdTipoDocumentoAmm"
+		partOfOid="true" />
+	<persistentProperty
+		name="pgDocAmm"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdCup"
+		partOfOid="true" />
+</SQLPersistentInfo>

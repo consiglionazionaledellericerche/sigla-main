@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_tipo_missione"
+		property="cd_tipo_missione"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"		
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"		
+		label="Tipo missione" />
+	<fieldProperty
+		name="ds_tipo_missione"
+		property="ds_tipo_missione"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"		
+		label="Descrizione tipo missione"
+		caseSensitiveSearch="false" 
+		nullable="false"		/>
+
+	<formFieldProperty name="cd_tipo_missione" />
+	<formFieldProperty name="ds_tipo_missione" />
+
+	<columnFieldProperty name="cd_tipo_missione" />
+	<columnFieldProperty name="ds_tipo_missione" />
+
+	<findFieldProperty name="cd_tipo_missione" />
+	<findFieldProperty name="ds_tipo_missione" />
+
+</bulkInfo>

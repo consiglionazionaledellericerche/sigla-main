@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="data_registrazione"
+		property="data_registrazione"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		formatName="date_short"
+		label="Data Trasferimento"
+		command ="doOnData_registrazioneChange"/>
+
+	<fieldProperty
+		name="tipo_movimento_carico"
+		property="tipoMovimentoCarico"
+		printProperty="ds_tipo_carico_scarico"
+		optionsProperty="tipoMovimentiCarico"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnSearch="true"
+		label="Tipo Movimento Carico"/>
+
+	<fieldProperty
+		name="tipo_movimento_scarico"
+		property="tipoMovimentoScarico"
+		printProperty="ds_tipo_carico_scarico"
+		optionsProperty="tipoMovimentiScarico"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnSearch="true"
+		label="Tipo Movimento Scarico"/>
+
+	<fieldProperty
+		name="findUoDestinazione"
+		property="uo_destinazione"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		completeOnSave = "true"
+		label="UO Destinazione" />
+	<fieldProperty
+		name="cdUoDestinazione"
+		property="uo_destinazione.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROUoDestinazione"
+		label="Codice UO" />
+	<fieldProperty
+		name="pg_inventario_dest"
+		property="inventario_destinazione.pg_inventario"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Inventario Destinazione" />
+	<fieldProperty
+		name="ds_inventario_dest"
+		property="inventario_destinazione.ds_inventario"
+		maxLength="100"
+		inputSize="70"
+		inputType="ROTEXT"
+		label="Descrizione Inventario Destinazione" />	
+		
+	<fieldProperty
+		name="fl_scarica_tutti"
+		property="fl_scarica_tutti"
+		inputType="CHECKBOX"
+		label="Trasferimento inventario completo" />
+
+
+	<formFieldProperty name="data_registrazione" />
+	<formFieldProperty name="tipo_movimento_carico" />
+	<formFieldProperty name="tipo_movimento_scarico" />
+			
+	<formFieldProperty name="findUoDestinazione" />
+	<formFieldProperty name="cdUoDestinazione" />
+		
+	<formFieldProperty name="pg_inventario_dest" />
+	<formFieldProperty name="ds_inventario_dest" />	
+
+	<formFieldProperty name="fl_scarica_tutti" />	
+	
+
+</bulkInfo>

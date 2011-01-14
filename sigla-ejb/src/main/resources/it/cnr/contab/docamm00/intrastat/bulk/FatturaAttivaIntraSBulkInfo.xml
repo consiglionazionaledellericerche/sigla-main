@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdCds" />
+	<fieldProperty
+		name="cdUnitaOrganizzativa"
+		property="cdUnitaOrganizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdUnitaOrganizzativa" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="pgFatturaAttiva"
+		property="pgFatturaAttiva"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="pgFatturaAttiva" />
+	<fieldProperty
+		name="pgRigaIntra"
+		property="pgRigaIntra"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="pgRigaIntra" />
+	<fieldProperty
+		name="pgStorico"
+		property="pgStorico"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="pgStorico" />
+	<fieldProperty
+		name="ammontareEuro"
+		property="ammontareEuro"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="ammontareEuro" />
+	<fieldProperty
+		name="idNaturaTransazione"
+		property="idNaturaTransazione"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="idNaturaTransazione" />
+	<fieldProperty
+		name="idNomenclaturaCombinata"
+		property="idNomenclaturaCombinata"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="idNomenclaturaCombinata" />
+	<fieldProperty
+		name="massaNetta"
+		property="massaNetta"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="massaNetta" />
+	<fieldProperty
+		name="unitaSupplementari"
+		property="unitaSupplementari"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="unitaSupplementari" />
+	<fieldProperty
+		name="valoreStatistico"
+		property="valoreStatistico"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="valoreStatistico" />
+	<fieldProperty
+		name="esercizioCondConsegna"
+		property="esercizioCondConsegna"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizioCondConsegna" />
+	<fieldProperty
+		name="cdIncoterm"
+		property="cdIncoterm"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cdIncoterm" />
+	<fieldProperty
+		name="esercizioModTrasporto"
+		property="esercizioModTrasporto"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizioModTrasporto" />
+	<fieldProperty
+		name="cdModalitaTrasporto"
+		property="cdModalitaTrasporto"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		label="cdModalitaTrasporto" />
+	<fieldProperty
+		name="pgNazioneDestinazione"
+		property="pgNazioneDestinazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="pgNazioneDestinazione" />
+	<fieldProperty
+		name="cdProvinciaOrigine"
+		property="cdProvinciaOrigine"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cdProvinciaOrigine" />
+	<fieldProperty
+		name="dsBene"
+		property="dsBene"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		enabledOnEdit="false"
+		label="dsBene" />
+	<fieldProperty
+		name="idCpa"
+		property="idCpa"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="idCpa" />
+	<fieldProperty
+		name="esercizioModIncasso"
+		property="esercizioModIncasso"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizioModIncasso" />
+	<fieldProperty
+		name="cdModalitaIncasso"
+		property="cdModalitaIncasso"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="cdModalitaIncasso" />
+	<fieldProperty
+		name="esercizioModErogazione"
+		property="esercizioModErogazione"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizioModErogazione" />
+	<fieldProperty
+		name="cdModalitaErogazione"
+		property="cdModalitaErogazione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="cdModalitaErogazione" />
+	<fieldProperty
+		name="flInviato"
+		property="flInviato"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="flInviato" />
+	<fieldProperty
+		name="nrProtocollo"
+		property="nrProtocollo"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnEdit="false"
+		label="nrProtocollo" />
+	<fieldProperty
+		name="nrProgressivo"
+		property="nrProgressivo"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		label="nrProgressivo" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdCds" />
+		<formFieldProperty
+			name="cdUnitaOrganizzativa" />
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="pgFatturaAttiva" />
+		<formFieldProperty
+			name="pgRigaIntra" />
+		<formFieldProperty
+			name="pgStorico" />
+	</form>
+	<formFieldProperty
+		name="cdCds" />
+	<formFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pgFatturaAttiva" />
+	<formFieldProperty
+		name="pgRigaIntra" />
+	<formFieldProperty
+		name="pgStorico" />
+	<formFieldProperty
+		name="ammontareEuro" />
+	<formFieldProperty
+		name="idNaturaTransazione" />
+	<formFieldProperty
+		name="idNomenclaturaCombinata" />
+	<formFieldProperty
+		name="massaNetta" />
+	<formFieldProperty
+		name="unitaSupplementari" />
+	<formFieldProperty
+		name="valoreStatistico" />
+	<formFieldProperty
+		name="esercizioCondConsegna" />
+	<formFieldProperty
+		name="cdIncoterm" />
+	<formFieldProperty
+		name="esercizioModTrasporto" />
+	<formFieldProperty
+		name="cdModalitaTrasporto" />
+	<formFieldProperty
+		name="pgNazioneDestinazione" />
+	<formFieldProperty
+		name="cdProvinciaOrigine" />
+	<formFieldProperty
+		name="dsBene" />
+	<formFieldProperty
+		name="idCpa" />
+	<formFieldProperty
+		name="esercizioModIncasso" />
+	<formFieldProperty
+		name="cdModalitaIncasso" />
+	<formFieldProperty
+		name="esercizioModErogazione" />
+	<formFieldProperty
+		name="cdModalitaErogazione" />
+	<formFieldProperty
+		name="flInviato" />
+	<formFieldProperty
+		name="nrProtocollo" />
+	<formFieldProperty
+		name="nrProgressivo" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pgFatturaAttiva" />
+	<findFieldProperty
+		name="pgRigaIntra" />
+	<findFieldProperty
+		name="pgStorico" />
+	<findFieldProperty
+		name="ammontareEuro" />
+	<findFieldProperty
+		name="idNaturaTransazione" />
+	<findFieldProperty
+		name="idNomenclaturaCombinata" />
+	<findFieldProperty
+		name="massaNetta" />
+	<findFieldProperty
+		name="unitaSupplementari" />
+	<findFieldProperty
+		name="valoreStatistico" />
+	<findFieldProperty
+		name="esercizioCondConsegna" />
+	<findFieldProperty
+		name="cdIncoterm" />
+	<findFieldProperty
+		name="esercizioModTrasporto" />
+	<findFieldProperty
+		name="cdModalitaTrasporto" />
+	<findFieldProperty
+		name="pgNazioneDestinazione" />
+	<findFieldProperty
+		name="cdProvinciaOrigine" />
+	<findFieldProperty
+		name="dsBene" />
+	<findFieldProperty
+		name="idCpa" />
+	<findFieldProperty
+		name="esercizioModIncasso" />
+	<findFieldProperty
+		name="cdModalitaIncasso" />
+	<findFieldProperty
+		name="esercizioModErogazione" />
+	<findFieldProperty
+		name="cdModalitaErogazione" />
+	<findFieldProperty
+		name="flInviato" />
+	<findFieldProperty
+		name="nrProtocollo" />
+	<findFieldProperty
+		name="nrProgressivo" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pgFatturaAttiva" />
+	<columnFieldProperty
+		name="pgRigaIntra" />
+	<columnFieldProperty
+		name="pgStorico" />
+	<columnFieldProperty
+		name="ammontareEuro" />
+	<columnFieldProperty
+		name="idNaturaTransazione" />
+	<columnFieldProperty
+		name="idNomenclaturaCombinata" />
+	<columnFieldProperty
+		name="massaNetta" />
+	<columnFieldProperty
+		name="unitaSupplementari" />
+	<columnFieldProperty
+		name="valoreStatistico" />
+	<columnFieldProperty
+		name="esercizioCondConsegna" />
+	<columnFieldProperty
+		name="cdIncoterm" />
+	<columnFieldProperty
+		name="esercizioModTrasporto" />
+	<columnFieldProperty
+		name="cdModalitaTrasporto" />
+	<columnFieldProperty
+		name="pgNazioneDestinazione" />
+	<columnFieldProperty
+		name="cdProvinciaOrigine" />
+	<columnFieldProperty
+		name="dsBene" />
+	<columnFieldProperty
+		name="idCpa" />
+	<columnFieldProperty
+		name="esercizioModIncasso" />
+	<columnFieldProperty
+		name="cdModalitaIncasso" />
+	<columnFieldProperty
+		name="esercizioModErogazione" />
+	<columnFieldProperty
+		name="cdModalitaErogazione" />
+	<columnFieldProperty
+		name="flInviato" />
+	<columnFieldProperty
+		name="nrProtocollo" />
+	<columnFieldProperty
+		name="nrProgressivo" />
+</bulkInfo>

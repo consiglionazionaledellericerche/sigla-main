@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.logs.bulk.Batch_procedura_parametroKey" >
+	<defaultColumnMap
+		tableName="BATCH_PROCEDURA_PARAMETRO" >
+		<columnMapping
+			columnName="NOME_PARAMETRO"
+			propertyName="nome_parametro"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_PROCEDURA"
+			propertyName="cd_procedura"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_VALORE_PARAMETRO"
+			propertyName="pg_valore_parametro"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="nome_parametro"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_procedura"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_valore_parametro"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.consultazioni.bulk.V_fondo_economaleBulk"
+	homeClassName="it.cnr.contab.docamm00.consultazioni.bulk.V_fondo_economaleHome">
+	<defaultColumnMap
+		tableName="V_FONDO_ECONOMALE">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CDS"
+			propertyName="cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="UO"
+			propertyName="uo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CODICE_FONDO"
+			propertyName="cd_codice_fondo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_FONDO"
+			propertyName="ds_fondo"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="ECONOMO"
+			propertyName="economo"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_APERTO"
+			propertyName="fl_aperto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="IM_AMMONTARE_INIZIALE"
+			propertyName="im_ammontare_iniziale"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_AMMONTARE_FONDO"
+			propertyName="im_ammontare_fondo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_RESIDUO_FONDO"
+			propertyName="im_residuo_fondo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="cd_modalita_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_MODALITA_PAG"
+			propertyName="ds_modalita_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="ABI"
+			propertyName="abi"
+			sqlTypeName="CHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="CAB"
+			propertyName="cab"
+			sqlTypeName="CHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="NUMERO_CONTO"
+			propertyName="numero_conto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CIN"
+			propertyName="cin"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="INTESTAZIONE"
+			propertyName="intestazione"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_IBAN"
+			propertyName="codice_iban"
+			sqlTypeName="VARCHAR"
+			columnSize="34"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_SWIFT"
+			propertyName="codice_swift"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cds" />
+	<persistentProperty
+		name="uo" />
+	<persistentProperty
+		name="cd_codice_fondo" />
+	<persistentProperty
+		name="ds_fondo" />
+	<persistentProperty
+		name="economo" />
+	<persistentProperty
+		name="fl_aperto" />
+	<persistentProperty
+		name="im_ammontare_iniziale" />
+	<persistentProperty
+		name="im_ammontare_fondo" />
+	<persistentProperty
+		name="im_residuo_fondo" />
+	<persistentProperty
+		name="cd_modalita_pag" />
+	<persistentProperty
+		name="ds_modalita_pag" />
+	<persistentProperty
+		name="abi" />
+	<persistentProperty
+		name="cab" />
+	<persistentProperty
+		name="numero_conto" />
+	<persistentProperty
+		name="cin" />
+	<persistentProperty
+		name="intestazione" />
+	<persistentProperty
+		name="codice_iban" />
+	<persistentProperty
+		name="codice_swift" />
+</SQLPersistentInfo>

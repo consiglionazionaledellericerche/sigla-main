@@ -1,0 +1,63 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.reports.bulk.Print_spooler_paramBase"
+	keyClassName="it.cnr.contab.reports.bulk.Print_spooler_paramKey"
+	homeClassName="it.cnr.contab.reports.bulk.Print_spooler_paramHome" >
+	<defaultColumnMap
+		tableName="PRINT_SPOOLER_PARAM" >
+		<columnMapping
+			columnName="VALORE_PARAM"
+			propertyName="valoreParam"
+			sqlTypeName="VARCHAR"
+			columnSize="4000" />
+		<columnMapping
+			columnName="PARAM_TYPE"
+			propertyName="paramType"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />			
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />			
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+
+	</defaultColumnMap>
+	<persistentProperty
+		name="valoreParam" />
+	<persistentProperty
+		name="paramType" />		
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

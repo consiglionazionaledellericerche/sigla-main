@@ -1,0 +1,33 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoHome" >
+	<defaultColumnMap
+		tableName="MODALITA_PAGAMENTO" >
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="rif_modalita_pagamento.cd_modalita_pag" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzo.cd_terzo" />
+		<columnMapping
+			columnName="CD_TERZO_DELEGATO"
+			propertyName="terzo_delegato.cd_terzo" />
+	</defaultColumnMap>
+	
+	<columnMap
+		name="V_MODALITA_PAGAMENTO_ANAG"
+		tableName="V_MODALITA_PAGAMENTO_ANAG"
+		extends="default" >
+	</columnMap>
+	
+	<persistentProperty
+		name="rif_modalita_pagamento"
+		partOfOid="true" />
+	<persistentProperty
+		name="terzo"
+		partOfOid="true" />
+	<persistentProperty
+		name="terzo_delegato"
+		/>
+
+</SQLPersistentInfo>

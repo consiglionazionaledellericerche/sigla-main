@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_tipologia_rischio"
+		property="cd_tipologia_rischio"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice Tipologia" />
+	<fieldProperty
+		name="ds_tipologia_rischio"
+		property="ds_tipologia_rischio"
+		maxLength="100"
+		inputSize="75"
+		inputType="TEXT"
+		nullable="false"
+		label="Descrizione"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_inizio_validita"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Inizio Validita" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		formatName="date_short"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Fine Validita" />
+	<fieldProperty
+		name="dataFineValidita"
+		property="dataFineValidita"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Fine Validita" />
+	<fieldProperty
+		name="aliquota_ente"
+		property="aliquota_ente"
+		maxLength="20"
+		inputSize="20"
+		formatName = "it.cnr.contab.util.Importo6CifreFormat"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Aliquota Ente" />
+	<fieldProperty
+		name="aliquota_percipiente"
+		property="aliquota_percipiente"
+		maxLength="20"
+		inputSize="20"
+		formatName = "it.cnr.contab.util.Importo6CifreFormat"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Aliquota Percipiente" />
+
+	<formFieldProperty name="cd_tipologia_rischio" />
+	<formFieldProperty name="ds_tipologia_rischio" />
+	<formFieldProperty name="dt_inizio_validita" />
+	<formFieldProperty name="dt_fine_validita" />
+	<formFieldProperty name="dataFineValidita" />
+	<formFieldProperty name="aliquota_ente" />
+	<formFieldProperty name="aliquota_percipiente" />
+
+	<columnFieldProperty name="cd_tipologia_rischio" />
+	<columnFieldProperty name="ds_tipologia_rischio" />
+	<columnFieldProperty name="aliquota_ente" />
+	<columnFieldProperty name="aliquota_percipiente" />
+	<columnFieldProperty name="dt_inizio_validita" />
+	<columnFieldProperty name="dataFineValidita" />
+
+	<findFieldProperty name="cd_tipologia_rischio" />
+	<findFieldProperty name="ds_tipologia_rischio" />
+	<findFieldProperty name="aliquota_ente" />
+	<findFieldProperty name="aliquota_percipiente" />
+	<findFieldProperty name="dt_inizio_validita" />
+	<findFieldProperty name="dt_fine_validita" />
+
+</bulkInfo>

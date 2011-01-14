@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_unita_organizzativa" />
+	<fieldProperty
+		name="cd_contributo_ritenuta"
+		property="tipoContributoRitenuta.cd_contributo_ritenuta"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Codice CO/RI" />
+	<fieldProperty
+		name="ds_contributo_ritenuta"
+		property="tipoContributoRitenuta.ds_contributo_ritenuta"
+		maxLength="60"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="stato_cofi_cr"
+		property="stato_cofi_cr"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Stato COFI"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_compenso"
+		property="pg_compenso"
+		inputType="TEXT"
+		label="Nr. Compenso" />
+	<fieldProperty
+		name="ti_ente_percipiente"
+		property="ti_ente_percipiente"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="E/P" />
+	<fieldProperty
+		name="imponibile_lordo"
+		property="imponibile_lordo"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		label="Imponibile lordo" />
+	<fieldProperty
+		name="im_deduzione_irpef"
+		property="im_deduzione_irpef"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		label="Deduzione IRPEF" />
+	<fieldProperty
+		name="im_deduzione_family"
+		property="im_deduzione_family"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		label="Deduzione FAMILY" />		
+	<fieldProperty
+		name="imponibile"
+		property="imponibile"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		label="Imponibile" />
+	<fieldProperty
+		name="ammontare_lordo"
+		property="ammontare_lordo"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		label="Ammontare lordo" />
+	<fieldProperty
+		name="ammontareEnte"
+		property="ammontareEnte"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		label="Ammontare Ente" />
+	<fieldProperty
+		name="ammontarePercepiente"
+		property="ammontarePercepiente"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		label="Ammontare Percipiente" />
+	<fieldProperty
+		name="ammontareEnteLordo"
+		property="ammontareEnteLordo"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		label="Ammontare Lordo Ente" />
+	<fieldProperty
+		name="ammontarePercepienteLordo"
+		property="ammontarePercepienteLordo"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		label="Ammontare Lordo Percipiente" />
+	<fieldProperty
+		name="aliquotaEnte"
+		property="aliquotaEnte"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		label="Aliquota Ente" />
+	<fieldProperty
+		name="aliquotaPercepiente"
+		property="aliquotaPercepiente"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		label="Aliquota Percipiente" />
+	<fieldProperty
+		name="dt_ini_validita"
+		property="dt_ini_validita"
+		formatName="date_short"
+		inputType="TEXT"
+		label="Inizio Validita" />
+	<fieldProperty
+		name="im_cori_sospeso"
+		property="im_cori_sospeso"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		label="Ammontare Sospeso" />		
+
+	<formFieldProperty name="cd_cds" />
+	<formFieldProperty name="cd_unita_organizzativa" />
+	<formFieldProperty name="cd_contributo_ritenuta" />
+	<formFieldProperty name="ds_contributo_ritenuta" />
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="stato_cofi_cr" />
+	<formFieldProperty name="pg_compenso" />
+	<formFieldProperty name="ti_ente_percipiente" />
+	<formFieldProperty name="imponibile" />
+	<formFieldProperty name="ammontareEnte" />
+	<formFieldProperty name="ammontarePercepiente" />
+	<formFieldProperty name="aliquotaEnte" />
+	<formFieldProperty name="aliquotaPercepiente" />
+	<formFieldProperty name="dt_ini_validita" />
+	<formFieldProperty name="ammontarePercepienteLordo" />
+	<formFieldProperty name="ammontareEnteLordo" />
+	<formFieldProperty name="ammontare_lordo" />
+	<formFieldProperty name="im_cori_sospeso" />	
+
+	<columnFieldProperty name="cd_contributo_ritenuta" />
+	<columnFieldProperty name="ds_contributo_ritenuta" />
+	<columnFieldProperty
+		name="ti_ente_percipiente"
+		style="text-align:center" />
+	<columnFieldProperty name="imponibile_lordo" />
+	<columnFieldProperty name="im_deduzione_irpef" />
+	<columnFieldProperty name="im_deduzione_family" />
+	<columnFieldProperty name="imponibile" />
+	<columnFieldProperty name="aliquotaEnte" />
+	<columnFieldProperty name="aliquotaPercepiente" />
+	<columnFieldProperty name="ammontareEnteLordo" />
+	<columnFieldProperty name="ammontareEnte" />
+	<columnFieldProperty name="ammontarePercepienteLordo" />
+	<columnFieldProperty name="im_cori_sospeso" />
+	<columnFieldProperty name="ammontarePercepiente" />
+
+	<findFieldProperty name="cd_cds" />
+	<findFieldProperty name="cd_unita_organizzativa" />
+	<findFieldProperty name="cd_contributo_ritenuta" />
+	<findFieldProperty name="esercizio" />
+	<findFieldProperty name="stato_cofi_cr" />
+	<findFieldProperty name="pg_compenso" />
+	<findFieldProperty name="ti_ente_percipiente" />
+	<findFieldProperty name="imponibile" />
+	<findFieldProperty name="ammontareEnte" />
+	<findFieldProperty name="ammontarePercepiente" />
+	<findFieldProperty name="aliquotaEnte" />
+	<findFieldProperty name="aliquotaPercepiente" />
+	<findFieldProperty name="dt_ini_validita" />
+	<findFieldProperty name="im_cori_sospeso" />	
+	
+</bulkInfo>

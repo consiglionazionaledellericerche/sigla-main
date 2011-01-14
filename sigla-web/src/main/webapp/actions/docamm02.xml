@@ -1,0 +1,27 @@
+<action-mappings>
+
+	<action 
+		path="/CRUDTariffarioAction" actionClass="it.cnr.contab.docamm00.actions.CRUDTariffarioAction">
+	</action>
+	<action 
+		path="/CRUDTipoSezionaleAction" actionClass="it.cnr.contab.docamm00.actions.CRUDTipoSezionaleAction">
+	</action>
+	  
+
+	<businessProcess
+		name="CRUDTariffarioBP" className="it.cnr.contab.docamm00.bp.CRUDTariffarioBP">
+		<forward name="default" path="/docamm00/tariffario.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk"/>	
+		<init-param name="componentSessionName" value="CNRDOCAMM00_EJB_TariffarioComponentSession"/>
+		<init-param name="defaultAction" value="CRUDTariffarioAction"/>		
+	</businessProcess>
+
+	<businessProcess
+		name="CRUDTipoSezionaleBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+		<forward name="default" path="/docamm00/tipo_sezionale.jsp"/>
+			<init-param name="bulkClassName" value="it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk" />
+			<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+			<init-param name="defaultAction" value="CRUDTipoSezionaleAction"/>
+	</businessProcess>
+
+</action-mappings>

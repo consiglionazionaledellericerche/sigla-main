@@ -1,0 +1,28 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.InquadramentoBase"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.InquadramentoHome" >
+	<defaultColumnMap
+		tableName="INQUADRAMENTO" >
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="rapporto.anagrafico.cd_anag" />
+		<columnMapping
+			columnName="DT_INI_VALIDITA_RAPPORTO"
+			propertyName="rapporto.dt_ini_validita" />
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="rapporto.cd_anag" />
+		<columnMapping
+			columnName="PG_RIF_INQUADRAMENTO"
+			propertyName="rif_inquadramento.pg_rif_inquadramento" />
+		<columnMapping
+			columnName="CD_TIPO_RAPPORTO"
+			propertyName="rapporto.tipo_rapporto.cd_tipo_rapporto" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="rif_inquadramento"
+		partOfOid="true" />
+	<persistentProperty
+		name="rapporto"
+		partOfOid="true" />
+</SQLPersistentInfo>

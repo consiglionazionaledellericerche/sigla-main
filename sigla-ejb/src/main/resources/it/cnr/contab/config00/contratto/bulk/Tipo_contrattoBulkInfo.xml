@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Tipologie di Contratto"
+          longDescription="Tipologie di Contratto">
+	<fieldProperty
+		name="cd_tipo_contratto"
+		property="cd_tipo_contratto"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		nullable="false"
+		enabledOnSearch="true"
+		label="Codice" />
+	<fieldProperty
+		name="ds_tipo_contratto"
+		property="ds_tipo_contratto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		enabledOnSearch="true"
+		maxLength="200"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="natura_contabile"
+		property="natura_contabile"
+		inputType="SELECT"
+		keysProperty="ti_natura_contabileKeys"
+		nullable="false"
+		enabledOnSearch="true"
+		label="Natura contabile del rapporto" />
+	<fieldProperty
+		name="fl_cancellato"
+		property="fl_cancellato"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Cancellato" />
+		
+    <form name="searchtool">
+	  <formFieldProperty
+		name="cd_tipo_contratto" />	
+	  <formFieldProperty
+		name="ds_tipo_contratto"
+		inputType="TEXT"
+		inputSize="30"
+		 />           
+	</form>	
+	
+	<formFieldProperty
+		name="cd_tipo_contratto" />	
+	<formFieldProperty
+		name="ds_tipo_contratto" />
+	<formFieldProperty
+		name="natura_contabile" />
+	<formFieldProperty
+		name="fl_cancellato" />
+		
+	<columnFieldProperty
+		name="cd_tipo_contratto" />
+	<columnFieldProperty
+		name="ds_tipo_contratto" />
+	<columnFieldProperty
+		name="natura_contabile" />
+	<columnFieldProperty
+		name="fl_cancellato" />
+		
+	<findFieldProperty
+		name="cd_tipo_contratto" />
+	<findFieldProperty
+		name="ds_tipo_contratto" />
+	<findFieldProperty
+		name="natura_contabile" />
+	<findFieldProperty
+		name="fl_cancellato" />
+</bulkInfo>

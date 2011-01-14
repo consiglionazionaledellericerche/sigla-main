@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.consultazioni.bulk.ElencoinventariobeniBase"
+	keyClassName="it.cnr.contab.inventario00.consultazioni.bulk.ElencoinventariobeniKey"
+	homeClassName="it.cnr.contab.inventario00.consultazioni.bulk.ElencoinventariobeniHome">
+	<defaultColumnMap
+		tableName="V_ELENCO_INVENTARIO_BENI">
+		<columnMapping
+			columnName="DATA_REGISTRAZIONE"
+			propertyName="data_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />		
+		<columnMapping
+			columnName="VALORE_INIZIALE"
+			propertyName="valore_iniziale"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONE_MENO"
+			propertyName="variazione_meno"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6"
+			nullable="true" />
+		<columnMapping
+			columnName="VARIAZIONE_PIU"
+			propertyName="variazione_piu"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6"
+			nullable="true" />
+		<columnMapping
+			columnName="VALORE_FINALE"
+			propertyName="valore_finale"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="ETICHETTA"
+			propertyName="etichetta"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />		
+		<columnMapping
+			columnName="TARGA"
+			propertyName="targa"
+			sqlTypeName="VARCHAR"
+			columnSize="8"
+			nullable="true" />							
+	</defaultColumnMap>
+	<persistentProperty
+		name="valore_iniziale" />
+	<persistentProperty
+		name="variazione_meno" />
+	<persistentProperty
+		name="variazione_piu" />
+	<persistentProperty
+		name="valore_finale" />
+	<persistentProperty
+		name="data_registrazione" />
+	<persistentProperty
+		name="etichetta" />
+	<persistentProperty
+		name="targa" />	
+</SQLPersistentInfo>

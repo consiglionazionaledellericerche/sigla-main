@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_voce_iva"
+		property="voce_iva.cd_voce_iva"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		label="I.V.A."
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_voce_iva"
+		property="voce_iva.ds_voce_iva"
+		inputSize="15"
+		inputType="ROTEXT"
+		label="Descrizione I.V.A."
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="totale_imponibile"
+		property="totale_imponibile"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Imponibile" />
+	<fieldProperty
+		name="totale_iva"
+		property="totale_iva"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale I.V.A." />
+	<fieldProperty
+		name="totale_prezzo"
+		property="totale_prezzo"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Prezzo Totale" />
+
+
+	
+	
+	<formFieldProperty
+		name="totale_imponibile" />
+	<formFieldProperty
+		name="codice_iva" />
+	<formFieldProperty
+		name="perc_iva" />		
+	<formFieldProperty
+		name="totale_iva" />
+	<formFieldProperty
+		name="totale_prezzo" />
+		
+	<columnFieldProperty
+		name="totale_imponibile" />
+	<columnFieldProperty
+		name="codice_iva" />
+	<columnFieldProperty
+		name="perc_iva" />
+	<columnFieldProperty
+		name="totale_iva" />
+	<columnFieldProperty
+		name="totale_prezzo" />
+
+
+	<columnSet
+		name="consuntivoSet">
+		<columnFieldProperty
+			name="totale_imponibile"
+			/>
+		<columnFieldProperty
+			name="cd_voce_iva"
+			/>
+		<columnFieldProperty
+			name="ds_voce_iva"
+			/>
+		<columnFieldProperty
+			name="totale_iva"
+			/>
+		<columnFieldProperty
+			name="totale_prezzo"
+			/>		
+	</columnSet>
+</bulkInfo>

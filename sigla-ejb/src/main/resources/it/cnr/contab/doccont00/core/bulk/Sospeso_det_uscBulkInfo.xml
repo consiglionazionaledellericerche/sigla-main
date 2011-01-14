@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="cd_sospeso"
+		property="sospeso.cd_sospeso"
+		inputType="ROTEXT"
+		label="Codice Interno" />
+	<fieldProperty
+		name="im_associato"
+		property="im_associato"
+		inputType="TEXT"
+		maxLength="16"
+		inputSize="16"
+		formatName = "it.cnr.contab.util.EuroFormat"				
+		label="Importo" />
+	<fieldProperty
+		name="pg_mandato"
+		property="pg_mandato"
+		inputType="TEXT"
+		label="pg_mandato" />
+	<fieldProperty
+		name="ti_entrata_spesa"
+		property="ti_entrata_spesa"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_entrata_spesa" />
+	<fieldProperty
+		name="sospeso_im_disponibile"
+		property="sospeso.im_disponibile"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		label="Imp.disponibile" />
+	<fieldProperty
+		name="ti_sospeso_riscontro"
+		property="sospeso.ti_sospeso_riscontro"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		label="Sospeso/Riscontro"
+		keysProperty="ti_sospeso_riscontroKeys"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_sospeso_padre"
+		property="sospeso.cd_sospeso_padre"
+		inputType="ROTEXT"
+		label="Codice da Banca"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		label="Stato"
+		keysProperty="statoKeys"
+		caseSensitiveSearch="false" />	
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_sospeso" />
+	<formFieldProperty
+		name="im_associato" />
+	<formFieldProperty
+		name="pg_mandato" />
+	<formFieldProperty
+		name="ti_entrata_spesa" />
+
+		
+	<columnFieldProperty
+		name="cd_sospeso_padre" />
+	<columnFieldProperty
+		name="cd_sospeso" />
+	<columnFieldProperty
+		name="im_associato" />
+	<columnFieldProperty
+		name="sospeso_im_disponibile"/>	
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_sospeso" />
+	<findFieldProperty
+		name="im_associato" />
+	<findFieldProperty
+		name="pg_mandato" />
+	<findFieldProperty
+		name="ti_entrata_spesa" />
+	<findFieldProperty
+		name="ti_sospeso_riscontro" />
+	<findFieldProperty
+		name="stato"/>
+		
+	
+	<columnSet name="CONS_SOSPESI_DET_USC">
+		<columnFieldProperty name="cd_cds" />
+		<columnFieldProperty name="esercizio" />	
+		<columnFieldProperty name="pg_mandato" />
+		<columnFieldProperty name="ti_entrata_spesa" />
+		<columnFieldProperty name="ti_sospeso_riscontro" />
+		<columnFieldProperty name="cd_sospeso" />
+		<columnFieldProperty name="im_associato" />
+	</columnSet>
+
+</bulkInfo>

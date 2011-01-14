@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.sto.bulk.CdsBase"
+	keyClassName="it.cnr.contab.config00.sto.bulk.CdsKey"
+	homeClassName="it.cnr.contab.config00.sto.bulk.CdsHome" >
+	<defaultColumnMap
+		tableName="UNITA_ORGANIZZATIVA" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_RESPONSABILE_AMM"
+			propertyName="cd_responsabile_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="CD_RESPONSABILE"
+			propertyName="cd_responsabile"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="CD_UNITA_PADRE"
+			propertyName="cd_unita_padre"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_TIPO_UNITA"
+			propertyName="cd_tipo_unita"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_PROPRIO_UNITA"
+			propertyName="cd_proprio_unita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_RUBRICA"
+			propertyName="fl_rubrica"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DS_UNITA_ORGANIZZATIVA"
+			propertyName="ds_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_INIZIO"
+			propertyName="esercizio_inizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="LIVELLO"
+			propertyName="livello"
+			sqlTypeName="DECIMAL"
+			columnSize="2"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_FINE"
+			propertyName="esercizio_fine"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_PRESIDENTE_AREA"
+			propertyName="fl_presidente_area"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PRC_COPERTURA_OBBLIG_3"
+			propertyName="prc_copertura_obblig_3"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2" />
+		<columnMapping
+			columnName="PRC_COPERTURA_OBBLIG_2"
+			propertyName="prc_copertura_obblig_2"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2" />
+		<columnMapping
+			columnName="FL_UO_CDS"
+			propertyName="fl_uo_cds"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_AREA_RICERCA"
+			propertyName="cd_area_ricerca"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="FL_CDS"
+			propertyName="fl_cds"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_AREA_SCIENTIFICA"
+			propertyName="cd_area_scientifica"
+			sqlTypeName="VARCHAR"
+			columnSize="2" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="cd_responsabile_amm" />
+	<persistentProperty
+		name="cd_responsabile" />
+	<persistentProperty
+		name="cd_unita_padre" />
+	<persistentProperty
+		name="cd_tipo_unita" />
+	<persistentProperty
+		name="cd_proprio_unita" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="fl_rubrica" />
+	<persistentProperty
+		name="ds_unita_organizzativa" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="esercizio_inizio" />
+	<persistentProperty
+		name="livello" />
+	<persistentProperty
+		name="esercizio_fine" />
+	<persistentProperty
+		name="fl_presidente_area" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="prc_copertura_obblig_3" />
+	<persistentProperty
+		name="fl_uo_cds" />
+	<persistentProperty
+		name="prc_copertura_obblig_2" />
+	<persistentProperty
+		name="cd_area_ricerca" />
+	<persistentProperty
+		name="fl_cds" />
+	<persistentProperty
+		name="cd_area_scientifica" />
+</SQLPersistentInfo>

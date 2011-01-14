@@ -1,0 +1,225 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_appartenenza"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_rs_ssc_costi_ogc"
+		property="im_rs_ssc_costi_ogc"
+		inputType="TEXT"
+		label="im_rs_ssc_costi_ogc" />
+	<fieldProperty
+		name="im_ri_ccs_spese_odc"
+		property="im_ri_ccs_spese_odc"
+		inputType="TEXT"
+		label="im_ri_ccs_spese_odc" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="cd_elemento_voce"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="esercizio_res"
+		property="esercizio_res"
+		inputType="TEXT"
+		label="esercizio impegno" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice GAE"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_progetto"
+		property="cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Modulo di Attivita'"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="im_rag_a2_spese_costi_altrui"
+		property="im_rag_a2_spese_costi_altrui"
+		inputType="TEXT"
+		label="im_rag_a2_spese_costi_altrui" />
+	<fieldProperty
+		name="im_rk_ccs_spese_ogc"
+		property="im_rk_ccs_spese_ogc"
+		inputType="TEXT"
+		label="im_rk_ccs_spese_ogc" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CdR"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_rap_a3_spese_costi_altrui"
+		property="im_rap_a3_spese_costi_altrui"
+		inputType="TEXT"
+		label="im_rap_a3_spese_costi_altrui" />
+	<fieldProperty
+		name="im_rq_ssc_costi_odc"
+		property="im_rq_ssc_costi_odc"
+		inputType="TEXT"
+		label="im_rq_ssc_costi_odc" />
+	<fieldProperty
+		name="im_rae_a2_spese_ogc"
+		property="im_rae_a2_spese_ogc"
+		inputType="TEXT"
+		label="im_rae_a2_spese_ogc" />
+	<fieldProperty
+		name="im_rac_a2_spese_odc"
+		property="im_rac_a2_spese_odc"
+		inputType="TEXT"
+		label="im_rac_a2_spese_odc" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_gestione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_ran_a3_spese_ogc"
+		property="im_ran_a3_spese_ogc"
+		inputType="TEXT"
+		label="im_ran_a3_spese_ogc" />
+	<fieldProperty
+		name="im_ral_a3_spese_odc"
+		property="im_ral_a3_spese_odc"
+		inputType="TEXT"
+		label="im_ral_a3_spese_odc" />
+	<fieldProperty
+		name="im_ru_spese_costi_altrui"
+		property="im_ru_spese_costi_altrui"
+		inputType="TEXT"
+		label="im_ru_spese_costi_altrui" />
+	<fieldProperty
+		name="cd_funzione"
+		property="cd_funzione"
+		inputType="TEXT"
+		label="Funzione" />
+	<fieldProperty
+		name="cd_natura"
+		property="cd_natura"
+		inputType="TEXT"
+		label="Natura" />
+	<fieldProperty
+		name="ds_linea_attivita"
+		property="ds_linea_attivita"
+		inputType="TEXT"
+		label="Descrizione" />
+
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="im_rs_ssc_costi_ogc" />
+	<formFieldProperty
+		name="im_ri_ccs_spese_odc" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="esercizio_res" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="im_rag_a2_spese_costi_altrui" />
+	<formFieldProperty
+		name="im_rk_ccs_spese_ogc" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="im_rap_a3_spese_costi_altrui" />
+	<formFieldProperty
+		name="im_rq_ssc_costi_odc" />
+	<formFieldProperty
+		name="im_rae_a2_spese_ogc" />
+	<formFieldProperty
+		name="im_rac_a2_spese_odc" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="im_ran_a3_spese_ogc" />
+	<formFieldProperty
+		name="im_ral_a3_spese_odc" />
+	<formFieldProperty
+		name="im_ru_spese_costi_altrui" />
+
+	<columnFieldProperty
+		name="cd_centro_responsabilita"
+		columnStyle="width:80px; text-align:left"
+		/>
+	<columnFieldProperty
+		name="cd_progetto"
+		columnStyle="width:80px; text-align:left"
+		/>		
+	<columnFieldProperty
+		name="cd_linea_attivita"
+		columnStyle="padding-left:10px"/>		
+	<columnFieldProperty
+		name="cd_funzione" 
+		columnStyle="padding-left:10px"/>
+	<columnFieldProperty
+		name="cd_natura" />
+	<columnFieldProperty
+		name="ds_linea_attivita" />
+
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="im_rs_ssc_costi_ogc" />
+	<findFieldProperty
+		name="im_ri_ccs_spese_odc" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="im_rag_a2_spese_costi_altrui" />
+	<findFieldProperty
+		name="im_rk_ccs_spese_ogc" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="im_rap_a3_spese_costi_altrui" />
+	<findFieldProperty
+		name="im_rq_ssc_costi_odc" />
+	<findFieldProperty
+		name="im_rae_a2_spese_ogc" />
+	<findFieldProperty
+		name="im_rac_a2_spese_odc" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="im_ran_a3_spese_ogc" />
+	<findFieldProperty
+		name="im_ral_a3_spese_odc" />
+	<findFieldProperty
+		name="im_ru_spese_costi_altrui" />
+
+</bulkInfo>

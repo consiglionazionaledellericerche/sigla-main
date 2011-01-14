@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.singconto.bulk.V_stm_paramin_sing_contoBase"
+	keyClassName="it.cnr.contab.doccont00.singconto.bulk.V_stm_paramin_sing_contoKey"
+	homeClassName="it.cnr.contab.doccont00.singconto.bulk.V_stm_paramin_sing_contoHome" >
+	<defaultColumnMap
+		tableName="V_STM_PARAMIN_SING_CONTO" >
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_COMPETENZA_RESIDUO"
+			propertyName="ti_competenza_residuo"
+			sqlTypeName="VARCHAR"
+			columnSize="200" />
+		<columnMapping
+			columnName="SEQUENZA"
+			propertyName="sequenza"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CHIAVE"
+			propertyName="chiave"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="200" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipo" />
+	<persistentProperty
+		name="ti_competenza_residuo" />
+	<persistentProperty
+		name="chiave" />
+	<persistentProperty
+		name="sequenza" />
+	<persistentProperty
+		name="cd_cds" />
+</SQLPersistentInfo>

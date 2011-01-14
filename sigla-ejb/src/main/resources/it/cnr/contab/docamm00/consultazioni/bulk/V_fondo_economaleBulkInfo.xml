@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cds"
+		property="cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS" />
+	<fieldProperty
+		name="uo"
+		property="uo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="UO" />
+	<fieldProperty
+		name="cd_codice_fondo"
+		property="cd_codice_fondo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice Fondo" />
+	<fieldProperty
+		name="ds_fondo"
+		property="ds_fondo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione Fondo" />
+	<fieldProperty
+		name="economo"
+		property="economo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Economo" />
+	<fieldProperty
+		name="fl_aperto"
+		property="fl_aperto"
+		inputType="TEXTAREA"
+		label="Flag Aperto" />
+	<fieldProperty
+		name="im_ammontare_iniziale"
+		property="im_ammontare_iniziale"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Ammontare Iniziale" />
+	<fieldProperty
+		name="im_ammontare_fondo"
+		property="im_ammontare_fondo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Ammontare Fondo" />
+	<fieldProperty
+		name="im_residuo_fondo"
+		property="im_residuo_fondo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Residuo Fondo" />
+	<fieldProperty
+		name="cd_modalita_pag"
+		property="cd_modalita_pag"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Modalita di Pagamento" />
+	<fieldProperty
+		name="ds_modalita_pag"
+		property="ds_modalita_pag"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Descrizione Modalita di Pagamento" />
+	<fieldProperty
+		name="abi"
+		property="abi"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Abi" />
+	<fieldProperty
+		name="cab"
+		property="cab"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Cab" />
+	<fieldProperty
+		name="numero_conto"
+		property="numero_conto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Numero Conto" />
+	<fieldProperty
+		name="cin"
+		property="cin"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Cin" />
+	<fieldProperty
+		name="intestazione"
+		property="intestazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Intestazione" />
+	<fieldProperty
+		name="codice_iban"
+		property="codice_iban"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="34"
+		label="Codice Iban" />
+	<fieldProperty
+		name="codice_swift"
+		property="codice_swift"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Codice Swift" />
+		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cds" />
+	<formFieldProperty
+		name="uo" />
+	<formFieldProperty
+		name="cd_codice_fondo" />
+	<formFieldProperty
+		name="ds_fondo" />
+	<formFieldProperty
+		name="economo" />
+	<formFieldProperty
+		name="fl_aperto" />
+	<formFieldProperty
+		name="im_ammontare_iniziale" />
+	<formFieldProperty
+		name="im_ammontare_fondo" />
+	<formFieldProperty
+		name="im_residuo_fondo" />
+	<formFieldProperty
+		name="cd_modalita_pag" />
+	<formFieldProperty
+		name="ds_modalita_pag" />
+	<formFieldProperty
+		name="abi" />
+	<formFieldProperty
+		name="cab" />
+	<formFieldProperty
+		name="numero_conto" />
+	<formFieldProperty
+		name="cin" />
+	<formFieldProperty
+		name="intestazione" />
+	<formFieldProperty
+		name="codice_iban" />
+	<formFieldProperty
+		name="codice_swift" />
+		
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cds" />
+	<findFieldProperty
+		name="uo" />
+	<findFieldProperty
+		name="cd_codice_fondo" />
+	<findFieldProperty
+		name="ds_fondo" />
+	<findFieldProperty
+		name="economo" />
+	<findFieldProperty
+		name="fl_aperto" />
+	<findFieldProperty
+		name="im_ammontare_iniziale" />
+	<findFieldProperty
+		name="im_ammontare_fondo" />
+	<findFieldProperty
+		name="im_residuo_fondo" />
+	<findFieldProperty
+		name="cd_modalita_pag" />
+	<findFieldProperty
+		name="ds_modalita_pag" />
+	<findFieldProperty
+		name="abi" />
+	<findFieldProperty
+		name="cab" />
+	<findFieldProperty
+		name="numero_conto" />
+	<findFieldProperty
+		name="cin" />
+	<findFieldProperty
+		name="intestazione" />
+	<findFieldProperty
+		name="codice_iban" />
+	<findFieldProperty
+		name="codice_swift" />
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cds" />
+	<columnFieldProperty
+		name="uo" />
+	<columnFieldProperty
+		name="cd_codice_fondo" />
+	<columnFieldProperty
+		name="ds_fondo" />
+	<columnFieldProperty
+		name="economo" />
+	<columnFieldProperty
+		name="fl_aperto" />
+	<columnFieldProperty
+		name="im_ammontare_iniziale" />
+	<columnFieldProperty
+		name="im_ammontare_fondo" />
+	<columnFieldProperty
+		name="im_residuo_fondo" />
+	<columnFieldProperty
+		name="cd_modalita_pag" />
+	<columnFieldProperty
+		name="ds_modalita_pag" />
+	<columnFieldProperty
+		name="abi" />
+	<columnFieldProperty
+		name="cab" />
+	<columnFieldProperty
+		name="numero_conto" />
+	<columnFieldProperty
+		name="cin" />
+	<columnFieldProperty
+		name="intestazione" />
+	<columnFieldProperty
+		name="codice_iban" />
+	<columnFieldProperty
+		name="codice_swift" />
+</bulkInfo>

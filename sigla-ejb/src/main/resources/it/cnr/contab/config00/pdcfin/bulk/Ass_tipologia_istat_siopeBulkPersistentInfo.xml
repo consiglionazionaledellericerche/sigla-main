@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.Ass_tipologia_istat_siopeBulk"
+	homeClassName="it.cnr.contab.config00.pdcfin.bulk.Ass_tipologia_istat_siopeHome">
+	<defaultColumnMap
+		tableName="ASS_TIPOLOGIA_ISTAT_SIOPE">
+		<columnMapping
+			columnName="PG_TIPOLOGIA"
+			propertyName="tipologie_istat.pg_tipologia"
+			sqlTypeName="DECIMAL"
+			columnSize="5" />
+		<columnMapping
+			columnName="ESERCIZIO_SIOPE"
+			propertyName="codici_siope.esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="TI_GESTIONE_SIOPE"
+			propertyName="codici_siope.ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_SIOPE"
+			propertyName="codici_siope.cd_siope"
+			sqlTypeName="VARCHAR"
+			columnSize="45" />
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="tipologie_istat"
+		partOfOid="true" />
+	<persistentProperty
+		name="codici_siope"
+		partOfOid="true" />
+</SQLPersistentInfo>

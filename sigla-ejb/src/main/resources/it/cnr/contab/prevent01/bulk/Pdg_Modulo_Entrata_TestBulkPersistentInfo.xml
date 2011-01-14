@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent01.bulk.Pdg_Modulo_Entrata_TestBulk"
+	homeClassName="it.cnr.contab.prevent01.bulk.Pdg_Modulo_Entrata_TestHome">
+	<defaultColumnMap
+		tableName="PDG_MODULO_ENTRATE">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true"/>		
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="centro_responsabilita.cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30" 
+			primary="true"/>
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="modulo.pg_progetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />	
+	<persistentProperty
+		name="centro_responsabilita" />
+	<persistentProperty
+		name="modulo"/>
+</SQLPersistentInfo>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.tabrif.bulk.Tipo_carico_scaricoBase"
+	keyClassName="it.cnr.contab.inventario00.tabrif.bulk.Tipo_carico_scaricoKey"
+	homeClassName="it.cnr.contab.inventario00.tabrif.bulk.Tipo_carico_scaricoHome" >
+	<defaultColumnMap
+		tableName="TIPO_CARICO_SCARICO" >
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dt_cancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_DOCUMENTO"
+			propertyName="ti_documento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_TIPO_CARICO_SCARICO"
+			propertyName="ds_tipo_carico_scarico"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_BUONO_PER_TRASFERIMENTO"
+			propertyName="fl_buono_per_trasferimento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_FATTURABILE"
+			propertyName="fl_fatturabile"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_AUMENTO_VALORE"
+			propertyName="fl_aumento_valore"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_ELABORA_BUONO_COGE"
+			propertyName="fl_elabora_buono_coge"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_STORNO_FONDO"
+			propertyName="fl_storno_fondo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_CHIUDE_FONDO"
+			propertyName="fl_chiude_fondo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_VENDITA"
+			propertyName="fl_vendita"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_cancellazione" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="ti_documento" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="ds_tipo_carico_scarico" />
+	<persistentProperty
+		name="fl_buono_per_trasferimento" />
+	<persistentProperty
+		name="fl_fatturabile" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="fl_aumento_valore" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="fl_elabora_buono_coge" />
+	<persistentProperty
+		name="fl_storno_fondo" />	
+	<persistentProperty
+		name="fl_chiude_fondo" />	
+	<persistentProperty
+		name="fl_vendita" />		
+</SQLPersistentInfo>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_obbl_riportabiliBulk"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_obbl_riportabiliHome">
+	<defaultColumnMap
+		tableName="V_CONS_OBBL_RIPORTABILI">
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE"
+			propertyName="esercizio_originale"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO_OBBLIGAZIONE"
+			propertyName="stato_obbligazione"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="RIPORTATO"
+			propertyName="riportato"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_OBBLIGAZIONE"
+			propertyName="ds_obbligazione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_SCADVOCE"
+			propertyName="im_scadvoce"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+			name="cd_linea_attivita" />
+	<persistentProperty
+			name="cd_progetto" />
+	<persistentProperty
+			name="cd_cds" />
+	<persistentProperty
+			name="cd_unita_organizzativa" />
+	<persistentProperty
+			name="cd_centro_responsabilita" />
+	<persistentProperty
+			name="esercizio_originale" />
+	<persistentProperty
+			name="pg_obbligazione" />
+	<persistentProperty
+			name="pg_obbligazione_scadenzario" />
+	<persistentProperty
+			name="esercizio" />
+	<persistentProperty
+			name="stato_obbligazione" />
+	<persistentProperty
+			name="riportato" />
+	<persistentProperty
+			name="ds_obbligazione" />
+	<persistentProperty
+			name="im_scadvoce" />
+	<persistentProperty
+			name="cd_elemento_voce" />
+</SQLPersistentInfo>

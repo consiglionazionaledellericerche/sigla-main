@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ds_modalita_trasporto"
+		property="ds_modalita_trasporto"
+		maxLength="300"
+		inputType="TEXTAREA"
+		cols="100"
+		rows="3"
+		nullable="false"
+		label="Descrizione"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_modalita_trasporto"
+		property="cd_modalita_trasporto"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROmodalita_trasporto"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		maxLength="4"
+		inputSize="4"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROmodalita_trasporto"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Esercizio" />
+			
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_modalita_trasporto" />
+	<formFieldProperty
+		name="ds_modalita_trasporto" />
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_modalita_trasporto" />
+	<columnFieldProperty
+		name="ds_modalita_trasporto" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_modalita_trasporto" />
+	<findFieldProperty
+		name="ds_modalita_trasporto" />
+
+</bulkInfo>

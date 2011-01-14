@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="im_stanz_iniziale_a1"
+		property="im_stanz_iniziale_a1"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Valore dello stanziamento iniziale (Bilancio Preventivo approvato)" />
+	<fieldProperty
+		name="im_stanz_iniziale_a2"
+		property="im_stanz_iniziale_a2"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Importo stanziamentto per secondo anno" />
+	<fieldProperty
+		name="im_stanz_iniziale_a3"
+		property="im_stanz_iniziale_a3"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Importo stanziamentto per terzo anno" />
+	<fieldProperty
+		name="variazioni_piu"
+		property="variazioni_piu"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Variazioni di competenza positive" />
+	<fieldProperty
+		name="variazioni_meno"
+		property="variazioni_meno"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Variazioni di competenza negative" />
+	<fieldProperty
+		name="im_stanz_iniziale_cassa"
+		property="im_stanz_iniziale_cassa"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Valore dello stanziamento iniziale di cassa dal Piano di gestione,(solo all'esercizio di bilancio)" />
+	<fieldProperty
+		name="variazioni_piu_cassa"
+		property="variazioni_piu_cassa"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Variazioni positive di cassa al PDG,(solo all'esercizio di bilancio)" />
+	<fieldProperty
+		name="variazioni_meno_cassa"
+		property="variazioni_meno_cassa"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Variazioni negative di cassa al PDG,(solo all'esercizio di bilancio)" />
+	<fieldProperty
+		name="im_obbl_acc_comp"
+		property="im_obbl_acc_comp"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Sommatoria di obbligazioni/accertamenti di competenza" />
+	<fieldProperty
+		name="im_stanz_res_improprio"
+		property="im_stanz_res_improprio"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Residuo improprio ribaltato, per esercizio di provenienza" />
+	<fieldProperty
+		name="var_piu_stanz_res_imp"
+		property="var_piu_stanz_res_imp"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Sommatoria delle variazioni positive al residuo improprio" />
+	<fieldProperty
+		name="var_meno_stanz_res_imp"
+		property="var_meno_stanz_res_imp"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Sommatoria delle variazioni negative al residuo improprio" />
+	<fieldProperty
+		name="im_obbl_res_imp"
+		property="im_obbl_res_imp"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Sommatoria delle obbligazioni residue improprie" />
+	<fieldProperty
+		name="var_piu_obbl_res_imp"
+		property="var_piu_obbl_res_imp"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Sommatoria delle modifiche positive ai residui impropri" />
+	<fieldProperty
+		name="var_meno_obbl_res_imp"
+		property="var_meno_obbl_res_imp"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Sommatoria delle modifiche negative ai residui impropri" />
+	<fieldProperty
+		name="im_obbl_res_pro"
+		property="im_obbl_res_pro"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Per esercizio residuo &lt; esercizio di bilancio" />
+	<fieldProperty
+		name="var_piu_obbl_res_pro"
+		property="var_piu_obbl_res_pro"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Contiene la sommatoria delle variazioni positive ai residui propri" />
+	<fieldProperty
+		name="var_meno_obbl_res_pro"
+		property="var_meno_obbl_res_pro"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Contiene la sommatoria delle variazioni negative ai residui propri" />
+	<fieldProperty
+		name="im_mandati_reversali_pro"
+		property="im_mandati_reversali_pro"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Importo totale mandati o reversali su Competenza o Residui propri" />
+	<fieldProperty
+		name="im_mandati_reversali_imp"
+		property="im_mandati_reversali_imp"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Importo totale mandati o reversali su residui impropri" />
+	<fieldProperty
+		name="im_pagamenti_incassi"
+		property="im_pagamenti_incassi"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Importo totale pagamenti o incassi" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio di riferimento" />
+	<fieldProperty
+		name="esercizio_res"
+		property="esercizio_res"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio di riferimento residuo" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice del Centro di responsabilità" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice del GAE" />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Definisce l'appartenenza (CNR o CdS) delle voci del piano dei conti finanziario." />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Definisce la sezione (entrata o spesa) delle voci del piano dei conti finanziario" />
+	<fieldProperty
+		name="cd_voce"
+		property="cd_voce"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		label="Codice della voce di bilancio" />
+		
+	<formFieldProperty
+		name="im_stanz_iniziale_a1" />
+	<formFieldProperty
+		name="im_stanz_iniziale_a2" />
+	<formFieldProperty
+		name="im_stanz_iniziale_a3" />
+	<formFieldProperty
+		name="variazioni_piu" />
+	<formFieldProperty
+		name="variazioni_meno" />
+	<formFieldProperty
+		name="im_stanz_iniziale_cassa" />
+	<formFieldProperty
+		name="variazioni_piu_cassa" />
+	<formFieldProperty
+		name="variazioni_meno_cassa" />
+	<formFieldProperty
+		name="im_obbl_acc_comp" />
+	<formFieldProperty
+		name="im_stanz_res_improprio" />
+	<formFieldProperty
+		name="var_piu_stanz_res_imp" />
+	<formFieldProperty
+		name="var_meno_stanz_res_imp" />
+	<formFieldProperty
+		name="im_obbl_res_imp" />
+	<formFieldProperty
+		name="var_piu_obbl_res_imp" />
+	<formFieldProperty
+		name="var_meno_obbl_res_imp" />
+	<formFieldProperty
+		name="im_obbl_res_pro" />
+	<formFieldProperty
+		name="var_piu_obbl_res_pro" />
+	<formFieldProperty
+		name="var_meno_obbl_res_pro" />
+	<formFieldProperty
+		name="im_mandati_reversali_pro" />
+	<formFieldProperty
+		name="im_mandati_reversali_imp" />
+	<formFieldProperty
+		name="im_pagamenti_incassi" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="esercizio_res" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_voce" />
+	
+	
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="esercizio_res" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_voce" />
+		
+	<columnFieldProperty
+		name="im_stanz_iniziale_a1" />
+	<columnFieldProperty
+		name="im_stanz_iniziale_a2" />
+	<columnFieldProperty
+		name="im_stanz_iniziale_a3" />
+	<columnFieldProperty
+		name="variazioni_piu" />
+	<columnFieldProperty
+		name="variazioni_meno" />
+	<columnFieldProperty
+		name="im_stanz_iniziale_cassa" />
+	<columnFieldProperty
+		name="variazioni_piu_cassa" />
+	<columnFieldProperty
+		name="variazioni_meno_cassa" />
+	<columnFieldProperty
+		name="im_obbl_acc_comp" />
+	<columnFieldProperty
+		name="im_stanz_res_improprio" />
+	<columnFieldProperty
+		name="var_piu_stanz_res_imp" />
+	<columnFieldProperty
+		name="var_meno_stanz_res_imp" />
+	<columnFieldProperty
+		name="im_obbl_res_imp" />
+	<columnFieldProperty
+		name="var_piu_obbl_res_imp" />
+	<columnFieldProperty
+		name="var_meno_obbl_res_imp" />
+	<columnFieldProperty
+		name="im_obbl_res_pro" />
+	<columnFieldProperty
+		name="var_piu_obbl_res_pro" />
+	<columnFieldProperty
+		name="var_meno_obbl_res_pro" />
+	<columnFieldProperty
+		name="im_mandati_reversali_pro" />
+	<columnFieldProperty
+		name="im_mandati_reversali_imp" />
+	<columnFieldProperty
+		name="im_pagamenti_incassi" />
+	<columnFieldProperty
+		name="dacr" />
+	<columnFieldProperty
+		name="utcr" />
+	<columnFieldProperty
+		name="duva" />
+	<columnFieldProperty
+		name="utuv" />
+	<columnFieldProperty
+		name="pg_ver_rec" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="esercizio_res" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="ti_appartenenza" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_voce" />
+</bulkInfo>

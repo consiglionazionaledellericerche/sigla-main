@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" longDescription="Stampa ripartizione costi su GAE/Modulo/Commessa">
+
+	<formFieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="ROTEXT" 
+		inputSize="3"
+		label="CDS" />	
+		
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		inputSize="3"
+		label="Esercizio" />
+
+	<fieldProperty
+		name="findUOForPrint"
+		property="uoForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="cdUOForPrint"
+		property="uoForPrint.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		readonlyProperty="ROCdUoForPrint"
+		label="Codice UO" />
+	<fieldProperty
+		name="dsUOForPrint"
+		property="uoForPrint.ds_unita_organizzativa"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione UO" />
+		
+	<fieldProperty
+		name="cdUOCRForPrint"
+		property="cdUOCRForPrint"/>
+
+	<fieldProperty
+		name="findCommessaForPrint"
+		property="commessaForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		columnSet="filtro_ricerca_commesse"
+		freeSearchSet="filtro_ricerca_commesse"
+		label="Commessa" />
+	<fieldProperty
+		name="cdCommessaForPrint"
+		property="commessaForPrint.cd_progetto"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		readonlyProperty="ROCdCommessaForPrint"/>
+	<fieldProperty
+		name="dsCommessaForPrint"
+		property="commessaForPrint.ds_progetto"
+		maxLength="500"
+		inputSize="60"
+		inputType="TEXT"
+        readonlyProperty="ROCdCommessaForPrint"/>
+		
+	<fieldProperty
+		name="cdCommessaCRForPrint"
+		property="cdCommessaCRForPrint"/>
+
+	<fieldProperty
+		name="findModuloForPrint"
+		property="moduloForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		columnSet="filtro_ricerca_moduli"
+		freeSearchSet="filtro_ricerca_moduli"		
+		label="Modulo di attività" />
+	<fieldProperty
+		name="cdModuloForPrint"
+		property="moduloForPrint.cd_progetto"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		readonlyProperty="ROCdModuloForPrint"/>
+	<fieldProperty
+		name="dsModuloForPrint"
+		property="moduloForPrint.ds_progetto"
+		maxLength="500"
+		inputSize="60"
+		inputType="TEXT"
+        readonlyProperty="ROCdModuloForPrint"/>
+		
+	<fieldProperty
+		name="cdModuloCRForPrint"
+		property="cdModuloCRForPrint"/>
+
+	<fieldProperty
+		name="findDipendenteForPrint"
+		property="dipendenteForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		columnSet="nominativo"
+		freeSearchSet="nominativo"
+		label="Dipendente" />
+	<fieldProperty
+		name="idDipendenteForPrint"
+		property="dipendenteForPrint.id_matricola"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		readonlyProperty="ROIdDipendenteForPrint"/>
+	<fieldProperty
+		name="dsDipendenteForPrint"
+		property="dipendenteForPrint.nominativo"
+		maxLength="60"
+		inputSize="20"
+		inputType="TEXT"
+        readonlyProperty="ROIdDipendenteForPrint"/>
+		
+	<fieldProperty
+		name="idDipendenteCRForPrint"
+		property="idDipendenteCRForPrint"/>
+				
+	<fieldProperty
+		name="mese"
+		property="mese"
+		inputType="SELECT"
+		label="Mese"
+		keysProperty="meseKeys"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"/>
+
+	<formFieldProperty name="findUOForPrint" />
+	<formFieldProperty name="cdUOForPrint" />
+	<formFieldProperty name="dsUOForPrint" />
+	<formFieldProperty name="cdUOCRForPrint" />		
+	<formFieldProperty name="mese" />
+	<formFieldProperty name="findCommessaForPrint" />
+	<formFieldProperty name="cdCommessaForPrint" />
+	<formFieldProperty name="dsCommessaForPrint" />
+	<formFieldProperty name="cdCommessaCRForPrint" />	
+	<formFieldProperty name="findModuloForPrint" />
+	<formFieldProperty name="cdModuloForPrint" />
+	<formFieldProperty name="dsModuloForPrint" />
+	<formFieldProperty name="cdModuloCRForPrint" />		
+	<formFieldProperty name="findDipendenteForPrint" />
+	<formFieldProperty name="idDipendenteForPrint" />
+	<formFieldProperty name="dsDipendenteForPrint" />
+	<formFieldProperty name="idDipendenteCRForPrint" />		
+
+	<form
+		name="/cnrpreventivo/pdg/personale_su_linee.rpt">
+		<formFieldProperty 
+			name="cd_cds"
+			inputType="ROTEXT" />
+		<formFieldProperty 
+			name="esercizio"
+			inputType="ROTEXT" />
+		<formFieldProperty 
+			name="cdUOForPrint" />
+		<formFieldProperty 
+			name="cdCommessaForPrint" />
+		<formFieldProperty 
+			name="cdModuloForPrint" />
+		<formFieldProperty 
+			name="idDipendenteForPrint" />
+			
+	</form>
+
+	<printForm
+		name="/cnrpreventivo/pdg/personale_su_linee.rpt">
+		<printFieldProperty 
+			name="mese"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="1"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="3"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdCommessaCRForPrint"
+			parameterPosition="4"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdModuloCRForPrint"
+			parameterPosition="5"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="idDipendenteCRForPrint"
+			parameterPosition="6"
+			parameterType="STRING" />
+			
+	</printForm>		
+<printForm
+		name="/cnrpreventivo/pdg/personale_su_linee.jasper">
+		<printFieldProperty 
+			name="mese"
+			parameterPosition="0"
+			parameterType="STRING" 
+			paramNameJR="mese"
+			paramTypeJR="java.lang.Integer"/>
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="2"
+			parameterType="STRING" 
+			paramNameJR="uo"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="3"
+			parameterType="STRING"
+			paramNameJR="cds"
+			paramTypeJR="java.lang.String"  />
+		<printFieldProperty 
+			name="cdCommessaCRForPrint"
+			parameterPosition="4"
+			parameterType="STRING" 
+			paramNameJR="commessa"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cdModuloCRForPrint"
+			parameterPosition="5"
+			parameterType="STRING" 
+			paramNameJR="modulo"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="idDipendenteCRForPrint"
+			parameterPosition="6"
+			parameterType="STRING"
+			paramNameJR="matricola"
+			paramTypeJR="java.lang.String"  />	
+	</printForm>
+</bulkInfo>

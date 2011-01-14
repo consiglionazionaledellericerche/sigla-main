@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="esercizio" />
+	<fieldProperty
+		name="pg_mandato"
+		property="pg_mandato"
+		inputType="TEXT"
+		label="pg_mandato" />
+	<fieldProperty
+		name="cd_tipo_bollo"
+		property="cd_tipo_bollo"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		label="cd_tipo_bollo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		label="cd_terzo" />
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_mandato" />
+	<formFieldProperty
+		name="cd_tipo_bollo" />
+	<formFieldProperty
+		name="cd_terzo" />
+
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_mandato" />
+	<columnFieldProperty
+		name="cd_tipo_bollo" />
+	<columnFieldProperty
+		name="cd_terzo" />
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_mandato" />
+	<findFieldProperty
+		name="cd_tipo_bollo" />
+	<findFieldProperty
+		name="cd_terzo" />
+
+</bulkInfo>

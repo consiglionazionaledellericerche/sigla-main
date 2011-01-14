@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.bulk.V_stm_paramin_pdg_variazioneBulk"
+	homeClassName="it.cnr.contab.pdg00.bulk.V_stm_paramin_pdg_variazioneHome" >
+	<defaultColumnMap
+		tableName="V_STM_PARAMIN_PDG_VARIAZIONE" >
+		<columnMapping
+			columnName="ID_REPORT"
+			propertyName="id_report"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CHIAVE"
+			propertyName="chiave"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="SEQUENZA"
+			propertyName="sequenza"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VARIAZIONE"
+			propertyName="pg_variazione"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="id_report" />
+	<persistentProperty
+		name="chiave" />
+	<persistentProperty
+		name="tipo" />
+	<persistentProperty
+		name="sequenza" />
+	<persistentProperty
+		name="pg_variazione" />
+</SQLPersistentInfo>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent00.bulk.Pdg_aggregato_etr_detBulk"
+	homeClassName="it.cnr.contab.prevent00.bulk.Pdg_aggregato_etr_detHome" >
+	<defaultColumnMap
+		tableName="PDG_AGGREGATO_ETR_DET" >
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cdr.cd_centro_responsabilita"
+			fetchOnly = "false"/>
+
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="elemento_voce.esercizio" 
+			fetchOnly = "true"/>
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="elemento_voce.cd_elemento_voce" 
+			fetchOnly = "false" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="elemento_voce.ti_gestione"
+			fetchOnly = "false" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="elemento_voce.ti_appartenenza" 
+			fetchOnly = "false"/>
+
+		<columnMapping
+			columnName="CD_NATURA"
+			propertyName="natura.cd_natura"
+			fetchOnly = "false"/>
+	</defaultColumnMap>
+			
+	<columnMap
+		name="V_DPDG_AGGREGATO_ETR_DET_D"
+		tableName="V_DPDG_AGGREGATO_ETR_DET_D"
+		extends="default" >
+	</columnMap>
+
+	<persistentProperty
+		name="cdr"
+		partOfOid="true" />
+	<persistentProperty
+		name="elemento_voce"
+		partOfOid="true" />
+	<persistentProperty
+		name="natura"
+		partOfOid="true" />
+</SQLPersistentInfo>

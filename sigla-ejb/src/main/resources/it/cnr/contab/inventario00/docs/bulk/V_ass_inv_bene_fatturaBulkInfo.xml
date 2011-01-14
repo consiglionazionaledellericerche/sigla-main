@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Associazione Buoni - Documenti Amministrativi">
+	<fieldProperty
+		name="cd_cds_fatt_pass"
+		property="cd_cds_fatt_pass"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds Documento" />
+	<fieldProperty
+		name="cd_uo_fatt_pass"
+		property="cd_uo_fatt_pass"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="UO Documento" />
+	<fieldProperty
+		name="esercizio_fatt_pass"
+		property="esercizio_fatt_pass"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Documento" />
+	<fieldProperty
+		name="pg_fattura_passiva"
+		property="pg_fattura_passiva"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo Documento" />
+	<fieldProperty
+		name="progressivo_riga_fatt_pass"
+		property="progressivo_riga_fatt_pass"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Riga Documento" />
+	<fieldProperty
+		name="pg_inventario"
+		property="pg_inventario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice Inventario" />
+	<fieldProperty
+		name="nr_inventario"
+		property="nr_inventario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice Bene" />
+	<fieldProperty
+		name="progressivo"
+		property="progressivo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo" />
+	<fieldProperty
+		name="ds_bene"
+		property="ds_bene"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1000"
+		label="Descrizione Bene" />
+	<fieldProperty
+		name="ds_fattura"
+		property="ds_fattura"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Descrizione Documento" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Cliente/Fornitore" />
+	<fieldProperty
+		name="ds_terzo"
+		property="ds_terzo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Descr. Cliente/Fornitore" />
+	<fieldProperty
+		name="ti_documento"
+		property="ti_documento"
+		inputType="TEXT"
+		keysProperty="tipoMovimentoKey"
+		inputSize="1"
+		maxLength="1" 
+		label="Tipo buono"/>
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio buono" />
+	<fieldProperty
+		name="pg_buono_c_s"
+		property="pg_buono_c_s"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero buono" />		
+	<fieldProperty
+		name="cd_tipo_documento_amm"
+		property="cd_tipo_documento_amm"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Tipo Doc.Generico" />	
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		inputType="TEXT"
+		inputSize="60"
+		maxLength="60"
+		label="Tipo Documento" />	
+	<formFieldProperty
+		name="cd_cds_fatt_pass" />
+	<formFieldProperty
+		name="cd_uo_fatt_pass" />
+	<formFieldProperty
+		name="esercizio_fatt_pass" />
+	<formFieldProperty
+		name="pg_fattura_passiva" />
+	<formFieldProperty
+		name="progressivo_riga_fatt_pass" />
+	<formFieldProperty
+		name="pg_inventario" />
+	<formFieldProperty
+		name="nr_inventario" />
+	<formFieldProperty
+		name="progressivo" />
+	<formFieldProperty
+		name="ti_documento" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_buono_c_s" />	
+	<formFieldProperty
+		name="ds_bene" />
+	<formFieldProperty
+		name="ds_fattura" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="ds_terzo" />
+	<formFieldProperty
+		name="cd_tipo_documento_amm" />	
+	<formFieldProperty
+		name="tipo" />		
+	<findFieldProperty
+		name="cd_cds_fatt_pass" />	
+	<findFieldProperty
+		name="cd_uo_fatt_pass" />
+	<findFieldProperty
+		name="esercizio_fatt_pass" />
+	<findFieldProperty
+		name="pg_fattura_passiva" />
+	<findFieldProperty
+		name="progressivo_riga_fatt_pass" />
+	<findFieldProperty
+		name="pg_inventario" />
+	<findFieldProperty
+		name="nr_inventario" />
+	<findFieldProperty
+		name="progressivo" />
+	<findFieldProperty
+		name="ds_bene" />
+	<findFieldProperty
+		name="ds_fattura" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="ds_terzo" />
+	<findFieldProperty
+		name="ti_documento" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_buono_c_s" />	
+	<columnFieldProperty
+		name="tipo" />				
+	<columnFieldProperty
+		name="cd_cds_fatt_pass" />
+	<columnFieldProperty
+		name="cd_uo_fatt_pass" />
+	<columnFieldProperty
+		name="esercizio_fatt_pass" />
+	<columnFieldProperty
+		name="pg_fattura_passiva" />
+	<columnFieldProperty
+		name="progressivo_riga_fatt_pass" />
+	<columnFieldProperty
+		name="pg_inventario" />
+	<columnFieldProperty
+		name="nr_inventario" />
+	<columnFieldProperty
+		name="progressivo" />
+	<columnFieldProperty
+		name="ds_bene" />
+	<columnFieldProperty
+		name="ds_fattura" />
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="ds_terzo" />
+	<columnFieldProperty
+		name="ti_documento" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_buono_c_s" />	
+		
+</bulkInfo>

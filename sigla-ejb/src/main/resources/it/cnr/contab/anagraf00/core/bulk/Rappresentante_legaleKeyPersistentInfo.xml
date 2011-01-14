@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.Rappresentante_legaleKey" >
+	<defaultColumnMap
+		tableName="RAPPRESENTANTE_LEGALE" >
+		<columnMapping
+			columnName="PG_RAPP_LEGALE"
+			propertyName="pg_rapp_legale"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_rapp_legale"
+		partOfOid="true" />
+</SQLPersistentInfo>

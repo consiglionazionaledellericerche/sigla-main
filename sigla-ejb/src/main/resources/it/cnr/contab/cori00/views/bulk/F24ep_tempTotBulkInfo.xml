@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="tipo_riga_f24"
+		property="tipo_riga_f24"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="tipo riga f24" />
+	<fieldProperty
+		name="codice_tributo"
+		property="codice_tributo"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="codice tributo" />
+	<fieldProperty
+		name="prog"
+		property="prog"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="prog" />
+	<fieldProperty
+		name="codice_ente"
+		property="codice_ente"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="codice ente" />
+	<fieldProperty
+		name="mese_rif"
+		property="mese_rif"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="mese rif" />
+	<fieldProperty
+		name="anno_rif"
+		property="anno_rif"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="anno rif" />
+	<fieldProperty
+		name="importo_debito"
+		property="importo_debito"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="importo debito" />
+	<fieldProperty
+		name="pg_liquidazione"
+		property="pg_liquidazione"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="pg liquidazione" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="cd cds" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="uo" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio" />
+	<fieldProperty
+		name="cd_matricola_inps"
+		property="cd_matricola_inps"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		label="matricola inps" />	
+	<fieldProperty
+		name="periodo_da"
+		property="periodo_da"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		label="periodo da" />
+	<fieldProperty
+		name="periodo_a"
+		property="periodo_a"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		label="periodo a" />	
+			
+	<formFieldProperty
+		name="tipo_riga_f24" />	
+	<formFieldProperty
+		name="codice_tributo" />
+	<formFieldProperty
+		name="prog" />
+	<formFieldProperty
+		name="codice_ente" />
+	<formFieldProperty
+		name="mese_rif" />
+	<formFieldProperty
+		name="anno_rif" />
+	<formFieldProperty
+		name="importo_debito" />
+	<formFieldProperty
+		name="pg_liquidazione" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_matricola_inps" />	
+	<formFieldProperty
+		name="periodo_da" />	
+	<formFieldProperty
+		name="periodo_a" />	
+		
+	<findFieldProperty
+		name="tipo_riga_f24" />		
+	<findFieldProperty
+		name="codice_tributo" />
+	<findFieldProperty
+		name="prog" />
+	<findFieldProperty
+		name="codice_ente" />
+	<findFieldProperty
+		name="mese_rif" />
+	<findFieldProperty
+		name="anno_rif" />
+	<findFieldProperty
+		name="importo_debito" />
+	<findFieldProperty
+		name="pg_liquidazione" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_matricola_inps" />
+	<findFieldProperty
+		name="periodo_da" />	
+	<findFieldProperty
+		name="periodo_a" />	
+		
+		
+	<columnFieldProperty
+		name="tipo_riga_f24" />		
+	<columnFieldProperty
+		name="codice_tributo" />
+	<columnFieldProperty
+		name="prog" />
+	<columnFieldProperty
+		name="codice_ente" />
+	<columnFieldProperty
+		name="mese_rif" />
+	<columnFieldProperty
+		name="anno_rif" />
+	<columnFieldProperty
+		name="importo_debito" />
+	<columnFieldProperty
+		name="pg_liquidazione" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_matricola_inps" />
+	<columnFieldProperty
+		name="periodo_da" />	
+	<columnFieldProperty
+		name="periodo_a" />	
+			
+</bulkInfo>

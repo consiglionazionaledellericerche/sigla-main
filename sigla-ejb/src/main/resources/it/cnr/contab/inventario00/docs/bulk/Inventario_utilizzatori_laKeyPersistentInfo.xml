@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laKey" >
+	<defaultColumnMap
+		tableName="INVENTARIO_UTILIZZATORI_LA" >
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="pg_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UTILIZZATORE_CDR"
+			propertyName="cd_utilizzatore_cdr"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="NR_INVENTARIO"
+			propertyName="nr_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PROGRESSIVO"
+			propertyName="progressivo"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_inventario"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_utilizzatore_cdr"
+		partOfOid="true" />
+	<persistentProperty
+		name="nr_inventario"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_linea_attivita"
+		partOfOid="true" />
+	<persistentProperty
+		name="progressivo"
+		partOfOid="true" />
+</SQLPersistentInfo>

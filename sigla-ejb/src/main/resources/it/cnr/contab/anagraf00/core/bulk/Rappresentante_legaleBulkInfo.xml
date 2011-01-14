@@ -1,0 +1,180 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		label="Codice Fiscale"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		label="Cognome"
+		inputType="TEXT"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="dt_canc"
+		property="dt_canc"
+		label="Data cancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		/>
+	<fieldProperty
+		name="dt_nascita"
+		property="dt_nascita"
+		label="Data di nascita"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="nome"
+		property="nome"
+		label="Nome"
+		inputType="TEXT"
+		nullable="false"
+		/>
+	<fieldProperty
+		name="pg_comune_nascita"
+		property="pg_comune_nascita"
+		label="Codice comune nascita"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="ds_comune_nascita"
+		property="comune_nascita.ds_comune"
+		readonlyProperty="ROds_comune_nascita"
+		label="Citt&#224;/comune di nascita"
+		inputType="TEXT"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_provincia_nascita"
+		property="comune_nascita.provincia.ds_provincia"
+		label="Provincia di Nascita"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="ds_nazione_nascita"
+		property="comune_nascita.nazione.ds_nazione"
+		label="Nazione di Nascita"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="find_comune_nascita"
+		property="comune_nascita"
+		label="Nazione di Nascita"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="pg_rapp_legale"
+		property="pg_rapp_legale"
+		label="Codice"
+		inputType="ROTEXT"
+		/>
+	<fieldProperty
+		name="titolo"
+		property="titolo"
+		label="Titolo"
+		inputType="TEXT"
+		nullable="false"
+		/>
+
+	<columnFieldProperty
+		name="codice_fiscale"
+		/>
+	<columnFieldProperty
+		name="cognome"
+		/>
+	<columnFieldProperty
+		name="dt_canc"
+		/>
+	<columnFieldProperty
+		name="dt_nascita"
+		/>
+	<columnFieldProperty
+		name="nome"
+		/>
+	<columnFieldProperty
+		name="pg_comune_nascita"
+		/>
+	<columnFieldProperty
+		name="ds_comune_nascita"
+		/>
+	<columnFieldProperty
+		name="pg_rapp_legale"
+		/>
+	<columnFieldProperty
+		name="titolo"
+		/>
+
+	<formFieldProperty
+		name="codice_fiscale"
+		/>
+	<formFieldProperty
+		name="cognome"
+		inputSize="65"
+		/>
+	<formFieldProperty
+		name="dt_canc"
+		/>
+	<formFieldProperty
+		name="dt_nascita"
+		/>
+	<formFieldProperty
+		name="nome"
+		inputSize="65"
+		/>
+	<formFieldProperty
+		name="pg_comune_nascita"
+		/>
+	<formFieldProperty
+		name="pg_rapp_legale"
+		/>
+	<formFieldProperty
+		name="titolo"
+		inputSize="65"
+		/>
+	<formFieldProperty
+		name="ds_comune_nascita"
+		/>
+	<formFieldProperty
+		name="find_comune_nascita"
+		/>
+	<formFieldProperty
+		name="ds_provincia_nascita"
+		/>
+	<formFieldProperty
+		name="ds_nazione_nascita"
+		/>
+
+	<findFieldProperty
+		name="codice_fiscale"
+		/>
+	<findFieldProperty
+		name="cognome"
+		/>
+	<findFieldProperty
+		name="dt_canc"
+		/>
+	<findFieldProperty
+		name="dt_nascita"
+		/>
+	<findFieldProperty
+		name="nome"
+		/>
+	<findFieldProperty
+		name="pg_comune_nascita"
+		/>
+	<findFieldProperty
+		name="pg_rapp_legale"
+		inputType="TEXT"
+		/>
+	<findFieldProperty
+		name="titolo"
+		/>
+
+
+</bulkInfo>

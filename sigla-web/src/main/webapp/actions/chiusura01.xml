@@ -1,0 +1,48 @@
+<action-mappings>
+	<action
+		path="/AnnullamentoDocContAction"
+		actionClass="it.cnr.contab.chiusura00.action.AnnullamentoDocContAction" />
+	<action
+		path="/RiportoEsSuccessivoAction"
+		actionClass="it.cnr.contab.chiusura00.action.RiportoEsSuccessivoAction" />
+	<action
+		path="/RiportoEsPrecedenteAction"
+		actionClass="it.cnr.contab.chiusura00.action.RiportoEsPrecedenteAction" />
+		
+
+  
+	<businessProcess name="AnnullamentoBP" className="it.cnr.contab.chiusura00.bp.AnnullamentoBP">
+		<forward name="default" path="/chiusura00/annullamento_massivo.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.chiusura00.bulk.V_obb_acc_xxxBulk" />
+		<init-param name="componentSessionName" value="CNRCHIUSURA00_EJB_RicercaDocContComponentSession"/>		
+		<init-param name="defaultAction" value="AnnullamentoDocContAction" />
+	</businessProcess>
+    
+	<businessProcess name="RiportoEsSuccessivoBP" className="it.cnr.contab.chiusura00.bp.RiportoEsSuccessivoBP">
+		<forward name="default" path="/chiusura00/riporto_es_successivo.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.chiusura00.bulk.V_obb_acc_xxxBulk" />
+		<init-param name="componentSessionName" value="CNRCHIUSURA00_EJB_RicercaDocContComponentSession"/>		
+		<init-param name="defaultAction" value="RiportoEsSuccessivoAction" />
+	</businessProcess>
+
+	<businessProcess name="RiportoEvolutoEsSuccessivoBP" className="it.cnr.contab.chiusura00.bp.RiportoEvolutoEsSuccessivoBP">
+		<forward name="default" path="/chiusura00/riporto_evoluto_es_successivo.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.chiusura00.bulk.V_obb_acc_xxxBulk" />
+		<init-param name="componentSessionName" value="CNRCHIUSURA00_EJB_RicercaDocContComponentSession"/>		
+		<init-param name="defaultAction" value="RiportoEsSuccessivoAction" />
+	</businessProcess>
+
+	<businessProcess name="RiportoEsPrecedenteBP" className="it.cnr.contab.chiusura00.bp.RiportoEsPrecedenteBP">
+		<forward name="default" path="/chiusura00/riporto_es_precedente.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.chiusura00.bulk.V_obb_acc_xxxBulk" />
+		<init-param name="componentSessionName" value="CNRCHIUSURA00_EJB_RicercaDocContComponentSession"/>		
+		<init-param name="defaultAction" value="RiportoEsPrecedenteAction" />
+	</businessProcess>
+
+  <businessProcess
+      name="RiportoSelezionatoreListaBP" className="it.cnr.contab.chiusura00.bp.RiportoSelezionatoreListaBP">
+    <forward name="default" path="/util/form_lista.jsp"/>
+    <init-param name="defaultAction" value="SelezionaLista" />
+  </businessProcess>
+
+</action-mappings>

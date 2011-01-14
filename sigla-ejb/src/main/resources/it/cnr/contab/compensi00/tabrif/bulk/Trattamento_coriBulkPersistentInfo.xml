@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Trattamento_coriBulk"
+	keyClassName="it.cnr.contab.compensi00.tabrif.bulk.Trattamento_coriKey"
+	homeClassName="it.cnr.contab.compensi00.tabrif.bulk.Trattamento_coriHome" >
+
+	<defaultColumnMap
+		tableName="TRATTAMENTO_CORI" >
+
+		<columnMapping
+			columnName="CD_TRATTAMENTO"
+			propertyName="tipoTrattamento.cd_trattamento" />
+		<columnMapping
+			columnName="CD_CONTRIBUTO_RITENUTA"
+			propertyName="tipoContributoRitenuta.cd_contributo_ritenuta" />
+
+	</defaultColumnMap>
+
+</SQLPersistentInfo>

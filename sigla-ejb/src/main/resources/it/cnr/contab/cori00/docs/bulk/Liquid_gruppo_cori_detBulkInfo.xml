@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CdS" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="pg_comune"
+		property="pg_comune"
+		inputType="TEXT"
+		label="Comune" />
+	<fieldProperty
+		name="cd_contributo_ritenuta"
+		property="cd_contributo_ritenuta"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Tipo CORI" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_liquidazione"
+		property="pg_liquidazione"
+		inputType="TEXT"
+		label="Liquidazione" />
+	<fieldProperty
+		name="pg_compenso"
+		property="pg_compenso"
+		inputType="TEXT"
+		label="Numero Compenso" />
+	<fieldProperty
+		name="cd_regione"
+		property="cd_regione"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Regione" />
+	<fieldProperty
+		name="ti_ente_percipiente"
+		property="ti_ente_percipiente"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Ente/Percepiente" />
+	<fieldProperty
+		name="cd_gruppo_cr"
+		property="cd_gruppo_cr"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Gruppo CORI" />
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_comune" />
+	<formFieldProperty
+		name="cd_contributo_ritenuta" />
+	<formFieldProperty
+		name="pg_liquidazione" />
+	<formFieldProperty
+		name="pg_compenso" />
+	<formFieldProperty
+		name="cd_regione" />
+	<formFieldProperty
+		name="ti_ente_percipiente" />
+	<formFieldProperty
+		name="cd_gruppo_cr" />
+
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_gruppo_cr" />
+	<columnFieldProperty
+		name="cd_contributo_ritenuta" />
+	<columnFieldProperty
+		name="pg_liquidazione" />
+	<columnFieldProperty
+		name="pg_compenso" />
+	<columnFieldProperty
+		name="cd_regione" />
+	<columnFieldProperty
+		name="pg_comune" />
+	<columnFieldProperty
+		name="ti_ente_percipiente" />
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="pg_comune" />
+	<findFieldProperty
+		name="cd_contributo_ritenuta" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_liquidazione" />
+	<findFieldProperty
+		name="pg_compenso" />
+	<findFieldProperty
+		name="cd_regione" />
+	<findFieldProperty
+		name="ti_ente_percipiente" />
+	<findFieldProperty
+		name="cd_gruppo_cr" />
+
+</bulkInfo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk"
+	homeClassName="it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrHome">
+	<defaultColumnMap
+		tableName="ASS_VAR_STANZ_RES_CDR">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="var_stanz_res.esercizio"/>
+		<columnMapping
+			columnName="PG_VARIAZIONE"
+			propertyName="var_stanz_res.pg_variazione"/>
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="centro_di_responsabilita.cd_centro_responsabilita"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="var_stanz_res"
+		partOfOid="true" />
+	<persistentProperty
+		name="centro_di_responsabilita"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="nome_file"
+		property="nome_file"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Nome File" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_esecuzione"
+		property="pg_esecuzione"
+		inputType="TEXT"
+		label="Pg Esecuzione" />
+	<fieldProperty
+		name="dacr"
+		property="dacr"
+		inputType="TEXT"
+		label="Data Caricamento"/>
+
+	<formFieldProperty
+		name="nome_file" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_esecuzione" />
+	<formFieldProperty
+		name="dacr" />
+
+	<columnFieldProperty
+		name="nome_file" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_esecuzione" />
+	<columnFieldProperty
+		name="dacr" />
+
+	<findFieldProperty
+		name="nome_file" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_esecuzione" />
+
+</bulkInfo>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	
+	<fieldProperty
+		name="find_cds"
+		property="cds"
+		label="CdS"
+		inputType="SEARCHTOOL"
+		formName="searchtool_login"
+		/>
+	<fieldProperty
+		name="cd_cds"
+		property="cds.cd_unita_organizzativa"
+		label="Codice CdS"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		/>
+	<fieldProperty
+		name="ds_cds"
+		property="cds.ds_unita_organizzativa"
+		inputSize="20"
+		inputType="ROTEXT" />
+
+	<fieldProperty
+		name="find_uo"
+		property="uo"
+		label="Unità organizzativa"
+		inputType="SEARCHTOOL"
+		formName="searchtool_login"
+		/>
+	<fieldProperty
+		name="cd_uo"
+		property="uo.cd_unita_organizzativa"
+		label="Codice UO"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		/>
+	<fieldProperty
+		name="ds_uo"
+		property="uo.ds_unita_organizzativa"
+		inputSize="20"
+		inputType="ROTEXT" />
+
+	<fieldProperty
+		name="find_cdr"
+		property="cdr"
+		label="CdR"
+		inputType="SEARCHTOOL"
+		formName="searchtool_login"
+		/>
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cdr.cd_centro_responsabilita"
+		label="Codice CdR"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		/>
+	<fieldProperty
+		name="ds_cdr"
+		property="cdr.ds_cdr"
+		inputSize="20"
+		inputType="ROTEXT" />
+
+	<formFieldProperty
+		name="find_cds"
+		/>
+	<formFieldProperty
+		name="cd_cds"
+		/>
+	<formFieldProperty
+		name="ds_cds"
+		/>
+
+	<formFieldProperty
+		name="find_uo"
+		/>
+	<formFieldProperty
+		name="cd_uo"
+		/>
+	<formFieldProperty
+		name="ds_uo"
+		/>
+
+	<formFieldProperty
+		name="find_cdr"
+		/>
+	<formFieldProperty
+		name="cd_centro_responsabilita"
+		/>
+	<formFieldProperty
+		name="ds_cdr"
+		/>
+</bulkInfo>

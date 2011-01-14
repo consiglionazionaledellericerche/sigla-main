@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cds.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Centro di Spesa" />
+	<fieldProperty
+		name="ds_cds"
+		property="cds.ds_unita_organizzativa"
+		maxLength="300"
+		inputSize="50"
+		inputType="ROTEXT"
+		label="Centro di Spesa" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="unita_organizzativa.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Unità Organizzativa" />
+	<fieldProperty
+		name="ds_unita_organizzativa"
+		property="unita_organizzativa.ds_unita_organizzativa"
+		maxLength="300"
+		inputSize="50"
+		inputType="ROTEXT"
+		label="Unità Organizzativa" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"  
+		enabledOnFreeSearch="true"			
+		enabledOnSearch="true"
+		label="Stato"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputSize="6"
+		inputType="TEXT"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"  
+		enabledOnFreeSearch="true"			
+		enabledOnSearch="true"
+		label="Esercizio" />
+	<fieldProperty
+		name="dt_da"
+		property="dt_da"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnInsert = "true"
+		enabledOnEdit = "false"  
+		enabledOnFreeSearch="true"			
+		enabledOnSearch="true"
+		label="Inizio periodo" 
+		nullable="false"/>
+	<fieldProperty
+		name="pg_liquidazione"
+		property="pg_liquidazione"
+		inputSize="6"
+		inputType="TEXT"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"  
+		enabledOnFreeSearch="true"			
+		enabledOnSearch="true"
+		label="N. liquidazione" />
+	<fieldProperty
+		name="dt_a"
+		property="dt_a"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnInsert = "true"
+		enabledOnEdit = "false"  
+		enabledOnFreeSearch="true"			
+		enabledOnSearch="true"
+		label="Fine periodo" 
+		nullable="false"/>
+	<fieldProperty
+		name="dacr"
+		property="dacr"
+		inputType="ROTEXT"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"
+		label="Data Liquidazione"/>
+	<fieldProperty
+		name="da_esercizio_precedente"
+		property="da_esercizio_precedente"
+		inputType="CHECKBOX"
+		enabledOnInsert = "true"
+		enabledOnEdit = "false"  
+		enabledOnFreeSearch="true"			
+		enabledOnSearch="true"
+		label="Da esercizio precedente"/>
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="ds_cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="ds_unita_organizzativa" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="dt_da" />
+	<formFieldProperty
+		name="pg_liquidazione" />
+	<formFieldProperty
+		name="dt_a" />	
+	<formFieldProperty
+		name="dacr" />	
+	<formFieldProperty
+		name="da_esercizio_precedente" />
+
+	
+	<columnFieldProperty
+		name="pg_liquidazione" />
+	<columnFieldProperty
+		name="esercizio" />	
+	<columnFieldProperty
+		name="cd_cds" />	
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="dt_da" />
+	<columnFieldProperty
+		name="dt_a" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="da_esercizio_precedente" />
+
+	<findFieldProperty
+		name="pg_liquidazione" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="dt_da" />
+	<findFieldProperty
+		name="dt_a" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="da_esercizio_precedente" />
+
+</bulkInfo>

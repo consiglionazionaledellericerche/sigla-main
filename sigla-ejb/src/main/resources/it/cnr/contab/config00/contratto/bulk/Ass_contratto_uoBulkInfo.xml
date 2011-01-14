@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio del Contratto" />
+	<fieldProperty
+		name="pg_contratto"
+		property="pg_contratto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo contratto" />
+	<fieldProperty
+		name="unita_organizzativa"
+		property="unita_organizzativa"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Unità organizzativa" />		
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="unita_organizzativa.cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice Unità organizzativa" />
+	<fieldProperty
+		name="ds_unita_organizzativa"
+		property="unita_organizzativa.ds_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Descrizione Unità organizzativa" />		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_contratto" />
+	<formFieldProperty
+		name="unita_organizzativa" />		
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_contratto" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="ds_unita_organizzativa" />
+	<columnSet name="uo">
+		<columnFieldProperty
+			name="cd_unita_organizzativa"/>
+		<columnFieldProperty
+			name="ds_unita_organizzativa"
+			property="unita_organizzativa.ds_unita_organizzativa"
+			label="Descrizione Unità Organizzativa"/>
+	</columnSet>				
+</bulkInfo>

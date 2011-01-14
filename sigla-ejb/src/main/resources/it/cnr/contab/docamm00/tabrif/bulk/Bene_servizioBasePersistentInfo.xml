@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBase"
+	keyClassName="it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioKey"
+	homeClassName="it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome" >
+	<defaultColumnMap
+		tableName="BENE_SERVIZIO" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_VOCE_IVA"
+			propertyName="cd_voce_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_GESTIONE_INVENTARIO"
+			propertyName="fl_gestione_inventario"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CATEGORIA_GRUPPO"
+			propertyName="cd_categoria_gruppo"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_BENE_SERVIZIO"
+			propertyName="ti_bene_servizio"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_BENE_SERVIZIO"
+			propertyName="ds_bene_servizio"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_GESTIONE_MAGAZZINO"
+			propertyName="fl_gestione_magazzino"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="UNITA_MISURA"
+			propertyName="unita_misura"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_OBB_INTRASTAT_ACQ"
+			propertyName="fl_obb_intrastat_acq"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_OBB_INTRASTAT_VEN"
+			propertyName="fl_obb_intrastat_ven"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+			
+		<columnMapping
+			columnName="FL_VALIDO"
+			propertyName="fl_valido"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_AUTOFATTURA"
+			propertyName="fl_autofattura"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="fl_gestione_inventario" />
+	<persistentProperty
+		name="cd_voce_iva" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="cd_categoria_gruppo" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="ti_bene_servizio" />
+	<persistentProperty
+		name="ds_bene_servizio" />
+	<persistentProperty
+		name="fl_gestione_magazzino" />
+	<persistentProperty
+		name="unita_misura" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="fl_obb_intrastat_acq" />	
+	<persistentProperty
+		name="fl_obb_intrastat_ven" />	
+	<persistentProperty
+		name="fl_valido" />
+	<persistentProperty
+		name="fl_autofattura" />			
+</SQLPersistentInfo>

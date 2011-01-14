@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.MandatoCupKey">
+	<defaultColumnMap
+		tableName="MANDATO_CUP">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cdCds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pgMandato"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="esercizioObbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="esercizioOriObbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pgObbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pgObbligazioneScadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS_DOC_AMM"
+			propertyName="cdCdsDocAmm"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UO_DOC_AMM"
+			propertyName="cdUoDocAmm"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_DOC_AMM"
+			propertyName="esercizioDocAmm"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_AMM"
+			propertyName="cdTipoDocumentoAmm"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_DOC_AMM"
+			propertyName="pgDocAmm"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CUP"
+			propertyName="cdCup"
+			sqlTypeName="VARCHAR"
+			columnSize="15"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdCds"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="pgMandato"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizioObbligazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizioOriObbligazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="pgObbligazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="pgObbligazioneScadenzario"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdCdsDocAmm"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdUoDocAmm"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizioDocAmm"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdTipoDocumentoAmm"
+		partOfOid="true" />
+	<persistentProperty
+		name="pgDocAmm"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdCup"
+		partOfOid="true" />
+</SQLPersistentInfo>

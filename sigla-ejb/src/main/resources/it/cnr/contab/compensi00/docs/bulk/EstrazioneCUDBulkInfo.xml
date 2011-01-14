@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	
+	<fieldProperty
+		name="findAnagrafico"
+		property="anagrafico"
+		inputType="SEARCHTOOL"
+		label="Anagrafico" />
+	<fieldProperty
+		name="cd_anag"
+		property="anagrafico.cd_anag"
+		inputType="TEXT"
+		readonlyProperty="ROAnagrafico"
+		nullable="false"
+		maxLength="8"
+		inputSize="8" 
+		label="Codice" />
+	<fieldProperty
+		name="ragione_sociale"
+		property="anagrafico.ragione_sociale"
+		inputType="ROTEXT"
+		inputSize="30" 
+		label="Ragione sociale" />
+	
+	
+	<formFieldProperty name="cd_anag" />
+	<formFieldProperty name="findAnagrafico" />
+	<formFieldProperty name="ragione_sociale" />
+</bulkInfo>

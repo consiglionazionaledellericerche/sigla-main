@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent00.bulk.Voce_f_res_presBulk"
+	homeClassName="it.cnr.contab.prevent00.bulk.Voce_f_res_presHome" >
+	
+	<defaultColumnMap tableName="VOCE_F_RES_PRES">		
+
+		<columnMapping
+			columnName="CD_VOCE"
+			propertyName="voce.cd_voce" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="voce.esercizio" />			
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="voce.ti_gestione" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="voce.ti_appartenenza" />			
+	</defaultColumnMap>		
+
+	<persistentProperty
+		name="voce"
+		partOfOid = "true"/>		
+</SQLPersistentInfo>

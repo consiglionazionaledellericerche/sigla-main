@@ -1,0 +1,1107 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_residui_speBase"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_residui_speHome">
+	<defaultColumnMap
+		tableName="V_CONS_GAE_RESIDUI_SPE">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_RES"
+			propertyName="esercizio_res"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_DIPARTIMENTO"
+			propertyName="cd_dipartimento"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="pg_progetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="ds_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_COMMESSA"
+			propertyName="pg_commessa"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_COMMESSA"
+			propertyName="cd_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_COMMESSA"
+			propertyName="ds_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_MODULO"
+			propertyName="pg_modulo"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="15"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_LINEA_ATTIVITA"
+			propertyName="ds_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="ds_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_STANZ_RES_IMPROPRIO"
+			propertyName="im_stanz_res_improprio"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_VAR_ST_RES"
+			propertyName="pg_var_st_res"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_VAR_ST_RES"
+			propertyName="ds_var_st_res"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_PIU_STANZ_RES_IMP"
+			propertyName="var_piu_stanz_res_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_MENO_STANZ_RES_IMP"
+			propertyName="var_meno_stanz_res_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_OBB"
+			propertyName="cd_cds_obb"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_CONT"
+			propertyName="cd_tipo_documento_cont"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_SCADENZA"
+			propertyName="ds_scadenza"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_OBBL_RES_IMP"
+			propertyName="im_obbl_res_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_OBBL_RES_PRO"
+			propertyName="im_obbl_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_VAR_RES_PRO"
+			propertyName="pg_var_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_VAR_RES_PRO"
+			propertyName="ds_var_res_pro"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_PIU_OBBL_RES_PRO"
+			propertyName="var_piu_obbl_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_MENO_OBBL_RES_PRO"
+			propertyName="var_meno_obbl_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_MAN"
+			propertyName="cd_cds_man"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pg_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MANDATO"
+			propertyName="ds_mandato"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_PRO"
+			propertyName="im_mandati_reversali_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_IMP"
+			propertyName="im_mandati_reversali_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="ASS_RES_IMP"
+			propertyName="ass_res_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="INIZIALE"
+			propertyName="iniziale"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DISP_RES"
+			propertyName="disp_res"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="RIMASTI_DA_PAGARE"
+			propertyName="rimasti_da_pagare"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="RIMASTI_DA_PAGARE_PRO"
+			propertyName="rimasti_da_pagare_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="RIMASTI_DA_PAGARE_IMP"
+			propertyName="rimasti_da_pagare_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PAGATO_TOTALE"
+			propertyName="pagato_totale"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+			
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="esercizio_res" />
+	<persistentProperty
+		name="cd_dipartimento" />
+	<persistentProperty
+		name="pg_progetto" />
+	<persistentProperty
+		name="cd_progetto" />
+	<persistentProperty
+		name="ds_progetto" />
+	<persistentProperty
+		name="pg_commessa" />
+	<persistentProperty
+		name="cd_commessa" />
+	<persistentProperty
+		name="ds_commessa" />
+	<persistentProperty
+		name="pg_modulo" />
+	<persistentProperty
+		name="cd_modulo" />
+	<persistentProperty
+		name="ds_modulo" />
+	<persistentProperty
+		name="cd_centro_responsabilita" />
+	<persistentProperty
+		name="cd_linea_attivita" />
+	<persistentProperty
+		name="ds_linea_attivita" />
+	<persistentProperty
+		name="ti_appartenenza" />
+	<persistentProperty
+		name="ti_gestione" />
+	<persistentProperty
+		name="cd_elemento_voce" />
+	<persistentProperty
+		name="ds_elemento_voce" />
+	<persistentProperty
+		name="im_stanz_res_improprio" />
+	<persistentProperty
+		name="pg_var_st_res" />
+	<persistentProperty
+		name="ds_var_st_res" />
+	<persistentProperty
+		name="var_piu_stanz_res_imp" />
+	<persistentProperty
+		name="var_meno_stanz_res_imp" />
+	<persistentProperty
+		name="cd_cds_obb" />
+	<persistentProperty
+		name="pg_obbligazione" />
+	<persistentProperty
+		name="pg_obbligazione_scadenzario" />
+	<persistentProperty
+		name="cd_tipo_documento_cont" />
+	<persistentProperty
+		name="ds_scadenza" />
+	<persistentProperty
+		name="im_obbl_res_imp" />
+	<persistentProperty
+		name="im_obbl_res_pro" />
+	<persistentProperty
+		name="pg_var_res_pro" />
+	<persistentProperty
+		name="ds_var_res_pro" />
+	<persistentProperty
+		name="var_piu_obbl_res_pro" />
+	<persistentProperty
+		name="var_meno_obbl_res_pro" />
+	<persistentProperty
+		name="cd_cds_man" />
+	<persistentProperty
+		name="pg_mandato" />
+	<persistentProperty
+		name="ds_mandato" />
+	<persistentProperty
+		name="im_mandati_reversali_pro" />
+	<persistentProperty
+		name="im_mandati_reversali_imp" />
+	<persistentProperty
+		name="ass_res_imp"/>
+	<persistentProperty		
+		name="iniziale"/>
+	<persistentProperty
+		name="disp_res"/>
+	<persistentProperty
+		name="rimasti_da_pagare"/>
+	<persistentProperty
+		name="rimasti_da_pagare_pro"/>
+	<persistentProperty
+		name="rimasti_da_pagare_imp"/>
+	<persistentProperty
+		name="pagato_totale"/>
+	
+	
+	<columnMap 
+		name="BASEGAE"
+		tableName="V_CONS_GAE_RESIDUI_SPE">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_DIPARTIMENTO"
+			propertyName="cd_dipartimento"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_COMMESSA"
+			propertyName="cd_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+			<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cd_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />		
+		</columnMap>	
+				
+	<columnMap 
+		name="SPEGAE"
+		tableName="V_CONS_GAE_RESIDUI_SPE"
+		extends="BASEGAE" >
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="ds_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_COMMESSA"
+			propertyName="ds_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_LINEA_ATTIVITA"
+			propertyName="ds_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_STANZ_RES_IMPROPRIO"
+			propertyName="im_stanz_res_improprio"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		<columnMapping
+			columnName="VAR_PIU_STANZ_RES_IMP"
+			propertyName="var_piu_stanz_res_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_MENO_STANZ_RES_IMP"
+			propertyName="var_meno_stanz_res_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		<columnMapping
+			columnName="IM_OBBL_RES_IMP"
+			propertyName="im_obbl_res_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_OBBL_RES_PRO"
+			propertyName="im_obbl_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_PIU_OBBL_RES_PRO"
+			propertyName="var_piu_obbl_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_MENO_OBBL_RES_PRO"
+			propertyName="var_meno_obbl_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		<columnMapping
+			columnName="DA_PAGARE"
+			propertyName="da_pagare"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />		
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_PRO"
+			propertyName="im_mandati_reversali_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_IMP"
+			propertyName="im_mandati_reversali_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ASS_RES_IMP"
+			propertyName="ass_res_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="INIZIALE"
+			propertyName="iniziale"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DISP_RES"
+			propertyName="disp_res"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="RIMASTI_DA_PAGARE"
+			propertyName="rimasti_da_pagare"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="PAGATO_TOTALE"
+			propertyName="pagato_totale"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		</columnMap>	
+		
+		<columnMap 
+			name="BASEGAEVOC"
+			tableName="V_CONS_GAE_RESIDUI_SPE"
+			extends="BASEGAE" >
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		</columnMap>	
+		
+		<columnMap 
+			name="SPEGAEVOC"
+			tableName="V_CONS_GAE_RESIDUI_SPE"
+			extends="BASEGAEVOC" >
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="ds_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_COMMESSA"
+			propertyName="ds_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_LINEA_ATTIVITA"
+			propertyName="ds_linea_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_STANZ_RES_IMPROPRIO"
+			propertyName="im_stanz_res_improprio"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		<columnMapping
+			columnName="VAR_PIU_STANZ_RES_IMP"
+			propertyName="var_piu_stanz_res_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_MENO_STANZ_RES_IMP"
+			propertyName="var_meno_stanz_res_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		<columnMapping
+			columnName="IM_OBBL_RES_IMP"
+			propertyName="im_obbl_res_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_OBBL_RES_PRO"
+			propertyName="im_obbl_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_PIU_OBBL_RES_PRO"
+			propertyName="var_piu_obbl_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_MENO_OBBL_RES_PRO"
+			propertyName="var_meno_obbl_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />		
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_PRO"
+			propertyName="im_mandati_reversali_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_IMP"
+			propertyName="im_mandati_reversali_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ASS_RES_IMP"
+			propertyName="ass_res_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="INIZIALE"
+			propertyName="iniziale"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DISP_RES"
+			propertyName="disp_res"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="RIMASTI_DA_PAGARE"
+			propertyName="rimasti_da_pagare"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="PAGATO_TOTALE"
+			propertyName="pagato_totale"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />			
+		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="ds_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		</columnMap>	
+		
+		<columnMap 
+			name="SPEGAEVOCVARP"
+			tableName="V_CONS_GAE_RESIDUI_SPE"
+			extends="BASEGAEVOC" >
+		<columnMapping
+			columnName="PG_VAR_RES_PRO"
+			propertyName="pg_var_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_VAR_RES_PRO"
+			propertyName="ds_var_res_pro"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />			
+		<columnMapping
+			columnName="VAR_PIU_OBBL_RES_PRO"
+			propertyName="var_piu_obbl_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		</columnMap>
+		
+		<columnMap 
+			name="SPEGAEVOCVARM"
+			tableName="V_CONS_GAE_RESIDUI_SPE"
+			extends="BASEGAEVOC" >
+		<columnMapping
+			columnName="PG_VAR_RES_PRO"
+			propertyName="pg_var_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_VAR_RES_PRO"
+			propertyName="ds_var_res_pro"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />			
+		<columnMapping
+			columnName="VAR_MENO_OBBL_RES_PRO"
+			propertyName="var_meno_obbl_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		</columnMap>	
+		  
+		<columnMap 
+			name="SPEGAEVOCPIUSTAN"
+			tableName="V_CONS_GAE_RESIDUI_SPE"
+			extends="BASEGAEVOC" >
+		<columnMapping
+			columnName="PG_VAR_ST_RES"
+			propertyName="pg_var_st_res"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_VAR_ST_RES"
+			propertyName="ds_var_st_res"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_PIU_STANZ_RES_IMP"
+			propertyName="var_piu_stanz_res_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		</columnMap>
+			
+		<columnMap 
+			name="SPEGAEVOCMENOSTAN"
+			tableName="V_CONS_GAE_RESIDUI_SPE"
+			extends="BASEGAEVOC" >
+		<columnMapping
+			columnName="PG_VAR_ST_RES"
+			propertyName="pg_var_st_res"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_VAR_ST_RES"
+			propertyName="ds_var_st_res"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="VAR_MENO_STANZ_RES_IMP"
+			propertyName="var_meno_stanz_res_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		</columnMap>	
+		       
+		<columnMap 
+			name="SPEGAEVOCIMP"
+			tableName="V_CONS_GAE_RESIDUI_SPE"
+			extends="BASEGAEVOC">
+		<columnMapping
+			columnName="CD_CDS_OBB"
+			propertyName="cd_cds_obb"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_SCADENZA"
+			propertyName="ds_scadenza"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_OBBL_RES_PRO"
+			propertyName="im_obbl_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		<columnMapping
+			columnName="VAR_PIU_OBBL_RES_PRO"
+			propertyName="var_piu_obbl_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		<columnMapping
+			columnName="VAR_MENO_OBBL_RES_PRO"
+			propertyName="var_meno_obbl_res_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />			
+		<columnMapping
+			columnName="RIMASTI_DA_PAGARE_PRO"
+			propertyName="rimasti_da_pagare_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />		
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_PRO"
+			propertyName="im_mandati_reversali_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		</columnMap>
+		
+		<columnMap 
+			name="SPEGAEVOCIMPMAN"
+			tableName="V_CONS_GAE_RESIDUI_SPE"
+			extends="BASEGAEVOC">
+		<columnMapping
+			columnName="CD_CDS_OBB"
+			propertyName="cd_cds_obb"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_SCADENZA"
+			propertyName="ds_scadenza"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_MAN"
+			propertyName="cd_cds_man"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pg_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MANDATO"
+			propertyName="ds_mandato"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_PRO"
+			propertyName="im_mandati_reversali_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		</columnMap>
+		
+		<columnMap 
+			name="SPEGAEVOCOBB"
+			tableName="V_CONS_GAE_RESIDUI_SPE"
+			extends="BASEGAEVOC">
+		<columnMapping
+			columnName="CD_CDS_OBB"
+			propertyName="cd_cds_obb"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_SCADENZA"
+			propertyName="ds_scadenza"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_OBBL_RES_IMP"
+			propertyName="im_obbl_res_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_IMP"
+			propertyName="im_mandati_reversali_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		<columnMapping
+			columnName="RIMASTI_DA_PAGARE_IMP"
+			propertyName="rimasti_da_pagare_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />		
+		</columnMap>
+		
+		<columnMap 
+			name="SPEGAEVOCOBBMOB"
+			tableName="V_CONS_GAE_RESIDUI_SPE"
+			extends="BASEGAEVOC">
+		<columnMapping
+			columnName="CD_CDS_OBB"
+			propertyName="cd_cds_obb"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_SCADENZA"
+			propertyName="ds_scadenza"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_MAN"
+			propertyName="cd_cds_man"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pg_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MANDATO"
+			propertyName="ds_mandato"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_IMP"
+			propertyName="im_mandati_reversali_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		</columnMap>
+               
+		
+		<columnMap 
+			name="SPEGAEVOCMAN"
+			tableName="V_CONS_GAE_RESIDUI_SPE"
+			extends="BASEGAEVOC">
+		<columnMapping
+			columnName="CD_CDS_MAN"
+			propertyName="cd_cds_man"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pg_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MANDATO"
+			propertyName="ds_mandato"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_PRO"
+			propertyName="im_mandati_reversali_pro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		</columnMap>	
+	
+		<columnMap 
+			name="SPEGAEVOCMOB"
+			tableName="V_CONS_GAE_RESIDUI_SPE"
+			extends="BASEGAEVOC" >
+		<columnMapping
+			columnName="CD_CDS_MAN"
+			propertyName="cd_cds_man"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pg_mandato"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_MANDATO"
+			propertyName="ds_mandato"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MANDATI_REVERSALI_IMP"
+			propertyName="im_mandati_reversali_imp"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+		</columnMap>
+</SQLPersistentInfo>

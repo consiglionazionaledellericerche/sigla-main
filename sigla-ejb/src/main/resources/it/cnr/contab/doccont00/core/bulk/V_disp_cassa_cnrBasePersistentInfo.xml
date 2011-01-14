@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.V_disp_cassa_cnrBase"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.V_disp_cassa_cnrHome" >
+	<defaultColumnMap
+		tableName="V_DISP_CASSA_CNR" >
+		<columnMapping
+			columnName="IM_DISPONIBILTA_CASSA"
+			propertyName="im_disponibilta_cassa"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="im_disponibilta_cassa" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_cds" />
+</SQLPersistentInfo>

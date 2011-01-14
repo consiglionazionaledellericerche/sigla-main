@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="nome_file"
+		property="nome_file"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Nome File" />
+	<fieldProperty
+		name="pg_esecuzione"
+		property="pg_esecuzione"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="Prog. Esec." />
+	<fieldProperty
+		name="pg_rec"
+		property="pg_rec"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Riga File" />
+	<fieldProperty
+		name="dt_giornaliera"
+		property="dt_giornaliera"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Giornaliera" />
+	<fieldProperty
+		name="dt_elaborazione"
+		property="dt_elaborazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Elaborazione" />
+	<fieldProperty
+		name="dt_esecuzione"
+		property="dt_esecuzione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Riscontro/Sospeso" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS" />
+	<fieldProperty
+		name="cd_cds_sr"
+		property="cd_cds_sr"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS" />
+	<fieldProperty
+		name="esercizio_sr"
+		property="esercizio_sr"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="ti_entrata_spesa_sr"
+		property="ti_entrata_spesa_sr"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="E/S" />
+	<fieldProperty
+		name="ti_sospeso_riscontro_sr"
+		property="ti_sospeso_riscontro_sr"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Sempre R (Riscontro)" />
+	<fieldProperty
+		name="cd_sr"
+		property="cd_sr"
+		inputType="TEXT"
+		inputSize="24"
+		maxLength="24"
+		label="Codice" />
+	<fieldProperty
+		name="tipo_mov"
+		property="tipo_mov"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Man/Rev/Sos" />
+	<fieldProperty
+		name="cd_cds_manrev"
+		property="cd_cds_manrev"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="CDS" />
+	<fieldProperty
+		name="esercizio_manrev"
+		property="esercizio_manrev"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_manrev"
+		property="pg_manrev"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		label="Numero" />
+	<fieldProperty
+		name="anomalia"
+		property="anomalia"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1000"
+		label="Oggetto dell'anomalia" />
+		
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="nome_file" />
+	<formFieldProperty
+		name="pg_esecuzione" />
+	<formFieldProperty
+		name="pg_rec" />
+	<formFieldProperty
+		name="dt_giornaliera" />
+	<formFieldProperty
+		name="dt_elaborazione" />
+	<formFieldProperty
+		name="dt_esecuzione" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_cds_sr" />
+	<formFieldProperty
+		name="esercizio_sr" />
+	<formFieldProperty
+		name="ti_entrata_spesa_sr" />
+	<formFieldProperty
+		name="ti_sospeso_riscontro_sr" />
+	<formFieldProperty
+		name="cd_sr" />
+	<formFieldProperty
+		name="tipo_mov" />
+	<formFieldProperty
+		name="cd_cds_manrev" />
+	<formFieldProperty
+		name="esercizio_manrev" />
+	<formFieldProperty
+		name="pg_manrev" />
+	<formFieldProperty
+		name="anomalia" />
+		
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="nome_file" />
+	<findFieldProperty
+		name="pg_esecuzione" />
+	<findFieldProperty
+		name="pg_rec" />
+	<findFieldProperty
+		name="dt_giornaliera" />
+	<findFieldProperty
+		name="dt_elaborazione" />
+	<findFieldProperty
+		name="dt_esecuzione" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_cds_sr" />
+	<findFieldProperty
+		name="esercizio_sr" />
+	<findFieldProperty
+		name="ti_entrata_spesa_sr" />
+	<findFieldProperty
+		name="ti_sospeso_riscontro_sr" />
+	<findFieldProperty
+		name="cd_sr" />
+	<findFieldProperty
+		name="tipo_mov" />
+	<findFieldProperty
+		name="cd_cds_manrev" />
+	<findFieldProperty
+		name="esercizio_manrev" />
+	<findFieldProperty
+		name="pg_manrev" />
+	<findFieldProperty
+		name="anomalia" />
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="nome_file" />
+	<columnFieldProperty
+		name="pg_esecuzione" />
+	<columnFieldProperty
+		name="pg_rec" />
+	<columnFieldProperty
+		name="dt_giornaliera" />
+	<columnFieldProperty
+		name="dt_elaborazione" />
+	<columnFieldProperty
+		name="dt_esecuzione" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_cds_sr" />
+	<columnFieldProperty
+		name="esercizio_sr" />
+	<columnFieldProperty
+		name="ti_entrata_spesa_sr" />
+	<columnFieldProperty
+		name="ti_sospeso_riscontro_sr" />
+	<columnFieldProperty
+		name="cd_sr" />
+	<columnFieldProperty
+		name="tipo_mov" />
+	<columnFieldProperty
+		name="cd_cds_manrev" />
+	<columnFieldProperty
+		name="esercizio_manrev" />
+	<columnFieldProperty
+		name="pg_manrev" />
+	<columnFieldProperty
+		name="anomalia" />
+		
+	<columnSet name="BASE">	
+		<columnFieldProperty  name="esercizio" />
+		<columnFieldProperty  name="nome_file" />
+		<columnFieldProperty  name="pg_esecuzione" />
+		<columnFieldProperty  name="cd_cds" />
+		<columnFieldProperty  name="pg_rec" />
+		<columnFieldProperty  name="dt_giornaliera" />
+		<columnFieldProperty  name="dt_elaborazione" />
+		<columnFieldProperty  name="tipo_mov" />
+		<columnFieldProperty  name="dt_esecuzione" />
+		<columnFieldProperty  name="cd_cds_sr" headerLabel="Sospeso"/>
+		<columnFieldProperty  name="esercizio_sr" headerLabel="Sospeso"/>
+		<columnFieldProperty  name="ti_entrata_spesa_sr" headerLabel="Sospeso"/>
+		<columnFieldProperty  name="cd_sr" headerLabel="Sospeso"/>
+		<columnFieldProperty  name="cd_cds_manrev" headerLabel="Madato/Revesale"/>
+		<columnFieldProperty  name="esercizio_manrev" headerLabel="Madato/Revesale"/>
+		<columnFieldProperty  name="pg_manrev" headerLabel="Madato/Revesale"/>
+		<columnFieldProperty  name="anomalia" />	
+	</columnSet>
+	
+	
+	<freeSearchSet name="BASE">	
+		<findFieldProperty  name="esercizio" />
+		<findFieldProperty  name="nome_file" />
+		<findFieldProperty  name="pg_esecuzione" />
+		<findFieldProperty  name="cd_cds" />
+		<findFieldProperty  name="pg_rec" />
+		<findFieldProperty  name="dt_giornaliera" />
+		<findFieldProperty  name="dt_elaborazione" />
+		<findFieldProperty  name="tipo_mov" />
+		<findFieldProperty  name="dt_esecuzione" />
+		<findFieldProperty  name="cd_cds_sr" />
+		<findFieldProperty  name="esercizio_sr" />
+		<findFieldProperty  name="ti_entrata_spesa_sr" />
+		<findFieldProperty  name="cd_sr" />
+		<findFieldProperty  name="cd_cds_manrev" />
+		<findFieldProperty  name="esercizio_manrev" />
+		<findFieldProperty  name="pg_manrev" />
+		<findFieldProperty  name="anomalia" />	
+	</freeSearchSet>
+
+</bulkInfo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Sospesi CNR">
+	<fieldProperty
+		name="ricercaSospesiAssegnati"
+		property="ricercaSospesiAssegnati"
+		label="Sospesi Assegnati a Cds"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		/>
+	<fieldProperty
+		name="ricercaSospesiInSospesoSelezionati"
+		property="ricercaSospesiInSospesoSelezionati"
+		label="Sospesi In Sospeso gi&#224; selezionati"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		/>
+	<fieldProperty
+		name="ricercaSospesiInSospeso"
+		property="ricercaSospesiInSospeso"
+		label="Sospesi In Sospeso non ancora selezionati"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		/>
+	<fieldProperty
+		name="ti_entrata_spesa"
+		property="ti_entrata_spesa"
+		label="Entrata/Spesa"
+		inputType="RADIOGROUP"
+		keysProperty ="ti_entrata_spesaKeys"
+		enabledOnSearch="false"
+		/>
+		
+
+	<formFieldProperty
+		name="ricercaSospesiAssegnati"/>
+	<formFieldProperty
+		name="ricercaSospesiInSospesoSelezionati"/>
+	<formFieldProperty
+		name="ricercaSospesiInSospeso"/>
+	<formFieldProperty
+		name="ti_entrata_spesa"/>
+		
+
+</bulkInfo>

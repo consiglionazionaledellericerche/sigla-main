@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio_limite"
+		property="esercizio_limite"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Codice terzo" />
+	<fieldProperty
+		name="ds_terzo"
+		property="ds_terzo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Nominativo" />
+	<fieldProperty
+		name="cd_tipo_limite"
+		property="cd_tipo_limite"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Tipo limite" />
+	<fieldProperty
+		name="im_incarichi"
+		property="im_incarichi"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Importo Incarichi" />
+
+	<formFieldProperty
+		name="esercizio_limite" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="ds_terzo" />
+	<formFieldProperty
+		name="cd_tipo_limite" />
+	<formFieldProperty
+		name="im_incarichi" />
+
+	<findFieldProperty
+		name="esercizio_limite" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="ds_terzo" />
+	<findFieldProperty
+		name="cd_tipo_limite" />
+	<findFieldProperty
+		name="im_incarichi" />
+
+	<columnFieldProperty
+		name="esercizio_limite" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="ds_terzo" />
+	<columnFieldProperty
+		name="cd_tipo_limite" />
+	<columnFieldProperty
+		name="im_incarichi" />
+
+	<columnSet
+		name="incarichiTerzo">
+		<columnFieldProperty
+			name="cd_terzo" />
+		<columnFieldProperty
+			name="ds_terzo"
+			inputType="TEXT"
+			inputSize="50"/>
+		<columnFieldProperty
+			name="im_incarichi" />
+	</columnSet>
+</bulkInfo>

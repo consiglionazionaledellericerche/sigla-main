@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Tipologie di Atti amministrativi"
+          longDescription="Tipologie di Atti">
+	<fieldProperty
+		name="cd_tipo_atto"
+		property="cd_tipo_atto"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		nullable="false"
+		enabledOnSearch="true"
+		label="Codice" />
+	<fieldProperty
+		name="ds_tipo_atto"
+		property="ds_tipo_atto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		enabledOnSearch="true"
+		maxLength="200"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="fl_cancellato"
+		property="fl_cancellato"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Cancellato" />
+
+	<fieldProperty
+		name="fl_non_definito"
+		property="fl_non_definito"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Atto non definito" />
+		
+    <form name="searchtool">
+	  <formFieldProperty
+		name="cd_tipo_atto"
+		inputSize="20" />	
+	  <formFieldProperty
+		name="ds_tipo_atto"
+		inputType="TEXT"
+		inputSize="30"
+		 />           
+	</form>	
+	
+	<formFieldProperty
+		name="cd_tipo_atto" />	
+	<formFieldProperty
+		name="ds_tipo_atto" />
+	<formFieldProperty
+		name="fl_cancellato" />
+	<formFieldProperty
+		name="fl_non_definito" />
+		
+	<columnFieldProperty
+		name="cd_tipo_atto" />
+	<columnFieldProperty
+		name="ds_tipo_atto" />
+	<columnFieldProperty
+		name="fl_cancellato" />
+	<columnFieldProperty
+		name="fl_non_definito" />
+		
+	<findFieldProperty
+		name="cd_tipo_atto" />
+	<findFieldProperty
+		name="ds_tipo_atto" />
+	<findFieldProperty
+		name="fl_cancellato" />
+	<findFieldProperty
+		name="fl_non_definito" />
+		
+</bulkInfo>

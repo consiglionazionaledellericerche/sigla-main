@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBase"
+	keyClassName="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereKey"
+	homeClassName="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereHome" >
+	<defaultColumnMap
+		tableName="DISTINTA_CASSIERE" >
+		<columnMapping
+			columnName="PG_DISTINTA_DEF"
+			propertyName="pg_distinta_def"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="DT_INVIO"
+			propertyName="dt_invio"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_REV_INI_SOS"
+			propertyName="im_rev_ini_sos"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_REV_INI_RIT"
+			propertyName="im_rev_ini_rit"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_EMISSIONE"
+			propertyName="dt_emissione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_MAN_INI_PAG"
+			propertyName="im_man_ini_pag"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_MAN_INI_SOS"
+			propertyName="im_man_ini_sos"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_MAN_INI_ACC"
+			propertyName="im_man_ini_acc"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_REV_INI_TRA"
+			propertyName="im_rev_ini_tra"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_distinta_def" />
+	<persistentProperty
+		name="dt_invio" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="im_rev_ini_rit" />
+	<persistentProperty
+		name="im_rev_ini_sos" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dt_emissione" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="im_man_ini_pag" />
+	<persistentProperty
+		name="im_man_ini_sos" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="im_man_ini_acc" />
+	<persistentProperty
+		name="im_rev_ini_tra" />
+</SQLPersistentInfo>

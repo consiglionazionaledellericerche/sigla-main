@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Impegni Riportabili"
+          longDescription="Impegni Riportabili">
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Cod." />
+	<fieldProperty
+		name="cd_progetto"
+		property="cd_progetto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice Modulo di Attivita'" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Unita' organizzativa" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDR" />
+	<fieldProperty
+		name="esercizio_originale"
+		property="esercizio_originale"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Impegno" />
+	<fieldProperty
+		name="pg_obbligazione"
+		property="pg_obbligazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Prog. Impegno" />
+	<fieldProperty
+		name="pg_obbligazione_scadenzario"
+		property="pg_obbligazione_scadenzario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Prog. Scadenzario" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="stato_obbligazione"
+		property="stato_obbligazione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Stato Impegno" />
+	<fieldProperty
+		name="riportato"
+		property="riportato"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Riportato" />
+	<fieldProperty
+		name="ds_obbligazione"
+		property="ds_obbligazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione Impegno" />
+	<fieldProperty
+		name="im_scadvoce"
+		property="im_scadvoce"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+	    formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Riportabile" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Voce di Spesa" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="cd_progetto" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="esercizio_originale" />
+	<formFieldProperty
+		name="pg_obbligazione" />
+	<formFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="stato_obbligazione" />
+	<formFieldProperty
+		name="riportato" />
+	<formFieldProperty
+		name="ds_obbligazione" />
+	<formFieldProperty
+		name="im_scadvoce" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="cd_progetto" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="esercizio_originale" />
+	<findFieldProperty
+		name="pg_obbligazione" />
+	<findFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="stato_obbligazione" />
+	<findFieldProperty
+		name="riportato" />
+	<findFieldProperty
+		name="ds_obbligazione" />
+	<findFieldProperty
+		name="im_scadvoce" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="cd_progetto" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="esercizio_originale" />
+	<columnFieldProperty
+		name="pg_obbligazione" />
+	<columnFieldProperty
+		name="pg_obbligazione_scadenzario" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="stato_obbligazione" />
+	<columnFieldProperty
+		name="riportato" />
+	<columnFieldProperty
+		name="ds_obbligazione" />
+	<columnFieldProperty
+		name="im_scadvoce" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnSet	
+	     name="consObblRiportabili">
+		<columnFieldProperty
+			name="cd_linea_attivita" />
+		<columnFieldProperty
+			name="cd_progetto" />
+		<columnFieldProperty
+			name="cd_centro_responsabilita" />
+		<columnFieldProperty
+			name="esercizio_originale" />
+		<columnFieldProperty
+			name="pg_obbligazione" />
+		<columnFieldProperty
+			name="pg_obbligazione_scadenzario" />
+		<columnFieldProperty
+			name="stato_obbligazione" />
+		<columnFieldProperty
+			name="riportato" />
+		<columnFieldProperty
+			name="ds_obbligazione" />
+		<columnFieldProperty
+			name="im_scadvoce" />
+		<columnFieldProperty
+			name="cd_elemento_voce" />
+	</columnSet>
+	<freeSearchSet	
+	     name="consObblRiportabili">
+		<findFieldProperty
+			name="cd_linea_attivita" label = "Linea Attivita'" />
+		<findFieldProperty
+			name="cd_progetto" />
+		<findFieldProperty
+			name="cd_centro_responsabilita" />
+		<findFieldProperty
+			name="cd_unita_organizzativa" />
+		<findFieldProperty
+			name="esercizio_originale" />
+		<findFieldProperty
+			name="pg_obbligazione" />
+		<findFieldProperty
+			name="pg_obbligazione_scadenzario" />
+		<findFieldProperty
+			name="esercizio" />
+		<findFieldProperty
+			name="stato_obbligazione" />
+		<findFieldProperty
+			name="riportato" />
+		<findFieldProperty
+			name="ds_obbligazione" />
+		<findFieldProperty
+			name="im_scadvoce" />
+		<findFieldProperty
+			name="cd_elemento_voce" />
+	</freeSearchSet>
+</bulkInfo>

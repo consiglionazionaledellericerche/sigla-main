@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="user_"
+		property="user_"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="user_"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_transaction_"
+		property="dt_transaction_"
+		inputType="TEXT"
+		label="dt_transaction_" />
+	<fieldProperty
+		name="pg_comune"
+		property="pg_comune"
+		inputType="TEXT"
+		label="pg_comune" />
+	<fieldProperty
+		name="action_"
+		property="action_"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="action_"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_storico_"
+		property="pg_storico_"
+		inputType="TEXT"
+		label="pg_storico_" />
+	<fieldProperty
+		name="abi"
+		property="abi"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		label="abi" />
+	<fieldProperty
+		name="frazione"
+		property="frazione"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="frazione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_abicab"
+		property="ds_abicab"
+		maxLength="150"
+		inputSize="150"
+		inputType="TEXT"
+		label="ds_abicab"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="via"
+		property="via"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="via"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cap"
+		property="cap"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		label="cap"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cab"
+		property="cab"
+		maxLength="5"
+		inputSize="5"
+		inputType="TEXT"
+		label="cab" />
+	<fieldProperty
+		name="fl_cancellato"
+		property="fl_cancellato"
+		inputType="CHECKBOX"
+		label="fl_cancellato" />
+
+	<formFieldProperty
+		name="pg_storico_" />
+	<formFieldProperty
+		name="user_" />
+	<formFieldProperty
+		name="dt_transaction_" />
+	<formFieldProperty
+		name="action_" />
+	<formFieldProperty
+		name="abi" />
+	<formFieldProperty
+		name="cab" />
+	<formFieldProperty
+		name="ds_abicab" />
+	<formFieldProperty
+		name="via" />
+	<formFieldProperty
+		name="cap" />
+	<formFieldProperty
+		name="frazione" />
+	<formFieldProperty
+		name="pg_comune" />
+	<formFieldProperty
+		name="fl_cancellato" />
+
+	<columnFieldProperty
+		name="user_" />
+	<columnFieldProperty
+		name="dt_transaction_" />
+	<columnFieldProperty
+		name="action_" />
+	<columnFieldProperty
+		name="abi" />
+	<columnFieldProperty
+		name="cab" />
+	<columnFieldProperty
+		name="ds_abicab" />
+	<columnFieldProperty
+		name="via" />
+	<columnFieldProperty
+		name="cap" />
+	<columnFieldProperty
+		name="frazione" />
+	<columnFieldProperty
+		name="pg_comune" />
+	<columnFieldProperty
+		name="fl_cancellato" />
+
+	<findFieldProperty
+		name="pg_storico_" />
+	<findFieldProperty
+		name="user_" />
+	<findFieldProperty
+		name="dt_transaction_" />
+	<findFieldProperty
+		name="action_" />
+	<findFieldProperty
+		name="abi" />
+	<findFieldProperty
+		name="cab" />
+	<findFieldProperty
+		name="ds_abicab" />
+	<findFieldProperty
+		name="via" />
+	<findFieldProperty
+		name="cap" />
+	<findFieldProperty
+		name="frazione" />
+	<findFieldProperty
+		name="pg_comune" />
+	<findFieldProperty
+		name="fl_cancellato" />
+
+</bulkInfo>

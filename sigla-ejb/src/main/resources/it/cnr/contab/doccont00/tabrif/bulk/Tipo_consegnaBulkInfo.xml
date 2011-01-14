@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_tipo_consegna"
+		property="cd_tipo_consegna"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_tipo_consegna"
+		property="ds_tipo_consegna"
+		maxLength="100"
+		inputSize="80"
+		inputType="TEXT"
+		label="Descrizione"
+		nullable="false"
+		caseSensitiveSearch="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true" />
+
+	<formFieldProperty
+		name="cd_tipo_consegna" />
+	<formFieldProperty
+		name="ds_tipo_consegna" />
+
+	<columnFieldProperty
+		name="cd_tipo_consegna"
+		style="width:100px" />
+	<columnFieldProperty
+		name="ds_tipo_consegna"
+		style="width:400px" />
+
+	<findFieldProperty
+		name="cd_tipo_consegna" />
+	<findFieldProperty
+		name="ds_tipo_consegna" />
+
+</bulkInfo>

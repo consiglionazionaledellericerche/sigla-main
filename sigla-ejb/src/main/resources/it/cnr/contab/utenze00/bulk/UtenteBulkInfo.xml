@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cdr"
+		property="cd_cdr"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="30"
+		label="Codice CDR" />
+	<fieldProperty
+		name="cd_cds_configuratore"
+		property="cd_cds_configuratore"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="30"
+		label="Codice CDS amministratore" />
+	<fieldProperty
+		name="cd_gestore"
+		property="cd_gestore"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="20"
+		label="Gestore" />
+	<fieldProperty
+		name="cd_utente"
+		property="cd_utente"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="20"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		enabledOnSearch="true"
+		label="Codice Utente" />
+	<fieldProperty
+		name="cd_utente_templ"
+		property="cd_utente_templ"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="20"
+		label="Template" />
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		inputType="TEXT"
+		inputSize="60"
+		maxLength="100"
+		enabledOnSearch="true"
+		label="Cognome" />
+	<fieldProperty
+		name="ds_utente"
+		property="ds_utente"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="200"
+		enabledOnSearch="true"
+		label="Descrizione" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnSearch="true"
+		label="Data fine validità" />
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_inizio_validita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnSearch="true"
+		label="Data inizio validità" />
+	<fieldProperty
+		name="fl_password_change"
+		property="fl_password_change"
+		inputType="CHECKBOX"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="La password scade dopo sei mesi" />
+	<fieldProperty
+		name="fl_utente_templ"
+		property="fl_utente_templ"
+		inputType="TEXT"
+		label="fl_utente_templ" />
+	<fieldProperty
+		name="indirizzo"
+		property="indirizzo"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="200"
+		enabledOnSearch="true"
+		label="Indirizzo" />
+	<fieldProperty
+		name="nome"
+		property="nome"
+		inputType="TEXT"
+		inputSize="60"
+		maxLength="100"
+		enabledOnSearch="true"
+		label="Nome" />
+	<fieldProperty
+		name="password"
+		property="password"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="20"
+		label="password" />
+	<fieldProperty
+		name="ti_utente"
+		property="ti_utente"
+		inputType="TEXT"
+		label="ti_utente" />
+	<fieldProperty
+		name="utenteTemplate"
+		property="utenteTemplate"
+		inputType="TEXT"
+		label="utenteTemplate" />
+	<fieldProperty
+		name="cd_dipartimento"
+		property="dipartimento.cd_dipartimento"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		enabledOnSearch="true"
+		label="Dipartimento" />
+	<fieldProperty
+		name="dipartimento"
+		property="dipartimento"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Dipartimento" />
+	<fieldProperty
+		name="dt_ultimo_accesso"
+		property="dt_ultimo_accesso"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnSearch="true"
+		label="Data ultimo accesso" />
+	<fieldProperty
+		name="fl_autenticazione_ldap"
+		property="fl_autenticazione_ldap"
+		inputType="CHECKBOX"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		enabledOnInsert="true"
+		readonlyProperty="ROLdap"
+		label="Autenticazione su server LDAP" />
+	<fieldProperty
+		name="cd_utente_uid"
+		property="cd_utente_uid"
+		inputType="TEXT"
+		inputSize="20"
+		enabledOnEdit="false"
+		enabledOnInsert="true"
+		enabledOnSearch="true"
+		maxLength="200"
+		formatName="it.cnr.jada.util.LowercaseStringFormat"
+		label="Codice Utente Ufficiale CNR" />
+	<fieldProperty
+		name="fl_supervisore"
+		property="fl_supervisore"
+		inputType="CHECKBOX"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Utente Supervisore" />
+	<fieldProperty
+		name="cd_ruolo_supervisore"
+		property="ruolo_supervisore.cd_ruolo"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		enabledOnSearch="true"
+		label="Codice Ruolo Supervisore" />
+	<fieldProperty
+		name="ruolo_supervisore"
+		property="ruolo_supervisore"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Ruolo Supervisore" />
+	<fieldProperty
+		name="fl_altra_proc"
+		property="fl_altra_proc"
+		inputType="CHECKBOX"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Utente gestito da procedure esterne" />
+
+	<formFieldProperty
+		name="cd_cdr" />
+	<formFieldProperty
+		name="cd_cds_configuratore" />
+	<formFieldProperty
+		name="cd_gestore" />
+	<formFieldProperty
+		name="cd_utente" />
+	<formFieldProperty
+		name="cd_utente_templ" />
+	<formFieldProperty
+		name="cognome" />
+	<formFieldProperty
+		name="ds_utente" />
+	<formFieldProperty
+		name="dt_fine_validita" />
+	<formFieldProperty
+		name="dt_inizio_validita" />
+	<formFieldProperty
+		name="fl_password_change" />
+	<formFieldProperty
+		name="indirizzo" />
+	<formFieldProperty
+		name="nome" />
+	<formFieldProperty
+		name="password" />
+	<formFieldProperty
+		name="dipartimento" />
+	<formFieldProperty
+		name="fl_autenticazione_ldap" />
+	<formFieldProperty
+		name="cd_utente_uid"
+		label="Codice Utente Ufficiale CNR (nome.cognome)" />
+	<formFieldProperty
+		name="fl_supervisore" />
+	<formFieldProperty
+		name="ruolo_supervisore" />
+	<formFieldProperty
+		name="fl_altra_proc" />
+
+	<columnFieldProperty
+		name="cd_utente" />
+	<columnFieldProperty
+		name="cd_utente_uid" />
+	<columnFieldProperty
+		name="ds_utente" />
+</bulkInfo>

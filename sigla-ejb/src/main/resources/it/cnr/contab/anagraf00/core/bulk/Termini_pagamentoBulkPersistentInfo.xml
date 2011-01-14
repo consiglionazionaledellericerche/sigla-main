@@ -1,0 +1,26 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.Termini_pagamentoBulk"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.Termini_pagamentoHome" >
+	<defaultColumnMap
+		tableName="TERMINI_PAGAMENTO" >
+		<columnMapping
+			columnName="CD_TERMINI_PAG"
+			propertyName="rif_termini_pagamento.cd_termini_pag" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzo.cd_terzo" />
+	</defaultColumnMap>
+
+	<columnMap
+		name="V_TERMINI_PAGAMENTO_ANAG"
+		tableName="V_TERMINI_PAGAMENTO_ANAG"
+		extends="default" >
+	</columnMap>
+
+	<persistentProperty
+		name="rif_termini_pagamento"
+		partOfOid="true" />
+	<persistentProperty
+		name="terzo"
+		partOfOid="true" />
+</SQLPersistentInfo>

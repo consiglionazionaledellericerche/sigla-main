@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="dtElaborazione"
+		property="dtElaborazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dt_elaborazione" />
+	<fieldProperty
+		name="pgElaborazione"
+		property="pgElaborazione"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="pg_elaborazione" />
+	<fieldProperty
+		name="pgRiga"
+		property="pgRiga"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="pg_riga" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="esercizio" />
+	<fieldProperty
+		name="esercizioRes"
+		property="esercizioRes"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="esercizio_res" />
+	<fieldProperty
+		name="cdCentroResponsabilita"
+		property="cdCentroResponsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cd_centro_responsabilita" />
+	<fieldProperty
+		name="cdLineaAttivita"
+		property="cdLineaAttivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cd_linea_attivita" />
+	<fieldProperty
+		name="tiGestione"
+		property="tiGestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="ti_gestione" />
+	<fieldProperty
+		name="cdElementoVoce"
+		property="cdElementoVoce"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="cd_elemento_voce" />
+	<fieldProperty
+		name="imStanzInizialeA1Sigla"
+		property="imStanzInizialeA1Sigla"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="im_stanz_iniziale_a1_sigla" />
+	<fieldProperty
+		name="variazioniPiuSigla"
+		property="variazioniPiuSigla"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="variazioni_piu_sigla" />
+	<fieldProperty
+		name="variazioniMenoSigla"
+		property="variazioniMenoSigla"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="variazioni_meno_sigla" />
+	<fieldProperty
+		name="imObblAccCompSigla"
+		property="imObblAccCompSigla"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="im_obbl_acc_comp_sigla" />
+	<fieldProperty
+		name="imStanzResImproprioSigla"
+		property="imStanzResImproprioSigla"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="im_stanz_res_improprio_sigla" />
+	<fieldProperty
+		name="varPiuStanzResImpSigla"
+		property="varPiuStanzResImpSigla"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="var_piu_stanz_res_imp_sigla" />
+	<fieldProperty
+		name="varMenoStanzResImpSigla"
+		property="varMenoStanzResImpSigla"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="var_meno_stanz_res_imp_sigla" />
+	<fieldProperty
+		name="imObblResImpSigla"
+		property="imObblResImpSigla"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="im_obbl_res_imp_sigla" />
+	<fieldProperty
+		name="imObblResProSigla"
+		property="imObblResProSigla"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="im_obbl_res_pro_sigla" />
+	<fieldProperty
+		name="varPiuObblResProSigla"
+		property="varPiuObblResProSigla"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="var_piu_obbl_res_pro_sigla" />
+	<fieldProperty
+		name="varMenoObblResProSigla"
+		property="varMenoObblResProSigla"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="var_meno_obbl_res_pro_sigla" />
+	<fieldProperty
+		name="imMandatiReversaliSigla"
+		property="imMandatiReversaliSigla"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="im_mandati_reversali_sigla" />
+	<fieldProperty
+		name="imStanzInizialeA1Dwh"
+		property="imStanzInizialeA1Dwh"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="im_stanz_iniziale_a1_dwh" />
+	<fieldProperty
+		name="variazioniPiuDwh"
+		property="variazioniPiuDwh"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="variazioni_piu_dwh" />
+	<fieldProperty
+		name="variazioniMenoDwh"
+		property="variazioniMenoDwh"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="variazioni_meno_dwh" />
+	<fieldProperty
+		name="imObblAccCompDwh"
+		property="imObblAccCompDwh"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="im_obbl_acc_comp_dwh" />
+	<fieldProperty
+		name="imStanzResImproprioDwh"
+		property="imStanzResImproprioDwh"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="im_stanz_res_improprio_dwh" />
+	<fieldProperty
+		name="varPiuStanzResImpDwh"
+		property="varPiuStanzResImpDwh"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="var_piu_stanz_res_imp_dwh" />
+	<fieldProperty
+		name="varMenoStanzResImpDwh"
+		property="varMenoStanzResImpDwh"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="var_meno_stanz_res_imp_dwh" />
+	<fieldProperty
+		name="imObblResImpDwh"
+		property="imObblResImpDwh"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="im_obbl_res_imp_dwh" />
+	<fieldProperty
+		name="imObblResProDwh"
+		property="imObblResProDwh"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="im_obbl_res_pro_dwh" />
+	<fieldProperty
+		name="varPiuObblResProDwh"
+		property="varPiuObblResProDwh"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="var_piu_obbl_res_pro_dwh" />
+	<fieldProperty
+		name="varMenoObblResProDwh"
+		property="varMenoObblResProDwh"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="var_meno_obbl_res_pro_dwh" />
+	<fieldProperty
+		name="imMandatiReversaliDwh"
+		property="imMandatiReversaliDwh"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="im_mandati_reversali_dwh" />
+
+	<formFieldProperty
+		name="dtElaborazione" />
+	<formFieldProperty
+		name="pgElaborazione" />
+	<formFieldProperty
+		name="pgRiga" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="esercizioRes" />
+	<formFieldProperty
+		name="cdCentroResponsabilita" />
+	<formFieldProperty
+		name="cdLineaAttivita" />
+	<formFieldProperty
+		name="tiGestione" />
+	<formFieldProperty
+		name="cdElementoVoce" />
+	<formFieldProperty
+		name="imStanzInizialeA1Sigla" />
+	<formFieldProperty
+		name="variazioniPiuSigla" />
+	<formFieldProperty
+		name="variazioniMenoSigla" />
+	<formFieldProperty
+		name="imObblAccCompSigla" />
+	<formFieldProperty
+		name="imStanzResImproprioSigla" />
+	<formFieldProperty
+		name="varPiuStanzResImpSigla" />
+	<formFieldProperty
+		name="varMenoStanzResImpSigla" />
+	<formFieldProperty
+		name="imObblResImpSigla" />
+	<formFieldProperty
+		name="imObblResProSigla" />
+	<formFieldProperty
+		name="varPiuObblResProSigla" />
+	<formFieldProperty
+		name="varMenoObblResProSigla" />
+	<formFieldProperty
+		name="imMandatiReversaliSigla" />
+	<formFieldProperty
+		name="imStanzInizialeA1Dwh" />
+	<formFieldProperty
+		name="variazioniPiuDwh" />
+	<formFieldProperty
+		name="variazioniMenoDwh" />
+	<formFieldProperty
+		name="imObblAccCompDwh" />
+	<formFieldProperty
+		name="imStanzResImproprioDwh" />
+	<formFieldProperty
+		name="varPiuStanzResImpDwh" />
+	<formFieldProperty
+		name="varMenoStanzResImpDwh" />
+	<formFieldProperty
+		name="imObblResImpDwh" />
+	<formFieldProperty
+		name="imObblResProDwh" />
+	<formFieldProperty
+		name="varPiuObblResProDwh" />
+	<formFieldProperty
+		name="varMenoObblResProDwh" />
+	<formFieldProperty
+		name="imMandatiReversaliDwh" />
+	<findFieldProperty
+		name="dtElaborazione" />
+	<findFieldProperty
+		name="pgElaborazione" />
+	<findFieldProperty
+		name="pgRiga" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="esercizioRes" />
+	<findFieldProperty
+		name="cdCentroResponsabilita" />
+	<findFieldProperty
+		name="cdLineaAttivita" />
+	<findFieldProperty
+		name="tiGestione" />
+	<findFieldProperty
+		name="cdElementoVoce" />
+	<findFieldProperty
+		name="imStanzInizialeA1Sigla" />
+	<findFieldProperty
+		name="variazioniPiuSigla" />
+	<findFieldProperty
+		name="variazioniMenoSigla" />
+	<findFieldProperty
+		name="imObblAccCompSigla" />
+	<findFieldProperty
+		name="imStanzResImproprioSigla" />
+	<findFieldProperty
+		name="varPiuStanzResImpSigla" />
+	<findFieldProperty
+		name="varMenoStanzResImpSigla" />
+	<findFieldProperty
+		name="imObblResImpSigla" />
+	<findFieldProperty
+		name="imObblResProSigla" />
+	<findFieldProperty
+		name="varPiuObblResProSigla" />
+	<findFieldProperty
+		name="varMenoObblResProSigla" />
+	<findFieldProperty
+		name="imMandatiReversaliSigla" />
+	<findFieldProperty
+		name="imStanzInizialeA1Dwh" />
+	<findFieldProperty
+		name="variazioniPiuDwh" />
+	<findFieldProperty
+		name="variazioniMenoDwh" />
+	<findFieldProperty
+		name="imObblAccCompDwh" />
+	<findFieldProperty
+		name="imStanzResImproprioDwh" />
+	<findFieldProperty
+		name="varPiuStanzResImpDwh" />
+	<findFieldProperty
+		name="varMenoStanzResImpDwh" />
+	<findFieldProperty
+		name="imObblResImpDwh" />
+	<findFieldProperty
+		name="imObblResProDwh" />
+	<findFieldProperty
+		name="varPiuObblResProDwh" />
+	<findFieldProperty
+		name="varMenoObblResProDwh" />
+	<findFieldProperty
+		name="imMandatiReversaliDwh" />
+	<columnFieldProperty
+		name="dtElaborazione" />
+	<columnFieldProperty
+		name="pgElaborazione" />
+	<columnFieldProperty
+		name="pgRiga" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="esercizioRes" />
+	<columnFieldProperty
+		name="cdCentroResponsabilita" />
+	<columnFieldProperty
+		name="cdLineaAttivita" />
+	<columnFieldProperty
+		name="tiGestione" />
+	<columnFieldProperty
+		name="cdElementoVoce" />
+	<columnFieldProperty
+		name="imStanzInizialeA1Sigla" />
+	<columnFieldProperty
+		name="variazioniPiuSigla" />
+	<columnFieldProperty
+		name="variazioniMenoSigla" />
+	<columnFieldProperty
+		name="imObblAccCompSigla" />
+	<columnFieldProperty
+		name="imStanzResImproprioSigla" />
+	<columnFieldProperty
+		name="varPiuStanzResImpSigla" />
+	<columnFieldProperty
+		name="varMenoStanzResImpSigla" />
+	<columnFieldProperty
+		name="imObblResImpSigla" />
+	<columnFieldProperty
+		name="imObblResProSigla" />
+	<columnFieldProperty
+		name="varPiuObblResProSigla" />
+	<columnFieldProperty
+		name="varMenoObblResProSigla" />
+	<columnFieldProperty
+		name="imMandatiReversaliSigla" />
+	<columnFieldProperty
+		name="imStanzInizialeA1Dwh" />
+	<columnFieldProperty
+		name="variazioniPiuDwh" />
+	<columnFieldProperty
+		name="variazioniMenoDwh" />
+	<columnFieldProperty
+		name="imObblAccCompDwh" />
+	<columnFieldProperty
+		name="imStanzResImproprioDwh" />
+	<columnFieldProperty
+		name="varPiuStanzResImpDwh" />
+	<columnFieldProperty
+		name="varMenoStanzResImpDwh" />
+	<columnFieldProperty
+		name="imObblResImpDwh" />
+	<columnFieldProperty
+		name="imObblResProDwh" />
+	<columnFieldProperty
+		name="varPiuObblResProDwh" />
+	<columnFieldProperty
+		name="varMenoObblResProDwh" />
+	<columnFieldProperty
+		name="imMandatiReversaliDwh" />
+		
+	<columnSet name="STAMPA">
+		<columnFieldProperty name="dt_elaborazione" />
+	</columnSet>
+		
+	<freeSearchSet name="STAMPA">		
+		<findFieldProperty name="dt_elaborazione" />
+	</freeSearchSet>
+	
+</bulkInfo>

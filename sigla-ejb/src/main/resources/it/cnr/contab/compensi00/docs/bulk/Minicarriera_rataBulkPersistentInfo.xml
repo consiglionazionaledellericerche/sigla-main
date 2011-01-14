@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.docs.bulk.Minicarriera_rataBulk"
+	keyClassName="it.cnr.contab.compensi00.docs.bulk.Minicarriera_rataKey"
+	homeClassName="it.cnr.contab.compensi00.docs.bulk.Minicarriera_rataHome" >
+
+	<defaultColumnMap tableName="MINICARRIERA_RATA" >
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="minicarriera.cd_cds" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="minicarriera.esercizio" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="minicarriera.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_MINICARRIERA"
+			propertyName="minicarriera.pg_minicarriera" />
+
+		<columnMapping
+			columnName="CD_CDS_COMPENSO"
+			propertyName="compenso.cd_cds" />
+		<columnMapping
+			columnName="ESERCIZIO_COMPENSO"
+			propertyName="compenso.esercizio" />
+		<columnMapping
+			columnName="CD_UO_COMPENSO"
+			propertyName="compenso.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_COMPENSO"
+			propertyName="compenso.pg_compenso" />
+
+	</defaultColumnMap>		
+
+	<persistentProperty
+		name="minicarriera"
+		partOfOid="true" />
+	<persistentProperty
+		name="compenso" />
+
+</SQLPersistentInfo>

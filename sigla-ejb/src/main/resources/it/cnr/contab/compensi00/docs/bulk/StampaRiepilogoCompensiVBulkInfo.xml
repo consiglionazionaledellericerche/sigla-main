@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="tc"
+		property="tc" />			
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT" 
+		inputSize="8"
+		maxLength="8"
+		label="Esercizio"/>
+	<formFieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="ROTEXT" 
+		inputSize="10"
+		label="CdS Appartenenza"/>
+	<formFieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="ROTEXT" 
+		inputSize="10"
+		label="UO Appartenenza"/>
+		
+	<fieldProperty
+		name="findTerzoForPrint"
+		property="terzoForPrint"
+		freeSearchSet="terzoStampaRiepilogoCompensi"
+		inputType="SEARCHTOOL"
+		label="Terzo" />
+	<fieldProperty
+		name="cd_terzo"
+		property="terzoForPrint.cd_terzo"
+		inputType="TEXT"
+		readonlyProperty="ROTerzoForPrint"
+		nullable="false"
+		maxLength="8"
+		inputSize="8" 
+		label="Codice" />		
+	<fieldProperty
+		name="denominazione_sede"
+		property="terzoForPrint.denominazione_sede"
+		inputType="ROTEXT"
+		inputSize="30" 
+		label="Denominazione Sede" />
+		
+	<fieldProperty
+		name="cd_cdsForPrint"
+		property="cd_cdsForPrint"/>
+	<fieldProperty
+		name="cd_UoForPrint"
+		property="cd_UoForPrint"/>
+
+	<formFieldProperty name="cd_unita_organizzativa" />
+	<formFieldProperty name="cd_cds" />
+	<formFieldProperty name="esercizio" />
+	
+	<formFieldProperty name="cd_terzo" />
+	<formFieldProperty name="denominazione_sede" />
+	<formFieldProperty name="findTerzoForPrint" />
+
+	
+	<formFieldProperty name="cd_cdsForPrint" />
+	<formFieldProperty name="cd_UoForPrint" />
+
+	<form
+		name="/docamm/docamm/vpg_partitario_compensi.rpt">
+		<formFieldProperty name="cd_cds" />
+		<formFieldProperty name="cd_unita_organizzativa" />
+		<formFieldProperty name="esercizio" />
+		
+		<formFieldProperty name="cd_terzo" />
+		<formFieldProperty name="denominazione_sede" />
+		<formFieldProperty name="findTerzoForPrint" />
+	</form>
+
+	<printForm
+		name="/docamm/docamm/vpg_partitario_compensi.rpt">
+		<printFieldProperty 
+			name="tc"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cd_cdsForPrint"
+			parameterPosition="1"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cd_UoForPrint"
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="3"
+			parameterType="STRING" />
+		<printFieldProperty
+			name="cd_terzo"
+			parameterPosition="4"
+			parameterType="STRING" />
+	</printForm>
+
+	<printForm
+		name="/docamm/docamm/vpg_partitario_compensi.jasper">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING" 
+			paramNameJR="Esercizio"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="cd_cdsForPrint"
+			parameterPosition="1"
+			parameterType="STRING" 
+			paramNameJR="CDS"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cd_UoForPrint"
+			parameterPosition="2"
+			parameterType="STRING" 
+			paramNameJR="UO"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty
+			name="cd_terzo"
+			parameterPosition="3"
+			parameterType="STRING" 
+			paramNameJR="Cd_Terzo"
+			paramTypeJR="java.lang.Integer"/>
+	</printForm>
+</bulkInfo>

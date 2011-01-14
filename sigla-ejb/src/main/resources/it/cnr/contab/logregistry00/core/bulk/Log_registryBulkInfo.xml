@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="dt_disattivazione_au"
+		property="dt_disattivazione_au"
+		inputType="TEXT"
+		label="Data disatt. trg au" />
+	<fieldProperty
+		name="nome_table_src"
+		property="nome_table_src"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Tab sorgente"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_ultimo_start_ai"
+		property="dt_ultimo_start_ai"
+		inputType="TEXT"
+		label="Data ultimo ai" />
+	<fieldProperty
+		name="nome_pkg"
+		property="nome_pkg"
+		maxLength="40"
+		inputSize="40"
+		inputType="TEXT"
+		label="Package"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="nome_trg_ai"
+		property="nome_trg_ai"
+		maxLength="40"
+		inputSize="40"
+		inputType="TEXT"
+		label="Trigger ai"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_disattivazione_ai"
+		property="dt_disattivazione_ai"
+		inputType="TEXT"
+		label="Data disatt. trg ai" />
+	<fieldProperty
+		name="dt_ultimo_start_ad"
+		property="dt_ultimo_start_ad"
+		inputType="TEXT"
+		label="Data ultimo ad" />
+	<fieldProperty
+		name="nome_trg_ad"
+		property="nome_trg_ad"
+		maxLength="40"
+		inputSize="40"
+		inputType="TEXT"
+		label="Trigger ad"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_disattivazione_ad"
+		property="dt_disattivazione_ad"
+		inputType="TEXT"
+		label="Data disatt. trg ad" />
+	<fieldProperty
+		name="num_max_righe_table_log"
+		property="num_max_righe_table_log"
+		inputType="TEXT"
+		label="Max righe log" />
+	<fieldProperty
+		name="num_righe_in_table_log"
+		property="num_righe_in_table_log"
+		inputType="TEXT"
+		label="Num righe" />
+	<fieldProperty
+		name="stato_trg_au"
+		property="stato_trg_au"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Stato trigger au"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="nome_table_log"
+		property="nome_table_log"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Tabella log"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="stato_trg_ai"
+		property="stato_trg_ai"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Stato trigger ai"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="stato_trg_ad"
+		property="stato_trg_ad"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Stato trigger ad"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_attivazione_au"
+		property="dt_attivazione_au"
+		inputType="TEXT"
+		label="Data att. trg au" />
+	<fieldProperty
+		name="ds_table_log"
+		property="ds_table_log"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_attivazione_ai"
+		property="dt_attivazione_ai"
+		inputType="TEXT"
+		label="Data att. trg ai" />
+	<fieldProperty
+		name="dt_attivazione_ad"
+		property="dt_attivazione_ad"
+		inputType="TEXT"
+		label="Data att. trg ad" />
+	<fieldProperty
+		name="dt_ultimo_start_au"
+		property="dt_ultimo_start_au"
+		inputType="TEXT"
+		label="Data ultimo au" />
+	<fieldProperty
+		name="nome_trg_au"
+		property="nome_trg_au"
+		maxLength="40"
+		inputSize="40"
+		inputType="TEXT"
+		label="Trigger au"
+		caseSensitiveSearch="false" />
+
+	<formFieldProperty
+		name="dt_disattivazione_au" />
+	<formFieldProperty
+		name="nome_table_src" />
+	<formFieldProperty
+		name="dt_ultimo_start_ai" />
+	<formFieldProperty
+		name="nome_trg_ai" />
+	<formFieldProperty
+		name="dt_disattivazione_ai" />
+	<formFieldProperty
+		name="dt_ultimo_start_ad" />
+	<formFieldProperty
+		name="nome_trg_ad" />
+	<formFieldProperty
+		name="dt_disattivazione_ad" />
+	<formFieldProperty
+		name="num_max_righe_table_log" />
+	<formFieldProperty
+		name="num_righe_in_table_log" />
+	<formFieldProperty
+		name="stato_trg_au" />
+	<formFieldProperty
+		name="nome_table_log" />
+	<formFieldProperty
+		name="stato_trg_ai" />
+	<formFieldProperty
+		name="stato_trg_ad" />
+	<formFieldProperty
+		name="dt_attivazione_au" />
+	<formFieldProperty
+		name="ds_table_log" />
+	<formFieldProperty
+		name="dt_attivazione_ai" />
+	<formFieldProperty
+		name="dt_attivazione_ad" />
+	<formFieldProperty
+		name="dt_ultimo_start_au" />
+	<formFieldProperty
+		name="nome_trg_au" />
+	<formFieldProperty
+		name="nome_pkg" />
+
+	<columnFieldProperty
+		name="nome_table_src" />
+	<columnFieldProperty
+		name="nome_table_log" />
+	<columnFieldProperty
+		name="ds_table_log" />
+	<columnFieldProperty
+		name="stato_trg_ad" />
+	<columnFieldProperty
+		name="dt_ultimo_start_ad" />
+	<columnFieldProperty
+		name="stato_trg_ai" />
+	<columnFieldProperty
+		name="dt_ultimo_start_ai" />
+	<columnFieldProperty
+		name="stato_trg_au" />
+	<columnFieldProperty
+		name="dt_ultimo_start_au" />
+	<columnFieldProperty
+		name="dt_attivazione_au" />
+	<columnFieldProperty
+		name="dt_disattivazione_au" />
+	<columnFieldProperty
+		name="dt_attivazione_ai" />
+	<columnFieldProperty
+		name="dt_disattivazione_ai" />
+	<columnFieldProperty
+		name="dt_attivazione_ad" />
+	<columnFieldProperty
+		name="dt_disattivazione_ad" />
+	<columnFieldProperty
+		name="num_righe_in_table_log" />
+	<columnFieldProperty
+		name="num_max_righe_table_log" />
+	<columnFieldProperty
+		name="nome_trg_ad" />
+	<columnFieldProperty
+		name="nome_trg_ai" />
+	<columnFieldProperty
+		name="nome_trg_au" />
+	<columnFieldProperty
+		name="nome_pkg" />
+
+	<findFieldProperty
+		name="dt_disattivazione_au" />
+	<findFieldProperty
+		name="nome_table_src" />
+	<findFieldProperty
+		name="dt_ultimo_start_ai" />
+	<findFieldProperty
+		name="nome_trg_ai" />
+	<findFieldProperty
+		name="dt_disattivazione_ai" />
+	<findFieldProperty
+		name="dt_ultimo_start_ad" />
+	<findFieldProperty
+		name="nome_trg_ad" />
+	<findFieldProperty
+		name="dt_disattivazione_ad" />
+	<findFieldProperty
+		name="num_max_righe_table_log" />
+	<findFieldProperty
+		name="num_righe_in_table_log" />
+	<findFieldProperty
+		name="stato_trg_au" />
+	<findFieldProperty
+		name="nome_table_log" />
+	<findFieldProperty
+		name="stato_trg_ai" />
+	<findFieldProperty
+		name="stato_trg_ad" />
+	<findFieldProperty
+		name="dt_attivazione_au" />
+	<findFieldProperty
+		name="ds_table_log" />
+	<findFieldProperty
+		name="dt_attivazione_ai" />
+	<findFieldProperty
+		name="dt_attivazione_ad" />
+	<findFieldProperty
+		name="dt_ultimo_start_au" />
+	<findFieldProperty
+		name="nome_trg_au" />
+	<findFieldProperty
+		name="nome_pkg" />
+
+</bulkInfo>

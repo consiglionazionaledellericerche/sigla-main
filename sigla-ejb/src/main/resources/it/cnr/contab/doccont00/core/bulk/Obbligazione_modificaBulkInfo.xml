@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cds.cd_unita_organizzativa"
+		label="Codice CdS"
+		inputType="TEXT" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_modifica"
+		property="pg_modifica"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Numero Modifica" />
+	<fieldProperty
+		name="ds_modifica"
+		property="ds_modifica"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione"
+		nullable="false" />
+	<fieldProperty
+		name="dt_modifica"
+		property="dt_modifica"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Data Modifica" />
+	<fieldProperty
+		name="esercizio_originale"
+		property="obbligazione.esercizio_originale"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Es. Impegno" />
+	<fieldProperty
+		name="pg_obbligazione"
+		property="obbligazione.pg_obbligazione"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Num Impegno" />
+	<fieldProperty
+		name="motivazione"
+		property="motivazione"
+		label="Motivazione"
+		cols="60"
+		rows="2"
+		inputType="TEXTAREA"
+		nullable="false"
+		/>
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_modifica" />
+	<formFieldProperty
+		name="ds_modifica" />
+	<formFieldProperty
+		name="dt_modifica" />
+	<formFieldProperty
+		name="esercizio_originale" />
+	<formFieldProperty
+		name="pg_obbligazione" />
+	<formFieldProperty
+		name="motivazione" />		
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_modifica" />
+	<findFieldProperty
+		name="ds_modifica" />
+	<findFieldProperty
+		name="dt_modifica" />
+	<findFieldProperty
+		name="esercizio_originale" />
+	<findFieldProperty
+		name="pg_obbligazione" />
+	<findFieldProperty
+		name="motivazione" />		
+
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_modifica" />
+	<columnFieldProperty
+		name="ds_modifica" />
+	<columnFieldProperty
+		name="dt_modifica" />
+	<columnFieldProperty
+		name="esercizio_originale" />
+	<columnFieldProperty
+		name="pg_obbligazione" />
+	<columnFieldProperty
+		name="motivazione" />		
+</bulkInfo>

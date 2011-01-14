@@ -1,0 +1,43 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Impegni Competenza">>
+
+	<fieldProperty
+		name="stato_obbligazione"
+		property="stato_obbligazione"
+		label="Stato"
+		inputType="SELECT"
+		keysProperty="stato_obbligazioneKeys"
+		maxLength="1"
+		inputSize="2"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"		
+		/>
+		
+	<columnFieldProperty
+		name="stato_obbligazione"
+		columnStyle="text-align: center"
+		/>
+
+	<formFieldProperty
+		name="stato_obbligazione"
+		/>	
+		
+	<findFieldProperty
+		name="cd_riferimento_contratto"
+		/>
+	<findFieldProperty
+		name="cd_tipo_obbligazione"
+		/>
+	<findFieldProperty
+		name="dt_scadenza_contratto"
+		/>
+	<findFieldProperty
+		name="stato_obbligazione"
+		/>
+		
+
+</bulkInfo>

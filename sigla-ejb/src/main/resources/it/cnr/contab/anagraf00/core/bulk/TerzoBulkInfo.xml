@@ -1,0 +1,460 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="descrizioneAnagrafica"
+		property="anagrafico.descrizioneAnagrafica"
+		readonlyPropertyOnEdit="dipendente"
+		label="Anagrafica"
+		inputType="TEXT"
+		nullable="false"
+		/>
+
+	<fieldProperty
+		name="dt_fine_rapporto"
+		property="dt_fine_rapporto"
+		readonlyPropertyOnEdit="dipendente"
+		label="Data fine rapporto"
+		inputType="TEXT"
+		formatName="date_short"
+		/>
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_rapporto"
+		readonlyPropertyOnEdit="dipendente"
+		label="Data fine validita'"
+		inputType="TEXT"
+		formatName="date_short"
+		/>
+	<fieldProperty
+		name="nome_rapp_legale"
+		property="rappresentante_legale.nome"
+		readonlyProperty="ROrappresentante_legale"
+		label="Rappresentante legale"
+		inputType="TEXT" />
+	<fieldProperty
+		name="cognome_rapp_legale"
+		property="rappresentante_legale.cognome"
+		readonlyProperty="ROrappresentante_legale"
+		label="Rappresentante legale"
+		inputType="TEXT" />
+	<fieldProperty
+		name="find_rapp_legale"
+		property="rappresentante_legale"
+		readonlyPropertyOnEdit="dipendente"
+		label="Rappresentante legale"
+		inputType="SEARCHTOOL" />
+	<fieldProperty
+		name="cap_comune_sede"
+		property="cap_comune_sede"
+		readonlyPropertyOnEdit="dipendente"
+		label="CAP"
+		optionsProperty="caps_comune"
+		inputType="SELECT" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		label="Codice terzo"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnFreeSearch="true"
+		/>
+	<fieldProperty
+		name="cd_anag"
+		property="anagrafico.cd_anag"
+		label="Codice anagrafica"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		/>
+	<fieldProperty
+		name="cd_precedente"
+		property="cd_precedente"
+		readonlyPropertyOnEdit="dipendente"
+		label="Codice precedente"
+		inputType="TEXT" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="unita_organizzativa.cd_unita_organizzativa"
+		readonlyPropertyOnEdit="dipendente"
+		label="Codice Unit&#224;"
+		inputType="TEXT" />
+	<fieldProperty
+		name="cd_unita_org"
+		property="unita_organizzativa.cd_unita_organizzativa"
+		label="Codice Unit&#224;"
+		readonlyProperty="ROunita_organizzativa"
+		inputType="TEXT"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_unita_organizzativa"
+		property="unita_organizzativa.ds_unita_organizzativa"
+		label="Unit&#224; Organizzativa"
+		readonlyProperty="ROunita_organizzativa"
+		inputType="TEXT"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="find_unita_organizzativa"
+		property="unita_organizzativa"
+		label="Unit&#224; Organizzativa"
+		readonlyProperty="find_uoRO"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="denominazione_sede"
+		property="denominazione_sede"
+		readonlyPropertyOnEdit="dipendente"
+		label="Denominazione"
+		enabledOnSearch="true"
+		inputType="TEXT" />
+	<fieldProperty
+		name="frazione_sede"
+		property="frazione_sede"
+		readonlyPropertyOnEdit="dipendente"
+		label="Frazione"
+		inputType="TEXT" />
+	<fieldProperty
+		name="nome_unita_organizzativa"
+		property="nome_unita_organizzativa"
+		readonlyPropertyOnEdit="dipendente"
+		inputType="TEXT" />
+	<fieldProperty
+		name="note"
+		property="note"
+		readonlyPropertyOnEdit="dipendente"
+		label="Note"
+		inputType="TEXTAREA" />
+	<fieldProperty
+		name="numero_civico_sede"
+		property="numero_civico_sede"
+		readonlyPropertyOnEdit="dipendente"
+		label="Numero civico"
+		inputType="TEXT" />
+	<fieldProperty
+		name="comune_sede"
+		property="comune_sede.ds_comune"
+		readonlyProperty="ROcomune_sede"
+		label="Citt&#224;/comune"
+		inputType="TEXT" />
+	<fieldProperty
+		name="find_comune_sede"
+		property="comune_sede"
+		readonlyPropertyOnEdit="dipendente"
+		label="Citt&#224;/comune"
+		inputType="SEARCHTOOL" />
+	<fieldProperty
+		name="ds_provincia_sede"
+		property="comune_sede.provincia.ds_provincia"
+		label="Provincia"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="ds_nazione_sede"
+		property="comune_sede.nazione.ds_nazione"
+		label="Nazione"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="codice_iso_sede"
+		property="comune_sede.nazione.cd_iso"
+		label="Codice Iso"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="ti_terzo"
+		property="ti_terzo"
+		readonlyPropertyOnEdit="dipendente"
+		keysProperty="ti_terzoKeys"
+		label="Tipo terzo"
+		layout = "HORIZONTAL"		
+		inputType="RADIOGROUP"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="via_sede"
+		property="via_sede"
+		readonlyPropertyOnEdit="dipendente"
+		label="Via"
+		inputType="TEXT"
+		nullable="false"
+		/>
+
+	<fieldProperty
+		name="nome_anagrafico"
+		property="anagrafico.nome"
+		label="Nome"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false"
+		/>
+	<fieldProperty
+		name="cognome_anagrafico"
+		property="anagrafico.cognome"
+		label="Cognome"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false"
+		/>
+	<fieldProperty
+		name="ragione_sociale_anagrafico"
+		property="anagrafico.ragione_sociale"
+		label="Ragione sociale"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false"
+		/>
+	<fieldProperty
+		name="codice_fiscale_anagrafico"
+		property="anagrafico.codice_fiscale"
+		label="Codice Fiscale"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		/>
+	<fieldProperty
+		name="partita_iva_anagrafico"
+		property="anagrafico.partita_iva"
+		label="Partita IVA"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		/>
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_terzo" />
+		<formFieldProperty
+			name="denominazione_sede"
+			inputSize="30" />
+	</form>
+
+	<form
+		name="fondoEconSearchtool" >
+		<formFieldProperty
+			name="cd_terzo"
+			nullable="false" />
+		<formFieldProperty
+			name="denominazione_sede"
+			inputSize="30"
+			inputType="ROTEXT" />
+	</form>
+	
+	<formFieldProperty
+		name="cap_comune_sede"
+		/>
+	<formFieldProperty
+		name="dt_fine_rapporto"
+		/>
+	<formFieldProperty
+		name="ds_provincia_sede"
+		/>
+	<formFieldProperty
+		name="ds_nazione_sede"
+		/>
+	<formFieldProperty
+		name="cd_terzo"
+		inputSize="4"
+		/>
+	<formFieldProperty
+		name="cd_anag"
+		inputSize="4"
+		/>
+	<formFieldProperty
+		name="cd_precedente"
+		/>
+	<formFieldProperty
+		name="cd_unita_org"
+		/>
+	<formFieldProperty
+		name="codice_iso_sede"
+		/>
+	<formFieldProperty
+		name="denominazione_sede"
+		inputSize="50"
+		/>
+	<formFieldProperty
+		name="frazione_sede"
+		/>
+	<formFieldProperty
+		name="nome_unita_organizzativa"
+		/>
+	<formFieldProperty
+		name="note"
+		/>
+	<formFieldProperty
+		name="numero_civico_sede"
+		/>
+	<formFieldProperty
+		name="comune_sede"
+		/>
+	<formFieldProperty
+		name="ti_terzo"
+		/>
+	<formFieldProperty
+		name="via_sede"
+		/>
+	<formFieldProperty
+		name="comune_sede"
+		/>
+	<formFieldProperty
+		name="find_comune_sede"
+		/>
+	<formFieldProperty
+		name="find_rapp_legale"
+		/>
+	<formFieldProperty
+		name="nome_rapp_legale"
+		/>
+	<formFieldProperty
+		name="cognome_rapp_legale"
+		/>
+	<formFieldProperty
+		name="ds_unita_organizzativa"
+		/>
+	<formFieldProperty
+		name="find_unita_organizzativa"
+		/>
+	<formFieldProperty
+		name="dt_fine_validita"
+		/>
+
+	<findFieldProperty
+		name="cd_terzo"
+		/>
+	<findFieldProperty
+		name="cd_anag"
+		enabledOnFreeSearch="false"
+		/>
+	<findFieldProperty
+		name="cd_precedente"
+		enabledOnFreeSearch="true"
+		/>
+	<findFieldProperty
+		name="denominazione_sede"
+		/>
+	<findFieldProperty
+		name="dt_fine_rapporto"
+		enabledOnFreeSearch="false"
+		/>
+	<findFieldProperty
+		name="dt_fine_validita"
+		enabledOnFreeSearch="false"
+		/>
+	<findFieldProperty
+		name="ti_terzo"
+		enabledOnFreeSearch="true" />
+	<findFieldProperty
+		name="codice_fiscale_anagrafico"
+		enabledOnFreeSearch="true" />
+	<findFieldProperty
+		name="partita_iva_anagrafico"
+		enabledOnFreeSearch="true" />
+	<freeSearchSet
+		name="default">
+		<findFieldProperty
+			name="cd_terzo" />
+		<findFieldProperty
+			name="cd_anag"
+			enabledOnFreeSearch="true" />
+		<findFieldProperty
+			name="codice_fiscale_anagrafico"/>
+		<findFieldProperty
+			name="partita_iva_anagrafico"/>
+		<findFieldProperty
+			name="denominazione_sede" />
+		<findFieldProperty
+			name="dt_fine_rapporto"
+			enabledOnFreeSearch="true" />
+		<findFieldProperty
+			name="ti_terzo"
+			enabledOnFreeSearch="true" />
+		<findFieldProperty
+			name="cd_precedente"
+			enabledOnFreeSearch="true"
+			/>
+	</freeSearchSet>
+	
+	<freeSearchSet
+		name="terzoStrutturaCNR">
+		<findFieldProperty
+			name="cd_terzo" />
+		<findFieldProperty
+			name="cd_precedente"
+			enabledOnFreeSearch="true"
+			/>
+		<findFieldProperty
+			name="denominazione_sede" />
+		<findFieldProperty
+			name="dt_fine_validita"
+			enabledOnFreeSearch="true" />
+	</freeSearchSet>
+
+	<freeSearchSet
+		name="terzoPersonaFisica">
+		<findFieldProperty
+			name="cd_terzo" />
+		<findFieldProperty
+			name="denominazione_sede" />
+		<findFieldProperty
+			name="dt_fine_rapporto"
+			enabledOnFreeSearch="true" />
+		<findFieldProperty
+			name="ti_terzo"
+			enabledOnFreeSearch="true" />
+	</freeSearchSet>
+
+	<freeSearchSet
+		name="terzoStampaRiepilogoCompensi">
+		<findFieldProperty
+			name="cd_terzo" />
+		<findFieldProperty
+			name="cd_anag" />
+		<findFieldProperty
+			name="nome_anagrafico" />
+		<findFieldProperty
+			name="cognome_anagrafico" />
+		<findFieldProperty
+			name="ragione_sociale_anagrafico" />
+		<findFieldProperty
+			name="codice_fiscale_anagrafico" />
+		<findFieldProperty
+			name="partita_iva_anagrafico" />
+	</freeSearchSet>
+
+	<columnFieldProperty
+		name="cd_terzo"
+		label="Codice" />
+	<columnFieldProperty
+		name="cd_anag"
+		label="Anagrafica" />
+	<columnFieldProperty
+		name="denominazione_sede"
+		headerStyle="width:100%" />
+	<columnFieldProperty
+		name="codice_fiscale_anagrafico"/>
+	<columnFieldProperty
+		name="partita_iva_anagrafico"/>
+	<columnFieldProperty
+		name="dt_fine_rapporto"
+		label="Fine rapp." />
+
+	<columnFieldProperty
+		name="descrizioneAnagrafica" />
+
+</bulkInfo>

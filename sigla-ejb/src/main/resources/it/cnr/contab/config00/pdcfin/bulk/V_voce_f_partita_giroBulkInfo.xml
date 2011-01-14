@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" 
+		shortDescription="Voce finanziaria"
+		longDescription="Voce finanziaria">
+	<fieldProperty
+		name="ds_titolo_capitolo"
+		property="ds_titolo_capitolo"
+		maxLength="200"
+		inputSize="200"
+		inputType="TEXT"
+		label="Descrizione Titolo/Capitolo"
+		caseSensitiveSearch="false" />
+		
+	<formFieldProperty
+		name="ds_titolo_capitolo" />
+
+<columnSet
+	name="accertamento">
+
+	<columnFieldProperty
+		name="cd_voce"
+		columnStyle="width:140px; text-align:left"/>
+	<columnFieldProperty
+		name="ds_titolo_capitolo"/>
+</columnSet>
+
+	<findFieldProperty
+		name="ds_titolo_capitolo" />
+
+	<freeSearchSet
+		name="accertamento">
+		<findFieldProperty
+			name="cd_voce" />
+		<findFieldProperty
+			name="ds_titolo_capitolo" />
+		<findFieldProperty
+			name="cd_titolo_capitolo" />
+		<findFieldProperty
+			name="cd_categoria" />
+	</freeSearchSet>
+		
+</bulkInfo>

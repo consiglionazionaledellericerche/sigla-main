@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.intcass.bulk.V_cons_sospesiBulk"
+	homeClassName="it.cnr.contab.doccont00.intcass.bulk.V_cons_sospesiHome">
+	<defaultColumnMap
+		tableName="V_CONS_SOSPESI">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_ENTRATA_SPESA"
+			propertyName="ti_entrata_spesa"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE"
+			propertyName="cd_cds_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_SOSPESO"
+			propertyName="cd_sospeso"
+			sqlTypeName="VARCHAR"
+			columnSize="24"
+			nullable="true" />
+		<columnMapping
+			columnName="LIVELLO"
+			propertyName="livello"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_ANAGRAFICO"
+			propertyName="ds_anagrafico"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="CAUSALE"
+			propertyName="causale"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_CC_BI"
+			propertyName="ti_cc_bi"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="DES_TI_CC_BI"
+			propertyName="des_ti_cc_bi"
+			sqlTypeName="VARCHAR"
+			columnSize="14"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_VALIDITA"
+			propertyName="stato_validita"
+			sqlTypeName="VARCHAR"
+			columnSize="9"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_STORNO"
+			propertyName="dt_storno"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SOSPESO"
+			propertyName="im_sospeso"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ASSOCIATO"
+			propertyName="im_associato"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_DA_ASSOCIARE"
+			propertyName="im_da_associare"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_STATO_SOSPESO"
+			propertyName="ds_stato_sospeso"
+			sqlTypeName="VARCHAR"
+			columnSize="35"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ASS_MOD_1210"
+			propertyName="im_ass_mod_1210"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_SOSPESO_PADRE"
+			propertyName="cd_sospeso_padre"
+			sqlTypeName="VARCHAR"
+			columnSize="24"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_MAN_REV"
+			propertyName="pg_man_rev"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="ti_entrata_spesa" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="cd_cds_origine" />
+	<persistentProperty
+		name="cd_sospeso" />
+	<persistentProperty
+		name="livello" />
+	<persistentProperty
+		name="dt_registrazione" />
+	<persistentProperty
+		name="ds_anagrafico" />
+	<persistentProperty
+		name="causale" />
+	<persistentProperty
+		name="ti_cc_bi" />
+	<persistentProperty
+		name="des_ti_cc_bi" />
+	<persistentProperty
+		name="stato_validita" />
+	<persistentProperty
+		name="dt_storno" />
+	<persistentProperty
+		name="im_sospeso" />
+	<persistentProperty
+		name="im_associato" />
+	<persistentProperty
+		name="im_da_associare" />
+	<persistentProperty
+		name="ds_stato_sospeso" />
+	<persistentProperty
+		name="im_ass_mod_1210" />
+	<persistentProperty
+		name="cd_sospeso_padre" />
+	<persistentProperty
+		name="pg_man_rev" />
+		
+	<columnMap 
+		name="SOSREV"
+		tableName="V_CONS_SOSPESI">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_SOSPESO"
+			propertyName="cd_sospeso"
+			sqlTypeName="VARCHAR"
+			columnSize="24"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE"
+			propertyName="cd_cds_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_ANAGRAFICO"
+			propertyName="ds_anagrafico"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="CAUSALE"
+			propertyName="causale"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="DES_TI_CC_BI"
+			propertyName="des_ti_cc_bi"
+			sqlTypeName="VARCHAR"
+			columnSize="14"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_VALIDITA"
+			propertyName="stato_validita"
+			sqlTypeName="VARCHAR"
+			columnSize="9"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_STATO_SOSPESO"
+			propertyName="ds_stato_sospeso"
+			sqlTypeName="VARCHAR"
+			columnSize="35"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SOSPESO"
+			propertyName="im_sospeso"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ASSOCIATO"
+			propertyName="im_associato"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_DA_ASSOCIARE"
+			propertyName="im_da_associare"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_SOSPESO_PADRE"
+			propertyName="cd_sospeso_padre"
+			sqlTypeName="VARCHAR"
+			columnSize="24"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_ENTRATA_SPESA"
+			propertyName="ti_entrata_spesa"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="LIVELLO"
+			propertyName="livello"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</columnMap>
+	
+	<columnMap 
+		name="SOSREVRDETT"
+		tableName="V_CONS_SOSPESI"
+		extends="SOSREV" >
+	</columnMap>
+	
+	<columnMap 
+		name="SOSREVRDETTREV"
+		tableName="V_CONS_SOSPESI">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_SOSPESO"
+			propertyName="cd_sospeso"
+			sqlTypeName="VARCHAR"
+			columnSize="24"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_VALIDITA"
+			propertyName="stato_validita"
+			sqlTypeName="VARCHAR"
+			columnSize="9"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_STATO_SOSPESO"
+			propertyName="ds_stato_sospeso"
+			sqlTypeName="VARCHAR"
+			columnSize="35"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_MAN_REV"
+			propertyName="pg_man_rev"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_REGISTRAZIONE"
+			propertyName="dt_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="CAUSALE"
+			propertyName="causale"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />		
+		<columnMapping
+			columnName="IM_ASSOCIATO"
+			propertyName="im_associato"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_SOSPESO_PADRE"
+			propertyName="cd_sospeso_padre"
+			sqlTypeName="VARCHAR"
+			columnSize="24"
+			nullable="true" />	
+		<columnMapping
+			columnName="TI_ENTRATA_SPESA"
+			propertyName="ti_entrata_spesa"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="LIVELLO"
+			propertyName="livello"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		</columnMap>
+		
+	<columnMap 
+		name="SOSMAN"
+		tableName="V_CONS_SOSPESI"
+		extends="SOSREV" >
+	</columnMap>
+	
+	<columnMap 
+		name="SOSMANMDETT"
+		tableName="V_CONS_SOSPESI"
+		extends="SOSMAN" >
+	</columnMap>
+	
+	
+	<columnMap 
+		name="SOSMANMDETTMAN"
+		tableName="V_CONS_SOSPESI"
+		extends="SOSREVRDETTREV" >
+	</columnMap>
+</SQLPersistentInfo>

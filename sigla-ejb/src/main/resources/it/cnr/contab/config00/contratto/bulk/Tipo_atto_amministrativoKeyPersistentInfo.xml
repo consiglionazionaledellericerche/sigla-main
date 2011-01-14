@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.contratto.bulk.Tipo_atto_amministrativoKey">
+	<defaultColumnMap
+		tableName="TIPO_ATTO_AMMINISTRATIVO">
+		<columnMapping
+			columnName="CD_TIPO_ATTO"
+			propertyName="cd_tipo_atto"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_tipo_atto"
+		partOfOid="true" />
+</SQLPersistentInfo>

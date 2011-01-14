@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.tabrif.bulk.Tipo_missioneKey" >
+	<defaultColumnMap
+		tableName="TIPO_MISSIONE" >
+		<columnMapping
+			columnName="CD_TIPO_MISSIONE"
+			propertyName="cd_tipo_missione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_tipo_missione"
+		partOfOid="true" />
+</SQLPersistentInfo>

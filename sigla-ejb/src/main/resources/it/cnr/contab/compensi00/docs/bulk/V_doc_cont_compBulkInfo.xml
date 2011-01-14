@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_cds_compenso"
+		property="cd_cds_compenso"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CDS compenso"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_uo_compenso"
+		property="cd_uo_compenso"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="UO compenso"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio_compenso"
+		property="esercizio_compenso"
+		inputType="TEXT"
+		label="Esercizio Compenso" />
+	<fieldProperty
+		name="pg_compenso"
+		property="pg_compenso"
+		inputType="TEXT"
+		label="Progr. compenso" />
+
+	<fieldProperty
+		name="cd_cds_doc_cont"
+		property="cd_cds_doc_cont"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CDS"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio_doc_cont"
+		property="esercizio_doc_cont"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_doc_cont"
+		property="pg_doc_cont"
+		inputType="TEXT"
+		label="Progressivo" />
+	<fieldProperty
+		name="ds_doc_cont"
+		property="ds_doc_cont"
+		inputType="TEXT"
+		label="Descrizione" />
+	<fieldProperty
+		name="tipo_doc_cont"
+		property="tipo_doc_cont"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Tipo documento"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="tipoDocCont"
+		property="tipoDocCont"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Tipo documento"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="principale"
+		property="principale"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Principale"
+		caseSensitiveSearch="false" />
+
+	<formFieldProperty name="cd_cds_compenso" />
+	<formFieldProperty name="cd_uo_compenso" />
+	<formFieldProperty name="esercizio_compenso" />
+	<formFieldProperty name="pg_compenso" />
+	<formFieldProperty name="cd_cds_doc_cont" />
+	<formFieldProperty name="esercizio_doc_cont" />
+	<formFieldProperty name="pg_doc_cont" />
+	<formFieldProperty name="ds_doc_cont" />
+	<formFieldProperty name="tipo_doc_cont" />
+	<formFieldProperty name="tipoDocCont" />
+	<formFieldProperty name="principale" />
+
+	<columnFieldProperty name="tipoDocCont" />
+	<columnFieldProperty name="pg_doc_cont" />
+	<columnFieldProperty name="ds_doc_cont" />
+	<columnFieldProperty name="cd_cds_doc_cont" />
+	<columnFieldProperty name="esercizio_doc_cont" />
+
+</bulkInfo>

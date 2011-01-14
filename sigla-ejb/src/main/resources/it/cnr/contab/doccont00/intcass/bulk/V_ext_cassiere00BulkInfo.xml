@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="nome_file"
+		property="nome_file"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Nome File"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="nome_file" />
+
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="nome_file" 
+		style="width:300px" />
+
+	
+	
+	<findFieldProperty
+		name="nome_file" />
+
+</bulkInfo>

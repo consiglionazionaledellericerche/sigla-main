@@ -1,0 +1,91 @@
+<action-mappings>
+  
+  <action 
+	path="/CRUDCaricoBuonoAction" 
+	actionClass="it.cnr.contab.inventario01.actions.CRUDCaricoBuonoAction" />
+  <action 
+	path="/CRUDScaricoBuonoAction" 
+	actionClass="it.cnr.contab.inventario01.actions.CRUDScaricoBuonoAction" />
+  <action 
+	path="/AssBeneFatturaAction" 
+	actionClass="it.cnr.contab.inventario00.actions.AssBeneFatturaAction" />
+  <action
+	path="/CRUDTipoAmmortamentoAction"
+	actionClass="it.cnr.contab.inventario00.actions.CRUDTipoAmmortamentoAction" />
+  <action
+	path="/CRUDInventarioBeniAction"
+	actionClass="it.cnr.contab.inventario00.actions.CRUDInventarioBeniAction" />
+  <action 
+	path="/CRUDTrasferimentoInventarioAction" 
+	actionClass="it.cnr.contab.inventario00.actions.CRUDTrasferimentoInventarioAction" />
+  <action 
+	path="/CRUDAggiornamentoInventarioAction" 
+	actionClass="it.cnr.contab.inventario00.actions.CRUDAggiornamentoInventarioAction" />
+	
+ 
+  <businessProcess name="CRUDCaricoInventarioBP" className="it.cnr.contab.inventario01.bp.CRUDCaricoInventarioBP">
+	<forward name="default" path="/inventario00/carico_inventario.jsp"/>
+	<forward name="daFattura" path="/inventario00/inventario_aggrega.jsp"/>    
+	<forward name="daDocumento" path="/inventario00/inventario_aggrega_doc.jsp"/>    
+	<init-param name="bulkClassName" value="it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk" />
+	<init-param name="componentSessionName" value="CNRINVENTARIO01_EJB_BuonoCaricoScaricoComponentSession"/>
+	<init-param name="defaultAction" value="CRUDCaricoBuonoAction"/>
+  </businessProcess>
+  <businessProcess name="CRUDScaricoInventarioBP" className="it.cnr.contab.inventario01.bp.CRUDScaricoInventarioBP">
+	<forward name="default" path="/inventario00/scarico_inventario.jsp"/>
+	<init-param name="bulkClassName" value="it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk" />
+	<init-param name="componentSessionName" value="CNRINVENTARIO01_EJB_BuonoCaricoScaricoComponentSession"/>
+	<init-param name="defaultAction" value="CRUDScaricoBuonoAction"/>
+  </businessProcess>
+
+  <businessProcess name="AssBeneFatturaBP" className="it.cnr.contab.inventario00.bp.AssBeneFatturaBP">
+	<forward name="default" path="/inventario00/ass_inv_bene_fattura.jsp"/>
+	<forward name="daDocumento" path="/inventario00/ass_inv_bene_fattura_doc.jsp"/>
+	<forward name="perAumentoValore" path="/inventario00/ass_inv_bene_fattura_per_aumento.jsp"/>	
+	<forward name="perAumentoValoreDoc" path="/inventario00/ass_inv_bene_fattura_per_aumento_doc.jsp"/>	
+	<init-param name="bulkClassName" value="it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk" />
+	<init-param name="componentSessionName" value="CNRINVENTARIO01_EJB_BuonoCaricoScaricoComponentSession"/>
+	<init-param name="defaultAction" value="AssBeneFatturaAction"/>
+  </businessProcess>
+  
+  <businessProcess
+		name="CRUDTipoAmmortamentoBP" className="it.cnr.contab.inventario00.bp.CRUDTipoAmmortamentoBP">
+		<forward name="default" path="/inventario00/tipo_ammortamento.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.inventario00.tabrif.bulk.Tipo_ammortamentoBulk" />
+		<init-param name="componentSessionName" value="CNRINVENTARIO00_EJB_Tipo_ammortamentoComponentSession"/>
+		<init-param name="defaultAction" value="CRUDTipoAmmortamentoAction"/>
+	</businessProcess>
+
+  <businessProcess
+		name="CRUDInventarioBeniBP" className="it.cnr.contab.inventario00.bp.CRUDInventarioBeniBP">
+		<forward name="default" path="/inventario00/inventario_beni.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk" />
+		<init-param name="componentSessionName" value="CNRINVENTARIO00_EJB_Inventario_beniComponentSession"/>
+		<init-param name="defaultAction" value="CRUDInventarioBeniAction"/>
+	</businessProcess>
+  
+
+  <businessProcess name="CRUDTrasferimentoExtraInventarioBP" className="it.cnr.contab.inventario00.bp.CRUDTrasferimentoInventarioBP">
+	<forward name="default" path="/inventario00/trasferimento_inventario.jsp"/>
+	<init-param name="bulkClassName" value="it.cnr.contab.inventario00.docs.bulk.Trasferimento_inventarioBulk" />
+	<init-param name="componentSessionName" value="CNRINVENTARIO01_EJB_BuonoCaricoScaricoComponentSession"/>
+	<init-param name="defaultAction" value="CRUDTrasferimentoInventarioAction"/>
+	<init-param name="TIPO_TRASFERIMENTO" value="EXTRA" />
+  </businessProcess>
+  
+  <businessProcess name="CRUDTrasferimentoIntraInventarioBP" className="it.cnr.contab.inventario00.bp.CRUDTrasferimentoInventarioBP">
+	<forward name="default" path="/inventario00/trasferimento_inventario.jsp"/>
+	<init-param name="bulkClassName" value="it.cnr.contab.inventario00.docs.bulk.Trasferimento_inventarioBulk" />
+	<init-param name="componentSessionName" value="CNRINVENTARIO01_EJB_BuonoCaricoScaricoComponentSession"/>
+	<init-param name="defaultAction" value="CRUDTrasferimentoInventarioAction"/>
+	<init-param name="TIPO_TRASFERIMENTO" value="INTRA" />
+  </businessProcess>
+
+  <businessProcess name="CRUDAggiornamentoInventarioBP" className="it.cnr.contab.inventario00.bp.CRUDAggiornamentoInventarioBP">
+	<forward name="default" path="/inventario00/aggiornamento_inventario.jsp"/>
+	<init-param name="bulkClassName" value="it.cnr.contab.inventario00.docs.bulk.Aggiornamento_inventarioBulk" />
+	<init-param name="componentSessionName" value="CNRINVENTARIO00_EJB_Aggiornamento_inventarioComponentSession"/>
+	<init-param name="defaultAction" value="CRUDAggiornamentoInventarioAction"/>
+  </businessProcess>
+
+</action-mappings>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Reversale_rigaBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Reversale_rigaHome" >
+	<defaultColumnMap
+		tableName="REVERSALE_RIGA" >
+		<columnMapping
+			columnName="CD_TERZO_UO"
+			propertyName="modalita_pagamento.terzo.cd_terzo" 
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="modalita_pagamento.rif_modalita_pagamento.cd_modalita_pag" />
+		<columnMapping
+			columnName="CD_TERZO_UO"
+			propertyName="banca.terzo.cd_terzo" />
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="banca.pg_banca"/>																		
+	</defaultColumnMap>
+	<persistentProperty
+		name="banca"/>
+	<persistentProperty
+		name="modalita_pagamento"/>						
+</SQLPersistentInfo>

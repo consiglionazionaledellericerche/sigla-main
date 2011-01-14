@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Consultazione Disponibilità per CDR/GAE/Voce di Bilancio">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio di riferimento" />
+	<fieldProperty
+		name="esercizio_res"
+		property="esercizio_res"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio di riferimento residuo" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CdR" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="UO" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="G.A.E." />
+	<fieldProperty
+		name="cd_modulo"
+		property="cd_modulo"
+		inputType="TEXTAREA"
+		inputSize="40"
+		maxLength="40"
+		label="Codice Modulo" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		label="Voce del Piano" />	
+	<fieldProperty
+		name="cd_voce"
+		property="cd_voce"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		label="Voce di Bilancio" />	
+	<fieldProperty
+		name="im_stanz_iniziale_a1"
+		property="im_stanz_iniziale_a1"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Stanziamento iniziale" />
+	<fieldProperty
+		name="variazioni_piu"
+		property="variazioni_piu"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni +" />
+	<fieldProperty
+		name="variazioni_meno"
+		property="variazioni_meno"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni -" />
+	<fieldProperty
+		name="assestato"
+		property="assestato"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato" />
+	<fieldProperty
+		name="im_obbl_acc_comp"
+		property="im_obbl_acc_comp"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale impegni assunti" />
+	<fieldProperty
+		name="disponibilita"
+		property="disponibilita"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Disponibilità" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="esercizio_res" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="cd_modulo" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="cd_voce" />
+	<formFieldProperty
+		name="im_stanz_iniziale_a1" />
+	<formFieldProperty
+		name="variazioni_piu" />
+	<formFieldProperty
+		name="variazioni_meno" />
+	<formFieldProperty
+		name="assestato" />
+	<formFieldProperty
+		name="im_obbl_acc_comp" />
+	<formFieldProperty
+		name="disponibilita" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="esercizio_res" />
+	<findFieldProperty
+		name="cd_centro_responsabilita"/>
+	<findFieldProperty
+		name="cd_unita_organizzativa"/>
+	<findFieldProperty
+		name="cd_linea_attivita"/>
+	<findFieldProperty
+		name="cd_modulo"/>
+	<findFieldProperty
+		name="cd_elemento_voce"/>
+	<findFieldProperty
+		name="cd_voce" />
+	<findFieldProperty
+		name="im_stanz_iniziale_a1" />
+	<findFieldProperty
+		name="variazioni_piu" />
+	<findFieldProperty
+		name="variazioni_meno" />
+	<findFieldProperty
+		name="assestato" />
+	<findFieldProperty
+		name="im_obbl_acc_comp" />
+	<findFieldProperty
+		name="disponibilita" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="esercizio_res" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="cd_modulo" 
+		style="width:180px"/>
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="cd_voce" />
+	<columnFieldProperty
+		name="im_stanz_iniziale_a1" />
+	<columnFieldProperty
+		name="variazioni_piu" />
+	<columnFieldProperty
+		name="variazioni_meno" />
+	<columnFieldProperty
+		name="assestato" />	
+	<columnFieldProperty
+		name="im_obbl_acc_comp" />
+	<columnFieldProperty
+		name="disponibilita" />	
+
+	<columnSet name="dispPerObbligazioniAccertamenti">
+		<columnFieldProperty
+			name="esercizio_res" />
+		<columnFieldProperty
+			name="cd_centro_responsabilita" />
+		<columnFieldProperty
+			name="cd_linea_attivita" />
+		<columnFieldProperty
+			name="cd_elemento_voce" />
+		<columnFieldProperty
+			name="im_stanz_iniziale_a1" />
+		<columnFieldProperty
+			name="variazioni_piu" />
+		<columnFieldProperty
+			name="variazioni_meno" />
+		<columnFieldProperty
+			name="assestato" />	
+		<columnFieldProperty
+			name="im_obbl_acc_comp" />
+		<columnFieldProperty
+			name="disponibilita" />	
+		<columnFieldProperty
+			name="cd_modulo" 
+			style="width:180px"/>
+	</columnSet>
+</bulkInfo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.AccessoKey" >
+	<defaultColumnMap
+		tableName="ACCESSO" >
+		<columnMapping
+			columnName="CD_ACCESSO"
+			propertyName="cd_accesso"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_accesso"
+		partOfOid="true" />
+</SQLPersistentInfo>

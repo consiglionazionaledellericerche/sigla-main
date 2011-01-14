@@ -1,0 +1,255 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_ds_tipo_sezionale"
+		property="cd_ds_tipo_sezionale"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		nullable="false"
+		label="Codice e Descrizione" />
+	<fieldProperty
+		name="fl_intra_ue"
+		property="fl_intra_ue"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Intra UE" />
+	<fieldProperty
+		name="fl_extra_ue"
+		property="fl_extra_ue"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Extra UE" />
+	<fieldProperty
+		name="fl_san_marino_con_iva"
+		property="fl_san_marino_con_iva"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="San Marino con IVA" />
+	<fieldProperty
+		name="fl_san_marino_senza_iva"
+		property="fl_san_marino_senza_iva"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="San Marino senza IVA" />
+	<fieldProperty
+		name="fl_ordinario"
+		property="fl_ordinario"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Ordinario" />
+	<fieldProperty
+		name="fl_autofattura"
+		property="fl_autofattura"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Autofattura" />
+
+	<fieldProperty
+		name="attivita_commerciale"
+		property="attivita_commerciale"
+		inputType="SEARCHTOOL" 		
+		enabledOnSearch="false"
+		label="Attivita' Commerciale"
+        enabledOnEdit="true" />	
+	<fieldProperty
+		name="cd_attivita_commerciale"
+		property="attivita_commerciale.cd_attivita_commerciale"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		label="Attivita' Commerciale"
+		nullable="false"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_attivita_commerciale"
+		property="attivita_commerciale.ds_attivita_commerciale"
+		inputSize="15"
+		inputType="ROTEXT"
+		label=""
+		nullable="false"
+		caseSensitiveSearch="false" />
+		
+	<fieldProperty
+		name="find_sezionale_ven_liquidazione"
+		property="tipo_sezionale_vendita"
+		inputType="SEARCHTOOL" 		
+		enabledOnSearch="false"
+		label="Sezionale Vendite"
+      	enabledOnEdit="true" />		
+	<fieldProperty
+		name="sezionale_ven_liquidazione"
+		property="tipo_sezionale_vendita.cd_tipo_sezionale"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		label="Sezionale Vendite"
+		caseSensitiveSearch="false"
+		enabledOnEdit="true"/>			
+	<fieldProperty
+		name="ds_sezionale_ven_liquidazione"
+		property="tipo_sezionale_vendita.ds_tipo_sezionale"
+		inputSize="15"
+		label=""
+		inputType="ROTEXT"
+		caseSensitiveSearch="false" />	
+		
+	<fieldProperty
+		name="cd_tipo_sezionale"
+		property="cd_tipo_sezionale"
+		maxLength="6"
+		inputSize="6"
+		inputType="TEXT"
+		label="Codice"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="false"/>
+		
+	<fieldProperty
+		name="ds_tipo_sezionale"
+		property="ds_tipo_sezionale"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		nullable="false"
+		label="Descrizione"
+		caseSensitiveSearch="false" />	
+
+	<fieldProperty
+		name="ti_acquisti_vendite"
+		property="ti_acquisti_vendite"
+		keysProperty="ti_acquisti_venditeKeys"
+		label="Acquisti/Vendite" 
+		inputType="RADIOGROUP"
+		enabledOnEdit="false"
+		nullable="false"
+		enabledOnSearch="false" />
+	 
+	<fieldProperty
+		name="ti_istituz_commerc"
+		property="ti_istituz_commerc"
+		keysProperty="ti_istituz_commercKeys"
+		label="Istituzionale/Commerciale" 
+		inputType="RADIOGROUP"
+		enabledOnEdit="false"
+		nullable="false"
+		enabledOnSearch="false" />
+
+	<fieldProperty
+		name="ti_bene_servizio"
+		property="ti_bene_servizio"
+		maxLength="1"
+		inputSize="20"
+		inputType="SELECT"
+		nullable="false"
+		keysProperty="ti_bene_servizioKeys"
+		readonlyProperty="ROTi_bene_servizio"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		label="Servizio/Bene"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_bene_servizioForSearch"
+		property="ti_bene_servizio"
+		maxLength="1"
+		inputSize="20"
+		inputType="SELECT"
+		nullable="true"
+		keysProperty="ti_bene_servizioKeys"
+		readonlyProperty="ROTi_bene_servizio"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Servizio/Bene"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_servizi_non_residenti"
+		property="fl_servizi_non_residenti"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Servizi non residenti" />
+			
+	<formFieldProperty
+		name="cd_tipo_sezionale" />	
+	<formFieldProperty
+		name="ds_tipo_sezionale" />
+	<formFieldProperty
+		name="ti_acquisti_vendite" />	
+	<formFieldProperty
+		name="ti_istituz_commerc" />	
+	<formFieldProperty
+		name="attivita_commerciale" />
+	<formFieldProperty
+		name="cd_attivita_commerciale" />
+	<formFieldProperty
+		name="ds_attivita_commerciale" />	
+	<formFieldProperty
+		name="sezionale_ven_liquidazione" />	
+	<formFieldProperty
+		name="ds_sezionale_ven_liquidazione" />	
+	<formFieldProperty
+		name="find_sezionale_ven_liquidazione" />	
+	<formFieldProperty
+		name="fl_ordinario" />	
+	<formFieldProperty
+		name="fl_intra_ue" />	
+	<formFieldProperty
+		name="fl_extra_ue" />	
+	<formFieldProperty
+		name="fl_san_marino_con_iva" />	
+	<formFieldProperty
+		name="fl_san_marino_senza_iva" />	
+	<formFieldProperty
+		name="fl_autofattura" />	
+	<formFieldProperty
+		name="ti_bene_servizio" />	
+	<formFieldProperty
+		name="ti_bene_servizioForSearch" />	
+	<formFieldProperty
+		name="fl_servizi_non_residenti" />		
+	<columnFieldProperty
+		name="cd_tipo_sezionale" />
+	<columnFieldProperty
+		name="cd_attivita_commerciale" />
+	<columnFieldProperty
+		name="ti_istituz_commerc" />
+	<columnFieldProperty
+		name="ds_tipo_sezionale" />
+	<columnFieldProperty
+		name="ti_acquisti_vendite" />
+	<columnFieldProperty
+		name="ti_bene_servizio" />	
+
+	<findFieldProperty
+		name="cd_tipo_sezionale" />
+	<findFieldProperty
+		name="ds_tipo_sezionale" />
+	<findFieldProperty
+		name="ti_bene_servizioForSearch" />
+		
+	<columnFieldProperty
+		name="ti_istituz_commerc" />
+	<columnFieldProperty
+		name="ti_acquisti_vendite" />
+	<columnFieldProperty
+		name="ti_bene_servizio" />
+
+	<columnSet
+		name="tipi_sezionali">
+		<columnFieldProperty
+			name="ds_tipo_sezionale" />
+	</columnSet>
+	
+</bulkInfo>

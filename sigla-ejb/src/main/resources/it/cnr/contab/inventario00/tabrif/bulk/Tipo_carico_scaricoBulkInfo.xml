@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_tipo_carico_scarico"
+		property="cd_tipo_carico_scarico"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		enabledOnEdit="false"		
+		enabledOnFreeSearch="true"
+		label="Codice" />
+	<fieldProperty
+		name="ds_tipo_carico_scarico"
+		property="ds_tipo_carico_scarico"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_documento"
+		property="ti_documento"
+		inputType="RADIOGROUP"
+		keysProperty="tipoDocumentoKeys"
+		layout="HORIZONTAL"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		label="Tipo Documento" />
+	<fieldProperty
+		name="dt_cancellazione"
+		property="dt_cancellazione"
+		inputType="TEXT"
+		formatName="date_short"			
+		label="Data Cancellazione" />
+	<fieldProperty
+		name="fl_fatturabile"
+		property="fl_fatturabile"
+		inputType="CHECKBOX"
+		label="Visibile da Fattura" />
+	<fieldProperty
+		name="fl_aumento_valore"
+		property="fl_aumento_valore"
+		inputType="CHECKBOX"
+		label="Aumento di Valore" />
+	<fieldProperty
+		name="fl_elabora_buono_coge"
+		property="fl_elabora_buono_coge"
+		inputType="CHECKBOX"
+		label="Carico soggetto ad elaborazione COGE" />
+	<fieldProperty
+		name="fl_storno_fondo"
+		property="fl_storno_fondo"
+		inputType="CHECKBOX"
+		label="Scarico che storna il fondo" />	
+	<fieldProperty
+		name="fl_buono_per_trasferimento"
+		property="fl_buono_per_trasferimento"
+		inputType="CHECKBOX"
+		label="Trasferimento" />
+	<fieldProperty
+		name="fl_chiude_fondo"
+		property="fl_chiude_fondo"
+		inputType="CHECKBOX"
+		label="Scarico che chiude il fondo" />	
+	<fieldProperty
+		name="fl_vendita"
+		property="fl_vendita"
+		inputType="CHECKBOX"
+		label="Vendita" />
+	<formFieldProperty
+		name="cd_tipo_carico_scarico" />
+	<formFieldProperty
+		name="ds_tipo_carico_scarico" />
+	<formFieldProperty
+		name="ti_documento" />
+	<formFieldProperty
+		name="fl_fatturabile" />
+	<formFieldProperty
+		name="fl_aumento_valore" />
+	<formFieldProperty
+		name="dt_cancellazione" />	
+	<formFieldProperty
+		name="fl_elabora_buono_coge" />	
+	<formFieldProperty
+		name="fl_buono_per_trasferimento" />	
+	<formFieldProperty
+		name="fl_storno_fondo" />	
+	<formFieldProperty
+		name="fl_chiude_fondo" />
+	<formFieldProperty
+		name="fl_vendita" />
+	<columnFieldProperty
+		name="cd_tipo_carico_scarico" />
+	<columnFieldProperty
+		name="ds_tipo_carico_scarico" />
+	<columnFieldProperty
+		name="ti_documento" />
+	<columnFieldProperty
+		name="dt_cancellazione" />
+	<columnFieldProperty
+		name="fl_fatturabile" />
+	<columnFieldProperty
+		name="fl_elabora_buono_coge" />
+	<columnFieldProperty
+		name="fl_buono_per_trasferimento" />
+	<columnFieldProperty
+		name="fl_storno_fondo" />
+	<columnFieldProperty
+		name="fl_chiude_fondo" />
+	<columnFieldProperty
+		name="fl_vendita" />
+	<findFieldProperty
+		name="cd_tipo_carico_scarico" />
+	<findFieldProperty
+		name="ds_tipo_carico_scarico" />
+	<findFieldProperty
+		name="ti_documento" />
+	<findFieldProperty
+		name="dt_cancellazione" />
+
+</bulkInfo>

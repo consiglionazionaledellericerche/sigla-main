@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.docs.bulk.Documento_genericoBase"
+	keyClassName="it.cnr.contab.docamm00.docs.bulk.Documento_genericoKey"
+	homeClassName="it.cnr.contab.docamm00.docs.bulk.Documento_genericoHome" >
+	<defaultColumnMap
+		tableName="DOCUMENTO_GENERICO" >
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dt_cancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="IM_TOTALE"
+			propertyName="im_totale"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO_COGE"
+			propertyName="stato_coge"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UO_ORIGINE"
+			propertyName="cd_uo_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO_PAGAMENTO_FONDO_ECO"
+			propertyName="stato_pagamento_fondo_eco"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_ASSOCIATO_MANREV"
+			propertyName="ti_associato_manrev"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="cd_divisa"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_LETTERA"
+			propertyName="pg_lettera"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE"
+			propertyName="cd_cds_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_PAGAMENTO_FONDO_ECO"
+			propertyName="dt_pagamento_fondo_eco"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="STATO_COFI"
+			propertyName="stato_cofi"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_A_COMPETENZA_COGE"
+			propertyName="dt_a_competenza_coge"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_SCADENZA"
+			propertyName="dt_scadenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="TI_ISTITUZ_COMMERC"
+			propertyName="ti_istituz_commerc"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_DOCUMENTO_GENERICO"
+			propertyName="ds_documento_generico"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CAMBIO"
+			propertyName="cambio"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="4"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO_COAN"
+			propertyName="stato_coan"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DATA_REGISTRAZIONE"
+			propertyName="data_registrazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_DA_COMPETENZA_COGE"
+			propertyName="dt_da_competenza_coge"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_LETTERA"
+			propertyName="esercizio_lettera"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_cancellazione" />
+	<persistentProperty
+		name="im_totale" />
+	<persistentProperty
+		name="stato_coge" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="cd_uo_origine" />
+	<persistentProperty
+		name="stato_pagamento_fondo_eco" />
+	<persistentProperty
+		name="ti_associato_manrev" />
+	<persistentProperty
+		name="cd_divisa" />
+	<persistentProperty
+		name="pg_lettera" />
+	<persistentProperty
+		name="cd_cds_origine" />
+	<persistentProperty
+		name="dt_pagamento_fondo_eco" />
+	<persistentProperty
+		name="stato_cofi" />
+	<persistentProperty
+		name="dt_a_competenza_coge" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dt_scadenza" />
+	<persistentProperty
+		name="ti_istituz_commerc" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="ds_documento_generico" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="cambio" />
+	<persistentProperty
+		name="stato_coan" />
+	<persistentProperty
+		name="data_registrazione" />
+	<persistentProperty
+		name="dt_da_competenza_coge" />
+	<persistentProperty
+		name="esercizio_lettera" />
+</SQLPersistentInfo>

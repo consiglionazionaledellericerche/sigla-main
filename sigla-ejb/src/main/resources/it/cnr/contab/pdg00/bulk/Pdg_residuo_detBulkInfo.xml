@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="pdg_residuo.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio di riferimento del residuo" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="centro_responsabilita.cd_centro_responsabilita"
+		inputType="TEXT"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Codice CdR" />
+	<fieldProperty
+		name="ds_centro_responsabilita"
+		property="ds_cdr"
+		inputType="TEXT"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Descrizione CdR" />
+	<fieldProperty
+		name="cd_classificazione_spese"
+		property="cd_classificazione_spese"
+		inputType="TEXT"
+		inputSize="10"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Classificazione di Spesa" />
+	<fieldProperty
+		name="ds_classificazione_spese"
+		property="ds_classificazione_spese"
+		inputType="TEXT"
+		inputSize="50"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Descr. Classificazione di Spesa" />
+	<fieldProperty
+		name="cd_cdr_linea"
+		property="centro_responsabilita_la.cd_centro_responsabilita"
+		inputType="TEXT"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="true"
+		label="Codice CdR" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="linea_attivita.cd_linea_attivita"
+		inputType="TEXT"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="Codice GAE" />
+	<fieldProperty
+		name="ds_linea_attivita"
+		property="linea_attivita.denominazione"
+		inputType="TEXT"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="Descrizione GAE" />
+	<fieldProperty
+		name="centro_responsabilita_la"
+		property="centro_responsabilita_la"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="CdR" />
+	<fieldProperty
+		name="linea_attivita"
+		property="linea_attivita"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		inputType="SEARCHTOOL"
+		formName="searchtool_x_residui"
+		label="GAE" />
+	<fieldProperty
+		name="pg_dettaglio"
+		property="pg_dettaglio"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		label="Progressivo" />
+	<fieldProperty
+		name="cd_progetto"
+		property="cd_progetto"
+		inputType="TEXT"
+		inputSize="30"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Codice Commessa" />
+	<fieldProperty
+		name="cd_dipartimento"
+		property="cd_dipartimento"
+		inputType="TEXT"
+		inputSize="30"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Codice Dipartimento" />
+	<fieldProperty
+		name="funzione"
+		property="funzione"
+		printProperty="cd_ds_funzione"
+		inputType="SEARCHTOOL"
+		formName="find_funzione"
+		label="Funzione"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="natura"
+		property="natura"
+		printProperty="cd_ds_natura"
+		inputType="SEARCHTOOL"
+		formName="find_natura"
+		label="Natura"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="cd_natura"
+		property="natura.cd_natura"
+		label="Natura"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="1" />
+	<fieldProperty
+		name="cd_funzione"
+		property="funzione.cd_funzione"
+		label="Funzione"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="2" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="elemento_voce.cd_elemento_voce"
+		inputType="TEXT"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="Codice Voce" />
+	<fieldProperty
+		name="cd_elemento_voce_ricerca"
+		property="elemento_voce.cd_elemento_voce"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="Codice Voce" />
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="elemento_voce.ds_elemento_voce"
+		inputType="TEXT"
+		label="Descrizione Voce" />
+	<fieldProperty
+		name="elemento_voce"
+		property="elemento_voce"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Voce del Piano" />	
+	<fieldProperty
+		name="dt_registrazione"
+		property="dt_registrazione"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="false"
+		enabledOnSearch="false"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data di registrazione"
+		inputSize="8" />
+	<fieldProperty
+		name="descrizione"
+		property="descrizione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione" />
+	<fieldProperty
+		name="im_residuo"
+		property="im_residuo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo del residuo" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		keysProperty="statoKeys"
+		readonlyProperty="ROStato"
+		inputType="RADIOGROUP"
+		label="Stato" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="cd_cdr_linea" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="pg_dettaglio" />
+	<formFieldProperty
+		name="cd_progetto" />
+	<formFieldProperty
+		name="cd_dipartimento" />
+	<formFieldProperty
+		name="cd_funzione" />
+	<formFieldProperty
+		name="cd_natura" />
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="cd_classificazione_spese" />
+	<formFieldProperty
+		name="ds_classificazione_spese" />
+	<formFieldProperty
+		name="dt_registrazione" />
+	<formFieldProperty
+		name="descrizione" />
+	<formFieldProperty
+		name="im_residuo" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="elemento_voce" />
+	<formFieldProperty
+		name="ds_elemento_voce" />
+	<formFieldProperty
+		name="centro_responsabilita_la" />
+	<formFieldProperty
+		name="linea_attivita" />
+	<formFieldProperty
+		name="ds_linea_attivita" />
+	<formFieldProperty
+		name="natura" />
+	<formFieldProperty
+		name="funzione" />
+
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="pg_dettaglio" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="cd_cdr_linea" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="pg_dettaglio" />
+	<findFieldProperty
+		name="cd_funzione" />
+	<findFieldProperty
+		name="cd_natura" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="dt_registrazione" />
+	<findFieldProperty
+		name="descrizione" />
+	<findFieldProperty
+		name="im_residuo" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="cd_cdr_linea" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="pg_dettaglio" />
+	<columnFieldProperty
+		name="cd_progetto" />
+	<columnFieldProperty
+		name="cd_dipartimento" />
+	<columnFieldProperty
+		name="cd_funzione" />
+	<columnFieldProperty
+		name="cd_natura" />
+	<columnFieldProperty
+		name="ti_appartenenza" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_elemento_voce" />
+	<columnFieldProperty
+		name="cd_classificazione_spese" />
+	<columnFieldProperty
+		name="ds_classificazione_spese" />
+	<columnFieldProperty
+		name="dt_registrazione" />
+	<columnFieldProperty
+		name="descrizione" />
+	<columnFieldProperty
+		name="im_residuo" />
+	<columnFieldProperty
+		name="funzione" />
+	<columnFieldProperty
+		name="natura" />
+
+	<columnSet name="dett">
+		<columnFieldProperty
+			label="Prog."
+			name="pg_dettaglio" />
+		<columnFieldProperty
+			name="stato" />
+		<columnFieldProperty
+			name="cd_cdr_linea" />
+		<columnFieldProperty
+			name="cd_linea_attivita" />
+		<columnFieldProperty
+			name="ds_linea_attivita" />
+		<columnFieldProperty
+			name="cd_progetto" />
+		<columnFieldProperty
+			name="cd_dipartimento" />
+		<columnFieldProperty
+			name="cd_elemento_voce" />
+		<columnFieldProperty
+			name="ds_elemento_voce" />
+		<columnFieldProperty
+			name="im_residuo" />
+	</columnSet>
+</bulkInfo>

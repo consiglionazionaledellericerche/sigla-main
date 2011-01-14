@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.fondecon00.core.bulk.Fondo_economaleBulk"
+	homeClassName="it.cnr.contab.fondecon00.core.bulk.Fondo_economaleHome" >
+	<defaultColumnMap
+		tableName="FONDO_ECONOMALE" >
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cds.cd_unita_organizzativa"
+			fetchOnly="false" />
+
+		//Economo
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="economo.cd_terzo" />
+
+		//Mandato di origine fondo economale
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="mandato.pg_mandato" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="mandato.esercizio"
+			fetchOnly="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="mandato.cds.cd_unita_organizzativa"
+			fetchOnly="true" />
+
+		//Reversale per il fondo economale
+		<columnMapping
+			columnName="PG_REVERSALE"
+			propertyName="reversale.pg_reversale" />
+		<columnMapping
+			columnName="ESERCIZIO_REVERSALE"
+			propertyName="reversale.esercizio" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="reversale.cds.cd_unita_organizzativa"
+			fetchOnly="true" />
+
+		//Modalita pagamento per il fondo economale
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="modalita_pagamento.cd_modalita_pag" />
+
+		//Banca per il fondo economale
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="banca.pg_banca" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="banca.cd_terzo"
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="banca.terzo.cd_terzo"
+			fetchOnly="true"/>
+
+		//Sospeso di chiusura del fondo economale
+		<columnMapping
+			columnName="CD_SOSPESO"
+			propertyName="sospeso_di_chiusura.cd_sospeso" />
+		<columnMapping
+			columnName="ESERCIZIO_REVERSALE"
+			propertyName="sospeso_di_chiusura.esercizio" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="sospeso_di_chiusura.cds.cd_unita_organizzativa"
+			fetchOnly="true" />
+		<columnMapping
+			columnName="TI_ES_SOSPESO"
+			propertyName="sospeso_di_chiusura.ti_entrata_spesa" />
+		<columnMapping
+			columnName="TI_SR_SOSPESO"
+			propertyName="sospeso_di_chiusura.ti_sospeso_riscontro" />
+
+	</defaultColumnMap>
+
+	<columnMap
+		name="V_UNITA_ORGANIZZATIVA_VALIDA"
+		tableName="V_UNITA_ORGANIZZATIVA_VALIDA"
+		extends="default" >
+	</columnMap>
+
+	<persistentProperty
+		name="unita_organizzativa"
+		partOfOid="true" />
+	<persistentProperty
+		name="cds"
+		partOfOid="true"/>		
+	<persistentProperty
+		name="economo" />
+	<persistentProperty
+		name="mandato" />
+	<persistentProperty
+		name="reversale" />
+	<persistentProperty
+		name="modalita_pagamento" />
+	<persistentProperty
+		name="banca" />
+	<persistentProperty
+		name="sospeso_di_chiusura" />
+
+</SQLPersistentInfo>

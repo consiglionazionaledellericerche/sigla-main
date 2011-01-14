@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.V_doc_passivo_obbligazioneBase"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.V_doc_passivo_obbligazioneHome" >
+	<defaultColumnMap
+		tableName="V_DOC_PASSIVO_OBBLIGAZIONE" >
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="pg_banca"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="esercizio_ori_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_IVA_DOC_AMM"
+			propertyName="im_iva_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="cd_modalita_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_CONT"
+			propertyName="cd_tipo_documento_cont"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_PGIRO"
+			propertyName="fl_pgiro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_FAI_REVERSALE"
+			propertyName="fl_fai_reversale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_UO_ORIGINE"
+			propertyName="cd_uo_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="IM_IMPONIBILE_DOC_AMM"
+			propertyName="im_imponibile_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="CD_TERZO_CESSIONARIO"
+			propertyName="cd_terzo_cessionario"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IM_SCADENZA"
+			propertyName="im_scadenza"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_FATTURA_FORNITORE"
+			propertyName="dt_fattura_fornitore"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="CD_SOSPESO"
+			propertyName="cd_sospeso"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="PG_LETTERA"
+			propertyName="pg_lettera"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE"
+			propertyName="cd_cds_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="STATO_COFI"
+			propertyName="stato_cofi"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="FL_SELEZIONE"
+			propertyName="fl_selezione"
+			sqlTypeName="VARCHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="DT_SCADENZA"
+			propertyName="dt_scadenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_AMM"
+			propertyName="cd_tipo_documento_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="IM_TOTALE_DOC_AMM"
+			propertyName="im_totale_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="PG_DOCUMENTO_AMM"
+			propertyName="pg_documento_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="CD_CDS_OBBLIGAZIONE"
+			propertyName="cd_cds_obbligazione"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="IM_ASSOCIATO_DOC_CONTABILE"
+			propertyName="im_associato_doc_contabile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="TI_ENTRATA_SPESA"
+			propertyName="ti_entrata_spesa"
+			sqlTypeName="VARCHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="TI_FATTURA"
+			propertyName="ti_fattura"
+			sqlTypeName="VARCHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="NR_FATTURA_FORNITORE"
+			propertyName="nr_fattura_fornitore"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="TI_PAGAMENTO"
+			propertyName="ti_pagamento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="TI_SOSPESO_RISCONTRO"
+			propertyName="ti_sospeso_riscontro"
+			sqlTypeName="VARCHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="esercizio_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_banca" />
+	<persistentProperty
+		name="esercizio_ori_obbligazione" />
+	<persistentProperty
+		name="pg_obbligazione" />
+	<persistentProperty
+		name="im_iva_doc_amm" />
+	<persistentProperty
+		name="cd_tipo_documento_cont" />
+	<persistentProperty
+		name="cd_modalita_pag" />
+	<persistentProperty
+		name="fl_pgiro" />
+	<persistentProperty
+		name="cd_uo_origine" />
+	<persistentProperty
+		name="cd_terzo_cessionario" />
+	<persistentProperty
+		name="im_imponibile_doc_amm" />
+	<persistentProperty
+		name="im_scadenza" />
+	<persistentProperty
+		name="dt_fattura_fornitore" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_sospeso" />
+	<persistentProperty
+		name="pg_lettera" />
+	<persistentProperty
+		name="cd_cds_origine" />
+	<persistentProperty
+		name="stato_cofi" />
+	<persistentProperty
+		name="fl_selezione" />
+	<persistentProperty
+		name="fl_fai_reversale" />
+	<persistentProperty
+		name="dt_scadenza" />
+	<persistentProperty
+		name="cd_tipo_documento_amm" />
+	<persistentProperty
+		name="im_totale_doc_amm" />
+	<persistentProperty
+		name="pg_documento_amm" />
+	<persistentProperty
+		name="cd_cds_obbligazione" />
+	<persistentProperty
+		name="im_associato_doc_contabile" />
+	<persistentProperty
+		name="pg_obbligazione_scadenzario" />
+	<persistentProperty
+		name="ti_entrata_spesa" />
+	<persistentProperty
+		name="ti_fattura" />
+	<persistentProperty
+		name="nr_fattura_fornitore" />
+	<persistentProperty
+		name="ti_pagamento" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="ti_sospeso_riscontro" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="esercizio_obbligazione" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

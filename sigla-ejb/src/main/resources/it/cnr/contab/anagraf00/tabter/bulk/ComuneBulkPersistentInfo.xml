@@ -1,0 +1,20 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk"
+	homeClassName="it.cnr.contab.anagraf00.tabter.bulk.ComuneHome" >
+
+	<defaultColumnMap
+		tableName="COMUNE" >
+		<columnMapping
+			columnName="CD_PROVINCIA"
+			propertyName="provincia.cd_provincia" />
+		<columnMapping
+			columnName="PG_NAZIONE"
+			propertyName="nazione.pg_nazione" />
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="provincia" />
+	<persistentProperty
+		name="nazione" />
+
+</SQLPersistentInfo>

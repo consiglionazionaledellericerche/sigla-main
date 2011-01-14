@@ -1,0 +1,41 @@
+<action-mappings>
+	<action 
+		path="/CRUDAbiCabAction" actionClass="it.cnr.contab.anagraf00.action.CRUDAbiCabAction">
+	</action>
+	<action 
+		path="/CRUDNazioneAction" actionClass="it.cnr.contab.anagraf00.action.CRUDNazioneAction">
+	</action>
+
+	<businessProcess
+		name="CRUDAbiCabBP" className="it.cnr.contab.anagraf00.bp.CRUDAbiCabBP">
+		<forward name="default" path="/anagraf00/abicab.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.anagraf00.tabrif.bulk.AbicabBulk"/>
+		<init-param name="componentSessionName" value="CNRANAGRAF00_EJB_AbiCabComponentSession"/>
+		<init-param name="defaultAction" value="CRUDAbiCabAction"/>		
+	</businessProcess>
+
+	<businessProcess
+		name="CRUDNazioneBP" className="it.cnr.contab.anagraf00.bp.CRUDNazioneBP">
+		<forward name="default" path="/anagraf00/nazione.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk"/>
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+		<init-param name="defaultAction" value="CRUDNazioneAction"/>		
+	</businessProcess>
+
+	<businessProcess
+		name="CRUDComuneItalianoBP" className="it.cnr.contab.anagraf00.bp.CRUDComuneBP">
+		<forward name="default" path="/anagraf00/comune_italiano.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.anagraf00.tabter.bulk.ComuneItalianoBulk"/>
+		<init-param name="componentSessionName" value="CNRANAGRAF00_EJB_ComuneComponentSession"/>"/>
+	    <init-param name="searchResultColumnSet" value="comuneItaliano"/>
+	    <init-param name="freeSearchSet" value="comuneItalianoFreeSearchSet"/>
+	</businessProcess>
+
+	<businessProcess
+		name="CRUDCapBP" className="it.cnr.contab.anagraf00.bp.CRUDCapBP">
+		<forward name="default" path="/anagraf00/cap.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.anagraf00.tabter.bulk.CapBulk"/>
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+	</businessProcess>
+
+</action-mappings>

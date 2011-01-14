@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.Ldap_serverBase"
+	keyClassName="it.cnr.contab.utenze00.bulk.Ldap_serverKey"
+	homeClassName="it.cnr.contab.utenze00.bulk.Ldap_serverHome">
+	<defaultColumnMap
+		tableName="LDAP_SERVER">
+		<columnMapping
+			columnName="FL_ATTIVO"
+			propertyName="fl_attivo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_MASTER"
+			propertyName="fl_master"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="LIVELLO_PRIORITA"
+			propertyName="livello_priorita"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_SSL"
+			propertyName="fl_ssl"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="fl_attivo" />
+	<persistentProperty
+		name="fl_master" />
+	<persistentProperty
+		name="livello_priorita" />
+	<persistentProperty
+		name="fl_ssl" />
+</SQLPersistentInfo>

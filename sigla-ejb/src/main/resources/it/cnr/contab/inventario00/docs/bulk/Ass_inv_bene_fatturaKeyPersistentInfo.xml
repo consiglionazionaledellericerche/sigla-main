@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaKey">
+	<defaultColumnMap
+		tableName="ASS_INV_BENE_FATTURA">
+		<columnMapping
+			columnName="PG_RIGA"
+			propertyName="pg_riga"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_riga"
+		partOfOid="true" />
+</SQLPersistentInfo>

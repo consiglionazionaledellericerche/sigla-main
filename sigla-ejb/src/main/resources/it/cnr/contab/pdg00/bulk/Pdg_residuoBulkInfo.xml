@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Residuo del PdG"
+          longDescription="Residuo del PdG">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputSize="4"
+		maxLength="4"
+		inputType="ROTEXT"
+		label="Esercizio" />
+
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="centro_responsabilita.cd_centro_responsabilita"
+		inputType="TEXT"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="Codice CDR" />
+	<fieldProperty
+		name="ds_cdr"
+		property="centro_responsabilita.ds_cdr"
+		inputType="TEXT"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="Descrizione CDR" />
+	<fieldProperty
+		name="centro_responsabilita"
+		property="centro_responsabilita"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Centro di Responsabilità" />
+
+	<fieldProperty
+		name="stato"
+		property="stato"
+		keysProperty="statiKeys"
+		inputType="SELECT"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		readonlyProperty="ROStato"
+		nullable="false"
+		label="Stato" />
+	<fieldProperty
+		name="im_massa_spendibile"
+		property="im_massa_spendibile"
+		inputType="TEXT"
+		inputSize="25"
+		formatName="it.cnr.contab.util.EuroFormat"
+		readonlyProperty="ROMassaSpendibile"
+		label="Risorse provenienti dall'esercizio 2004" />
+	<fieldProperty
+		name="imTotale"
+		property="imTotale"
+		inputType="TEXT"
+		inputSize="25"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "false"
+		label="Risorse ripartite" />
+	<fieldProperty
+		name="imTotaleDifferenza"
+		property="imTotaleDifferenza"
+		inputType="TEXT"
+		inputSize="25"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "false"
+		label="Differenza" />
+	<formFieldProperty
+		name="centro_responsabilita" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="im_massa_spendibile" />
+	<formFieldProperty
+		name="imTotale" />
+	<formFieldProperty
+		name="imTotaleDifferenza" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="im_massa_spendibile" />
+	<columnFieldProperty
+		name="imTotale" />
+	<columnFieldProperty
+		name="imTotaleDifferenza" />
+
+	<columnSet name="residuo">
+		<columnFieldProperty
+			name="cd_centro_responsabilita" />
+		<columnFieldProperty
+			name="stato" />
+		<columnFieldProperty
+			name="im_massa_spendibile" />
+	</columnSet>
+</bulkInfo>

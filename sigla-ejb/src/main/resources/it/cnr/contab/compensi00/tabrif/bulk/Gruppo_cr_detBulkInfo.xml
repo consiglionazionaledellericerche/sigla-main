@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	
+	<fieldProperty
+		name="esercizio"
+		property="gruppo.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />	
+	<fieldProperty
+		name="cd_gruppo_cr"
+		property="gruppo.cd_gruppo_cr"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		label="Codice gruppo CORI" />
+	<fieldProperty
+		name="ds_gruppo_cr"
+		property="gruppo.ds_gruppo_cr"
+		inputType="ROTEXT"
+		inputSize="50"
+		maxLength="50"
+		label="Descr. gruppo CORI" />	
+	<fieldProperty
+		name="find_regione"
+		property="regione"
+		label="Regione"		
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		enabledOnEdit="true" />
+	<fieldProperty
+		name="cd_regione"
+		property="regione.cd_regione"
+		label="Regione"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="true" />
+	<fieldProperty
+		name="ds_regione"
+		property="regione.ds_regione"
+		label="Descrizione"
+		inputSize="50"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="find_comune"
+		property="comune"
+		label="Comune"		
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		enabledOnEdit="true" />
+	<fieldProperty
+		name="pg_comune"
+		property="comune.pg_comune"
+		label="Comune"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="true" />
+	<fieldProperty
+		name="ds_comune"
+		property="comune.ds_comune"
+		label="Descrizione"
+		inputSize="50"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="cd_terzo_versamento"
+		property="terzo.cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Terzo"
+		enabledOnSearch="true"
+		enabledOnEdit="true"  />
+	<fieldProperty
+		name="terzo"
+		property="terzo"
+		inputType="SEARCHTOOL"
+		label="Terzo"
+		enabledOnSearch="true"
+		enabledOnEdit="true"/>
+	<fieldProperty
+		name="ds_terzo"
+		property="terzo.denominazione_sede"
+		inputType="ROTEXT"
+		label="Terzo" />	
+	<fieldProperty
+		name="modalita_pagamento"
+		property="modalitaPagamento"
+		printProperty="cd_ds_modalita_pagamento"
+		optionsProperty="modalitaOptions"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnEdit="true" 
+		label="Mod. pagamento" />
+	<fieldProperty
+		name="cd_modalita_pagamento"
+		property="cd_modalita_pagamento"
+		inputType="TEXT"
+		label="Codice Modalita di Pag." />
+	<fieldProperty
+		name="listaBanche"
+		property="banca"
+		inputType="BUTTON"
+		img="img/find16.gif"
+		readonlyProperty="abledToInsertBank"
+		label="Conto/i ..."
+		href="javascript:submitForm('doSearchListaBanche')" />
+	<fieldProperty
+		name="contoA"
+		property="banca"
+		inputType="FORM"
+		formName="A"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoP"
+		property="banca"
+		inputType="FORM"
+		formName="P"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoB"
+		property="banca"
+		inputType="FORM"
+		formName="B"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoQ"
+		property="banca"
+		inputType="FORM"
+		formName="Q"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />	
+	<fieldProperty
+		name="contoN"
+		property="banca"
+		inputType="FORM"
+		formName="N"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<!--<fieldProperty
+		name="banca"
+		property="banca"
+		inputType="SELECT"
+		readonlyProperty="ROBanca"		
+		optionsProperty="bancaOptions"
+		printProperty="ds_estesa"
+		label="Coordinate"
+		nullable="false"/> -->
+	<fieldProperty
+		name="pg_banca"
+		property="banca.pg_banca"
+		inputType="TEXT"
+		label="Banca" />
+	<fieldProperty
+		name="banca_cab"
+		property="banca.cab"
+		inputType="ROTEXT"
+		label="CAB" />
+	<fieldProperty
+		name="banca_abi"
+		property="banca.abi"
+		inputType="ROTEXT"
+		label="ABI" />
+	<fieldProperty
+		name="banca_intestazione"
+		property="banca.intestazione"
+		inputType="ROTEXT"
+		label="Intestazione" />
+	<fieldProperty
+		name="banca_nr_conto"
+		property="banca.numero_conto"
+		inputType="ROTEXT"
+		label="Numero Conto" />				
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_gruppo_cr" />
+	<formFieldProperty
+		name="ds_gruppo_cr" />	
+		
+	<formFieldProperty 
+		name="cd_regione" />
+	<formFieldProperty 
+		name="find_regione" />
+	<formFieldProperty 
+		name="ds_regione" />	
+	<formFieldProperty 
+		name="pg_comune" />
+	<formFieldProperty 
+		name="find_comune" />
+	<formFieldProperty 
+		name="ds_comune" />	
+	<formFieldProperty
+		name="ds_terzo" />	
+	<formFieldProperty
+		name="terzo" />	
+	<formFieldProperty
+		name="cd_terzo_versamento" />
+	<formFieldProperty
+		name="modalita_pagamento" />	
+	<formFieldProperty
+		name="modalitaPagamento" />			
+	<formFieldProperty
+		name="cd_modalita_pagamento" />
+	<formFieldProperty name="listaBanche" />
+	<formFieldProperty name="abi" />
+	<formFieldProperty name="cab" />
+	<formFieldProperty name="numero_conto" />
+	<formFieldProperty name="intestazione" />
+	<formFieldProperty name="codice_iban" />
+	<formFieldProperty name="codice_swift" />	
+	<formFieldProperty name="contoA" />
+	<formFieldProperty name="contoB" />
+	<formFieldProperty name="contoP" />
+	<formFieldProperty name="contoQ" />
+	<formFieldProperty name="contoN" />
+	<formFieldProperty
+		name="pg_banca" />
+	<formFieldProperty
+		name="banca" />	
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_gruppo_cr" />
+	<findFieldProperty
+		name="cd_regione" />
+	<findFieldProperty
+		name="pg_comune" />
+	<findFieldProperty
+		name="cd_terzo_versamento" />
+	<findFieldProperty
+		name="cd_modalita_pagamento" />
+	<findFieldProperty
+		name="pg_banca" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_gruppo_cr" />
+	<columnFieldProperty
+		name="cd_regione" />
+	<columnFieldProperty
+		name="pg_comune" />
+	<columnFieldProperty
+		name="cd_terzo_versamento" />
+	<columnFieldProperty
+		name="cd_modalita_pagamento" />
+	<columnFieldProperty
+		name="pg_banca" />
+</bulkInfo>

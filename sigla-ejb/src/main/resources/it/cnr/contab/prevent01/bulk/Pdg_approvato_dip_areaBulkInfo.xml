@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="cd_dipartimento"
+		property="dipartimento.cd_dipartimento"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		readonlyProperty="ROrigates"
+		label="Dipartimento"/>
+	<fieldProperty
+		name="ds_dipartimento"
+		property="dipartimento.ds_dipartimento"
+		maxLength="30"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Descrizione dipartimento"/>
+	<fieldProperty
+        name="dipartimento"
+        property="dipartimento"
+        inputType="SEARCHTOOL"
+        formName="searchtool"
+		readonlyProperty="RODipartimento"
+        enabledOnInsert="true"
+        enabledOnEdit="true"
+        enabledOnSearch="true"
+        nullable="false"
+        label="Dipartimento" />		
+	<fieldProperty
+		name="pg_dettaglio"
+		property="pg_dettaglio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo" />
+	<fieldProperty
+        name="area"
+        property="area"
+        inputType="SEARCHTOOL"
+        formName="searchtool"
+		readonlyProperty="ROrigates"
+        enabledOnInsert="true"
+        enabledOnEdit="true"
+        enabledOnSearch="true"
+        nullable="false"
+        label="Area" />		
+	<fieldProperty
+		name="cd_cds_area"
+		property="area.cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		readonlyProperty="ROrigates"
+		nullable="false"
+		label="Area" />
+	<fieldProperty
+		name="ds_cds_area"
+		property="area.ds_unita_organizzativa"
+		inputType="ROTEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Descrizione Area" />
+	<fieldProperty
+		name="importo_approvato"
+		property="importo_approvato"
+		inputType="TEXT"
+		readonlyProperty="ROImporto_approvato"
+		nullable="false"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Importo approvato" />
+	<fieldProperty
+		name="importo_ripartito"
+		property="importo_ripartito"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Importo ripartito" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_dipartimento" />
+	<formFieldProperty
+		name="ds_dipartimento" />
+	<formFieldProperty
+		name="dipartimento" />
+	<formFieldProperty
+		name="pg_dettaglio" />
+	<formFieldProperty
+		name="cd_cds_area" />
+	<formFieldProperty
+		name="ds_cds_area" />
+	<formFieldProperty
+		name="area" />
+	<formFieldProperty
+		name="importo_approvato" />
+	<formFieldProperty
+		name="importo_ripartito" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_dipartimento" />
+	<findFieldProperty
+		name="pg_dettaglio" />
+	<findFieldProperty
+		name="cd_cds_area" />
+	<findFieldProperty
+		name="importo_approvato" />
+	<columnFieldProperty
+		name="cd_dipartimento" />
+	<columnFieldProperty
+		name="ds_dipartimento" />
+	<columnFieldProperty
+		name="cd_cds_area" />
+	<columnFieldProperty
+		name="ds_cds_area" />
+	<columnFieldProperty
+		name="importo_approvato" />
+	<columnFieldProperty
+		name="importo_ripartito" />
+</bulkInfo>

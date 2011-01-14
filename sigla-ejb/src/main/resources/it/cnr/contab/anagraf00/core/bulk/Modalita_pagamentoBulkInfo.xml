@@ -1,0 +1,126 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_modalita_pag"
+		property="rif_modalita_pagamento.cd_modalita_pag"
+		label="Codice"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="cd_terzo_delegato"
+		property="terzo_delegato.cd_terzo"
+		readonlyProperty="ROterzo_delegato"
+		label="Terzo Cessionario"
+		inputType="TEXT" 
+		inputSize="10"
+		nullable="false" />
+	<fieldProperty
+		name="ds_terzo_delegato"
+		property="terzo_delegato.denominazione_sede"
+		readonlyProperty="ROterzo_delegato"
+		label="Terzo Cessionario"
+		inputType="ROTEXT" 
+		inputSize="50" />
+	<fieldProperty
+		name="find_terzo_delegato"
+		property="terzo_delegato"
+		label="Terzo Cessionario"
+		inputType="SEARCHTOOL" />
+	<fieldProperty
+		name="rif_modalita_pagamento"
+		property="rif_modalita_pagamento"
+		label="rif_modalita_pagamento"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="ti_pagamento"
+		property="rif_modalita_pagamento.ti_pagamento"
+		label="Tipo pagamento"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="codice_cassiere"
+		property="rif_modalita_pagamento.codice_cassiere"
+		label="Codice cassiere"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="ds_modalita_pag"
+		property="rif_modalita_pagamento.ds_modalita_pag"
+		label="Descrizione"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="terzo"
+		property="terzo"
+		label="terzo"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="cd_ds_modalita_pagamento"
+		property="cd_ds_modalita_pagamento"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="Codice e Descrizione" />		
+
+	<columnFieldProperty
+		name="cd_modalita_pag"
+		/>
+	<columnFieldProperty
+		name="codice_cassiere"
+		/>
+	<columnFieldProperty
+		name="ds_modalita_pag"
+		columnStyle="width: 60px"
+		/>
+	<columnFieldProperty
+		name="ti_pagamento"
+		/>
+	<columnFieldProperty
+		name="cd_terzo_delegato"
+		/>
+
+	<formFieldProperty
+		name="cd_modalita_pag"
+		/>
+	<formFieldProperty
+		name="cd_terzo_delegato"
+		/>
+	<formFieldProperty
+		name="ds_terzo_delegato"
+		/>
+	<formFieldProperty
+		name="rif_modalita_pagamento"
+		/>
+	<formFieldProperty
+		name="terzo"
+		/>
+	<formFieldProperty
+		name="ds_modalita_pag"
+		/>
+	<formFieldProperty
+		name="codice_cassiere"
+		/>
+	<formFieldProperty
+		name="terzo_delegato"
+		/>
+	<formFieldProperty
+		name="find_terzo_delegato"
+		/>
+	<formFieldProperty
+		name="ti_pagamento"
+		/>
+
+	<findFieldProperty
+		name="cd_modalita_pag"
+		/>
+	<findFieldProperty
+		name="cd_terzo_delegato"
+		/>
+
+
+</bulkInfo>

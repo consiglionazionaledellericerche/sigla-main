@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraBase"
+	keyClassName="it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraKey"
+	homeClassName="it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraHome" >
+	<defaultColumnMap
+		tableName="FATTURA_PASSIVA_INTRA" >
+		<columnMapping
+			columnName="PG_NAZIONE_PROVENIENZA"
+			propertyName="pg_nazione_provenienza"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="ID_NATURA_TRANSAZIONE"
+			propertyName="id_natura_transazione"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="CD_MODALITA_TRASPORTO"
+			propertyName="cd_modalita_trasporto"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="ID_NOMENCLATURA_COMBINATA"
+			propertyName="id_nomenclatura_combinata"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_PROVINCIA_DESTINAZIONE"
+			propertyName="cd_provincia_destinazione"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_INCOTERM"
+			propertyName="cd_incoterm"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="ESERCIZIO_MOD_TRASPORTO"
+			propertyName="esercizio_mod_trasporto"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="ESERCIZIO_COND_CONSEGNA"
+			propertyName="esercizio_cond_consegna"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="AMMONTARE_DIVISA"
+			propertyName="ammontare_divisa"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="VALORE_STATISTICO"
+			propertyName="valore_statistico"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="AMMONTARE_EURO"
+			propertyName="ammontare_euro"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="UNITA_SUPPLEMENTARI"
+			propertyName="unita_supplementari"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_NAZIONE_ORIGINE"
+			propertyName="pg_nazione_origine"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="MASSA_NETTA"
+			propertyName="massa_netta"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="DS_BENE"
+			propertyName="ds_bene"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="ESERCIZIO_MOD_INCASSO"
+			propertyName="esercizio_mod_incasso"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />	
+		<columnMapping
+			columnName="ESERCIZIO_MOD_EROGAZIONE"
+			propertyName="esercizio_mod_erogazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />	
+		<columnMapping
+			columnName="CD_MODALITA_EROGAZIONE"
+			propertyName="cd_modalita_ergazione"
+			sqlTypeName="VARCHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="CD_MODALITA_INCASSO"
+			propertyName="cd_modalita_incasso"
+			sqlTypeName="VARCHAR"
+			columnSize="1" />		
+		<columnMapping
+			columnName="ID_CPA"
+			propertyName="id_cpa"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />			
+		<columnMapping
+			columnName="FL_INVIATO"
+			propertyName="fl_inviato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="nr_protocollo"
+			propertyName="nr_protocollo"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			nullable="true" />
+		<columnMapping
+			columnName="nr_progressivo"
+			propertyName="nr_progressivo"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			nullable="true" />			
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_nazione_provenienza" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="id_natura_transazione" />
+	<persistentProperty
+		name="cd_modalita_trasporto" />
+	<persistentProperty
+		name="id_nomenclatura_combinata" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="cd_provincia_destinazione" />
+	<persistentProperty
+		name="cd_incoterm" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="ammontare_divisa" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="valore_statistico" />
+	<persistentProperty
+		name="ammontare_euro" />
+	<persistentProperty
+		name="unita_supplementari" />
+	<persistentProperty
+		name="pg_nazione_origine" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="massa_netta" />
+	<persistentProperty
+		name="ds_bene" />
+	<persistentProperty
+		name ="esercizio_cond_consegna"/>
+	<persistentProperty
+		name ="esercizio_mod_trasporto"/>
+	<persistentProperty
+		name ="esercizio_mod_erogazione"/>
+	<persistentProperty
+		name ="esercizio_mod_incasso"/>		
+	<persistentProperty
+		name="cd_modalita_erogazione" />
+	<persistentProperty
+		name="cd_modalita_incasso" />
+	<persistentProperty
+		name="id_cpa" />			
+	<persistentProperty
+		name="fl_inviato" />		
+	<persistentProperty
+		name="nr_protocollo" />
+	<persistentProperty
+		name="nr_progressivo" />			
+</SQLPersistentInfo>

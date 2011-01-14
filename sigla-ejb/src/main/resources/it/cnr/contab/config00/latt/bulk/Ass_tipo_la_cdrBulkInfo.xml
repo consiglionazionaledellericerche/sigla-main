@@ -1,0 +1,51 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="centro_responsabilita"
+		property="centro_responsabilita"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Centro di responsabilita"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="centro_responsabilita.cd_centro_responsabilita"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		label="Codice CDR"/>
+	<fieldProperty
+		name="tipo_linea_attivita"
+		property="tipo_linea_attivita"
+		inputType="SEARCHTOOL"
+		label="Tipo GAE"
+		formName="searchtool"
+		enabledOnSearch="true"
+		enabledOnEdit="false" />
+	<fieldProperty
+		name="cd_tipo_linea_attivita"
+		property="tipo_linea_attivita.cd_tipo_linea_attivita"
+		maxLength="10"
+		inputSize="6"
+		inputType="TEXT"
+		label="Codice tipo GAE" />
+
+	<formFieldProperty
+		name="centro_responsabilita" />
+	<formFieldProperty
+		name="tipo_linea_attivita" />
+
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="cd_tipo_linea_attivita" />
+
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="cd_tipo_linea_attivita" />
+
+</bulkInfo>

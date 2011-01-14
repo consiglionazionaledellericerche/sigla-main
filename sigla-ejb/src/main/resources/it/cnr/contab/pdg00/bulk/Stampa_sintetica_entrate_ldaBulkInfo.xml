@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="findUOForPrint"
+		property="uoForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="cdUOForPrint"
+		property="uoForPrint.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROUoForPrint"
+		label="Codice UO" />
+	<fieldProperty
+		name="dsUOForPrint"
+		property="uoForPrint.ds_unita_organizzativa"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione UO" />
+
+	<fieldProperty
+		name="findCdrForPrint"
+		property="cdrForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		label="Centro di Responsabilità" />
+	<fieldProperty
+		name="cdCdrForPrint"
+		property="cdrForPrint.cd_centro_responsabilita"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROCdrForPrint"
+		label="Codice Cdr" />	
+	<fieldProperty
+		name="dsCdrForPrint"
+		property="cdrForPrint.ds_cdr"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione Cdr" />
+
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio" />
+	<formFieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="ROTEXT" 
+		label="CDS" />
+	<formFieldProperty
+		name="cdsForPrint"
+		property="cdsForPrint"
+		inputType="ROTEXT" 
+		label="CDS CdR" />
+	
+	<formFieldProperty name="findUOForPrint" />
+	<formFieldProperty name="cdUOForPrint" />
+	<formFieldProperty name="dsUOForPrint" />
+	
+	<formFieldProperty name="findCdrForPrint" />
+	<formFieldProperty name="cdCdrForPrint" />
+	<formFieldProperty name="dsCdrForPrint" />
+
+	<form
+		name="/cnrpreventivo/pdg/sintetica_entrate_lda_A1.rpt">
+		<formFieldProperty
+			name="esercizio"
+			inputType="ROTEXT"
+			label="Esercizio" />
+		<formFieldProperty 
+			name="cd_cds"
+			inputType="ROTEXT"
+			label="CDS" />
+		<formFieldProperty
+			name="cdsForPrint"
+			property="cdsForPrint"
+			inputType="ROTEXT" 
+		label="CDS CdR" />
+		<formFieldProperty name="findUoForPrint" />
+		<formFieldProperty name="cdUoForPrint" />
+		<formFieldProperty name="dsUoForPrint" />
+
+		<formFieldProperty name="findCdrForPrint" />
+		<formFieldProperty name="cdCdrForPrint" />
+		<formFieldProperty name="dsCdrForPrint" />
+	</form>
+
+	<printForm
+		name="/cnrpreventivo/pdg/sintetica_entrate_lda_A1.rpt">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdsForPrint"
+			parameterPosition="1"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdUoNullableForPrint"
+			property="cdUoNullableForPrint"
+			parameterPosition="2"
+			parameterType="STRING" />
+		<printFieldProperty 
+			name="cdCdrNullableForPrint"
+			property="cdCdrNullableForPrint"
+			parameterPosition="3"
+			parameterType="STRING" />
+	</printForm>
+<printForm
+		name="/cnrpreventivo/pdg/sintetica_entrate_lda_a1.jasper">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING" 
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer"/>
+		<printFieldProperty 
+			name="cdsForPrint"
+			parameterPosition="1"
+			parameterType="STRING" 
+			paramNameJR="cds"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+			name="cdUoNullableForPrint"
+			property="cdUoNullableForPrint"
+			parameterPosition="2"
+			parameterType="STRING"
+			paramNameJR="uo"
+			paramTypeJR="java.lang.String"/>
+		<printFieldProperty 
+			name="cdCdrNullableForPrint"
+			property="cdCdrNullableForPrint"
+			parameterPosition="3"
+			parameterType="STRING" 
+			paramNameJR="cdr"
+			paramTypeJR="java.lang.String"/>
+
+	</printForm>
+</bulkInfo>

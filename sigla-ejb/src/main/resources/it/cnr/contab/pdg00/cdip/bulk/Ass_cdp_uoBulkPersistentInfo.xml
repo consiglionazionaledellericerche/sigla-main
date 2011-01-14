@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.cdip.bulk.Ass_cdp_uoBulk"
+	homeClassName="it.cnr.contab.pdg00.cdip.bulk.Ass_cdp_uoHome" >
+	<defaultColumnMap
+		tableName="ASS_CDP_UO" >
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa" />
+
+	</defaultColumnMap>
+	<persistentProperty
+		name="unita_organizzativa"
+		partOfOid="true" />
+</SQLPersistentInfo>

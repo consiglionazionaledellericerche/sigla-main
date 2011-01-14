@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.intrastat.bulk.Codici_cpaBase"
+	keyClassName="it.cnr.contab.docamm00.intrastat.bulk.Codici_cpaKey"
+	homeClassName="it.cnr.contab.docamm00.intrastat.bulk.Codici_cpaHome">
+	<defaultColumnMap
+		tableName="CODICI_CPA">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CPA"
+			propertyName="cd_cpa"
+			sqlTypeName="VARCHAR"
+			columnSize="6"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_CPA"
+			propertyName="ds_cpa"
+			sqlTypeName="VARCHAR"
+			columnSize="500"
+			nullable="false" />
+		<columnMapping
+			columnName="LIVELLO"
+			propertyName="livello"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_UTILIZZABILE"
+			propertyName="fl_utilizzabile"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="TI_BENE_SERVIZIO"
+			propertyName="ti_bene_servizio"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />		
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_cpa" />
+	<persistentProperty
+		name="ds_cpa" />
+	<persistentProperty
+		name="livello" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="ti_bene_servizio" />
+	<persistentProperty
+		name="fl_utilizzabile" />		
+</SQLPersistentInfo>

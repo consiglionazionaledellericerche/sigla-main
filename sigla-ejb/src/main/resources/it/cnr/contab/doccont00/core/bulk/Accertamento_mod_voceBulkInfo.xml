@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_modifica"
+		property="pg_modifica"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero Modifica" />
+	<fieldProperty
+		name="ti_gestione"
+		property="voce_f.ti_gestione"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Tipo Gestione" />
+	<fieldProperty
+		name="ti_appartenenza"
+		property="voce_f.ti_appartenenza"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Tipo Appartenenza" />
+	<fieldProperty
+		name="cd_voce"
+		property="voce_f.cd_voce"
+		inputType="ROTEXT"
+		label="Capitolo" />
+	<fieldProperty
+		name="ds_voce"
+		property="voce_f.ds_voce"
+		maxLength="100"
+		inputSize="70"
+		inputType="ROTEXT"
+		label="Descrizione Voce" />
+	<fieldProperty
+		name="find_voce"
+		property="voce_f"
+		inputType="SEARCHTOOL"
+		label="Voce" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="linea_attivita.cd_centro_responsabilita"
+		label="CdR"
+		inputType="TEXT" />
+	<fieldProperty
+		name="cd_linea_attivita"
+		property="cd_linea_attivita"
+		label="Codice GAE"
+		inputType="ROTEXT"
+		nullable="false"/>
+	<fieldProperty
+		name="ds_linea_attivita"
+		property="linea_attivita.ds_linea_attivita"
+		inputType="ROTEXT"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Descrizione" />
+	<fieldProperty
+		name="find_linea_attivita"
+		property="linea_attivita"
+		inputType="SEARCHTOOL"
+		formName="searchtool_denominazione"
+		label="G.a.e." />
+	<fieldProperty
+		name="im_modifica"
+		property="im_modifica"
+		label="Importo"
+		inputType="TEXT"
+		maxLength="13"
+		inputSize="13"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		nullable="false" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_modifica" />
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_voce" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="cd_linea_attivita" />
+	<formFieldProperty
+		name="im_modifica" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_modifica" />
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_voce" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="cd_linea_attivita" />
+	<findFieldProperty
+		name="im_modifica" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_modifica" />
+	<columnFieldProperty
+		name="ti_appartenenza" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_voce" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="cd_linea_attivita" />
+	<columnFieldProperty
+		name="im_modifica" />
+
+	<columnSet
+		name="accertamentoModifica">	
+		<!-- 
+		<columnFieldProperty
+			name="cd_voce" />
+		<columnFieldProperty
+			name="ds_voce" />
+		 -->	
+		<columnFieldProperty
+			name="cd_centro_responsabilita" />
+		<columnFieldProperty
+			name="cd_linea_attivita" />
+		<columnFieldProperty
+			name="ds_linea_attivita" />
+		<columnFieldProperty
+			name="im_modifica" />
+	</columnSet>
+
+</bulkInfo>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ds_insieme_la"
+		property="ds_insieme_la"
+		maxLength="200"
+		inputSize="200"
+		cols="60"
+		rows="3"
+		inputType="TEXTAREA"
+		label="Descrizione"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_insieme_la"
+		property="cd_insieme_la"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		maxLength="30"
+		inputSize="10"
+		inputType="TEXT"
+		label="Centro di responsabilità"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="centro_responsabilita"
+		property="centro_responsabilita"
+		inputType="SEARCHTOOL"
+		label="Centro di responsabilità"
+		formName="searchtool" />
+
+	<formFieldProperty
+		name="centro_responsabilita" />
+	<formFieldProperty
+		name="cd_insieme_la" />
+	<formFieldProperty
+		name="ds_insieme_la" />
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_insieme_la"
+			enabledOnEdit="true" />
+		<formFieldProperty
+			name="ds_insieme_la"
+			inputSize="30"
+			inputType="TEXT" />
+	</form>
+		
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="cd_insieme_la" />
+	<columnFieldProperty
+		name="ds_insieme_la" />
+
+	<findFieldProperty
+		name="ds_insieme_la" />
+	<findFieldProperty
+		name="cd_insieme_la" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+
+</bulkInfo>

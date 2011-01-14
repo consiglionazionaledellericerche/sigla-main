@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.cdip.bulk.V_cdp_stato_mensilitaBase"
+	homeClassName="it.cnr.contab.pdg00.cdip.bulk.V_cdp_stato_mensilitaHome" >
+	<defaultColumnMap
+		tableName="V_CDP_STATO_MENSILITA" >
+		<columnMapping
+			columnName="MESE"
+			propertyName="mese"
+			sqlTypeName="DECIMAL"
+			columnSize="2"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO_CARICO"
+			propertyName="stato_carico"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_STATO_SCARICO"
+			propertyName="fl_stato_scarico"
+			sqlTypeName="VARCHAR"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+			columnSize="1" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="mese" />
+	<persistentProperty
+		name="stato_carico" />
+	<persistentProperty
+		name="fl_stato_scarico" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+</SQLPersistentInfo>

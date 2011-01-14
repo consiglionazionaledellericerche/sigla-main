@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Tipo_contributo_ritenutaBulk"
+	keyClassName="it.cnr.contab.compensi00.tabrif.bulk.Tipo_contributo_ritenutaKey"
+	homeClassName="it.cnr.contab.compensi00.tabrif.bulk.Tipo_contributo_ritenutaHome" >
+
+	<defaultColumnMap tableName="TIPO_CONTRIBUTO_RITENUTA" >
+		<columnMapping
+			columnName="PG_CLASSIFICAZIONE_MONTANTI"
+			propertyName="classificazioneMontanti.pg_classificazione_montanti" />
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE_CORI"
+			propertyName="classificazioneCori.cd_classificazione_cori" />
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="classificazioneMontanti" />
+	<persistentProperty
+		name="classificazioneCori" />
+
+</SQLPersistentInfo>

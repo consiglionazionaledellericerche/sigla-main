@@ -1,0 +1,49 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Accertamento_scad_voceBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Accertamento_scad_voceHome" >
+	<defaultColumnMap
+		tableName="ACCERTAMENTO_SCAD_VOCE" >
+		<columnMapping
+			columnName="PG_ACCERTAMENTO_SCADENZARIO"
+			propertyName="accertamento_scadenzario.pg_accertamento_scadenzario"
+			/>
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="accertamento_scadenzario.accertamento.pg_accertamento"
+			/>
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE"
+			propertyName="accertamento_scadenzario.accertamento.esercizio_originale"
+			/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="accertamento_scadenzario.accertamento.esercizio"
+			/>
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="accertamento_scadenzario.accertamento.cds.cd_unita_organizzativa"
+			/>
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="linea_attivita.centro_responsabilita.cd_centro_responsabilita"
+			/>			
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="linea_attivita.cd_linea_attivita"
+			/>			
+	</defaultColumnMap>
+	<persistentProperty
+		name="accertamento_scadenzario"
+		partOfOid="true" />
+	<persistentProperty
+		name="linea_attivita"
+		partOfOid="true" />
+
+	<fetchPolicy
+		name="it.cnr.contab.doccont00.comp.AccertamentoComponent.edit">
+		<include pattern="linea_attivita"/>		
+		<exclude pattern="linea_attivita.*"/>
+		<include pattern="linea_attivita.centro_responsabilita"/>
+		<exclude pattern="linea_attivita.centro_responsabilita.*"/>				
+	</fetchPolicy>
+</SQLPersistentInfo>

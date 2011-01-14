@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.contratto.bulk.ContrattoBulk"
+	homeClassName="it.cnr.contab.config00.contratto.bulk.ContrattoHome">
+	<defaultColumnMap
+		tableName="CONTRATTO">
+		<columnMapping
+			columnName="ESERCIZIO_PADRE"
+			propertyName="contratto_padre.esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="STATO_PADRE"
+			propertyName="contratto_padre.stato"
+			sqlTypeName="CHAR"
+			columnSize="1" />			
+		<columnMapping
+			columnName="PG_CONTRATTO_PADRE"
+			propertyName="contratto_padre.pg_contratto"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="FIG_GIUR_INT"
+			propertyName="figura_giuridica_interna.cd_terzo"
+			sqlTypeName="DECIMAL"
+			nullable="false"
+			columnSize="8" />
+		<columnMapping
+			columnName="FIG_GIUR_EST"
+			propertyName="figura_giuridica_esterna.cd_terzo"
+			sqlTypeName="DECIMAL"
+			nullable="false"
+			columnSize="8" />
+		<columnMapping
+			columnName="CD_TERZO_RESP"
+			propertyName="responsabile.cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="CD_TERZO_FIRMATARIO"
+			propertyName="firmatario.cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />			
+		<columnMapping
+			columnName="CD_TIPO_CONTRATTO"
+			propertyName="tipo_contratto.cd_tipo_contratto"
+			sqlTypeName="VARCHAR"
+			nullable="false"
+			columnSize="5" />
+		<columnMapping
+			columnName="CD_TIPO_ATTO"
+			propertyName="atto.cd_tipo_atto"
+			sqlTypeName="VARCHAR"
+			nullable="false"
+			columnSize="5" />
+		<columnMapping
+			columnName="CD_ORGANO"
+			propertyName="organo.cd_organo"
+			sqlTypeName="VARCHAR"
+			nullable="false"
+			columnSize="5" />
+		<columnMapping
+			columnName="CD_TIPO_ATTO_ANN"
+			propertyName="atto_annullamento.cd_tipo_atto"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="CD_ORGANO_ANN"
+			propertyName="organo_annullamento.cd_organo"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />			
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			nullable="false"
+			columnSize="30" />			
+		<columnMapping
+			columnName="CD_PROC_AMM"
+			propertyName="procedura_amministrativa.cd_proc_amm"
+			sqlTypeName="VARCHAR"
+			nullable="false"
+			columnSize="5" />			
+			
+	</defaultColumnMap>
+	
+	<persistentProperty
+		name="contratto_padre"/>
+	<persistentProperty
+		name="figura_giuridica_interna"/>
+	<persistentProperty
+		name="figura_giuridica_esterna"/>
+	<persistentProperty
+		name="responsabile"/>
+	<persistentProperty
+		name="firmatario"/>		
+	<persistentProperty
+		name="tipo_contratto" />
+	<persistentProperty
+		name="atto" />
+	<persistentProperty
+		name="organo" />
+	<persistentProperty
+		name="atto_annullamento" />
+	<persistentProperty
+		name="organo_annullamento" />
+	<persistentProperty
+		name="unita_organizzativa" />		
+	<persistentProperty
+		name="procedura_amministrativa" />				
+</SQLPersistentInfo>

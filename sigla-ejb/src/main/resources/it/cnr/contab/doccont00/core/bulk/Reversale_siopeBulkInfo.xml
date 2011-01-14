@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Codice CDS della Reversale" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio della Reversale" />
+	<fieldProperty
+		name="pg_reversale"
+		property="pg_reversale"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero della Reversale" />
+	<fieldProperty
+		name="esercizio_accertamento"
+		property="esercizio_accertamento"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio dell'accertamento della riga di Reversale" />
+	<fieldProperty
+		name="esercizio_ori_accertamento"
+		property="esercizio_ori_accertamento"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio residuo di provenienza dell'accertamento della riga di Reversale" />
+	<fieldProperty
+		name="pg_accertamento"
+		property="pg_accertamento"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo dell'accertamento della riga di Reversale" />
+	<fieldProperty
+		name="pg_accertamento_scadenzario"
+		property="pg_accertamento_scadenzario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Scadenza dell'accertamento della riga di Reversale" />
+	<fieldProperty
+		name="cd_cds_doc_amm"
+		property="cd_cds_doc_amm"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS del documento amministrativo della riga di Reversale" />
+	<fieldProperty
+		name="cd_uo_doc_amm"
+		property="cd_uo_doc_amm"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="UO del documento amministrativo della riga di Reversale" />
+	<fieldProperty
+		name="esercizio_doc_amm"
+		property="esercizio_doc_amm"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio del documento amministrativo della riga di Reversale" />
+	<fieldProperty
+		name="cd_tipo_documento_amm"
+		property="cd_tipo_documento_amm"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Tipologia di documento amministrativo della riga di Reversale" />
+	<fieldProperty
+		name="pg_doc_amm"
+		property="pg_doc_amm"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo del documento amministrativo della riga di Reversale" />
+	<fieldProperty
+		name="esercizio_siope"
+		property="codice_siope.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio del codice SIOPE" />
+	<fieldProperty
+		name="ti_gestione"
+		property="codice_siope.ti_gestione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Tipo Gestione del Codice SIOPE" />
+	<fieldProperty
+		name="cd_siope"
+		property="codice_siope.cd_siope"
+		inputType="ROTEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice Siope" />
+	<fieldProperty
+		name="ds_siope"
+		property="codice_siope.descrizione"
+		inputType="ROTEXT"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Descrizione" />
+	<fieldProperty
+		name="importo"
+		property="importo"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="Importo"
+		formatName = "it.cnr.contab.util.EuroFormat" />
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_reversale" />
+	<formFieldProperty
+		name="esercizio_accertamento" />
+	<formFieldProperty
+		name="esercizio_ori_accertamento" />
+	<formFieldProperty
+		name="pg_accertamento" />
+	<formFieldProperty
+		name="pg_accertamento_scadenzario" />
+	<formFieldProperty
+		name="cd_cds_doc_amm" />
+	<formFieldProperty
+		name="cd_uo_doc_amm" />
+	<formFieldProperty
+		name="esercizio_doc_amm" />
+	<formFieldProperty
+		name="cd_tipo_documento_amm" />
+	<formFieldProperty
+		name="pg_doc_amm" />
+	<formFieldProperty
+		name="esercizio_siope" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="cd_siope" />
+	<formFieldProperty
+		name="ds_siope" />
+	<formFieldProperty
+		name="importo" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_reversale" />
+	<findFieldProperty
+		name="esercizio_accertamento" />
+	<findFieldProperty
+		name="esercizio_ori_accertamento" />
+	<findFieldProperty
+		name="pg_accertamento" />
+	<findFieldProperty
+		name="pg_accertamento_scadenzario" />
+	<findFieldProperty
+		name="cd_cds_doc_amm" />
+	<findFieldProperty
+		name="cd_uo_doc_amm" />
+	<findFieldProperty
+		name="esercizio_doc_amm" />
+	<findFieldProperty
+		name="cd_tipo_documento_amm" />
+	<findFieldProperty
+		name="pg_doc_amm" />
+	<findFieldProperty
+		name="esercizio_siope" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="cd_siope" />
+	<findFieldProperty
+		name="importo" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_reversale" />
+	<columnFieldProperty
+		name="esercizio_accertamento" />
+	<columnFieldProperty
+		name="esercizio_ori_accertamento" />
+	<columnFieldProperty
+		name="pg_accertamento" />
+	<columnFieldProperty
+		name="pg_accertamento_scadenzario" />
+	<columnFieldProperty
+		name="cd_cds_doc_amm" />
+	<columnFieldProperty
+		name="cd_uo_doc_amm" />
+	<columnFieldProperty
+		name="esercizio_doc_amm" />
+	<columnFieldProperty
+		name="cd_tipo_documento_amm" />
+	<columnFieldProperty
+		name="pg_doc_amm" />
+	<columnFieldProperty
+		name="esercizio_siope" />
+	<columnFieldProperty
+		name="ti_gestione" />
+	<columnFieldProperty
+		name="cd_siope" />
+	<columnFieldProperty
+		name="importo" />
+
+	<columnSet name="collegaARigaReversale">
+		<columnFieldProperty
+			name="cd_siope" />
+		<columnFieldProperty
+			name="ds_siope" />
+		<columnFieldProperty
+			name="importo" 
+			columnStyle="text-align: right;"
+			command="doDefault"
+			enabledOnEdit="true"
+			enabledOnInsert="true"/>
+	</columnSet>
+</bulkInfo>

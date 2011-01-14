@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_area_scientifica"
+		property="cd_area_scientifica"
+		maxLength="2"
+		inputSize="2"
+		inputType="TEXT"
+		label="Codice"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_area_scientifica"
+		property="ds_area_scientifica"
+		maxLength="80"
+		inputSize="30"
+		inputType="TEXT"
+		label="Descrizione"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true" />
+
+	<formFieldProperty
+		name="cd_area_scientifica" />
+	<formFieldProperty
+		name="ds_area_scientifica" />
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_area_scientifica" />
+		<formFieldProperty
+			name="ds_area_scientifica" />
+	</form>
+
+	<columnFieldProperty
+		name="cd_area_scientifica" />
+	<columnFieldProperty
+		name="ds_area_scientifica" />
+
+	<findFieldProperty
+		name="cd_area_scientifica" />
+	<findFieldProperty
+		name="ds_area_scientifica" />
+
+</bulkInfo>

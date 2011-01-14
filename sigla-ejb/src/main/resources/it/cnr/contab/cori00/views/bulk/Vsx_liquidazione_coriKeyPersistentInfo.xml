@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.cori00.views.bulk.Vsx_liquidazione_coriKey" >
+	<defaultColumnMap
+		tableName="VSX_LIQUIDAZIONE_CORI" >
+		<columnMapping
+			columnName="PG_CALL"
+			propertyName="pg_call"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PAR_NUM"
+			propertyName="par_num"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_call"
+		partOfOid="true" />
+	<persistentProperty
+		name="par_num"
+		partOfOid="true" />
+</SQLPersistentInfo>

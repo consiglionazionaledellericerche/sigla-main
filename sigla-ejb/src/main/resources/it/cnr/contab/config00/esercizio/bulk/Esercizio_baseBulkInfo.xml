@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Codice dell'esercizio contabile" />
+	<formFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="esercizio" />
+		
+    <form
+		name="searchtool" >
+		<formFieldProperty
+			name="esercizio"
+			inputType="TEXT" 
+			inputSize="4"
+			label="Esercizio documento amministrativo"/>
+	</form> 	
+	
+</bulkInfo>

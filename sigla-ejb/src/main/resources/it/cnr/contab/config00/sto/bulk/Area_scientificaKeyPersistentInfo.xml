@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.sto.bulk.Area_scientificaKey" >
+	<defaultColumnMap
+		tableName="AREA_SCIENTIFICA" >
+		<columnMapping
+			columnName="CD_AREA_SCIENTIFICA"
+			propertyName="cd_area_scientifica"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_area_scientifica"
+		partOfOid="true" />
+</SQLPersistentInfo>

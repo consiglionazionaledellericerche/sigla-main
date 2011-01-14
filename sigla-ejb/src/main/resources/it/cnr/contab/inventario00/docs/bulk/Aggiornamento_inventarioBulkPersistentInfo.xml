@@ -1,0 +1,4 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.docs.bulk.Aggiornamento_inventarioBulk"
+	homeClassName="it.cnr.contab.inventario00.docs.bulk.Aggiornamento_inventarioHome" >
+</SQLPersistentInfo>

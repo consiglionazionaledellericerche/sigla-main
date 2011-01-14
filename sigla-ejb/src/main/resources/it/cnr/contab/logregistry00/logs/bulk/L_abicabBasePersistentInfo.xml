@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.logregistry00.logs.bulk.L_abicabBase"
+	keyClassName="it.cnr.contab.logregistry00.logs.bulk.L_abicabKey"
+	homeClassName="it.cnr.contab.logregistry00.logs.bulk.L_abicabHome" >
+	<defaultColumnMap
+		tableName="L_ABICAB" >
+		<columnMapping
+			columnName="DS_ABICAB"
+			propertyName="ds_abicab"
+			sqlTypeName="VARCHAR"
+			columnSize="150"
+			nullable="false" />
+		<columnMapping
+			columnName="ACTION_"
+			propertyName="action_"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="VIA"
+			propertyName="via"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="DT_TRANSACTION_"
+			propertyName="dt_transaction_"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CAP"
+			propertyName="cap"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="USER_"
+			propertyName="user_"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_COMUNE"
+			propertyName="pg_comune"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_CANCELLATO"
+			propertyName="fl_cancellato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FRAZIONE"
+			propertyName="frazione"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ds_abicab" />
+	<persistentProperty
+		name="action_" />
+	<persistentProperty
+		name="via" />
+	<persistentProperty
+		name="dt_transaction_" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="cap" />
+	<persistentProperty
+		name="user_" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_comune" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="fl_cancellato" />
+	<persistentProperty
+		name="frazione" />
+</SQLPersistentInfo>

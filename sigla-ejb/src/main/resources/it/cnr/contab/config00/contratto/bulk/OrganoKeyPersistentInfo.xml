@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.contratto.bulk.OrganoKey">
+	<defaultColumnMap
+		tableName="ORGANO">
+		<columnMapping
+			columnName="CD_ORGANO"
+			propertyName="cd_organo"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_organo"
+		partOfOid="true" />
+</SQLPersistentInfo>

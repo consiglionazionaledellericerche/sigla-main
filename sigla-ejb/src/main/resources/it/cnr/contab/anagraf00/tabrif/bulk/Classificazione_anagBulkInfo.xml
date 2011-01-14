@@ -1,0 +1,58 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_classific_anag"
+		property="cd_classific_anag"
+		label="Codice classificazione"
+		enabledOnEdit="false"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="ds_classific_anag"
+		property="ds_classific_anag"
+		label="Descrizione classificazione"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="dt_canc"
+		property="dt_canc"
+		label="Data cancellazione"
+		inputType="ROTEXT"
+		/>
+
+	<columnFieldProperty
+		name="cd_classific_anag"
+		/>
+	<columnFieldProperty
+		name="ds_classific_anag"
+		/>
+	<columnFieldProperty
+		name="dt_canc"
+		/>
+
+	<formFieldProperty
+		name="cd_classific_anag"
+		/>
+	<formFieldProperty
+		name="ds_classific_anag"
+		/>
+	<formFieldProperty
+		name="dt_canc"
+		/>
+
+	<findFieldProperty
+		name="cd_classific_anag"
+		/>
+	<findFieldProperty
+		name="ds_classific_anag"
+		/>
+	<findFieldProperty
+		name="dt_canc"
+		inputType="TEXT"
+		/>
+
+
+</bulkInfo>

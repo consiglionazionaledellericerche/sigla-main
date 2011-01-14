@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+targetNamespace="http://contab.cnr.it/SIGLA/schema"
+            xmlns="http://contab.cnr.it/SIGLA/schema"> --> 
+ <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"> 
+	<xsd:element name="righescadvoc">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="im_voce" nillable="false">
+                    <xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+                        	<xsd:minLength value="1"></xsd:minLength>							
+						</xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:element>
+                
+                <xsd:element name="cdr" nillable="false">
+                    <xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+                        	<xsd:minLength value="1"></xsd:minLength>							
+						</xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:element>
+                
+                <xsd:element name="gae" nillable="false">
+                    <xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+                        	<xsd:minLength value="1"></xsd:minLength>							
+						</xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+	<xsd:element name="righefat">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:sequence>
+                    <xsd:element name="progressivo_riga" type="xsd:string" />
+                </xsd:sequence>
+                <xsd:choice>
+                    <xsd:sequence>
+                        <xsd:element name="cd_tariffario" nillable="false">
+                            <xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+	                                <xsd:minLength value="1"></xsd:minLength>								
+								</xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:element>
+                    </xsd:sequence>
+                    
+                    <xsd:sequence>						
+                        <xsd:element name="ds_riga_fattura" nillable="false">
+                            <xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+	                                <xsd:minLength value="1"></xsd:minLength>								
+								</xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:element>
+                        <xsd:element name="prezzo_unitario" nillable="false">
+                            <xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+	                                <xsd:minLength value="1"></xsd:minLength>							
+								</xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:element>
+                        <xsd:element name="quantita" nillable="false">
+                            <xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+                                <xsd:minLength value="1"></xsd:minLength>							
+							</xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:element>
+                        <xsd:element name="cd_voce_iva" nillable="false">
+                            <xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+	                                <xsd:minLength value="1"></xsd:minLength>								
+								</xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:choice>
+                
+                <xsd:sequence>
+                   	<xsd:element name="fl_iva_forzata">	
+				        <xsd:simpleType>
+					        <xsd:restriction base="xsd:NMTOKEN">
+					            <xsd:enumeration value="N" />
+					            <xsd:enumeration value="Y" />
+					        </xsd:restriction>
+				        </xsd:simpleType>
+				    </xsd:element>
+                    <xsd:element name="cd_voce" nillable="false">
+                        <xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+                                <xsd:minLength value="1"></xsd:minLength>								
+							</xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+                <xsd:choice>
+                    <xsd:sequence>
+                        <xsd:element name="esercizio_contratto" type="xsd:string" />
+                        <xsd:element name="stato_contratto" type="xsd:string" />
+                        <xsd:element name="pg_contratto" type="xsd:string" />
+                    </xsd:sequence>
+                    <xsd:sequence></xsd:sequence>
+                </xsd:choice>
+                <xsd:choice>
+                    <xsd:sequence>
+                        <xsd:element name="pg_accertamento" type="xsd:string" />
+                        <xsd:element name="pg_accertamento_scadenzario" type="xsd:string" />
+                        <xsd:element name="ds_accertamento" nillable="false">
+                            <xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+	                                <xsd:minLength value="1"></xsd:minLength>								
+								</xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:element>
+                    </xsd:sequence>                    
+                    <xsd:sequence>
+                        <xsd:element name="pg_obbligazione" type="xsd:string" />
+                        <xsd:element name="pg_obbligazione_scadenzario" type="xsd:string" />
+                        <xsd:element name="ds_obbligazione" nillable="false">
+                            <xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+	                                <xsd:minLength value="1"></xsd:minLength>								
+								</xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:element>
+                        <xsd:element name="motivazione" type="xsd:string" />
+                        <xsd:element name="esercizio_assncna_fin" nillable="false">
+                            <xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+	                                <xsd:minLength value="1"></xsd:minLength>							
+								</xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:element>
+                        <xsd:element name="pg_fattura_assncna_fin" nillable="false">
+                            <xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+	                                <xsd:minLength value="1"></xsd:minLength>							
+								</xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:element>
+                        <xsd:element name="pg_riga_assncna_fin" nillable="false">
+                            <xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+	                                <xsd:minLength value="1"></xsd:minLength>							
+								</xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:choice>
+                <xsd:sequence>
+                    <xsd:element ref="righescadvoc" maxOccurs="unbounded" />
+                </xsd:sequence>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+	<xsd:element name="fattura">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="esercizio">
+                    <xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+                                <xsd:minLength value="1"></xsd:minLength>								
+							</xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="pg_fattura_attiva" type="xsd:string" />
+                <xsd:element name="pg_fattura_esterno" nillable="false">
+                    <xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+                                <xsd:minLength value="1"></xsd:minLength>								
+							</xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="cd_cds_origine" nillable="false">
+                    <xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+                                <xsd:minLength value="1"></xsd:minLength>								
+							</xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="cd_uo_origine" nillable="false">
+                    <xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+                                <xsd:minLength value="1"></xsd:minLength>								
+							</xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="ti_fattura">
+			        <xsd:simpleType>
+			        	<xsd:restriction base="xsd:NMTOKEN">
+			            	<xsd:enumeration value="F" />
+			            	<xsd:enumeration value="C" />				
+							<!--<xs:enumeration value="D" />-->
+						</xsd:restriction>
+			        </xsd:simpleType>
+			    </xsd:element>
+			    	<xsd:element name="fl_intra_ue">		
+				        <xsd:simpleType>
+					        <xsd:restriction base="xsd:NMTOKEN">
+					            <xsd:enumeration value="N" />
+					            <xsd:enumeration value="Y" />
+					        </xsd:restriction>
+				        </xsd:simpleType>
+				    </xsd:element>
+				    <xsd:element name="fl_extra_ue">		
+				        <xsd:simpleType>
+					        <xsd:restriction base="xsd:NMTOKEN">
+					            <xsd:enumeration value="N" />
+					            <xsd:enumeration value="Y" />
+					        </xsd:restriction>
+				        </xsd:simpleType>
+				    </xsd:element>
+				    <xsd:element name="fl_san_marino">		
+				        <xsd:simpleType>
+					        <xsd:restriction base="xsd:NMTOKEN">
+					            <xsd:enumeration value="N" />
+					            <xsd:enumeration value="Y" />
+					        </xsd:restriction>
+				        </xsd:simpleType>
+				    </xsd:element>
+                <xsd:element name="cd_tipo_sezionale" nillable="false">
+                    <xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+                                <xsd:minLength value="1"></xsd:minLength>								
+							</xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="dt_registrazione" nillable="false" type="xsd:string"></xsd:element>
+                	<xsd:element name="ti_causale_emissione" >
+				        <xsd:simpleType>
+				            <xsd:restriction base="xsd:NMTOKEN">
+				            	<xsd:enumeration value="T" />
+				            	<xsd:enumeration value="C" />
+				            	<xsd:enumeration value="L" />
+								<!--<xs:enumeration value="B" /> -->
+							</xsd:restriction>
+				        </xsd:simpleType>
+				    </xsd:element>
+
+                	<xsd:element name="fl_liquidazione_differita">
+				        <xsd:simpleType>
+					        <xsd:restriction base="xsd:NMTOKEN">
+					            <xsd:enumeration value="N" />
+					            <xsd:enumeration value="Y" />
+					        </xsd:restriction>
+				        </xsd:simpleType>
+				    </xsd:element>
+
+                <xsd:element name="ds_fattura_attiva" type="xsd:string" />
+                <xsd:element name="cd_terzo" nillable="false">
+                    <xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+                                <xsd:minLength value="1"></xsd:minLength>								
+							</xsd:restriction>
+                   </xsd:simpleType>
+                </xsd:element>
+                <xsd:choice>
+                    <xsd:sequence>
+                      <xsd:element name="cd_modalita_pag" nillable="false">
+                            <xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+	                                <xsd:minLength value="1"></xsd:minLength>								
+								</xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:element>
+                        <xsd:element name="pg_banca" nillable="false">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:minLength value="1"></xsd:minLength>
+							</xsd:restriction>
+						</xsd:simpleType>
+                        </xsd:element>
+                    </xsd:sequence>
+                    <xsd:sequence></xsd:sequence>
+                </xsd:choice>
+                <xsd:element name="cd_terzo_uo_cds" nillable="false">
+                    <xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+                                <xsd:minLength value="1"></xsd:minLength>								
+							</xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="cd_modalita_pag_uo_cds" nillable="false">
+                    <xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+                                <xsd:minLength value="1"></xsd:minLength>								
+							</xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="pg_banca_uo_cds" nillable="false">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:minLength value="1"></xsd:minLength>
+							</xsd:restriction>
+						</xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="cd_divisa" type="xsd:string" fixed="EURO" />
+                <xsd:element name="cambio" type="xsd:string" fixed="1" />
+                <xsd:element name="note" type="xsd:string" />
+                <xsd:element name="utcr" nillable="false">
+                    <xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+                                <xsd:minLength value="1"></xsd:minLength>								
+							</xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="cod_errore" type="xsd:string" />
+                <xsd:element name="desc_errore" type="xsd:string" />
+                <xsd:sequence>
+                    <xsd:element ref="righefat" maxOccurs="unbounded" />
+                </xsd:sequence>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+	<xsd:element name="fatture">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="fattura" maxOccurs="unbounded" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

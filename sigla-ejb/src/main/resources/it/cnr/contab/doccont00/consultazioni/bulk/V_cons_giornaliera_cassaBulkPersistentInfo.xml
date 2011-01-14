@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_giornaliera_cassaBulk"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_giornaliera_cassaHome">
+	<defaultColumnMap
+		tableName="V_CONS_GIORNALIERA_CASSA">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="NOME_FILE"
+			propertyName="nome_file"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_REC"
+			propertyName="pg_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="TR"
+			propertyName="tr"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_GIORNALIERA"
+			propertyName="data_giornaliera"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_MOVIMENTO"
+			propertyName="data_movimento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pg_mandato"
+			sqlTypeName="VARCHAR"
+			columnSize="39"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_REVERSALE"
+			propertyName="pg_reversale"
+			sqlTypeName="VARCHAR"
+			columnSize="39"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_SOSPESO_E"
+			propertyName="cd_sospeso_e"
+			sqlTypeName="VARCHAR"
+			columnSize="54"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_SOSPESO_S"
+			propertyName="cd_sospeso_s"
+			sqlTypeName="VARCHAR"
+			columnSize="54"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SOS_E_APERTI"
+			propertyName="im_sos_e_aperti"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SOS_E_STORNI"
+			propertyName="im_sos_e_storni"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_REV_SOSPESI"
+			propertyName="im_rev_sospesi"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_REVERSALI"
+			propertyName="im_reversali"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_REV_STORNI"
+			propertyName="im_rev_storni"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SOS_S_APERTI"
+			propertyName="im_sos_s_aperti"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SOS_S_STORNI"
+			propertyName="im_sos_s_storni"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MANDATI"
+			propertyName="im_mandati"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MAN_STORNI"
+			propertyName="im_man_storni"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_MAN_SOSPESI"
+			propertyName="im_man_sospesi"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="TOT_SBILANCIO"
+			propertyName="tot_sbilancio"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />		
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="nome_file" />
+	<persistentProperty
+		name="pg_rec" />
+	<persistentProperty
+		name="tr" />
+	<persistentProperty
+		name="data_giornaliera" />
+	<persistentProperty
+		name="data_movimento" />
+	<persistentProperty
+		name="cd_cds" />
+	<persistentProperty
+		name="pg_mandato" />
+	<persistentProperty
+		name="pg_reversale" />
+	<persistentProperty
+		name="cd_sospeso_e" />
+	<persistentProperty
+		name="cd_sospeso_s" />
+	<persistentProperty
+		name="im_sos_e_aperti" />
+	<persistentProperty
+		name="im_sos_e_storni" />
+	<persistentProperty
+		name="im_rev_sospesi" />
+	<persistentProperty
+		name="im_reversali" />
+	<persistentProperty
+		name="im_rev_storni" />
+	<persistentProperty
+		name="im_sos_s_aperti" />
+	<persistentProperty
+		name="im_sos_s_storni" />
+	<persistentProperty
+		name="im_mandati" />
+	<persistentProperty
+		name="im_man_storni" />
+	<persistentProperty
+		name="im_man_sospesi" />	
+	<persistentProperty
+		name="tot_sbilancio" />		
+	<columnMap 
+		name="FILENAME"
+		tableName="EXT_CASSIERE00">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="NOME_FILE"
+			propertyName="nome_file"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		</columnMap>		
+</SQLPersistentInfo>

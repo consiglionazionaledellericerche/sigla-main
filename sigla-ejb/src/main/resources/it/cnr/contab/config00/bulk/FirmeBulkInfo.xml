@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		inputSize="4"
+		maxLength="4"		
+		label="Esercizio" />
+	
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		keysProperty="tipoDBKeys" 
+		inputType="SELECT"
+		label="Tipo"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		nullable="true" />
+
+	<fieldProperty
+		name="firma1"
+		property="firma1"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="130"
+		label="Prima Firma" />
+
+	<fieldProperty
+		name="firma2"
+		property="firma2"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="130"
+		label="Seconda Firma" />
+		
+	<fieldProperty
+		name="firma3"
+		property="firma3"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="130"
+		label="Terza Firma" />	
+	
+	<fieldProperty
+		name="firma4"
+		property="firma4"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="130"		
+		label="Quarta Firma" />		
+				
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="tipo" />
+	<formFieldProperty name="firma1" />
+	<formFieldProperty name="firma2" />	
+	<formFieldProperty name="firma3" />		
+	<formFieldProperty name="firma4" />		
+	
+	<columnFieldProperty name="esercizio" />
+	<columnFieldProperty name="tipo" />
+	<columnFieldProperty name="firma1" />
+	<columnFieldProperty name="firma2" />	
+	<columnFieldProperty name="firma3" />		
+	<columnFieldProperty name="firma4" />
+	
+</bulkInfo>

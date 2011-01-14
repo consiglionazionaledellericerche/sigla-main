@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.docs.bulk.V_associazioni_disponibiliBase"
+	homeClassName="it.cnr.contab.inventario00.docs.bulk.V_associazioni_disponibiliHome">
+	<defaultColumnMap
+		tableName="V_ASSOCIAZIONI_DISPONIBILI">
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="pg_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="NR_INVENTARIO"
+			propertyName="nr_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PROGRESSIVO"
+			propertyName="progressivo"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_BENE"
+			propertyName="ds_bene"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_DOCUMENTO"
+			propertyName="ti_documento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"/>
+		<columnMapping
+			columnName="PG_BUONO_C_S"
+			propertyName="pg_buono_c_s"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"/>	
+		<columnMapping
+			columnName="ASSOCIATO"
+			propertyName="associato"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6" />	
+		<columnMapping
+			columnName="INVENTARIATO"
+			propertyName="inventariato"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6" />						
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_unita_organizzativa" />
+	<persistentProperty
+		name="pg_inventario" />
+	<persistentProperty
+		name="nr_inventario" />
+	<persistentProperty
+		name="progressivo" />
+	<persistentProperty
+		name="ds_bene" />
+	<persistentProperty
+		name="inventariato" />
+	<persistentProperty
+		name="associato" />
+	<persistentProperty
+		name="ti_documento" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="pg_buono_c_s" />	
+	
+</SQLPersistentInfo>

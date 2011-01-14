@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.cdip.bulk.Ass_cdp_uoBase"
+	keyClassName="it.cnr.contab.pdg00.cdip.bulk.Ass_cdp_uoKey"
+	homeClassName="it.cnr.contab.pdg00.cdip.bulk.Ass_cdp_uoHome" >
+	<defaultColumnMap
+		tableName="ASS_CDP_UO" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="PRC_UO_A3"
+			propertyName="prc_uo_a3"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2" />
+		<columnMapping
+			columnName="PRC_UO_A2"
+			propertyName="prc_uo_a2"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2" />
+		<columnMapping
+			columnName="PRC_UO_A1"
+			propertyName="prc_uo_a1"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="prc_uo_a3" />
+	<persistentProperty
+		name="prc_uo_a2" />
+	<persistentProperty
+		name="prc_uo_a1" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

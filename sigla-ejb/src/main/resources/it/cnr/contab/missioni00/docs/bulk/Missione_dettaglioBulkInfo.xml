@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+/******************* SPESA *************/
+	<fieldProperty
+		name="dt_inizio_tappa"
+		property="missione.collectionGiorniSpeseSelezionati"
+		optionsProperty="missione.collectionGiorniSpese"
+		maxLength="30"
+		inputSize="30"
+		style="width:100px;height:100px"
+		inputType="SELECT"
+		formatName="date_short"		 
+		label="Giorno"
+		nullable="false"
+		command="doOnGiornoSpesaChange"
+		/>
+	<fieldProperty
+		name="singolo_giorno"
+		property="dt_inizio_tappa"
+		inputType="TEXT"
+		inputSize="20"
+		formatName="timestamp"
+		label="Giorno"
+		/>		
+	<fieldProperty
+		name="find_tipo_spesa"
+		property="tipo_spesa"
+		inputType="SEARCHTOOL"
+		label="Tipo spesa"		
+		/>
+	<fieldProperty
+		name="cd_ti_spesa"
+		property="cd_ti_spesa"
+		label="Tipo spesa"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="20"
+		nullable="false"
+		readonlyProperty="ROTipo_spesa"						
+		/>
+	<fieldProperty
+		name="ds_ti_spesa"
+		property="ds_ti_spesa"
+		label="Descrione tipo spesa"
+		inputSize="50"
+		maxLength="100"
+		inputType="ROTEXT" 
+		/>		
+	<fieldProperty
+		name="ds_spesa"
+		property="ds_spesa"
+		maxLength="100"
+		inputSize="50"
+		inputType="TEXT"
+		label="Descrizione"
+		/>
+	<fieldProperty
+		name="fl_spesa_anticipata"
+		property="fl_spesa_anticipata"
+		inputType="CHECKBOX"
+		label="Spesa anticipata" 
+		/>
+	<fieldProperty
+		name="localita_spostamento"
+		property="localita_spostamento"
+		maxLength="200"
+		inputSize="50"
+		inputType="TEXT"
+		label="Localita spostamento"
+		/>
+	<fieldProperty
+		name="id_giustificativo"
+		property="id_giustificativo"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Id. giustificativo"
+		/>				
+	<fieldProperty
+		name="ds_giustificativo"
+		property="ds_giustificativo"
+		maxLength="100"
+		inputSize="50"
+		inputType="TEXT"
+		label="Descrizione giustificativo"
+		/>		
+	<fieldProperty
+		name="ds_no_giustificativo"
+		property="ds_no_giustificativo"
+		maxLength="100"
+		inputSize="50"
+		inputType="TEXT"
+		label="Mancanza giustificativo"
+		/>
+	<fieldProperty
+		name="find_tipo_auto"
+		property="tipo_auto"
+		inputType="SEARCHTOOL"
+		label="Tipo auto"		
+		/>
+	<fieldProperty
+		name="ti_auto"
+		property="ti_auto"
+		inputType="TEXT"
+		maxLength="1"
+		inputSize="1"
+		label="Tipo auto"
+		nullable="false"
+		readonlyProperty="ROTipo_auto"
+		/>
+	<fieldProperty
+		name="find_tipo_pasto"
+		property="tipo_pasto"
+		inputType="SEARCHTOOL"
+		label="Tipo pasto"		
+		/>
+	<fieldProperty
+		name="cd_ti_pasto"
+		property="cd_ti_pasto"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="20"
+		label="Tipo pasto"
+		nullable="false"
+		readonlyProperty="ROTipo_pasto"
+		/>
+	<fieldProperty
+		name="chilometri"
+		property="chilometri"
+		inputType="TEXT"
+		label="Km"
+		nullable="false"
+		formatName = "it.cnr.contab.util.EuroFormat"				
+		/>		
+/******************* IMPORTI SPESA *************/
+	<fieldProperty
+		name="im_spesa_divisa"
+		property="im_spesa_divisa"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		inputType="TEXT"
+		label="Importo"
+		nullable="false"		
+		/>		
+	<fieldProperty
+		name="find_divisa_spesa"
+		property="divisa_spesa"
+		inputType="SEARCHTOOL"
+		label="Valuta spesa"		
+		/>		
+	<fieldProperty
+		name="cd_divisa_spesa"
+		property="divisa_spesa.cd_divisa"
+		label="Valuta"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		readonlyProperty="RODivisa_spesa"								
+		/>
+	<fieldProperty
+		name="ds_divisa_spesa"
+		property="divisa_spesa.ds_divisa"
+		label=""
+		inputSize="20"
+		inputType="ROTEXT" 
+		/>
+	<fieldProperty
+		name="cambio_spesa"
+		property="cambio_spesa"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"				
+		label="Cambio"
+		nullable="false"		
+		/>
+	<fieldProperty
+		name="im_base_maggiorazione"
+		property="im_base_maggiorazione"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"						
+		label="Importo base maggiorazione"
+		nullable="false"		
+		/>
+	<fieldProperty
+		name="percentuale_maggiorazione"
+		property="percentuale_maggiorazione"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"						
+		label="Percentuale maggiorazione"
+		/>				
+	<fieldProperty
+		name="im_maggiorazione"
+		property="im_maggiorazione"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"				
+		label="Importo maggiorazione" 
+		/>
+	<fieldProperty
+		name="im_maggiorazione_euro"
+		property="im_maggiorazione_euro"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		label="Importo maggiorazione euro" 
+		/>		
+	<fieldProperty
+		name="indennita_chilometrica"
+		property="tipo_auto.indennita_chilometrica"
+		inputType="ROTEXT"
+		label="Indennita Km" 
+		/>
+	<fieldProperty
+		name="im_spesa_euro"
+		property="im_spesa_euro"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"														
+		label="Importo euro" />
+	<fieldProperty
+		name="im_spesa_max"
+		property="im_spesa_max"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"												
+		label="Importo max" />				
+	<fieldProperty
+		name="im_totale_spesa"
+		property="im_totale_spesa"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		label="Totale spesa" 	/>
+	<fieldProperty
+		name="im_spesa_max_divisa"
+		property="im_spesa_max_divisa"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"		
+		label="Importo max divisa" 	/>				
+/******************* DIARIA *************/
+	<fieldProperty
+		name="im_diaria_netto"
+		property="im_diaria_netto"
+		inputType="TEXT"
+		maxLength="16"
+		inputSize="16"		
+		formatName = "it.cnr.contab.util.EuroPositivoFormat"								
+		label="Netto diaria"
+		nullable="false"
+		readonlyProperty="ROImportiDiaria"								
+		/>		
+	<fieldProperty
+		name="im_diaria_lorda"
+		property="im_diaria_lorda"
+		inputType="TEXT"
+		maxLength="16"
+		inputSize="16"		
+		formatName = "it.cnr.contab.util.EuroFormat"								
+		label="Lordo diaria"
+		nullable="false"
+		readonlyProperty="ROImportiDiaria"						
+		/>						
+	<fieldProperty
+		name="im_quota_esente"
+		property="im_quota_esente"
+		inputType="TEXT"
+		maxLength="16"
+		inputSize="16"		
+		formatName = "it.cnr.contab.util.EuroPositivoFormat"						
+		label="Quota esente"
+		nullable="false"
+		readonlyProperty="ROImportiDiaria"								
+		/>
+
+	<fieldProperty
+		name="fl_diaria_manuale"
+		property="fl_diaria_manuale"
+		inputType="CHECKBOX"
+		label="Diaria manuale" 	/>		
+	<fieldProperty
+		name="ti_spesa_diaria"
+		property="ti_spesa_diaria"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_spesa_diaria"
+		caseSensitiveSearch="false" />
+		
+	/* Dettaglio spesa */	
+	<formFieldProperty name="dt_inizio_tappa" />
+	<formFieldProperty name="find_tipo_spesa" />	
+	<formFieldProperty name="cd_ti_spesa" />
+	<formFieldProperty name="ds_ti_spesa" />	
+	<formFieldProperty name="ds_spesa" />
+	<formFieldProperty name="fl_spesa_anticipata" />	
+	<formFieldProperty name="localita_spostamento" />	
+	<formFieldProperty name="id_giustificativo" />
+	<formFieldProperty name="ds_giustificativo" />	
+	<formFieldProperty name="ds_no_giustificativo" />
+	<formFieldProperty name="im_spesa_euro" />	
+	<formFieldProperty name="im_spesa_max" />
+	<formFieldProperty name="im_totale_spesa" />
+	<formFieldProperty name="find_divisa_spesa" />		
+	<formFieldProperty name="cd_divisa_spesa" />
+	<formFieldProperty name="ds_divisa_spesa" />		
+	<formFieldProperty name="im_spesa_max_divisa" />	
+	<formFieldProperty name="cambio_spesa" />	
+	<formFieldProperty name="indennita_chilometrica" />
+	<formFieldProperty name="im_base_maggiorazione" />
+	<formFieldProperty name="percentuale_maggiorazione" />	
+	<formFieldProperty name="im_maggiorazione" />
+	<formFieldProperty name="im_maggiorazione_euro" />	
+	<formFieldProperty name="find_tipo_auto" />
+	<formFieldProperty name="ti_auto" />	
+	<formFieldProperty name="find_tipo_pasto" />	
+	<formFieldProperty name="cd_ti_pasto" />
+	<formFieldProperty name="im_spesa_divisa" command="doOnImSpesaDivisaChange"/>/>
+	<formFieldProperty name="chilometri" />
+	/* Dettaglio diaria */
+	<formFieldProperty name="im_diaria_netto" command="doOnDiariaManuale"/>	
+	<formFieldProperty name="im_quota_esente" command="doOnDiariaManuale"/>
+	
+	<findFieldProperty name="dt_inizio_tappa" />
+	<findFieldProperty name="cd_cds" />
+	<findFieldProperty name="fl_spesa_anticipata" />
+	<findFieldProperty name="im_totale_spesa" />
+	<findFieldProperty name="cd_unita_organizzativa" />
+	<findFieldProperty name="pg_missione" />
+	<findFieldProperty name="esercizio" />
+	<findFieldProperty name="cambio_spesa" />	
+	<findFieldProperty name="ds_giustificativo" />
+	<findFieldProperty name="indennita_chilometrica" />
+	<findFieldProperty name="im_maggiorazione" />
+	<findFieldProperty name="im_maggiorazione_euro" />	
+	<findFieldProperty name="fl_no_diaria" />
+	<findFieldProperty name="localita_spostamento" />
+	<findFieldProperty name="cd_divisa_spesa" />	
+	<findFieldProperty name="im_quota_esente" />
+	<findFieldProperty name="id_giustificativo" />
+	<findFieldProperty name="fl_diaria_manuale" />
+	<findFieldProperty name="ds_ti_spesa" />
+	<findFieldProperty name="ti_auto" />
+	<findFieldProperty name="cd_ti_spesa" />
+	<findFieldProperty name="im_diaria_netto" />
+	<findFieldProperty name="cd_ti_pasto" />
+	<findFieldProperty name="im_spesa_max" />
+	<findFieldProperty name="im_spesa_euro" />
+	<findFieldProperty name="im_base_maggiorazione" />
+	<findFieldProperty name="pg_riga" />
+	<findFieldProperty name="ti_spesa_diaria" />
+	<findFieldProperty name="im_spesa_divisa" />
+	<findFieldProperty name="ds_no_giustificativo" />
+	<findFieldProperty name="chilometri" />
+	<findFieldProperty name="ds_spesa" />
+	<findFieldProperty name="im_spesa_max_divisa" />	
+
+	<columnSet name="dettaglioDiariaSet">
+		<columnFieldProperty name="singolo_giorno" />
+		<columnFieldProperty name="im_diaria_lorda" />				
+		<columnFieldProperty name="im_quota_esente" />
+		<columnFieldProperty name="im_diaria_netto" />		
+		<columnFieldProperty name="fl_diaria_manuale" />
+	</columnSet>
+	
+	<columnSet name="dettaglioSpesaSet">
+		<columnFieldProperty name="singolo_giorno" />
+		<columnFieldProperty name="cd_ti_spesa" />
+		<columnFieldProperty name="ds_spesa" />	
+		<columnFieldProperty name="fl_spesa_anticipata" />
+		<columnFieldProperty name="im_spesa_divisa" />
+		<columnFieldProperty name="cd_divisa_spesa" />		
+		<columnFieldProperty name="cambio_spesa" />		
+		<columnFieldProperty name="im_spesa_euro" />		
+		<columnFieldProperty name="im_totale_spesa" />
+		<columnFieldProperty name="im_spesa_max" />
+		<columnFieldProperty name="im_spesa_max_divisa" />				
+	</columnSet>
+</bulkInfo>

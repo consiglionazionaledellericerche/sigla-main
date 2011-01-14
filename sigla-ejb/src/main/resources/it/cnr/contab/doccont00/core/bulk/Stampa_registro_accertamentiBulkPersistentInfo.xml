@@ -1,0 +1,5 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Stampa_registro_accertamentiBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Stampa_registro_accertamentiHome" >
+
+</SQLPersistentInfo>

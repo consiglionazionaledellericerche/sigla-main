@@ -1,0 +1,14 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.Ruolo_accessoBulk"
+	homeClassName="it.cnr.contab.utenze00.bulk.Ruolo_accessoHome" >
+	<defaultColumnMap
+		tableName="RUOLO_ACCESSO" >
+		<columnMapping
+			columnName="CD_ACCESSO"
+			propertyName="accesso.cd_accesso"
+			/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="accesso"
+		partOfOid="true"/>
+</SQLPersistentInfo>

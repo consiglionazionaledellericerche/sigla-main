@@ -1,0 +1,264 @@
+package it.cnr.contab.docamm00.ejb;
+import it.cnr.contab.docamm00.comp.ElaboraFileIntraComponent;
+import it.cnr.contab.docamm00.docs.bulk.VIntrastatBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
+
+import java.rmi.RemoteException;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.Remove;
+import javax.ejb.Stateless;
+
+
+@Stateless(name="CNRDOCAMM00_EJB_ElaboraFileIntraComponentSession")
+public class ElaboraFileIntraComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ElaboraFileIntraComponentSession {
+	@PostConstruct
+	public void ejbCreate() throws javax.ejb.CreateException {
+		componentObj = new it.cnr.contab.docamm00.comp.ElaboraFileIntraComponent();
+	}
+	@Remove
+	public void ejbRemove() throws javax.ejb.EJBException {
+		componentObj.release();
+	}
+	
+	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {
+		return new ElaboraFileIntraComponentSessionBean();
+	}
+	public List EstraiLista(UserContext param0, OggettoBulk param1)
+			throws ComponentException, PersistencyException,
+			IntrospectionException, RemoteException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			List result = ((ElaboraFileIntraComponent)componentObj).EstraiLista(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public List SezioneDueAcquisti(UserContext param0, OggettoBulk param1)
+			throws ComponentException, PersistencyException,
+			IntrospectionException, RemoteException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			List result = ((ElaboraFileIntraComponent)componentObj).SezioneDueAcquisti(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public List SezioneQuattroAcquisti(UserContext param0, OggettoBulk param1)
+	throws ComponentException, PersistencyException,
+	IntrospectionException, RemoteException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			List result = ((ElaboraFileIntraComponent)componentObj).SezioneQuattroAcquisti(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public List SezioneDueVendite(UserContext param0, OggettoBulk param1)
+			throws ComponentException, PersistencyException,
+			IntrospectionException, RemoteException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			List result = ((ElaboraFileIntraComponent)componentObj).SezioneDueVendite(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public List SezioneQuattroVendite(UserContext param0, OggettoBulk param1)
+			throws ComponentException, PersistencyException,
+			IntrospectionException, RemoteException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			List result = ((ElaboraFileIntraComponent)componentObj).SezioneQuattroVendite(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public List SezioneTreAcquisti(UserContext param0, OggettoBulk param1)
+			throws ComponentException, PersistencyException,
+			IntrospectionException, RemoteException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			List result = ((ElaboraFileIntraComponent)componentObj).SezioneTreAcquisti(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public List SezioneTreVendite(UserContext param0, OggettoBulk param1)
+			throws ComponentException, PersistencyException,
+			IntrospectionException, RemoteException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			List result = ((ElaboraFileIntraComponent)componentObj).SezioneTreVendite(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public List SezioneUnoAcquisti(UserContext param0, OggettoBulk param1)
+			throws ComponentException, PersistencyException,
+			IntrospectionException, RemoteException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			List result = ((ElaboraFileIntraComponent)componentObj).SezioneUnoAcquisti(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public List SezioneUnoVendite(UserContext param0, OggettoBulk param1)
+			throws ComponentException, PersistencyException,
+			IntrospectionException, RemoteException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			List result = ((ElaboraFileIntraComponent)componentObj).SezioneUnoVendite(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+public List EstraiListaIntra12(UserContext param0, OggettoBulk param1)
+throws ComponentException, PersistencyException,
+IntrospectionException, RemoteException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		List result = ((ElaboraFileIntraComponent)componentObj).EstraiListaIntra12(param0,param1);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public Integer recuperoMaxProt(UserContext param0)
+		throws ComponentException, PersistencyException,
+		IntrospectionException, RemoteException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		Integer result = ((ElaboraFileIntraComponent)componentObj).recuperoMaxProt(param0);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+
+public void confermaElaborazione(UserContext param0,VIntrastatBulk bulk)
+		throws ComponentException, PersistencyException,
+		IntrospectionException, RemoteException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		 ((ElaboraFileIntraComponent)componentObj).confermaElaborazione(param0,bulk);
+		component_invocation_succes(param0,componentObj);
+	
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public java.util.Date recuperoMaxDtPagamentoLiq(UserContext param0, OggettoBulk bulk)
+throws ComponentException, IntrospectionException, RemoteException {
+pre_component_invocation(param0,componentObj);
+try {
+	java.util.Date result=((ElaboraFileIntraComponent)componentObj).recuperoMaxDtPagamentoLiq(param0, bulk);
+	component_invocation_succes(param0,componentObj);
+	return result;
+} catch(it.cnr.jada.comp.ComponentException e) {
+component_invocation_failure(param0,componentObj);
+throw e;
+} catch(RuntimeException e) {
+throw uncaughtRuntimeException(param0,componentObj,e);
+} catch(Error e) {
+throw uncaughtError(param0,componentObj,e);
+}
+}	
+}

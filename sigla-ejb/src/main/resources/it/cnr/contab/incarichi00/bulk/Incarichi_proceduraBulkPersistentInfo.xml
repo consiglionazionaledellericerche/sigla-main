@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk"
+	homeClassName="it.cnr.contab.incarichi00.bulk.Incarichi_proceduraHome">
+	<defaultColumnMap
+		tableName="INCARICHI_PROCEDURA">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_COMUNE"
+			propertyName="citta.pg_comune" />
+		<columnMapping
+			columnName="ESERCIZIO_RICHIESTA"
+			propertyName="incarichi_richiesta.esercizio" />
+		<columnMapping
+			columnName="PG_RICHIESTA"
+			propertyName="incarichi_richiesta.pg_richiesta" />
+		<columnMapping
+			columnName="CD_TERZO_RESP"
+			propertyName="terzo_resp.cd_terzo" />
+		<columnMapping
+			columnName="CD_FIRMATARIO"
+			propertyName="firmatario.cd_terzo" />
+		<columnMapping
+			columnName="CD_PROC_AMM"
+			propertyName="procedura_amministrativa.cd_proc_amm" />
+		<columnMapping
+			columnName="CD_TIPO_ATTO"
+			propertyName="atto.cd_tipo_atto" />
+		<columnMapping
+			columnName="CD_TIPO_INCARICO"
+			propertyName="tipo_incarico.cd_tipo_incarico" />
+		<columnMapping
+			columnName="CD_TIPO_ATTIVITA"
+			propertyName="tipo_attivita.cd_tipo_attivita" />
+		<columnMapping
+			columnName="ESERCIZIO_PADRE"
+			propertyName="incarichi_procedura_padre.esercizio" />
+		<columnMapping
+			columnName="PG_PROCEDURA_PADRE"
+			propertyName="incarichi_procedura_padre.pg_procedura" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cds" />
+	<persistentProperty
+		name="unita_organizzativa" />
+	<persistentProperty
+		name="citta" />
+	<persistentProperty
+		name="incarichi_richiesta" />
+	<persistentProperty
+		name="terzo_resp" />
+	<persistentProperty
+		name="firmatario" />
+	<persistentProperty
+		name="procedura_amministrativa" />
+	<persistentProperty
+		name="atto" />
+	<persistentProperty
+		name="tipo_incarico" />
+	<persistentProperty
+		name="tipo_attivita" />
+	<persistentProperty
+		name="incarichi_procedura_padre" />
+</SQLPersistentInfo>

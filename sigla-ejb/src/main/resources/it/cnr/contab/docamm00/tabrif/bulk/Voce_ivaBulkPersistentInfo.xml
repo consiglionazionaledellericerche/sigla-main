@@ -1,0 +1,17 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBase"
+	homeClassName="it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome" >
+
+<!-- NB: PER LAVORARE SULLA TABELLA TARIFFARIO SI E' MESSO FETCHONLY DI VOCE_IVA A FALSE -->
+	
+	<defaultColumnMap
+		tableName="VOCE_IVA" >
+		<columnMapping
+			columnName="CD_GRUPPO_IVA"
+			propertyName="gruppo_iva.cd_gruppo_iva"
+			fetchOnly="false" />
+	</defaultColumnMap>
+	
+	<persistentProperty
+		name="gruppo_iva" />
+</SQLPersistentInfo>

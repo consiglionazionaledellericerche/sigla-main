@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_storico_"
+		property="pg_storico_"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="pg_storico_" />
+	<fieldProperty
+		name="cd_cds_compenso"
+		property="cd_cds_compenso"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="cd_cds_compenso" />
+	<fieldProperty
+		name="esercizio_compenso"
+		property="esercizio_compenso"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio_compenso" />
+	<fieldProperty
+		name="cd_uo_compenso"
+		property="cd_uo_compenso"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="cd_uo_compenso" />
+	<fieldProperty
+		name="pg_compenso"
+		property="pg_compenso"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="pg_compenso" />
+	<fieldProperty
+		name="cd_cds_doc"
+		property="cd_cds_doc"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="cd_cds_doc" />
+	<fieldProperty
+		name="esercizio_doc"
+		property="esercizio_doc"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio_doc" />
+	<fieldProperty
+		name="pg_doc"
+		property="pg_doc"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="pg_doc" />
+	<fieldProperty
+		name="cd_tipo_doc"
+		property="cd_tipo_doc"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="cd_tipo_doc" />
+	<fieldProperty
+		name="user_"
+		property="user_"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="user_" />
+	<fieldProperty
+		name="dt_transaction_"
+		property="dt_transaction_"
+		inputType="TEXT"
+		formatName="date_short"
+		label="dt_transaction_" />
+	<fieldProperty
+		name="action_"
+		property="action_"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="action_" />
+	<formFieldProperty
+		name="pg_storico_" />
+	<formFieldProperty
+		name="cd_cds_compenso" />
+	<formFieldProperty
+		name="esercizio_compenso" />
+	<formFieldProperty
+		name="cd_uo_compenso" />
+	<formFieldProperty
+		name="pg_compenso" />
+	<formFieldProperty
+		name="cd_cds_doc" />
+	<formFieldProperty
+		name="esercizio_doc" />
+	<formFieldProperty
+		name="pg_doc" />
+	<formFieldProperty
+		name="cd_tipo_doc" />
+	<formFieldProperty
+		name="user_" />
+	<formFieldProperty
+		name="dt_transaction_" />
+	<formFieldProperty
+		name="action_" />
+	<findFieldProperty
+		name="pg_storico_" />
+	<findFieldProperty
+		name="cd_cds_compenso" />
+	<findFieldProperty
+		name="esercizio_compenso" />
+	<findFieldProperty
+		name="cd_uo_compenso" />
+	<findFieldProperty
+		name="pg_compenso" />
+	<findFieldProperty
+		name="cd_cds_doc" />
+	<findFieldProperty
+		name="esercizio_doc" />
+	<findFieldProperty
+		name="pg_doc" />
+	<findFieldProperty
+		name="cd_tipo_doc" />
+	<findFieldProperty
+		name="user_" />
+	<findFieldProperty
+		name="dt_transaction_" />
+	<findFieldProperty
+		name="action_" />
+	<columnFieldProperty
+		name="pg_storico_" />
+	<columnFieldProperty
+		name="cd_cds_compenso" />
+	<columnFieldProperty
+		name="esercizio_compenso" />
+	<columnFieldProperty
+		name="cd_uo_compenso" />
+	<columnFieldProperty
+		name="pg_compenso" />
+	<columnFieldProperty
+		name="cd_cds_doc" />
+	<columnFieldProperty
+		name="esercizio_doc" />
+	<columnFieldProperty
+		name="pg_doc" />
+	<columnFieldProperty
+		name="cd_tipo_doc" />
+	<columnFieldProperty
+		name="user_" />
+	<columnFieldProperty
+		name="dt_transaction_" />
+	<columnFieldProperty
+		name="action_" />
+</bulkInfo>

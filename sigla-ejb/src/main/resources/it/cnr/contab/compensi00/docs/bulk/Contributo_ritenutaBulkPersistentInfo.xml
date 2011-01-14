@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.docs.bulk.Contributo_ritenutaBulk"
+	keyClassName="it.cnr.contab.compensi00.docs.bulk.Contributo_ritenutaKey"
+	homeClassName="it.cnr.contab.compensi00.docs.bulk.Contributo_ritenutaHome" >
+
+	<defaultColumnMap
+		tableName="CONTRIBUTO_RITENUTA" >
+
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="compenso.cd_cds" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="compenso.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="compenso.esercizio" />
+		<columnMapping
+			columnName="PG_COMPENSO"
+			propertyName="compenso.pg_compenso" />
+
+		<columnMapping
+			columnName="CD_CDS_OBBLIGAZIONE"
+			propertyName="obbligazioneScadenzario.obbligazione.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="obbligazioneScadenzario.obbligazione.esercizio" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="obbligazioneScadenzario.obbligazione.esercizio_originale" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="obbligazioneScadenzario.obbligazione.pg_obbligazione" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="obbligazioneScadenzario.pg_obbligazione_scadenzario" />
+
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="compenso"
+		partOfOid = "true" />
+	<persistentProperty
+		name="obbligazioneScadenzario" />
+
+</SQLPersistentInfo>

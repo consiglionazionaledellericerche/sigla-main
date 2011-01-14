@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Dettaglio Stralcio Mensile"
+          longDescription="Dettaglio Stralcio Mensile">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="mese"
+		property="mese"
+		keysProperty="meseKeys"
+		inputSize="30"
+		maxLength="30"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"		
+		label="Mese" />
+	<fieldProperty
+		name="dt_estrazione"
+		property="dt_estrazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Estrazione" />
+	<fieldProperty
+		name="esercizio_compenso"
+		property="esercizio_compenso"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Compenso" />
+	<fieldProperty
+		name="cd_contributo_ritenuta"
+		property="cd_contributo_ritenuta"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice Contributo/Ritenuta" />
+	<fieldProperty
+		name="totale_imponibile"
+		property="totale_imponibile"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		label="Totale Imponibile" />	
+	<fieldProperty
+		name="totale_ritenuta"
+		property="totale_ritenuta"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		label="Totale Ritenuta" />
+	<fieldProperty
+		name="totale_ritenuta_sospesa"
+		property="totale_ritenuta_sospesa"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		label="Totale Ritenuta Sospesa" />	
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="mese" />
+	<formFieldProperty
+		name="dt_estrazione" />
+	<formFieldProperty
+		name="esercizio_compenso" />
+	<formFieldProperty 
+	    name="cd_contributo_ritenuta" />	
+	<formFieldProperty 
+	    name="totale_imponibile" />
+  	<formFieldProperty 
+	    name="totale_ritenuta" />
+   	<formFieldProperty 
+	    name="totale_ritenuta_sospesa" />
+	    
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="mese" />
+	<findFieldProperty
+		name="dt_estrazione" />
+	<findFieldProperty
+		name="esercizio_compenso" />
+	<findFieldProperty 
+	    name="cd_contributo_ritenuta" />
+	<findFieldProperty
+		name="totale_imponibile" />
+	<findFieldProperty 
+	    name="totale_ritenuta" />
+	<findFieldProperty 
+	    name="totale_ritenuta_sospesa" />    	    
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="mese" />		
+	<columnFieldProperty
+		name="dt_estrazione" />
+	<columnFieldProperty
+		name="esercizio_compenso" />
+	<columnFieldProperty 
+	    name="cd_contributo_ritenuta" />
+	<columnFieldProperty
+		name="totale_imponibile" />
+	<columnFieldProperty 
+	    name="totale_ritenuta" />
+	<columnFieldProperty 
+	    name="totale_ritenuta_sospesa" />
+	    
+	<columnSet name="distinct_estrazione">
+		<columnFieldProperty
+			name="esercizio" />	
+		<columnFieldProperty
+			name="mese" />
+		<columnFieldProperty
+			name="dt_estrazione" />
+	</columnSet>
+</bulkInfo>

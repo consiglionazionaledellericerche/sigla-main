@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.segnalazioni00.bulk.Attivita_siglaBase"
+	keyClassName="it.cnr.contab.segnalazioni00.bulk.Attivita_siglaKey"
+	homeClassName="it.cnr.contab.segnalazioni00.bulk.Attivita_siglaHome">
+	<defaultColumnMap
+		tableName="ATTIVITA_SIGLA">
+		<columnMapping
+			columnName="PROTOCOLLO"
+			propertyName="protocollo"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="ID_HELP"
+			propertyName="id_help"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_ATTIVITA"
+			propertyName="dt_attivita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="RICHIEDENTE"
+			propertyName="richiedente"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_ATTIVITA"
+			propertyName="ds_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="500"
+			nullable="true" />
+		<columnMapping
+			columnName="NOTE"
+			propertyName="note"
+			sqlTypeName="VARCHAR"
+			columnSize="500"
+			nullable="true" />
+		<columnMapping
+			columnName="PRIORITA"
+			propertyName="priorita"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="NOTE_PRIORITA"
+			propertyName="note_priorita"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_CONSEGNA"
+			propertyName="dt_consegna"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_ATTIVITA"
+			propertyName="tipo_attivita"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="REFERENTI"
+			propertyName="referenti"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_INIZIO_ATTIVITA"
+			propertyName="dt_inizio_attivita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_FINE_ATTIVITA"
+			propertyName="dt_fine_attivita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="TEMPO_ANALISI"
+			propertyName="tempo_analisi"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="TEMPO_SVILUPPO"
+			propertyName="tempo_sviluppo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="FL_BUG_APERTO"
+			propertyName="fl_bug_aperto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="ID_BUGZILLA"
+			propertyName="id_bugzilla"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="protocollo" />
+	<persistentProperty
+		name="id_help" />
+	<persistentProperty
+		name="dt_attivita" />
+	<persistentProperty
+		name="richiedente" />
+	<persistentProperty
+		name="ds_attivita" />
+	<persistentProperty
+		name="note" />
+	<persistentProperty
+		name="priorita" />
+	<persistentProperty
+		name="note_priorita" />
+	<persistentProperty
+		name="dt_consegna" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="tipo_attivita" />
+	<persistentProperty
+		name="referenti" />
+	<persistentProperty
+		name="dt_inizio_attivita" />
+	<persistentProperty
+		name="dt_fine_attivita" />
+	<persistentProperty
+		name="tempo_analisi" />
+	<persistentProperty
+		name="tempo_sviluppo" />
+	<persistentProperty
+		name="fl_bug_aperto" />
+	<persistentProperty
+		name="id_bugzilla" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

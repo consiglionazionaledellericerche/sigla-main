@@ -1,0 +1,56 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.Ass_cap_spesa_Cds_tipo_interventoBulk"
+	homeClassName="it.cnr.contab.config00.pdcfin.bulk.Ass_cap_spesa_Cds_tipo_interventoHome" >
+		<defaultColumnMap
+		tableName="ASS_EV_EV" >
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="elemento_voce.cd_elemento_voce"
+		  />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="elemento_voce.esercizio"
+  		fetchOnly="true"
+			/> 
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="elemento_voce.ti_appartenenza"
+			/>
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="elemento_voce.ti_gestione"
+			/>
+		<columnMapping
+			columnName="TI_ELEMENTO_VOCE"
+			propertyName="elemento_voce.ti_elemento_voce"
+			/>			
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE_COLL"
+			propertyName="elemento_voce_coll.cd_elemento_voce"
+			/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="elemento_voce_coll.esercizio"
+			fetchOnly="true"
+			/> 
+		<columnMapping
+			columnName="TI_APPARTENENZA_COLL"
+			propertyName="elemento_voce_coll.ti_appartenenza"
+	 	  />
+		<columnMapping
+			columnName="TI_GESTIONE_COLL"
+			propertyName="elemento_voce_coll.ti_gestione"
+			/>
+		<columnMapping
+			columnName="TI_ELEMENTO_VOCE_COLL"
+			propertyName="elemento_voce_coll.ti_elemento_voce"
+			/>			
+	</defaultColumnMap>
+	
+	<persistentProperty
+		name="elemento_voce" 
+		partOfOid="true" />
+	<persistentProperty
+		name="elemento_voce_coll"
+		partOfOid="true" />
+</SQLPersistentInfo>

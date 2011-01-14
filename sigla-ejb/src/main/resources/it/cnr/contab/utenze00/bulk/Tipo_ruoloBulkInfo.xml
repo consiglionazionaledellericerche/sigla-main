@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnSearch="true"
+		label="Tipo ruolo" />
+	<fieldProperty
+		name="ds_tipo"
+		property="ds_tipo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnSearch="true"
+		label="Descrizione tipo ruolo" />
+		
+    <form name="searchtool">
+		<formFieldProperty
+			name="tipo" />
+		<formFieldProperty
+			name="ds_tipo"
+			inputType="TEXT"
+			inputSize="50"
+			 />
+    </form>    	
+	<formFieldProperty
+		name="tipo" />
+	<formFieldProperty
+		name="ds_tipo" />
+
+	<findFieldProperty
+		name="tipo" />
+	<findFieldProperty
+		name="ds_tipo" />
+
+	<columnFieldProperty
+		name="tipo" />
+	<columnFieldProperty
+		name="ds_tipo" />
+</bulkInfo>

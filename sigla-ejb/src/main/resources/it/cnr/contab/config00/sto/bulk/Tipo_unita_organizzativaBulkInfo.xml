@@ -1,0 +1,50 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_tipo_unita"
+		property="cd_tipo_unita"
+		label="Codice"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="10"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="ds_tipo_unita"
+		property="ds_tipo_unita"
+		label="Descrizione"
+		inputType="TEXTAREA"
+		maxLength="300"
+		cols="60"
+		rows="5"		
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		enabledOnSearch="true"
+		/>
+
+	<columnFieldProperty
+		name="cd_tipo_unita"
+		/>
+	<columnFieldProperty
+		name="ds_tipo_unita"
+		/>
+
+	<formFieldProperty
+		name="cd_tipo_unita"
+		/>
+	<formFieldProperty
+		name="ds_tipo_unita"
+		/>
+
+	<findFieldProperty
+		name="cd_tipo_unita"
+		/>
+	<findFieldProperty
+		name="ds_tipo_unita"
+		/>
+
+
+</bulkInfo>

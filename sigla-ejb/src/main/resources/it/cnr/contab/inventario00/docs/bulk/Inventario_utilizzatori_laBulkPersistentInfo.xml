@@ -1,0 +1,38 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laBulk"
+	homeClassName="it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laHome" >
+
+	<defaultColumnMap
+		tableName="INVENTARIO_UTILIZZATORI_LA" >		
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			nullable="false"
+			propertyName="bene.inventario.pg_inventario" />
+		<columnMapping
+			columnName="NR_INVENTARIO"
+			nullable="false"
+			propertyName="bene.nr_inventario" />
+		<columnMapping
+			columnName="PROGRESSIVO"
+			nullable="false"
+			propertyName="bene.progressivo" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			nullable="false"
+			propertyName="linea_attivita.cd_linea_attivita" />
+		<columnMapping
+			columnName="CD_UTILIZZATORE_CDR"
+			nullable="false"
+			propertyName="linea_attivita.centro_responsabilita.cd_centro_responsabilita" />
+				
+	</defaultColumnMap>		
+
+	<persistentProperty
+		name="bene" 
+		partOfOid="true"/>
+		
+	<persistentProperty
+		name="linea_attivita" 
+		partOfOid="true"/>	
+		
+</SQLPersistentInfo>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.logs.bulk.Batch_log_rigaBase"
+	keyClassName="it.cnr.contab.logs.bulk.Batch_log_rigaKey"
+	homeClassName="it.cnr.contab.logs.bulk.Batch_log_rigaHome" >
+	<defaultColumnMap
+		tableName="BATCH_LOG_RIGA" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="TI_MESSAGGIO"
+			propertyName="ti_messaggio"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="MESSAGGIO"
+			propertyName="messaggio"
+			sqlTypeName="VARCHAR"
+			columnSize="4000" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="NOTE"
+			propertyName="note"
+			sqlTypeName="VARCHAR"
+			columnSize="4000" />
+		<columnMapping
+			columnName="TRACE"
+			propertyName="trace"
+			sqlTypeName="VARCHAR"
+			columnSize="4000" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="ti_messaggio" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="messaggio" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="note" />
+	<persistentProperty
+		name="trace" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

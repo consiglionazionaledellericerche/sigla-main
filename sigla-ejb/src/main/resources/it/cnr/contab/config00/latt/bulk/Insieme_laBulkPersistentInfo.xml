@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.latt.bulk.Insieme_laBulk"
+	homeClassName="it.cnr.contab.config00.latt.bulk.Insieme_laHome" >
+	<defaultColumnMap
+		tableName="INSIEME_LA" >
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="centro_responsabilita.cd_centro_responsabilita" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="centro_responsabilita"
+		partOfOid="true" />
+</SQLPersistentInfo>

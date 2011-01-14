@@ -1,0 +1,67 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.TerzoBase"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.TerzoHome" >
+	<defaultColumnMap
+		tableName="TERZO" >
+
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="anagrafico.cd_anag" />
+	 <!--  	<columnMapping
+			columnName="CODICE_FISCALE_ANAGRAFICO"
+			propertyName="anagrafico.codice_fiscale" />
+		<columnMapping
+			columnName="PARTITA_IVA_ANAGRAFICO"
+			propertyName="anagrafico.partita_iva" />  -->
+		<columnMapping
+			columnName="PG_COMUNE_SEDE"
+			propertyName="comune_sede.pg_comune" />
+
+		<columnMapping
+			columnName="PG_RAPP_LEGALE"
+			propertyName="rappresentante_legale.pg_rapp_legale" />
+
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa" />
+
+	</defaultColumnMap>
+	
+	<columnMap
+		name="V_TERZO_CF_PI"
+		tableName="V_TERZO_CF_PI"
+		extends="default" >
+		<columnMapping
+			columnName="CODICE_FISCALE_ANAGRAFICO"
+			propertyName="anagrafico.codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="PARTITA_IVA_ANAGRAFICO"
+			propertyName="anagrafico.partita_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+	</columnMap>
+	
+	<persistentProperty
+		name="anagrafico" />
+	<persistentProperty
+		name="comune_sede" />
+	<persistentProperty
+		name="rappresentante_legale" />
+	<persistentProperty
+		name="unita_organizzativa" />
+	<!-- <persistentProperty
+		name="anagrafico.codice_fiscale" />
+	<persistentProperty
+		name="anagrafico.partita_iva" />  -->
+	<fetchPolicy
+		name="it.cnr.contab.doccont00.comp.ObbligazioneComponent.find.creditore">
+		<exclude pattern="*" />
+		<include pattern="anagrafico"/>
+		<exclude pattern="anagrafico.*"/>		
+	</fetchPolicy>
+
+</SQLPersistentInfo>

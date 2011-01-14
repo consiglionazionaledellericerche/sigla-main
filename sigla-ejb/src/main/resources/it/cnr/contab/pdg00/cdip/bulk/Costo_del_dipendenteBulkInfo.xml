@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ti_appartenenza"
+		property="ti_appartenenza"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_appartenenza" />
+	<fieldProperty
+		name="ti_rapporto"
+		property="ti_rapporto"
+		inputType="SELECT"
+		keysProperty="ti_rapportoKeys"
+		label="Tipo rapporto" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_unita_organizzativa"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Capitolo" />
+	<fieldProperty
+		name="cd_ds_elemento_voce"
+		property="elemento_voce.cd_ds_elemento_voce"
+		inputType="ROTEXT"
+		label="Capitolo" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+
+	<fieldProperty
+		name="im_a3"
+		property="im_a3"
+		inputType="TEXT"
+		maxLength="18"
+		inputSize="18"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Importo anno 3" />
+	<fieldProperty
+		name="im_a2"
+		property="im_a2"
+		inputType="TEXT"
+		maxLength="18"
+		inputSize="18"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Importo anno 2" />
+	<fieldProperty
+		name="im_a1"
+		property="im_a1"
+		maxLength="18"
+		inputSize="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Importo anno 1" />
+
+	<fieldProperty
+		name="im_oneri_cnr_a3"
+		property="im_oneri_cnr_a3"
+		inputType="TEXT"
+		maxLength="18"
+		inputSize="18"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Importo oneri cnr anno 3" />
+	<fieldProperty
+		name="im_oneri_cnr_a2"
+		property="im_oneri_cnr_a2"
+		inputType="TEXT"
+		maxLength="18"
+		inputSize="18"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Importo oneri cnr anno 2" />
+	<fieldProperty
+		name="im_oneri_cnr_a1"
+		property="im_oneri_cnr_a1"
+		maxLength="18"
+		inputSize="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Importo oneri cnr anno 1" />
+		
+	<fieldProperty
+		name="im_tfr_a3"
+		property="im_tfr_a3"
+		inputType="TEXT"
+		maxLength="18"
+		inputSize="18"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Importo tfr anno 3" />
+	<fieldProperty
+		name="im_tfr_a2"
+		property="im_tfr_a2"
+		inputType="TEXT"
+		maxLength="18"
+		inputSize="18"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Importo tfr anno 2" />
+	<fieldProperty
+		name="im_tfr_a1"
+		property="im_tfr_a1"
+		maxLength="18"
+		inputSize="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Importo tfr anno 1" />
+		
+	<fieldProperty
+		name="id_matricola"
+		property="id_matricola"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="id_matricola" />
+	<fieldProperty
+		name="ti_prev_cons"
+		property="ti_prev_cons"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="ti_prev_cons" />
+	<fieldProperty
+		name="dt_scarico"
+		property="dt_scarico"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data scarico" />
+	<fieldProperty
+		name="ti_gestione"
+		property="ti_gestione"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="ti_gestione" />
+		
+	<fieldProperty
+		name="nominativo"
+		property="nominativo"
+		maxLength="60"
+		inputSize="20"
+		inputType="TEXT"
+		label="Nominativo" />
+	<fieldProperty
+		name="dt_scad_contratto"
+		property="dt_scad_contratto"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data scad. contratto" />
+	<fieldProperty
+		name="cd_livello_1"
+		property="cd_livello_1"
+		maxLength="3"
+		inputSize="3"
+		inputType="TEXT"
+		label="Cod. livello 1" />
+	<fieldProperty
+		name="cd_livello_2"
+		property="cd_livello_2"
+		maxLength="3"
+		inputSize="3"
+		inputType="TEXT"
+		label="Cod. livello 2" />
+	<fieldProperty
+		name="cd_livello_3"
+		property="cd_livello_3"
+		maxLength="3"
+		inputSize="3"
+		inputType="TEXT"
+		label="Cod. livello 3" />
+	<fieldProperty
+		name="cd_profilo"
+		property="cd_profilo"
+		maxLength="4"
+		inputSize="4"
+		inputType="TEXT"
+		label="Cod. profilo" />
+	<fieldProperty
+		name="ds_profilo"
+		property="ds_profilo"
+		maxLength="100"
+		inputSize="20"
+		inputType="TEXT"
+		label="Descr. profilo" />
+	<fieldProperty
+		name="origine_fonti"
+		property="origine_fonti"
+		label="Origine"
+		keysProperty="tipo_naturaKeys"
+		inputType="SELECT"
+		nullable="true"
+		/>
+
+	<formFieldProperty
+		name="ti_appartenenza" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_elemento_voce" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="im_a3" />
+	<formFieldProperty
+		name="im_a2" />
+	<formFieldProperty
+		name="im_a1" />
+	<formFieldProperty
+		name="im_oneri_cnr_a3" />
+	<formFieldProperty
+		name="im_oneri_cnr_a2" />
+	<formFieldProperty
+		name="im_oneri_cnr_a1" />
+	<formFieldProperty
+		name="im_tfr_a3" />
+	<formFieldProperty
+		name="im_tfr_a2" />
+	<formFieldProperty
+		name="im_tfr_a1" />
+	<formFieldProperty
+		name="id_matricola" />
+	<formFieldProperty
+		name="dt_scarico" />
+	<formFieldProperty
+		name="ti_gestione" />
+	<formFieldProperty
+		name="ti_rapporto" />
+	<formFieldProperty
+		name="origine_fonti" />
+
+	<columnFieldProperty
+		name="cd_ds_elemento_voce" />
+	<columnFieldProperty
+		name="dt_scarico" />
+
+	<findFieldProperty
+		name="ti_appartenenza" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="cd_elemento_voce" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="id_matricola" />
+	<findFieldProperty
+		name="dt_scarico" />
+	<findFieldProperty
+		name="ti_gestione" />
+	<findFieldProperty
+		name="origine_fonti" />
+
+</bulkInfo>

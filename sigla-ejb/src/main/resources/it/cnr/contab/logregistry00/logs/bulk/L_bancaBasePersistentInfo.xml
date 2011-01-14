@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.logregistry00.logs.bulk.L_bancaBase"
+	keyClassName="it.cnr.contab.logregistry00.logs.bulk.L_bancaKey"
+	homeClassName="it.cnr.contab.logregistry00.logs.bulk.L_bancaHome" >
+	<defaultColumnMap
+		tableName="L_BANCA" >
+		<columnMapping
+			columnName="ACTION_"
+			propertyName="action_"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_TRANSACTION_"
+			propertyName="dt_transaction_"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_CC_CDS"
+			propertyName="fl_cc_cds"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CODICE_IBAN"
+			propertyName="codice_iban"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="ORIGINE"
+			propertyName="origine"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="CODICE_SWIFT"
+			propertyName="codice_swift"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="PG_BANCA_DELEGATO"
+			propertyName="pg_banca_delegato"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="USER_"
+			propertyName="user_"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="CAB"
+			propertyName="cab"
+			sqlTypeName="CHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="QUIETANZA"
+			propertyName="quietanza"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_PAGAMENTO"
+			propertyName="ti_pagamento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="INTESTAZIONE"
+			propertyName="intestazione"
+			sqlTypeName="VARCHAR"
+			columnSize="200" />
+		<columnMapping
+			columnName="CD_TERZO_DELEGATO"
+			propertyName="cd_terzo_delegato"
+			sqlTypeName="DECIMAL"
+			columnSize="8" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_CANCELLATO"
+			propertyName="fl_cancellato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="ABI"
+			propertyName="abi"
+			sqlTypeName="CHAR"
+			columnSize="5" />
+		<columnMapping
+			columnName="NUMERO_CONTO"
+			propertyName="numero_conto"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="action_" />
+	<persistentProperty
+		name="dt_transaction_" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="fl_cc_cds" />
+	<persistentProperty
+		name="origine" />
+	<persistentProperty
+		name="codice_iban" />
+	<persistentProperty
+		name="codice_swift" />
+	<persistentProperty
+		name="pg_banca_delegato" />
+	<persistentProperty
+		name="user_" />
+	<persistentProperty
+		name="cab" />
+	<persistentProperty
+		name="quietanza" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="ti_pagamento" />
+	<persistentProperty
+		name="intestazione" />
+	<persistentProperty
+		name="cd_terzo_delegato" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="fl_cancellato" />
+	<persistentProperty
+		name="abi" />
+	<persistentProperty
+		name="numero_conto" />
+</SQLPersistentInfo>

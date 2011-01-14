@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.RuoloKey" >
+	<defaultColumnMap
+		tableName="RUOLO" >
+		<columnMapping
+			columnName="CD_RUOLO"
+			propertyName="cd_ruolo"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_ruolo"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="tipo_doc"
+		property="tipo_documento"
+		printProperty="ds_tipo_documento_amm"
+		optionsProperty="tipi_doc"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnSearch="false"
+		enabledOnEdit="false"
+		label="Tipo Documento"/>
+	<fieldProperty
+		name="tipo_doc_for_search"
+		property="tipo_documento"
+		printProperty="ds_tipo_documento_amm"
+		optionsProperty="tipi_doc_for_search"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		findProperty="cd_tipo_documento_amm"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="false"
+		label="Tipo Documento"/>
+	<fieldProperty
+		name="cd_tipo_documento_amm"
+		property="cd_tipo_documento_amm"
+		inputType="TEXT"
+		label="Tipo documento"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"/>
+
+	<fieldProperty
+		name="ti_associato_manrev"
+		property="ti_associato_manrev"
+		maxLength="1"
+		inputSize="20"
+		inputType="ROTEXT"
+		nullable="false"
+		keysProperty="ti_associato_manrevKeys"
+		label="Associazione man/rev"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_associato_manrevForSearch"
+		property="ti_associato_manrev"
+		maxLength="1"
+		inputSize="20"
+		inputType="SELECT"
+		nullable="true"
+		keysProperty="ti_associato_manrevKeysForSearch"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Associazione man/rev"
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="stato_pagamento_fondo_eco"
+		property="stato_pagamento_fondo_eco"
+		maxLength="1"
+		inputSize="10"
+		inputType="SELECT"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		nullable="false"
+		readonlyProperty="ROStato_pagamento_fondo_eco"
+		keysProperty="stato_pagamento_fondo_ecoKeys"
+		label="Fondo economale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="stato_pagamento_fondo_ecoForSearch"
+		property="stato_pagamento_fondo_eco"
+		maxLength="1"
+		inputSize="20"
+		inputType="SELECT"
+		nullable="true"
+		keysProperty="stato_pagamento_fondo_ecoKeysForSearch"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Fondo economale"
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		label="CDS Appartenenza"
+		enabledOnFreeSearch="false"
+		enabledOnSearch="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		/>
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		label="UO Appartenenza"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		/>
+	<fieldProperty
+		name="cambio"
+		property="cambio"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		nullable="false"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		enabledOnInsert="true"
+		readonlyProperty="ROCambio"
+		label="Cambio" />
+	<fieldProperty
+		name="valuta"
+		property="valuta"
+		printProperty="ds_divisa"
+		optionsProperty="valute"
+		maxLength="10"
+		inputSize="10"
+		inputType="SELECT"
+		nullable="false"
+		readonlyProperty="ROValuta"
+		enabledOnSearch="false"
+		label="Valuta"/>
+	<fieldProperty
+		name="valutaFissa"
+		property="valuta"
+		printProperty="ds_divisa"
+		optionsProperty="valute"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		nullable="false"
+		label="Valuta"/>
+	<fieldProperty
+		name="inizio_validita_valuta"
+		property="inizio_validita_valuta"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Validita da:"/>
+	<fieldProperty
+		name="fine_validita_valuta"
+		property="fine_validita_valuta"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		label="a:"/>
+	
+	<fieldProperty
+		name="cd_cds_origine"
+		property="cd_cds_origine"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		enabledOnFreeSearch="false"
+		enabledOnSearch="true"
+		label="Cds origine" />
+	<fieldProperty
+		name="data_registrazione"
+		property="data_registrazione"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		nullable="false"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="Data registrazione" />
+	<fieldProperty
+		name="data_registrazioneForSearch"
+		property="data_registrazione"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="Data registrazione" />
+	
+	<fieldProperty
+		name="stato_cofi"
+		property="stato_cofi"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		keysProperty="stato_cofiKeys"
+		label="Stato"
+		enabledOnFreeSearch="false"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="stato_cofiForSearch"
+		property="stato_cofi"
+		maxLength="1"
+		inputSize="20"
+		inputType="SELECT"
+		nullable="true"
+		keysProperty="stato_cofiKeysForSearch"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Stato"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_scadenza"
+		property="dt_scadenza"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		label="Data Scadenza" />
+	<fieldProperty
+		name="cd_uo_origine"
+		property="cd_uo_origine"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		label="UO Origine" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"		
+		enabledOnFreeSearch="true"
+		label="Esercizio" />
+	<fieldProperty
+		name="ti_istituz_commerc"
+		property="ti_istituz_commerc"
+		inputType="SELECT"
+		readonlyProperty="abledToModifyTipoFattura"
+		label="Tipo"
+		nullable="false"
+		enabledOnSearch="true"
+		keysProperty="ti_istituz_commercKeys" />
+	<fieldProperty
+		name="ti_istituz_commercSearch"
+		property="ti_istituz_commerc"
+		inputType="SELECT"
+		label="Tipo"
+		nullable="true"
+		enabledOnSearch="true"
+		keysProperty="ti_istituz_commercKeys" />
+	<fieldProperty
+		name="ti_entrate_spese"
+		property="ti_entrate_spese"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		keysProperty="entrate_speseKeys"
+		label="ti_entrate_spese"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_documento_generico"
+		property="ds_documento_generico"
+		maxLength="300"
+		inputSize="300"
+		inputType="TEXTAREA"
+		cols="75"
+		rows="4"
+		nullable="false"
+		label="Descrizione Documento Generico"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_documento_generico"
+		property="pg_documento_generico"
+		inputType="TEXT"
+		inputSize="10"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"		
+		enabledOnFreeSearch="true"
+		label="Progressivo" />
+		<fieldProperty
+		name="dt_a_competenza_coge"
+		property="dt_a_competenza_coge"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		readonlyProperty="RODateCompetenzaCOGE"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		label="Competenza al" />		
+	<fieldProperty
+		name="dt_da_competenza_coge"
+		property="dt_da_competenza_coge"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		readonlyProperty="RODateCompetenzaCOGE"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		label="Competenza dal" />
+	<fieldProperty
+		name="im_totale"
+		property="im_totale"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		label="Importo documento"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"		
+		enabledOnFreeSearch="true"/>
+	<fieldProperty
+		name="stato_coge"
+		property="stato_coge"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="stato_coge"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="importoTotalePerObbligazione"
+		property="importoTotalePerObbligazione"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale dettagli" />
+	<fieldProperty
+		name="importoTotalePerAccertamento"
+		property="importoTotalePerAccertamento"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale dettagli" />
+	<fieldProperty
+		name="flagEnte"
+		property="flagEnte"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		keysProperty="flagEnteKeys"
+		readonlyProperty="ROFlagEnte"
+		label="Generico su Ente"/>
+	<fieldProperty
+		name="flagEnteForSearch"
+		property="flagEnte"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		keysProperty="flagEnteKeys"
+		label="Generico su Ente"/>
+		<fieldProperty
+		name="esercizio_lettera"
+		property="lettera_pagamento_estero.esercizio"
+		inputType="ROTEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="im_commissioni_lettera"
+		property="lettera_pagamento_estero.im_commissioni"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		nullable="false"
+		label="Commissioni" />
+	<fieldProperty
+		name="im_pagamento"
+		property="lettera_pagamento_estero.im_pagamento"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		nullable="false"
+		label="Importo" />
+	<fieldProperty
+		name="pg_lettera"
+		property="lettera_pagamento_estero.pg_lettera"
+		inputType="ROTEXT"
+		label="Nr. lettera" />
+	<fieldProperty
+		name="dt_registrazione_lettera"
+		property="lettera_pagamento_estero.dt_registrazione"
+		inputType="ROTEXT"
+		formatName="date_short"
+		nullable="false"
+		label="Data registrazione" />
+	<fieldProperty
+		name="creaLettera"
+		property="lettera_pagamento_estero"
+		inputType="BUTTON"
+		img="img/new16.gif"
+		readonlyProperty="abledToInsertLettera"
+		label="Crea lettera pagamento estero"
+		href="javascript:submitForm('doCreaLettera')" />
+	<fieldProperty
+		name="cancellaLettera"
+		property="lettera_pagamento_estero"
+		inputType="BUTTON"
+		img="img/delete16.gif"
+		readonlyProperty="abledToDeleteLettera"
+		label="Cancella lettera pagamento estero"
+		href="javascript:submitForm('doCancellaLettera')" />
+	<fieldProperty
+		name="cd_sospeso"
+		property="lettera_pagamento_estero.sospeso.cd_sospeso_padre"
+		inputType="TEXT"
+		readonlyProperty="ROSospeso"
+		label="N. sospeso"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio_sospeso"
+		property="lettera_pagamento_estero.sospeso.esercizio"
+		inputType="ROTEXT"
+		enabledOnFreeSearch="false"
+		label="Esercizio sospeso" />
+	<fieldProperty
+		name="cd_cds_sospeso"
+		property="lettera_pagamento_estero.sospeso.cd_cds"
+		inputType="ROTEXT"
+		enabledOnFreeSearch="false"
+		label="Cds sospeso" />
+	<fieldProperty
+		name="ti_entrata_spesa"
+		property="lettera_pagamento_estero.sospeso.ti_entrata_spesa"
+		keysProperty="tipo_sospesoKeys"
+		inputType="ROTEXT"
+		enabledOnFreeSearch="false"
+		label="Tipo sospeso" />
+	<fieldProperty
+		name="sospeso"
+		property="lettera_pagamento_estero.sospeso"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROSospesoSearchTool"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		completeOnSave="false"
+		label="Sospeso"/>
+	<fieldProperty
+		name="valutaForSearch"
+		property="valuta"
+		printProperty="ds_divisa"
+		optionsProperty="valute"
+		maxLength="10"
+		inputSize="10"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		nullable="true"
+		label="Valuta"/>
+
+	
+	<formFieldProperty
+		name="esercizio_lettera" />
+	<formFieldProperty
+		name="im_commissioni_lettera" />
+	<formFieldProperty
+		name="im_pagamento" />
+	<formFieldProperty
+		name="pg_lettera" />
+	<formFieldProperty
+		name="dt_registrazione_lettera" />
+	<formFieldProperty
+		name="creaLettera" />
+	<formFieldProperty
+		name="cancellaLettera" />
+	<formFieldProperty
+		name="cd_sospeso" />
+	<formFieldProperty
+		name="esercizio_sospeso" />
+	<formFieldProperty
+		name="cd_cds_sospeso" />
+	<formFieldProperty
+		name="ti_entrata_spesa" />
+	<formFieldProperty
+		name="sospeso" />
+
+		
+	<formFieldProperty 
+		name="ti_istituz_commerc"/>
+	<formFieldProperty 
+		name="ti_istituz_commercSearch"/>
+	<formFieldProperty
+		name="ti_associato_manrev"/>
+	<formFieldProperty
+		name="im_totale"/>
+	<formFieldProperty
+		name="ti_associato_manrevForSearch" />
+	<formFieldProperty
+		name="importoTotalePerObbligazione" />
+	<formFieldProperty
+		name="importoTotalePerAccertamento" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="data_registrazioneForSearch" />
+
+	<formFieldProperty
+		name="pg_documento_generico" />
+	<formFieldProperty
+		name="flagEnte" />
+	<formFieldProperty
+		name="dt_scadenza" />		
+	<formFieldProperty
+		name="dt_da_competenza_coge" />		
+	<formFieldProperty
+		name="dt_a_competenza_coge" />		
+	<formFieldProperty
+		name="flagEnteForSearch" />
+	<formFieldProperty
+		name="ds_documento_generico" />
+	<formFieldProperty
+		name="data_registrazione"
+		command="doCambiaDataPagamento"/>
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="tipo_doc" />
+	<formFieldProperty
+		name="tipo_doc_for_search" />
+	<formFieldProperty
+		name="valuta" />
+	<formFieldProperty
+		name="valutaFissa" />
+	<formFieldProperty
+		name="inizio_validita_valuta" />
+	<formFieldProperty
+		name="fine_validita_valuta" />
+	<formFieldProperty
+		name="cambio" 
+		command="doOnChangeModified" />
+	<formFieldProperty
+		name="cd_cds_origine" />
+	<formFieldProperty
+		name="cd_uo_origine" />
+	<formFieldProperty
+		name="stato_cofi"/>
+	<formFieldProperty
+		name="stato_cofiForSearch" />
+	<formFieldProperty 
+		name="stato_pagamento_fondo_eco" />
+	<formFieldProperty 
+		name="stato_pagamento_fondo_ecoForSearch" />
+	<formFieldProperty 
+		name="valutaForSearch"/>
+
+	<columnFieldProperty
+		name="cd_tipo_documento_amm" />
+	<columnFieldProperty
+		name="pg_documento_generico" />
+	<columnFieldProperty
+		name="data_registrazione" />
+	<columnFieldProperty
+		name="dt_scadenza" />		
+	<columnFieldProperty
+		name="ds_documento_generico" />
+	<columnFieldProperty
+		name="stato_cofi" />
+	<columnFieldProperty
+		name="ti_istituz_commerc"/>
+	<columnFieldProperty
+		name="cd_uo_origine" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="ti_associato_manrev"/>
+	<columnFieldProperty
+		name="im_totale" />		
+
+	<columnSet name="filtro_ricerca_documenti">	
+		<columnFieldProperty
+			name="pg_documento_generico" />
+		<columnFieldProperty
+			name="data_registrazione" />
+		<columnFieldProperty
+			name="dt_scadenza" />		
+		<columnFieldProperty
+			name="ds_documento_generico" />
+		<columnFieldProperty
+			name="stato_cofi" />
+		<columnFieldProperty
+			name="cd_uo_origine" />
+		<columnFieldProperty
+			name="cd_unita_organizzativa" />
+		<columnFieldProperty
+			name="cd_tipo_documento_amm" />
+		<columnFieldProperty
+			name="im_totale" />			
+	</columnSet>
+
+	<findFieldProperty name="ti_istituz_commercSearch"/>
+	<findFieldProperty name="ti_associato_manrevForSearch"/>
+	<findFieldProperty name="pg_documento_generico" />
+	<findFieldProperty name="data_registrazione" />
+	<findFieldProperty name="dt_scadenza" />		
+	<findFieldProperty name="cd_tipo_documento_amm" />		
+	<findFieldProperty name="stato_cofiForSearch" />
+	<findFieldProperty name="cd_uo_origine" />
+	<findFieldProperty name="ds_documento_generico" />
+	<findFieldProperty name="esercizio" />		
+	<findFieldProperty name="stato_pagamento_fondo_ecoForSearch" />
+	<findFieldProperty name="tipo_doc_for_search" />
+	<findFieldProperty name="im_totale" />
+	<findFieldProperty name="cd_unita_organizzativa" />
+	<findFieldProperty name="cd_sospeso" />
+	<findFieldProperty name="esercizio_sospeso" />
+	<findFieldProperty name="cd_cds_sospeso" />
+	<findFieldProperty name="ti_entrata_spesa" />
+	<findFieldProperty name="sospeso" />
+	<findFieldProperty name="valutaForSearch"/>
+	<findFieldProperty name="cd_cds" />
+	
+</bulkInfo>

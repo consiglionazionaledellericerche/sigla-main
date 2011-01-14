@@ -1,0 +1,130 @@
+package it.cnr.contab.progettiric00.comp.geco;
+
+import java.sql.Connection;
+import java.util.List;
+
+import it.cnr.contab.config00.geco.bulk.Geco_dipartimentoBulk;
+import it.cnr.contab.config00.geco.bulk.Geco_dipartimentoIBulk;
+import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
+import it.cnr.contab.config00.sto.bulk.DipartimentoHome;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_commessaIBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_moduloIBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_progettoIBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_commessaBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_moduloBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_progettoBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.CRUDComponent;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.ejb.EJBCommonServices;
+
+public class ProgettoGecoComponent extends CRUDComponent {
+
+	@SuppressWarnings("unchecked")
+	public List<Geco_progettoIBulk> cercaProgettiGeco(UserContext userContext, OggettoBulk oggettoBulk, Class<? extends OggettoBulk> bulkClass) throws ComponentException{
+		try {
+			ProgettoBulk progetto = (ProgettoBulk)oggettoBulk;
+			BulkHome gecoProgettoHome = getHome(userContext, bulkClass);
+			Geco_progettoBulk gecoProgettoDummy = new Geco_progettoBulk();
+			SQLBuilder sql = gecoProgettoHome.createSQLBuilder();
+			if (progetto!=null){
+				if (progetto.getEsercizio() != null)
+					gecoProgettoDummy.setEsercizio(new Long(progetto.getEsercizio()));
+				if (progetto.getPg_progetto() != null)
+					gecoProgettoDummy.setId_prog(new Long(progetto.getPg_progetto()));
+				if (progetto.getTipo_fase() != null)
+					gecoProgettoDummy.setFase(progetto.getTipo_fase());
+			}
+			sql.addClause(gecoProgettoDummy.buildFindClauses(new Boolean(true)));
+			sql.addClause("AND","esercizio",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+			return (List<Geco_progettoIBulk>)gecoProgettoHome.fetchAll(sql);
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Geco_commessaIBulk> cercaCommesseGeco(UserContext userContext, OggettoBulk oggettoBulk, Class<? extends OggettoBulk> bulkClass) throws ComponentException{
+		try {
+			ProgettoBulk progetto = (ProgettoBulk)oggettoBulk;
+			BulkHome gecoCommessaHome = getHome(userContext, bulkClass);
+			Geco_commessaBulk gecoCommessaDummy = new Geco_commessaBulk();
+			SQLBuilder sql = gecoCommessaHome.createSQLBuilder();
+			if (progetto!=null){
+				if (progetto.getEsercizio() != null)
+					gecoCommessaDummy.setEsercizio(new Long(progetto.getEsercizio()));
+				if (progetto.getPg_progetto() != null)
+					gecoCommessaDummy.setId_comm(new Long(progetto.getPg_progetto()));
+				if (progetto.getTipo_fase() != null)
+					gecoCommessaDummy.setFase(progetto.getTipo_fase());
+			}
+			sql.addClause(gecoCommessaDummy.buildFindClauses(new Boolean(true)));
+			sql.addClause("AND","esercizio",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+			sql.addClause("AND","cds",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(userContext)); 
+			return (List<Geco_commessaIBulk>)gecoCommessaHome.fetchAll(sql);
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Geco_moduloIBulk> cercaModuliGeco(UserContext userContext, OggettoBulk oggettoBulk, Class<? extends OggettoBulk> bulkClass) throws ComponentException{
+		try {
+			ProgettoBulk progetto = (ProgettoBulk)oggettoBulk;
+			BulkHome gecoModuloHome = getHome(userContext, bulkClass);
+			Geco_moduloBulk gecoModuloDummy = new Geco_moduloBulk();
+			SQLBuilder sql = gecoModuloHome.createSQLBuilder();
+			if (progetto!=null){
+				if (progetto.getEsercizio() != null)
+					gecoModuloDummy.setEsercizio(new Long(progetto.getEsercizio()));
+				if (progetto.getPg_progetto() != null)
+					gecoModuloDummy.setId_mod(new Long(progetto.getPg_progetto()));
+				if (progetto.getTipo_fase() != null)
+					gecoModuloDummy.setFase(progetto.getTipo_fase());
+			}
+			sql.addClause(gecoModuloDummy.buildFindClauses(new Boolean(true)));
+			sql.addClause("AND","esercizio",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+			sql.addClause("AND","cds_esec",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(userContext));
+			return (List<Geco_moduloIBulk>)gecoModuloHome.fetchAll(sql);
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+	}
+	@SuppressWarnings("unchecked")
+	public List<Geco_dipartimentoIBulk> cercaDipartimentiGeco(UserContext userContext, OggettoBulk oggettoBulk, Class<? extends OggettoBulk> bulkClass) throws ComponentException{
+		try {
+			DipartimentoBulk dipartimento = (DipartimentoBulk)oggettoBulk;
+			BulkHome gecoDipartimentoHome = getHome(userContext, bulkClass);
+			Geco_dipartimentoBulk gecoDipartimentoDummy = new Geco_dipartimentoBulk();
+			SQLBuilder sql = gecoDipartimentoHome.createSQLBuilder();
+			if (dipartimento!=null){
+				if (dipartimento.getCd_dipartimento() != null)
+					gecoDipartimentoDummy.setCod_dip(dipartimento.getCd_dipartimento());
+			}
+			sql.addClause(gecoDipartimentoDummy.buildFindClauses(new Boolean(true)));
+			sql.addClause("AND","esercizio",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+			return (List<Geco_dipartimentoIBulk>)gecoDipartimentoHome.fetchAll(sql);
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+	}
+
+	@Override
+	public Connection getConnection(UserContext usercontext) throws ComponentException {
+        try{
+        	if (connection == null)
+        		connection = EJBCommonServices.getDatasource("java:jdbc/GECO").getConnection();
+        	return connection;
+        }catch(Exception exception){
+            throw handleException(exception);
+        }
+	}
+}

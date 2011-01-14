@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		<formFieldProperty
+				name="esercizio"
+				property="esercizio"
+				inputType="ROTEXT"
+				inputSize="2"
+        		label="Esercizio" />
+   		<fieldProperty
+                name="findUoForPrint"
+                property="uoForPrint"
+                inputType="SEARCHTOOL"
+                formName="searchtool"
+                enabledOnSearch="true"
+                completeOnSave="true"
+               	readonlyProperty="uoForPrintEnabled"
+		  		label="Unità organizzativa" />
+		<fieldProperty
+			name="cdUoForPrint"
+			property="cdUoForPrint"/>
+      	<!-- <fieldProperty
+                name="cduoForPrint"
+                property="uoForPrint.cd_unita_organizzativa" />  
+        <fieldProperty
+                name="ds_unita_organizzativa"
+                property="uoForPrint.ds_unita_organizzativa"
+                inputType="TEXT"
+                inputSize="80" />    --> 
+       <fieldProperty
+                name="findTerzo_firmatarioForPrint"
+                property="terzo_firmatarioForPrint"
+                inputType="SEARCHTOOL"
+                formName="searchtool"
+                enabledOnSearch="true"
+                completeOnSave="true" 
+                label="Firmatario" />
+       <fieldProperty
+                name="cd_Terzo_firmatarioForPrint"
+                property="cd_Terzo_firmatarioForPrint"/>
+     <!--  <fieldProperty
+                name="ds_firmatario"
+                property="terzo_firmatarioForPrint.ds_terzo"
+                inputSize="30"
+                inputType="ROTEXT" /> -->
+        <fieldProperty
+                name="findFigura_giuridicaForPrint"
+                property="figura_giuridicaForPrint"
+                inputType="SEARCHTOOL"
+                formName="searchtool"
+                nullable="false"
+                enabledOnSearch="true"
+                completeOnSave="true"   
+                label="Figura Giuridica Esterna" />
+      <fieldProperty
+                name="fig_figura_giuridicaForPrint"
+                property="fig_figura_giuridicaForPrint" />
+       <fieldProperty
+                name="stato"
+                property="stato"
+                inputType="SELECT"
+                keysProperty="ti_statoKeys"
+                nullable="false"
+                enabledOnSearch="true"
+                label="Stato" />              
+        <fieldProperty
+                name="findTipo_contrattoForPrint"
+                property="tipo_contrattoForPrint"
+                inputType="SEARCHTOOL"
+                formName="searchtool"
+                nullable="false"
+                enabledOnSearch="true"
+                completeOnSave="true"   
+                label="Tipologia" />
+         <fieldProperty
+                name="cd_Tipo_contrattoForPrint"
+                property="cd_Tipo_contrattoForPrint" />
+        <fieldProperty
+                name="DataStipula_da"
+                property="dataStipula_da"
+                inputType="TEXT"
+                formatName="date_short"
+                enabledOnInsert="true"
+                nullable="false"
+                label="Data di stipula da" />
+        <fieldProperty
+                name="DataStipula_a"
+                property="dataStipula_a"
+                inputType="TEXT"
+                formatName="date_short"
+                enabledOnInsert="true"
+                nullable="false"
+                label="Data di stipula a" />
+        <fieldProperty
+                name="DataInizioValidita_da"
+                property="dataInizioValidita_da"
+                inputType="TEXT"
+                formatName="date_short"
+                enabledOnInsert="true"
+                nullable="false"
+                label="Data di inizio Validità da" />
+        <fieldProperty
+                name="DataInizioValidita_a"
+                property="dataInizioValidita_a"
+                inputType="TEXT"
+                formatName="date_short"
+                enabledOnInsert="true"
+                nullable="false"
+                label="Data di inizio Validità a" />
+        <fieldProperty
+                name="DataFineValidita_da"
+                property="dataFineValidita_da"
+                inputType="TEXT"
+                formatName="date_short"
+                enabledOnInsert="true"
+                nullable="false"
+                label="Data di fine Validità da " />
+        <fieldProperty
+                name="DataFineValidita_a"
+                property="dataFineValidita_a"
+                inputType="TEXT"
+                formatName="date_short"
+                enabledOnInsert="true"
+                nullable="false"
+                label="Data di fine Validità a" />
+	    
+        <formFieldProperty name="findUoForPrint"/>
+        <formFieldProperty name="cdUoForPrint"/> 
+        <formFieldProperty name="ds_unita_organizzativa"/>          
+        <formFieldProperty name="findTerzo_firmatarioForPrint"/>
+        <formFieldProperty name="cd_Terzo_firmatarioForPrint"/>
+        <formFieldProperty name="findFigura_giuridicaForPrint"/>
+		<formFieldProperty name="fig_figura_giuridicaForPrint"/>
+        <formFieldProperty name="stato"/>        
+        <formFieldProperty name="findTipo_contrattoForPrint"/>             
+        <formFieldProperty name="cd_Tipo_contrattoForPrint"/> 
+        <formFieldProperty name="DataStipula_da"/>
+        <formFieldProperty name="DataStipula_a"/>
+        <formFieldProperty name="DataInizioValidita_da"/>
+        <formFieldProperty name="DataInizioValidita_a"/>
+        <formFieldProperty name="DataFineValidita_da"/>
+        <formFieldProperty name="DataFineValidita_a"/>
+                     
+	<printForm
+		name="/cnrconfigurazione/contratti/ElencoContratti.jasper">
+			
+		
+		<printFieldProperty 
+			name="cdUoForPrint"
+			parameterPosition="0"
+			parameterType="STRING" 
+			paramNameJR="unita_organizzativa"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cd_Terzo_firmatarioForPrint"
+			parameterPosition="1"
+			parameterType="STRING" 
+			paramNameJR="firmatario"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="fig_figura_giuridicaForPrint"
+			parameterPosition="2"
+			parameterType="STRING" 
+			paramNameJR="figura_giuridica"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="stato"
+			property="stato"
+			parameterPosition="3"
+			parameterType="STRING" 
+			paramNameJR="stato"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cd_Tipo_contrattoForPrint"
+			parameterPosition="4"
+			parameterType="STRING" 
+			paramNameJR="tipologia"
+			paramTypeJR="java.lang.String" />		
+		<printFieldProperty 
+			name="DataStipula_da"
+			parameterPosition="5"
+			parameterType="STRING" 
+			paramNameJR="data_stipula_da"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="DataStipula_a"
+			parameterPosition="6"
+			parameterType="STRING" 
+			paramNameJR="data_stipula_a"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="DataInizioValidita_da"
+			parameterPosition="7"
+			parameterType="STRING" 
+			paramNameJR="data_inizio_da"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="DataInizioValidita_a"
+			parameterPosition="8"
+			parameterType="STRING" 
+			paramNameJR="data_inizio_a"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="DataFineValidita_da"
+			parameterPosition="9"
+			parameterType="STRING" 
+			paramNameJR="data_fine_da"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="DataFineValidita_a"
+			parameterPosition="10"
+			parameterType="STRING" 
+			paramNameJR="data_fine_a"
+			paramTypeJR="java.lang.String" />
+			
+	</printForm>	
+			
+</bulkInfo>

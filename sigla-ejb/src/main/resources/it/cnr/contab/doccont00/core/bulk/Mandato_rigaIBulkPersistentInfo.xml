@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Mandato_rigaIHome" >
+	<defaultColumnMap
+		tableName="MANDATO_RIGA" >
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="mandatoI.pg_mandato"/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="mandatoI.esercizio" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="mandatoI.cds.cd_unita_organizzativa" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="mandatoI"
+		partOfOid="true" />
+</SQLPersistentInfo>

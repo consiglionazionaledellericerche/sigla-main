@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_catastale"
+		property="cd_catastale"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice catastale" />
+	<fieldProperty
+		name="ds_comune"
+		property="ds_comune"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="Comune" />
+	<fieldProperty
+		name="cd_provincia"
+		property="cd_provincia"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Provincia" />
+	<fieldProperty
+		name="importo"
+		property="importo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo limite esenzione" />
+	<fieldProperty
+		name="old_importo"
+		property="old_importo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo limite vecchia esenzione" />
+	<fieldProperty
+		name="nota"
+		property="nota"
+		inputType="TEXT"
+		maxLength="500"
+		label="Nota" />	
+	<formFieldProperty
+		name="cd_catastale" />
+	<formFieldProperty
+		name="ds_comune" />
+	<formFieldProperty
+		name="cd_provincia" />
+	<formFieldProperty
+		name="importo" />
+	<formFieldProperty
+		name="old_importo" />
+	<formFieldProperty
+		name="nota" />		
+	<findFieldProperty
+		name="cd_catastale" />
+	<findFieldProperty
+		name="ds_comune" />
+	<findFieldProperty
+		name="cd_provincia" />
+	<findFieldProperty
+		name="importo" />
+	<findFieldProperty
+		name="old_importo" />
+	<findFieldProperty
+		name="nota" />		
+	<columnFieldProperty
+		name="cd_catastale" />
+	<columnFieldProperty
+		name="ds_comune" />
+	<columnFieldProperty
+		name="cd_provincia" />
+	<columnFieldProperty
+		name="importo" />
+	<columnFieldProperty
+		name="old_importo" />
+	<columnFieldProperty
+		name="nota" />	
+</bulkInfo>

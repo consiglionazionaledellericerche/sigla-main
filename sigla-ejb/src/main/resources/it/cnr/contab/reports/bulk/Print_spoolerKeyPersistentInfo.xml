@@ -1,0 +1,16 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.reports.bulk.Print_spoolerKey" >
+	<defaultColumnMap
+		tableName="PRINT_SPOOLER" >
+		<columnMapping
+			columnName="PG_STAMPA"
+			propertyName="pgStampa"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pgStampa"
+		partOfOid="true" />
+</SQLPersistentInfo>

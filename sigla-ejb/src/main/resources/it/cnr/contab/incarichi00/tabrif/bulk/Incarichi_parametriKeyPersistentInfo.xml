@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriKey">
+	<defaultColumnMap
+		tableName="INCARICHI_PARAMETRI">
+		<columnMapping
+			columnName="CD_PARAMETRI"
+			propertyName="cd_parametri"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_parametri"
+		partOfOid="true" />
+</SQLPersistentInfo>

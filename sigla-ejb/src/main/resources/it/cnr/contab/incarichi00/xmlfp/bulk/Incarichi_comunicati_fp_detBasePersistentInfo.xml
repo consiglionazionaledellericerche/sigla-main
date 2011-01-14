@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fp_detBase"
+	keyClassName="it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fp_detKey"
+	homeClassName="it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fp_detHome">
+	<defaultColumnMap
+		tableName="INCARICHI_COMUNICATI_FP_DET">
+		<columnMapping
+			columnName="TIPO_RECORD_DET"
+			propertyName="tipo_record_det"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO_PAG"
+			propertyName="importo_pag"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="ESITO_INCARICO_PAGAMENTO"
+			propertyName="esito_incarico_pagamento"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_ANNO_PAG"
+			propertyName="err_anno_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_SEMESTRE_PAG"
+			propertyName="err_semestre_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ERR_IMPORTO_PAG"
+			propertyName="err_importo_pag"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipo_record_det" />
+	<persistentProperty
+		name="importo_pag" />
+	<persistentProperty
+		name="esito_incarico_pagamento" />
+	<persistentProperty
+		name="err_anno_pag" />
+	<persistentProperty
+		name="err_semestre_pag" />
+	<persistentProperty
+		name="err_importo_pag" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

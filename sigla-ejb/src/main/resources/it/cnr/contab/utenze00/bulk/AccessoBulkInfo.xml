@@ -1,0 +1,53 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_accesso"
+		property="cd_accesso"
+		label="Codice accesso"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="ds_accesso"
+		property="ds_accesso"
+		label="Descrizione"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="ti_accesso"
+		property="ti_accesso"
+		label="ti_accesso"
+		inputType="TEXT"
+		/>
+
+	<columnFieldProperty
+		name="cd_accesso"
+		/>
+	<columnFieldProperty
+		name="ds_accesso"
+		/>
+
+	<formFieldProperty
+		name="cd_accesso"
+		/>
+	<formFieldProperty
+		name="ds_accesso"
+		/>
+	<formFieldProperty
+		name="ti_accesso"
+		/>
+
+	<findFieldProperty
+		name="cd_accesso"
+		/>
+	<findFieldProperty
+		name="ds_accesso"
+		/>
+	<findFieldProperty
+		name="ti_accesso"
+		/>
+
+
+</bulkInfo>

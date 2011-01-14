@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="pg_attivita"
+		property="pg_attivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "true"	
+		label="Numero" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "true"
+		label="Esercizio" />
+	<fieldProperty
+		name="protocollo"
+		property="protocollo"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		label="Rif. protocollo" />
+	<fieldProperty
+		name="id_help"
+		property="id_help"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		label="Rif. helpdesk" />
+	<fieldProperty
+		name="dt_attivita"
+		property="dt_attivita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		label="Data richiesta" />
+	<fieldProperty
+		name="richiedente"
+		property="richiedente"
+		inputType="TEXTAREA"
+		cols="50"
+		rows="2"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		maxLength="100"
+		label="Richiedente" />
+	<fieldProperty
+		name="ds_attivita"
+		property="ds_attivita"
+		inputType="TEXTAREA"
+		cols="80"
+		rows="5"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		maxLength="500"
+		label="Descrizione" />
+	<fieldProperty
+		name="note"
+		property="note"
+		inputType="TEXTAREA"
+		cols="50"
+		rows="5"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		maxLength="500"
+		label="Note" />
+	<fieldProperty
+		name="priorita"
+		property="priorita"
+		inputType="SELECT"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		keysProperty="prioritaKeys"
+		label="Priorità" />
+	<fieldProperty
+		name="note_priorita"
+		property="note_priorita"
+		inputType="TEXTAREA"
+		cols="50"
+		rows="3"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		maxLength="200"
+		label="Note priorita" />
+	<fieldProperty
+		name="dt_consegna"
+		property="dt_consegna"
+		inputType="TEXT"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		formatName="date_short"
+		label="Data massima" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="SELECT"
+		keysProperty="statoKeys"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		label="Stato" />
+	<fieldProperty
+		name="tipo_attivita"
+		property="tipo_attivita"
+		inputType="SELECT"
+		keysProperty="tipo_attivitaKeys"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		label="Tipo" />
+	<fieldProperty
+		name="cd_redattore"
+		property="terzo.cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Redattore" />
+	<fieldProperty
+		name="terzo"
+		property="terzo"
+		inputType="SEARCHTOOL"
+		label="Redattore"
+		enabledOnSearch="true"
+		enabledOnEdit="true"/>
+	<fieldProperty
+		name="ds_terzo"
+		property="terzo.denominazione_sede"
+		inputType="ROTEXT"
+		label="Redattore" />		
+	<fieldProperty
+		name="referenti"
+		property="referenti"
+		inputType="TEXTAREA"
+		cols="30"
+		rows="3"
+		maxLength="100"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		label="Referenti" />
+	<fieldProperty
+		name="dt_inizio_attivita"
+		property="dt_inizio_attivita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		label="Data inizio" />
+	<fieldProperty
+		name="dt_fine_attivita"
+		property="dt_fine_attivita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		label="Data fine" />
+	<fieldProperty
+		name="tempo_analisi"
+		property="tempo_analisi"
+		inputType="TEXT"
+		maxLength="100"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		label="giorni/uomo analisi" />
+	<fieldProperty
+		name="tempo_sviluppo"
+		property="tempo_sviluppo"
+		inputType="TEXT"
+		maxLength="100"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		label="giorni/uomo sviluppo" />
+	<fieldProperty
+		name="cd_responsabile_1"
+		property="terzo1.cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8" 
+		label="Resp. 1"/>
+	<fieldProperty
+		name="terzo1"
+		property="terzo1"
+		inputType="SEARCHTOOL"
+		label="Resp.1"
+		enabledOnSearch="true"
+		enabledOnEdit="true"/>
+	<fieldProperty
+		name="ds_terzo1"
+		property="terzo1.denominazione_sede"
+		inputType="ROTEXT"
+		label="Terzo" />		
+	<fieldProperty
+		name="cd_responsabile_2"
+		property="terzo2.cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Resp. 2" />
+	<fieldProperty
+		name="terzo2"
+		property="terzo2"
+		inputType="SEARCHTOOL"
+		label="Resp.2"
+		enabledOnSearch="true"
+		enabledOnEdit="true"/>
+	<fieldProperty
+		name="ds_terzo2"
+		property="terzo2.denominazione_sede"
+		inputType="ROTEXT"
+		label="Terzo" />		
+	<fieldProperty
+		name="cd_responsabile_3"
+		property="terzo3.cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Resp. 3" />
+	<fieldProperty
+		name="terzo3"
+		property="terzo3"
+		inputType="SEARCHTOOL"
+		label="Resp.3"
+		enabledOnSearch="true"
+		enabledOnEdit="true"/>
+	<fieldProperty
+		name="ds_terzo3"
+		property="terzo3.denominazione_sede"
+		inputType="ROTEXT"
+		label="Terzo" />		
+		
+	<fieldProperty
+		name="cd_responsabile_4"
+	    property="terzo4.cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Resp. 4" />
+	<fieldProperty
+		name="terzo4"
+		property="terzo4"
+		inputType="SEARCHTOOL"
+		label="Resp.4"
+		enabledOnSearch="true"
+		enabledOnEdit="true"/>
+	<fieldProperty
+		name="ds_terzo4"
+		property="terzo4.denominazione_sede"
+		inputType="ROTEXT"
+		label="Terzo" />		
+	<fieldProperty
+		name="cd_responsabile_5"
+		property="terzo5.cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Resp. 5" />
+	<fieldProperty
+		name="terzo5"
+		property="terzo5"
+		inputType="SEARCHTOOL"
+		label="Resp.5"
+		enabledOnSearch="true"
+		enabledOnEdit="true"/>
+	<fieldProperty
+		name="ds_terzo5"
+		property="terzo5.denominazione_sede"
+		inputType="ROTEXT"
+		label="Terzo" />		
+	<fieldProperty
+		name="cd_responsabile_6"
+		property="terzo6.cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		label="Resp. 6" />
+	<fieldProperty
+		name="terzo6"
+		property="terzo6"
+		inputType="SEARCHTOOL"
+		label="Resp.6"
+		enabledOnSearch="true"
+		enabledOnEdit="true"/>
+	<fieldProperty
+		name="ds_terzo6"
+		property="terzo6.denominazione_sede"
+		inputType="ROTEXT"
+		label="Terzo" />		
+	<fieldProperty
+		name="fl_bug_aperto"
+		property="fl_bug_aperto"
+		inputType="CHECKBOX"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		label="Bug" />
+	<fieldProperty
+		name="id_bugzilla"
+		property="id_bugzilla"
+		inputType="TEXT"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		inputSize="10"
+		maxLength="10"
+		label="Nr. BUG" />
+	<formFieldProperty
+		name="pg_attivita" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="protocollo" />
+	<formFieldProperty
+		name="id_help" />
+	<formFieldProperty
+		name="dt_attivita" />
+	<formFieldProperty
+		name="richiedente" />
+	<formFieldProperty
+		name="ds_attivita" />
+	<formFieldProperty
+		name="note" />
+	<formFieldProperty
+		name="priorita" />
+	<formFieldProperty
+		name="note_priorita" />
+	<formFieldProperty
+		name="dt_consegna" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="tipo_attivita" />
+	<formFieldProperty
+		name="cd_redattore" />
+	<formFieldProperty
+		name="referenti" />
+	<formFieldProperty
+		name="dt_inizio_attivita" />
+	<formFieldProperty
+		name="dt_fine_attivita" />
+	<formFieldProperty
+		name="tempo_analisi" />
+	<formFieldProperty
+		name="tempo_sviluppo" />
+	<formFieldProperty
+		name="cd_responsabile_1" />
+	<formFieldProperty
+		name="cd_responsabile_2" />
+	<formFieldProperty
+		name="cd_responsabile_3" />
+	<formFieldProperty
+		name="cd_responsabile_4" />
+	<formFieldProperty
+		name="cd_responsabile_5" />
+	<formFieldProperty
+		name="cd_responsabile_6" />
+	<formFieldProperty
+		name="fl_bug_aperto" />
+	<formFieldProperty
+		name="id_bugzilla" />
+	<formFieldProperty
+		name="ds_terzo" />	
+	<formFieldProperty
+		name="terzo" />	
+	<formFieldProperty
+		name="ds_terzo1" />	
+	<formFieldProperty
+		name="terzo1" />	
+	<formFieldProperty
+		name="ds_terzo2" />	
+	<formFieldProperty
+		name="terzo2" />	
+	<formFieldProperty
+		name="ds_terzo3" />	
+	<formFieldProperty
+		name="terzo3" />	
+	<formFieldProperty
+		name="ds_terzo4" />	
+	<formFieldProperty
+		name="terzo4" />	
+	<formFieldProperty
+		name="ds_terzo5" />	
+	<formFieldProperty
+		name="terzo5" />	
+	<formFieldProperty
+		name="ds_terzo6" />	
+	<formFieldProperty
+		name="terzo6" />			
+		
+	<findFieldProperty
+		name="pg_attivita" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="protocollo" />
+	<findFieldProperty
+		name="id_help" />
+	<findFieldProperty
+		name="dt_attivita" />
+	<findFieldProperty
+		name="richiedente" />
+	<findFieldProperty
+		name="ds_attivita" />
+	<findFieldProperty
+		name="note" />
+	<findFieldProperty
+		name="priorita" />
+	<findFieldProperty
+		name="note_priorita" />
+	<findFieldProperty
+		name="dt_consegna" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="tipo_attivita" />
+	<findFieldProperty
+		name="cd_redattore" />
+	<findFieldProperty
+		name="referenti" />
+	<findFieldProperty
+		name="dt_inizio_attivita" />
+	<findFieldProperty
+		name="dt_fine_attivita" />
+	<findFieldProperty
+		name="tempo_analisi" />
+	<findFieldProperty
+		name="tempo_sviluppo" />
+	<findFieldProperty
+		name="cd_responsabile_1" />
+	<findFieldProperty
+		name="cd_responsabile_2" />
+	<findFieldProperty
+		name="cd_responsabile_3" />
+	<findFieldProperty
+		name="cd_responsabile_4" />
+	<findFieldProperty
+		name="cd_responsabile_5" />
+	<findFieldProperty
+		name="cd_responsabile_6" />
+	<findFieldProperty
+		name="fl_bug_aperto" />
+	<findFieldProperty
+		name="id_bugzilla" />
+		
+	<!-- <findFieldProperty
+		name="ds_terzo" />	
+	<findFieldProperty
+		name="terzo" />	
+	<findFieldProperty
+		name="ds_terzo1" />	
+	<findFieldProperty
+		name="terzo1" />	
+		<findFieldProperty
+		name="ds_terzo2" />	
+	<findFieldProperty
+		name="terzo2" />	
+		<findFieldProperty
+		name="ds_terzo3" />	
+	<findFieldProperty
+		name="terzo3" />	
+		<findFieldProperty
+		name="ds_terzo4" />	
+	<findFieldProperty
+		name="terzo4" />	
+		<findFieldProperty
+		name="ds_terzo5" />	
+	<findFieldProperty
+		name="terzo5" />	
+	<findFieldProperty
+		name="ds_terzo6" />	
+	<findFieldProperty
+		name="terzo6" />			
+ -->		
+		
+	<columnFieldProperty
+		name="pg_attivita" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="protocollo" />
+	<columnFieldProperty
+		name="id_help" />
+	<columnFieldProperty
+		name="dt_attivita" />
+	<columnFieldProperty
+		name="richiedente" />
+	<columnFieldProperty
+		name="ds_attivita" />
+	<columnFieldProperty
+		name="note" />
+	<columnFieldProperty
+		name="priorita" />
+	<columnFieldProperty
+		name="note_priorita" />
+	<columnFieldProperty
+		name="dt_consegna" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="tipo_attivita" />
+	<columnFieldProperty
+		name="cd_redattore" />
+	<columnFieldProperty
+		name="referenti" />
+	<columnFieldProperty
+		name="dt_inizio_attivita" />
+	<columnFieldProperty
+		name="dt_fine_attivita" />
+	<columnFieldProperty
+		name="tempo_analisi" />
+	<columnFieldProperty
+		name="tempo_sviluppo" />
+	<columnFieldProperty
+		name="cd_responsabile_1" />
+	<columnFieldProperty
+		name="cd_responsabile_2" />
+	<columnFieldProperty
+		name="cd_responsabile_3" />
+	<columnFieldProperty
+		name="cd_responsabile_4" />
+	<columnFieldProperty
+		name="cd_responsabile_5" />
+	<columnFieldProperty
+		name="cd_responsabile_6" />
+	<columnFieldProperty
+		name="fl_bug_aperto" />
+	<columnFieldProperty
+		name="id_bugzilla" />
+	<!--  <columnFieldProperty
+		name="ds_terzo" />	
+	<columnFieldProperty
+		name="terzo" />	
+	<columnFieldProperty
+		name="ds_terzo1" />	
+	<columnFieldProperty
+		name="terzo1" />	
+	<columnFieldProperty
+		name="ds_terzo2" />	
+	<columnFieldProperty
+		name="terzo2" />	
+	<columnFieldProperty
+		name="ds_terzo3" />	
+	<columnFieldProperty
+		name="terzo3" />	
+	<columnFieldProperty
+		name="ds_terzo4" />	
+	<columnFieldProperty
+		name="terzo4" />	
+	<columnFieldProperty
+		name="ds_terzo5" />	
+	<columnFieldProperty
+		name="terzo5" />	
+	<columnFieldProperty
+		name="ds_terzo6" />	
+	<columnFieldProperty
+		name="terzo6" />				
+		 -->
+</bulkInfo>

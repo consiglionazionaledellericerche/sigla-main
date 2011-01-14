@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBase"
+	homeClassName="it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaHome" >
+	<defaultColumnMap
+		tableName="ASS_INV_BENE_FATTURA" >
+		<columnMapping
+			columnName="PG_INVENTARIO"
+			propertyName="pg_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_FATT_ATT"
+			propertyName="cd_cds_fatt_att"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_FATT_ATT"
+			propertyName="esercizio_fatt_att"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_UO_FATT_PASS"
+			propertyName="cd_uo_fatt_pass"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="PG_FATTURA_ATTIVA"
+			propertyName="pg_fattura_attiva"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="CD_CDS_FATT_PASS"
+			propertyName="cd_cds_fatt_pass"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="CD_UO_FATT_ATT"
+			propertyName="cd_uo_fatt_att"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_FATTURA_PASSIVA"
+			propertyName="pg_fattura_passiva"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PROGRESSIVO_RIGA_FATT_ATT"
+			propertyName="progressivo_riga_fatt_att"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PROGRESSIVO_RIGA_FATT_PASS"
+			propertyName="progressivo_riga_fatt_pass"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="ESERCIZIO_FATT_PASS"
+			propertyName="esercizio_fatt_pass"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="NR_INVENTARIO"
+			propertyName="nr_inventario"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PROGRESSIVO"
+			propertyName="progressivo"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_DOCUMENTO"
+			propertyName="ti_documento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"/>
+		<columnMapping
+			columnName="PG_BUONO_C_S"
+			propertyName="pg_buono_c_s"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />		
+		<columnMapping
+			columnName="ESERCIZIO_DOC_GEN"
+			propertyName="esercizio_doc_gen"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PROGRESSIVO_RIGA_DOC_GEN"
+			propertyName="progressivo_riga_doc_gen"
+			sqlTypeName="DECIMAL"
+			columnSize="10"/>
+		<columnMapping
+			columnName="CD_TIPO_DOCUMENTO_AMM"
+			propertyName="cd_tipo_documento_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="10"/>
+		<columnMapping
+			columnName="CD_UO_DOC_GEN"
+			propertyName="cd_uo_doc_gen"
+			sqlTypeName="VARCHAR"
+			columnSize="30"/>
+		<columnMapping
+			columnName="CD_CDS_DOC_GEN"
+			propertyName="cd_cds_doc_gen"
+			sqlTypeName="VARCHAR"
+			columnSize="30"/>
+		<columnMapping
+			columnName="PG_DOCUMENTO_GENERICO"
+			propertyName="pg_documento_generico"
+			sqlTypeName="DECIMAL"
+			columnSize="10"/>	
+			
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_inventario" />
+	<persistentProperty
+		name="cd_cds_fatt_att" />
+	<persistentProperty
+		name="esercizio_fatt_att" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="cd_uo_fatt_pass" />
+	<persistentProperty
+		name="pg_fattura_attiva" />
+	<persistentProperty
+		name="cd_cds_fatt_pass" />
+	<persistentProperty
+		name="cd_uo_fatt_att" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="pg_fattura_passiva" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="progressivo_riga_fatt_att" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="progressivo_riga_fatt_pass" />
+	<persistentProperty
+		name="esercizio_fatt_pass" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="nr_inventario" />
+	<persistentProperty
+		name="progressivo" />
+	<persistentProperty
+		name="ti_documento" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="pg_buono_c_s" />	
+	<persistentProperty
+		name="esercizio_doc_gen"/>
+	<persistentProperty
+		name="progressivo_riga_doc_gen"/>
+	<persistentProperty
+		name="cd_tipo_documento_amm"/>
+	<persistentProperty
+		name="cd_uo_doc_gen"/>
+	<persistentProperty
+		name="cd_cds_doc_gen" />
+	<persistentProperty
+		name="pg_documento_generico"/>	
+</SQLPersistentInfo>

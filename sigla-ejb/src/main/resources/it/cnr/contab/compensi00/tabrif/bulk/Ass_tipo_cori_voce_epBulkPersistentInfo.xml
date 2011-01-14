@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.tabrif.bulk.Ass_tipo_cori_voce_epBulk"
+	homeClassName="it.cnr.contab.compensi00.tabrif.bulk.Ass_tipo_cori_voce_epHome">
+	<defaultColumnMap
+		tableName="ASS_TIPO_CORI_VOCE_EP">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="voce_ep.esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="CD_VOCE_EP"
+			propertyName="voce_ep.cd_voce_ep"
+			sqlTypeName="VARCHAR"
+			columnSize="45" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="voce_ep_contr.esercizio"
+			fetchOnly="true"/>	
+		<columnMapping
+			columnName="CD_VOCE_EP_CONTR"
+			propertyName="voce_ep_contr.cd_voce_ep"
+			sqlTypeName="VARCHAR"
+			columnSize="45" />
+		<columnMapping
+			columnName="CD_CONTRIBUTO_RITENUTA"
+			propertyName="contributo_ritenuta.cd_contributo_ritenuta"
+			sqlTypeName="VARCHAR"/>	
+	</defaultColumnMap>
+	<persistentProperty
+		name="voce_ep"
+		partOfOid="false" />
+	<persistentProperty
+		name="voce_ep_contr"
+		partOfOid="false" />
+	<persistentProperty
+		name="contributo_ritenuta.cd_contributo_ritenuta"
+		partOfOid="true" />
+		
+		
+</SQLPersistentInfo>

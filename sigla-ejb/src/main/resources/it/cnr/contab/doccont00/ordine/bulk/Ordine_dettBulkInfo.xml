@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Cds" />
+	<fieldProperty
+		name="ds_dettaglio"
+		property="ds_dettaglio"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="Descrizione"
+		nullable="false"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_ordine"
+		property="pg_ordine"
+		inputType="TEXT"
+		label="Ordine" />
+	<fieldProperty
+		name="pg_dettaglio"
+		property="pg_dettaglio"
+		inputType="TEXT"
+		label="Dettaglio" />
+	<fieldProperty
+		name="quantita"
+		property="quantita"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		label="Quantita"
+		nullable="false" />
+	<fieldProperty
+		name="im_unitario"
+		property="im_unitario"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"		
+		label="Importo Unitario"
+		nullable="false" />
+	<fieldProperty
+		name="imponibile"
+		property="imponibile"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Imponibile" />
+	<fieldProperty
+		name="im_iva"
+		property="im_iva"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Iva"
+		nullable="false" />
+	<fieldProperty
+		name="importoTotale"
+		property="importoTotale"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Totale" />
+
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="ds_dettaglio" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_dettaglio" />
+	<formFieldProperty
+		name="pg_ordine" />
+	<formFieldProperty
+		name="quantita" />
+	<formFieldProperty
+		name="im_unitario" />
+	<formFieldProperty
+		name="imponibile" />
+	<formFieldProperty
+		name="im_iva" />
+	<formFieldProperty
+		name="importoTotale" />
+
+	<columnFieldProperty
+		name="ds_dettaglio"
+		headerStyle="width:200px" />
+	<columnFieldProperty
+		name="quantita"
+		style="width:70px; text-align: right" />
+	<columnFieldProperty
+		name="im_unitario"
+		style="width:90px" />
+	<columnFieldProperty
+		name="imponibile"
+		style="width:90px" />
+	<columnFieldProperty
+		name="im_iva"
+		style="width:70px" />
+	<columnFieldProperty
+		name="importoTotale"
+		style="width:90px" />
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="ds_dettaglio" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="im_iva" />
+	<findFieldProperty
+		name="pg_ordine" />
+	<findFieldProperty
+		name="im_unitario" />
+	<findFieldProperty
+		name="pg_dettaglio" />
+	<findFieldProperty
+		name="quantita" />
+
+</bulkInfo>

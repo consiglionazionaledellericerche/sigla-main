@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_scad_obblBulk"
+	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_scad_obblHome">
+	<defaultColumnMap
+		tableName="V_CONS_SCAD_OBBL">
+		<columnMapping
+			columnName="CDS"
+			propertyName="cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="UO"
+			propertyName="uo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ORIGINALE"
+			propertyName="esercizio_originale"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBL"
+			propertyName="pg_obbl"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBL_SCAD"
+			propertyName="pg_obbl_scad"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="VOCE_BILANCIO"
+			propertyName="voce_bilancio"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DATA_SCAD"
+			propertyName="data_scad"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_SCAD"
+			propertyName="ds_scad"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_SCAD"
+			propertyName="im_scad"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_ASS_DOC_AMM"
+			propertyName="im_ass_doc_amm"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMP_ASS_DOC_CONT"
+			propertyName="imp_ass_doc_cont"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="CREDITORE"
+			propertyName="creditore"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cds" />
+	<persistentProperty
+		name="uo" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="esercizio_originale" />
+	<persistentProperty
+		name="pg_obbl" />
+	<persistentProperty
+		name="pg_obbl_scad" />
+	<persistentProperty
+		name="voce_bilancio" />
+	<persistentProperty
+		name="data_scad" />
+	<persistentProperty
+		name="ds_scad" />
+	<persistentProperty
+		name="im_scad" />
+	<persistentProperty
+		name="im_ass_doc_amm" />
+	<persistentProperty
+		name="imp_ass_doc_cont" />
+	<persistentProperty
+		name="creditore" />
+</SQLPersistentInfo>

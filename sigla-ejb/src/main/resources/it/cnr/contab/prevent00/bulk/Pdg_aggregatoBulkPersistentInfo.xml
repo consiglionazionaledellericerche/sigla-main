@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent00.bulk.Pdg_aggregatoBulk"
+	homeClassName="it.cnr.contab.prevent00.bulk.Pdg_aggregatoHome" >
+	<defaultColumnMap
+		tableName="PDG_AGGREGATO" >
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cdr.cd_centro_responsabilita" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdr"
+		partOfOid="true" />
+</SQLPersistentInfo>

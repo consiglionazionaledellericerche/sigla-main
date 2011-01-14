@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+
+	<formFieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="ROTEXT"
+		label="Esercizio" />
+	<formFieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="ROTEXT" 
+		label="CDS" />
+
+	<fieldProperty
+		name="findUOForPrint"
+		property="uoForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="cdUOForPrint"
+		property="uoForPrint.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROUoForPrint"
+		label="Codice UO" />
+	<fieldProperty
+		name="dsUOForPrint"
+		property="uoForPrint.ds_unita_organizzativa"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione UO" />
+	
+	<fieldProperty
+		name="cdUOCRForPrint"
+		property="cdUOCRForPrint"/>
+		
+	<fieldProperty
+		name="findVoceDPForPrint"
+		property="vocedpForPrint"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		enabledOnSearch="true"
+		label="Voce del Piano" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="vocedpForPrint.cd_elemento_voce"
+		inputType="TEXT"
+		completeOnSave="true"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="vocedpForPrint.ds_elemento_voce"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"/>
+		
+	<fieldProperty
+		name="voceDPForPrint"
+		property="voceDPForPrint"/>
+	
+	<!-- <fieldProperty
+        name="stato"
+        property="stato"
+        inputType="SELECT"
+        keysProperty="ti_statoKeys"
+        nullable="false"
+        enabledOnSearch="true"
+        label="Stato" /> -->
+	
+	<fieldProperty
+		name="findTerzo"
+		property="terzo"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		label="Terzo" />
+	<fieldProperty
+		name="cd_terzo"
+		property="terzo.cd_terzo"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		readonlyProperty="ROTerzo"
+		label="Codice Terzo" />
+	<fieldProperty
+		name="ds_terzo"
+		property="terzo.denominazione_sede"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione Terzo" />
+	<fieldProperty
+		name="cdTerzoForPrint"
+		property="cdTerzoForPrint"/>
+		
+		
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="cd_cds" />
+	<formFieldProperty name="findUOForPrint" />
+	<formFieldProperty
+		name="cdUOForPrint"
+		nullable="false" />
+	<formFieldProperty name="dsUOForPrint" />
+	<formFieldProperty name="cdUOCRForPrint" />
+
+	<formFieldProperty name="findVoceDPForPrint" />
+	<formFieldProperty 
+		name="cd_elemento_voce" 
+		enabledOnSearch="true"/>
+	<formFieldProperty name="ds_elemento_voce" />
+	<formFieldProperty name="voceDPForPrint" />
+	<!-- <formFieldProperty name="stato" /> -->
+		
+		
+	<formFieldProperty name="findTerzo" />
+	<formFieldProperty name="cd_terzo" />
+	<formFieldProperty name="ds_terzo" />	
+	
+
+</bulkInfo>

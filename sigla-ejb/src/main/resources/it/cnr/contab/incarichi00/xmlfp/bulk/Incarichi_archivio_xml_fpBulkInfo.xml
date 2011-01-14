@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA" 
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Archivio File Funzione Pubblica"
+	longDescription="Archivio File Incarichi Funzione Pubblica" >
+	<fieldProperty
+		name="id_archivio"
+		property="id_archivio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Id. Archivio" />
+	<fieldProperty
+		name="ds_archivio"
+		property="ds_archivio"
+		inputType="TEXTAREA"
+		inputSize="2000"
+		maxLength="2000"
+		cols="80"
+		rows="3"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="nome_file_inv"
+		property="nome_file_inv"
+		inputType="TEXT"
+		inputSize="40"
+		maxLength="400"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"
+		label="Nome del File Inviato" />
+	<fieldProperty
+		name="nome_file_ric"
+		property="nome_file_ric"
+		inputType="TEXT"
+		inputSize="40"
+		maxLength="400"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"
+		label="Nome del File Ricevuto" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		readonlyProperty="ROSelezione"
+		nullable="false"
+		label="Anno" />
+	<fieldProperty
+		name="semestre"
+		property="semestre"
+		keysProperty="ti_semestriKeys"
+		inputType="SELECT"
+		readonlyProperty="ROSelezione"
+		nullable="false"
+		label="Periodo" />
+	<fieldProperty
+		name="dt_calcolo"
+		property="dt_calcolo"
+		keysProperty="ti_dataCalcoloKeys"
+		inputType="SELECT"
+		readonlyProperty="ROSelezione"
+		nullable="false"
+		label="Data da utilizzare per estrazione" />
+	<fieldProperty
+		name="fl_crea_file_per_tipologia"
+		property="fl_crea_file_per_tipologia"
+		inputType="CHECKBOX"
+		readonlyProperty="ROSelezione"
+		nullable="false"
+		label="Crea File Diversi per Tipologia" />
+	<fieldProperty
+		name="fl_crea_file_da_file"
+		property="fl_crea_file_da_file"
+		inputType="CHECKBOX"
+		command="doClearSelection"
+		nullable="false"
+		label="Crea File Corretto da Comunicazione FP" />
+	<fieldProperty
+		name="tipo_estrazione_pagamenti"
+		property="tipo_estrazione_pagamenti"
+		keysProperty="ti_pagamentiKeys"
+		inputType="SELECT"
+		readonlyProperty="ROSelezione"
+		nullable="false"
+		label="Pagamenti Effettuati" />
+	<fieldProperty
+		name="fl_visualizza_file_xml"
+		property="fl_visualizza_file_xml"
+		inputType="CHECKBOX"
+		nullable="false"
+		command="doDefault"
+		label="Visualizza File XML" />
+	<fieldProperty
+		name="num_max_file_record"
+		property="num_max_file_record"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		readonlyProperty="ROSelezione"
+		nullable="false"
+		label="Numero massimo di record per file" />
+	<fieldProperty
+		name="blob_inv"
+		property="blob_inv"
+		inputType="FILE"
+		inputSize="40"
+		maxLength="400"
+		caseSensitiveSearch="false"
+		nullable="false"
+		label="File Inviato" />
+	<fieldProperty
+		name="blob_ric"
+		property="blob_ric"
+		inputType="FILE"
+		inputSize="40"
+		maxLength="400"
+		caseSensitiveSearch="false"
+		nullable="false"
+		label="File Ricevuto" />
+	<fieldProperty
+		name="blob_ric_err"
+		property="blob_ric_err"
+		inputType="FILE"
+		inputSize="40"
+		maxLength="400"
+		caseSensitiveSearch="false"
+		nullable="false"
+		label="File Ricevuto con Errori" />
+	<fieldProperty
+		name="countInsIncarichiComunicati"
+		property="countInsIncarichiComunicati"
+		label="Incarichi Nuovi"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"/>
+	<fieldProperty
+		name="countUpdIncarichiComunicati"
+		property="countUpdIncarichiComunicati"
+		label="Incarichi Modificati"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"/>
+	<fieldProperty
+		name="countDelIncarichiComunicati"
+		property="countDelIncarichiComunicati"
+		label="Incarichi Cancellati"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"/>
+	<fieldProperty
+		name="countInsIncarichiOkRicevuti"
+		property="countInsIncarichiOkRicevuti"
+		label="Incarichi Nuovi Corretti"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"/>
+	<fieldProperty
+		name="countUpdIncarichiOkRicevuti"
+		property="countUpdIncarichiOkRicevuti"
+		label="Incarichi Modificati Corretti"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"/>
+	<fieldProperty
+		name="countDelIncarichiOkRicevuti"
+		property="countDelIncarichiOkRicevuti"
+		label="Incarichi Eliminati Corretti"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"/>
+	<fieldProperty
+		name="countInsIncarichiErrRicevuti"
+		property="countInsIncarichiErrRicevuti"
+		label="Incarichi Nuovi Errati"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"/>
+	<fieldProperty
+		name="countUpdIncarichiErrRicevuti"
+		property="countUpdIncarichiErrRicevuti"
+		label="Incarichi Modificati Errati"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"/>
+	<fieldProperty
+		name="countDelIncarichiErrRicevuti"
+		property="countDelIncarichiErrRicevuti"
+		label="Incarichi Eliminati Errati"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"/>
+	<fieldProperty
+		name="countInsIncarichiOkEstratti"
+		property="countInsIncarichiOkEstratti"
+		label="Incarichi Nuovi Estratti"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"/>
+	<fieldProperty
+		name="countUpdIncarichiOkEstratti"
+		property="countUpdIncarichiOkEstratti"
+		label="Incarichi Modificati Estratti"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"/>
+	<fieldProperty
+		name="countDelIncarichiOkEstratti"
+		property="countDelIncarichiOkEstratti"
+		label="Incarichi Eliminati Estratti"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"/>
+	<fieldProperty
+		name="countInsAllIncarichiOkEstratti"
+		property="countInsIncarichiOkEstratti"
+		label="Incarichi Nuovi Estratti"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"/>
+	<fieldProperty
+		name="countUpdAllIncarichiOkEstratti"
+		property="countUpdIncarichiOkEstratti"
+		label="Incarichi Modificati Estratti"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"/>
+	<fieldProperty
+		name="countDelAllIncarichiOkEstratti"
+		property="countDelIncarichiOkEstratti"
+		label="Incarichi Eliminati Estratti"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"/>
+	<fieldProperty
+		name="countInsIncarichiErrEstratti"
+		property="countInsIncarichiErrEstratti"
+		label="Incarichi Nuovi Estratti Errati"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"/>
+	<fieldProperty
+		name="countUpdIncarichiErrEstratti"
+		property="countUpdIncarichiErrEstratti"
+		label="Incarichi Modificati Estratti Errati"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"/>
+	<fieldProperty
+		name="countDelIncarichiErrEstratti"
+		property="countDelIncarichiErrEstratti"
+		label="Incarichi Eliminati Estratti Errati"
+		inputType="ROTEXT"
+		maxLength="4"
+		inputSize="4"/>
+	<fieldProperty
+		name="totImportoNuoviIncarichiComunicato"
+		property="totImportoNuoviIncarichiComunicato"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Incarichi Comunicati" />
+	<fieldProperty
+		name="totImportoNuoviIncarichiOkRicevuti"
+		property="totImportoNuoviIncarichiOkRicevuti"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Incarichi Corretti" />
+	<fieldProperty
+		name="totImportoNuoviIncarichiErrRicevuti"
+		property="totImportoNuoviIncarichiErrRicevuti"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Incarichi Errati" />
+	<fieldProperty
+		name="totImportoNuoviIncarichiOkEstratti"
+		property="totImportoNuoviIncarichiOkEstratti"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Incarichi Estratti" />
+	<fieldProperty
+		name="totImportoNuoviIncarichiErrEstratti"
+		property="totImportoNuoviIncarichiErrEstratti"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Incarichi Estratti Errati" />
+	<fieldProperty
+		name="totImportoAllNuoviIncarichiOkEstratti"
+		property="totImportoNuoviIncarichiOkEstratti"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Totale Incarichi Estratti" />
+
+
+	<formFieldProperty
+		name="id_archivio" />
+	<formFieldProperty
+		name="ds_archivio" />
+	<formFieldProperty
+		name="nome_file_inv" 
+		label="File Inviato" />
+	<formFieldProperty
+		name="nome_file_ric" 
+		label="File Ricevuto" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="semestre" />
+	<formFieldProperty
+		name="dt_calcolo" />
+	<formFieldProperty
+		name="fl_crea_file_per_tipologia"  />
+	<formFieldProperty
+		name="fl_crea_file_da_file"  />
+	<formFieldProperty
+		name="tipo_estrazione_pagamenti" />
+	<formFieldProperty
+		name="fl_visualizza_file_xml" />
+	<formFieldProperty
+		name="num_max_file_record"  />
+	<formFieldProperty
+		name="blob_inv" />
+	<formFieldProperty
+		name="blob_ric" />
+	<formFieldProperty
+		name="blob_ric_err" />
+	<formFieldProperty
+		name="countInsIncarichiComunicati"
+		label="Nuovi" />
+	<formFieldProperty
+		name="countUpdIncarichiComunicati"
+		label="Modificati" />
+	<formFieldProperty
+		name="countDelIncarichiComunicati"
+		label="Eliminati" />
+	<formFieldProperty
+		name="countInsIncarichiOkRicevuti"
+		label="Nuovi"/>
+	<formFieldProperty
+		name="countUpdIncarichiOkRicevuti"
+		label="Modificati"/>
+	<formFieldProperty
+		name="countDelIncarichiOkRicevuti"
+		label="Eliminati"/>
+	<formFieldProperty
+		name="countInsIncarichiErrRicevuti"
+		label="Nuovi"/>
+	<formFieldProperty
+		name="countUpdIncarichiErrRicevuti"
+		label="Modificati" />
+	<formFieldProperty
+		name="countDelIncarichiErrRicevuti"
+		label="Eliminati" />
+	<formFieldProperty
+		name="countInsIncarichiOkEstratti"
+		label="Nr. Estratti"/>
+	<formFieldProperty
+		name="countUpdIncarichiOkEstratti"
+		label="Nr. Estratti"/>
+	<formFieldProperty
+		name="countDelIncarichiOkEstratti"
+		label="Nr. Estratti"/>
+	<formFieldProperty
+		name="countInsAllIncarichiOkEstratti"
+		label="Nuovi"/>
+	<formFieldProperty
+		name="countUpdAllIncarichiOkEstratti"
+		label="Modificati"/>
+	<formFieldProperty
+		name="countDelAllIncarichiOkEstratti"
+		label="Cancellati"/>
+	<formFieldProperty
+		name="countInsIncarichiErrEstratti"
+		label="Nuovi"/>
+	<formFieldProperty
+		name="countUpdIncarichiErrEstratti"
+		label="Modificati"/>
+	<formFieldProperty
+		name="countDelIncarichiErrEstratti"
+		label="Cancellati"/>
+	<formFieldProperty
+		name="totImportoNuoviIncarichiComunicato"
+		label="Importo Totale" />
+	<formFieldProperty
+		name="totImportoNuoviIncarichiOkRicevuti"
+		label="Importo Totale" />
+	<formFieldProperty
+		name="totImportoNuoviIncarichiErrRicevuti"
+		label="Importo Totale" />
+	<formFieldProperty
+		name="totImportoNuoviIncarichiOkEstratti"
+		label="Importo Totale" />
+	<formFieldProperty
+		name="totImportoNuoviIncarichiErrRicevuti"
+		label="Importo Totale" />
+	<formFieldProperty
+		name="totImportoAllNuoviIncarichiOkEstratti"
+		label="Importo Totale Nuovi Incarichi" />
+
+	<columnFieldProperty
+		name="id_archivio" />
+	<columnFieldProperty
+		name="ds_archivio" />
+
+	<findFieldProperty
+		name="id_archivio" />
+	<findFieldProperty
+		name="ds_archivio" />
+</bulkInfo>

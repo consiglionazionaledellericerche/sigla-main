@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<freeSearchSet name="default">
+		<findFieldProperty
+			name="cd_linea_attivita" />
+		<findFieldProperty
+			name="ds_linea_attivita" 
+			label="Descrizione G.a.e."/>
+		<findFieldProperty
+			name="dt_registrazione" />
+		<findFieldProperty
+			name="cd_elemento_voce" />
+		<findFieldProperty
+			name="ds_elemento_voce" 
+			label="Descrizione Voce del Piano"/>
+		<findFieldProperty
+			name="descrizione" 
+			label="Descrizione Movimento"/>
+       	<findFieldProperty
+       		name="im_spese_gest_decentrata_int" />
+       	<findFieldProperty
+       		name="im_spese_gest_decentrata_est" />
+       	<findFieldProperty
+       		name="im_spese_gest_accentrata_int" />
+       	<findFieldProperty
+       		name="im_spese_gest_accentrata_est" />
+	</freeSearchSet>
+
+	<columnSet name="insertVariazioneGestionale">
+		<columnFieldProperty
+			name="cd_linea_attivita" 
+			descProperty="linea_attivita.ds_linea_attivita"
+			inputType="DESCTOOL"/>
+		<columnFieldProperty
+			name="cd_elemento_voce"
+			descProperty="elemento_voce.ds_elemento_voce"
+			inputType="DESCTOOL"/>
+		<columnFieldProperty
+			name="descrizione" />
+        <columnFieldProperty
+           	name="im_spese_gest_decentrata_int"
+         	label="Fonti Interne"
+        	headerLabel="GESTIONE DECENTRATA" />		
+        <columnFieldProperty
+           	name="im_spese_gest_decentrata_est"
+         	label="Fonti Esterne"
+	       	headerLabel="GESTIONE DECENTRATA" />		
+        <columnFieldProperty
+           	name="im_spese_gest_accentrata_int" 
+           	label="Fonti Interne"
+	       	headerLabel="GESTIONE ACCENTRATA" />		
+        <columnFieldProperty
+          	name="im_spese_gest_accentrata_est" 
+          	label="Fonti Esterne"
+	      	headerLabel="GESTIONE ACCENTRATA" />
+		<columnFieldProperty
+			name="cd_cds_area" 
+			descProperty="area.ds_unita_organizzativa"
+			inputType="DESCTOOL"/>
+	</columnSet>
+	<columnSet name="dipInsertVariazioneGestionale">
+		<columnFieldProperty
+			name="cd_linea_attivita" 
+			descProperty="linea_attivita.ds_linea_attivita"
+			inputType="DESCTOOL"/>
+		<columnFieldProperty
+			name="cd_elemento_voce"
+			descProperty="elemento_voce.ds_elemento_voce"
+			inputType="DESCTOOL"/>
+		<columnFieldProperty
+			name="descrizione" />
+        <columnFieldProperty
+           	name="im_spese_gest_decentrata_int"
+         	label="Fonti Interne"
+        	headerLabel="GESTIONE DECENTRATA" />		
+        <columnFieldProperty
+           	name="im_spese_gest_decentrata_est"
+         	label="Fonti Esterne"
+	       	headerLabel="GESTIONE DECENTRATA" />		
+        <columnFieldProperty
+           	name="im_spese_gest_accentrata_int" 
+           	label="Fonti Interne"
+	       	headerLabel="GESTIONE ACCENTRATA" />		
+        <columnFieldProperty
+          	name="im_spese_gest_accentrata_est" 
+          	label="Fonti Esterne"
+	      	headerLabel="GESTIONE ACCENTRATA" />
+		<columnFieldProperty
+			name="cd_cds_area" 
+			descProperty="area.ds_unita_organizzativa"
+			inputType="DESCTOOL"/>
+		<columnFieldProperty
+			name="iconaVistoDipartimento"
+			label="" />
+	</columnSet>
+</bulkInfo>

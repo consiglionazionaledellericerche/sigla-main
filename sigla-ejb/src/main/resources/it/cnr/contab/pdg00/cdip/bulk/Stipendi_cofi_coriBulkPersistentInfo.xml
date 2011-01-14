@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofi_coriBulk"
+	homeClassName="it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofi_coriHome" >
+	<defaultColumnMap
+		tableName="STIPENDI_COFI_CORI" >
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="stipendi_cofi.esercizio" />
+		<columnMapping
+			columnName="MESE"
+			propertyName="stipendi_cofi.mese"/>	
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="stipendi_cofi"
+		partOfOid="true" />
+</SQLPersistentInfo>

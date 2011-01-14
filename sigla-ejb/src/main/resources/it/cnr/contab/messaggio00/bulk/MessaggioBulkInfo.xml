@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_messaggio"
+		property="pg_messaggio"
+		inputType="TEXT"
+		label="Numero messaggio"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="soggetto"
+		property="soggetto"
+		maxLength="200"
+		inputSize="100"
+		inputType="TEXT"
+		label="Soggetto"
+		caseSensitiveSearch="false"
+		nullable="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="priorita"
+		property="priorita"
+		inputType="TEXT"
+		maxLength="1"
+		inputSize="2"
+		label="Priorità"
+		nullable="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		inputType="TEXT"
+		label="Data fine validità"
+		formatName="date_short"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="server_url"
+		property="server_url"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="URL Server"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_messaggio"
+		property="ds_messaggio"
+		maxLength="200"
+		inputSize="100"
+		inputType="TEXT"
+		label="Descrizione (nascosta)"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="corpo"
+		property="corpo"
+		maxLength="4000"
+		cols="100"
+		rows="6"
+		inputType="TEXTAREA"
+		label="Messaggio"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_utente"
+		property="cd_utente"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Utente"
+		caseSensitiveSearch="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="dt_inizio_validita"
+		property="dt_inizio_validita"
+		inputType="TEXT"
+		label="Data inizio validità"
+		formatName="date_short"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="iconaOpenClose"
+		property="iconaOpenClose"
+		inputType="TEXT"
+		label="Visto" />
+	<fieldProperty
+		name="dacr"
+		property="dacr"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		formatName="date_short"
+		label="Data Creazione" />
+
+	<formFieldProperty
+		name="pg_messaggio" />
+	<formFieldProperty
+		name="cd_utente" />
+	<formFieldProperty
+		name="server_url" />
+	<formFieldProperty
+		name="priorita" />
+	<formFieldProperty
+		name="soggetto" />
+	<formFieldProperty
+		name="ds_messaggio" />
+	<formFieldProperty
+		name="corpo" />
+	<formFieldProperty
+		name="dt_inizio_validita" />
+	<formFieldProperty
+		name="dt_fine_validita" />
+
+	<form
+		name="view">
+		<formFieldProperty
+			name="soggetto" />
+		<formFieldProperty
+			name="ds_messaggio"
+			inputType="HIDDEN" />
+		<formFieldProperty
+			name="corpo" />
+	</form>
+
+	<columnFieldProperty
+		name="pg_messaggio" />
+	<columnFieldProperty
+		name="priorita" />
+	<columnFieldProperty
+		name="cd_utente" />
+	<columnFieldProperty
+		name="server_url" />
+	<columnFieldProperty
+		name="soggetto" />
+	<columnFieldProperty
+		name="dt_inizio_validita" />
+	<columnFieldProperty
+		name="dt_fine_validita" />
+
+	<columnSet
+		name="view">
+		<columnFieldProperty
+			name="iconaOpenClose" />
+		<columnFieldProperty
+			name="dacr" />
+		<columnFieldProperty
+			name="soggetto"
+			style="width: 100%" />
+	</columnSet>
+
+	<findFieldProperty
+		name="soggetto" />
+	<findFieldProperty
+		name="priorita" />
+	<findFieldProperty
+		name="dt_fine_validita" />
+	<findFieldProperty
+		name="pg_messaggio" />
+	<findFieldProperty
+		name="server_url" />
+	<findFieldProperty
+		name="ds_messaggio" />
+	<findFieldProperty
+		name="corpo" />
+	<findFieldProperty
+		name="cd_utente" />
+	<findFieldProperty
+		name="dt_inizio_validita" />
+
+</bulkInfo>

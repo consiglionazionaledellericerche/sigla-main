@@ -1,0 +1,16 @@
+<action-mappings>
+
+  <action 
+      path="/CRUDConguaglioAction" actionClass="it.cnr.contab.compensi00.actions.CRUDConguaglioAction">
+  </action>
+
+  <businessProcess
+	name="CRUDConguaglioBP" className="it.cnr.contab.compensi00.bp.CRUDConguaglioBP">
+	<forward name="default" path="/compensi00/conguaglio.jsp"/>
+	<init-param name="printbp" value="OfflineReportPrintBP"/>
+	<init-param name="bulkClassName" value="it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk"/>
+	<init-param name="componentSessionName" value="CNRCOMPENSI00_EJB_ConguaglioComponentSession"/>
+	<init-param name="defaultAction" value="CRUDConguaglioAction"/>
+  </businessProcess>
+
+</action-mappings>

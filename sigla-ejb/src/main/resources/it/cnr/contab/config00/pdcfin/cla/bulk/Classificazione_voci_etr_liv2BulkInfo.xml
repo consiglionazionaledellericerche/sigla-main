@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<form
+        name="classVociAssociate">
+       	<formFieldProperty
+       		name="cd_livello2" />
+	</form>        	
+
+	<columnSet
+        name="classVociAssociate">
+       	<columnFieldProperty
+       		name="cd_livello2" />
+       	<columnFieldProperty
+       		name="ds_classificazione" />
+       	<columnFieldProperty
+       		name="fl_class_sac" 
+       		label="SAC"/>
+       	<columnFieldProperty
+       		name="fl_solo_gestione" 
+       		label="Gest."/>
+	</columnSet>        	
+
+	<columnSet
+        name="default">
+       	<columnFieldProperty
+       		name="cd_livello1" />
+       	<columnFieldProperty
+       		name="cd_livello2" />
+       	<columnFieldProperty
+       		name="ds_classificazione" />
+	</columnSet>        	
+
+	<freeSearchSet name="default">
+		<findFieldProperty
+			name="cd_livello2" />
+		<findFieldProperty
+			name="ds_classificazione" />
+	</freeSearchSet>
+</bulkInfo>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_tipo_limite"
+		property="cd_tipo_limite"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="ds_tipo_limite"
+		property="ds_tipo_limite"
+		inputType="TEXTAREA"
+		maxLength="200"
+		cols="60"
+		rows="5"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="fl_cancellato"
+		property="fl_cancellato"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Eliminato" />
+	<fieldProperty
+		name="fl_raggruppa"
+		property="fl_raggruppa"
+		inputType="CHECKBOX"
+		command="doOnFlRaggruppaChange"
+		enabledOnView="true"
+		label="Raggruppa per CDS/UO" />
+
+	<formFieldProperty
+		name="cd_tipo_limite" />
+	<formFieldProperty
+		name="ds_tipo_limite" />
+	<formFieldProperty
+		name="fl_cancellato" />
+	<formFieldProperty
+		name="fl_raggruppa" />
+
+	<columnFieldProperty
+		name="cd_tipo_limite" />
+	<columnFieldProperty
+		name="ds_tipo_limite" />
+	<columnFieldProperty
+		name="fl_cancellato" />
+
+	<findFieldProperty
+		name="cd_tipo_limite" />
+	<findFieldProperty
+		name="ds_tipo_limite" />
+	<findFieldProperty
+		name="fl_cancellato" />
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_tipo_limite" />
+		<formFieldProperty
+			name="ds_tipo_limite"
+			inputType="TEXT"
+			inputSize="30" />
+	</form>
+</bulkInfo>

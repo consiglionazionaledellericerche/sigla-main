@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_finanziatore_terzo"
+		property="finanziatore.cd_terzo"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		label="Codice Terzo" 
+		caseSensitiveSearch="false"/>
+	<fieldProperty
+		name="finanziatore"
+		property="finanziatore"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		readonlyProperty="notNew"
+		enabledOnSearch="true"
+		label="Finanziatore" />	
+		
+	<fieldProperty
+		name="pg_progetto"
+		property="pg_progetto"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Codice Progetto" />
+			
+	<fieldProperty
+		name="importo_finanziato"
+		property="importo_finanziato"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Finanziato" />
+
+	<form name="finanziatore">
+		<formFieldProperty
+			name="cd_terzo"
+			property="finanziatore.cd_terzo"
+			label="Codice Finanziatore"
+			/>
+		<formFieldProperty
+			name="denominazione_sede"
+			property="finanziatore.denominazione_sede"
+			label="Descrizione Finanziatore"
+			/>
+			
+		<formFieldProperty
+			name="importo_finanziato"
+			/>
+	</form>
+	<columnSet name="finanziatore">
+		<columnFieldProperty
+			name="cd_terzo"
+			property="finanziatore.cd_terzo"
+			label="Codice Finanziatore"/>
+		<columnFieldProperty
+			name="denominazione_sede"
+			property="finanziatore.denominazione_sede"
+			label="Descrizione Finanziatore"/>
+		<columnFieldProperty
+			name="importo_finanziato"/>
+	</columnSet>
+	
+	<formFieldProperty
+		name="pg_progetto" />
+	<formFieldProperty
+		name="finanziatore" />
+	<formFieldProperty
+		name="cd_finanziatore_terzo" />
+	<formFieldProperty
+		name="importo_finanziato" />
+
+	<columnFieldProperty
+		name="cd_finanziatore_terzo" />
+	<columnFieldProperty
+		name="pg_progetto" />	
+	<columnFieldProperty
+		name="importo_finanziato" />
+
+	<findFieldProperty
+		name="pg_progetto" />
+	<findFieldProperty
+		name="cd_finanziatore_terzo" />
+	<findFieldProperty
+		name="importo_finanziato" />
+
+</bulkInfo>

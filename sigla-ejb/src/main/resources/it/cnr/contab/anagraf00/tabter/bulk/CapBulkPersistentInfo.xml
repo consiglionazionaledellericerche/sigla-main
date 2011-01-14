@@ -1,0 +1,18 @@
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.tabter.bulk.CapBulk"
+	keyClassName="it.cnr.contab.anagraf00.tabter.bulk.CapKey"
+	homeClassName="it.cnr.contab.anagraf00.tabter.bulk.CapHome" >
+
+	<defaultColumnMap
+		tableName="CAP" >
+	
+		<columnMapping
+			columnName="PG_COMUNE"
+			propertyName="comune.pg_comune" />
+
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="comune" />
+
+</SQLPersistentInfo>

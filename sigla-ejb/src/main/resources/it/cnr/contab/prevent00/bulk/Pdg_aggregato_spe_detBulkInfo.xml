@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_natura"
+		enabledOnSearch="true"
+		property="natura.cd_natura"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Cod. natura" />
+	<fieldProperty
+		name="ds_natura"
+		property="natura.ds_natura"
+		inputType="TEXT"
+		label="Descrizione natura" />
+	<fieldProperty
+		name="natura"
+		property="natura"
+		printProperty="cd_ds_natura"
+		optionsProperty="nature"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		enabledOnEdit="false"
+		label="Natura" />
+
+	<fieldProperty
+		name="cd_cds"
+		property="cds.cd_unita_organizzativa"
+		maxLength="10"
+		enabledOnSearch="true"
+		inputSize="10"
+		inputType="TEXT"
+		label="Cds" />
+	<fieldProperty
+		name="ds_cds"
+		property="cds.ds_unita_organizzativa"
+		inputType="TEXT"
+		label="Descrizione Cds" />
+	<fieldProperty
+		name="cds"
+		property="cds"
+		printProperty="cd_ds_cds"
+		optionsProperty="cdss"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="Cds" />
+
+	<fieldProperty
+		name="titolo"
+		property="elemento_voce"
+		printProperty="cd_ds_elemento_voce"
+		optionsProperty="elementi_voci"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="Titolo" />
+	<fieldProperty
+		name="capitolo"
+		property="elemento_voce"
+		printProperty="cd_ds_elemento_voce"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="Capitolo" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		enabledOnSearch="true"
+        property="elemento_voce.cd_elemento_voce"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Codice voce del piano" />
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="elemento_voce.ds_elemento_voce"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Descrizione voce del piano" />
+
+	<fieldProperty
+		name="cd_funzione"
+		enabledOnSearch="true"
+		property="funzione.cd_funzione"
+		maxLength="2"
+		inputSize="2"
+		inputType="TEXT"
+		label="Cod. funzione" />
+	<fieldProperty
+		name="ds_funzione"
+		property="funzione.ds_funzione"
+		label="Descrizione funzione" />
+	<fieldProperty
+		name="funzione"
+		property="funzione"
+		printProperty="cd_ds_funzione"
+		optionsProperty="funzioni"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="Funzione" />
+
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cdr.cd_centro_responsabilita"
+		enabledOnSearch="false"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Codice Cdr" />
+
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		enabledOnSearch="false"
+		inputType="TEXT"
+		label="Esercizio" />
+
+	<fieldProperty
+		name="im_rae_a2_spese_ogc"
+		property="im_rae_a2_spese_ogc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="relativa UO (AE)" />
+	<fieldProperty
+		name="im_rac_a2_spese_odc"
+		property="im_rac_a2_spese_odc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="relativa UO (AC)" />
+	<fieldProperty
+		name="im_ro_css_altri_costi"
+		property="im_ro_css_altri_costi"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Altri Costi (O)" />
+	<fieldProperty
+		name="im_rl_ccs_spese_ogc_altra_uo"
+		property="im_rl_ccs_spese_ogc_altra_uo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="altra UO (L)" />
+	<fieldProperty
+		name="im_ran_a3_spese_ogc"
+		property="im_ran_a3_spese_ogc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="relativa UO (AN)" />
+	<fieldProperty
+		name="im_ral_a3_spese_odc"
+		property="im_ral_a3_spese_odc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="relativa UO (AL)" />
+	<fieldProperty
+		name="im_ru_spese_costi_altrui"
+		property="im_ru_spese_costi_altrui"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Spese per costi altrui (U)" />
+	<fieldProperty
+		name="im_rad_a2_spese_odc_altra_uo"
+		property="im_rad_a2_spese_odc_altra_uo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="altra UO (AD)" />
+	<fieldProperty
+		name="im_rap_a3_spese_costi_altrui"
+		property="im_rap_a3_spese_costi_altrui"
+		inputType="TEXT"
+		label="Spese per costi altrui (AP)" />
+	<fieldProperty
+		name="im_rao_a3_spese_ogc_altra_uo"
+		property="im_rao_a3_spese_ogc_altra_uo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="altra UO (AO)" />
+	<fieldProperty
+		name="im_rq_ssc_costi_odc"
+		property="im_rq_ssc_costi_odc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="relativa UO (Q)" />
+	<fieldProperty
+		name="im_rj_ccs_spese_odc_altra_uo"
+		property="im_rj_ccs_spese_odc_altra_uo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="altra UO (J)" />
+	<fieldProperty
+		name="im_rah_a3_costi_finali"
+		property="im_rah_a3_costi_finali"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Finali (AH)" />
+	<fieldProperty
+		name="im_rai_a3_costi_altro_cdr"
+		property="im_rai_a3_costi_altro_cdr"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Verso altro CDR (AI)" />
+	<fieldProperty
+		name="im_rs_ssc_costi_ogc"
+		property="im_rs_ssc_costi_ogc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="relativa UO (S)" />
+	<fieldProperty
+		name="im_ram_a3_spese_odc_altra_uo"
+		property="im_ram_a3_spese_odc_altra_uo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="altra UO (AM)" />
+	<fieldProperty
+		name="im_raa_a2_costi_finali"
+		property="im_raa_a2_costi_finali"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Finali (AA)" />
+	<fieldProperty
+		name="im_rm_css_ammortamenti"
+		property="im_rm_css_ammortamenti"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Ammortamenti (M)" />
+	<fieldProperty
+		name="im_ri_ccs_spese_odc"
+		property="im_ri_ccs_spese_odc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="relativa UO (I)" />
+	<fieldProperty
+		name="im_rk_ccs_spese_ogc"
+		property="im_rk_ccs_spese_ogc"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="relativa UO (K)" />
+	<fieldProperty
+		name="im_rv_pagamenti"
+		property="im_rv_pagamenti"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Pagamenti (V)" />
+	<fieldProperty
+		name="im_rr_ssc_costi_odc_altra_uo"
+		property="im_rr_ssc_costi_odc_altra_uo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="altra UO (R)" />
+	<fieldProperty
+		name="im_rp_css_verso_altro_cdr"
+		property="im_rp_css_verso_altro_cdr"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Verso altro CDR (P)" />
+	<fieldProperty
+		name="im_rab_a2_costi_altro_cdr"
+		property="im_rab_a2_costi_altro_cdr"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Verso altro CDR (AB)" />
+	<fieldProperty
+		name="im_rn_css_rimanenze"
+		property="im_rn_css_rimanenze"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Rimanenze (N)" />
+	<fieldProperty
+		name="im_rh_ccs_costi"
+		property="im_rh_ccs_costi"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="Costi (H)" />
+	<fieldProperty
+		name="im_rt_ssc_costi_ogc_altra_uo"
+		property="im_rt_ssc_costi_ogc_altra_uo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="altra UO (T)" />
+	<fieldProperty
+		name="im_rag_a2_spese_costi_altrui"
+		property="im_rag_a2_spese_costi_altrui"
+		inputType="TEXT"
+		label="Spese per costi altrui (AG)" />
+	<fieldProperty
+		name="im_raf_a2_spese_ogc_altra_uo"
+		property="im_raf_a2_spese_ogc_altra_uo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="18"
+		label="altra UO (AF)" />
+
+
+	<formFieldProperty
+		name="im_rag_a2_spese_costi_altrui" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rap_a3_spese_costi_altrui" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rao_a3_spese_ogc_altra_uo" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_ran_a3_spese_ogc" 
+		enabledOnEdit="false" />		
+	<formFieldProperty
+		name="im_ram_a3_spese_odc_altra_uo" 
+		enabledOnEdit="false" />	
+	<formFieldProperty
+		name="im_ral_a3_spese_odc" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rai_a3_costi_altro_cdr" 
+		enabledOnEdit="false" />	
+	<formFieldProperty
+		name="im_rah_a3_costi_finali" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_raf_a2_spese_ogc_altra_uo" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rae_a2_spese_ogc" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rad_a2_spese_odc_altra_uo" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rac_a2_spese_odc" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rab_a2_costi_altro_cdr" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_raa_a2_costi_finali" 
+		enabledOnEdit="false" />	
+	<formFieldProperty
+		name="im_rt_ssc_costi_ogc_altra_uo" 
+		enabledOnEdit="false" />	
+	<formFieldProperty
+		name="im_rs_ssc_costi_ogc" 
+		enabledOnEdit="false" />	
+	<formFieldProperty
+		name="im_rr_ssc_costi_odc_altra_uo" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rq_ssc_costi_odc" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rp_css_verso_altro_cdr" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_ro_css_altri_costi" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rn_css_rimanenze" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rm_css_ammortamenti" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rl_ccs_spese_ogc_altra_uo" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rk_ccs_spese_ogc" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rj_ccs_spese_odc_altra_uo"
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_ru_spese_costi_altrui" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rh_ccs_costi" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_ri_ccs_spese_odc" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="im_rv_pagamenti" 
+		enabledOnEdit="false" />
+	<formFieldProperty
+		name="titolo" />
+	<formFieldProperty
+		name="capitolo" />
+	<formFieldProperty
+		name="funzione" />
+	<formFieldProperty
+		name="natura" />
+	<formFieldProperty
+		name="ricerca_elem_voce" />
+	<formFieldProperty
+		name="cds" />
+
+	<columnFieldProperty
+		name="cd_elemento_voce"/>
+	<columnFieldProperty
+		name="ds_elemento_voce"/>
+	<columnFieldProperty
+		name="cd_funzione" />
+	<columnFieldProperty
+		name="ds_funzione" />
+	<columnFieldProperty
+		name="cd_natura" />
+	<columnFieldProperty
+		name="ds_natura" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="ds_cds" />
+
+	<findFieldProperty
+		name="cd_elemento_voce"/>
+	<findFieldProperty
+		name="cd_funzione"/>
+	<findFieldProperty
+		name="cd_natura"/>
+	<findFieldProperty
+		name="cd_cds"/>
+
+</bulkInfo>

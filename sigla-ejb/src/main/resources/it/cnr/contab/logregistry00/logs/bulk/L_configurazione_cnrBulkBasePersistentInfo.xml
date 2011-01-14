@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.logregistry00.logs.bulk.L_configurazione_cnrBulkBase"
+	keyClassName="it.cnr.contab.logregistry00.logs.bulk.L_configurazione_cnrBulkKey"
+	homeClassName="it.cnr.contab.logregistry00.logs.bulk.L_configurazione_cnrBulkHome">
+	<defaultColumnMap
+		tableName="L_CONFIGURAZIONE_CNR">
+		<columnMapping
+			columnName="IM02"
+			propertyName="im02"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6"
+			nullable="true" />
+		<columnMapping
+			columnName="DT01"
+			propertyName="dt01"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT02"
+			propertyName="dt02"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="VAL01"
+			propertyName="val01"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="VAL02"
+			propertyName="val02"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="VAL03"
+			propertyName="val03"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="VAL04"
+			propertyName="val04"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="IM01"
+			propertyName="im01"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6"
+			nullable="true" />
+		<columnMapping
+			columnName="USER_"
+			propertyName="user_"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_TRANSACTION_"
+			propertyName="dt_transaction_"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="ACTION_"
+			propertyName="action_"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="im02" />
+	<persistentProperty
+		name="dt01" />
+	<persistentProperty
+		name="dt02" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="val01" />
+	<persistentProperty
+		name="val02" />
+	<persistentProperty
+		name="val03" />
+	<persistentProperty
+		name="val04" />
+	<persistentProperty
+		name="im01" />
+	<persistentProperty
+		name="user_" />
+	<persistentProperty
+		name="dt_transaction_" />
+	<persistentProperty
+		name="action_" />
+</SQLPersistentInfo>

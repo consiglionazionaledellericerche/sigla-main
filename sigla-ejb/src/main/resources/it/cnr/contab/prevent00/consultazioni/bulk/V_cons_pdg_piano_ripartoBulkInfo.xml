@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Piano di Riparto delle Spese Accentrate"
+          longDescription="Piano di Riparto delle Spese Accentrate">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" 
+                enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="30"
+		label="CDR" />
+	<fieldProperty
+		name="ds_cdr"
+		property="ds_cdr"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Descrizione" />
+	<fieldProperty
+		name="id_classificazione"
+		property="id_classificazione"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		label="Identificativo classificazione" 
+                enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="cd_classificazione"
+		property="cd_classificazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="30"
+		label="Codice Classificazione" />
+	<fieldProperty
+		name="ds_classificazione"
+		property="ds_classificazione"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Descrizione" />
+	<fieldProperty
+		name="importo_assegnato"
+		property="importo_assegnato"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Importo assegnato" />
+	<fieldProperty
+		name="importo_ripartito"
+		property="importo_ripartito"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Importo ripartito" />
+	<fieldProperty
+		name="importo_da_ripartire"
+		property="importo_da_ripartire"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Importo da ripartire" />
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_centro_responsabilita" />
+	<formFieldProperty
+		name="ds_cdr" />
+	<formFieldProperty
+		name="id_classificazione" />
+	<formFieldProperty
+		name="cd_classificazione" />
+	<formFieldProperty
+		name="ds_classificazione" />
+	<formFieldProperty
+		name="importo_assegnato" />
+	<formFieldProperty
+		name="importo_ripartito" />
+	<formFieldProperty
+		name="importo_da_ripartire" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="id_classificazione" />
+	<findFieldProperty
+		name="cd_classificazione" />
+	<findFieldProperty
+		name="ds_classificazione" />
+	<findFieldProperty
+		name="cd_centro_responsabilita" />
+	<findFieldProperty
+		name="ds_cdr" />
+	<findFieldProperty
+		name="importo_assegnato" />
+	<findFieldProperty
+		name="importo_ripartito" />
+	<findFieldProperty
+		name="importo_da_ripartire" />
+
+	<columnFieldProperty
+		name="cd_classificazione" />
+	<columnFieldProperty
+		name="ds_classificazione" />
+	<columnFieldProperty
+		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+		name="ds_cdr" />
+	<columnFieldProperty
+		name="importo_assegnato" />
+	<columnFieldProperty
+		name="importo_ripartito" />
+	<columnFieldProperty
+		name="importo_da_ripartire" />
+</bulkInfo>

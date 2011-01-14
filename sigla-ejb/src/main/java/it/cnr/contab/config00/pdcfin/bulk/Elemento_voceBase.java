@@ -1,0 +1,317 @@
+package it.cnr.contab.config00.pdcfin.bulk;
+
+import it.cnr.jada.persistency.*;
+
+public class Elemento_voceBase extends Elemento_voceKey implements Keyed {
+	// CD_CAPOCONTO_FIN VARCHAR(10) 
+	private java.lang.String cd_capoconto_fin;
+
+	// CD_ELEMENTO_PADRE VARCHAR(20)
+	private java.lang.String cd_elemento_padre;
+
+	// CD_PARTE VARCHAR(20)
+	private java.lang.String cd_parte;
+
+	// CD_PROPRIO_ELEMENTO VARCHAR(20)
+	private java.lang.String cd_proprio_elemento;
+
+	// DS_ELEMENTO_VOCE VARCHAR(100)
+	private java.lang.String ds_elemento_voce;
+
+	// FL_LIMITE_ASS_OBBLIG CHAR(1)
+	private java.lang.Boolean fl_limite_ass_obblig;
+
+	// FL_PARTITA_GIRO CHAR(1)
+	private java.lang.Boolean fl_partita_giro;
+
+	// FL_VOCE_NON_SOGG_IMP_AUT CHAR(1) NOT NULL
+	private java.lang.Boolean fl_voce_non_sogg_imp_aut;
+
+	// FL_VOCE_PERSONALE CHAR(1) NOT NULL
+	private java.lang.Boolean fl_voce_personale;
+
+	// FL_VOCE_SAC CHAR(1) NOT NULL
+	private java.lang.Boolean fl_voce_sac;
+
+	// TI_ELEMENTO_VOCE CHAR(1) NOT NULL
+	private java.lang.String ti_elemento_voce;
+
+	// ESERCIZIO_CLA_E DECIMAL(4,0)
+	private java.lang.Integer esercizio_cla_e;	
+
+	// COD_CLA_E VARCHAR(20)
+	private java.lang.String cod_cla_e;	
+	
+	// ESERCIZIO_CLA_S DECIMAL(4,0)
+	private java.lang.Integer esercizio_cla_s;	
+
+	// COD_CLA_S VARCHAR(20)
+	private java.lang.String cod_cla_s;	
+	
+	// FL_RECON CHAR(1) NOT NULL
+	private java.lang.Boolean fl_recon;
+
+	// FL_INV_BENI_PATR BOOLEAN NOT NULL
+	private java.lang.Boolean fl_inv_beni_patr;
+	
+	// ID_CLASSIFICAZIONE NUMBER NOT NULL
+	private java.lang.Integer id_classificazione;
+
+	// FL_VOCE_FONDO CHAR(1) NOT NULL
+	private java.lang.Boolean fl_voce_fondo;
+
+	// FL_CHECK_TERZO_SIOPE CHAR(1) NOT NULL
+	private java.lang.Boolean fl_check_terzo_siope;
+
+	private java.lang.Boolean fl_inv_beni_comp;
+public Elemento_voceBase() {
+	super();
+}
+public Elemento_voceBase(java.lang.String cd_elemento_voce,java.lang.Integer esercizio,java.lang.String ti_appartenenza,java.lang.String ti_gestione) {
+	super(cd_elemento_voce,esercizio,ti_appartenenza,ti_gestione);
+}
+/* 
+ * Getter dell'attributo cd_capoconto_fin
+ */
+public java.lang.String getCd_capoconto_fin() {
+	return cd_capoconto_fin;
+}
+/* 
+ * Getter dell'attributo cd_elemento_padre
+ */
+public java.lang.String getCd_elemento_padre() {
+	return cd_elemento_padre;
+}
+/* 
+ * Getter dell'attributo cd_parte
+ */
+public java.lang.String getCd_parte() {
+	return cd_parte;
+}
+/* 
+ * Getter dell'attributo cd_proprio_elemento
+ */
+public java.lang.String getCd_proprio_elemento() {
+	return cd_proprio_elemento;
+}
+/* 
+ * Getter dell'attributo ds_elemento_voce
+ */
+public java.lang.String getDs_elemento_voce() {
+	return ds_elemento_voce;
+}
+/* 
+ * Getter dell'attributo fl_limite_ass_obblig
+ */
+public java.lang.Boolean getFl_limite_ass_obblig() {
+	return fl_limite_ass_obblig;
+}
+/* 
+ * Getter dell'attributo fl_partita_giro
+ */
+public java.lang.Boolean getFl_partita_giro() {
+	return fl_partita_giro;
+}
+/* 
+ * Getter dell'attributo fl_voce_non_sogg_imp_aut
+ */
+public java.lang.Boolean getFl_voce_non_sogg_imp_aut() {
+	return fl_voce_non_sogg_imp_aut;
+}
+/* 
+ * Getter dell'attributo fl_voce_personale
+ */
+public java.lang.Boolean getFl_voce_personale() {
+	return fl_voce_personale;
+}
+/* 
+ * Getter dell'attributo fl_voce_sac
+ */
+public java.lang.Boolean getFl_voce_sac() {
+	return fl_voce_sac;
+}
+/* 
+ * Getter dell'attributo ti_elemento_voce
+ */
+public java.lang.String getTi_elemento_voce() {
+	return ti_elemento_voce;
+}
+/* 
+ * Setter dell'attributo cd_capoconto_fin
+ */
+public void setCd_capoconto_fin(java.lang.String cd_capoconto_fin) {
+	this.cd_capoconto_fin = cd_capoconto_fin;
+}
+/* 
+ * Setter dell'attributo cd_elemento_padre
+ */
+public void setCd_elemento_padre(java.lang.String cd_elemento_padre) {
+	this.cd_elemento_padre = cd_elemento_padre;
+}
+/* 
+ * Setter dell'attributo cd_parte
+ */
+public void setCd_parte(java.lang.String cd_parte) {
+	this.cd_parte = cd_parte;
+}
+/* 
+ * Setter dell'attributo cd_proprio_elemento
+ */
+public void setCd_proprio_elemento(java.lang.String cd_proprio_elemento) {
+	this.cd_proprio_elemento = cd_proprio_elemento;
+}
+/* 
+ * Setter dell'attributo ds_elemento_voce
+ */
+public void setDs_elemento_voce(java.lang.String ds_elemento_voce) {
+	this.ds_elemento_voce = ds_elemento_voce;
+}
+/* 
+ * Setter dell'attributo fl_limite_ass_obblig
+ */
+public void setFl_limite_ass_obblig(java.lang.Boolean fl_limite_ass_obblig) {
+	this.fl_limite_ass_obblig = fl_limite_ass_obblig;
+}
+/* 
+ * Setter dell'attributo fl_partita_giro
+ */
+public void setFl_partita_giro(java.lang.Boolean fl_partita_giro) {
+	this.fl_partita_giro = fl_partita_giro;
+}
+/* 
+ * Setter dell'attributo fl_voce_non_sogg_imp_aut
+ */
+public void setFl_voce_non_sogg_imp_aut(java.lang.Boolean fl_voce_non_sogg_imp_aut) {
+	this.fl_voce_non_sogg_imp_aut = fl_voce_non_sogg_imp_aut;
+}
+/* 
+ * Setter dell'attributo fl_voce_personale
+ */
+public void setFl_voce_personale(java.lang.Boolean fl_voce_personale) {
+	this.fl_voce_personale = fl_voce_personale;
+}
+/* 
+ * Setter dell'attributo fl_voce_sac
+ */
+public void setFl_voce_sac(java.lang.Boolean fl_voce_sac) {
+	this.fl_voce_sac = fl_voce_sac;
+}
+/* 
+ * Setter dell'attributo ti_elemento_voce
+ */
+public void setTi_elemento_voce(java.lang.String ti_elemento_voce) {
+	this.ti_elemento_voce = ti_elemento_voce;
+}
+	/**
+	 * @return
+	 */
+	public java.lang.String getCod_cla_e() {
+		return cod_cla_e;
+	}
+
+	/**
+	 * @return
+	 */
+	public java.lang.Integer getEsercizio_cla_e() {
+		return esercizio_cla_e;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setCod_cla_e(java.lang.String v_cod_cla_e) {
+		this.cod_cla_e = v_cod_cla_e;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setEsercizio_cla_e(java.lang.Integer v_esercizio_cla_e) {
+		this.esercizio_cla_e = v_esercizio_cla_e;
+	}
+
+	/**
+	 * @return
+	 */
+	public java.lang.String getCod_cla_s() {
+		return cod_cla_s;
+	}
+
+	/**
+	 * @return
+	 */
+	public java.lang.Integer getEsercizio_cla_s() {
+		return esercizio_cla_s;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setCod_cla_s(java.lang.String newCod_cla_s) {
+		this.cod_cla_s = newCod_cla_s;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setEsercizio_cla_s(java.lang.Integer newEsercizio_cla_s) {
+		this.esercizio_cla_s = newEsercizio_cla_s;
+	}
+
+	/**
+	 * @return
+	 */
+	public java.lang.Boolean getFl_recon() {
+		return fl_recon;
+	}
+
+	/**
+	 * @param boolean1
+	 */
+	public void setFl_recon(java.lang.Boolean boolean1) {
+		fl_recon = boolean1;
+	}
+
+	public java.lang.Boolean getFl_inv_beni_patr() {
+		return fl_inv_beni_patr;
+	}
+
+	public void setFl_inv_beni_patr(java.lang.Boolean boolean1) {
+		fl_inv_beni_patr = boolean1;
+	}
+	/**
+	 * @return
+	 */
+	public java.lang.Integer getId_classificazione() {
+		return id_classificazione;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setId_classificazione(java.lang.Integer integer) {
+		id_classificazione = integer;
+	}
+
+	public Boolean getFl_voce_fondo() {
+		return fl_voce_fondo;
+	}
+	
+	public void setFl_voce_fondo(Boolean fl_voce_fondo) {
+		this.fl_voce_fondo = fl_voce_fondo;
+	}
+	
+	public java.lang.Boolean getFl_check_terzo_siope() {
+		return fl_check_terzo_siope;
+	}
+	
+	public void setFl_check_terzo_siope(java.lang.Boolean fl_check_terzo_siope) {
+		this.fl_check_terzo_siope = fl_check_terzo_siope;
+	}
+	public java.lang.Boolean getFl_inv_beni_comp() {
+		return fl_inv_beni_comp;
+	}
+	public void setFl_inv_beni_comp(java.lang.Boolean fl_inv_beni_comp) {
+		this.fl_inv_beni_comp = fl_inv_beni_comp;
+	}
+}

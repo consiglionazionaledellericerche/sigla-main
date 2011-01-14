@@ -1,0 +1,110 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_tipo_rapporto"
+		property="cd_tipo_rapporto"
+		label="Codice"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_tipo_rapporto"
+		property="ds_tipo_rapporto"
+		label="Descrizione"
+		maxLength="100"
+		inputSize="70"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_dipendente_altro"
+		property="ti_dipendente_altro"
+		keysProperty="ti_dipendente_altroKeys"
+		inputType="RADIOGROUP"
+		layout="HORIZONTAL"	
+		label="Tipo Anagrafico"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="fl_inquadramento"
+		property="fl_inquadramento"
+		inputType="CHECKBOX"
+		label="Prevede Inquadramenti"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="fl_bonus"
+		property="fl_bonus"
+		inputType="CHECKBOX"
+		label="Prevede Bonus"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true" />	
+	<fieldProperty
+		name="cd_trattamento"
+		property="cd_trattamento"
+		label="Codice Trattamento"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="ti_rapporto_altro"
+		property="ti_rapporto_altro"
+		readonlyProperty="tipoRapportoRO"
+		keysProperty ="tipiRapportoKeys"
+		inputType="SELECT"
+		label="Tipo Rapporto"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true" />
+    <form 
+       name="searchtool">
+       <formFieldProperty
+		 name="cd_tipo_rapporto"/>
+       <formFieldProperty 
+         name="ds_tipo_rapporto" />
+    </form>
+	<formFieldProperty name="cd_tipo_rapporto" />
+	<formFieldProperty name="ds_tipo_rapporto" />
+	<formFieldProperty name="ti_dipendente_altro" />
+	<formFieldProperty name="ti_rapporto_altro" />
+	<formFieldProperty name="fl_inquadramento" />
+	<formFieldProperty name="fl_bonus" />
+	<formFieldProperty name="cd_trattamento" />
+	
+	<columnFieldProperty name="cd_tipo_rapporto" />
+	<columnFieldProperty name="ds_tipo_rapporto" />
+	<columnFieldProperty name="ti_dipendente_altro" />
+	<columnFieldProperty name="ti_rapporto_altro" />
+	<columnFieldProperty name="fl_inquadramento" />
+	<columnFieldProperty name="fl_bonus" />
+	<columnFieldProperty name="cd_trattamento" />
+	
+	<findFieldProperty name="cd_tipo_rapporto" />
+	<findFieldProperty name="ds_tipo_rapporto" />
+	<findFieldProperty name="ti_dipendente_altro" />
+	<findFieldProperty
+		name="ti_rapporto_altro"
+		readonlyProperty="findTipoRapportoRO" />
+	<findFieldProperty name="fl_inquadramento" />
+	<findFieldProperty name="fl_bonus" />
+	<findFieldProperty name="cd_trattamento" />
+</bulkInfo>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.messaggio00.bulk.MessaggioBase"
+	keyClassName="it.cnr.contab.messaggio00.bulk.MessaggioKey"
+	homeClassName="it.cnr.contab.messaggio00.bulk.MessaggioHome" >
+	<defaultColumnMap
+		tableName="MESSAGGIO" >
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UTENTE"
+			propertyName="cd_utente"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="SOGGETTO"
+			propertyName="soggetto"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PRIORITA"
+			propertyName="priorita"
+			sqlTypeName="DECIMAL"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_INIZIO_VALIDITA"
+			propertyName="dt_inizio_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DT_FINE_VALIDITA"
+			propertyName="dt_fine_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="CORPO"
+			propertyName="corpo"
+			sqlTypeName="VARCHAR"
+			columnSize="4000" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_MESSAGGIO"
+			propertyName="ds_messaggio"
+			sqlTypeName="VARCHAR"
+			columnSize="200" />
+		<columnMapping
+			columnName="SERVER_URL"
+			propertyName="server_url"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="cd_utente" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="soggetto" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="priorita" />
+	<persistentProperty
+		name="dt_inizio_validita" />
+	<persistentProperty
+		name="dt_fine_validita" />
+	<persistentProperty
+		name="corpo" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="ds_messaggio" />
+	<persistentProperty
+		name="server_url" />
+</SQLPersistentInfo>

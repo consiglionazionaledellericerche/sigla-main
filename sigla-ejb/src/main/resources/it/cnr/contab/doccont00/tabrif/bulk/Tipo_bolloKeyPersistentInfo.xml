@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.tabrif.bulk.Tipo_bolloKey" >
+	<defaultColumnMap
+		tableName="TIPO_BOLLO" >
+		<columnMapping
+			columnName="CD_TIPO_BOLLO"
+			propertyName="cd_tipo_bollo"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_tipo_bollo"
+		partOfOid="true" />
+</SQLPersistentInfo>

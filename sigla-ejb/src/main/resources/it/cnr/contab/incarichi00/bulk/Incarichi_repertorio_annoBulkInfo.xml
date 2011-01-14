@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="incarichi_repertorio.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Anno" />
+	<fieldProperty
+		name="pg_repertorio"
+		property="incarichi_repertorio.pg_repertorio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Identificativo Incarico" />
+	<fieldProperty
+		name="esercizio_limite"
+		property="esercizio_limite"
+		optionsProperty="anniList"
+		readonlyPropertyOnEdit="ROEsercizio_limite"
+		inputType="SELECT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="importo_iniziale"
+		property="importo_iniziale"
+		readonlyPropertyOnEdit="ROImporto_iniziale"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Importo" />
+	<fieldProperty
+		name="importo_complessivo"
+		property="importo_complessivo"
+		readonlyPropertyOnEdit="ROImporto_complessivo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Importo effettivo" />
+	<fieldProperty
+		name="importo_utilizzato"
+		property="importo_utilizzato"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		nullable="false"
+		label="Importo utilizzato" />
+	<fieldProperty
+		name="ds_terzo"
+		property="incarichi_repertorio.dsTerzoForColumnMap"
+		inputType="ROTEXT"
+		inputSize="30"
+		enabledOnSearch="true"
+		label="Contraente" />
+	<fieldProperty
+		name="pg_procedura"
+		property="incarichi_repertorio.pg_procedura"
+		inputType="ROTEXT"
+		inputSize="10"
+		label="Identificativo Procedura" />
+
+  	<form name="searchtool">
+          <formFieldProperty
+                name="esercizio"/>
+          <formFieldProperty
+                name="pg_repertorio"/>
+	   	  <formFieldProperty
+				name="esercizio_limite" 
+				inputType="TEXT" />                
+    </form>
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_repertorio" />
+	<formFieldProperty
+		name="ds_terzo" />
+	<formFieldProperty
+		name="esercizio_limite" />
+	<formFieldProperty
+		name="importo_iniziale" />
+	<formFieldProperty
+		name="importo_complessivo" />
+	<formFieldProperty
+		name="importo_utilizzato" />
+	<formFieldProperty
+		name="pg_procedura" />
+
+	<columnFieldProperty
+		name="esercizio_limite" />
+	<columnFieldProperty
+		name="importo_iniziale"
+		label="importo"
+		headerLabel="IMPORTO" />
+	<columnFieldProperty
+		name="importo_complessivo"
+		label="effettivo"
+		headerLabel="IMPORTO" />
+	<columnFieldProperty
+		name="importo_utilizzato"
+		label="utilizzato"
+		headerLabel="IMPORTO" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_repertorio" />
+	<findFieldProperty
+		name="esercizio_limite" />
+	<findFieldProperty
+		name="importo_iniziale" />
+	<findFieldProperty
+		name="importo_complessivo" />
+
+	<columnSet
+		name="SU_COMPENSO">
+		<columnFieldProperty
+			name="esercizio" 
+			label="Esercizio Incarico"/>
+		<columnFieldProperty
+			name="pg_repertorio"
+			label="Identificativo Incarico"/>
+		<columnFieldProperty
+			name="pg_procedura"
+			label="Identificativo Procedura"/>
+		<columnFieldProperty
+			name="ds_terzo" />
+		<columnFieldProperty
+			name="esercizio_limite"
+			label="Esercizio Limite" />
+		<columnFieldProperty
+			name="importo_iniziale"
+	   		label="iniziale"
+		    headerLabel="IMPORTO" />
+		<columnFieldProperty
+			name="importo_complessivo"
+	   		label="finale"
+		    headerLabel="IMPORTO" />
+		<columnFieldProperty
+			name="importo_utilizzato"
+	   		label="utilizzato"
+		    headerLabel="IMPORTO" />
+	</columnSet>	    
+</bulkInfo>

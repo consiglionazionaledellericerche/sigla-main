@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Buoni ancora da collegare a Documenti Amministrativi">
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="UO" />
+	<fieldProperty
+		name="pg_inventario"
+		property="pg_inventario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice Inventario" />
+	<fieldProperty
+		name="nr_inventario"
+		property="nr_inventario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice Bene" />
+	<fieldProperty
+		name="progressivo"
+		property="progressivo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo" />
+	<fieldProperty
+		name="ds_bene"
+		property="ds_bene"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1000"
+		label="Descrizione Bene" />
+
+	<fieldProperty
+		name="ti_documento"
+		property="ti_documento"
+		inputType="TEXT"
+		keysProperty="tipoMovimentoKey"
+		inputSize="1"
+		maxLength="1" 
+		label="Tipo buono"/>
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio buono" />
+	<fieldProperty
+		name="pg_buono_c_s"
+		property="pg_buono_c_s"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Numero buono" />		
+	<fieldProperty
+		name="inventariato"
+		property="inventariato"
+		inputType="TEXT"
+		inputSize="25"
+		maxLength="25"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Inventariato" />			
+	<fieldProperty
+		name="associato"
+		property="associato"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		inputType="TEXT"
+		inputSize="25"
+		maxLength="25"
+		label="Associato" />		
+	<formFieldProperty
+		name="cd_unita_organizzativa" />				
+	<formFieldProperty
+		name="pg_inventario" />
+	<formFieldProperty
+		name="nr_inventario" />
+	<formFieldProperty
+		name="progressivo" />
+	<formFieldProperty
+		name="ti_documento" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pg_buono_c_s" />	
+	<formFieldProperty
+		name="ds_bene" />
+	<formFieldProperty
+		name="inventariato" />
+	<formFieldProperty
+		name="associato" />
+		
+	<findFieldProperty
+		name="cd_unita_organizzativa" />
+	<findFieldProperty
+		name="pg_inventario" />
+	<findFieldProperty
+		name="nr_inventario" />
+	<findFieldProperty
+		name="progressivo" />
+	<findFieldProperty
+		name="ds_bene" />
+	<findFieldProperty
+		name="ti_documento" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_buono_c_s" />	
+		<findFieldProperty
+		name="inventariato" />
+	<findFieldProperty
+		name="associato" />	
+	
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="pg_inventario" />
+	<columnFieldProperty
+		name="nr_inventario" />
+	<columnFieldProperty
+		name="progressivo" />
+	<columnFieldProperty
+		name="ti_documento" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_buono_c_s" />		
+	<columnFieldProperty
+		name="ds_bene" />
+	<columnFieldProperty
+		name="inventariato" />
+	<columnFieldProperty
+		name="associato" />
+		
+</bulkInfo>

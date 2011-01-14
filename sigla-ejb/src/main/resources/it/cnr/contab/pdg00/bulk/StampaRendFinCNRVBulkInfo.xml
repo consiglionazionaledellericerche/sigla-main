@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="findCds"
+		property="cds"
+		inputType="SEARCHTOOL"
+		completeOnSave="true"
+		label="CdS" />
+	<fieldProperty
+		name="cd_cds"
+		property="cds.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="false"
+		readonlyProperty="ROCds"
+		label="Codice CdS" />
+	<fieldProperty
+		name="ds_cds"
+		property="cds.ds_unita_organizzativa"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione CdS" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputSize="4"
+		maxLength="4"
+		inputType="ROTEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="stampaArticolo"
+		property="stampaArticolo"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Stampa Articolo" 
+		/>
+
+	<formFieldProperty name="cd_cds" />
+	<formFieldProperty name="findCds" />
+	<formFieldProperty name="ds_cds" />
+	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="stampaArticolo" />
+
+	<printForm
+		name="/cnrpreventivo/pdg/rendiconto_fin_spese_cnr_dz.jasper">
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="cds"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer" />		
+		<printFieldProperty 
+			name="stampaArticolo"
+			parameterPosition="2"
+			parameterType="STRING"
+			paramNameJR="stampaArticolo"
+			paramTypeJR="java.lang.Boolean" />
+    </printForm>		
+	<printForm
+		name="/cnrpreventivo/pdg/rendiconto_fin_entrate_cnr_dz.jasper">
+		<printFieldProperty 
+			name="cd_cds"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="cds"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer" />		
+		<printFieldProperty 
+			name="stampaArticolo"
+			parameterPosition="2"
+			parameterType="STRING"
+			paramNameJR="stampaArticolo"
+			paramTypeJR="java.lang.Boolean" />
+    </printForm>		
+</bulkInfo>

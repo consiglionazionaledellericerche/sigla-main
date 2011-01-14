@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<!-- ************************** FIELD PROPERTY ************************ -->
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputSize="6"
+		inputType="TEXT"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"  
+		enabledOnFreeSearch="true"			
+		enabledOnSearch="true"
+		label="Esercizio" />
+	<fieldProperty
+		name="data_da"
+		property="data_da"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"  
+		enabledOnFreeSearch="true"			
+		enabledOnSearch="true"
+		nullable="false"
+		label="Inizio periodo" />
+	<fieldProperty
+		name="data_a"
+		property="data_a"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"  
+		enabledOnFreeSearch="true"			
+		enabledOnSearch="true"
+		nullable="false"
+		label="Fine periodo" />
+	<fieldProperty
+		name="da_esercizio_precedente"
+		property="da_esercizio_precedente"
+		inputType="CHECKBOX"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"  
+		enabledOnFreeSearch="true"			
+		enabledOnSearch="true"
+		label="Da esercizio precedente"/>
+	<fieldProperty
+		name="pg_exec"
+		property="pg_exec"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"  
+		enabledOnFreeSearch="true"			
+		enabledOnSearch="true"
+		label="Progressivo Elaborazione" />
+	<fieldProperty
+		name="note"
+		property="note"
+		inputSize="100"
+		inputType="TEXT"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"  
+		enabledOnFreeSearch="false"			
+		enabledOnSearch="false"
+		label="" />
+		
+
+	<!-- ************************ FORM FIELD PROPERTY ******************** -->
+	<formFieldProperty name="data_da" />
+	<formFieldProperty name="data_a" />
+	<formFieldProperty name="da_esercizio_precedente" />
+	<formFieldProperty name="pg_exec" />
+	<formFieldProperty name="note" />
+
+	<!-- ************************ FIND FIELD PROPERTY ******************** -->
+	<findFieldProperty name="data_da" />
+	<findFieldProperty name="data_a" />
+	<findFieldProperty name="da_esercizio_precedente" />	
+	<findFieldProperty name="pg_exec" />	
+	<findFieldProperty name="note" />		
+	
+</bulkInfo>

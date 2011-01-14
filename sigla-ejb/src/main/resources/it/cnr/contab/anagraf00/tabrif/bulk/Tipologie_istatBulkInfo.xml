@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_tipologia"
+		property="pg_tipologia"
+		inputType="ROTEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Progressivo Tipologia" />
+	<fieldProperty
+		name="ds_tipologia"
+		property="ds_tipologia"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Descrizione Tipologia" />
+	
+	<formFieldProperty
+		name="pg_tipologia" />
+	<formFieldProperty
+		name="ds_tipologia" />
+	
+	<findFieldProperty
+		name="pg_tipologia" />
+	<findFieldProperty
+		name="ds_tipologia" />
+	
+	<columnFieldProperty
+		name="pg_tipologia" />
+	<columnFieldProperty
+		name="ds_tipologia" />
+		
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="pg_tipologia"
+		    inputSize="5"
+		    inputType="TEXT"/>
+		<formFieldProperty
+			name="ds_tipologia"
+		    inputSize="60"
+		    rows="1"
+		    inputType="TEXT"/>
+	</form>
+	
+</bulkInfo>

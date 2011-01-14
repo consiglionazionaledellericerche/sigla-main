@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.contratto.bulk.Tipo_contrattoKey">
+	<defaultColumnMap
+		tableName="tipo_contratto">
+		<columnMapping
+			columnName="CD_TIPO_CONTRATTO"
+			propertyName="cd_tipo_contratto"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_tipo_contratto"
+		partOfOid="true" />
+</SQLPersistentInfo>

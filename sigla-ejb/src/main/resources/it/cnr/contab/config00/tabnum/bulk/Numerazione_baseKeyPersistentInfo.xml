@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.tabnum.bulk.Numerazione_baseKey" >
+	<defaultColumnMap
+		tableName="NUMERAZIONE_BASE" >
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TABELLA"
+			propertyName="tabella"
+			sqlTypeName="VARCHAR"
+			columnSize="35"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="COLONNA"
+			propertyName="colonna"
+			sqlTypeName="VARCHAR"
+			columnSize="35"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="tabella"
+		partOfOid="true" />
+	<persistentProperty
+		name="colonna"
+		partOfOid="true" />
+</SQLPersistentInfo>

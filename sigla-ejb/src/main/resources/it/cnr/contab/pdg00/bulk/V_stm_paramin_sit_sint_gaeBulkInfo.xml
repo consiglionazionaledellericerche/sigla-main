@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	
+	<fieldProperty
+		name="chiave"
+		property="chiave"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		label="chiave" />
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="tipo" />
+	<fieldProperty
+		name="sequenza"
+		property="sequenza"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		label="sequenza" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="esercizio" />
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="cd_cds" />
+	<fieldProperty
+		name="uo"
+		property="uo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="uo" />
+	
+	
+	<formFieldProperty
+		name="chiave" />
+	<formFieldProperty
+		name="tipo" />
+	<formFieldProperty
+		name="sequenza" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="uo" />
+	
+	
+	<findFieldProperty
+		name="chiave" />
+	<findFieldProperty
+		name="tipo" />
+	<findFieldProperty
+		name="sequenza" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="uo" />
+	
+	
+	<columnFieldProperty
+		name="chiave" />
+	<columnFieldProperty
+		name="tipo" />
+	<columnFieldProperty
+		name="sequenza" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="uo" />
+	
+</bulkInfo>

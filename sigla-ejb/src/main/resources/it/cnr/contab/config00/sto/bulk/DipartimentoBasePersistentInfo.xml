@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.sto.bulk.DipartimentoBase"
+	keyClassName="it.cnr.contab.config00.sto.bulk.DipartimentoKey"
+	homeClassName="it.cnr.contab.config00.sto.bulk.DipartimentoHome">
+	<defaultColumnMap
+		tableName="DIPARTIMENTO">
+		<columnMapping
+			columnName="DS_DIPARTIMENTO"
+			propertyName="ds_dipartimento"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_ISTITUZIONE"
+			propertyName="dt_istituzione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_DEL_IST"
+			propertyName="ds_del_ist"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_SOPPRESSIONE"
+			propertyName="dt_soppressione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_DEL_SOPPR"
+			propertyName="ds_del_soppr"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="ID_DIPARTIMENTO"
+			propertyName="id_dipartimento"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ds_dipartimento" />
+	<persistentProperty
+		name="dt_istituzione" />
+	<persistentProperty
+		name="ds_del_ist" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="dt_soppressione" />
+	<persistentProperty
+		name="ds_del_soppr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="id_dipartimento" />
+</SQLPersistentInfo>

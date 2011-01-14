@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo>
+	<fieldProperty
+		name="pg_repertorio"
+		property="pg_repertorio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo identificativo della richiesta di attivazione contratto" />
+
+	<formFieldProperty
+		name="pg_repertorio" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_repertorio" />
+	<findFieldProperty
+		name="progressivo_riga" />
+	<findFieldProperty
+		name="nome_file" />
+	<findFieldProperty
+		name="ds_file" />
+	<findFieldProperty
+		name="tipo_archivio" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="data_creazione" />
+	<findFieldProperty
+		name="utcr" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_repertorio" />
+	<columnFieldProperty
+		name="progressivo_riga" />
+	<columnFieldProperty
+		name="nome_file" />
+	<columnFieldProperty
+		name="ds_file" />
+	<columnFieldProperty
+		name="tipo_archivio" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="data_creazione" />
+	<columnFieldProperty
+		name="utcr" />
+</bulkInfo>

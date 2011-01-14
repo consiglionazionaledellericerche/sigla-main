@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Liquidazioni CORI non effettuate"
+          longDescription="Liquidazioni CORI non effettuate">
+	<fieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CDS" />
+	<fieldProperty
+		name="cd_unita_organizzativa"
+		property="cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Unita' organizzativa" />
+	<fieldProperty
+		name="cd_gruppo_cr"
+		property="cd_gruppo_cr"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Gruppo CORI" />
+	<fieldProperty
+		name="cd_regione"
+		property="cd_regione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Regione" />
+	<fieldProperty
+		name="pg_comune"
+		property="pg_comune"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Comune" />
+	<fieldProperty
+		name="esercizio_compenso"
+		property="esercizio_compenso"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Compenso" />		
+	<fieldProperty
+		name="pg_compenso"
+		property="pg_compenso"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo Compenso" />				
+	<fieldProperty
+		name="cd_contributo_ritenuta"
+		property="cd_contributo_ritenuta"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Codice Contributo Ritenuta" />
+	<fieldProperty
+		name="dt_mandato"
+		property="dt_mandato"
+		inputType="TEXT"
+		label="Data"
+		formatName="date_short" />					
+	<fieldProperty
+		name="dt_da"
+		property="dt_da"
+		inputType="TEXT"
+		label="Inizio periodo"
+		formatName="date_short"/>
+	<fieldProperty
+		name="dt_a"
+		property="dt_a"
+		inputType="TEXT"
+		label="Fine periodo"
+		formatName="date_short"/>
+		
+	<formFieldProperty
+		name="cd_cds" />
+	<formFieldProperty
+		name="cd_unita_organizzativa" />
+	<formFieldProperty
+		name="cd_gruppo_cr" />
+	<formFieldProperty
+		name="cd_regione" />
+	<formFieldProperty
+		name="pg_comune" />
+	<formFieldProperty
+		name="dt_mandato" />		
+	<formFieldProperty
+		name="dt_da" />
+	<formFieldProperty
+		name="dt_a" />				
+	<formFieldProperty
+		name="esercizio_compenso" />	
+	<formFieldProperty
+		name="pg_compenso" />			
+	<formFieldProperty
+		name="cd_contributo_ritenuta" />			
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="cd_unita_organizzativa" />		
+	<findFieldProperty
+		name="cd_gruppo_cr" />
+	<findFieldProperty
+		name="cd_regione" />
+	<findFieldProperty
+		name="pg_comune" />
+	<findFieldProperty
+		name="dt_mandato" />		
+	<findFieldProperty
+		name="dt_da" />		
+	<findFieldProperty
+		name="dt_a" />						
+	<columnFieldProperty
+		name="cd_cds" />
+	<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	<columnFieldProperty
+		name="cd_gruppo_cr" />
+	<columnFieldProperty
+		name="cd_regione" />
+	<columnFieldProperty
+		name="pg_comune" />
+</bulkInfo>
