@@ -45,7 +45,7 @@
             <artifactId>maven-ear-plugin</artifactId>
             <configuration>
 			   <defaultLibBundleDir>lib</defaultLibBundleDir>
-			   <generateApplicationXml>true</generateApplicationXml>
+			   <generateApplicationXml>false</generateApplicationXml>
                <archive>
                   <manifest>
                      <addClasspath>true</addClasspath>
