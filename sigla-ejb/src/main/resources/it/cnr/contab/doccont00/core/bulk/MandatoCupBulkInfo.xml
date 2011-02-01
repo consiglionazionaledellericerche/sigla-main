@@ -158,6 +158,7 @@
 		inputType="TEXT"
 		inputSize="22"
 		maxLength="22"
+		nullable="false"
 		label="Importo"
 		command="doDefault"
 		formatName = "it.cnr.contab.util.EuroFormat" />

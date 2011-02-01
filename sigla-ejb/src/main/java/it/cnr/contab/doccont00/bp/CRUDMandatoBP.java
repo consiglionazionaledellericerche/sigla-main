@@ -365,6 +365,9 @@ private void validateCupCollegati(ActionContext context, OggettoBulk model) thro
    if (bulk!=null && bulk.getMandato_riga()!=null && bulk.getMandato_riga().getMandatoCupColl()!=null && !bulk.getMandato_riga().getMandatoCupColl().isEmpty()){
 	if(bulk.getCdCup()==null)
 	   throw new ValidationException("Attenzione. Il codice Cup è obbligatorio");
+	if(bulk.getImporto()==null)
+		   throw new ValidationException("Attenzione. L'importo associato al codice Cup è obbligatorio");
+		
 	BulkList list=bulk.getMandato_riga().getMandatoCupColl();
 	for (Iterator i = list.iterator(); i.hasNext();){
 		MandatoCupBulk l=(MandatoCupBulk)i.next();
@@ -401,6 +404,7 @@ public boolean isNewButtonEnabled()
 public boolean isDeleteButtonEnabled() 
 {
 	if (((MandatoBulk)getModel()).getUnita_organizzativa().getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)==0 &&
+			((MandatoBulk)getModel()).getCd_uo_origine()!=null && (((MandatoBulk)getModel()).getCd_uo_origine().compareTo(((MandatoBulk)getModel()).getCd_unita_organizzativa())==0) &&
 			(((MandatoBulk)getModel()).getTi_mandato()==null||
 			 !((MandatoBulk)getModel()).getTi_mandato().equals(((MandatoBulk)getModel()).TIPO_REGOLARIZZAZIONE)))
 		return false;

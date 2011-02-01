@@ -543,6 +543,9 @@ private void validateCupCollegati(ActionContext context, OggettoBulk model) thro
 	   if (bulk!=null && bulk.getReversale_riga()!=null && bulk.getReversale_riga().getReversaleCupColl()!=null && !bulk.getReversale_riga().getReversaleCupColl().isEmpty()){
 		if(bulk.getCdCup()==null)
 		   throw new ValidationException("Attenzione. Il codice Cup è obbligatorio");
+		if(bulk.getImporto()==null)
+			   throw new ValidationException("Attenzione. L'importo associato al codice Cup è obbligatorio");
+		
 		BulkList list=bulk.getReversale_riga().getReversaleCupColl();
 		for (Iterator i = list.iterator(); i.hasNext();){
 			ReversaleCupBulk l=(ReversaleCupBulk)i.next();

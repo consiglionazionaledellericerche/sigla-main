@@ -340,6 +340,7 @@ public Forward doConfirmSalvaCup(ActionContext actioncontext,int option) {
 			if (bp.isCup_attivo()){
 				boolean trovato =false;
 				if (mandato instanceof MandatoIBulk){
+					bp.getCupCollegati().validate(actioncontext);
 					for (Iterator i=mandato.getMandato_rigaColl().iterator();i.hasNext()&&!trovato;){
 						Mandato_rigaBulk riga = (Mandato_rigaBulk)i.next();
 							if(riga.getMandatoCupColl().isEmpty()||riga.getTipoAssociazioneCup().compareTo(Mandato_rigaBulk.SIOPE_TOTALMENTE_ASSOCIATO)!=0)

@@ -492,6 +492,7 @@ public Forward doConfirmSalvaCup(ActionContext actioncontext,int option) {
 			if (bp.isCup_attivo()){
 				boolean trovato =false;
 				if (reversale instanceof ReversaleIBulk){
+					bp.getCupCollegati().validate(actioncontext);
 					for (Iterator i=reversale.getReversale_rigaColl().iterator();i.hasNext()&&!trovato;){
 						Reversale_rigaBulk riga = (Reversale_rigaBulk)i.next();
 							if(riga.getReversaleCupColl().isEmpty()||riga.getTipoAssociazioneCup().compareTo(Mandato_rigaBulk.SIOPE_TOTALMENTE_ASSOCIATO)!=0)
