@@ -1568,17 +1568,21 @@ public boolean isCostiDipendenteCaricati (UserContext userContext, CdrBulk cdr) 
 		SQLBuilder sql = home.createSQLBuilder();
 		sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
 		
-		V_struttura_organizzativaHome homeStrutt = (V_struttura_organizzativaHome)getHome(userContext,V_struttura_organizzativaBulk.class);
-		List uoList = (List)homeStrutt.findUoCollegateCDS(cdr.getUnita_padre(), CNRUserContext.getEsercizio(userContext));
-		Unita_organizzativaBulk uoBulk;
-		
-		sql.openParenthesis("AND");
-		for ( Iterator uoIterator = uoList.iterator(); uoIterator.hasNext();) {
-			uoBulk = (Unita_organizzativaBulk) uoIterator.next();
-			sql.addSQLClause("OR", "CD_UO_CARICO",sql.EQUALS,uoBulk.getCd_unita_organizzativa());
+		if (isCdrSAC(userContext, cdr) && cdr.getUnita_padre()!=null) {
+			sql.addSQLClause("AND","CD_UO_CARICO",sql.EQUALS,cdr.getUnita_padre().getCd_unita_organizzativa());
 		}
-		sql.closeParenthesis();
-	
+		else{
+			V_struttura_organizzativaHome homeStrutt = (V_struttura_organizzativaHome)getHome(userContext,V_struttura_organizzativaBulk.class);
+			List uoList = (List)homeStrutt.findUoCollegateCDS(cdr.getUnita_padre(), CNRUserContext.getEsercizio(userContext));
+			Unita_organizzativaBulk uoBulk;
+			
+			sql.openParenthesis("AND");
+			for ( Iterator uoIterator = uoList.iterator(); uoIterator.hasNext();) {
+				uoBulk = (Unita_organizzativaBulk) uoIterator.next();
+				sql.addSQLClause("OR", "CD_UO_CARICO",sql.EQUALS,uoBulk.getCd_unita_organizzativa());
+			}
+			sql.closeParenthesis();
+		}
 		List result = getHome( userContext, V_cdp_matricolaBulk.class ).fetchAll( sql );
 		if ( result.size() > 0 )
 			return true;
