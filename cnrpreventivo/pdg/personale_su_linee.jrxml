@@ -631,18 +631,18 @@ ORDER BY ESERCIZIO,TIPO,MESE,CDS,UO,CD_COMMESSA,CD_MODULO,ID_MATRICOLA]]></query
 					<textElement>
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[($F{MESE}.equals("1") ?"Gennaio":
-($F{MESE}.equals("2") ?"Febbraio":
-($F{MESE}.equals("3") ?"Marzo":
-($F{MESE}.equals("4") ?"Aprile":
-($F{MESE}.equals("5") ?"Maggio":
-($F{MESE}.equals("6") ?"Giugno":
-($F{MESE}.equals("7") ?"Luglio":
-($F{MESE}.equals("8")?"Agosto":
-($F{MESE}.equals("9") ?"Settembre":
-($F{MESE}.equals("10") ?"Ottobre":
-($F{MESE}.equals("11") ?"Novembre":
-($F{MESE}.equals("12") ?"Dicembre":
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{MESE}.equals("1") ?"Gennaio "+$F{ESERCIZIO}:
+($F{MESE}.equals("2") ?"Febbraio "+$F{ESERCIZIO}:
+($F{MESE}.equals("3") ?"Marzo "+$F{ESERCIZIO}:
+($F{MESE}.equals("4") ?"Aprile "+$F{ESERCIZIO}:
+($F{MESE}.equals("5") ?"Maggio "+$F{ESERCIZIO}:
+($F{MESE}.equals("6") ?"Giugno "+$F{ESERCIZIO}:
+($F{MESE}.equals("7") ?"Luglio "+$F{ESERCIZIO}:
+($F{MESE}.equals("8")?"Agosto "+$F{ESERCIZIO}:
+($F{MESE}.equals("9") ?"Settembre "+$F{ESERCIZIO}:
+($F{MESE}.equals("10") ?"Ottobre "+$F{ESERCIZIO}:
+($F{MESE}.equals("11") ?"Novembre "+$F{ESERCIZIO}:
+($F{MESE}.equals("12") ?"Dicembre "+$F{ESERCIZIO}:
 "Previsionale"))))))))))))]]></textFieldExpression>
 				</textField>
 			</band>
