@@ -23,8 +23,8 @@
 
 <table>
   <tr>
-	<td><% bp.getController().writeFormLabel(out,"esercizio"); %></td>
-	<td><% bp.getController().writeFormInput(out,"esercizio"); %></td>
+	<td><% bp.getController().writeFormLabel(out,"esercizio_base"); %></td>
+	<td><% bp.getController().writeFormInput(out,"esercizio_base"); %></td>
   </tr>
   <tr>	
 	<td><% bp.getController().writeFormLabel(out,"cd_cds"); %></td>

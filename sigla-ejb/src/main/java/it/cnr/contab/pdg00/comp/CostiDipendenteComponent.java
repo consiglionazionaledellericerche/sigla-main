@@ -3,6 +3,7 @@ package it.cnr.contab.pdg00.comp;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.PreparedStatement;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import it.cnr.contab.prevent01.ejb.PdgAggregatoModuloComponentSession;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
+import it.cnr.contab.segnalazioni00.bulk.Stampa_attivita_siglaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.*;
@@ -433,7 +435,8 @@ private void inizializzaBulkPerStampa(UserContext userContext, Stampa_imponibili
 private void inizializzaBulkPerStampa(UserContext userContext, Stampa_ripartizione_costiVBulk stampa) throws it.cnr.jada.comp.ComponentException {
 
 	stampa.setCd_cds(it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
-	stampa.setEsercizio(CNRUserContext.getEsercizio(userContext));
+//	stampa.setEsercizio(CNRUserContext.getEsercizio(userContext));
+	inizializzaEsercizio(userContext, (Stampa_ripartizione_costiVBulk)stampa);
     stampa.setCommessaForPrint(new ProgettoBulk());
 	stampa.setModuloForPrint(new ProgettoBulk());
 	stampa.setDipendenteForPrint(new V_dipendenteBulk());
@@ -2038,4 +2041,21 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, String cd_un
 		throw handleException( e );
 	}
 }
+	public Collection findEsercizi(Stampa_attivita_siglaBulk bulk, Esercizio_baseHome h) throws PersistencyException, IntrospectionException {
+		return h.findEsercizi(bulk);
+	}
+	
+	protected OggettoBulk inizializzaEsercizio(UserContext usercontext, Stampa_ripartizione_costiVBulk stampa) throws ComponentException{
+		try {
+			Esercizio_baseHome esercizioBaseHome = (Esercizio_baseHome)getHome(usercontext, Esercizio_baseBulk.class);
+			java.util.Collection esercizi;
+			esercizi =  esercizioBaseHome.findEsercizi((Stampa_ripartizione_costiVBulk)stampa);
+			((Stampa_ripartizione_costiVBulk)stampa).setAnni(esercizi);
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		} catch (IntrospectionException e) {
+			throw new ComponentException(e);
+		}	
+		return stampa;	
+	}
 }

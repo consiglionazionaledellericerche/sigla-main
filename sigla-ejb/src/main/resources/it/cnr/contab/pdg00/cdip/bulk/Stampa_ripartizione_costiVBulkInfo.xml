@@ -11,12 +11,27 @@
 		inputSize="3"
 		label="CDS" />	
 		
-	<formFieldProperty
+	<!--  <formFieldProperty
 		name="esercizio"
 		property="esercizio"
 		inputType="ROTEXT"
 		inputSize="3"
-		label="Esercizio" />
+		label="Esercizio" /> -->
+		
+	<fieldProperty
+		name="esercizio_base"
+		property="esercizio_base"
+		optionsProperty="anni"
+		printProperty ="esercizio"
+		inputSize="4"
+		inputType="select"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		label="Esercizio" />	
+	<fieldProperty
+			name="esercizioForPrint"
+			property="esercizioForPrint"/>	
 
 	<fieldProperty
 		name="findUOForPrint"
@@ -136,6 +151,8 @@
 		enabledOnEdit="false"
 		caseSensitiveSearch="false"/>
 
+	<formFieldProperty name="esercizio_base"/>
+	<formFieldProperty name="esercizioForPrint"/>
 	<formFieldProperty name="findUOForPrint" />
 	<formFieldProperty name="cdUOForPrint" />
 	<formFieldProperty name="dsUOForPrint" />
@@ -214,7 +231,7 @@
 			paramNameJR="mese"
 			paramTypeJR="java.lang.Integer"/>
 		<printFieldProperty 
-			name="esercizio"
+			name="esercizioForPrint"
 			parameterPosition="1"
 			parameterType="STRING"
 			paramNameJR="esercizio"
