@@ -415,7 +415,7 @@ order by PG_VARIAZIONE_PDG ,CD_CDR]]></queryString>
 					<textElement>
 						<font/>
 					</textElement>
-				<text><![CDATA[Riferimenti]]></text>
+				<text><![CDATA[Motivazione]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
