@@ -1160,6 +1160,7 @@ public SQLBuilder selectCommessaForPrintByClause(UserContext usercontext, Stampa
 	SQLBuilder sqlbuilder = progettohome.createSQLBuilder();
 	sqlbuilder.addSQLClause("AND", "LIVELLO", sqlbuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
 	sqlbuilder.addSQLClause("AND", "TIPO_FASE", sqlbuilder.EQUALS, ProgettoBulk.TIPO_FASE_PREVISIONE);
+	sqlbuilder.addSQLClause("AND", "ESERCIZIO", sqlbuilder.EQUALS, stampa_ripartizione_costivbulk.getEsercizio_base().getEsercizio());
 	// Se uo 999.000 in scrivania: visualizza tutti i progetti
 	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( usercontext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 	if (!((CNRUserContext) usercontext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
@@ -1175,6 +1176,7 @@ public SQLBuilder selectModuloForPrintByClause(UserContext usercontext, Stampa_r
 	SQLBuilder sqlbuilder = progettohome.createSQLBuilder();
 	sqlbuilder.addClause("AND", "livello", sqlbuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
 	sqlbuilder.addSQLClause("AND", "TIPO_FASE", sqlbuilder.EQUALS, ProgettoBulk.TIPO_FASE_PREVISIONE);
+	sqlbuilder.addSQLClause("AND", "ESERCIZIO", sqlbuilder.EQUALS, stampa_ripartizione_costivbulk.getEsercizio_base().getEsercizio());
 	if(stampa_ripartizione_costivbulk.getCommessaForPrint()!= null && stampa_ripartizione_costivbulk.getCommessaForPrint().getPg_progetto()!=null)
 	  sqlbuilder.addClause("AND", "pg_progetto_padre", sqlbuilder.EQUALS, stampa_ripartizione_costivbulk.getCommessaForPrint().getPg_progetto());
 	// Se uo 999.000 in scrivania: visualizza tutti i progetti
