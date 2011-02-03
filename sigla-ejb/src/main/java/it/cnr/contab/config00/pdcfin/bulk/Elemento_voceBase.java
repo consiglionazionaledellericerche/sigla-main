@@ -64,6 +64,8 @@ public class Elemento_voceBase extends Elemento_voceKey implements Keyed {
 	private java.lang.Boolean fl_check_terzo_siope;
 
 	private java.lang.Boolean fl_inv_beni_comp;
+	
+	private java.lang.Boolean fl_limite_spesa;
 public Elemento_voceBase() {
 	super();
 }
@@ -313,5 +315,11 @@ public void setTi_elemento_voce(java.lang.String ti_elemento_voce) {
 	}
 	public void setFl_inv_beni_comp(java.lang.Boolean fl_inv_beni_comp) {
 		this.fl_inv_beni_comp = fl_inv_beni_comp;
+	}
+	public java.lang.Boolean getFl_limite_spesa() {
+		return fl_limite_spesa;
+	}
+	public void setFl_limite_spesa(java.lang.Boolean fl_limite_spesa) {
+		this.fl_limite_spesa = fl_limite_spesa;
 	}
 }

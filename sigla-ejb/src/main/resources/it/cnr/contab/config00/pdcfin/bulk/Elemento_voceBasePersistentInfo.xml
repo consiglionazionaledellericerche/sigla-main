@@ -159,6 +159,13 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_LIMITE_SPESA"
+			propertyName="fl_limite_spesa"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />		
 	</defaultColumnMap>
 
 	<persistentProperty
@@ -213,4 +220,6 @@
 		name="fl_check_terzo_siope" />
 	<persistentProperty
 		name="fl_inv_beni_comp" />	
+	<persistentProperty
+		name="fl_limite_spesa" />	
 </SQLPersistentInfo>

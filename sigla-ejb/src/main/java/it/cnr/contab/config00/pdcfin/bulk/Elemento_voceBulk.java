@@ -99,6 +99,7 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	setFl_voce_fondo(new Boolean( false ) );
 	setFl_check_terzo_siope(new Boolean( false ));
 	setFl_inv_beni_comp(new Boolean(false));
+	setFl_limite_spesa(new Boolean(false));
 	return this;
 }
 /**

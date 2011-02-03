@@ -325,4 +325,15 @@
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
 		<init-param name="defaultAction" value="CRUDServizioPecAction" />
   </businessProcess>
+   <action 
+      path="/CRUDLimiteSpesaAction" actionClass="it.cnr.contab.config00.action.CRUDLimiteSpesaAction">
+  </action>
+
+  <businessProcess
+      name="CRUDLimiteSpesaBP" className="it.cnr.contab.config00.bp.CRUDLimiteSpesaBP">
+    <forward name="default" path="/config00/limite_spesa.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.config00.pdcfin.bulk.LimiteSpesaBulk" />
+		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_LimiteSpesaComponentSession" />
+		<init-param name="defaultAction" value="CRUDLimiteSpesaAction" />
+  </businessProcess>
 </action-mappings>

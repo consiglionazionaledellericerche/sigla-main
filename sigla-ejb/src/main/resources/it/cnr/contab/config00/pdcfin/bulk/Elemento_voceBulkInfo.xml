@@ -280,6 +280,15 @@
 		inputType="CHECKBOX"
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false" />	
+	<fieldProperty
+		name="fl_limite_spesa"
+		property="fl_limite_spesa"
+		label="Soggetto a limite spesa"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />		
 	<form
 		name="searchtool" >
 		<formFieldProperty
@@ -345,7 +354,8 @@
 		name="fl_inv_beni_patr" />
 	<columnFieldProperty
 		name="fl_check_terzo_siope" />	
-
+  <columnFieldProperty
+		name="fl_limite_spesa" />
 <columnSet
 	name="impegnoPGiro">
 		
@@ -465,8 +475,8 @@
    <formFieldProperty
 		name="fl_inv_beni_patr" />
    <formFieldProperty
-		name="fl_check_terzo_siope" />
-
+		name="fl_limite_spesa" />
+		
 	<findFieldProperty
 		name="esercizio"
 		/>
@@ -502,7 +512,7 @@
 	<findFieldProperty
 		name="fl_voce_fondo" />
 	<findFieldProperty
-		name="fl_check_terzo_siope" />
+		name="fl_limite_spesa" />
 
 	<form
 		name="searchtool_x_var_stanz_res" >

@@ -263,7 +263,14 @@ public class PdgAggregatoModuloComponent extends CRUDComponent {
 
 	public void modificaStatoPdg_aggregato_AP_CC(UserContext userContext,Pdg_moduloBulk pdg_modulo) throws it.cnr.jada.comp.ComponentException {
 	}
+	public void modificaStatoPdg_aggregato_CG_AG(UserContext userContext,Pdg_moduloBulk pdg_modulo) throws it.cnr.jada.comp.ComponentException {
+		Pdg_esercizioBulk es = findPdgEsercizio(userContext, pdg_modulo); 
 
+		if (es==null)
+			throw new ApplicationException("Non è stato impostato lo stato iniziale di apertura del PdGP - CDR per il CdR "+es.getCd_centro_responsabilita());
+		if (!es.getStato().equals(Pdg_esercizioBulk.STATO_APERTURA_GESTIONALE_CDR))
+			throw new ApplicationException("Stato non modificabile poichè non è 'Apertura Gestionale del CDR', lo stato del PdGP - CDR per il CdR "+es.getCd_centro_responsabilita());
+	}
 	public void modificaStatoPdg_aggregato_AP_AD(UserContext userContext,Pdg_moduloBulk pdg_modulo) throws it.cnr.jada.comp.ComponentException {
 
 		Pdg_esercizioBulk es = findPdgEsercizio(userContext, pdg_modulo); 
@@ -348,6 +355,9 @@ public class PdgAggregatoModuloComponent extends CRUDComponent {
 				Pdg_moduloBulk.STATO_AG.equals(nuovoStato);
 		if (Pdg_moduloBulk.STATO_AG.equals(vecchioStato))
 			return Pdg_moduloBulk.STATO_CG.equals(nuovoStato);
+		// nuovo cambio stato per gestione limite spesa
+		if (Pdg_moduloBulk.STATO_CG.equals(vecchioStato))
+			return Pdg_moduloBulk.STATO_AG.equals(nuovoStato);
 		return false;
 	}
 
