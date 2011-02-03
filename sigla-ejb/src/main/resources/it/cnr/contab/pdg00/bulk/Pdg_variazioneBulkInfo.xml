@@ -113,7 +113,7 @@
         enabledOnSearch="true"		
 		maxLength="1000"
 		nullable="false"
-		label="Descrizione" />
+		label="Descrizione e Riferimenti" />
 	<fieldProperty
 		name="ds_delibera"
 		property="ds_delibera"
@@ -123,7 +123,7 @@
         enabledOnSearch="true"		
 		maxLength="200"
 		nullable="false"
-		label="Motivazione" />
+		label="Descrizione delibera" />
 	<fieldProperty
 		name="tipo_variazione"
 		property="tipo_variazione"
@@ -171,8 +171,8 @@
 		rows="3"
         enabledOnSearch="true"		
 		maxLength="200"
-		nullable="true"
-		label="Riferimenti" />
+		nullable="false"
+		label="Motivazione" />
 	<fieldProperty
 		name="cd_causale_respinta"
 		property="cd_causale_respinta"

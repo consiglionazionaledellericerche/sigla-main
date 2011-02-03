@@ -218,10 +218,13 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 					pdg));
 			pdg.setTi_causale_respintaKeys(testataHome
 					.loadCausaliMancataApprovazione());
-			if (pdg.getStato().equalsIgnoreCase(
-					Pdg_variazioneBulk.STATO_APPROVATA)
-					|| pdg.getStato().equalsIgnoreCase(
-							Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE)) {
+			// RosPuc 28/01/2011
+			if(pdg.getStato().equalsIgnoreCase(Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA)){
+//			if (pdg.getStato().equalsIgnoreCase(
+//					Pdg_variazioneBulk.STATO_APPROVATA)
+//					|| pdg.getStato().equalsIgnoreCase(
+//							Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE)) {
+//				
 				if(selectVariazioniForDocumentale(userContext, null,new Pdg_variazioneBulk(pdg.getEsercizio(),pdg.getPg_variazione_pdg()), ArchiviaStampaPdgVariazioneBulk.VIEW_SIGNED, Boolean.TRUE).executeCountQuery(getConnection(userContext))!=0) 
 		 	 	  pdg.setStatoDocumentale(ArchiviaStampaPdgVariazioneBulk.VIEW_SIGNED); 
 			  else if (selectVariazioniForDocumentale(userContext, null,new Pdg_variazioneBulk(pdg.getEsercizio(),pdg.getPg_variazione_pdg()), ArchiviaStampaPdgVariazioneBulk.VIEW_NOT_SIGNED, Boolean.TRUE).executeCountQuery(getConnection(userContext))!=0)
@@ -2635,10 +2638,12 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 			throws ComponentException,
 			it.cnr.jada.persistency.PersistencyException {
 		SQLBuilder sql = selectBase(userContext, clauses, bulk);
-		sql.openParenthesis(FindClause.AND);
-		sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVATA);
-		sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
-		sql.closeParenthesis();
+		// RosPuc 28/01/2011
+//		sql.openParenthesis(FindClause.AND);
+//		sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVATA);
+//		sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
+//		sql.closeParenthesis();
+		sql.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
 		String cds = null, uo = null;
 		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome(
 				userContext, Unita_organizzativa_enteBulk.class).findAll()

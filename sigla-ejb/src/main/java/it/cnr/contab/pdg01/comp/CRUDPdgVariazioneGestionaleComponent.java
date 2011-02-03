@@ -938,7 +938,7 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 																    rigaVar.getTi_gestione(),
 																    rigaVar.getCd_elemento_voce()));
 	
-				if (assestato.getAssestato_finale().compareTo(Utility.ZERO) == -1)
+				if (assestato==null || assestato.getAssestato_finale().compareTo(Utility.ZERO) == -1)
 					messaggio = ((messaggio==null)?"Attenzione!":(messaggio + "<BR>")) + 
 					     "Al momento la disponibilità del CdR "+rigaVar.getCd_cdr_assegnatario()+
 					     " per la Voce " + rigaVar.getCd_elemento_voce() + " e GAE " + rigaVar.getCd_linea_attivita() + 

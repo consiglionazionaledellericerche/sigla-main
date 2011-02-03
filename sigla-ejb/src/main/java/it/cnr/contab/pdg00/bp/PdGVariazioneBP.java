@@ -248,11 +248,12 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		if (!isAbilitatoModificaDescVariazioni() && ((Pdg_variazioneBulk)getModel()).isApprovata())
 			return false;
 		else
-		return super.isSaveButtonEnabled() && (isCdrScrivania() || isUoEnte());
+		return super.isSaveButtonEnabled() && (isCdrScrivania() || isUoEnte())&&!(((Pdg_variazioneBulk)getModel()).getStatoDocumentale()!=null);
 	}	
 	public boolean isDeleteButtonEnabled()
 	{
-		return super.isDeleteButtonEnabled() && (isCdrScrivania() || isUoEnte()) && !((Pdg_variazioneBulk)getModel()).isApprovata();
+		return super.isDeleteButtonEnabled() && (isCdrScrivania() || isUoEnte()) && //!((Pdg_variazioneBulk)getModel()).isApprovata();
+		!(((Pdg_variazioneBulk)getModel()).getStatoDocumentale()!=null);
 	}
 	/**
 	 * Metodo utilizzato per creare una toolbar applicativa personalizzata.
@@ -321,7 +322,7 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	 */
 	public boolean isNonApprovaButtonEnabled() {
 
-		return isSaveButtonEnabled() && ((Pdg_variazioneBulk)getModel()).isPropostaDefinitiva() && isUoEnte();
+		return  super.isSaveButtonEnabled() && ((Pdg_variazioneBulk)getModel()).isPropostaDefinitiva() && isUoEnte();
 	}
 	/**
 	 * Gestione del salvataggio come definitiva di una variazione
@@ -514,6 +515,7 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 			return (isSaveButtonEnabled()||(((Pdg_variazioneBulk)getModel()).isPropostaDefinitiva()))&& 
 					((Pdg_variazioneBulk)getModel()).isPropostaDefinitiva() && 
 					((Pdg_variazioneBulk)getModel()).isNotNew() &&
+					((Pdg_variazioneBulk)getModel()).getStatoDocumentale()==null &&
 					(getCentro_responsabilita_scrivania().getLivello().intValue() == 1 || isUoArea())&&
 					((Pdg_variazioneBulk)getModel()).getCentro_responsabilita().getCd_cds().equals(getCentro_responsabilita_scrivania().getCd_cds());
 		}catch(NullPointerException e){
