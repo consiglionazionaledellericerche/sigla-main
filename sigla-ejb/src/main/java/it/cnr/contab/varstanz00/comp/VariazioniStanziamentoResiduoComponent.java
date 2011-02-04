@@ -472,26 +472,26 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 						                                                          saldi);
 				super.modificaConBulk(userContext,saldi);
 				// rospuc 01/2011 inizio modifica  da provare controllo della spesa
-				Voce_fBulk voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
-						  new Voce_fBulk(saldi.getVoce().getCd_voce(),saldi.getEsercizio_res(),saldi.getTi_appartenenza(),saldi.getTi_gestione())
-						  );
-				getHomeCache(userContext).fetchAll(userContext);
+//				Voce_fBulk voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
+//						  new Voce_fBulk(saldi.getVoce().getCd_voce(),saldi.getEsercizio_res(),saldi.getTi_appartenenza(),saldi.getTi_gestione())
+//						  );
+//				getHomeCache(userContext).fetchAll(userContext);
 				Elemento_voceBulk elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
-		            new Elemento_voceBulk(voce.getCd_elemento_voce(),voce.getEsercizio(),voce.getTi_appartenenza(),voce.getTi_gestione())
+		            new Elemento_voceBulk(varRiga.getCd_elemento_voce(),varRiga.getEsercizio(),varRiga.getTi_appartenenza(),varRiga.getTi_gestione())
 		            );
 				if (elemento_voce == null)
-					throw new ApplicationException("Elemento voce non trovato per la Voce: "+ voce.getCd_voce());
+					throw new ApplicationException("Elemento voce non trovato per la Voce: "+ varRiga.getCd_voce());
 				if(elemento_voce.getFl_limite_spesa().booleanValue()){
 					WorkpackageBulk workpackage = (WorkpackageBulk)getHome(userContext,WorkpackageBulk.class).findByPrimaryKey(
 							new WorkpackageBulk(saldi.getCd_centro_responsabilita(),saldi.getCd_linea_attivita())
 							);
 					LimiteSpesaBulk limiteTestata=(LimiteSpesaBulk)getHome(userContext, LimiteSpesaBulk.class).findByPrimaryKey(
-							new LimiteSpesaBulk(saldi.getEsercizio_res(),voce.getTi_appartenenza(),voce.getTi_gestione(),voce.getCd_elemento_voce(),
+							new LimiteSpesaBulk(saldi.getEsercizio_res(),elemento_voce.getTi_appartenenza(),elemento_voce.getTi_gestione(),elemento_voce.getCd_elemento_voce(),
 									((NaturaBulk)getHome(userContext,NaturaBulk.class).findByPrimaryKey(
 											new NaturaBulk(workpackage.getCd_natura()))).getTipo()));
 					if(limiteTestata==null)
 						limiteTestata=(LimiteSpesaBulk)getHome(userContext, LimiteSpesaBulk.class).findByPrimaryKey(
-								new LimiteSpesaBulk(saldi.getEsercizio_res(),voce.getTi_appartenenza(),voce.getTi_gestione(),voce.getCd_elemento_voce(),"*"));
+								new LimiteSpesaBulk(saldi.getEsercizio_res(),elemento_voce.getTi_appartenenza(),elemento_voce.getTi_gestione(),elemento_voce.getCd_elemento_voce(),"*"));
 					String cds=null;
 				 	if (limiteTestata!=null)
 					{
@@ -504,16 +504,16 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 								cds=uo.getCd_cds();
 						}
 						LimiteSpesaDetBulk limite=(LimiteSpesaDetBulk)getHome(userContext, LimiteSpesaDetBulk.class).findByPrimaryKey(
-								new LimiteSpesaDetBulk(saldi.getEsercizio_res(),cds,voce.getTi_appartenenza(),voce.getTi_gestione(),voce.getCd_elemento_voce(),
+								new LimiteSpesaDetBulk(saldi.getEsercizio_res(),cds,elemento_voce.getTi_appartenenza(),elemento_voce.getTi_gestione(),elemento_voce.getCd_elemento_voce(),
 										((NaturaBulk)getHome(userContext,NaturaBulk.class).findByPrimaryKey(
 												new NaturaBulk(workpackage.getCd_natura()))).getTipo()));
 						if(limite==null)
 							limite=(LimiteSpesaDetBulk)getHome(userContext, LimiteSpesaDetBulk.class).findByPrimaryKey(
-									new LimiteSpesaDetBulk(saldi.getEsercizio_res(),cds,voce.getTi_appartenenza(),voce.getTi_gestione(),voce.getCd_elemento_voce(),"*"));
+									new LimiteSpesaDetBulk(saldi.getEsercizio_res(),cds,elemento_voce.getTi_appartenenza(),elemento_voce.getTi_gestione(),elemento_voce.getCd_elemento_voce(),"*"));
 						if(limite==null)
 							throw new ApplicationException("Limite sul controllo della spesa non definito per il CdS.");
 						if((limite.getImpegni_assunti().add(varRiga.getIm_variazione())).compareTo(limite.getImporto_limite())>0)
-							throw new ApplicationException("Disponibilità ad impegnare non sufficiente, residuo "+limite.getImpegni_assunti().subtract(limite.getImporto_limite()));
+							throw new ApplicationException("Disponibilità ad impegnare non sufficiente, sulla voce "+elemento_voce.getCd_elemento_voce()+", residuo "+limite.getImpegni_assunti().subtract(limite.getImporto_limite()));
 						else{
 							limite.setImpegni_assunti(limite.getImpegni_assunti().add(varRiga.getIm_variazione()));
 							limite.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
@@ -525,12 +525,13 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				 	//else
 						//throw new ApplicationException("Limite sul controllo della spesa non definito.");
 				}
+			//}
 			//fine modifica
 			}
 			generaVariazioneBilancio(userContext, var_stanz_res);
 			if (var_stanz_res.getTipologia().equalsIgnoreCase(Var_stanz_resBulk.TIPOLOGIA_STO)||
 				var_stanz_res.getTipologia().equalsIgnoreCase(Var_stanz_resBulk.TIPOLOGIA_ECO)){
-				String soggetto = "E' stata approvata la Variazione allo stanziamento residuo nï¿½ "+var_stanz_res.getPg_variazione();
+				String soggetto = "E' stata approvata la Variazione allo stanziamento residuo n° "+var_stanz_res.getPg_variazione();
 				generaEMAIL(userContext, var_stanz_res,soggetto,soggetto +" del "+var_stanz_res.getEsercizio()+"<BR>",null, "APP");			    	
 			}						
 		} catch (IntrospectionException e) {

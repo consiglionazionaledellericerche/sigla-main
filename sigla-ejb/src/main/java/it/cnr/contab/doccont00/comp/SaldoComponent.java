@@ -828,7 +828,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaVariazioneStanziamento(UserContext use
 				if(limite==null)
 					throw new ApplicationException("Limite sul controllo della spesa non definito per il CdS.");
 				if((limite.getImpegni_assunti().add(importo)).compareTo(limite.getImporto_limite())>0)
-					throw new ApplicationException("Disponibilità ad impegnare non sufficiente, residuo "+limite.getImporto_limite().subtract(limite.getImpegni_assunti()));
+					throw new ApplicationException("Disponibilità ad impegnare non sufficiente, sulla voce "+elemento_voce.getCd_elemento_voce()+", residuo "+limite.getImporto_limite().subtract(limite.getImpegni_assunti()));
 				else{
 					limite.setImpegni_assunti(limite.getImpegni_assunti().add(importo));
 					limite.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
