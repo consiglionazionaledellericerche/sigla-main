@@ -237,6 +237,9 @@ public void validate() throws it.cnr.jada.bulk.ValidationException {
 	// controllo su campo MESE
 	if ( getMese() == null )
 		throw new it.cnr.jada.bulk.ValidationException( "Attenzione: indicare un Mese." );
+	// controllo su campo ESERCIZIO
+	if ( getEsercizio_base() == null )
+		throw new it.cnr.jada.bulk.ValidationException( "Attenzione: indicare un Esercizio." );
 }
 	/**
 	 * @return
