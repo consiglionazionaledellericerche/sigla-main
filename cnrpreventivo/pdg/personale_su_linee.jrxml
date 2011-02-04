@@ -92,22 +92,22 @@
 	</style>
 
 	<parameter name="mese" isForPrompting="false" class="java.lang.Integer">
-		<defaultValueExpression ><![CDATA[new Integer(0)]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA[new Integer(01)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="esercizio" isForPrompting="false" class="java.lang.Integer">
-		<defaultValueExpression ><![CDATA[new Integer(2010)]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA[new Integer(2011)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="uo" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["*"]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA["079.000"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="cds" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["070"]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA["079"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="commessa" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["*"]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA["PM.P05.013"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="modulo" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["*"]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA["PM.P05.013.001"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="matricola" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["*"]]></defaultValueExpression>
@@ -162,6 +162,12 @@ ORDER BY ESERCIZIO,TIPO,MESE,CDS,UO,CD_COMMESSA,CD_MODULO,ID_MATRICOLA]]></query
 	</variable>
 	<variable name="tot_commessa" class="java.math.BigDecimal" resetType="Group" resetGroup="commessa" calculation="Sum">
 		<variableExpression><![CDATA[$F{STIPENDIO}]]></variableExpression>
+	</variable>
+	<variable name="tot_modulo_A1" class="java.math.BigDecimal" resetType="Group" resetGroup="modulo" calculation="Sum">
+		<variableExpression><![CDATA[$F{STIPENDIO_A1}]]></variableExpression>
+	</variable>
+	<variable name="tot_commessa_A1" class="java.math.BigDecimal" resetType="Group" resetGroup="commessa" calculation="Sum">
+		<variableExpression><![CDATA[$F{STIPENDIO_A1}]]></variableExpression>
 	</variable>
 
 		<group  name="tipo" isReprintHeaderOnEachPage="true" >
@@ -242,11 +248,11 @@ ORDER BY ESERCIZIO,TIPO,MESE,CDS,UO,CD_COMMESSA,CD_MODULO,ID_MATRICOLA]]></query
 				<staticText>
 					<reportElement
 						style="TNR12BOLD"
-						x="504"
-						y="2"
+						x="426"
+						y="4"
 						width="183"
 						height="15"
-						key="staticText-18"/>
+						key="staticText-22"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
@@ -259,12 +265,12 @@ ORDER BY ESERCIZIO,TIPO,MESE,CDS,UO,CD_COMMESSA,CD_MODULO,ID_MATRICOLA]]></query
 				</staticText>
 				<textField isStretchWithOverflow="false" pattern=" #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						style="TNR12BOLD"
-						x="697"
-						y="3"
-						width="80"
+						style="TNR10BOLD"
+						x="642"
+						y="5"
+						width="63"
 						height="14"
-						key="textField-11"/>
+						key="textField-15"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
@@ -273,7 +279,7 @@ ORDER BY ESERCIZIO,TIPO,MESE,CDS,UO,CD_COMMESSA,CD_MODULO,ID_MATRICOLA]]></query
 					<textElement textAlignment="Right">
 						<font isUnderline="true"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_commessa}]]></textFieldExpression>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_commessa_A1}]]></textFieldExpression>
 				</textField>
 			</band>
 			</groupFooter>
@@ -536,11 +542,11 @@ ORDER BY ESERCIZIO,TIPO,MESE,CDS,UO,CD_COMMESSA,CD_MODULO,ID_MATRICOLA]]></query
 				<staticText>
 					<reportElement
 						style="TNR12BOLD"
-						x="504"
-						y="2"
+						x="426"
+						y="4"
 						width="183"
 						height="15"
-						key="staticText-17"/>
+						key="staticText-21"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
@@ -553,12 +559,12 @@ ORDER BY ESERCIZIO,TIPO,MESE,CDS,UO,CD_COMMESSA,CD_MODULO,ID_MATRICOLA]]></query
 				</staticText>
 				<textField isStretchWithOverflow="false" pattern=" #,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						style="TNR12BOLD"
-						x="697"
-						y="3"
-						width="80"
+						style="TNR10BOLD"
+						x="642"
+						y="5"
+						width="63"
 						height="14"
-						key="textField-10"/>
+						key="textField-16"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
@@ -567,7 +573,7 @@ ORDER BY ESERCIZIO,TIPO,MESE,CDS,UO,CD_COMMESSA,CD_MODULO,ID_MATRICOLA]]></query
 					<textElement textAlignment="Right">
 						<font isUnderline="true"/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_modulo}]]></textFieldExpression>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{tot_modulo_A1}]]></textFieldExpression>
 				</textField>
 			</band>
 			</groupFooter>
