@@ -3,12 +3,11 @@ package it.cnr.contab.pdg00.comp;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.PreparedStatement;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.EJBException;
-
+import java.util.Collection;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.esercizio.bulk.*;
 import it.cnr.contab.pdg00.cdip.bulk.*;
@@ -23,7 +22,6 @@ import it.cnr.contab.prevent01.ejb.PdgAggregatoModuloComponentSession;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
-import it.cnr.contab.segnalazioni00.bulk.Stampa_attivita_siglaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.*;
@@ -31,6 +29,7 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.sql.*;
+import it.cnr.contab.segnalazioni00.bulk.Stampa_attivita_siglaBulk;
 
 public class CostiDipendenteComponent extends RicercaComponent implements ICostiDipendenteMgr, IPrintMgr {
 /**
@@ -435,9 +434,9 @@ private void inizializzaBulkPerStampa(UserContext userContext, Stampa_imponibili
 private void inizializzaBulkPerStampa(UserContext userContext, Stampa_ripartizione_costiVBulk stampa) throws it.cnr.jada.comp.ComponentException {
 
 	stampa.setCd_cds(it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
-//	stampa.setEsercizio(CNRUserContext.getEsercizio(userContext));
+	//stampa.setEsercizio(CNRUserContext.getEsercizio(userContext));
 	inizializzaEsercizio(userContext, (Stampa_ripartizione_costiVBulk)stampa);
-    stampa.setCommessaForPrint(new ProgettoBulk());
+  stampa.setCommessaForPrint(new ProgettoBulk());
 	stampa.setModuloForPrint(new ProgettoBulk());
 	stampa.setDipendenteForPrint(new V_dipendenteBulk());
 	try{	    
@@ -1393,13 +1392,14 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, CdrBulk cdr)
 			
 		// se il CdR è della SAC deve esser controllato direttamente
 		// altrimenti si vede l'afferenza
+		sql.addSQLClause("AND","ASS_CDP_LA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.addSQLClause("AND","ASS_CDP_LA.MESE",sql.EQUALS,BigDecimal.ZERO);
+		
 		if (isCdrSAC(userContext, cdr)) {
-			sql.addSQLClause("AND","ASS_CDP_LA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
 			sql.addSQLClause("AND","ASS_CDP_LA.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdr.getCd_centro_responsabilita());
 		}
 		else {
 			sql.addToHeader("V_STRUTTURA_ORGANIZZATIVA");
-			sql.addSQLClause("AND","ASS_CDP_LA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
 			sql.addSQLJoin("ASS_CDP_LA.ESERCIZIO", "V_STRUTTURA_ORGANIZZATIVA.ESERCIZIO");
 			sql.addSQLJoin("ASS_CDP_LA.CD_CENTRO_RESPONSABILITA", "V_STRUTTURA_ORGANIZZATIVA.CD_ROOT");
 			sql.addSQLClause("AND","V_STRUTTURA_ORGANIZZATIVA.CD_CDR_AFFERENZA",sql.EQUALS,cdr.getCd_centro_responsabilita());
@@ -1439,12 +1439,14 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, CdrBulk cdr,
 			
 		// se il CdR è della SAC deve esser controllato direttamente
 		// altrimenti si vede l'afferenza
+		sql.addSQLClause("AND","ASS_CDP_LA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.addSQLClause("AND","ASS_CDP_LA.MESE",sql.EQUALS,BigDecimal.ZERO);
+		
 		if (isCdrSAC(userContext, cdr)) {
 			sql.addToHeader("LINEA_ATTIVITA");
 			sql.addSQLClause("AND","LINEA_ATTIVITA.PG_PROGETTO",sql.EQUALS,modulo.getPg_progetto());
 			sql.addSQLJoin("ASS_CDP_LA.CD_CENTRO_RESPONSABILITA", "LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA");
 			sql.addSQLJoin("ASS_CDP_LA.CD_LINEA_ATTIVITA", "LINEA_ATTIVITA.CD_LINEA_ATTIVITA");		
-			sql.addSQLClause("AND","ASS_CDP_LA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
 			sql.addSQLClause("AND","ASS_CDP_LA.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdr.getCd_centro_responsabilita());
 		}
 		else {
@@ -1453,7 +1455,6 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, CdrBulk cdr,
 			sql.addSQLClause("AND","LINEA_ATTIVITA.PG_PROGETTO",sql.EQUALS,modulo.getPg_progetto());
 			sql.addSQLJoin("ASS_CDP_LA.CD_CENTRO_RESPONSABILITA", "LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA");
 			sql.addSQLJoin("ASS_CDP_LA.CD_LINEA_ATTIVITA", "LINEA_ATTIVITA.CD_LINEA_ATTIVITA");		
-			sql.addSQLClause("AND","ASS_CDP_LA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
 			sql.addSQLJoin("ASS_CDP_LA.ESERCIZIO", "V_STRUTTURA_ORGANIZZATIVA.ESERCIZIO");
 			sql.addSQLJoin("ASS_CDP_LA.CD_CENTRO_RESPONSABILITA", "V_STRUTTURA_ORGANIZZATIVA.CD_ROOT");
 			sql.addSQLClause("AND","V_STRUTTURA_ORGANIZZATIVA.CD_CDR_AFFERENZA",sql.EQUALS,cdr.getCd_centro_responsabilita());
@@ -1572,7 +1573,7 @@ public boolean isCostiDipendenteCaricati (UserContext userContext, CdrBulk cdr) 
 		BulkHome home = getHome(userContext,V_cdp_matricolaBulk.class);
 		SQLBuilder sql = home.createSQLBuilder();
 		sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
-		
+		sql.addSQLClause("AND","MESE",sql.EQUALS,BigDecimal.ZERO);
 		if (isCdrSAC(userContext, cdr) && cdr.getUnita_padre()!=null) {
 			sql.addSQLClause("AND","CD_UO_CARICO",sql.EQUALS,cdr.getUnita_padre().getCd_unita_organizzativa());
 		}
@@ -2043,7 +2044,7 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, String cd_un
 		throw handleException( e );
 	}
 }
-	public Collection findEsercizi(Stampa_attivita_siglaBulk bulk, Esercizio_baseHome h) throws PersistencyException, IntrospectionException {
+public Collection findEsercizi(Stampa_attivita_siglaBulk bulk, Esercizio_baseHome h) throws PersistencyException, IntrospectionException {
 		return h.findEsercizi(bulk);
 	}
 	
