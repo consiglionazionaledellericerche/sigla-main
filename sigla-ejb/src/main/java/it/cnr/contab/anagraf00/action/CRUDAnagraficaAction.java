@@ -861,7 +861,9 @@ public Forward doConfermaElenco(ActionContext context,int option) {
 public Forward doOnDt_fin_validitaChange(ActionContext context)  {
 	try{
 		it.cnr.contab.anagraf00.bp.CRUDAnagraficaBP bp = (it.cnr.contab.anagraf00.bp.CRUDAnagraficaBP)getBusinessProcess(context);
-		AnagraficoBulk anagrafico = bp.getAnagrafico();		
+		AnagraficoBulk anagrafico = bp.getAnagrafico();	
+		java.util.GregorianCalendar data_da = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
+		java.util.GregorianCalendar data_a = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
 		Carico_familiare_anagBulk carico = (Carico_familiare_anagBulk)bp.getCrudCarichi_familiari_anag().getModel();
 		java.sql.Timestamp oldData = carico.getDt_fin_validita();
 		java.sql.Timestamp maxDataCompensi = bp.findMaxDataCompValida(context.getUserContext(), anagrafico);
@@ -869,6 +871,13 @@ public Forward doOnDt_fin_validitaChange(ActionContext context)  {
 			fillModel(context);
 			if(carico.getDt_fin_validita()==null)
 				throw new ValidationException("E' necessario inserire la data di fine validità.");
+			data_da.setTime(carico.getDt_ini_validita());
+			data_a.setTime(carico.getDt_fin_validita());
+			if (data_da.get(java.util.GregorianCalendar.YEAR)!=data_a.get(java.util.GregorianCalendar.YEAR)){
+				carico.setDt_fin_validita(oldData);
+				throw new ValidationException("La data di inizio e fine validità devono appartenere allo stesso esercizio.");
+			}
+				
 			if (!bp.isSearching())
 			  try{
 				  if ((oldData==null || carico.getDt_fin_validita().before(oldData))&& anagrafico.isUtilizzata_detrazioni()&&

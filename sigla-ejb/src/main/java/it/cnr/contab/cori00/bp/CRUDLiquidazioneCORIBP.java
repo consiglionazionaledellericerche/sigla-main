@@ -904,4 +904,11 @@ public void SelezionaF24Prev(ActionContext context) {
 	}
 		 
 }
+public static CRUDLiquidazioneCORIBP getBusinessProcessFor(it.cnr.jada.action.ActionContext context, Liquid_coriBulk liq, String mode) throws it.cnr.jada.action.BusinessProcessException 
+{
+	if(liq == null) 
+		return null;
+	else
+		return (CRUDLiquidazioneCORIBP)context.getUserInfo().createBusinessProcess(context,"CRUDLiquidazioneCORIBP",new Object[] { mode });
+}
 }

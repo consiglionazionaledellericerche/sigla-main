@@ -258,7 +258,21 @@
 		property="pgStorico"
 		inputType="TEXT"
 		maxLength="10"
-		enabledOnEdit="false"/>			
+		enabledOnEdit="false"/>
+	<fieldProperty
+		name="ds_tipo"
+		property="ds_tipo"
+		inputType="TEXT"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Tipo Fattura"/>		
+	<fieldProperty
+		name="uo_origine"
+		property="uo_origine"
+		inputType="TEXT"
+		maxLength="30"
+		enabledOnEdit="false"
+		label ="Uo origine"/>							
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -326,7 +340,12 @@
 	<formFieldProperty
 		name="nrProtocollo" />	
 	<formFieldProperty
-		name="pgStorico" />			
+		name="pgStorico" />
+	<formFieldProperty
+		name="ds_tipo" />	
+	<formFieldProperty
+		name="uo_origine" />
+					
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
@@ -381,6 +400,11 @@
 		name="cdProvinciaOrigine" />
 	<findFieldProperty
 		name="nazFiscale" />	
+	<findFieldProperty
+		name="ds_tipo" />
+	<findFieldProperty
+		name="uo_origine" />	
+		
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
@@ -434,5 +458,9 @@
 	<columnFieldProperty
 		name="cdProvinciaOrigine" />
 	<columnFieldProperty
-		name="nazFiscale" />	
+		name="nazFiscale" />
+	<columnFieldProperty
+		name="ds_tipo" />
+	<columnFieldProperty
+		name="uo_origine" />			
 </bulkInfo>

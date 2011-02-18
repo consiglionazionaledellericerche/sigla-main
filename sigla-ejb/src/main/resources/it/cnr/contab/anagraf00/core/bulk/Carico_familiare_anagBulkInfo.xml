@@ -109,10 +109,10 @@
 		name="codice_fiscale"
 		/>
 	<columnFieldProperty
-		name="dt_fin_validita"
-		/>
-	<columnFieldProperty
 		name="dt_ini_validita"
+		/>	
+	<columnFieldProperty
+		name="dt_fin_validita"
 		/>
 	<columnFieldProperty
 		name="prc_carico"
@@ -144,11 +144,11 @@
 		maxLength="16"
 		/>
 	<formFieldProperty
-		name="dt_fin_validita"
-		/>
-	<formFieldProperty
 		name="dt_ini_validita"
 		/>
+	<formFieldProperty
+		name="dt_fin_validita"
+		/>	
 	<formFieldProperty
 		name="dt_nascita_figlio"
 		/>
@@ -178,10 +178,10 @@
 		name="codice_fiscale"
 		/>
 	<findFieldProperty
-		name="dt_fin_validita"
-		/>
-	<findFieldProperty
 		name="dt_ini_validita"
+		/>	
+	<findFieldProperty
+		name="dt_fin_validita"
 		/>
 	<findFieldProperty
 		name="prc_carico"

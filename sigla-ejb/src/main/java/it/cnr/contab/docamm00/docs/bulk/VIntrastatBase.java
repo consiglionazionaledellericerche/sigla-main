@@ -83,7 +83,22 @@ public class VIntrastatBase extends VIntrastatKey implements Keyed {
 	
 	private java.lang.Integer nrProgressivo;
 	
+	private java.lang.String ds_tipo;
 	
+	private java.lang.String uo_origine;
+	
+	public java.lang.String getDs_tipo() {
+		return ds_tipo;
+	}
+	public void setDs_tipo(java.lang.String dsTipo) {
+		ds_tipo = dsTipo;
+	}
+	public java.lang.String getUo_origine() {
+		return uo_origine;
+	}
+	public void setUo_origine(java.lang.String cdUoOrigine) {
+		uo_origine = cdUoOrigine;
+	}
 	public VIntrastatBase() {
 		super();
 	}

@@ -411,4 +411,20 @@ public String getSedeInpdapF24(UserContext userContext) throws ComponentExceptio
 		}
 	}
 }
+public void eliminaPendenti_f24Tot(UserContext userContext)
+		throws ComponentException, RemoteException {
+	try {
+		invoke("eliminaPendenti_f24Tot",new Object[] {userContext });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
 }

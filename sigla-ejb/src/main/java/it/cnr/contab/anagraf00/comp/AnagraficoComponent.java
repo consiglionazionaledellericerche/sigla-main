@@ -1794,11 +1794,11 @@ public void checkConiugeAlreadyExistFor(UserContext userContext,AnagraficoBulk a
 				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non è possibile indicare primo figlio in assenza di Coniuge, esiste già un primo figlio in assenza di Coniuge nello stesso periodo!");
 			else if (carico.getCodice_fiscale().equals(carico_familiare.getCodice_fiscale()))
 				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: è stato già inserito un carico con lo stesso Codice Fiscale!");
-			else if (carico.getCodice_fiscale().equals(carico_familiare.getCodice_fiscale_altro_gen()))
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: esiste un figlio il cui altro genitore ha lo stesso Codice Fiscale!");			
+			else if (!carico.isConiuge()&& carico.getCodice_fiscale().equals(carico_familiare.getCodice_fiscale_altro_gen()))
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: il carico ha lo stesso codice fiscale dell'altro genitore!");			
 			else if (carico.isFiglio() && 
 					 carico.getCodice_fiscale_altro_gen()!= null && 
-					 carico.getCodice_fiscale_altro_gen().equals(carico_familiare.getCodice_fiscale()))
+					 carico.getCodice_fiscale_altro_gen().equals(carico_familiare.getCodice_fiscale()) && !carico_familiare.isConiuge())
 				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: Il Codice Fiscale dell'altro genitore è uguale a quello di un altro carico!");
 			}
 	}
@@ -1933,8 +1933,10 @@ public void validaTi_persona(UserContext userContext, AnagraficoBulk carico) {
 			Carico_familiare_anagBulk carico_familiare=(Carico_familiare_anagBulk)list.get(j);
 		if (carico_familiare.isFiglio() && 
 			!carico_familiare.getFl_primo_figlio_manca_con() && 
-			carico_familiare.getPrc_carico().compareTo(new java.math.BigDecimal(100))==0 &&
-			!esisteConiugeValido(userContext,carico_familiare.getAnagrafico(),carico_familiare) &&
+			carico_familiare.getPrc_carico().compareTo(new java.math.BigDecimal(100))==0
+			//&&
+			//!esisteConiugeValido(userContext,carico_familiare.getAnagrafico(),carico_familiare) 
+			&&
 			carico_familiare.getCodice_fiscale_altro_gen() == null)
 			throw new ApplicationException("Carichi Familiari: per il Figlio è necessario specificare il Codice fiscale dell'altro genitore oppure è necessario inserire il Coniuge");
 		}

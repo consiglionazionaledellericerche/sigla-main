@@ -1750,15 +1750,22 @@ public void	callRibaltaDispImproprie(UserContext userContext) throws ComponentEx
 }
 
 public OggettoBulk updateParametriCds (UserContext context) throws EJBException,ComponentException, PersistencyException, RemoteException {
-	Parametri_cdsBulk parametri_cds =(Parametri_cdsBulk)getHome(context,Parametri_cdsBulk.class).findByPrimaryKey(new Parametri_cdsBulk(((CNRUserContext)context).getCd_cds(),((CNRUserContext)context).getEsercizio()));
-	try {
-		
-		parametri_cds.setFl_ribaltato( new Boolean(true));
-		parametri_cds.setToBeUpdated();
-		updateBulk(context, parametri_cds);
-	} catch(Throwable e) {
-		throw handleException(e);
+	Parametri_cdsBulk parametri_cds =(Parametri_cdsBulk)getHome(context,Parametri_cdsBulk.class).findByPrimaryKey(new Parametri_cdsBulk(((CNRUserContext)context).getCd_cds(),((CNRUserContext)context).getEsercizio()-1));
+	if(parametri_cds==null || parametri_cds.getFl_ribaltato()){ 
+		parametri_cds =(Parametri_cdsBulk)getHome(context,Parametri_cdsBulk.class).findByPrimaryKey(new Parametri_cdsBulk(((CNRUserContext)context).getCd_cds(),((CNRUserContext)context).getEsercizio()));
+		try {
+			
+			parametri_cds.setFl_ribaltato( new Boolean(true));
+			parametri_cds.setToBeUpdated();
+			updateBulk(context, parametri_cds);
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
 	}
+	else{
+		throw new ApplicationException("Attenzione! Il ribaltamento per l'esercizio precedente non è stato effettuato.");
+	}
+		
 	return parametri_cds;
 }
 }

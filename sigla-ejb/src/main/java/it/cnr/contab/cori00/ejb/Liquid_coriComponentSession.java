@@ -21,6 +21,7 @@ String getContoSpecialeEnteF24(UserContext userContext)throws it.cnr.jada.comp.C
 void Popola_f24(UserContext userContext,Liquid_coriBulk liquidazione) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.util.List EstraiListaTot(UserContext userContext,it.cnr.contab.cori00.docs.bulk.Liquid_coriBulk param1)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void Popola_f24Tot(UserContext userContext,Liquid_coriBulk liquidazione) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+void eliminaPendenti_f24Tot(UserContext userContext) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 String getSedeInpsF24(UserContext userContext)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 Configurazione_cnrBulk getSedeInailF24(UserContext userContext)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 String getSedeInpdapF24(UserContext userContext)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;

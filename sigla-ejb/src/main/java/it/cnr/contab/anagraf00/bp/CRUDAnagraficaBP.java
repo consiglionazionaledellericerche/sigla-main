@@ -60,22 +60,25 @@ public class CRUDAnagraficaBP extends SimpleCRUDBP {
 			validaCarico(context,(Carico_familiare_anagBulk)bulk);
 		}
 		public OggettoBulk removeDetail(int i) {
-			List list = getDetails();
-			Carico_familiare_anagBulk carico=(Carico_familiare_anagBulk)list.get(i);	
-			if(carico.getAnagrafico()!=null &&  carico.getAnagrafico().isUtilizzata_detrazioni()){
-				setMessage("Cancellazione non possibile! Carico familiare utilizzato nel calcolo delle detrazioni.");
-				return null;
-		}else{
-			if (carico.isConiuge())
-			{
-			for(int j = list.size() - 1; j >= 0; j--)
-				{
-					Carico_familiare_anagBulk carico_familiare=(Carico_familiare_anagBulk)list.get(j);
-					validaRemoveDetail(carico_familiare);
+			if (!getModel().isNew()){	
+				List list = getDetails();
+				Carico_familiare_anagBulk carico=(Carico_familiare_anagBulk)list.get(i);
+			
+				if(carico.getAnagrafico()!=null &&  carico.getAnagrafico().isUtilizzata_detrazioni()){
+					setMessage("Cancellazione non possibile! Carico familiare utilizzato nel calcolo delle detrazioni.");
+					return null;
 				}
-			}
-			return super.removeDetail(i);
+				else{
+					if (carico.isConiuge()){
+						for(int j = list.size() - 1; j >= 0; j--){
+							Carico_familiare_anagBulk carico_familiare=(Carico_familiare_anagBulk)list.get(j);
+							validaRemoveDetail(carico_familiare);
+						}
+					}
+					return super.removeDetail(i);
+				}
 		}
+			return super.removeDetail(i);	
 		}
 	};
 
@@ -490,6 +493,7 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 		
 	}
 	protected void validaCarico(ActionContext context,Carico_familiare_anagBulk carico) throws ValidationException {
+		if(carico.isToBeCreated()){
 		try {
 			AnagraficoComponentSession sess = (AnagraficoComponentSession)createComponentSession();
 			if (carico.isConiuge()|| carico.isFiglio()){
@@ -498,9 +502,16 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 			if (carico.isFiglio() && 
 				!carico.getFl_primo_figlio_manca_con() && 
 				carico.getPrc_carico().compareTo(new java.math.BigDecimal(100))==0 &&
-				!sess.esisteConiugeValido(context.getUserContext(),carico.getAnagrafico(),carico) &&
+				//!sess.esisteConiugeValido(context.getUserContext(),carico.getAnagrafico(),carico) &&
 				carico.getCodice_fiscale_altro_gen() == null)
 				throw new ValidationException("Attenzione: è necessario specificare il Codice fiscale dell'altro genitore");
+			java.util.GregorianCalendar data_da = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
+			java.util.GregorianCalendar data_a = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
+			data_da.setTime(carico.getDt_ini_validita());
+			data_a.setTime(carico.getDt_fin_validita());
+			if (data_da.get(java.util.GregorianCalendar.YEAR)!=data_a.get(java.util.GregorianCalendar.YEAR)){
+				throw new ValidationException("La data di inizio e fine validità devono appartenere allo stesso esercizio.");
+			}
 		} catch(javax.ejb.EJBException e) {
 			throw new it.cnr.jada.DetailedRuntimeException(e);
 		}catch(it.cnr.jada.comp.ComponentException ex){
@@ -509,6 +520,7 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 			throw new it.cnr.jada.DetailedRuntimeException(ex);
 		}catch (java.rmi.RemoteException ex) {
 			throw new it.cnr.jada.DetailedRuntimeException(ex);
+		}
 		}
 	}
 	public void basicEdit(it.cnr.jada.action.ActionContext context,it.cnr.jada.bulk.OggettoBulk bulk, boolean doInitializeForEdit) throws it.cnr.jada.action.BusinessProcessException {

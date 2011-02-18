@@ -126,12 +126,10 @@ public Forward doDettaglioGruppiLocaliFor(ActionContext context) {
 	Liquid_coriBulk liquid_cori = (Liquid_coriBulk)bp.getModel();
 	Liquid_gruppoCoriCRUDController gruppi_controller = (Liquid_gruppoCoriCRUDController)bp.getGruppi();
 	Liquid_gruppo_coriIBulk selected = (Liquid_gruppo_coriIBulk)gruppi_controller.getModel();
-
 	try {
-		Unita_organizzativaBulk uoOrigineSelected = (Unita_organizzativaBulk)Utility.createUnita_organizzativaComponentSession().findUOByCodice(context.getUserContext(),selected.getCd_uo_origine());
-	
 		if (selected == null)
 			return handleException(context, new it.cnr.jada.comp.ApplicationException("Selezionare un Gruppo."));
+		Unita_organizzativaBulk uoOrigineSelected = (Unita_organizzativaBulk)Utility.createUnita_organizzativaComponentSession().findUOByCodice(context.getUserContext(),selected.getCd_uo_origine());
 		
 		if (selected != null 
 				//&& selected.getCd_cds().compareTo(selected.getCd_cds_origine())!=0){
