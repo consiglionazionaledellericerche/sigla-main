@@ -31,14 +31,16 @@
 		isBold="true"
 		isItalic="true"
 		pdfFontName="Times-BoldItalic"
-	/>
+	>
+	</style>
 	<style 
 		name="TNRC10"
 		isDefault="false"
 		fontName="Times New Roman"
 		isItalic="true"
 		pdfFontName="Times-Italic"
-	/>
+	>
+	</style>
 	<style 
 		name="TNRGC12"
 		isDefault="false"
@@ -47,28 +49,32 @@
 		isBold="true"
 		isItalic="true"
 		pdfFontName="Times-BoldItalic"
-	/>
+	>
+	</style>
 	<style 
 		name="TNR10"
 		isDefault="false"
 		fontName="Times New Roman"
 		fontSize="10"
 		pdfFontName="Times-Roman"
-	/>
+	>
+	</style>
 	<style 
 		name="TNR8"
 		isDefault="false"
 		fontName="Times New Roman"
 		fontSize="8"
 		pdfFontName="Times-Roman"
-	/>
+	>
+	</style>
 	<style 
 		name="TNRG10"
 		isDefault="false"
 		fontName="Times New Roman"
 		isBold="true"
 		pdfFontName="Times-Bold"
-	/>
+	>
+	</style>
 	<style 
 		name="TNRG12"
 		isDefault="false"
@@ -76,7 +82,8 @@
 		fontSize="12"
 		isBold="true"
 		pdfFontName="Times-Bold"
-	/>
+	>
+	</style>
 	<style 
 		name="TNRG8"
 		isDefault="false"
@@ -84,14 +91,16 @@
 		fontSize="8"
 		isBold="true"
 		pdfFontName="Times-Bold"
-	/>
+	>
+	</style>
 	<style 
 		name="TNR9"
 		isDefault="false"
 		fontName="Times New Roman"
 		fontSize="9"
 		pdfFontName="Times-Roman"
-	/>
+	>
+	</style>
 	<style 
 		name="TNRG9"
 		isDefault="false"
@@ -99,7 +108,8 @@
 		fontSize="9"
 		isBold="true"
 		pdfFontName="Times-Bold"
-	/>
+	>
+	</style>
 	<style 
 		name="TNRG14"
 		isDefault="false"
@@ -107,7 +117,8 @@
 		fontSize="14"
 		isBold="true"
 		pdfFontName="Times-Bold"
-	/>
+	>
+	</style>
 	<style 
 		name="TNRGC16"
 		isDefault="false"
@@ -116,7 +127,8 @@
 		isBold="true"
 		isItalic="true"
 		pdfFontName="Times-BoldItalic"
-	/>
+	>
+	</style>
 	<style 
 		name="TNRG16"
 		isDefault="false"
@@ -124,7 +136,8 @@
 		fontSize="16"
 		isBold="true"
 		pdfFontName="Times-Bold"
-	/>
+	>
+	</style>
 	<style 
 		name="TNRC16"
 		isDefault="false"
@@ -132,14 +145,16 @@
 		fontSize="16"
 		isItalic="true"
 		pdfFontName="Times-Italic"
-	/>
+	>
+	</style>
 	<style 
 		name="TNR16"
 		isDefault="false"
 		fontName="Times New Roman"
 		fontSize="16"
 		pdfFontName="Times-Roman"
-	/>
+	>
+	</style>
 	<style 
 		name="TNRC9"
 		isDefault="false"
@@ -147,7 +162,8 @@
 		fontSize="9"
 		isItalic="true"
 		pdfFontName="Times-Italic"
-	/>
+	>
+	</style>
 	<style 
 		name="TNRG11"
 		isDefault="false"
@@ -155,14 +171,16 @@
 		fontSize="11"
 		isBold="true"
 		pdfFontName="Times-Bold"
-	/>
+	>
+	</style>
 	<style 
 		name="TNR12"
 		isDefault="false"
 		fontName="Times New Roman"
 		fontSize="12"
 		pdfFontName="Times-Roman"
-	/>
+	>
+	</style>
 
 	<parameter name="Esercizio" isForPrompting="false" class="java.lang.Integer">
 		<defaultValueExpression ><![CDATA[new Integer("2006")]]></defaultValueExpression>
@@ -193,7 +211,7 @@
 	</parameter>
 	<queryString><![CDATA[select * from PRT_SCAD_ACCERT
 where ESERCIZIO = $P{Esercizio}
-and UO_ORI like $P{UO_or}
+and UO_ORI like decode($P{UO_or},'*','%',$P{UO_or})
 and CDS_ORI = $P{CDS_or}
 and CDS = $P{CDS}
 and RIPORTATO = $P{Riporto}
@@ -251,7 +269,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="52"
 						height="15"
 						key="textField"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -269,7 +291,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="54"
 						height="12"
 						key="textField"/>
-					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
@@ -283,7 +309,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="62"
 						height="12"
 						key="textField"/>
-					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
@@ -297,7 +327,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="57"
 						height="12"
 						key="textField"/>
-					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
@@ -311,7 +345,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="140"
 						height="13"
 						key="staticText-14"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement>
 						<font/>
 					</textElement>
@@ -333,7 +371,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="497"
 						height="40"
 						key="image-1"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<graphicElement stretchType="NoStretch"/>
 					<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
 				</image>
@@ -349,7 +391,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="782"
 						height="27"
 						key="staticText-1"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -363,7 +409,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="782"
 						height="19"
 						key="textField-1"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -379,7 +429,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="782"
 						height="15"
 						key="textField-2"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement>
 						<font/>
 					</textElement>
@@ -393,7 +447,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="782"
 						height="15"
 						key="textField-3"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement>
 						<font/>
 					</textElement>
@@ -407,7 +465,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="86"
 						height="13"
 						key="textField"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement>
 						<font/>
 					</textElement>
@@ -421,7 +483,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="100"
 						height="13"
 						key="textField"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
@@ -435,7 +501,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="100"
 						height="13"
 						key="textField"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement>
 						<font/>
 					</textElement>
@@ -449,7 +519,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="44"
 						height="13"
 						key="staticText-2"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement>
 						<font/>
 					</textElement>
@@ -462,7 +536,9 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="782"
 						height="0"
 						key="line-1"/>
-					<graphicElement stretchType="NoStretch" pen="2Point"/>
+					<graphicElement stretchType="NoStretch">
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+</graphicElement>
 				</line>
 				<staticText>
 					<reportElement
@@ -472,7 +548,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="52"
 						height="24"
 						key="staticText-3"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -486,7 +566,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="47"
 						height="24"
 						key="staticText-4"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -500,7 +584,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="44"
 						height="24"
 						key="staticText-5"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -514,7 +602,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="38"
 						height="24"
 						key="staticText-6"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -528,7 +620,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="46"
 						height="13"
 						key="staticText-7"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -542,7 +638,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="49"
 						height="16"
 						key="staticText-8"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Left">
 						<font/>
 					</textElement>
@@ -556,7 +656,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="110"
 						height="16"
 						key="staticText-9"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -570,7 +674,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="49"
 						height="24"
 						key="staticText-10"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -584,7 +692,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="59"
 						height="24"
 						key="staticText-11"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -598,7 +710,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="57"
 						height="24"
 						key="staticText-12"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -612,7 +728,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="67"
 						height="24"
 						key="staticText-13"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -626,7 +746,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="28"
 						height="13"
 						key="staticText-16"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -648,7 +772,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="47"
 						height="13"
 						key="textField"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -662,7 +790,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="47"
 						height="13"
 						key="textField"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -676,7 +808,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="38"
 						height="13"
 						key="textField"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -690,7 +826,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="46"
 						height="13"
 						key="textField"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -704,7 +844,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="100"
 						height="13"
 						key="textField"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Left">
 						<font/>
 					</textElement>
@@ -718,7 +862,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="166"
 						height="13"
 						key="textField"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement>
 						<font/>
 					</textElement>
@@ -732,7 +880,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="54"
 						height="13"
 						key="textField"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
@@ -746,7 +898,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="62"
 						height="13"
 						key="textField"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
@@ -760,7 +916,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="57"
 						height="13"
 						key="textField"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
@@ -774,7 +934,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="67"
 						height="13"
 						key="textField"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -790,7 +954,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						key="staticText-17">
 							<printWhenExpression><![CDATA[new Boolean($F{RIPORTATO}.equals("N")&&$F{TIPO}.equals("ACR_RES"))]]></printWhenExpression>
 						</reportElement>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -806,7 +974,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						key="staticText-18">
 							<printWhenExpression><![CDATA[new Boolean($F{RIPORTATO}.equals("N")&&$F{TIPO}.equals("ACR"))]]></printWhenExpression>
 						</reportElement>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
@@ -827,7 +999,9 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="782"
 						height="0"
 						key="line-2"/>
-					<graphicElement stretchType="NoStretch" pen="2Point"/>
+					<graphicElement stretchType="NoStretch">
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+</graphicElement>
 				</line>
 			</band>
 		</pageFooter>
@@ -841,7 +1015,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="54"
 						height="18"
 						key="textField"/>
-					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="1Point" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
@@ -855,7 +1033,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="62"
 						height="18"
 						key="textField"/>
-					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="1Point" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
@@ -869,7 +1051,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="57"
 						height="18"
 						key="textField"/>
-					<box topBorder="Thin" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="1Point" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
@@ -883,7 +1069,11 @@ and DATA_SCAD between $P{DataInizio} and $P{DataFine}]]></queryString>
 						width="140"
 						height="16"
 						key="staticText-15"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement>
 						<font/>
 					</textElement>
