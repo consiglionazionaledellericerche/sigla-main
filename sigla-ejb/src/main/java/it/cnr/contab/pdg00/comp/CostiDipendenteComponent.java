@@ -2054,6 +2054,9 @@ public Collection findEsercizi(Stampa_attivita_siglaBulk bulk, Esercizio_baseHom
 			java.util.Collection esercizi;
 			esercizi =  esercizioBaseHome.findEsercizi((Stampa_ripartizione_costiVBulk)stampa);
 			((Stampa_ripartizione_costiVBulk)stampa).setAnni(esercizi);
+			Esercizio_baseBulk esercizio = (Esercizio_baseBulk) getHome(usercontext, Esercizio_baseBulk.class).findAll().get(0);
+			Integer esercizio_scrivania = CNRUserContext.getEsercizio(usercontext);
+			stampa.setEsercizio_base(esercizio);
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
 		} catch (IntrospectionException e) {
