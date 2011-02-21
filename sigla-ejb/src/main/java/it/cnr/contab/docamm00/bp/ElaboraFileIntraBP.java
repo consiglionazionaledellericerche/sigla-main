@@ -155,7 +155,7 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
 				 throw new ApplicationException("Codice sezione doganale non configurato");
 			bw.append(Formatta(config.getVal01(),"D",6,"0"));
 			bw.append(Formatta(null,"S",4," "));//riservata SDA
-			bw.append(Formatta(P_iva,"D",16,"0"));
+			bw.append(Formatta(P_iva,"S",16," "));
 			if(config.getVal03()==null)
 				 throw new ApplicationException("Progressivo sede utente abilitato non configurato");
 			bw.append(Formatta(config.getVal03(),"D",3,"0")); //progressivo sede
