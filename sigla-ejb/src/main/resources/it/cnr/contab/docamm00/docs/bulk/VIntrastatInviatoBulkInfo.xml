@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	shortDescription="Intrastat Inviato"
+	longDescription="Intrastat Inviato"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizio" />
+	<fieldProperty
+		name="mese"
+		property="mese"
+		keysProperty="meseKeys"
+		inputSize="30"
+		maxLength="30"
+		inputType="SELECT"
+		enabledOnEdit="false"
+		label="mese" />
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		keysProperty="tipoKeys"
+		inputSize="30"
+		maxLength="30"
+		inputType="SELECT"
+		enabledOnEdit="false"
+		label="tipo" />
+	<fieldProperty
+		name="uo"
+		property="uo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="uo" />
+	<fieldProperty
+		name="progressivo"
+		property="progressivo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="progressivo" />
+	<fieldProperty
+		name="dt_registrazione"
+		property="dt_registrazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="data registrazione" />
+	<fieldProperty
+		name="nr_fattura"
+		property="nr_fattura"
+		inputType="TEXT"
+		cols="60"
+		rows="5"
+		maxLength="40"
+		enabledOnEdit="false"
+		label="nr fattura" />
+	<fieldProperty
+		name="partita_iva"
+		property="partita_iva"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="partita iva" />
+	<fieldProperty
+		name="ti_bene_servizio"
+		property="ti_bene_servizio"
+		keysProperty="tiBeneServizioKeys"
+		inputSize="30"
+		maxLength="30"
+		inputType="SELECT"
+		enabledOnEdit="false"
+		label="bene/servizio" />
+	<fieldProperty
+		name="codice"
+		property="codice"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		label="codice bene/servizio" />
+	<fieldProperty
+		name="ammontare_euro"
+		property="ammontare_euro"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="false"
+		label="ammontare euro" />
+	<fieldProperty
+		name="protocollo_invio"
+		property="protocollo_invio"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnEdit="false"
+		label="protocollo invio" />
+	<fieldProperty
+		name="riga_invio"
+		property="riga_invio"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		label="riga invio" />
+	
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="mese" />
+	<formFieldProperty
+		name="tipo" />
+	<formFieldProperty
+		name="uo" />
+	<formFieldProperty
+		name="progressivo" />
+	<formFieldProperty
+		name="dt_registrazione" />
+	<formFieldProperty
+		name="nr_fattura" />
+	<formFieldProperty
+		name="partita_iva" />
+	<formFieldProperty
+		name="ti_bene_servizio" />
+	<formFieldProperty
+		name="codice" />
+	<formFieldProperty
+		name="ammontare_euro" />
+	<formFieldProperty
+		name="protocollo_invio" />
+	<formFieldProperty
+		name="riga_invio" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="mese" />
+	<findFieldProperty
+		name="tipo" />
+	<findFieldProperty
+		name="uo" />
+	<findFieldProperty
+		name="progressivo" />
+	<findFieldProperty
+		name="dt_registrazione" />
+	<findFieldProperty
+		name="nr_fattura" />
+	<findFieldProperty
+		name="partita_iva" />
+	<findFieldProperty
+		name="ti_bene_servizio" />
+	<findFieldProperty
+		name="codice" />
+	<findFieldProperty
+		name="ammontare_euro" />
+	<findFieldProperty
+		name="protocollo_invio" />
+	<findFieldProperty
+		name="riga_invio" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="mese" />
+	<columnFieldProperty
+		name="tipo" />
+	<columnFieldProperty
+		name="uo" />
+	<columnFieldProperty
+		name="progressivo" />
+	<columnFieldProperty
+		name="dt_registrazione" />
+	<columnFieldProperty
+		name="nr_fattura" />
+	<columnFieldProperty
+		name="partita_iva" />
+	<columnFieldProperty
+		name="ti_bene_servizio" />
+	<columnFieldProperty
+		name="codice" />
+	<columnFieldProperty
+		name="ammontare_euro" />
+	<columnFieldProperty
+		name="protocollo_invio" />
+	<columnFieldProperty
+		name="riga_invio" />
+</bulkInfo>
