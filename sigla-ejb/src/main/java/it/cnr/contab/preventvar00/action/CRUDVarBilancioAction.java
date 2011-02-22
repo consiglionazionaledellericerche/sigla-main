@@ -125,7 +125,9 @@ public Forward doOnEsercizioResChange(ActionContext context) {
 		fillModel(context);
 		CRUDVarBilancioBP bp = (CRUDVarBilancioBP)getBusinessProcess(context);
 		Var_bilancioBulk varBil = (Var_bilancioBulk)bp.getModel();
-		varBil.setVar_stanz_res(new Var_stanz_resBulk());
+		if(varBil.isNew()){
+			varBil.setVar_stanz_res(new Var_stanz_resBulk());
+		}
 		return context.findDefaultForward();
 	}catch(Throwable ex){
 		return handleException(context, ex);

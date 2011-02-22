@@ -860,6 +860,11 @@ public List findEsercizi_res(CNRUserContext userContext,Var_bilancioBulk var_bil
 			Esercizio_baseHome home = (Esercizio_baseHome)getHome(userContext,Esercizio_baseBulk.class);
 			SQLBuilder sql = home.createSQLBuilder();
 		    sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.LESS_EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getEsercizio());
+		    if( var_bilancio.getVar_stanz_res()!=null && var_bilancio.getEsercizio_var_stanz_res()!=null)
+		    	sql.addSQLClause("AND", "ESERCIZIO",SQLBuilder.NOT_EQUALS,var_bilancio.getEsercizio());
+		    else if(var_bilancio.getPdg_variazione()!=null && var_bilancio.getPg_variazione_pdg()!=null)
+		    	sql.addSQLClause("AND", "ESERCIZIO",SQLBuilder.EQUALS,var_bilancio.getEsercizio());
+		    
 		    sql.addOrderBy("ESERCIZIO DESC");
 			Broker broker = home.createBroker(sql);
 			lista = home.fetchAll(broker);

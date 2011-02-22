@@ -26,7 +26,7 @@
 		inputType="SELECT"
 		nullable="false"
 		enabledOnInsert="true"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
 		enabledOnSearch="true"
 		style="width:15em"
 		label="Esercizio residuo" />	
