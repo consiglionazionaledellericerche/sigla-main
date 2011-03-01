@@ -208,9 +208,16 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 	**/
 	public void eliminaConBulk(UserContext userContext, OggettoBulk bulk) throws ComponentException{
 		try {		
+			String stato_prec=null;
+			Var_stanz_resBulk var = (Var_stanz_resBulk) bulk;
+			if (var.getStato().compareTo(Var_stanz_resBulk.STATO_PROPOSTA_DEFINITIVA)==0)
+				stato_prec=Var_stanz_resBulk.STATO_PROPOSTA_DEFINITIVA;
+			
 			if (bulk instanceof ICancellatoLogicamente){
 				((ICancellatoLogicamente)bulk).cancellaLogicamente();
 				updateBulk(userContext, bulk);
+				if(stato_prec!=null)		
+					aggiornaLimiteSpesa(userContext, var);
 			}else{
 				super.eliminaConBulk(userContext, bulk);				
 			}

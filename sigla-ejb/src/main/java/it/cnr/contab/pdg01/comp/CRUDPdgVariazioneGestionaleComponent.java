@@ -337,9 +337,16 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 	**/
 	public void eliminaConBulk(UserContext userContext, OggettoBulk bulk) throws ComponentException{
 		try {		
+			String stato_prec=null;
+			Pdg_variazioneBulk var = (Pdg_variazioneBulk) bulk;
+			if (var.getStato().compareTo(Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA)==0)
+				stato_prec=Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA;
+			
 			if (bulk instanceof ICancellatoLogicamente){
 					((ICancellatoLogicamente)bulk).cancellaLogicamente();
 					updateBulk(userContext, bulk);
+				if(stato_prec!=null)		
+					aggiornaLimiteSpesa(userContext, var);
 			}else{
 				super.eliminaConBulk(userContext, bulk);				
 			}

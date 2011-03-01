@@ -252,8 +252,8 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	}	
 	public boolean isDeleteButtonEnabled()
 	{
-		return super.isDeleteButtonEnabled() && (isCdrScrivania() || isUoEnte()) && //!((Pdg_variazioneBulk)getModel()).isApprovata();
-		!(((Pdg_variazioneBulk)getModel()).getStatoDocumentale()!=null);
+		return super.isDeleteButtonEnabled() && (isCdrScrivania() || isUoEnte()) && 
+		!((Pdg_variazioneBulk)getModel()).isApprovata() &&!(((Pdg_variazioneBulk)getModel()).getStatoDocumentale()!=null);
 	}
 	/**
 	 * Metodo utilizzato per creare una toolbar applicativa personalizzata.
