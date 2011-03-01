@@ -170,7 +170,7 @@
 		cols="80"
 		rows="3"
         enabledOnSearch="true"		
-		maxLength="200"
+		maxLength="500"
 		nullable="false"
 		label="Motivazione" />
 	<fieldProperty

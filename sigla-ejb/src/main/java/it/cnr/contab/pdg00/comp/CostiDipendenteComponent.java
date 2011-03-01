@@ -524,9 +524,12 @@ private boolean isStatoPdgValidoPerModificaCDP(Pdg_preventivoBulk pdg) {
 		pdg.getStato().equalsIgnoreCase(pdg.ST_E_CHIUSO); 
 }
 private boolean isStatoPdgPValidoPerModificaCDP(Pdg_esercizioBulk pdgP) {
+	if (pdgP==null)
+		return false;
+	else
 	return 
-		pdgP.getStato().equalsIgnoreCase(pdgP.STATO_APERTURA_CDR) || 
-		pdgP.getStato().equalsIgnoreCase(pdgP.STATO_ESAMINATO_CDR); 
+		(pdgP.getStato().equalsIgnoreCase(pdgP.STATO_APERTURA_CDR) || 
+		 pdgP.getStato().equalsIgnoreCase(pdgP.STATO_ESAMINATO_CDR)); 
 }
 /**
  *  Default

@@ -114,6 +114,7 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 			if (!pdg.isStorno() && !pdg.getTipo_variazione().isMovimentoSuFondi())
 				controllaQuadraturaImportiAree(userContext, pdg);
 			
+			aggiornaLimiteSpesa(userContext, pdg);
 			/*
 			 * Verifico che l'assestato di tutte le combinazioni scelte sia positivo in modo da avvertire
 			 * l'utente del problema di approvazione che avrebbe  
@@ -125,6 +126,31 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 		return pdg;
 	}
 	
+
+private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg) throws ComponentException {
+
+	try {
+		LoggableStatement cs = new LoggableStatement(getConnection( userContext ),
+			"{call " + it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() 
+			+ "CNRCTB053.aggiornaLimiteSpesaVar(?,?,?,?)}",false,this.getClass());
+		cs.setObject( 1, pdg.getEsercizio() );
+		cs.setObject( 2, pdg.getPg_variazione_pdg() );
+		cs.setObject( 3,"C"); //competenza 
+		cs.setObject( 4, userContext.getUser());
+		try {
+			lockBulk(userContext,pdg);
+			cs.executeQuery();
+		} catch (Throwable e) {
+			throw handleException(pdg,e);
+		} finally {
+			cs.close();
+		}	
+	} catch (java.sql.SQLException e) {
+		// Gestisce eccezioni SQL specifiche (errori di lock,...)
+		throw handleSQLException(e);
+	}
+}
+
 	protected Voce_f_saldi_cdr_lineaBulk trovaSaldo(UserContext userContext, Pdg_variazione_riga_gestBulk pdg_det,Voce_fBulk voce) throws PersistencyException, ComponentException{
 		Voce_f_saldi_cdr_lineaBulk saldo = (Voce_f_saldi_cdr_lineaBulk)getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class).findByPrimaryKey(
 		   new Voce_f_saldi_cdr_lineaBulk(pdg_det.getEsercizio(),
@@ -294,7 +320,8 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 			throw new ComponentException(e);
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
-		}	
+		}
+		aggiornaLimiteSpesa(userContext, pdg);
 		return (Pdg_variazioneBulk)super.modificaConBulk(userContext, pdg);
 	}		
 
@@ -1131,4 +1158,15 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 		}
 	  return null;
 	}	
+	public it.cnr.jada.bulk.OggettoBulk statoPrecedente(
+			UserContext userContext, it.cnr.jada.bulk.OggettoBulk oggettoBulk)
+			throws ComponentException {
+		Pdg_variazioneBulk var = (Pdg_variazioneBulk) oggettoBulk;
+		var.setStato(Pdg_variazioneBulk.STATO_PROPOSTA_PROVVISORIA);
+		var.setDt_chiusura(null);
+		var.setToBeUpdated(); 
+		var = (Pdg_variazioneBulk) super.modificaConBulk(userContext, var);
+		aggiornaLimiteSpesa(userContext, var);
+		return var;
+	}
 }

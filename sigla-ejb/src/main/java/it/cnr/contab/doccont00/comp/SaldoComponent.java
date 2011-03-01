@@ -787,60 +787,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaVariazioneStanziamento(UserContext use
 		saldo.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
 		saldo.setToBeUpdated();
 		updateBulk( userContext, saldo );
-		// rospuc 01/2011 inizio modifica  da provare controllo della spesa
-		voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
-			  new Voce_fBulk(voce.getCd_voce(),voce.getEsercizio(),voce.getTi_appartenenza(),voce.getTi_gestione())
-			  );
-		Elemento_voceBulk elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
-            new Elemento_voceBulk(voce.getCd_elemento_voce(),voce.getEsercizio(),voce.getTi_appartenenza(),voce.getTi_gestione())
-            );
-		if (elemento_voce == null)
-			throw new ApplicationException("Elemento voce non trovato per la Voce: "+ voce.getCd_voce());
-		if(elemento_voce.getFl_limite_spesa().booleanValue()){
-			WorkpackageBulk workpackage = (WorkpackageBulk)getHome(userContext,WorkpackageBulk.class).findByPrimaryKey(
-					new WorkpackageBulk(cd_cdr,cd_linea_attivita)
-					);
-			LimiteSpesaBulk limiteTestata=(LimiteSpesaBulk)getHome(userContext, LimiteSpesaBulk.class).findByPrimaryKey(
-					new LimiteSpesaBulk(esercizio_res,voce.getTi_appartenenza(),voce.getTi_gestione(),voce.getCd_elemento_voce(),
-							((NaturaBulk)getHome(userContext,NaturaBulk.class).findByPrimaryKey(
-									new NaturaBulk(workpackage.getCd_natura()))).getTipo()));
-			if(limiteTestata==null)
-				limiteTestata=(LimiteSpesaBulk)getHome(userContext, LimiteSpesaBulk.class).findByPrimaryKey(
-						new LimiteSpesaBulk(esercizio_res,voce.getTi_appartenenza(),voce.getTi_gestione(),voce.getCd_elemento_voce(),"*"));
-			String cds=null;
-		 	if (limiteTestata!=null)
-			{
-				CdrBulk cdr=(CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(
-						new CdrBulk(cd_cdr));
-				if(cdr.getCd_unita_organizzativa()!=null){
-					Unita_organizzativaBulk uo=(Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(
-							new Unita_organizzativaBulk(cdr.getCd_unita_organizzativa()));
-					if(uo.getUnita_padre()!=null)
-						cds=uo.getCd_cds();
-				}
-				LimiteSpesaDetBulk limite=(LimiteSpesaDetBulk)getHome(userContext, LimiteSpesaDetBulk.class).findByPrimaryKey(
-						new LimiteSpesaDetBulk(esercizio_res,cds,voce.getTi_appartenenza(),voce.getTi_gestione(),voce.getCd_elemento_voce(),
-								((NaturaBulk)getHome(userContext,NaturaBulk.class).findByPrimaryKey(
-										new NaturaBulk(workpackage.getCd_natura()))).getTipo()));
-				if(limite==null)
-					limite=(LimiteSpesaDetBulk)getHome(userContext, LimiteSpesaDetBulk.class).findByPrimaryKey(
-							new LimiteSpesaDetBulk(esercizio_res,cds,voce.getTi_appartenenza(),voce.getTi_gestione(),voce.getCd_elemento_voce(),"*"));
-				if(limite==null)
-					throw new ApplicationException("Limite sul controllo della spesa non definito per il CdS.");
-				if((limite.getImpegni_assunti().add(importo)).compareTo(limite.getImporto_limite())>0)
-					throw new ApplicationException("Disponibilità ad impegnare non sufficiente, sulla voce "+elemento_voce.getCd_elemento_voce()+", residuo "+limite.getImporto_limite().subtract(limite.getImpegni_assunti()));
-				else{
-					limite.setImpegni_assunti(limite.getImpegni_assunti().add(importo));
-					limite.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
-					limite.setToBeUpdated();
-					updateBulk( userContext, limite );
-				} 
-			}
-		 	// Presupponiamo che se non è in testata non è soggetta ai limite(per evitare di inserire dei  limiti fittizzi per le fonte esterne)
-		 	//else
-				//throw new ApplicationException("Limite sul controllo della spesa non definito.");
-		}
-	//fine modifica
+		
 		/**
 		 * @author mspasiano
 		 * Aggiorno i saldi negli anni successivi aperti

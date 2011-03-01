@@ -68,7 +68,7 @@
 			columnName="RIFERIMENTI"
 			propertyName="riferimenti"
 			sqlTypeName="VARCHAR"
-			columnSize="200"
+			columnSize="500"
 			nullable="false" />
 		<columnMapping
 			columnName="CD_CAUSALE_RESPINTA"

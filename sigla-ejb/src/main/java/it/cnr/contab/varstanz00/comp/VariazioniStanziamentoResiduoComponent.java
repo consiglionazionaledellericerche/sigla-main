@@ -383,6 +383,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 					throw new ApplicationException("La Differenza di spesa ("+new it.cnr.contab.util.EuroFormat().format(ass_cdr.getSpesa_diff())+")"+
 												   "\n" + "per il Cdr "+ ass_cdr.getCd_centro_responsabilita()+ " ï¿½ diversa da zero. ");
 			}
+			aggiornaLimiteSpesa(userContext, var_stanz_res);
 		} catch (IntrospectionException e) {
 			throw new ComponentException(e);
 		}catch (PersistencyException e) {
@@ -471,62 +472,6 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 						                                                          varRiga.getIm_variazione().negate(),
 						                                                          saldi);
 				super.modificaConBulk(userContext,saldi);
-				// rospuc 01/2011 inizio modifica  da provare controllo della spesa
-//				Voce_fBulk voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
-//						  new Voce_fBulk(saldi.getVoce().getCd_voce(),saldi.getEsercizio_res(),saldi.getTi_appartenenza(),saldi.getTi_gestione())
-//						  );
-//				getHomeCache(userContext).fetchAll(userContext);
-				Elemento_voceBulk elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
-		            new Elemento_voceBulk(varRiga.getCd_elemento_voce(),varRiga.getEsercizio(),varRiga.getTi_appartenenza(),varRiga.getTi_gestione())
-		            );
-				if (elemento_voce == null)
-					throw new ApplicationException("Elemento voce non trovato per la Voce: "+ varRiga.getCd_voce());
-				if(elemento_voce.getFl_limite_spesa().booleanValue()){
-					WorkpackageBulk workpackage = (WorkpackageBulk)getHome(userContext,WorkpackageBulk.class).findByPrimaryKey(
-							new WorkpackageBulk(saldi.getCd_centro_responsabilita(),saldi.getCd_linea_attivita())
-							);
-					LimiteSpesaBulk limiteTestata=(LimiteSpesaBulk)getHome(userContext, LimiteSpesaBulk.class).findByPrimaryKey(
-							new LimiteSpesaBulk(saldi.getEsercizio_res(),elemento_voce.getTi_appartenenza(),elemento_voce.getTi_gestione(),elemento_voce.getCd_elemento_voce(),
-									((NaturaBulk)getHome(userContext,NaturaBulk.class).findByPrimaryKey(
-											new NaturaBulk(workpackage.getCd_natura()))).getTipo()));
-					if(limiteTestata==null)
-						limiteTestata=(LimiteSpesaBulk)getHome(userContext, LimiteSpesaBulk.class).findByPrimaryKey(
-								new LimiteSpesaBulk(saldi.getEsercizio_res(),elemento_voce.getTi_appartenenza(),elemento_voce.getTi_gestione(),elemento_voce.getCd_elemento_voce(),"*"));
-					String cds=null;
-				 	if (limiteTestata!=null)
-					{
-						CdrBulk cdr=(CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(
-								new CdrBulk(saldi.getCd_centro_responsabilita()));
-						if(cdr.getCd_unita_organizzativa()!=null){
-							Unita_organizzativaBulk uo=(Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(
-									new Unita_organizzativaBulk(cdr.getCd_unita_organizzativa()));
-							if(uo.getUnita_padre()!=null)
-								cds=uo.getCd_cds();
-						}
-						LimiteSpesaDetBulk limite=(LimiteSpesaDetBulk)getHome(userContext, LimiteSpesaDetBulk.class).findByPrimaryKey(
-								new LimiteSpesaDetBulk(saldi.getEsercizio_res(),cds,elemento_voce.getTi_appartenenza(),elemento_voce.getTi_gestione(),elemento_voce.getCd_elemento_voce(),
-										((NaturaBulk)getHome(userContext,NaturaBulk.class).findByPrimaryKey(
-												new NaturaBulk(workpackage.getCd_natura()))).getTipo()));
-						if(limite==null)
-							limite=(LimiteSpesaDetBulk)getHome(userContext, LimiteSpesaDetBulk.class).findByPrimaryKey(
-									new LimiteSpesaDetBulk(saldi.getEsercizio_res(),cds,elemento_voce.getTi_appartenenza(),elemento_voce.getTi_gestione(),elemento_voce.getCd_elemento_voce(),"*"));
-						if(limite==null)
-							throw new ApplicationException("Limite sul controllo della spesa non definito per il CdS.");
-						if((limite.getImpegni_assunti().add(varRiga.getIm_variazione())).compareTo(limite.getImporto_limite())>0)
-							throw new ApplicationException("Disponibilità ad impegnare non sufficiente, sulla voce "+elemento_voce.getCd_elemento_voce()+", residuo "+limite.getImpegni_assunti().subtract(limite.getImporto_limite()));
-						else{
-							limite.setImpegni_assunti(limite.getImpegni_assunti().add(varRiga.getIm_variazione()));
-							limite.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
-							limite.setToBeUpdated();
-							updateBulk( userContext, limite );
-						}
-					}
-				 	// Presupponiamo che se non è in testata non è soggetta ai limite(per evitare di inserire dei  limiti fittizzi per le fonte esterne)
-				 	//else
-						//throw new ApplicationException("Limite sul controllo della spesa non definito.");
-				}
-			//}
-			//fine modifica
 			}
 			generaVariazioneBilancio(userContext, var_stanz_res);
 			if (var_stanz_res.getTipologia().equalsIgnoreCase(Var_stanz_resBulk.TIPOLOGIA_STO)||
@@ -704,6 +649,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 //		var_stanz_res.setDt_chiusura(DateUtils.dataContabile(EJBCommonServices.getServerDate(), CNRUserContext.getEsercizio(userContext)));
 		var_stanz_res.setToBeUpdated();
 		var_stanz_res = (Var_stanz_resBulk)super.modificaConBulk(userContext, var_stanz_res);
+		aggiornaLimiteSpesa(userContext, var_stanz_res);
 		return var_stanz_res;
 	}
 	public it.cnr.jada.bulk.OggettoBulk statoPrecedente(UserContext userContext, it.cnr.jada.bulk.OggettoBulk ogettoBulk) throws ComponentException{
@@ -712,7 +658,31 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		var_stanz_res.setDt_chiusura(null);
 		var_stanz_res.setToBeUpdated();
 		var_stanz_res = (Var_stanz_resBulk)super.modificaConBulk(userContext, var_stanz_res);
+		aggiornaLimiteSpesa(userContext, var_stanz_res);
 		return var_stanz_res;
+	}
+	private void aggiornaLimiteSpesa(UserContext userContext,Var_stanz_resBulk pdg) throws ComponentException {
+
+		try {
+			LoggableStatement cs = new LoggableStatement(getConnection( userContext ),
+				"{call " + it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() 
+				+ "CNRCTB053.aggiornaLimiteSpesaVar(?,?,?,?)}",false,this.getClass());
+			cs.setObject( 1, pdg.getEsercizio() );
+			cs.setObject( 2, pdg.getPg_variazione());
+			cs.setObject( 3,"R"); //competenza 
+			cs.setObject( 4, userContext.getUser());
+			try {
+				lockBulk(userContext,pdg);
+				cs.executeQuery();
+			} catch (Throwable e) {
+				throw handleException(pdg,e);
+			} finally {
+				cs.close();
+			}	
+		} catch (java.sql.SQLException e) {
+			// Gestisce eccezioni SQL specifiche (errori di lock,...)
+			throw handleSQLException(e);
+		}
 	}
 	private void inizializzaSommeAZero(Var_stanz_resBulk var_stanz_res){
 		for (java.util.Iterator j=var_stanz_res.getAssociazioneCDR().iterator();j.hasNext();){			
