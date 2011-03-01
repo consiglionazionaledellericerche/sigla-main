@@ -19,14 +19,21 @@ import it.cnr.contab.doccont00.core.bulk.MandatoIHome;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaHome;
 import it.cnr.contab.gestiva00.core.bulk.Stampa_registri_ivaVBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.ejb.EJBException;
 
 /**
  * Insert the type's description here.
@@ -269,26 +276,7 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 	return null;
 	}
 
-	public Integer recuperoMaxProt(UserContext param0) throws ComponentException {
-		// Numero progressivo univoco della dichiarazione non dovrebbe essere per anno
-		Fattura_attiva_intraHome home=(Fattura_attiva_intraHome)getHome(param0, Fattura_attiva_intraBulk.class);
-		Fattura_passiva_intraHome home_att=(Fattura_passiva_intraHome)getHome(param0, Fattura_passiva_intraBulk.class);
-		try {
-			
-			Integer attive= (new Integer(
-					((Integer)home_att.findMax( new Fattura_attiva_intraBulk(), "nr_protocollo", new Integer(200000)))+1));
-			Integer passive=(new Integer(
-					((Integer)home.findMax( new Fattura_passiva_intraBulk(), "nr_protocollo", new Integer(200000)))+1));
-			if(attive.compareTo(passive)>0)
-				return attive;
-			else 
-				return passive;
-			   
-		} catch (PersistencyException e) {
-			handleException(e);
-		}
-		return 1;
-	}
+	
     public java.util.Date recuperoMaxDtPagamentoLiq(UserContext uc, OggettoBulk bulk) throws ComponentException 
     {
     	try {
@@ -339,8 +327,11 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 			Fattura_attiva_intraHome home_att=(Fattura_attiva_intraHome)getHome(context, Fattura_attiva_intraBulk.class);
 			FatturaPassivaIntraSHome home_s=(FatturaPassivaIntraSHome)getHome(context, FatturaPassivaIntraSBulk.class);
 			FatturaAttivaIntraSHome home_att_s=(FatturaAttivaIntraSHome)getHome(context, FatturaAttivaIntraSBulk.class);
-			
-			Integer prot=recuperoMaxProt(context);
+			Integer prot=0;
+			if(bulk.getNrProtocolloAcq()!=null)
+				prot=bulk.getNrProtocolloAcq();
+			else
+				throw new ApplicationException("Non è stato indicato il numero Protocollo Acq/Serv. ricevuti");
 			Integer conta=0;
 			for (Iterator i=(SezioneUnoAcquisti(context, bulk)).iterator();i.hasNext();){
 				conta=conta+1;
@@ -410,7 +401,10 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
     			}
 			}
 			conta=0;
-			prot=recuperoMaxProt(context);
+			if(bulk.getNrProtocolloVen()!=null)
+				prot=bulk.getNrProtocolloVen();
+			else
+				throw new ApplicationException("Non è stato indicato il numero Protocollo Cessioni/Serv. resi");
 			for (Iterator i=(SezioneUnoVendite(context, bulk)).iterator();i.hasNext();){
 				conta=conta+1;
     			VIntrastatBulk det=(VIntrastatBulk)i.next();
@@ -479,6 +473,18 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 	    			updateBulk(context, fats);
     			}
 			}
+			it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
+			try {
+				config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( context, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context), null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_COSTANTI, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_MODELLO_INTRASTAT);
+				config.setIm01(new BigDecimal(bulk.getNrProtocollo()));
+				config.setToBeUpdated();
+				updateBulk(context, config);
+			} catch (RemoteException e) {
+				throw new ComponentException(e);
+			} catch (EJBException e) {
+				throw new ComponentException(e);
+			}
+			
 		} catch (Exception e) {
 			handleException(e);
 		}

@@ -10,34 +10,23 @@ import java.io.OutputStreamWriter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
-import java.util.List;
-
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
-
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.EcfBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
-import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.docamm00.docs.bulk.VIntra12Bulk;
 import it.cnr.contab.docamm00.docs.bulk.VIntrastatBulk;
 import it.cnr.contab.docamm00.ejb.ElaboraFileIntraComponentSession;
-import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
-import it.cnr.contab.docamm00.intrastat.bulk.FatturaPassivaIntraSBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_richiestaBulk;
-import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
@@ -45,7 +34,6 @@ import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.jsp.Button;
 import it.cnr.jada.util.jsp.JSPUtils;
-
 
 public class ElaboraFileIntraBP extends SimpleCRUDBP {
 	
@@ -67,7 +55,7 @@ public boolean isScaricaButtonEnabled() {
 		return false;
 }
 public boolean isConfermaButtonHidden() {
-	if (this.getModel()  instanceof VIntrastatBulk && getFile()!=null) {
+	if (this.getModel()  instanceof VIntrastatBulk && getFile()!=null && getInvio() ) {
 		return false;
 	}
 	else
@@ -93,8 +81,18 @@ protected it.cnr.jada.util.jsp.Button[] createToolbar() {
 }
 
 private String file;
+private Boolean invio=new Boolean(false);
+public Boolean getInvio() {
+	return invio;
+}
+public void setInvio(Boolean invio) {
+	this.invio = invio;
+}
 public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invio) throws BusinessProcessException, ComponentException, PersistencyException, IntrospectionException {
-	  try{			  
+	  try{
+		  setInvio(invio);
+		  dett.setNrProtocolloAcq(null);
+		  dett.setNrProtocolloVen(null);
 		  AnagraficoComponentSession sess = (AnagraficoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRANAGRAF00_EJB_AnagraficoComponentSession", AnagraficoComponentSession.class);
 	      AnagraficoBulk ente = sess.getAnagraficoEnte(context.getUserContext());
 	      java.util.List lista=((ElaboraFileIntraComponentSession)createComponentSession()).EstraiLista(context.getUserContext(),getModel());
@@ -111,7 +109,7 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
 				 throw new ApplicationException("Codice utente abilitato non configurato");
 	    	 File f;
 	    if (invio){
-		   f = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/",
+	       f = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/",
 				   Formatta(config.getVal02(),"S",4," ")+//codice utente abilitato
 				   Formatta(new Integer(EcfBulk.getDateCalendar(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()).get(java.util.Calendar.MONTH)+1).toString(),"D",2,"0")+
 				   Formatta(new Integer(EcfBulk.getDateCalendar(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()).get(java.util.Calendar.DAY_OF_MONTH)).toString(),"D",2,"0")+
@@ -175,8 +173,7 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
     	    	   !listaSezioneQuattroAcquisti.isEmpty()){
 	    	bw.append(new String("EUROX"));
 	    	bw.append(P_iva);
-	    	prot=((ElaboraFileIntraComponentSession)createComponentSession()).recuperoMaxProt(context.getUserContext());
-	    	
+	    	prot=config.getIm01().intValue()+1;
 	    	bw.append(Formatta(prot.toString(),"D",6,"0"));
 	    	bw.append("0");// Tipo record Frontespizio
 	    	bw.append(Formatta("0","D",5,"0"));// progressivo riga di dettaglio per frontespizio 0
@@ -428,9 +425,9 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
     		}
     	}
     	if(prot!=0)
-    		prot=((ElaboraFileIntraComponentSession)createComponentSession()).recuperoMaxProt(context.getUserContext())+1;
+    		prot=prot+1;
     	else
-    		prot=((ElaboraFileIntraComponentSession)createComponentSession()).recuperoMaxProt(context.getUserContext());
+    		prot=config.getIm01().intValue()+1;
     	// VENDITE
     	if(!listaSezioneUnoVendite.isEmpty()||
     	   !listaSezioneDueVendite.isEmpty()||
@@ -678,6 +675,7 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
 	      bw.close();
 	      osw.close();
 	      os.close();	      
+	      dett.setNrProtocollo(prot);
 	      setFile("/tmp/"+f.getName());	  
      }else{
 	    	  bw.flush();
@@ -1056,7 +1054,7 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
       bw.flush();
       bw.close();
       osw.close();
-      os.close();	      
+      os.close();	     
       setFile("/tmp/"+f.getName());	  
 	}else{
    	  bw.flush();
@@ -1077,7 +1075,7 @@ throw new ApplicationException("Errore nella scrittura del file!");
 }	
 }
 public void confermaElaborazione(ActionContext context, VIntrastatBulk dett) throws ComponentException, PersistencyException, IntrospectionException, RemoteException, BusinessProcessException {
-	((ElaboraFileIntraComponentSession)createComponentSession()).confermaElaborazione(context.getUserContext(),dett);
-	setFile(null);
+		((ElaboraFileIntraComponentSession)createComponentSession()).confermaElaborazione(context.getUserContext(),dett);
+		setFile(null);
 	}
 }

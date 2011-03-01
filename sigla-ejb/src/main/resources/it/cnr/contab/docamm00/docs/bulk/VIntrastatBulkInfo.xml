@@ -272,7 +272,21 @@
 		inputType="TEXT"
 		maxLength="30"
 		enabledOnEdit="false"
-		label ="Uo origine"/>							
+		label ="Uo origine"/>		
+	<fieldProperty
+		name="nrProtocolloAcq"
+		property="nrProtocolloAcq"
+		inputType="TEXT"
+		maxLength="6"
+		enabledOnEdit="true"
+		label="Protocollo Acq/Serv. ricevuti "/>		
+	<fieldProperty
+		name="nrProtocolloVen"
+		property="nrProtocolloVen"
+		inputType="TEXT"
+		maxLength="6"
+		enabledOnEdit="true"
+		label="Protocollo Cessioni/Serv. resi "/>		
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -345,7 +359,11 @@
 		name="ds_tipo" />	
 	<formFieldProperty
 		name="uo_origine" />
-					
+	<formFieldProperty
+		name="nrProtocolloAcq" />
+	<formFieldProperty
+		name="nrProtocolloVen" />			
+						
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
