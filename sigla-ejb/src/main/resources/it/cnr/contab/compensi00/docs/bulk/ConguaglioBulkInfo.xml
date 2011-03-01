@@ -192,7 +192,31 @@
 		enabledOnEdit = "false"
 		enabledOnSearch = "true"
 		enabledOnFreeSearch = "true"
-		label="Importo detrazione personale anagrafico" />		
+		label="Importo detrazione personale anagrafico" />	
+	<fieldProperty		
+		name="fl_no_detrazioni_altre"
+		property="fl_no_detrazioni_altre"
+		inputType="CHECKBOX"		
+		enabledOnInsert = "true"
+		enabledOnSearch = "false"
+		enabledOnFreeSearch = "true"
+		label="Non Applicazione Detrazioni Personali"/>	
+	<fieldProperty		
+		name="fl_no_detrazioni_family"
+		property="fl_no_detrazioni_family"
+		inputType="CHECKBOX"		
+		enabledOnInsert = "true"
+		enabledOnSearch = "false"
+		enabledOnFreeSearch = "true"
+		label="Non Applicazione Detrazioni Familiari"/>	
+	<fieldProperty		
+		name="fl_detrazioni_altri_tipi"
+		property="fl_detrazioni_altri_tipi"
+		inputType="CHECKBOX"		
+		enabledOnInsert = "true"
+		enabledOnSearch = "false"
+		enabledOnFreeSearch = "true"
+		label="Applicazione Detrazioni Altri Tipi"/>	
 /*********** COMPENSO ************/
 	<fieldProperty
 		name="cd_uo_compenso"
@@ -983,7 +1007,10 @@
     <formFieldProperty name="numero_giorni_esterno" />		
     <formFieldProperty name="ds_comune_addcom_esterno" />		
     <formFieldProperty name="find_comune_esterno" />		
-    <formFieldProperty name="ds_provincia_esterno" />		
+    <formFieldProperty name="ds_provincia_esterno" />	
+	<formFieldProperty name="fl_no_detrazioni_altre" />
+	<formFieldProperty name="fl_no_detrazioni_family" />
+	<formFieldProperty name="fl_detrazioni_altri_tipi" />		    	
         	
 	<columnFieldProperty name="cd_cds" />
 	<columnFieldProperty name="cd_unita_organizzativa" />
@@ -1071,6 +1098,9 @@
 	<findFieldProperty name="fl_escludi_qvaria_deduzione" />
 	<findFieldProperty name="im_detrazione_personale_anag" />			
 	<findFieldProperty name="fl_accantona_add_terr" />
-	<findFieldProperty name="fl_detrazioni_fam_intero_anno" />	
+	<findFieldProperty name="fl_detrazioni_fam_intero_anno" />
+	<findFieldProperty name="fl_no_detrazioni_altre" />
+	<findFieldProperty name="fl_no_detrazioni_family" />
+	<findFieldProperty name="fl_detrazioni_altri_tipi" />	
 	
 </bulkInfo>

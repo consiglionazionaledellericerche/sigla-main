@@ -233,6 +233,15 @@ public class ConguaglioBase extends ConguaglioKey implements Keyed {
 	
 	// IM_CORI_SOSPESO DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal im_cori_sospeso;	
+	
+	// FL_NO_DETRAZIONI_ALTRE CHAR(1) NOT NULL
+	private java.lang.Boolean fl_no_detrazioni_altre;
+	
+	// FL_NO_DETRAZIONI_FAMILY CHAR(1) NOT NULL
+	private java.lang.Boolean fl_no_detrazioni_family;
+	
+	// FL_DETRAZIONI_ALTRI_TIPI CHAR(1) NOT NULL
+	private java.lang.Boolean fl_detrazioni_altri_tipi;	
 public ConguaglioBase() {
 	super();
 }
@@ -1134,6 +1143,25 @@ public void setTi_anagrafico(java.lang.String ti_anagrafico) {
 	}
 	public void setIm_cori_sospeso(java.math.BigDecimal im_cori_sospeso) {
 		this.im_cori_sospeso = im_cori_sospeso;
+	}
+	public java.lang.Boolean getFl_no_detrazioni_altre() {
+		return fl_no_detrazioni_altre;
+	}
+	public void setFl_no_detrazioni_altre(java.lang.Boolean fl_no_detrazioni_altre) {
+		this.fl_no_detrazioni_altre = fl_no_detrazioni_altre;
+	}
+	public java.lang.Boolean getFl_no_detrazioni_family() {
+		return fl_no_detrazioni_family;
+	}
+	public void setFl_no_detrazioni_family(java.lang.Boolean fl_no_detrazioni_family) {
+		this.fl_no_detrazioni_family = fl_no_detrazioni_family;
+	}
+	public java.lang.Boolean getFl_detrazioni_altri_tipi() {
+		return fl_detrazioni_altri_tipi;
+	}
+	public void setFl_detrazioni_altri_tipi(
+			java.lang.Boolean fl_detrazioni_altri_tipi) {
+		this.fl_detrazioni_altri_tipi = fl_detrazioni_altri_tipi;
 	}
 
 }

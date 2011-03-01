@@ -465,6 +465,9 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	setIm_addreg_rate_eseprec(new java.math.BigDecimal(0));
 	setIm_addprov_rate_eseprec(new java.math.BigDecimal(0));
 	setIm_addcom_rate_eseprec(new java.math.BigDecimal(0));
+	setFl_no_detrazioni_altre(Boolean.FALSE);
+	setFl_no_detrazioni_family(Boolean.FALSE);
+	setFl_detrazioni_altri_tipi(Boolean.FALSE);
 	
 	return this;
 }
