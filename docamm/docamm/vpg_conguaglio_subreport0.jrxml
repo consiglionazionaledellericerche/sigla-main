@@ -1133,7 +1133,7 @@ order by tipo]]></queryString>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[($F{FL_SENZA_CALCOLI}.equals("NO")?"No":"Si")]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" pattern="###0" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" pattern="###0" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						style="TNR9"
 						x="473"
@@ -1577,7 +1577,7 @@ order by tipo]]></queryString>
 					<textElement textAlignment="Left">
 						<font/>
 					</textElement>
-				<text><![CDATA[Applicazione detrazioni per assegni alimnetari]]></text>
+				<text><![CDATA[Applicazione detrazioni per assegni alimentari]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
