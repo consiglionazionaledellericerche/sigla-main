@@ -102,20 +102,20 @@ public class CMISService {
 			metadataProperties.add(
 					nodeService.getDictionaryService().createProperty(systemCredentials, 
 							BaseTypeId.CMIS_FOLDER.value(), 
-							PropertyIds.NAME, folderName));
+							PropertyIds.NAME, Arrays.asList(folderName)));
 			aspectsToAdd.add(AspectMetdata.getCmisAspectName(AspectMetdata.ASPECT_TITLED));
 			if (title != null)
 				aspectProperties.add(
 					nodeService.getDictionaryService().createProperty(systemCredentials, 
 							AspectMetdata.getCmisAspectName(AspectMetdata.ASPECT_TITLED), 
 							AspectMetdata.getPrefixLocalPart(AspectMetdata.PROPERTY_TITLE), 
-							title));
+							Arrays.asList(title)));
 			if (description != null)
 				aspectProperties.add(
 					nodeService.getDictionaryService().createProperty(systemCredentials, 
 							AspectMetdata.getCmisAspectName(AspectMetdata.ASPECT_TITLED), 
 							AspectMetdata.getPrefixLocalPart(AspectMetdata.PROPERTY_DESCRIPTION), 
-							description));			
+							Arrays.asList(description)));			
 			Node folder = nodeService.createFolder(systemCredentials, node, metadataProperties, aspectsToAdd, aspectProperties);
 			return CMISPath.construct(folder.getPath());
 		}catch(CmisConstraintException _ex){

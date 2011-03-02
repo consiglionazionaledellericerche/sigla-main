@@ -5,6 +5,7 @@ import it.cnr.cmisdl.model.paging.ListNodePage;
 import it.cnr.contab.cmis.CMISAspect;
 import it.cnr.contab.cmis.CMISRelationship;
 import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.bulk.ServizioPecBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
@@ -319,9 +320,21 @@ public class FirmaDigitalePdgVariazioniBP extends
 	public void sign(ActionContext context) throws BusinessProcessException {
 		try {
 			ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
-			caricaDatiPEC(context);
-			setSignEnabled(true);
-			setSignFile(true);
+			Parametri_cdsBulk  parametriCds = Utility.createParametriCdsComponentSession().
+				getParametriCds(context.getUserContext(), 
+								CNRUserContext.getCd_cds(context.getUserContext()), 
+								CNRUserContext.getEsercizio(context.getUserContext()));
+			if (parametriCds.getFl_kit_firma_digitale()){
+				caricaDatiPEC(context);
+				setSignEnabled(true);
+				setSignFile(true);
+			}else{
+				pdgVariazioniService.addAspect(archiviaStampaPdgVariazioneBulk
+						.getPdgVariazioneDocument().getNode(),
+						CMISAspect.CNR_SIGNEDDOCUMENT.value());
+				setFocusedElement(context, null);
+				refresh(context);
+			}
 		} catch (Throwable e) {
 			throw new BusinessProcessException(e);
 		}

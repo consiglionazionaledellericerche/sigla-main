@@ -1,35 +1,18 @@
 package it.cnr.contab.cmis.service;
 
-import it.cnr.cmisdl.model.Node;
-import it.cnr.cmisdl.model.paging.ListNodePage;
-import it.cnr.cmisdl.model.property.AspectMetdata;
-import it.cnr.cmisdl.service.AuthenticationService;
-import it.cnr.cmisdl.service.ContentService;
 import it.cnr.cmisdl.service.DictionaryService;
-import it.cnr.cmisdl.service.NodeService;
-import it.cnr.cmisdl.service.SearchService;
-import it.cnr.contab.cmis.CMISRelationship;
-import it.cnr.contab.cmis.acl.Permission;
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperties;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
-import it.cnr.contab.cmis.converter.Converter;
 import it.cnr.contab.cmis.converter.PropertyDefinitionBulk;
-import it.cnr.contab.reports.bulk.Report;
-import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.util.Introspector;
 
-import java.beans.IntrospectionException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -39,13 +22,8 @@ import java.util.Set;
 
 import org.apache.chemistry.opencmis.client.api.ObjectType;
 import org.apache.chemistry.opencmis.client.api.Property;
-import org.apache.chemistry.opencmis.client.runtime.PersistentPropertyImpl;
-import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.definitions.PropertyDefinition;
-import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisRuntimeException;
 import org.apache.commons.httpclient.Credentials;
-import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
