@@ -11,9 +11,9 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import org.apache.chemistry.opencmis.client.api.Property;
-import org.apache.chemistry.opencmis.client.runtime.PersistentPropertyImpl;
 import org.apache.chemistry.opencmis.commons.definitions.PropertyDefinition;
 import org.apache.commons.httpclient.Credentials;
 
@@ -44,6 +44,6 @@ public class PropertyDefinitionBulk<T extends Serializable>{
 			value = (T)Introspector.invoke(oggettoBulk, method);
 		if (value == null)
 			throw new PropertyNullValueException();		
-		return SpringUtil.getBean("dictionaryService", DictionaryService.class).createProperty(systemCredentials, propertyDefinition, value);
+		return SpringUtil.getBean("dictionaryService", DictionaryService.class).createProperty(systemCredentials, propertyDefinition, Arrays.asList(value));
 	}
 }

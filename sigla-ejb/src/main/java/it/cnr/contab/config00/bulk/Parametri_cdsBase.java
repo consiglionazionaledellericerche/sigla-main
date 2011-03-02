@@ -1,10 +1,8 @@
 package it.cnr.contab.config00.bulk;
 
-import java.math.BigDecimal;
-
-import it.cnr.contab.config00.sto.bulk.CdrBulk;
-import it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk;
 import it.cnr.jada.persistency.Keyed;
+
+import java.math.BigDecimal;
 
 /**
  * Creation date: (12/11/2004)
@@ -31,6 +29,7 @@ public class Parametri_cdsBase extends Parametri_cdsKey implements Keyed {
 	private String cd_cdr_linea_pgiro_s;
 	private String cd_linea_pgiro_s;
 	private Boolean fl_blocco_iban;
+	private Boolean fl_kit_firma_digitale;
 	// IM_SOGLIA_CONTRATTO_S NUMBER(15,2) NULL
 	private BigDecimal im_soglia_contratto_s;
 
@@ -264,5 +263,10 @@ public class Parametri_cdsBase extends Parametri_cdsKey implements Keyed {
 	public void setFl_blocco_iban(Boolean fl_blocco_iban) {
 		this.fl_blocco_iban = fl_blocco_iban;
 	}
-
+	public Boolean getFl_kit_firma_digitale() {
+		return fl_kit_firma_digitale;
+	}
+	public void setFl_kit_firma_digitale(Boolean fl_kit_firma_digitale) {
+		this.fl_kit_firma_digitale = fl_kit_firma_digitale;
+	}
 }

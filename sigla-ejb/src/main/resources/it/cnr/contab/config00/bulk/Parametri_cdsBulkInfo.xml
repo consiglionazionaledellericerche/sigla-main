@@ -193,6 +193,12 @@
 		property="fl_blocco_iban"
 		inputType="CHECKBOX" 
 		label="Messaggio bloccante mancanza Iban"/>					
+	<fieldProperty
+		name="fl_kit_firma_digitale"
+		property="fl_kit_firma_digitale"
+		inputType="CHECKBOX" 
+		label="In possesso del Kit di Firma Digitale"/>					
+
 	<formFieldProperty name="esercizio" />
 	<formFieldProperty name="centro_spesa" />		
 	<formFieldProperty name="fl_commessa_obbligatoria" />
@@ -219,6 +225,7 @@
  	<formFieldProperty name="cd_cdr_linea_pgiro_s" />  
 	<formFieldProperty name="cd_linea_pgiro_s" /> 
 	<formFieldProperty name="fl_blocco_iban" />
+	<formFieldProperty name="fl_kit_firma_digitale" />
 		
 	<columnFieldProperty name="esercizio" />
 	<columnFieldProperty name="cd_unita_organizzativa" />
@@ -249,6 +256,7 @@
  	<columnFieldProperty name="cd_cdr_linea_pgiro_s" /> 
 	<columnFieldProperty name="cd_linea_pgiro_s" />   
 	<columnFieldProperty name="fl_blocco_iban" />
+	<columnFieldProperty name="fl_kit_firma_digitale" />
 	
 	<findFieldProperty name="cd_unita_organizzativa" />
 	<findFieldProperty name="fl_commessa_obbligatoria" />
@@ -277,4 +285,5 @@
 	<findFieldProperty name="cd_cdr_linea_pgiro_s" /> 
 	<findFieldProperty name="cd_linea_pgiro_s" />  
 	<findFieldProperty name="fl_blocco_iban" />
+	<findFieldProperty name="fl_kit_firma_digitale" />
 </bulkInfo>

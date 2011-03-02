@@ -180,6 +180,14 @@
 			columnSize="1"
 			nullable="true"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_KIT_FIRMA_DIGITALE"
+			propertyName="fl_kit_firma_digitale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />						
+			
 	</defaultColumnMap>
 	<persistentProperty
 		name="blocco_impegni_cdr_gae" />	
@@ -236,5 +244,7 @@
 	<persistentProperty
 		name="cd_linea_pgiro_s" /> 
 	<persistentProperty
-		name="fl_blocco_iban" />	
+		name="fl_blocco_iban" />
+	<persistentProperty
+		name="fl_kit_firma_digitale" />	
 </SQLPersistentInfo>
