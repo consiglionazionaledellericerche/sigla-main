@@ -291,7 +291,7 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		return (isSaveButtonEnabled()||(super.isSaveButtonEnabled()&&((Pdg_variazioneBulk)getModel()).isPropostaProvvisoria()))&& 
 		        ((Pdg_variazioneBulk)getModel()).isPropostaProvvisoria() && 
 		        ((Pdg_variazioneBulk)getModel()).isNotNew() &&
-	 		    (getCentro_responsabilita_scrivania().getLivello().intValue() == 1 || isUoArea())&&
+	 		    (getCentro_responsabilita_scrivania().getLivello().intValue() == 1 || isUoArea()||isUoSac())&&
 		        ((Pdg_variazioneBulk)getModel()).getCentro_responsabilita().getCd_cds().equals(getCentro_responsabilita_scrivania().getCd_cds());
 	}
 	/**
@@ -422,6 +422,9 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	public boolean isUoArea(){
 		return (getUoSrivania().getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_AREA)==0);
 	}
+	public boolean isUoSac(){
+		return (getUoSrivania().getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC)==0);
+	}
 	/**
 	 * @return
 	 */
@@ -516,7 +519,7 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 					((Pdg_variazioneBulk)getModel()).isPropostaDefinitiva() && 
 					((Pdg_variazioneBulk)getModel()).isNotNew() &&
 					((Pdg_variazioneBulk)getModel()).getStatoDocumentale()==null &&
-					(getCentro_responsabilita_scrivania().getLivello().intValue() == 1 || isUoArea())&&
+					(getCentro_responsabilita_scrivania().getLivello().intValue() == 1 || isUoArea() ||isUoSac())&&
 					((Pdg_variazioneBulk)getModel()).getCentro_responsabilita().getCd_cds().equals(getCentro_responsabilita_scrivania().getCd_cds());
 		}catch(NullPointerException e){
 			return false;

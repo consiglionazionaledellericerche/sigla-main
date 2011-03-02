@@ -305,7 +305,7 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 			return (isSaveButtonEnabled()||(super.isSaveButtonEnabled()&&((Var_stanz_resBulk)getModel()).isPropostaProvvisoria()))&& 
 					((Var_stanz_resBulk)getModel()).isPropostaProvvisoria() && 
 					((Var_stanz_resBulk)getModel()).isNotNew() &&
-					(controllaCdrDaAccMod() || isUoArea())&&
+					(controllaCdrDaAccMod() || isUoArea()|| isUoSac())&&
 					controllaBP() &&
 					((Var_stanz_resBulk)getModel()).getCentroDiResponsabilita().getCd_cds().equals(getCentro_responsabilita_scrivania().getCd_cds());
 		}catch(NullPointerException e){
@@ -321,7 +321,7 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 			return (isSaveButtonEnabled()||(((Var_stanz_resBulk)getModel()).isPropostaDefinitiva()))&& 
 					((Var_stanz_resBulk)getModel()).isPropostaDefinitiva() && 
 					((Var_stanz_resBulk)getModel()).isNotNew() &&
-					(controllaCdrDaAccMod() || isUoArea())&&
+					(controllaCdrDaAccMod() || isUoArea()||isUoSac())&&
 					((Var_stanz_resBulk)getModel()).getCentroDiResponsabilita().getCd_cds().equals(getCentro_responsabilita_scrivania().getCd_cds());
 		}catch(NullPointerException e){
 			return false;
@@ -391,6 +391,9 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	}
 	public boolean isUoEnte(){
 		return (getUoSrivania().getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)==0);
+	}
+	public boolean isUoSac(){
+		return (getUoSrivania().getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC)==0);
 	}
 	public boolean isUoArea(){
 		return (getUoSrivania().getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_AREA)==0);
@@ -561,6 +564,5 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	}
 	public void setAbilitatoModificaDescVariazioni(boolean abilitatoModificaDescVariazioni) {
 		this.abilitatoModificaDescVariazioni = abilitatoModificaDescVariazioni;
-	}
-	
+	}	
 }
