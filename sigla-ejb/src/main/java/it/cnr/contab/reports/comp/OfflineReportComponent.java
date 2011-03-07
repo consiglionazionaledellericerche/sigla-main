@@ -310,8 +310,7 @@ public class OfflineReportComponent extends GenericComponent implements
 					throw new ApplicationException(
 							"Utente non abilitato per il livello di visibilità CNR.");
 			}
-
-			sql.addClause("and", "ti_visibilita", sql.EQUALS, ti_visibilita);
+			sql.addClause("and", "tiVisibilita", sql.EQUALS, ti_visibilita);
 
 			sql.addOrderBy("DACR DESC");
 
