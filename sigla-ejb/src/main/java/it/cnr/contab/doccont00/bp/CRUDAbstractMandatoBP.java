@@ -1,9 +1,12 @@
 package it.cnr.contab.doccont00.bp;
 
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
 
 import java.rmi.RemoteException;
 import java.util.*;
+
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
@@ -272,5 +275,15 @@ public void esistonoPiuModalitaPagamento(ActionContext context)throws it.cnr.jad
 	} catch (RemoteException e) {
 		throw new BusinessProcessException(e);
 	}
+}
+public boolean isDipendenteDaConguaglio(it.cnr.jada.action.ActionContext context,MandatoBulk mandato) throws it.cnr.jada.action.BusinessProcessException {
+	try {
+		return ((MandatoComponentSession) createComponentSession()).isDipendenteDaConguaglio(context.getUserContext(),mandato);
+	} catch (it.cnr.jada.comp.ComponentException e) {
+		throw handleException(e);
+	} catch (java.rmi.RemoteException e) {
+		throw handleException(e);
+	}
+
 }
 }

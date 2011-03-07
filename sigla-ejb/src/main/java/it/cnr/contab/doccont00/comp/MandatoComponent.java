@@ -6,6 +6,10 @@ import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoKey;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
+import it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk;
+import it.cnr.contab.compensi00.docs.bulk.ConguaglioHome;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
@@ -6288,5 +6292,31 @@ public SQLBuilder selectCupByClause(UserContext userContext, MandatoCupIBulk man
 	sql.closeParenthesis();
 	sql.addClause(clauses);
 	return sql;
+}
+public java.lang.Boolean isDipendenteDaConguaglio(
+		UserContext userContext, MandatoBulk mandato)
+		throws ComponentException {
+	try {
+		for (Iterator i = mandato.getMandato_rigaColl().iterator();i.hasNext();){
+		Mandato_rigaBulk riga = (Mandato_rigaBulk)i.next();
+		if (riga.getCd_tipo_documento_amm().equals(Numerazione_doc_ammBulk.TIPO_COMPENSO) )
+		{
+			CompensoBulk compenso = new CompensoBulk(
+					riga.getCd_cds_doc_amm(),
+					riga.getCd_uo_doc_amm(),
+					riga.getEsercizio_doc_amm(),
+					riga.getPg_doc_amm());
+			
+			ConguaglioHome conguaglioHome = (ConguaglioHome)getHome(userContext, ConguaglioBulk.class);
+			if (conguaglioHome.findConguaglioAssociatoACompenso(compenso)!=null)
+				return Boolean.TRUE;
+		}
+			return Boolean.FALSE;
+	}
+	
+		return Boolean.FALSE;
+	} catch (Exception e) {
+		throw handleException(e);
+	}
 }
 }
