@@ -231,11 +231,7 @@ public class RepertorioLimitiComponent extends CRUDComponent implements ICRUDMgr
 
 			importo = importo.setScale(2, BigDecimal.ROUND_HALF_EVEN);
 
-			boolean isUoEnte = ((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).
-					findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext)))).
-					getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)==0;
-
-			if (reperBulk.getFl_raggiunto_limite() && !isUoEnte && importo.compareTo(Utility.ZERO)==1)
+			if (reperBulk.getFl_raggiunto_limite() && importo.compareTo(Utility.ZERO)==1)
 				  throw new ApplicationException(
 							"Impossibile effettuare l'operazione !\n\n"+
 					        "Nell'esercizio "+esercizio+ " per la combinazione: \n\n"+
@@ -243,7 +239,7 @@ public class RepertorioLimitiComponent extends CRUDComponent implements ICRUDMgr
 		                    "- Tipo Attivita: "+tipoAttivitaBulk.getDs_tipo_attivita()+"\n"+
 		                    "- Natura: "+NaturaBulk.tipo_naturaKeys.get(cd_tipo_natura)+"\n\n"+
 					        "è stato raggiunto il limite.");
-			else if (!isUoEnte) {
+			else {
 				if (reperBulk.getImporto_residuo().compareTo(Utility.ZERO)==0 && importo.compareTo(Utility.ZERO)==1)
 					  throw new ApplicationException(
 						"Impossibile effettuare l'operazione !\n\n"+
