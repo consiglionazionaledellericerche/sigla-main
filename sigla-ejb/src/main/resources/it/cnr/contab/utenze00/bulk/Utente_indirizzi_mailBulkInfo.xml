@@ -27,7 +27,6 @@
 	<fieldProperty
 		name="fl_com_app_var_stanz_res"
 		property="fl_com_app_var_stanz_res"
-		readonlyProperty="cdrEnte"
 		inputType="CHECKBOX"
 		nullable="false"
 		label="Comunica avvenuta approvazione Variazioni Residui" />
@@ -41,7 +40,6 @@
 	<fieldProperty
 		name="fl_com_app_var_stanz_comp"
 		property="fl_com_app_var_stanz_comp"
-		readonlyProperty="cdrEnte"
 		inputType="CHECKBOX"
 		nullable="false"
 		label="omunica avvenuta approvazione Variazioni Competenza" />
