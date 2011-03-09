@@ -89,16 +89,16 @@
 		<defaultValueExpression ><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="esercizio" isForPrompting="false" class="java.lang.Integer">
-		<defaultValueExpression ><![CDATA[new Integer(2005)]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA[new Integer(2010)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="nota" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="cd_anag" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA[new String("17827")]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA[new String("136671")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ti_cert" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA[new String("RA")]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA[new String("CC")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>

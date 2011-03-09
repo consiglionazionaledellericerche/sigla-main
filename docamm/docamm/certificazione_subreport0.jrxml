@@ -250,11 +250,11 @@ $F{FRAZIONE_FISCALE}+" "+($F{CAP_COMUNE_FISCALE}==null?"":$F{CAP_COMUNE_FISCALE}
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DS_NAZIONE_FISCALE}]]></textFieldExpression>
 				</textField>
-				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<image  onErrorType="Icon" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="1"
+						x="107"
 						y="0"
-						width="497"
+						width="477"
 						height="40"
 						key="image-1"/>
 					<box></box>
