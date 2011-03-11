@@ -34,6 +34,9 @@ public class Pdg_variazioneBase extends Pdg_variazioneKey implements Keyed {
 
 //    STATO CHAR(3) NOT NULL
 	private java.lang.String stato;
+	
+//  STATO_INVIO CHAR(3) NOT NULL
+	private java.lang.String stato_invio;	
  
 //	  RIFERIMENTI VARCHAR(200) NULL
     private java.lang.String riferimenti;
@@ -185,6 +188,12 @@ public Boolean getFl_visto_dip_variazioni() {
 }
 public void setFl_visto_dip_variazioni(Boolean fl_visto_dip_variazioni) {
 	this.fl_visto_dip_variazioni = fl_visto_dip_variazioni;
+}
+public java.lang.String getStato_invio() {
+	return stato_invio;
+}
+public void setStato_invio(java.lang.String statoInvio) {
+	stato_invio = statoInvio;
 }
 
 

@@ -34,6 +34,7 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellatoLogicamente{
 	private static final java.util.Dictionary ti_statoKeys = new it.cnr.jada.util.OrderedHashtable();
 	private static final java.util.Dictionary ti_tipologia_finKeys = new it.cnr.jada.util.OrderedHashtable();
+	private static final java.util.Dictionary stato_invioKeys = new it.cnr.jada.util.OrderedHashtable();
 	
 	final public static String STATO_PROPOSTA_PROVVISORIA = "PRP";
 	final public static String STATO_PROPOSTA_DEFINITIVA = "PRD";
@@ -41,6 +42,9 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	final public static String STATO_APPROVAZIONE_FORMALE = "APF";
 	final public static String STATO_RESPINTA = "RES";
 	final public static String STATO_ANNULLATA = "ANN";
+
+	final public static String STATO_DA_INVIARE = "DAI";
+	final public static String STATO_INVIATA = "INV";
 
 	static {
 		ti_statoKeys.put(STATO_PROPOSTA_PROVVISORIA,"Proposta Provvisoria");
@@ -52,6 +56,10 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 
 		ti_tipologia_finKeys.put(NaturaBulk.TIPO_NATURA_FONTI_INTERNE,"Fonti Interne");
 		ti_tipologia_finKeys.put(NaturaBulk.TIPO_NATURA_FONTI_ESTERNE,"Fonti Esterne");
+		
+		stato_invioKeys.put(STATO_DA_INVIARE,"Da inviare");
+		stato_invioKeys.put(STATO_INVIATA,"Inviata");
+
 	}
 
 	private BulkList associazioneCDR = new BulkList();
@@ -143,7 +151,9 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	public final java.util.Dictionary getTi_statoKeys() {
 		return ti_statoKeys;
 	}	
-
+	public final java.util.Dictionary getStato_invioKeys() {
+		return stato_invioKeys;
+	}	
 	/**
 	 * @return
 	 */

@@ -111,12 +111,12 @@ public class Pdg_variazioneHome extends BulkHome {
 		sql.addSQLClause("AND","PG_VARIAZIONE_PDG",sql.EQUALS,testata.getPg_variazione_pdg());
 		return dettHome.fetchAll(sql);
 	}
-	public Dictionary loadCausaliMancataApprovazione() throws PersistencyException, IntrospectionException {
+	public Dictionary loadCausaliMancataApprovazione(it.cnr.jada.UserContext userContext) throws PersistencyException, IntrospectionException {
 		java.util.Dictionary list = new it.cnr.jada.util.OrderedHashtable();
 
 		PersistentHome dettHome = getHomeCache().getHome(Configurazione_cnrBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
-		sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,"0");
+		sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
 		sql.addSQLClause("AND","CD_UNITA_FUNZIONALE",sql.EQUALS,"*");		
 		sql.addSQLClause("AND","CD_CHIAVE_PRIMARIA",sql.EQUALS,"PDG_VARIAZIONE");
 

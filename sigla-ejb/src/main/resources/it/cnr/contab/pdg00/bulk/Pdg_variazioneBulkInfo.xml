@@ -190,7 +190,7 @@
 		cols="80"
 		rows="3"
         enabledOnSearch="true"		
-		maxLength="200"
+		maxLength="500"
 		nullable="true"
 		label="Motivazione" />
 	<fieldProperty
@@ -384,6 +384,18 @@
 		property="fl_visto_dip_variazioni"
 		inputType="CHECKBOX"
 		label="Visto" />
+	<fieldProperty
+		name="stato_invio"
+		property="stato_invio"
+		inputType="SELECT"
+		keysProperty="stato_invioKeys"
+		inputSize="3"
+		maxLength="3"
+        enabledOnInsert="false"
+        enabledOnEdit="true"
+        enabledOnSearch="true"		
+		nullable="true"
+		label="Stato Invio" />	
 		
     <form
         name="searchtool">
@@ -500,6 +512,8 @@
 		name="ds_variazione_bilancio" />		
 	<formFieldProperty
 		name="fl_visto_dip_variazioni" />
+	<formFieldProperty
+		name="stato_invio" />	
 				
 	<findFieldProperty
 		name="esercizio" />
@@ -539,6 +553,8 @@
 		name="cd_elemento_voce" />
 	<findFieldProperty
 		name="fl_visto_dip_variazioni" />
+	<findFieldProperty
+		name="stato_invio" />
 		
 	<columnFieldProperty
 		name="esercizio" />
@@ -574,7 +590,8 @@
 		name="dt_app_formale" />
 	<columnFieldProperty
 		name="cd_elemento_voce" />
-			
+	<columnFieldProperty
+		name="stato_invio" />		
 	<columnSet
 	        name="RiepilogoVariazioni">
         	<columnFieldProperty
@@ -637,6 +654,8 @@
 				name="dt_app_formale" />
 			<columnFieldProperty
 				name="cd_elemento_voce" />
+			<columnFieldProperty
+				name="stato_invio" />	
 	</columnSet>
 	
 	

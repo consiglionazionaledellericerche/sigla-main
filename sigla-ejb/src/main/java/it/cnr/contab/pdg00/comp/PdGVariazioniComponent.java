@@ -147,7 +147,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 					EJBCommonServices.getServerDate(), CNRUserContext
 							.getEsercizio(userContext)));
 			pdg_variazione.setTi_causale_respintaKeys(testataHome
-					.loadCausaliMancataApprovazione());
+					.loadCausaliMancataApprovazione(userContext));
 			pdg_variazione.setFl_visto_dip_variazioni(new Boolean(false));
 			inizializzaSommeAZero(pdg_variazione);
 			return super.inizializzaBulkPerInserimento(userContext,
@@ -167,7 +167,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 						userContext, Pdg_variazioneBulk.class);
 				((Pdg_variazioneBulk) oggettobulk)
 						.setTi_causale_respintaKeys(testataHome
-								.loadCausaliMancataApprovazione());
+								.loadCausaliMancataApprovazione(userContext));
 			}
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
@@ -185,7 +185,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 						userContext, Pdg_variazioneBulk.class);
 				((Pdg_variazioneBulk) oggettobulk)
 						.setTi_causale_respintaKeys(testataHome
-								.loadCausaliMancataApprovazione());
+								.loadCausaliMancataApprovazione(userContext));
 			}
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
@@ -212,12 +212,10 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 			pdg.setRiepilogoSpese(new it.cnr.jada.bulk.BulkList(testataHome
 					.findRiepilogoSpese(pdg)));
 			pdg.setTi_causale_respintaKeys(testataHome
-					.loadCausaliMancataApprovazione());
+					.loadCausaliMancataApprovazione(userContext));
 			pdg.setCdsAbilitatoAdApprovare(isCdsAbilitatoAdApprovare(
 					userContext, pdg.getCentro_responsabilita().getCd_cds(),
 					pdg));
-			pdg.setTi_causale_respintaKeys(testataHome
-					.loadCausaliMancataApprovazione());
 			// RosPuc 28/01/2011
 			if(pdg.getStato().equalsIgnoreCase(Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA)){
 //			if (pdg.getStato().equalsIgnoreCase(
@@ -225,7 +223,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 //					|| pdg.getStato().equalsIgnoreCase(
 //							Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE)) {
 //				
-				if(selectVariazioniForDocumentale(userContext, null,new Pdg_variazioneBulk(pdg.getEsercizio(),pdg.getPg_variazione_pdg()), ArchiviaStampaPdgVariazioneBulk.VIEW_SIGNED, Boolean.TRUE).executeCountQuery(getConnection(userContext))!=0) 
+			  if(selectVariazioniForDocumentale(userContext, null,new Pdg_variazioneBulk(pdg.getEsercizio(),pdg.getPg_variazione_pdg()), ArchiviaStampaPdgVariazioneBulk.VIEW_SIGNED, Boolean.TRUE).executeCountQuery(getConnection(userContext))!=0) 
 		 	 	  pdg.setStatoDocumentale(ArchiviaStampaPdgVariazioneBulk.VIEW_SIGNED); 
 			  else if (selectVariazioniForDocumentale(userContext, null,new Pdg_variazioneBulk(pdg.getEsercizio(),pdg.getPg_variazione_pdg()), ArchiviaStampaPdgVariazioneBulk.VIEW_NOT_SIGNED, Boolean.TRUE).executeCountQuery(getConnection(userContext))!=0)
 				  pdg.setStatoDocumentale(ArchiviaStampaPdgVariazioneBulk.VIEW_NOT_SIGNED);
