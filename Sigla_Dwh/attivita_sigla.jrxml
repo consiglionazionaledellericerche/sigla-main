@@ -248,7 +248,7 @@
 	</style>
 
 	<parameter name="Esercizio" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["2010"]]></defaultValueExpression>
+		<defaultValueExpression ><![CDATA["2009"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Tipo" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA[new String ("%")]]></defaultValueExpression>
@@ -292,6 +292,9 @@
 	<parameter name="SUBREPORT_DIR" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
 	</parameter>
+	<parameter name="Stato_differito" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["true"]]></defaultValueExpression>
+	</parameter>
 	<queryString><![CDATA[select a.*,t1.cd_terzo cd1,t1.denominazione_sede ds1,
 t2.denominazione_sede ds2,
 t3.denominazione_sede ds3,
@@ -316,7 +319,8 @@ and ((a.stato='A' and $P{Stato_analisi}='true')
 or (a.stato='S' and $P{Stato_sviluppo}='true')
 or (a.stato='T' and $P{Stato_test}='true')
 or (a.stato='R' and $P{Stato_rilasciato}='true')
-or (a.stato='I' and $P{Stato_iniziale}='true'))
+or (a.stato='I' and $P{Stato_iniziale}='true')
+or (a.stato='D' and $P{Stato_differito}='true'))
 and ((a.tipo_attivita='C' and $P{Tipo_att_correttiva}='true')
 or (a.tipo_attivita='E' and $P{Tipo_att_evolutiva}='true')
 or (a.tipo_attivita='M' and $P{Tipo_att_manutentiva}='true')
@@ -802,7 +806,8 @@ or (a.tipo_attivita='G' and $P{Tipo_att_supporto_gestione}='true'))]]></queryStr
 ($F{STATO}.equals("A")?"Analisi":
 ($F{STATO}.equals("S")?"Sviluppo":
 ($F{STATO}.equals("T")?"Test":
-($F{STATO}.equals("R")?"Rilasciata":"")))))]]></textFieldExpression>
+($F{STATO}.equals("R")?"Rilasciata":
+($F{STATO}.equals("D")?"Differito":""))))))]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
