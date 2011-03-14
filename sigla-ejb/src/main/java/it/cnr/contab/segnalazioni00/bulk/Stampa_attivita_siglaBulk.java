@@ -34,6 +34,7 @@ public class Stampa_attivita_siglaBulk extends OggettoBulk implements Persistent
 	private Boolean stato_test;
 	private Boolean stato_rilasciato;
 	private Boolean stato_iniziale;
+	private Boolean stato_differito;
 	
 	private Boolean tipo_att_correttiva;
 	private Boolean tipo_att_evolutiva;
@@ -175,6 +176,7 @@ public class Stampa_attivita_siglaBulk extends OggettoBulk implements Persistent
 		setStato_test(new Boolean(false));
 		setStato_rilasciato(new Boolean(false));
 		setStato_iniziale(new Boolean(false));
+		setStato_differito(new Boolean(false));
 	}
 	public void selezionaStati(){
 		setStato_analisi(new Boolean(!getStato_analisi().booleanValue()));
@@ -182,6 +184,7 @@ public class Stampa_attivita_siglaBulk extends OggettoBulk implements Persistent
 		setStato_test(new Boolean(!getStato_test().booleanValue()));
 		setStato_rilasciato(new Boolean(!getStato_rilasciato().booleanValue()));
 		setStato_iniziale(new Boolean(!getStato_iniziale().booleanValue()));
+		setStato_differito(new Boolean(!getStato_differito().booleanValue()));
 		}
 	
 	public Boolean getStato_analisi() {
@@ -204,6 +207,10 @@ public class Stampa_attivita_siglaBulk extends OggettoBulk implements Persistent
 		return stato_iniziale;
 	}
 	
+	public Boolean getStato_differito() {
+		return stato_differito;
+	}
+	
 	
 	public void setStato_analisi(Boolean boolean1) {
 		stato_analisi = boolean1;
@@ -223,6 +230,10 @@ public class Stampa_attivita_siglaBulk extends OggettoBulk implements Persistent
 	
 	public void setStato_iniziale(Boolean boolean1) {
 		stato_iniziale = boolean1;
+	}
+	
+	public void setStato_differito(Boolean boolean1) {
+		stato_differito = boolean1;
 	}
 	
 	public void inizializzaTipiAttivita() {
