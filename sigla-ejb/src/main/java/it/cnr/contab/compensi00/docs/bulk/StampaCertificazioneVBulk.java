@@ -28,12 +28,14 @@ public class StampaCertificazioneVBulk extends it.cnr.jada.bulk.OggettoBulk {
 	public static final String TI_IMPOSTA = "TI";
 	public static final String TI_IMPOSTA_CC = "CC";
 	public static final String TI_CONTRIBUTI = "RC";
+	public static final String TI_IMPOSTA_PC = "PC";
 
 	private boolean stampaRit_prev;
 	private boolean stampaRit_acconto;
 	private boolean stampaTit_imposta;
 	private boolean stampaTit_imposta_cc;	
 	private boolean stampaRit_contrib;
+	private boolean stampaTit_imposta_pc;
 
 /**
  * StampaCertificazioneVBulk constructor comment.
@@ -51,6 +53,7 @@ public OrderedHashtable getTipoKeys() {
 		tipoKeys.put("TI", "a Titolo d'Imposta");
 		tipoKeys.put("CC", "a Titolo d'Imposta - Co.Co.Co.");
 		tipoKeys.put("RC", "per Contributi corrisposti ad imprese");
+		tipoKeys.put("PC", "a Titolo d'Imposta - Premi per concorsi");
 	}
 	return tipoKeys;
 }
@@ -243,5 +246,12 @@ public void setStampaTit_imposta(boolean newStampaTit_imposta) {
 	 */
 	public void setTi_cert(String ti_cert) {
 		this.ti_cert = ti_cert;
+	}
+	public boolean isStampaTit_imposta_pc() {
+		return stampaTit_imposta_pc;
+	}
+
+	public void setStampaTit_imposta_pc(boolean b) {
+		this.stampaTit_imposta_pc = b;
 	}
 }

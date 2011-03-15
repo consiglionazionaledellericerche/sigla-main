@@ -36,6 +36,8 @@ public it.cnr.jada.action.Forward doChangeTi_cert(it.cnr.jada.action.ActionConte
 		stampa.setStampaTit_imposta_cc(false);
 		bp.setStampaRit_contrib(false);
 		stampa.setStampaRit_contrib(false);
+		bp.setStampaTit_imposta_pc(false);
+		stampa.setStampaTit_imposta_pc(false);
 	} else if (stampa.getTi_cert().equals(StampaCertificazioneVBulk.TI_ACCONTO)){
 		bp.setStampaRit_prev(false);
 		stampa.setStampaRit_prev(false);
@@ -47,6 +49,8 @@ public it.cnr.jada.action.Forward doChangeTi_cert(it.cnr.jada.action.ActionConte
 		stampa.setStampaTit_imposta_cc(false);
 		bp.setStampaRit_contrib(false);
 		stampa.setStampaRit_contrib(false);
+		bp.setStampaTit_imposta_pc(false);
+		stampa.setStampaTit_imposta_pc(false);
 	} else if (stampa.getTi_cert().equals(StampaCertificazioneVBulk.TI_IMPOSTA)){
 		bp.setStampaRit_prev(false);
 		stampa.setStampaRit_prev(false);
@@ -58,6 +62,8 @@ public it.cnr.jada.action.Forward doChangeTi_cert(it.cnr.jada.action.ActionConte
 		stampa.setStampaTit_imposta_cc(false);
 		bp.setStampaRit_contrib(false);
 		stampa.setStampaRit_contrib(false);
+		bp.setStampaTit_imposta_pc(false);
+		stampa.setStampaTit_imposta_pc(false);
 	} else if (stampa.getTi_cert().equals(StampaCertificazioneVBulk.TI_IMPOSTA_CC)){
 		bp.setStampaRit_prev(false);
 		stampa.setStampaRit_prev(false);
@@ -69,6 +75,21 @@ public it.cnr.jada.action.Forward doChangeTi_cert(it.cnr.jada.action.ActionConte
 		stampa.setStampaTit_imposta_cc(true);
 		bp.setStampaRit_contrib(false);
 		stampa.setStampaRit_contrib(false);
+		bp.setStampaTit_imposta_pc(false);
+		stampa.setStampaTit_imposta_pc(false);
+	} else if (stampa.getTi_cert().equals(StampaCertificazioneVBulk.TI_IMPOSTA_PC)){
+		bp.setStampaRit_prev(false);
+		stampa.setStampaRit_prev(false);
+		bp.setStampaRit_acconto(false);
+		stampa.setStampaRit_acconto(false);
+		bp.setStampaTit_imposta(false);
+		stampa.setStampaTit_imposta(false);
+		bp.setStampaTit_imposta_cc(false);
+		stampa.setStampaTit_imposta_cc(false);
+		bp.setStampaRit_contrib(false);
+		stampa.setStampaRit_contrib(false);	
+		bp.setStampaTit_imposta_pc(true);
+		stampa.setStampaTit_imposta_pc(true);
 	} else {
 		bp.setStampaRit_prev(false);
 		stampa.setStampaRit_prev(false);
@@ -80,6 +101,8 @@ public it.cnr.jada.action.Forward doChangeTi_cert(it.cnr.jada.action.ActionConte
 		stampa.setStampaTit_imposta_cc(false);
 		bp.setStampaRit_contrib(true);
 		stampa.setStampaRit_contrib(true);
+		bp.setStampaTit_imposta_pc(false);
+		stampa.setStampaTit_imposta_pc(false);
 	}
 	return context.findDefaultForward();
 }

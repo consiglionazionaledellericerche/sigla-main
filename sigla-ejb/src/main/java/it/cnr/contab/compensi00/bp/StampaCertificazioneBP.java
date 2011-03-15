@@ -13,6 +13,7 @@ public class StampaCertificazioneBP extends it.cnr.contab.reports.bp.ParametricP
 	private boolean stampaTit_imposta;
 	private boolean stampaTit_imposta_cc;	
 	private boolean stampaRit_contrib;
+	private boolean stampaTit_imposta_pc;
 	
 	private boolean editingTi_cert;
 /**
@@ -40,6 +41,8 @@ public String getJSPTitle(){
 		return "Stampa Certificazione a Titolo d'Imposta - Co.Co.Co.";
 	else if (isStampaRit_contrib())
 		return "Stampa Certificazione per Contributi corrisposti ad imprese";
+	else if (isStampaTit_imposta_pc())
+		return "Stampa Certificazione a Titolo d'Imposta - Premi per concorsi";
 	return "Stampa Certificazione";
 }
 /**
@@ -75,6 +78,11 @@ protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionCo
 		stampa.setStampaTit_imposta_cc(true);
 		stampa.setTi_cert(stampa.TI_IMPOSTA_CC);
 		setEditingTi_cert(false);
+	} else if (type != null && type.equals(stampa.TI_IMPOSTA_PC)){
+		setStampaTit_imposta_pc(true);
+		stampa.setStampaTit_imposta_pc(true);
+		stampa.setTi_cert(stampa.TI_IMPOSTA_PC);
+		setEditingTi_cert(false);	
 	} else {
 		setStampaRit_acconto(true);
 		stampa.setStampaRit_acconto(true);
@@ -166,5 +174,18 @@ public void setStampaTit_imposta(boolean newStampaTit_imposta) {
 	 */
 	public void setEditingTi_cert(boolean editingTi_cert) {
 		this.editingTi_cert = editingTi_cert;
+	}
+	/**
+	 * @return
+	 */
+	public boolean isStampaTit_imposta_pc() {
+		return stampaTit_imposta_pc;
+	}
+
+	/**
+	 * @param b
+	 */
+	public void setStampaTit_imposta_pc(boolean b) {
+		stampaTit_imposta_pc = b;
 	}
 }
