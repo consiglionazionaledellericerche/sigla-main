@@ -1,74 +1,79 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<bulkInfo>
-	<fieldProperty
-		name="cd_utente"
-		property="cd_utente"
-		inputType="TEXT"
-		inputSize="20"
-		maxLength="20"
-		label="Codice dell' utente" />
-	<fieldProperty
-		name="cd_gestore"
-		property="cd_gestore"
-		inputType="TEXT"
-		inputSize="20"
-		maxLength="20"
-		label="Codice gestore" />
-	
-	<fieldProperty
-		name="cd_gestore"
-		property="cd_gestore"
-		inputType="TEXT"
-		inputSize="20"
-		maxLength="20"
-		nullable="false"
-		enabledOnInsert="true"
-		enabledOnEdit="false"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"
-		label="Codice gestore" />
+<bulkInfo>		
 	<fieldProperty
 		name="find_gestore"
 		property="gestore"
 		inputType="SEARCHTOOL"
-		enabledOnInsert="true"
-		enabledOnEdit="true"
+		freeSearchSet="utente_gest"
+		columnSet= "utente_gest"
 		enabledOnSearch="true"
+		enabledOnFreeSearch = "true"
 		label="Codice Gestore" />
-	
 	<fieldProperty
-		name="cd_utente"
-		property="cd_utente"
+		name="cd_gestore"
+		property="gestore.cd_utente"
 		inputType="TEXT"
 		inputSize="20"
 		maxLength="20"
 		nullable="false"
-		enabledOnInsert="true"
-		enabledOnEdit="false"
 		enabledOnSearch="true"
-		enabledOnFreeSearch="true"
-		label="Codice dell' utente" />	
+		enabledOnFreeSearch = "true"
+		label="Codice Gestore"/>
+	<fieldProperty
+		name="cd_utente_uid"
+		property="gestore.cd_utente_uid"
+		inputType="ROTEXT"
+		inputSize="20"
+		maxLength="200"
+		enabledOnSearch="true"
+		enabledOnFreeSearch = "true"
+		formatName="it.cnr.jada.util.LowercaseStringFormat"/>
+	
 	<fieldProperty
 		name="find_utente"
 		property="utente"
 		inputType="SEARCHTOOL"
-		enabledOnInsert="true"
-		enabledOnEdit="true"
+		freeSearchSet="utente_gest"
+		columnSet= "utente_gest"
 		enabledOnSearch="true"
+		enabledOnFreeSearch = "true"
 		label="Codice Utente" />
+	<fieldProperty
+		name="cd_utente"
+		property="utente.cd_utente"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch = "true"
+		label="Codice Utente"/>
+		
 		
 	<formFieldProperty
 		name="cd_utente" />
-	<formFieldProperty name="find_utente" />	
+	<formFieldProperty 
+		name="find_utente" />	
 	<formFieldProperty
 		name="cd_gestore" />
-	<formFieldProperty name="find_gestore" />	
+	<formFieldProperty
+		name="cd_utente_uid" />
+	<formFieldProperty 
+		name="find_gestore" />
+		
+			
 	<findFieldProperty
 		name="cd_utente" />
 	<findFieldProperty
 		name="cd_gestore" />
+	<findFieldProperty
+		name="cd_utente_uid" />
+			
 	<columnFieldProperty
 		name="cd_utente" />
 	<columnFieldProperty
 		name="cd_gestore" />
+	<columnFieldProperty
+		name="cd_utente_uid" />
+		
 </bulkInfo>

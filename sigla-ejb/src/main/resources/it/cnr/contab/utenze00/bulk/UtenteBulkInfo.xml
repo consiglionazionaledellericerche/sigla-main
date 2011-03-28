@@ -240,4 +240,35 @@
 		name="cd_utente_uid" />
 	<columnFieldProperty
 		name="ds_utente" />
+		
+	<form
+		name="searchtool_utente_gest" >
+		<formFieldProperty
+			name="cd_utente"
+		    inputSize="10" />
+		<formFieldProperty
+			name="cd_utente_uid" 
+			inputType="TEXT"
+		    inputSize="20" />
+	</form>
+		
+	<freeSearchSet name="utente_gest">
+		<findFieldProperty
+		    name="cd_utente"
+		    enabledOnSearch="true"/>
+		<findFieldProperty
+			name="cd_utente_uid" />
+	</freeSearchSet>
+	
+	<columnSet
+		name="utente_gest">
+		<columnFieldProperty
+			name="cd_utente" />
+		<columnFieldProperty
+			name="cd_utente_uid" />
+	</columnSet>
+	
+	<findFieldProperty
+		name="cd_utente" />
+
 </bulkInfo>
