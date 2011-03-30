@@ -127,6 +127,10 @@ ORDER BY ACQUISTI_VENDITE ASC,
 
 ]]></variableExpression>
 	</variable>
+	<variable name="INTERO_ANNO" class="java.lang.Boolean" resetType="Report" calculation="First">
+		<variableExpression><![CDATA[new Boolean($F{CD_UO}.contains("ANNUALE"))]]></variableExpression>
+		<initialValueExpression><![CDATA[new Boolean(false)]]></initialValueExpression>
+	</variable>
 
 		<group  name="LAST_PAGE" isStartNewPage="true" >
 			<groupExpression><![CDATA[$F{GRUPPO}.equals("C")?$F{GRUPPO}:"DUMMY"]]></groupExpression>
@@ -259,7 +263,7 @@ ORDER BY ACQUISTI_VENDITE ASC,
 			<groupExpression><![CDATA[$V{REPORT_COUNT}]]></groupExpression>
 			<groupHeader>
 			<band height="15"  isSplitAllowed="true" >
-				<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("B") && $F{TIPOLOGIA_RIGA}.equals("D"))]]></printWhenExpression>
+				<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("B") && $F{TIPOLOGIA_RIGA}.equals("D") && $V{INTERO_ANNO}.compareTo(new Boolean(false))==0)]]></printWhenExpression>
 				<rectangle>
 					<reportElement
 						x="3"
@@ -431,7 +435,7 @@ ORDER BY ACQUISTI_VENDITE ASC,
 					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
 						<font pdfFontName="Times-Bold" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[ $F{IVA_INDETRAIBILE}]]></textFieldExpression>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{IVA_INDETRAIBILE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -451,7 +455,7 @@ ORDER BY ACQUISTI_VENDITE ASC,
 					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
 						<font pdfFontName="Times-Bold" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[ $F{IVA_ESIGIBILE}]]></textFieldExpression>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{IVA_ESIGIBILE}]]></textFieldExpression>
 				</textField>
 				<line direction="TopDown">
 					<reportElement
@@ -473,7 +477,7 @@ ORDER BY ACQUISTI_VENDITE ASC,
 			<groupExpression><![CDATA[$V{REPORT_COUNT}]]></groupExpression>
 			<groupHeader>
 			<band height="20"  isSplitAllowed="true" >
-				<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("B") && $F{TIPOLOGIA_RIGA}.equals("P"))]]></printWhenExpression>
+				<printWhenExpression><![CDATA[new Boolean($F{GRUPPO}.equals("B") && $F{TIPOLOGIA_RIGA}.equals("P") && $V{INTERO_ANNO}.compareTo(new Boolean(false))==0)]]></printWhenExpression>
 				<rectangle>
 					<reportElement
 						mode="Opaque"
@@ -655,7 +659,7 @@ ORDER BY ACQUISTI_VENDITE ASC,
 					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
 						<font pdfFontName="Times-Bold" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[ $F{IVA_INDETRAIBILE}]]></textFieldExpression>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{IVA_INDETRAIBILE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -880,7 +884,7 @@ ORDER BY ACQUISTI_VENDITE ASC,
 					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
 						<font pdfFontName="Times-Bold" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[ $F{IVA_INDETRAIBILE}]]></textFieldExpression>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{IVA_INDETRAIBILE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
