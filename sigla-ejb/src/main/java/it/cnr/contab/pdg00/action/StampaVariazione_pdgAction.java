@@ -33,6 +33,7 @@ public class StampaVariazione_pdgAction extends ParametricPrintAction {
 			if (ds.length()>400)
 				ds=ds.substring(0, 399);
 			printbp.initDsOggettoPEC(ds);
+			printbp.initDsNumregPEC(bulk.getPg_variazione_pdg()+"-"+bulk.getEsercizio());
 
 		}
 		return forward;

@@ -554,6 +554,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 
 		datiPEC.setOggetto(datiPEC.getOggetto().replace("\"","'").replaceAll("[^a-zA-Z0-9\\\\/. ,'_^-]"," "));
 		datiPEC.setDenominazioneServizio(servizioPec.getDsServizio());
+		datiPEC.setNumeroRegistrazione(pbulk.getPg_variazione_pdg()+"-"+pbulk.getEsercizio());
 		
 		if (testMode) {
 			datiPEC.setEmailProtocollo(servizioPecProtocollo.getEmailTest());
