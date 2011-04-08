@@ -316,7 +316,8 @@ order by PG_VARIAZIONE_PDG ,CD_CDR]]></queryString>
 				<textFieldExpression   class="java.lang.String"><![CDATA[($F{STATO}.equals("PRP")?new String("Proposta Provvisoria"):
 ($F{STATO}.equals("PRD")?new String("Proposta Definitiva"):
 ($F{STATO}.equals("APP")?new String("Approvata"):
-($F{STATO}.equals("ANN")?new String("Annullata"):null))))]]></textFieldExpression>
+($F{STATO}.equals("APF")?new String("Approvata Formale"):
+($F{STATO}.equals("ANN")?new String("Annullata"):null)))))]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
