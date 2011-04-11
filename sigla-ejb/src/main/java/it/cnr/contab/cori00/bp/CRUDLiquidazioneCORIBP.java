@@ -77,7 +77,8 @@ protected it.cnr.jada.util.jsp.Button[] createViewDettaglioGruppiToolbar() {
 	return toolbar;
 }
 protected it.cnr.jada.util.jsp.Button[] createToolbar() {
-	Button[] toolbar = new Button[12];
+	Button[] toolbar = new Button[11];
+	//Button[] toolbar = new Button[12];
 	int i = 0;
 	toolbar[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.search");
 	toolbar[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.startSearch");
@@ -88,7 +89,7 @@ protected it.cnr.jada.util.jsp.Button[] createToolbar() {
 	toolbar[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.bringBack");
 	toolbar[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.print");
 	toolbar[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.undoBringBack");
-	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.f24");
+	//toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.f24");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.f24Tot");
 	// attenzione il link al file viene settato dinamicamente con il nome del file nella writeToolbar(PageContext pagecontext) 
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.download");
@@ -318,6 +319,7 @@ return file;
 public void setFile(String file) {
 this.file = file;
 }
+/**Procedura attualmente NON UTILIZZATA Vecchio tracciato*/
 public void Estrazione(ActionContext context) throws ComponentException, RemoteException, BusinessProcessException{
 	 try{	
 		 //	da fare 

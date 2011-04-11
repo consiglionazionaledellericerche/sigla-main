@@ -78,8 +78,8 @@ public class LiquidazioneCoriF24EPAction extends it.cnr.jada.util.action.Selezio
 	public Forward doCloseForm(ActionContext context) throws BusinessProcessException {
 		try {
 			LiquidazioneCoriF24EPBP bp= (LiquidazioneCoriF24EPBP) context.getBusinessProcess();
-			bp.refresh(context);
-			return context.findDefaultForward();
+			bp.refresh(context); 
+			return super.doCloseForm(context);
 		} catch (Throwable e) {
 			return handleException(context, e);
 		}
