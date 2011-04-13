@@ -1,36 +1,49 @@
 package it.cnr.contab.anagraf00.comp;
 
-import it.cnr.contab.config00.sto.bulk.*;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
+import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
+import it.cnr.contab.anagraf00.core.bulk.RapportoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TelefonoBulk;
+import it.cnr.contab.anagraf00.core.bulk.Termini_pagamentoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
+import it.cnr.contab.anagraf00.core.bulk.V_terzo_anagrafico_sipBulk;
+import it.cnr.contab.anagraf00.core.bulk.V_terzo_anagrafico_sipHome;
+import it.cnr.contab.anagraf00.core.bulk.V_terzo_sipBulk;
+import it.cnr.contab.anagraf00.core.bulk.V_terzo_sipHome;
+import it.cnr.contab.anagraf00.tabrif.bulk.AbicabBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
 import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
-import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
-import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
-import it.cnr.contab.pdg01.bulk.Tipo_variazioneHome;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
-import it.cnr.contab.util.Utility;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.comp.ICRUDMgr;
+import it.cnr.jada.persistency.Broker;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.Query;
+import it.cnr.jada.persistency.sql.ReferentialIntegrityException;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.RemoteIterator;
 
-import java.sql.CallableStatement;
-import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
-
-import it.cnr.contab.anagraf00.core.bulk.*;
-import it.cnr.contab.anagraf00.tabrif.bulk.*;
-import it.cnr.contab.anagraf00.tabter.bulk.*;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.ejb.*;
-import it.cnr.jada.persistency.Broker;
-import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.*;
 
 /**
  * Questa classe svolge le operazioni fondamentali di lettura, scrittura e filtro dei dati
@@ -1234,5 +1247,22 @@ public List findNazioniIban(UserContext userContext,BancaBulk bulk) throws it.cn
 		throw handleException(e);
 	}
 	return lista;	
-}	
+}
+	@SuppressWarnings("unchecked")
+	/**
+	 * Cerca la matricola di un eventuale dipendente, se il terzo passato non è un dipendente ritorna null  
+	 * @param userContext
+	 * @param terzo
+	 * @return
+	 * @throws it.cnr.jada.comp.ComponentException
+	 */
+	public Integer findMatricolaDipendente(UserContext userContext, TerzoBulk terzo, Date dataCompetenzaDocumento) throws it.cnr.jada.comp.ComponentException {
+		try {
+			return ((TerzoHome)getHome(userContext, TerzoBulk.class)).findMatricolaDipendente(userContext, terzo, dataCompetenzaDocumento);
+		} catch(PersistencyException e) {
+			throw handleException(e);
+		} catch (IntrospectionException e) {
+			throw handleException(e);
+		}			
+	}
 }

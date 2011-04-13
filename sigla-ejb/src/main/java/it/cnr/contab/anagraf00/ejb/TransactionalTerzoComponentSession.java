@@ -1,7 +1,11 @@
 package it.cnr.contab.anagraf00.ejb;
 import java.rmi.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.ejb.*;
 
 public class TransactionalTerzoComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements TerzoComponentSession {
@@ -369,6 +373,25 @@ public java.util.List findListaTerziSIP_rendicontazione(it.cnr.jada.UserContext 
 			param5,
 			param6,
 			param7});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public Integer findMatricolaDipendente(UserContext userContext, TerzoBulk terzo, Date dataCompetenzaDocumento)
+		throws ComponentException, java.rmi.RemoteException {
+	try {
+		return (Integer)invoke("findMatricolaDipendente",new Object[] {
+				userContext,
+				terzo,
+				dataCompetenzaDocumento});
 	} catch(java.rmi.RemoteException e) {
 		throw e;
 	} catch(java.lang.reflect.InvocationTargetException e) {

@@ -1,9 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:jee="http://www.springframework.org/schema/jee"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-						http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<context:annotation-config />
+						
     <import resource="classpath*:it/cnr/contab/cmis/service/cmis-service-context.xml"/>
 
 	<jee:jndi-lookup id="offlineReportComponent"
@@ -15,6 +19,15 @@
    			resource-ref="false">
    	</jee:jndi-lookup>
 
+	<jee:jndi-lookup id="mailSession"
+   			jndi-name="java:mail/MailSession"
+   			resource-ref="false">
+   	</jee:jndi-lookup>
+
+	<bean id="testMode" class="java.lang.Boolean">
+		<constructor-arg value="true"/>
+	</bean>
+
     <bean id="printService" class="it.cnr.contab.reports.service.PrintService">
     	<property name="offlineReportComponent" ref="offlineReportComponent"/>
     	<property name="gson" ref="gson"/>
@@ -24,4 +37,60 @@
     <bean id="ldapService" class="it.cnr.contab.utenze00.service.LDAPService">
     	<property name="gestioneLoginComponent" ref="gestioneLoginComponent"/>
     </bean>
+    <!-- Bean per ottenere una istanza di IDocumentoAmministrativoSpesaBulk -->
+    <bean id="ANTICIPO" class="it.cnr.contab.missioni00.docs.bulk.AnticipoBulk"/>
+    <bean id="COMPENSO" class="it.cnr.contab.compensi00.docs.bulk.CompensoBulk"/>    
+	<bean id="GENERICO_S" class="it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk"/>
+	<bean id="MISSIONE" class="it.cnr.contab.missioni00.docs.bulk.MissioneBulk"/>
+    
+    <bean id="propertyPlaceholderHelper" class="org.springframework.util.PropertyPlaceholderHelper">
+    	<constructor-arg>
+    		<value>${</value>
+    	</constructor-arg>
+    	<constructor-arg>
+    		<value>}</value>
+    	</constructor-arg>
+    </bean>
+    <bean id="dateShortFormat" class="java.text.SimpleDateFormat">
+		<constructor-arg> 
+			<value>dd/MM/yyyy</value>
+		</constructor-arg>						
+    </bean>
+    <bean id="timeShortFormat" class="java.text.SimpleDateFormat">
+		<constructor-arg> 
+			<value>HH:mm:ss</value>
+		</constructor-arg>						
+    </bean>
+    
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    	<property name="session" ref="mailSession"/>
+	</bean>
+	<bean id="fromAddress" class="java.lang.String">
+		<constructor-arg> 
+			<value>sigla@cnr.it</value>
+		</constructor-arg>						
+	</bean>
+	<bean id="defaultToTestMode" class="java.lang.String">
+		<constructor-arg> 
+			<value>sigla@cnr.it</value>
+		</constructor-arg>						
+	</bean>
+    <bean id="mailService" class="it.cnr.contab.util.service.MailService">
+    	<property name="toTestModeList" ref="defaultToTestMode"/>
+    </bean>
+	<bean id="mailMessageFooter" class="java.lang.String">
+		<constructor-arg> 
+			<value><![CDATA[<HR>Spedito da:
+<BR>Sistema Informativo per la Gestione delle linee di Attività (<strong>SIGLA</strong>) il ${date.current.short} alle ${time.current.short}
+<BR>  
+<BR><strong>NOTA</strong>: Il presente messaggio è stato inviato da un processo automatico.
+<BR>L'indirizzo utilizzato non è abilitato a ricevere posta. Si prega di non rispondere.
+]]>
+			</value>
+		</constructor-arg>						
+	</bean>
+    
+    
+	<import resource="classpath*:it/cnr/contab/*/service/*-context.xml" />
+	<import resource="classpath*:sigla/extension/sigla-*-context.xml" />
 </beans>

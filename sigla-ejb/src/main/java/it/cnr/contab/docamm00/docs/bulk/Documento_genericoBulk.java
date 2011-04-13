@@ -4,6 +4,8 @@ import it.cnr.contab.docamm00.bp.*;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.*;
+
+import java.sql.Timestamp;
 import java.util.*;
 
 import it.cnr.contab.doccont00.core.bulk.*;
@@ -1853,6 +1855,9 @@ public void addToAssociazioniInventarioHash(
 					return ass;
 			}
 			return null;
+		}
+		public Timestamp getDt_documento() {
+			return getData_registrazione();
 		}
 		
 		

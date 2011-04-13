@@ -1,7 +1,11 @@
 package it.cnr.contab.anagraf00.core.bulk;
 
+import java.util.Collection;
+import java.util.Date;
+
 import it.cnr.contab.anagraf00.tabrif.bulk.*;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.*;
@@ -247,4 +251,26 @@ public SQLBuilder selectRif_termini_pagamento(TerzoBulk terzo) throws Persistenc
 	sql.addSQLClause("AND","TERMINI_PAGAMENTO.CD_TERZO",sql.EQUALS,terzo.getCd_terzo());
 	return sql;
 }
+	/**
+	 * Cerca la matricola di un eventuale dipendente, la cui data di inizio del rapporto non è successiva
+	 * alla data di competenza del documento
+	 * @param userContext
+	 * @param terzo
+	 * @param dataCompetenzaDocumento
+	 * @return se il terzo passato non è un dipendente ritorna null
+	 * @throws PersistencyException
+	 * @throws IntrospectionException
+	 */
+	@SuppressWarnings("unchecked")
+	public Integer findMatricolaDipendente(UserContext userContext, TerzoBulk terzo, Date dataCompetenzaDocumento)throws PersistencyException,IntrospectionException {
+		Integer matricola = null;
+		Collection<RapportoBulk> rapporti = ((AnagraficoHome) getHomeCache().getHome(AnagraficoBulk.class)).findRapporti(terzo.getAnagrafico());
+		for (RapportoBulk rapporto : rapporti) {
+			if (rapporto.getMatricola_dipendente() != null && rapporto.getDt_ini_validita().before(dataCompetenzaDocumento)) {
+				matricola = rapporto.getMatricola_dipendente();
+				break;
+			}
+		}
+		return matricola;
+	}
 }

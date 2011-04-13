@@ -16,5 +16,10 @@ public final class SpringUtil {
 	public static <T extends Object> T getBean(String beanName, Class<T> clazz){
 		return (T) beanFactory.getBean(beanName, clazz);
 	}
+
+	@SuppressWarnings("unchecked")
+	public static <T extends Object> T getBean(String beanName, Class<T> clazz, Object...constructorArgs){
+		return (T) beanFactory.getBean(beanName, constructorArgs);
+	}
 	
 }

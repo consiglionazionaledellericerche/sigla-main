@@ -3,6 +3,7 @@ package it.cnr.contab.missioni00.docs.bulk;
 import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.*;
 import java.math.BigDecimal;
@@ -3301,5 +3302,8 @@ public String getDsUnitaOrganizzativa(){
 	if (getUnitaOrganizzativa() == null)
 		return null;
 	return getUnitaOrganizzativa().getDs_unita_organizzativa();
+}
+public Timestamp getDt_documento() {
+	return getDt_inizio_missione();
 }
 }

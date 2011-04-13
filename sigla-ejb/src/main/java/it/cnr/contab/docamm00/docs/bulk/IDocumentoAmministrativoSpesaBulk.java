@@ -20,6 +20,8 @@ public java.sql.Timestamp getDt_a_competenza_coge();
  * Getter dell'attributo dt_da_competenza_coge
  */
 public java.sql.Timestamp getDt_da_competenza_coge();
+
+public java.sql.Timestamp getDt_documento();
 /**
  * Insert the method's description here.
  * Creation date: (5/8/2002 10:42:33 AM)
@@ -68,4 +70,5 @@ void setEsercizio(Integer newEsercizio);
  * @return java.lang.Integer
  */
 void setPg_doc_amm(Long newPg);
+
 }

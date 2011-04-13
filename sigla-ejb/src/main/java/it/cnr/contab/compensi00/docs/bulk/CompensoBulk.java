@@ -33,6 +33,7 @@ import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Dictionary;
 import java.util.Iterator;
@@ -3177,6 +3178,10 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		if (getUnitaOrganizzativa() == null)
 			return null;
 		return getUnitaOrganizzativa().getDs_unita_organizzativa();
+	}
+
+	public Timestamp getDt_documento() {
+		return getDt_registrazione();
 	}
 	
 }

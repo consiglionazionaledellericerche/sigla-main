@@ -1,5 +1,7 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
+import java.sql.Timestamp;
+
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaIBP;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.CRUDBP;
@@ -403,5 +405,8 @@ public void setPg_fattura_passiva_fat_clgs(java.lang.Long pg_fattura_passiva_fat
  */
 public void setStorniHashMap(java.util.HashMap newStorniHashMap) {
 	storniHashMap = newStorniHashMap;
+}
+public Timestamp getDt_documento() {
+	return getDt_registrazione();
 }
 }

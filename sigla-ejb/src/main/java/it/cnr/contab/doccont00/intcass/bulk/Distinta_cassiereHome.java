@@ -3,7 +3,11 @@ package it.cnr.contab.doccont00.intcass.bulk;
 import java.math.*;
 import java.sql.*;
 import java.util.*;
+
 import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.fondecon00.core.bulk.Fondo_spesaBulk;
+import it.cnr.contab.fondecon00.core.bulk.Fondo_spesaHome;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.*;
@@ -1839,5 +1843,48 @@ public java.util.List findDistintaCasserieDettagli( Distinta_cassiereBulk distin
 	sql.addClause("AND","cd_unita_organizzativa",SQLBuilder.EQUALS, distinta.getCd_unita_organizzativa());
 	sql.addClause("AND","pg_distinta",SQLBuilder.EQUALS, distinta.getPg_distinta());
 	return home.fetchAll(sql);
+}
+/**
+ * 
+ * @param userContext
+ * @param distinta
+ * @throws ComponentException
+ */
+@SuppressWarnings("unchecked")
+public void avvisoDiPagamentoDipendenti(UserContext userContext, Distinta_cassiereBulk distinta) throws ComponentException{
+	try {
+		Fondo_spesaHome fondo_spesaHome = (Fondo_spesaHome) getHomeCache().getHome( Fondo_spesaBulk.class );
+		Distinta_cassiere_detHome distintaDetHome =  (Distinta_cassiere_detHome) getHomeCache().getHome( Distinta_cassiere_detBulk.class );
+		SQLBuilder sql = distintaDetHome.createSQLBuilder();
+		sql.addTableToHeader("MANDATO", "man");
+		sql.addClause(FindClause.AND, "distinta", SQLBuilder.EQUALS, distinta);
+		sql.addSQLJoin("distinta_cassiere_det.esercizio", "man.esercizio");
+		sql.addSQLJoin("distinta_cassiere_det.cd_cds", "man.cd_cds");
+		sql.addSQLJoin("distinta_cassiere_det.pg_mandato", "man.pg_mandato");
+		sql.openParenthesis(FindClause.AND);
+		sql.addClause(FindClause.AND, "man.ti_mandato", SQLBuilder.EQUALS, MandatoBulk.TIPO_PAGAMENTO);
+		sql.addClause(FindClause.OR, "man.ti_mandato", SQLBuilder.EQUALS, MandatoBulk.TIPO_REGOLAM_SOSPESO);
+		sql.closeParenthesis();
+		SQLBuilder sqlFondoSpesa = fondo_spesaHome.createSQLBuilder();
+		sqlFondoSpesa.addSQLJoin("fondo_spesa.esercizio_mandato", "man.esercizio");
+		sqlFondoSpesa.addSQLJoin("fondo_spesa.cd_cds_mandato", "man.cd_cds");
+		sqlFondoSpesa.addSQLJoin("fondo_spesa.pg_mandato", "man.pg_mandato");
+		sql.addSQLNotExistsClause(FindClause.AND, sqlFondoSpesa);
+		List<Distinta_cassiere_detBulk> dettagliDistinta =  distintaDetHome.fetchAll(sql);
+		for (Distinta_cassiere_detBulk dettaglioDistinta : dettagliDistinta) {
+			if (dettaglioDistinta.getPg_mandato() != null){
+				MandatoHome mandatoHome = (MandatoHome) getHomeCache().getHome(MandatoIBulk.class);
+				MandatoBulk mandato = new MandatoBulk(dettaglioDistinta.getCd_cds(), 
+													dettaglioDistinta.getEsercizio(), 
+													dettaglioDistinta.getPg_mandato());
+				mandato = (MandatoBulk) mandatoHome.findByPrimaryKey(mandato);
+				if (mandatoHome.isAvvisoDiPagamentoMandato(userContext, mandato)){
+					mandatoHome.sendAvvisoDiPagamento(userContext, mandato);
+				}
+			}
+		}
+	} catch (Exception e) {
+		throw new ComponentException( e );
+	}
 }
 }

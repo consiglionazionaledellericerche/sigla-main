@@ -1,7 +1,9 @@
 package it.cnr.contab.anagraf00.ejb;
 import java.sql.Timestamp;
+import java.util.Date;
 
 import it.cnr.contab.anagraf00.comp.TerzoComponent;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -152,6 +154,24 @@ public java.util.List findListaTerziSIP_rendicontazione(it.cnr.jada.UserContext 
 	pre_component_invocation(param0,componentObj);
 	try {
 		java.util.List result = ((TerzoComponent)componentObj).findListaTerziSIP_rendicontazione(param0,param1,param2,param3,param4,param5,param6,param7);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public Integer findMatricolaDipendente(it.cnr.jada.UserContext param0,TerzoBulk param1, Date param2) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		Integer result = ((TerzoComponent)componentObj).findMatricolaDipendente(param0,param1, param2);
 		component_invocation_succes(param0,componentObj);
 		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {

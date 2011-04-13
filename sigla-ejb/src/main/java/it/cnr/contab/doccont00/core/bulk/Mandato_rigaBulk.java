@@ -515,4 +515,8 @@ public String getTipoAssociazioneCup() {
 	if (totCup.compareTo(Utility.ZERO)==0) return SIOPE_NON_ASSOCIATO;
 	return SIOPE_PARZIALMENTE_ASSOCIATO;
 }
+@Override
+public String getDs_mandato_riga() {
+	return super.getDs_mandato_riga();
+}
 }

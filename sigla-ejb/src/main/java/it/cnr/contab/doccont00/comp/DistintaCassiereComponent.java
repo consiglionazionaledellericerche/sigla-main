@@ -23,6 +23,7 @@ import it.cnr.contab.doccont00.core.bulk.Ass_mandato_reversaleBulk;
 import it.cnr.contab.doccont00.core.bulk.Ass_mandato_reversaleHome;
 import it.cnr.contab.doccont00.core.bulk.MandatoAccreditamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoHome;
 import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIHome;
@@ -2076,6 +2077,8 @@ public class DistintaCassiereComponent extends
 			makeBulkPersistent(userContext, distinta);
 			aggiornaDataDiffDocamm(userContext, distinta,
 					MandatoBulk.STATO_TRASMISSIONE_TRASMESSO);
+			Distinta_cassiereHome distintaHome = (Distinta_cassiereHome) getHome( userContext, distinta.getClass());
+			distintaHome.avvisoDiPagamentoDipendenti(userContext, distinta);
 			SQLBuilder sql = selectDistinte_cassiere_detCollegate(userContext,
 					distinta);
 			List list = getHome(userContext, Distinta_cassiere_detBulk.class)
