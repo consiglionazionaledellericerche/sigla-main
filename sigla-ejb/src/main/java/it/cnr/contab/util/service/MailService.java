@@ -124,8 +124,8 @@ public class MailService {
 			return null;
 		StringBuilder sb = new StringBuilder();
 		for (String x : source)
-			sb.append(x + ",");
-		sb.delete(sb.length()-",".length(), sb.length());
+			sb.append(x + ";");
+		sb.delete(sb.length()-";".length(), sb.length());
 		return sb.toString();
 	}
 	

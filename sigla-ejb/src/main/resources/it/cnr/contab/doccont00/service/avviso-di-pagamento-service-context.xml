@@ -9,7 +9,7 @@
 
 	<bean id="mail.avviso.di.pagamento.to.test.mode" class="java.lang.String">
 		<constructor-arg> 
-			<value>marco.spasiano@cnr.it,matilde.durso@cnr.it</value>
+			<value>marco.spasiano@cnr.it;matilde.durso@cnr.it</value>
 		</constructor-arg>						
 	</bean>
 	<bean id="avviso.di.pagamento.mail.subject" class="java.lang.String">
