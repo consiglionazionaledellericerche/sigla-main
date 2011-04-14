@@ -61,7 +61,6 @@
 			<value>HH:mm:ss</value>
 		</constructor-arg>						
     </bean>
-    
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
     	<property name="session" ref="mailSession"/>
 	</bean>
@@ -70,7 +69,7 @@
 			<value>sigla@cnr.it</value>
 		</constructor-arg>						
 	</bean>
-	<bean id="defaultToTestMode" class="java.util.List">
+	<bean id="defaultToTestMode" class="java.util.LinkedList">
 		<constructor-arg>
 			<list>
 				<value>sigla@cnr.it</value>
