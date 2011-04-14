@@ -70,11 +70,13 @@
 			<value>sigla@cnr.it</value>
 		</constructor-arg>						
 	</bean>
-	<bean id="defaultToTestMode" class="java.lang.String">
-		<constructor-arg> 
-			<value>sigla@cnr.it</value>
-		</constructor-arg>						
-	</bean>
+	<bean id="defaultToTestMode" class="java.util.List">
+		<constructor-arg>
+			<list>
+				<value>sigla@cnr.it</value>
+			</list>
+		</constructor-arg>
+	</bean>	
     <bean id="mailService" class="it.cnr.contab.util.service.MailService">
     	<property name="toTestModeList" ref="defaultToTestMode"/>
     </bean>

@@ -32,9 +32,9 @@ public class MailService {
 	
 	private String defaultSubject;
 	private String defaultText;
-	private String toTestModeList;
+	private List<String> toTestModeList;
 	
-	public void setToTestModeList(String toTestModeList) {
+	public void setToTestModeList(List<String> toTestModeList) {
 		this.toTestModeList = toTestModeList;
 	}
 
@@ -78,9 +78,7 @@ public class MailService {
 		try{
 			MessagePreparator messagePreparator = new MessagePreparator(
 					fromAddress,
-					testMode?toTestModeList:convertListToAddress(to),
-					convertListToAddress(cc),
-					convertListToAddress(bcc),
+					testMode?toTestModeList:to,cc,bcc,
 					subject,
 					messageText.toString());
 			mailSender.send(messagePreparator);
@@ -131,13 +129,13 @@ public class MailService {
 	
 	class MessagePreparator implements MimeMessagePreparator{
 		private final String from;
-		private final String to;
-		private final String cc;
-		private final String bcc;
+		private final List<String> to;
+		private final List<String> cc;
+		private final List<String> bcc;
 		private final String subject;
 		private final String text;
 		
-		public MessagePreparator(String from, String to, String cc, String bcc,
+		public MessagePreparator(String from, List<String> to, List<String> cc, List<String> bcc,
 				String subject, String text) {
 			super();
 			this.from = from;
@@ -151,11 +149,11 @@ public class MailService {
 		public void prepare(MimeMessage mimeMessage) throws Exception {
 		     MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 		     message.setFrom(from);
-		     message.setTo(to);
-		     if (cc != null)
-		    	 message.setCc(cc);
+		     message.setTo(to.toArray(new String[to.size()]));
+		     if (cc != null && !cc.isEmpty())
+		    	 message.setCc(cc.toArray(new String[cc.size()]));
 		     if (bcc != null)
-		    	 message.setBcc(bcc);
+		    	 message.setBcc(bcc.toArray(new String[bcc.size()]));
 		     message.setSubject(subject);
 		     message.setText(text, true);
 		}
