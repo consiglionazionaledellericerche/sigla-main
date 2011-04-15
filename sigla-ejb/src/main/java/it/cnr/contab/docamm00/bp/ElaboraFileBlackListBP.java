@@ -501,15 +501,11 @@ public Integer Formatta(String s, String allineamento,Integer dimensione,String 
 		w.append(s.substring(0,dimensione));
 		colonna++;
 		int i=0;
-		while(dimensione+(i*(dimensione-1))<=s.length()){
+		while(dimensione+(i*(dimensione-1))<s.length()){
 			i++; 
-			w.append(codice);
-			if(s.length()>dimensione+((i-1)*(dimensione-1))){
+			w.append(codice); 
+			if(s.length()>dimensione+((i-1)*(dimensione-1)))
 				w.append(Formatta("+"+s.substring(dimensione+((i-1)*(dimensione-1)),s.length()),allineamento,dimensione,riempimento));
-			}
-			else{
-				w.append("+"+s.substring(dimensione+((i-1)*(dimensione-1)),dimensione+(i*(dimensione-1))));
-			}
 			colonna++;
 		}
 	}
