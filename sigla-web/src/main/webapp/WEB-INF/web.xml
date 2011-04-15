@@ -209,6 +209,11 @@
 		<mime-type>text/text</mime-type>
 	</mime-mapping>
 	<mime-mapping>
+		<extension>ivl</extension>
+		<mime-type>text/text</mime-type>
+	</mime-mapping>
+	
+	<mime-mapping>
 		<extension>I01</extension>
 		<mime-type>text/text</mime-type>
 	</mime-mapping>

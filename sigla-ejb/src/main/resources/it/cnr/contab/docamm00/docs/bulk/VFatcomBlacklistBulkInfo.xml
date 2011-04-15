@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	shortDescription="Riepilogativi BlackList"
+	longDescription="Riepilogativi BlackList"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		keysProperty="tipofatturaKeys"
+		inputSize="30"
+		maxLength="30"
+		inputType="SELECT"
+		enabledOnEdit="false"
+		label="tipo" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="mese"
+		property="mese"
+		keysProperty="meseKeys"
+		inputSize="30"
+		maxLength="30"
+		inputType="SELECT"
+		enabledOnEdit="false"
+		label="mese" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="terzo" />
+	<fieldProperty
+		name="imponibile"
+		property="imponibile"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="false"
+		label="imponibile" />
+	<fieldProperty
+		name="iva"
+		property="iva"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="false"
+		label="iva" />
+	<fieldProperty
+		name="imp_esente"
+		property="imp_esente"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="false"
+		label="imp. esente" />
+	<fieldProperty
+		name="imp_non_imp"
+		property="imp_non_imp"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="false"
+		label="importo non imponibile" />
+	<fieldProperty
+		name="imp_non_soggetto"
+		property="imp_non_soggetto"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="false"
+		label="importo non soggetto" />
+	<fieldProperty
+		name="ds_nazione"
+		property="ds_nazione"
+		inputType="TEXT"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="nazione" />
+	<fieldProperty
+		name="cd_nazione"
+		property="cd_nazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cod. nazione" />
+	<fieldProperty
+		name="bene_servizio"
+		property="bene_servizio"
+		keysProperty="beneservizioKeys"
+		inputSize="30"
+		maxLength="30"
+		inputType="SELECT"
+		enabledOnEdit="false"
+		label="bene/servizio" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="codice fiscale" />
+	<fieldProperty
+		name="id_fiscale_estero"
+		property="id_fiscale_estero"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="id fiscale estero" />
+	<fieldProperty
+		name="persona"
+		property="persona"
+		keysProperty="fisicagiuridicaKeys"
+		inputSize="30"
+		maxLength="30"
+		inputType="SELECT"
+		enabledOnEdit="false"
+		label="persona" />
+	<fieldProperty
+		name="nome"
+		property="nome"
+		inputType="TEXT"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="nome" />
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		inputType="TEXT"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="cognome" />
+	<fieldProperty
+		name="ragione_sociale"
+		property="ragione_sociale"
+		inputType="TEXT"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="ragione sociale" />
+	<fieldProperty
+		name="comune_nascita"
+		property="comune_nascita"
+		inputType="TEXT"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="comune nascita" />
+	<fieldProperty
+		name="dt_nascita"
+		property="dt_nascita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="data nascita" />
+	<fieldProperty
+		name="cd_provincia"
+		property="cd_provincia"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cod. provincia" />
+	<fieldProperty
+		name="italiano_estero"
+		property="italiano_estero"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="italiano/estero" />
+	<fieldProperty
+		name="stato_nascita"
+		property="stato_nascita"
+		inputType="TEXT"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="stato nascita" />
+	<fieldProperty
+		name="indirizzo_sede"
+		property="indirizzo_sede"
+		inputType="TEXT"
+		maxLength="120"
+		enabledOnEdit="false"
+		label="indirizzo sede" />
+	<fieldProperty
+		name="comune_sede"
+		property="comune_sede"
+		inputType="TEXT"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="comune sede" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="mese" />
+		<formFieldProperty
+			name="cd_terzo" />
+	</form>
+	<formFieldProperty
+		name="tipo" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="mese" />
+	<formFieldProperty
+		name="cd_terzo" />
+	<formFieldProperty
+		name="imponibile" />
+	<formFieldProperty
+		name="iva" />
+	<formFieldProperty
+		name="imp_esente" />
+	<formFieldProperty
+		name="imp_non_imp" />
+	<formFieldProperty
+		name="imp_non_soggetto" />
+	<formFieldProperty
+		name="ds_nazione" />
+	<formFieldProperty
+		name="cd_nazione" />
+	<formFieldProperty
+		name="bene_servizio" />
+	<formFieldProperty
+		name="codice_fiscale" />
+	<formFieldProperty
+		name="id_fiscale_estero" />
+	<formFieldProperty
+		name="persona" />
+	<formFieldProperty
+		name="nome" />
+	<formFieldProperty
+		name="cognome" />
+	<formFieldProperty
+		name="ragione_sociale" />
+	<formFieldProperty
+		name="comune_nascita" />
+	<formFieldProperty
+		name="dt_nascita" />
+	<formFieldProperty
+		name="cd_provincia" />
+	<formFieldProperty
+		name="italiano_estero" />
+	<formFieldProperty
+		name="stato_nascita" />
+	<formFieldProperty
+		name="indirizzo_sede" />
+	<formFieldProperty
+		name="comune_sede" />
+	<findFieldProperty
+		name="tipo" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="mese" />
+	<findFieldProperty
+		name="cd_terzo" />
+	<findFieldProperty
+		name="imponibile" />
+	<findFieldProperty
+		name="iva" />
+	<findFieldProperty
+		name="imp_esente" />
+	<findFieldProperty
+		name="imp_non_imp" />
+	<findFieldProperty
+		name="imp_non_soggetto" />
+	<findFieldProperty
+		name="ds_nazione" />
+	<findFieldProperty
+		name="cd_nazione" />
+	<findFieldProperty
+		name="bene_servizio" />
+	<findFieldProperty
+		name="codice_fiscale" />
+	<findFieldProperty
+		name="id_fiscale_estero" />
+	<findFieldProperty
+		name="persona" />
+	<findFieldProperty
+		name="nome" />
+	<findFieldProperty
+		name="cognome" />
+	<findFieldProperty
+		name="ragione_sociale" />
+	<findFieldProperty
+		name="comune_nascita" />
+	<findFieldProperty
+		name="dt_nascita" />
+	<findFieldProperty
+		name="cd_provincia" />
+	<findFieldProperty
+		name="italiano_estero" />
+	<findFieldProperty
+		name="stato_nascita" />
+	<findFieldProperty
+		name="indirizzo_sede" />
+	<findFieldProperty
+		name="comune_sede" />
+	<columnFieldProperty
+		name="tipo" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="mese" />
+	<columnFieldProperty
+		name="cd_terzo" />
+	<columnFieldProperty
+		name="imponibile" />
+	<columnFieldProperty
+		name="iva" />
+	<columnFieldProperty
+		name="imp_esente" />
+	<columnFieldProperty
+		name="imp_non_imp" />
+	<columnFieldProperty
+		name="imp_non_soggetto" />
+	<columnFieldProperty
+		name="ds_nazione" />
+	<columnFieldProperty
+		name="cd_nazione" />
+	<columnFieldProperty
+		name="bene_servizio" />
+	<columnFieldProperty
+		name="codice_fiscale" />
+	<columnFieldProperty
+		name="id_fiscale_estero" />
+	<columnFieldProperty
+		name="persona" />
+	<columnFieldProperty
+		name="nome" />
+	<columnFieldProperty
+		name="cognome" />
+	<columnFieldProperty
+		name="ragione_sociale" />
+
+</bulkInfo>

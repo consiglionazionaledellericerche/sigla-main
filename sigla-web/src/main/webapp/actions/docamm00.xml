@@ -222,4 +222,24 @@
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
 	    <init-param name="defaultAction" value="ConsFileIntraInviatoAction" />
   </businessProcess>
+  <action 
+      path="/ElaboraFileBlackListAction" actionClass="it.cnr.contab.docamm00.actions.ElaboraFileBlackListAction">
+  </action>
+   <businessProcess
+      name="ElaboraFileBlackListBP" className="it.cnr.contab.docamm00.bp.ElaboraFileBlackListBP">
+    	<forward name="default" path="/docamm00/elabora_file_blacklist.jsp"/>
+    	<init-param name="bulkClassName" value="it.cnr.contab.docamm00.docs.bulk.VFatcomBlacklistBulk"/>
+	<init-param name="componentSessionName" value="CNRDOCAMM00_EJB_ElaboraFileIntraComponentSession" />
+	<init-param name="defaultAction" value="ElaboraFileBlackListAction" />
+  </businessProcess>
+   <action 
+      path="/ConsFileBlackListAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+  </action>
+  <businessProcess
+      name="ConsFileBlackListBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+    	<forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.docamm00.docs.bulk.VFatcomBlacklistBulk"/>
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
+	    <init-param name="defaultAction" value="ConsFileBlackListAction" />
+  </businessProcess>
 </action-mappings>

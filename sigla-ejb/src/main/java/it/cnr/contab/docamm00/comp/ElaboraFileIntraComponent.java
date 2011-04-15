@@ -1,6 +1,9 @@
 package it.cnr.contab.docamm00.comp;
 
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.docamm00.docs.bulk.VFatcomBlacklistBulk;
+import it.cnr.contab.docamm00.docs.bulk.VFatcomBlacklistHome;
 import it.cnr.contab.docamm00.docs.bulk.VIntra12Bulk;
 import it.cnr.contab.docamm00.docs.bulk.VIntra12Home;
 import it.cnr.contab.docamm00.docs.bulk.VIntrastatBulk;
@@ -489,5 +492,23 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 			handleException(e);
 		}
 	}
-	
+
+	public List EstraiBlacklist(UserContext context, OggettoBulk bulk,OggettoBulk bulkterzo)  throws ComponentException {
+		VFatcomBlacklistHome home = (VFatcomBlacklistHome)getHome(context,VFatcomBlacklistBulk.class);
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause("AND", "esercizio", sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context));
+		sql.addClause("AND", "mese",sql.EQUALS,((VFatcomBlacklistBulk)bulk).getMese());
+		if(bulkterzo !=null && (bulkterzo instanceof TerzoBulk)){
+			TerzoBulk terzo=(TerzoBulk)bulkterzo;
+			if(terzo.getCd_terzo()!=null)
+				sql.addClause("AND", "cd_terzo", sql.EQUALS,terzo.getCd_terzo());
+		}
+		sql.addOrderBy("esercizio,mese,cd_terzo,tipo,bene_servizio");
+		try {
+			return home.fetchAll(sql);
+		} catch (PersistencyException e) {
+			handleException(e);
+		}
+	return null;
+	}
 }
