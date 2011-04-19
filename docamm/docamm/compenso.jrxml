@@ -114,15 +114,18 @@
 	<parameter name="UO" isForPrompting="false" class="java.lang.String">
 		<defaultValueExpression ><![CDATA["000.403"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="Pg_compenso" isForPrompting="false" class="java.lang.Integer"/>
+	<parameter name="Pg_compenso" isForPrompting="false" class="java.lang.Integer">
+		<parameterDescription><![CDATA[ATTENZIONE NON LASCIARE VALORIZZATO]]></parameterDescription>
+	</parameter>
 	<parameter name="Terzo" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["109126"]]></defaultValueExpression>
+		<parameterDescription><![CDATA[ATTENZIONE LASCIARE %]]></parameterDescription>
+		<defaultValueExpression ><![CDATA["%"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Pg_fine" isForPrompting="false" class="java.lang.Long">
-		<defaultValueExpression ><![CDATA[new Long(99)]]></defaultValueExpression>
+		<parameterDescription><![CDATA[ATTENZIONE NON LASCIARE VALORIZZATO]]></parameterDescription>
 	</parameter>
 	<parameter name="Pg_inizio" isForPrompting="false" class="java.lang.Long">
-		<defaultValueExpression ><![CDATA[new Long(1)]]></defaultValueExpression>
+		<parameterDescription><![CDATA[ATTENZIONE NON LASCIARE VALORIZZATO]]></parameterDescription>
 	</parameter>
 	<queryString><![CDATA[select a.*,b.FL_DEDUZIONE_IRPEF,b.FL_DEDUZIONE_FAMILY,b.FL_DETRAZIONI_ALTRE,b.FL_DETRAZIONI_FAMILY
 from v_compenso a, parametri_cnr b
