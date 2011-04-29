@@ -84,7 +84,7 @@
 		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		enabledOnEdit="false"
 		nullable="false"
-		label="impegni assunti" />
+		label="assestato" />
 	<fieldProperty
 		name="importo_disponibile"
 		property="importo_disponibile"
