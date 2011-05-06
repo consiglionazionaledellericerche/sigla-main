@@ -309,7 +309,7 @@ if(getFile()!=null){
     stringbuffer.append(':');
     stringbuffer.append(pagecontext.getRequest().getServerPort());
     stringbuffer.append(JSPUtils.getAppRoot(httpservletrequest));
-    toolbar[11].setHref("javascript:doPrint('"+stringbuffer+getFile()+ "')");
+    toolbar[10].setHref("javascript:doPrint('"+stringbuffer+getFile()+ "')");
 }
 super.writeToolbar(pagecontext);
 }
