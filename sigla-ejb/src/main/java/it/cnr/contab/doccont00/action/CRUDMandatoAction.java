@@ -336,8 +336,8 @@ public Forward doConfirmSalvaCup(ActionContext actioncontext,int option) {
 		{
 			CRUDMandatoBP bp = (CRUDMandatoBP)actioncontext.getBusinessProcess();
 			MandatoBulk mandato = (MandatoBulk)bp.getModel();
-			
-			if (bp.isCup_attivo()){
+			// mandato.isRequiredSiope() controlla che non sia un mandato di regolarizzazione 
+			if (bp.isCup_attivo() && mandato.isRequiredSiope() ){
 				boolean trovato =false;
 				if (mandato instanceof MandatoIBulk){
 					bp.getCupCollegati().validate(actioncontext);

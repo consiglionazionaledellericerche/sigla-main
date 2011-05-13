@@ -488,8 +488,8 @@ public Forward doConfirmSalvaCup(ActionContext actioncontext,int option) {
 		{
 			CRUDReversaleBP bp = (CRUDReversaleBP)actioncontext.getBusinessProcess();
 			ReversaleBulk reversale = (ReversaleBulk)bp.getModel();
-			
-			if (bp.isCup_attivo()){
+			// reversale.isRequiredSiope() controlla che non sia una reversale di regolarizzazione 
+			if (bp.isCup_attivo() &&reversale.isRequiredSiope() ){
 				boolean trovato =false;
 				if (reversale instanceof ReversaleIBulk){
 					bp.getCupCollegati().validate(actioncontext);
