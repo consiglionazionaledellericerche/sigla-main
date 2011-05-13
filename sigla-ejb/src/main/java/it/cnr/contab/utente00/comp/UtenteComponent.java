@@ -862,7 +862,10 @@ public SelezionaCdsBulk findCds(UserContext userContext,SelezionaCdsBulk scds) t
 						//sql2.addClause("AND","livello",sql2.EQUALS,CdrHome.CDR_PRIMO_LIVELLO);
 					}
 				}
-				sql2.setOrderBy("livello, cd_unita_organizzativa", it.cnr.jada.util.OrderConstants.ORDER_ASC);
+
+				sql2.setOrderBy("livello", it.cnr.jada.util.OrderConstants.ORDER_ASC);
+				sql2.setOrderBy("cd_unita_organizzativa", it.cnr.jada.util.OrderConstants.ORDER_ASC);
+				
 				List lista2 = home2.fetchAll(sql2);
 				//if (!scds.getCdr().equalsByPrimaryKey(findCdrEnte(userContext)))
 					if (lista2.size()>=1) {
@@ -892,7 +895,8 @@ public SelezionaCdsBulk findUo(UserContext userContext,SelezionaCdsBulk scds) th
 			scds.setCds(scds.getUo().getUnita_padre());
 			//if (!scds.getUo().getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_SAC)) {
 			sql.addClause("AND","cd_unita_organizzativa",sql.EQUALS,scds.getUo().getCd_unita_organizzativa());
-			sql.setOrderBy("livello, cd_unita_organizzativa", it.cnr.jada.util.OrderConstants.ORDER_ASC);
+			sql.setOrderBy("livello", it.cnr.jada.util.OrderConstants.ORDER_ASC);
+			sql.setOrderBy("cd_unita_organizzativa", it.cnr.jada.util.OrderConstants.ORDER_ASC);
 			//}
 			List lista = home.fetchAll(sql);
 			if ((scds.getCdr()!=null && !scds.getCdr().equalsByPrimaryKey(findCdrEnte(userContext))) || scds.getCdr()==null)
