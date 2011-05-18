@@ -244,5 +244,22 @@ public boolean isAbilitatoModificaDescVariazioni(it.cnr.jada.UserContext param0)
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
+public boolean isAbilitatoAllTrattamenti(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	try{
+		boolean result = ((RuoloComponent)componentObj).isAbilitatoAllTrattamenti(param0);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
 }
 

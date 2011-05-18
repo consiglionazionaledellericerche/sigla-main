@@ -8,10 +8,12 @@ import it.cnr.contab.missioni00.ejb.*;
 import it.cnr.contab.missioni00.docs.bulk.*;
 import it.cnr.contab.missioni00.tabrif.bulk.*;
 import it.cnr.contab.missioni00.bp.CRUDMissioneBP;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
+import it.cnr.contab.compensi00.bp.CRUDMinicarrieraBP;
 import it.cnr.contab.compensi00.docs.bulk.*;
 
 import java.util.GregorianCalendar;
@@ -2621,6 +2623,13 @@ public Forward doOnTipoTrattamentoChange(ActionContext context)
 		{	
 			missione.setTipo_trattamento(oldTipoTrattamento);
 			return handleException(context, e);			
+		}
+		
+		if(!missione.getTipo_trattamento().getFl_visibile_a_tutti()&& !UtenteBulk.isAbilitatoAllTrattamenti(context.getUserContext()))
+		{
+			missione.setTipo_trattamento(oldTipoTrattamento);
+			throw new it.cnr.jada.comp.ApplicationException(
+		    "Utente non abilitato all'utilizzo del trattamento selezionato!");
 		}	
 		
 		if(missione.getTipo_trattamento() == null)

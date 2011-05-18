@@ -194,6 +194,14 @@
 		enabledOnSearch="false"
 		enabledOnEdit="true"
 		enabledOnInsert="true" />
+	<fieldProperty
+		name="fl_visibile_a_tutti"
+		property="fl_visibile_a_tutti"
+		inputType="CHECKBOX"
+		label="Visibile a tutti"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />
 
 	<formFieldProperty
 		name="cd_trattamento"
@@ -218,7 +226,8 @@
 	<formFieldProperty name="fl_utilizzabile_art35" />	
 	<formFieldProperty name="fl_anno_prec" />	
 	<formFieldProperty name="fl_detrazioni_altre" />		
-	<formFieldProperty name="fl_incarico" />			
+	<formFieldProperty name="fl_incarico" />	
+	<formFieldProperty name="fl_visibile_a_tutti" />		
 
 	<columnFieldProperty name="cd_trattamento" />
 	<columnFieldProperty name="ds_ti_trattamento" />
@@ -239,7 +248,8 @@
 	<columnFieldProperty name="fl_utilizzabile_art35" />		
 	<columnFieldProperty name="fl_anno_prec" />			
 	<columnFieldProperty name="fl_detrazioni_altre" />				
-	<columnFieldProperty name="fl_incarico" />					
+	<columnFieldProperty name="fl_incarico" />		
+	<columnFieldProperty name="fl_visibile_a_tutti" />					
 
 	<columnSet name="cd_ds_trattamento">
 		<columnFieldProperty name="cd_trattamento" />
@@ -268,4 +278,5 @@
 	<findFieldProperty name="fl_anno_prec" />		
 	<findFieldProperty name="fl_detrazioni_altre" />			
 	<findFieldProperty name="fl_incarico" />				
+	<findFieldProperty name="fl_visibile_a_tutti" />	
 </bulkInfo>

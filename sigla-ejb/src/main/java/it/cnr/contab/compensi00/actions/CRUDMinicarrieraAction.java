@@ -10,6 +10,7 @@ import it.cnr.contab.compensi00.ejb.*;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.docamm00.bp.*;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.BulkCollections;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -967,6 +968,17 @@ public Forward doOnTipoTrattamentoChange(ActionContext context) {
 
 	try {
 		fillModel(context);
+		
+		CRUDMinicarrieraBP bp = (CRUDMinicarrieraBP)context.getBusinessProcess();
+		MinicarrieraBulk carriera = (MinicarrieraBulk)bp.getModel();
+		if(!carriera.getTipo_trattamento().getFl_visibile_a_tutti()&& !UtenteBulk.isAbilitatoAllTrattamenti(context.getUserContext()))
+		{
+			doAzzeraTipoTrattamento(context, carriera);
+			bp.findTipiTrattamento(context);
+			throw new it.cnr.jada.comp.ApplicationException(
+		    "Utente non abilitato all'utilizzo del trattamento selezionato!");
+		}	
+		
 		PostTipoTrattamentoChange(context);
 		
 		return context.findDefaultForward();

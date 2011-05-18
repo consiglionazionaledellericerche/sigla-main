@@ -1931,11 +1931,8 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			filtro.setTipoAnagrafico(compenso.getTi_anagrafico());
 			filtro.setDataValidita(compenso.getDt_registrazione());
 			filtro.setFlSenzaCalcoli(compenso.getFl_senza_calcoli());
-			filtro
-					.setFlDefaultCongualio(new Boolean(compenso
-							.isDaConguaglio()));
-			filtro.setTiIstituzionaleCommerciale(compenso
-					.getTi_istituz_commerc());
+			filtro.setFlDefaultCongualio(new Boolean(compenso.isDaConguaglio()));
+			filtro.setTiIstituzionaleCommerciale(compenso.getTi_istituz_commerc());
 
 			filtro.setFlBonus(compenso.isDaBonus());
 			if (filtro.getCdTipoRapporto() != null

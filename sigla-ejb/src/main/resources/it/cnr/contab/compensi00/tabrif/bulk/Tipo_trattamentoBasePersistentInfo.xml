@@ -162,6 +162,13 @@
 			sqlTypeName="VARCHAR"
 			columnSize="3"
 			nullable="true" />
+		<columnMapping
+			columnName="FL_VISIBILE_A_TUTTI"
+			propertyName="fl_visibile_a_tutti"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 
 	</defaultColumnMap>
 	<persistentProperty
@@ -212,5 +219,6 @@
 		name="fl_incarico" />
 	<persistentProperty
 		name="tipo_rapp_impiego" />
-		
+	<persistentProperty
+		name="fl_visibile_a_tutti" />		
 </SQLPersistentInfo>

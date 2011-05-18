@@ -20,6 +20,7 @@ import it.cnr.contab.compensi00.ejb.*;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.docamm00.bp.*;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
@@ -1333,6 +1334,15 @@ public Forward doOnTipoTrattamentoChange(ActionContext context) {
 		fillModel(context);
 		CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);
 
+		CompensoBulk compenso = (CompensoBulk)bp.getModel();
+		if(!compenso.getTipoTrattamento().getFl_visibile_a_tutti()&& !UtenteBulk.isAbilitatoAllTrattamenti(context.getUserContext()))
+		{
+			doAzzeraTipoTrattamento(context, compenso);
+			bp.findTipiTrattamento(context);
+			throw new it.cnr.jada.comp.ApplicationException(
+		    "Utente non abilitato all'utilizzo del trattamento selezionato!");
+		}	
+	
 		bp.onTipoTrattamentoChange(context);
 		((CompensoBulk)bp.getModel()).setStatoCompensoToEseguiCalcolo();
 

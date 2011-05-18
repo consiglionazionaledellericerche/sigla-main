@@ -63,6 +63,9 @@ public class Tipo_trattamentoBase extends Tipo_trattamentoKey implements Keyed {
 	// TIPO_RAPP_IMPIEGO CHAR(3) NULL
 	private java.lang.String tipo_rapp_impiego;
 	
+	// FL_VISIBILE_A_TUTTI CHAR(1) NOT NULL
+	private java.lang.Boolean fl_visibile_a_tutti;
+	
 public Tipo_trattamentoBase() {
 	super();
 }
@@ -261,5 +264,11 @@ public java.lang.String getTipo_rapp_impiego() {
 }
 public void setTipo_rapp_impiego(java.lang.String tipo_rapp_impiego) {
 	this.tipo_rapp_impiego = tipo_rapp_impiego;
+}
+public java.lang.Boolean getFl_visibile_a_tutti() {
+		return fl_visibile_a_tutti;
+}
+public void setFl_visibile_a_tutti(java.lang.Boolean fl_visibile_a_tutti) {
+		this.fl_visibile_a_tutti = fl_visibile_a_tutti;
 }
 }
