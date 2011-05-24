@@ -121,4 +121,23 @@ public class TransactionalOfflineReportComponentSession extends
 		}
 	}
 	
+	
+	public boolean controllaStampeInCoda(it.cnr.jada.UserContext param0,
+			it.cnr.contab.reports.bulk.Print_spoolerBulk param1) throws 
+			it.cnr.jada.comp.ComponentException,RemoteException {
+		try {
+			return ((Boolean)invoke("controllaStampeInCoda",new Object[] {
+					param0, param1 })).booleanValue();
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
 }

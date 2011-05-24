@@ -1,5 +1,6 @@
 package it.cnr.contab.reports.comp;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.StringTokenizer;
@@ -330,4 +331,49 @@ public class OfflineReportComponent extends GenericComponent implements
 			throw handleException(e);
 		}
 	}
+	
+	public Boolean controllaStampeInCoda(
+			it.cnr.jada.UserContext userContext, it.cnr.contab.reports.bulk.Print_spoolerBulk stampa)
+			throws it.cnr.jada.comp.ComponentException, RemoteException {
+		try {
+			LoggableStatement stm = new LoggableStatement(
+					getConnection(userContext),
+					"SELECT REPORT,STATO,UTCR FROM "
+							+ it.cnr.jada.util.ejb.EJBCommonServices
+									.getDefaultSchema()
+							+ "PRINT_SPOOLER WHERE REPORT = ? AND"
+							+ " (STATO = ? OR"
+							+ " STATO = ? ) AND"
+							+ " UTCR = ?", true,this.getClass());
+			try {
+				stm.setString(1, stampa.getReport());
+				stm.setString(2, Print_spoolerBulk.STATO_IN_CODA);
+				stm.setString(3, Print_spoolerBulk.STATO_IN_ESECUZIONE);
+				stm.setString(4, stampa.getUser());
+				java.sql.ResultSet rs = stm.executeQuery();
+				try {
+					if (rs.next())
+						return true;
+		} catch (Throwable e) {
+			throw handleException(e);
+		} finally {
+			try {
+				rs.close();
+			} catch (java.sql.SQLException e) {
+			}
+			;
+		}
+	} finally {
+		try {
+			stm.close();
+		} catch (java.sql.SQLException e) {
+		}
+		;
+	}
+} catch (java.sql.SQLException e) {
+	throw handleException(e);
+}
+		return false;
+}
+		
 }
