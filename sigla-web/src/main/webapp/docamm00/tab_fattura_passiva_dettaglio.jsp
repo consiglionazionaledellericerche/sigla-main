@@ -186,7 +186,12 @@
 				<span class="FormLabel" style="color:red">
 					Nessun riferimento trovato per la modalità di pagamento selezionata!
 				</span>
-		 <%	} %>
+		 <%	} else if(riga!=null && riga.getModalita_pagamento() == null  
+				 && riga.getModalita()!= null && riga.getModalita().size() == 0 && (riga.getFornitore() != null && riga.getFornitore().getCrudStatus() != riga.getFornitore().UNDEFINED)) { %>
+		    <span class="FormLabel" style="color:red">
+				Attenzione! Nessuna modalità di pagamento trovata!
+			</span>
+		 <% } %>
 		<td>
 	  <tr>
     </table>
