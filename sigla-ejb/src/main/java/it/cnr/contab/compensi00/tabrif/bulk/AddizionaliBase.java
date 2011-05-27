@@ -17,6 +17,14 @@ public class AddizionaliBase extends AddizionaliKey implements Keyed {
 	//  OLD_ALIQUOTA DECIMAL(10,6) NOT NULL
 	private java.math.BigDecimal old_aliquota;
   
+	private java.lang.String nota;
+	
+	public java.lang.String getNota() {
+		return nota;
+	}
+	public void setNota(java.lang.String nota) {
+		this.nota = nota;
+	}
 	public AddizionaliBase() {
 		super();
 	}
