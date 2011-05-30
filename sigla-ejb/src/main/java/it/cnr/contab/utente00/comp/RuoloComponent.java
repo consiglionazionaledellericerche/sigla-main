@@ -13,6 +13,7 @@ import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
 
 import java.io.Serializable;
+import it.cnr.jada.persistency.IntrospectionException;
 
 
 /**
@@ -998,7 +999,7 @@ public boolean isAbilitatoModificaDescVariazioni(UserContext userContext)throws 
 	
 return (false);
 }
-public boolean isAbilitatoAllTrattamenti(UserContext userContext)throws it.cnr.jada.comp.ComponentException{
+public boolean isAbilitatoAllTrattamenti(UserContext userContext)throws it.cnr.jada.comp.ComponentException, IntrospectionException{
 	try {
 	SQLBuilder sql = null; 
 	SQLBroker broker = null;
@@ -1020,8 +1021,16 @@ public boolean isAbilitatoAllTrattamenti(UserContext userContext)throws it.cnr.j
 		}		     		     
 	}
 	else {
+		String cd_uo_scrivania = CNRUserContext.getCd_unita_organizzativa(userContext);
+		Unita_organizzativaBulk cd_uo_cds;
+		
+		Unita_organizzativaHome uoHome = (Unita_organizzativaHome)getHome(userContext, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk.class);
+		Unita_organizzativaBulk uo = (Unita_organizzativaBulk)uoHome.findByPrimaryKey(new Unita_organizzativaBulk(cd_uo_scrivania));
+
+		cd_uo_cds = uoHome.findUo_cdsByUo(CNRUserContext.getEsercizio(userContext),cd_uo_scrivania);
+		
 		sql = getHome(userContext, Utente_unita_ruoloBulk.class).createSQLBuilder();
-		sql.addSQLClause("AND","UTENTE_UNITA_RUOLO.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(userContext));
+		sql.addSQLClause("AND","UTENTE_UNITA_RUOLO.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,cd_uo_cds.getCd_unita_organizzativa());
 		sql.addSQLClause("AND","UTENTE_UNITA_RUOLO.CD_UTENTE",SQLBuilder.EQUALS,CNRUserContext.getUser(userContext));
 		broker =  getHome( userContext, Utente_unita_ruoloBulk.class ).createBroker( sql );
 		Utente_unita_ruoloBulk utente_unita_ruolo;

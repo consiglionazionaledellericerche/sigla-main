@@ -266,7 +266,7 @@ public static boolean isAbilitatoSospensioneCori(it.cnr.jada.UserContext param0)
 public static boolean isAbilitatoModificaDescVariazioni(it.cnr.jada.UserContext param0) throws ComponentException, RemoteException{
 	return getRuoloComponentSession().isAbilitatoModificaDescVariazioni(param0);
 }
-public static boolean isAbilitatoAllTrattamenti(it.cnr.jada.UserContext param0) throws ComponentException, RemoteException{
+public static boolean isAbilitatoAllTrattamenti(it.cnr.jada.UserContext param0) throws ComponentException, RemoteException,it.cnr.jada.persistency.IntrospectionException{
 	return getRuoloComponentSession().isAbilitatoAllTrattamenti(param0);
 }
 }

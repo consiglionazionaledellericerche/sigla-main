@@ -1,5 +1,6 @@
 package it.cnr.contab.utente00.ejb;
 import it.cnr.contab.utente00.comp.RuoloComponent;
+import it.cnr.jada.persistency.IntrospectionException;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.*;
@@ -244,7 +245,7 @@ public boolean isAbilitatoModificaDescVariazioni(it.cnr.jada.UserContext param0)
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
-public boolean isAbilitatoAllTrattamenti(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+public boolean isAbilitatoAllTrattamenti(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException, IntrospectionException {
 	try{
 		boolean result = ((RuoloComponent)componentObj).isAbilitatoAllTrattamenti(param0);
 		component_invocation_succes(param0,componentObj);
