@@ -80,6 +80,6 @@
 		name="aliquota" />
 	<columnFieldProperty
 		name="old_aliquota" />	
-	<findFieldProperty
+	<columnFieldProperty
 		name="nota" />			
 </bulkInfo>
