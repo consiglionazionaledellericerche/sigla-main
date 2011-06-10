@@ -574,9 +574,9 @@ public void checkValiditaInizioFineMissione() throws it.cnr.jada.action.MessageT
 
 	GregorianCalendar gdf = getGregorianCalendar(getDt_fine_missione());
 	GregorianCalendar gdi = getGregorianCalendar(getDt_inizio_missione());
-	gdf.add(java.util.Calendar.MONTH, -6);
+	gdf.add(java.util.Calendar.DAY_OF_YEAR, -240);
 	if(gdf.after(gdi))
-		 throw new it.cnr.jada.action.MessageToUser( "La durata della missione non puo' essere superiore ai 6 mesi !" );	
+		 throw new it.cnr.jada.action.MessageToUser( "La durata della missione non puo' essere superiore ai 240 giorni !" );	
 }
 /**
  * Il metodo genera le tappe non configurate facendole ereditare dalla tappa giorno precedente 
