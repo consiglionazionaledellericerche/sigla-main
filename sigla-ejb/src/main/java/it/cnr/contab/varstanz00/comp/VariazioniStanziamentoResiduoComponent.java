@@ -30,6 +30,8 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioHome;
@@ -284,25 +286,47 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		}
 		return sql;
 	}
-	public SQLBuilder selectElemento_voceByClause (UserContext userContext,Var_stanz_res_rigaBulk var_stanz_res_riga, Elemento_voceBulk elemento_voce, CompoundFindClause clause) throws ComponentException, PersistencyException{	
-		SQLBuilder sql = getHome(userContext, Elemento_voceBulk.class).createSQLBuilder();
-		sql.addClause( clause );
-		sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getEsercizio());
-		sql.addSQLClause("AND", "TI_GESTIONE", SQLBuilder.EQUALS, CostantiTi_gestione.TI_GESTIONE_SPESE);		
-		sql.addSQLClause("AND", "TI_APPARTENENZA", SQLBuilder.NOT_EQUALS, "C");
-		it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
-		try {
-			config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_CDR_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_CDR_PERSONALE);
-		} catch (RemoteException e) {
-			throw new ComponentException(e);
-		} catch (EJBException e) {
-			throw new ComponentException(e);
-		}
-		if (config != null && var_stanz_res_riga.getCentroTestata()!=null && var_stanz_res_riga.getCentroTestata().getCd_centro_responsabilita()!=null){
-			if( var_stanz_res_riga.getCentroTestata().getCd_centro_responsabilita().compareTo(config.getVal01())!=0)
-				sql.addSQLClause("AND", "FL_VOCE_PERSONALE", SQLBuilder.EQUALS, "N");
-		}
-		return sql;
+	public SQLBuilder selectElemento_voceByClause (UserContext userContext,Var_stanz_res_rigaBulk var_stanz_res_riga, Elemento_voceBulk elemento_voce, CompoundFindClause clause) throws ComponentException, PersistencyException{
+		
+		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
+		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
+
+		if (clause == null) clause = ((OggettoBulk)elemento_voce).buildFindClauses(null);
+
+		SQLBuilder sql = getHome(userContext, elemento_voce,"V_ELEMENTO_VOCE_PDG_SPE").createSQLBuilder();
+
+			if(clause != null) sql.addClause(clause);
+			sql.addSQLClause("AND", "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
+			
+			sql.addTableToHeader("PARAMETRI_LIVELLI");
+			sql.addSQLJoin("V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", "PARAMETRI_LIVELLI.ESERCIZIO");
+
+			sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL");
+			sql.addSQLJoin("V_ELEMENTO_VOCE_PDG_SPE.ID_CLASSIFICAZIONE", "V_CLASSIFICAZIONE_VOCI_ALL.ID_CLASSIFICAZIONE");
+			sql.addSQLJoin("V_CLASSIFICAZIONE_VOCI_ALL.NR_LIVELLO", "PARAMETRI_LIVELLI.LIVELLI_SPESA");
+
+			sql.openParenthesis("AND");
+			sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", sql.ISNULL, null);	
+			sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", sql.EQUALS, "N");	
+			sql.closeParenthesis();
+
+			if (var_stanz_res_riga.getLinea_di_attivita() != null)
+				sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_FUNZIONE",sql.EQUALS,var_stanz_res_riga.getLinea_di_attivita().getCd_funzione());
+
+			if (clause != null) sql.addClause(clause);
+			it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
+			try {
+				config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_CDR_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_CDR_PERSONALE);
+			} catch (RemoteException e) {
+				throw new ComponentException(e);
+			} catch (EJBException e) {
+				throw new ComponentException(e);
+			}
+			if (config != null && var_stanz_res_riga.getCentroTestata()!=null && var_stanz_res_riga.getCentroTestata().getCd_centro_responsabilita()!=null){
+				if( var_stanz_res_riga.getCentroTestata().getCd_centro_responsabilita().compareTo(config.getVal01())!=0)
+					sql.addSQLClause("AND", "FL_VOCE_PERSONALE", SQLBuilder.EQUALS, "N");
+			}
+			return sql;
 	}
 	public SQLBuilder selectAssestatoResiduoByClause (UserContext userContext,Var_stanz_resBulk var_stanz_res, V_assestato_residuoBulk assestato_residuo, CompoundFindClause clause) throws ComponentException, PersistencyException{	
 		SQLBuilder sql = getHome(userContext, V_assestato_residuoBulk.class).createSQLBuilder();
