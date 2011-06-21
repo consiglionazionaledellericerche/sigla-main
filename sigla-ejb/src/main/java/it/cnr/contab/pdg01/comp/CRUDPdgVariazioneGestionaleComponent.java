@@ -321,8 +321,9 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
 		}
+		super.modificaConBulk(userContext, pdg);
 		aggiornaLimiteSpesa(userContext, pdg);
-		return (Pdg_variazioneBulk)super.modificaConBulk(userContext, pdg);
+		return pdg;
 	}		
 
 	/**
