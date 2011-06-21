@@ -3,6 +3,6 @@
     <wb-module deploy-name="sigla-ws">
         <wb-resource deploy-path="/" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/java"/>
-<property name="java-output-path" value="/sigla-ws/target/classes"/>
+        <property name="java-output-path" value="/sigla-ws/target/classes"/>
     </wb-module>
 </project-modules>
