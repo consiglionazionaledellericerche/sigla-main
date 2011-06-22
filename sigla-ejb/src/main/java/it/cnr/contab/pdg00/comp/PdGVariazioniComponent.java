@@ -2652,9 +2652,22 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 			sql.addClause(FindClause.AND, "cd_centro_responsabilita", SQLBuilder.STARTSWITH, cds);
 			Unita_organizzativaBulk cdsBulk = (Unita_organizzativaBulk) getHome(userContext, Unita_organizzativaBulk.class).
 				findByPrimaryKey(new Unita_organizzativaBulk(cds));
-			if (Tipo_unita_organizzativaHome.TIPO_UO_SAC.equalsIgnoreCase(cdsBulk.getCd_tipo_unita())){
-				uo = CNRUserContext.getCd_unita_organizzativa(userContext);
-				sql.addClause(FindClause.AND, "cd_centro_responsabilita", SQLBuilder.STARTSWITH, uo);
+			 if(Tipo_unita_organizzativaHome.TIPO_UO_SAC.equalsIgnoreCase(cdsBulk.getCd_tipo_unita()) && 
+					 bulk !=null && bulk instanceof Pdg_variazioneBulk  && ((Pdg_variazioneBulk)bulk).getPg_variazione_pdg()!=null){
+				 Pdg_variazioneHome Pdg_variazioneHome = (Pdg_variazioneHome) getHome(userContext, Pdg_variazioneBulk.class);
+				 Pdg_variazioneBulk pdg = (Pdg_variazioneBulk) Pdg_variazioneHome.findByPrimaryKey((Pdg_variazioneBulk)bulk);
+				if (pdg!=null && pdg.getCentro_responsabilita()!=null && pdg.getCd_centro_responsabilita()!=null){
+					CdrHome cdrHome = (CdrHome) getHome(userContext, CdrBulk.class);
+					CdrBulk cdrVar = (CdrBulk) cdrHome.findByPrimaryKey(new CdrKey(pdg.getCd_centro_responsabilita()));
+					uo = cdrVar.getCd_unita_organizzativa();
+					sql.addClause(FindClause.AND, "cd_centro_responsabilita", SQLBuilder.STARTSWITH, uo);
+				}
+			}
+			else{	
+				if (Tipo_unita_organizzativaHome.TIPO_UO_SAC.equalsIgnoreCase(cdsBulk.getCd_tipo_unita())){
+					uo = CNRUserContext.getCd_unita_organizzativa(userContext);
+					sql.addClause(FindClause.AND, "cd_centro_responsabilita", SQLBuilder.STARTSWITH, uo);
+				}
 			}
 		}		
 		List<Integer> variazioniPresentiSulDocumentale = variazioniPresentiSulDocumentale(userContext, tiSigned,cds, uo);
