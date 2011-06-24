@@ -86,12 +86,6 @@
 		<dependencies>
 	  	<dependency>
 	  		<groupId>it.cnr</groupId>
-	  		<artifactId>jada</artifactId>
-	  		<version>2.0.1</version>
-	  		<type>ejb</type>
-	  	</dependency>
-	  	<dependency>
-	  		<groupId>it.cnr</groupId>
 	  		<artifactId>sigla-ejb</artifactId>
 			<version>${pom.version}</version>
 	  		<type>ejb</type>
