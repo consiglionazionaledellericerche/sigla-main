@@ -1243,25 +1243,4 @@ public class CompensoComponentSessionBean extends
 			throw uncaughtError(param0, componentObj, e);
 		}
 	}
-	
-	public void archiviaStampa(UserContext userContext, Date fromDate, Date untilDate, CompensoBulk compensoBulk, Integer... years)throws ComponentException,
-	javax.ejb.EJBException {
-		pre_component_invocation(userContext, componentObj);
-		try {
-			((CompensoComponent) componentObj).archiviaStampa(userContext, fromDate, untilDate, compensoBulk, years);
-			component_invocation_succes(userContext, componentObj);
-		} catch (it.cnr.jada.comp.NoRollbackException e) {
-			component_invocation_succes(userContext, componentObj);
-			throw e;
-		} catch (it.cnr.jada.comp.ComponentException e) {
-			component_invocation_failure(userContext, componentObj);
-			throw e;
-		} catch (RuntimeException e) {
-			throw uncaughtRuntimeException(userContext, componentObj, e);
-		} catch (Error e) {
-			throw uncaughtError(userContext, componentObj, e);
-		}
-		
-	}
-	
 }

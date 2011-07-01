@@ -1,5 +1,7 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
+import it.cnr.contab.cmis.annotation.CMISPolicy;
+import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
@@ -19,9 +21,12 @@ public class Documento_genericoBase extends Documento_genericoKey implements Key
 	private java.lang.String cd_uo_origine;
 
 	// DATA_REGISTRAZIONE TIMESTAMP NOT NULL
+	@CMISProperty(name="emppay:datDoc",converterBeanName="cmis.converter.timestampToCalendarConverter")	
 	private java.sql.Timestamp data_registrazione;
 
 	// DS_DOCUMENTO_GENERICO VARCHAR(300)
+	@CMISPolicy(name="P:cm:titled", property=@CMISProperty(name="cm:description"))
+	@CMISProperty(name="emppay:descDoc")	
 	private java.lang.String ds_documento_generico;
 
 	// DT_A_COMPETENZA_COGE TIMESTAMP NOT NULL
@@ -43,6 +48,7 @@ public class Documento_genericoBase extends Documento_genericoKey implements Key
 	private java.lang.Integer esercizio_lettera;
 
 	// IM_TOTALE DECIMAL(15,2) NOT NULL
+	@CMISProperty(name="emppay:impNetto")
 	private java.math.BigDecimal im_totale;
 
 	// PG_LETTERA DECIMAL(10,0)

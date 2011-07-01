@@ -71,5 +71,4 @@ Acconto_classific_coriBulk doCalcolaAccontoAddCom(it.cnr.jada.UserContext param0
 java.util.List findListaCompensiSIP(UserContext userContext,String query,String dominio,String uo,String terzo,String tipoRicerca,String string, String string2, String string3, Timestamp data_inizio,Timestamp data_fine)throws ComponentException,java.rmi.RemoteException;
 CompensoBulk inizializzaCompensoPerBonus(UserContext userContext,CompensoBulk compenso, BonusBulk bonus) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 boolean isSospensioneIrpefOkPerContabil(it.cnr.jada.UserContext param0,it.cnr.contab.compensi00.docs.bulk.CompensoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-void archiviaStampa(UserContext userContext, Date fromDate, Date untilDate, CompensoBulk compensoBulk, Integer... years)throws ComponentException,java.rmi.RemoteException;
 }

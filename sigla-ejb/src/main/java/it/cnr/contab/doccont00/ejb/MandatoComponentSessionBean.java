@@ -1,9 +1,17 @@
 package it.cnr.contab.doccont00.ejb;
+import java.rmi.RemoteException;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 import it.cnr.contab.doccont00.comp.MandatoComponent;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
 @Stateless(name="CNRDOCCONT00_EJB_MandatoComponentSession")
 public class MandatoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements MandatoComponentSession {
 @PostConstruct
@@ -351,6 +359,42 @@ public it.cnr.contab.doccont00.core.bulk.MandatoIBulk listaScadenzeAccertamentoP
 		it.cnr.contab.doccont00.core.bulk.MandatoIBulk result = ((MandatoComponent)componentObj).listaScadenzeAccertamentoPerRegolarizzazione(param0,param1);
 		component_invocation_succes(param0,componentObj);
 		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public void avvisoDiPagamentoMandatiRiscontrati()throws ComponentException{
+	it.cnr.jada.UserContext param0 = new CNRUserContext("SCHEDULER", null, 0, null, null, null);
+	pre_component_invocation(param0,componentObj);
+	try {
+		((MandatoComponent)componentObj).avvisoDiPagamentoMandatiRiscontrati(param0);
+		component_invocation_succes(param0,componentObj);
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+public void avvisoDiPagamentoMandatoRiscontrato(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.MandatoBulk param1)throws ComponentException{
+	pre_component_invocation(param0,componentObj);
+	try {
+		((MandatoComponent)componentObj).avvisoDiPagamentoMandatoRiscontrato(param0, param1);
+		component_invocation_succes(param0,componentObj);
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
 		component_invocation_succes(param0,componentObj);
 		throw e;

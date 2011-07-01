@@ -12,24 +12,11 @@
     	<property name="dictionaryService" ref="dictionaryService"/>
     </bean>
     
-    <bean id="cmisService" class="it.cnr.contab.cmis.service.CMISService" init-method="init">
-    	<property name="nodeService" ref="nodeService"/>
-    	<property name="searchService" ref="searchService"/>
-    	<property name="authenticationService" ref="authenticationService"/>
-    	<property name="dictionaryService" ref="dictionaryService"/>
-    	<property name="contentService" ref="contentService"/>
-    	<property name="cmisBulkInfo" ref="cmisBulkInfo"/>
+
+    <bean id="cmisPathUserHomes" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
+    	<property name="path" value="/User Homes"/>
     </bean>
 
-    <bean id="cmisPathConcFormazReddito" class="it.cnr.contab.cmis.service.CMISPath">
-    	<property name="path" value="/Altri pagamenti C.N.R/Concorrenti alla formazione del reddito (inclusi nel CUD)"/>
-    </bean>
-    <bean id="cmisPathNonConcFormazReddito" class="it.cnr.contab.cmis.service.CMISPath">
-    	<property name="path" value="/Altri pagamenti C.N.R/Non concorrenti alla formazione del reddito"/>
-    </bean>
-    <bean id="cmisPathIndAnzianita" class="it.cnr.contab.cmis.service.CMISPath">
-    	<property name="path" value="/Altri pagamenti C.N.R/Indennità di anzianità"/>
-    </bean>
     <bean id="cmisPathVariazioniAlPianoDiGestione" class="it.cnr.contab.cmis.service.CMISPath">
     	<property name="path" value="/Variazioni Al Piano di Gestione"/>
     </bean>
@@ -54,6 +41,18 @@
     		<value>{http://www.alfresco.org/model/content/1.0}cmobject.Collaborator</value>
     	</constructor-arg>
 	</bean>
+
+    <bean id="cmisService" class="it.cnr.contab.cmis.service.CMISService" init-method="init">
+    	<property name="nodeService" ref="nodeService"/>
+    	<property name="searchService" ref="searchService"/>
+    	<property name="authenticationService" ref="authenticationService"/>
+    	<property name="dictionaryService" ref="dictionaryService"/>
+    	<property name="contentService" ref="contentService"/>
+    	<property name="cmisBulkInfo" ref="cmisBulkInfo"/>
+    	<property name="roleConsumer" ref="permission.consumer"/>
+    	<property name="roleCoordinator" ref="permission.coordinator"/>
+    </bean>
+	
     <bean id="pdgVariazioniService" class="it.cnr.contab.pdg00.service.PdgVariazioniService" parent="cmisService"/>
 
 </beans>

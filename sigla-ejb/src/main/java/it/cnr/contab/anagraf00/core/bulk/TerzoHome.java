@@ -266,7 +266,8 @@ public SQLBuilder selectRif_termini_pagamento(TerzoBulk terzo) throws Persistenc
 		Integer matricola = null;
 		Collection<RapportoBulk> rapporti = ((AnagraficoHome) getHomeCache().getHome(AnagraficoBulk.class)).findRapporti(terzo.getAnagrafico());
 		for (RapportoBulk rapporto : rapporti) {
-			if (rapporto.getMatricola_dipendente() != null && rapporto.getDt_ini_validita().before(dataCompetenzaDocumento)) {
+			if (rapporto.getMatricola_dipendente() != null && rapporto.getDt_ini_validita().before(dataCompetenzaDocumento)
+					&& rapporto.getDt_fin_validita().after(dataCompetenzaDocumento)) {
 				matricola = rapporto.getMatricola_dipendente();
 				break;
 			}

@@ -33,7 +33,7 @@ public class MissioneBase extends MissioneKey implements Keyed {
 	private java.lang.String cd_uo_anticipo;
 
 	// CODICE_FISCALE VARCHAR(20)
-	@CMISPolicy(name="P:emp:cf", property=@CMISProperty(name="emp:codice"))
+	@CMISPolicy(name="P:emp:cf", property=@CMISProperty(name="emp:cfcodice"))
 	private java.lang.String codice_fiscale;
 
 	// COGNOME VARCHAR(50)

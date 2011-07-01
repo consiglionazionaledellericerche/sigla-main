@@ -100,7 +100,9 @@ import it.cnr.contab.util00.ejb.ProcedureComponentSession;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.OutdatedResourceException;
 import it.cnr.jada.bulk.PrimaryKeyHashMap;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
@@ -110,6 +112,7 @@ import it.cnr.jada.comp.IPrintMgr;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
@@ -120,6 +123,7 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -133,6 +137,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import javax.ejb.EJBException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
@@ -6279,14 +6284,52 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			throw handleException(e);
 		}
 	}
-public SQLBuilder selectCupByClause(UserContext userContext, MandatoCupIBulk mandato, CupBulk cup, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException
-{
-	SQLBuilder sql = getHome( userContext, CupBulk.class ).createSQLBuilder();
-	sql.openParenthesis("AND");
- 	sql.addClause("AND", "dt_canc", sql.ISNULL, null);
-	sql.addClause("OR","dt_canc",sql.GREATER,it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
-	sql.closeParenthesis();
-	sql.addClause(clauses);
-	return sql;
-}
+	public SQLBuilder selectCupByClause(UserContext userContext, MandatoCupIBulk mandato, CupBulk cup, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException
+	{
+		SQLBuilder sql = getHome( userContext, CupBulk.class ).createSQLBuilder();
+		sql.openParenthesis("AND");
+	 	sql.addClause("AND", "dt_canc", sql.ISNULL, null);
+		sql.addClause("OR","dt_canc",sql.GREATER,it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+		sql.closeParenthesis();
+		sql.addClause(clauses);
+		return sql;
+	}
+	
+	public void avvisoDiPagamentoMandatiRiscontrati(UserContext userContext) throws ComponentException{
+		try {
+			MandatoHome mandatoHome = (MandatoHome) getHome( userContext, MandatoIBulk.class , "AVVISO_PAGAMENTO");
+			SQLBuilder sql = mandatoHome.createSQLBuilder();
+			sql.addClause(FindClause.AND, "fl_invia_avviso_pagamento", SQLBuilder.EQUALS, Boolean.TRUE);
+			List<MandatoBulk> mandati = mandatoHome.fetchAll(sql);
+			for (MandatoBulk mandato : mandati) {
+				Utility.createMandatoComponentSession().avvisoDiPagamentoMandatoRiscontrato(userContext, mandato);
+			}
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		} catch (RemoteException e) {
+			throw handleException(e);
+		} catch (EJBException e) {
+			throw handleException(e);
+		}
+	}
+	
+	public void avvisoDiPagamentoMandatoRiscontrato(UserContext userContext, MandatoBulk mandato) throws ComponentException{
+		try {
+			MandatoHome mandatoHome = (MandatoHome) getHome( userContext, MandatoIBulk.class, "AVVISO_PAGAMENTO" );
+			mandatoHome.lock(mandato);
+			if (mandato.getFl_invia_avviso_pagamento() && 
+					mandatoHome.isAvvisoDiPagamentoMandato(userContext, mandato, Boolean.TRUE))
+				mandatoHome.sendAvvisoDiPagamentoPerBonifico(userContext, mandato);
+			mandato.setFl_invia_avviso_pagamento(Boolean.FALSE);
+			mandato.setToBeUpdated();
+			super.modificaConBulk(userContext, mandato);
+		} catch (PersistencyException e) {
+			handleException(e);
+		} catch (OutdatedResourceException e) {
+			handleException(e);
+		} catch (BusyResourceException e) {
+			handleException(e);
+		}
+		
+	}
 }

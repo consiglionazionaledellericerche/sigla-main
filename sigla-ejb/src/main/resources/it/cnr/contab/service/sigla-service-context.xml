@@ -19,6 +19,11 @@
    			resource-ref="false">
    	</jee:jndi-lookup>
 
+	<jee:jndi-lookup id="mandatoComponent"
+   			jndi-name="SIGLA/CNRDOCCONT00_EJB_MandatoComponentSession/remote"
+   			resource-ref="false">
+   	</jee:jndi-lookup>
+
 	<jee:jndi-lookup id="mailSession"
    			jndi-name="java:mail/MailSession"
    			resource-ref="false">
@@ -40,7 +45,7 @@
     <!-- Bean per ottenere una istanza di IDocumentoAmministrativoSpesaBulk -->
     <bean id="ANTICIPO" class="it.cnr.contab.missioni00.docs.bulk.AnticipoBulk"/>
     <bean id="COMPENSO" class="it.cnr.contab.compensi00.docs.bulk.CompensoBulk"/>    
-	<bean id="GENERICO_S" class="it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk"/>
+	<bean id="GENERICO_S" class="it.cnr.contab.docamm00.docs.bulk.Documento_generico_passivoBulk"/>
 	<bean id="MISSIONE" class="it.cnr.contab.missioni00.docs.bulk.MissioneBulk"/>
     
     <bean id="propertyPlaceholderHelper" class="org.springframework.util.PropertyPlaceholderHelper">
@@ -90,7 +95,6 @@
 			</value>
 		</constructor-arg>						
 	</bean>
-    
     
 	<import resource="classpath*:it/cnr/contab/*/service/*-context.xml" />
 	<import resource="classpath*:sigla/extension/sigla-*-context.xml" />

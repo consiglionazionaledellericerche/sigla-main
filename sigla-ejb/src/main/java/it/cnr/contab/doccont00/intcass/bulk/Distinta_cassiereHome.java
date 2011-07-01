@@ -1878,7 +1878,7 @@ public void avvisoDiPagamentoDipendenti(UserContext userContext, Distinta_cassie
 													dettaglioDistinta.getEsercizio(), 
 													dettaglioDistinta.getPg_mandato());
 				mandato = (MandatoBulk) mandatoHome.findByPrimaryKey(mandato);
-				if (mandatoHome.isAvvisoDiPagamentoMandato(userContext, mandato)){
+				if (mandatoHome.isAvvisoDiPagamentoMandato(userContext, mandato, Boolean.FALSE)){
 					mandatoHome.sendAvvisoDiPagamento(userContext, mandato);
 				}
 			}

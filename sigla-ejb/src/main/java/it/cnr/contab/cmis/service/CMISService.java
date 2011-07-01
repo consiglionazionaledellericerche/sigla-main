@@ -10,6 +10,7 @@ import it.cnr.cmisdl.service.NodeService;
 import it.cnr.cmisdl.service.SearchService;
 import it.cnr.contab.cmis.CMISRelationship;
 import it.cnr.contab.cmis.acl.Permission;
+import it.cnr.contab.cmis.acl.Role;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.jada.bulk.OggettoBulk;
 
@@ -38,12 +39,30 @@ public class CMISService {
 	private ContentService contentService;
 	private CMISBulkInfo<?> cmisBulkInfo;
 	protected Credentials systemCredentials;
+	private Role roleConsumer;
+	private Role roleCoordinator;
 	
 	public void init(){
 		systemCredentials = authenticationService.getUserSession(
 				(UsernamePasswordCredentials) authenticationService.getSystemCredentials());
 	}
 	
+	public Role getRoleConsumer() {
+		return roleConsumer;
+	}
+
+	public void setRoleConsumer(Role roleConsumer) {
+		this.roleConsumer = roleConsumer;
+	}
+
+	public Role getRoleCoordinator() {
+		return roleCoordinator;
+	}
+
+	public void setRoleCoordinator(Role roleCoordinator) {
+		this.roleCoordinator = roleCoordinator;
+	}
+
 	public void setNodeService(NodeService nodeService) {
 		this.nodeService = nodeService;
 	}
@@ -92,7 +111,11 @@ public class CMISService {
 		}		
 	}
 
-	public CMISPath createFolderIfNotPresent(CMISPath cmisPath, String folderName, String title, String description){
+	public Node getNode(CMISPath cmisPath){
+		return nodeService.getNodeByPath(systemCredentials, cmisPath.getPath());
+	}
+	
+	public CMISPath createFolderIfNotPresent(CMISPath cmisPath, String folderName, String title, String description, Permission... permissions){
 		Node node = nodeService.getNodeByPath(systemCredentials, cmisPath.getPath());
 		try{
 			List<Property<?>> metadataProperties = new ArrayList<Property<?>>();
@@ -117,6 +140,12 @@ public class CMISService {
 							AspectMetdata.getPrefixLocalPart(AspectMetdata.PROPERTY_DESCRIPTION), 
 							Arrays.asList(description)));			
 			Node folder = nodeService.createFolder(systemCredentials, node, metadataProperties, aspectsToAdd, aspectProperties);
+			if (permissions.length > 0 ){
+				nodeService.setInheritedPermission(systemCredentials, folder, Boolean.FALSE);
+				for (Permission permission : permissions) {
+					nodeService.addACL(systemCredentials, folder, permission.getUserName(), permission.getRole().getRoleName());
+				}
+			}
 			return CMISPath.construct(folder.getPath());
 		}catch(CmisConstraintException _ex){
 			return cmisPath.appendToPath(folderName);
@@ -130,37 +159,34 @@ public class CMISService {
 	public InputStream getResource(Node node){
 		return contentService.retreiveContent(node, systemCredentials);
 	}
+
+	public void copyTo(Node node, CMISPath cmisPath){
+		Node targetNode = nodeService.getNodeByPath(systemCredentials, cmisPath.getPath());
+		nodeService.copyNode(systemCredentials, node, targetNode);	
+	}
 	
 	public Node storePrintDocument(OggettoBulk oggettoBulk, Report report, CMISPath cmisPath, Permission... permissions){
-		try {
-			return storeSimpleDocument(oggettoBulk, report.getInputStream(), report.getContentType(), report.getName(), cmisPath, permissions);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		return storeSimpleDocument(oggettoBulk, report.getInputStream(), report.getContentType(), report.getName(), cmisPath, permissions);
 	}
 	
 	public Node storeSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name, 
 				CMISPath cmisPath, Permission... permissions){
 		Node parentNode = nodeService.getNodeByPath(systemCredentials, cmisPath.getPath());
-		try {
-			name = sanitizeFilename(name);
-			Node node = nodeService.createContent(systemCredentials, parentNode, inputStream, name, 
-					contentType, cmisBulkInfo.getType(systemCredentials, oggettoBulk).getId(), 
-					cmisBulkInfo.getProperty(systemCredentials, oggettoBulk), 
-					cmisBulkInfo.getAspect(systemCredentials, oggettoBulk), 
-					cmisBulkInfo.getAspectProperty(systemCredentials, oggettoBulk));
-			if (permissions.length > 0 ){
-				nodeService.setInheritedPermission(systemCredentials, node, Boolean.FALSE);
-				for (Permission permission : permissions) {
-					nodeService.addACL(systemCredentials, node, permission.getUserName(), permission.getRole().getRoleName());
-				}
+		name = sanitizeFilename(name);
+		Node node = nodeService.createContent(systemCredentials, parentNode, inputStream, name, 
+				contentType, cmisBulkInfo.getType(systemCredentials, oggettoBulk).getId(), 
+				cmisBulkInfo.getProperty(systemCredentials, oggettoBulk), 
+				cmisBulkInfo.getAspect(systemCredentials, oggettoBulk), 
+				cmisBulkInfo.getAspectProperty(systemCredentials, oggettoBulk));
+		if (permissions.length > 0 ){
+			nodeService.setInheritedPermission(systemCredentials, node, Boolean.FALSE);
+			for (Permission permission : permissions) {
+				nodeService.addACL(systemCredentials, node, permission.getUserName(), permission.getRole().getRoleName());
 			}
-			//TODO non dovrebbe essere necessario, ma non so perchè i metadati non li prende in creazione
-			updateProperties(oggettoBulk, node);
-			return node;
-		} catch (Exception e) {
-			throw new RuntimeException(e);
 		}
+		//TODO non dovrebbe essere necessario, ma non so perchè i metadati non li prende in creazione
+		updateProperties(oggettoBulk, node);
+		return node;
 	}
 	
 	public void updateProperties(OggettoBulk oggettoBulk, Node node){

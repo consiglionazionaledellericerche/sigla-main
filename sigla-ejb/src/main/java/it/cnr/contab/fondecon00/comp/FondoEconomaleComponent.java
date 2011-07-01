@@ -15,6 +15,8 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.fondecon00.core.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoHome;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
@@ -1271,6 +1273,13 @@ public Fondo_economaleBulk reintegraSpese(
 			}
 			
 			fondo = (Fondo_economaleBulk)getHome(userContext, fondo).findByPrimaryKey(fondo);
+			MandatoHome mandatoHome = (MandatoHome) getHome( userContext, MandatoIBulk.class );
+			for (Object assoc : fondo.getAssociazioni_mandati()) {
+				Ass_fondo_eco_mandatoBulk ass_fondo_eco_mandato = (Ass_fondo_eco_mandatoBulk)assoc;
+				if (mandatoHome.isAvvisoDiPagamentoMandatoReintegroFondo(userContext, ass_fondo_eco_mandato.getMandato())){
+					mandatoHome.sendAvvisoDiPagamentoPerBonifico(userContext, ass_fondo_eco_mandato.getMandato());
+				}
+			}
 			
 		} catch (it.cnr.jada.persistency.PersistencyException e) {
 			throw handleException(fondo, e);

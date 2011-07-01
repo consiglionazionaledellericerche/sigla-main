@@ -80,14 +80,15 @@ public class CMISBulkInfo<T extends Serializable> {
 				}
 				parentType = getChildType(systemCredentials, parentType.getId(), parentTypeName);
 			}
-			return cacheObjType.put(oggettoBulk.getClass(), getChildType(systemCredentials, parentType.getId(), cmisType.name()));
+			cacheObjType.put(oggettoBulk.getClass(), getChildType(systemCredentials, parentType.getId(), cmisType.name()));
+			return cacheObjType.get(oggettoBulk.getClass());
 		}
 		cacheObjType.put(oggettoBulk.getClass(), getType(systemCredentials, cmisType.name()));
 		return cacheObjType.get(oggettoBulk.getClass());
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<String> getAspect(Credentials systemCredentials, OggettoBulk oggettoBulk) throws IllegalArgumentException, IllegalAccessException{
+	public List<String> getAspect(Credentials systemCredentials, OggettoBulk oggettoBulk){
 		if (cacheObjAspect.containsKey(oggettoBulk.getClass()))
 			return new ArrayList(cacheObjAspect.get(oggettoBulk.getClass()));
 		Set<String> results = new HashSet<String>();
@@ -113,9 +114,9 @@ public class CMISBulkInfo<T extends Serializable> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public PropertyDefinitionBulk<T> createPropertyDefinition(Credentials systemCredentials, String typeId, String propertyTypeId, Class<T> value, Field field, Method method){
+	public PropertyDefinitionBulk<T> createPropertyDefinition(Credentials systemCredentials, String typeId, String propertyTypeId, Class<T> value, Field field, Method method, String beanNameConverter){
 		return PropertyDefinitionBulk.construct((PropertyDefinition<T>) getType(systemCredentials, typeId).
-									getPropertyDefinitions().get(propertyTypeId),field, method);
+									getPropertyDefinitions().get(propertyTypeId),field, method, beanNameConverter);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -130,14 +131,14 @@ public class CMISBulkInfo<T extends Serializable> {
 				if (field.isAnnotationPresent(CMISProperty.class)){
 						results.add(createPropertyDefinition(systemCredentials,
 								getType(systemCredentials, oggettoBulk).getId(), 
-								field.getAnnotation(CMISProperty.class).name(), (Class<T>) field.getType(),field, null));
+								field.getAnnotation(CMISProperty.class).name(), (Class<T>) field.getType(),field, null, field.getAnnotation(CMISProperty.class).converterBeanName()));
 				}
 				if (field.isAnnotationPresent(CMISProperties.class)){
 					List<CMISProperty> properties = Arrays.asList(field.getAnnotation(CMISProperties.class).property());
 					for (CMISProperty cmisProperty : properties) {
 							results.add(createPropertyDefinition(systemCredentials,
 									getType(systemCredentials, oggettoBulk).getId(), 
-									cmisProperty.name(), (Class<T>) field.getType(), field, null));
+									cmisProperty.name(), (Class<T>) field.getType(), field, null, cmisProperty.converterBeanName()));
 					}
 				}
 			}
@@ -146,14 +147,14 @@ public class CMISBulkInfo<T extends Serializable> {
 				if (method.isAnnotationPresent(CMISProperty.class)){
 					results.add(createPropertyDefinition(systemCredentials,
 							getType(systemCredentials, oggettoBulk).getId(), 
-							method.getAnnotation(CMISProperty.class).name(), (Class<T>) method.getReturnType(), null, method));
+							method.getAnnotation(CMISProperty.class).name(), (Class<T>) method.getReturnType(), null, method,method.getAnnotation(CMISProperty.class).converterBeanName()));
 				}
 				if (method.isAnnotationPresent(CMISProperties.class)){
 					List<CMISProperty> properties = Arrays.asList(method.getAnnotation(CMISProperties.class).property());
 					for (CMISProperty cmisProperty : properties) {
 						results.add(createPropertyDefinition(systemCredentials,
 								getType(systemCredentials, oggettoBulk).getId(), 
-								cmisProperty.name(), (Class<T>) method.getReturnType(), null, method));
+								cmisProperty.name(), (Class<T>) method.getReturnType(), null, method, cmisProperty.converterBeanName()));
 					}
 				}
 			}			
@@ -190,7 +191,7 @@ public class CMISBulkInfo<T extends Serializable> {
 					for (CMISProperty cmisProperty : properties) {
 						results.add(createPropertyDefinition(systemCredentials,
 								getType(systemCredentials, field.getAnnotation(CMISPolicy.class).name()).getId(), 
-								cmisProperty.name(), (Class<T>) field.getType(),field, null));
+								cmisProperty.name(), (Class<T>) field.getType(),field, null, cmisProperty.converterBeanName()));
 					}
 				}
 			}
@@ -201,7 +202,7 @@ public class CMISBulkInfo<T extends Serializable> {
 					for (CMISProperty cmisProperty : properties) {
 						results.add(createPropertyDefinition(systemCredentials,
 								getType(systemCredentials, method.getAnnotation(CMISPolicy.class).name()).getId(), 
-								cmisProperty.name(), (Class<T>) method.getReturnType(),null, method));
+								cmisProperty.name(), (Class<T>) method.getReturnType(),null, method, cmisProperty.converterBeanName()));
 					}
 				}
 			}			

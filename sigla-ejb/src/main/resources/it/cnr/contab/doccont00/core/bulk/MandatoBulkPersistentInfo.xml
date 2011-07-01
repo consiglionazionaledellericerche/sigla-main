@@ -10,7 +10,18 @@
 			columnName="CD_UNITA_ORGANIZZATIVA"
 			propertyName="unita_organizzativa.cd_unita_organizzativa"/>
 	</defaultColumnMap>
+    <columnMap name="AVVISO_PAGAMENTO"
+		extends="default" >
+		<columnMapping
+			columnName="FL_INVIA_AVVISO_PAGAMENTO"
+			propertyName="fl_invia_avviso_pagamento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+	</columnMap>
 
+	<persistentProperty
+		name="fl_invia_avviso_pagamento" />
 	<persistentProperty
 		name="cds"
 		partOfOid= "true"/>			

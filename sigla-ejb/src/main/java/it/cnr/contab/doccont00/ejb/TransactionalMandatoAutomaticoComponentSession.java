@@ -1,6 +1,9 @@
 package it.cnr.contab.doccont00.ejb;
 import java.rmi.*;
 
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.ejb.*;
 
 public class TransactionalMandatoAutomaticoComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements MandatoAutomaticoComponentSession {
@@ -392,5 +395,13 @@ public it.cnr.contab.doccont00.core.bulk.MandatoIBulk listaScadenzeAccertamentoP
 			throw new java.rmi.RemoteException("Uncaugth exception",ex);
 		}
 	}
+}
+public void avvisoDiPagamentoMandatiRiscontrati() throws ComponentException,
+		RemoteException {
+	throw new java.rmi.RemoteException("Uncaugth exception");	
+}
+public void avvisoDiPagamentoMandatoRiscontrato(UserContext param0,
+		MandatoBulk param1) throws ComponentException, RemoteException {
+	throw new java.rmi.RemoteException("Uncaugth exception");	
 }
 }

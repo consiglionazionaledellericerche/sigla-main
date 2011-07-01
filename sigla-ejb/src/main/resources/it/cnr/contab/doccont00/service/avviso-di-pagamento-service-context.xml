@@ -7,11 +7,47 @@
 						http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
 						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
+    <bean id="docAmmCMISService" class="it.cnr.contab.docamm00.service.DocAmmCMISService" parent="cmisService"/>
+
+    <bean id="cmisPathAltriPagamentiCNR" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
+    	<property name="path" value="/Altri pagamenti C.N.R"/>
+    </bean>
+    <bean id="cmisPathConcFormazReddito" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
+    	<property name="path" value="/Altri pagamenti C.N.R/Concorrenti alla formazione del reddito (inclusi nel CUD)"/>
+    </bean>
+    <bean id="cmisPathNonConcFormazReddito" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
+    	<property name="path" value="/Altri pagamenti C.N.R/Non concorrenti alla formazione del reddito"/>
+    </bean>
+    <bean id="cmisPathIndAnzianita" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
+    	<property name="path" value="/Altri pagamenti C.N.R/Indennita' di anzianita'"/>
+    </bean>
+
+	<!-- Scheduler per i mandati riscontrati -->	
+	<bean id="avvisoDiPagamentoJobDetail"
+	  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	  <property name="targetObject" ref="mandatoComponent"/>
+	  <property name="targetMethod" value="avvisoDiPagamentoMandatiRiscontrati"/>
+	  <property name="concurrent" value="false"/>
+	</bean>
+	<bean id="avvisoDiPagamentoJob"
+	  class="org.springframework.scheduling.quartz.CronTriggerBean">
+	  <property name="jobDetail" ref="avvisoDiPagamentoJobDetail" />
+	  <!-- run every hour -->
+<!-- 	  <property name="cronExpression" value="0 0/60 * * * ?" /> -->
+	 <property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	  <property name="triggers">
+	      <list>
+	          <ref bean="avvisoDiPagamentoJob" />
+	      </list>
+	  </property>
+	</bean>	
+
 	<bean id="mail.avviso.di.pagamento.to.test.mode" class="java.util.LinkedList">
 		<constructor-arg>
 			<list>
-				<value>marco.spasiano@cnr.it</value>
-				<value>matilde.durso@cnr.it</value>
+				<value>sigla@cnr.it</value>
 			</list>
 		</constructor-arg>
 	</bean>	
@@ -25,6 +61,12 @@
 			<value><![CDATA[[sigla] Annullamento Mandato]]></value>
 		</constructor-arg>						
 	</bean>			
+	<bean id="avviso.di.pagamento.per.bonifico.mail.text.header" class="java.lang.String">
+		<constructor-arg> 
+			<value><![CDATA[<strong>Oggetto:</strong><BR>
+<BR>La presente è per informarla che è stato effettuato il pagamento dei documenti:<BR>]]></value>
+		</constructor-arg>						
+	</bean>
 	<bean id="avviso.di.pagamento.mail.text.header" class="java.lang.String">
 		<constructor-arg> 
 			<value><![CDATA[<strong>Oggetto:</strong><BR>
@@ -59,7 +101,15 @@ Unità Organizzativa ${cd_unita_organizzativa} avente come oggetto "${ds_doc_amm
 <BR>La mail inviata in precedenza e relativa al pagamento suddetto non dovrà quindi essere considerata valida.
 ]]></value>
 		</constructor-arg>						
-	</bean>	
+	</bean>
+	<bean id="avviso.di.pagamento.per.bonifico.mail.text.footer" class="java.lang.String">
+		<constructor-arg> 
+			<value><![CDATA[<BR><BR>La Nota di Liquidazione relativa è stata pubblicata su <a href="http://siper.cnr.it">SIPER</a>
+<BR><BR>Una volta autenticati, per poter visualizzare o scaricare il documento, scegliere il servizio
+<BR>"Altri pagamenti C.N.R." dal menu laterale.<BR>]]></value>
+		</constructor-arg>						
+	</bean>
+		
     <bean id="avviso.di.pagamento.mail.service" parent="mailService">
     	<property name="toTestModeList" ref="mail.avviso.di.pagamento.to.test.mode"/>
     </bean>

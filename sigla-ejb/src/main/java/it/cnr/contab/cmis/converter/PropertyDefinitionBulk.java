@@ -22,16 +22,18 @@ public class PropertyDefinitionBulk<T extends Serializable>{
 	private final PropertyDefinition<T> propertyDefinition;
 	private final Field field;
 	private final Method method;
+	private final String beanNameConverter;
 	
-	public static <T extends Serializable> PropertyDefinitionBulk<T> construct(PropertyDefinition<T> propertyDefinition, Field field, Method method) {
-		return new PropertyDefinitionBulk<T>(propertyDefinition, field, method);
+	public static <T extends Serializable> PropertyDefinitionBulk<T> construct(PropertyDefinition<T> propertyDefinition, Field field, Method method, String beanNameConverter) {
+		return new PropertyDefinitionBulk<T>(propertyDefinition, field, method, beanNameConverter);
 	}
 	
-	public PropertyDefinitionBulk(PropertyDefinition<T> propertyDefinition, Field field, Method method) {
+	public PropertyDefinitionBulk(PropertyDefinition<T> propertyDefinition, Field field, Method method, String beanNameConverter) {
 		super();
 		this.field = field;
 		this.method = method;
 		this.propertyDefinition = propertyDefinition;
+		this.beanNameConverter = beanNameConverter;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -43,7 +45,8 @@ public class PropertyDefinitionBulk<T extends Serializable>{
 		if (method != null)
 			value = (T)Introspector.invoke(oggettoBulk, method);
 		if (value == null)
-			throw new PropertyNullValueException();		
+			throw new PropertyNullValueException();	
+		value = (T) SpringUtil.getBean(beanNameConverter, Converter.class).convert(value);
 		return SpringUtil.getBean("dictionaryService", DictionaryService.class).createProperty(systemCredentials, propertyDefinition, Arrays.asList(value));
 	}
 }

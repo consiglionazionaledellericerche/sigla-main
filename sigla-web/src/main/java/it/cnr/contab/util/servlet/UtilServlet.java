@@ -4,6 +4,7 @@ import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaPadreComponentSession;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Print_spoolerHome;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.blobs.bulk.*;
@@ -119,6 +120,7 @@ public class UtilServlet extends HttpServlet {
 	public void init()
 		throws ServletException
 	{
+		SpringUtil.init();
 		class PrintThread
 			implements Runnable
 		{

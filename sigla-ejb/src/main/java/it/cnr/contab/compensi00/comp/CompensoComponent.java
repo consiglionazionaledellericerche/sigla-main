@@ -6390,35 +6390,4 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		}
 		return true;
 	}
-	
-	public void archiviaStampa(UserContext userContext, Date fromDate, Date untilDate, CompensoBulk compensoBulk, Integer... years) throws ComponentException{
-		CompensoHome compensoHome = (CompensoHome) getHome(userContext, CompensoBulk.class);
-		CompoundFindClause clauses = new CompoundFindClause();
-		CompoundFindClause clausesYear = new CompoundFindClause();
-		if (fromDate != null)
-			clauses.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.GREATER_EQUALS, new Timestamp(fromDate.getTime()));
-		if (untilDate != null)
-			clauses.addClause(FindClause.AND, "dt_registrazione", SQLBuilder.LESS_EQUALS, new Timestamp(untilDate.getTime()));
-		for (Integer year : years) {
-			clausesYear.addClause(FindClause.OR, "esercizio", SQLBuilder.EQUALS, year);
-		}
-		clauses = CompoundFindClause.and(clauses, clausesYear);
-		try {
-			RemoteIterator missioni = cerca(userContext, clauses, compensoBulk);
-			while(missioni.hasMoreElements()){
-				CompensoBulk compenso = (CompensoBulk) missioni.nextElement();
-				try{
-					compenso = (CompensoBulk) inizializzaBulkPerModifica(userContext,
-							compenso);
-					compensoHome.archiviaStampa(userContext, compenso);
-				}catch(Exception ex){
-					System.err.println("Compenso:"+compenso + " - "+ex);
-					continue;
-				}
-			}
-		}catch (RemoteException e) {
-			throw handleException(e);
-		}
-	}
-	
 }

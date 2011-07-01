@@ -16,7 +16,7 @@ public class CompensoKey extends OggettoBulk implements KeyedPersistent {
 	private java.lang.String cd_cds;
 
 	// CD_UNITA_ORGANIZZATIVA VARCHAR(30) NOT NULL (PK)
-	@CMISPolicy(name = "P:strorg:uo", property = @CMISProperty(name = "strorg:codice"))
+	@CMISPolicy(name = "P:strorg:uo", property = @CMISProperty(name = "strorguo:codice"))
 	private java.lang.String cd_unita_organizzativa;
 
 	// ESERCIZIO DECIMAL(4,0) NOT NULL (PK)

@@ -22,6 +22,7 @@ import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.*;
@@ -172,6 +173,8 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		STATI_RIPORTO.put(PARZIALMENTE_RIPORTATO,"Parzialmente riportata");
 		STATI_RIPORTO.put(COMPLETAMENTE_RIPORTATO,"Completamente riportata");		
 	}
+	private MandatoBulk mandatoPagamento;
+	private String typePayment;
 public MissioneBulk() {
 	super();
 }
@@ -3297,7 +3300,7 @@ public Unita_organizzativaBulk getUnitaOrganizzativa() {
 public void setUnitaOrganizzativa(Unita_organizzativaBulk unitaOrganizzativa) {
 	this.unitaOrganizzativa = unitaOrganizzativa;
 }
-@CMISPolicy(name="P:strorg:uo", property=@CMISProperty(name="strorg:descrizione"))	
+@CMISPolicy(name="P:strorg:uo", property=@CMISProperty(name="strorguo:descrizione"))	
 public String getDsUnitaOrganizzativa(){
 	if (getUnitaOrganizzativa() == null)
 		return null;
@@ -3306,4 +3309,38 @@ public String getDsUnitaOrganizzativa(){
 public Timestamp getDt_documento() {
 	return getDt_inizio_missione();
 }
+	public MandatoBulk getMandatoPagamento() {
+		return mandatoPagamento;
+	}
+	public void setMandatoPagamento(MandatoBulk mandatoPagamento) {
+		this.mandatoPagamento = mandatoPagamento;
+	}
+	@CMISPolicy(name="P:emppay:pagamento", property=@CMISProperty(name="emppay:esercizioPag"))
+	public Integer getEsercizioPagamento(){
+		if (getMandatoPagamento() == null)
+			return null;
+		return getMandatoPagamento().getEsercizio();	
+	}
+	@CMISPolicy(name="P:emppay:pagamento", property=@CMISProperty(name="emppay:numPag"))
+	public Long getPgPagamento(){
+		if (getMandatoPagamento() == null)
+			return null;
+		return getMandatoPagamento().getPg_mandato();	
+	}
+	@CMISPolicy(name="P:emppay:pagamento", 
+			property=@CMISProperty(name="emppay:datEmisPag",converterBeanName="cmis.converter.timestampToCalendarConverter"))
+	public Date getDatEmisPag(){
+		if (getMandatoPagamento() == null)
+			return null;
+		return getMandatoPagamento().getDt_pagamento();	
+	}
+	@CMISProperty(name="emppay:type_payment")
+	public String getTypePayment(){
+		return typePayment;
+	}	
+	
+	public void setTypePayment(String typePayment){
+		this.typePayment = typePayment;
+	}
+	
 }

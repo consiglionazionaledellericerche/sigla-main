@@ -5,6 +5,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaHome;
 import it.cnr.contab.docamm00.docs.bulk.Tipo_documento_ammBulk;
 import it.cnr.contab.fondecon00.core.bulk.Fondo_spesaBulk;
 import it.cnr.contab.fondecon00.core.bulk.Fondo_spesaHome;
@@ -18,6 +19,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
@@ -34,6 +36,8 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 public abstract class MandatoHome extends BulkHome {
 	public MandatoHome(Class clazz, java.sql.Connection conn) {
@@ -157,6 +161,21 @@ public abstract class MandatoHome extends BulkHome {
 		return result;
 	}	
 	
+	public MandatoBulk findMandato(UserContext userContext, IDocumentoAmministrativoSpesaBulk docAmm) throws PersistencyException{
+		PersistentHome homeMandatoRiga = getHomeCache().getHome( Mandato_rigaBulk.class );
+		SQLBuilder sql = homeMandatoRiga.createSQLBuilder();
+		sql.addClause(FindClause.AND, "esercizio_doc_amm", SQLBuilder.EQUALS, docAmm.getEsercizio());
+		sql.addClause(FindClause.AND, "cd_cds_doc_amm", SQLBuilder.EQUALS, docAmm.getCd_cds());
+		sql.addClause(FindClause.AND, "cd_uo_doc_amm", SQLBuilder.EQUALS, docAmm.getCd_uo());
+		sql.addClause(FindClause.AND, "cd_tipo_documento_amm", SQLBuilder.EQUALS, docAmm.getCd_tipo_doc_amm());
+		sql.addClause(FindClause.AND, "pg_doc_amm", SQLBuilder.EQUALS, docAmm.getPg_doc_amm());
+		List<Mandato_rigaBulk> righe = homeMandatoRiga.fetchAll(sql);
+		for (Mandato_rigaBulk mandato_rigaBulk : righe) {
+			return mandato_rigaBulk.getMandato();
+		}
+		return null;
+		
+	}
 		/**
 		 * Imposta il pg_mandato di un oggetto <code>MandatoBulk</code>.
 		 *
@@ -230,7 +249,7 @@ public abstract class MandatoHome extends BulkHome {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Boolean isAvvisoDiPagamentoMandato(UserContext userContext, MandatoBulk mandato) throws ComponentException{
+	public Boolean isAvvisoDiPagamentoMandato(UserContext userContext, MandatoBulk mandato, Boolean bonifico) throws ComponentException{
 		try {
 			TerzoHome terzoHome = (TerzoHome) getHomeCache().getHome( TerzoBulk.class );
 			Fondo_spesaHome fondo_spesaHome = (Fondo_spesaHome) getHomeCache().getHome( Fondo_spesaBulk.class );
@@ -242,20 +261,110 @@ public abstract class MandatoHome extends BulkHome {
 			if (!existFondoSpesa)
 				return Boolean.FALSE;
 			Mandato_terzoBulk mandatoTerzo = findMandato_terzo(userContext, mandato);
-			Integer matricola = terzoHome.findMatricolaDipendente(userContext, mandatoTerzo.getTerzo(),mandato.getDt_trasmissione());
+			Integer matricola = terzoHome.findMatricolaDipendente(userContext, mandatoTerzo.getTerzo(),mandato.getDt_pagamento());
 			if (matricola != null && (mandato.getTi_mandato().equalsIgnoreCase( MandatoBulk.TIPO_PAGAMENTO) ||
 					mandato.getTi_mandato().equalsIgnoreCase( MandatoBulk.TIPO_REGOLAM_SOSPESO))){
 				Collection<Mandato_rigaBulk>  righeMandato = findMandato_riga(userContext, mandato);
 				for (Mandato_rigaBulk mandatoRiga : righeMandato) {
 					Modalita_pagamentoBulk modalitaPagamento = mandatoRiga.getModalita_pagamento();
-					if (modalitaPagamento.getRif_modalita_pagamento().getTi_pagamento().equals(Rif_modalita_pagamentoBulk.ALTRO) ||
-							modalitaPagamento.getRif_modalita_pagamento().getTi_pagamento().equals(Rif_modalita_pagamentoBulk.QUIETANZA)){
+					if (bonifico){
+						if (!(modalitaPagamento.getRif_modalita_pagamento().getTi_pagamento().equals(Rif_modalita_pagamentoBulk.ALTRO) ||
+								modalitaPagamento.getRif_modalita_pagamento().getTi_pagamento().equals(Rif_modalita_pagamentoBulk.QUIETANZA))){
+							return Boolean.TRUE;
+						}
+					}else{
+						if (modalitaPagamento.getRif_modalita_pagamento().getTi_pagamento().equals(Rif_modalita_pagamentoBulk.ALTRO) ||
+								modalitaPagamento.getRif_modalita_pagamento().getTi_pagamento().equals(Rif_modalita_pagamentoBulk.QUIETANZA)){
+							return Boolean.TRUE;
+						}
+					}
+				}
+			}
+			return Boolean.FALSE;
+		} catch (Exception e) {
+			throw new ComponentException( e );
+		}		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Boolean isAvvisoDiPagamentoMandatoReintegroFondo(UserContext userContext, MandatoBulk mandato) throws ComponentException{
+		try {
+			TerzoHome terzoHome = (TerzoHome) getHomeCache().getHome( TerzoBulk.class );
+			Mandato_terzoBulk mandatoTerzo = findMandato_terzo(userContext, mandato);
+			Integer matricola = terzoHome.findMatricolaDipendente(userContext, mandatoTerzo.getTerzo(),mandato.getDt_pagamento());
+			if (matricola != null && (mandato.getTi_mandato().equalsIgnoreCase( MandatoBulk.TIPO_PAGAMENTO) ||
+					mandato.getTi_mandato().equalsIgnoreCase( MandatoBulk.TIPO_REGOLAM_SOSPESO))){
+				Collection<Mandato_rigaBulk>  righeMandato = findMandato_riga(userContext, mandato);
+				for (Mandato_rigaBulk mandatoRiga : righeMandato) {
+					Modalita_pagamentoBulk modalitaPagamento = mandatoRiga.getModalita_pagamento();
+					if (!(modalitaPagamento.getRif_modalita_pagamento().getTi_pagamento().equals(Rif_modalita_pagamentoBulk.ALTRO) ||
+							modalitaPagamento.getRif_modalita_pagamento().getTi_pagamento().equals(Rif_modalita_pagamentoBulk.QUIETANZA))){
 						return Boolean.TRUE;
 					}
 				}
 			}
 			return Boolean.FALSE;
 		} catch (Exception e) {
+			throw new ComponentException( e );
+		}		
+	}
+	
+	private void gestioneAvvisoDiPagamento(MandatoBulk mandato, Mandato_rigaBulk mandatoRiga, StringBuffer text, String innerTextBean) throws ComponentException, PersistencyException{
+		MailService mailService = SpringUtil.getBean("avviso.di.pagamento.mail.service", MailService.class);
+		IDocumentoAmministrativoSpesaBulk docAmm = SpringUtil.getBean(mandatoRiga.getCd_tipo_documento_amm(), IDocumentoAmministrativoSpesaBulk.class);
+		docAmm.setCd_cds(mandatoRiga.getCd_cds_doc_amm());
+		docAmm.setCd_uo(mandatoRiga.getCd_uo_doc_amm());
+		docAmm.setEsercizio(mandatoRiga.getEsercizio_doc_amm());
+		docAmm.setPg_doc_amm(mandatoRiga.getPg_doc_amm());
+		docAmm.setCd_tipo_doc_amm(mandatoRiga.getCd_tipo_documento_amm());
+		docAmm = (IDocumentoAmministrativoSpesaBulk)getHomeCache().getHome(docAmm.getClass()).findByPrimaryKey(docAmm);
+						
+		Properties prop = new Properties();
+		prop.put("ds_tipo_documento_amm", mandato.getTipoDocumentoKeys().get(mandatoRiga.getCd_tipo_documento_amm()));
+		prop.put("pg_doc_amm", String.valueOf(docAmm.getPg_doc_amm()));
+		prop.put("data_doc_amm", SpringUtil.getBean("dateShortFormat", DateFormat.class).format(docAmm.getDt_documento()));
+		prop.put("cd_unita_organizzativa",docAmm.getCd_uo());
+		prop.put("ds_doc_amm",docAmm.getDescrizione_spesa()==null?"":docAmm.getDescrizione_spesa());
+		text.append(mailService.resolvePalceHolder(SpringUtil.getBean(innerTextBean, String.class), prop));
+	}
+
+	private Boolean archiviaAvvisoDiPagamento(UserContext userContext, Mandato_rigaBulk mandatoRiga) throws ComponentException, PersistencyException, IntrospectionException{
+		IDocumentoAmministrativoSpesaBulk docAmm = SpringUtil.getBean(mandatoRiga.getCd_tipo_documento_amm(), IDocumentoAmministrativoSpesaBulk.class);
+		docAmm.setCd_cds(mandatoRiga.getCd_cds_doc_amm());
+		docAmm.setCd_uo(mandatoRiga.getCd_uo_doc_amm());
+		docAmm.setEsercizio(mandatoRiga.getEsercizio_doc_amm());
+		docAmm.setPg_doc_amm(mandatoRiga.getPg_doc_amm());
+		docAmm.setCd_tipo_doc_amm(mandatoRiga.getCd_tipo_documento_amm());
+		docAmm = (IDocumentoAmministrativoSpesaBulk)getHomeCache().getHome(docAmm.getClass()).findByPrimaryKey(docAmm);
+		return ((IDocumentoAmministrativoSpesaHome)getHomeCache().getHome((Persistent) docAmm)).archiviaStampa(userContext, mandatoRiga.getMandato(), docAmm);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void sendAvvisoDiPagamentoPerBonifico(UserContext userContext, MandatoBulk mandato) throws ComponentException{
+		try {
+			TerzoHome terzoHome = (TerzoHome) getHomeCache().getHome( TerzoBulk.class );
+			MailService mailService = SpringUtil.getBean("avviso.di.pagamento.mail.service", MailService.class);
+			String subject;
+			StringBuffer text = new StringBuffer();
+			subject = SpringUtil.getBean("avviso.di.pagamento.mail.subject", String.class);
+			text.append(SpringUtil.getBean("avviso.di.pagamento.per.bonifico.mail.text.header", String.class));
+			mandato.setTipoDocumentoKeys(loadTipoDocumentoKeys(mandato));
+			Mandato_terzoBulk mandatoTerzo = findMandato_terzo(userContext, mandato);
+			Collection<Mandato_rigaBulk>  righeMandato = findMandato_riga(userContext, mandato);
+			Boolean archiviato = Boolean.FALSE;
+			for (Mandato_rigaBulk mandatoRiga : righeMandato) {
+				gestioneAvvisoDiPagamento(mandato, mandatoRiga, text, "avviso.di.pagamento.mail.text.inner");
+				archiviato = archiviaAvvisoDiPagamento(userContext, mandatoRiga);
+			}
+			if (archiviato)
+				text.append(SpringUtil.getBean("avviso.di.pagamento.per.bonifico.mail.text.footer", String.class));
+			Integer matricola = terzoHome.findMatricolaDipendente(userContext, mandatoTerzo.getTerzo(),mandato.getDt_trasmissione());
+			if (matricola != null){
+				String mailAddress = SpringUtil.getBean("ldapService", LDAPService.class).getLdapUserFromMatricola(userContext, matricola)[1];
+				mailService.send(Arrays.asList(mailAddress), subject, text.toString());
+			}
+		}catch (NoSuchBeanDefinitionException e) {
+		}catch (Exception e) {
 			throw new ComponentException( e );
 		}		
 	}
@@ -279,21 +388,7 @@ public abstract class MandatoHome extends BulkHome {
 			Mandato_terzoBulk mandatoTerzo = findMandato_terzo(userContext, mandato);
 			Collection<Mandato_rigaBulk>  righeMandato = findMandato_riga(userContext, mandato);
 			for (Mandato_rigaBulk mandatoRiga : righeMandato) {
-				IDocumentoAmministrativoSpesaBulk docAmm = SpringUtil.getBean(mandatoRiga.getCd_tipo_documento_amm(), IDocumentoAmministrativoSpesaBulk.class);
-				docAmm.setCd_cds(mandatoRiga.getCd_cds_doc_amm());
-				docAmm.setCd_uo(mandatoRiga.getCd_uo_doc_amm());
-				docAmm.setEsercizio(mandatoRiga.getEsercizio_doc_amm());
-				docAmm.setPg_doc_amm(mandatoRiga.getPg_doc_amm());
-				docAmm.setCd_tipo_doc_amm(mandatoRiga.getCd_tipo_documento_amm());
-				docAmm = (IDocumentoAmministrativoSpesaBulk)getHomeCache().getHome(docAmm.getClass()).findByPrimaryKey(docAmm);
-								
-				Properties prop = new Properties();
-				prop.put("ds_tipo_documento_amm", mandato.getTipoDocumentoKeys().get(mandatoRiga.getCd_tipo_documento_amm()));
-				prop.put("pg_doc_amm", String.valueOf(docAmm.getPg_doc_amm()));
-				prop.put("data_doc_amm", SpringUtil.getBean("dateShortFormat", DateFormat.class).format(docAmm.getDt_documento()));
-				prop.put("cd_unita_organizzativa",docAmm.getCd_uo());
-				prop.put("ds_doc_amm",docAmm.getDescrizione_spesa());
-				text.append(mailService.resolvePalceHolder(SpringUtil.getBean("avviso.di.pagamento.mail.text.inner", String.class), prop));
+				gestioneAvvisoDiPagamento(mandato, mandatoRiga, text, "avviso.di.pagamento.mail.text.inner");
 			}
 			if (stato.equalsIgnoreCase(MandatoBulk.STATO_MANDATO_ANNULLATO))
 				text.append(SpringUtil.getBean("avviso.di.annullamento.mail.text.footer", String.class));

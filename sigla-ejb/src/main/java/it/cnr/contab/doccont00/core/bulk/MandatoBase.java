@@ -59,6 +59,8 @@ public class MandatoBase extends MandatoKey implements Keyed {
 
 	// TI_MANDATO CHAR(1) NOT NULL
 	private java.lang.String ti_mandato;
+	
+	private java.lang.Boolean fl_invia_avviso_pagamento;
 
 public MandatoBase() {
 	super();
@@ -281,5 +283,12 @@ public void setTi_competenza_residuo(java.lang.String ti_competenza_residuo) {
  */
 public void setTi_mandato(java.lang.String ti_mandato) {
 	this.ti_mandato = ti_mandato;
+}
+public java.lang.Boolean getFl_invia_avviso_pagamento() {
+	return fl_invia_avviso_pagamento;
+}
+public void setFl_invia_avviso_pagamento(
+		java.lang.Boolean fl_invia_avviso_pagamento) {
+	this.fl_invia_avviso_pagamento = fl_invia_avviso_pagamento;
 }
 }

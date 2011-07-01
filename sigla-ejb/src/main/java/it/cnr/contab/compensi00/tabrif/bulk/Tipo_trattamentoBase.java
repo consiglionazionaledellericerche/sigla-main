@@ -62,6 +62,12 @@ public class Tipo_trattamentoBase extends Tipo_trattamentoKey implements Keyed {
 	
 	// TIPO_RAPP_IMPIEGO CHAR(3) NULL
 	private java.lang.String tipo_rapp_impiego;
+
+	// FL_STRALCIO_DIP CHAR(1)
+	private java.lang.Boolean fl_stralcio_dip;
+
+	// FL_STRALCIO_DIP CHAR(1)
+	private java.lang.Boolean fl_tfr;
 	
 public Tipo_trattamentoBase() {
 	super();
@@ -261,5 +267,17 @@ public java.lang.String getTipo_rapp_impiego() {
 }
 public void setTipo_rapp_impiego(java.lang.String tipo_rapp_impiego) {
 	this.tipo_rapp_impiego = tipo_rapp_impiego;
+}
+public java.lang.Boolean getFl_stralcio_dip() {
+	return fl_stralcio_dip;
+}
+public void setFl_stralcio_dip(java.lang.Boolean fl_stralcio_dip) {
+	this.fl_stralcio_dip = fl_stralcio_dip;
+}
+public java.lang.Boolean getFl_tfr() {
+	return fl_tfr;
+}
+public void setFl_tfr(java.lang.Boolean fl_tfr) {
+	this.fl_tfr = fl_tfr;
 }
 }

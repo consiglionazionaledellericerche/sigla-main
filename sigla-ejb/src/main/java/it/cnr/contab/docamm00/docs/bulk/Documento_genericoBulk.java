@@ -11,20 +11,27 @@ import java.util.*;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
+import it.cnr.contab.cmis.annotation.CMISPolicy;
+import it.cnr.contab.cmis.annotation.CMISProperty;
+import it.cnr.contab.cmis.annotation.CMISType;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.*;
-
+@CMISType(name="D:emppay:document")
 public class Documento_genericoBulk extends Documento_genericoBase implements IDocumentoAmministrativoSpesaBulk, Voidable, IDefferUpdateSaldi {
 	protected BulkList documento_generico_dettColl= new BulkList();
     private java.util.Vector dettagliCancellati= new Vector();
     private int num_dettColl= 0;
     protected DivisaBulk valuta;
+	//Unità Organizzativa
+	private Unita_organizzativaBulk unitaOrganizzativa;
+    
     private java.util.Collection valute;
     private java.sql.Timestamp fine_validita_valuta;
     private java.sql.Timestamp inizio_validita_valuta;
@@ -103,6 +110,8 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	private boolean isDocumentoModificabile = true; //serve per sapere se il documento è modificabile o meno
 
 	private Lettera_pagam_esteroBulk lettera_pagamento_estero = null;
+	private MandatoBulk mandatoPagamento;
+	private String typePayment;
 	
     static {
 		TIPO = new it.cnr.jada.util.OrderedHashtable();
@@ -1859,6 +1868,51 @@ public void addToAssociazioniInventarioHash(
 		public Timestamp getDt_documento() {
 			return getData_registrazione();
 		}
+		public Unita_organizzativaBulk getUnitaOrganizzativa() {
+			return unitaOrganizzativa;
+		}
+
+		public void setUnitaOrganizzativa(Unita_organizzativaBulk unitaOrganizzativa) {
+			this.unitaOrganizzativa = unitaOrganizzativa;
+		}
+		@CMISPolicy(name="P:strorg:uo", property=@CMISProperty(name="strorguo:descrizione"))	
+		public String getDsUnitaOrganizzativa(){
+			if (getUnitaOrganizzativa() == null)
+				return null;
+			return getUnitaOrganizzativa().getDs_unita_organizzativa();
+		}
+		public MandatoBulk getMandatoPagamento() {
+			return mandatoPagamento;
+		}
+		public void setMandatoPagamento(MandatoBulk mandatoPagamento) {
+			this.mandatoPagamento = mandatoPagamento;
+		}
+		@CMISPolicy(name="P:emppay:pagamento", property=@CMISProperty(name="emppay:esercizioPag"))
+		public Integer getEsercizioPagamento(){
+			if (getMandatoPagamento() == null)
+				return null;
+			return getMandatoPagamento().getEsercizio();	
+		}
+		@CMISPolicy(name="P:emppay:pagamento", property=@CMISProperty(name="emppay:numPag"))
+		public Long getPgPagamento(){
+			if (getMandatoPagamento() == null)
+				return null;
+			return getMandatoPagamento().getPg_mandato();	
+		}
+		@CMISPolicy(name="P:emppay:pagamento", 
+				property=@CMISProperty(name="emppay:datEmisPag",converterBeanName="cmis.converter.timestampToCalendarConverter"))
+		public Date getDatEmisPag(){
+			if (getMandatoPagamento() == null)
+				return null;
+			return getMandatoPagamento().getDt_pagamento();	
+		}
+		@CMISProperty(name="emppay:type_payment")
+		public String getTypePayment(){
+			return typePayment;
+		}	
 		
+		public void setTypePayment(String typePayment){
+			this.typePayment = typePayment;
+		}
 		
 }

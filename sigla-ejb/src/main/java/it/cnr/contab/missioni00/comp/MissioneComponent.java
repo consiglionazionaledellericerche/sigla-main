@@ -1043,7 +1043,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk, it.cnr.
 	    if (missioneTemp.getDefferredSaldi() != null)
 			missioneTemp.getDefferredSaldi().putAll(aTempDiffSaldi);
 		aggiornaCogeCoanDocAmm(userContext, missioneTemp);
-		
+		archiviaMissioneConAnticipo(userContext, missioneTemp);
         if (!verificaStatoEsercizio(userContext, new it.cnr.contab.config00.esercizio.bulk.EsercizioBulk(missioneTemp.getCd_cds(), ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio())))
             throw new it.cnr.jada.comp.ApplicationException("Impossibile salvare un documento per un esercizio non aperto!");
             
@@ -2666,7 +2666,7 @@ public OggettoBulk modificaConBulk(it.cnr.jada.UserContext userContext,OggettoBu
 	}
 
 	aggiornaObbligazione(userContext, missione, status);
-
+	archiviaMissioneConAnticipo(userContext, missione);
 	missione = (MissioneBulk) super.modificaConBulk(userContext, missione);
 
 	
@@ -4248,33 +4248,21 @@ public java.util.List findListaMissioniSIP(UserContext userContext,String query,
 		throw handleException(ex);
 	}
 }
-public void archiviaStampa(UserContext userContext, Date fromDate, Date untilDate, MissioneBulk missioneBulk, Integer... years) throws ComponentException{
-	MissioneHome missioneHome = (MissioneHome) getHome(userContext, MissioneBulk.class);
-	CompoundFindClause clauses = new CompoundFindClause();
-	CompoundFindClause clausesYear = new CompoundFindClause();
-	if (fromDate != null)
-		clauses.addClause(FindClause.AND, "dt_inizio_missione", SQLBuilder.GREATER_EQUALS, new Timestamp(fromDate.getTime()));
-	if (untilDate != null)
-		clauses.addClause(FindClause.AND, "dt_fine_missione", SQLBuilder.LESS_EQUALS, new Timestamp(untilDate.getTime()));
-	clauses.addClause(FindClause.AND, "ti_provvisorio_definitivo", SQLBuilder.EQUALS, "D");
-	for (Integer year : years) {
-		clausesYear.addClause(FindClause.OR, "esercizio", SQLBuilder.EQUALS, year);
-	}
-	clauses = CompoundFindClause.and(clauses, clausesYear);
-	try {
-		RemoteIterator missioni = cerca(userContext, clauses, missioneBulk);
-		while(missioni.hasMoreElements()){
-			MissioneBulk missione = (MissioneBulk) missioni.nextElement();
-			try{
-				missione = (MissioneBulk) inizializzaBulkPerModifica(userContext, missione);
-				missioneHome.archiviaStampa(userContext, missione);
-			}catch(Exception ex){
-				System.err.println("Missione:"+missione + " - "+ex);
-				continue;
+	private void archiviaMissioneConAnticipo(UserContext userContext, MissioneBulk missione) throws ComponentException{
+		if (missione.getAnticipo() != null && missione.getTi_provvisorio_definitivo().equalsIgnoreCase("D")){
+			if (missione.getIm_netto_pecepiente().equals(missione.getAnticipo().getIm_anticipo())){
+				MissioneHome missioneHome = (MissioneHome) getHome(userContext, MissioneBulk.class);
+				MandatoHome mandatohome = (MandatoHome)getHome(userContext, MandatoBulk.class);
+				try {
+					missioneHome.archiviaStampa(userContext, 
+							mandatohome.findMandato(userContext, missione), 
+							missione);
+				} catch (IntrospectionException e) {
+					handleException(e);
+				} catch (PersistencyException e) {
+					handleException(e);
+				}
 			}
 		}
-	}catch (RemoteException e) {
-		throw handleException(e);
 	}
-}
 }

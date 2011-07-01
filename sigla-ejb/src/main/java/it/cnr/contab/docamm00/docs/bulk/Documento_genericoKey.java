@@ -1,5 +1,7 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
+import it.cnr.contab.cmis.annotation.CMISPolicy;
+import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
@@ -13,12 +15,15 @@ public class Documento_genericoKey extends OggettoBulk implements KeyedPersisten
 	private java.lang.String cd_tipo_documento_amm;
 
 	// CD_UNITA_ORGANIZZATIVA VARCHAR(30) NOT NULL (PK)
+	@CMISPolicy(name="P:strorg:uo", property=@CMISProperty(name="strorguo:codice"))	
 	private java.lang.String cd_unita_organizzativa;
 
 	// ESERCIZIO DECIMAL(4,0) NOT NULL (PK)
+	@CMISProperty(name="emppay:esercizioDoc")
 	private java.lang.Integer esercizio;
 
 	// PG_DOCUMENTO_GENERICO DECIMAL(10,0) NOT NULL (PK)
+	@CMISProperty(name="emppay:numDoc",converterBeanName="cmis.converter.longToIntegerConverter")	
 	private java.lang.Long pg_documento_generico;
 
 public Documento_genericoKey() {

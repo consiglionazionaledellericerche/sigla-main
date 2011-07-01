@@ -87,7 +87,7 @@ public class CompensoBase extends CompensoKey implements Keyed {
 	private java.lang.String cd_voce_iva;
 
 	// CODICE_FISCALE VARCHAR(20)
-	@CMISPolicy(name="P:emp:cf", property=@CMISProperty(name="emp:codice"))
+	@CMISPolicy(name="P:emp:cf", property=@CMISProperty(name="emp:cfcodice"))
 	private java.lang.String codice_fiscale;
 
 	// COGNOME VARCHAR(50)

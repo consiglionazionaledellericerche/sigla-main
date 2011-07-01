@@ -162,6 +162,18 @@
 			sqlTypeName="VARCHAR"
 			columnSize="3"
 			nullable="true" />
+		<columnMapping
+			columnName="FL_STRALCIO_DIP"
+			propertyName="fl_stralcio_dip"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_TFR"
+			propertyName="fl_tfr"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 
 	</defaultColumnMap>
 	<persistentProperty
@@ -212,5 +224,9 @@
 		name="fl_incarico" />
 	<persistentProperty
 		name="tipo_rapp_impiego" />
+	<persistentProperty
+		name="fl_stralcio_dip" />
+	<persistentProperty
+		name="fl_tfr" />
 		
 </SQLPersistentInfo>

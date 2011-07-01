@@ -110,7 +110,7 @@
     </dependency>
   </dependencies>
   <properties>
-  	<cmisdl.version>1.5</cmisdl.version>
+  	<cmisdl.version>1.6</cmisdl.version>
   	<jada.version>2.0.0</jada.version>
   	<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
   </properties>
