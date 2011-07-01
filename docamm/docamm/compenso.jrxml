@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="354"/>
+	<property name="ireport.y" value="199"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -30,15 +30,19 @@
 		<defaultValueExpression><![CDATA["000.407"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Pg_compenso" class="java.lang.Integer" isForPrompting="false">
+		<parameterDescription><![CDATA[Non valorizzare al rilascio]]></parameterDescription>
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Terzo" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[Attenzione lasciare %]]></parameterDescription>
 		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Pg_fine" class="java.lang.Long" isForPrompting="false">
+		<parameterDescription><![CDATA[Non valorizzare al rilascio]]></parameterDescription>
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Pg_inizio" class="java.lang.Long" isForPrompting="false">
+		<parameterDescription><![CDATA[Non valorizzare al rilascio]]></parameterDescription>
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -247,7 +251,7 @@ new BigDecimal("0")))))]]></variableExpression>
 					<textElement/>
 					<text><![CDATA[VISTO si liquidi]]></text>
 				</staticText>
-				<textField pattern="¤ #,##0.00" isBlankWhenNull="false">
+				<textField pattern="ï¿½ #,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-12" style="TNR9" positionType="Float" stretchType="RelativeToBandHeight" x="102" y="56" width="107" height="13">
 						<printWhenExpression><![CDATA[new Boolean($F{PG_OBBLIGAZIONE}!=null)]]></printWhenExpression>
 					</reportElement>
@@ -781,9 +785,9 @@ $F{DS_COMUNE_NASCITA}+
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center"/>
-					<textFieldExpression class="java.lang.String"><![CDATA["Nota Liquidazione di compenso n° "+$F{PG_COMPENSO}+" del "+(new SimpleDateFormat("dd/MM/yyyy")).format($F{DT_REGISTRAZIONE})
-+" "+($F{PG_MINICARRIERA}!=null?($F{PG_MINICARRIERA}==null?" Missione n° ":" Minicarriera n° ")
-+($F{PG_MINICARRIERA}==null?$F{PG_MISSIONE}:$F{PG_MINICARRIERA}):"")+" Unità Organizzativa "+$F{CD_UNITA_ORGANIZZATIVA}+" - "+$F{DS_UNITA_ORGANIZZATIVA}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA["Nota Liquidazione di compenso nï¿½ "+$F{PG_COMPENSO}+" del "+(new SimpleDateFormat("dd/MM/yyyy")).format($F{DT_REGISTRAZIONE})
++" "+($F{PG_MINICARRIERA}!=null?($F{PG_MINICARRIERA}==null?" Missione nï¿½ ":" Minicarriera nï¿½ ")
++($F{PG_MINICARRIERA}==null?$F{PG_MISSIONE}:$F{PG_MINICARRIERA}):"")+" Unitï¿½ Organizzativa "+$F{CD_UNITA_ORGANIZZATIVA}+" - "+$F{DS_UNITA_ORGANIZZATIVA}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement key="staticText-19" style="TNRG9" x="6" y="99" width="86" height="17"/>
