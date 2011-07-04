@@ -91,6 +91,15 @@
 		enabledOnEdit="false"
 		enabledOnInsert="false"
 		label="Da pagina"/>
+	<fieldProperty
+		name="intero_anno"
+		property="intero_anno"
+		inputType="CHECKBOX"
+		enabledOnInsert = "true"
+		enabledOnEdit = "false"  
+		enabledOnFreeSearch="true"			
+		enabledOnSearch="true"
+		label="Intero Anno"/>			
 
 	<!-- ************************ FORM FIELD PROPERTY ******************** -->
 
@@ -102,6 +111,7 @@
 	<formFieldProperty name="tipoSezionaleFlag" />
 	<formFieldProperty name="sezionaliFlagsRadioGroup"/>
 	<formFieldProperty name="pageNumber" />
+	<formFieldProperty name="intero_anno" />
 	
 	
 	<!-- ************************ FIND FIELD PROPERTY ******************** -->
@@ -111,6 +121,7 @@
 	<findFieldProperty name="mese" />	
 	<findFieldProperty name="tipo_sezionale" />
 	<findFieldProperty name="sezionaliFlagsRadioGroup"/>
+	
 	
 	<!-- ************************ COLUMN FIELD PROPERTY ****************** -->
 
