@@ -372,8 +372,8 @@ public it.cnr.contab.doccont00.core.bulk.MandatoIBulk listaScadenzeAccertamentoP
 	}
 }
 public void avvisoDiPagamentoMandatiRiscontrati()throws ComponentException{
-	/**Codice necessario perchè invocato da uno scheduler
-	 * 
+	/**
+	 * Codice necessario perchè invocato da uno scheduler
 	 */
 	if (null == componentObj)
 		componentObj = new it.cnr.contab.doccont00.comp.MandatoComponent();
@@ -396,6 +396,11 @@ public void avvisoDiPagamentoMandatiRiscontrati()throws ComponentException{
 }
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public void avvisoDiPagamentoMandatoRiscontrato(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.MandatoBulk param1)throws ComponentException{
+	/**
+	 * Codice necessario perchè invocato da uno scheduler
+	 */
+	if (null == componentObj)
+		componentObj = new it.cnr.contab.doccont00.comp.MandatoComponent();
 	pre_component_invocation(param0,componentObj);
 	try {
 		((MandatoComponent)componentObj).avvisoDiPagamentoMandatoRiscontrato(param0, param1);
