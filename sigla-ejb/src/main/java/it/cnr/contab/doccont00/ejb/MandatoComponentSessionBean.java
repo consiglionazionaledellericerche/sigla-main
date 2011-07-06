@@ -372,6 +372,11 @@ public it.cnr.contab.doccont00.core.bulk.MandatoIBulk listaScadenzeAccertamentoP
 	}
 }
 public void avvisoDiPagamentoMandatiRiscontrati()throws ComponentException{
+	/**Codice necessario perchè invocato da uno scheduler
+	 * 
+	 */
+	if (null == componentObj)
+		componentObj = new it.cnr.contab.doccont00.comp.MandatoComponent();
 	it.cnr.jada.UserContext param0 = new CNRUserContext("SCHEDULER", null, 0, null, null, null);
 	pre_component_invocation(param0,componentObj);
 	try {
