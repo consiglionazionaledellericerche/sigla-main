@@ -450,6 +450,7 @@ public class MissioneHome extends BulkHome implements
 				 */
 				docAmmCMISService.addAnotherParentToNode(mandato, docAmm, uidMail[0], node, beanName);
 			}catch (CmisConstraintException e) {
+				e.printStackTrace();
 			}catch (Exception e) {
 				throw new PersistencyException(e);
 			}

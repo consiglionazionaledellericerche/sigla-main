@@ -6302,11 +6302,14 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			sql.addClause(FindClause.AND, "fl_invia_avviso_pagamento", SQLBuilder.EQUALS, Boolean.TRUE);
 			List<MandatoBulk> mandati = mandatoHome.fetchAll(sql);
 			for (MandatoBulk mandato : mandati) {
-				Utility.createMandatoComponentSession().avvisoDiPagamentoMandatoRiscontrato(userContext, mandato);
+				try{
+					Utility.createMandatoComponentSession().avvisoDiPagamentoMandatoRiscontrato(userContext, mandato);
+				}catch(Throwable _th){
+					//TODO
+					_th.printStackTrace();
+				}
 			}
 		} catch (PersistencyException e) {
-			throw handleException(e);
-		} catch (RemoteException e) {
 			throw handleException(e);
 		} catch (EJBException e) {
 			throw handleException(e);
@@ -6322,7 +6325,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				mandatoHome.sendAvvisoDiPagamentoPerBonifico(userContext, mandato);
 			mandato.setFl_invia_avviso_pagamento(Boolean.FALSE);
 			mandato.setToBeUpdated();
-			super.modificaConBulk(userContext, mandato);
+			mandatoHome.update(mandato, userContext);
 		} catch (PersistencyException e) {
 			handleException(e);
 		} catch (OutdatedResourceException e) {
