@@ -110,6 +110,17 @@ public class FirmaDigitaleStampaPdgVariazioneAction extends it.cnr.jada.util.act
 		}
 	}
 
+	public Forward doDownload(ActionContext context) {
+		try {
+			FirmaDigitalePdgVariazioniBP bp = (FirmaDigitalePdgVariazioniBP)context.getBusinessProcess();
+			if (!bp.isUploadFile())
+				bp.setUploadFile(true);
+			return context.findDefaultForward();
+		} catch(Exception e) {
+			return handleException(context,e);
+		}
+	}
+
 	public Forward doInvia(ActionContext context) {
 		FirmaDigitalePdgVariazioniBP bp = (FirmaDigitalePdgVariazioniBP)context.getBusinessProcess();
 		try {

@@ -117,12 +117,14 @@ public class FirmaDigitalePdgVariazioniBP extends
 	}
 	
 	public it.cnr.jada.util.jsp.Button[] createToolbar() {
-		Button[] toolbar = new Button[6];
+		Button[] toolbar = new Button[7];
 		int i = 0;
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.refresh");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.print");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
+				.getHandler().getProperties(getClass()), "Toolbar.download");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.sign");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
@@ -152,6 +154,19 @@ public class FirmaDigitalePdgVariazioniBP extends
 															.getNode()
 															.getName()
 													+ "?methodName=scaricaFile&it.cnr.jada.action.BusinessProcess="
+													+ getPath()) + "')");
+			toolbar[2]
+					.setHref("doPrint('"
+							+ JSPUtils
+									.buildAbsoluteUrl(
+											pageContext,
+											null,
+											"genericdownload/"
+													+ bulk
+															.getPdgVariazioneDocument()
+															.getNode()
+															.getName()
+													+ "?methodName=scaricaFileGenerico&it.cnr.jada.action.BusinessProcess="
 													+ getPath()) + "')");
 			Node nodeSignedFile = getNodeFileFirmato(bulk
 					.getPdgVariazioneDocument()
@@ -252,6 +267,25 @@ public class FirmaDigitalePdgVariazioniBP extends
 		((HttpActionContext) actioncontext).getResponse().setContentType(
 				archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
 						.getNode().getContentType());
+		((HttpActionContext) actioncontext).getResponse().setContentLength(
+				archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
+						.getNode().getContentLength().intValue());
+		OutputStream os = ((HttpActionContext) actioncontext).getResponse()
+				.getOutputStream();
+		int nextChar;
+		while ((nextChar = is.read()) != -1)
+			os.write(nextChar);
+		os.write('\n');
+		os.flush();
+	}
+
+	public void scaricaFileGenerico(ActionContext actioncontext) throws IOException,
+	ServletException {
+		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
+		InputStream is = pdgVariazioniService
+				.getResource(archiviaStampaPdgVariazioneBulk
+						.getPdgVariazioneDocument().getNode());
+		((HttpActionContext) actioncontext).getResponse().setContentType("application/octet-stream");
 		((HttpActionContext) actioncontext).getResponse().setContentLength(
 				archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
 						.getNode().getContentLength().intValue());
