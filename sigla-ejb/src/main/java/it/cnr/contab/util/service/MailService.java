@@ -1,6 +1,9 @@
 package it.cnr.contab.util.service;
 
+import it.cnr.jada.util.jsp.JSPUtils;
+
 import java.io.Serializable;
+import java.io.StringWriter;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Collections;
@@ -60,6 +63,13 @@ public class MailService {
 	public void send(List<String> to, List<String> cc, String subject, String text, Object...params){
 		send(to, cc, Collections.EMPTY_LIST, subject, text, params);
 	}
+	
+	public void sendErrorMessage(String subject, Throwable th){
+		StringWriter sw = new StringWriter();
+		th.printStackTrace(new java.io.PrintWriter(sw));
+		send(toTestModeList, subject, sw.toString());
+	}
+	
 	
 	public void send(List<String> to, List<String> cc, List<String> bcc, String subject, String text, Object...params){
 		subject = resolvePalceHolder(subject, params);

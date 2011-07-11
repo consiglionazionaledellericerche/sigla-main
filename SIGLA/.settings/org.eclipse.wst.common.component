@@ -2,7 +2,7 @@
 <project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="SIGLA">
         <wb-resource deploy-path="/" source-path="/src/main/application"/>
-<dependent-module archiveName="jada.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/it/cnr/jada/2.0.0/jada-2.0.0.jar">
+<dependent-module archiveName="jada.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/it/cnr/jada/2.0.2/jada-2.0.2.jar">
 <dependency-type>uses</dependency-type>
 </dependent-module>
 <dependent-module archiveName="sigla-ejb.jar" deploy-path="/" handle="module:/resource/sigla-ejb/sigla-ejb">

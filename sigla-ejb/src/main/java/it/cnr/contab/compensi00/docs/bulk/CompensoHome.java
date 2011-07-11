@@ -409,6 +409,7 @@ public class CompensoHome extends BulkHome implements
 				 */
 				docAmmCMISService.addAnotherParentToNode(mandato, docAmm, uidMail[0], node, beanName);
 			}catch (CmisConstraintException e) {
+				throw new PersistencyException(e);
 			}catch (Exception e) {
 				throw new PersistencyException(e);
 			}

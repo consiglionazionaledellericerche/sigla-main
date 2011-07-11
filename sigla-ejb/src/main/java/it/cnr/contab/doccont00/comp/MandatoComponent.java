@@ -6302,16 +6302,12 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			sql.addClause(FindClause.AND, "fl_invia_avviso_pagamento", SQLBuilder.EQUALS, Boolean.TRUE);
 			List<MandatoBulk> mandati = mandatoHome.fetchAll(sql);
 			for (MandatoBulk mandato : mandati) {
-				try{
-					Utility.createMandatoComponentSession().avvisoDiPagamentoMandatoRiscontrato(userContext, mandato);
-				}catch(Throwable _th){
-					//TODO
-					_th.printStackTrace();
-				}
+				Utility.createMandatoComponentSession().avvisoDiPagamentoMandatoRiscontrato(userContext, mandato);
+				Utility.createMandatoComponentSession().aggiornaStatoAvvisoDiPagamento(userContext, mandato);
 			}
 		} catch (PersistencyException e) {
 			throw handleException(e);
-		} catch (EJBException e) {
+		} catch (RemoteException e) {
 			throw handleException(e);
 		}
 	}
@@ -6323,9 +6319,6 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			if (mandato.getFl_invia_avviso_pagamento() && 
 					mandatoHome.isAvvisoDiPagamentoMandato(userContext, mandato, Boolean.TRUE))
 				mandatoHome.sendAvvisoDiPagamentoPerBonifico(userContext, mandato);
-			mandato.setFl_invia_avviso_pagamento(Boolean.FALSE);
-			mandato.setToBeUpdated();
-			mandatoHome.update(mandato, userContext);
 		} catch (PersistencyException e) {
 			handleException(e);
 		} catch (OutdatedResourceException e) {
@@ -6333,6 +6326,16 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		} catch (BusyResourceException e) {
 			handleException(e);
 		}
-		
+	}
+	
+	public void aggiornaStatoAvvisoDiPagamento(UserContext userContext, MandatoBulk mandato) throws ComponentException{
+		try {
+			MandatoHome mandatoHome = (MandatoHome) getHome( userContext, MandatoIBulk.class, "AVVISO_PAGAMENTO" );
+			mandato.setFl_invia_avviso_pagamento(Boolean.FALSE);
+			mandato.setToBeUpdated();
+			mandatoHome.update(mandato, userContext);
+		} catch (PersistencyException e) {
+			handleException(e);
+		}
 	}
 }

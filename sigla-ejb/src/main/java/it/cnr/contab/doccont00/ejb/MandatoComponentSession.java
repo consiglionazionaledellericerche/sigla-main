@@ -25,4 +25,5 @@ java.lang.Boolean isCollegamentoSiopeCompleto (it.cnr.jada.UserContext param0, i
 it.cnr.contab.doccont00.core.bulk.MandatoIBulk listaScadenzeAccertamentoPerRegolarizzazione(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.MandatoIBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void avvisoDiPagamentoMandatiRiscontrati() throws ComponentException, java.rmi.RemoteException;
 void avvisoDiPagamentoMandatoRiscontrato(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.MandatoBulk param1) throws ComponentException, java.rmi.RemoteException;
+void aggiornaStatoAvvisoDiPagamento(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.MandatoBulk param1) throws ComponentException, java.rmi.RemoteException;
 }

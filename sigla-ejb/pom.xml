@@ -168,7 +168,7 @@
   <properties>
   	<cmisdl.version>1.7</cmisdl.version>
   	<spring.version>3.0.3.RELEASE</spring.version>
-  	<jada.version>2.0.0</jada.version>
+  	<jada.version>2.0.2</jada.version>
   	<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
   </properties>
 	<repositories>

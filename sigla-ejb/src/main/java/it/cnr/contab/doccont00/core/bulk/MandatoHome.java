@@ -365,7 +365,12 @@ public abstract class MandatoHome extends BulkHome {
 			}
 		}catch (NoSuchBeanDefinitionException e) {
 		}catch (Exception e) {
-			throw new ComponentException( e );
+			SpringUtil.getBean("mailService", MailService.class).sendErrorMessage(
+					"Errore durante l'archiviazione del Mandato di Pagamento: "+
+					mandato.getEsercizio()+
+					"/"+mandato.getCd_unita_organizzativa()+
+					"/"+mandato.getPg_mandato(), 
+					e);
 		}		
 	}
 	
