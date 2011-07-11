@@ -391,11 +391,15 @@ public void avvisoDiPagamentoMandatiRiscontrati()throws ComponentException{
 }
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public void avvisoDiPagamentoMandatoRiscontrato(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.MandatoBulk param1)throws ComponentException{
+	pre_component_invocation(param0,componentObj);
 	try {
 		((MandatoComponent)componentObj).avvisoDiPagamentoMandatoRiscontrato(param0, param1);
+		component_invocation_succes(param0,componentObj);
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
 		throw e;
 	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
 		throw e;
 	} catch(RuntimeException e) {
 		throw uncaughtRuntimeException(param0,componentObj,e);
