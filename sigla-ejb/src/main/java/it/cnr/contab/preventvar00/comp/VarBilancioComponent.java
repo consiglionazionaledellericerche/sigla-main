@@ -540,6 +540,7 @@ public Var_bilancioBulk salvaDefinitivo(UserContext userContext, Var_bilancioBul
 	    lockBulk(userContext, varBilancio);
 	    validaModificaConBulk(userContext, varBilancio);
 	    varBilancio.setToBeUpdated();
+//	    varBilancio = (Var_bilancioBulk) eseguiModificaConBulk(userContext, varBilancio);
 		eseguiModificaConBulk(userContext, varBilancio);
 		
 		// solo nel salvataggio definitivo (almeno per ora, in caso contrario inserire
@@ -549,7 +550,9 @@ public Var_bilancioBulk salvaDefinitivo(UserContext userContext, Var_bilancioBul
 		Iterator it = varBilancio.getDettagli().iterator();
 		while(it.hasNext()) {
 			Var_bilancio_detBulk varBilDett = (Var_bilancio_detBulk)it.next();
-			if (varBilDett.getVoceFSaldi().getCrudStatus()!=OggettoBulk.NORMAL)
+//			aggiunta la condizione sul getCrudStatus()!=OggettoBulk.UNDEFINED
+//			perchè la riga in tabella viene aggiunta nel package CNRCTB055 e deve poter continuare
+			if (varBilDett.getVoceFSaldi().getCrudStatus()!=OggettoBulk.NORMAL && varBilDett.getVoceFSaldi().getCrudStatus()!=OggettoBulk.UNDEFINED)
 				throw new it.cnr.jada.comp.ApplicationException("La voce "+varBilDett.getCd_voce()+" non è corretta. Modificare o eliminare il dettaglio relativo.");
 		}
 
