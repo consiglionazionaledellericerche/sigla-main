@@ -400,12 +400,12 @@ public void avvisoDiPagamentoMandatiRiscontrati() throws ComponentException,
 		RemoteException {
 	throw new java.rmi.RemoteException("Uncaugth exception");	
 }
-public void avvisoDiPagamentoMandatoRiscontrato(UserContext param0,
+public String avvisoDiPagamentoMandatoRiscontrato(UserContext param0,
 		MandatoBulk param1) throws ComponentException, RemoteException {
 	throw new java.rmi.RemoteException("Uncaugth exception");	
 }
 public void aggiornaStatoAvvisoDiPagamento(UserContext param0,
-		MandatoBulk param1) throws ComponentException, RemoteException {
+		MandatoBulk param1, String inviaAvvisoPag) throws ComponentException, RemoteException {
 	throw new java.rmi.RemoteException("Uncaugth exception");	
 }
 }

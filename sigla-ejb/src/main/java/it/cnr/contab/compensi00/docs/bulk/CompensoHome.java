@@ -381,7 +381,8 @@ public class CompensoHome extends BulkHome implements
 				
 				String beanName;
 				String typePayment;
-				if (compenso.getTipoTrattamento().getFl_stralcio_dip()!= null &&
+				if (compenso.getTipoTrattamento() != null &&
+						compenso.getTipoTrattamento().getFl_stralcio_dip()!= null &&
 						!compenso.getTipoTrattamento().getFl_stralcio_dip() &&
 						compenso.getTipoTrattamento().getFl_tfr()){
 					beanName = "cmisPathIndAnzianita";

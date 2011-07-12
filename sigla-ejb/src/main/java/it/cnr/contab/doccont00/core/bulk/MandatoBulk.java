@@ -30,6 +30,10 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk {
 	public final static String STATO_MANDATO_EMESSO		= "E";
 	public final static String STATO_MANDATO_PAGATO		= "P";
 
+	public final static String STATO_INVIO_AVV_PAG_Y	= "Y";
+	public final static String STATO_INVIO_AVV_PAG_N	= "N";
+	public final static String STATO_INVIO_AVV_PAG_E	= "E";
+	
 	public final static String STATO_COGE_N	= "N";
 	public final static String STATO_COGE_C	= "C";
 	public final static String STATO_COGE_R	= "R";

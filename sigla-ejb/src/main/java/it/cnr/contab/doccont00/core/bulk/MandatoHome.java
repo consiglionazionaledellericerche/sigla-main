@@ -340,7 +340,7 @@ public abstract class MandatoHome extends BulkHome {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void sendAvvisoDiPagamentoPerBonifico(UserContext userContext, MandatoBulk mandato) throws ComponentException{
+	public String sendAvvisoDiPagamentoPerBonifico(UserContext userContext, MandatoBulk mandato) throws ComponentException{
 		try {
 			TerzoHome terzoHome = (TerzoHome) getHomeCache().getHome( TerzoBulk.class );
 			MailService mailService = SpringUtil.getBean("avviso.di.pagamento.mail.service", MailService.class);
@@ -363,7 +363,9 @@ public abstract class MandatoHome extends BulkHome {
 				String mailAddress = SpringUtil.getBean("ldapService", LDAPService.class).getLdapUserFromMatricola(userContext, matricola)[1];
 				mailService.send(Arrays.asList(mailAddress), subject, text.toString());
 			}
+			return MandatoBulk.STATO_INVIO_AVV_PAG_N;
 		}catch (NoSuchBeanDefinitionException e) {
+			return MandatoBulk.STATO_INVIO_AVV_PAG_E;
 		}catch (Exception e) {
 			SpringUtil.getBean("mailService", MailService.class).sendErrorMessage(
 					"Errore durante l'archiviazione del Mandato di Pagamento: "+
@@ -371,6 +373,7 @@ public abstract class MandatoHome extends BulkHome {
 					"/"+mandato.getCd_unita_organizzativa()+
 					"/"+mandato.getPg_mandato(), 
 					e);
+			return MandatoBulk.STATO_INVIO_AVV_PAG_E;
 		}		
 	}
 	

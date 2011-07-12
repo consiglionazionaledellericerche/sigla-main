@@ -16,8 +16,7 @@
 			columnName="FL_INVIA_AVVISO_PAGAMENTO"
 			propertyName="fl_invia_avviso_pagamento"
 			sqlTypeName="CHAR"
-			columnSize="1"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+			columnSize="1"/>
 	</columnMap>
 
 	<persistentProperty

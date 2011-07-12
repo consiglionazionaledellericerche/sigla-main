@@ -1,17 +1,12 @@
 package it.cnr.contab.doccont00.ejb;
-import java.rmi.RemoteException;
+import it.cnr.contab.doccont00.comp.MandatoComponent;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.comp.ComponentException;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-
-import it.cnr.contab.doccont00.comp.MandatoComponent;
-import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
-import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.comp.ComponentException;
 @Stateless(name="CNRDOCCONT00_EJB_MandatoComponentSession")
 public class MandatoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements MandatoComponentSession {
 @PostConstruct
@@ -390,11 +385,12 @@ public void avvisoDiPagamentoMandatiRiscontrati()throws ComponentException{
 	}
 }
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-public void avvisoDiPagamentoMandatoRiscontrato(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.MandatoBulk param1)throws ComponentException{
+public String avvisoDiPagamentoMandatoRiscontrato(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.MandatoBulk param1)throws ComponentException{
 	pre_component_invocation(param0,componentObj);
 	try {
-		((MandatoComponent)componentObj).avvisoDiPagamentoMandatoRiscontrato(param0, param1);
+		String result = ((MandatoComponent)componentObj).avvisoDiPagamentoMandatoRiscontrato(param0, param1);
 		component_invocation_succes(param0,componentObj);
+		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
 		component_invocation_succes(param0,componentObj);
 		throw e;
@@ -408,10 +404,10 @@ public void avvisoDiPagamentoMandatoRiscontrato(it.cnr.jada.UserContext param0,i
 	}
 }
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-public void aggiornaStatoAvvisoDiPagamento(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.MandatoBulk param1)throws ComponentException{
+public void aggiornaStatoAvvisoDiPagamento(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.MandatoBulk param1, String inviaAvvisoPag)throws ComponentException{
 	pre_component_invocation(param0,componentObj);
 	try {
-		((MandatoComponent)componentObj).aggiornaStatoAvvisoDiPagamento(param0, param1);
+		((MandatoComponent)componentObj).aggiornaStatoAvvisoDiPagamento(param0, param1, inviaAvvisoPag);
 		component_invocation_succes(param0,componentObj);
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
 		component_invocation_succes(param0,componentObj);

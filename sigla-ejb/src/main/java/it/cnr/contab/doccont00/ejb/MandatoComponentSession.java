@@ -24,6 +24,6 @@ it.cnr.contab.doccont00.core.bulk.MandatoIBulk esitaVariazioneBilancioDiRegolari
 java.lang.Boolean isCollegamentoSiopeCompleto (it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.MandatoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.contab.doccont00.core.bulk.MandatoIBulk listaScadenzeAccertamentoPerRegolarizzazione(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.MandatoIBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void avvisoDiPagamentoMandatiRiscontrati() throws ComponentException, java.rmi.RemoteException;
-void avvisoDiPagamentoMandatoRiscontrato(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.MandatoBulk param1) throws ComponentException, java.rmi.RemoteException;
-void aggiornaStatoAvvisoDiPagamento(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.MandatoBulk param1) throws ComponentException, java.rmi.RemoteException;
+String avvisoDiPagamentoMandatoRiscontrato(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.MandatoBulk param1) throws ComponentException, java.rmi.RemoteException;
+void aggiornaStatoAvvisoDiPagamento(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.MandatoBulk param1, String inviaAvvisoPag) throws ComponentException, java.rmi.RemoteException;
 }
