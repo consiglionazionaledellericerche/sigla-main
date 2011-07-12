@@ -366,17 +366,17 @@ public it.cnr.contab.doccont00.core.bulk.MandatoIBulk listaScadenzeAccertamentoP
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public void avvisoDiPagamentoMandatiRiscontrati()throws ComponentException{
 	it.cnr.jada.UserContext param0 = new CNRUserContext("SCHEDULER", null, 0, null, null, null);
-	pre_component_invocation(param0,componentObj);
 	try {
 		((MandatoComponent)componentObj).avvisoDiPagamentoMandatiRiscontrati(param0);
-		component_invocation_succes(param0,componentObj);
+		componentObj.release(param0);
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
-		component_invocation_succes(param0,componentObj);
+		componentObj.release(param0);
 		throw e;
 	} catch(it.cnr.jada.comp.ComponentException e) {
-		component_invocation_failure(param0,componentObj);
+		componentObj.release(param0);
 		throw e;
 	} catch(RuntimeException e) {
 		throw uncaughtRuntimeException(param0,componentObj,e);
