@@ -272,7 +272,6 @@
 		<columnFieldProperty name="cd_modulo" />
 		<columnFieldProperty name="cd_livello1" />
 		<columnFieldProperty name="ds_classificazione" />
-		<columnFieldProperty name="im_presunti_prec" label="Risorse presunte prov. da es. prec." />
 		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
 		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
 		<columnFieldProperty name="im_dec_area_int" label="Fonti Interne" headerLabel="Gestione Decentrata anno corrente Aree"/>
@@ -480,7 +479,6 @@
 		<columnFieldProperty name="cd_modulo" />
 		<columnFieldProperty name="cd_livello1" />
 		<columnFieldProperty name="ds_classificazione" />
-		<columnFieldProperty name="im_presunti_prec" label="Risorse presunte prov. da es. prec." />
 		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
 		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente Istituto"/>
 		<columnFieldProperty name="im_dec_area_int" label="Fonti Interne" headerLabel="Gestione Decentrata anno corrente Aree"/>
@@ -542,7 +540,7 @@
 		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
 		<columnFieldProperty name="im_pagamenti" />		
 	</columnSet>
-	<columnSet name="SPEDIPTIPCDRMODLIV1LIV2LIV3">
+	<columnSet name="SPEDIPTIPCDRMODLIV1LIV2LIV3LIN">
 		<columnFieldProperty name="cd_dipartimento" />
 		<columnFieldProperty name="cd_tipo_modulo" />
 		<columnFieldProperty name="cd_centro_responsabilita" />	
