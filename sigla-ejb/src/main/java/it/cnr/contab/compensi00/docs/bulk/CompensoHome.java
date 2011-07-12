@@ -22,6 +22,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.PersistenceException;
+
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 
@@ -298,6 +300,8 @@ public class CompensoHome extends BulkHome implements
 			throws IntrospectionException, PersistencyException {
 		CompensoBulk compenso = (CompensoBulk)docAmm;
 		compenso.setTipoTrattamento(loadTipo_trattamento(compenso));
+		if (compenso.getTipoTrattamento() == null)
+			throw new PersistenceException("Trattamento non trovato: "+compenso.getCd_trattamento());
 		TerzoBulk terzo = (TerzoBulk) getHomeCache().getHome(TerzoBulk.class).
 			findByPrimaryKey(new TerzoBulk(compenso.getCd_terzo()));
 		if (terzo == null || terzo.getAnagrafico() == null)

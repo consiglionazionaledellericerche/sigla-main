@@ -369,6 +369,7 @@ public it.cnr.contab.doccont00.core.bulk.MandatoIBulk listaScadenzeAccertamentoP
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public void avvisoDiPagamentoMandatiRiscontrati()throws ComponentException{
 	it.cnr.jada.UserContext param0 = new CNRUserContext("SCHEDULER", null, 0, null, null, null);
+	componentObj.initialize();
 	try {
 		((MandatoComponent)componentObj).avvisoDiPagamentoMandatiRiscontrati(param0);
 		componentObj.release(param0);
@@ -379,28 +380,32 @@ public void avvisoDiPagamentoMandatiRiscontrati()throws ComponentException{
 		componentObj.release(param0);
 		throw e;
 	} catch(RuntimeException e) {
-		throw uncaughtRuntimeException(param0,componentObj,e);
+		componentObj.release(param0);
+		throw e;
 	} catch(Error e) {
-		throw uncaughtError(param0,componentObj,e);
+		componentObj.release(param0);
+		throw e;
 	}
 }
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public String avvisoDiPagamentoMandatoRiscontrato(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.MandatoBulk param1)throws ComponentException{
-	pre_component_invocation(param0,componentObj);
+	componentObj.initialize();
 	try {
 		String result = ((MandatoComponent)componentObj).avvisoDiPagamentoMandatoRiscontrato(param0, param1);
-		component_invocation_succes(param0,componentObj);
+		componentObj.release();
 		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
-		component_invocation_succes(param0,componentObj);
+		componentObj.release();
 		throw e;
 	} catch(it.cnr.jada.comp.ComponentException e) {
-		component_invocation_failure(param0,componentObj);
+		componentObj.release();
 		throw e;
 	} catch(RuntimeException e) {
-		throw uncaughtRuntimeException(param0,componentObj,e);
+		componentObj.release();
+		throw e;
 	} catch(Error e) {
-		throw uncaughtError(param0,componentObj,e);
+		componentObj.release();
+		throw e;
 	}
 }
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
