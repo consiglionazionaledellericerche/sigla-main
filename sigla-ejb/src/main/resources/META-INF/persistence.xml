@@ -7,14 +7,14 @@
 		<jta-data-source>java:/jdbc/CIR</jta-data-source>
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="none"/>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle9Dialect"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle9iDialect"/>
 			<property name="hibernate.jdbc.batch_size" value="0"/>		  
 			<property name="hibernate.jdbc.use_streams_for_binary" value="false"/>
 			<property name="hibernate.show_sql" value="true"/>		  
 		</properties>
 	</persistence-unit>
 	<persistence-unit name="GECO" >
-		<jta-data-source>java:jdbc/GECO</jta-data-source>
+		<jta-data-source>java:/jdbc/GECO</jta-data-source>
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="none"/>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.InformixDialect"/>

@@ -1,23 +1,18 @@
 <action-mappings>
 
   <action 
-      path="/CRUDBframeBlobAction" actionClass="it.cnr.jada.blobs.action.CRUDBframeBlobAction">
+      path="/CRUDBlobAction" actionClass="it.cnr.jada.blobs.action.CRUDBlobAction">
   </action>
   <action
   	path="/ExcelBlobAction" actionClass="it.cnr.jada.blobs.action.ExcelBlobAction">
   </action>
   
   <businessProcess
-      name="CRUDBframeBlobBP" className="it.cnr.jada.blobs.bp.CRUDBframeBlobBP">
+      name="CRUDBlobBP" className="it.cnr.jada.blobs.bp.CRUDBlobBP">
     <forward name="default" path="/blobs/browser_bframe_blobs.jsp"/>
-    <init-param name="defaultAction" value="CRUDBframeBlobAction" />
+    <init-param name="defaultAction" value="CRUDBlobAction" />
   </businessProcess>
 
-  <businessProcess
-      name="SelezionatoreBframeBlobBP" className="it.cnr.jada.blobs.bp.SelezionatoreBframeBlobBP">
-    <forward name="default" path="/blobs/browser_bframe_blobs.jsp"/>
-    <init-param name="defaultAction" value="SelezionatoreListaAlberoAction" />
-  </businessProcess>
  <businessProcess
       name="ExcelBlobBP" className="it.cnr.jada.blobs.bp.ExcelBlobBP">
     <forward name="default" path="/blobs/browser_excel_blobs.jsp" />

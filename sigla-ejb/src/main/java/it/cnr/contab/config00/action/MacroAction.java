@@ -138,7 +138,7 @@ public class MacroAction extends FormAction{
 			        ui.getCdr().getCd_centro_responsabilita());			
 			actioncontext.setUserContext(userContext);
 			actioncontext.setUserInfo(ui);
-			//Se il mode è H allora va in sola visualizzazione altrimenti in modifica			
+			//Se il mode ï¿½ H allora va in sola visualizzazione altrimenti in modifica			
 			mode = mode.equals("H")?"V":"M";
             if (costi_personale.equals("N")){
 				Object[] parametri;
@@ -178,13 +178,13 @@ public class MacroAction extends FormAction{
 			}
 			return actioncontext.findDefaultForward();
 		} catch(it.cnr.contab.utente00.nav.comp.PasswordScadutaException e) {
-			setErrorMessage(actioncontext,"Password scaduta da più di sei mesi.");
+			setErrorMessage(actioncontext,"Password scaduta da piï¿½ di sei mesi.");
 			return actioncontext.findForward("password_scaduta");
 		} catch(it.cnr.contab.utente00.nav.comp.UtenteNonValidoException e) {
-			setErrorMessage(actioncontext,"Utente non più valido");
+			setErrorMessage(actioncontext,"Utente non piï¿½ valido");
 			return actioncontext.findDefaultForward();
 		} catch(it.cnr.contab.utente00.nav.comp.UtenteInDisusoException e) {
-			setErrorMessage(actioncontext,"Utente non utilizzato da più di sei mesi.");
+			setErrorMessage(actioncontext,"Utente non utilizzato da piï¿½ di sei mesi.");
 			return actioncontext.findDefaultForward();
 		} catch(Throwable e) {
 			return handleException(actioncontext,e);
@@ -210,7 +210,7 @@ public class MacroAction extends FormAction{
 			getProgettoRicercaPadreComponentSession().aggiornaGECO(context.getUserContext());
 		} catch (Exception e) {
 			String text = "Errore interno del Server Utente:"+CNRUserContext.getUser(context.getUserContext())+" UO:"+CNRUserContext.getCd_unita_organizzativa(context.getUserContext());
-			SendMail.sendErrorMail(text,e.toString());
+			SendMail.getInstance().sendErrorMail(text,e.toString());
 		}
 	}
 }

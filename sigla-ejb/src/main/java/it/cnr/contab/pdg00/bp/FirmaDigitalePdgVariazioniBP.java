@@ -15,11 +15,9 @@ import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
-import it.cnr.contab.pdg00.bulk.cmis.AllegatoPdGVariazioneDocumentBulk;
 import it.cnr.contab.pdg00.bulk.cmis.AllegatoPdGVariazioneSignedDocument;
 import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
 import it.cnr.contab.pdg00.service.PdgVariazioniService;
-import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
@@ -29,7 +27,6 @@ import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.BulkInfo;
-import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
@@ -37,8 +34,7 @@ import it.cnr.jada.firma.DatiPEC;
 import it.cnr.jada.firma.FirmaInfos;
 import it.cnr.jada.firma.NotSignedEnvelopeException;
 import it.cnr.jada.firma.Verifica;
-import it.cnr.jada.firma.bp.SendPecMail;
-import it.cnr.jada.util.action.Selection;
+import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
 import it.cnr.jada.util.jsp.JSPUtils;
@@ -384,7 +380,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 			fileDir.delete();
 			if (!fileDir.mkdir())
 				throw new BusinessProcessException(
-						"Directory già esistente, riprovare a generare la firma!");
+						"Directory giï¿½ esistente, riprovare a generare la firma!");
 
 			file = new File(fileDir, getFileName());
 			InputStream is = pdgVariazioniService
@@ -469,7 +465,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		}
 		if (servizioPecProtocollo == null)
 			throw new ValidationException(
-					"Non è presente l'email per l'invio della posta certificata per l'ufficio del Protocollo. Impossibile procedere!");
+					"Non ï¿½ presente l'email per l'invio della posta certificata per l'ufficio del Protocollo. Impossibile procedere!");
 		// PEC derivata dalla stampa specifica
 		ServizioPecBulk servizioPec = null;
 		try {
@@ -484,7 +480,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		}
 		if (servizioPec == null)
 			throw new ValidationException(
-					"L'ufficio di competenza per l'invio della posta certificata non è definito. Impossibile procedere!");
+					"L'ufficio di competenza per l'invio della posta certificata non ï¿½ definito. Impossibile procedere!");
 		if (!parametriEnte.getTipo_db()
 				.equals(Parametri_enteBulk.DB_PRODUZIONE)) 
 			testMode = true;
@@ -584,7 +580,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 			handleException(e);
 		}
 		if (uoPec == null || (uoPec.getEmailPec()==null && uoPec.getEmailPecDirettore()==null))
-			throw new ValidationException("L'indirizzo email di posta certificata per la unità organizzativa "+cdUoPec+" non è definito. Impossibile procedere!");
+			throw new ValidationException("L'indirizzo email di posta certificata per la unitï¿½ organizzativa "+cdUoPec+" non ï¿½ definito. Impossibile procedere!");
 		return uoPec;
 	}
 	
@@ -617,7 +613,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 
 		try {
 			List<String> lista = datiPEC.emailListTotale();
-			SendPecMail.sendMail(datiPEC.getOggetto(), datiPEC.getOggetto(), file,
+			SendMail.getInstance(SendMail.PEC_PROPERTIES).sendMail(datiPEC.getOggetto(), datiPEC.getOggetto(), file,
 					lista, datiPEC);
 		} catch (Exception ex) {
 			pdgVariazioniService.removeAspect(archiviaStampaPdgVariazioneBulk
@@ -679,7 +675,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		
 		try {
 			List<String> lista = datiPEC.emailListTotale();
-			SendPecMail.sendMail(datiPEC.getOggetto(), datiPEC.getOggetto(), fileNew,
+			SendMail.getInstance(SendMail.PEC_PROPERTIES).sendMail(datiPEC.getOggetto(), datiPEC.getOggetto(), fileNew,
 					lista, datiPEC);
 		} catch (Exception ex) {
 			pdgVariazioniService.removeAspect(archiviaStampaPdgVariazioneBulk

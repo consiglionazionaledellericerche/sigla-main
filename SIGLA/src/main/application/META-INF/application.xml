@@ -1,11 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:application="http://java.sun.com/xml/ns/javaee/application_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_5.xsd" version="5">
-  <display-name>SIGLA</display-name>
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE application PUBLIC
+	"-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN"
+	"http://java.sun.com/dtd/application_1_3.dtd">
+<application>
+  <display-name>sigla-ear</display-name>
   <module>
-    <ejb>sigla-ejb.jar</ejb>
+    <ejb>jada.jar</ejb>
   </module>
   <module>
-    <ejb>sigla-ws.jar</ejb>
+    <ejb>sigla-ejb.jar</ejb>
   </module>
   <module>
     <web>
@@ -14,7 +17,6 @@
     </web>
   </module>
   <module>
-    <ejb>jada.jar</ejb>
+    <ejb>sigla-ws.jar</ejb>
   </module>
-  <library-directory>lib</library-directory>
 </application>

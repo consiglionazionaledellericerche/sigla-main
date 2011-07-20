@@ -1,7 +1,5 @@
 package it.cnr.contab.util.service;
 
-import it.cnr.jada.util.jsp.JSPUtils;
-
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.text.DateFormat;

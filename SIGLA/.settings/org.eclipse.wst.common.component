@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="SIGLA">
-        <wb-resource deploy-path="/" source-path="/src/main/application"/>
-<dependent-module archiveName="jada.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/it/cnr/jada/2.0.2/jada-2.0.2.jar">
+<wb-module deploy-name="SIGLA">
+<wb-resource deploy-path="/" source-path="/EarContent"/>
+<wb-resource deploy-path="/" source-path="/src/main/application"/>
+<dependent-module archiveName="jada.jar" deploy-path="/" handle="module:/resource/jada/jada">
 <dependency-type>uses</dependency-type>
 </dependent-module>
 <dependent-module archiveName="sigla-ejb.jar" deploy-path="/" handle="module:/resource/sigla-ejb/sigla-ejb">
@@ -89,9 +90,6 @@
 <dependent-module archiveName="commons-logging-1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-logging/commons-logging/1.0/commons-logging-1.0.jar">
 <dependency-type>uses</dependency-type>
 </dependent-module>
-<dependent-module archiveName="commons-collections-2.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-collections/commons-collections/2.1/commons-collections-2.1.jar">
-<dependency-type>uses</dependency-type>
-</dependent-module>
 <dependent-module archiveName="commons-fileupload-1.2.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-fileupload/commons-fileupload/1.2.1/commons-fileupload-1.2.1.jar">
 <dependency-type>uses</dependency-type>
 </dependent-module>
@@ -155,5 +153,8 @@
 <dependent-module archiveName="org.springframework.transaction-3.0.3.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/org.springframework.transaction/3.0.3.RELEASE/org.springframework.transaction-3.0.3.RELEASE.jar">
 <dependency-type>uses</dependency-type>
 </dependent-module>
-    </wb-module>
+<dependent-module archiveName="quartz-all-1.6.3.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/opensymphony/quartz-all/1.6.3/quartz-all-1.6.3.jar">
+<dependency-type>uses</dependency-type>
+</dependent-module>
+</wb-module>
 </project-modules>

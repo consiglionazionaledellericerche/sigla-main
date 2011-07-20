@@ -22,6 +22,11 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-ejb-plugin</artifactId>
 					<configuration>
+                         <archive>
+                            <manifestEntries>
+                               <Dependencies>oracle.jdbc, org.apache.xerces, com.novell.ldap, com.sun.security, org.apache.commons.collections, com.informix.jdbc</Dependencies>
+                            </manifestEntries>
+                         </archive>
             			<ejbVersion>3.0</ejbVersion>
 					</configuration>
 				</plugin>
@@ -64,7 +69,7 @@
     <dependency>
     	<groupId>javax.mail</groupId>
     	<artifactId>mail</artifactId>
-    	<version>1.4.1</version>
+    	<version>1.4.4</version>
     	<type>jar</type>
     	<scope>provided</scope>
     </dependency>
@@ -168,7 +173,7 @@
   <properties>
   	<cmisdl.version>1.7</cmisdl.version>
   	<spring.version>3.0.3.RELEASE</spring.version>
-  	<jada.version>2.0.2</jada.version>
+  	<jada.version>2.1.0</jada.version>
   	<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
   </properties>
 	<repositories>

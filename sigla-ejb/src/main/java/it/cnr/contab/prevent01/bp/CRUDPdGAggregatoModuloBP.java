@@ -94,7 +94,7 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 			getProgettoRicercaPadreComponentSession().aggiornaGECO(context.getUserContext());
 		} catch (Exception e) {
 			String text = "Errore interno del Server Utente:"+CNRUserContext.getUser(context.getUserContext())+" UO:"+CNRUserContext.getCd_unita_organizzativa(context.getUserContext());
-			SendMail.sendErrorMail(text,e.toString());
+			SendMail.getInstance().sendErrorMail(text,e.toString());
 		}
 	}
 	protected void initialize(ActionContext context) throws BusinessProcessException {
@@ -129,7 +129,7 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 			if (!isCdrPdGPUtilizzabile()) {
 				setStatus(VIEW);
 				setEditable(false);
-				setErrorMessage("Lo stato del PdGP - CDR per il CdR "+((CdrBulk)getModel()).getCd_centro_responsabilita()+" risulta non impostato oppure\nè chiusa la fase previsionale per l'esercizio "+CNRUserContext.getEsercizio(context.getUserContext())+". Non consentita la modifica.");
+				setErrorMessage("Lo stato del PdGP - CDR per il CdR "+((CdrBulk)getModel()).getCd_centro_responsabilita()+" risulta non impostato oppure\nï¿½ chiusa la fase previsionale per l'esercizio "+CNRUserContext.getEsercizio(context.getUserContext())+". Non consentita la modifica.");
 			}
 		}
 	}
@@ -216,7 +216,7 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 	}
 
 	/**
-	 * Stabilisce se l'utente è abilitato ad effettuare inserimenti 
+	 * Stabilisce se l'utente ï¿½ abilitato ad effettuare inserimenti 
 	 * e cancellazioni delle testate dei moduli, in base al fatto 
 	 * che il CdR in scrivania sia di primo livello per l'utente
 	 *  
@@ -232,7 +232,7 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 	}
 
 	/**
-	 * Stabilisce se è utilizzabile il CdR preimpostato in mappa
+	 * Stabilisce se ï¿½ utilizzabile il CdR preimpostato in mappa
 	 * dato che deve essere precaricata la tabella pdg_esercizio
 	 * con l'anno di esercizio del PdG e con tale CdR 
 	 *  
@@ -270,7 +270,7 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 	}
 	
 	public boolean isROModuloEntrate() {
-		// se lo stato del CdR è in esame dal centro il 999.000 può entrare in
+		// se lo stato del CdR ï¿½ in esame dal centro il 999.000 puï¿½ entrare in
 		// modifica sulla mappa delle entrate dato che ci sono dei campi editabili
 		if (getCdrPdGP().getStato().equals(Pdg_esercizioBulk.STATO_IN_ESAME_CDR) && isUoEnte())
 			return false;
@@ -445,7 +445,7 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 	}
 
 	/**
-	 * Stabilisce se si può operare (modificare) il gestionale
+	 * Stabilisce se si puï¿½ operare (modificare) il gestionale
 	 *  
 	 * @return 	true - gestionale operabile
 	 * 			false - gestionale non operabile

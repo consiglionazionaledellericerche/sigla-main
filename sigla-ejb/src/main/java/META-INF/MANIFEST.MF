@@ -8,4 +8,4 @@ Class-Path: Base64.jar
  commons-codec.jar 
  commons-collections.jar 
  commons-lang.jar
-
+Dependencies: oracle.jdbc, org.apache.xerces, com.novell.ldap, com.sun.security, org.apache.commons.collections
