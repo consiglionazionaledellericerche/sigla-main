@@ -22,6 +22,7 @@ import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.CdsHome;
+import it.cnr.contab.config00.sto.bulk.EnteBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
@@ -2792,11 +2793,14 @@ private void inizializzaBulkPerStampa(UserContext userContext, Stampa_obb_doc_am
  * inizializzaBulkPerStampa method comment.
  */
 public it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerStampa(it.cnr.jada.UserContext userContext, it.cnr.jada.bulk.OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
-
+try{
 	if (bulk instanceof Stampa_registro_obbligazioniBulk)
 		inizializzaBulkPerStampa(userContext, (Stampa_registro_obbligazioniBulk)bulk);
-	else if (bulk instanceof Stampa_registro_annotazione_spese_pgiroBulk)
+	else if (bulk instanceof Stampa_registro_annotazione_spese_pgiroBulk){
+		EnteBulk ente = (EnteBulk) getHome(userContext, EnteBulk.class).findAll().get(0);
+		((Stampa_registro_annotazione_spese_pgiroBulk)bulk).setCdsEnte(ente);
 		inizializzaBulkPerStampa(userContext, (Stampa_registro_annotazione_spese_pgiroBulk)bulk);
+	}
 	else if (bulk instanceof Stampa_scadenzario_obbligazioniBulk)
 		inizializzaBulkPerStampa(userContext, (Stampa_scadenzario_obbligazioniBulk)bulk);
 	else if (bulk instanceof Stampa_obbligazioni_riportabiliVBulk)
@@ -2807,6 +2811,9 @@ public it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerStampa(it.cnr.jada.UserCon
 		inizializzaBulkPerStampa(userContext, (Stampa_obb_doc_ammBulk)bulk);
 		
 	return bulk;
+} catch (it.cnr.jada.persistency.PersistencyException e) {
+	throw handleException( e);
+}
 }
 /** 
   *  Tipologia CdS è 'SAC'
@@ -4036,18 +4043,18 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_sc
 			throw new ValidationException("Il campo DATA INIZIO PERIODO è obbligatorio");
 		if (stampa.getDataFine()==null)
 			throw new ValidationException("Il campo DATA FINE PERIODO è obbligatorio");
-
-		java.sql.Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(stampa.getEsercizio().intValue());
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
 			throw new ValidationException("La DATA di INIZIO PERIODO non può essere superiore alla DATA di FINE PERIODO");
-		if (stampa.getDataInizio().compareTo(firstDayOfYear)<0){
-			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di INIZIO PERIODO non può essere inferiore a " + formatter.format(firstDayOfYear));
-		}
-		if (stampa.getDataFine().compareTo(lastDay)>0){
-			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di FINE PERIODO non può essere superiore a " + formatter.format(lastDay));
-		}
+
+//		java.sql.Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(stampa.getEsercizio().intValue());
+//		if (stampa.getDataInizio().compareTo(firstDayOfYear)<0){
+//			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
+//			throw new ValidationException("La DATA di INIZIO PERIODO non può essere inferiore a " + formatter.format(firstDayOfYear));
+//		}
+//		if (stampa.getDataFine().compareTo(lastDay)>0){
+//			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
+//			throw new ValidationException("La DATA di FINE PERIODO non può essere superiore a " + formatter.format(lastDay));
+//		}
 
 	}catch(ValidationException ex){
 		throw new ApplicationException(ex);

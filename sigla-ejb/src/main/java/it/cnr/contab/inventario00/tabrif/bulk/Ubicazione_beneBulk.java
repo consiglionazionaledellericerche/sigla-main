@@ -13,9 +13,7 @@ public class Ubicazione_beneBulk extends Ubicazione_beneBase {
 
 	private Ubicazione_beneBulk nodoPadre;
 
-	// CD_CDS e CD_UNITA_ORGANIZZATIVA che identificano le Ubicazioni fittizie
-	public static final String CD_CDS_FITTIZIO = "999";
-	public static final String CD_UO_FITTIZIO = "999.000";
+	
 public Ubicazione_beneBulk() {
 	super();
 }

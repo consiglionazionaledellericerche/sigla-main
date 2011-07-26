@@ -24,7 +24,7 @@ public class AccertamentoBulk extends AccertamentoBase implements IDocumentoCont
 	private it.cnr.contab.config00.pdcfin.bulk.V_voce_f_partita_giroBulk capitolo = new it.cnr.contab.config00.pdcfin.bulk.V_voce_f_partita_giroBulk();
 	private ContrattoBulk contratto = new ContrattoBulk();
 	private it.cnr.contab.config00.sto.bulk.CdsBulk cds = new CdsBulk();
-
+	private CdsBulk cdsEnte;
 	private it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk unita_organizzativa = new it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk();
 	
 	private BulkList accertamento_scadenzarioColl = new BulkList();
@@ -64,6 +64,12 @@ public AccertamentoBulk() {
 public AccertamentoBulk(java.lang.String cd_cds,java.lang.Integer esercizio,java.lang.Integer esercizio_originale,java.lang.Long pg_accertamento) {
 	super(cd_cds,esercizio,esercizio_originale,pg_accertamento);
 	setCds(new it.cnr.contab.config00.sto.bulk.CdsBulk(cd_cds));
+}
+public CdsBulk getCdsEnte() {
+	return cdsEnte;
+}
+public void setCdsEnte(CdsBulk cdsEnte) {
+	this.cdsEnte = cdsEnte;
 }
 /**
  * <!-- @TODO: da completare -->

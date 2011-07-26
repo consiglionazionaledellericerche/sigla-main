@@ -1,5 +1,7 @@
 package it.cnr.contab.doccont00.core.bulk;
 
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
+
 /**
  * Insert the type's description here.
  * Creation date: (27/01/2003 15.29.47)
@@ -16,7 +18,7 @@ public class Stampa_registro_annotazione_spese_pgiroBulk extends ObbligazioneBul
 	public final static String STATO_OBB_TUTTI = "*";
 	public final static java.util.Dictionary statoObbligazioneKeys;
 	private boolean cdsUOInScrivania = false;
-	
+	private CdsBulk cdsEnte;
 	private it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uoForPrint;
 
 	private boolean isUOForPrintEnabled;
@@ -49,6 +51,12 @@ public Stampa_registro_annotazione_spese_pgiroBulk() {
 public Stampa_registro_annotazione_spese_pgiroBulk(String cd_cds, Integer esercizio, Integer esercizio_originale, Long pg_obbligazione) {
 	super(cd_cds, esercizio, esercizio_originale, pg_obbligazione);
 }
+public CdsBulk getCdsEnte() {
+	return cdsEnte;
+}
+public void setCdsEnte(CdsBulk cdsEnte) {
+	this.cdsEnte = cdsEnte;
+}
 /**
  * Insert the method's description here.
  * Creation date: (20/01/2003 16.50.12)
@@ -56,7 +64,7 @@ public Stampa_registro_annotazione_spese_pgiroBulk(String cd_cds, Integer eserci
  */
 public String getCdCdsForPrint() {
 
-	return "999";
+	return getCdsEnte().getCd_unita_organizzativa();
 }
 /**
  * Insert the method's description here.

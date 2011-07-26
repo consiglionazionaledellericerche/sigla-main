@@ -1854,7 +1854,7 @@ private void inizializzaBulkPerStampa(UserContext userContext, Stampa_registro_a
 	stampa.setEsercizio(CNRUserContext.getEsercizio(userContext));
 	stampa.setCd_cds(CNRUserContext.getCd_cds(userContext));
 	//stampa.setUoForPrint(new Unita_organizzativaBulk());
-
+    
 	stampa.setDataInizio(DateServices.getFirstDayOfYear(CNRUserContext.getEsercizio(userContext).intValue()));
 	stampa.setDataFine(getDataOdierna(userContext));
 	stampa.setPgInizio(new Long(0));
@@ -1873,7 +1873,6 @@ private void inizializzaBulkPerStampa(UserContext userContext, Stampa_registro_a
 		if (cds_scrivania.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_ENTE)){
 			stampa.setCds_origine(new CdsBulk());
 			stampa.setIsCdsForPrintEnabled(true);
-			
 			stampa.setUo_cds_origine(new Unita_organizzativaBulk());
 			stampa.setIsUOForPrintEnabled(true);
 		} else {
@@ -2005,15 +2004,19 @@ private void inizializzaBulkPerStampa(UserContext userContext, Stampa_scadenzari
  * inizializzaBulkPerStampa method comment.
  */
 public it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerStampa(UserContext userContext, OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
-
-	if (bulk instanceof Stampa_registro_accertamentiBulk)
-		inizializzaBulkPerStampa(userContext, (Stampa_registro_accertamentiBulk)bulk);
-	else if (bulk instanceof Stampa_registro_annotazione_entrate_pgiroBulk)
-		inizializzaBulkPerStampa(userContext, (Stampa_registro_annotazione_entrate_pgiroBulk)bulk);
-	else if (bulk instanceof Stampa_scadenzario_accertamentiBulk)
-		inizializzaBulkPerStampa(userContext, (Stampa_scadenzario_accertamentiBulk)bulk);
-		
-	return bulk;
+	try{
+		EnteBulk ente = (EnteBulk) getHome(userContext, EnteBulk.class).findAll().get(0);
+		 ((AccertamentoBulk)bulk).setCdsEnte(ente);
+		if (bulk instanceof Stampa_registro_accertamentiBulk)
+			inizializzaBulkPerStampa(userContext, (Stampa_registro_accertamentiBulk)bulk);
+		else if (bulk instanceof Stampa_registro_annotazione_entrate_pgiroBulk)
+			inizializzaBulkPerStampa(userContext, (Stampa_registro_annotazione_entrate_pgiroBulk)bulk);
+		else if (bulk instanceof Stampa_scadenzario_accertamentiBulk)
+			inizializzaBulkPerStampa(userContext, (Stampa_scadenzario_accertamentiBulk)bulk);
+		return bulk;
+	} catch (it.cnr.jada.persistency.PersistencyException pe){
+		throw new ComponentException(pe);
+	}
 }
 /** 
   *  Inizializzazione di una scadenza
@@ -2965,19 +2968,20 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_sc
 			throw new ValidationException("Il campo DATA INIZIO PERIODO è obbligatorio");
 		if (stampa.getDataFine()==null)
 			throw new ValidationException("Il campo DATA FINE PERIODO è obbligatorio");
-
-		java.sql.Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(stampa.getEsercizio().intValue());
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
 			throw new ValidationException("La DATA di INIZIO PERIODO non può essere superiore alla DATA di FINE PERIODO");
-		if (stampa.getDataInizio().compareTo(firstDayOfYear)<0){
-			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di INIZIO PERIODO non può essere inferiore a " + formatter.format(firstDayOfYear));
-		}
-		if (stampa.getDataFine().compareTo(lastDayOfYear)>0){
-			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di FINE PERIODO non può essere superiore a " + formatter.format(lastDayOfYear));
-		}
-
+//		
+//RP modif prova
+//		java.sql.Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(stampa.getEsercizio().intValue());
+//		if (stampa.getDataInizio().compareTo(firstDayOfYear)<0){
+//			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
+//			throw new ValidationException("La DATA di INIZIO PERIODO non può essere inferiore a " + formatter.format(firstDayOfYear));
+//		}
+//		if (stampa.getDataFine().compareTo(lastDayOfYear)>0){
+//			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
+//			throw new ValidationException("La DATA di FINE PERIODO non può essere superiore a " + formatter.format(lastDayOfYear));
+//		}
+//RP modif prova fine		
 	}catch(ValidationException ex){
 		throw new ApplicationException(ex);
 	}

@@ -21,6 +21,7 @@ import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
@@ -509,8 +510,7 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 		
 		String cds_scrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext);
 		String uo_scrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext);
-	
-			
+		
 		SQLBuilder sql = getHome(userContext, Ubicazione_beneBulk.class).createSQLBuilder();
 		sql.addClause( clauses );
 		
@@ -519,14 +519,26 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 		sql.addSQLClause("AND","CD_CDS",SQLBuilder.EQUALS, cds_scrivania);
 		sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS, uo_scrivania);
 	
-		// Aggiunge alle Ubicazioni della UO di scrivania, quelle fittizie.
-		sql.addSQLClause("OR","CD_CDS",SQLBuilder.EQUALS, Ubicazione_beneBulk.CD_CDS_FITTIZIO);
-		sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS, Ubicazione_beneBulk.CD_UO_FITTIZIO);
+		
+//		public static final String CD_CDS_FITTIZIO = "999";
+//		public static final String CD_UO_FITTIZIO = "999.000";
+//		// Aggiunge alle Ubicazioni della UO di scrivania, quelle fittizie.
+//		sql.addSQLClause("OR","CD_CDS",sql.EQUALS, Ubicazione_beneBulk.CD_CDS_FITTIZIO);
+//		sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",sql.EQUALS, Ubicazione_beneBulk.CD_UO_FITTIZIO);
+//		sql.closeParenthesis();
+
+		try {
+			Unita_organizzativa_enteBulk uoEnte=(Unita_organizzativa_enteBulk)(Utility.createUnita_organizzativaComponentSession().getUoEnte(userContext));
+			sql.addSQLClause("OR","CD_CDS",sql.EQUALS, uoEnte.getCd_unita_padre());
+			sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",sql.EQUALS, uoEnte.getCd_unita_organizzativa());
+		} catch (Exception e) {
+			throw handleException(e);
+		}
 		sql.closeParenthesis();
 	
 		sql.addOrderBy("LIVELLO");
 		sql.addOrderBy("CD_UBICAZIONE");	
-		
+
 		return sql;		
 	}	
 	/**
