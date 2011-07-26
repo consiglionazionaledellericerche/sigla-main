@@ -732,6 +732,7 @@
 	    <init-param name="defaultAction" value="ConsScadObbligazioniAction" />
 	    <init-param name="multiSelezione" value="Y" />
   </businessProcess> 
+  
    <action 
       path="/Estrazione_glaAction" actionClass="it.cnr.contab.docamm00.consultazioni.action.Estrazione_glaAction">
   </action>
@@ -1079,4 +1080,15 @@
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
 	    <init-param name="defaultAction" value="ConsVLimiteSpesaDetAction" />	    
   </businessProcess>
+   <action 
+      path="/ConsScadAccertamentiAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+  </action>
+   <businessProcess
+      name="ConsScadAccertamentiBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+   	<forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_scad_accertBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
+	    <init-param name="defaultAction" value="ConsScadAccertamentiAction" />
+	    <init-param name="multiSelezione" value="Y" />
+  </businessProcess> 
 </action-mappings>
