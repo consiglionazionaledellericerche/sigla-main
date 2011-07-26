@@ -323,7 +323,7 @@ public Forward doBlankSearchScadenza_ricerca(
 		//tb.setAnagrafico(new AnagraficoBulk());
 		obbl.setCreditore(null);
 		obbl.setCd_cds(fondo.getCd_cds());
-		obbl.setCd_tipo_documento_cont(Numerazione_doc_contBulk.TIPO_OBB);
+		//obbl.setCd_tipo_documento_cont(Numerazione_doc_contBulk.TIPO_OBB);
 		obbl.setEsercizio(fondo.getEsercizio());
 		scadenza.setObbligazione(obbl);
 		fondo.setScadenza_ricerca(scadenza);

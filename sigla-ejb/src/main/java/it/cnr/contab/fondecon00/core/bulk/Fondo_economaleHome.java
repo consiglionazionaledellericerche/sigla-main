@@ -2,6 +2,8 @@ package it.cnr.contab.fondecon00.core.bulk;
 
 
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
@@ -28,7 +30,21 @@ private void addClausesObbScad(
 
 	sql.addSQLClause("AND","OBBLIGAZIONE.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context));
 	sql.addSQLClause("AND","OBBLIGAZIONE.DT_CANCELLAZIONE", sql.ISNULL, null);
-	sql.addSQLClause("AND","OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT",sql.EQUALS, it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_OBB);
+	//sql.addSQLClause("AND","OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT",sql.EQUALS, it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_OBB);
+	if (ObbligazioneBulk.TIPO_COMPETENZA.equals(filtro
+			.getTipo_obbligazione()))
+		sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT",
+				sql.EQUALS, Numerazione_doc_contBulk.TIPO_OBB);
+	else if (ObbligazioneBulk.TIPO_RESIDUO_PROPRIO.equals(filtro
+			.getTipo_obbligazione()))
+		sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT",
+				sql.EQUALS, Numerazione_doc_contBulk.TIPO_OBB_RES);
+	else if (ObbligazioneBulk.TIPO_RESIDUO_IMPROPRIO.equals(filtro
+			.getTipo_obbligazione()))
+		sql.addSQLClause("AND", "OBBLIGAZIONE.CD_TIPO_DOCUMENTO_CONT",
+				sql.EQUALS,
+				Numerazione_doc_contBulk.TIPO_OBB_RES_IMPROPRIA);
+
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA", sql.NOT_EQUALS, new java.math.BigDecimal(0));
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE IS NULL");
 	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN),java.sql.Types.DECIMAL,2);
