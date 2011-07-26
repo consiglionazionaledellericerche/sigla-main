@@ -2708,6 +2708,7 @@ public Forward doOnFlBollaDoganaleChange(ActionContext context) {
 		Boolean autof = fattura.getFl_autofattura();
 		String fattServizi = fattura.getTi_bene_servizio();
 		Boolean merceextraUE=fattura.getFl_merce_extra_ue();
+		Boolean merceintraUE=fattura.getFl_merce_intra_ue();
 		Boolean liqDiff = fattura.getFl_liquidazione_differita();
 		fillModel( context );		
 		try	{
@@ -2721,6 +2722,7 @@ public Forward doOnFlBollaDoganaleChange(ActionContext context) {
 				//fattura.setStato_pagamento_fondo_eco(fattura.NO_FONDO_ECO);
 				fattura.setFl_autofattura(Boolean.FALSE);
 				fattura.setFl_merce_extra_ue(Boolean.FALSE);
+				fattura.setFl_merce_intra_ue(Boolean.FALSE);
 				fattura.setAutoFatturaNeeded(false);
 				fattura.setFl_liquidazione_differita(Boolean.FALSE);
 				if (fattura instanceof Fattura_passiva_IBulk)
@@ -2744,6 +2746,7 @@ public Forward doOnFlBollaDoganaleChange(ActionContext context) {
 			fattura.setFl_autofattura(autof);
 			fattura.setTi_bene_servizio(fattServizi);
 			fattura.setFl_merce_extra_ue(merceextraUE);
+			fattura.setFl_merce_intra_ue(merceintraUE);
 			fattura.setFl_liquidazione_differita(liqDiff);
  			bp.setModel(context,fattura);
 			throw e;
@@ -2774,6 +2777,7 @@ public Forward doOnFlExtraUEChange(ActionContext context) {
 		Boolean autof = fattura.getFl_autofattura();
 		String fattServizi = fattura.getTi_bene_servizio();
 		Boolean merceextraUE=fattura.getFl_merce_extra_ue();
+		Boolean merceintraUE=fattura.getFl_merce_intra_ue();
 		Boolean liqDiff = fattura.getFl_liquidazione_differita();
 		fillModel( context );		
 		try	{
@@ -2785,6 +2789,7 @@ public Forward doOnFlExtraUEChange(ActionContext context) {
 				fattura.setFl_spedizioniere(Boolean.FALSE);
 				fattura.setStato_pagamento_fondo_eco(fattura.NO_FONDO_ECO);
 				fattura.setFl_merce_extra_ue(Boolean.FALSE);
+				fattura.setFl_merce_intra_ue(Boolean.FALSE);
 				fattura.setFl_liquidazione_differita(Boolean.FALSE);
 				if (!fattura.isPromiscua())
 					fattura.setTi_bene_servizio(fattura.FATTURA_DI_BENI);
@@ -2814,6 +2819,7 @@ public Forward doOnFlExtraUEChange(ActionContext context) {
 			fattura.setFl_autofattura(autof);
 			fattura.setTi_bene_servizio(fattServizi);
 			fattura.setFl_merce_extra_ue(merceextraUE);
+			fattura.setFl_merce_intra_ue(merceintraUE);
 			fattura.setFl_liquidazione_differita(liqDiff);
 			bp.setModel(context,fattura);
 			throw e;
@@ -2844,6 +2850,7 @@ public Forward doOnFlIntraUEChange(ActionContext context) {
 		Boolean autof = fattura.getFl_autofattura();
 		String fattServizi = fattura.getTi_bene_servizio();
 		Boolean merceextraUE=fattura.getFl_merce_extra_ue();
+		Boolean merceintraUE=fattura.getFl_merce_intra_ue();
 		Boolean liqDiff = fattura.getFl_liquidazione_differita();
 		fillModel( context );		
 		try	{
@@ -2854,6 +2861,7 @@ public Forward doOnFlIntraUEChange(ActionContext context) {
 				fattura.setFl_bolla_doganale(Boolean.FALSE);
 				fattura.setFl_spedizioniere(Boolean.FALSE);
 				fattura.setFl_merce_extra_ue(Boolean.FALSE);
+				fattura.setFl_merce_intra_ue(Boolean.FALSE);
 				fattura.setStato_pagamento_fondo_eco(fattura.NO_FONDO_ECO);
 				fattura.setFl_liquidazione_differita(Boolean.FALSE);
 				if (!fattura.isPromiscua())
@@ -2885,6 +2893,7 @@ public Forward doOnFlIntraUEChange(ActionContext context) {
 			fattura.setFl_autofattura(autof);
 			fattura.setTi_bene_servizio(fattServizi);
 			fattura.setFl_merce_extra_ue(merceextraUE);
+			fattura.setFl_merce_intra_ue(merceintraUE);
 			fattura.setFl_liquidazione_differita(liqDiff);
 			bp.setModel(context,fattura);
 			throw e;
@@ -2915,6 +2924,7 @@ public Forward doOnFlSanMarinoConIVAChange(ActionContext context) {
 		Boolean autof = fattura.getFl_autofattura();
 		String fattServizi = fattura.getTi_bene_servizio();
 		Boolean merceextraUE=fattura.getFl_merce_extra_ue();
+		Boolean merceintraUE=fattura.getFl_merce_intra_ue();
 		Boolean liqDiff = fattura.getFl_liquidazione_differita();
 		fillModel( context );		
 		try	{
@@ -2926,6 +2936,7 @@ public Forward doOnFlSanMarinoConIVAChange(ActionContext context) {
 				fattura.setFl_spedizioniere(Boolean.FALSE);
 				fattura.setFl_autofattura(Boolean.FALSE);
 				fattura.setFl_merce_extra_ue(Boolean.FALSE);
+				fattura.setFl_merce_intra_ue(Boolean.FALSE);
 				fattura.setStato_pagamento_fondo_eco(fattura.NO_FONDO_ECO);
 				fattura.setAutoFatturaNeeded(false);
 				fattura.setFl_liquidazione_differita(Boolean.FALSE);
@@ -2948,6 +2959,7 @@ public Forward doOnFlSanMarinoConIVAChange(ActionContext context) {
 			fattura.setFl_autofattura(autof);
 			fattura.setTi_bene_servizio(fattServizi);
 			fattura.setFl_merce_extra_ue(merceextraUE);
+			fattura.setFl_merce_intra_ue(merceintraUE);
 			fattura.setFl_liquidazione_differita(liqDiff);
 			bp.setModel(context,fattura);
 			throw e;
@@ -2978,6 +2990,7 @@ public Forward doOnFlSanMarinoSenzaIVAChange(ActionContext context) {
 		Boolean autof = fattura.getFl_autofattura();
 		String fattServizi = fattura.getTi_bene_servizio();
 		Boolean merceextraUE=fattura.getFl_merce_extra_ue();
+		Boolean merceintraUE=fattura.getFl_merce_intra_ue();
 		Boolean liqDiff = fattura.getFl_liquidazione_differita();
 		fillModel( context );		
 		try	{
@@ -2988,6 +3001,7 @@ public Forward doOnFlSanMarinoSenzaIVAChange(ActionContext context) {
 				fattura.setFl_bolla_doganale(Boolean.FALSE);
 				fattura.setFl_spedizioniere(Boolean.FALSE);
 				fattura.setFl_merce_extra_ue(Boolean.FALSE);
+				fattura.setFl_merce_intra_ue(Boolean.FALSE);
 				fattura.setStato_pagamento_fondo_eco(fattura.NO_FONDO_ECO);
 				fattura.setFl_liquidazione_differita(Boolean.FALSE);
 				if (!fattura.isPromiscua())
@@ -3019,6 +3033,7 @@ public Forward doOnFlSanMarinoSenzaIVAChange(ActionContext context) {
 			fattura.setFl_autofattura(autof);
 			fattura.setTi_bene_servizio(fattServizi);
 			fattura.setFl_merce_extra_ue(merceextraUE);
+			fattura.setFl_merce_intra_ue(merceintraUE);
 			fattura.setFl_liquidazione_differita(liqDiff);
 			bp.setModel(context,fattura);
 			throw e;
@@ -3049,6 +3064,7 @@ public Forward doOnFlSpedizioniereChange(ActionContext context) {
 		Boolean autof = fattura.getFl_autofattura();
 		String fattServizi = fattura.getTi_bene_servizio();
 		Boolean merceextraUE=fattura.getFl_merce_extra_ue();
+		Boolean merceintraUE=fattura.getFl_merce_intra_ue();
 		fillModel( context );		
 		try	{
 			if (Boolean.TRUE.equals(fattura.getFl_spedizioniere())) {
@@ -3062,6 +3078,7 @@ public Forward doOnFlSpedizioniereChange(ActionContext context) {
 				fattura.setFl_autofattura(Boolean.FALSE);
 				fattura.setAutoFatturaNeeded(false);
 				fattura.setFl_merce_extra_ue(Boolean.FALSE);
+				fattura.setFl_merce_intra_ue(Boolean.FALSE);
 				if (fattura instanceof Fattura_passiva_IBulk)
 					doBlankSearchFatturaEstera(context, (Fattura_passiva_IBulk)fattura);
 				if (!fattura.isDefaultValuta())
@@ -3084,6 +3101,7 @@ public Forward doOnFlSpedizioniereChange(ActionContext context) {
 			fattura.setFl_autofattura(autof);
 			fattura.setTi_bene_servizio(fattServizi);
 			fattura.setFl_merce_extra_ue(merceextraUE);
+			fattura.setFl_merce_intra_ue(merceintraUE);
 			bp.setModel(context,fattura);
 			throw e;
 		}
@@ -3113,6 +3131,7 @@ public Forward doOnIstituzionaleCommercialeChange(ActionContext context) {
 		Boolean autof = fattura.getFl_autofattura();
 		String fattServizi = fattura.getTi_bene_servizio();
 		Boolean merceextraUE=fattura.getFl_merce_extra_ue();
+		Boolean merceintraUE=fattura.getFl_merce_intra_ue();
 		Boolean liqDiff = fattura.getFl_liquidazione_differita();
 		fillModel( context );		
 		try	{
@@ -3126,6 +3145,7 @@ public Forward doOnIstituzionaleCommercialeChange(ActionContext context) {
 			fattura.setAutoFatturaNeeded(false);
 			fattura.setTi_bene_servizio(null);
 			fattura.setFl_merce_extra_ue(Boolean.FALSE);
+			fattura.setFl_merce_intra_ue(Boolean.FALSE);
 			fattura.setFl_liquidazione_differita(Boolean.FALSE);
 			if (fattura instanceof Fattura_passiva_IBulk)
 				((Fattura_passiva_IBulk)fattura).setFattura_estera(null);
@@ -3143,6 +3163,7 @@ public Forward doOnIstituzionaleCommercialeChange(ActionContext context) {
 			fattura.setFl_autofattura(autof);
 			fattura.setTi_bene_servizio(fattServizi);
 			fattura.setFl_merce_extra_ue(merceextraUE);
+			fattura.setFl_merce_intra_ue(merceintraUE);
 			fattura.setFl_liquidazione_differita(liqDiff);
 			bp.setModel(context,fattura);
 			throw e;
@@ -3318,15 +3339,19 @@ public Forward doOnTiBeneServizioChange(ActionContext context) {
 		Boolean autof = fattura.getFl_autofattura();
 		String fattServizi = fattura.getTi_bene_servizio();
 		Boolean merceextraUE=fattura.getFl_merce_extra_ue();
-
+		Boolean merceintraUE=fattura.getFl_merce_intra_ue();
 		fillModel( context );		
 		try	{
 			if (fattura.getFl_extra_ue() != null && 
 				fattura.getFl_extra_ue().booleanValue()) {
-				if (fattura.isFatturaDiServizi()) {
-					fattura.setFl_autofattura(Boolean.TRUE);
-					//fattura.setAutoFatturaNeeded(true);
-				} else {
+				if (fattura.getTi_bene_servizio() != null && 
+						Bene_servizioBulk.SERVIZIO.equalsIgnoreCase(fattura.getTi_bene_servizio())) {
+					fattura.setFl_merce_intra_ue(Boolean.FALSE);
+					if(fattura.isCommerciale()){
+						fattura.setFl_autofattura(Boolean.TRUE);
+						fattura.setAutoFatturaNeeded(false);
+					}
+				} else { 
 					fattura.setFl_autofattura(Boolean.FALSE);
 					//fattura.setAutoFatturaNeeded(false);
 				}
@@ -3336,6 +3361,7 @@ public Forward doOnTiBeneServizioChange(ActionContext context) {
 					if (fattura.isFatturaDiServizi()) {
 						fattura.setFl_autofattura(Boolean.TRUE);
 						fattura.setAutoFatturaNeeded(false);
+				  		fattura.setFl_merce_extra_ue(Boolean.FALSE);
 					} else {
 						fattura.setFl_autofattura(Boolean.TRUE);
 						fattura.setAutoFatturaNeeded(true);
@@ -3365,6 +3391,7 @@ public Forward doOnTiBeneServizioChange(ActionContext context) {
 			fattura.setFl_autofattura(autof);
 			fattura.setTi_bene_servizio(fattServizi);
 			fattura.setFl_merce_extra_ue(merceextraUE);
+			fattura.setFl_merce_intra_ue(merceintraUE);
 			bp.setModel(context,fattura);
 			throw e;
 		}
@@ -4052,7 +4079,7 @@ private Elemento_voceBulk getElementoVoce(ActionContext context, Categoria_grupp
 			
 		return cgi.getVoce_f();
 	} catch (Throwable e) {
-		throw new it.cnr.jada.comp.ApplicationException("Errore nel caricamento del titolo/capitolo per il gruppo inventerio \"" + cgi.getDs_categoria_gruppo() + "\"!");
+		throw new it.cnr.jada.comp.ApplicationException("Errore nel caricamento del titolo/capitolo per il gruppo inventario \"" + cgi.getDs_categoria_gruppo() + "\"!");
 	}
 }
 /**
@@ -4292,6 +4319,7 @@ public Forward doOnFlMerceExtraUEChange(ActionContext context) {
 		Boolean autof = fattura.getFl_autofattura();
 		String fattServizi = fattura.getTi_bene_servizio();
 		Boolean merceextraUE=fattura.getFl_merce_extra_ue();
+		Boolean merceintraUE=fattura.getFl_merce_intra_ue();
 		fillModel( context );		
 		try	{
 			if (Boolean.TRUE.equals(fattura.getFl_merce_extra_ue())) {
@@ -4301,6 +4329,7 @@ public Forward doOnFlMerceExtraUEChange(ActionContext context) {
 				fattura.setFl_spedizioniere(Boolean.FALSE);
 				fattura.setStato_pagamento_fondo_eco(fattura.NO_FONDO_ECO);
 				fattura.setFl_extra_ue(Boolean.FALSE);
+				fattura.setFl_merce_intra_ue(Boolean.FALSE);
 				if (!fattura.isPromiscua())
 					fattura.setTi_bene_servizio(fattura.FATTURA_DI_BENI);
 				fattura.setFl_autofattura(Boolean.FALSE);
@@ -4330,6 +4359,7 @@ public Forward doOnFlMerceExtraUEChange(ActionContext context) {
 			fattura.setFl_autofattura(autof);
 			fattura.setTi_bene_servizio(fattServizi);
 			fattura.setFl_merce_extra_ue(merceextraUE);
+			fattura.setFl_merce_intra_ue(merceintraUE);
 			bp.setModel(context,fattura);
 			throw e;
 		}
@@ -4388,17 +4418,69 @@ public Forward doOnStatoFondoEconChange(ActionContext context) {
     }
     return context.findDefaultForward();
 }
-public Forward doBringBackSearchNomenclatura_combinata(ActionContext context,
-		Fattura_passiva_intraBulk fattura_passiva_intra,
-		it.cnr.contab.docamm00.intrastat.bulk.Nomenclatura_combinataBulk trovato) 
-		throws java.rmi.RemoteException {
-		try {			
-			if (trovato!=null){
-				fattura_passiva_intra.setNomenclatura_combinata(trovato);
+public Forward doOnFlMerceIntraUEChange(ActionContext context) {
+	
+	try {
+		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+		Fattura_passivaBulk fattura = (Fattura_passivaBulk)bp.getModel();
+		Boolean intraUE = fattura.getFl_intra_ue();
+		Boolean extraUE = fattura.getFl_extra_ue();
+		Boolean sanMarinoCI = fattura.getFl_san_marino_con_iva();
+		Boolean sanMarinoSI = fattura.getFl_san_marino_senza_iva();
+		Boolean spedizioniere = fattura.getFl_spedizioniere();
+		Boolean bollaDoganale = fattura.getFl_bolla_doganale();
+		String spesa = fattura.getStato_pagamento_fondo_eco();
+		Boolean autof = fattura.getFl_autofattura();
+		String fattServizi = fattura.getTi_bene_servizio();
+		Boolean merceextraUE=fattura.getFl_merce_extra_ue();
+		Boolean merceintraUE=fattura.getFl_merce_intra_ue();
+		fillModel( context );		
+		try	{
+			if (Boolean.TRUE.equals(fattura.getFl_merce_intra_ue())) {
+				fattura.setFl_san_marino_con_iva(Boolean.FALSE);
+				fattura.setFl_san_marino_senza_iva(Boolean.FALSE);
+				fattura.setFl_bolla_doganale(Boolean.FALSE);
+				fattura.setFl_spedizioniere(Boolean.FALSE);
+				fattura.setStato_pagamento_fondo_eco(fattura.NO_FONDO_ECO);
+				fattura.setFl_intra_ue(Boolean.FALSE);
+				fattura.setFl_merce_extra_ue(Boolean.FALSE);
+				if (!fattura.isPromiscua())
+					fattura.setTi_bene_servizio(fattura.FATTURA_DI_BENI);
+				if(fattura.isCommerciale() ){
+					fattura.setFl_autofattura(Boolean.TRUE);
+					fattura.setAutoFatturaNeeded(true);
+				}
+			} else {
+				fattura.setTi_bene_servizio(null);
+				fattura.setFl_extra_ue(Boolean.FALSE);
+				fattura.setFl_autofattura(Boolean.FALSE);
+				fattura.setAutoFatturaNeeded(false);
+				if (!fattura.isDefaultValuta())
+					fattura = doSelezionaValutaDefault(context, fattura);
 			}
+
+			if (fattura instanceof Fattura_passiva_IBulk)
+				((Fattura_passiva_IBulk)fattura).setFattura_estera(null);
+			basicDoOnIstituzionaleCommercialeChange(context, fattura);
+			bp.setModel(context,fattura);
 			return context.findDefaultForward();
-		} catch(Exception e) {
-			return handleException(context,e);
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			fattura.setFl_intra_ue(intraUE);
+			fattura.setFl_extra_ue(extraUE);
+			fattura.setFl_san_marino_con_iva(sanMarinoCI);
+			fattura.setFl_san_marino_senza_iva(sanMarinoSI);
+			fattura.setFl_bolla_doganale(bollaDoganale);
+			fattura.setFl_spedizioniere(spedizioniere);
+			fattura.setStato_pagamento_fondo_eco(spesa);
+			fattura.setFl_autofattura(autof);
+			fattura.setTi_bene_servizio(fattServizi);
+			fattura.setFl_merce_extra_ue(merceextraUE);
+			fattura.setFl_merce_intra_ue(merceintraUE);
+			bp.setModel(context,fattura);
+			throw e;
 		}
+	} catch (Throwable t) {
+		return handleException(context, t);
 	}
+}
 }

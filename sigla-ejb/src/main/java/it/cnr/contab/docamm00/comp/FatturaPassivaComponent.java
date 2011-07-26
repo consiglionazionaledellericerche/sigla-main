@@ -6,6 +6,7 @@ import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -2453,7 +2454,7 @@ public void controllaQuadraturaIntrastat(UserContext aUC,Fattura_passivaBulk fat
 	throws ComponentException {
 
 	try {
-		if (fattura.getFl_intra_ue() != null && fattura.getFl_intra_ue().booleanValue() &&
+		if (fattura.getFl_intra_ue() != null && fattura.getFl_intra_ue().booleanValue() && !fattura.getFl_merce_extra_ue().booleanValue() &&
 				fattura.getFornitore()!=null &&fattura.getFornitore().getAnagrafico()!=null && fattura.getFornitore().getAnagrafico().getPartita_iva()!=null){
 		     	Boolean trovato=false;
 		     	Boolean obbligatorio=false;
@@ -3475,11 +3476,20 @@ public java.util.Collection findSezionali(UserContext aUC,Fattura_passivaBulk fa
 	throws ComponentException,it.cnr.jada.persistency.PersistencyException {
 	
 	Vector options = new Vector();
+	Vector options_all = new Vector();
+	Vector options_bs = new Vector();
 
 	if (fatturaPassiva.getFl_intra_ue() != null && fatturaPassiva.getFl_intra_ue().booleanValue()) {
 		options.add(new String[][] { { "TIPO_SEZIONALE.FL_INTRA_UE","Y", "AND" } });
 	} else if (fatturaPassiva.getFl_extra_ue() != null && fatturaPassiva.getFl_extra_ue().booleanValue()) {
 		options.add(new String[][] { { "TIPO_SEZIONALE.FL_EXTRA_UE","Y", "AND" } });
+		///??? Rospuc da chiedere
+		if (fatturaPassiva.isIstituzionale() && fatturaPassiva.getFl_merce_intra_ue() != null && fatturaPassiva.getFl_merce_intra_ue().booleanValue()) {
+			options.add(new String[][] { { "TIPO_SEZIONALE.TI_BENE_SERVIZIO","B", "AND" } });
+		}else if( fatturaPassiva.getTi_bene_servizio()!=null && fatturaPassiva.getTi_bene_servizio().compareTo( Bene_servizioBulk.BENE)==0){
+			options.add(new String[][] { { "TIPO_SEZIONALE.TI_BENE_SERVIZIO","*", "AND" } });
+		}
+		///??? Rospuc da chiedere
 	} else if (fatturaPassiva.getFl_san_marino_con_iva() != null && fatturaPassiva.getFl_san_marino_con_iva().booleanValue()) {
 		options.add(new String[][] { { "TIPO_SEZIONALE.FL_SAN_MARINO_CON_IVA","Y", "AND" } });
 	} else if (fatturaPassiva.getFl_san_marino_senza_iva() != null &&  fatturaPassiva.getFl_san_marino_senza_iva().booleanValue()) {
@@ -3493,17 +3503,62 @@ public java.util.Collection findSezionali(UserContext aUC,Fattura_passivaBulk fa
 		else
 			options.add(new String[][] { { "TIPO_SEZIONALE.FL_ORDINARIO","Y", "AND" } });
 	}
-
-	options.add(new String[][] {
-						{ "TIPO_SEZIONALE.TI_BENE_SERVIZIO", "*", "AND" },
-						{ "TIPO_SEZIONALE.TI_BENE_SERVIZIO", fatturaPassiva.getTi_bene_servizio(), "OR" }
-					});
-
 	//Richiesta Mingarelli e Paolo del 25/02/2002.
 	//Aggiunta per sicurezza in modo tale che se su tipo sezionale viene aggirato
 	//il controllo applicativo (Acq+Fl_autofatt) non vengano caricati sez autofatt
 	options.add(new String[][] { { "TIPO_SEZIONALE.FL_AUTOFATTURA", "N", "AND" } });
-	//
+	
+	options.add(new String[][] {
+		{ "TIPO_SEZIONALE.TI_BENE_SERVIZIO", "*", "AND" },
+		{ "TIPO_SEZIONALE.TI_BENE_SERVIZIO", fatturaPassiva.getTi_bene_servizio(), "OR" }
+	});
+//	if(fatturaPassiva.getTi_bene_servizio()==null || fatturaPassiva.getTi_bene_servizio().compareTo(Bene_servizioBulk.BENE_SERVIZIO)==0){
+//			options.add(new String[][] {
+//						{ "TIPO_SEZIONALE.TI_BENE_SERVIZIO", "*", "AND" },
+//						{ "TIPO_SEZIONALE.TI_BENE_SERVIZIO", fatturaPassiva.getTi_bene_servizio(), "OR" }
+//					});
+//	}else{ 
+//		for (java.util.Iterator i = options.iterator(); i.hasNext();) {
+//			String[][] option = (String[][])i.next();
+//			options_bs.add(option);
+//			options_all.add(option);
+//		}
+//		options_bs.add(new String[][] {
+//				{ "TIPO_SEZIONALE.TI_BENE_SERVIZIO", fatturaPassiva.getTi_bene_servizio(), "AND" }});
+//		options_all.add(new String[][] {
+//						{ "TIPO_SEZIONALE.TI_BENE_SERVIZIO", "*", "AND" }});
+//		try {
+//			 
+//			List l= new ArrayList( ((it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleHome)getHome(aUC,it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk.class)).findTipiSezionali(
+//						fatturaPassiva.getEsercizio(),
+//						fatturaPassiva.getCd_uo_origine(),
+//						(fatturaPassiva.isPromiscua()) ?
+//							fatturaPassiva.COMMERCIALE :
+//							fatturaPassiva.getTi_istituz_commerc(),
+//						it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk.ACQUISTI,
+//						fatturaPassiva.getTi_fattura(),
+//						options_bs));
+//			 List l_all= new ArrayList(((it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleHome)getHome(aUC,it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk.class)).findTipiSezionali(
+//						fatturaPassiva.getEsercizio(),
+//						fatturaPassiva.getCd_uo_origine(),
+//						(fatturaPassiva.isPromiscua()) ?
+//							fatturaPassiva.COMMERCIALE :
+//							fatturaPassiva.getTi_istituz_commerc(),
+//						it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk.ACQUISTI,
+//						fatturaPassiva.getTi_fattura(),
+//						options_all));
+//			 if(fatturaPassiva.getFl_extra_ue() &&!fatturaPassiva.getFl_merce_intra_ue() && fatturaPassiva.getTi_bene_servizio().compareTo( Bene_servizioBulk.BENE)==0){
+//				 l_all.addAll(l);
+//				  return l_all;
+//			 }
+//			 else{
+//				 l.addAll(l_all);
+//				  return l;
+//			 }
+//		} catch (it.cnr.jada.persistency.IntrospectionException e) {
+//			throw handleException(fatturaPassiva, e);
+//		}
+//	}
 
 	try {
 		return ((it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleHome)getHome(aUC,it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk.class)).findTipiSezionali(
@@ -4146,6 +4201,7 @@ public OggettoBulk inizializzaBulkPerRicercaLibera (UserContext userContext, Ogg
 	fp.setFornitore(fornitore);
 	fp.setFl_autofattura(null);
 	fp.setFl_merce_extra_ue(null);
+	fp.setFl_merce_intra_ue(null);
 	fp.setFl_fattura_compenso(null);
 	fp.setFl_liquidazione_differita(null);
 
@@ -5006,16 +5062,17 @@ public it.cnr.jada.persistency.sql.SQLBuilder selectFattura_esteraByClause(UserC
 	it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(aUC,fatturaEstera).createSQLBuilder();
 	sql.addClause(clauses);
 	sql.openParenthesis("AND");
-        sql.openParenthesis("AND");
+    sql.openParenthesis("AND");
 	sql.addClause("AND", "stato_cofi", sql.NOT_EQUALS, Fattura_passivaBulk.STATO_ANNULLATO);
-	sql.addClause("AND", "fl_extra_ue", sql.EQUALS, Boolean.TRUE);
-	sql.addClause("AND", "ti_bene_servizio", sql.EQUALS, Fattura_passivaBulk.FATTURA_DI_BENI);
+	sql.addClause("AND", "fl_extra_ue", sql.EQUALS, Boolean.TRUE); 
+	sql.addSQLClause("AND", "FATTURA_PASSIVA.TI_BENE_SERVIZIO", sql.EQUALS,  Bene_servizioBulk.BENE);
+	sql.addClause("AND", "fl_merce_intra_ue", sql.NOT_EQUALS, Boolean.TRUE); 
 	sql.closeParenthesis();
-        sql.openParenthesis("OR");
+    sql.openParenthesis("OR");
 	sql.addClause("AND","fl_merce_extra_ue",sql.EQUALS, Boolean.TRUE);
 	sql.addClause("AND", "stato_cofi", sql.NOT_EQUALS, Fattura_passivaBulk.STATO_ANNULLATO);
-        sql.closeParenthesis();
-        sql.closeParenthesis();
+    sql.closeParenthesis();
+    sql.closeParenthesis();
 	sql.addSQLClause("AND", " NOT EXISTS (SELECT 1 FROM FATTURA_PASSIVA B WHERE B.CD_CDS_FAT_CLGS = FATTURA_PASSIVA.CD_CDS AND B.CD_UO_FAT_CLGS = FATTURA_PASSIVA.CD_UNITA_ORGANIZZATIVA AND B.ESERCIZIO_FAT_CLGS = FATTURA_PASSIVA.ESERCIZIO AND B.PG_FATTURA_PASSIVA_FAT_CLGS = FATTURA_PASSIVA.PG_FATTURA_PASSIVA AND (B.FL_BOLLA_DOGANALE = 'Y' OR B.FL_SPEDIZIONIERE = 'Y') AND B.STATO_COFI <> 'A')");
 	
 	return sql;

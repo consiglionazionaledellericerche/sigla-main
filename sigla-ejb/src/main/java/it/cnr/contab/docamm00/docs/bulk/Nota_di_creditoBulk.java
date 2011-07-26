@@ -140,6 +140,7 @@ public void copyFrom(
 	setFl_autofattura(fattura_passiva.getFl_autofattura());
 	setTi_bene_servizio(fattura_passiva.getTi_bene_servizio());
 	setFl_merce_extra_ue(fattura_passiva.getFl_merce_extra_ue());
+	setFl_merce_intra_ue(fattura_passiva.getFl_merce_intra_ue());
 	setFl_fattura_compenso(fattura_passiva.getFl_fattura_compenso());
 	setDs_fattura_passiva(fattura_passiva.getDs_fattura_passiva());
 	//setDt_fattura_fornitore(fattura_passiva.getDt_fattura_fornitore());

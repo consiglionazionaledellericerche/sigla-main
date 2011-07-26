@@ -405,6 +405,13 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_MERCE_INTRA_UE"
+			propertyName="fl_merce_intra_ue"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -542,4 +549,6 @@
 		name="fl_merce_extra_ue" />	
 	<persistentProperty
 		name="fl_liquidazione_differita" />		
+	<persistentProperty
+		name="fl_merce_intra_ue" />		
 </SQLPersistentInfo>

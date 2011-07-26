@@ -163,7 +163,12 @@
 	      		<% bp.getController().writeFormInput(out,null,"fl_extra_ue",roOnAutoGen,null,"");%>
 	      	</td>      	
 	     	<td width="100">&nbsp;</td>
-	   		<% bp.getController().writeFormField(out,"fl_spedizioniere");%>
+	     	<td>
+	     	<% bp.getController().writeFormLabel(out,"fl_spedizioniere");%>
+	     	</td>      	
+	     	<td>
+	   		<% bp.getController().writeFormInput(out,null,"fl_spedizioniere",fatturaPassiva.getFl_merce_intra_ue(),null,"");%>
+	   		</td>
 	      </tr>
 	      <tr>     	
 	      	<td>
@@ -179,8 +184,13 @@
 	     	<td>
 	     		<% bp.getController().writeFormInput(out,null,"fl_san_marino_senza_iva",roOnAutoGen,null,"");%>
 	     	</td>
-	     	<td width="100">&nbsp;</td>
-	   		<% bp.getController().writeFormField(out,"fl_bolla_doganale");%>
+     		<td width="100">&nbsp;</td>
+	     	<td>
+		     	<% bp.getController().writeFormLabel(out,"fl_bolla_doganale");%>
+	     	</td>      	
+	     	<td>
+	   			<% bp.getController().writeFormInput(out,null,"fl_bolla_doganale",fatturaPassiva.getFl_merce_intra_ue(),null,"");%>
+			</td>
 	      </tr>
 	     <% } %>
       <tr>     	
@@ -199,6 +209,17 @@
       	</td>      	
      	<td>
      		<% bp.getController().writeFormInput(out,null,"fl_merce_extra_ue",roOnAutoGen,null,"");%>
+     	</td>	
+     	 <% } %>
+     	 <% 
+    			if((fatturaPassiva.getTi_bene_servizio() != null && 
+    					Bene_servizioBulk.BENE.equalsIgnoreCase(fatturaPassiva.getTi_bene_servizio()) && fatturaPassiva.getFl_extra_ue() )) { %>
+		<td width="10">&nbsp;</td>
+		<td>		
+      		<% bp.getController().writeFormLabel(out,"fl_merce_intra_ue");%>
+      	</td>      	
+     	<td>
+     		<% bp.getController().writeFormInput(out,null,"fl_merce_intra_ue",roOnAutoGen,null,"");%>
      	</td>	
      	 <% } %>
       </tr>

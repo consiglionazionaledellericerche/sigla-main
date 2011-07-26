@@ -815,7 +815,7 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
 			   		
 			   			totImpServExtra=totImpServExtra.add(d.getImponibile());
 			   	   		totIvaServExtra=totIvaServExtra.add(d.getIva());
-			   		}else{
+			   		}else if (d.getCdBeneServizio().compareTo("BENI")!=0){
 			   			totImpServExtra=totImpServExtra.add(d.getImponibile());
 			   	   		totIvaServExtra=totIvaServExtra.add(d.getIva());
 			   		}   			

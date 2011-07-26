@@ -463,6 +463,13 @@
 		enabledOnSearch="true"
 		label="Merce da paesi extra U.E." />	
 	<fieldProperty
+		name="fl_merce_intra_ue"
+		property="fl_merce_intra_ue"
+		inputType="CHECKBOX"
+		readonlyProperty="ROFl_intra_ue"
+		enabledOnSearch="true"
+		label="Merce da paesi intra U.E." />	
+	<fieldProperty
 		name="protocollo_iva"
 		property="protocollo_iva"
 		maxLength="10"
@@ -1005,7 +1012,10 @@
 	<formFieldProperty
 		name="fl_merce_extra_ue"
 		command="doOnFlMerceExtraUEChange" />
-		
+	<formFieldProperty
+		name="fl_merce_intra_ue"
+		command="doOnFlMerceIntraUEChange" />
+			
 	<formFieldProperty
 		name="fl_congelata" />
 	<formFieldProperty

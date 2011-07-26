@@ -20,6 +20,18 @@
 	<table>
 		<tr>
 			<td><%bp.getController().writeFormInput(out,"default","ti_entita",false,"FormInput","onclick=\"submitForm('doCambiaTi_entita')\"");%></td>
+			 	<td>
+					<% if (anagrafico.getDt_fine_rapporto()!=null) { %>
+						<span class="FormLabel" style="color:red">
+							DISABILITATA
+						</span>
+					<%	} %> 
+					<% if (anagrafico.isDipendente()) { %>
+					<span class="FormLabel" style="color:red">
+							DIPENDENTE
+						</span>
+					<%	} %>	
+			  	</td>
 		</tr>
 	<%if (anagrafico.isPersonaFisica() || anagrafico.isPersonaGiuridica() || anagrafico.isDiversi()) {%>
 		<tr>

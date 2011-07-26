@@ -372,7 +372,9 @@ private void aggiornaSaldiInInserimento( UserContext userContext, ObbligazioneBu
 					    l'utente ha avuto il warning sulla disp.cassa e ha risposto no */
 		boolean checkDispCassa = forzaDispCassa == null || 
  								 forzaDispCassa != null && !forzaDispCassa.booleanValue();
-		session.aggiornaObbligazioniAccertamenti( userContext, voce, obbligazione.getCd_cds(), im_voce, Voce_f_saldi_cmpBulk.TIPO_COMPETENZA, checkDispCassa);
+		session.aggiornaObbligazioniAccertamenti( userContext, voce, obbligazione.getCd_cds(), im_voce,
+				Voce_f_saldi_cmpBulk.TIPO_COMPETENZA,
+				checkDispCassa);
 		/*
 		 * Aggiorno i Saldi per CDR/Linea
 		 */

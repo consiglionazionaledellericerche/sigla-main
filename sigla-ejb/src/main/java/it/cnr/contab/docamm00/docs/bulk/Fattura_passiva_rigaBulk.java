@@ -344,6 +344,9 @@ public boolean isVoceIVAOnlyIntraUE() {
 			fp.getTi_bene_servizio() != null && Bene_servizioBulk.SERVIZIO.equalsIgnoreCase(fp.getTi_bene_servizio())&& 
 			fp.getFl_extra_ue() != null && fp.getFl_extra_ue().booleanValue())||
 			(fp.isIstituzionale() && fp.getFl_intra_ue() != null && fp.getFl_intra_ue().booleanValue()) ||
+			// ??? Rospuc da chiedere
+			(fp.isIstituzionale() && fp.getFl_merce_intra_ue() != null && fp.getFl_merce_intra_ue().booleanValue()) ||
+			// ??? Rospuc da chiedere
 			(fp.isIstituzionale() && (fp.getFl_san_marino_senza_iva() != null && fp.getFl_san_marino_senza_iva().booleanValue())));
 }
 public boolean isVoidable() {

@@ -982,17 +982,20 @@ public String getSezionaliFlag() {
 		    getTi_bene_servizio() != null && FATTURA_DI_BENI.equalsIgnoreCase(getTi_bene_servizio()) &&
 			getFl_merce_extra_ue() != null && getFl_merce_extra_ue()){
 			setFl_merce_extra_ue(Boolean.TRUE);
+			setFl_merce_intra_ue(Boolean.FALSE);
 			setFl_autofattura(Boolean.FALSE);
 			setAutoFatturaNeeded(true);
 		}
 		else if(getTi_istituz_commerc() != null && COMMERCIALE.equalsIgnoreCase(getTi_istituz_commerc()) &&
 			    getTi_bene_servizio() != null && FATTURA_DI_SERVIZI.equalsIgnoreCase(getTi_bene_servizio())){
 			setFl_merce_extra_ue(Boolean.FALSE);
+			setFl_merce_intra_ue(Boolean.FALSE);
 			//setFl_autofattura(Boolean.TRUE);
 			setAutoFatturaNeeded(false);
 		}
 		else{
 				setFl_merce_extra_ue(Boolean.FALSE);
+				setFl_merce_intra_ue(Boolean.FALSE);
 				boolean autoFatt = (getTi_istituz_commerc() != null && !ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()));
 				setAutoFatturaNeeded(autoFatt);
 				if (autoFatt)
@@ -1002,17 +1005,29 @@ public String getSezionaliFlag() {
 			((Fattura_passiva_IBulk)this).setFattura_estera(null);
 
 		sezionaliFlag = SEZIONALI_FLAGS_IUE;
-	} else if (getFl_extra_ue() != null && getFl_extra_ue().booleanValue()) {
+	} else if (getFl_extra_ue() != null && getFl_extra_ue().booleanValue()){
 		setFl_intra_ue(Boolean.FALSE);
 		setFl_san_marino_con_iva(Boolean.FALSE);
 		setFl_san_marino_senza_iva(Boolean.FALSE);
 		setFl_bolla_doganale(Boolean.FALSE);
 		setFl_spedizioniere(Boolean.FALSE);
 		setFl_merce_extra_ue(Boolean.FALSE);
+		//??? solo commerciale
+		if( getTi_istituz_commerc() != null && COMMERCIALE.equalsIgnoreCase(getTi_istituz_commerc()) &&
+			   getTi_bene_servizio() != null && FATTURA_DI_BENI.equalsIgnoreCase(getTi_bene_servizio()) &&
+			   getFl_merce_intra_ue() != null && getFl_merce_intra_ue()){
+				boolean autoFatt = (getTi_istituz_commerc() != null && !ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()));
+				setAutoFatturaNeeded(autoFatt);
+				if (autoFatt)
+					setFl_autofattura(Boolean.TRUE);
+				
+		}else{
+				if (isAutoFatturaNeeded())
+					setFl_autofattura(isFatturaDiServizi()? Boolean.TRUE : Boolean.FALSE);
+		}	
 		if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
 			((Fattura_passiva_IBulk)this).setFattura_estera(null);
-		if (isAutoFatturaNeeded())
-			setFl_autofattura(isFatturaDiServizi()? Boolean.TRUE : Boolean.FALSE);
+			
 		//setAutoFatturaNeeded(isFatturaDiServizi());
 		sezionaliFlag = SEZIONALI_FLAGS_EUE;
 	} else if (getFl_san_marino_con_iva() != null && getFl_san_marino_con_iva().booleanValue()) {
@@ -1022,6 +1037,7 @@ public String getSezionaliFlag() {
 		setFl_bolla_doganale(Boolean.FALSE);
 		setFl_spedizioniere(Boolean.FALSE);
 		setFl_merce_extra_ue(Boolean.FALSE);
+		setFl_merce_intra_ue(Boolean.FALSE);
 		if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
 			((Fattura_passiva_IBulk)this).setFattura_estera(null);
 		if (isAutoFatturaNeeded())
@@ -1035,6 +1051,7 @@ public String getSezionaliFlag() {
 		setFl_bolla_doganale(Boolean.FALSE);
 		setFl_spedizioniere(Boolean.FALSE);
 		setFl_merce_extra_ue(Boolean.FALSE);
+		setFl_merce_intra_ue(Boolean.FALSE);
 		if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
 			((Fattura_passiva_IBulk)this).setFattura_estera(null);
 		boolean autoFatt = (getTi_istituz_commerc() != null && !ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()));
@@ -1285,6 +1302,7 @@ public OggettoBulk initialize(CRUDBP bp,it.cnr.jada.action.ActionContext context
 	setFl_spedizioniere(Boolean.FALSE);
 	setFl_autofattura(Boolean.FALSE);
 	setFl_merce_extra_ue(Boolean.FALSE);
+	setFl_merce_intra_ue(Boolean.FALSE);
 	setFl_liquidazione_differita(Boolean.FALSE);
 	return this;
 }
@@ -1818,7 +1836,9 @@ public boolean quadraturaInDeroga() {
 				(getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue() && isFatturaDiServizi() && getFl_autofattura().booleanValue())||
 				// quadratura in deroga per commerciali
 				//(getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue()) ||
-				(getFl_extra_ue() != null && getFl_extra_ue().booleanValue() && isFatturaDiServizi() && getFl_autofattura().booleanValue()) 
+				(getFl_extra_ue() != null && getFl_extra_ue().booleanValue() && isFatturaDiServizi() && getFl_autofattura().booleanValue()) ||
+				(getFl_extra_ue() != null && getFl_extra_ue().booleanValue() && Bene_servizioBulk.BENE.equalsIgnoreCase(getTi_bene_servizio()) && getFl_autofattura().booleanValue()
+				  && getFl_merce_intra_ue()!=null && getFl_merce_intra_ue().booleanValue())
 			);
 }
 /**
@@ -1828,7 +1848,9 @@ public boolean quadraturaInDeroga1210() {
 	return ((isIstituzionale() && (
 				(getFl_intra_ue() != null && getFl_intra_ue().booleanValue()) ||
 				(getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue())) &&
-				isFatturaDiBeni()) || (getTipo_sezionale()!=null && getTipo_sezionale().getFl_servizi_non_residenti().booleanValue()));
+				isFatturaDiBeni()) || (getTipo_sezionale()!=null && getTipo_sezionale().getFl_servizi_non_residenti().booleanValue())||
+				(isIstituzionale() && getFl_extra_ue() != null && getFl_extra_ue().booleanValue() && Bene_servizioBulk.BENE.equalsIgnoreCase(getTi_bene_servizio()) 
+						  && getFl_merce_intra_ue()!=null && getFl_merce_intra_ue().booleanValue()));
 }
 public void removeFromAssociazioniInventarioHash(
 	Ass_inv_bene_fatturaBulk ass,
@@ -2304,6 +2326,7 @@ public void setSezionaliFlag(String newSezionaliFlag) {
 						setFl_bolla_doganale(Boolean.FALSE);
 						setFl_spedizioniere(Boolean.FALSE);
 						setFl_merce_extra_ue(Boolean.FALSE);
+						setFl_merce_intra_ue(Boolean.FALSE);
 						if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
 							((Fattura_passiva_IBulk)this).setFattura_estera(null);
 						if (isAutoFatturaNeeded())
@@ -2319,6 +2342,7 @@ public void setSezionaliFlag(String newSezionaliFlag) {
 						setFl_bolla_doganale(Boolean.FALSE);
 						setFl_spedizioniere(Boolean.FALSE);
 						setFl_merce_extra_ue(Boolean.FALSE);
+						setFl_merce_intra_ue(Boolean.FALSE);
 						if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
 							((Fattura_passiva_IBulk)this).setFattura_estera(null);
 						if (isAutoFatturaNeeded())
@@ -2335,6 +2359,7 @@ public void setSezionaliFlag(String newSezionaliFlag) {
 						setFl_bolla_doganale(Boolean.FALSE);
 						setFl_spedizioniere(Boolean.FALSE);
 						setFl_merce_extra_ue(Boolean.FALSE);
+						setFl_merce_intra_ue(Boolean.FALSE);
 						if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
 							((Fattura_passiva_IBulk)this).setFattura_estera(null);
 						boolean autoFatt = (getTi_istituz_commerc() != null && !ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()));
@@ -2349,6 +2374,7 @@ public void setSezionaliFlag(String newSezionaliFlag) {
 						setFl_bolla_doganale(Boolean.FALSE);
 						setFl_spedizioniere(Boolean.FALSE);
 						setFl_merce_extra_ue(Boolean.FALSE);
+						setFl_merce_intra_ue(Boolean.FALSE);
 						if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
 							((Fattura_passiva_IBulk)this).setFattura_estera(null);
 						if (isAutoFatturaNeeded())
@@ -2364,6 +2390,7 @@ public void setSezionaliFlag(String newSezionaliFlag) {
 						setFl_bolla_doganale(Boolean.FALSE);
 						setFl_spedizioniere(Boolean.FALSE);
 						setFl_merce_extra_ue(Boolean.FALSE);
+						setFl_merce_intra_ue(Boolean.FALSE);
 						if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
 							((Fattura_passiva_IBulk)this).setFattura_estera(null);
 						if (isAutoFatturaNeeded())
@@ -2380,6 +2407,7 @@ public void setSezionaliFlag(String newSezionaliFlag) {
 						setFl_bolla_doganale(Boolean.FALSE);
 						setFl_spedizioniere(Boolean.FALSE);
 						setFl_merce_extra_ue(Boolean.FALSE);
+						setFl_merce_intra_ue(Boolean.FALSE);
 						if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
 							((Fattura_passiva_IBulk)this).setFattura_estera(null);
 						boolean autoFatt = (getTi_istituz_commerc() != null && !ISTITUZIONALE.equalsIgnoreCase(getTi_istituz_commerc()));
@@ -2394,6 +2422,7 @@ public void setSezionaliFlag(String newSezionaliFlag) {
 						setFl_bolla_doganale(Boolean.FALSE);
 						setFl_spedizioniere(Boolean.FALSE);
 						setFl_merce_extra_ue(Boolean.FALSE);
+						setFl_merce_intra_ue(Boolean.FALSE);
 						if (getClass().isAssignableFrom(Fattura_passiva_IBulk.class))
 							((Fattura_passiva_IBulk)this).setFattura_estera(null);
 						if (isAutoFatturaNeeded())
@@ -2639,5 +2668,4 @@ public void validateDate() throws ValidationException {
 		}	
 		return false;
 	}
-
 }

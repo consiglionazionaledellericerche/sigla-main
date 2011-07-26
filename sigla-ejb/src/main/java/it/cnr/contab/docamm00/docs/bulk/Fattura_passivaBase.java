@@ -195,6 +195,9 @@ public class Fattura_passivaBase extends Fattura_passivaKey implements Keyed {
 	// FL_LIQUIDAZIONE_DIFFERITA CHAR(1) NOT NULL
 	private java.lang.Boolean fl_liquidazione_differita;
 	
+	// FL_MERCE_INTRA_UE CHAR(1) NOT NULL
+	private java.lang.Boolean fl_merce_intra_ue;
+	
 public Fattura_passivaBase() {
 	super();
 }
@@ -950,5 +953,11 @@ public java.lang.Boolean getFl_liquidazione_differita() {
  */
 public void setFl_liquidazione_differita(java.lang.Boolean fl_liquidazione_differita) {
 	this.fl_liquidazione_differita = fl_liquidazione_differita;
+}
+public java.lang.Boolean getFl_merce_intra_ue() {
+	return fl_merce_intra_ue;
+}
+public void setFl_merce_intra_ue(java.lang.Boolean flMerceIntraUe) {
+	fl_merce_intra_ue = flMerceIntraUe;
 }
 }
