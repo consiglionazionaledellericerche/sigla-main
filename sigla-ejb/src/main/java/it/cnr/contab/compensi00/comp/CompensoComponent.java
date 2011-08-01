@@ -5411,13 +5411,15 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		try {
 			cs = new LoggableStatement(getConnection(userContext), "{call "
 					+ it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
-					+ "CNRCTB930.estrazione770(?, ?, ?, ?) }", false, this
+					+ "CNRCTB930.estrazione770(?, ?, ?, ?, ?, ?) }", false, this
 					.getClass());
 
 			cs.setInt(1, bulk.getEsercizio().intValue()); // Esercizio
-			cs.setLong(2, bulk.getId_report().longValue()); // Id report
-			cs.setString(3, null); // Messaggio
-			cs.setString(4, bulk.getUser()); // Utente
+			cs.setString(2, bulk.getQuadri_770().getTi_modello()); // Tipo Modello
+			cs.setString(3, bulk.getQuadri_770().getCd_quadro()); // Codice Quadro
+			cs.setLong(4, bulk.getId_report().longValue()); // Id report
+			cs.setString(5, null); // Messaggio
+			cs.setString(6, bulk.getUser()); // Utente
 
 			cs.executeQuery();
 
@@ -6417,5 +6419,15 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			throw handleException(e);
 		}
 	}
-	
+	public SQLBuilder selectQuadri_770ByClause(UserContext userContext,
+			Estrazione770Bulk estraz, Quadri_770Bulk quadri,
+			CompoundFindClause clauses) throws ComponentException {
+
+		Quadri_770Home home = (Quadri_770Home) getHome(userContext, quadri);
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause(clauses);
+		sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
+		
+		return sql;
+	}	
 }

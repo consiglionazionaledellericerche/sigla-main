@@ -3,7 +3,7 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="http://contab.cnr.it/schema/SIGLA" 
 		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
-	<formFieldProperty
+	<fieldProperty
 		name="esercizio"
 		property="esercizio"
 		inputType="ROTEXT" 
@@ -11,6 +11,39 @@
 		maxLength="8"
 		label="Esercizio"/>
 		
+	<fieldProperty
+		name="findQuadri"
+		property="quadri_770"
+		inputType="SEARCHTOOL"
+		label="Codice Quadro" />
+	<fieldProperty
+		name="cd_quadro"
+		property="quadri_770.cd_quadro"
+		inputType="TEXT"
+		readonlyProperty="ROQuadri_770"
+		nullable="false"
+		maxLength="4"
+		inputSize="4" 
+		label="Codice Quadro" />
+	<fieldProperty
+		name="ds_quadro"
+		property="quadri_770.ds_quadro"
+		inputType="TEXT"
+		readonlyProperty="ROQuadri_770"
+		inputSize="50" 
+		label="Descrizione Quadro" />
+	<fieldProperty
+		name="ti_modello"
+		property="quadri_770.ti_modello"
+		inputType="TEXT"
+		readonlyProperty="ROQuadri_770"
+		inputSize="1" 
+		label="Tipo Modello" />
+		
 	<formFieldProperty name="esercizio" />
+	<formFieldProperty name="findQuadri" />
+    <formFieldProperty name="cd_quadro" />
+    <formFieldProperty name="ds_quadro" />
+    <formFieldProperty name="ti_modello" />
 	
 </bulkInfo>
