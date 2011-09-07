@@ -1886,7 +1886,7 @@ public SQLBuilder selectV_terzoByClause(UserContext aUC,AnticipoBulk anticipo, V
 	CompoundFindClause clause = CompoundFindClause.or(
 		new SimpleFindClause("dt_fine_validita_terzo",sql.GREATER_EQUALS, anticipo.getDt_registrazione()),
 		new SimpleFindClause("dt_fine_validita_terzo",sql.ISNULL, null));
-	sql.addClause(clauses);
+	sql.addClause(clause);
 		
 	return sql;
 }
