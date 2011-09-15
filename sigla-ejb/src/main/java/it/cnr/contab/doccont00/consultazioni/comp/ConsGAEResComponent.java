@@ -460,7 +460,7 @@ public class ConsGAEResComponent extends CRUDComponent {
 						sql.addColumn("NVL(VAR_PIU_OBBL_RES_PRO,0)", "VAR_PIU_OBBL_RES_PRO");
 						sql.addColumn("NVL(VAR_MENO_OBBL_RES_PRO,0)", "VAR_MENO_OBBL_RES_PRO");		
 						sql.addColumn("NVL(IM_MANDATI_REVERSALI_PRO,0)", "IM_MANDATI_REVERSALI_PRO");		
-						sql.addColumn("NVL(RIMASTI_DA_PAGARE,0)", "RIMASTI_DA_PAGARE_PRO");
+						sql.addColumn("NVL(RIMASTI_DA_PAGARE_PRO,0)", "RIMASTI_DA_PAGARE_PRO");
 					}
 				}
 				
