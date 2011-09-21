@@ -111,7 +111,7 @@
   </dependencies>
   <properties>
   	<cmisdl.version>1.7</cmisdl.version>
-  	<jada.version>2.1.0</jada.version>
+  	<jada.version>2.0.2</jada.version>
   	<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
   </properties>
 	<repositories>
