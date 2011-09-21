@@ -30,14 +30,14 @@ public class OfflineReportComponent extends GenericComponent implements
 	}
 
 	/**
-	 * Stampa non configurata PreCondition: La stampa specificata non ï¿½ stata
+	 * Stampa non configurata PreCondition: La stampa specificata non è stata
 	 * configurata (non esiste un record corrispondente nella tabella
 	 * PRINT_PRIORITY) PostCondition: Genera una ApplicationException con il
 	 * messaggio
-	 * "La stampa non ï¿½ stata configurata correttamente. Avvisare il supporto tecnico."
-	 * Normale PreCondition: Nessun'altra precondizione ï¿½ verificata
+	 * "La stampa non è stata configurata correttamente. Avvisare il supporto tecnico."
+	 * Normale PreCondition: Nessun'altra precondizione è verificata
 	 * PostCondition: Aggiunge la richiesta di stampa alla tabella PRINT_SPOOLER
-	 * impostando la prioritï¿½ e la descrizione configurate in PRINT_PRIORITY
+	 * impostando la priorità e la descrizione configurate in PRINT_PRIORITY
 	 */
 
 	public void addJob(it.cnr.jada.UserContext userContext,
@@ -63,7 +63,7 @@ public class OfflineReportComponent extends GenericComponent implements
 				try {
 					if (!rs.next())
 						throw new ApplicationException(
-								"La stampa non ï¿½ stata configurata correttamente. Avvisare il supporto tecnico.");
+								"La stampa non è stata configurata correttamente. Avvisare il supporto tecnico.");
 					print_spooler.setPrioritaServer(new Integer(rs.getInt(1)));
 					print_spooler.setUser(userContext.getUser());
 					print_spooler.setPriorita(new Integer(0));
@@ -75,11 +75,11 @@ public class OfflineReportComponent extends GenericComponent implements
 					if (print_spooler.getDtPartenza() != null
 							&& print_spooler.getEmailCc() != null)
 						throw new ApplicationException(
-								"Non ï¿½ possibile inserire il campo E-Mail Cc per le stampe programmate in batch.");
+								"Non è possibile inserire il campo E-Mail Cc per le stampe programmate in batch.");
 					if (print_spooler.getDtPartenza() != null
 							&& print_spooler.getEmailCcn() != null)
 						throw new ApplicationException(
-								"Non ï¿½ possibile inserire il campo E-Mail Ccn per le stampe programmate in batch.");
+								"Non è possibile inserire il campo E-Mail Ccn per le stampe programmate in batch.");
 
 					if (Print_spoolerBulk.TI_VISIBILITA_UTENTE
 							.equals(print_spooler.getTiVisibilita()))
@@ -94,7 +94,7 @@ public class OfflineReportComponent extends GenericComponent implements
 								|| it.cnr.contab.utenze00.bp.CNRUserContext
 										.getCd_cdr(userContext) == null)
 							throw new ApplicationException(
-									"L'utente non ï¿½ stato assegnato a nessun CDR quindi non ï¿½ possibile impostare questo livello di visibilitï¿½.");
+									"L'utente non è stato assegnato a nessun CDR quindi non è possibile impostare questo livello di visibilità.");
 						print_spooler
 								.setVisibilita(it.cnr.contab.utenze00.bp.CNRUserContext
 										.getCd_cdr(userContext));
@@ -103,14 +103,14 @@ public class OfflineReportComponent extends GenericComponent implements
 						if (CNRUserContext
 								.getCd_unita_organizzativa(userContext) == null)
 							throw new ApplicationException(
-									"L'utente non ha selezionato una unitï¿½ organizzativa, quindi non puï¿½ impostare questo livello di visibilitï¿½.");
+									"L'utente non ha selezionato una unità organizzativa, quindi non può impostare questo livello di visibilità.");
 						print_spooler.setVisibilita(CNRUserContext
 								.getCd_unita_organizzativa(userContext));
 					} else if (Print_spoolerBulk.TI_VISIBILITA_CDS
 							.equals(print_spooler.getTiVisibilita())) {
 						if (CNRUserContext.getCd_cds(userContext) == null)
 							throw new ApplicationException(
-									"L'utente non ha selezionato una unitï¿½ organizzativa, quindi non puï¿½ impostare questo livello di visibilitï¿½.");
+									"L'utente non ha selezionato una unità organizzativa, quindi non può impostare questo livello di visibilità.");
 						print_spooler.setVisibilita(CNRUserContext
 								.getCd_cds(userContext));
 					}
@@ -146,16 +146,16 @@ public class OfflineReportComponent extends GenericComponent implements
 	}
 
 	/**
-	 * Una o piï¿½ stampe giï¿½ cancellate PreCondition: L'utente ha richiesto la
-	 * cancellazione di una o piï¿½ stampe dalla coda di stampa e almeno una di
-	 * esse risulta giï¿½ cancellata. PostCondition: Viene generata una
+	 * Una o più stampe già cancellate PreCondition: L'utente ha richiesto la
+	 * cancellazione di una o più stampe dalla coda di stampa e almeno una di
+	 * esse risulta già cancellata. PostCondition: Viene generata una
 	 * ApplicationException con il messaggio
-	 * "Una o piï¿½ stampe sono state cancellate da altri utenti." Una o piï¿½
+	 * "Una o più stampe sono state cancellate da altri utenti." Una o più
 	 * stampe in esecuzione PreCondition: L'utente ha richiesto la cancellazione
-	 * di una o piï¿½ stampe dalla coda di stampa e almeno una di esse risulta in
+	 * di una o più stampe dalla coda di stampa e almeno una di esse risulta in
 	 * esecuzione. PostCondition: Viene generata una ApplicationException con il
-	 * messaggio"Una o piï¿½ stampe sono attualmente in esecuzione e non possono essere cancellate."
-	 * Normale PreCondition: Nessun'altra precondizione ï¿½ verificata
+	 * messaggio"Una o più stampe sono attualmente in esecuzione e non possono essere cancellate."
+	 * Normale PreCondition: Nessun'altra precondizione è verificata
 	 * PostCondition: Le stampe specificate vengono cancellate dalla coda di
 	 * stampa.
 	 */
@@ -169,11 +169,11 @@ public class OfflineReportComponent extends GenericComponent implements
 						print_spooler[i]).findAndLock(print_spooler[i]);
 				if (print_spooler[i] == null)
 					throw new ApplicationException(
-							"Una o piï¿½ stampe sono state cancellate da altri utenti.");
+							"Una o più stampe sono state cancellate da altri utenti.");
 				if (Print_spoolerBulk.STATO_IN_ESECUZIONE
 						.equals(print_spooler[i].getStato()))
 					throw new ApplicationException(
-							"Una o piï¿½ stampe sono attualmente in esecuzione e non possono essere cancellate.");
+							"Una o più stampe sono attualmente in esecuzione e non possono essere cancellate.");
 				deleteBulk(userContext, print_spooler[i]);
 			}
 		} catch (PersistencyException e) {
@@ -217,7 +217,7 @@ public class OfflineReportComponent extends GenericComponent implements
 				printSpooler.setToBeUpdated();
 				updateBulk(userContext, printSpooler);
 			}
-			SendMail.getInstance().sendMail(
+			SendMail.sendMail(
 					"Rimozione dalla lista di distribuzione di SIGLA",
 					"Le confermiamo la rimozione dalla lista di distribuzione della \""
 							+ printSpooler.getDsStampa() + "\".",
@@ -244,7 +244,7 @@ public class OfflineReportComponent extends GenericComponent implements
 	/**
 	 * Normale PreCondition: L'utente ha richiesto la composizione della coda di
 	 * stampa PostCondition: Viene restituito l'elenco delle stampe presenti
-	 * nella coda di stampa compatibili con i criteri di visibilitï¿½ specificati
+	 * nella coda di stampa compatibili con i criteri di visibilità specificati
 	 * (secondo quanto sepcificato dalla vista "V_PRINT_SPOOLER_VISIBILITA")
 	 */
 
@@ -266,7 +266,7 @@ public class OfflineReportComponent extends GenericComponent implements
 						|| it.cnr.contab.utenze00.bp.CNRUserContext
 								.getCd_cdr(userContext) == null)
 					throw new ApplicationException(
-							"L'utente non ï¿½ stato assegnato a nessun CDR quindi non ï¿½ possibile impostare questo livello di visibilitï¿½.");
+							"L'utente non è stato assegnato a nessun CDR quindi non è possibile impostare questo livello di visibilità.");
 				sql.addClause("and", "visibilita", SQLBuilder.EQUALS,
 						it.cnr.contab.utenze00.bp.CNRUserContext
 								.getCd_cdr(userContext));
@@ -274,14 +274,14 @@ public class OfflineReportComponent extends GenericComponent implements
 					.equals(ti_visibilita)) {
 				if (CNRUserContext.getCd_unita_organizzativa(userContext) == null)
 					throw new ApplicationException(
-							"L'utente non ha selezionato una unitï¿½ organizzativa, quindi non puï¿½ impostare questo livello di visibilitï¿½.");
+							"L'utente non ha selezionato una unità organizzativa, quindi non può impostare questo livello di visibilità.");
 				sql.addClause("and", "visibilita", SQLBuilder.EQUALS,
 						CNRUserContext.getCd_unita_organizzativa(userContext));
 			} else if (Print_spoolerBulk.TI_VISIBILITA_CDS
 					.equals(ti_visibilita)) {
 				if (CNRUserContext.getCd_cds(userContext) == null)
 					throw new ApplicationException(
-							"L'utente non ha selezionato una unitï¿½ organizzativa, quindi non puï¿½ impostare questo livello di visibilitï¿½.");
+							"L'utente non ha selezionato una unità organizzativa, quindi non può impostare questo livello di visibilità.");
 				sql.addClause("and", "visibilita", SQLBuilder.EQUALS,
 						CNRUserContext.getCd_cds(userContext));
 			} else if (Print_spoolerBulk.TI_VISIBILITA_CNR
@@ -293,7 +293,7 @@ public class OfflineReportComponent extends GenericComponent implements
 						|| it.cnr.contab.utenze00.bp.CNRUserContext
 								.getCd_cdr(userContext) == null)
 					throw new ApplicationException(
-							"Utente non abilitato per il livello di visibilitï¿½ CNR.");
+							"Utente non abilitato per il livello di visibilità CNR.");
 				CdrBulk cdr = (CdrBulk) getHome(userContext, CdrBulk.class)
 						.findByPrimaryKey(
 								new CdrKey(
@@ -303,12 +303,12 @@ public class OfflineReportComponent extends GenericComponent implements
 						|| it.cnr.contab.utenze00.bp.CNRUserContext
 								.getCd_cdr(userContext) == null)
 					throw new ApplicationException(
-							"Utente non abilitato per il livello di visibilitï¿½ CNR.");
+							"Utente non abilitato per il livello di visibilità CNR.");
 				getHomeCache(userContext).fetchAll(userContext);
 				if (!Tipo_unita_organizzativaHome.TIPO_UO_ENTE.equals(cdr
 						.getUnita_padre().getUnita_padre().getCd_tipo_unita()))
 					throw new ApplicationException(
-							"Utente non abilitato per il livello di visibilitï¿½ CNR.");
+							"Utente non abilitato per il livello di visibilità CNR.");
 			}
 
 			sql.addClause("and", "ti_visibilita", sql.EQUALS, ti_visibilita);

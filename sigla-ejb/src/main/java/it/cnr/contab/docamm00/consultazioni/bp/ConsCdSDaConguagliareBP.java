@@ -124,7 +124,7 @@ public class ConsCdSDaConguagliareBP extends ConsultazioniBP {
 					}else{
 						//addressTO.add("rosangela.pucciarelli@cnr.it");
 						addressTO.add(EMAIL1);
-						subject = "Non ï¿½ stato possibile inviare l'E-Mail poichï¿½ non si conosce il riferimento del referente amministartivo del CdS :"+cds.getCd_unita_organizzativa();
+						subject = "Non è stato possibile inviare l'E-Mail poichè non si conosce il riferimento del referente amministartivo del CdS :"+cds.getCd_unita_organizzativa();
 					}
 				
 					if(EMAIL1!=null)
@@ -136,7 +136,7 @@ public class ConsCdSDaConguagliareBP extends ConsultazioniBP {
 					if(EMAIL4!=null)
 						addressCCN.add(EMAIL4);
 				}
-				SendMail.getInstance().sendMail(subject, corpo, addressTO, null, addressCCN);			
+				SendMail.sendMail(subject, corpo, addressTO, null, addressCCN);			
 			}
 		} catch (ComponentException e) {
 			handleException(e);
@@ -165,7 +165,7 @@ public class ConsCdSDaConguagliareBP extends ConsultazioniBP {
 			String cdUO = iterator.next();
 			Unita_organizzativaBulk uo = (Unita_organizzativaBulk) createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), new Unita_organizzativaBulk(cdUO));
 			mess.append("<tr><td colspan=\"2\" style=\"font-weight : bold\">");
-			mess.append("Unitï¿½ Organizzativa: "+uo.getCd_unita_organizzativa() + " " + uo.getDs_unita_organizzativa());
+			mess.append("Unità Organizzativa: "+uo.getCd_unita_organizzativa() + " " + uo.getDs_unita_organizzativa());
 			mess.append("</td></tr>");
 			mess.append("<tr><td style=\"font-weight : bold\">Codice Terzo</td><td style=\"font-weight : bold\">Denominazione</td><td style=\"font-weight : bold\">Motivazione</td></tr>");		
 			for (Iterator<V_terzi_da_conguagliareBulk> iteratorTerzi = treeUO.get(cdUO).iterator(); iteratorTerzi.hasNext();) {

@@ -573,7 +573,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			text += "<BR>" + postText+ "<BR>";
 		if (addressTO != null){
 			try {
-				SendMail.getInstance().sendMail(soggetto,text,InternetAddress.parse(addressTO));
+				SendMail.sendMail(soggetto,text,InternetAddress.parse(addressTO));
 			} catch (AddressException e) {
 			}
 		}
@@ -1091,7 +1091,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 					config = createConfigurazioneCnrComponentSession().getConfigurazione( usercontext, CNRUserContext.getEsercizio(usercontext), null, Configurazione_cnrBulk.PK_ANNI_RESIDUI_VAR_ST_RES, String.valueOf(annoResiduo));
 				if (config != null){
 					if (!origineFonti.equalsIgnoreCase(config.getVal01()) && !origineFonti.equalsIgnoreCase(config.getVal02())){
-						throw new ApplicationException("Non ï¿½ consentito emettere variazioni allo stanziamento residuo\n"+
+						throw new ApplicationException("Non è consentito emettere variazioni allo stanziamento residuo\n"+
 						   "su residui del "+annoResiduo+" sulle "+ NaturaBulk.tipo_naturaKeys.get(origineFonti));	
 					}
 				}

@@ -154,7 +154,7 @@ public class UtilServlet extends HttpServlet {
 			((ProgettoRicercaPadreComponentSession) EJBCommonServices.createEJB("CNRPROGETTIRIC00_EJB_ProgettoRicercaPadreComponentSession")).aggiornaGECO(userContext);
 		} catch (Exception e) {
 			String text = "Errore interno del Server Utente:"+CNRUserContext.getUser(userContext);
-			SendMail.getInstance().sendErrorMail(text,e.toString());
+			SendMail.sendErrorMail(text,e.toString());
 		}
 	}
 	
@@ -186,7 +186,7 @@ public class UtilServlet extends HttpServlet {
 				} catch(java.net.UnknownHostException e) {
 				} catch(java.net.ConnectException e){
 				}catch(IOException e) {
-					//In questo caso Il file ï¿½ giï¿½ stato cancellato e quindi cancello la riga
+					//In questo caso Il file è già stato cancellato e quindi cancello la riga
 					Print_spoolerBulk bulk = (Print_spoolerBulk)print_spoolerHome.findByPrimaryKey(new Print_spoolerBulk(new Long(rs.getLong("PG_STAMPA"))));
 					print_spoolerHome.deleteRiga(bulk, null);					
 				}				  				  
@@ -243,7 +243,7 @@ public class UtilServlet extends HttpServlet {
 				} catch(java.net.UnknownHostException e) {
 				} catch(java.net.ConnectException e){
 				}catch(IOException e) {
-					//In questo caso Il file ï¿½ giï¿½ stato cancellato e quindi cancello la riga
+					//In questo caso Il file è già stato cancellato e quindi cancello la riga
 					Excel_spoolerBulk bulk = (Excel_spoolerBulk)excel_spoolerHome.findByPrimaryKey(new Excel_spoolerBulk(new Long(rs.getLong("PG_ESTRAZIONE"))));
 					excel_spoolerHome.deleteRiga(bulk);					
 				}				  				  				  	

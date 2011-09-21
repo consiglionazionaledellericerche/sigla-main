@@ -21,7 +21,7 @@ public CRUDWorkpackageBP(String function) {
 	super(function);
 }
 /**
- * Ritorna i risultati della linea di attivitï¿½
+ * Ritorna i risultati della linea di attività
  * 
  * @return it.cnr.jada.util.action.SimpleDetailCRUDController
  */
@@ -71,7 +71,7 @@ private void aggiornaGECO(UserContext userContext) {
 		getProgettoRicercaPadreComponentSession().aggiornaGECO(userContext);
 	} catch (Exception e) {
 		String text = "Errore interno del Server Utente:"+CNRUserContext.getUser(userContext);
-		SendMail.getInstance().sendErrorMail(text,e.toString());
+		SendMail.sendErrorMail(text,e.toString());
 	}
 }
 

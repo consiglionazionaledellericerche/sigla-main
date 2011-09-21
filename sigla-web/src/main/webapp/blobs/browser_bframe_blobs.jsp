@@ -13,9 +13,7 @@
 <html>
 <head>
 <% JSPUtils.printBaseUrl(pageContext); %>
-<%
-	CRUDBlobBP bp = (CRUDBlobBP)BusinessProcess.getBusinessProcess(request);
-%>
+<% 	CRUDBframeBlobBP bp = (CRUDBframeBlobBP)BusinessProcess.getBusinessProcess(request); %>
 <title>File esterni</title>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="JavaScript">

@@ -48,7 +48,7 @@ private void aggiornaGECO(UserContext userContext) {
 		getProgettoRicercaPadreComponentSession().aggiornaGECO(userContext);
 	} catch (Exception e) {
 		String text = "Errore interno del Server Utente:"+CNRUserContext.getUser(userContext);
-		SendMail.getInstance().sendErrorMail(text,e.toString());
+		SendMail.sendErrorMail(text,e.toString());
 	}
 }
 

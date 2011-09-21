@@ -20,7 +20,7 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.blobs.bp.ExcelBlobBP;
-import it.cnr.jada.blobs.ejb.BlobComponentSession;
+import it.cnr.jada.blobs.ejb.BframeBlobComponentSession;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.ConsultazioniAction;
 import it.cnr.jada.util.action.SelezionatoreListaBP;

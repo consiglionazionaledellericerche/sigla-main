@@ -8,21 +8,8 @@
 						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<context:annotation-config />
 						
-        <import resource="classpath*:it/cnr/contab/cmis/service/cmis-service-context.xml"/>
-	<bean
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-		        <list>
-		        	<value>classpath*:mail.properties</value>
-			        <value>classpath*:sigla/extension/*.properties</value>
-		        </list>
-		</property>
-		<property name="ignoreUnresolvablePlaceholders" value="true" />
-	</bean>
+    <import resource="classpath*:it/cnr/contab/cmis/service/cmis-service-context.xml"/>
 
-        <!--ATTENZIONE la configurazione di un EJB in Spring dipende dal AS su cui si fa il deploy 
-                la configurazione sottostante è valida fino a JBOSS 6 per il 7 è necessario fare 
-                l' override nella configurazione di JBOSS perchè i nomi JNDI cambiano-->
 	<jee:jndi-lookup id="offlineReportComponent"
    			jndi-name="SIGLA/BREPORTS_EJB_OfflineReportComponentSession/remote"
    			resource-ref="false">
@@ -37,21 +24,10 @@
    			resource-ref="false">
    	</jee:jndi-lookup>
 
-	<!-- Mail service -->
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="${mail.host}" />
-		<property name="username" value="${mail.username}" />
-		<property name="password" value="${mail.password}" />
-		<property name="javaMailProperties">
-			<props>
-				<prop key="mail.from.default">${mail.from.default}</prop>
-				<!-- Use SMTP-AUTH to authenticate to SMTP server -->
-				<prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
-				<!-- Use TLS to encrypt communication with SMTP server -->
-				<prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>
-			</props>
-		</property>
-	</bean>
+	<jee:jndi-lookup id="mailSession"
+   			jndi-name="java:mail/MailSession"
+   			resource-ref="false">
+   	</jee:jndi-lookup>
 
 	<bean id="testMode" class="java.lang.Boolean">
 		<constructor-arg value="true"/>
@@ -90,6 +66,9 @@
 			<value>HH:mm:ss</value>
 		</constructor-arg>						
     </bean>
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    	<property name="session" ref="mailSession"/>
+	</bean>
 	<bean id="fromAddress" class="java.lang.String">
 		<constructor-arg> 
 			<value>sigla@cnr.it</value>

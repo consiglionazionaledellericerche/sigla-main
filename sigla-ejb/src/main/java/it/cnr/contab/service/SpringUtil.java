@@ -13,7 +13,7 @@ public final class SpringUtil {
 	}
 	
 	/**
-	 * Metodo di utilit√† per caricare il contesto di Spring 
+	 * Metodo di utilit‡ per caricare il contesto di Spring 
 	 */
 	public static void init(){
 	}

@@ -424,13 +424,13 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 		BusinessProcess currentbp = context.getBusinessProcess();
 		try {
 			context.setBusinessProcess(bp);
-			bp.closeAllChildren();
 			it.cnr.jada.action.BusinessProcess newbp;
 			if (nodo.getTi_funzione() != null)
 				newbp = context.createBusinessProcess(nodo.getBusiness_process(),new Object[] { nodo.getTi_funzione() });
 			else
 				newbp = context.createBusinessProcess(nodo.getBusiness_process());
 			if (newbp == null) return context.findDefaultForward();
+			bp.closeAllChildren();
 			context.addBusinessProcess(newbp);
 			return context.findDefaultForward();
 		} catch(it.cnr.jada.action.BusinessProcessException e) {
