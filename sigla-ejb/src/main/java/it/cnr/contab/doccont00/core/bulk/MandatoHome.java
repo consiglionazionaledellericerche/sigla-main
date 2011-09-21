@@ -32,6 +32,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -248,6 +249,27 @@ public abstract class MandatoHome extends BulkHome {
 		return ht;
 	}
 	
+	private Date findDataDiCompetenzaDocumentoAmm(UserContext userContext, MandatoBulk mandato) throws PersistencyException, IntrospectionException{
+		Date result = null; 
+		Collection<Mandato_rigaBulk>  righeMandato = findMandato_riga(userContext, mandato);
+		for (Mandato_rigaBulk mandatoRiga : righeMandato) {
+			IDocumentoAmministrativoSpesaBulk docAmm = SpringUtil.getBean(mandatoRiga.getCd_tipo_documento_amm(), IDocumentoAmministrativoSpesaBulk.class);
+			docAmm.setCd_cds(mandatoRiga.getCd_cds_doc_amm());
+			docAmm.setCd_uo(mandatoRiga.getCd_uo_doc_amm());
+			docAmm.setEsercizio(mandatoRiga.getEsercizio_doc_amm());
+			docAmm.setPg_doc_amm(mandatoRiga.getPg_doc_amm());
+			docAmm.setCd_tipo_doc_amm(mandatoRiga.getCd_tipo_documento_amm());
+			docAmm = (IDocumentoAmministrativoSpesaBulk)getHomeCache().getHome(docAmm.getClass()).findByPrimaryKey(docAmm);
+			if (result == null)
+				result = docAmm.getDt_da_competenza_coge();
+			else{
+				if (result.before(docAmm.getDt_da_competenza_coge()) )
+					result = docAmm.getDt_da_competenza_coge();
+			}
+		}
+		return result;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public Boolean isAvvisoDiPagamentoMandato(UserContext userContext, MandatoBulk mandato, Boolean bonifico) throws ComponentException{
 		try {
@@ -261,7 +283,7 @@ public abstract class MandatoHome extends BulkHome {
 			if (!existFondoSpesa)
 				return Boolean.FALSE;
 			Mandato_terzoBulk mandatoTerzo = findMandato_terzo(userContext, mandato);
-			Integer matricola = terzoHome.findMatricolaDipendente(userContext, mandatoTerzo.getTerzo(),mandato.getDt_pagamento());
+			Integer matricola = terzoHome.findMatricolaDipendente(userContext, mandatoTerzo.getTerzo(),findDataDiCompetenzaDocumentoAmm(userContext,mandato));
 			if (matricola != null && (mandato.getTi_mandato().equalsIgnoreCase( MandatoBulk.TIPO_PAGAMENTO) ||
 					mandato.getTi_mandato().equalsIgnoreCase( MandatoBulk.TIPO_REGOLAM_SOSPESO))){
 				Collection<Mandato_rigaBulk>  righeMandato = findMandato_riga(userContext, mandato);
@@ -291,7 +313,7 @@ public abstract class MandatoHome extends BulkHome {
 		try {
 			TerzoHome terzoHome = (TerzoHome) getHomeCache().getHome( TerzoBulk.class );
 			Mandato_terzoBulk mandatoTerzo = findMandato_terzo(userContext, mandato);
-			Integer matricola = terzoHome.findMatricolaDipendente(userContext, mandatoTerzo.getTerzo(),mandato.getDt_pagamento());
+			Integer matricola = terzoHome.findMatricolaDipendente(userContext, mandatoTerzo.getTerzo(),findDataDiCompetenzaDocumentoAmm(userContext,mandato));
 			if (matricola != null && (mandato.getTi_mandato().equalsIgnoreCase( MandatoBulk.TIPO_PAGAMENTO) ||
 					mandato.getTi_mandato().equalsIgnoreCase( MandatoBulk.TIPO_REGOLAM_SOSPESO))){
 				Collection<Mandato_rigaBulk>  righeMandato = findMandato_riga(userContext, mandato);
@@ -358,7 +380,7 @@ public abstract class MandatoHome extends BulkHome {
 			}
 			if (archiviato)
 				text.append(SpringUtil.getBean("avviso.di.pagamento.per.bonifico.mail.text.footer", String.class));
-			Integer matricola = terzoHome.findMatricolaDipendente(userContext, mandatoTerzo.getTerzo(),mandato.getDt_trasmissione());
+			Integer matricola = terzoHome.findMatricolaDipendente(userContext, mandatoTerzo.getTerzo(),findDataDiCompetenzaDocumentoAmm(userContext,mandato));
 			if (matricola != null){
 				String mailAddress = SpringUtil.getBean("ldapService", LDAPService.class).getLdapUserFromMatricola(userContext, matricola)[1];
 				mailService.send(Arrays.asList(mailAddress), subject, text.toString());
@@ -402,7 +424,7 @@ public abstract class MandatoHome extends BulkHome {
 				text.append(SpringUtil.getBean("avviso.di.annullamento.mail.text.footer", String.class));
 			else
 				text.append(SpringUtil.getBean("avviso.di.pagamento.mail.text.footer", String.class));
-			Integer matricola = terzoHome.findMatricolaDipendente(userContext, mandatoTerzo.getTerzo(),mandato.getDt_trasmissione());
+			Integer matricola = terzoHome.findMatricolaDipendente(userContext, mandatoTerzo.getTerzo(),findDataDiCompetenzaDocumentoAmm(userContext,mandato));
 			String mailAddress = SpringUtil.getBean("ldapService", LDAPService.class).getLdapUserFromMatricola(userContext, matricola)[1];
 			mailService.send(Arrays.asList(mailAddress), subject, text.toString());
 		} catch (Exception e) {
