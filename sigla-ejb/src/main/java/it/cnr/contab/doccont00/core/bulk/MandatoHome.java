@@ -253,20 +253,25 @@ public abstract class MandatoHome extends BulkHome {
 		Date result = null; 
 		Collection<Mandato_rigaBulk>  righeMandato = findMandato_riga(userContext, mandato);
 		for (Mandato_rigaBulk mandatoRiga : righeMandato) {
-			IDocumentoAmministrativoSpesaBulk docAmm = SpringUtil.getBean(mandatoRiga.getCd_tipo_documento_amm(), IDocumentoAmministrativoSpesaBulk.class);
-			docAmm.setCd_cds(mandatoRiga.getCd_cds_doc_amm());
-			docAmm.setCd_uo(mandatoRiga.getCd_uo_doc_amm());
-			docAmm.setEsercizio(mandatoRiga.getEsercizio_doc_amm());
-			docAmm.setPg_doc_amm(mandatoRiga.getPg_doc_amm());
-			docAmm.setCd_tipo_doc_amm(mandatoRiga.getCd_tipo_documento_amm());
-			docAmm = (IDocumentoAmministrativoSpesaBulk)getHomeCache().getHome(docAmm.getClass()).findByPrimaryKey(docAmm);
-			if (result == null)
-				result = docAmm.getDt_da_competenza_coge();
-			else{
-				if (result.before(docAmm.getDt_da_competenza_coge()) )
+			try{
+				IDocumentoAmministrativoSpesaBulk docAmm = SpringUtil.getBean(mandatoRiga.getCd_tipo_documento_amm(), IDocumentoAmministrativoSpesaBulk.class);
+				docAmm.setCd_cds(mandatoRiga.getCd_cds_doc_amm());
+				docAmm.setCd_uo(mandatoRiga.getCd_uo_doc_amm());
+				docAmm.setEsercizio(mandatoRiga.getEsercizio_doc_amm());
+				docAmm.setPg_doc_amm(mandatoRiga.getPg_doc_amm());
+				docAmm.setCd_tipo_doc_amm(mandatoRiga.getCd_tipo_documento_amm());
+				docAmm = (IDocumentoAmministrativoSpesaBulk)getHomeCache().getHome(docAmm.getClass()).findByPrimaryKey(docAmm);
+				if (result == null)
 					result = docAmm.getDt_da_competenza_coge();
+				else{
+					if (result.before(docAmm.getDt_da_competenza_coge()) )
+						result = docAmm.getDt_da_competenza_coge();
+				}
+			}catch(NoSuchBeanDefinitionException _ex){
 			}
 		}
+		if (result == null)
+			result = mandato.getDt_emissione();
 		return result;
 	}
 	
