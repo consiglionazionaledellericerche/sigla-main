@@ -2,9 +2,10 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vpg_man_rev_ass_subreport0" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="0.9090909090909096"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="384"/>
+	<property name="ireport.y" value="863"/>
+	<property name="ireport.background.image.properties" value="false,true,0.25,0,0,0,0,0,0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -131,6 +132,7 @@ ID_RIGA, TI_RECORD_L2,SEQUENZA]]>
 	<field name="CD_CUP" class="java.lang.String"/>
 	<field name="DS_CUP" class="java.lang.String"/>
 	<field name="IM_CUP" class="java.math.BigDecimal"/>
+	<field name="STATO" class="java.lang.String"/>
 	<variable name="Totale_Cod_Siope" class="java.math.BigDecimal" resetType="Group" resetGroup="PK_MANDATO" calculation="Sum">
 		<variableExpression><![CDATA[$F{IM_SIOPE}]]></variableExpression>
 	</variable>
@@ -143,7 +145,7 @@ ID_RIGA, TI_RECORD_L2,SEQUENZA]]>
 			<band height="29" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean(!$F{TI_RECORD_L1}.equals("B"))]]></printWhenExpression>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-1" style="TNRG12" x="4" y="0" width="561" height="15"/>
+					<reportElement key="textField-1" style="TNRG12" x="0" y="0" width="595" height="15"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -165,11 +167,8 @@ ID_RIGA, TI_RECORD_L2,SEQUENZA]]>
 	<group name="PageHeaderC" isReprintHeaderOnEachPage="true">
 		<groupExpression><![CDATA["DUMMY"]]></groupExpression>
 		<groupHeader>
-			<band height="41" splitType="Stretch">
+			<band height="38" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("A"))]]></printWhenExpression>
-				<rectangle radius="0">
-					<reportElement key="rectangle-1" x="4" y="5" width="561" height="36"/>
-				</rectangle>
 				<staticText>
 					<reportElement key="staticText-1" style="TNR10" x="10" y="10" width="90" height="13"/>
 					<box>
@@ -226,6 +225,18 @@ ID_RIGA, TI_RECORD_L2,SEQUENZA]]>
 					<textElement/>
 					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{ESERCIZIO}]]></textFieldExpression>
 				</textField>
+				<line>
+					<reportElement key="line-53" x="4" y="2" width="560" height="1"/>
+				</line>
+				<line>
+					<reportElement key="line-54" positionType="FixRelativeToBottom" x="4" y="37" width="560" height="1"/>
+				</line>
+				<line>
+					<reportElement key="line-55" positionType="Float" stretchType="RelativeToTallestObject" x="564" y="2" width="1" height="36"/>
+				</line>
+				<line>
+					<reportElement key="line-56" positionType="Float" stretchType="RelativeToTallestObject" x="4" y="2" width="1" height="35"/>
+				</line>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -235,11 +246,8 @@ ID_RIGA, TI_RECORD_L2,SEQUENZA]]>
 	<group name="PageheaderD" isReprintHeaderOnEachPage="true">
 		<groupExpression><![CDATA["DUMMY"]]></groupExpression>
 		<groupHeader>
-			<band height="38" splitType="Stretch">
+			<band height="39" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("B"))]]></printWhenExpression>
-				<rectangle radius="0">
-					<reportElement key="rectangle-2" x="4" y="2" width="561" height="32"/>
-				</rectangle>
 				<staticText>
 					<reportElement key="staticText-3" style="TNR10" x="10" y="6" width="120" height="13"/>
 					<box>
@@ -312,6 +320,18 @@ ID_RIGA, TI_RECORD_L2,SEQUENZA]]>
 					<textFieldExpression class="java.lang.String"><![CDATA["Gestione: "+
 ($F{TI_COMPETENZA_RESIDUO}.equals("C")?"Competenza":"Residuo")]]></textFieldExpression>
 				</textField>
+				<line>
+					<reportElement key="line-53" x="4" y="3" width="560" height="1"/>
+				</line>
+				<line>
+					<reportElement key="line-54" positionType="FixRelativeToBottom" x="4" y="37" width="560" height="1"/>
+				</line>
+				<line>
+					<reportElement key="line-55" positionType="Float" stretchType="RelativeToTallestObject" x="564" y="3" width="1" height="35"/>
+				</line>
+				<line>
+					<reportElement key="line-56" positionType="Float" stretchType="RelativeToTallestObject" x="4" y="3" width="1" height="35"/>
+				</line>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -557,12 +577,9 @@ $F{CD_UO_ORIGINE}!= null)]]></printWhenExpression>
 	<group name="PageheaderF" isReprintHeaderOnEachPage="true">
 		<groupExpression><![CDATA["DUMMY"]]></groupExpression>
 		<groupHeader>
-			<band height="23" splitType="Stretch">
+			<band height="29" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean(!$F{TI_RECORD_L1}.equals("B")&&
 $F{CD_UO_ORIGINE}!= null)]]></printWhenExpression>
-				<rectangle radius="0">
-					<reportElement key="rectangle-5" x="4" y="3" width="561" height="20"/>
-				</rectangle>
 				<textField isBlankWhenNull="true">
 					<reportElement key="textField-20" style="TNRG10" x="10" y="7" width="158" height="13" isRemoveLineWhenBlank="true"/>
 					<box>
@@ -596,6 +613,18 @@ $F{CD_UO_ORIGINE}!= null)]]></printWhenExpression>
 					<textElement textAlignment="Right"/>
 					<textFieldExpression class="java.lang.String"><![CDATA["Netto: "+new DecimalFormat("¤ #,##0.00").format($F{IM_MANDATO}.subtract($F{IM_RITENUTE}))]]></textFieldExpression>
 				</textField>
+				<line>
+					<reportElement key="line-53" x="5" y="4" width="560" height="1"/>
+				</line>
+				<line>
+					<reportElement key="line-54" positionType="FixRelativeToBottom" x="5" y="28" width="560" height="1"/>
+				</line>
+				<line>
+					<reportElement key="line-55" positionType="Float" stretchType="RelativeToTallestObject" x="564" y="4" width="1" height="25"/>
+				</line>
+				<line>
+					<reportElement key="line-56" positionType="Float" stretchType="RelativeToTallestObject" x="4" y="4" width="1" height="25"/>
+				</line>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -1531,7 +1560,7 @@ $F{TI_RECORD_L1}.equals("E")||$F{TI_RECORD_L1}.equals("F")
 					<textElement textAlignment="Left"/>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{DS_REVERSALE_RIGA}]]></textFieldExpression>
 				</textField>
-				<textField pattern="ï¿½ #,##0.00" isBlankWhenNull="true">
+				<textField pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement key="textField-44" style="TNRG10" positionType="Float" stretchType="RelativeToBandHeight" x="360" y="3" width="172" height="13" isRemoveLineWhenBlank="true"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1660,7 +1689,14 @@ $F{TI_MANDATO}.equals("R")
 		</groupFooter>
 	</group>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="669" splitType="Stretch">
+			<image hAlign="Center">
+				<reportElement x="4" y="14" width="581" height="632" printWhenGroupChanges="PK_MANDATO">
+					<printWhenExpression><![CDATA[$F{STATO}.compareTo( "A" )==0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE} +"Annullato.gif"]]></imageExpression>
+			</image>
+		</band>
 	</background>
 	<title>
 		<band splitType="Stretch"/>
@@ -1669,7 +1705,7 @@ $F{TI_MANDATO}.equals("R")
 		<band height="50" splitType="Stretch">
 			<printWhenExpression><![CDATA[new Boolean(!$F{TI_RECORD_L1}.equals("B"))]]></printWhenExpression>
 			<image>
-				<reportElement key="image-1" x="2" y="0" width="531" height="41"/>
+				<reportElement key="image-1" x="0" y="0" width="531" height="41"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>

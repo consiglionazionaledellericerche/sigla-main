@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="255"/>
+	<property name="ireport.y" value="178"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -97,6 +97,7 @@ ORDER BY ESERCIZIO, CD_CDS, PG_REVERSALE, Decode(TI_RECORD,'A',1,'D',2,'E',3,'C'
 	<field name="CD_CUP" class="java.lang.String"/>
 	<field name="DS_CUP" class="java.lang.String"/>
 	<field name="IM_CUP" class="java.math.BigDecimal"/>
+	<field name="STATO" class="java.lang.String"/>
 	<variable name="Totale_Cod_Siope" class="java.math.BigDecimal" resetType="Group" resetGroup="PK_REVERSALE" calculation="Sum">
 		<variableExpression><![CDATA[$F{IM_SIOPE}]]></variableExpression>
 	</variable>
@@ -386,12 +387,6 @@ $F{CD_UO_ORIGINE}!= null)]]></printWhenExpression>
 					<textElement/>
 					<textFieldExpression class="java.lang.String"><![CDATA[" - "+$F{DS_UO_CDS}]]></textFieldExpression>
 				</textField>
-				<rectangle radius="0">
-					<reportElement key="rectangle-4" x="4" y="53" width="561" height="113"/>
-					<graphicElement>
-						<pen lineWidth="1.0" lineStyle="Solid"/>
-					</graphicElement>
-				</rectangle>
 				<textField isBlankWhenNull="false">
 					<reportElement key="textField-13" style="TNR10" x="10" y="58" width="551" height="13"/>
 					<box>
@@ -506,6 +501,18 @@ $F{CD_UO_ORIGINE}!= null)]]></printWhenExpression>
 					<textElement textAlignment="Left"/>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{INTESTAZIONE}.toUpperCase()]]></textFieldExpression>
 				</textField>
+				<line>
+					<reportElement key="line-60" stretchType="RelativeToBandHeight" x="4" y="39" width="1" height="126"/>
+				</line>
+				<line>
+					<reportElement key="line-59" stretchType="RelativeToBandHeight" x="564" y="39" width="1" height="126"/>
+				</line>
+				<line>
+					<reportElement key="line-58" x="4" y="39" width="561" height="1"/>
+				</line>
+				<line>
+					<reportElement key="line-57" positionType="FixRelativeToBottom" x="3" y="165" width="561" height="1"/>
+				</line>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -1399,7 +1406,14 @@ $F{CD_SOSPESO}== null))]]></printWhenExpression>
 		</groupFooter>
 	</group>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="717" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="29" width="595" height="669" isPrintWhenDetailOverflows="true" printWhenGroupChanges="PK_REVERSALE">
+					<printWhenExpression><![CDATA[$F{STATO}.compareTo( "A" )==0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE} +"Annullato.gif"]]></imageExpression>
+			</image>
+		</band>
 	</background>
 	<title>
 		<band splitType="Stretch"/>
