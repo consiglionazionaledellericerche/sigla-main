@@ -92,6 +92,9 @@
 	<tr>
 	<td><% bp.getTappaController().writeFormLabel( out, "fl_no_diaria"); %>
 		<% bp.getTappaController().writeFormInput(out,"default","fl_no_diaria",!bp.isEditingTappa()||!bp.isDiariaEditable(HttpActionContext.getUserContext(session)),"FormInput", null);%></td>
+		<% if (bp.isRimborsoVisible(HttpActionContext.getUserContext(session))) { %>
+	         <td><% bp.getTappaController().writeFormInput(out,"default","tipoRimborsoRadioGroup",!bp.isEditingTappa()||!bp.isRimborsoEditable(HttpActionContext.getUserContext(session)),"FormInput", null);%></td>
+        <% } %>	
 	</tr>			
 </table>
 </div>

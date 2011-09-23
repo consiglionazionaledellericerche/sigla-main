@@ -630,6 +630,17 @@
 		formatName = "it.cnr.contab.util.EuroFormat"		
 		inputType="ROTEXT"
 		label="diaria esente" 
+		/>	
+	<fieldProperty
+		name="im_rimborso"
+		property="im_rimborso"
+		formatName = "it.cnr.contab.util.EuroFormat"		
+		inputType="TEXT"
+		label="rimborso"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"										
 		/>													
 /******************** fine TAB. CONSUNTIVO **********************/
 
@@ -955,6 +966,7 @@
 	<formFieldProperty name="totale_spese_del_giorno" />
 	<formFieldProperty name="totale_netto_diaria_del_giorno" />
 	<formFieldProperty name="totale_esente_diaria_del_giorno" />
+	<formFieldProperty name="im_rimborso" />
 /******************** TAB. FONDO + OBBLIGAZIONE + ANTICIPO + COMPENSO**********************/
 	<formFieldProperty name="dt_pagamento_fondo_eco" />	
 	<formFieldProperty name="stato_pagamento_fondo_eco" />

@@ -167,6 +167,20 @@
 		label="Alloggio gratuito" />		
 /*****/
 
+	<fieldProperty
+		name="tipoRimborsoRadioGroup"
+		property="flag_tipo_rimborso"
+		keysProperty="flag_tipo_rimborsoKeys"
+		inputType="RADIOGROUP"
+		layout = "VERTICAL"	
+		label=""			
+		/>
+	<fieldProperty
+		name="fl_rimborso"
+		property="fl_rimborso"
+		inputType="CHECKBOX"
+		label="Trattamento alternativo" />	
+
 	<formFieldProperty name="dt_inizio_tappa" />
 	<formFieldProperty name="dt_fine_tappa" />	
 	<formFieldProperty name="find_nazione" />
@@ -180,6 +194,7 @@
 	<formFieldProperty name="cambio_tappa" />	
 	<formFieldProperty name="dt_ingresso_estero" />
 	<formFieldProperty name="dt_uscita_estero" />
+	<formFieldProperty name="tipoRimborsoRadioGroup" />
 		
 	<columnFieldProperty 
 		name="dt_inizio_tappa"
@@ -200,6 +215,7 @@
 	<columnFieldProperty name="fl_alloggio_gratuito" />	
 	<columnFieldProperty name="fl_vitto_alloggio_gratuito" />
 	<columnFieldProperty name="fl_no_diaria" />
+	<columnFieldProperty name="fl_rimborso" />
 	<columnFieldProperty name="dt_ingresso_estero" />	
 	<columnFieldProperty name="dt_uscita_estero" />
 
@@ -222,5 +238,5 @@
 	<findFieldProperty name="dt_uscita_estero" />
 	<findFieldProperty name="dt_fine_tappa" />
 	<findFieldProperty name="fl_alloggio_gratuito" />
-
+	<findFieldProperty name="fl_rimborso" />
 </bulkInfo>

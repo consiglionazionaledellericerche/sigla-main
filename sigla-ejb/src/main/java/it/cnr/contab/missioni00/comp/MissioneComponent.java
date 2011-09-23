@@ -488,6 +488,35 @@ public MissioneBulk cancellaDiariaPhisically(it.cnr.jada.UserContext userContext
 		throw new it.cnr.jada.persistency.PersistencyException(e);
     }
 }
+public MissioneBulk cancellaRimborsoPhisically(it.cnr.jada.UserContext userContext, MissioneBulk missione) throws ComponentException, it.cnr.jada.persistency.PersistencyException
+{
+    try 
+    {
+    	LoggableStatement ps =new LoggableStatement(getConnection(userContext),
+	                    "DELETE FROM " +
+	                    it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
+						"Missione_dettaglio " +
+						" where pg_missione = ?" +
+						" and  esercizio = ?" +
+						" and  cd_cds = ?" +
+						" and  cd_unita_organizzativa = ?" +
+						" and  ti_spesa_diaria = 'R'" ,true,this.getClass());
+	
+        ps.setObject(1, missione.getPg_missione());
+        ps.setObject(2, missione.getEsercizio());
+	    ps.setString(3, missione.getCd_cds());
+        ps.setString(4, missione.getCd_unita_organizzativa());
+ 
+        ps.executeQuery();
+        
+        return missione;
+	} 
+    catch (java.sql.SQLException e) 
+    {
+		throw new it.cnr.jada.persistency.PersistencyException(e);
+    }
+}
+
 /**
  * Cancellazione fisica Tappe
  *
@@ -558,7 +587,8 @@ private void caricaDettagliMissione(UserContext aUC, MissioneBulk missione) thro
 
 		if(aDettaglio.getTi_spesa_diaria().equals(Missione_dettaglioBulk.TIPO_DIARIA))
 			missione.getDiariaMissioneColl().add(aDettaglio);
-			
+		if(aDettaglio.getTi_spesa_diaria().equals(Missione_dettaglioBulk.TIPO_RIMBORSO))
+			missione.getRimborsoMissioneColl().add(aDettaglio);
 		if(aDettaglio.getTi_spesa_diaria().equals(Missione_dettaglioBulk.TIPO_SPESA))
 		{
 			// Carico gli attributi esterni
@@ -1750,6 +1780,35 @@ public MissioneBulk generaDiaria (UserContext aUC, MissioneBulk missione) throws
 		throw handleException(missione, e);
 	}
 }
+public MissioneBulk generaRimborso (UserContext aUC, MissioneBulk missione) throws ComponentException
+{
+	LoggableStatement cs = null;
+	try
+	{
+		//missione.calcolaConsuntivi();
+		try
+		{
+			cs = new LoggableStatement(getConnection(aUC), "{call "+it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
+					+"CNRCTB505.elaboraMissioneRimborso(?,?,?,?)}",false,this.getClass());
+			cs.setObject( 1, missione.getCd_cds()                 );		
+			cs.setObject( 2, missione.getCd_unita_organizzativa() );		
+			cs.setObject( 3, missione.getEsercizio()              );
+			cs.setObject( 4, missione.getPg_missione()            );
+			cs.executeQuery();
+		}
+		finally 
+		{
+		    cs.close();
+		}
+		missione = ritornaRimborsoGenerato(aUC, missione);		
+		return missione;
+	}
+	catch (java.sql.SQLException e)
+	{
+		throw handleException(missione, e);
+	}
+}
+
 /**
  * Carica i dati relativi alla divisa di default
  *
@@ -2729,6 +2788,40 @@ private MissioneBulk ritornaDiariaGenerata(UserContext aUC, MissioneBulk mission
 		throw handleException(missione, e);
 	}
 }
+private MissioneBulk ritornaRimborsoGenerato(UserContext aUC, MissioneBulk missione) throws ComponentException
+{
+	try
+	{
+		Missione_dettaglioHome dettaglioHome = (Missione_dettaglioHome)getHome( aUC, Missione_dettaglioBulk.class );
+		SQLBuilder sql = dettaglioHome.createSQLBuilder();
+	
+		sql.addSQLClause( "AND", "cd_cds", sql.EQUALS, missione.getCd_cds());
+		sql.addSQLClause( "AND", "cd_unita_organizzativa", sql.EQUALS, missione.getCd_unita_organizzativa());
+		sql.addSQLClause("AND","esercizio",sql.EQUALS,missione.getEsercizio());
+		sql.addSQLClause("AND","pg_missione",sql.EQUALS,missione.getPg_missione());
+		sql.addSQLClause("AND","ti_spesa_diaria",sql.EQUALS, Missione_dettaglioBulk.TIPO_RIMBORSO);		
+
+		it.cnr.jada.bulk.BulkList dettagliRimborso = new it.cnr.jada.bulk.BulkList(dettaglioHome.fetchAll( sql ));
+	
+		if((dettagliRimborso == null) || (dettagliRimborso.isEmpty()))
+			throw new it.cnr.jada.comp.ApplicationException("Problemi nella creazione del rimborso !");
+
+		missione.setRimborsoMissioneColl(dettagliRimborso);
+
+		for ( Iterator i = missione.getRimborsoMissioneColl().iterator(); i.hasNext(); )
+		{
+			Missione_dettaglioBulk aRimborso = (Missione_dettaglioBulk)i.next();
+			aRimborso.setMissione(missione);
+		}
+					
+		return missione;
+	} 
+	catch (Throwable e) 
+	{
+		throw handleException(missione, e);
+	}
+}
+
 /**
  * Annulla le modifiche apportate alla missione e ritorna al savepoint impostato in precedenza
  *
@@ -3143,6 +3236,7 @@ public SQLBuilder selectTipo_pastoByClause(UserContext aUC,Missione_dettaglioBul
 
 	sql.addClause("AND","cd_ti_pasto",sql.EQUALS, dettaglioSpesa.getCd_ti_pasto());
 
+	sql.addClause("AND","cd_area_estera",sql.EQUALS,tappa.getNazione().getCd_area_estera());
 
 	sql.addSQLClause("AND","(cd_ti_pasto || ti_area_geografica || pg_nazione || pg_rif_inquadramento || TO_CHAR(dt_inizio_validita, 'DDMMYYYY') || TO_CHAR(dt_fine_validita, 'DDMMYYYY'))  = " +
 					 it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + " CNRCTB500.getFirstTabMissione('02', cd_ti_pasto, ?, ?, ?, ?)");
@@ -3229,8 +3323,11 @@ public SQLBuilder selectTipo_spesaByClause(UserContext aUC,Missione_dettaglioBul
 	sql.addClause("OR","pg_rif_inquadramento",sql.EQUALS, new Long(0));	
 	sql.closeParenthesis();
 	
+	if (tappa.getFl_rimborso())
+	    sql.addClause("AND","fl_ammissibile_con_rimborso",sql.EQUALS, tappa.getFl_rimborso());	
+
 	sql.addClause("AND","cd_ti_spesa",sql.EQUALS, dettaglioSpesa.getCd_ti_spesa());					
-		
+
 	sql.addSQLClause("AND","(cd_ti_spesa || ti_area_geografica || pg_nazione || pg_rif_inquadramento || TO_CHAR(dt_inizio_validita, 'DDMMYYYY') || TO_CHAR(dt_fine_validita, 'DDMMYYYY'))  = " +
 					 it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + " CNRCTB500.getFirstTabMissione('01', cd_ti_spesa, ?, ?, ?, ?)");
 

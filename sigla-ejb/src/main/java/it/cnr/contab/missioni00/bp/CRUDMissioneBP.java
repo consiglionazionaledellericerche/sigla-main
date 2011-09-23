@@ -26,6 +26,7 @@ import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
 import it.cnr.contab.docamm00.ejb.*;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
@@ -60,6 +61,7 @@ public class CRUDMissioneBP extends it.cnr.jada.util.action.SimpleCRUDBP	impleme
 	};	
 	
 	private final SimpleDetailCRUDController diariaController = new SimpleDetailCRUDController("Diaria", Missione_dettaglioBulk.class,"diariaMissioneColl",this);
+	private final SimpleDetailCRUDController rimborsoController = new SimpleDetailCRUDController("Rimborso", Missione_dettaglioBulk.class,"rimborsoMissioneColl",this);
 	private final SimpleDetailCRUDController consuntivoController = new SimpleDetailCRUDController("Consuntivo", Missione_dettaglioBulk.class,"speseMissioneColl",this);				
 
 	private boolean editingTappa = false;
@@ -91,6 +93,7 @@ public CRUDMissioneBP(String function)
  * Il metodo gestisce la creazione di una nuova tappa.
  * Il metodo verifica se la configurazione delle tappe può essere modificata.
  * Se i dettagli di diaria sono già stati creati li cancello
+ * Se i dettagli del rimborso sono già stati creati li cancello
  */
 
 public void addTappa(ActionContext context) throws it.cnr.jada.bulk.ValidationException, BusinessProcessException, it.cnr.jada.comp.ApplicationException
@@ -103,6 +106,10 @@ public void addTappa(ActionContext context) throws it.cnr.jada.bulk.ValidationEx
 	if((missione.getDiariaMissioneColl() != null) && (!missione.getDiariaMissioneColl().isEmpty()))
 		missione = cancellaDiariaPerModificaConfigurazioneTappe(context);	
 			
+	//Se ho il rimborso lo cancello
+	if((missione.getRimborsoMissioneColl() != null) && (!missione.getRimborsoMissioneColl().isEmpty()))
+		missione = cancellaRimborsoPerModificaConfigurazioneTappe(context);	
+	
 	// Chiama il metodo 'addToTappeMissioneColl' che fa le opportune inizializzazioni
 	getTappaController().add(context);
 	
@@ -227,7 +234,11 @@ public void cancellaDettagliMissione(ActionContext context) throws BusinessProce
 	cancellaDiaria(context);
 	missione=(MissioneBulk)getModel();
 	getDiariaController().reset(context);
-
+	
+	cancellaRimborso(context);
+	missione=(MissioneBulk)getModel();
+	getRimborsoController().reset(context);
+	
 	missione.setSpeseInserite(false);	
 }
 /**
@@ -255,6 +266,31 @@ public void cancellaDiaria(ActionContext context) throws BusinessProcessExceptio
 	}	
 }
 /**
+ * Il metodo gestisce la cancellazione fisica dei dettagli di diaria della missione 
+ */
+
+public void cancellaRimborso(ActionContext context) throws BusinessProcessException
+{
+	try
+	{
+		MissioneBulk missione = (MissioneBulk) getModel();
+
+		if(missione.getRimborsoMissioneColl()==null || missione.getRimborsoMissioneColl().isEmpty())
+			return;
+
+		MissioneComponentSession component = (MissioneComponentSession)createComponentSession("CNRMISSIONI00_EJB_MissioneComponentSession",MissioneComponentSession.class);
+		missione = component.cancellaRimborsoPhisically(context.getUserContext(), missione);
+		
+		setModel(context, missione);
+		((MissioneBulk)getModel()).cancellaRimborso();
+	}
+	catch(Throwable e) 
+	{
+		throw handleException(e);
+	}	
+}
+
+/**
  * Il metodo cancella i dettagli della diaria a seguito della modifica della configurazione delle tappe
  */
 
@@ -265,6 +301,22 @@ public MissioneBulk cancellaDiariaPerModificaConfigurazioneTappe(ActionContext c
 	cancellaDiaria(context);
 	
 	setMessage("Diaria cancellata !");
+	missione=(MissioneBulk)getModel();
+	missione.setSpeseInserite(false);
+	
+	return missione;
+}
+/**
+ * Il metodo cancella i dettagli della quota di rimborso a seguito della modifica della configurazione delle tappe
+ */
+
+public MissioneBulk cancellaRimborsoPerModificaConfigurazioneTappe(ActionContext context) throws BusinessProcessException
+{
+	MissioneBulk missione = (MissioneBulk) getModel();
+	
+	cancellaRimborso(context);
+	
+	setMessage("Rimborso cancellato !");
 	missione=(MissioneBulk)getModel();
 	missione.setSpeseInserite(false);
 	
@@ -649,7 +701,11 @@ public void editaTappa(ActionContext context) throws it.cnr.jada.action.Business
 	// Se non ho spese ma ho la diaria quest'ultima dovra' essere cancellata per poter proseguire
 	if((missione.getDiariaMissioneColl() != null) && (!missione.getDiariaMissioneColl().isEmpty()))
 		missione = cancellaDiariaPerModificaConfigurazioneTappe(context);	
-		
+	
+	//Se ho il rimborso lo cancello
+	if((missione.getRimborsoMissioneColl() != null) && (!missione.getRimborsoMissioneColl().isEmpty()))
+		missione = cancellaRimborsoPerModificaConfigurazioneTappe(context);	
+
 	Missione_tappaBulk tappa = 	(Missione_tappaBulk) getTappaController().getModel(); 			
  				
 	tappa.setTappaIniziale((Missione_tappaBulk)tappa.clone());		
@@ -715,6 +771,71 @@ public boolean isDiariaEditable(UserContext context) throws BusinessProcessExcep
 		throw handleException(ex);
 	}
 }
+public boolean isRimborsoEditable(UserContext context) throws BusinessProcessException, RemoteException
+{
+	try
+	{
+		Missione_tappaBulk tappa = (Missione_tappaBulk)getTappaController().getModel();
+		java.sql.Timestamp data_inizio_rimborso_miss_estero;
+		java.sql.Timestamp data_fine_rimborso_miss_estero;
+
+		java.util.GregorianCalendar gci = getGregorianCalendar();
+		java.util.GregorianCalendar gcf = getGregorianCalendar();
+		gci.setTime(tappa.getMissione().getDt_inizio_missione());
+		gcf.setTime(tappa.getMissione().getDt_fine_missione());
+		gci.add(java.util.Calendar.DAY_OF_YEAR,+1);
+		
+		if (isRimborsoVisible(context))
+		{
+			if (tappa.getDt_inizio_tappa()!= null) 
+			{
+				Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
+				if ( sess.getDt01(context, new Integer(0), "*", "RIMBORSO_MISS_ESTERO", "PERIODO_VALIDITA") == null ||
+					 sess.getDt02(context, new Integer(0), "*", "RIMBORSO_MISS_ESTERO", "PERIODO_VALIDITA") == null)
+					throw new ApplicationException("Configurazione CNR: non è stato impostato il periodo di validità per i rimborsi esteri (RIMBORSO_MISS_ESTERO - PERIODO_VALIDITA)");	
+				data_inizio_rimborso_miss_estero = sess.getDt01(context, new Integer(0), "*", "RIMBORSO_MISS_ESTERO", "PERIODO_VALIDITA");
+				data_fine_rimborso_miss_estero = sess.getDt02(context, new Integer(0), "*", "RIMBORSO_MISS_ESTERO", "PERIODO_VALIDITA");
+	
+				//solo se è estera, non c'è diaria, la missione dura più di 24 ore e la tappa è compresa nel periodo di validità
+				if (tappa.getFl_comune_estero().booleanValue() && 
+					tappa.getFl_no_diaria().booleanValue() &&
+					gcf.compareTo(gci) >= 0 &&
+					!(tappa.getDt_inizio_tappa().compareTo(data_inizio_rimborso_miss_estero)< 0) &&
+					tappa.getDt_inizio_tappa().compareTo(data_fine_rimborso_miss_estero)<0)
+					{
+						return true;
+					}
+				else
+					{
+						return(false);
+					}
+			}
+			return false;
+		}
+		return false;
+	}
+	catch(it.cnr.jada.comp.ComponentException ex)
+	{
+		throw handleException(ex);
+	}
+}
+public boolean isRimborsoVisible(UserContext context) throws BusinessProcessException, RemoteException
+{
+	Missione_tappaBulk tappa = (Missione_tappaBulk)getTappaController().getModel();
+	if (tappa != null && tappa.getFl_comune_estero()!= null) 
+	{
+		//solo se è estera è visibile 
+		if (tappa.getFl_comune_estero().booleanValue())
+				return true;
+	    return false;	
+	}
+	else
+	{
+		return(false);
+	}
+	
+}
+
 /**
  * Tale metodo gestisce la ricerca degli Inquadramenti e dei Tipi Trattamento sempre che sia gia' stato selezionato 
  * un Tipo Rapporto
@@ -930,6 +1051,21 @@ public MissioneBulk generaDiaria(ActionContext context, MissioneBulk missione) t
 		throw handleException(e);		
 	}
 }
+public MissioneBulk generaRimborso(ActionContext context, MissioneBulk missione) throws it.cnr.jada.action.BusinessProcessException, it.cnr.jada.comp.ComponentException, java.rmi.RemoteException, it.cnr.jada.bulk.ValidationException
+{
+	try
+	{
+		MissioneComponentSession component = (MissioneComponentSession)createComponentSession("CNRMISSIONI00_EJB_MissioneComponentSession",MissioneComponentSession.class);
+		return(component.generaRimborso(context.getUserContext(), missione));
+	}
+	catch(it.cnr.jada.comp.ComponentException e)
+	{	
+		ricaricaMissioneInModifica(context);
+		missione = (MissioneBulk)getModel();
+		missione.setSpeseInserite(false);
+		throw handleException(e);		
+	}
+}
 /**
  * Metodo richiesto dall' interfaccia IDocumentoAmministrativoBP
  */
@@ -984,6 +1120,13 @@ public it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk getDeleteMan
  
 public final it.cnr.jada.util.action.SimpleDetailCRUDController getDiariaController() {
 	return diariaController;
+}
+/**
+ * Tale metodo ritorna il Controller del "Rimborso"
+ */
+ 
+public final it.cnr.jada.util.action.SimpleDetailCRUDController getRimborsoController() {
+	return rimborsoController;
 }
 /**
  * Metodo richiesto dall' interfaccia IValidaDocContBP
@@ -1597,6 +1740,10 @@ public void removeTappa(ActionContext context) throws it.cnr.jada.bulk.Validatio
 	if((missione.getDiariaMissioneColl() != null) && (!missione.getDiariaMissioneColl().isEmpty()))
 		missione = cancellaDiariaPerModificaConfigurazioneTappe(context);	
 		
+	//Se ho il rimborso lo cancello
+	if((missione.getRimborsoMissioneColl() != null) && (!missione.getRimborsoMissioneColl().isEmpty()))
+		missione = cancellaRimborsoPerModificaConfigurazioneTappe(context);	
+
 	// Chiama il metodo 'removeFromTappeMissioneColl'
 	getTappaController().remove(context);
 	missione.setTappeConfigurate(false);
@@ -2239,4 +2386,16 @@ public void setDiariaSiNo(ActionContext context) throws BusinessProcessException
 		}
 	}	
 }
+protected java.util.GregorianCalendar getGregorianCalendar() {
+
+	java.util.GregorianCalendar gc = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
+
+	gc.set(java.util.Calendar.HOUR, 0);
+	gc.set(java.util.Calendar.MINUTE, 0);
+	gc.set(java.util.Calendar.SECOND, 0);
+	gc.set(java.util.Calendar.MILLISECOND, 0);
+	gc.set(java.util.Calendar.AM_PM, java.util.Calendar.AM);
+
+	return gc;
+	}
 }

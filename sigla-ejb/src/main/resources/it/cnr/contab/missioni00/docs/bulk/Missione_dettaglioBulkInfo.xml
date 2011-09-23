@@ -283,6 +283,17 @@
 		inputType="TEXT"
 		label="ti_spesa_diaria"
 		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="im_rimborso"
+		property="im_rimborso"
+		inputType="TEXT"
+		maxLength="16"
+		inputSize="16"		
+		formatName = "it.cnr.contab.util.EuroPositivoFormat"								
+		label="Quota rimborso"
+		nullable="false"
+		readonlyProperty="ROImportiDiaria"								
+		/>	
 		
 	/* Dettaglio spesa */	
 	<formFieldProperty name="dt_inizio_tappa" />
@@ -318,6 +329,8 @@
 	<formFieldProperty name="im_diaria_netto" command="doOnDiariaManuale"/>	
 	<formFieldProperty name="im_quota_esente" command="doOnDiariaManuale"/>
 	
+	<formFieldProperty name="im_rimborso" />	
+	
 	<findFieldProperty name="dt_inizio_tappa" />
 	<findFieldProperty name="cd_cds" />
 	<findFieldProperty name="fl_spesa_anticipata" />
@@ -351,6 +364,7 @@
 	<findFieldProperty name="chilometri" />
 	<findFieldProperty name="ds_spesa" />
 	<findFieldProperty name="im_spesa_max_divisa" />	
+	<findFieldProperty name="im_rimborso" />
 
 	<columnSet name="dettaglioDiariaSet">
 		<columnFieldProperty name="singolo_giorno" />
@@ -358,6 +372,12 @@
 		<columnFieldProperty name="im_quota_esente" />
 		<columnFieldProperty name="im_diaria_netto" />		
 		<columnFieldProperty name="fl_diaria_manuale" />
+	</columnSet>
+	
+	<columnSet name="dettaglioRimborsoSet">
+		<columnFieldProperty name="singolo_giorno" />
+		<columnFieldProperty name="im_rimborso" />				
+		<columnFieldProperty name="im_quota_esente" />
 	</columnSet>
 	
 	<columnSet name="dettaglioSpesaSet">

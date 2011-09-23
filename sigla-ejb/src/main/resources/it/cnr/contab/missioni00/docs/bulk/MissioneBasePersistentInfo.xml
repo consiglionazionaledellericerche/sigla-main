@@ -331,6 +331,13 @@
 			sqlTypeName="VARCHAR"
 			columnSize="10"
 			nullable="false" />
+		<columnMapping
+			columnName="IM_RIMBORSO"
+			propertyName="im_rimborso"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />			
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -444,4 +451,6 @@
 		name="esercizio_obbligazione" />
 	<persistentProperty
 		name="cd_tipo_rapporto" />
+	<persistentProperty
+		name="im_rimborso" />		
 </SQLPersistentInfo>

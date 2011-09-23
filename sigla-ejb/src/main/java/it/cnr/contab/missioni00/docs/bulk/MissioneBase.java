@@ -162,6 +162,9 @@ public class MissioneBase extends MissioneKey implements Keyed {
 
 	// TI_PROVVISORIO_DEFINITIVO CHAR(1) NOT NULL
 	private java.lang.String ti_provvisorio_definitivo;
+	
+	// IM_RIMBORSO DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal im_rimborso;
 
 public MissioneBase() {
 	super();
@@ -780,5 +783,11 @@ public void setTi_istituz_commerc(java.lang.String ti_istituz_commerc) {
  */
 public void setTi_provvisorio_definitivo(java.lang.String ti_provvisorio_definitivo) {
 	this.ti_provvisorio_definitivo = ti_provvisorio_definitivo;
+}
+public java.math.BigDecimal getIm_rimborso() {
+	return im_rimborso;
+}
+public void setIm_rimborso(java.math.BigDecimal im_rimborso) {
+	this.im_rimborso = im_rimborso;
 }
 }

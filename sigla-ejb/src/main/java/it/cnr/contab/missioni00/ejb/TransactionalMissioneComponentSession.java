@@ -56,6 +56,28 @@ public class TransactionalMissioneComponentSession extends
 			}
 		}
 	}
+	public it.cnr.contab.missioni00.docs.bulk.MissioneBulk cancellaRimborsoPhisically(
+			it.cnr.jada.UserContext param0,
+			it.cnr.contab.missioni00.docs.bulk.MissioneBulk param1)
+			throws RemoteException, it.cnr.jada.comp.ComponentException,
+			it.cnr.jada.persistency.PersistencyException {
+		try {
+			return (it.cnr.contab.missioni00.docs.bulk.MissioneBulk) invoke(
+					"cancellaRimborsoPhisically", new Object[] { param0, param1 });
+		} catch (java.rmi.RemoteException e) {
+			throw e;
+		} catch (java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch (it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch (it.cnr.jada.persistency.PersistencyException ex) {
+				throw ex;
+			} catch (Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception", ex);
+			}
+		}
+	}
 
 	public it.cnr.contab.missioni00.docs.bulk.MissioneBulk cancellaTappePhisically(
 			it.cnr.jada.UserContext param0,
@@ -392,6 +414,25 @@ public class TransactionalMissioneComponentSession extends
 		try {
 			return (it.cnr.contab.missioni00.docs.bulk.MissioneBulk) invoke(
 					"generaDiaria", new Object[] { param0, param1 });
+		} catch (java.rmi.RemoteException e) {
+			throw e;
+		} catch (java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch (it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch (Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception", ex);
+			}
+		}
+	}
+	public it.cnr.contab.missioni00.docs.bulk.MissioneBulk generaRimborso(
+			it.cnr.jada.UserContext param0,
+			it.cnr.contab.missioni00.docs.bulk.MissioneBulk param1)
+			throws RemoteException, it.cnr.jada.comp.ComponentException {
+		try {
+			return (it.cnr.contab.missioni00.docs.bulk.MissioneBulk) invoke(
+					"generaRimborso", new Object[] { param0, param1 });
 		} catch (java.rmi.RemoteException e) {
 			throw e;
 		} catch (java.lang.reflect.InvocationTargetException e) {

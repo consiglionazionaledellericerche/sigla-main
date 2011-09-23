@@ -109,6 +109,20 @@
 		caseSensitiveSearch="false"
 		label="Codice iso"
 		/>
+	<fieldProperty
+		name="cd_area_estera"
+		property="cd_area_estera"
+		maxLength="2"
+		inputSize="2"
+		inputType="TEXT"
+		nullable="true"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false"
+		label="Area Estera"
+		/>		
 /*********************************/
 /*********** DIVISA **************/
 /*********************************/
@@ -201,6 +215,7 @@
 	<formFieldProperty name="cd_nazione" />
 	<formFieldProperty name="cd_nazione_770" />
 	<formFieldProperty name="cd_iso" />
+	<formFieldProperty name="cd_area_estera" />
 	<formFieldProperty
 		name="cd_divisa"
 		readonlyProperty="RODivisa" />
@@ -219,6 +234,7 @@
 	<columnFieldProperty name="cd_nazione" />
 	<columnFieldProperty name="cd_nazione_770" />
 	<columnFieldProperty name="cd_iso" />
+	<columnFieldProperty name="cd_area_estera" />
 	<columnFieldProperty
 		name="ds_divisa"
 		label="Divisa" />
@@ -234,6 +250,7 @@
 	<findFieldProperty name="cd_nazione" />
 	<findFieldProperty name="cd_nazione_770" />
 	<findFieldProperty name="cd_iso" />
+	<findFieldProperty name="cd_area_estera" />
 	<findFieldProperty name="cd_divisa" />
 	<findFieldProperty name="cd_divisa_per_missione" />
 

@@ -80,7 +80,26 @@
 		inputSize="60"
 		inputType="ROTEXT"
 		label="Nazione" />
+	<fieldProperty
+		name="cd_area_estera"
+		property="nazione.cd_area_estera"
+		inputSize="2"
+		inputType="TEXT"
+		label="Area Estera" />	
 /***********************************/
+/************ AREA ESTERA **************/
+	<fieldProperty
+		name="cd_area_estera"
+		property="cd_area_estera"
+		maxLength="2"
+		inputSize="2"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false" 
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Area Estera" />
 /************* DIVISA **************/
 	<fieldProperty
 		name="find_divisa"
@@ -166,6 +185,9 @@
 	<formFieldProperty name="limite_max_pasto" />
 	<formFieldProperty name="dataFineValidita" />
 	<formFieldProperty name="dt_cancellazione" />
+	<formFieldProperty name="cd_area_estera" />
+	<formFieldProperty name="ds_area_estera" />
+	<formFieldProperty name="find_area_estera" />
  
 	<columnFieldProperty name="cd_ti_pasto" />
 	<columnFieldProperty name="rif_inquadramento" />
@@ -178,6 +200,8 @@
 	<columnFieldProperty name="dt_inizio_validita" />
 	<columnFieldProperty name="dataFineValidita" />
 	<columnFieldProperty name="dt_cancellazione" />
+	<columnFieldProperty name="cd_area_estera" />
+	<columnFieldProperty name="ds_area_estera" />
 
 	<findFieldProperty name="cd_ti_pasto" />
 	<findFieldProperty name="rif_inquadramento" />
@@ -188,5 +212,6 @@
 	<findFieldProperty name="dt_inizio_validita" />
 	<findFieldProperty name="dt_fine_validita" />
 	<findFieldProperty name="dt_cancellazione" />
+	<findFieldProperty name="cd_area_estera" />	
 
 </bulkInfo>

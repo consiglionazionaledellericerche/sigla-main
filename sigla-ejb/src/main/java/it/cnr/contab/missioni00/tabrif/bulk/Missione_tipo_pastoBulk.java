@@ -17,11 +17,12 @@ public class Missione_tipo_pastoBulk extends Missione_tipo_pastoBase
 		
 	private Rif_inquadramentoBulk rifInquadramento;
 	private java.util.Collection rifInquadramenti;
+	
 public Missione_tipo_pastoBulk() {
 	super();
 }
-public Missione_tipo_pastoBulk(java.lang.String cd_ti_pasto,java.sql.Timestamp dt_inizio_validita,java.lang.Long pg_nazione,java.lang.Long pg_rif_inquadramento,java.lang.String ti_area_geografica) {
-	super(cd_ti_pasto,dt_inizio_validita,pg_nazione,pg_rif_inquadramento,ti_area_geografica);
+public Missione_tipo_pastoBulk(java.lang.String cd_ti_pasto,java.sql.Timestamp dt_inizio_validita,java.lang.Long pg_nazione,java.lang.Long pg_rif_inquadramento,java.lang.String ti_area_geografica,java.lang.String cd_area_estera) {
+	super(cd_ti_pasto,dt_inizio_validita,pg_nazione,pg_rif_inquadramento,ti_area_geografica,cd_area_estera);
 	setRifInquadramento(new it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBulk(pg_rif_inquadramento));
 	setNazione(new it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk(pg_nazione));
 }
@@ -215,5 +216,20 @@ public void validate() throws ValidationException {
 	// controllo su campo DATA CANCELLAZIONE
 	if(getDt_cancellazione()!=null && getDt_cancellazione().compareTo(getDt_inizio_validita())<0)
 		throw new ValidationException("Il campo DATA CANCELLAZIONE deve essere superiore alla Data Inizio Validità");
+	
+	// controllo su campo Area Estera
+	if ( getCd_area_estera() == null )
+		throw new ValidationException( "Il campo Area Estera non può essere vuoto!" );
 }		
+
+public java.lang.String getCd_area_estera() {
+	it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk nazione = this.getNazione();
+	if (nazione == null)
+		return null;
+	return nazione.getCd_area_estera();
+}
+public void setCd_area_estera(java.lang.String cd_area_estera) {
+	this.getNazione().setCd_area_estera(cd_area_estera);
+}
+
 }

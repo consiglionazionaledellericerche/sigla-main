@@ -15,9 +15,7 @@
 		<columnMapping
 			columnName="CD_DIVISA"
 			propertyName="divisa.cd_divisa" />
-		
 	</defaultColumnMap>
-	
 
 	<persistentProperty
 		name="nazione"

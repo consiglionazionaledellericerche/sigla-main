@@ -15,6 +15,7 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 {
 	public final static String TIPO_DIARIA = "D";
 	public final static String TIPO_SPESA = "S";		
+	public final static String TIPO_RIMBORSO = "R";
 	protected MissioneBulk missione;
 
 /********************* SPESA *****************************/	

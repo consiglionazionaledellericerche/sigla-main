@@ -67,11 +67,16 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	private BulkList diariaMissioneColl = new BulkList();	
 	private boolean speseInserite = false;
 	
+	// Dettagli rimborso
+	private BulkList rimborsoMissioneColl = new BulkList();
+	
 	// Consuntivo missione
 	private java.sql.Timestamp giorno_consuntivo;
 	private BigDecimal totaleSpeseDelGiorno = new BigDecimal(0);	
 	private BigDecimal totaleNettoDiariaDelGiorno = new BigDecimal(0);
-	private BigDecimal totaleEsenteDiariaDelGiorno = new BigDecimal(0);		
+	private BigDecimal totaleEsenteDiariaDelGiorno = new BigDecimal(0);	
+	private BigDecimal totaleRimborsoDelGiorno = new BigDecimal(0);
+	private BigDecimal totaleEsenteRimborsoDelGiorno = new BigDecimal(0);
 
 	//Unità Organizzativa
 	private Unita_organizzativaBulk unitaOrganizzativa;
@@ -257,7 +262,9 @@ public int addToSpeseMissioneColl( Missione_dettaglioBulk spesa )
 	spesa.setIm_diaria_lorda(new BigDecimal(0));
 	spesa.setIm_diaria_netto(new BigDecimal(0));
 	spesa.setFl_diaria_manuale(new Boolean(false));
-		
+	
+	spesa.setIm_rimborso(new BigDecimal(0));
+	
 	// Inizializzo i campi "not null" di particolari tipi di spesa
 	spesa.setIm_base_maggiorazione(new BigDecimal(0));
 	spesa.setIm_maggiorazione(new BigDecimal(0));
@@ -291,6 +298,7 @@ public int addToTappeMissioneColl( Missione_tappaBulk tappa )
 	
 	tappa.setFl_no_diaria(new Boolean(true));
 	tappa.setFlag_spese(tappa.NESSUNO);	
+	tappa.setFl_rimborso(new Boolean(false));
 	
 	return tappeMissioneColl.size()-1;
 }
@@ -345,6 +353,7 @@ public void calcolaConsuntivi()
 {
 	calcolaConsuntiviSpese();			
 	calcolaConsuntiviDiaria();
+	calcolaConsuntiviRimborso();
 	calcolaConsuntiviMissione();
 }
 /**
@@ -409,6 +418,62 @@ public void calcolaConsuntiviDiariaDelGiorno()
 	}	
 }
 /**
+ * Il metodo calcola tutti gli importi necessari per il consuntivo rimborso 
+ * della missione
+ */
+
+public void calcolaConsuntiviRimborso() 
+{
+	setIm_rimborso(new BigDecimal(0));
+	setIm_quota_esente(new BigDecimal(0));	
+
+	if(getRimborsoMissioneColl() == null)
+		return;
+	
+	for ( Iterator i = getRimborsoMissioneColl().iterator(); i.hasNext(); )
+	{
+		Missione_dettaglioBulk rimborso = (Missione_dettaglioBulk)i.next();
+
+		if(rimborso.getIm_rimborso() != null)
+		{
+			setIm_rimborso(getIm_rimborso().add(rimborso.getIm_rimborso()));
+			setIm_rimborso(getIm_rimborso().setScale(2, BigDecimal.ROUND_HALF_EVEN));
+		}	
+		if(rimborso.getIm_quota_esente() != null)
+		{
+			setIm_quota_esente(getIm_quota_esente().add(rimborso.getIm_quota_esente()));
+			setIm_quota_esente(getIm_quota_esente().setScale(2, BigDecimal.ROUND_HALF_EVEN));
+		}	
+	}
+}
+/**
+ * Il metodo calcola tutti gli importi necessari per il consuntivo rimborso della missione
+ * di un determinato giorno
+ */
+
+public void calcolaConsuntiviRimborsoDelGiorno() 
+{
+	setTotaleRimborsoDelGiorno(new BigDecimal(0));
+	setTotaleEsenteRimborsoDelGiorno(new BigDecimal(0));			
+	
+	if((getGiorno_consuntivo() == null) || (getRimborsoMissioneColl() == null))
+		return;
+	
+	for ( Iterator i = getRimborsoMissioneColl().iterator(); i.hasNext(); )
+	{
+		Missione_dettaglioBulk rimborso = (Missione_dettaglioBulk)i.next();
+		
+		if(getGiorno_consuntivo().equals(rimborso.getDt_inizio_tappa()))
+		{
+			if(rimborso.getIm_rimborso() != null)
+				setTotaleRimborsoDelGiorno(getTotaleRimborsoDelGiorno().add(rimborso.getIm_rimborso()));
+			if(rimborso.getIm_quota_esente() != null)	
+				setTotaleEsenteRimborsoDelGiorno(getTotaleEsenteRimborsoDelGiorno().add(rimborso.getIm_quota_esente()));			
+		}	
+	}	
+}
+
+/**
  * Il metodo calcola tutti gli importi necessari per il consuntivo della missione
  */
 
@@ -424,6 +489,8 @@ public void calcolaConsuntiviMissione()
 		setIm_diaria_netto(new BigDecimal(0));
 	if(getIm_diaria_lorda() == null)
 		setIm_diaria_lorda(new BigDecimal(0));
+	if(getIm_rimborso() == null)
+		setIm_rimborso(new BigDecimal(0));
 
 	if(isMissioneConCompenso())
 	{
@@ -442,7 +509,7 @@ public void calcolaConsuntiviMissione()
 	}
 	else	
 	{
-		setIm_totale_missione(getIm_spese().add(getIm_diaria_netto()));
+		setIm_totale_missione(getIm_spese().add(getIm_diaria_netto().add(getIm_rimborso())));
 		setIm_totale_missione(getIm_totale_missione().setScale(2, BigDecimal.ROUND_HALF_EVEN));
 
 		// 	In caso la missione non abbia il compenso i due importi seguenti sono uguali
@@ -527,6 +594,21 @@ public void cancellaDiaria()
 
 	setIm_diaria_lorda(new BigDecimal(0));
 	setIm_diaria_netto(new BigDecimal(0));
+	setIm_quota_esente(new BigDecimal(0));	
+}
+/**
+ * Il metodo rimuove tutti i dettagli di diaria dalla relativa collection ed inizializza
+ * gli importi della missione relativi alla diaria
+ */
+
+public void cancellaRimborso() 
+{
+	if(getRimborsoMissioneColl() == null || getRimborsoMissioneColl().isEmpty())
+		return;
+	
+	setRimborsoMissioneColl(new BulkList());
+
+	setIm_rimborso(new BigDecimal(0));
 	setIm_quota_esente(new BigDecimal(0));	
 }
 /**
@@ -779,7 +861,7 @@ public BulkCollection[] getBulkLists()
 {
 	// Metti solo le liste di oggetti che devono essere resi persistenti
 	
-	 return new it.cnr.jada.bulk.BulkCollection[] { tappeMissioneColl, speseMissioneColl, diariaMissioneColl };
+	 return new it.cnr.jada.bulk.BulkCollection[] { tappeMissioneColl, speseMissioneColl, diariaMissioneColl, rimborsoMissioneColl };
 }
 /**
  * Il metodo restituisce il valore dell'attributo 'cd_cds_anticipo'
@@ -996,6 +1078,9 @@ public BulkList getDettagliMissioneColl()
 	if(getDiariaMissioneColl() != null && ! getDiariaMissioneColl().isEmpty())
 		listaDettagli.addAll(getDiariaMissioneColl());
 		
+	if(getRimborsoMissioneColl() != null && ! getRimborsoMissioneColl().isEmpty())
+		listaDettagli.addAll(getRimborsoMissioneColl());
+	
 	return listaDettagli;
 }
 /**
@@ -1004,6 +1089,13 @@ public BulkList getDettagliMissioneColl()
 
 public it.cnr.jada.bulk.BulkList getDiariaMissioneColl() {
 	return diariaMissioneColl;
+}
+/**
+ * Il metodo ritorna una BulkList contenente tutti i dettagli dei rimborsi della missione
+ */
+
+public it.cnr.jada.bulk.BulkList getRimborsoMissioneColl() {
+	return rimborsoMissioneColl;
 }
 /**
  * Il  metodo ritorna il valore dell'attributo 'documentiContabiliCancellati'
@@ -1465,6 +1557,18 @@ public java.math.BigDecimal getTotaleNettoDiariaDelGiorno() {
 	return totaleNettoDiariaDelGiorno;
 }
 /**
+ * Il metodo restituisce l'attributo 'totaleEsenteRimborsoDelGiorno'
+ */
+public java.math.BigDecimal getTotaleEsenteRimborsoDelGiorno() {
+	return totaleEsenteRimborsoDelGiorno;
+}
+/**
+ * Il metodo restituisce l'attributo 'totaleRimborsoDelGiorno'
+ */
+public java.math.BigDecimal getTotaleRimborsoDelGiorno() {
+	return totaleRimborsoDelGiorno;
+}
+/**
  * Il metodo restituisce l'attributo 'totaleSpeseDelGiorno'
  */
 public java.math.BigDecimal getTotaleSpeseDelGiorno() {
@@ -1562,6 +1666,8 @@ public void inizializzaGiornoConsuntivo()
 	setTotaleSpeseDelGiorno(new BigDecimal(0));
 	setTotaleNettoDiariaDelGiorno(new BigDecimal(0));
 	setTotaleEsenteDiariaDelGiorno(new BigDecimal(0));
+	setTotaleRimborsoDelGiorno(new BigDecimal(0));
+	setTotaleEsenteRimborsoDelGiorno(new BigDecimal(0));
 }
 /**
  * Il metodo inizializza gli attributi relativi al terzo con valori NULL
@@ -1735,7 +1841,8 @@ public boolean isCompensoObbligatorio()
 	for ( Iterator i = getTappeMissioneColl().iterator(); i.hasNext(); )	
 	{
 		tappa = (Missione_tappaBulk) i.next();
-		if((tappa.isEstera() && tappa.getFl_no_diaria() == false) || tappa.isComuneProprio())
+		if((tappa.isEstera() && tappa.getFl_no_diaria() == false) || tappa.isComuneProprio() ||
+		   (tappa.isEstera() && tappa.getFl_rimborso() == true)	)
 			return true;		
 	}		
 	return false;
@@ -2466,7 +2573,8 @@ public void ripristinaCrudStatusFigli()
 	//	cancellando le tappe vengono cancellati anche i relativi dettagli 
 	//	(spese e diaria) da un Constraint. 
 	setSpeseMissioneColl(new BulkList());		
-	setDiariaMissioneColl(new BulkList());		
+	setDiariaMissioneColl(new BulkList());	
+	setRimborsoMissioneColl(new BulkList());
 }
 /**
  * il  metodo imposta il valore dell'attributo 'annoSolare'
@@ -2588,6 +2696,12 @@ public void setDettagliCancellati(java.util.Vector newDettagliCancellati) {
  */
 public void setDiariaMissioneColl(it.cnr.jada.bulk.BulkList newDiariaMissioneColl) {
 	diariaMissioneColl = newDiariaMissioneColl;
+}
+/**
+ * Il metodo imposta il valore dell'attributo 'rimborsoMissioneColl'
+ */
+public void setRimborsoMissioneColl(it.cnr.jada.bulk.BulkList newRimborsoMissioneColl) {
+	rimborsoMissioneColl = newRimborsoMissioneColl;
 }
 /**
  * Il metodo imposta il valore dell'attributo 'documentiContabiliCancellati'
@@ -2764,14 +2878,14 @@ public void setInizioFineTappe(java.sql.Timestamp data_fine_diaria_miss_estero) 
 			}		
 			else
 			{
-				// Italia
+				// Estere - non è la prima nè l'ultima tappa
 				if(	((tappaSuccessiva != null) && (tappaSuccessiva.getFl_comune_estero().booleanValue()) && (!(tappa.getDt_inizio_tappa().compareTo(data_fine_diaria_miss_estero)>0))) ||
 					((tappaPrecedente != null) && (tappaPrecedente.getFl_comune_estero().booleanValue())&& (!(tappa.getDt_inizio_tappa().compareTo(data_fine_diaria_miss_estero)>0))))
 				{
 					inizioTappa.set(GregorianCalendar.HOUR_OF_DAY, 23);
 					inizioTappa.set(GregorianCalendar.MINUTE, 59);					
 				}
-				else
+				else //Italia oppure non diaria
 				{
 					if(!((inizioTappa.get(GregorianCalendar.HOUR_OF_DAY) == 0) && (inizioTappa.get(GregorianCalendar.MINUTE)==0)))
 						inizioTappa.add(java.util.Calendar.DATE, 1);					
@@ -3023,6 +3137,18 @@ public void setTotaleNettoDiariaDelGiorno(java.math.BigDecimal newTotaleNettoDia
 	totaleNettoDiariaDelGiorno = newTotaleNettoDiariaDelGiorno;
 }
 /**
+ * Il metodo imposta il valore dell'attributo 'totaleEsenteRimborsoDelGiorno'
+ */
+public void setTotaleEsenteRimborsoDelGiorno(java.math.BigDecimal newTotaleEsenteRimborsoDelGiorno) {
+	totaleEsenteRimborsoDelGiorno = newTotaleEsenteRimborsoDelGiorno;
+}
+/**
+ * Il metodo imposta il valore dell'attributo 'totaleRimborsoDelGiorno'
+ */
+public void setTotaleRimborsoDelGiorno(java.math.BigDecimal newTotaleRimborsoDelGiorno) {
+	totaleRimborsoDelGiorno = newTotaleRimborsoDelGiorno;
+}
+/**
  * Il metodo imposta il valore dell'attributo 'totaleSpeseDelGiorno'
  */
 public void setTotaleSpeseDelGiorno(java.math.BigDecimal newTotaleSpeseDelGiorno) {
@@ -3238,7 +3364,8 @@ public void validate() throws ValidationException
 	// Importo totale della missione nullo
 	if(!isSalvataggioTemporaneo() &&
 	   (getIm_spese()==null || getIm_spese().compareTo(new BigDecimal(0))==0) &&
-   	   (getIm_diaria_netto()==null || getIm_diaria_netto().compareTo(new BigDecimal(0))==0)
+   	   (getIm_diaria_netto()==null || getIm_diaria_netto().compareTo(new BigDecimal(0))==0) &&
+   	   (getIm_rimborso()==null || getIm_rimborso().compareTo(new BigDecimal(0))==0)
 	   )
 		throw new ValidationException("Impossibile proseguire con il salvataggio! La missione ha importo nullo.");
 		
@@ -3279,7 +3406,8 @@ public void verificaUltimaTappa()
 		
 	if((tappa.getDt_inizio_tappa().after(tappa.getDt_fine_tappa())) || (tappa.getDt_inizio_tappa().equals(tappa.getDt_fine_tappa())))
 	{	
-		if((!tappa.getFl_comune_estero().booleanValue()) && (penultimaTappa != null))
+		//if((!tappa.getFl_comune_estero().booleanValue()) && (penultimaTappa != null))
+		if((penultimaTappa != null))
 			penultimaTappa.setDt_fine_tappa((java.sql.Timestamp)getDt_fine_missione().clone());
 
 		int indice = getTappeMissioneColl().size()-1	;
@@ -3289,6 +3417,37 @@ public void verificaUltimaTappa()
 	}	
 }
 
+public boolean isTappeEstereCoerenti()
+{
+	if(getTappeMissioneColl() == null || getTappeMissioneColl().isEmpty())
+		return false;
+
+	Missione_tappaBulk tappa=null;
+	Boolean rimborso=null;
+	for ( Iterator i = getTappeMissioneColl().iterator(); i.hasNext(); )	
+	{
+		tappa = (Missione_tappaBulk) i.next();
+		if(tappa.isEstera() && rimborso == null)
+			rimborso = tappa.getFl_rimborso();
+		if (tappa.isEstera() && tappa.getFl_rimborso().compareTo(rimborso)!=0)
+			return false;
+	}		
+	return true;
+}
+public boolean isMissioneConRimborso()
+{
+	if(getTappeMissioneColl() == null || getTappeMissioneColl().isEmpty())
+		return false;
+
+	Missione_tappaBulk tappa=null;
+	for ( Iterator i = getTappeMissioneColl().iterator(); i.hasNext(); )	
+	{
+		tappa = (Missione_tappaBulk) i.next();
+		if(tappa.isEstera() && tappa.getFl_rimborso())
+			return true;
+	}		
+	return false;
+}
 public Unita_organizzativaBulk getUnitaOrganizzativa() {
 	return unitaOrganizzativa;
 }

@@ -40,14 +40,10 @@ public class NazioneBase extends NazioneKey implements Keyed {
 	private java.lang.String struttura_iban;
 
 	private java.lang.String struttura_piva;
-	
 
-public java.lang.String getStruttura_piva() {
-		return struttura_piva;
-	}
-	public void setStruttura_piva(java.lang.String struttura_piva) {
-		this.struttura_piva = struttura_piva;
-	}
+	// CD_AREA_ESTERA CHAR(2) NOT NULL
+	private java.lang.String cd_area_estera;
+
 public NazioneBase() {
 	super();
 }
@@ -173,5 +169,17 @@ public java.lang.String getStruttura_iban() {
 }
 public void setStruttura_iban(java.lang.String struttura_iban) {
 	this.struttura_iban = struttura_iban;
+}
+public java.lang.String getCd_area_estera() {
+	return cd_area_estera;
+}
+public void setCd_area_estera(java.lang.String cd_area_estera) {
+	this.cd_area_estera = cd_area_estera;
+}
+public java.lang.String getStruttura_piva() {
+	return struttura_piva;
+}
+public void setStruttura_piva(java.lang.String struttura_piva) {
+	this.struttura_piva = struttura_piva;
 }
 }

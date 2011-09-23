@@ -63,6 +63,10 @@
 	<td><% bp.getController().writeFormLabel(out,"cd_iso"); %></td>
 	<td><% bp.getController().writeFormInput(out,"cd_iso"); %></td>
   </tr>
+    <tr>
+	<td><% bp.getController().writeFormLabel(out,"cd_area_estera"); %></td>
+	<td><% bp.getController().writeFormInput(out,"cd_area_estera"); %></td>
+  </tr>
 </table>
 
 <%	bp.closeFormWindow(pageContext); %>

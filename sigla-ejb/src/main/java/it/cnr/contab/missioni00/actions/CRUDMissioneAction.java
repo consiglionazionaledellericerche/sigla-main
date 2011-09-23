@@ -558,6 +558,9 @@ public Forward doBringBackSearchFind_nazione(ActionContext context, Missione_tap
 		tappa.setDivisa_tappa(new DivisaBulk());
 		tappa.setCambio_tappa(new java.math.BigDecimal(0));
 
+		if (aNazione != null && aNazione.getCd_area_estera() == null) 
+			throw new it.cnr.jada.comp.ApplicationException("Area Estera non difinita per la nazione !");
+		       //bp.setMessage("Area Estera non difinita per la nazione !");
 		if(tappa.getNazione()!=null)
 			bp.setDivisaCambioTappaEstera(context, tappa);
 		
@@ -1447,6 +1450,12 @@ public Forward doFineConfigurazioneTappa(ActionContext context)
 			return context.findDefaultForward();
 		}
 		
+		if(!missione.isTappeEstereCoerenti())
+		{
+			setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Le tappe estere devono avere tutte la stessa tipologia di Trattamento!");
+			return context.findDefaultForward();
+		}
+		
 		if(missione.getCrudStatus() == OggettoBulk.NORMAL || missione.getCrudStatus() == OggettoBulk.TO_BE_UPDATED) 
 		{
 			bp.cancellaTappePhisically(context);
@@ -1503,6 +1512,11 @@ public Forward doFineInserimentoSpese(ActionContext context)
 			//	Salvo temporaneamente la missione per potere lanciare le
 			//  procedure di generazione Diaria + Abbattimenti 
 			missione = bp.generaDiaria(context, missione);
+			
+			// A differenza della diaria, il rimborso viene generato solo se previsto
+			// Controllo che non sia già inserito (poichè non viene sempre cancellato come la diaria)
+			if(missione.isMissioneConRimborso() && (missione.getRimborsoMissioneColl() == null || missione.getRimborsoMissioneColl().isEmpty()))
+			    missione = bp.generaRimborso(context, missione);
 
 			//	Verifico se devo scollegare la scadenza
 			doControlliPerFineSpese(context, missione);
@@ -1510,7 +1524,10 @@ public Forward doFineInserimentoSpese(ActionContext context)
 			missione.setSpeseInserite(true);
 			missione.setMissioneIniziale(oldMissione);		
 				
-			doTab(context, "tab", "tabDettaglioDiaria");
+			if(missione.isMissioneConRimborso())
+			    doTab(context, "tab", "tabDettaglioRimborso");
+			else
+				doTab(context, "tab", "tabDettaglioDiaria");
 			bp.setModel(context, missione);
 		}
 		return context.findDefaultForward();
@@ -1955,7 +1972,12 @@ public Forward doOnFineMissioneChange(ActionContext context)
 		if(bp.isSearching())
 			return context.findDefaultForward();
 		if (((MissioneBulk)bp.getModel()).getDt_fine_missione() == null)
+		{	
+			// cancello la collection dei giorni		
+			if(	missione.getCollectionGiorni() != null && !missione.getCollectionGiorni().isEmpty())
+				missione.setCollectionGiorni(null);
 			return context.findDefaultForward();
+		}	
 		try{missione.isDataFineModificabile();}
 		catch(it.cnr.jada.comp.ApplicationException e)
 		{
@@ -2074,6 +2096,7 @@ public Forward doOnGiornoConsuntivoChange(ActionContext context)
 		bp.selezionaDettagliConsuntivo(context);
 		missione.calcolaConsuntiviSpeseDelGiorno();
 		missione.calcolaConsuntiviDiariaDelGiorno();
+		missione.calcolaConsuntiviRimborsoDelGiorno();
 
 		bp.setDirty(isDirty);
 		
@@ -2187,8 +2210,12 @@ public Forward doOnInizioMissioneChange(ActionContext context)
 			return context.findDefaultForward();
 
 		if (missione.getDt_inizio_missione() == null)
+		{	
+			// cancello la collection dei giorni		
+			if(	missione.getCollectionGiorni() != null && !missione.getCollectionGiorni().isEmpty())
+				missione.setCollectionGiorni(null);
         	return context.findDefaultForward();
-
+		}
 		if (oldDataIniziale == null)
 			return context.findDefaultForward();
 			
@@ -2625,7 +2652,7 @@ public Forward doOnTipoTrattamentoChange(ActionContext context)
 			return handleException(context, e);			
 		}
 		
-		if(!missione.getTipo_trattamento().getFl_visibile_a_tutti()&& !UtenteBulk.isAbilitatoAllTrattamenti(context.getUserContext()))
+		if(missione.getTipo_trattamento() != null && !missione.getTipo_trattamento().getFl_visibile_a_tutti()&& !UtenteBulk.isAbilitatoAllTrattamenti(context.getUserContext()))
 		{
 			missione.setTipo_trattamento(oldTipoTrattamento);
 			throw new it.cnr.jada.comp.ApplicationException(
@@ -3062,6 +3089,8 @@ public Forward doSetNazioneDivisaCambioItalia(ActionContext context)
 			missione_tappa.setFl_comune_altro(new Boolean(false));
 			missione_tappa.setFl_comune_estero(new Boolean(false));
 			missione_tappa.setFl_no_diaria(new Boolean(true));
+			//if (bp.isRimborsoEditable(context.getUserContext()))
+			missione_tappa.setFl_rimborso(new Boolean(false));
 		}
 		if(missione_tappa.getComune().equals(Missione_tappaBulk.COMUNE_ALTRO))
 		{
@@ -3069,6 +3098,8 @@ public Forward doSetNazioneDivisaCambioItalia(ActionContext context)
 			missione_tappa.setFl_comune_altro(new Boolean(true));
 			missione_tappa.setFl_comune_estero(new Boolean(false));
 			missione_tappa.setFl_no_diaria(new Boolean(true));
+			//if (bp.isRimborsoEditable(context.getUserContext()))
+			missione_tappa.setFl_rimborso(new Boolean(false));
 		}
 		if(missione_tappa.getComune().equals(Missione_tappaBulk.COMUNE_ESTERO))
 		{
@@ -3077,6 +3108,8 @@ public Forward doSetNazioneDivisaCambioItalia(ActionContext context)
 			missione_tappa.setFl_comune_estero(new Boolean(true));
 			//missione_tappa.setFl_no_diaria(new Boolean(false));
 			missione_tappa.setFl_no_diaria(new Boolean(true));
+			//if (bp.isRimborsoEditable(context.getUserContext()))
+			missione_tappa.setFl_rimborso(new Boolean(false));
 		}
 		
 		bp.setDiariaSiNo(context);
