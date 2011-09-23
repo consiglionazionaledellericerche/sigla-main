@@ -58,7 +58,7 @@ public Forward doSelezioneTipoAreaGeografica(ActionContext context) {
 		fillModel(context);
 		
 		bp.gestioneNazione(context);
-		
+	
 		return context.findDefaultForward();
 	} catch(Throwable e) {
 		return handleException(context,e);

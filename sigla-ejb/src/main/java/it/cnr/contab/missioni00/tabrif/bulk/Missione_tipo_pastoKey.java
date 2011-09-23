@@ -54,7 +54,7 @@ public java.lang.String getCd_ti_pasto() {
 	return cd_ti_pasto;
 }
 /* 
- * Getter dell'attributo cd_ti_pasto
+ * Getter dell'attributo cd_area_estera
  */
 public java.lang.String getCd_area_estera() {
 	return cd_area_estera;

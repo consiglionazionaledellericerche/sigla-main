@@ -373,6 +373,9 @@ public void validaTappa() throws ValidationException
 		// 1 esistera' sicuramente perche' e' quella che sto inserendo
 		if(i > 1)		
 			throw new ValidationException( "La tappa del giorno selezionato e' gia' stata configurata !" );
-	}			
+	}
+	// Se ho settato "Allogio gratuito" o "Vitto e alloggio gratuito" non posso scegliere il trattamento alternativo
+	if((getFl_alloggio_gratuito().booleanValue()||getFl_vitto_alloggio_gratuito().booleanValue())&& getFl_rimborso().booleanValue())
+		throw new ValidationException( "Non è possibile scegliere il Trattamento alternativo quando l'Alloggio è gratuito !" );
 }
 }

@@ -80,14 +80,18 @@
 		inputSize="60"
 		inputType="ROTEXT"
 		label="Nazione" />
-	<fieldProperty
-		name="cd_area_estera"
-		property="nazione.cd_area_estera"
-		inputSize="2"
-		inputType="TEXT"
-		label="Area Estera" />	
 /***********************************/
 /************ AREA ESTERA **************/
+	<fieldProperty
+		name="find_area_estera"
+		property="rifAreePaesiEsteri"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROFindRifAreePaesiEsteri"
+		enabledOnInsert="true"
+		enabledOnEdit="false" 
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Area Estera" />
 	<fieldProperty
 		name="cd_area_estera"
 		property="cd_area_estera"
@@ -100,6 +104,12 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		label="Area Estera" />
+	<fieldProperty
+		name="ds_area_estera"
+		property="rifAreePaesiEsteri.ds_area_estera"
+		inputSize="100"
+		inputType="ROTEXT"
+		label="Descrizione Area estera" />		
 /************* DIVISA **************/
 	<fieldProperty
 		name="find_divisa"

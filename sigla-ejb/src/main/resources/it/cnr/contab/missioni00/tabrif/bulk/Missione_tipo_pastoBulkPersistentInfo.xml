@@ -15,6 +15,9 @@
 		<columnMapping
 			columnName="CD_DIVISA"
 			propertyName="divisa.cd_divisa" />
+		<columnMapping
+			columnName="CD_AREA_ESTERA"
+			propertyName="rifAreePaesiEsteri.cd_area_estera" />			
 	</defaultColumnMap>
 
 	<persistentProperty
@@ -25,5 +28,7 @@
 		partOfOid="true" />
 	<persistentProperty
 		name="divisa" />
-
+	<persistentProperty
+		name="rifAreePaesiEsteri" 
+	    partOfOid="true" />/>
 </SQLPersistentInfo>
