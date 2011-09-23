@@ -1788,13 +1788,27 @@ public MissioneBulk generaRimborso (UserContext aUC, MissioneBulk missione) thro
 		//missione.calcolaConsuntivi();
 		try
 		{
-			cs = new LoggableStatement(getConnection(aUC), "{call "+it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
-					+"CNRCTB505.elaboraMissioneRimborso(?,?,?,?)}",false,this.getClass());
-			cs.setObject( 1, missione.getCd_cds()                 );		
-			cs.setObject( 2, missione.getCd_unita_organizzativa() );		
-			cs.setObject( 3, missione.getEsercizio()              );
-			cs.setObject( 4, missione.getPg_missione()            );
-			cs.executeQuery();
+			if (missione.getCd_trattamento()!=null)
+			{	
+				cs = new LoggableStatement(getConnection(aUC), "{call "+it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
+						+"CNRCTB505.elaboraMissioneRimborso(?,?,?,?,?)}",false,this.getClass());
+				cs.setObject( 1, missione.getCd_cds()                 );		
+				cs.setObject( 2, missione.getCd_unita_organizzativa() );		
+				cs.setObject( 3, missione.getEsercizio()              );
+				cs.setObject( 4, missione.getPg_missione()            );
+				cs.setObject( 5, missione.getCd_trattamento()         );
+				cs.executeQuery();
+			}
+			else
+			{	
+				cs = new LoggableStatement(getConnection(aUC), "{call "+it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
+						+"CNRCTB505.elaboraMissioneRimborso(?,?,?,?)}",false,this.getClass());
+				cs.setObject( 1, missione.getCd_cds()                 );		
+				cs.setObject( 2, missione.getCd_unita_organizzativa() );		
+				cs.setObject( 3, missione.getEsercizio()              );
+				cs.setObject( 4, missione.getPg_missione()            );
+				cs.executeQuery();
+			}	
 		}
 		finally 
 		{

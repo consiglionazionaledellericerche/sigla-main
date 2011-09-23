@@ -1452,7 +1452,7 @@ public Forward doFineConfigurazioneTappa(ActionContext context)
 		
 		if(!missione.isTappeEstereCoerenti())
 		{
-			setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Le tappe estere devono avere tutte la stessa tipologia di Trattamento!");
+			setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Le tappe estere devono avere tutte la stessa tipologia di Trattamento di missione!");
 			return context.findDefaultForward();
 		}
 		
@@ -2664,9 +2664,17 @@ public Forward doOnTipoTrattamentoChange(ActionContext context)
 		else
 			missione.setCd_trattamento(missione.getTipo_trattamento().getCd_trattamento());
 			 
+		// A differenza della diaria, il rimborso viene generato solo se previsto
+		// Poichè cambia il trattamento devo ricalcolarlo (può cambiare la quota esente)
+		if(missione.isMissioneConRimborso())// && (missione.getRimborsoMissioneColl() == null || missione.getRimborsoMissioneColl().isEmpty()))
+		{	
+			    bp.cancellaRimborso(context);
+			    missione = bp.generaRimborso(context, missione);
+		}
+		
 		bp.setModel(context, missione);
 		bp.resyncChildren(context);
-
+		
 		return context.findDefaultForward();
 	}
 	catch (Throwable t) 
