@@ -1877,7 +1877,7 @@ public SQLBuilder selectV_terzoByClause(UserContext aUC,AnticipoBulk anticipo, V
 	//	quanti sono i tipi rapporto
 	
 	SQLBuilder sql = getHome(aUC,V_terzo_per_compensoBulk.class,"DISTINCT_TERZO").createSQLBuilder();
-
+	sql.addClause(clauses);
 	sql.setDistinctClause(true);
 	sql.addSQLClause("AND","TI_DIPENDENTE_ALTRO",sql.EQUALS,anticipo.getTi_anagrafico());
 	sql.addSQLClause("AND","CD_TERZO",sql.EQUALS, anticipo.getCd_terzo());
