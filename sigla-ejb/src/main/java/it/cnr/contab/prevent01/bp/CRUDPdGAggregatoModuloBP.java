@@ -157,7 +157,7 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 	}
     protected Button[] createToolbar()
 	{
-		Button abutton[] = new Button[12];
+		Button abutton[] = new Button[13];
 		int i = 0;
 		abutton[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.search");
 		abutton[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.startSearch");
@@ -174,6 +174,8 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 		it.cnr.jada.util.jsp.Button button = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.consultazionePianoRiparto");
 		button.setSeparator(true);
 		abutton[i++] = button;
+		abutton[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.consultazioneLimitiSpesa");
+		abutton[i-1].setSeparator(true);
 		abutton[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.scaricaCostiPersonale");
 		abutton[i-1].setSeparator(true);
 		abutton[i++] = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.annullaScaricaCostiPersonale");

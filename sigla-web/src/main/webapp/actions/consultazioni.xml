@@ -1091,4 +1091,21 @@
 	    <init-param name="defaultAction" value="ConsScadAccertamentiAction" />
 	    <init-param name="multiSelezione" value="Y" />
   </businessProcess> 
+   <action 
+      path="/ConsLimitiSpesaPdgpAction" actionClass="it.cnr.contab.prevent00.consultazioni.action.ConsLimitiSpesaPdgpAction">
+  </action>
+  <businessProcess
+      name="ConsLimitiSpesaPdgpBP" className="it.cnr.contab.prevent00.consultazioni.bp.ConsLimitiSpesaPdgpBP">
+    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.prevent00.consultazioni.bulk.VLimiteSpesaPdgpBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
+	    <init-param name="defaultAction" value="ConsLimitiSpesaPdgpAction" />	    
+  </businessProcess>  
+  <businessProcess
+      name="ConsLimitiSpesaDetPdgpBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.prevent00.consultazioni.bulk.VLimiteSpesaDetPdgpBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
+	    <init-param name="defaultAction" value="ConsultazioniAction" />	    
+  </businessProcess>  
 </action-mappings>

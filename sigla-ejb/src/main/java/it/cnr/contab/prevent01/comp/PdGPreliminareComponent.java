@@ -167,7 +167,8 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 						throw new ApplicationException( "Lo stato non può essere aggiornato poichè non tutte le righe del PdGP hanno stato "+Pdg_moduloBulk.STATO_CC);
 										
 					controllaPianoRiparto(userContext, pdg_esercizio, false);
-
+					//viene richiamata la procedura, il controllo viene fatto nel package
+					aggiornaLimiti(userContext, pdg_esercizio);
 				}
 
 				// se si cambia lo stato a STATO_CHIUSURA_CDR verifichiamo la
@@ -501,7 +502,9 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 						throw new ApplicationException( "Lo stato può essere aggiornato unicamente dal Direttore dell'Istituto");
 					}
 				}
-
+				//viene richiamata la procedura, il controllo viene fatto nel package
+				aggiornaLimiti(userContext, pdg_esercizio);
+				
 				pdg_esercizio.setStato(prev);
 				updateBulk( userContext,pdg_esercizio );
 			}
@@ -1283,6 +1286,26 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 			return testata;
 		} catch(Exception e) {
 			throw handleException(e);
+		}
+	}
+	private void aggiornaLimiti(UserContext userContext, Pdg_esercizioBulk pdg) throws ComponentException
+	{
+
+		try
+		{
+			lockBulk(userContext, pdg);		
+			LoggableStatement cs = new LoggableStatement(getConnection( userContext ), "{call "+it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
+					+"CNRCTB053.aggiornaLimiteSpesaDec(?,?,?,?)}",false,this.getClass());
+			cs.setObject( 1, pdg.getEsercizio() );
+			cs.setString( 2, pdg.getCd_centro_responsabilita());
+			cs.setString( 3, pdg.getStato());
+			cs.setObject( 4, userContext.getUser());
+			cs.executeQuery();
+			cs.close();
+		} 
+		catch (Throwable e) 
+		{
+			throw handleException(pdg, e);
 		}
 	}
 }

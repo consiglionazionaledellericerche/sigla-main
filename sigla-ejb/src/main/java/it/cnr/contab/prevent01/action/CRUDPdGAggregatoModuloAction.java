@@ -469,4 +469,30 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 			return handleException(context,e);
 		}
 	}
+	/**
+	 * Gestione della richiesta di consultazione  limite spesa
+	 *
+	 * @param context	L'ActionContext della richiesta
+	 * @return Il Forward alla pagina di risposta
+	 */
+	public Forward doConsultaLimitiSpesa(ActionContext context) {
+		try {
+			fillModel(context);
+			CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP)getBusinessProcess(context);
+			CdrBulk cdr = (CdrBulk)bp.getModel();
+			CompoundFindClause clause = new CompoundFindClause();
+			clause.addClause("AND","esercizio",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(context.getUserContext()));
+			if (cdr!=null && cdr.getCd_cds()!=null) {
+				clause.addClause("AND","cdCds",SQLBuilder.EQUALS,cdr.getCd_cds());
+			}
+			ConsultazioniBP ricercaLiberaBP = (ConsultazioniBP)context.createBusinessProcess("ConsLimitiSpesaPdgpBP");
+			ricercaLiberaBP.addToBaseclause(clause);
+			ricercaLiberaBP.openIterator(context);
+			context.addHookForward("close",this,"doDefault");
+			return context.addBusinessProcess(ricercaLiberaBP);
+		}catch(Throwable ex){
+			return handleException(context, ex);
+		}
+	}
+
 }

@@ -15,6 +15,8 @@ import javax.ejb.EJBException;
 
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.pdcfin.bulk.LimiteSpesaBulk;
+import it.cnr.contab.config00.pdcfin.bulk.LimiteSpesaHome;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
@@ -200,7 +202,8 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 				sql.closeParenthesis();  		      
 			sql.closeParenthesis();
 		    sql.addSQLClause("AND", "V_CLASSIFICAZIONE_VOCI.ESERCIZIO", sql.EQUALS, dett.getEsercizio());
-		    sql.addSQLClause("AND", "V_CLASSIFICAZIONE_VOCI.TI_GESTIONE", sql.EQUALS, Elemento_voceHome.GESTIONE_SPESE);		    
+		    sql.addSQLClause("AND", "V_CLASSIFICAZIONE_VOCI.TI_GESTIONE", sql.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
+		    sql.addSQLClause("AND", "V_CLASSIFICAZIONE_VOCI.FL_SOLO_GESTIONE", sql.EQUALS,"N");
 			if (clause != null) 
 			  sql.addClause(clause);
 			return sql;
@@ -270,5 +273,35 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 		} catch(Throwable e) {
 			throw handleException(e);
 		}
+	}
+	public boolean soggettaLimite(UserContext usercontext,Pdg_modulo_speseBulk pdg_modulo_spese,String fonte)throws ComponentException {
+		try {
+			if (pdg_modulo_spese!=null && pdg_modulo_spese.getId_classificazione()!=null){
+				SQLBuilder sql = ((Elemento_voceHome)getHome(usercontext, Elemento_voceBulk.class)).createSQLBuilder();
+				sql.addSQLClause("AND","ID_CLASSIFICAZIONE" ,SQLBuilder.EQUALS,pdg_modulo_spese.getId_classificazione());
+				sql.addSQLClause("AND","FL_LIMITE_SPESA",SQLBuilder.EQUALS,"Y");
+				if (sql.executeExistsQuery(getConnection(usercontext))){
+					Elemento_voceHome home_voce =(Elemento_voceHome)getHome(usercontext,Elemento_voceBulk.class);
+					java.util.List voci=home_voce.fetchAll(sql);
+					for(Iterator i=voci.iterator();i.hasNext();){
+						Elemento_voceBulk voceBulk = (Elemento_voceBulk)i.next();
+						SQLBuilder sql2 = ((LimiteSpesaHome)getHome(usercontext, LimiteSpesaBulk.class)).createSQLBuilder();
+						sql2.addSQLClause("AND","ESERCIZIO",SQLBuilder.EQUALS,voceBulk.getEsercizio());
+						sql2.addSQLClause("AND","TI_APPARTENENZA",SQLBuilder.EQUALS,voceBulk.getTi_appartenenza());
+						sql2.addSQLClause("AND","TI_GESTIONE",SQLBuilder.EQUALS,voceBulk.getTi_gestione());
+						sql2.addSQLClause("AND","CD_ELEMENTO_VOCE",SQLBuilder.EQUALS,voceBulk.getCd_elemento_voce());
+						sql2.openParenthesis("AND");
+						sql2.addSQLClause("AND","FONTE",SQLBuilder.EQUALS,fonte);
+						sql2.addSQLClause("OR","FONTE",SQLBuilder.EQUALS,LimiteSpesaBulk.FONTE_INTERNA_E_ESTERNA);
+						sql2.closeParenthesis();
+						if(sql2.executeExistsQuery(getConnection(usercontext)))
+								return true;
+					}
+				}
+			}
+			return false;
+		} catch(Throwable e) {
+			throw handleException(e);
+		}	
 	}
 }

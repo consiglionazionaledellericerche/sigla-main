@@ -29,7 +29,8 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 	private java.math.BigDecimal totale_spese_decentrate_esterne_gest;
 	private java.math.BigDecimal totale_spese_accentrate_interne_gest;
 	private java.math.BigDecimal totale_spese_accentrate_esterne_gest;
-	
+	private boolean limiteInt=false;
+	private boolean limiteEst=false;
 	public Pdg_modulo_speseBulk() {
 		super();
 	}
@@ -208,7 +209,9 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 
 	}
 	public boolean isROAccentrataRiparto(){
-		if (isROAccentrata() || isGestioneAccentrataRipartoDisable()){
+		if (isROAccentrata() || isGestioneAccentrataRipartoDisable() 
+				||isLimiteEst()
+				){
 			if (getCrudStatus() != OggettoBulk.NORMAL)
 			  setIm_spese_gest_accentrata_est(Utility.ZERO);
 			return true;								
@@ -222,7 +225,9 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 			     !getArea().equalsByPrimaryKey(getPdg_modulo_costi().getPdg_modulo().getCdr().getUnita_padre().getUnita_padre())));
 	}
 	public boolean isROAccentrataCdsArea(){
-		if (isROAccentrata()||isGestioneAccentrataCdsAreaDisable()){
+		if (isROAccentrata()||isGestioneAccentrataCdsAreaDisable()
+				||isLimiteInt()
+				){
 	    	if (getCrudStatus() != OggettoBulk.NORMAL)
 			  setIm_spese_gest_accentrata_int(Utility.ZERO);
 			return true;								
@@ -382,5 +387,17 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 	 */
 	public java.math.BigDecimal getImporto_da_ripartire_dec_est_gest() {
 		return Utility.nvl(getIm_spese_gest_decentrata_est()).subtract(Utility.nvl(getTotale_spese_decentrate_esterne_gest()));
+	}
+	public void setLimiteInt(boolean soggettaLimite) {
+		limiteInt=soggettaLimite;
+	}
+	public void setLimiteEst(boolean soggettaLimite) {
+		limiteEst=soggettaLimite;		
+	}
+	public boolean isLimiteInt() {
+		return limiteInt;
+	}
+	public boolean isLimiteEst() {
+		return limiteEst;
 	}
 }

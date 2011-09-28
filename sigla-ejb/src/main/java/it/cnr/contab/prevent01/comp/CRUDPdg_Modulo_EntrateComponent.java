@@ -133,9 +133,9 @@ public SQLBuilder selectClassificazione_vociByClause(CNRUserContext userContext,
 	sql.openParenthesis("OR");		        
 	sql.addSQLClause("AND", "UNITA_ORGANIZZATIVA.CD_TIPO_UNITA", sql.NOT_EQUALS, Tipo_unita_organizzativaHome.TIPO_UO_SAC);
 	sql.addSQLClause("AND", "V_CLASSIFICAZIONE_VOCI.FL_CLASS_SAC", sql.EQUALS, "N");
-	sql.addSQLClause("AND", "V_CLASSIFICAZIONE_VOCI.FL_SOLO_GESTIONE", sql.EQUALS, "N");
 	sql.closeParenthesis();  		      
 	sql.closeParenthesis();
+	sql.addSQLClause("AND", "V_CLASSIFICAZIONE_VOCI.FL_SOLO_GESTIONE", sql.EQUALS, "N");
 	if (clauses != null) 
 		 sql.addClause(clauses);
 	return sql;

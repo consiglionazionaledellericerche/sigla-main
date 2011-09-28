@@ -597,7 +597,7 @@ public boolean isLeaf(UserContext userContext, OggettoBulk bulk) throws Componen
 								sql.addSQLClause("AND", "TIPO_FASE",SQLBuilder.EQUALS,progetto_sip.getTipo_fase());								
 								SQLBroker brokerUtilizzati = moduli_utilizzatiHome.createBroker(sql);
 								if (brokerUtilizzati.next()){
-									handleExceptionMail(userContext, new ApplicationException("Si è tentato di cacellare il modulo utilizzato: "+progetto_sip.getEsercizio()+"/"+progetto_sip.getPg_progetto()+"/"+progetto_sip.getTipo_fase()));
+									handleExceptionMail(userContext, new ApplicationException("Si è tentato di cancellare il modulo utilizzato: "+progetto_sip.getEsercizio()+"/"+progetto_sip.getPg_progetto()+"/"+progetto_sip.getTipo_fase()));
 								}else{	
 									progetto_sip.setToBeDeleted();
 									super.eliminaConBulk(userContext, progetto_sip);

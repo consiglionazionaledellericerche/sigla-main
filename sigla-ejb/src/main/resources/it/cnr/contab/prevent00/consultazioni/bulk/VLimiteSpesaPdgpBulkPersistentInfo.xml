@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.prevent00.consultazioni.bulk.VLimiteSpesaPdgpBulk"
+	homeClassName="it.cnr.contab.prevent00.consultazioni.bulk.VLimiteSpesaPdgpHome">
+	<defaultColumnMap
+		tableName="V_LIMITE_SPESA_PDGP">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cdCds"
+			sqlTypeName="VARCHAR"
+			columnSize="4000"
+			nullable="true" />
+		<columnMapping
+			columnName="FONTE"
+			propertyName="fonte"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="IMPORTO_LIMITE"
+			propertyName="importoLimite"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_PREVISTO"
+			propertyName="importoPrevisto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_DISPONIBILE"
+			propertyName="importoDisponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE"
+			propertyName="cdClassificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="34"
+			nullable="true" />
+		<columnMapping
+			columnName="ID_CLASSIFICAZIONE"
+			propertyName="idClassificazione"
+			sqlTypeName="DECIMAL"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_AREA"
+			propertyName="cdArea"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cdCds" />
+	<persistentProperty
+		name="fonte" />
+	<persistentProperty
+		name="importoLimite" />
+	<persistentProperty
+		name="importoPrevisto" />
+	<persistentProperty
+		name="importoDisponibile" />
+	<persistentProperty
+		name="cdClassificazione" />
+	<persistentProperty
+		name="idClassificazione" />
+	<persistentProperty
+		name="cdArea" />
+</SQLPersistentInfo>
