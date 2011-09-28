@@ -1214,7 +1214,10 @@ public class FatturaAttivaComponentWS {
 						    	         riga.setPrezzo_unitario(riga.getTariffario().getIm_tariffario());
 						    	         riga.setQuantita(new BigDecimal(riga.getTariffario().getUnita_misura()));
 						    	         riga.setIm_imponibile(riga.getPrezzo_unitario().multiply(riga.getQuantita()));
-						    	         riga.setIm_iva(riga.getIm_imponibile().multiply(riga.getVoce_iva().getPercentuale()).divide(new BigDecimal(100)).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+						    	         if(fatr.getFl_iva_forzata().booleanValue())
+						    	        	 riga.setIm_iva(fatr.getIm_iva());
+						    	         else
+						    	        	 riga.setIm_iva(riga.getIm_imponibile().multiply(riga.getVoce_iva().getPercentuale()).divide(new BigDecimal(100)).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
 						    	         riga.setIm_totale_divisa(riga.getIm_imponibile().add(riga.getIm_iva()));
 						    	         riga.setIm_diponibile_nc(riga.getIm_totale_divisa());
 						    	         riga.setDs_riga_fattura(riga.getTariffario().getDs_tariffario());
@@ -1237,7 +1240,11 @@ public class FatturaAttivaComponentWS {
 		    	   	            	    fat=ValorizzaErrore(fat,Costanti.ERRORE_FA_106.toString());
 		    	                }else{
 		    	                	    riga.setIm_imponibile(riga.getPrezzo_unitario().multiply(riga.getQuantita()));
-			    	                    riga.setIm_iva(riga.getIm_imponibile().multiply(riga.getVoce_iva().getPercentuale()).divide(new BigDecimal(100)).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+		    	                	    if(fatr.getFl_iva_forzata().booleanValue())
+						    	        	 riga.setIm_iva(fatr.getIm_iva());
+						    	         else
+						    	        	 riga.setIm_iva(riga.getIm_imponibile().multiply(riga.getVoce_iva().getPercentuale()).divide(new BigDecimal(100)).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+			    	                    
 			    	                    riga.setIm_totale_divisa(riga.getIm_imponibile().add(riga.getIm_iva()));
 			    	                    riga.setIm_diponibile_nc(riga.getIm_totale_divisa());
 			    	                    if(fatr.getDs_riga_fattura()!=null)
@@ -1965,6 +1972,9 @@ private SOAPFault generaFault(String localName,String stringFault) throws SOAPEx
       }else if (riga!=null){
     	  if (riga.getFl_iva_forzata()==null)
     		  return new String("Flag Iva forzata non inserito.");
+    	  if (riga.getFl_iva_forzata().booleanValue())
+    		  if(riga.getIm_iva()==null)
+    			  return new String("Importo Iva forzata non inserito.");
     	  if (riga.getCd_voce()==null)
     		  return new String("Codice voce non inserito.");
     	  if (riga.getCd_bene_servizio()==null)
