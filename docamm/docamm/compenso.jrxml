@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="199"/>
+	<property name="ireport.y" value="22"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -251,7 +251,7 @@ new BigDecimal("0")))))]]></variableExpression>
 					<textElement/>
 					<text><![CDATA[VISTO si liquidi]]></text>
 				</staticText>
-				<textField pattern="� #,##0.00" isBlankWhenNull="false">
+				<textField pattern="¤ #,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-12" style="TNR9" positionType="Float" stretchType="RelativeToBandHeight" x="102" y="56" width="107" height="13">
 						<printWhenExpression><![CDATA[new Boolean($F{PG_OBBLIGAZIONE}!=null)]]></printWhenExpression>
 					</reportElement>
