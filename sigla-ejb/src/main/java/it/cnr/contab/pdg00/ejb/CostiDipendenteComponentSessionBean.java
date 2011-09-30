@@ -196,10 +196,10 @@ public class CostiDipendenteComponentSessionBean extends it.cnr.jada.ejb.Ricerca
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	public it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(it.cnr.jada.UserContext param0,it.cnr.contab.config00.sto.bulk.CdrBulk param1,int param2, String param3) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	public it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(it.cnr.jada.UserContext param0,it.cnr.contab.config00.sto.bulk.CdrBulk param1,int param2, String param3, boolean param4) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
-			it.cnr.jada.util.RemoteIterator result = ((CostiDipendenteComponent)componentObj).listaLinea_attivitaPerCdr(param0,param1,param2,param3);
+			it.cnr.jada.util.RemoteIterator result = ((CostiDipendenteComponent)componentObj).listaLinea_attivitaPerCdr(param0,param1,param2,param3,param4);
 			component_invocation_succes(param0,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
@@ -214,10 +214,10 @@ public class CostiDipendenteComponentSessionBean extends it.cnr.jada.ejb.Ricerca
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	public java.util.List listaLinea_attivitaPerRipartizioneResidui(it.cnr.jada.UserContext param0,String param1,String param2,int param3, String param4) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	public java.util.List listaLinea_attivitaPerRipartizioneResidui(it.cnr.jada.UserContext param0,String param1,String param2,int param3, String param4, boolean param5) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
-			java.util.List result = ((CostiDipendenteComponent)componentObj).listaLinea_attivitaPerRipartizioneResidui(param0,param1,param2,param3,param4);
+			java.util.List result = ((CostiDipendenteComponent)componentObj).listaLinea_attivitaPerRipartizioneResidui(param0,param1,param2,param3,param4,param5);
 			component_invocation_succes(param0,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {

@@ -201,6 +201,12 @@
 		inputType="SELECT"
 		nullable="true"
 		/>
+	<fieldProperty
+		name="fl_rapporto13"
+		property="fl_rapporto13"
+		label="Contratti Privati"
+		inputType="CHECKBOX"
+		enabledOnFreeSearch="false"	/>
 
 	<formFieldProperty
 		name="ti_appartenenza" />
@@ -238,6 +244,8 @@
 		name="ti_rapporto" />
 	<formFieldProperty
 		name="origine_fonti" />
+	<formFieldProperty
+		name="fl_rapporto13" />
 
 	<columnFieldProperty
 		name="cd_ds_elemento_voce" />

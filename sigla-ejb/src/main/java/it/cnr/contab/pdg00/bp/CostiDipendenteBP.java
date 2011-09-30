@@ -376,7 +376,8 @@ public class CostiDipendenteBP extends BulkBP {
 			if (((CostiDipendenteComponentSession)createComponentSession()).isEsercizioChiuso(userContext))
 				throw new ApplicationException("Funzione non disponibile ad esercizio chiuso.");
 
-			String matricola_rip=null, matricola_nac=null;
+			String matricola_rip=null, matricola_nac=null, matricola_ind=null, matricola_rap13=null;
+			int matricoleRipartite=0;
 			V_cdp_matricolaBulk matricola_src = (V_cdp_matricolaBulk)this.getCostiDipendenti().getModel();  
 
 			if (matricola_src==null)
@@ -385,13 +386,17 @@ public class CostiDipendenteBP extends BulkBP {
 					 (matricola_src.getStato_carico()==null || !matricola_src.getStato_carico().equals(Ass_cdp_uoBulk.STATO_ACCETTATO)))
 				throw new ApplicationException("Funzione non disponibile in presenza di selezione di una matricola scaricata da altra UO e non ancora accettata.");
 				
-			if (matricola_src.getTi_rapporto().equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_DETERMINATO)) {
+/*
+if (matricola_src.getTi_rapporto().equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_DETERMINATO) && !matricola_src.getFl_rapporto13()) {
 				for (SelectionIterator i = getCostiDipendenti().getSelection().iterator();i.hasNext();) {
 					V_cdp_matricolaBulk matricola_dest = (V_cdp_matricolaBulk)getCostiDipendenti().getDetails().get(i.nextIndex());
 					if (matricola_dest.getTi_rapporto().equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_INDETERMINATO))
 						throw new ApplicationException("Funzione non disponibile in presenza di selezione contemporanea di dipendenti a tempo deteminato ed indeterminato.");
+					else if (matricola_dest.getFl_rapporto13())
+						throw new it.cnr.jada.action.MessageToUser("Funzione non disponibile in presenza di selezione della matricola "+matricola_dest.getId_matricola()+".");
 				}
 			}
+*/			
 			if (!getCostiDipendenti().getSelection().isEmpty()) {
 				for (SelectionIterator i = getCostiDipendenti().getSelection().iterator();i.hasNext();) {
 					V_cdp_matricolaBulk matricola_dest = (V_cdp_matricolaBulk)getCostiDipendenti().getDetails().get(i.nextIndex());
@@ -404,6 +409,12 @@ public class CostiDipendenteBP extends BulkBP {
 						else if (!matricola_dest.isProvenienzaInterna() && 
 								 (matricola_dest.getStato_carico()==null || !matricola_dest.getStato_carico().equals(Ass_cdp_uoBulk.STATO_ACCETTATO)))
 							matricola_nac=(matricola_nac!=null?matricola_nac+", ":"")+matricola_dest.getId_matricola();
+						else if ((matricola_src.getTi_rapporto().equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_DETERMINATO) && !matricola_src.getFl_rapporto13()) &&
+								  matricola_dest.getTi_rapporto().equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_INDETERMINATO))
+							matricola_ind=(matricola_ind!=null?matricola_ind+", ":"")+matricola_dest.getId_matricola();
+						else if ((matricola_src.getTi_rapporto().equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_DETERMINATO) && !matricola_src.getFl_rapporto13()) &&
+								  matricola_dest.getTi_rapporto().equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_DETERMINATO) && matricola_dest.getFl_rapporto13())
+							matricola_rap13=(matricola_rap13!=null?matricola_rap13+", ":"")+matricola_dest.getId_matricola();
 						else {
 							for (java.util.Iterator<Ass_cdp_laBulk> y = matricola_src.getCostiScaricati().iterator();y.hasNext();) {
 								Ass_cdp_laBulk ass_cdp_la = y.next();
@@ -444,6 +455,7 @@ public class CostiDipendenteBP extends BulkBP {
 								
 								matricola_dest.addToCostiScaricatiAltraUO(newAssCpdUo);
 							}
+							matricoleRipartite++;
 						}
 					}
 				}
@@ -463,8 +475,26 @@ public class CostiDipendenteBP extends BulkBP {
 				else
 					message.append("La matricola "+matricola_nac+" non è stata aggiornata in quanto scaricata da altra UO e non ancora accettata.");
 			} 
+			if (matricola_ind!=null) {
+				if (message.length()!=0) 
+					message.append("\n");
+				if (matricola_ind.contains(","))
+					message.append("Le matricole "+matricola_ind+" non sono state aggiornate in quanto a tempo indeterminato. Non è possibile copiare da una matricola a tempo determinato.");
+				else
+					message.append("La matricola "+matricola_ind+" non è stata aggiornata in quanto a tempo indeterminato. Non è possibile copiare da una matricola a tempo determinato.");
+			} 
+			if (matricola_rap13!=null) {
+				if (message.length()!=0) 
+					message.append("\n");
+				if (matricola_rap13.contains(","))
+					message.append("Le matricole "+matricola_rap13+" non sono state aggiornate. Non è possibile copiare da una matricola a tempo determinato.");
+				else
+					message.append("La matricola "+matricola_rap13+" non è stata aggiornata. Non è possibile copiare da una matricola a tempo determinato.");
+			} 
 			if (message.length()==0)
-				message.append("Salvataggio eseguito in modo corretto.");
+				message.append("Sono state aggiornate "+matricoleRipartite+" matricole in modo corretto.");
+			else
+				message.append("\n\n Sono state aggiornate "+matricoleRipartite+" matricole in modo corretto.");
 			
 			setMessage(message.toString());
 		} catch(Throwable e) {
@@ -492,16 +522,25 @@ public class CostiDipendenteBP extends BulkBP {
 				throw new ApplicationException("Funzione non disponibile ad esercizio chiuso.");
 	
 			if (linee_attivita != null && !linee_attivita.isEmpty()) {
-				int countTi=0, countTd=0;
+				int countTi=0, countTd=0, countRap3=0;
+				StringBuffer matrRap3=new StringBuffer();
 				for (SelectionIterator i = getCostiDipendenti().getSelection().iterator();i.hasNext();) {
 					V_cdp_matricolaBulk matricola_dest = (V_cdp_matricolaBulk)getCostiDipendenti().getDetails().get(i.nextIndex());
 					if (matricola_dest.getTi_rapporto().equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_INDETERMINATO))
 						countTi++;
-					else
+					else {
 						countTd++;
+						if (matricola_dest.getFl_rapporto13()) {
+							countRap3++;
+							if (matrRap3.length()>0) matrRap3.append(", ");
+							matrRap3.append(matricola_dest.getId_matricola());
+						}
+					}
 				}
 				if (countTi>0 && countTd>0)
 					throw new ApplicationException("Funzione non disponibile in presenza di selezione contemporanea di dipendenti a tempo deteminato ed indeterminato.");
+				else if (countRap3>0)
+					throw new it.cnr.jada.action.MessageToUser("Funzione non disponibile per le matricole "+matrRap3+".");
 
 				if (getCostiDipendenti().getSelection().size() == 0) {
 					ripartizioneResidui(userContext, (V_cdp_matricolaBulk)getCostiDipendenti().getModel(), linee_attivita);

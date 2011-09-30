@@ -604,7 +604,7 @@ public it.cnr.jada.util.RemoteIterator listaCdr(UserContext userContext,String c
   *		 - la linea di attività deve essere di spesa
   *		 - la linea di attività deve essere valida nell'esercizio di scrivania
   */
-public it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(UserContext userContext,CdrBulk cdr,int mese, String tipo_rapporto) throws ComponentException {
+public it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(UserContext userContext,CdrBulk cdr,int mese, String tipo_rapporto, boolean isRapporto13) throws ComponentException {
 	SQLBuilder sql = getHome(userContext,it.cnr.contab.config00.latt.bulk.WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA").createSQLBuilder();
 	if (mese == 0) {
 		sql.addTableToHeader("PDG_MODULO");
@@ -627,7 +627,9 @@ public it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(UserContext use
 	sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_NATURA","NATURA.CD_NATURA");
 	sql.addSQLClause(FindClause.AND, "NATURA.FL_SPESA",SQLBuilder.EQUALS,"Y");
 	//Nel gestionale devono vedere tutte le GAE va tolto il controllo della natura per il tempo determiniato/indeterminato
-	if (mese==0 && tipo_rapporto.equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_INDETERMINATO))
+	if (mese==0 && tipo_rapporto!=null &&
+		(tipo_rapporto.equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_INDETERMINATO) ||
+		 (tipo_rapporto.equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_DETERMINATO) && isRapporto13)))
 		sql.addSQLClause(FindClause.AND, "NATURA.TIPO",SQLBuilder.EQUALS,NaturaBulk.TIPO_NATURA_FONTI_INTERNE);
 	
 	sql.addTableToHeader("FUNZIONE");
@@ -671,7 +673,7 @@ public it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(UserContext use
   *      - il pdg associato al cdr della linea di attività deve essere in stato A,B,D o E    
   *      - la linea di attività deve appartenere ad un cdr dell'unità organizzativa dell'utente per l'esercizio di scrivania
   */
-public java.util.List listaLinea_attivitaPerRipartizioneResidui(UserContext userContext,String id_matricola,String cd_unita_organizzativa,int mese, String tipo_rapporto) throws ComponentException {
+public java.util.List listaLinea_attivitaPerRipartizioneResidui(UserContext userContext,String id_matricola,String cd_unita_organizzativa,int mese, String tipo_rapporto, boolean isRapporto13) throws ComponentException {
 	try {
 		BulkHome home = getHome(userContext,it.cnr.contab.config00.latt.bulk.WorkpackageBulk.class,"V_LINEA_ATTIVITA_VALIDA");
 		SQLBuilder sql = home.createSQLBuilder();
@@ -700,7 +702,9 @@ public java.util.List listaLinea_attivitaPerRipartizioneResidui(UserContext user
 
 		sql.addSQLClause(FindClause.AND, "NATURA.FL_SPESA",SQLBuilder.EQUALS,"Y");
 		//Nel gestionale devono vedere tutte le GAE va tolto il controllo della natura per il tempo determiniato/indeterminato
-		if (mese==0 && tipo_rapporto!=null && tipo_rapporto.equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_INDETERMINATO))
+		if (mese==0 && tipo_rapporto!=null &&
+				(tipo_rapporto.equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_INDETERMINATO) ||
+				 (tipo_rapporto.equalsIgnoreCase(Costo_del_dipendenteBulk.TI_RAPPORTO_DETERMINATO) && isRapporto13)))
 			sql.addSQLClause(FindClause.AND, "NATURA.TIPO",SQLBuilder.EQUALS,NaturaBulk.TIPO_NATURA_FONTI_INTERNE);
 
 		sql.addTableToHeader("FUNZIONE");

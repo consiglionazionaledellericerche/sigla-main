@@ -179,7 +179,7 @@ public it.cnr.jada.util.RemoteIterator listaCdr(it.cnr.jada.UserContext param0,S
 		}
 	}
 }
-public it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(it.cnr.jada.UserContext param0,it.cnr.contab.config00.sto.bulk.CdrBulk param1,int param2, String param3) throws RemoteException,it.cnr.jada.comp.ComponentException {
+public it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(it.cnr.jada.UserContext param0,it.cnr.contab.config00.sto.bulk.CdrBulk param1,int param2, String param3, boolean param4) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (it.cnr.jada.util.RemoteIterator)invoke("listaLinea_attivitaPerCdr",new Object[] {
 			param0,
@@ -198,7 +198,7 @@ public it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(it.cnr.jada.Use
 		}
 	}
 }
-public java.util.List listaLinea_attivitaPerRipartizioneResidui(it.cnr.jada.UserContext param0,java.lang.String param1,String param2,int param3, String param4) throws RemoteException,it.cnr.jada.comp.ComponentException {
+public java.util.List listaLinea_attivitaPerRipartizioneResidui(it.cnr.jada.UserContext param0,java.lang.String param1,String param2,int param3, String param4, boolean param5) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (java.util.List)invoke("listaLinea_attivitaPerRipartizioneResidui",new Object[] {
 			param0,
