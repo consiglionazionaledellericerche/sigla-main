@@ -3434,6 +3434,28 @@ public boolean isTappeEstereCoerenti()
 	}		
 	return true;
 }
+public boolean isRimborsoValidoPerDurataTappeEstere()
+{
+	if(getTappeMissioneColl() == null || getTappeMissioneColl().isEmpty())
+		return false;
+
+	Missione_tappaBulk tappa=null;
+	//Boolean rimborso=null;
+	Long oreTappa=null;
+	for ( Iterator i = getTappeMissioneColl().iterator(); i.hasNext(); )	
+	{
+		tappa = (Missione_tappaBulk) i.next();
+		if(tappa.isEstera() && tappa.getFl_rimborso())
+		{
+			//conto le ore delle tappe estere
+			java.util.GregorianCalendar inizioTappa = (java.util.GregorianCalendar)getGregorianCalendar(tappa.getDt_inizio_tappa()).clone();
+			java.util.GregorianCalendar fineTappa = (java.util.GregorianCalendar)getGregorianCalendar(tappa.getDt_inizio_tappa()).clone();
+			oreTappa =  fineTappa.getTime().getTime() - inizioTappa.getTime().getTime();	
+		}
+
+	}		
+	return false;
+}
 public boolean isMissioneConRimborso()
 {
 	if(getTappeMissioneColl() == null || getTappeMissioneColl().isEmpty())

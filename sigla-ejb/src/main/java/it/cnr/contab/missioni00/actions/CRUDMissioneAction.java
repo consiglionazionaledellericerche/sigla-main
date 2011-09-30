@@ -1465,6 +1465,13 @@ public Forward doFineConfigurazioneTappa(ActionContext context)
 		missione = (MissioneBulk)bp.getModel();
 			
 		bp.fineConfigurazioneTappa(context);
+
+		if (missione.isMissioneConRimborso() && !bp.isRimborsoValidoPerDurataTappeEstere(context))
+		{
+			missione.setTappeConfigurate(false);
+			setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "La durata delle tappe estere è inferiore alle 24 ore: Trattamento alternativo di missione non consentito!");
+			return context.findDefaultForward();
+		}
 		
 		// Riseleziono la tappa gia' selezionata (refresh)
 		bp.getTappaController().setSelection(context, bp.getTappaController().getSelection());

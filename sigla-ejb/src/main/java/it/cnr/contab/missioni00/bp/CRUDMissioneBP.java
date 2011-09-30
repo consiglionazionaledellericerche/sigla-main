@@ -1,5 +1,7 @@
 package it.cnr.contab.missioni00.bp;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -2398,4 +2400,39 @@ protected java.util.GregorianCalendar getGregorianCalendar() {
 
 	return gc;
 	}
+
+public boolean isRimborsoValidoPerDurataTappeEstere(ActionContext context) throws BusinessProcessException
+{
+	try {
+		MissioneBulk missione = (MissioneBulk)getModel();
+		BigDecimal numeroMinuti = new BigDecimal("0");
+		BigDecimal numeroMinutiLimite = new BigDecimal("1440");
+
+		if(	(missione.getTappeMissioneColl() == null) || (missione.getTappeMissioneColl().size() == 0))
+		{
+			return true;
+		}
+
+		for ( java.util.Iterator i = missione.getTappeMissioneColl().iterator(); i.hasNext(); )
+		{
+			Missione_tappaBulk tappa = (Missione_tappaBulk) i.next();
+	
+			if(tappa.isEstera() && tappa.getFl_rimborso())
+			{	
+				MissioneComponentSession component = (MissioneComponentSession)createComponentSession("CNRMISSIONI00_EJB_MissioneComponentSession",MissioneComponentSession.class);
+				numeroMinuti = numeroMinuti.add(component.calcolaMinutiTappa(context.getUserContext(), tappa));
+			}
+			
+		}
+		if (numeroMinuti.compareTo(numeroMinutiLimite) < 0)
+			return false;
+		else
+			return true;
+	}
+	catch(Throwable e) 
+	{
+		throw handleException(e);
+	}
+}
+
 }

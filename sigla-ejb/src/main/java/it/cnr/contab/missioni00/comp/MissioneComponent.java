@@ -22,6 +22,8 @@ import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
 import java.util.*;
 import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import it.cnr.contab.utenze00.bp.*;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
@@ -4388,4 +4390,36 @@ public void archiviaStampa(UserContext userContext, Date fromDate, Date untilDat
 		throw handleException(e);
 	}
 }
+
+public BigDecimal calcolaMinutiTappa (UserContext aUC, Missione_tappaBulk tappa) throws ComponentException
+{
+	LoggableStatement cs = null;
+	java.sql.ResultSet rs;
+	BigDecimal ore = new BigDecimal("0");
+	try
+	{
+		try
+		{
+			cs = new LoggableStatement(getConnection(aUC), "{?=call "+it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
+					+"CNRCTB500.calcolaMinutiTappa(?,?)}",false,this.getClass());
+			cs.registerOutParameter( 1, java.sql.Types.DECIMAL);
+			cs.setObject( 2, tappa.getDt_inizio_tappa()           );		
+			cs.setObject( 3, tappa.getDt_fine_tappa()             );		
+			cs.executeQuery();
+			ore = cs.getBigDecimal(1);
+			
+		}
+		finally 
+		{
+		    cs.close();
+		}
+		return ore;		
+	}
+
+	catch (java.sql.SQLException e)
+	{
+		throw handleException(tappa, e);
+	}
+}
+
 }

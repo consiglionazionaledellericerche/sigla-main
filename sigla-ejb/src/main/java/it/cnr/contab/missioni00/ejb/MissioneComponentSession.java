@@ -45,4 +45,5 @@ boolean isTerzoCervellone(it.cnr.jada.UserContext param0,it.cnr.contab.missioni0
 java.util.List findListaMissioniSIP(UserContext userContext,String query,String dominio,String uo,String terzo,String tipoRicerca,String string, String string2, String string3, Timestamp data_inizio,Timestamp data_fine)throws ComponentException,java.rmi.RemoteException;
 it.cnr.contab.config00.bulk.Parametri_cnrBulk parametriCnr(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void archiviaStampa(UserContext userContext, Date fromDate, Date untilDate, MissioneBulk missioneBulk, Integer... years)throws ComponentException,java.rmi.RemoteException;
+java.math.BigDecimal calcolaMinutiTappa(it.cnr.jada.UserContext param0,it.cnr.contab.missioni00.docs.bulk.Missione_tappaBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }
