@@ -176,6 +176,16 @@
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Variazioni di imposta comprensive di eventuali interessi di periodi prec." />
 	<fieldProperty
+		name="iva_liq_esterna"
+		property="iva_liq_esterna"
+		inputType="TEXT"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Variazioni di imposta da liquidazioni esterne" />	
+	<fieldProperty
 		name="pg_doc_amm"
 		property="pg_doc_amm"
 		inputType="TEXT"
@@ -401,6 +411,8 @@
 	<formFieldProperty
 		name="var_imp_per_prec" />
 	<formFieldProperty
+		name="iva_liq_esterna" />	
+	<formFieldProperty
 		name="pg_doc_amm" />
 	<formFieldProperty
 		name="acconto_iva_vers" />
@@ -501,6 +513,8 @@
 	<columnFieldProperty
 		name="var_imp_per_prec" />
 	<columnFieldProperty
+		name="iva_liq_esterna" />		
+	<columnFieldProperty
 		name="pg_doc_amm" />
 	<columnFieldProperty
 		name="acconto_iva_vers" />
@@ -593,6 +607,8 @@
 		name="cred_iva_infrann_comp" />
 	<findFieldProperty
 		name="var_imp_per_prec" />
+	<findFieldProperty
+		name="iva_liq_esterna" />	
 	<findFieldProperty
 		name="pg_doc_amm" />
 	<findFieldProperty

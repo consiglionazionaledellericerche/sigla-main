@@ -173,7 +173,31 @@
 		enabledOnInsert="true"
 		formatName="it.cnr.contab.util.PositiveDecimalFormat"
 		label=""/>
+<fieldProperty
+		name="variazioni_imposta_esterna_deb"
+		property="variazioni_imposta_esterna_deb"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		label=""/>
 
+	<fieldProperty
+		name="variazioni_imposta_esterna_cre"
+		property="variazioni_imposta_esterna_cre"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		label=""/>
 	<fieldProperty
 		name="tipoSezionaleFlag"
 		property="tipoSezionaleFlag"
@@ -220,6 +244,8 @@
 	<formFieldProperty name="iva_dovuta_deb" />
 	<formFieldProperty name="variazioni_imposta_deb" />
 	<formFieldProperty name="variazioni_imposta_cre" />
+	<formFieldProperty name="variazioni_imposta_esterna_deb" />
+	<formFieldProperty name="variazioni_imposta_esterna_cre" />
 	<formFieldProperty name="imp_der_per_prec_cre" />
 	<formFieldProperty name="imp_der_per_prec_deb" />
 	<formFieldProperty name="pageNumber" />

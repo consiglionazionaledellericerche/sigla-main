@@ -33,7 +33,9 @@ public abstract class Liquidazione_ivaVBulk
 	private java.math.BigDecimal iva_dovuta_cre;	
 	private java.math.BigDecimal imp_da_vers_deb;
 	private java.math.BigDecimal imp_da_vers_cre;
-
+	private java.math.BigDecimal variazioni_imposta_esterna_deb;
+	private java.math.BigDecimal variazioni_imposta_esterna_cre;
+	
 	private java.math.BigDecimal id_report = null;
 	private Integer pageNumber = null;
 /**
@@ -63,6 +65,11 @@ public void aggiornaTotali() {
 		setVariazioni_imposta_deb(getLiquidazione_iva().getVar_imp_per_prec().abs());
 	else
 		setVariazioni_imposta_cre(getLiquidazione_iva().getVar_imp_per_prec());
+	
+	if (getLiquidazione_iva().getIva_liq_esterna() != null && getLiquidazione_iva().getIva_liq_esterna().compareTo(new java.math.BigDecimal(0))<0)
+		setVariazioni_imposta_esterna_deb(getLiquidazione_iva().getIva_liq_esterna().abs());
+	else
+		setVariazioni_imposta_esterna_cre(getLiquidazione_iva().getIva_liq_esterna());
 
 	if (getLiquidazione_iva().getIva_da_versare() !=null && getLiquidazione_iva().getIva_da_versare().compareTo(new java.math.BigDecimal(0))<0)
 		setImp_da_vers_deb(getLiquidazione_iva().getIva_da_versare().abs());
@@ -327,7 +334,8 @@ public void resetLiquidazioneIva() {
 	setImp_der_per_prec_deb(zero);
 	setIva_dovuta_cre(zero);
 	setIva_dovuta_deb(zero);
-
+	setVariazioni_imposta_esterna_cre(zero);
+	setVariazioni_imposta_esterna_deb(zero);
 		
     getLiquidazione_iva().setStato(PROVVISORIO);
     getLiquidazione_iva().setCd_cds(getCd_cds());
@@ -447,6 +455,20 @@ public void setVariazioni_imposta_cre(java.math.BigDecimal newVariazioni_imposta
 public void setVariazioni_imposta_deb(java.math.BigDecimal newVariazioni_imposta_deb) {
 	variazioni_imposta_deb = newVariazioni_imposta_deb;
 }
+public java.math.BigDecimal getVariazioni_imposta_esterna_deb() {
+	return variazioni_imposta_esterna_deb;
+}
+public void setVariazioni_imposta_esterna_deb(
+		java.math.BigDecimal variazioni_imposta_esterna_deb) {
+	this.variazioni_imposta_esterna_deb = variazioni_imposta_esterna_deb;
+}
+public java.math.BigDecimal getVariazioni_imposta_esterna_cre() {
+	return variazioni_imposta_esterna_cre;
+}
+public void setVariazioni_imposta_esterna_cre(
+		java.math.BigDecimal variazioni_imposta_esterna_cre) {
+	this.variazioni_imposta_esterna_cre = variazioni_imposta_esterna_cre;
+}
 /**
  * Insert the method's description here.
  * Creation date: (08/07/2002 14.30.48)
@@ -469,7 +491,16 @@ public void validate() throws ValidationException {
 	else 
 	if ((getVariazioni_imposta_deb() != null && getVariazioni_imposta_deb().compareTo(zero)!=0))
 		getLiquidazione_iva().setVar_imp_per_prec(getVariazioni_imposta_deb().negate());
-        
+      
+    if ((getVariazioni_imposta_esterna_cre() != null && getVariazioni_imposta_esterna_cre().compareTo(zero)!=0) 
+    	  && (getVariazioni_imposta_esterna_deb() != null && getVariazioni_imposta_esterna_deb().compareTo(zero)!=0))
+            throw new ValidationException("Impostare un solo valore (debito/credito) per il campo 'Variazioni risultante da liquidazioni esterne.'");
+
+    if ((getVariazioni_imposta_esterna_cre() != null && getVariazioni_imposta_esterna_cre().compareTo(zero)!=0))
+		getLiquidazione_iva().setIva_liq_esterna(getVariazioni_imposta_esterna_cre());
+	else 
+		if ((getVariazioni_imposta_esterna_deb() != null && getVariazioni_imposta_esterna_deb().compareTo(zero)!=0))
+			getLiquidazione_iva().setIva_liq_esterna(getVariazioni_imposta_esterna_deb().negate());
     super.validate();
 
     if (getLiquidazione_iva() != null)
