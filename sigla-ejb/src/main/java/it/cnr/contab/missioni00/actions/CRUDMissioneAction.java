@@ -2673,7 +2673,7 @@ public Forward doOnTipoTrattamentoChange(ActionContext context)
 			 
 		// A differenza della diaria, il rimborso viene generato solo se previsto
 		// Poichè cambia il trattamento devo ricalcolarlo (può cambiare la quota esente)
-		if(missione.isMissioneConRimborso())// && (missione.getRimborsoMissioneColl() == null || missione.getRimborsoMissioneColl().isEmpty()))
+		if(missione.isMissioneConRimborso() && missione.getPg_missione()!=null)// && (missione.getRimborsoMissioneColl() == null || missione.getRimborsoMissioneColl().isEmpty()))
 		{	
 			    bp.cancellaRimborso(context);
 			    missione = bp.generaRimborso(context, missione);
