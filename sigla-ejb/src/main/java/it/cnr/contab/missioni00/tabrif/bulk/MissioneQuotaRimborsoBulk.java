@@ -6,19 +6,18 @@ package it.cnr.contab.missioni00.tabrif.bulk;
 import it.cnr.contab.anagraf00.tabter.bulk.RifAreePaesiEsteriBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.CRUDBP;
 public class MissioneQuotaRimborsoBulk extends MissioneQuotaRimborsoBase {
-	/**
-	 * [RIF_AREE_PAESI_ESTERI Classificazione delle Aree dei paesi esteri.]
-	 **/
-	private RifAreePaesiEsteriBulk rifAreePaesiEsteri =  new RifAreePaesiEsteriBulk();
-	/**
-	 * [GRUPPO_INQUADRAMENTO Definisce i gruppi di inquadramento ministeriali per le diarie estere; gruppi da 1 a 6.
-Ogni profilo di inquadramento del CNR, sia quelli dipendente che quelli riferiti a soggetti esterni, deve essere qualificato con il gruppo ministeriale di inquadramento corrispondente per il recupero della diaria.
-Era definito anche un valore convenzionale (*)  per gestire il caso in cui tale valorizzazione sia indifferente alla gestione. Tale gestione è ora inutile per le modifiche fatte alla gestione missioni.
-L'associazione per il recupero di spese ed abbattimenti è ora fatta in base al profilo di inquadramento e non al gruppo ministeriale.]
-	 **/
-	private Gruppo_inquadramentoBulk gruppoInquadramento =  new Gruppo_inquadramentoBulk();
+
+	private RifAreePaesiEsteriBulk rifAreePaesiEsteri;
+
+	private Gruppo_inquadramentoBulk gruppoInquadramento;
+	
+	private java.util.Collection gruppiInquadramento;
+	
+	private java.util.Collection areePaesiEsteri;
+	
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: MISSIONE_QUOTA_RIMBORSO
@@ -102,5 +101,59 @@ L'associazione per il recupero di spese ed abbattimenti è ora fatta in base al p
 	 **/
 	public void setCd_gruppo_inquadramento(java.lang.String cd_gruppo_inquadramento)  {
 		this.getGruppoInquadramento().setCd_gruppo_inquadramento(cd_gruppo_inquadramento);
+	}
+	public java.util.Collection getGruppiInquadramento() {
+		return gruppiInquadramento;
+	}
+	public void setGruppiInquadramento(java.util.Collection newColl) {
+		gruppiInquadramento = newColl;
+	}
+	public java.util.Collection getAreePaesiEsteri() {
+		return areePaesiEsteri;
+	}
+	public void setAreePaesiEsteri(java.util.Collection areePaesiEsteri) {
+		this.areePaesiEsteri = areePaesiEsteri;
+	}
+	public java.sql.Timestamp getDataFineValidita() {
+		
+		if ( (getDt_fine_validita()!=null) && (getDt_fine_validita().equals(it.cnr.contab.config00.esercizio.bulk.EsercizioHome.DATA_INFINITO)))
+			return null;
+		return getDt_fine_validita();
+	}
+	public void setDataFineValidita(java.sql.Timestamp newDate) {
+		
+		this.setDt_fine_validita(newDate);
+	}	
+	public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
+		
+		super.initializeForInsert(bp,context);
+		resetImporti();
+		setDt_fine_validita(it.cnr.contab.config00.esercizio.bulk.EsercizioHome.DATA_INFINITO);
+
+		return this;	
+	}
+	private void resetImporti() {
+
+		setIm_rimborso(new java.math.BigDecimal(0));
+	}
+	public void validate() throws ValidationException {
+
+		// controllo su campo INQUADRAMENTO
+		if (getCd_gruppo_inquadramento()==null)
+			throw new ValidationException( "Il campo INQUADRAMENTO non può essere vuoto" );
+
+		// controllo su campo DIVISA
+		if (getCd_area_estera()==null)
+			throw new ValidationException( "Il campo AREA ESTERA non può essere vuoto" );
+
+		// controllo su campo INIZIO VALIDITA
+		if (getDt_inizio_validita()==null)
+			throw new ValidationException( "Il campo DATA INIZIO VALIDITA non può essere vuoto" );
+
+		// controllo su campo IMPORTO DIARIA
+		if (getIm_rimborso()==null)
+			throw new ValidationException( "Il campo IMPORTO RIMBORSO non può essere vuoto" );
+		if ( getIm_rimborso().compareTo(new java.math.BigDecimal(0))<=0 )
+			throw new ValidationException( "Il campo IMPORTO RIMBORSO deve essere maggiore di 0 !" );
 	}
 }

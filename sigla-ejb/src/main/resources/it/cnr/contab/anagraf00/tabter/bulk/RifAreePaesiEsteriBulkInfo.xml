@@ -28,12 +28,15 @@
 	<fieldProperty
 		name="ti_italia_estero"
 		property="ti_italia_estero"
-		inputType="TEXT"
-		inputSize="1"
-		maxLength="1"
-		enabledOnEdit="false"
+		keysProperty="ti_italia_esteroKeys"
+		inputType="SELECT"
 		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false" 
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		label="Italia/Estero" />
+		
 	<form
 		name="searchtool">
 		<formFieldProperty

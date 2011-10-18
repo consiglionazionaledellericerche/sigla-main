@@ -242,14 +242,6 @@ public void validate() throws ValidationException {
 	}
 	
 	public boolean isROFindRifAreePaesiEsteri(){
-		/*
-
-		if (getTi_area_geografica()==null)
-			return false;
-
-		return 
-			(getTi_area_geografica().compareTo(TipoAreaGeografica.ITALIA)==0) ||
-			(getTi_area_geografica().compareTo(TipoAreaGeografica.INDIFFERENTE)==0);
-			*/return false;
+		return false;
 	}
 }

@@ -3,27 +3,31 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
 	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
-	shortDescription="Definizione dell'importo di quota di rimborso massima (per 24 ore) valida per missioni estere."
+	shortDescription="Quota di rimborso massima."
 	longDescription="Definizione dell'importo di quota di rimborso massima (per 24 ore) valida per missioni estere.">
 	<fieldProperty
-		name="cd_area_estera"
-		property="cd_area_estera"
-		inputType="TEXT"
-		inputSize="2"
-		maxLength="2"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
+		name="area_estera"
+		property="rifAreePaesiEsteri"
+		printProperty="ds_area_estera"
+		optionsProperty="areePaesiEsteri"
+		inputType="SELECT"
 		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		label="Codice Area" />
 	<fieldProperty
-		name="cd_gruppo_inquadramento"
-		property="cd_gruppo_inquadramento"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
+		name="gruppo_inquadramento"
+		property="gruppoInquadramento"
+		printProperty="ds_gruppo_inquadramento"
+		optionsProperty="gruppiInquadramento"
+		inputType="SELECT"
 		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		label="Gruppo Inquadramento" />
 	<fieldProperty
 		name="dt_inizio_validita"
@@ -43,6 +47,16 @@
 		nullable="false"
 		label="Data fine validità" />
 	<fieldProperty
+		name="dtFineValidita"
+		property="dataFineValidita"
+		inputType="TEXT"
+		formatName="date_short"					
+		label="Data Fine Validita"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />		
+	<fieldProperty
 		name="im_rimborso"
 		property="im_rimborso"
 		inputType="TEXT"
@@ -50,26 +64,34 @@
 		enabledOnEdit="false"
 		nullable="false"
 		label="Quota Rimborso" />
+	
 	<form
 		name="searchtool">
 		<formFieldProperty
-			name="cd_area_estera" />
+			name="area_estera" />
 		<formFieldProperty
-			name="cd_gruppo_inquadramento" />
+			name="gruppo_inquadramento" />
 		<formFieldProperty
 			name="dt_inizio_validita" />
 	</form>
+	
+	<formFieldProperty
+		name="area_estera" />
+	<formFieldProperty
+		name="gruppo_inquadramento" />
 	<formFieldProperty
 		name="dt_inizio_validita" />
 	<formFieldProperty
 		name="dt_fine_validita" />
+	<formFieldProperty 
+	    name="dtFineValidita" />		
 	<formFieldProperty
 		name="im_rimborso" />
 		
 	<findFieldProperty
-		name="cd_area_estera" />
+		name="area_estera" />
 	<findFieldProperty
-		name="cd_gruppo_inquadramento" />
+		name="gruppo_inquadramento" />
 	<findFieldProperty
 		name="dt_inizio_validita" />
 	<findFieldProperty
@@ -78,13 +100,15 @@
 		name="im_rimborso" />
 		
 	<columnFieldProperty
-		name="cd_area_estera" />
+		name="area_estera" />
 	<columnFieldProperty
-		name="cd_gruppo_inquadramento" />
+		name="gruppo_inquadramento" />
 	<columnFieldProperty
 		name="dt_inizio_validita" />
 	<columnFieldProperty
 		name="dt_fine_validita" />
+	<columnFieldProperty 
+	    name="dtFineValidita" />		
 	<columnFieldProperty
 		name="im_rimborso" />
 </bulkInfo>

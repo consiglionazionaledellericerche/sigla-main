@@ -6,6 +6,7 @@ package it.cnr.contab.anagraf00.tabter.bulk;
 import java.sql.Connection;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.Broker;
+import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.SQLBuilder;
@@ -30,5 +31,11 @@ public class RifAreePaesiEsteriHome extends BulkHome {
 		broker.close();
 
 		return area;
+	}
+	public java.util.List findAreePaesiEsteri() throws IntrospectionException, PersistencyException{
+
+		SQLBuilder sql = createSQLBuilder();
+
+		return fetchAll(sql);
 	}
 }
