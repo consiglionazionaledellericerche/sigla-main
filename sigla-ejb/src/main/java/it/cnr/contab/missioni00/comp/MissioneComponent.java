@@ -2710,9 +2710,8 @@ public OggettoBulk modificaConBulk(it.cnr.jada.UserContext userContext,OggettoBu
 		   !missione.getAnticipoClone().equalsByPrimaryKey(missione.getAnticipo()))		
 			aggiornaAnticipo(userContext, missione.getAnticipoClone(), new Boolean(false));		
 
-		// Aggiornamento dell'anticipo che ho legato dalla missione			
-		if(missione.getPg_anticipo() != null && 
-		   !missione.getAnticipo().equalsByPrimaryKey(missione.getAnticipoClone()))
+		// Aggiornamento dell'anticipo che ho legato alla missione			
+		if(missione.getPg_anticipo() != null /*&& !missione.getAnticipo().equalsByPrimaryKey(missione.getAnticipoClone())*/)
 			aggiornaAnticipo(userContext, missione.getAnticipo(), new Boolean(true));
 
 		// Se ho modificato una missione gia' contabilizzata in Coge o Coan
