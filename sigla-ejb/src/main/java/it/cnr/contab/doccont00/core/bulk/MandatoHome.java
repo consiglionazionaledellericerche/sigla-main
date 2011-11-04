@@ -392,7 +392,7 @@ public abstract class MandatoHome extends BulkHome {
 			}
 			return MandatoBulk.STATO_INVIO_AVV_PAG_N;
 		}catch (NoSuchBeanDefinitionException e) {
-			return MandatoBulk.STATO_INVIO_AVV_PAG_E;
+			return MandatoBulk.STATO_INVIO_AVV_PAG_N;
 		}catch (Exception e) {
 			SpringUtil.getBean("mailService", MailService.class).sendErrorMessage(
 					"Errore durante l'archiviazione del Mandato di Pagamento: "+
