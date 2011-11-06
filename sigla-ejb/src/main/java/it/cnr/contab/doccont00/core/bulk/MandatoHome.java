@@ -264,7 +264,7 @@ public abstract class MandatoHome extends BulkHome {
 				if (result == null)
 					result = docAmm.getDt_da_competenza_coge();
 				else{
-					if (result.before(docAmm.getDt_da_competenza_coge()) )
+					if (docAmm.getDt_da_competenza_coge() != null && result.before(docAmm.getDt_da_competenza_coge()) )
 						result = docAmm.getDt_da_competenza_coge();
 				}
 			}catch(NoSuchBeanDefinitionException _ex){
