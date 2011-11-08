@@ -98,8 +98,17 @@ public TerzoBulk cercaTerzoPerUnitaOrganizzativa(UserContext userContext,Unita_o
 
 	public void eliminaConBulk(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
 		try {
-			makeBulkPersistent(userContext,bulk);
-		} catch (it.cnr.jada.persistency.sql.ReferentialIntegrityException rie) {
+			try {
+				TerzoBulk terzo = (TerzoBulk)bulk;
+				terzo.setCrudStatus(bulk.TO_BE_UPDATED);
+				terzo.setDt_fine_rapporto(getHome(userContext,terzo).getServerDate());
+				makeBulkPersistent(userContext,bulk);
+			} catch(Throwable e) {
+				throw handleException(bulk,e);
+			}
+			
+			//makeBulkPersistent(userContext,bulk);
+		//} catch (it.cnr.jada.persistency.sql.ReferentialIntegrityException rie) {
 		/*	Angelo 03/01/05 Se ci sono dei dettagli non imposto la data di fine
 			try {
 				TerzoBulk terzo = (TerzoBulk)bulk;
@@ -109,7 +118,7 @@ public TerzoBulk cercaTerzoPerUnitaOrganizzativa(UserContext userContext,Unita_o
 			} catch(Throwable e) {
 				throw handleException(bulk,rie);
 			}*/
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");
+			//throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");
 		} catch (Throwable e) {
 			throw handleException(bulk,e);
 		}

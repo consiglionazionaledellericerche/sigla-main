@@ -16,7 +16,7 @@ public class VLimiteSpesaDetBase extends VLimiteSpesaDetKey implements Keyed {
 	private java.math.BigDecimal impegni_assunti;
  
 //    IMPORTO_DISPONIBILE DECIMAL(22,0)
-	private java.lang.Long importo_disponibile;
+	private java.math.BigDecimal importo_disponibile;
  
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -75,14 +75,14 @@ public class VLimiteSpesaDetBase extends VLimiteSpesaDetKey implements Keyed {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [importo_disponibile]
 	 **/
-	public java.lang.Long getImporto_disponibile() {
+	public java.math.BigDecimal getImporto_disponibile() {
 		return importo_disponibile;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [importo_disponibile]
 	 **/
-	public void setImporto_disponibile(java.lang.Long importo_disponibile)  {
+	public void setImporto_disponibile(java.math.BigDecimal importo_disponibile)  {
 		this.importo_disponibile=importo_disponibile;
 	}
 }
