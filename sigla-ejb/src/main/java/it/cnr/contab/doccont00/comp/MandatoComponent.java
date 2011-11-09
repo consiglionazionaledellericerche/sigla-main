@@ -6303,7 +6303,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			List<MandatoBulk> mandati = mandatoHome.fetchAll(sql);
 			for (MandatoBulk mandato : mandati) {
 				String inviaAvvisoPag = Utility.createMandatoComponentSession().avvisoDiPagamentoMandatoRiscontrato(userContext, mandato);
-				Utility.createMandatoComponentSession().aggiornaStatoAvvisoDiPagamento(userContext, mandato, inviaAvvisoPag);
+				if (inviaAvvisoPag != null)
+					Utility.createMandatoComponentSession().aggiornaStatoAvvisoDiPagamento(userContext, mandato, inviaAvvisoPag);
 			}
 		} catch (PersistencyException e) {
 			throw handleException(e);
@@ -6322,9 +6323,9 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		} catch (PersistencyException e) {
 			handleException(e);
 		} catch (OutdatedResourceException e) {
-			handleException(e);
+			return null;
 		} catch (BusyResourceException e) {
-			handleException(e);
+			return null;
 		}
 		return MandatoBulk.STATO_INVIO_AVV_PAG_N;
 	}
