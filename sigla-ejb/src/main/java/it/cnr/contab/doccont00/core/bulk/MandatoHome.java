@@ -295,10 +295,7 @@ public abstract class MandatoHome extends BulkHome {
 				for (Mandato_rigaBulk mandatoRiga : righeMandato) {
 					Modalita_pagamentoBulk modalitaPagamento = mandatoRiga.getModalita_pagamento();
 					if (bonifico){
-						if (!(modalitaPagamento.getRif_modalita_pagamento().getTi_pagamento().equals(Rif_modalita_pagamentoBulk.ALTRO) ||
-								modalitaPagamento.getRif_modalita_pagamento().getTi_pagamento().equals(Rif_modalita_pagamentoBulk.QUIETANZA))){
-							return Boolean.TRUE;
-						}
+						return Boolean.TRUE;
 					}else{
 						if (modalitaPagamento.getRif_modalita_pagamento().getTi_pagamento().equals(Rif_modalita_pagamentoBulk.ALTRO) ||
 								modalitaPagamento.getRif_modalita_pagamento().getTi_pagamento().equals(Rif_modalita_pagamentoBulk.QUIETANZA)){
@@ -379,16 +376,22 @@ public abstract class MandatoHome extends BulkHome {
 			Mandato_terzoBulk mandatoTerzo = findMandato_terzo(userContext, mandato);
 			Collection<Mandato_rigaBulk>  righeMandato = findMandato_riga(userContext, mandato);
 			Boolean archiviato = Boolean.FALSE;
+			Boolean inviaMail = Boolean.TRUE;
 			for (Mandato_rigaBulk mandatoRiga : righeMandato) {
 				gestioneAvvisoDiPagamento(mandato, mandatoRiga, text, "avviso.di.pagamento.mail.text.inner");
 				archiviato = archiviaAvvisoDiPagamento(userContext, mandatoRiga);
+				Modalita_pagamentoBulk modalitaPagamento = mandatoRiga.getModalita_pagamento();
+				if (modalitaPagamento.getRif_modalita_pagamento().getTi_pagamento().equals(Rif_modalita_pagamentoBulk.ALTRO) ||
+						modalitaPagamento.getRif_modalita_pagamento().getTi_pagamento().equals(Rif_modalita_pagamentoBulk.QUIETANZA))
+					inviaMail = Boolean.FALSE;
 			}
 			if (archiviato)
 				text.append(SpringUtil.getBean("avviso.di.pagamento.per.bonifico.mail.text.footer", String.class));
 			Integer matricola = terzoHome.findMatricolaDipendente(userContext, mandatoTerzo.getTerzo(),findDataDiCompetenzaDocumentoAmm(userContext,mandato));
 			if (matricola != null){
 				String mailAddress = SpringUtil.getBean("ldapService", LDAPService.class).getLdapUserFromMatricola(userContext, matricola)[1];
-				mailService.send(Arrays.asList(mailAddress), subject, text.toString());
+				if (inviaMail)
+					mailService.send(Arrays.asList(mailAddress), subject, text.toString());
 			}
 			return MandatoBulk.STATO_INVIO_AVV_PAG_N;
 		}catch (NoSuchBeanDefinitionException e) {
