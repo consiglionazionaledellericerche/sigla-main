@@ -1804,7 +1804,8 @@ public boolean isCompensoDaModificareInManuale()
 		return (!getTipo_trattamento().equalsByPrimaryKey(getMissioneIniziale().getTipo_trattamento()) ||
 				 getIm_spese().compareTo(getMissioneIniziale().getIm_spese()) != 0 ||
 				 getIm_diaria_netto().compareTo(getMissioneIniziale().getIm_diaria_netto()) != 0 ||
-				 getIm_quota_esente().compareTo(getMissioneIniziale().getIm_quota_esente()) != 0 ||			 
+				 getIm_quota_esente().compareTo(getMissioneIniziale().getIm_quota_esente()) != 0 ||
+				 getIm_rimborso().compareTo(getMissioneIniziale().getIm_rimborso()) != 0||
 				 getDt_registrazione().compareTo(getMissioneIniziale().getDt_registrazione()) != 0 ||
 				 getDt_inizio_missione().compareTo(getMissioneIniziale().getDt_inizio_missione()) != 0 ||
 				 !getTipo_rapporto().equalsByPrimaryKey(getMissioneIniziale().getTipo_rapporto()) ||
