@@ -49,7 +49,7 @@ public class ExpireSessionServlet extends HttpServlet implements Serializable,Ht
 	}
 	protected void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String invalidateSession = req.getParameter("sessionID");
-		if (invalidateSession != null){
+		if (invalidateSession != null && sessionObjects.get(invalidateSession) != null){
 			sessionObjects.get(invalidateSession).invalidate();
 		}else{
 			int indice = 0;
