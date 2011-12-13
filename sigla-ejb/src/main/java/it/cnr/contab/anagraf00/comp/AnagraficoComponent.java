@@ -672,6 +672,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 	/* Segnalazione Err. CNR 643 - BORRIELLO	*/ 
 	//if (!isItalianoEsteroModificabile(aUC, (AnagraficoBulk)bulk)){ 
 			if (anagrafico.getComune_fiscale()!=null &&
+			    anagrafico.getComune_fiscale().getTi_italiano_estero()!=null &&
 				(anagrafico.getComune_fiscale().getTi_italiano_estero().compareTo(anagrafico.getTi_italiano_estero())!=0) && 
 				!(anagrafico.getComune_fiscale().getTi_italiano_estero().compareTo(ComuneBulk.COMUNE_ESTERO)==0 &&
 				(anagrafico.getTi_italiano_estero().compareTo(NazioneBulk.CEE)==0)||
@@ -2204,5 +2205,25 @@ public boolean verificaStrutturaPiva(UserContext userContext, AnagraficoBulk ana
 		}	
 	}
 	return false;
+}
+public void checkCaricoAlreadyExistFor(UserContext userContext,
+		AnagraficoBulk anagrafico, Carico_familiare_anagBulk carico) throws ComponentException
+		{
+		for (java.util.Iterator i = anagrafico.getCarichi_familiari_anag().iterator();i.hasNext();) {
+			Carico_familiare_anagBulk carico_familiare = (Carico_familiare_anagBulk)i.next();
+			if (!carico.equals(carico_familiare) &&
+				!((carico.getDt_ini_validita().before(carico_familiare.getDt_ini_validita()) &&
+			     carico.getDt_ini_validita().before(carico_familiare.getDt_fin_validita()) &&
+			     carico.getDt_fin_validita().before(carico_familiare.getDt_ini_validita()) &&
+			     carico.getDt_fin_validita().before(carico_familiare.getDt_fin_validita())) ||
+			    (carico.getDt_ini_validita().after(carico_familiare.getDt_ini_validita()) &&
+			     carico.getDt_ini_validita().after(carico_familiare.getDt_fin_validita()) &&
+			     carico.getDt_fin_validita().after(carico_familiare.getDt_ini_validita()) &&
+			     carico.getDt_fin_validita().after(carico_familiare.getDt_fin_validita())))){
+			if (carico.getCodice_fiscale().compareTo(carico_familiare.getCodice_fiscale())==0){
+	 			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non è possibile indicare un carico in questo periodo con questo codice fiscale, esiste già un carico valido nello stesso periodo!");
+			}
+	}
+	}
 }
 }

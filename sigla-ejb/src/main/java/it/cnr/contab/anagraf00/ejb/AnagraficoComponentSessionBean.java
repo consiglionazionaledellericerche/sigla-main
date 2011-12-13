@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import it.cnr.contab.anagraf00.comp.AnagraficoComponent;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.Carico_familiare_anagBulk;
 import it.cnr.contab.compensi00.comp.CompensoComponent;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.ValidationException;
@@ -423,5 +424,25 @@ public class AnagraficoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponen
 		} catch(Error e) {
 			throw uncaughtError(param0,componentObj,e);
 		}
+	}
+	public void checkCaricoAlreadyExistFor(UserContext param0,
+			AnagraficoBulk param1, Carico_familiare_anagBulk param2)
+			throws ComponentException, RemoteException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			((AnagraficoComponent)componentObj).checkCaricoAlreadyExistFor(param0,param1,param2);
+			component_invocation_succes(param0,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+		
 	}
 }

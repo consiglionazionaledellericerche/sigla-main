@@ -3,6 +3,7 @@ package it.cnr.contab.anagraf00.ejb;
 import java.sql.Timestamp;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.Carico_familiare_anagBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
@@ -32,4 +33,6 @@ Long Max_prog_estrazione(UserContext userContext)throws it.cnr.jada.comp.Compone
 void Popola_ecf(UserContext userContext,Long prog_estrazione)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 Timestamp findMaxDataCompValida(UserContext param0,AnagraficoBulk param1) throws IntrospectionException,PersistencyException, ComponentException,java.rmi.RemoteException;
 boolean verificaStrutturaPiva(UserContext userContext, AnagraficoBulk anagrafico) throws ComponentException, it.cnr.jada.bulk.ValidationException,java.rmi.RemoteException;
+void checkCaricoAlreadyExistFor(UserContext userContext,
+		AnagraficoBulk anagrafico, Carico_familiare_anagBulk carico)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

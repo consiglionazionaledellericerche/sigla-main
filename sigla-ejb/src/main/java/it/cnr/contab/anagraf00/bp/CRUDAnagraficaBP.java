@@ -509,9 +509,10 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 			java.util.GregorianCalendar data_a = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
 			data_da.setTime(carico.getDt_ini_validita());
 			data_a.setTime(carico.getDt_fin_validita());
-			if (data_da.get(java.util.GregorianCalendar.YEAR)!=data_a.get(java.util.GregorianCalendar.YEAR)){
-				throw new ValidationException("La data di inizio e fine validità devono appartenere allo stesso esercizio.");
-			}
+//			if (data_da.get(java.util.GregorianCalendar.YEAR)!=data_a.get(java.util.GregorianCalendar.YEAR)){
+//				throw new ValidationException("La data di inizio e fine validità devono appartenere allo stesso esercizio.");
+//			}
+			sess.checkCaricoAlreadyExistFor(context.getUserContext(),carico.getAnagrafico(),carico);
 		} catch(javax.ejb.EJBException e) {
 			throw new it.cnr.jada.DetailedRuntimeException(e);
 		}catch(it.cnr.jada.comp.ComponentException ex){

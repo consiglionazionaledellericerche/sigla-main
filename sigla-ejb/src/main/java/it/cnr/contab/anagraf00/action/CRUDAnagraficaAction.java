@@ -873,10 +873,10 @@ public Forward doOnDt_fin_validitaChange(ActionContext context)  {
 				throw new ValidationException("E' necessario inserire la data di fine validità.");
 			data_da.setTime(carico.getDt_ini_validita());
 			data_a.setTime(carico.getDt_fin_validita());
-			if (data_da.get(java.util.GregorianCalendar.YEAR)!=data_a.get(java.util.GregorianCalendar.YEAR)){
-				carico.setDt_fin_validita(oldData);
-				throw new ValidationException("La data di inizio e fine validità devono appartenere allo stesso esercizio.");
-			}
+//			if (data_da.get(java.util.GregorianCalendar.YEAR)!=data_a.get(java.util.GregorianCalendar.YEAR)){
+//				carico.setDt_fin_validita(oldData);
+//				throw new ValidationException("La data di inizio e fine validità devono appartenere allo stesso esercizio.");
+//			}
 				
 			if (!bp.isSearching())
 			  try{
