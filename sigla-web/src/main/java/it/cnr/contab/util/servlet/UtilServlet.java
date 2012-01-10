@@ -54,12 +54,13 @@ public class UtilServlet extends HttpServlet {
 		String s = httpservletrequest.getParameter("campo");
 		String aggiornaGECO = httpservletrequest.getParameter("aggiornaGECO");
 		String esercizio = httpservletrequest.getParameter("esercizio");
+		String cds = httpservletrequest.getParameter("cds");
 		String getDirTemp = httpservletrequest.getParameter("tmp.dir.SIGLAWeb");
 		if(s == null && aggiornaGECO == null && getDirTemp == null){
 			httpservletresponse.getWriter().println("Richiesta non autorizzata: specificare " + (new URL("http", httpservletrequest.getServerName(), httpservletrequest.getServerPort(), httpservletrequest.getRequestURI())).toExternalForm() + "?campo=xyz");
 			httpservletresponse.setStatus(401);
 		}else if(s == null && aggiornaGECO != null && aggiornaGECO.equalsIgnoreCase("Y")){
-			aggiornaGECO(esercizio);
+			aggiornaGECO(esercizio,cds);
 		}else if(s == null && aggiornaGECO == null && getDirTemp != null && getDirTemp.equalsIgnoreCase("Y")){
 			httpservletresponse.setContentType("text/plain");
 			httpservletresponse.getWriter().println(getServletContext().getRealPath("/"));	
@@ -135,7 +136,7 @@ public class UtilServlet extends HttpServlet {
 					if (new java.text.SimpleDateFormat("HH").format(new java.util.Date()).equalsIgnoreCase("02")){
 						deletePrintSpooler();
 						deleteExcel();
-						aggiornaGECO(String.valueOf(dataInizio.get(GregorianCalendar.YEAR)));
+						aggiornaGECO(String.valueOf(dataInizio.get(GregorianCalendar.YEAR)), null);
 						deleteMessaggi();
 					}
 				  }
@@ -150,8 +151,8 @@ public class UtilServlet extends HttpServlet {
 		}
 		new Thread(new PrintThread()).start();							
 	}
-	private void aggiornaGECO(String esercizio) {
-		UserContext userContext = new CNRUserContext("GECO",null,esercizio!=null?Integer.valueOf(esercizio):null,null,null,null);
+	private void aggiornaGECO(String esercizio, String cds) {
+		UserContext userContext = new CNRUserContext("GECO",null,esercizio!=null?Integer.valueOf(esercizio):null,null,cds,null);
 		try {
 			((ProgettoRicercaPadreComponentSession) EJBCommonServices.createEJB("CNRPROGETTIRIC00_EJB_ProgettoRicercaPadreComponentSession")).aggiornaGECO(userContext);
 		} catch (Exception e) {
