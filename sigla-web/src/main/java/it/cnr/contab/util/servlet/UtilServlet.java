@@ -10,12 +10,14 @@ import it.cnr.jada.blobs.bulk.*;
 import it.cnr.jada.excel.bulk.Excel_spoolerBulk;
 import it.cnr.jada.excel.bulk.Excel_spoolerHome;
 import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import javax.ejb.EJBException;
@@ -51,12 +53,13 @@ public class UtilServlet extends HttpServlet {
 		httpservletresponse.setDateHeader("Expires", 0L);
 		String s = httpservletrequest.getParameter("campo");
 		String aggiornaGECO = httpservletrequest.getParameter("aggiornaGECO");
+		String esercizio = httpservletrequest.getParameter("esercizio");
 		String getDirTemp = httpservletrequest.getParameter("tmp.dir.SIGLAWeb");
 		if(s == null && aggiornaGECO == null && getDirTemp == null){
 			httpservletresponse.getWriter().println("Richiesta non autorizzata: specificare " + (new URL("http", httpservletrequest.getServerName(), httpservletrequest.getServerPort(), httpservletrequest.getRequestURI())).toExternalForm() + "?campo=xyz");
 			httpservletresponse.setStatus(401);
 		}else if(s == null && aggiornaGECO != null && aggiornaGECO.equalsIgnoreCase("Y")){
-			aggiornaGECO();
+			aggiornaGECO(esercizio);
 		}else if(s == null && aggiornaGECO == null && getDirTemp != null && getDirTemp.equalsIgnoreCase("Y")){
 			httpservletresponse.setContentType("text/plain");
 			httpservletresponse.getWriter().println(getServletContext().getRealPath("/"));	
@@ -119,6 +122,7 @@ public class UtilServlet extends HttpServlet {
 	public void init()
 		throws ServletException
 	{
+		final GregorianCalendar dataInizio = (GregorianCalendar) GregorianCalendar.getInstance();
 		class PrintThread
 			implements Runnable
 		{
@@ -131,7 +135,7 @@ public class UtilServlet extends HttpServlet {
 					if (new java.text.SimpleDateFormat("HH").format(new java.util.Date()).equalsIgnoreCase("02")){
 						deletePrintSpooler();
 						deleteExcel();
-						aggiornaGECO();
+						aggiornaGECO(String.valueOf(dataInizio.get(GregorianCalendar.YEAR)));
 						deleteMessaggi();
 					}
 				  }
@@ -146,8 +150,8 @@ public class UtilServlet extends HttpServlet {
 		}
 		new Thread(new PrintThread()).start();							
 	}
-	private void aggiornaGECO() {
-		UserContext userContext = new CNRUserContext("GECO",null,null,null,null,null);
+	private void aggiornaGECO(String esercizio) {
+		UserContext userContext = new CNRUserContext("GECO",null,esercizio!=null?Integer.valueOf(esercizio):null,null,null,null);
 		try {
 			((ProgettoRicercaPadreComponentSession) EJBCommonServices.createEJB("CNRPROGETTIRIC00_EJB_ProgettoRicercaPadreComponentSession")).aggiornaGECO(userContext);
 		} catch (Exception e) {
