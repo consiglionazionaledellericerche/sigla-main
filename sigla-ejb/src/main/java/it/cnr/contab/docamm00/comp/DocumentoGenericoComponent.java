@@ -9,6 +9,7 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.bulk.*;
+import it.cnr.contab.config00.sto.bulk.EnteBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteHome;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
@@ -37,6 +38,7 @@ import it.cnr.contab.anagraf00.tabrif.bulk.*;
 import it.cnr.contab.doccont00.ejb.*;
 import java.math.BigDecimal;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
+import it.cnr.contab.cori00.docs.bulk.Liquid_gruppo_coriIBulk;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaHome;
@@ -3442,13 +3444,16 @@ private void inizializzaBulkPerStampa(UserContext userContext, Stampa_docamm_per
 //^^@@
 private void inizializzaBulkPerStampa(UserContext userContext, Stampa_elenco_fattureVBulk stampa) throws it.cnr.jada.comp.ComponentException {
 
-
-	stampa.setEsercizio(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
-	stampa.setCd_cds(it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
-
-	stampa.setTerzo(new TerzoBulk());
-
 	try{
+	stampa.setEsercizio(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+	BulkHome home = getHome(userContext, EnteBulk.class);
+	SQLBuilder sql = home.createSQLBuilder();
+	EnteBulk ente =(EnteBulk) home.fetchAll(sql).get(0);
+	 
+	if(it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext).compareTo(ente.getCd_unita_organizzativa())!=0){
+		stampa.setCd_cds(it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
+	}
+	stampa.setTerzo(new TerzoBulk());
 	
 		String cd_uo_scrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext);
 		Unita_organizzativaHome uoHome = (it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome)getHome(userContext, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk.class);
