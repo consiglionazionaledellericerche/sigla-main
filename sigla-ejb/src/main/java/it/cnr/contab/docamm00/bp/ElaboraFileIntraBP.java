@@ -424,15 +424,16 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
     			bw.append("\r\n");
     		}
     	}
-    	if(prot!=0)
-    		prot=prot+1;
-    	else
-    		prot=config.getIm01().intValue()+1;
+    	
     	// VENDITE
     	if(!listaSezioneUnoVendite.isEmpty()||
     	   !listaSezioneDueVendite.isEmpty()||
     	   !listaSezioneTreVendite.isEmpty()||
     	   !listaSezioneQuattroVendite.isEmpty()){
+    		if(prot!=0)
+        		prot=prot+1;
+        	else
+        		prot=config.getIm01().intValue()+1;
          	//parte iniziale fissa
     		bw.append(new String("EUROX"));
         	bw.append(P_iva);

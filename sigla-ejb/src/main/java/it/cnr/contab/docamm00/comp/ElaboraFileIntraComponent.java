@@ -324,18 +324,22 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 	}
     return null;
     }
-	public void confermaElaborazione(UserContext context, VIntrastatBulk bulk) throws ComponentException {
-		try {
+	public void confermaElaborazione(UserContext context, VIntrastatBulk bulk) throws ComponentException, PersistencyException {
+		
 			Fattura_passiva_intraHome home=(Fattura_passiva_intraHome)getHome(context, Fattura_passiva_intraBulk.class);
 			Fattura_attiva_intraHome home_att=(Fattura_attiva_intraHome)getHome(context, Fattura_attiva_intraBulk.class);
 			FatturaPassivaIntraSHome home_s=(FatturaPassivaIntraSHome)getHome(context, FatturaPassivaIntraSBulk.class);
 			FatturaAttivaIntraSHome home_att_s=(FatturaAttivaIntraSHome)getHome(context, FatturaAttivaIntraSBulk.class);
 			Integer prot=0;
-			if(bulk.getNrProtocolloAcq()!=null)
-				prot=bulk.getNrProtocolloAcq();
-			else
-				throw new ApplicationException("Non è stato indicato il numero Protocollo Acq/Serv. ricevuti");
 			Integer conta=0;
+			
+			if(bulk.getNrProtocolloAcq()==null &&bulk.getNrProtocolloVen()==null)
+				throw new ApplicationException("Non sono stati indicati ne il numero Protocollo Acq/Serv. ricevuti, ne il numero Protocollo Cessioni/Serv. resi.");
+			if(bulk.getNrProtocolloAcq()!=null){
+				prot=bulk.getNrProtocolloAcq();
+			//else
+				//throw new ApplicationException("Non è stato indicato il numero Protocollo Acq/Serv. ricevuti");
+			// per gestire caso in cui un solo flusso viene accettato
 			for (Iterator i=(SezioneUnoAcquisti(context, bulk)).iterator();i.hasNext();){
 				conta=conta+1;
     			VIntrastatBulk det=(VIntrastatBulk)i.next();
@@ -403,11 +407,13 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 	    			updateBulk(context, fats);
     			}
 			}
+			} //fine (bulk.getNrProtocolloAcq()!=null	
 			conta=0;
-			if(bulk.getNrProtocolloVen()!=null)
+			// per gestire caso in cui un solo flusso viene accettato
+			if(bulk.getNrProtocolloVen()!=null){
 				prot=bulk.getNrProtocolloVen();
-			else
-				throw new ApplicationException("Non è stato indicato il numero Protocollo Cessioni/Serv. resi");
+			//else
+				//throw new ApplicationException("Non è stato indicato il numero Protocollo Cessioni/Serv. resi");
 			for (Iterator i=(SezioneUnoVendite(context, bulk)).iterator();i.hasNext();){
 				conta=conta+1;
     			VIntrastatBulk det=(VIntrastatBulk)i.next();
@@ -476,21 +482,27 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 	    			updateBulk(context, fats);
     			}
 			}
+			}//fine (bulk.getNrProtocollVen()!=null
 			it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 			try {
 				config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( context, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context), null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_COSTANTI, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_MODELLO_INTRASTAT);
 				config.setIm01(new BigDecimal(bulk.getNrProtocollo()));
 				config.setToBeUpdated();
 				updateBulk(context, config);
+				// se ribaltata la configurazione aggiorno il valore anche per esercizio +1
+				config=Utility.createConfigurazioneCnrComponentSession().getConfigurazione( context, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context)+1, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_COSTANTI, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_MODELLO_INTRASTAT);
+				if(config!=null){
+					config.setIm01(new BigDecimal(bulk.getNrProtocollo()));
+					config.setToBeUpdated();
+					updateBulk(context, config);
+				}
 			} catch (RemoteException e) {
 				throw new ComponentException(e);
 			} catch (EJBException e) {
 				throw new ComponentException(e);
 			}
 			
-		} catch (Exception e) {
-			handleException(e);
-		}
+		
 	}
 
 	public List EstraiBlacklist(UserContext context, OggettoBulk bulk,OggettoBulk bulkterzo)  throws ComponentException {
