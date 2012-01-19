@@ -195,7 +195,7 @@
     </dependency>
     <dependency>
 		<groupId>it.cnr.jada-libs</groupId>
-		<artifactId>capi-full-30-all14</artifactId>
+		<artifactId>capi-full-31-all14</artifactId>
 		<version>1.0.1</version>
 		<type>jar</type>
     </dependency>
@@ -203,6 +203,11 @@
     	<groupId>org.springframework</groupId>
     	<artifactId>spring</artifactId>
     	<version>${spring.version}</version>
+    </dependency>
+    <dependency>
+	  <groupId>org.bouncycastle</groupId>
+	  <artifactId>bcprov-jdk15</artifactId>
+	  <version>1.44</version>
     </dependency>
    </dependencies>
   <properties>

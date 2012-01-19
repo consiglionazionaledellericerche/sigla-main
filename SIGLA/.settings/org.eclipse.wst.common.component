@@ -128,7 +128,7 @@
         <dependent-module archiveName="CopyResource-1.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/it/cnr/jada-libs/CopyResource/1.0.1/CopyResource-1.0.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="capi-full-30-all14-1.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/it/cnr/jada-libs/capi-full-30-all14/1.0.1/capi-full-30-all14-1.0.1.jar">
+        <dependent-module archiveName="capi-full-31-all14-1.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/it/cnr/jada-libs/capi-full-31-all14/1.0.1/capi-full-31-all14-1.0.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="spring-2.5.6.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring/2.5.6/spring-2.5.6.jar">

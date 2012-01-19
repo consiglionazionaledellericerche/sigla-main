@@ -891,7 +891,7 @@ public class GestioneLoginComponent
 		}
 	}
 	
-	public boolean isUtenteAbilitatoLdap(UserContext userContext,String userID) throws it.cnr.jada.comp.ComponentException {
+	public boolean isUtenteAbilitatoLdap(UserContext userContext,String userID, boolean masterLdap) throws it.cnr.jada.comp.ComponentException {
 		try {
 			// verifichiamo che tipo di autenticazione è ora attiva sui parametri ente
 		   	Parametri_enteHome enteHome = (Parametri_enteHome)getHome(userContext, Parametri_enteBulk.class);
@@ -903,38 +903,44 @@ public class GestioneLoginComponent
 	        Ldap_serverHome home = (Ldap_serverHome) getHomeCache(userContext).getHome(Ldap_serverBulk.class);
 	        it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
 	        sql.addClause("AND","fl_attivo",sql.EQUALS,new Boolean(true));
-	        sql.addClause("AND","fl_master",sql.EQUALS,new Boolean(true));
+	        if (masterLdap)
+	        	sql.addClause("AND","fl_master",sql.EQUALS,new Boolean(true));
 	        sql.addOrderBy("livello_priorita");
 			List result = getHome( userContext, Ldap_serverBulk.class ).fetchAll( sql );
 	
-			Ldap_serverBulk ldap = (Ldap_serverBulk)result.get(0);
+			for(Iterator it = result.iterator();it.hasNext();) {
+				Ldap_serverBulk ldap = (Ldap_serverBulk)it.next();
 	
-			LdapLogin ldapLogin = new LdapLogin(
-					ldap.getHostname(),
-					ldap.getPort(),
-					ente.getLdap_user(),
-					ente.getLdap_password(),
-					ldap.getFl_ssl().booleanValue(),
-					ldap.isMaster());
-			ldapLogin.setAppName(ente.getLdap_app_name());
-			ldapLogin.setBaseDN(ente.getLdap_base_dn());
-				
-			try {
-				return ldapLogin.isUtenteAbilitato(userID);
-			} catch (PasswordLdapScadutaException e) {
-				throw e;
-			} catch (LDAPException e) {
-		    	e.printStackTrace();
-		        if (e.getResultCode()==LDAPException.CONNECT_ERROR)
-					throw new ApplicationException("Impossibile stabilire una connessione con il servizio di autenticazione utente.\nContattare il supporto applicativo.");
-				throw new ApplicationException("Impossibile stabilire la connessione, il server di autenticazione utente ha generato il seguente errore: "+e.getMessage());
-			} catch (Exception e) {
-				throw new ApplicationException(e.getMessage());
+				LdapLogin ldapLogin = new LdapLogin(
+						ldap.getHostname(),
+						ldap.getPort(),
+						ente.getLdap_user(),
+						ente.getLdap_password(),
+						ldap.getFl_ssl().booleanValue(),
+						ldap.isMaster());
+				ldapLogin.setAppName(ente.getLdap_app_name());
+				ldapLogin.setBaseDN(ente.getLdap_base_dn());
+					
+				try {
+					return ldapLogin.isUtenteAbilitato(userID);
+				} catch (PasswordLdapScadutaException e) {
+					throw e;
+				} catch (LDAPException e) {
+			    	e.printStackTrace();
+					if (!it.hasNext()) {
+				        if (e.getResultCode()==LDAPException.CONNECT_ERROR)
+							throw new ApplicationException("Impossibile stabilire una connessione con il servizio di autenticazione utente.\nContattare il supporto applicativo.");
+						throw new ApplicationException("Impossibile stabilire la connessione, il server di autenticazione utente ha generato il seguente errore: "+e.getMessage());
+					}
+				} catch (Exception e) {
+					throw new ApplicationException(e.getMessage());
+				}
 			}
-	
+
 		} catch(Throwable e) {
 			throw handleException(e);
 		}
+		return false;
 	}
 	/**
 	 * Se abilita = true, viene abilitato l'utente userID in LDAP per accedere in SIGLA

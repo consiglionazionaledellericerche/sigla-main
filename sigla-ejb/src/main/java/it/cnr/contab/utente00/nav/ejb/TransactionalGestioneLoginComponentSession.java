@@ -344,11 +344,12 @@ public class TransactionalGestioneLoginComponentSession extends it.cnr.jada.ejb.
 			}
 		}
 	}
-	public boolean isUtenteAbilitatoLdap(it.cnr.jada.UserContext param0,String param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	public boolean isUtenteAbilitatoLdap(it.cnr.jada.UserContext param0,String param1,boolean param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
 		try {
 			return (Boolean)invoke("isUtenteAbilitatoLdap",new Object[] {
 				param0,
-				param1 });
+				param1,
+				param2 });
 		} catch(java.rmi.RemoteException e) {
 			throw e;
 		} catch(java.lang.reflect.InvocationTargetException e) {

@@ -32,7 +32,7 @@ it.cnr.contab.utenze00.bulk.UtenteBulk validaUtente(it.cnr.jada.UserContext para
 it.cnr.contab.config00.bulk.ApplicationServerBulk validaServerLogin(it.cnr.jada.UserContext param0,it.cnr.contab.config00.bulk.ApplicationServerBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.contab.config00.bulk.ApplicationServerBulk validaServerAttivo(it.cnr.jada.UserContext param0,it.cnr.contab.config00.bulk.ApplicationServerBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.util.List utentiMultipli(it.cnr.jada.UserContext param0,it.cnr.contab.utenze00.bulk.UtenteBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-boolean isUtenteAbilitatoLdap(it.cnr.jada.UserContext param0, String param1)  throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+boolean isUtenteAbilitatoLdap(it.cnr.jada.UserContext param0, String param1, boolean param2)  throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void cambiaAbilitazioneUtente(it.cnr.jada.UserContext param0, String param1, boolean param2)  throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 List<SessionTraceBulk> sessionList(it.cnr.jada.UserContext param0, String param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 CdrBulk cdrDaUo(it.cnr.jada.UserContext param0,Unita_organizzativaBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;

@@ -192,7 +192,7 @@ public boolean isUtenteAbilitatoLdap(UserContext uc) throws it.cnr.jada.action.B
 		 throw new MessageToUser("Codice utente ufficiale non valorizzato!");
 	
 	try {
-		return ((GestioneLoginComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession",GestioneLoginComponentSession.class)).isUtenteAbilitatoLdap(uc, utente.getCd_utente_uid());
+		return ((GestioneLoginComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession",GestioneLoginComponentSession.class)).isUtenteAbilitatoLdap(uc, utente.getCd_utente_uid(), true);
 	} catch (ComponentException e) {
 		throw handleException(e);
 	} catch (RemoteException e) {

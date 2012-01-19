@@ -303,7 +303,7 @@ public OggettoBulk modificaConBulk(it.cnr.jada.UserContext userContext,OggettoBu
 		UtenteBulk ute = (UtenteBulk) bulk;
 		if (ute!=null && ute.getFl_autenticazione_ldap() && ute.getCd_utente_uid()!=null) {
 			// controlliamo se l'utente esiste su ldap
-			((GestioneLoginComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession",GestioneLoginComponentSession.class)).isUtenteAbilitatoLdap(userContext, ute.getCd_utente_uid());
+			((GestioneLoginComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession",GestioneLoginComponentSession.class)).isUtenteAbilitatoLdap(userContext, ute.getCd_utente_uid(), false);
 		}
 	}
 	catch (Throwable e) 
