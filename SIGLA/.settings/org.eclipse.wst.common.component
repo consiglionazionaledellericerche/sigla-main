@@ -134,5 +134,8 @@
         <dependent-module archiveName="spring-2.5.6.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring/2.5.6/spring-2.5.6.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="bcprov-jdk15-1.44.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/bouncycastle/bcprov-jdk15/1.44/bcprov-jdk15-1.44.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>

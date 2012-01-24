@@ -365,13 +365,18 @@ public class FirmaDigitalePdgVariazioniBP extends
 	public void scaricaFileGenerico(ActionContext actioncontext) throws IOException,
 			ServletException {
 		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
-		InputStream is = pdgVariazioniService
-				.getResource(archiviaStampaPdgVariazioneBulk
-						.getPdgVariazioneDocument().getNode());
-		((HttpActionContext) actioncontext).getResponse().setContentType("text/octet-stream");
-		((HttpActionContext) actioncontext).getResponse().setContentLength(
-				archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
-						.getNode().getContentLength().intValue());
+		InputStream is = null;
+		if (!isTestSession()) {
+			is = pdgVariazioniService
+					.getResource(archiviaStampaPdgVariazioneBulk
+							.getPdgVariazioneDocument().getNode());
+			((HttpActionContext) actioncontext).getResponse().setContentType("text/octet-stream");
+			((HttpActionContext) actioncontext).getResponse().setContentLength(
+					archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
+							.getNode().getContentLength().intValue());
+		} else {
+			is = new BufferedInputStream(new FileInputStream(nomeFilePathTest));
+		}
 		OutputStream os = ((HttpActionContext) actioncontext).getResponse()
 				.getOutputStream();
 		int nextChar;
