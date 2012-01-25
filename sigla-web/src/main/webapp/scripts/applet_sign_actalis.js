@@ -25,9 +25,10 @@ function loadApplet()
 		  'codebase = "http://java.sun.com/update/1.6.0/jinstall-6-windows-i586.cab#Version=1,5,0,0"'+
     	  'WIDTH="320" HEIGHT="28" NAME="sign_applet">'+
     	  '<PARAM NAME="code" VALUE="it.actalis.applet.Sign.class" >'+
-    	  '<PARAM NAME="codebase" VALUE="applets/actalis" >'+
+    	  '<PARAM NAME="codebase" VALUE="applets" >'+
     	  '<PARAM NAME="archive" VALUE="applet-sign.jar, applet-resources.jar" >' +
     	  '<PARAM NAME="name" VALUE="sign_applet" >'+
+    	  '<param name="cache_option" value="no">'+
     	  '<PARAM NAME="GUI.CharFont" VALUE="Tahoma" >'+
     	  '<PARAM NAME="GUI.CharSize" VALUE="12" >'+
           '<param name="GUI.Language" value="IT">'+
@@ -41,11 +42,12 @@ function loadApplet()
           '</OBJECT>');
     		
     else if (_ns == true) document.writeln('<APPLET '+
-                'CODEBASE="applets/"'+
+                'CODEBASE="applets"'+
                 'code="it.actalis.applet.Sign.class"'+
                 'name="sign_applet" width="320" height="28"'+
                 'archive="applet-sign.jar, applet-resources.jar" MAYSCRIPT>'+
                 'No JDK 1.6 support for APPLET!!'+
+          	    '<param name="cache_option" value="no">'+
            '</APPLET>');
     }		
     
