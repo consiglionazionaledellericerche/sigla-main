@@ -22,17 +22,16 @@ function loadApplet()
     
     if (_ie == true) document.writeln('<OBJECT '+
     	  'classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93"'+
+		  'codebase = "http://java.sun.com/update/1.6.0/jinstall-6-windows-i586.cab#Version=1,5,0,0"'+
     	  'WIDTH="320" HEIGHT="28" NAME="sign_applet">'+
     	  '<PARAM NAME="code" VALUE="it.actalis.applet.Sign.class" >'+
-    	  '<PARAM NAME="codebase" VALUE="applets" >'+
-    	  '<PARAM NAME="cache_option" VALUE="plugin" >' +
-    	  '<PARAM NAME="cache_archive" VALUE="applet-sign.jar, applet-resources.jar" >' +
-    	  '<PARAM NAME="cache_version" VALUE="0.2.2.07, 0.2.2.07">'+
+    	  '<PARAM NAME="codebase" VALUE="applets/actalis" >'+
+    	  '<PARAM NAME="archive" VALUE="applet-sign.jar, applet-resources.jar" >' +
     	  '<PARAM NAME="name" VALUE="sign_applet" >'+
     	  '<PARAM NAME="GUI.CharFont" VALUE="Tahoma" >'+
     	  '<PARAM NAME="GUI.CharSize" VALUE="12" >'+
           '<param name="GUI.Language" value="IT">'+
-    	  '<PARAM NAME="type" VALUE="application/x-java-applet;version=1.3.1_06">'+
+    	  '<PARAM NAME="type" VALUE="application/x-java-applet;version=1.5.0">'+
     	  '<param name="startOnInit" value=false>'+
     	  '<param name="Sign.AutoStart" value=false>'+
     	  '<param name="scriptable" value=true>'+
@@ -46,7 +45,7 @@ function loadApplet()
                 'code="it.actalis.applet.Sign.class"'+
                 'name="sign_applet" width="320" height="28"'+
                 'archive="applet-sign.jar, applet-resources.jar" MAYSCRIPT>'+
-                'No JDK 1.3 support for APPLET!!'+
+                'No JDK 1.6 support for APPLET!!'+
            '</APPLET>');
     }		
     
