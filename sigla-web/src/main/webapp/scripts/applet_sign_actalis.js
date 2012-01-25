@@ -45,9 +45,9 @@ function loadApplet()
                 'CODEBASE="applets"'+
                 'code="it.actalis.applet.Sign.class"'+
                 'name="sign_applet" width="320" height="28"'+
+                'cache_option="no"'+
                 'archive="applet-sign.jar, applet-resources.jar" MAYSCRIPT>'+
                 'No JDK 1.6 support for APPLET!!'+
-          	    '<param name="cache_option" value="no">'+
            '</APPLET>');
     }		
     
