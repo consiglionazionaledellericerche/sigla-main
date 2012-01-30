@@ -193,6 +193,15 @@
 		enabledOnEdit="false"
 		enabledOnInsert="false"
 		label="Utente gestito da procedure esterne" />
+	<fieldProperty
+		name="fl_attiva_blocco"
+		property="fl_attiva_blocco"
+		inputType="CHECKBOX"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Utente soggetto a blocco delle funzioni" />
 
 	<formFieldProperty
 		name="cd_cdr" />
@@ -233,6 +242,8 @@
 		name="ruolo_supervisore" />
 	<formFieldProperty
 		name="fl_altra_proc" />
+	<formFieldProperty
+		name="fl_attiva_blocco" />
 
 	<columnFieldProperty
 		name="cd_utente" />

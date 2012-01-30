@@ -1,9 +1,6 @@
 package it.cnr.contab.utenze00.bulk;
 
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.Keyed;
 
 public class UtenteBase extends UtenteKey implements Keyed {
 	// CD_CDR VARCHAR(30)
@@ -71,6 +68,9 @@ public class UtenteBase extends UtenteKey implements Keyed {
 	
 	// FL_ALTRA_PROC CHAR(1)
 	private java.lang.Boolean fl_altra_proc;
+
+	// FL_ATTIVA_BLOCCO CHAR(1)
+	private java.lang.Boolean fl_attiva_blocco;
 
 public UtenteBase() {
 	super();
@@ -299,5 +299,11 @@ public java.lang.Boolean getFl_altra_proc() {
 }
 public void setFl_altra_proc(java.lang.Boolean fl_altra_proc) {
 	this.fl_altra_proc = fl_altra_proc;
+}
+public java.lang.Boolean getFl_attiva_blocco() {
+	return fl_attiva_blocco;
+}
+public void setFl_attiva_blocco(java.lang.Boolean fl_attiva_blocco) {
+	this.fl_attiva_blocco = fl_attiva_blocco;
 }
 }

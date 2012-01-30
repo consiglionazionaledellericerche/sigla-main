@@ -1,5 +1,6 @@
 package it.cnr.contab.utente00.nav.comp;
 
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
 import it.cnr.contab.messaggio00.bulk.*;
 //@@<< FB
 // ***************************************************************
@@ -49,6 +50,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.Log;
 import it.cnr.jada.util.RemoteIterator;
@@ -454,7 +456,7 @@ public class GestioneLoginComponent
 	        }
 	        
 		    it.cnr.jada.persistency.sql.SQLBuilder sql = new it.cnr.jada.persistency.sql.SQLBuilder();
-		    sql.setHeader("SELECT TI_FUNZIONE");
+		    sql.setHeader("SELECT CD_ACCESSO, TI_FUNZIONE");
 		    sql.addTableToHeader("V_ASS_BP_ACCESSO_UNITA_UTENTE");
 			sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",sql.EQUALS,cd_unita_organizzativa);
 			sql.addSQLClause("AND","BUSINESS_PROCESS",sql.EQUALS,bp);
@@ -463,10 +465,23 @@ public class GestioneLoginComponent
 			PreparedStatement stm = sql.prepareStatement(getConnection(userContext));
 			try {
 				java.sql.ResultSet rs = stm.executeQuery();
-				String mode = null;
+				String mode = null, accesso = null;
 				while(rs.next()) {
 					mode = rs.getString("TI_FUNZIONE");
-					if ("M".equals(mode)) {
+                    accesso = rs.getString("CD_ACCESSO");
+					if (utente.getFl_attiva_blocco() && accesso!=null){
+						PersistentHome ruoloBloccoHome = getHomeCache(userContext).getHome(Ruolo_bloccoBulk.class);
+						SQLBuilder sqlRuoloBlocco = ruoloBloccoHome.createSQLBuilder();
+						sqlRuoloBlocco.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS, esercizio);
+						sqlRuoloBlocco.addClause(FindClause.AND,"fl_attivo",SQLBuilder.EQUALS, Boolean.TRUE);
+						sqlRuoloBlocco.addTableToHeader("RUOLO_ACCESSO");
+						sqlRuoloBlocco.addSQLJoin("RUOLO_BLOCCO.CD_RUOLO", "RUOLO_ACCESSO.CD_RUOLO");
+						sqlRuoloBlocco.addSQLClause(FindClause.AND,"RUOLO_ACCESSO.CD_ACCESSO",SQLBuilder.EQUALS, accesso);
+						java.util.List listBlocco = ruoloBloccoHome.fetchAll(sqlRuoloBlocco);
+						if (!listBlocco.isEmpty())
+							return null;
+					}
+                    if ("M".equals(mode)) {
 						try{rs.close();}catch( java.sql.SQLException e ){};
 						return mode;
 					}
@@ -512,6 +527,18 @@ public class GestioneLoginComponent
 	            return null;
 	        if (nodo.getBusiness_process() == null)
 	            return null;
+			if (utente.getFl_attiva_blocco() && nodo.getCd_accesso()!=null){
+				PersistentHome ruoloBloccoHome = getHomeCache(userContext).getHome(Ruolo_bloccoBulk.class);
+				SQLBuilder sqlRuoloBlocco = ruoloBloccoHome.createSQLBuilder();
+				sqlRuoloBlocco.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS, esercizio);
+				sqlRuoloBlocco.addClause(FindClause.AND,"fl_attivo",SQLBuilder.EQUALS, Boolean.TRUE);
+				sqlRuoloBlocco.addTableToHeader("RUOLO_ACCESSO");
+				sqlRuoloBlocco.addSQLJoin("RUOLO_BLOCCO.CD_RUOLO", "RUOLO_ACCESSO.CD_RUOLO");
+				sqlRuoloBlocco.addSQLClause(FindClause.AND,"RUOLO_ACCESSO.CD_ACCESSO",SQLBuilder.EQUALS, nodo.getCd_accesso());
+				java.util.List listBlocco = ruoloBloccoHome.fetchAll(sqlRuoloBlocco);
+				if (!listBlocco.isEmpty())
+					throw new ApplicationException("Accesso non consentito");
+			}
 	        return nodo;
 	    } catch (Throwable e) {
 	        throw handleException(e);

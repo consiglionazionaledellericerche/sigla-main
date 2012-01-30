@@ -1,0 +1,64 @@
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="cd_ruolo"
+		property="ruolo.cd_ruolo"
+		label="Ruolo"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		label="Esercizio"
+		inputType="TEXT"
+		/>
+	<fieldProperty
+		name="fl_attiva"
+		property="fl_attiva"
+		inputType="CHECKBOX"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Blocco Attivo" />
+	<fieldProperty
+		name="ruolo"
+		property="ruolo"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Ruolo" />
+
+	<columnFieldProperty
+		name="cd_ruolo"
+		/>
+	<columnFieldProperty
+		name="esercizio"
+		/>
+	<columnFieldProperty
+		name="fl_attiva"
+		/>
+
+	<formFieldProperty
+		name="cd_ruolo"
+		/>
+	<formFieldProperty
+		name="esercizio"
+		/>
+	<formFieldProperty
+		name="ruolo"
+		/>
+	<formFieldProperty
+		name="fl_attiva"
+		/>
+
+	<findFieldProperty
+		name="cd_accesso"
+		/>
+	<findFieldProperty
+		name="cd_ruolo"
+		/>
+</bulkInfo>
