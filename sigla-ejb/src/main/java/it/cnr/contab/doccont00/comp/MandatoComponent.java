@@ -5340,6 +5340,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				verificaSospesiDa1210(aUC, (MandatoIBulk) mandato);
 			}
 			verificaModalitaPagamento(aUC, mandato);
+			if (mandato.getTi_mandato().equals(mandato.TIPO_PAGAMENTO)) 
+				verificaTracciabilitaPagamenti(aUC, mandato);
 
 		} catch (Exception e) {
 			throw handleException(e);
@@ -6315,6 +6317,47 @@ public java.lang.Boolean isDipendenteDaConguaglio(
 	}
 	
 		return Boolean.FALSE;
+	} catch (Exception e) {
+		throw handleException(e);
+	}
+}
+private void verificaTracciabilitaPagamenti(UserContext userContext,
+		MandatoBulk mandato) throws ComponentException {
+	try {
+		if (mandato.getMandato_rigaColl().size() == 0)
+			return;
+
+		for (Iterator i = mandato.getMandato_rigaColl().iterator(); i
+				.hasNext();) {
+			Mandato_rigaBulk riga = (Mandato_rigaBulk) i.next();
+
+			
+			if (riga.getCd_modalita_pag() == null || riga.getCd_tipo_documento_amm() == null)
+				throw new ApplicationException(
+						"Attenzione! esistono righe del mandato per cui non risulta valorizzata la modalità di pagamento oppure il tipo di documento amministrativo");
+			try {
+				LoggableStatement cs = new LoggableStatement(
+						getConnection(userContext), "{  call "
+								+ it.cnr.jada.util.ejb.EJBCommonServices
+										.getDefaultSchema()
+								+ "CNRCTB037.verificaTracciabilitaPag(?, ?, ?,?)}",
+						false, this.getClass());
+				try {
+					cs.setObject(1, mandato.getEsercizio());
+					cs.setString(2, riga.getCd_modalita_pag());
+					cs.setString(3, riga.getCd_tipo_documento_amm());
+					cs.setObject(4, mandato.getIm_netto());
+					cs.executeQuery();
+				} catch (SQLException e) {
+					throw handleException(e);
+				} finally {
+					cs.close();
+				}
+			} catch (SQLException e) {
+				throw handleException(e);
+			}
+			
+		}
 	} catch (Exception e) {
 		throw handleException(e);
 	}
