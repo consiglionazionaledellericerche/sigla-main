@@ -6340,13 +6340,14 @@ private void verificaTracciabilitaPagamenti(UserContext userContext,
 						getConnection(userContext), "{  call "
 								+ it.cnr.jada.util.ejb.EJBCommonServices
 										.getDefaultSchema()
-								+ "CNRCTB037.verificaTracciabilitaPag(?, ?, ?,?)}",
+								+ "CNRCTB037.verificaTracciabilitaPag(?, ?, ?,?,?)}",
 						false, this.getClass());
 				try {
 					cs.setObject(1, mandato.getEsercizio());
-					cs.setString(2, riga.getCd_modalita_pag());
-					cs.setString(3, riga.getCd_tipo_documento_amm());
-					cs.setObject(4, mandato.getIm_netto());
+					cs.setObject(2, mandato.getDt_emissione());
+					cs.setString(3, riga.getCd_modalita_pag());
+					cs.setString(4, riga.getCd_tipo_documento_amm());
+					cs.setObject(5, mandato.getIm_netto());
 					cs.executeQuery();
 				} catch (SQLException e) {
 					throw handleException(e);

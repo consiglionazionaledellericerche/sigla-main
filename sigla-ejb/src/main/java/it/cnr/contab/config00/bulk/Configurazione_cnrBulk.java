@@ -56,6 +56,9 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String SK_MODELLO_INTRASTAT="MODELLO_INTRASTAT";
 	public final static String PK_INCARICHI_MODIFICA_ALLEGATI = "INCARICHI_MODIFICA_ALLEGATI";
 	public final static String SK_INCARICHI_MOD_CONTRATTO = "INCARICHI_MOD_CONTRATTO";
+	
+	public final static String PK_LIMITE_UTILIZZO_CONTANTI = "LIMITE_UTILIZZO_CONTANTI";
+	public final static String SK_LIMITE1 = "LIMITE1";
 
 	public Configurazione_cnrBulk() {
 	super();
