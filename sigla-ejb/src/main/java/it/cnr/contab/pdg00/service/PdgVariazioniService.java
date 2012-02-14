@@ -49,18 +49,24 @@ public class PdgVariazioniService extends CMISService {
 		return result;
 		
 	}	
-	
+
 	public List<Integer> findVariazioniPresenti(Integer esercizio, String tiSigned, String cds, String uo){
+		return findVariazioniPresenti(esercizio, tiSigned, cds, uo, null);
+	}
+	
+	public List<Integer> findVariazioniPresenti(Integer esercizio, String tiSigned, String cds, String uo, Long variazionePdg){
 		List<Integer> result = new ArrayList<Integer>();
-		StringBuffer query = new StringBuffer("select var.cmis:objectid, ");
+		StringBuffer query = new StringBuffer("select var.cmis:objectId, ");
 		query.append("var.").append(CMISProperty.VARPIANOGEST_NUMEROVARIAZIONE.value());
 		query.append(" from varpianogest:document var");
-		query.append(" join strorg:cds as cds on var.cmis:objectid = cds.cmis:objectid");
-		query.append(" join strorg:uo as uo on var.cmis:objectid = uo.cmis:objectid");
+		query.append(" join strorg:cds as cds on var.cmis:objectId = cds.cmis:objectId");
+		query.append(" join strorg:uo as uo on var.cmis:objectId = uo.cmis:objectId");
 		if (tiSigned != null &&
 				tiSigned.equals(ArchiviaStampaPdgVariazioneBulk.VIEW_SIGNED))
-			query.append(" join cnr:signedDocument as sig on var.cmis:objectid = sig.cmis:objectid");
+			query.append(" join cnr:signedDocument as sig on var.cmis:objectId = sig.cmis:objectId");
 		query.append(" where var.").append(CMISProperty.VARPIANOGEST_ESERCIZIO.value()).append(" = ").append(esercizio);
+		if (variazionePdg != null)
+			query.append(" and var.").append(CMISProperty.VARPIANOGEST_NUMEROVARIAZIONE.value()).append(" = ").append(variazionePdg);
 		if (cds != null)
 			query.append(" and cds.").append(CMISProperty.STRORGCDS_CODICE.value()).append(" = ").append("'").append(cds).append("'");
 		if (uo != null)
