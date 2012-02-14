@@ -2669,8 +2669,12 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 					sql.addClause(FindClause.AND, "cd_centro_responsabilita", SQLBuilder.STARTSWITH, uo);
 				}
 			}
-		}		
-		List<Integer> variazioniPresentiSulDocumentale = variazioniPresentiSulDocumentale(userContext, tiSigned,cds, uo);
+		}
+		Long variazionePdg = null;
+		if (bulk != null && bulk instanceof Pdg_variazioneBulk ){
+			variazionePdg = ((Pdg_variazioneBulk)bulk).getPg_variazione_pdg();
+		}
+		List<Integer> variazioniPresentiSulDocumentale = variazioniPresentiSulDocumentale(userContext, tiSigned, cds, uo, variazionePdg);
 		if (clausolaIn && variazioniPresentiSulDocumentale.isEmpty())
 			sql.addClause(FindClause.AND, "pg_variazione_pdg", SQLBuilder.EQUALS, -1);
 		sql.openParenthesis(FindClause.AND);
@@ -2684,10 +2688,10 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		return sql;
 	}
 
-	private List<Integer> variazioniPresentiSulDocumentale(UserContext userContext, String tiSigned, String cds, String uo) throws ComponentException, PersistencyException{
+	private List<Integer> variazioniPresentiSulDocumentale(UserContext userContext, String tiSigned, String cds, String uo, Long variazionePdg) throws ComponentException, PersistencyException{
 		PdgVariazioniService pdgVariazioniService = SpringUtil.getBean("pdgVariazioniService",
 				PdgVariazioniService.class);
-		return pdgVariazioniService.findVariazioniPresenti(CNRUserContext.getEsercizio(userContext),tiSigned, cds, uo);
+		return pdgVariazioniService.findVariazioniPresenti(CNRUserContext.getEsercizio(userContext),tiSigned, cds, uo, variazionePdg);
 	}
 }
  
