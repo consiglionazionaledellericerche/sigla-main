@@ -81,6 +81,7 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	}
 	setFl_supervisore( new Boolean( false ) );
 	setFl_altra_proc( new Boolean( false ) );
+	setFl_attiva_blocco( new Boolean( true ) );
 	return this;
 }
 /**
