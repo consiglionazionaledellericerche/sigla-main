@@ -1083,7 +1083,7 @@ public class GestioneLoginComponent
 	}
 	public List utentiMultipli(UserContext userContext,UtenteBulk utente) throws it.cnr.jada.comp.ComponentException {
 		try {
-			UtenteHome home = (UtenteHome)getHome(userContext,utente);
+			UtenteHome home = (UtenteHome)getHome(userContext,UtenteBulk.class);
 			SQLBuilder sqlUtente = home.createSQLBuilder();
 	 		sqlUtente.addClause("AND","fl_autenticazione_ldap",sqlUtente.EQUALS,Boolean.TRUE);
 	 		if(utente.getCd_utente_uid()!=null)
