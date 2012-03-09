@@ -50,11 +50,13 @@
 	<% bp.writeFormField(out,"note");%>
 </tr>
 <tr>
-<%	if(bp.getAnagrafico() != null && bp.getAnagrafico().isStrutturaCNR() )
-		bp.writeFormField(out,"dt_fine_validita");
-	else
-		bp.writeFormField(out,"dt_fine_rapporto");
-%>
+	<%	if(bp.getAnagrafico() != null && bp.getAnagrafico().isStrutturaCNR() ){ %>
+		<td><%bp.writeFormLabel(out,"default","dt_fine_validita"); %></td> 
+		<td><%bp.writeFormInput(out,"default","dt_fine_validita",false,null,null); %></td>
+	<% }else { %>
+		<td><%bp.writeFormLabel(out,"default","dt_fine_rapporto"); %></td>
+		<td><%bp.writeFormInput(out,"default","dt_fine_rapporto",true,null,null); %></td>
+	<%} %> 
 </tr>
 </table>
 
