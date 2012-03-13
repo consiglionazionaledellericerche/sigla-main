@@ -95,7 +95,10 @@
 			propertyName="bonus.esercizio" />
 		<columnMapping
 			columnName="PG_BONUS"
-			propertyName="bonus.pg_bonus" />			
+			propertyName="bonus.pg_bonus" />	
+		<columnMapping
+			columnName="CD_TERZO_PIGNORATO"
+			propertyName="pignorato.cd_terzo"/>	
 	</defaultColumnMap>		
 
 	<persistentProperty

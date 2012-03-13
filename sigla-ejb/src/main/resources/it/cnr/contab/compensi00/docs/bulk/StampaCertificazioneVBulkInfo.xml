@@ -129,5 +129,14 @@
 			paramNameJR="nota"
 			paramTypeJR="java.lang.String"  />
 	</printForm>
+		<printForm
+		name="/docamm/docamm/certificazione_comunicaz_pignorato.jasper">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING" 
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer" />
+	</printForm>
 
 </bulkInfo>

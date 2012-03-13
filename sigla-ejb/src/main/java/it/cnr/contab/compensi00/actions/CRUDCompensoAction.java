@@ -298,6 +298,9 @@ public Forward doBlankSearchFind_terzo(ActionContext context, CompensoBulk compe
 		compenso.setIncarichi_repertorio_anno(null);
 		compenso.setTi_prestazione(null);
 		//compenso.setIncarichi_oggetto(null);
+		
+		compenso.setPignorato(null);
+		compenso.setVisualizzaPignorato(false);
 
 		compenso.setStatoCompensoToEseguiCalcolo();
 	}
@@ -1343,6 +1346,17 @@ public Forward doOnTipoTrattamentoChange(ActionContext context) {
 		    "Utente non abilitato all'utilizzo del trattamento selezionato!");
 		}	
 	
+		if (compenso.getTipoTrattamento()!=null && compenso.getTipoTrattamento().getFl_pignorato_obbl())
+		{
+			compenso.setVisualizzaPignorato(true);
+		    compenso.setPignorato(new TerzoBulk());
+		}
+		else
+		{
+			compenso.setPignorato(null);
+			compenso.setVisualizzaPignorato(false);
+		}
+		
 		bp.onTipoTrattamentoChange(context);
 		((CompensoBulk)bp.getModel()).setStatoCompensoToEseguiCalcolo();
 
@@ -1703,6 +1717,9 @@ public void PostTipoRapportoChange(ActionContext context) {
 		compenso.setCodici_altra_forma_ass_inps(null);
 		compenso.setVisualizzaCodici_altra_forma_ass_inps(false);
 		compenso.setComune_inps(null);
+		
+		compenso.setPignorato(null);
+		compenso.setVisualizzaPignorato(false);
 
 	}catch (Throwable ex) {
 		handleException(context, ex);

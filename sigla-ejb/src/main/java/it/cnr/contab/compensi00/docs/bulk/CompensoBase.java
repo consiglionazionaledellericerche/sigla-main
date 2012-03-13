@@ -356,6 +356,10 @@ public class CompensoBase extends CompensoKey implements Keyed {
 	private java.lang.Long pg_bonus;
 	// 
 	private java.lang.Boolean fl_liquidazione_differita;
+	
+	// CD_TERZO_PIGNORATO DECIMAL(8,0) NOT NULL
+	private java.lang.Integer cd_terzo_pignorato;
+	
 public CompensoBase() {
 	super();
 }
@@ -1713,5 +1717,10 @@ public void setTi_istituz_commerc(java.lang.String ti_istituz_commerc) {
 			java.lang.Boolean fl_liquidazione_differita) {
 		this.fl_liquidazione_differita = fl_liquidazione_differita;
 	}
-
+	public java.lang.Integer getCd_terzo_pignorato() {
+		return cd_terzo_pignorato;
+	}
+	public void setCd_terzo_pignorato(java.lang.Integer cd_terzo_pignorato) {
+		this.cd_terzo_pignorato = cd_terzo_pignorato;
+	}
 }

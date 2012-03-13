@@ -183,6 +183,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	private java.lang.String riportataInScrivania = NON_RIPORTATO;
 	private java.lang.Boolean roQuota_esente_inps = java.lang.Boolean.FALSE;
 	private BonusBulk bonus;
+	private it.cnr.contab.anagraf00.core.bulk.TerzoBulk pignorato = new it.cnr.contab.anagraf00.core.bulk.TerzoBulk();
+	private boolean visualizzaPignorato = false;
 
 	public CompensoBulk() {
 		super();
@@ -3179,4 +3181,35 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		return getUnitaOrganizzativa().getDs_unita_organizzativa();
 	}
 	
+	public it.cnr.contab.anagraf00.core.bulk.TerzoBulk getPignorato() {
+		return pignorato;
+	}
+
+	public void setPignorato(it.cnr.contab.anagraf00.core.bulk.TerzoBulk pignorato) {
+		this.pignorato = pignorato;
+	}	
+	public java.lang.String getDs_pignorato() {
+		if ( pignorato != null )
+			return pignorato.getDenominazione_sede();
+		return "";	
+	}
+	public void setCd_terzo_pignorato(java.lang.Integer cd_terzo_pignorato) {
+		this.getPignorato().setCd_terzo(cd_terzo_pignorato);
+	}	
+	public java.lang.Integer getCd_terzo_pignorato() {
+		it.cnr.contab.anagraf00.core.bulk.TerzoBulk pignorato = this.getPignorato();
+		if (pignorato == null)
+			return null;
+		return pignorato.getCd_terzo();
+	}
+	public boolean isROPignorato() {
+		return pignorato == null || pignorato.getCrudStatus() == NORMAL;
+	}
+	public boolean isVisualizzaPignorato() {
+		return visualizzaPignorato;
+	}
+
+	public void setVisualizzaPignorato(boolean visualizzaPignorato) {
+		this.visualizzaPignorato = visualizzaPignorato;
+	}
 }

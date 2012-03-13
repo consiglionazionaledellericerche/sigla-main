@@ -202,7 +202,14 @@
 		enabledOnSearch="false"
 		enabledOnEdit="true"
 		enabledOnInsert="true" />
-
+	<fieldProperty
+		name="fl_pignorato_obbl"
+		property="fl_pignorato_obbl"
+		inputType="CHECKBOX"
+		label="Terzo pignorato obbligatorio"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />
 	<formFieldProperty
 		name="cd_trattamento"
 		command="doCaricaIntervalli" />
@@ -227,7 +234,8 @@
 	<formFieldProperty name="fl_anno_prec" />	
 	<formFieldProperty name="fl_detrazioni_altre" />		
 	<formFieldProperty name="fl_incarico" />	
-	<formFieldProperty name="fl_visibile_a_tutti" />		
+	<formFieldProperty name="fl_visibile_a_tutti" />	
+	<formFieldProperty name="fl_pignorato_obbl" />
 
 	<columnFieldProperty name="cd_trattamento" />
 	<columnFieldProperty name="ds_ti_trattamento" />
@@ -249,7 +257,8 @@
 	<columnFieldProperty name="fl_anno_prec" />			
 	<columnFieldProperty name="fl_detrazioni_altre" />				
 	<columnFieldProperty name="fl_incarico" />		
-	<columnFieldProperty name="fl_visibile_a_tutti" />					
+	<columnFieldProperty name="fl_visibile_a_tutti" />	
+	<columnFieldProperty name="fl_pignorato_obbl" />					
 
 	<columnSet name="cd_ds_trattamento">
 		<columnFieldProperty name="cd_trattamento" />
@@ -279,4 +288,5 @@
 	<findFieldProperty name="fl_detrazioni_altre" />			
 	<findFieldProperty name="fl_incarico" />				
 	<findFieldProperty name="fl_visibile_a_tutti" />	
+	<findFieldProperty name="fl_pignorato_obbl" />		
 </bulkInfo>

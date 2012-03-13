@@ -1277,6 +1277,53 @@
 		enabledOnSearch = "false"
 		enabledOnFreeSearch = "true"
 		label="Liquidazione differita" />	
+	<fieldProperty
+		name="find_pignorato"
+		property="pignorato"
+		inputType="SEARCHTOOL"
+		label="Terzo Pignorato"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="cd_terzo_pignorato"
+		property="pignorato.cd_terzo"
+		readonlyProperty="ROPignorato"
+		label="Terzo Pignorato"
+		inputType="TEXT"
+		maxLength="8"
+		inputSize="8"
+		enabledOnSearch="true"
+		nullable="true"
+		/>
+	<fieldProperty
+		name="ds_pignorato"
+		property="ds_pignorato"
+		readonlyProperty="ROPignorato"
+		label=""
+		inputSize="60"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="partita_iva_pignorato"
+		property="pignorato.anagrafico.partita_iva"
+		readonlyProperty="ROPignorato"
+		label="Partita IVA"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="20"
+		enabledOnSearch="true"
+		nullable="true"		
+		/>
+	<fieldProperty
+		name="codice_fiscale_pignorato"
+		property="pignorato.anagrafico.codice_fiscale"
+		readonlyProperty="ROPignorato"
+		label="Codice Fiscale"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="20"
+		enabledOnSearch="true"
+		nullable="true"		
+		/>
 
 	<formFieldProperty name="cd_cds" />
 	<formFieldProperty name="cd_unita_organizzativa" />
@@ -1442,6 +1489,11 @@
 	<formFieldProperty name="im_netto_da_trattenere"
                        command="doOnImNettoDaTrattenereChange" />
    <formFieldProperty name="fl_liquidazione_differita"/> 
+   <formFieldProperty name="cd_terzo_pignorato"/> 
+   <formFieldProperty name="ds_pignorato"/> 
+   <formFieldProperty name="find_pignorato"/> 
+   <formFieldProperty name="codice_fiscale_pignorato"/>
+   <formFieldProperty name="partita_iva_pignorato"/>
                        	
 	<columnFieldProperty name="cd_cds" />
 	<columnFieldProperty name="cd_unita_organizzativa" />
@@ -1563,5 +1615,6 @@
 	<findFieldProperty name="esercizio_rep"/>			
 	<findFieldProperty name="pg_repertorio"/>			
 	<findFieldProperty name="esercizio_limite_rep"/>
-	<findFieldProperty name="im_netto_da_trattenere"/>	
+	<findFieldProperty name="im_netto_da_trattenere"/>
+	<findFieldProperty name="cd_terzo_pignorato"/>	
 </bulkInfo>

@@ -129,7 +129,31 @@
 </fieldset>
 </div>
 <% } %>
-
+<% if (compenso.isVisualizzaPignorato()) { %>
+	<div class="Group" style="width:100%">
+	<fieldset class="fieldset">
+	<legend class="GroupLabel">Pignorato</legend>
+	<table>
+	  <tr>
+	   <td><% bp.getController().writeFormLabel( out, "cd_terzo_pignorato"); %></td>
+	   <td colspan=2>
+		<% bp.getController().writeFormInput( out, "cd_terzo_pignorato"); %>
+		<% bp.getController().writeFormInput( out, "ds_pignorato"); %>
+		<% bp.getController().writeFormInput( out, "find_pignorato"); %>
+	   </td>
+	  </tr>
+	  <tr>
+	   <td>	<% bp.getController().writeFormLabel( out, "codice_fiscale_pignorato"); %></td>
+	   <td>	<% bp.getController().writeFormInput( out, "codice_fiscale_pignorato"); %></td>
+	   <td>
+            <% bp.getController().writeFormLabel( out, "partita_iva_pignorato"); %>
+	        <% bp.getController().writeFormInput( out, "partita_iva_pignorato"); %>	        
+	   </td>
+	  </tr>
+	</table>
+	</fieldset>	
+    </div>
+<% } %>
 <% if (compenso.isVisualizzaCodici_rapporti_inps()) { %>
 <div class="Group" style="width:100%">
 <table>

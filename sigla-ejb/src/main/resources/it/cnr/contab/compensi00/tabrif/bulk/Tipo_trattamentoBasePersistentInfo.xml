@@ -169,7 +169,13 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-
+		<columnMapping
+			columnName="FL_PIGNORATO_OBBL"
+			propertyName="fl_pignorato_obbl"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="fl_detrazioni_dipendente" />
@@ -220,5 +226,7 @@
 	<persistentProperty
 		name="tipo_rapp_impiego" />
 	<persistentProperty
-		name="fl_visibile_a_tutti" />		
+		name="fl_visibile_a_tutti" />	
+	<persistentProperty
+		name="fl_pignorato_obbl" />
 </SQLPersistentInfo>

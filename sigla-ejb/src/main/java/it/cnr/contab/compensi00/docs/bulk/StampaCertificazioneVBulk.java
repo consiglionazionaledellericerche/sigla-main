@@ -29,6 +29,7 @@ public class StampaCertificazioneVBulk extends it.cnr.jada.bulk.OggettoBulk {
 	public static final String TI_IMPOSTA_CC = "CC";
 	public static final String TI_CONTRIBUTI = "RC";
 	public static final String TI_IMPOSTA_PC = "PC";
+	public static final String TI_ACCONTO_PPT = "RAPPT";
 
 	private boolean stampaRit_prev;
 	private boolean stampaRit_acconto;
@@ -36,6 +37,7 @@ public class StampaCertificazioneVBulk extends it.cnr.jada.bulk.OggettoBulk {
 	private boolean stampaTit_imposta_cc;	
 	private boolean stampaRit_contrib;
 	private boolean stampaTit_imposta_pc;
+	private boolean stampaRit_acconto_ppt;
 
 /**
  * StampaCertificazioneVBulk constructor comment.
@@ -54,6 +56,7 @@ public OrderedHashtable getTipoKeys() {
 		tipoKeys.put("CC", "a Titolo d'Imposta - Co.Co.Co.");
 		tipoKeys.put("RC", "per Contributi corrisposti ad imprese");
 		tipoKeys.put("PC", "a Titolo d'Imposta - Premi per concorsi");
+		tipoKeys.put("RAPPT", "a Ritenuta d'Acconto su somme liquidate a seguito di pignoramenti presso terzi");
 	}
 	return tipoKeys;
 }
@@ -253,5 +256,12 @@ public void setStampaTit_imposta(boolean newStampaTit_imposta) {
 
 	public void setStampaTit_imposta_pc(boolean b) {
 		this.stampaTit_imposta_pc = b;
+	}
+	public boolean isStampaRit_acconto_ppt() {
+		return stampaRit_acconto_ppt;
+	}
+
+	public void setStampaRit_acconto_ppt(boolean stampaRit_acconto_ppt) {
+		this.stampaRit_acconto_ppt = stampaRit_acconto_ppt;
 	}
 }

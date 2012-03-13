@@ -65,6 +65,9 @@ public class Tipo_trattamentoBase extends Tipo_trattamentoKey implements Keyed {
 	
 	// FL_VISIBILE_A_TUTTI CHAR(1) NOT NULL
 	private java.lang.Boolean fl_visibile_a_tutti;
+
+	// FL_PIGNORATO_OBBL CHAR(1) NOT NULL
+	private java.lang.Boolean fl_pignorato_obbl;
 	
 public Tipo_trattamentoBase() {
 	super();
@@ -270,5 +273,11 @@ public java.lang.Boolean getFl_visibile_a_tutti() {
 }
 public void setFl_visibile_a_tutti(java.lang.Boolean fl_visibile_a_tutti) {
 		this.fl_visibile_a_tutti = fl_visibile_a_tutti;
+}
+public java.lang.Boolean getFl_pignorato_obbl() {
+	return fl_pignorato_obbl;
+}
+public void setFl_pignorato_obbl(java.lang.Boolean fl_pignorato_obbl) {
+	this.fl_pignorato_obbl = fl_pignorato_obbl;
 }
 }

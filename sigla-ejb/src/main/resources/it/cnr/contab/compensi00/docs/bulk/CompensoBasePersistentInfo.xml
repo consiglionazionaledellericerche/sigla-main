@@ -727,6 +727,12 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="CD_TERZO_PIGNORATO"
+			propertyName="cd_terzo_pignorato"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />			
 	</defaultColumnMap>
 	<persistentProperty
 		name="cognome" />
@@ -971,5 +977,7 @@
 	<persistentProperty
 		name="pg_bonus" />		
 	<persistentProperty
-		name="fl_liquidazione_differita" />			
+		name="fl_liquidazione_differita" />	
+	<persistentProperty
+		name="cd_terzo_pignorato" />		
 </SQLPersistentInfo>

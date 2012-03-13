@@ -870,7 +870,9 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			compenso.setTipiTrattamento(findTipiTrattamento(userContext,
 					compenso));
 			loadTipoTrattamento(userContext, compenso);
-
+			
+			loadPignorato(userContext, compenso);
+			
 			loadDatiLiquidazione(userContext, compenso);
 			loadContributiERitenute(userContext, compenso);
 			loadMinicarriera(userContext, compenso);
@@ -2320,7 +2322,14 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			throw new it.cnr.jada.comp.ApplicationException(
 					"Selezionare un Conto valido");
 		}
+		case 14: {
+			throw new it.cnr.jada.comp.ApplicationException(
+					"Selezionare il Tipo Prestazione");
 		}
+		case 15: {
+			throw new it.cnr.jada.comp.ApplicationException(
+					"Selezionare il Terzo Pignorato");
+		}	
 	}
 
 	/**
@@ -5284,6 +5293,10 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				&& compenso.getBanca().getFl_cancellato())
 			return 13;
 
+		// pignorato assente
+		if (compenso.isVisualizzaPignorato()
+				&& compenso.getCd_terzo_pignorato() == null)
+			return 15;		
 		return (0);
 	}
 
@@ -6430,4 +6443,22 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		
 		return sql;
 	}	
+	private void loadPignorato(UserContext userContext,
+			CompensoBulk compenso) throws ComponentException {
+		try {  
+			if((compenso.getTipoTrattamento()!=null && compenso.getTipoTrattamento().getFl_pignorato_obbl())||compenso.getCd_terzo_pignorato()!=null)
+			{	
+	             compenso.setVisualizzaPignorato(true);
+	             if (compenso.getCd_terzo_pignorato()!=null)
+	             {
+	            	 TerzoHome tHome = (TerzoHome) getHome(userContext,TerzoBulk.class);
+						 TerzoBulk tKey = new TerzoBulk(compenso.getCd_terzo_pignorato());
+						 TerzoBulk t = (TerzoBulk) tHome.findByPrimaryKey(tKey);
+	            	 compenso.setPignorato(t);
+	             }
+			}
+		} catch (it.cnr.jada.persistency.PersistencyException ex) {
+			throw handleException(ex);
+		}
+	}
 }
