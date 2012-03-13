@@ -2331,6 +2331,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 					"Selezionare il Terzo Pignorato");
 		}	
 	}
+	}
 
 	/**
 	 * Prepara un OggettoBulk (compenso) per l'inserimento
