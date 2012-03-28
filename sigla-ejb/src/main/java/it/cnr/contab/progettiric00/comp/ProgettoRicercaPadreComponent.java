@@ -571,9 +571,12 @@ public boolean isLeaf(UserContext userContext, OggettoBulk bulk) throws Componen
 					if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_progettoBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
 						if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_progetto_sacBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
 							if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_progetto_rstlBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
-								progetto_sip.setToBeDeleted();
-								super.eliminaConBulk(userContext, progetto_sip);
+								if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_progetto_strategicoBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
+									progetto_sip.setToBeDeleted();
+									super.eliminaConBulk(userContext, progetto_sip);
+								}		
 							}
+								
 						}
 					}
 				}
@@ -581,8 +584,10 @@ public boolean isLeaf(UserContext userContext, OggettoBulk bulk) throws Componen
 					if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_commessaBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
 						if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_commessa_sacBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
 							if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_commessa_rstlBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
-								progetto_sip.setToBeDeleted();
-								super.eliminaConBulk(userContext, progetto_sip);
+								if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_commessa_psBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
+									progetto_sip.setToBeDeleted();
+									super.eliminaConBulk(userContext, progetto_sip);
+								}
 							}
 						}
 					}
@@ -591,16 +596,18 @@ public boolean isLeaf(UserContext userContext, OggettoBulk bulk) throws Componen
 					if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_moduloBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
 						if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_modulo_sacBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
 							if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_modulo_rstlBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
-								SQLBuilder sql = moduli_utilizzatiHome.createSQLBuilderAll();
-								sql.addSQLClause("AND", "ESERCIZIO",SQLBuilder.EQUALS,progetto_sip.getEsercizio());
-								sql.addSQLClause("AND", "PG_PROGETTO",SQLBuilder.EQUALS,progetto_sip.getPg_progetto());
-								sql.addSQLClause("AND", "TIPO_FASE",SQLBuilder.EQUALS,progetto_sip.getTipo_fase());								
-								SQLBroker brokerUtilizzati = moduli_utilizzatiHome.createBroker(sql);
-								if (brokerUtilizzati.next()){
-									handleExceptionMail(userContext, new ApplicationException("Si è tentato di cancellare il modulo utilizzato: "+progetto_sip.getEsercizio()+"/"+progetto_sip.getPg_progetto()+"/"+progetto_sip.getTipo_fase()));
-								}else{	
-									progetto_sip.setToBeDeleted();
-									super.eliminaConBulk(userContext, progetto_sip);
+								if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_modulo_psBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
+									SQLBuilder sql = moduli_utilizzatiHome.createSQLBuilderAll();
+									sql.addSQLClause("AND", "ESERCIZIO",SQLBuilder.EQUALS,progetto_sip.getEsercizio());
+									sql.addSQLClause("AND", "PG_PROGETTO",SQLBuilder.EQUALS,progetto_sip.getPg_progetto());
+									sql.addSQLClause("AND", "TIPO_FASE",SQLBuilder.EQUALS,progetto_sip.getTipo_fase());								
+									SQLBroker brokerUtilizzati = moduli_utilizzatiHome.createBroker(sql);
+									if (brokerUtilizzati.next()){
+										handleExceptionMail(userContext, new ApplicationException("Si è tentato di cancellare il modulo utilizzato: "+progetto_sip.getEsercizio()+"/"+progetto_sip.getPg_progetto()+"/"+progetto_sip.getTipo_fase()));
+									}else{	
+										progetto_sip.setToBeDeleted();
+										super.eliminaConBulk(userContext, progetto_sip);
+									}
 								}
 							}
 						}

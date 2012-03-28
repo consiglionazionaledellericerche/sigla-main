@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.progettiric00.geco.bulk.Geco_modulo_psBase"
+	keyClassName="it.cnr.contab.progettiric00.geco.bulk.Geco_modulo_psKey"
+	homeClassName="it.cnr.contab.progettiric00.geco.bulk.Geco_modulo_psHome">
+	<defaultColumnMap
+		tableName="modulo_ps">
+		<columnMapping
+			columnName="cod_mod"
+			propertyName="cod_mod"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="id_comm"
+			propertyName="id_comm"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="tipo_mod"
+			propertyName="tipo_mod"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="descr_mod"
+			propertyName="descr_mod"
+			sqlTypeName="VARCHAR"
+			columnSize="255"
+			nullable="false" />
+		<columnMapping
+			columnName="cds_prop"
+			propertyName="cds_prop"
+			sqlTypeName="CHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="cds_esec"
+			propertyName="cds_esec"
+			sqlTypeName="CHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="sede_princ_cdsuo"
+			propertyName="sede_princ_cdsuo"
+			sqlTypeName="CHAR"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="cod_tip"
+			propertyName="cod_tip"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="cod_3rzo_gest"
+			propertyName="cod_3rzo_gest"
+			sqlTypeName="VARCHAR"
+			columnSize="255"
+			nullable="true" />
+		<columnMapping
+			columnName="matricola_gest"
+			propertyName="matricola_gest"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="cognome_gest"
+			propertyName="cognome_gest"
+			sqlTypeName="VARCHAR"
+			columnSize="255"
+			nullable="true" />
+		<columnMapping
+			columnName="nome_gest"
+			propertyName="nome_gest"
+			sqlTypeName="VARCHAR"
+			columnSize="255"
+			nullable="true" />
+		<columnMapping
+			columnName="telefono_gest"
+			propertyName="telefono_gest"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="email_gest"
+			propertyName="email_gest"
+			sqlTypeName="VARCHAR"
+			columnSize="255"
+			nullable="true" />
+		<columnMapping
+			columnName="parola_chiave_1"
+			propertyName="parola_chiave_1"
+			sqlTypeName="VARCHAR"
+			columnSize="255"
+			nullable="true" />
+		<columnMapping
+			columnName="parola_chiave_2"
+			propertyName="parola_chiave_2"
+			sqlTypeName="VARCHAR"
+			columnSize="255"
+			nullable="true" />
+		<columnMapping
+			columnName="parola_chiave_3"
+			propertyName="parola_chiave_3"
+			sqlTypeName="VARCHAR"
+			columnSize="255"
+			nullable="true" />
+		<columnMapping
+			columnName="descrittori_1"
+			propertyName="descrittori_1"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="descrittori_2"
+			propertyName="descrittori_2"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="descrittori_3"
+			propertyName="descrittori_3"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="esercizio_proposta"
+			propertyName="esercizio_proposta"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="esercizio_inizio_attivita"
+			propertyName="esercizio_inizio_attivita"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="data_inizio_attivita"
+			propertyName="data_inizio_attivita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="stato"
+			propertyName="stato"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="stato_att_scie"
+			propertyName="stato_att_scie"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="stato_att_contab"
+			propertyName="stato_att_contab"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="data_fine_attivita_scie"
+			propertyName="data_fine_attivita_scie"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="data_fine_attivita_contab"
+			propertyName="data_fine_attivita_contab"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="esercizio_chiusura"
+			propertyName="esercizio_chiusura"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="codicefiscale_gest"
+			propertyName="codicefiscale_gest"
+			sqlTypeName="CHAR"
+			columnSize="16"
+			nullable="true" />
+		<columnMapping
+			columnName="esito_negoz"
+			propertyName="esito_negoz"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="utente_creatore"
+			propertyName="utente_creatore"
+			sqlTypeName="VARCHAR"
+			columnSize="255"
+			nullable="true" />
+		<columnMapping
+			columnName="data_creazione"
+			propertyName="data_creazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="ip_creazione"
+			propertyName="ip_creazione"
+			sqlTypeName="VARCHAR"
+			columnSize="255"
+			nullable="true" />
+		<columnMapping
+			columnName="utente_ultima_modifica"
+			propertyName="utente_ultima_modifica"
+			sqlTypeName="VARCHAR"
+			columnSize="255"
+			nullable="true" />
+		<columnMapping
+			columnName="data_ultima_modifica"
+			propertyName="data_ultima_modifica"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="ip_ultima_modifica"
+			propertyName="ip_ultima_modifica"
+			sqlTypeName="VARCHAR"
+			columnSize="32"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cod_mod" />
+	<persistentProperty
+		name="id_comm" />
+	<persistentProperty
+		name="tipo_mod" />
+	<persistentProperty
+		name="descr_mod" />
+	<persistentProperty
+		name="cds_prop" />
+	<persistentProperty
+		name="cds_esec" />
+	<persistentProperty
+		name="sede_princ_cdsuo" />
+	<persistentProperty
+		name="cod_tip" />
+	<persistentProperty
+		name="cod_3rzo_gest" />
+	<persistentProperty
+		name="matricola_gest" />
+	<persistentProperty
+		name="cognome_gest" />
+	<persistentProperty
+		name="nome_gest" />
+	<persistentProperty
+		name="telefono_gest" />
+	<persistentProperty
+		name="email_gest" />
+	<persistentProperty
+		name="parola_chiave_1" />
+	<persistentProperty
+		name="parola_chiave_2" />
+	<persistentProperty
+		name="parola_chiave_3" />
+	<persistentProperty
+		name="descrittori_1" />
+	<persistentProperty
+		name="descrittori_2" />
+	<persistentProperty
+		name="descrittori_3" />
+	<persistentProperty
+		name="esercizio_proposta" />
+	<persistentProperty
+		name="esercizio_inizio_attivita" />
+	<persistentProperty
+		name="data_inizio_attivita" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="stato_att_scie" />
+	<persistentProperty
+		name="stato_att_contab" />
+	<persistentProperty
+		name="data_fine_attivita_scie" />
+	<persistentProperty
+		name="data_fine_attivita_contab" />
+	<persistentProperty
+		name="esercizio_chiusura" />
+	<persistentProperty
+		name="codicefiscale_gest" />
+	<persistentProperty
+		name="esito_negoz" />
+	<persistentProperty
+		name="utente_creatore" />
+	<persistentProperty
+		name="data_creazione" />
+	<persistentProperty
+		name="ip_creazione" />
+	<persistentProperty
+		name="utente_ultima_modifica" />
+	<persistentProperty
+		name="data_ultima_modifica" />
+	<persistentProperty
+		name="ip_ultima_modifica" />
+</SQLPersistentInfo>
