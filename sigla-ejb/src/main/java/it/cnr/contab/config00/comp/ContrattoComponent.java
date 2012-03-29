@@ -15,6 +15,7 @@ import java.util.StringTokenizer;
 
 import it.cnr.contab.utenze00.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.client.docamm.FatturaAttiva;
 import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.config00.bulk.*;
@@ -201,6 +202,13 @@ public class ContrattoComponent extends it.cnr.jada.comp.CRUDDetailComponent imp
 		  sql.addClause(clause);
 		return sql;
 	}	
+public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext,  OggettoBulk bulk,it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo, CompoundFindClause clauses) throws ComponentException {
+		
+		TerzoHome home = (TerzoHome)getHome(userContext, TerzoBulk.class, "V_TERZO_CF_PI");
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause(clauses);
+		return sql;
+}
 	/**
 	 * Pre:  Ricerca Tipo Provvedimento
 	 * Post: Limitazione ai tipi non annullati

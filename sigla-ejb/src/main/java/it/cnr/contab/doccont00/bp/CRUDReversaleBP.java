@@ -538,6 +538,14 @@ public SimpleDetailCRUDController getCupCollegati() {
 	return cupCollegati;
 }
 private void validateCupCollegati(ActionContext context, OggettoBulk model) throws ValidationException {
+	try {
+		if (getCupCollegati() != null && getCupCollegati().getModel() != null){
+			getCupCollegati().getModel().validate(getModel());
+		   completeSearchTools(context, this);
+		}
+	} catch (BusinessProcessException e) {
+		handleException(e);
+	} 
 	   ReversaleCupBulk bulk =(ReversaleCupBulk)model;
 	   java.math.BigDecimal tot_col=java.math.BigDecimal.ZERO;
 	   if (bulk!=null && bulk.getReversale_riga()!=null && bulk.getReversale_riga().getReversaleCupColl()!=null && !bulk.getReversale_riga().getReversaleCupColl().isEmpty()){

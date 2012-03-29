@@ -360,6 +360,15 @@ public SimpleDetailCRUDController getCupCollegati() {
 	return cupCollegati;
 }
 private void validateCupCollegati(ActionContext context, OggettoBulk model) throws ValidationException {
+	try {
+		if (getCupCollegati() != null && getCupCollegati().getModel() != null){
+			getCupCollegati().getModel().validate(getModel());
+		   completeSearchTools(context, this);
+		}
+	} catch (BusinessProcessException e) {
+		handleException(e);
+	} 
+	
    MandatoCupBulk bulk =(MandatoCupBulk)model;
    BigDecimal tot_col=BigDecimal.ZERO;
    if (bulk!=null && bulk.getMandato_riga()!=null && bulk.getMandato_riga().getMandatoCupColl()!=null && !bulk.getMandato_riga().getMandatoCupColl().isEmpty()){
