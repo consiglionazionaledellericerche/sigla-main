@@ -51,6 +51,24 @@
 		inputSize="30" 
 		label="Ragione sociale" />
 	<fieldProperty
+		name="cognome"
+		property="anagraficoForPrint.cognome"
+		inputType="ROTEXT"
+		inputSize="50" 
+		label="Cognome" />
+	<fieldProperty
+		name="nome"
+		property="anagraficoForPrint.nome"
+		inputType="ROTEXT"
+		inputSize="50" 
+		label="Nome" />
+	<fieldProperty
+		name="denominazione"
+		property="denominazione"
+		inputType="ROTEXT"
+		inputSize="100" 
+		label="Denominazione" />		
+	<fieldProperty
 		name="note"
 		property="note"
 		inputType="TEXTAREA"
@@ -66,7 +84,7 @@
 	<formFieldProperty name="ti_cert" />
 	<formFieldProperty name="cd_anag" />
 	<formFieldProperty name="findAnagraficoForPrint" />
-	<formFieldProperty name="ragione_sociale" />
+	<formFieldProperty name="denominazione" />
 	<formFieldProperty name="note" />
 	
 	<form

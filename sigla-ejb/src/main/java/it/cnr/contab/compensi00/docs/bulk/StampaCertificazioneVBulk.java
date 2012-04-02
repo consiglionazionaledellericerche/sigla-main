@@ -19,6 +19,7 @@ public class StampaCertificazioneVBulk extends it.cnr.jada.bulk.OggettoBulk {
 	// NOTE
 	private String note;
 	private String ti_cert;
+	private String denominazione;
 	//private boolean editingTi_cert; 
 
 	private static OrderedHashtable tipoKeys;
@@ -138,7 +139,17 @@ public String getTi_cert() {
     	return TI_CONTRIBUTI;
     	*/
 }
+public String getDenominazione() {
+	if (getAnagraficoForPrint()==null)
+		return null;
+	if (getAnagraficoForPrint().getCd_anag()==null)
+		return null;
+    if (getAnagraficoForPrint().getRagione_sociale()!=null)
+    	return getAnagraficoForPrint().getRagione_sociale();
+    
+	return getAnagraficoForPrint().getCognome()+" "+ getAnagraficoForPrint().getNome();
 
+}
 public boolean isROAnagraficoForPrint(){
 	return anagraficoForPrint == null || anagraficoForPrint.getCrudStatus() == NORMAL;
 }
