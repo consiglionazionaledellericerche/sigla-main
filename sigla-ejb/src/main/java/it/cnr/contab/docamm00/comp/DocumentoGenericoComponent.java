@@ -5240,7 +5240,7 @@ private void controllaQuadraturaInventario(UserContext auc, Documento_genericoBu
 			Buono_carico_scarico_dettBulk ass=(Buono_carico_scarico_dettBulk)i.next();
 			ass.setBene((Inventario_beniBulk)getHome(auc, Inventario_beniBulk.class).findByPrimaryKey(ass.getBene()));
 			// per gestire l'inventario anche per i generici di reintegro del fondo 
-			if (documento.getTipo_documento().getTi_entrata_spesa().compareTo(documento.GENERICO_E)==0)
+			if (documento.getTipo_documento().getCd_tipo_documento_amm().compareTo(documento.GENERICO_E)==0)
 				totale_inv=totale_inv.add(ass.getBene().getValore_alienazione());
 			else
 				totale_inv=totale_inv.add(ass.getValore_unitario());
