@@ -1,5 +1,6 @@
 package it.cnr.contab.preventvar00.action;
 import java.rmi.RemoteException;
+import java.util.Iterator;
 
 import it.cnr.contab.prevent00.bulk.*;
 import it.cnr.contab.preventvar00.bulk.*;
@@ -127,6 +128,13 @@ public Forward doOnEsercizioResChange(ActionContext context) {
 		Var_bilancioBulk varBil = (Var_bilancioBulk)bp.getModel();
 		if(varBil.isNew()){
 			varBil.setVar_stanz_res(new Var_stanz_resBulk());
+		}
+		for (Iterator i=varBil.getDettagli().iterator();i.hasNext();){
+			Var_bilancio_detBulk det=(Var_bilancio_detBulk) i.next();
+			V_assestato_voceBulk old=det.getVoceFSaldi();
+			det.setVoceFSaldi(new V_assestato_voceBulk(old.getEsercizio(), varBil.getEsercizio_res().getEsercizio(), old.getCd_centro_responsabilita(), old.getTi_appartenenza(), old.getTi_gestione(), old.getCd_elemento_voce()));
+			det.getVoceFSaldi().setCd_voce(old.getCd_voce());
+			bp.completeSearchTool(context, det, det.getBulkInfo().getFieldProperty("find_voce"));
 		}
 		return context.findDefaultForward();
 	}catch(Throwable ex){
