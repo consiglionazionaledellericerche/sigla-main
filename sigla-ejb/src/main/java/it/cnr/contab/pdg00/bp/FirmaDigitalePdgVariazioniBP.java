@@ -115,7 +115,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 							.getPdgVariazioneDocument(bulk
 									.getPdg_variazioneForPrint()));
 				} catch (DetailedException e) {
-					handleException(e);
+					throw handleException(e);
 				}
 			} else {
 				PdgVariazioneDocument varDoc = new PdgVariazioneDocument(null);
@@ -314,11 +314,11 @@ public class FirmaDigitalePdgVariazioniBP extends
 						CNRUserContext.getCd_cdr((CNRUserContext) context
 								.getUserContext()));
 			} catch (ComponentException e) {
-				handleException(e);
+				throw handleException(e);
 			} catch (EJBException e) {
-				handleException(e);
+				throw handleException(e);
 			} catch (RemoteException e) {
-				handleException(e);
+				throw handleException(e);
 			}
 			bulk.setPg_variazione_pdg(new Long(0));
 			bulk.setCentro_responsabilita(cdr);
@@ -513,7 +513,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 			return (null);
 	}
 
-	public String getDownloadFile(javax.servlet.jsp.PageContext pageContext) {
+	public String getDownloadFile(javax.servlet.jsp.PageContext pageContext) throws BusinessProcessException {
 		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
 		File file = null;
 		File fileDir = null;
@@ -547,9 +547,9 @@ public class FirmaDigitalePdgVariazioniBP extends
 			out.flush();
 			out.close();
 		} catch (IOException e) {
-			handleException(e);
+			throw handleException(e);
 		} catch (BusinessProcessException e) {
-			handleException(e);
+			throw handleException(e);
 		}
 		String dirName = new File(fileDir.getName()).getName();
 		// ripuliamo il path
@@ -585,7 +585,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		return datiPEC;
 	}
 
-	public void caricaDatiPEC(ActionContext context) throws ValidationException {
+	public void caricaDatiPEC(ActionContext context) throws ValidationException, BusinessProcessException {
 		ArchiviaStampaPdgVariazioneBulk pbulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
 		String cdServizioPEC = null;
 		cdServizioPEC = PEC_BILANCIO;
@@ -596,11 +596,11 @@ public class FirmaDigitalePdgVariazioniBP extends
 			parametriEnte = Utility.createParametriEnteComponentSession()
 					.getParametriEnte(context.getUserContext());
 		} catch (ComponentException e) {
-			handleException(e);
+			throw handleException(e);
 		} catch (EJBException e) {
-			handleException(e);
+			throw handleException(e);
 		} catch (RemoteException e) {
-			handleException(e);
+			throw handleException(e);
 		}
 		// PEC del protocollo
 		ServizioPecBulk servizioPecProtocollo = null;
@@ -609,11 +609,11 @@ public class FirmaDigitalePdgVariazioniBP extends
 					.createParametriEnteComponentSession().getServizioPec(
 							context.getUserContext(), PEC_PROTOCOLLO);
 		} catch (ComponentException e) {
-			handleException(e);
+			throw handleException(e);
 		} catch (EJBException e) {
-			handleException(e);
+			throw handleException(e);
 		} catch (RemoteException e) {
-			handleException(e);
+			throw handleException(e);
 		}
 		if (servizioPecProtocollo == null)
 			throw new ValidationException(
@@ -624,11 +624,11 @@ public class FirmaDigitalePdgVariazioniBP extends
 			servizioPec = Utility.createParametriEnteComponentSession()
 					.getServizioPec(context.getUserContext(), cdServizioPEC);
 		} catch (ComponentException e) {
-			handleException(e);
+			throw handleException(e);
 		} catch (EJBException e) {
-			handleException(e);
+			throw handleException(e);
 		} catch (RemoteException e) {
-			handleException(e);
+			throw handleException(e);
 		}
 		if (servizioPec == null)
 			throw new ValidationException(
@@ -656,11 +656,11 @@ public class FirmaDigitalePdgVariazioniBP extends
 					CNRUserContext.getCd_cdr((CNRUserContext) context
 							.getUserContext()));
 		} catch (ComponentException e) {
-			handleException(e);
+			throw handleException(e);
 		} catch (EJBException e) {
-			handleException(e);
+			throw handleException(e);
 		} catch (RemoteException e) {
-			handleException(e);
+			throw handleException(e);
 		}
 
 		String cdUoPec = null;
@@ -718,18 +718,18 @@ public class FirmaDigitalePdgVariazioniBP extends
 		}
 	}
 
-	private UnitaOrganizzativaPecBulk getUoPec(ActionContext context, String cdUoPec) throws ValidationException {
+	private UnitaOrganizzativaPecBulk getUoPec(ActionContext context, String cdUoPec) throws ValidationException, BusinessProcessException {
 		UnitaOrganizzativaPecBulk uoPec = null;
 		try {
 			uoPec = Utility
 					.createParametriEnteComponentSession()
 					.getUnitaOrganizzativaPec(context.getUserContext(), cdUoPec);
 		} catch (ComponentException e) {
-			handleException(e);
+			throw handleException(e);
 		} catch (EJBException e) {
-			handleException(e);
+			throw handleException(e);
 		} catch (RemoteException e) {
-			handleException(e);
+			throw handleException(e);
 		}
 		if (uoPec == null || (uoPec.getEmailPec()==null && uoPec.getEmailPecDirettore()==null))
 			throw new ValidationException("L'indirizzo email di posta certificata per la unità organizzativa "+cdUoPec+" non è definito. Impossibile procedere!");
