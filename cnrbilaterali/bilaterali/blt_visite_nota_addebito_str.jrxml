@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="NotaAddebito" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="0" bottomMargin="0" isSummaryWithPageHeaderAndFooter="true" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.Blt_visite_stampe_candidaturaScriptlet">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC8" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC9" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG11" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR12" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman"/>
+	<style name="TNRG12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC12" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRG14" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
+	<style name="TNRC16" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG16" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRGC16" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cd_accordo" class="java.lang.String">
+		<defaultValueExpression><![CDATA["00001"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cd_progetto" class="java.lang.String">
+		<defaultValueExpression><![CDATA["00001"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cd_terzo" class="java.lang.Integer"/>
+	<parameter name="pg_autorizzazione" class="java.lang.Long"/>
+	<parameter name="pg_visita" class="java.lang.Long"/>
+	<parameter name="pg_ver_rec" class="java.lang.Long"/>
+	<parameter name="flag_to_update" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="fl_tipo_stampa" class="java.lang.String">
+		<defaultValueExpression><![CDATA["T"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select a.cd_accordo, a.im_rimb_spese_ant, a.fl_stampato_modello_contratto
+from blt_visite a, blt_autorizzati h, terzo b, blt_accordi e, nazione f, blt_progetti g
+where a.cd_accordo = $P{cd_accordo}
+and a.cd_progetto = $P{cd_progetto}
+and a.cd_terzo = $P{cd_terzo}
+and a.pg_autorizzazione = $P{pg_autorizzazione}
+and a.pg_visita = $P{pg_visita}
+and a.cd_accordo = h.cd_accordo
+and a.cd_progetto = h.cd_progetto
+and a.cd_terzo = h.cd_terzo
+and h.cd_terzo = b.cd_terzo
+and h.cd_accordo = e.cd_accordo
+and e.pg_nazione_str = f.pg_nazione
+and a.cd_accordo = g.cd_accordo
+and a.cd_progetto = g.cd_progetto]]>
+	</queryString>
+	<field name="CD_ACCORDO" class="java.lang.String"/>
+	<field name="IM_RIMB_SPESE_ANT" class="java.math.BigDecimal"/>
+	<field name="FL_STAMPATO_MODELLO_CONTRATTO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<printWhenExpression><![CDATA[($P{fl_tipo_stampa}.equals( "A" )||$P{fl_tipo_stampa}.equals( "T" )) &&
+$F{IM_RIMB_SPESE_ANT}!=null && $F{IM_RIMB_SPESE_ANT}.compareTo(BigDecimal.ZERO)==1]]></printWhenExpression>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-2" x="-39" y="1" width="593" height="23"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pg_ver_rec">
+					<subreportParameterExpression><![CDATA[$P{pg_ver_rec}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pg_visita">
+					<subreportParameterExpression><![CDATA[$P{pg_visita}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cd_accordo">
+					<subreportParameterExpression><![CDATA[$P{cd_accordo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cd_progetto">
+					<subreportParameterExpression><![CDATA[$P{cd_progetto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cd_terzo">
+					<subreportParameterExpression><![CDATA[$P{cd_terzo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="anticipo">
+					<subreportParameterExpression><![CDATA[new String("Y")]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pg_autorizzazione">
+					<subreportParameterExpression><![CDATA[$P{pg_autorizzazione}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "blt_visite_nota_addebito_ant.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="25" splitType="Prevent">
+			<printWhenExpression><![CDATA[($P{fl_tipo_stampa}.equals( "S" )||$P{fl_tipo_stampa}.equals( "T" ))]]></printWhenExpression>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-2" x="-39" y="1" width="593" height="23"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pg_ver_rec">
+					<subreportParameterExpression><![CDATA[("S".equals($P{fl_tipo_stampa})||"T".equals($P{fl_tipo_stampa}))&&"FL_STAMPATO_MODELLO_CONTRATTO".equals($P{flag_to_update})&&
+$F{FL_STAMPATO_MODELLO_CONTRATTO}.equals("N")?$P{pg_ver_rec}+1:$P{pg_ver_rec}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cd_accordo">
+					<subreportParameterExpression><![CDATA[$P{cd_accordo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pg_visita">
+					<subreportParameterExpression><![CDATA[$P{pg_visita}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cd_progetto">
+					<subreportParameterExpression><![CDATA[$P{cd_progetto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cd_terzo">
+					<subreportParameterExpression><![CDATA[$P{cd_terzo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="flag_to_update">
+					<subreportParameterExpression><![CDATA[new String("FL_STAMPATO_NOTA_ADDEBITO")]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="anticipo">
+					<subreportParameterExpression><![CDATA[(($P{fl_tipo_stampa}.equals( "A" )||$P{fl_tipo_stampa}.equals( "T" )) &&
+$F{IM_RIMB_SPESE_ANT}!=null && $F{IM_RIMB_SPESE_ANT}.compareTo(BigDecimal.ZERO)==1)?
+new String("Y"):new String("N")]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pg_autorizzazione">
+					<subreportParameterExpression><![CDATA[$P{pg_autorizzazione}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "blt_visite_nota_addebito_saldo.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

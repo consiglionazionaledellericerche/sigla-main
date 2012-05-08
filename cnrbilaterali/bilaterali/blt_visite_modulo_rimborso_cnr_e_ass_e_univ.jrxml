@@ -1,0 +1,841 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ModuloRimborsoSpeseCnrAss" pageWidth="595" pageHeight="842" columnWidth="465" leftMargin="65" rightMargin="65" topMargin="30" bottomMargin="30" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.Blt_visite_stampe_candidaturaScriptlet">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0000000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="4"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC8" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC9" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG11" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR12" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman"/>
+	<style name="TNRG12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC12" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRG14" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
+	<style name="TNRC16" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG16" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRGC16" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNR11" fontName="Times New Roman" fontSize="11" pdfFontName="Times-Roman"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cd_accordo" class="java.lang.String">
+		<defaultValueExpression><![CDATA["00001"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cd_progetto" class="java.lang.String">
+		<defaultValueExpression><![CDATA["00001"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cd_terzo" class="java.lang.Integer"/>
+	<parameter name="pg_autorizzazione" class="java.lang.Long"/>
+	<parameter name="pg_visita" class="java.lang.Long"/>
+	<parameter name="pg_ver_rec" class="java.lang.Long"/>
+	<parameter name="flag_to_update" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select
+a.dt_ini_visita, a.dt_fin_visita, a.num_prot_autoriz_partenza, a.dt_prot_autoriz_partenza, s.dt_nascita, s.codice_fiscale, l.ds_comune comune_nascita, e.anno_fin, e.anno_ini, e.fl_viaggi_interni,
+s.ti_sesso sesso_autorizzato,
+b.denominazione_sede ds_terzo_autorizzato,
+c.ds_cdr,
+(select h.denominazione_sede from terzo h where g.cd_respons_ita = h.cd_terzo) ds_responsabile_ita,
+(select h.denominazione_sede from terzo h where g.cd_respons_str = h.cd_terzo) ds_responsabile_str,
+e.acronimo_ente_str, f.ds_nazione ds_nazione_ente_str, e.nome_ente_str,
+g.ds_progetto_ita, e.importo_diaria_ita, e.fl_spese_visto, e.cd_divisa_ita,
+e.fl_rimborso_treno, e.importo_mensile_ita, h.fl_assimilato_dip
+from blt_visite a, blt_autorizzati h, terzo b, cdr c, blt_accordi e, nazione f, blt_progetti g, anagrafico s, comune l
+where a.cd_accordo = $P{cd_accordo}
+and a.cd_progetto = $P{cd_progetto}
+and a.cd_terzo = $P{cd_terzo}
+and a.pg_autorizzazione = $P{pg_autorizzazione}
+and a.pg_visita = $P{pg_visita}
+and a.cd_accordo = h.cd_accordo
+and a.cd_progetto = h.cd_progetto
+and a.cd_terzo = h.cd_terzo
+and h.cd_terzo = b.cd_terzo
+and h.cd_cdr_terzo = c.cd_centro_responsabilita
+and h.cd_accordo = e.cd_accordo
+and e.pg_nazione_str = f.pg_nazione
+and a.cd_accordo = g.cd_accordo
+and a.cd_progetto = g.cd_progetto
+and s.cd_anag = b.cd_anag
+and s.pg_comune_nascita = l.pg_comune]]>
+	</queryString>
+	<field name="DT_INI_VISITA" class="java.sql.Timestamp"/>
+	<field name="DT_FIN_VISITA" class="java.sql.Timestamp"/>
+	<field name="NUM_PROT_AUTORIZ_PARTENZA" class="java.math.BigDecimal"/>
+	<field name="DT_PROT_AUTORIZ_PARTENZA" class="java.sql.Timestamp"/>
+	<field name="DT_NASCITA" class="java.sql.Timestamp"/>
+	<field name="CODICE_FISCALE" class="java.lang.String"/>
+	<field name="COMUNE_NASCITA" class="java.lang.String"/>
+	<field name="ANNO_FIN" class="java.math.BigDecimal"/>
+	<field name="ANNO_INI" class="java.math.BigDecimal"/>
+	<field name="FL_VIAGGI_INTERNI" class="java.lang.String"/>
+	<field name="SESSO_AUTORIZZATO" class="java.lang.String"/>
+	<field name="DS_TERZO_AUTORIZZATO" class="java.lang.String"/>
+	<field name="DS_CDR" class="java.lang.String"/>
+	<field name="DS_RESPONSABILE_ITA" class="java.lang.String"/>
+	<field name="DS_RESPONSABILE_STR" class="java.lang.String"/>
+	<field name="ACRONIMO_ENTE_STR" class="java.lang.String"/>
+	<field name="DS_NAZIONE_ENTE_STR" class="java.lang.String"/>
+	<field name="NOME_ENTE_STR" class="java.lang.String"/>
+	<field name="DS_PROGETTO_ITA" class="java.lang.String"/>
+	<field name="IMPORTO_DIARIA_ITA" class="java.math.BigDecimal"/>
+	<field name="FL_SPESE_VISTO" class="java.lang.String"/>
+	<field name="CD_DIVISA_ITA" class="java.lang.String"/>
+	<field name="FL_RIMBORSO_TRENO" class="java.lang.String"/>
+	<field name="IMPORTO_MENSILE_ITA" class="java.math.BigDecimal"/>
+	<field name="FL_ASSIMILATO_DIP" class="java.lang.String"/>
+	<variable name="numGiorni" class="java.lang.Long">
+		<variableExpression><![CDATA[$P{REPORT_SCRIPTLET}.getGiorniVisita($F{DT_INI_VISITA}, $F{DT_FIN_VISITA})]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="19" splitType="Prevent">
+			<staticText>
+				<reportElement key="staticText-23" style="TNR11" x="0" y="0" width="466" height="14" forecolor="#244061"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Allegato 1]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="49" splitType="Prevent">
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="259" y="0" width="23" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Al]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="290" y="0" width="175" height="48"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Consiglio nazionale delle Ricerche
+Ufficio Accordi e Relazioni Internazionali
+Piazzale Aldo Moro, 7
+00185 Roma]]></text>
+			</staticText>
+		</band>
+		<band height="45" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="56" y="25" width="409" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Accordo di cooperazione scientifica tra il CNR e "+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+"), "+$F{DS_NAZIONE_ENTE_STR}+". "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"Biennio":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"Triennio":"Anni"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+". Progetto comune di ricerca "+$F{DS_RESPONSABILE_ITA}.toUpperCase()+" / "+$F{DS_RESPONSABILE_STR}.toUpperCase()+"."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-1" style="TNR11" x="0" y="25" width="56" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Oggetto:]]></text>
+			</staticText>
+		</band>
+		<band height="27" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="56" y="0" width="409" height="15"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Richiesta rimborso delle spese di viaggio."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["In riferimento al soggiorno di ricerca autorizzato con lettera dell'Ufficio Accordi e Relazioni Internazionali (prot. AMMCNT n. "+$F{NUM_PROT_AUTORIZ_PARTENZA}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_PROT_AUTORIZ_PARTENZA})+"), "+($F{SESSO_AUTORIZZATO}.equals("M")?"il sottoscritto":"la sottoscritta")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+", "+($F{SESSO_AUTORIZZATO}.equals("M")?"nato":"nata")+" a "+$F{COMUNE_NASCITA}+" il "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_NASCITA})+", Codice Fiscale "+$F{CODICE_FISCALE}.toUpperCase()+", in servizio presso ........................................., abitante in Via/Piazza ..........................................., CAP ..............., Comune ........................"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="0" y="0" width="465" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[CHIEDE]]></text>
+			</staticText>
+		</band>
+		<band height="82" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["il rimborso delle sotto elencate spese per complessivi Euro ..................... (riportare ogni singola spesa ed il relativo importo. Le spese rimborsabili sono elencate nelle istruzioni del presente modulo):"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="378" y="21" width="72" height="59">
+					<printWhenExpression><![CDATA[$F{FL_ASSIMILATO_DIP}.equals( "N" )]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Applicare qui la marca da bollo da Euro 1,81 se dovuta"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="283" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["........................................................................................."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="290" y="0" width="175" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Euro ..............................................."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="283" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["........................................................................................."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="290" y="0" width="175" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Euro ..............................................."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="283" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["........................................................................................."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="290" y="0" width="175" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Euro ..............................................."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="283" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["........................................................................................."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="290" y="0" width="175" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Euro ..............................................."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="283" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["........................................................................................."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="290" y="0" width="175" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Euro ..............................................."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="290" y="0" width="175" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Euro ..............................................."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="283" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{FL_ASSIMILATO_DIP}.equals("Y")?"Totale":"Totale (a)"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{FL_ASSIMILATO_DIP}.equals("N")]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="283" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["applicare la marca da bollo se il Totale (a) superi Euro 77,47 (b)"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="290" y="0" width="175" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Euro ..............................................."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{FL_ASSIMILATO_DIP}.equals("N")]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="290" y="0" width="175" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Euro ..............................................."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="283" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["TOTALE (c=a+b)"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{FL_ASSIMILATO_DIP}.equals("N")]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="283" height="12"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["riservato al CNR"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="465" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+		</band>
+		<band height="20" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{FL_ASSIMILATO_DIP}.equals("N")]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="290" y="0" width="175" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Euro ..............................................."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="283" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["IRPEF 20% (d=a*0,20)"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="25" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{FL_ASSIMILATO_DIP}.equals("N")]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="290" y="0" width="175" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Euro ..............................................."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="283" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["NETTO A PAGARE (a+b-d)"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="17" width="465" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+		</band>
+		<band height="21" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{FL_ASSIMILATO_DIP}.equals("N")]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+($F{SESSO_AUTORIZZATO}.equals("M")?"Il sottoscritto":"La sottoscritta")+" dichiara di non esercitare una professione in via abituale e di non essere, pertanto, titolare di Partita IVA. Le prestazioni di cui alla presente specifica sono state effettuate in via occasionale e conseguentemente i relativi compensi sono da inquadrare tra i redditi di cui all'art. 67, lettera L, del DPR 917/1986."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="290" y="0" width="175" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Firma ............................................."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="23" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+($F{SESSO_AUTORIZZATO}.equals("M")?"Il sottoscritto":"La sottoscritta")+" chiede che la somma sia accreditata sul conto corrente bancario personale o cointestato identificato con il codice IBAN ................................................................................................................"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="35" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+($F{SESSO_AUTORIZZATO}.equals("M")?"Il sottoscritto":"La sottoscritta")+" dichiara sotto la propria responsabilità di aver effettuato il soggiorno in "+$F{DS_NAZIONE_ENTE_STR}+" dal .............. al ............... e di aver percepito dalla Parte ospitante un contributo in valuta locale ammontante a ..................."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="30" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="283" height="12"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Data ........................................................."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="290" y="0" width="175" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Firma ............................................."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<break>
+				<reportElement x="0" y="0" width="465" height="1"/>
+			</break>
+			<staticText>
+				<reportElement key="" style="TNRG11" x="0" y="8" width="465" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[ISTRUZIONI]]></text>
+			</staticText>
+		</band>
+		<band height="15" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="466" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Sara' a carico del CNR il rimborso delle seguenti spese:"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="18" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["il viaggio andata e ritorno, dal luogo di provenienza fino a quello di destinazione (o altro indicato nei singoli Accordi), su mezzi pubblici ordinari:"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="25" y="0" width="15" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+		</band>
+		<band height="18" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["in aereo: saranno totalmente rimborsate se sostenute acquistando il titolo a tariffa economica. Qualora vengano acquistati biglietti a tariffa superiore, il CNR provvedera' al rimborso dell'importo corrispondente alla tariffa economica vigente al momento della partenza"+($F{FL_RIMBORSO_TRENO}.equals("Y")?",":";")]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="18" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{FL_RIMBORSO_TRENO}.equals("Y")]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["o in treno: saranno totalmente rimborsate se sostenute acquistando il biglietto di 2a classe/WL doppio. Qualora vengano utilizzati biglietti a tariffa superiore, il CNR provvederà al rimborso dell’importo corrispondente alla tariffa di 2a classe vigente al momento della partenza;"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="18" splitType="Prevent">
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="25" y="0" width="15" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["gli spostamenti in Italia dal luogo di lavoro o di residenza, su mezzi pubblici ordinari, per raggiungere l’aeroporto/stazione ferroviaria di partenza;"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="18" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{FL_SPESE_VISTO}.equals("Y")]]></printWhenExpression>
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="25" y="0" width="15" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["il visto d’ingresso nel paese di destinazione e la tassa d’imbarco aeroportuale;"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="18" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{FL_VIAGGI_INTERNI}.equals("Y")]]></printWhenExpression>
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="25" y="0" width="15" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["i viaggi interni, effettuati nel Paese ospitante mediante mezzi pubblici ordinari, necessari per lo svolgimento della ricerca secondo il programma di visita approvato;"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="18" splitType="Prevent">
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="25" y="0" width="16" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["il taxi (solo se utilizzato per il trasporto dei materiali o per la mancanza o il cessato servizio di mezzi pubblici). La richiesta del rimborso dovrà essere corredata di motivazione scritta;"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="18" splitType="Prevent">
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="25" y="0" width="15" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["la sovrattassa per eccesso bagaglio (solo per il trasporto di materiale necessario allo svolgimento della ricerca). La richiesta del rimborso dovrà essere corredata di motivazione scritta."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{FL_ASSIMILATO_DIP}.equals("N")]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="466" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Si ricorda che dall'01/02/2011 per adeguarsi alla normativa fiscale, il rimborso delle spese di viaggio deve essere ricondotto nell'ambito dell'art. 5 del DPR 23/10/1972 n. 633 in materia di IVA e degli art. 67, comma 1, lettera L e art. 49, comma 1, del Testo Unico delle imposte sui redditi in materia di IRPEF. Pertanto in sede di liquidazione il CNR applichera' la ritenuta d'acconto IRPEF del 20%, succesivamente recuperabile in sede di dichiarazione dei redditi, con conservazione della documentazione originale, per il percettore della somma."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="15" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="466" height="15"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Non saranno rimborsate le seguenti spese:"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="15" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["il viaggio con mezzo proprio o a noleggio;"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="25" y="0" width="15" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+		</band>
+		<band height="15" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["i servizi resi dall'agenzia di viaggio (spedizione biglietteria, spese di agenzia per concessione visto);"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="25" y="0" width="15" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+		</band>
+		<band height="15" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["eventuali assicurazioni."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="25" y="0" width="15" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+		</band>
+		<band height="20" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="466" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["La richiesta di rimborso delle spese di viaggio docra' essere presentata entro due mesi dalla data di fine soggiorno."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{FL_ASSIMILATO_DIP}.equals("N")]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="466" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="true" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["A) Nel caso in cui lo studioso richiedente SIA SOGGETTO IVA, per il rimborso delle spese, dovra' emettere fattura."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{FL_ASSIMILATO_DIP}.equals("N")]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="466" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="true" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["B) Nel caso in cui lo studioso richiedente NON SIA SOGGETTO IVA, per il rimborso delle spese, dovra' compilare il presente modulo."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="15" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="466" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Alla richiesta di rimborso dovranno essere allegati:"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="18" splitType="Prevent">
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="25" y="0" width="15" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["in originale, i titoli di viaggio utilizzati e le ricevute delle spese. L'esatto costo del viaggio dovra' essere stampigliato su biglietto o, in caso di biglietto a tariffa speciale, risultare da un'allegata dichiarazione dell'Agenzia che lo ha rilasciato. Nel caso di acquisto online dei biglietti, e' necessario allegare la stampa del biglietto con l'importo e le carte di imbarco in orginale;"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="18" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["una relazione scientifica sull'attivita' svolta. Dovra' essere presentata anche nel caso in cui l'interessato non richieda il rimborso delle spese di viaggio (la rinuncia al rimborso dovra' essere comunicata al CNR). La mancata presentazione della relazione scientifica precludera' la concessione di successivi contributi CNR;"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="25" y="0" width="15" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+		</band>
+		<band height="18" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["una dichiarazione dell'Istituzione straniera nella quale siano indicati la durata e le date di inizio e fine soggiorno;"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="25" y="0" width="15" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+		</band>
+		<band height="18" splitType="Prevent">
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="25" y="0" width="16" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["una copia dell'avvenuta restituzione all'Ente straniero della somma non dovuta, determinata dall'eventuale riduzione della durata del soggiorno. Si ricorda, infatti, che il contributo di soggiorno assegnato dall'ente straniero e' calcolato sulla base della durata inizialmente concordata."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="466" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["La somma relativa al rimborso delle spese potra' essere accreditata sul conto corrente personale (o cointestato) dello studioso o, nel caso in cui non venga richiesto l'accredito su c/c, riscossa presso una filiale della BNL nella citta' di residenza dell'interessato."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{FL_ASSIMILATO_DIP}.equals("N")]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="466" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Sul presente modulo di rimborso spese di viaggio dovra' essere applicata una marca da bollo da Euro 1,81 quando la spesa di cui si chiede il rimborso supera Euro 77,47."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="466" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Ai sensi dell'Art. 25 del DPCM n. 33 del 26/01/1967, le pubblicazioni concernenti lavori effettuati con mezzi posti a disposizione dal CNR devono recare l'indicazione 'Lavoro eseguito con contributo del CNR'. Pertanto sulle eventuali pubblicazioni derivatni da ricerche svolte in "+$F{DS_NAZIONE_ENTE_STR}+" grazie ad un contributo di soggiorno nel quadro di un Accordo CNR/"+$F{ACRONIMO_ENTE_STR}+", si dovra' fare riferimento all'Accordo stesso."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="15" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="466" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Copia della pubblicazione dovra' essere inviata, non appena possibile, al:"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="50" splitType="Prevent">
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="25" y="0" width="441" height="50"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Consiglio Nazionale delle Ricerche
+Ufficio Accordi e Relazioni Internazionali
+Piazzale Aldo Moro, 7
+00185 Roma
+]]></text>
+			</staticText>
+		</band>
+		<band height="24" splitType="Prevent">
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="0" y="0" width="466" height="24"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ATTENZIONE: EVENTUALI CORREZIONI SUL MODULO RICHIESTA RIMBORSO SPESE DEVONO ESSERE SIGLATE DAL RICHIEDENTE
+
+]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<summary>
+		<band splitType="Prevent"/>
+	</summary>
+</jasperReport>
