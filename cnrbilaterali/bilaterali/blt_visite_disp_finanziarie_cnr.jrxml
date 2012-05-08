@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.100000000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="371"/>
+	<property name="ireport.y" value="419"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -189,16 +189,16 @@ and s.cd_anag = b.cd_anag]]>
 :""+$F{CAP_ENTE_DI_APPARTENENZA}+" - "+$F{COMUNE_ENTE_DI_APPARTENENZA}+""]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="60" splitType="Prevent">
+		<band height="70" splitType="Prevent">
 			<staticText>
-				<reportElement key="staticText-1" style="TNR11" x="0" y="40" width="51" height="14"/>
+				<reportElement key="staticText-1" style="TNR11" x="0" y="50" width="51" height="14"/>
 				<textElement>
 					<font fontName="Times New Roman" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Oggetto:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-2" style="TNR11" x="51" y="40" width="414" height="14"/>
+				<reportElement key="textField-2" style="TNR11" x="51" y="50" width="414" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11" isBold="false"/>
 				</textElement>
@@ -221,7 +221,7 @@ and s.cd_anag = b.cd_anag]]>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph lineSpacing="Single" firstLineIndent="25"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Si informa che in data odierna è stata trasmessa a "+$F{ACRONIMO_ENTE_STR}+" la candidatura della S.V. per un soggiorno di ricerca in "+$F{DS_NAZIONE_ENTE_STR}+", della durata di "+$V{numGiorni}+" giorni, a decorrere dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+", nell'ambito del Progetto comune di ricerca '"+$F{DS_PROGETTO_ITA}+"' (Reponsabile italiano "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_ITA}.toUpperCase()+", Responsabile straniero "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_STR}.toUpperCase()+")."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Si informa che in data odierna è stata trasmessa a "+$F{ACRONIMO_ENTE_STR}+" la candidatura della S.V. per un soggiorno di ricerca in "+$F{DS_NAZIONE_ENTE_STR}+", della durata di "+$V{numGiorni}+" giorni, a decorrere dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+", nell'ambito del Progetto comune di ricerca '"+$F{DS_PROGETTO_ITA}+"' (Responsabile italiano "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_ITA}.toUpperCase()+", Responsabile straniero "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_STR}.toUpperCase()+")."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">

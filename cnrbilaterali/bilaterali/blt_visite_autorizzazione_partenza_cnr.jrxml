@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.363636363636364"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="703"/>
+	<property name="ireport.y" value="750"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -216,7 +216,7 @@ and s.cd_anag = b.cd_anag]]>
 			</staticText>
 		</band>
 		<band height="20" splitType="Prevent">
-			<printWhenExpression><![CDATA[$F{FL_ASSIMILATO_DIP}.equals("Y")]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{FL_ASSIMILATO_DIP}.equals("Y") && $F{FL_ASSOCIATO}.equals("N")]]></printWhenExpression>
 			<staticText>
 				<reportElement key="staticText-2" style="TNR11" x="255" y="0" width="44" height="14"/>
 				<textElement textAlignment="Justified">
@@ -265,7 +265,7 @@ and s.cd_anag = b.cd_anag]]>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph lineSpacing="Single" firstLineIndent="25"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{FL_ASSIMILATO_DIP}.equals("Y")?"Si comunica che e' pervenuta al CNR l'accettazione da parte dell'Ente straniero (all. 1) del soggiorno di ricerca richiesto dalla S.V. della durata di "+$V{numGiorni}+" giorni, a decorrere dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+" nell'ambito del Progetto comune di ricerca '"+$F{DS_PROGETTO_ITA}+"' (Reponsabile italiano "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_ITA}.toUpperCase()+", Responsabile straniero "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_STR}.toUpperCase()+").":"Si trasmette copia del contratto perfezionato (all. 1) relativo al soggiorno di ricerca richiesto dalla S.V. della durata di "+$V{numGiorni}+" giorni, a decorrere dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+" nell'ambito del Progetto comune di ricerca '"+$F{DS_PROGETTO_ITA}+"' (Reponsabile italiano "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_ITA}.toUpperCase()+", Responsabile straniero "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_STR}.toUpperCase()+")."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{FL_ASSIMILATO_DIP}.equals("Y")?"Si comunica che e' pervenuta al CNR l'accettazione da parte dell'Ente straniero (all. 1) del soggiorno di ricerca richiesto dalla S.V. della durata di "+$V{numGiorni}+" giorni, a decorrere dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+" nell'ambito del Progetto comune di ricerca '"+$F{DS_PROGETTO_ITA}+"' (Responsabile italiano "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_ITA}.toUpperCase()+", Responsabile straniero "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_STR}.toUpperCase()+").":"Si trasmette copia del contratto perfezionato (all. 1) relativo al soggiorno di ricerca richiesto dalla S.V. della durata di "+$V{numGiorni}+" giorni, a decorrere dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+" nell'ambito del Progetto comune di ricerca '"+$F{DS_PROGETTO_ITA}+"' (Reponsabile italiano "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_ITA}.toUpperCase()+", Responsabile straniero "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_STR}.toUpperCase()+")."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
@@ -290,7 +290,7 @@ and s.cd_anag = b.cd_anag]]>
 			</textField>
 		</band>
 		<band height="18" splitType="Prevent">
-			<printWhenExpression><![CDATA[$F{EMAIL_TRASMISSIONE_PASSAPORTO}!=null]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{EMAIL_TRASMISSIONE_PASSAPORTO}!=null || $F{FL_ATTI_AMMINISTRATIVI}.equals( "Y" )]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified">
@@ -301,7 +301,7 @@ and s.cd_anag = b.cd_anag]]>
 			</textField>
 		</band>
 		<band height="15" splitType="Prevent">
-			<printWhenExpression><![CDATA[$F{EMAIL_TRASMISSIONE_PASSAPORTO}!=null]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{EMAIL_TRASMISSIONE_PASSAPORTO}!=null || $F{FL_ATTI_AMMINISTRATIVI}.equals( "Y" )]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified">
@@ -312,7 +312,7 @@ and s.cd_anag = b.cd_anag]]>
 			</textField>
 		</band>
 		<band height="15" splitType="Prevent">
-			<printWhenExpression><![CDATA[$F{EMAIL_TRASMISSIONE_PASSAPORTO}!=null]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{EMAIL_TRASMISSIONE_PASSAPORTO}!=null || $F{FL_ATTI_AMMINISTRATIVI}.equals( "Y" )]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified">
@@ -323,7 +323,7 @@ and s.cd_anag = b.cd_anag]]>
 			</textField>
 		</band>
 		<band height="15" splitType="Prevent">
-			<printWhenExpression><![CDATA[$F{EMAIL_TRASMISSIONE_PASSAPORTO}!=null]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{EMAIL_TRASMISSIONE_PASSAPORTO}!=null || $F{FL_ATTI_AMMINISTRATIVI}.equals( "Y" )]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified">
@@ -334,7 +334,7 @@ and s.cd_anag = b.cd_anag]]>
 			</textField>
 		</band>
 		<band height="15" splitType="Prevent">
-			<printWhenExpression><![CDATA[$F{EMAIL_TRASMISSIONE_PASSAPORTO}!=null]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{EMAIL_TRASMISSIONE_PASSAPORTO}!=null || $F{FL_ATTI_AMMINISTRATIVI}.equals( "Y" )]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified">
@@ -446,6 +446,7 @@ and s.cd_anag = b.cd_anag]]>
 			</textField>
 		</band>
 		<band height="15" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{FL_ASSIMILATO_DIP}.equals( "N" ) && $F{FL_ASSOCIATO}.equals("N")]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="55" y="0" width="410" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified">
@@ -463,6 +464,7 @@ and s.cd_anag = b.cd_anag]]>
 			</staticText>
 		</band>
 		<band height="20" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{FL_ASSIMILATO_DIP}.equals( "N" ) && $F{FL_ASSOCIATO}.equals("N")]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="55" y="0" width="410" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified">
@@ -602,6 +604,7 @@ and s.cd_anag = b.cd_anag]]>
 			</staticText>
 		</band>
 		<band height="50" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{FL_ASSIMILATO_DIP}.equals("Y") && $F{FL_ASSOCIATO}.equals("N")]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified">
@@ -613,14 +616,14 @@ and s.cd_anag = b.cd_anag]]>
 		</band>
 		<band height="50" splitType="Prevent">
 			<staticText>
-				<reportElement key="staticText-24" style="TNR11" x="272" y="14" width="193" height="14" isPrintWhenDetailOverflows="true"/>
+				<reportElement key="staticText-24" style="TNR11" x="272" y="24" width="193" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
 				<text><![CDATA[Dott.ssa Virginia Coda Nunziante]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-23" style="TNR11" x="272" y="0" width="193" height="14" isPrintWhenDetailOverflows="true"/>
+				<reportElement key="staticText-23" style="TNR11" x="272" y="10" width="193" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>

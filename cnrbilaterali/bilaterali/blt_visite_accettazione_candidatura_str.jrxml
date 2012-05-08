@@ -111,7 +111,7 @@ and e.pg_nazione_str = f.pg_nazione]]>
 			</staticText>
 			<image scaleImage="FillFrame" onErrorType="Icon">
 				<reportElement key="image-1" x="0" y="0" width="199" height="28"/>
-				<imageExpression><![CDATA[$P{DIR_IMAGE}+"Logo CNR-2010-ENG-low.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE}+"Logo CNR-2010-ENG-low.png"]]></imageExpression>
 			</image>
 		</band>
 	</pageHeader>
@@ -122,7 +122,7 @@ and e.pg_nazione_str = f.pg_nazione]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""+$F{NOME_RESPONS_STR}.toUpperCase()+" "+$F{COGNOME_RESPONS_STR}.toUpperCase()+""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{NOME_RESPONS_STR}.toUpperCase()+" "+$F{COGNOME_RESPONS_STR}.toUpperCase()+""]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-1" style="TNRG11" x="262" y="0" width="31" height="14"/>
@@ -138,7 +138,7 @@ and e.pg_nazione_str = f.pg_nazione]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+")"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+")"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="18" splitType="Prevent">
@@ -147,7 +147,7 @@ and e.pg_nazione_str = f.pg_nazione]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Office of International Affairs"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Office of International Affairs"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="18" splitType="Prevent">
@@ -156,7 +156,7 @@ and e.pg_nazione_str = f.pg_nazione]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""+$F{DS_NAZIONE_ENG}+""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{DS_NAZIONE_ENG}+""]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="45" splitType="Prevent">
@@ -172,7 +172,7 @@ and e.pg_nazione_str = f.pg_nazione]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Agreement on scientific cooperation between CNR and "+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+"), "+$F{DS_NAZIONE_ENG}+" - Biennium ......... . Joint research project "+$F{RESPONSABILE_ITA}.toUpperCase()+" / "+$F{RESPONSABILE_STR}.toUpperCase()+"."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Agreement on scientific cooperation between CNR and "+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+"), "+$F{DS_NAZIONE_ENG}+" - Biennium ......... . Joint research project "+$F{RESPONSABILE_ITA}.toUpperCase()+" / "+$F{RESPONSABILE_STR}.toUpperCase()+"."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="35" splitType="Prevent">
@@ -181,7 +181,7 @@ and e.pg_nazione_str = f.pg_nazione]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Acceptance of "+$F{DS_AGGETTIVO_NAZIONAL}+" nominee"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Acceptance of "+$F{DS_AGGETTIVO_NAZIONAL}+" nominee"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
@@ -200,7 +200,7 @@ and e.pg_nazione_str = f.pg_nazione]]>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph firstLineIndent="25"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Please be informed that the CNR accepts the nominee of the following "+$F{DS_AGGETTIVO_NAZIONAL}+" scientist wishing to carry out a research stay in Italy:"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Please be informed that the CNR accepts the nominee of the following "+$F{DS_AGGETTIVO_NAZIONAL}+" scientist wishing to carry out a research stay in Italy:"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="30" splitType="Prevent">
@@ -247,35 +247,35 @@ and e.pg_nazione_str = f.pg_nazione]]>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""+$F{DS_TERZO_AUTORIZZATO}+""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{DS_TERZO_AUTORIZZATO}+""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="122" y="0" width="60" height="14"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""+$V{numGiorni}+" days"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$V{numGiorni}+" days"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="182" y="0" width="98" height="14"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="358" y="0" width="107" height="14"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""+$F{DS_PROGETTO_ENG}+""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{DS_PROGETTO_ENG}+""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="280" y="0" width="78" height="14"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Euro "+$F{IM_RIMB_PREVISTO}+""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Euro "+$F{IM_RIMB_PREVISTO}+""]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="40" splitType="Prevent">
@@ -285,7 +285,7 @@ and e.pg_nazione_str = f.pg_nazione]]>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph firstLineIndent="25"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Yours sincerely,"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Yours sincerely,"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="59" splitType="Prevent">
@@ -320,7 +320,7 @@ and e.pg_nazione_str = f.pg_nazione]]>
 					<font fontName="Times New Roman" size="8"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Piazzale Aldo Moro, 7 - 00185 Roma - Tel. "+$F{TELEF_RESPONS_ITA}+" - Fax "+$F{FAX_RESPONS_ITA}+" - email "+$F{EMAIL_RESPONS_ITA}+""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Piazzale Aldo Moro, 7 - 00185 Roma - Tel. "+$F{TELEF_RESPONS_ITA}+" - Fax "+$F{FAX_RESPONS_ITA}+" - email "+$F{EMAIL_RESPONS_ITA}+""]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="5" width="465" height="1"/>

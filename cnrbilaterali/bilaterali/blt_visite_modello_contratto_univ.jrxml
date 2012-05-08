@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="534"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -44,20 +44,17 @@
 	<parameter name="pg_ver_rec" class="java.lang.Long" isForPrompting="false"/>
 	<parameter name="flag_to_update" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="DIR_IMAGE" class="java.lang.String">
-		<defaultValueExpression><![CDATA["/home/mspasiano/STAMPE BILATERALI/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select
-a.dt_ini_visita, a.dt_fin_visita, s.codice_fiscale, s.dt_nascita, l.ds_comune comune_nascita, l.cd_provincia provincia_autorizzato, e.anno_ini, e.anno_fin, e.fl_viaggi_interni, e.im_diaria_contrib_sogg_ita, e.im_mensile_contrib_sogg_ita,
-b.denominazione_sede ds_terzo_autorizzato, a.num_prot_attrib_incarico, a.dt_prot_attrib_incarico,
-c.ds_cdr, e.acronimo_ente_str, f.ds_nazione ds_nazione_ente_str, e.nome_ente_str, a.num_prot_accett_ente_str,
+a.dt_ini_visita, a.dt_fin_visita, s.codice_fiscale, s.dt_nascita, l.ds_comune comune_nascita, l.cd_provincia provincia_autorizzato, e.anno_ini, e.anno_fin, e.fl_viaggi_interni, e.im_diaria_contrib_sogg_ita, e.im_mensile_contrib_sogg_ita, b.denominazione_sede ds_terzo_autorizzato, a.num_prot_attrib_incarico, a.dt_prot_attrib_incarico, e.acronimo_ente_str, f.ds_nazione ds_nazione_ente_str, e.nome_ente_str, a.num_prot_accett_ente_str,
 (select b.denominazione_sede from terzo b where b.cd_terzo = g.cd_respons_ita) responsabile_ita,
 (select b.denominazione_sede from terzo b where b.cd_terzo = g.cd_respons_str) responsabile_str,
-s.ti_sesso sesso_autorizzato,
-a.dt_prot_accett_ente_str, a.luogo_visita, e.num_articolo_prop_intel,
+s.ti_sesso sesso_autorizzato, a.dt_prot_accett_ente_str, a.luogo_visita, e.num_articolo_prop_intel,
 g.ds_progetto_ita, e.importo_diaria_ita, e.fl_spese_visto, e.cd_divisa_ita, e.data_firma_accordo,
 e.fl_rimborso_treno, e.importo_mensile_ita, h.fl_assimilato_dip, e.data_firma_addendum
-from blt_visite a, blt_autorizzati h, terzo b, cdr c, blt_accordi e, nazione f, blt_progetti g, anagrafico s, comune l
+from blt_visite a, blt_autorizzati h, terzo b, blt_accordi e, nazione f, blt_progetti g, anagrafico s, comune l
 where a.cd_accordo = $P{cd_accordo}
 and a.cd_progetto = $P{cd_progetto}
 and a.cd_terzo = $P{cd_terzo}
@@ -67,7 +64,6 @@ and a.cd_accordo = h.cd_accordo
 and a.cd_progetto = h.cd_progetto
 and a.cd_terzo = h.cd_terzo
 and h.cd_terzo = b.cd_terzo
-and h.cd_cdr_terzo = c.cd_centro_responsabilita
 and h.cd_accordo = e.cd_accordo
 and e.pg_nazione_str = f.pg_nazione
 and a.cd_accordo = g.cd_accordo
@@ -89,7 +85,6 @@ and s.pg_comune_nascita = l.pg_comune]]>
 	<field name="DS_TERZO_AUTORIZZATO" class="java.lang.String"/>
 	<field name="NUM_PROT_ATTRIB_INCARICO" class="java.math.BigDecimal"/>
 	<field name="DT_PROT_ATTRIB_INCARICO" class="java.sql.Timestamp"/>
-	<field name="DS_CDR" class="java.lang.String"/>
 	<field name="ACRONIMO_ENTE_STR" class="java.lang.String"/>
 	<field name="DS_NAZIONE_ENTE_STR" class="java.lang.String"/>
 	<field name="NOME_ENTE_STR" class="java.lang.String"/>
