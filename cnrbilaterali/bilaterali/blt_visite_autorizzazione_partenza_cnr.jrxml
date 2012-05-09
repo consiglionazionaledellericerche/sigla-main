@@ -2,9 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Autorizzazione_partenza_cnr_e_univ" pageWidth="595" pageHeight="842" columnWidth="465" leftMargin="65" rightMargin="65" topMargin="30" bottomMargin="20" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.Blt_visite_stampe_candidaturaScriptlet">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="1.363636363636364"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="750"/>
+	<property name="ireport.y" value="384"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -43,7 +43,7 @@
 	<parameter name="pg_visita" class="java.lang.Long"/>
 	<parameter name="pg_ver_rec" class="java.lang.Long"/>
 	<parameter name="flag_to_update" class="java.lang.String"/>
-	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+	<parameter name="DIR_IMAGE" class="java.lang.String">
 		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -54,16 +54,14 @@ c.ds_cdr, e.im_diaria_contrib_sogg_ita, e.im_mensile_contrib_sogg_ita,
 (select b.denominazione_sede from terzo b where b.cd_terzo = g.cd_respons_ita) responsabile_ita,
 (select b.denominazione_sede from terzo b where b.cd_terzo = g.cd_respons_str) responsabile_str,
 s.ti_sesso sesso_autorizzato,
-(select l.ds_comune from comune l where  h.pg_comune_ente_di_appartenenza =l.pg_comune) comune_ente_di_appartenenza,
+(select l.ds_comune from comune l where h.pg_comune_ente_di_appartenenza = l.pg_comune) comune_ente_di_appartenenza,
 (select h.via_sede from terzo h where c.cd_unita_organizzativa = h.cd_unita_organizzativa) indirizzo_istituto,
 (select h.cap_comune_sede from terzo h where c.cd_unita_organizzativa = h.cd_unita_organizzativa) cap_istituto,
 (select l.ds_comune from terzo h, comune l where c.cd_unita_organizzativa = h.cd_unita_organizzativa and h.pg_comune_sede = l.pg_comune) comune_istituto, e.fl_lettera_invito, e.email_trasmissione_passaporto, e.fl_viaggi_interni,
-(select l.cd_provincia from anagrafico s, comune l where s.cd_anag = h.cd_terzo and s.pg_comune_fiscale = l.pg_comune) provincia_istituto,
-(select h.via_sede from terzo h where c.cd_unita_organizzativa = h.cd_unita_organizzativa) indirizzo_istituto,
-(select h.cap_comune_sede from terzo h where c.cd_unita_organizzativa = h.cd_unita_organizzativa) cap_istituto,
-(select l.ds_comune from terzo h, comune l where c.cd_unita_organizzativa = h.cd_unita_organizzativa and h.pg_comune_sede = l.pg_comune) comune_istituto, e.anno_ini, e.anno_fin, h.ente_di_appartenenza, h.indirizzo_ente_di_appartenenza, h.cap_ente_di_appartenenza,
+e.anno_ini, e.anno_fin, h.ente_di_appartenenza, h.indirizzo_ente_di_appartenenza, h.cap_ente_di_appartenenza,
 e.acronimo_ente_str, f.ds_nazione ds_nazione_ente_str, e.nome_ente_str, e.indirizzo_ente_str, e.citta_ente_str,
 g.ds_progetto_ita, e.importo_diaria_ita, e.fl_spese_visto, e.cd_divisa_ita,
+(select l.cd_provincia from anagrafico s, comune l where s.cd_anag = h.cd_terzo and s.pg_comune_fiscale = l.pg_comune) provincia_istituto,
 e.fl_rimborso_treno, e.importo_mensile_ita, h.fl_assimilato_dip, e.ds_nazione_eng
 from blt_visite a, blt_autorizzati h, terzo b, cdr c, blt_accordi e, nazione f, blt_progetti g, anagrafico s
 where a.cd_accordo = $P{cd_accordo}
@@ -75,7 +73,7 @@ and a.cd_accordo = h.cd_accordo
 and a.cd_progetto = h.cd_progetto
 and a.cd_terzo = h.cd_terzo
 and h.cd_terzo = b.cd_terzo
-and h.cd_cdr_terzo = c.cd_centro_responsabilita
+and h.cd_cdr_terzo = c.cd_centro_responsabilita (+)
 and h.cd_accordo = e.cd_accordo
 and e.pg_nazione_str = f.pg_nazione
 and a.cd_accordo = g.cd_accordo
@@ -108,7 +106,6 @@ and s.cd_anag = b.cd_anag]]>
 	<field name="FL_LETTERA_INVITO" class="java.lang.String"/>
 	<field name="EMAIL_TRASMISSIONE_PASSAPORTO" class="java.lang.String"/>
 	<field name="FL_VIAGGI_INTERNI" class="java.lang.String"/>
-	<field name="PROVINCIA_ISTITUTO" class="java.lang.String"/>
 	<field name="ANNO_INI" class="java.math.BigDecimal"/>
 	<field name="ANNO_FIN" class="java.math.BigDecimal"/>
 	<field name="ENTE_DI_APPARTENENZA" class="java.lang.String"/>
@@ -123,6 +120,7 @@ and s.cd_anag = b.cd_anag]]>
 	<field name="IMPORTO_DIARIA_ITA" class="java.math.BigDecimal"/>
 	<field name="FL_SPESE_VISTO" class="java.lang.String"/>
 	<field name="CD_DIVISA_ITA" class="java.lang.String"/>
+	<field name="PROVINCIA_ISTITUTO" class="java.lang.String"/>
 	<field name="FL_RIMBORSO_TRENO" class="java.lang.String"/>
 	<field name="IMPORTO_MENSILE_ITA" class="java.math.BigDecimal"/>
 	<field name="FL_ASSIMILATO_DIP" class="java.lang.String"/>
@@ -190,7 +188,7 @@ and s.cd_anag = b.cd_anag]]>
 		<band height="20" splitType="Prevent">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="315" y="0" width="150" height="14"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
+				<textElement textAlignment="Left">
 					<font fontName="Times New Roman" size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{FL_ASSIMILATO_DIP}.equals("Y")
@@ -265,7 +263,7 @@ and s.cd_anag = b.cd_anag]]>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph lineSpacing="Single" firstLineIndent="25"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{FL_ASSIMILATO_DIP}.equals("Y")?"Si comunica che e' pervenuta al CNR l'accettazione da parte dell'Ente straniero (all. 1) del soggiorno di ricerca richiesto dalla S.V. della durata di "+$V{numGiorni}+" giorni, a decorrere dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+" nell'ambito del Progetto comune di ricerca '"+$F{DS_PROGETTO_ITA}+"' (Responsabile italiano "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_ITA}.toUpperCase()+", Responsabile straniero "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_STR}.toUpperCase()+").":"Si trasmette copia del contratto perfezionato (all. 1) relativo al soggiorno di ricerca richiesto dalla S.V. della durata di "+$V{numGiorni}+" giorni, a decorrere dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+" nell'ambito del Progetto comune di ricerca '"+$F{DS_PROGETTO_ITA}+"' (Reponsabile italiano "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_ITA}.toUpperCase()+", Responsabile straniero "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_STR}.toUpperCase()+")."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{FL_ASSIMILATO_DIP}.equals("Y")?"Si comunica che e' pervenuta al CNR l'accettazione da parte dell'Ente straniero (all. 1) del soggiorno di ricerca richiesto dalla S.V. della durata di "+$V{numGiorni}+" giorni, a decorrere dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+" nell'ambito del Progetto comune di ricerca '"+$F{DS_PROGETTO_ITA}+"' (Responsabile italiano "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_ITA}.toUpperCase()+", Responsabile straniero "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_STR}.toUpperCase()+").":"Si trasmette copia del contratto perfezionato (all. 1) relativo al soggiorno di ricerca richiesto dalla S.V. della durata di "+$V{numGiorni}+" giorni, a decorrere dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+" nell'ambito del Progetto comune di ricerca '"+$F{DS_PROGETTO_ITA}+"' (Responsabile italiano "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_ITA}.toUpperCase()+", Responsabile straniero "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_STR}.toUpperCase()+")."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
@@ -286,7 +284,7 @@ and s.cd_anag = b.cd_anag]]>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph firstLineIndent="25"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Al fine di poter far predisporre in tempo utile, all'Ente ospitante, tutti gli atti amministrativi necessari, si invita la S.V. a comunicare con urgenza i dati relativi al soggiorno in "+$F{DS_NAZIONE_ENTE_STR}+" "+($F{EMAIL_TRASMISSIONE_PASSAPORTO}!= null?"e il proprio numero di passaporto a:":"a")+""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Al fine di poter far predisporre in tempo utile, all'Ente ospitante, tutti gli atti amministrativi necessari, si invita la S.V. a comunicare con urgenza i dati relativi al soggiorno in "+$F{DS_NAZIONE_ENTE_STR}+" "+($F{EMAIL_TRASMISSIONE_PASSAPORTO}!= null?"e il proprio numero di passaporto a:":"a")+":"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="18" splitType="Prevent">

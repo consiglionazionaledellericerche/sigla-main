@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.100000000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="419"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -57,8 +57,9 @@ s.ti_sesso sesso_autorizzato,
 (select h.via_sede from terzo h where c.cd_unita_organizzativa = h.cd_unita_organizzativa) indirizzo_istituto,
 (select h.cap_comune_sede from terzo h where c.cd_unita_organizzativa = h.cd_unita_organizzativa) cap_istituto,
 (select l.ds_comune from comune l where  h.pg_comune_ente_di_appartenenza =l.pg_comune) comune_ente_di_appartenenza,
+(select l.cd_provincia from anagrafico s, comune l where s.cd_anag = h.cd_terzo and s.pg_comune_fiscale = l.pg_comune) provincia_istituto,
 (select l.ds_comune from terzo h, comune l where c.cd_unita_organizzativa = h.cd_unita_organizzativa and h.pg_comune_sede = l.pg_comune) comune_istituto,
-(select l.cd_provincia from anagrafico s, comune l where s.cd_anag = h.cd_terzo and s.pg_comune_fiscale = l.pg_comune) provincia_istituto, e.email_trasmissione_passaporto,
+ e.email_trasmissione_passaporto,
 e.acronimo_ente_str, f.ds_nazione ds_nazione_ente_str, e.nome_ente_str,
 g.ds_progetto_ita, e.importo_diaria_ita, e.fl_spese_visto, e.cd_divisa_ita,
 e.fl_rimborso_treno, e.importo_mensile_ita, h.fl_assimilato_dip
@@ -72,7 +73,7 @@ and a.cd_accordo = h.cd_accordo
 and a.cd_progetto = h.cd_progetto
 and a.cd_terzo = h.cd_terzo
 and h.cd_terzo = b.cd_terzo
-and h.cd_cdr_terzo = c.cd_centro_responsabilita
+and h.cd_cdr_terzo = c.cd_centro_responsabilita (+)
 and h.cd_accordo = e.cd_accordo
 and e.pg_nazione_str = f.pg_nazione
 and a.cd_accordo = g.cd_accordo
@@ -103,8 +104,8 @@ and s.cd_anag = b.cd_anag]]>
 	<field name="INDIRIZZO_ISTITUTO" class="java.lang.String"/>
 	<field name="CAP_ISTITUTO" class="java.lang.String"/>
 	<field name="COMUNE_ENTE_DI_APPARTENENZA" class="java.lang.String"/>
-	<field name="COMUNE_ISTITUTO" class="java.lang.String"/>
 	<field name="PROVINCIA_ISTITUTO" class="java.lang.String"/>
+	<field name="COMUNE_ISTITUTO" class="java.lang.String"/>
 	<field name="ACRONIMO_ENTE_STR" class="java.lang.String"/>
 	<field name="DS_NAZIONE_ENTE_STR" class="java.lang.String"/>
 	<field name="NOME_ENTE_STR" class="java.lang.String"/>
@@ -125,7 +126,7 @@ and s.cd_anag = b.cd_anag]]>
 		<band splitType="Prevent"/>
 	</title>
 	<pageHeader>
-		<band height="100" splitType="Prevent">
+		<band height="120" splitType="Prevent">
 			<image scaleImage="FillFrame" onErrorType="Icon">
 				<reportElement key="image-1" x="0" y="0" width="199" height="28"/>
 				<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE}+"Logo CNR-2010-ITA-low.png"]]></imageExpression>
@@ -189,16 +190,16 @@ and s.cd_anag = b.cd_anag]]>
 :""+$F{CAP_ENTE_DI_APPARTENENZA}+" - "+$F{COMUNE_ENTE_DI_APPARTENENZA}+""]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="70" splitType="Prevent">
+		<band height="80" splitType="Prevent">
 			<staticText>
-				<reportElement key="staticText-1" style="TNR11" x="0" y="50" width="51" height="14"/>
+				<reportElement key="staticText-1" style="TNR11" x="0" y="60" width="51" height="14"/>
 				<textElement>
 					<font fontName="Times New Roman" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Oggetto:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-2" style="TNR11" x="51" y="50" width="414" height="14"/>
+				<reportElement key="textField-2" style="TNR11" x="51" y="60" width="414" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11" isBold="false"/>
 				</textElement>

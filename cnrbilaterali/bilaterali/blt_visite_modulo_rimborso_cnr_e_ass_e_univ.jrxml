@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0000000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="4"/>
+	<property name="ireport.y" value="676"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -49,15 +49,14 @@
 	<queryString>
 		<![CDATA[select
 a.dt_ini_visita, a.dt_fin_visita, a.num_prot_autoriz_partenza, a.dt_prot_autoriz_partenza, s.dt_nascita, s.codice_fiscale, l.ds_comune comune_nascita, e.anno_fin, e.anno_ini, e.fl_viaggi_interni,
-s.ti_sesso sesso_autorizzato,
+s.ti_sesso sesso_autorizzato, l.cd_provincia,
 b.denominazione_sede ds_terzo_autorizzato,
-c.ds_cdr,
 (select h.denominazione_sede from terzo h where g.cd_respons_ita = h.cd_terzo) ds_responsabile_ita,
 (select h.denominazione_sede from terzo h where g.cd_respons_str = h.cd_terzo) ds_responsabile_str,
 e.acronimo_ente_str, f.ds_nazione ds_nazione_ente_str, e.nome_ente_str,
 g.ds_progetto_ita, e.importo_diaria_ita, e.fl_spese_visto, e.cd_divisa_ita,
 e.fl_rimborso_treno, e.importo_mensile_ita, h.fl_assimilato_dip
-from blt_visite a, blt_autorizzati h, terzo b, cdr c, blt_accordi e, nazione f, blt_progetti g, anagrafico s, comune l
+from blt_visite a, blt_autorizzati h, terzo b, blt_accordi e, nazione f, blt_progetti g, anagrafico s, comune l
 where a.cd_accordo = $P{cd_accordo}
 and a.cd_progetto = $P{cd_progetto}
 and a.cd_terzo = $P{cd_terzo}
@@ -67,7 +66,6 @@ and a.cd_accordo = h.cd_accordo
 and a.cd_progetto = h.cd_progetto
 and a.cd_terzo = h.cd_terzo
 and h.cd_terzo = b.cd_terzo
-and h.cd_cdr_terzo = c.cd_centro_responsabilita
 and h.cd_accordo = e.cd_accordo
 and e.pg_nazione_str = f.pg_nazione
 and a.cd_accordo = g.cd_accordo
@@ -86,8 +84,8 @@ and s.pg_comune_nascita = l.pg_comune]]>
 	<field name="ANNO_INI" class="java.math.BigDecimal"/>
 	<field name="FL_VIAGGI_INTERNI" class="java.lang.String"/>
 	<field name="SESSO_AUTORIZZATO" class="java.lang.String"/>
+	<field name="CD_PROVINCIA" class="java.lang.String"/>
 	<field name="DS_TERZO_AUTORIZZATO" class="java.lang.String"/>
-	<field name="DS_CDR" class="java.lang.String"/>
 	<field name="DS_RESPONSABILE_ITA" class="java.lang.String"/>
 	<field name="DS_RESPONSABILE_STR" class="java.lang.String"/>
 	<field name="ACRONIMO_ENTE_STR" class="java.lang.String"/>
@@ -110,15 +108,7 @@ and s.pg_comune_nascita = l.pg_comune]]>
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="19" splitType="Prevent">
-			<staticText>
-				<reportElement key="staticText-23" style="TNR11" x="0" y="0" width="466" height="14" forecolor="#244061"/>
-				<textElement textAlignment="Right">
-					<font fontName="Times New Roman" size="10"/>
-				</textElement>
-				<text><![CDATA[Allegato 1]]></text>
-			</staticText>
-		</band>
+		<band height="19" splitType="Prevent"/>
 	</pageHeader>
 	<detail>
 		<band height="49" splitType="Prevent">
@@ -171,7 +161,7 @@ Piazzale Aldo Moro, 7
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["In riferimento al soggiorno di ricerca autorizzato con lettera dell'Ufficio Accordi e Relazioni Internazionali (prot. AMMCNT n. "+$F{NUM_PROT_AUTORIZ_PARTENZA}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_PROT_AUTORIZ_PARTENZA})+"), "+($F{SESSO_AUTORIZZATO}.equals("M")?"il sottoscritto":"la sottoscritta")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+", "+($F{SESSO_AUTORIZZATO}.equals("M")?"nato":"nata")+" a "+$F{COMUNE_NASCITA}+" il "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_NASCITA})+", Codice Fiscale "+$F{CODICE_FISCALE}.toUpperCase()+", in servizio presso ........................................., abitante in Via/Piazza ..........................................., CAP ..............., Comune ........................"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["In riferimento al soggiorno di ricerca autorizzato con lettera dell'Ufficio Accordi e Relazioni Internazionali (prot. AMMCNT n. ................ del .................), "+($F{SESSO_AUTORIZZATO}.equals("M")?"il sottoscritto":"la sottoscritta")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+", "+($F{SESSO_AUTORIZZATO}.equals("M")?"nato":"nata")+" a "+$F{COMUNE_NASCITA}+" ("+$F{CD_PROVINCIA}+") il "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_NASCITA})+", Codice Fiscale "+$F{CODICE_FISCALE}.toUpperCase()+", in servizio presso ........................................., abitante in Via/Piazza ..........................................., CAP ..............., Comune ........................"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
@@ -272,7 +262,7 @@ Piazzale Aldo Moro, 7
 				<textFieldExpression class="java.lang.String"><![CDATA["Euro ..............................................."]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="20" splitType="Prevent">
+		<band height="38" splitType="Prevent">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="283" height="12"/>
 				<textElement textAlignment="Justified">
@@ -286,6 +276,20 @@ Piazzale Aldo Moro, 7
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Euro ..............................................."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="290" y="20" width="175" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Euro ..............................................."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="20" width="283" height="12"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["........................................................................................."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
@@ -671,7 +675,7 @@ Piazzale Aldo Moro, 7
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" isBold="true" isUnderline="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["La richiesta di rimborso delle spese di viaggio docra' essere presentata entro due mesi dalla data di fine soggiorno."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["La richiesta di rimborso delle spese di viaggio dovra' essere presentata entro due mesi dalla data di fine soggiorno."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
@@ -778,7 +782,7 @@ Piazzale Aldo Moro, 7
 					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["La somma relativa al rimborso delle spese potra' essere accreditata sul conto corrente personale (o cointestato) dello studioso o, nel caso in cui non venga richiesto l'accredito su c/c, riscossa presso una filiale della BNL nella citta' di residenza dell'interessato."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["La somma relativa al rimborso delle spese sarà accreditata sul conto corrente personale (o cointestato) dello studioso."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">

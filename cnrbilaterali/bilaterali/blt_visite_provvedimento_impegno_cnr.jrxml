@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.3310000000000006"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="485"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -197,7 +197,7 @@ and s.cd_anag = b.cd_anag]]>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Impegno rimborso spese di viaggio "+($F{SESSO_AUTORIZZATO}.equals("M")?"del Dott.":"della Dott.ssa")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+". ("+($F{FL_ASSIMILATO_DIP}.equals("Y")?""+($F{FL_ASSOCIATO}.equals("N")?"Personale CNR":"Associato al CNR")+"":"Personale non CNR")+")."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Impegno rimborso spese di viaggio "+($F{SESSO_AUTORIZZATO}.equals("M")?"del Dott.":"della Dott.ssa")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+" ("+($F{FL_ASSIMILATO_DIP}.equals("Y")?""+($F{FL_ASSOCIATO}.equals("N")?"Personale CNR":"Associato al CNR")+"":"Personale non CNR")+")."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="30" splitType="Prevent">
