@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ModelloContratto" pageWidth="595" pageHeight="842" columnWidth="465" leftMargin="65" rightMargin="65" topMargin="30" bottomMargin="40" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.Blt_visite_stampe_candidaturaScriptlet">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ModelloContratto" pageWidth="595" pageHeight="842" columnWidth="465" leftMargin="65" rightMargin="65" topMargin="20" bottomMargin="40" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.Blt_visite_stampe_candidaturaScriptlet">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.1"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="420"/>
+	<property name="ireport.y" value="336"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -49,19 +49,17 @@
 	<queryString>
 		<![CDATA[select
 a.dt_ini_visita, a.dt_fin_visita, s.codice_fiscale, s.dt_nascita, l.ds_comune comune_nascita, a.im_rimb_previsto,
-b.denominazione_sede ds_terzo_autorizzato, a.num_prot_attrib_incarico, e.anno_ini, e.anno_fin, a.fl_stampato_provv_pagam_ant, a.dt_prot_attrib_incarico,a.fl_pagamento_con_bonifico, e.fl_pagamento_ente, a.im_rimb_spese_ant, a.im_rimb_spese, e.num_articolo_prop_intel, e.ds_nazione_eng, e.ds_aggettivo_nazional, a.fl_pagamento_fine_visita,
+b.denominazione_sede ds_terzo_autorizzato, a.num_prot_attrib_incarico, e.anno_ini, e.anno_fin, a.fl_stampato_provv_pagam_ant, a.dt_prot_attrib_incarico,a.fl_pagamento_con_bonifico, e.fl_pagamento_ente, a.im_rimb_spese_ant, a.im_rimb_spese, e.num_articolo_prop_intel, e.ds_nazione_eng, e.ds_aggettivo_nazional, a.fl_pagamento_fine_visita,f.ds_nazione,
 (select l.ds_comune from comune l where l.pg_comune = s.pg_comune_fiscale) comune_fiscale, s. via_fiscale,
 (select b.denominazione_sede from terzo b where b.cd_terzo = g.cd_respons_ita) ds_responsabile_ita,
 (select b.denominazione_sede from terzo b where b.cd_terzo = g.cd_respons_str) ds_responsabile_str,
-(select s.codice_iban from banca s where s.pg_banca = a.pg_banca and s.cd_terzo = a.cd_terzo_banca) codice_iban,
-(select s.numero_conto from banca s where s.pg_banca = a.pg_banca and s.cd_terzo = a.cd_terzo_banca) numero_conto,
-(select s.codice_swift from banca s where s.pg_banca = a.pg_banca and s.cd_terzo = a.cd_terzo_banca) codice_swift,
-s. via_fiscale,
+banca.codice_iban, banca.numero_conto, banca.codice_swift,
+s.via_fiscale,
 e.acronimo_ente_str, f.ds_nazione ds_nazione_ente_str, e.nome_ente_str, a.num_prot_accett_ente_str, a.dt_prot_accett_ente_str, a.luogo_visita, e.num_articolo_prop_intel, g.ds_progetto_eng, e.importo_diaria_str,
 g.ds_progetto_ita, e.importo_diaria_ita, e.fl_spese_visto, e.cd_divisa_ita, e.data_firma_accordo,
 s.ti_sesso sesso_autorizzato,
 e.fl_rimborso_treno, e.importo_mensile_ita, h.fl_assimilato_dip, e.data_firma_addendum, a.fl_accettazione_convenzione
-from blt_visite a, blt_autorizzati h, terzo b, blt_accordi e, nazione f, blt_progetti g, anagrafico s, comune l
+from blt_visite a, blt_autorizzati h, terzo b, blt_accordi e, nazione f, blt_progetti g, anagrafico s, comune l, banca
 where a.cd_accordo = $P{cd_accordo}
 and a.cd_progetto = $P{cd_progetto}
 and a.cd_terzo = $P{cd_terzo}
@@ -76,7 +74,9 @@ and e.pg_nazione_str = f.pg_nazione
 and a.cd_accordo = g.cd_accordo
 and a.cd_progetto = g.cd_progetto
 and s.cd_anag = b.cd_anag
-and s.pg_comune_nascita = l.pg_comune]]>
+and s.pg_comune_nascita = l.pg_comune
+and banca.cd_terzo (+) = a.cd_terzo
+and banca.ti_pagamento (+) = 'N']]>
 	</queryString>
 	<field name="DT_INI_VISITA" class="java.sql.Timestamp"/>
 	<field name="DT_FIN_VISITA" class="java.sql.Timestamp"/>
@@ -98,6 +98,7 @@ and s.pg_comune_nascita = l.pg_comune]]>
 	<field name="DS_NAZIONE_ENG" class="java.lang.String"/>
 	<field name="DS_AGGETTIVO_NAZIONAL" class="java.lang.String"/>
 	<field name="FL_PAGAMENTO_FINE_VISITA" class="java.lang.String"/>
+	<field name="DS_NAZIONE" class="java.lang.String"/>
 	<field name="COMUNE_FISCALE" class="java.lang.String"/>
 	<field name="VIA_FISCALE" class="java.lang.String"/>
 	<field name="DS_RESPONSABILE_ITA" class="java.lang.String"/>
@@ -191,7 +192,7 @@ and s.pg_comune_nascita = l.pg_comune]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[""+($F{SESSO_AUTORIZZATO}.equals("M")?"Mr":"Ms")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+", born in "+$F{COMUNE_NASCITA}+" on "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_NASCITA})+", who permanently resides in "+$F{COMUNE_FISCALE}+", "+$F{VIA_FISCALE}+", citizenship "+$F{DS_AGGETTIVO_NAZIONAL}+" hence referred to as the “Contractor”"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+($F{SESSO_AUTORIZZATO}.equals("M")?"Mr":"Ms")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+", born in "+$F{COMUNE_NASCITA}+" ("+$F{DS_NAZIONE}+") on "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_NASCITA})+", who permanently resides in "+$F{COMUNE_FISCALE}+", "+$F{VIA_FISCALE}+", citizenship "+$F{DS_AGGETTIVO_NAZIONAL}+" hence referred to as the “Contractor”"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
@@ -258,22 +259,6 @@ and s.pg_comune_nascita = l.pg_comune]]>
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["the Bilateral Research Project '"+$F{DS_PROGETTO_ENG}+"' (Italian Project Coordinator "+($F{SESSO_AUTORIZZATO}.equals("M")?"Mr":"Ms")+" "+$F{DS_RESPONSABILE_ITA}.toUpperCase()+", "+$F{DS_AGGETTIVO_NAZIONAL}+" Project Coordinator "+($F{SESSO_AUTORIZZATO}.equals("M")?"Mr":"Ms")+" "+$F{DS_RESPONSABILE_STR}.toUpperCase()+") which has been jointly approved by CNR and "+$F{ACRONIMO_ENTE_STR}+" for the "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"biennium":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"triennium":"years"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+", involves "+($F{SESSO_AUTORIZZATO}.equals("M")?"Mr":"Ms")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+" in the list of candidates selected and approved by "+$F{ACRONIMO_ENTE_STR}+";"]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="13" height="14"/>
-				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" size="10" isBold="false"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["-"]]></textFieldExpression>
-			</textField>
-		</band>
-		<band height="20" splitType="Prevent">
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-2" style="TNR11" x="13" y="0" width="452" height="14"/>
-				<textElement textAlignment="Justified">
-					<font fontName="Times New Roman" size="10" isBold="false"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["the CNR with the Official Note, Ref. No. AMMCNT - CNR n. "+$F{NUM_PROT_ACCETT_ENTE_STR}+" dated "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_PROT_ACCETT_ENTE_STR})+", has accepted the research stay of "+($F{SESSO_AUTORIZZATO}.equals("M")?"Mr":"Ms")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+";"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="13" height="14"/>
@@ -361,9 +346,6 @@ and s.pg_comune_nascita = l.pg_comune]]>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["ART. 3 – Terms and Conditions"]]></textFieldExpression>
 			</textField>
-			<break>
-				<reportElement x="0" y="0" width="466" height="1"/>
-			</break>
 		</band>
 		<band height="18" splitType="Prevent">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
@@ -437,11 +419,11 @@ and s.pg_comune_nascita = l.pg_comune]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["The sum payable by CNR will be paid at the end of the stay by bank transfer directly onto the Contractor’s own bank account no. "+$F{NUMERO_CONTO}+", SWIFT Code "+$F{CODICE_SWIFT}+", IBAN Code "+$F{CODICE_IBAN}+"."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["The sum payable by CNR will be paid at the end of the stay by bank transfer directly onto the Contractor’s own bank account SWIFT Code "+$F{CODICE_SWIFT}+", IBAN Code "+$F{CODICE_IBAN}+"."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="18" splitType="Prevent">
-			<printWhenExpression><![CDATA[$F{FL_STAMPATO_PROVV_PAGAM_ANT}.equals( "N")]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{IM_RIMB_SPESE_ANT}== null]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14"/>
 				<textElement textAlignment="Justified">
@@ -451,23 +433,23 @@ and s.pg_comune_nascita = l.pg_comune]]>
 			</textField>
 		</band>
 		<band height="18" splitType="Prevent">
-			<printWhenExpression><![CDATA[$F{FL_STAMPATO_PROVV_PAGAM_ANT}.equals( "Y" )]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{IM_RIMB_SPESE_ANT}!= null && $F{FL_PAGAMENTO_FINE_VISITA}.equals( "N" )]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["The CNR will pay the due sum in to installments:"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["The CNR will pay the due sum in two installments:"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="18" splitType="Prevent">
-			<printWhenExpression><![CDATA[$F{FL_STAMPATO_PROVV_PAGAM_ANT}.equals( "Y")]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{IM_RIMB_SPESE_ANT}!= null && $F{FL_PAGAMENTO_FINE_VISITA}.equals( "N" )]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="13" y="0" width="453" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["The first of Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IM_RIMB_SPESE_ANT})+" will be paid to the Contractor during his/her stay by any branch of the Banca Nazionale del Lavoro (BNL) on the Italian territory."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["The first of Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IM_RIMB_SPESE_ANT})+" will be paid to the Contractor during "+($F{SESSO_AUTORIZZATO}.equals("M")?"his":"her")+" stay by any branch of the Banca Nazionale del Lavoro (BNL) on the Italian territory."]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="13" height="12"/>
@@ -478,13 +460,13 @@ and s.pg_comune_nascita = l.pg_comune]]>
 			</textField>
 		</band>
 		<band height="18" splitType="Prevent">
-			<printWhenExpression><![CDATA[$F{FL_STAMPATO_PROVV_PAGAM_ANT}.equals("Y" )]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{IM_RIMB_SPESE_ANT}!= null &&$F{FL_PAGAMENTO_FINE_VISITA}.equals( "N" )]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="13" y="0" width="453" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["The second of Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IM_RIMB_SPESE})+" will be paid at the end of the stay by bank transfer directly onto the Contractor’s own bank account no. "+$F{NUMERO_CONTO}+", SWIFT Code "+$F{CODICE_SWIFT}+", IBAN Code "+$F{CODICE_IBAN}+"."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["The second of Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IM_RIMB_SPESE})+" will be paid at the end of the stay by bank transfer directly onto the Contractor’s own bank account SWIFT Code "+$F{CODICE_SWIFT}+", IBAN Code "+$F{CODICE_IBAN}+"."]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="13" height="12"/>
@@ -572,7 +554,7 @@ and s.pg_comune_nascita = l.pg_comune]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Should any legal controversy arise, the Contractor declares his/her acceptance of the Tribunal of Rome as the place of lawful jurisdiction."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Should any legal controversy arise, the Contractor declares "+($F{SESSO_AUTORIZZATO}.equals("M")?"his":"her")+" acceptance of the Tribunal of Rome as the place of lawful jurisdiction."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
@@ -631,7 +613,7 @@ and s.pg_comune_nascita = l.pg_comune]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["In accordance to Art. 1341 of the Italian Civil Code, the undersigned explicitly declares his/her acceptance of the following articles herewith specified:"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["In accordance to Art. 1341 of the Italian Civil Code, the undersigned explicitly declares "+($F{SESSO_AUTORIZZATO}.equals("M")?"his":"her")+" acceptance of the following articles herewith specified:"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="18" splitType="Prevent">

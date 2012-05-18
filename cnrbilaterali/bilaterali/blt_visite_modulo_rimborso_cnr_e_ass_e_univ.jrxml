@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0000000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="676"/>
+	<property name="ireport.y" value="652"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -111,20 +111,20 @@ and s.pg_comune_nascita = l.pg_comune]]>
 		<band height="19" splitType="Prevent"/>
 	</pageHeader>
 	<detail>
-		<band height="49" splitType="Prevent">
+		<band height="64" splitType="Prevent">
 			<staticText>
-				<reportElement key="staticText-1" style="TNRG11" x="259" y="0" width="23" height="15"/>
+				<reportElement key="staticText-1" style="TNR11" x="259" y="0" width="23" height="15"/>
 				<textElement>
 					<font fontName="Times New Roman" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Al]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-1" style="TNRG11" x="290" y="0" width="175" height="48"/>
+				<reportElement key="staticText-1" style="TNR11" x="290" y="0" width="175" height="50"/>
 				<textElement>
 					<font fontName="Times New Roman" size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Consiglio nazionale delle Ricerche
+				<text><![CDATA[Consiglio Nazionale delle Ricerche
 Ufficio Accordi e Relazioni Internazionali
 Piazzale Aldo Moro, 7
 00185 Roma]]></text>
@@ -136,7 +136,7 @@ Piazzale Aldo Moro, 7
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Accordo di cooperazione scientifica tra il CNR e "+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+"), "+$F{DS_NAZIONE_ENTE_STR}+". "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"Biennio":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"Triennio":"Anni"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+". Progetto comune di ricerca "+$F{DS_RESPONSABILE_ITA}.toUpperCase()+" / "+$F{DS_RESPONSABILE_STR}.toUpperCase()+"."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Accordo di cooperazione scientifica tra CNR e "+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+"), "+$F{DS_NAZIONE_ENTE_STR}+" - "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"Biennio":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"Triennio":"Anni"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+". Progetto comune di ricerca "+$F{DS_RESPONSABILE_ITA}.toUpperCase()+" / "+$F{DS_RESPONSABILE_STR}.toUpperCase()+"."]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-1" style="TNR11" x="0" y="25" width="56" height="12"/>
@@ -161,7 +161,7 @@ Piazzale Aldo Moro, 7
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["In riferimento al soggiorno di ricerca autorizzato con lettera dell'Ufficio Accordi e Relazioni Internazionali (prot. AMMCNT n. ................ del .................), "+($F{SESSO_AUTORIZZATO}.equals("M")?"il sottoscritto":"la sottoscritta")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+", "+($F{SESSO_AUTORIZZATO}.equals("M")?"nato":"nata")+" a "+$F{COMUNE_NASCITA}+" ("+$F{CD_PROVINCIA}+") il "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_NASCITA})+", Codice Fiscale "+$F{CODICE_FISCALE}.toUpperCase()+", in servizio presso ........................................., abitante in Via/Piazza ..........................................., CAP ..............., Comune ........................"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["In riferimento al soggiorno di ricerca autorizzato con lettera dell'Ufficio Accordi e Relazioni Internazionali, prot. AMMCNT n. ................ del ................., "+($F{SESSO_AUTORIZZATO}.equals("M")?"il sottoscritto":"la sottoscritta")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+", "+($F{SESSO_AUTORIZZATO}.equals("M")?"nato":"nata")+" a "+$F{COMUNE_NASCITA}+" ("+$F{CD_PROVINCIA}+") il "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_NASCITA})+", Codice Fiscale "+$F{CODICE_FISCALE}.toUpperCase()+", in servizio presso ........................................................................................., residente in Via/Piazza ..................................................................................................................., CAP ..............., Comune ..............................................., Provincia ..............................................."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
@@ -182,7 +182,7 @@ Piazzale Aldo Moro, 7
 				<textFieldExpression class="java.lang.String"><![CDATA["il rimborso delle sotto elencate spese per complessivi Euro ..................... (riportare ogni singola spesa ed il relativo importo. Le spese rimborsabili sono elencate nelle istruzioni del presente modulo):"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="378" y="21" width="72" height="59">
+				<reportElement x="380" y="22" width="58" height="49">
 					<printWhenExpression><![CDATA[$F{FL_ASSIMILATO_DIP}.equals( "N" )]]></printWhenExpression>
 				</reportElement>
 				<box>
@@ -193,7 +193,7 @@ Piazzale Aldo Moro, 7
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font fontName="Times New Roman"/>
+					<font fontName="Times New Roman" size="8"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Applicare qui la marca da bollo da Euro 1,81 se dovuta"]]></textFieldExpression>
 			</textField>
@@ -432,7 +432,7 @@ Piazzale Aldo Moro, 7
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[""+($F{SESSO_AUTORIZZATO}.equals("M")?"Il sottoscritto":"La sottoscritta")+" dichiara sotto la propria responsabilità di aver effettuato il soggiorno in "+$F{DS_NAZIONE_ENTE_STR}+" dal .............. al ............... e di aver percepito dalla Parte ospitante un contributo in valuta locale ammontante a ..................."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+($F{SESSO_AUTORIZZATO}.equals("M")?"Il sottoscritto":"La sottoscritta")+" dichiara sotto la propria responsabilità di aver effettuato il soggiorno in "+$F{DS_NAZIONE_ENTE_STR}+" dal .................. al ................... e di aver percepito dalla Parte ospitante un contributo in valuta locale ammontante a ......................"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="30" splitType="Prevent">
@@ -685,7 +685,7 @@ Piazzale Aldo Moro, 7
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" isBold="true" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["A) Nel caso in cui lo studioso richiedente SIA SOGGETTO IVA, per il rimborso delle spese, dovra' emettere fattura."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["A) Nel caso in cui lo studioso richiedente SIA SOGGETTO IVA (cioe' l'attività di ricerca svolta durante il soggiorno rientri nell’ambito dell’”attività prevalente” correlata alla propria Partita Iva) per il rimborso delle spese, dovra' emettere fattura."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
@@ -721,7 +721,7 @@ Piazzale Aldo Moro, 7
 					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["in originale, i titoli di viaggio utilizzati e le ricevute delle spese. L'esatto costo del viaggio dovra' essere stampigliato su biglietto o, in caso di biglietto a tariffa speciale, risultare da un'allegata dichiarazione dell'Agenzia che lo ha rilasciato. Nel caso di acquisto online dei biglietti, e' necessario allegare la stampa del biglietto con l'importo e le carte di imbarco in orginale;"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["in originale, i titoli di viaggio utilizzati e le ricevute delle spese. L'esatto costo del viaggio dovra' essere stampigliato su biglietto o, in caso di biglietto a tariffa speciale, risultare da un'allegata dichiarazione dell'Agenzia che lo ha rilasciato. Nel caso di acquisto online dei biglietti, e' necessario allegare la stampa del biglietto con l'importo e le carte di imbarco in orginale"+($F{FL_ASSIMILATO_DIP}.equals("Y")?";":". Gli originali delle spese rimborsate saranno restituiti alla S.V. per la successiva presentazione in sede di dichiarazione dei redditi;")+""]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="18" splitType="Prevent">
@@ -802,7 +802,7 @@ Piazzale Aldo Moro, 7
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Ai sensi dell'Art. 25 del DPCM n. 33 del 26/01/1967, le pubblicazioni concernenti lavori effettuati con mezzi posti a disposizione dal CNR devono recare l'indicazione 'Lavoro eseguito con contributo del CNR'. Pertanto sulle eventuali pubblicazioni derivatni da ricerche svolte in "+$F{DS_NAZIONE_ENTE_STR}+" grazie ad un contributo di soggiorno nel quadro di un Accordo CNR/"+$F{ACRONIMO_ENTE_STR}+", si dovra' fare riferimento all'Accordo stesso."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Ai sensi dell'Art. 25 del DPCM n. 33 del 26/01/1967, le pubblicazioni concernenti lavori effettuati con mezzi posti a disposizione dal CNR devono recare l'indicazione 'Lavoro eseguito con contributo del CNR'. Pertanto sulle eventuali pubblicazioni derivanti da ricerche svolte in "+$F{DS_NAZIONE_ENTE_STR}+" grazie ad un contributo di soggiorno nel quadro di un Accordo CNR/"+$F{ACRONIMO_ENTE_STR}+", si dovra' fare riferimento all'Accordo stesso."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="15" splitType="Prevent">
@@ -816,7 +816,7 @@ Piazzale Aldo Moro, 7
 		</band>
 		<band height="50" splitType="Prevent">
 			<staticText>
-				<reportElement key="staticText-1" style="TNRG11" x="25" y="0" width="441" height="50"/>
+				<reportElement key="staticText-1" style="TNR11" x="25" y="0" width="441" height="50"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" isBold="false"/>
 				</textElement>

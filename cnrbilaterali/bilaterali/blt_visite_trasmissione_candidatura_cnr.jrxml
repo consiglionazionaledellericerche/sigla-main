@@ -48,7 +48,7 @@
 	</parameter>
 	<queryString>
 		<![CDATA[select
-a.dt_ini_visita, a.dt_fin_visita, e.ds_nazione_eng,
+a.dt_ini_visita, a.dt_fin_visita, e.ds_nazione_eng, e.fax_respons_str,
 b.denominazione_sede ds_terzo_autorizzato, g.cd_respons_ita, g.cd_respons_str,
 (select b.denominazione_sede from terzo b where b.cd_terzo = g.cd_respons_ita) responsabile_ita,
 (select b.denominazione_sede from terzo b where b.cd_terzo = g.cd_respons_str) responsabile_str,
@@ -78,6 +78,7 @@ and s.cd_anag = b.cd_anag]]>
 	<field name="DT_INI_VISITA" class="java.sql.Timestamp"/>
 	<field name="DT_FIN_VISITA" class="java.sql.Timestamp"/>
 	<field name="DS_NAZIONE_ENG" class="java.lang.String"/>
+	<field name="FAX_RESPONS_STR" class="java.lang.String"/>
 	<field name="DS_TERZO_AUTORIZZATO" class="java.lang.String"/>
 	<field name="CD_RESPONS_ITA" class="java.math.BigDecimal"/>
 	<field name="CD_RESPONS_STR" class="java.math.BigDecimal"/>
@@ -131,7 +132,7 @@ and s.cd_anag = b.cd_anag]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{NOME_RESPONS_STR}.toUpperCase()+" "+$F{COGNOME_RESPONS_STR}.toUpperCase()+""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+")"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="18">
@@ -140,25 +141,25 @@ and s.cd_anag = b.cd_anag]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+")"]]></textFieldExpression>
-			</textField>
-		</band>
-		<band height="18">
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-2" style="TNR11" x="298" y="0" width="167" height="14"/>
-				<textElement textAlignment="Justified">
-					<font fontName="Times New Roman" size="11"/>
-				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Office of International Affairs"]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="17">
+		<band height="18">
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-2" style="TNR11" x="298" y="0" width="167" height="14"/>
+				<reportElement key="textField-2" style="TNR11" x="297" y="0" width="168" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{DS_NAZIONE_ENG}+""]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="17">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="297" y="0" width="168" height="14"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Attn. "+$F{NOME_RESPONS_STR}.toUpperCase()+" "+$F{COGNOME_RESPONS_STR}.toUpperCase()+""]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="60">
@@ -167,15 +168,22 @@ and s.cd_anag = b.cd_anag]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Agreement on scientific cooperation between CNR and "+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+"), "+$F{DS_NAZIONE_ENG}+" - "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"Biennium":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"Triennium":"Years"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+". Joint research project "+$F{RESPONSABILE_ITA}.toUpperCase()+" / "+$F{RESPONSABILE_STR}.toUpperCase()+"."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Agreement on scientific cooperation between CNR and "+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+"), "+$F{DS_NAZIONE_ENG}+" - "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"Biennium":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"Triennium":"Years"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+". Joint research project '"+$F{DS_PROGETTO_ENG}+"' ("+$F{RESPONSABILE_ITA}.toUpperCase()+" / "+$F{RESPONSABILE_STR}.toUpperCase()+")."]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-1" style="TNR11" x="0" y="40" width="51" height="14"/>
-				<textElement>
+				<textElement textAlignment="Left">
 					<font fontName="Times New Roman" size="11" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Object:]]></text>
+				<text><![CDATA[Subject:]]></text>
 			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="298" y="0" width="167" height="14"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Fax "+$F{FAX_RESPONS_STR}+""]]></textFieldExpression>
+			</textField>
 		</band>
 		<band height="50">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
@@ -188,11 +196,11 @@ and s.cd_anag = b.cd_anag]]>
 		</band>
 		<band height="20">
 			<staticText>
-				<reportElement key="staticText-1" style="TNRG11" x="0" y="0" width="56" height="14"/>
-				<textElement>
-					<font fontName="Times New Roman" size="11"/>
+				<reportElement key="staticText-1" style="TNR11" x="0" y="0" width="56" height="14"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="11" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Dear Sirs,]]></text>
+				<text><![CDATA[Dear Sir,]]></text>
 			</staticText>
 		</band>
 		<band height="30">
@@ -256,7 +264,7 @@ and s.cd_anag = b.cd_anag]]>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{DS_PROGETTO_ENG}+""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{RESPONSABILE_ITA}.toUpperCase()+" / "+$F{RESPONSABILE_STR}.toUpperCase()+""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="211" y="0" width="93" height="14"/>
@@ -293,7 +301,7 @@ and s.cd_anag = b.cd_anag]]>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph firstLineIndent="20"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Yours sincerely,"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Best regards,"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="80">

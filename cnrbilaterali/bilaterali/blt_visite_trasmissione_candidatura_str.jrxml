@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.1000000000000005"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="173"/>
+	<property name="ireport.y" value="144"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -49,7 +49,7 @@
 	<queryString>
 		<![CDATA[select
 a.dt_ini_visita, a.dt_fin_visita, e.telef_respons_ita, e.fax_respons_ita, e.email_respons_ita,
-b.denominazione_sede ds_terzo_autorizzato, a.im_rimb_spese, g.fl_associato_respons_ita, e.anno_fin, e.anno_ini, a.im_rimb_spese_ant, e.importo_diaria_str, g.ente_respons_ita, g.indirizzo_ente_respons_ita, g.cap_ente_respons_ita,
+b.denominazione_sede ds_terzo_autorizzato, a.im_rimb_spese, g.fl_associato_respons_ita, e.anno_fin, e.anno_ini, a.im_rimb_spese_ant, e.importo_diaria_str, g.ente_respons_ita, g.indirizzo_ente_respons_ita, g.cap_ente_respons_ita, a.im_rimb_previsto, e.fl_pagamento_ente,
 c.ds_cdr, a.fl_pagamento_fine_visita, a.fl_pagamento_con_bonifico, a.fl_stampato_provv_pagam_ant,
 (select b.denominazione_sede from terzo b where b.cd_terzo = g.cd_respons_ita) responsabile_ita,
 (select b.denominazione_sede from terzo b where b.cd_terzo = g.cd_respons_str) responsabile_str,
@@ -94,6 +94,8 @@ and s.cd_anag= b.cd_anag]]>
 	<field name="ENTE_RESPONS_ITA" class="java.lang.String"/>
 	<field name="INDIRIZZO_ENTE_RESPONS_ITA" class="java.lang.String"/>
 	<field name="CAP_ENTE_RESPONS_ITA" class="java.lang.String"/>
+	<field name="IM_RIMB_PREVISTO" class="java.math.BigDecimal"/>
+	<field name="FL_PAGAMENTO_ENTE" class="java.lang.String"/>
 	<field name="DS_CDR" class="java.lang.String"/>
 	<field name="FL_PAGAMENTO_FINE_VISITA" class="java.lang.String"/>
 	<field name="FL_PAGAMENTO_CON_BONIFICO" class="java.lang.String"/>
@@ -143,7 +145,7 @@ and s.cd_anag= b.cd_anag]]>
 	<detail>
 		<band height="18" splitType="Prevent">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-2" style="TNR11" x="255" y="0" width="44" height="14"/>
+				<reportElement key="textField-2" style="TNR11" x="247" y="0" width="52" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
@@ -194,7 +196,7 @@ $F{INDIRIZZO_ENTE_RESPONS_ITA}]]></textFieldExpression>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Accordo di cooperazione scientifica tra CNR e "+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+"), "+$F{DS_NAZIONE_ENTE_STR}+" - "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"Biennio":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"Triennio":"Anni"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+". Progetto comune di ricerca "+$F{RESPONSABILE_ITA}.toUpperCase()+" / "+$F{RESPONSABILE_STR}.toUpperCase()+""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Accordo di cooperazione scientifica tra CNR e "+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+"), "+$F{DS_NAZIONE_ENTE_STR}+" - "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"Biennio":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"Triennio":"Anni"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+". Progetto comune di ricerca "+$F{RESPONSABILE_ITA}.toUpperCase()+" / "+$F{RESPONSABILE_STR}.toUpperCase()+"."]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-1" style="TNR11" x="0" y="25" width="51" height="14"/>
@@ -220,7 +222,7 @@ $F{INDIRIZZO_ENTE_RESPONS_ITA}]]></textFieldExpression>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph firstLineIndent="25"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Nel quadro dell’Accordo in oggetto, si trasmette copia della richiesta di visita "+($F{SESSO_AUTORIZZATO}.equals("M")?"del Dott.":"della Dott.ssa")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+" (all. 1)."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Nel quadro dell’Accordo in oggetto, si trasmette in allegato la richiesta di visita "+($F{SESSO_AUTORIZZATO}.equals("M")?"del Dott.":"della Dott.ssa")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+"."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
@@ -230,7 +232,7 @@ $F{INDIRIZZO_ENTE_RESPONS_ITA}]]></textFieldExpression>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph firstLineIndent="25"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["La S.V. dovrà valutare la possibilità di ricevere lo studioso secondo quanto prevede il programma di ricerca, comunicando all'indirizzo di posta elettronica "+$F{EMAIL_RESPONS_ITA}+" l'accettazione della visita."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["La S.V. dovrà valutare la possibilità di ricevere lo studioso straniero secondo quanto prevede il programma di ricerca, comunicando all'indirizzo di posta elettronica "+$F{EMAIL_RESPONS_ITA}+" l'accettazione o il rifiuto della visita."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
@@ -240,7 +242,7 @@ $F{INDIRIZZO_ENTE_RESPONS_ITA}]]></textFieldExpression>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph firstLineIndent="25"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["All'Ufficio scrivente dovranno essere tempestivamente comunicate tutte le variazioni riguardanti il soggiorno di ricerca, in quanto alcune di esse potrebbero comportare la modifica del contratto studioso/CNR, in particolare:"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["All'Ufficio scrivente dovranno essere tempestivamente comunicate tutte le variazioni riguardanti il soggiorno di ricerca, "+($F{FL_PAGAMENTO_ENTE}.equals( "Y" )?"in particolare:":"in quanto alcune di esse potrebbero comportare la modifica del contratto studioso/CNR, in particolare:")+""]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="15" splitType="Prevent">
@@ -284,11 +286,11 @@ $F{INDIRIZZO_ENTE_RESPONS_ITA}]]></textFieldExpression>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph firstLineIndent="25"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Si ricorda che l'Accordo CNR/"+$F{ACRONIMO_ENTE_STR}+" prevede che siano a carico del CNR le spese relative alla permanenza in Italia degli studiosi stranieri, pertanto "+($F{SESSO_AUTORIZZATO}.equals("M")?"il Dott.":"la Dott.ssa")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+" riceverà la somma di Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IM_RIMB_SPESE})+" quale compenso per il soggiorno di ricerca, della durata di "+$V{numGiorni}+" giorni, a decorrere dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+"."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Si ricorda che l'Accordo CNR/"+$F{ACRONIMO_ENTE_STR}+" prevede che siano a carico del CNR le spese relative alla permanenza in Italia degli studiosi stranieri, pertanto "+($F{SESSO_AUTORIZZATO}.equals("M")?"il Dott.":"la Dott.ssa")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+" riceverà la somma di Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IM_RIMB_PREVISTO})+" quale compenso per il soggiorno di ricerca, della durata di "+$V{numGiorni}+" giorni, a decorrere dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+"."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
-			<printWhenExpression><![CDATA[$F{FL_STAMPATO_PROVV_PAGAM_ANT}.equals("N")]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{IM_RIMB_SPESE_ANT}==null ]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14"/>
 				<textElement textAlignment="Justified">
@@ -299,7 +301,18 @@ $F{INDIRIZZO_ENTE_RESPONS_ITA}]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
-			<printWhenExpression><![CDATA[$F{FL_PAGAMENTO_CON_BONIFICO}.equals("Y") && $F{FL_PAGAMENTO_FINE_VISITA}.equals("Y")]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{FL_PAGAMENTO_ENTE}.equals( "Y" )]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="11"/>
+					<paragraph firstLineIndent="25"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["La somma dovuta allo studioso sarà trasferita dal CNR al "+$F{ACRONIMO_ENTE_STR}+", che provvederà direttamente alla corresponsione del compenso spettante."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{FL_PAGAMENTO_CON_BONIFICO}.equals("Y") && $F{FL_PAGAMENTO_FINE_VISITA}.equals("Y") && $F{FL_PAGAMENTO_ENTE}.equals( "N" )]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14"/>
 				<textElement textAlignment="Justified">
@@ -310,7 +323,7 @@ $F{INDIRIZZO_ENTE_RESPONS_ITA}]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
-			<printWhenExpression><![CDATA[$F{FL_STAMPATO_PROVV_PAGAM_ANT}.equals("Y")]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{IM_RIMB_SPESE_ANT}!=null && $F{FL_PAGAMENTO_FINE_VISITA}.equals( "N" ) && $F{FL_PAGAMENTO_ENTE}.equals( "N" )]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14"/>
 				<textElement textAlignment="Justified">
@@ -321,14 +334,14 @@ $F{INDIRIZZO_ENTE_RESPONS_ITA}]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
-			<printWhenExpression><![CDATA[$F{FL_STAMPATO_PROVV_PAGAM_ANT}.equals("Y")]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{IM_RIMB_SPESE_ANT}!=null && $F{FL_PAGAMENTO_FINE_VISITA}.equals( "N" ) && $F{FL_PAGAMENTO_ENTE}.equals("N" )]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="55" y="0" width="410" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["all'arrivo dello studioso, un acconto di Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IM_RIMB_SPESE_ANT})+", riscuotibile presso qualsiasi sportello della Banca Nazionale del Lavoro territorio;"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["all'arrivo dello studioso, un acconto di Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IM_RIMB_SPESE_ANT})+", riscuotibile presso qualsiasi sportello della Banca Nazionale del Lavoro sul territorio italiano;"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-1" style="TNRG11" x="40" y="0" width="15" height="14"/>
@@ -339,7 +352,7 @@ $F{INDIRIZZO_ENTE_RESPONS_ITA}]]></textFieldExpression>
 			</staticText>
 		</band>
 		<band height="20" splitType="Prevent">
-			<printWhenExpression><![CDATA[$F{FL_STAMPATO_PROVV_PAGAM_ANT}.equals("Y")]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{IM_RIMB_SPESE_ANT}!=null && $F{FL_PAGAMENTO_FINE_VISITA}.equals( "N" ) && $F{FL_PAGAMENTO_ENTE}.equals( "N" )]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="55" y="0" width="410" height="14"/>
 				<textElement textAlignment="Justified">
@@ -363,22 +376,24 @@ $F{INDIRIZZO_ENTE_RESPONS_ITA}]]></textFieldExpression>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph firstLineIndent="25"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Si invia, inoltre, un modulo (all. 2 - attestato di soggiorno) da compilare e rinviare all'Ufficio scrivente al termine del soggiorno nel quale si attesti la permanenza dello studioso."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Si allega, inoltre, l'attestato di soggiorno da compilare e rinviare all'Ufficio scrivente al termine del soggiorno nel quale si attesti l'effettiva permanenza dello studioso."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{FL_PAGAMENTO_ENTE}.equals( "N" )]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph firstLineIndent="25"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Nel caso in cui la durata del soggiorno venisse ridotta, lo studioso dovrà restituire una somma, calcolata sulla base di Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IMPORTO_DIARIA_STR})+" al giorno, mediante bonifico bancario (i cui riferimenti dovranno essere riportati nella dichiarazione di soggiorno) a favore del:"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Nel caso in cui la durata del soggiorno venisse ridotta, lo studioso dovrà restituire una somma, calcolata sulla base di Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IMPORTO_DIARIA_STR})+" al giorno, mediante bonifico bancario (i cui riferimenti dovranno essere riportati nell'attestato di soggiorno) a favore del:"]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="78" splitType="Prevent">
+		<band height="61" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{FL_PAGAMENTO_ENTE}.equals( "N")]]></printWhenExpression>
 			<staticText>
-				<reportElement key="staticText-1" style="TNRG11" x="25" y="0" width="440" height="61"/>
+				<reportElement key="staticText-1" style="TNR11" x="25" y="0" width="440" height="61"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" isBold="false"/>
 				</textElement>
@@ -388,16 +403,16 @@ Conto di evidenza n. 218155 denominato “CNR - Incassi e pagamenti giornalieri�
 Nella causale del versamento indicare "Ufficio Accordi e Relazioni Internazionali, mandato n. ............ - giorni non usufruiti n. .......]]></text>
 			</staticText>
 		</band>
-		<band height="50" splitType="Prevent">
+		<band height="50">
 			<staticText>
-				<reportElement key="staticText-24" style="TNR11" x="272" y="14" width="193" height="14" isPrintWhenDetailOverflows="true"/>
+				<reportElement key="staticText-24" style="TNR11" x="272" y="24" width="193" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
 				<text><![CDATA[Dott.ssa Virginia Coda Nunziante]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-23" style="TNR11" x="272" y="0" width="193" height="14" isPrintWhenDetailOverflows="true"/>
+				<reportElement key="staticText-23" style="TNR11" x="272" y="10" width="193" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>

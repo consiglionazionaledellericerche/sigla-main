@@ -208,7 +208,7 @@ and s.cd_anag = b.cd_anag]]>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph firstLineIndent="25"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Si comunica che e' pervenuta al CNR l'accettazione da parte dell'Ente straniero (all. 1) del soggiorno di ricerca richiesto dalla S.V. della durata di "+$V{numGiorni}+" giorni, a decorrere dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+" nell'ambito del Progetto comune di ricerca '"+$F{DS_PROGETTO_ITA}+"' (Reponsabile italiano "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_ITA}.toUpperCase()+", Responsabile straniero "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_STR}.toUpperCase()+")."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Si comunica che e' pervenuta al CNR l'accettazione da parte dell'Ente straniero (in allegato) del soggiorno di ricerca richiesto dalla S.V. della durata di "+$V{numGiorni}+" giorni, a decorrere dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+" nell'ambito del Progetto comune di ricerca '"+$F{DS_PROGETTO_ITA}+"' (Reponsabile italiano "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_ITA}.toUpperCase()+", Responsabile straniero "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_STR}.toUpperCase()+")."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
@@ -245,31 +245,41 @@ and s.cd_anag = b.cd_anag]]>
 		<band height="18" splitType="Prevent">
 			<printWhenExpression><![CDATA[$F{FL_ATTI_AMMINISTRATIVI}.equals("Y")]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14"/>
+				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="425" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph firstLineIndent="25"/>
+					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{ACRONIMO_ENTE_STR}+" - "+$F{NOME_ENTE_STR}+" - Office of International Relations"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Dr. "+$F{NOME_RESPONS_STR}+" "+$F{COGNOME_RESPONS_STR}+""]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="15" splitType="Prevent">
 			<printWhenExpression><![CDATA[$F{FL_ATTI_AMMINISTRATIVI}.equals("Y")]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
+				<reportElement key="textField-2" style="TNR11" x="40" y="1" width="425" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single" firstLineIndent="25"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{ACRONIMO_ENTE_STR}+" - "+$F{NOME_ENTE_STR}+" - Office of International Relations"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="15" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="40" y="1" width="425" height="14" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="11"/>
+					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{INDIRIZZO_ENTE_STR}]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="15" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{FL_ATTI_AMMINISTRATIVI}.equals("Y")]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
+				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="425" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single" firstLineIndent="25"/>
+					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{CITTA_ENTE_STR}+" ("+$F{DS_NAZIONE_ENG}+")"]]></textFieldExpression>
 			</textField>
@@ -277,23 +287,12 @@ and s.cd_anag = b.cd_anag]]>
 		<band height="15" splitType="Prevent">
 			<printWhenExpression><![CDATA[$F{FL_ATTI_AMMINISTRATIVI}.equals("Y")]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
+				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="425" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single" firstLineIndent="25"/>
+					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Tel. "+$F{TELEF_RESPONS_STR}+" - Fax "+$F{FAX_RESPONS_STR}+" - email: "+$F{EMAIL_RESPONS_STR}+""]]></textFieldExpression>
-			</textField>
-		</band>
-		<band height="15" splitType="Prevent">
-			<printWhenExpression><![CDATA[$F{FL_ATTI_AMMINISTRATIVI}.equals("Y")]]></printWhenExpression>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
-				<textElement textAlignment="Justified">
-					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single" firstLineIndent="25"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Att. "+$F{NOME_RESPONS_STR}+" "+$F{COGNOME_RESPONS_STR}+""]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20">
@@ -304,7 +303,7 @@ and s.cd_anag = b.cd_anag]]>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph firstLineIndent="25"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Alla presente si allega, inoltre, la lettera di invito di "+$F{ACRONIMO_ENTE_STR}+" (all. 3) necessaria per richidere il visto. Secondo le disposizioni vigenti, al momento della richiesta del visto, vanno forniti anche i dati riguardanti i luoghi di lavoro (in Italia e quello relativo al soggiorno in "+$F{DS_NAZIONE_ENTE_STR}+") e la qualifica ricoperta."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Alla presente si allega, inoltre, la lettera di invito di "+$F{ACRONIMO_ENTE_STR}+" necessaria per richidere il visto. Secondo le disposizioni vigenti, al momento della richiesta del visto, vanno forniti anche i dati riguardanti i luoghi di lavoro (in Italia e quello relativo al soggiorno in "+$F{DS_NAZIONE_ENTE_STR}+") e la qualifica ricoperta."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="15">

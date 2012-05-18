@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.100000000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="275"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -212,7 +212,7 @@ and s.cd_anag = b.cd_anag]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Comunicazione sulle disposizioni finanziarie."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Comunicazione disposizioni finanziarie."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
@@ -480,7 +480,7 @@ and s.cd_anag = b.cd_anag]]>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph lineSpacing="Single" firstLineIndent="25"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["L'Ufficio scrivente, una volta pervenuta l'accettazione da parte dell'Ente straniero, autorizzera' per iscritto la S.V. a dare inizio al soggiorno. In assenza di tale autorizzazione il CNR non rimborserà alcuna spesa."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["L'Ufficio scrivente, una volta pervenuta l'accettazione da parte dell'Ente straniero, autorizzera' per iscritto la S.V. a dare inizio al soggiorno. In assenza di tale autorizzazione il CNR non rimborserà alcuna spesa sostenuta."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">

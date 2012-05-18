@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="895"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -241,7 +241,7 @@ and s.pg_comune_nascita = l.pg_comune]]>
 					<font fontName="Times New Roman" size="10"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["che nel Progetto comune di ricerca '"+$F{DS_PROGETTO_ITA}+"' (Reponsabile italiano "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_ITA}.toUpperCase()+", Responsabile straniero "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_STR}.toUpperCase()+"), approvato congiuntamente da CNR e "+$F{ACRONIMO_ENTE_STR}+", "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"per il biennio":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"per il triennio":"per gli anni"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+", "+($F{SESSO_AUTORIZZATO}.equals("M")?"il Dott.":"la Dott.ssa")+" "+$F{DS_TERZO_AUTORIZZATO}+" risulta tra i candidati inseriti nel Progetto e selezionati dalla Commissione di valutazione scientifica del CNR;"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["che nel Progetto comune di ricerca '"+$F{DS_PROGETTO_ITA}+"' (Responsabile italiano "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_ITA}.toUpperCase()+", Responsabile straniero "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_STR}.toUpperCase()+"), approvato congiuntamente da CNR e "+$F{ACRONIMO_ENTE_STR}+", "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"per il biennio":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"per il triennio":"per gli anni"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+", "+($F{SESSO_AUTORIZZATO}.equals("M")?"il Dott.":"la Dott.ssa")+" "+$F{DS_TERZO_AUTORIZZATO}+" risulta tra i candidati inseriti nel Progetto e selezionati dalla Commissione di valutazione scientifica del CNR;"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="13" height="14"/>
@@ -331,7 +331,7 @@ and s.pg_comune_nascita = l.pg_comune]]>
 				<textFieldExpression class="java.lang.String"><![CDATA["ART. 2 - Oggetto della prestazione"]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="20" splitType="Prevent">
+		<band height="24" splitType="Prevent">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14"/>
 				<textElement textAlignment="Justified">
@@ -349,6 +349,9 @@ and s.pg_comune_nascita = l.pg_comune]]>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["ART. 3 - Modalità di esecuzione della prestazione professionale"]]></textFieldExpression>
 			</textField>
+			<break>
+				<reportElement x="0" y="3" width="464" height="1"/>
+			</break>
 		</band>
 		<band height="20" splitType="Prevent">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
@@ -861,7 +864,7 @@ and s.pg_comune_nascita = l.pg_comune]]>
 		</band>
 		<band height="20">
 			<staticText>
-				<reportElement key="" style="TNRG11" x="291" y="0" width="173" height="14"/>
+				<reportElement key="" style="TNR11" x="291" y="0" width="173" height="14"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="10" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
@@ -869,7 +872,7 @@ and s.pg_comune_nascita = l.pg_comune]]>
 				<text><![CDATA[IL COLLABORATORE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="" style="TNRG11" x="0" y="0" width="173" height="14"/>
+				<reportElement key="" style="TNR11" x="0" y="0" width="173" height="14"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="10" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
@@ -879,7 +882,7 @@ and s.pg_comune_nascita = l.pg_comune]]>
 		</band>
 		<band height="20">
 			<staticText>
-				<reportElement key="" style="TNRG11" x="293" y="0" width="173" height="14"/>
+				<reportElement key="" style="TNR11" x="293" y="0" width="173" height="14"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="10" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
@@ -887,7 +890,7 @@ and s.pg_comune_nascita = l.pg_comune]]>
 				<text><![CDATA[....................................]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="" style="TNRG11" x="0" y="0" width="173" height="14"/>
+				<reportElement key="" style="TNR11" x="0" y="0" width="173" height="14"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="10" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
@@ -924,7 +927,7 @@ and s.pg_comune_nascita = l.pg_comune]]>
 		</band>
 		<band height="20">
 			<staticText>
-				<reportElement key="" style="TNRG11" x="293" y="0" width="173" height="14"/>
+				<reportElement key="" style="TNR11" x="293" y="0" width="173" height="14"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="10" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
@@ -934,7 +937,7 @@ and s.pg_comune_nascita = l.pg_comune]]>
 		</band>
 		<band height="50">
 			<staticText>
-				<reportElement key="" style="TNRG11" x="294" y="0" width="173" height="14"/>
+				<reportElement key="" style="TNR11" x="294" y="0" width="173" height="14"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="10" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>

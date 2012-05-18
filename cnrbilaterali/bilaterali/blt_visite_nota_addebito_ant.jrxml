@@ -141,7 +141,7 @@ and s.pg_comune_nascita = l.pg_comune]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""+($F{SESSO_AUTORIZZATO}.equals("M")?"Mr":"Ms")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+($F{SESSO_AUTORIZZATO}.equals("M")?"Mr":"Ms")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+""]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="17">
@@ -150,7 +150,7 @@ and s.pg_comune_nascita = l.pg_comune]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""+$F{VIA_FISCALE}+""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{VIA_FISCALE}+""]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="32">
@@ -159,19 +159,19 @@ and s.pg_comune_nascita = l.pg_comune]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""+$F{COMUNE_FISCALE}+", "+$F{NAZIONE_FISCALE}+""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{COMUNE_FISCALE}+", "+$F{NAZIONE_FISCALE}+""]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="68">
 			<staticText>
-				<reportElement key="staticText-1" style="TNRG11" x="271" y="0" width="16" height="15"/>
+				<reportElement key="staticText-1" style="TNR11" x="271" y="0" width="16" height="15"/>
 				<textElement>
 					<font fontName="Times New Roman" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Al]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-1" style="TNRG11" x="287" y="0" width="178" height="64"/>
+				<reportElement key="staticText-1" style="TNR11" x="287" y="0" width="178" height="64"/>
 				<textElement>
 					<font fontName="Times New Roman" size="11" isBold="false"/>
 				</textElement>
@@ -181,9 +181,9 @@ Piazzale Aldo Moro, 7
 00185 Roma]]></text>
 			</staticText>
 		</band>
-		<band height="37">
+		<band height="52">
 			<staticText>
-				<reportElement key="staticText-1" style="TNRG11" x="287" y="0" width="178" height="28"/>
+				<reportElement key="staticText-1" style="TNR11" x="287" y="0" width="178" height="28"/>
 				<textElement>
 					<font fontName="Times New Roman" size="11" isBold="false"/>
 				</textElement>
@@ -191,20 +191,20 @@ Piazzale Aldo Moro, 7
 P.IVA 02118311006]]></text>
 			</staticText>
 		</band>
-		<band height="25">
+		<band height="30">
 			<staticText>
-				<reportElement key="staticText-1" style="TNRG11" x="0" y="0" width="106" height="16"/>
+				<reportElement key="staticText-1" style="TNRG11" x="0" y="0" width="132" height="16"/>
 				<textElement>
-					<font fontName="Times New Roman" size="11" isBold="false"/>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Nota di addebito]]></text>
+				<text><![CDATA[NOTA DI ADDEBITO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-1" style="TNRG11" x="286" y="0" width="178" height="16"/>
-				<textElement>
+				<reportElement key="staticText-1" style="TNR11" x="275" y="0" width="189" height="16"/>
+				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Date, ..................................]]></text>
+				<text><![CDATA[Date, ..............................................]]></text>
 			</staticText>
 		</band>
 		<band height="28">
@@ -214,7 +214,7 @@ P.IVA 02118311006]]></text>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Ref: Advance amount received for a research stay of "+$V{numGiorni}+" days in Italy, starting from "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+", which took place within the framework of the Agreement of Scientific Cooperation between CNR and "+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+"), "+$F{DS_NAZIONE_ENG}+" – "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"Biennium":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"Triennium":"Years"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+", as quoted in the Contract, Ref No. AMMCNT – CNR .............. dated .........."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Subject: Advance amount received for a research stay of "+$V{numGiorni}+" days in Italy, starting from "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+", which took place within the framework of the Agreement of Scientific Cooperation between CNR and "+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+"), "+$F{DS_NAZIONE_ENG}+" – "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"Biennium":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"Triennium":"Years"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+", as quoted in the Contract, Ref No. AMMCNT – CNR .............................. dated ...................................."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="36">
@@ -224,7 +224,7 @@ P.IVA 02118311006]]></text>
 					<font fontName="Times New Roman" size="11" isItalic="true"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Oggetto: Acconto compenso per un soggiorno di ricerca di "+$V{numGiorni}+" giorni, dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+", effettuato nell’ambito dell’Accordo di cooperazione scientifica CNR/"+$F{ACRONIMO_ENTE_STR}+" ("+$F{DS_NAZIONE_ENTE_STR}+") – "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"Biennio":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"Triennio":"Anni"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+", di cui al Contratto, prot. AMMCNT – CNR n. ....................... del ..................."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Oggetto: Acconto compenso per un soggiorno di ricerca di "+$V{numGiorni}+" giorni, dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+", effettuato nell’ambito dell’Accordo di cooperazione scientifica CNR/"+$F{ACRONIMO_ENTE_STR}+" ("+$F{DS_NAZIONE_ENTE_STR}+") – "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"Biennio":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"Triennio":"Anni"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+", di cui al Contratto, prot. AMMCNT – CNR n. ............................... del ......................................"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="14">
@@ -238,9 +238,9 @@ P.IVA 02118311006]]></text>
 		</band>
 		<band height="30">
 			<staticText>
-				<reportElement key="staticText-1" style="TNRG11" x="0" y="0" width="178" height="14"/>
+				<reportElement key="staticText-1" style="TNR11" x="0" y="0" width="178" height="14"/>
 				<textElement>
-					<font fontName="Times New Roman" size="10" isBold="true" isItalic="true"/>
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Importo Acconto Compenso]]></text>
 			</staticText>
@@ -250,7 +250,7 @@ P.IVA 02118311006]]></text>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($V{LORDO_PERCIPIENTE})]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[new java.text.DecimalFormat("#,##0.00").format($V{LORDO_PERCIPIENTE})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="352" y="0" width="32" height="14"/>
@@ -258,7 +258,7 @@ P.IVA 02118311006]]></text>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Euro"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Euro"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="14">
@@ -277,12 +277,11 @@ Totale imponibile]]></text>
 				</graphicElement>
 			</line>
 		</band>
-		<band height="22">
-			<printWhenExpression><![CDATA[$F{FL_ACCETTAZIONE_CONVENZIONE}.equals("Y")]]></printWhenExpression>
+		<band height="29">
 			<staticText>
-				<reportElement key="staticText-1" style="TNRG11" x="158" y="0" width="139" height="14"/>
+				<reportElement key="staticText-1" style="TNR11" x="158" y="0" width="139" height="14"/>
 				<textElement textAlignment="Right">
-					<font fontName="Times New Roman" size="10" isBold="true" isItalic="true"/>
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Totale imponibile]]></text>
 			</staticText>
@@ -292,7 +291,7 @@ Totale imponibile]]></text>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($V{LORDO_PERCIPIENTE})]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[new java.text.DecimalFormat("#,##0.00").format($V{LORDO_PERCIPIENTE})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="352" y="0" width="32" height="14"/>
@@ -300,29 +299,29 @@ Totale imponibile]]></text>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Euro"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Euro"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="14">
-			<printWhenExpression><![CDATA[$F{FL_ACCETTAZIONE_CONVENZIONE}.equals("Y")]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{FL_ACCETTAZIONE_CONVENZIONE}.equals( "Y")]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="117" y="0" width="180" height="14"/>
 				<textElement textAlignment="Right">
 					<font fontName="Times New Roman" size="11" isItalic="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Italian Income Tax (not applicable due to the Italy/"+$F{DS_NAZIONE_ENG}+" Agreement)"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Italian Income Tax (not applicable due to the Italy/"+$F{DS_NAZIONE_ENG}+" Agreement)"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="30">
-			<printWhenExpression><![CDATA[$F{FL_ACCETTAZIONE_CONVENZIONE}.equals("Y")]]></printWhenExpression>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<printWhenExpression><![CDATA[$F{FL_ACCETTAZIONE_CONVENZIONE}.equals( "Y" )]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement key="textField-2" style="TNR11" x="118" y="0" width="179" height="14"/>
 				<textElement textAlignment="Right">
 					<font fontName="Times New Roman" size="11" isItalic="true"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["IRPEF non applicata per convenzione Italia/"+$F{DS_NAZIONE_ENTE_STR}+""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["IRPEF non applicata per convenzione Italia/"+$F{DS_NAZIONE_ENTE_STR}+""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="384" y="0" width="81" height="14"/>
@@ -330,7 +329,7 @@ Totale imponibile]]></text>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($V{RITENUTA_PERCIPIENTE})]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[new java.text.DecimalFormat("#,##0.00").format($V{RITENUTA_PERCIPIENTE})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="352" y="0" width="32" height="14"/>
@@ -338,15 +337,15 @@ Totale imponibile]]></text>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Euro"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Euro"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="27">
 			<printWhenExpression><![CDATA[$F{FL_ACCETTAZIONE_CONVENZIONE}.equals("N")]]></printWhenExpression>
 			<staticText>
-				<reportElement key="staticText-1" style="TNRG11" x="156" y="0" width="140" height="14"/>
-				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" size="11" isBold="false"/>
+				<reportElement key="staticText-1" style="TNRG11" x="118" y="0" width="178" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Italian Income Tax (IRPEF) 30%]]></text>
 			</staticText>
@@ -356,7 +355,7 @@ Totale imponibile]]></text>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($V{RITENUTA_PERCIPIENTE})]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[new java.text.DecimalFormat("#,##0.00").format($V{RITENUTA_PERCIPIENTE})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="352" y="0" width="32" height="14"/>
@@ -364,7 +363,7 @@ Totale imponibile]]></text>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Euro"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Euro"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="14">
@@ -384,9 +383,9 @@ Totale imponibile]]></text>
 		</band>
 		<band height="50">
 			<staticText>
-				<reportElement key="staticText-1" style="TNRG11" x="157" y="0" width="140" height="14"/>
+				<reportElement key="staticText-1" style="TNR11" x="157" y="0" width="140" height="14"/>
 				<textElement textAlignment="Right">
-					<font fontName="Times New Roman" size="10" isBold="true" isItalic="true"/>
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Netto a pagare]]></text>
 			</staticText>
@@ -396,7 +395,7 @@ Totale imponibile]]></text>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($V{LORDO_PERCIPIENTE}.subtract($V{RITENUTA_PERCIPIENTE}))]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[new java.text.DecimalFormat("#,##0.00").format($V{LORDO_PERCIPIENTE}.subtract($V{RITENUTA_PERCIPIENTE}))]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="352" y="0" width="32" height="14"/>
@@ -404,19 +403,19 @@ Totale imponibile]]></text>
 					<font fontName="Times New Roman" size="11"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Euro"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Euro"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="50">
 			<staticText>
-				<reportElement key="staticText-1" style="TNRG11" x="271" y="25" width="140" height="25"/>
+				<reportElement key="staticText-1" style="TNR11" x="271" y="25" width="140" height="25"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="11" isBold="false"/>
 				</textElement>
-				<text><![CDATA[..............................]]></text>
+				<text><![CDATA[...................................................]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-1" style="TNRG11" x="271" y="0" width="140" height="25"/>
+				<reportElement key="staticText-1" style="TNR11" x="271" y="0" width="140" height="25"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="11" isBold="false"/>
 				</textElement>
