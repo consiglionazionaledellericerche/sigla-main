@@ -143,6 +143,8 @@ public class Fattura_attivaBase extends Fattura_attivaKey implements Keyed {
 	// TI_BENE_SERVIZIO CHAR(1) NOT NULL
 	private java.lang.String ti_bene_servizio;
 	
+	private java.lang.String fl_pagamento_anticipato;
+	
 public Fattura_attivaBase() {
 	super();
 }
@@ -689,5 +691,11 @@ public java.lang.String getTi_bene_servizio() {
 }
 public void setTi_bene_servizio(java.lang.String ti_bene_servizio) {
 	this.ti_bene_servizio = ti_bene_servizio;
+}
+public java.lang.String getFl_pagamento_anticipato() {
+	return fl_pagamento_anticipato;
+}
+public void setFl_pagamento_anticipato(java.lang.String fl_pagamento_anticipato) {
+	this.fl_pagamento_anticipato = fl_pagamento_anticipato;
 }
 }

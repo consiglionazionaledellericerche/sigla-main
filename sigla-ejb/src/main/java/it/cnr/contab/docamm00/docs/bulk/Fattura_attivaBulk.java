@@ -998,7 +998,7 @@ public OggettoBulk initializeForInsert(CRUDBP bp,it.cnr.jada.action.ActionContex
 	
 	if (getStato_cofi() == null)
 		setStato_cofi("I");
-	
+	if(getFl_pagamento_anticipato()==null) setFl_pagamento_anticipato("N");
 	return this;
 }
 public OggettoBulk initializeForSearch(CRUDBP bp,it.cnr.jada.action.ActionContext context) {

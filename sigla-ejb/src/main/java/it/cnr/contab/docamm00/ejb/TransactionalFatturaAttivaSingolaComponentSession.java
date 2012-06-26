@@ -1027,16 +1027,12 @@ public it.cnr.jada.util.RemoteIterator cercaObbligazioni(it.cnr.jada.UserContext
 }
 	}
 }
-public String lanciaStampa(it.cnr.jada.UserContext userContext, Long esercizio,
-		String cd_cds, String cd_unita_organizzativa, Long pg_fattura)
+public byte[] lanciaStampa(it.cnr.jada.UserContext userContext,Long pg_stampa)
 		throws PersistencyException, ComponentException, RemoteException {
 	try {
-		return (String)invoke("lanciaStampa",new Object[] {
+		return ( byte[])invoke("lanciaStampa",new Object[] {
 				userContext,
-				esercizio,
-				cd_cds,
-				cd_unita_organizzativa,
-				pg_fattura
+				pg_stampa
 				});
 	} catch(java.rmi.RemoteException e) {
 		throw e;
@@ -1431,4 +1427,27 @@ public List findListaCondizioneConsegnaWS(UserContext userContext, String query,
 			}
 		}
 }
+	public java.lang.Long inserisciDatiPerStampaIva(it.cnr.jada.UserContext userContext, Long esercizio,
+			String cd_cds, String cd_unita_organizzativa, Long pg_fattura)
+			throws PersistencyException, ComponentException, RemoteException {
+		try {
+			return (Long)invoke("inserisciDatiPerStampaIva",new Object[] {
+					userContext,
+					esercizio,
+					cd_cds,
+					cd_unita_organizzativa,
+					pg_fattura
+					});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
 }

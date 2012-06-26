@@ -30,11 +30,17 @@ import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettHome;
 import it.cnr.contab.inventario01.bulk.Inventario_beni_apgBulk;
 import it.cnr.contab.inventario01.bulk.Inventario_beni_apgHome;
+import it.cnr.contab.reports.bulk.Print_spoolerBulk;
+import it.cnr.contab.reports.bulk.Report;
+import it.cnr.contab.reports.service.PrintService;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Vector;
@@ -49,6 +55,9 @@ import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import java.util.Iterator;
+
+import javax.ejb.EJBException;
+
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -5840,7 +5849,7 @@ public RemoteIterator cercaObbligazioni(UserContext context, Filtro_ricerca_obbl
 		Obbligazione_scadenzarioBulk.class,
 		"default");
 } 
-private Long inserisciDatiPerStampaIva(
+public Long inserisciDatiPerStampaIva(
 		UserContext userContext,
 		Long esercizio,
 		String cd_cds,
@@ -5898,52 +5907,32 @@ private Long inserisciDatiPerStampaIva(
 				throw new FatturaNonProtocollataException("Fattura non protocollata!");
 	}else
 		throw new FatturaNonTrovataException("Fattura non trovata!");
+		
 	return pg_stampa;
 }
-public String lanciaStampa(
+public byte[] lanciaStampa(
 		UserContext userContext,
-		Long esercizio,
-		String cd_cds,
-		String cd_unita_organizzativa,
-		Long pg_fattura) throws PersistencyException, ComponentException {
-	    
-	  Long pg_stampa =inserisciDatiPerStampaIva(userContext, esercizio, cd_cds, cd_unita_organizzativa, pg_fattura);
-	  Map parameters = new HashMap();	
-	  
-	  File input = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/reports/"+"fatturaattiva_ncd.jasper");
-      File output = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/", File.separator + getOutputFileName("fatturaattiva_ncd.jasper", pg_stampa));
-	  try{
-		  Connection conn=EJBCommonServices.getConnection();
-		  try {
-				output.getParentFile().mkdirs();
-				final Locale locale = Locale.getDefault();
-	            final ResourceBundle resourceBundle = ResourceBundle.getBundle(
-	            		"net.sf.jasperreports.view.viewer", locale);
-	            parameters.put(JRParameter.REPORT_LOCALE,locale);
-	            parameters.put(JRParameter.REPORT_RESOURCE_BUNDLE,resourceBundle);
-	            parameters.put("DIR_SUBREPORT",input.getParent()+"/");
-	            parameters.put("SUBREPORT_DIR",input.getParent()+"/");
-	            parameters.put("DIR_IMAGE",System.getProperty("tmp.dir.SIGLAWeb")+"/img/");
-	            parameters.put(JRParameter.REPORT_CONNECTION,conn);
-	            parameters.put("Ti_stampa","R");
-	            parameters.put("id_report",pg_stampa);
-	            ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-
-	            parameters.put(JRParameter.REPORT_CLASS_LOADER,classLoader);
-	            JasperPrint jasperPrint = JasperFillManager.fillReport(input.getAbsolutePath(),
-						parameters,conn);			
-				JasperExportManager.exportReportToPdfFile(jasperPrint, output.getAbsolutePath());
-			} catch (JRException e) {
-				throw new GenerazioneReportException("Generazione Stampa non riuscita",e);
-			}finally{
-				conn.close();
-			}
-		}catch (SQLException e) {
-			throw handleException(e);
-		} 
-		return output.getAbsolutePath();
+		Long pg_stampa) throws PersistencyException, ComponentException {
+	try {
+		
+	  	File output = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/", File.separator + getOutputFileName("fatturaattiva_ncd.jasper", pg_stampa));
+	  	Print_spoolerBulk print = new Print_spoolerBulk(); 
+	  	print.setPgStampa(pg_stampa);
+		print.setFlEmail(false);
+		print.setReport("/docamm/docamm/fatturaattiva_ncd.jasper");
+		print.setNomeFile(getOutputFileName("fatturaattiva_ncd.jasper",pg_stampa));
+		print.setUtcr(userContext.getUser());
+		print.addParam("id_report",pg_stampa, Long.class);
+		print.addParam("Ti_stampa", "R", String.class);
+		Report report = SpringUtil.getBean("printService",PrintService.class).executeReport(userContext,print);
+		
+		FileOutputStream f = new FileOutputStream(output);   
+		f.write(report.getBytes());    
+		return report.getBytes();
+	} catch (IOException e) {
+		throw new GenerazioneReportException("Generazione Stampa non riuscita",e);
 	}
-
+}
 
 private static final DateFormat PDF_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
 

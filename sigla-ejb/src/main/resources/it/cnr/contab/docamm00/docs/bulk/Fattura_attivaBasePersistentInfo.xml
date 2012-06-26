@@ -302,7 +302,13 @@
 			propertyName="ti_bene_servizio"
 			sqlTypeName="CHAR"
 			columnSize="1"
-			nullable="false" />	
+			nullable="false" />
+		<columnMapping
+			columnName="FL_PAGAMENTO_ANTICIPATO"
+			propertyName="fl_pagamento_anticipato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />			
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -405,5 +411,7 @@
 	<persistentProperty
 		name="pg_fattura_esterno" />	
 	<persistentProperty
-		name="ti_bene_servizio" />		
+		name="ti_bene_servizio" />	
+	<persistentProperty
+		name="fl_pagamento_anticipato" />			
 </SQLPersistentInfo>

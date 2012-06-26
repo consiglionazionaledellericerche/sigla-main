@@ -1051,10 +1051,10 @@ public it.cnr.jada.util.RemoteIterator cercaObbligazioni(it.cnr.jada.UserContext
 		throw uncaughtError(param0,componentObj,e);
 }
 }
-public  String lanciaStampa(it.cnr.jada.UserContext param0,Long esercizio,String cd_cds,String cd_unita_organizzativa,Long pg_fattura) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException {
+public  byte[] lanciaStampa(it.cnr.jada.UserContext param0,Long pg_stampa) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException {
 	pre_component_invocation(param0,componentObj);
 	try {
-		String result=((FatturaAttivaSingolaComponent)componentObj).lanciaStampa(param0,esercizio,cd_cds,cd_unita_organizzativa,pg_fattura);
+		byte[] result=((FatturaAttivaSingolaComponent)componentObj).lanciaStampa(param0,pg_stampa);
 		component_invocation_succes(param0,componentObj);
 		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
@@ -1386,6 +1386,24 @@ public java.util.List findListaProvinciaWS(it.cnr.jada.UserContext param0,String
 	pre_component_invocation(param0,componentObj);
 	try {
 		java.util.List result = ((FatturaAttivaSingolaComponent)componentObj).findListaProvinciaWS(param0,param1,param2,param3);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public  java.lang.Long inserisciDatiPerStampaIva(it.cnr.jada.UserContext param0,Long esercizio,String cd_cds,String cd_unita_organizzativa,Long pg_fattura) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		java.lang.Long result=((FatturaAttivaSingolaComponent)componentObj).inserisciDatiPerStampaIva(param0,esercizio,cd_cds,cd_unita_organizzativa,pg_fattura);
 		component_invocation_succes(param0,componentObj);
 		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {

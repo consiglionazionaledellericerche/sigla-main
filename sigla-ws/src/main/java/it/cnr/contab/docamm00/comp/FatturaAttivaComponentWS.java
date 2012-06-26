@@ -1011,6 +1011,7 @@ public class FatturaAttivaComponentWS {
 	                    testata.setUtcr(fat.getUtcr());
 	                    testata.setCd_cds_origine(fat.getCd_cds_origine());
 	                    testata.setTi_bene_servizio(fat.getTi_bene_servizio());
+	                    testata.setFl_pagamento_anticipato(fat.getFl_pagamento_anticipato());
 	                    UserContext userContext = new WSUserContext(testata.getUtcr(),null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),testata.getCd_uo_origine(),testata.getCd_cds_origine(),null);
 	        	    	CdsBulk cds=new CdsBulk(fat.getCd_cds_origine());
 	        	    	cds=(CdsBulk)(((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).completaOggetto(userContext,cds));
@@ -1792,6 +1793,7 @@ public FatturaAttiva RicercaFattura(String user,Long esercizio,String cds,String
 		ritorno.setUtcr(fatturaAt.getUtcr());
 		ritorno.setNr_protocollo_iva(fatturaAt.getProtocollo_iva());
 		ritorno.setDt_protocollo(fatturaAt.getDt_emissione());
+		ritorno.setFl_pagamento_anticipato(fatturaAt.getFl_pagamento_anticipato());
 		for (Iterator i=fatturaAt.getFattura_attiva_intrastatColl().iterator();i.hasNext();){
 			Fattura_attiva_intraBulk riga_intra=(Fattura_attiva_intraBulk)i.next();
 			intra=new FatturaAttivaIntra();
@@ -1965,6 +1967,8 @@ private SOAPFault generaFault(String localName,String stringFault) throws SOAPEx
        		return new String("Divisa non inserita.");
        	if (fat.getCambio()==null)
        		return new String("Cambio non inserito.");
+     	if (fat.getFl_pagamento_anticipato()==null)
+       		return new String("Flag pagamento non inserito.");
        	if(fat.getRighefat()==null||fat.getRighefat().size()==0)
        		return new String("Righe fattura non inserite.");
        	else

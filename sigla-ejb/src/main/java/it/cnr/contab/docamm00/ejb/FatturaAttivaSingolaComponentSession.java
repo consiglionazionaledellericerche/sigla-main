@@ -63,7 +63,7 @@ void rimuoviDaAssociazioniInventario(it.cnr.jada.UserContext param0,it.cnr.conta
 it.cnr.jada.util.RemoteIterator selectBeniFor(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.jada.bulk.OggettoBulk rebuildDocumento(it.cnr.jada.UserContext param0, it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.jada.util.RemoteIterator cercaObbligazioni(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-String lanciaStampa(it.cnr.jada.UserContext userContext,Long esercizio,String cd_cds,String cd_unita_organizzativa,Long pg_fattura) throws PersistencyException, ComponentException,java.rmi.RemoteException;
+byte[] lanciaStampa(it.cnr.jada.UserContext userContext,java.lang.Long pg_stampa) throws PersistencyException, ComponentException,java.rmi.RemoteException;
 it.cnr.jada.bulk.OggettoBulk completaOggetto(it.cnr.jada.UserContext aUC,it.cnr.jada.bulk.OggettoBulk oggetto) throws PersistencyException,it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 boolean VerificaDuplicati(it.cnr.jada.UserContext aUC,it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk fatturaAttiva)throws PersistencyException,it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.util.List findListaModalitaPagamentoWS(it.cnr.jada.UserContext userContext,String terzo,String query,String dominio,String tipoRicerca)throws ComponentException,java.rmi.RemoteException;
@@ -82,4 +82,5 @@ java.util.List findListaNaturaTransazioneWS(it.cnr.jada.UserContext userContext,
 java.util.List findListaModalitaTrasportoWS(it.cnr.jada.UserContext userContext,String query,String dominio,String tipoRicerca)throws ComponentException,java.rmi.RemoteException;
 java.util.List findListaCondizioneConsegnaWS(it.cnr.jada.UserContext userContext,String query,String dominio,String tipoRicerca)throws ComponentException,java.rmi.RemoteException;
 java.util.List findListaProvinciaWS(it.cnr.jada.UserContext userContext,String query,String dominio,String tipoRicerca)throws ComponentException,java.rmi.RemoteException;
+java.lang.Long inserisciDatiPerStampaIva(it.cnr.jada.UserContext userContext,Long esercizio,String cd_cds,String cd_unita_organizzativa,java.lang.Long pg_fattura) throws PersistencyException, ComponentException,java.rmi.RemoteException;
 }

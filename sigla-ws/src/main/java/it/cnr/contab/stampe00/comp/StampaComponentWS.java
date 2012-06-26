@@ -12,6 +12,7 @@ import it.cnr.jada.persistency.PersistencyException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.rmi.RemoteException;
+
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
@@ -32,23 +33,12 @@ import org.jboss.wsf.spi.annotation.WebContext;
 public class StampaComponentWS {
 	
 @RolesAllowed({"WSUserRole","IITRole"})
-public byte[] DownloadFattura(String user,String esercizio,String cds,String uo,String pg) throws NumberFormatException, PersistencyException, ComponentException, RemoteException, EJBException, Exception {
+public byte[] DownloadFattura(String user,Long pg_stampa) throws NumberFormatException, PersistencyException, ComponentException, RemoteException, EJBException, Exception {
     	UserContext userContext = new WSUserContext(user,null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
-    	 if(cds==null||uo==null||pg==null||esercizio==null)
-    		 throw new SOAPFaultException(faultChiaveFatturaNonCompleta());
-		try{	
-			String FName = ((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).lanciaStampa(userContext, new Long(esercizio), cds, uo, new Long(pg));
-			File f = new File(FName);
-			byte[] file = new byte[(int) f.length()];
-			FileInputStream fileInputStream = new FileInputStream(f);
-			fileInputStream.read(file);
-		   return file;
+    	 try{	
+			return ((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).lanciaStampa(userContext, pg_stampa);
 		}catch(GenerazioneReportException e){
 			throw new SOAPFaultException(faultGenerazioneStampa());
-		}catch(FatturaNonTrovataException e){
-			throw new SOAPFaultException(faultFatturaNonTrovata());
-		}catch(FatturaNonProtocollataException e){
-			throw new SOAPFaultException(faultFatturaNonProtocollata());
 		}
   }
 	private SOAPFault faultChiaveFatturaNonCompleta() throws SOAPException{
@@ -62,6 +52,18 @@ public byte[] DownloadFattura(String user,String esercizio,String cds,String uo,
 	}
 	private SOAPFault faultGenerazioneStampa() throws SOAPException{
 		return generaFault("004","Generazione stampa non riuscita");
+	}
+	public Long inserisciDatiPerStampa(String user,String esercizio,String cds, String uo, String pg)throws NumberFormatException, PersistencyException, ComponentException, RemoteException, EJBException, Exception {
+		UserContext userContext = new WSUserContext(user,null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
+   	 if(cds==null||uo==null||pg==null||esercizio==null)
+   		 throw new SOAPFaultException(faultChiaveFatturaNonCompleta());
+		try{	
+			return  ((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).inserisciDatiPerStampaIva(userContext,new Long(esercizio),cds, uo, new Long(pg));
+		}catch(FatturaNonTrovataException e){
+			throw new SOAPFaultException(faultFatturaNonTrovata());
+		}catch(FatturaNonProtocollataException e){
+			throw new SOAPFaultException(faultFatturaNonProtocollata());
+		}
 	}
   private SOAPFault generaFault(String localName,String stringFault) throws SOAPException{
 		MessageFactory factory = MessageFactory.newInstance();

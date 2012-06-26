@@ -124,6 +124,7 @@ public void copyFrom(
 	setModalita_incassoColl(fattura_attiva.getModalita_incassoColl());
 	setModalita_erogazioneColl(fattura_attiva.getModalita_erogazioneColl());
 	setTi_bene_servizio(fattura_attiva.getTi_bene_servizio());
+	setFl_pagamento_anticipato(fattura_attiva.getFl_pagamento_anticipato());
 }
 public java.lang.Class getChildClass() {
 	return Nota_di_debito_attiva_rigaBulk.class;
