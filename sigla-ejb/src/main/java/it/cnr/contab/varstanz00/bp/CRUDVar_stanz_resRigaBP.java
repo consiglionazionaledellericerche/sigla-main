@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Iterator;
 
+import it.cnr.contab.anagraf00.core.bulk.Carico_familiare_anagBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -37,12 +38,34 @@ public class CRUDVar_stanz_resRigaBP extends SimpleCRUDBP {
 	private Var_stanz_resBulk var_stanz_res;
 	private CdrBulk centro_di_responsabilita;
 	private SimpleDetailCRUDController rigaVariazione = new SimpleDetailCRUDController( "rigaVariazione", Var_stanz_res_rigaBulk.class, "rigaVariazione", this){
+		protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
+			super.validate(actioncontext,oggettobulk);
+			validaRiga(actioncontext,(Var_stanz_res_rigaBulk)oggettobulk);
+		};
 	};
 	/**
 	 * 
 	 */
 	public CRUDVar_stanz_resRigaBP() {
 		super();
+	}
+
+	protected void validaRiga(ActionContext actioncontext,
+			Var_stanz_res_rigaBulk oggettobulk) throws ValidationException {
+		for (java.util.Iterator i = var_stanz_res.getRigaVariazione().iterator();i.hasNext();) {
+			Var_stanz_res_rigaBulk riga = (Var_stanz_res_rigaBulk)i.next();
+			if (!riga.equals(oggettobulk) &&
+					oggettobulk.getEsercizio()!= null && riga.getEsercizio().compareTo(oggettobulk.getEsercizio())==0 &&
+					oggettobulk.getEsercizio_res()!= null && riga.getEsercizio_res().compareTo(oggettobulk.getEsercizio_res())==0 &&
+					oggettobulk.getLinea_di_attivita()!= null && riga.getLinea_di_attivita()!= null &&
+					oggettobulk.getCd_cdr()!= null &&  riga.getCd_cdr()!= null &&
+					riga.getCd_cdr().compareTo(oggettobulk.getCd_cdr())==0 &&
+					oggettobulk.getCd_linea_attivita()!= null && riga.getCd_linea_attivita()!=null && 
+					riga.getCd_linea_attivita().compareTo(oggettobulk.getCd_linea_attivita())==0 &&
+					oggettobulk.getCd_elemento_voce()!= null && riga.getCd_elemento_voce()!=null && 
+					riga.getCd_elemento_voce().compareTo(oggettobulk.getCd_elemento_voce())==0)
+				throw new ValidationException ("Attenzione: combinazione Esercizio/Esercizio residuo/CdR/G.A.E./Voce già inserita!");
+			}
 	}
 
 	/**

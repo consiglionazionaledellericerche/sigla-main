@@ -16,6 +16,7 @@ import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_spesa_gestBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -85,6 +86,10 @@ public class CRUDPdgVariazioneRigaGestBP extends SimpleCRUDBP {
 						true,"Apponi Visto");
 				}
 		}
+		protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {	
+            Pdg_variazione_riga_gestBulk dett=(Pdg_variazione_riga_gestBulk)oggettobulk;
+            validaRiga(actioncontext,dett);
+		} 
 	};
 
 	private SimpleDetailCRUDController righeVariazioneSpeGest = new SimpleDetailCRUDController( "RigheVariazioneSpeGest", Pdg_variazione_riga_spesa_gestBulk.class, "righeVariazioneSpeGest", this){
@@ -132,7 +137,8 @@ public class CRUDPdgVariazioneRigaGestBP extends SimpleCRUDBP {
 				}
 		}
           protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {	
-             Pdg_variazione_riga_gestBulk dett=(Pdg_variazione_riga_gestBulk)oggettobulk;							 
+             Pdg_variazione_riga_gestBulk dett=(Pdg_variazione_riga_gestBulk)oggettobulk;
+             validaRiga(actioncontext,dett); 
                 if(dett!=null && dett.getIm_spese_gest_accentrata_int()!=null && dett.getIm_spese_gest_decentrata_int()!=null &&				   
                    dett.getIm_spese_gest_accentrata_int().compareTo(BigDecimal.ZERO)!=0 && dett.getIm_spese_gest_decentrata_int().compareTo(BigDecimal.ZERO)!=0 )
        	                throw new ValidationException("Non è possibile indicare sulla stessa riga di variazione sia le spese Decentrate Esterne che le spese Accentrate Esterne, inserire un nuovo dettaglio.");				
@@ -169,7 +175,51 @@ public class CRUDPdgVariazioneRigaGestBP extends SimpleCRUDBP {
 	public CRUDPdgVariazioneRigaGestBP() {
 		super();
 	}
-
+	protected void validaRiga(ActionContext actioncontext,
+			Pdg_variazione_riga_gestBulk oggettobulk) throws ValidationException {
+		for (java.util.Iterator i = ((Ass_pdg_variazione_cdrBulk)this.getModel()).getRigheVariazioneEtrGest().iterator();i.hasNext();) {
+			Pdg_variazione_riga_gestBulk riga = (Pdg_variazione_riga_gestBulk)i.next();
+			if (!riga.equals(oggettobulk) &&
+					riga.getEsercizio().compareTo(oggettobulk.getEsercizio())==0 &&
+					riga.getCd_cdr_assegnatario().compareTo(oggettobulk.getCd_cdr_assegnatario())==0 &&
+					((
+					(riga.getCd_cds_area()!= null && oggettobulk.getCd_cds_area()!=null ) &&
+					(riga.getCd_cds_area().compareTo(oggettobulk.getCd_cds_area())==0))|| 
+					(riga.getCd_cds_area()== null && oggettobulk.getCd_cds_area()==null ) ||
+					(riga.getCd_cds_area()!=null && riga.getCd_cds_area().compareTo(riga.getCdr_assegnatario().getCd_cds())==0 &&
+							oggettobulk.getCd_cds_area()==null )||		
+					(oggettobulk.getCd_cds_area()!=null && oggettobulk.getCd_cds_area().compareTo(oggettobulk.getCdr_assegnatario().getCd_cds())==0 &&
+							riga.getCd_cds_area()==null)) &&
+					oggettobulk.getLinea_attivita()!=null && riga.getLinea_attivita()!=null &&
+					oggettobulk.getCd_linea_attivita()!=null && riga.getCd_linea_attivita()!=null &&
+				    riga.getCd_linea_attivita().compareTo(oggettobulk.getCd_linea_attivita())==0 &&
+				    riga.getCd_elemento_voce()!=null && oggettobulk.getCd_elemento_voce()!=null &&
+				    riga.getCd_elemento_voce().compareTo(oggettobulk.getCd_elemento_voce())==0)
+				throw new ValidationException ("Attenzione: combinazione Esercizio/CdR/Area/G.A.E./Voce già inserita!");
+			}
+	
+	for (java.util.Iterator i =  ((Ass_pdg_variazione_cdrBulk)this.getModel()).getRigheVariazioneSpeGest().iterator();i.hasNext();) {
+		Pdg_variazione_riga_gestBulk riga = (Pdg_variazione_riga_gestBulk)i.next();
+		if (!riga.equals(oggettobulk) &&
+				riga.getEsercizio().compareTo(oggettobulk.getEsercizio())==0 &&
+				riga.getCd_cdr_assegnatario().compareTo(oggettobulk.getCd_cdr_assegnatario())==0 &&
+				((
+				(riga.getCd_cds_area()!= null && oggettobulk.getCd_cds_area()!=null ) &&
+				(riga.getCd_cds_area().compareTo(oggettobulk.getCd_cds_area())==0))|| 
+				(riga.getCd_cds_area()== null && oggettobulk.getCd_cds_area()==null ) ||
+				(riga.getCd_cds_area()!=null && riga.getCd_cds_area().compareTo(riga.getCdr_assegnatario().getCd_cds())==0 &&
+						oggettobulk.getCd_cds_area()==null )||		
+				(oggettobulk.getCd_cds_area()!=null && oggettobulk.getCd_cds_area().compareTo(oggettobulk.getCdr_assegnatario().getCd_cds())==0 &&
+						riga.getCd_cds_area()==null)) &&
+				oggettobulk.getLinea_attivita()!=null && riga.getLinea_attivita()!=null &&
+				oggettobulk.getCd_linea_attivita()!=null && riga.getCd_linea_attivita()!=null &&
+			    riga.getCd_linea_attivita().compareTo(oggettobulk.getCd_linea_attivita())==0 &&
+			    riga.getCd_elemento_voce()!=null && oggettobulk.getCd_elemento_voce()!=null &&
+			    riga.getCd_elemento_voce().compareTo(oggettobulk.getCd_elemento_voce())==0)
+			throw new ValidationException ("Attenzione: combinazione Esercizio/CdR/Area/G.A.E./Voce già inserita!");
+	}
+}
+	
 	public CRUDPdgVariazioneRigaGestBP(String function) {
 		super(function);
 	}
