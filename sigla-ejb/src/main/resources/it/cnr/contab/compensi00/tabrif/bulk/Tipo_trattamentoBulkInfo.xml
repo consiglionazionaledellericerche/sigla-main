@@ -6,7 +6,7 @@
 	<fieldProperty
 		name="cd_trattamento"
 		property="cd_trattamento"
-		maxLength="5"
+		maxLength="10"
 		inputSize="10"
 		inputType="TEXT"
 		label="Codice"
@@ -18,7 +18,7 @@
 	<fieldProperty
 		name="cd_trattamentoForSearch"
 		property="cd_trattamento"
-		maxLength="5"
+		maxLength="10"
 		inputSize="10"
 		inputType="TEXT"
 		label="Codice"
