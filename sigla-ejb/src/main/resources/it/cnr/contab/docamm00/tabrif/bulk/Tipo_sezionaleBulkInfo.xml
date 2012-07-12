@@ -180,7 +180,12 @@
 		enabledOnEdit="false"
 		nullable="false"
 		label="Servizi non residenti" />
-			
+	<fieldProperty
+		name="ordina"
+		property="ordina"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		nullable="true" />		
 	<formFieldProperty
 		name="cd_tipo_sezionale" />	
 	<formFieldProperty
@@ -218,7 +223,10 @@
 	<formFieldProperty
 		name="ti_bene_servizioForSearch" />	
 	<formFieldProperty
-		name="fl_servizi_non_residenti" />		
+		name="fl_servizi_non_residenti" />
+	<formFieldProperty
+		name="ordina" />		
+				
 	<columnFieldProperty
 		name="cd_tipo_sezionale" />
 	<columnFieldProperty
