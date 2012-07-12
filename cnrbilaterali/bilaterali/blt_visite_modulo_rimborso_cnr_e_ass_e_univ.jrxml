@@ -6,29 +6,29 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="652"/>
 	<import value="net.sf.jasperreports.engine.*"/>
-	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
-	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
-	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC8" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
-	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC9" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
-	<style name="TNRG10" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRG11" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNR12" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman"/>
-	<style name="TNRG12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC12" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNRG14" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNR16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
-	<style name="TNRC16" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRG16" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRGC16" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNR11" fontName="Times New Roman" fontSize="11" pdfFontName="Times-Roman"/>
+	<import value="java.util.*"/>
+	<style name="TNR8" isDefault="false" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="TNRG8" isDefault="false" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC8" isDefault="false" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR9" isDefault="false" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" isDefault="false" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC9" isDefault="false" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR10" isDefault="false" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" isDefault="false" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC10" isDefault="false" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG11" isDefault="false" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR12" isDefault="false" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman"/>
+	<style name="TNRG12" isDefault="false" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC12" isDefault="false" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" isDefault="false" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRGC14" isDefault="false" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRG14" isDefault="false" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR16" isDefault="false" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
+	<style name="TNRC16" isDefault="false" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG16" isDefault="false" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRGC16" isDefault="false" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNR11" isDefault="false" fontName="Times New Roman" fontSize="11" pdfFontName="Times-Roman"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
@@ -468,7 +468,6 @@ Piazzale Aldo Moro, 7
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="466" height="12"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Sara' a carico del CNR il rimborso delle seguenti spese:"]]></textFieldExpression>
 			</textField>
@@ -478,7 +477,6 @@ Piazzale Aldo Moro, 7
 				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["il viaggio andata e ritorno, dal luogo di provenienza fino a quello di destinazione (o altro indicato nei singoli Accordi), su mezzi pubblici ordinari:"]]></textFieldExpression>
 			</textField>
@@ -495,7 +493,6 @@ Piazzale Aldo Moro, 7
 				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["in aereo: saranno totalmente rimborsate se sostenute acquistando il titolo a tariffa economica. Qualora vengano acquistati biglietti a tariffa superiore, il CNR provvedera' al rimborso dell'importo corrispondente alla tariffa economica vigente al momento della partenza"+($F{FL_RIMBORSO_TRENO}.equals("Y")?",":";")]]></textFieldExpression>
 			</textField>
@@ -506,7 +503,6 @@ Piazzale Aldo Moro, 7
 				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["o in treno: saranno totalmente rimborsate se sostenute acquistando il biglietto di 2a classe/WL doppio. Qualora vengano utilizzati biglietti a tariffa superiore, il CNR provvederà al rimborso dell’importo corrispondente alla tariffa di 2a classe vigente al momento della partenza;"]]></textFieldExpression>
 			</textField>
@@ -523,7 +519,6 @@ Piazzale Aldo Moro, 7
 				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["gli spostamenti in Italia dal luogo di lavoro o di residenza, su mezzi pubblici ordinari, per raggiungere l’aeroporto/stazione ferroviaria di partenza;"]]></textFieldExpression>
 			</textField>
@@ -541,7 +536,6 @@ Piazzale Aldo Moro, 7
 				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["il visto d’ingresso nel paese di destinazione e la tassa d’imbarco aeroportuale;"]]></textFieldExpression>
 			</textField>
@@ -559,7 +553,6 @@ Piazzale Aldo Moro, 7
 				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["i viaggi interni, effettuati nel Paese ospitante mediante mezzi pubblici ordinari, necessari per lo svolgimento della ricerca secondo il programma di visita approvato;"]]></textFieldExpression>
 			</textField>
@@ -576,7 +569,6 @@ Piazzale Aldo Moro, 7
 				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["il taxi (solo se utilizzato per il trasporto dei materiali o per la mancanza o il cessato servizio di mezzi pubblici). La richiesta del rimborso dovrà essere corredata di motivazione scritta;"]]></textFieldExpression>
 			</textField>
@@ -593,7 +585,6 @@ Piazzale Aldo Moro, 7
 				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["la sovrattassa per eccesso bagaglio (solo per il trasporto di materiale necessario allo svolgimento della ricerca). La richiesta del rimborso dovrà essere corredata di motivazione scritta."]]></textFieldExpression>
 			</textField>
@@ -604,7 +595,6 @@ Piazzale Aldo Moro, 7
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="466" height="12"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Si ricorda che dall'01/02/2011 per adeguarsi alla normativa fiscale, il rimborso delle spese di viaggio deve essere ricondotto nell'ambito dell'art. 5 del DPR 23/10/1972 n. 633 in materia di IVA e degli art. 67, comma 1, lettera L e art. 49, comma 1, del Testo Unico delle imposte sui redditi in materia di IRPEF. Pertanto in sede di liquidazione il CNR applichera' la ritenuta d'acconto IRPEF del 20%, succesivamente recuperabile in sede di dichiarazione dei redditi, con conservazione della documentazione originale, per il percettore della somma."]]></textFieldExpression>
 			</textField>
@@ -623,7 +613,6 @@ Piazzale Aldo Moro, 7
 				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["il viaggio con mezzo proprio o a noleggio;"]]></textFieldExpression>
 			</textField>
@@ -640,9 +629,8 @@ Piazzale Aldo Moro, 7
 				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["i servizi resi dall'agenzia di viaggio (spedizione biglietteria, spese di agenzia per concessione visto);"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["i servizi resi dall'agenzia (spedizione biglietteria, spese di agenzia per concessione visto);"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-1" style="TNRG11" x="25" y="0" width="15" height="12"/>
@@ -657,7 +645,6 @@ Piazzale Aldo Moro, 7
 				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["eventuali assicurazioni."]]></textFieldExpression>
 			</textField>
@@ -719,7 +706,6 @@ Piazzale Aldo Moro, 7
 				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["in originale, i titoli di viaggio utilizzati e le ricevute delle spese. L'esatto costo del viaggio dovra' essere stampigliato su biglietto o, in caso di biglietto a tariffa speciale, risultare da un'allegata dichiarazione dell'Agenzia che lo ha rilasciato. Nel caso di acquisto online dei biglietti, e' necessario allegare la stampa del biglietto con l'importo e le carte di imbarco in orginale"+($F{FL_ASSIMILATO_DIP}.equals("Y")?";":". Gli originali delle spese rimborsate saranno restituiti alla S.V. per la successiva presentazione in sede di dichiarazione dei redditi;")+""]]></textFieldExpression>
 			</textField>
@@ -729,7 +715,6 @@ Piazzale Aldo Moro, 7
 				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["una relazione scientifica sull'attivita' svolta. Dovra' essere presentata anche nel caso in cui l'interessato non richieda il rimborso delle spese di viaggio (la rinuncia al rimborso dovra' essere comunicata al CNR). La mancata presentazione della relazione scientifica precludera' la concessione di successivi contributi CNR;"]]></textFieldExpression>
 			</textField>
@@ -746,7 +731,6 @@ Piazzale Aldo Moro, 7
 				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["una dichiarazione dell'Istituzione straniera nella quale siano indicati la durata e le date di inizio e fine soggiorno;"]]></textFieldExpression>
 			</textField>
@@ -770,7 +754,6 @@ Piazzale Aldo Moro, 7
 				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="426" height="12"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["una copia dell'avvenuta restituzione all'Ente straniero della somma non dovuta, determinata dall'eventuale riduzione della durata del soggiorno. Si ricorda, infatti, che il contributo di soggiorno assegnato dall'ente straniero e' calcolato sulla base della durata inizialmente concordata."]]></textFieldExpression>
 			</textField>
@@ -780,7 +763,6 @@ Piazzale Aldo Moro, 7
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="466" height="12"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["La somma relativa al rimborso delle spese sarà accreditata sul conto corrente personale (o cointestato) dello studioso."]]></textFieldExpression>
 			</textField>
@@ -791,7 +773,6 @@ Piazzale Aldo Moro, 7
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="466" height="12"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Sul presente modulo di rimborso spese di viaggio dovra' essere applicata una marca da bollo da Euro 1,81 quando la spesa di cui si chiede il rimborso supera Euro 77,47."]]></textFieldExpression>
 			</textField>

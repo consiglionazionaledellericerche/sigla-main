@@ -6,29 +6,29 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
-	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
-	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
-	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC8" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
-	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC9" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
-	<style name="TNRG10" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRG11" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNR12" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman"/>
-	<style name="TNRG12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC12" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNRG14" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNR16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
-	<style name="TNRC16" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRG16" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRGC16" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNR11" fontName="Times New Roman" fontSize="11" pdfFontName="Times-Roman"/>
+	<import value="java.util.*"/>
+	<style name="TNR8" isDefault="false" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="TNRG8" isDefault="false" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC8" isDefault="false" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR9" isDefault="false" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" isDefault="false" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC9" isDefault="false" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR10" isDefault="false" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" isDefault="false" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC10" isDefault="false" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG11" isDefault="false" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR12" isDefault="false" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman"/>
+	<style name="TNRG12" isDefault="false" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC12" isDefault="false" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" isDefault="false" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRGC14" isDefault="false" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRG14" isDefault="false" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR16" isDefault="false" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
+	<style name="TNRC16" isDefault="false" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG16" isDefault="false" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRGC16" isDefault="false" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNR11" isDefault="false" fontName="Times New Roman" fontSize="11" pdfFontName="Times-Roman"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
@@ -206,7 +206,6 @@ and s.cd_anag = b.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph firstLineIndent="25"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Si comunica che e' pervenuta al CNR l'accettazione da parte dell'Ente straniero (in allegato) del soggiorno di ricerca richiesto dalla S.V. della durata di "+$V{numGiorni}+" giorni, a decorrere dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+" nell'ambito del Progetto comune di ricerca '"+$F{DS_PROGETTO_ITA}+"' (Reponsabile italiano "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_ITA}.toUpperCase()+", Responsabile straniero "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{RESPONSABILE_STR}.toUpperCase()+")."]]></textFieldExpression>
 			</textField>
@@ -216,7 +215,6 @@ and s.cd_anag = b.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph firstLineIndent="25"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Si trasmette il contratto (all. 2) relativo al soggiorno sopra citato, che dovrà essere sottoscritto e restituito in originale all'Ufficio scrivente (anticipandolo via fax o per e-mail) per il perfezionamento dello stesso (cioe' la sottoscrizione del contratto anche da parte del CNR). Si prega di voler verificare, in particolare, i dati personali e le date del soggiorno inseriti nel contratto e di segnalare eventuali inesattezze prima della sottoscrizione."]]></textFieldExpression>
 			</textField>
@@ -226,7 +224,6 @@ and s.cd_anag = b.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph firstLineIndent="25"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["La S.V. sara' autorizzata per iscritto dall'Ufficio scrivente a dare inizio al soggiorno, con restituzione di una copia del contratto perfezionato."]]></textFieldExpression>
 			</textField>
@@ -237,7 +234,6 @@ and s.cd_anag = b.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph firstLineIndent="25"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Al fine di poter far predisporre in tempo utile, all'Ente ospitante, tutti gli atti amministrativi necessari, si invita la S.V. a comunicare con urgenza i dati relativi al soggiorno in "+$F{DS_NAZIONE_ENTE_STR}+" "+($F{EMAIL_TRASMISSIONE_PASSAPORTO}!= null?"e il proprio numero di passaporto a:":"a")+""]]></textFieldExpression>
 			</textField>
@@ -248,7 +244,6 @@ and s.cd_anag = b.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="425" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Dr. "+$F{NOME_RESPONS_STR}+" "+$F{COGNOME_RESPONS_STR}+""]]></textFieldExpression>
 			</textField>
@@ -268,7 +263,6 @@ and s.cd_anag = b.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="40" y="1" width="425" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{INDIRIZZO_ENTE_STR}]]></textFieldExpression>
 			</textField>
@@ -279,7 +273,6 @@ and s.cd_anag = b.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="425" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{CITTA_ENTE_STR}+" ("+$F{DS_NAZIONE_ENG}+")"]]></textFieldExpression>
 			</textField>
@@ -290,7 +283,6 @@ and s.cd_anag = b.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="425" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Tel. "+$F{TELEF_RESPONS_STR}+" - Fax "+$F{FAX_RESPONS_STR}+" - email: "+$F{EMAIL_RESPONS_STR}+""]]></textFieldExpression>
 			</textField>
@@ -301,7 +293,6 @@ and s.cd_anag = b.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph firstLineIndent="25"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Alla presente si allega, inoltre, la lettera di invito di "+$F{ACRONIMO_ENTE_STR}+" necessaria per richidere il visto. Secondo le disposizioni vigenti, al momento della richiesta del visto, vanno forniti anche i dati riguardanti i luoghi di lavoro (in Italia e quello relativo al soggiorno in "+$F{DS_NAZIONE_ENTE_STR}+") e la qualifica ricoperta."]]></textFieldExpression>
 			</textField>
@@ -311,7 +302,6 @@ and s.cd_anag = b.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph firstLineIndent="25"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Si ricorda che il CNR non rimborsera' alcuna spesa sostenuta dalla S.V.:"]]></textFieldExpression>
 			</textField>
@@ -321,7 +311,6 @@ and s.cd_anag = b.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="55" y="0" width="410" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["in presenza di un contratto non sottoscritto da entrambe le parti;"]]></textFieldExpression>
 			</textField>
@@ -345,7 +334,6 @@ and s.cd_anag = b.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="55" y="0" width="410" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["o in assenza dell'autorizzazione scritta ad iniziare il soggiorno."]]></textFieldExpression>
 			</textField>
@@ -379,7 +367,6 @@ and s.cd_anag = b.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="12" width="465" height="12"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="8"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Piazzale Aldo Moro, 7 - 00185 Roma - Tel. "+$F{TELEF_RESPONS_ITA}+" - Fax "+$F{FAX_RESPONS_ITA}+" - email "+$F{EMAIL_RESPONS_ITA}+""]]></textFieldExpression>
 			</textField>

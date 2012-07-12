@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProvvedimentoPagamento" pageWidth="595" pageHeight="842" columnWidth="475" leftMargin="60" rightMargin="60" topMargin="20" bottomMargin="20" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.Blt_visite_stampe_candidaturaScriptlet">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="314"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<import value="java.util.*"/>
+	<style name="TNR8" isDefault="false" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="TNRG8" isDefault="false" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC8" isDefault="false" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR9" isDefault="false" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" isDefault="false" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC9" isDefault="false" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR10" isDefault="false" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" isDefault="false" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC10" isDefault="false" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG11" isDefault="false" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR12" isDefault="false" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman"/>
+	<style name="TNRG12" isDefault="false" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC12" isDefault="false" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" isDefault="false" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRGC14" isDefault="false" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRG14" isDefault="false" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR16" isDefault="false" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
+	<style name="TNRC16" isDefault="false" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG16" isDefault="false" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRGC16" isDefault="false" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNR11" isDefault="false" fontName="Times New Roman" fontSize="11" pdfFontName="Times-Roman"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIR_IMAGE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cd_accordo" class="java.lang.String">
+		<defaultValueExpression><![CDATA["00001"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cd_progetto" class="java.lang.String">
+		<defaultValueExpression><![CDATA["00001"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cd_terzo" class="java.lang.Integer"/>
+	<parameter name="pg_autorizzazione" class="java.lang.Long"/>
+	<parameter name="pg_visita" class="java.lang.Long"/>
+	<parameter name="pg_ver_rec" class="java.lang.Long" isForPrompting="false"/>
+	<parameter name="flag_to_update" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[select
+a.dt_ini_visita, a.dt_fin_visita,
+b.denominazione_sede ds_terzo_autorizzato,
+ri.denominazione_sede ds_responsabile_ita,
+rs.denominazione_sede ds_responsabile_str,
+e.nome_ente_str,
+e.acronimo_ente_str, f.ds_nazione ds_nazione_ente_str,
+g.ds_progetto_ita, a.num_prot_attrib_incarico, a.dt_prot_attrib_incarico, a.num_prot_contratto, a.data_prot_contratto,
+a.esercizio_obblig, a.esercizio_ori_obblig, a.pg_obbligazione,
+a.num_prot_candidatura, a.dt_prot_candidatura,
+a.num_prot_rimb_spese, a.dt_prot_rimb_spese,
+c.num_delibera, c.data_delibera,
+d.cd_elemento_voce, d.dt_registrazione, d.im_obbligazione,
+d.cd_terzo, d.cd_unita_organizzativa, p.ds_elemento_voce,
+banca.codice_iban,
+(select distinct h.cd_linea_attivita from obbligazione_scad_voce h
+where a.cd_cds_obblig = h.cd_cds
+and a.esercizio_obblig = h.esercizio
+and a.esercizio_ori_obblig = h.esercizio_originale
+and a.pg_obbligazione = h.pg_obbligazione
+and rownum < 2) cd_linea_attivita,
+(select m.ds_linea_attivita from linea_attivita m
+ where (m.cd_centro_responsabilita, m.cd_linea_attivita) in (select distinct h.cd_centro_responsabilita, h.cd_linea_attivita from obbligazione_scad_voce h
+                               where a.cd_cds_obblig = h.cd_cds
+                               and a.esercizio_obblig = h.esercizio
+                               and a.esercizio_ori_obblig = h.esercizio_originale
+                               and a.pg_obbligazione = h.pg_obbligazione
+                               and rownum < 2)) ds_linea_attivita
+from blt_visite a, blt_autorizzati h, terzo b, blt_accordi e, nazione f, blt_progetti g, blt_esercizio c, obbligazione d, elemento_voce p, terzo ri, terzo rs, banca
+where a.cd_accordo = $P{cd_accordo}
+and a.cd_progetto = $P{cd_progetto}
+and a.cd_terzo = $P{cd_terzo}
+and a.pg_autorizzazione = $P{pg_autorizzazione}
+and a.pg_visita = $P{pg_visita}
+and a.cd_accordo = h.cd_accordo
+and a.cd_progetto = h.cd_progetto
+and a.cd_terzo = h.cd_terzo
+and h.cd_terzo = b.cd_terzo
+and a.esercizio_obblig = c.esercizio
+and h.cd_accordo = e.cd_accordo
+and e.pg_nazione_str = f.pg_nazione
+and a.cd_accordo = g.cd_accordo
+and a.cd_progetto = g.cd_progetto
+and g.cd_respons_ita = ri.cd_terzo
+and g.cd_respons_str = rs.cd_terzo
+and a.cd_cds_obblig = d.cd_cds
+and a.esercizio_obblig = d.esercizio
+and a.esercizio_ori_obblig = d.esercizio_originale
+and a.pg_obbligazione = d.pg_obbligazione
+and d.esercizio = p.esercizio
+and d.ti_appartenenza = p.ti_appartenenza
+and d.ti_gestione = p.ti_gestione
+and d.cd_elemento_voce = p.cd_elemento_voce
+and a.cd_terzo_banca = banca.cd_terzo
+and a.pg_banca = banca.pg_banca]]>
+	</queryString>
+	<field name="DT_INI_VISITA" class="java.sql.Timestamp"/>
+	<field name="DT_FIN_VISITA" class="java.sql.Timestamp"/>
+	<field name="DS_TERZO_AUTORIZZATO" class="java.lang.String"/>
+	<field name="DS_RESPONSABILE_ITA" class="java.lang.String"/>
+	<field name="DS_RESPONSABILE_STR" class="java.lang.String"/>
+	<field name="NOME_ENTE_STR" class="java.lang.String"/>
+	<field name="ACRONIMO_ENTE_STR" class="java.lang.String"/>
+	<field name="DS_NAZIONE_ENTE_STR" class="java.lang.String"/>
+	<field name="DS_PROGETTO_ITA" class="java.lang.String"/>
+	<field name="NUM_PROT_ATTRIB_INCARICO" class="java.math.BigDecimal"/>
+	<field name="DT_PROT_ATTRIB_INCARICO" class="java.sql.Timestamp"/>
+	<field name="NUM_PROT_CONTRATTO" class="java.math.BigDecimal"/>
+	<field name="DATA_PROT_CONTRATTO" class="java.sql.Timestamp"/>
+	<field name="ESERCIZIO_OBBLIG" class="java.math.BigDecimal"/>
+	<field name="ESERCIZIO_ORI_OBBLIG" class="java.math.BigDecimal"/>
+	<field name="PG_OBBLIGAZIONE" class="java.math.BigDecimal"/>
+	<field name="NUM_PROT_CANDIDATURA" class="java.math.BigDecimal"/>
+	<field name="DT_PROT_CANDIDATURA" class="java.sql.Timestamp"/>
+	<field name="NUM_PROT_RIMB_SPESE" class="java.math.BigDecimal"/>
+	<field name="DT_PROT_RIMB_SPESE" class="java.sql.Timestamp"/>
+	<field name="NUM_DELIBERA" class="java.lang.String"/>
+	<field name="DATA_DELIBERA" class="java.sql.Timestamp"/>
+	<field name="CD_ELEMENTO_VOCE" class="java.lang.String"/>
+	<field name="DT_REGISTRAZIONE" class="java.sql.Timestamp"/>
+	<field name="IM_OBBLIGAZIONE" class="java.math.BigDecimal"/>
+	<field name="CD_TERZO" class="java.math.BigDecimal"/>
+	<field name="CD_UNITA_ORGANIZZATIVA" class="java.lang.String"/>
+	<field name="DS_ELEMENTO_VOCE" class="java.lang.String"/>
+	<field name="CODICE_IBAN" class="java.lang.String"/>
+	<field name="CD_LINEA_ATTIVITA" class="java.lang.String"/>
+	<field name="DS_LINEA_ATTIVITA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="94" splitType="Stretch">
+			<image scaleImage="FillFrame" onErrorType="Icon">
+				<reportElement key="image-1" x="0" y="0" width="529" height="80"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR}+"Logo CNR-2010-ITA-09-high.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement key="staticText-23" style="TNR11" x="0" y="80" width="529" height="14" forecolor="#244061"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Ufficio Accordi e Relazioni Internazionali]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="0" y="15" width="74" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[U.O. 000.301]]></text>
+			</staticText>
+		</band>
+		<band height="30">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="475" height="30"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Oggetto: Accordo CNR/"+$F{ACRONIMO_ENTE_STR}+" – Impegno rimborso spese di viaggio Dr. "+$F{DS_TERZO_AUTORIZZATO}+"."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="18">
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="215" y="0" width="74" height="18"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[IL DIRETTORE]]></text>
+			</staticText>
+		</band>
+		<band height="35">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="475" height="35"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["VISTO il Regolamento di amministrazione, contabilità e finanza del CNR, pubblicato sulla Gazzetta Ufficiale n. 124 del 30/05/2005, supplemento ordinario n.101;"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="35">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="475" height="35"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["VISTO il Bilancio di Previsione del CNR per l’esercizio finanziario "+$F{ESERCIZIO_OBBLIG}+" approvato dal Consiglio di Amministrazione con delibera n. "+$F{NUM_DELIBERA}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_DELIBERA})+";"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="39">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="475" height="39"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["VISTA la voce di spesa "+$F{CD_ELEMENTO_VOCE}+" '"+$F{DS_ELEMENTO_VOCE}+"', U.O. "+$F{CD_UNITA_ORGANIZZATIVA}+", G.A.E. "+$F{CD_LINEA_ATTIVITA}+" '"+$F{DS_LINEA_ATTIVITA}+
+(!$F{ESERCIZIO_OBBLIG}.equals($F{ESERCIZIO_ORI_OBBLIG})?"', (in conto residui);":"")]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="42">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="475" height="42"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["VISTI l’Accordo di cooperazione scientifica e scambio di ricercatori tra Consiglio Nazionale delle Ricerche e "+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+") ed il relativo Addendum, attualmente in vigore;"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="51">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="475" height="51"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["VISTA la candidatura dello studioso Dr. "+$F{DS_TERZO_AUTORIZZATO}+", prot. AMMCNT - CNR n. "+$F{NUM_PROT_CANDIDATURA}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_PROT_CANDIDATURA})+", (progetto comune di ricerca: Responsabile italiano Dr. "+$F{DS_RESPONSABILE_ITA}.toUpperCase()+", Responsabile straniero Dr. "+$F{DS_RESPONSABILE_STR}.toUpperCase()+" relativa ad un soggiorno di studio in "+$F{DS_NAZIONE_ENTE_STR}+";"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="22">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="475" height="22"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["VISTO il parere favorevole espresso dalla Commissione di valutazione scientifica del CNR;"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="22">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="475" height="22"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["VISTO l’accoglimento del soggiorno di ricerca da parte dell’Istituzione straniera;"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="41">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="475" height="41"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["CONSIDERATO che nell’Accordo sopra citato è stabilito che il rimborso delle spese di viaggio degli studiosi italiani è a carico del CNR e che al momento la spesa presunta è quantificata in € "+$F{IM_OBBLIGAZIONE}+";"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="40">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="475" height="30"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["VISTA la richiesta di rimborso di spese di viaggio, prot. AMMCNT - CNR n. "+$F{NUM_PROT_RIMB_SPESE}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_PROT_RIMB_SPESE})+", relativa al soggiorno di studio effettuato dallo studioso;"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="30">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="475" height="30"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["VISTO l’impegno n. "+$F{PG_OBBLIGAZIONE}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_REGISTRAZIONE})+" preso a copertura della spesa;"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="18">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="475" height="18"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["RITENUTA l’opportunità di provvedere;"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="18">
+			<staticText>
+				<reportElement key="staticText-1" style="TNRG11" x="215" y="0" width="49" height="18"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DISPONE]]></text>
+			</staticText>
+		</band>
+		<band height="30">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="475" height="30"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["La liquidazione del rimborso delle spese di viaggio del Dr. "+$F{DS_TERZO_AUTORIZZATO}+", Codice terzo "+$F{CD_TERZO}+", pari a € "+$F{IM_OBBLIGAZIONE}+", con competenza economica dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+" al "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_FIN_VISITA})+", se necessario incrementando o diminuendo l’importo dell’impegno, indicato in premessa, n. "+$F{PG_OBBLIGAZIONE}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_REGISTRAZIONE})+", con accredito sul conto corrente identificato con il Codice IBAN n. "+$F{CODICE_IBAN}+";"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="19">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-2" style="TNR11" x="0" y="1" width="475" height="18"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Il pagamento del rimborso delle spese di viaggio entro il ………………"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="99">
+			<staticText>
+				<reportElement key="staticText-23" style="TNR11" x="305" y="7" width="133" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[IL DIRETTORE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-24" style="TNR11" x="283" y="21" width="192" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Dr.ssa Virginia Coda Nunziante]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

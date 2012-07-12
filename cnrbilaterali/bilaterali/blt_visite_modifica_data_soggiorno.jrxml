@@ -6,29 +6,29 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
-	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
-	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
-	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC8" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
-	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC9" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
-	<style name="TNRG10" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRG11" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNR12" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman"/>
-	<style name="TNRG12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC12" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNRG14" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNR16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
-	<style name="TNRC16" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRG16" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRGC16" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNR11" fontName="Times New Roman" fontSize="11" pdfFontName="Times-Roman"/>
+	<import value="java.util.*"/>
+	<style name="TNR8" isDefault="false" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="TNRG8" isDefault="false" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC8" isDefault="false" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR9" isDefault="false" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" isDefault="false" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC9" isDefault="false" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR10" isDefault="false" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" isDefault="false" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC10" isDefault="false" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG11" isDefault="false" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR12" isDefault="false" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman"/>
+	<style name="TNRG12" isDefault="false" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC12" isDefault="false" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" isDefault="false" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRGC14" isDefault="false" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRG14" isDefault="false" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR16" isDefault="false" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
+	<style name="TNRC16" isDefault="false" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG16" isDefault="false" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRGC16" isDefault="false" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNR11" isDefault="false" fontName="Times New Roman" fontSize="11" pdfFontName="Times-Roman"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
@@ -172,7 +172,7 @@ and d.cd_elemento_voce = p.cd_elemento_voce]]>
 			</staticText>
 			<image scaleImage="FillFrame" onErrorType="Icon">
 				<reportElement key="image-1" x="0" y="0" width="465" height="58"/>
-				<imageExpression><![CDATA[$P{DIR_IMAGE}+"Logo+CNR-2010-ITA-09-high.png"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE}+"Logo+CNR-2010-ITA-09-high.png"]]></imageExpression>
 			</image>
 		</band>
 	</pageHeader>
@@ -198,9 +198,8 @@ and d.cd_elemento_voce = p.cd_elemento_voce]]>
 				<reportElement key="textField-2" style="TNR11" x="51" y="25" width="414" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Accordo di cooperazione scientifica tra CNR e "+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+"), "+$F{DS_NAZIONE_ENTE_STR}+" –  "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"Biennio":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"Triennio":"Anni"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+". Progetto comune di ricerca "+$F{DS_RESPONSABILE_ITA}.toUpperCase()+" / "+$F{DS_RESPONSABILE_STR}.toUpperCase()+"."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Accordo di cooperazione scientifica tra CNR e "+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+"), "+$F{DS_NAZIONE_ENTE_STR}+" –  "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"Biennio":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"Triennio":"Anni"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+". Progetto comune di ricerca "+$F{DS_RESPONSABILE_ITA}.toUpperCase()+" / "+$F{DS_RESPONSABILE_STR}.toUpperCase()+"."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="35">
@@ -208,9 +207,8 @@ and d.cd_elemento_voce = p.cd_elemento_voce]]>
 				<reportElement key="textField-2" style="TNR11" x="51" y="0" width="414" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Modifica data soggiorno di ricerca "+($F{SESSO_AUTORIZZATO}.equals("M")?"del Dott.":"della Dott.ssa")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+"."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Modifica data soggiorno di ricerca "+($F{SESSO_AUTORIZZATO}.equals("M")?"del Dott.":"della Dott.ssa")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+"."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="31">
@@ -234,9 +232,8 @@ and d.cd_elemento_voce = p.cd_elemento_voce]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11" isItalic="false"/>
-					<paragraph firstLineIndent="38"/>
 				</textElement>
-				<textFieldExpression><![CDATA["il contratto di prestazione d'opera in regime di lavoro autonomo occasionale dello studioso "+($F{SESSO_AUTORIZZATO}.equals("M")?"del Dott.":"della Dott.ssa")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+", prot. AMMCNT - CNR n. "+$F{NUM_PROT_CONTRATTO}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_PROT_CONTRATTO})+"."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["il contratto di prestazione d'opera in regime di lavoro autonomo occasionale dello studioso "+($F{SESSO_AUTORIZZATO}.equals("M")?"del Dott.":"della Dott.ssa")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+", prot. AMMCNT - CNR n. "+$F{NUM_PROT_CONTRATTO}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_PROT_CONTRATTO})+"."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20">
@@ -245,9 +242,8 @@ and d.cd_elemento_voce = p.cd_elemento_voce]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single" firstLineIndent="38"/>
 				</textElement>
-				<textFieldExpression><![CDATA["la richiesta, prot. n. "+$F{NUM_PROT_COMUNIC_CAMBIO_DATE}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_PROT_COMUNIC_CAMBIO_DATE})+", di modifica di inizio e termine del soggiorno di ricerca dello studioso, concordata con l'Istituzione straniera;"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["la richiesta, prot. n. "+$F{NUM_PROT_COMUNIC_CAMBIO_DATE}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_PROT_COMUNIC_CAMBIO_DATE})+", di modifica di inizio e termine del soggiorno di ricerca dello studioso, concordata con l'Istituzione straniera;"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-1" style="TNRG11" x="0" y="0" width="39" height="14"/>
@@ -262,9 +258,8 @@ and d.cd_elemento_voce = p.cd_elemento_voce]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single" firstLineIndent="85"/>
 				</textElement>
-				<textFieldExpression><![CDATA["che tale modifica non pregiudica l'esecuzione del Programma di ricerca;"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["che tale modifica non pregiudica l'esecuzione del Programma di ricerca;"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-1" style="TNRG11" x="0" y="0" width="88" height="14"/>
@@ -289,7 +284,7 @@ and d.cd_elemento_voce = p.cd_elemento_voce]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11" isItalic="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA["che il soggiorno di ricerca "+($F{SESSO_AUTORIZZATO}.equals("M")?"del Dott.":"della Dott.ssa")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+" sia effettuato dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA_EFFETTIVA})+" al "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_FIN_VISITA_EFFETTIVA})+"."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["che il soggiorno di ricerca "+($F{SESSO_AUTORIZZATO}.equals("M")?"del Dott.":"della Dott.ssa")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+" sia effettuato dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA_EFFETTIVA})+" al "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_FIN_VISITA_EFFETTIVA})+"."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="50">
