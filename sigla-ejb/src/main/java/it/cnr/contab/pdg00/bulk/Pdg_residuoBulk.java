@@ -125,7 +125,7 @@ public class Pdg_residuoBulk extends Pdg_residuoBase {
 		if (dett!=null) {
 			Iterator it = dett.iterator();
 			BigDecimal totale = new BigDecimal("0");	
-			totale = totale.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+			totale = totale.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 			while (it.hasNext()) {
 				Pdg_residuo_detBulk riga = (Pdg_residuo_detBulk)it.next();
 				if (!riga.getStato().equals(riga.STATO_ANNULLATO)&&riga.getIm_residuo()!=null)

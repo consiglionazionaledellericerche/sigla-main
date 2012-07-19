@@ -614,7 +614,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				throw new ValidationException("Attenzione: è obbligatorio indicare l'importo dell'integrazione della \"Spesa complessiva presunta calcolata\".");
 			else if (!variazione.isAnnullato()){
 				java.math.BigDecimal prcIncrementoVar = Utility.nvl(variazione.getIncarichi_repertorio().getIncarichi_procedura().getTipo_incarico().getPrc_incremento_var());
-				BigDecimal importoMaxVar = variazione.getIncarichi_repertorio().getIncarichi_procedura().getImporto_complessivo().multiply(prcIncrementoVar.divide(new BigDecimal(100),2,BigDecimal.ROUND_HALF_EVEN));
+				BigDecimal importoMaxVar = variazione.getIncarichi_repertorio().getIncarichi_procedura().getImporto_complessivo().multiply(prcIncrementoVar.divide(new BigDecimal(100),2,BigDecimal.ROUND_HALF_UP));
 				if (variazione.getImporto_complessivo().compareTo(importoMaxVar)==1)
 					throw new ValidationException("Attenzione: la variazione massima consentita per \"Adeguamento Incremento Aliquote\" è " + new it.cnr.contab.util.EuroFormat().format(importoMaxVar)+".");
 			}
@@ -978,7 +978,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 		if (incarico.getTipo_incarico()==null || incarico.getTipo_incarico().getPrc_incremento()==null)
 			incarico.setImporto_complessivo(importoLordo);
 		else
-			incarico.setImporto_complessivo(importoLordo.add(importoLordo.multiply(incarico.getTipo_incarico().getPrc_incremento()).divide(new BigDecimal(100),2,BigDecimal.ROUND_HALF_EVEN)));
+			incarico.setImporto_complessivo(importoLordo.add(importoLordo.multiply(incarico.getTipo_incarico().getPrc_incremento()).divide(new BigDecimal(100),2,BigDecimal.ROUND_HALF_UP)));
 	}
     public void changeImportoLordo(it.cnr.jada.action.ActionContext context, Incarichi_proceduraBulk incarico, Incarichi_repertorio_varBulk variazione, BigDecimal importoLordo) {
 		variazione.setImporto_lordo(importoLordo);
@@ -987,7 +987,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 		if (incarico.getTipo_incarico()==null || incarico.getTipo_incarico().getPrc_incremento()==null)
 			variazione.setImporto_complessivo(importoLordo);
 		else
-			variazione.setImporto_complessivo(importoLordo.add(importoLordo.multiply(incarico.getTipo_incarico().getPrc_incremento()).divide(new BigDecimal(100),2,BigDecimal.ROUND_HALF_EVEN)));
+			variazione.setImporto_complessivo(importoLordo.add(importoLordo.multiply(incarico.getTipo_incarico().getPrc_incremento()).divide(new BigDecimal(100),2,BigDecimal.ROUND_HALF_UP)));
 	}
 	public SimpleDetailCRUDController getCrudArchivioAllegati() {
 		return crudArchivioAllegati;
@@ -1599,7 +1599,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 					for (Iterator<Incarichi_procedura_annoBulk> y=procAnnoNewList.iterator();y.hasNext();){
 						Incarichi_procedura_annoBulk proceduraAnnoAgg = y.next();
 						if (proceduraAnnoAgg.getEsercizio_limite().equals(proceduraAnno.getEsercizio_limite())){
-							proceduraAnnoAgg.setImporto_complessivo(proceduraAnnoAgg.getImporto_complessivo().add(proceduraAnno.getImporto_iniziale().multiply(new BigDecimal(nrContrattidaInserire)).divide(new BigDecimal(procedura.getNr_contratti()),2,BigDecimal.ROUND_HALF_EVEN)));
+							proceduraAnnoAgg.setImporto_complessivo(proceduraAnnoAgg.getImporto_complessivo().add(proceduraAnno.getImporto_iniziale().multiply(new BigDecimal(nrContrattidaInserire)).divide(new BigDecimal(procedura.getNr_contratti()),2,BigDecimal.ROUND_HALF_UP)));
 							trovato=true;
 							break;
 						}
@@ -1607,7 +1607,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 					if (!trovato){
 						Incarichi_procedura_annoBulk proceduraAnnoAgg = new Incarichi_procedura_annoBulk();
 						proceduraAnnoAgg.setEsercizio_limite(proceduraAnno.getEsercizio_limite());
-						proceduraAnnoAgg.setImporto_complessivo(proceduraAnno.getImporto_iniziale().multiply(new BigDecimal(nrContrattidaInserire)).divide(new BigDecimal(procedura.getNr_contratti()),2,BigDecimal.ROUND_HALF_EVEN));
+						proceduraAnnoAgg.setImporto_complessivo(proceduraAnno.getImporto_iniziale().multiply(new BigDecimal(nrContrattidaInserire)).divide(new BigDecimal(procedura.getNr_contratti()),2,BigDecimal.ROUND_HALF_UP));
 						procAnnoNewList.add(proceduraAnnoAgg);
 					}
 				}

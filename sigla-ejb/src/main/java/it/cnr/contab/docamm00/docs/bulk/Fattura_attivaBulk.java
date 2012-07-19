@@ -287,7 +287,7 @@ public void addToFattura_attiva_accertamentiHash(
 	if (righeAssociate == null) {
 		righeAssociate = new Vector();
 		//fattura_attiva_accertamentiHash.put(scadenza, righeAssociate);
-		addToFattura_attiva_ass_totaliMap(scadenza, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+		addToFattura_attiva_ass_totaliMap(scadenza, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	}
 	if (rigaFattura != null && !righeAssociate.contains(rigaFattura)) {
 		righeAssociate.add(rigaFattura);

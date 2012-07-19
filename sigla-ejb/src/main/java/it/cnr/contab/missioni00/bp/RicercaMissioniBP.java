@@ -180,7 +180,7 @@ public class RicercaMissioniBP extends BusinessProcess implements ResponseXMLBP{
 		elementMissione.appendChild(element);
 
         element = xmldoc.createElement("totalemissione");
-		node = xmldoc.createTextNode(miss.getIm_totale_missione()==null?"":miss.getIm_totale_missione().setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN).toString());//new it.cnr.contab.util.EuroFormat().format(miss.getIm_totale_missione()));
+		node = xmldoc.createTextNode(miss.getIm_totale_missione()==null?"":miss.getIm_totale_missione().setScale(2, java.math.BigDecimal.ROUND_HALF_UP).toString());//new it.cnr.contab.util.EuroFormat().format(miss.getIm_totale_missione()));
 		element.appendChild(node);
 		elementMissione.appendChild(element);
 		  

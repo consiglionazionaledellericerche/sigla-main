@@ -527,7 +527,7 @@ public OggettoBulk getBringBackModel() {
 						if (fatturaPassiva.hasStorni() || fatturaPassiva.hasAddebiti() || fatturaPassivaBP.isDeleting())
 							throw new MessageToUser("Non è possibile selezionare una diversa scadenza da quella associata al documento amministrativo, perché esso ha degli addebiti o degli storni associati! Selezionare la scadenza \"" + scadCorrente.getDs_scadenza() + "\".",ERROR_MESSAGE);
 						if (scadenzaSelezionata.getIm_associato_doc_amm() != null &&
-							scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) != 0 &&
+							scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0 &&
 							!fatturaPassivaBP.isDeleting()) {
 								if (!new Fattura_passiva_IBulk(
 										scadenzaSelezionata.getCd_cds(),
@@ -542,7 +542,7 @@ public OggettoBulk getBringBackModel() {
 					CRUDNotaDiCreditoAttivaBP ncaBP = (CRUDNotaDiCreditoAttivaBP)docAmmBP;
 					Nota_di_credito_attivaBulk nca = (Nota_di_credito_attivaBulk)ncaBP.getModel();
 						if (scadenzaSelezionata.getIm_associato_doc_amm() != null &&
-							scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) != 0 &&
+							scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0 &&
 							!ncaBP.isDeleting()) {
 								if (!new Nota_di_credito_attivaBulk(
 										scadenzaSelezionata.getCd_cds(),
@@ -559,7 +559,7 @@ public OggettoBulk getBringBackModel() {
 		                CRUDDocumentoGenericoPassivoBP docGenPassivoBP= (CRUDDocumentoGenericoPassivoBP) docAmmBP;
 		                Documento_genericoBulk docGenPassivo = (Documento_genericoBulk) docGenPassivoBP.getModel();
 						if (scadenzaSelezionata.getIm_associato_doc_amm() != null &&
-							scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) != 0) {
+							scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0) {
 	                        String cd_cds_doc_gen = (docGenPassivo.isFlagEnte()) ? 
 	                        										docGenPassivo.getCd_cds() : 
 	                        										scadenzaSelezionata.getObbligazione().getCd_cds_origine();
@@ -580,19 +580,19 @@ public OggettoBulk getBringBackModel() {
 			}
 		}
 		if (getParent() instanceof CRUDFatturaPassivaIBP || getParent() instanceof CRUDDocumentoGenericoPassivoBP ) {
-			if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN).compareTo(scadenzaSelezionata.getIm_scadenza()) == 0)
+			if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(scadenzaSelezionata.getIm_scadenza()) == 0)
 				throw new MessageToUser("Non è possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" con importo 0.",ERROR_MESSAGE);
 		}
 		if (getParent() instanceof RicercaObbligazioniBP) {
 			RicercaObbligazioniBP ricercaBP = (RicercaObbligazioniBP)getParent();
 			if (ricercaBP.getParent() != null && ricercaBP.getParent() instanceof CRUDFatturaPassivaIBP &&
-				new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN).compareTo(scadenzaSelezionata.getIm_scadenza()) == 0)
+				new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(scadenzaSelezionata.getIm_scadenza()) == 0)
 					throw new MessageToUser("Non è possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" con importo 0.",ERROR_MESSAGE);
 		}
 
 		if(	getParent() instanceof IDocumentoAmministrativoBP &&
 			scadenzaSelezionata.getIm_associato_doc_amm() != null &&
-			scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) != 0)
+			scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0)
 		{
 			IDocumentoAmministrativoBP docAmmBP = (IDocumentoAmministrativoBP)getParent();		
 			if(	docAmmBP instanceof CRUDMissioneBP)

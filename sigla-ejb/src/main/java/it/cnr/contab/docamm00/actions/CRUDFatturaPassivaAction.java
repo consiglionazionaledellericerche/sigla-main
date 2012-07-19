@@ -106,9 +106,9 @@ private java.util.Vector basicAddDetailsTo(
 			//java.math.BigDecimal totNdC = notaDiCredito.getIm_totale_fattura().add(calcolaTotaleSelezionati(addedElements));
 			//notaDiCredito.setIm_totale_fattura(totNdC);
 		//} catch (it.cnr.jada.comp.ApplicationException e) {
-			//notaDiCredito.setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+			//notaDiCredito.setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 		//}
-		notaDiCredito.setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+		notaDiCredito.setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 		notaDiCredito.calcolaTotaleFatturaFornitoreInEur();
 	}
 	return addedElements;
@@ -166,9 +166,9 @@ private java.util.Vector basicAddDetailsTo(ActionContext context, CRUDNotaDiDebi
 			//java.math.BigDecimal totNdD = notaDiDebito.getIm_totale_fattura().add(calcolaTotaleSelezionati(addedElements));
 			//notaDiDebito.setIm_totale_fattura(totNdD);
 		//} catch (it.cnr.jada.comp.ApplicationException e) {
-			//notaDiDebito.setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+			//notaDiDebito.setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 		//}
-		notaDiDebito.setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+		notaDiDebito.setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP ));
 		notaDiDebito.calcolaTotaleFatturaFornitoreInEur();
 	}
 	return addedElements;
@@ -192,7 +192,7 @@ protected void basicCalcolaImportoDisponibileNC(
 	
 	if (rigaFP.getQuantita() == null) rigaFP.setQuantita(new java.math.BigDecimal(1));
 	if (rigaFP.getPrezzo_unitario() == null) rigaFP.setPrezzo_unitario(new java.math.BigDecimal(0));
-	if (rigaFP.getIm_iva() == null) rigaFP.setIm_iva(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	if (rigaFP.getIm_iva() == null) rigaFP.setIm_iva(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP ));
 
 	java.math.BigDecimal nuovoTotale = rigaFP.getIm_imponibile().add(rigaFP.getIm_iva()).add(rigaFP.getIm_totale_addebiti());
 	java.util.HashMap storni = rigaFP.getFattura_passivaI().getStorniHashMap();
@@ -363,7 +363,7 @@ protected void basicDoCalcolaTotaliDiRiga(
 
 	if (riga.getQuantita() == null) riga.setQuantita(new java.math.BigDecimal(1));
 	if (riga.getPrezzo_unitario() == null) riga.setPrezzo_unitario(new java.math.BigDecimal(0));
-	if (riga.getIm_iva() == null) riga.setIm_iva(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	if (riga.getIm_iva() == null) riga.setIm_iva(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP ));
 
 	riga.setFl_iva_forzata(Boolean.FALSE);
 	riga.calcolaCampiDiRiga();
@@ -858,8 +858,8 @@ protected java.math.BigDecimal calcolaTotaleSelezionati(
 			java.math.BigDecimal imTotale = (escludiIVA) ?
 													rigaSelected.getIm_imponibile() :
 													rigaSelected.getIm_imponibile().add(rigaSelected.getIm_iva());
-			java.math.BigDecimal imStornati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
-			java.math.BigDecimal imAddebitati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+			java.math.BigDecimal imStornati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP );
+			java.math.BigDecimal imAddebitati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP );
 			if (rigaSelected instanceof Fattura_passiva_rigaIBulk) {
 				Fattura_passiva_rigaIBulk dettaglioFatturaPassiva = (Fattura_passiva_rigaIBulk)rigaSelected;
 				java.math.BigDecimal impStorniDiRiga = (escludiIVA) ?
@@ -875,7 +875,7 @@ protected java.math.BigDecimal calcolaTotaleSelezionati(
 		}
 	}
 
-	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP );
 	return importo;
 }
 /**
@@ -1391,7 +1391,7 @@ public Forward doBlankSearchSospeso(ActionContext context,
 		sospeso.setTi_entrata_spesa(sospeso.TIPO_SPESA);
 		sospeso.setTi_sospeso_riscontro(sospeso.TI_SOSPESO);
 		lettera.setSospeso(sospeso);
-		java.math.BigDecimal zero = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+		java.math.BigDecimal zero = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP );
 		lettera.setIm_pagamento(zero);
 		//lettera.setIm_commissioni(zero);
 		//lettera.setDt_registrazione(new java.sql.Timestamp(System.currentTimeMillis()));
@@ -1758,10 +1758,10 @@ public Forward doCalcolaTotalePerObbligazione(ActionContext context, Obbligazion
 							(java.util.List)fatt.getFattura_passiva_obbligazioniHash().get(obbligazione),
 							fatt.quadraturaInDeroga()));
 			} catch (it.cnr.jada.comp.ApplicationException e) {
-				fatt.setImportoTotalePerObbligazione(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+				fatt.setImportoTotalePerObbligazione(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP ));
 			}
 		} else
-			fatt.setImportoTotalePerObbligazione(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+			fatt.setImportoTotalePerObbligazione(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP ));
 	}
 	return context.findDefaultForward();	
 }
@@ -2426,7 +2426,7 @@ public Forward doModificaScadenzaInAutomatico(ActionContext context, String pref
 																				context,
 																				scadenza,
 																				fatturaPassiva,
-																				new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)),
+																				new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)),
 														false);
 			bp.getDefferedUpdateSaldiParentBP().getDefferedUpdateSaldiBulk().addToDefferredSaldi(
 										scadenza.getObbligazione(), 
@@ -2474,7 +2474,7 @@ public Forward doOnChangeModified(ActionContext context)
 			java.math.BigDecimal cambioAttuale = fp.getCambio();
 			if (cambioAttuale == null)
 				fp.setCambio((cambioAttuale = new java.math.BigDecimal(0)));
-        	cambioAttuale = cambioAttuale.setScale(3,java.math.BigDecimal.ROUND_HALF_EVEN);
+        	cambioAttuale = cambioAttuale.setScale(3,java.math.BigDecimal.ROUND_HALF_UP);
         	fp.setCambio(cambioAttuale);
 	        if (cambioAttuale.compareTo(new java.math.BigDecimal(0))==0){
 	        	fp.setCambio(vecchioCambio);
@@ -2491,7 +2491,7 @@ public Forward doOnChangeModified(ActionContext context)
 				if (dettaglio instanceof Fattura_passiva_rigaIBulk) {
 					java.math.BigDecimal vecchioTotale = (java.math.BigDecimal)vecchiTotali.get(dettaglio);
 					if (vecchioTotale == null)
-						vecchioTotale = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+						vecchioTotale = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 					basicCalcolaImportoDisponibileNC(context, (Fattura_passiva_rigaIBulk)dettaglio, vecchioTotale);
 				}
 			}
@@ -3874,7 +3874,7 @@ public Forward doSelezionaValuta(ActionContext context)
 					if (dettaglio instanceof Fattura_passiva_rigaIBulk) {
 						java.math.BigDecimal vecchioTotale = (java.math.BigDecimal)vecchiTotali.get(dettaglio);
 						if (vecchioTotale == null)
-							vecchioTotale = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+							vecchioTotale = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 						basicCalcolaImportoDisponibileNC(context, (Fattura_passiva_rigaIBulk)dettaglio, vecchioTotale);
 					}
 				}

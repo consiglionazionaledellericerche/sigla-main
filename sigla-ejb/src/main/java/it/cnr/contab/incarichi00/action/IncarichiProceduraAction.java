@@ -822,7 +822,7 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 			}
 
 			java.math.BigDecimal prcIncrementoVar = Utility.nvl(variazione.getIncarichi_repertorio().getIncarichi_procedura().getTipo_incarico().getPrc_incremento_var());
-			BigDecimal importoMaxVar = variazione.getIncarichi_repertorio().getIncarichi_procedura().getImporto_complessivo().multiply(prcIncrementoVar.divide(new BigDecimal(100),2,BigDecimal.ROUND_HALF_EVEN));
+			BigDecimal importoMaxVar = variazione.getIncarichi_repertorio().getIncarichi_procedura().getImporto_complessivo().multiply(prcIncrementoVar.divide(new BigDecimal(100),2,BigDecimal.ROUND_HALF_UP));
 			if (variazione.getImporto_complessivo().compareTo(importoMaxVar)==1) {
 				variazione.setImporto_complessivo(oldImporto);
 				bp.setMessage("Attenzione: la variazione massima consentita per \"Adeguamento Incremento Aliquote\" è " + 

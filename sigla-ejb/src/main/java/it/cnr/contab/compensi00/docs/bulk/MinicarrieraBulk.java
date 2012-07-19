@@ -1002,7 +1002,7 @@ private void reset(it.cnr.jada.action.ActionContext context) {
 	setStato(STATO_ATTIVA);
 	setStato_ass_compenso(STATO_NON_ASS_COMPENSO);
 	
-	setIm_totale_minicarriera(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	setIm_totale_minicarriera(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	
 	setNumero_rate(new Integer(1));
 
@@ -1047,9 +1047,9 @@ public void resetDefferredSaldi() {
  
 public void resetTassazioneSeparataData() {
 
-	setImponibile_irpef_eseprec1(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-	setImponibile_irpef_eseprec2(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-	setAliquota_irpef_media(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	setImponibile_irpef_eseprec1(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+	setImponibile_irpef_eseprec2(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+	setAliquota_irpef_media(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	setAliquotaCalcolata(false);
 }
 /**
@@ -1319,13 +1319,13 @@ public void validaImponibiliIrpef() throws ValidationException{
 		if (getFl_tassazione_separata() != null && getFl_tassazione_separata().booleanValue())
 			throw new ValidationException("Specificare l'importo dell'imponibile irpef 1 della minicarriera.");
 		else
-			setImponibile_irpef_eseprec1(new java.math.BigDecimal(0).setScale(6, java.math.BigDecimal.ROUND_HALF_EVEN));
+			setImponibile_irpef_eseprec1(new java.math.BigDecimal(0).setScale(6, java.math.BigDecimal.ROUND_HALF_UP));
 	}
 	if (getImponibile_irpef_eseprec2() == null) {
 		if (getFl_tassazione_separata() != null && getFl_tassazione_separata().booleanValue())
 			throw new ValidationException("Specificare l'importo dell'imponibile irpef 2 della minicarriera.");
 		else
-			setImponibile_irpef_eseprec2(new java.math.BigDecimal(0).setScale(6, java.math.BigDecimal.ROUND_HALF_EVEN));
+			setImponibile_irpef_eseprec2(new java.math.BigDecimal(0).setScale(6, java.math.BigDecimal.ROUND_HALF_UP));
 	}
 }
 /**

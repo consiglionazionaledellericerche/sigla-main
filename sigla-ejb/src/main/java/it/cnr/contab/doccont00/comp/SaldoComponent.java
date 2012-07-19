@@ -95,7 +95,7 @@ public Voce_f_saldi_cmpBulk aggiornaMandatiReversali(UserContext userContext, Vo
 		else
 			saldo = findAndLock( userContext, cd_cds, voce, ti_competenza_residuo );
         if (saldo != null){
-			saldo.setIm_mandati_reversali( saldo.getIm_mandati_reversali().add( importo.setScale(2, importo.ROUND_HALF_EVEN) ));
+			saldo.setIm_mandati_reversali( saldo.getIm_mandati_reversali().add( importo.setScale(2, importo.ROUND_HALF_UP) ));
 			saldo.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
 			updateBulk( userContext, saldo );
 		}		
@@ -177,7 +177,7 @@ public Voce_f_saldi_cmpBulk aggiornaObbligazioniAccertamenti(UserContext userCon
 		else
 			saldo = findAndLock( userContext, cd_cds, voce, ti_competenza_residuo );
 		if (saldo != null){			
-			importo = importo.setScale(2, importo.ROUND_HALF_EVEN);
+			importo = importo.setScale(2, importo.ROUND_HALF_UP);
 			saldo.setIm_obblig_imp_acr( saldo.getIm_obblig_imp_acr().add( importo) );
 			saldo.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
 	
@@ -190,7 +190,7 @@ public Voce_f_saldi_cmpBulk aggiornaObbligazioniAccertamenti(UserContext userCon
 					
 			updateBulk( userContext, saldo );
 		}			
-		importo = importo.setScale(2, importo.ROUND_HALF_EVEN);
+		importo = importo.setScale(2, importo.ROUND_HALF_UP);
 		return saldo;
 	}
 	catch 	(Exception e )
@@ -238,7 +238,7 @@ public Voce_f_saldi_cmpBulk aggiornaPagamentiIncassi(UserContext userContext, Vo
 	{
 		Voce_f_saldi_cmpBulk saldo = findAndLock( userContext, cd_cds, voce, ti_competenza_residuo );
 		if (saldo != null){
-			saldo.setIm_pagamenti_incassi( saldo.getIm_pagamenti_incassi().add(importo.setScale(2, importo.ROUND_HALF_EVEN) ));
+			saldo.setIm_pagamenti_incassi( saldo.getIm_pagamenti_incassi().add(importo.setScale(2, importo.ROUND_HALF_UP) ));
 			saldo.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
 			updateBulk( userContext, saldo );
 		}			
@@ -589,9 +589,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userConte
 		}
 		if (saldo != null){
 			if (tipo_residuo.equals(Voce_f_saldi_cdr_lineaBulk.TIPO_RESIDUO_IMPROPRIO))
-			  saldo.setIm_mandati_reversali_imp( saldo.getIm_mandati_reversali_imp().add( importo.setScale(2, importo.ROUND_HALF_EVEN) ));
+			  saldo.setIm_mandati_reversali_imp( saldo.getIm_mandati_reversali_imp().add( importo.setScale(2, importo.ROUND_HALF_UP) ));
 			else if (tipo_residuo.equals(Voce_f_saldi_cdr_lineaBulk.TIPO_RESIDUO_PROPRIO)||tipo_residuo.equals(Voce_f_saldi_cdr_lineaBulk.TIPO_COMPETENZA))
-			  saldo.setIm_mandati_reversali_pro( saldo.getIm_mandati_reversali_pro().add( importo.setScale(2, importo.ROUND_HALF_EVEN) ));
+			  saldo.setIm_mandati_reversali_pro( saldo.getIm_mandati_reversali_pro().add( importo.setScale(2, importo.ROUND_HALF_UP) ));
 			saldo.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
 			saldo.setToBeUpdated();
 			updateBulk( userContext, saldo );
@@ -726,7 +726,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaObbligazioniAccertamenti(UserContext u
 			}
 		}
 		if (saldo != null) {	
-			importo = importo.setScale(2, importo.ROUND_HALF_EVEN);
+			importo = importo.setScale(2, importo.ROUND_HALF_UP);
 			if (voce.getEsercizio().compareTo(esercizio_res) == 0){
 			   saldo.setIm_obbl_acc_comp( saldo.getIm_obbl_acc_comp().add( importo) );
 			}else{
@@ -778,7 +778,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaVariazioneStanziamento(UserContext use
 			saldo.setToBeCreated();
 			insertBulk(userContext, saldo);	
 		}
-		importo = importo.setScale(2, importo.ROUND_HALF_EVEN);
+		importo = importo.setScale(2, importo.ROUND_HALF_UP);
 		if(importo.compareTo(Utility.ZERO)==1)
 		  saldo.setVariazioni_piu(saldo.getVariazioni_piu().add(importo));
 		else  
@@ -958,7 +958,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaPagamentiIncassi(UserContext userConte
 													   " CDR: " + cd_cdr + " GAE: " + cd_linea_attivita + " Voce: " + voce.getCd_voce() ));
 		}		
 		if (saldo != null) {
-			saldo.setIm_pagamenti_incassi( saldo.getIm_pagamenti_incassi().add(importo.setScale(2, importo.ROUND_HALF_EVEN) ));
+			saldo.setIm_pagamenti_incassi( saldo.getIm_pagamenti_incassi().add(importo.setScale(2, importo.ROUND_HALF_UP) ));
 			saldo.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
 			saldo.setToBeUpdated();
 			updateBulk( userContext, saldo );
@@ -1011,7 +1011,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaImpegniResiduiPropri(UserContext userC
 		if (saldo == null){
 			  throw new ApplicationException("Saldo non trovato per la Voce/CdR/GAE: "+ voce.getCd_voce()+"/"+cd_cdr+"/"+cd_linea_attivita);
 		}
-		importo = importo.setScale(2, importo.ROUND_HALF_EVEN);
+		importo = importo.setScale(2, importo.ROUND_HALF_UP);
 		if ((saldo.getAssestatoResiduoImproprio().subtract(saldo.getIm_obbl_res_imp())).subtract(importo).compareTo(Utility.ZERO)<0)
 			  throw new ApplicationException(
 				"Impossibile effettuare l'operazione !\n"+
@@ -1053,7 +1053,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 		if (saldo == null){
 			  throw new ApplicationException("Saldo non trovato per la Voce/CdR/GAE: "+ voce.getCd_voce()+"/"+cd_cdr+"/"+cd_linea_attivita);
 		}
-		importo = importo.setScale(2, importo.ROUND_HALF_EVEN);
+		importo = importo.setScale(2, importo.ROUND_HALF_UP);
 		if (importo.compareTo(Utility.ZERO)>0)
 			saldo.setVar_piu_obbl_res_pro( saldo.getVar_piu_obbl_res_pro().add( importo.abs()) );
 		else

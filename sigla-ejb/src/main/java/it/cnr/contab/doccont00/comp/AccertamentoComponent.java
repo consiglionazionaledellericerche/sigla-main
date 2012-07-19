@@ -1729,7 +1729,7 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 				Accertamento_scad_voceBulk osv = (Accertamento_scad_voceBulk)j.next();
 				osv.setAccertamento_scadenzario( os );
 				if ( os.getIm_scadenza().doubleValue() != 0 )
-					osv.setPrc( (osv.getIm_voce().multiply( new BigDecimal(100)).divide( os.getIm_scadenza(), 2, BigDecimal.ROUND_HALF_EVEN)));
+					osv.setPrc( (osv.getIm_voce().multiply( new BigDecimal(100)).divide( os.getIm_scadenza(), 2, BigDecimal.ROUND_HALF_UP)));
 				else
 					osv.setPrc( new BigDecimal(0))	;
 			}	
@@ -2475,7 +2475,7 @@ public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext 
 	
 		for (Iterator s = scadenzaVecchia.getAccertamento_scad_voceColl().iterator(); s.hasNext(); ) {
 			Accertamento_scad_voceBulk asvOld = (Accertamento_scad_voceBulk)s.next();
-			newImportoAsv = nuovoImportoScadenzaVecchia.multiply(asvOld.getIm_voce()).divide(vecchioImportoScadenzaVecchia, 2, BigDecimal.ROUND_HALF_EVEN); 
+			newImportoAsv = nuovoImportoScadenzaVecchia.multiply(asvOld.getIm_voce()).divide(vecchioImportoScadenzaVecchia, 2, BigDecimal.ROUND_HALF_UP); 
 			
 			for (Iterator n = scadenzaNuova.getAccertamento_scad_voceColl().iterator(); n.hasNext(); ) {
 				Accertamento_scad_voceBulk asvNew = (Accertamento_scad_voceBulk)n.next();
@@ -3812,7 +3812,7 @@ protected AccertamentoBulk calcolaPercentualeImputazioneAccertamento (UserContex
 	for ( Iterator i = accertamento.getLineeAttivitaSelezionateColl().iterator(); i.hasNext(); )
 	{
 		lattDaPdg = (V_pdg_accertamento_etrBulk) i.next();
-		lattDaPdg.setPrcImputazioneFin( lattDaPdg.getImporto().multiply(percentuale).divide(totaleLattDaPdg, 2, BigDecimal.ROUND_HALF_EVEN) );
+		lattDaPdg.setPrcImputazioneFin( lattDaPdg.getImporto().multiply(percentuale).divide(totaleLattDaPdg, 2, BigDecimal.ROUND_HALF_UP) );
 	}	
 
 	// calcolo gli importi e le percentuali per i dettagli delle scadenze
@@ -3831,7 +3831,7 @@ protected AccertamentoBulk calcolaPercentualeImputazioneAccertamento (UserContex
 				if ( lattDaPdg.getCd_centro_responsabilita().equals( osv.getCd_centro_responsabilita()) &&
 					 lattDaPdg.getCd_linea_attivita().equals( osv.getCd_linea_attivita()))
 				{
-					osv.setIm_voce( os.getIm_scadenza().multiply( lattDaPdg.getPrcImputazioneFin()).divide( new BigDecimal(100), 2, BigDecimal.ROUND_HALF_EVEN));
+					osv.setIm_voce( os.getIm_scadenza().multiply( lattDaPdg.getPrcImputazioneFin()).divide( new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP));
 					totalePerScadenza = totalePerScadenza.add( osv.getIm_voce() );
 					if ( os.getIm_scadenza().doubleValue() != 0 )
 						osv.setPrc( lattDaPdg.getPrcImputazioneFin() );
@@ -3847,7 +3847,7 @@ protected AccertamentoBulk calcolaPercentualeImputazioneAccertamento (UserContex
 				if ( latt.getLinea_att().getCentro_responsabilita().getCd_centro_responsabilita().equals( osv.getCd_centro_responsabilita()) &&
 					 latt.getLinea_att().getCd_linea_attivita().equals( osv.getCd_linea_attivita()))
 				{
-					osv.setIm_voce( os.getIm_scadenza().multiply(latt.getPrcImputazioneFin()).divide( new BigDecimal(100), 2, BigDecimal.ROUND_HALF_EVEN));
+					osv.setIm_voce( os.getIm_scadenza().multiply(latt.getPrcImputazioneFin()).divide( new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP));
 					totalePerScadenza = totalePerScadenza.add( osv.getIm_voce() );					
 					if ( os.getIm_scadenza().doubleValue() != 0 )
 						osv.setPrc( latt.getPrcImputazioneFin() );

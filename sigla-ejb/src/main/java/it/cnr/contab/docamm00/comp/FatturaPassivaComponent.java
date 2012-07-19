@@ -205,7 +205,7 @@ private void aggiornaAccertamentiSuCancellazione(
 							notaDiCredito, 
 							scadenza.getAccertamento(),
 							status);
-					scadenza.setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+					scadenza.setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 					updateImportoAssociatoDocAmm(userContext, scadenza);
 				}
 			}
@@ -222,7 +222,7 @@ private void aggiornaAccertamentiSuCancellazione(
 
 				for (Iterator i = ((Vector)accTemporanei.get(accT)).iterator(); i.hasNext();) {
 					Accertamento_scadenzarioBulk scad = (Accertamento_scadenzarioBulk)i.next();
-					scad.setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+					scad.setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 					updateImportoAssociatoDocAmm(userContext, scad);
 				}
 				aggiornaAccertamentiTemporanei(userContext, accT);
@@ -488,7 +488,7 @@ private void aggiornaCarichiInventario(UserContext userContext,Fattura_passivaBu
 													WorkpackageBulk linea_att =dett.getLinea_attivita();
 													if (linea_att.getCd_centro_responsabilita()==cdraggr.getCodice()){
 														if ( dett.getObbligazione_scadenzario().getIm_scadenza().doubleValue() != 0)
-															dett.setPrc((dett.getIm_voce().multiply( new BigDecimal(100)).divide(dett.getObbligazione_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_EVEN)));
+															dett.setPrc((dett.getIm_voce().multiply( new BigDecimal(100)).divide(dett.getObbligazione_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_UP)));
 															if ( dett.getPrc()!=null && dett.getPrc().compareTo(new BigDecimal(0))!=0 && dett.getObbligazione_scadenzario().getIm_associato_doc_amm().doubleValue()!=0) {						    	
 																it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laBulk new_utilizzatore_la
 																= new it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laBulk(linea_att.getCd_linea_attivita(),linea_att.getCd_centro_responsabilita(),
@@ -799,7 +799,7 @@ private void aggiornaObbligazioni(
 				if (fattura_passiva.isEstera() &&
 					fattura_passiva.getLettera_pagamento_estero() != null &&
 					fattura_passiva.getLettera_pagamento_estero().getIm_pagamento() != null &&
-					fattura_passiva.getLettera_pagamento_estero().getIm_pagamento().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) != 0)
+					fattura_passiva.getLettera_pagamento_estero().getIm_pagamento().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0)
 					//Caso di collegamento a documento 1210	con sospeso inserito
 					im_ass = scadenza.getIm_scadenza();
 				else
@@ -844,7 +844,7 @@ private void aggiornaObbligazioniSuCancellazione(
 							fatturaPassiva, 
 							scadenza.getObbligazione(),
 							status);
-					scadenza.setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+					scadenza.setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 					updateImportoAssociatoDocAmm(userContext, scadenza);
 				}
             	/**
@@ -1068,7 +1068,7 @@ private void basicAggiornaLetteraPagamentoEstero(
 
 	if (lettera == null) return;
 	if (impAssDoc1210 == null)
-		impAssDoc1210 = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+		impAssDoc1210 = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 		
 	if (lettera.getSospesiCancellati() != null && !lettera.getSospesiCancellati().isEmpty())
 		for (Iterator i = lettera.getSospesiCancellati().iterator(); i.hasNext();) {
@@ -1227,7 +1227,7 @@ private java.math.BigDecimal calcolaTotaleIVAPer(
 		}
 	}
 
-	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	return importo;
 }
 private java.math.BigDecimal calcolaTotaleObbligazionePer(
@@ -1236,7 +1236,7 @@ private java.math.BigDecimal calcolaTotaleObbligazionePer(
 	Fattura_passivaBulk fatturaPassiva)
 	throws it.cnr.jada.comp.ComponentException {
 
-	java.math.BigDecimal imp = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	java.math.BigDecimal imp = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	if (fatturaPassiva instanceof Nota_di_creditoBulk) {
 		imp = calcolaTotaleObbligazionePerNdC(
 									userContext,
@@ -1264,8 +1264,8 @@ private java.math.BigDecimal calcolaTotaleObbligazionePerFP(
 	ObbligazioniTable obbligazioniHash = fatturaPassiva.getFattura_passiva_obbligazioniHash();
 	Vector dettagli = (Vector)obbligazioniHash.get(scadenza);
 	java.math.BigDecimal impTotaleDettagli = calcolaTotalePer(dettagli, fatturaPassiva.quadraturaInDeroga());
-	java.math.BigDecimal impTotaleStornati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
-	java.math.BigDecimal impTotaleAddebitati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	java.math.BigDecimal impTotaleStornati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
+	java.math.BigDecimal impTotaleAddebitati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	java.util.HashMap dettagliDaStornare = caricaStorniPer(userContext, dettagli);
 	java.util.HashMap dettagliDaAddebitare = caricaAddebitiPer(userContext, dettagli);
 	if (dettagliDaStornare != null) {
@@ -1345,7 +1345,7 @@ private java.math.BigDecimal calcolaTotaleObbligazionePerNdC(
 
 	ObbligazioniTable obbligazioniHash = notaDiCredito.getFattura_passiva_obbligazioniHash();
 	Vector dettagli = (Vector)obbligazioniHash.get(scadenza);
-	java.math.BigDecimal impTotaleDettagli = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	java.math.BigDecimal impTotaleDettagli = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	java.math.BigDecimal impTotaleStornati = calcolaTotalePer(
 													dettagli, 
 													notaDiCredito.quadraturaInDeroga()).add(
@@ -1387,7 +1387,7 @@ private java.math.BigDecimal calcolaTotaleObbligazionePerNdD(
 
 	ObbligazioniTable obbligazioniHash = notaDiDebito.getFattura_passiva_obbligazioniHash();
 	Vector dettagli = (Vector)obbligazioniHash.get(scadenza);
-	java.math.BigDecimal impTotaleDettagli = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	java.math.BigDecimal impTotaleDettagli = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	java.math.BigDecimal impTotaleStornati = calcolaTotalePer(
 														caricaStorniExceptFor(userContext, scadenza, null),
 														notaDiDebito.quadraturaInDeroga());
@@ -1443,7 +1443,7 @@ private java.math.BigDecimal calcolaTotalePer(
 		}
 	}
 
-	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	return importo;
 }
 private java.math.BigDecimal calcolaTotaleScadenzaAccertamentoPer(
@@ -2000,9 +2000,9 @@ public RemoteIterator cercaObbligazioni(UserContext context, Filtro_ricerca_obbl
 	sql.addSQLClause("AND","OBBLIGAZIONE.DT_CANCELLAZIONE", sql.ISNULL, null);
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA", sql.NOT_EQUALS, new java.math.BigDecimal(0));
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM IS NULL");
-	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN),java.sql.Types.DECIMAL,2);
+	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE IS NULL");
-	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN),java.sql.Types.DECIMAL,2);
+	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
 	sql.addSQLClause("AND","OBBLIGAZIONE.CD_UNITA_ORGANIZZATIVA",sql.EQUALS, filtro.getCd_unita_organizzativa());
 
 	if (filtro.getElemento_voce() != null) {
@@ -2423,7 +2423,7 @@ public void controllaQuadraturaConti(UserContext aUC,Fattura_passivaBulk fattura
 			if (fatturaPassiva.getIm_importo_totale_fattura_fornitore_euro() == null)
 				throw new it.cnr.jada.comp.ApplicationException("Attenzione: il totale dei dettagli di " + fatturaPassiva.getIm_totale_fattura_calcolato() + " (Imponibile + IVA) non corrisponde al totale di " + fatturaPassiva.getIm_totale_fattura() + " della testata fattura!");
 				
-			if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN).compareTo(fatturaPassiva.getIm_importo_totale_fattura_fornitore_euro()) == 0)
+			if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(fatturaPassiva.getIm_importo_totale_fattura_fornitore_euro()) == 0)
 				throw new it.cnr.jada.comp.ApplicationException("Attenzione: l'importo di testata non può essere 0!");
 
 			if (fatturaPassiva.getIm_importo_totale_fattura_fornitore_euro().compareTo(fatturaPassiva.getIm_totale_fattura_calcolato()) != 0) {
@@ -2484,13 +2484,13 @@ public void controllaQuadraturaIntrastat(UserContext aUC,Fattura_passivaBulk fat
 			!fatturaPassiva.isCongelata()) {
 			aggiornaImportiTotali(aUC, fatturaPassiva);
 
-			java.math.BigDecimal impIntrastat = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+			java.math.BigDecimal impIntrastat = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 			BulkList intrastatColl = fatturaPassiva.getFattura_passiva_intrastatColl();
 			for (java.util.Iterator i = intrastatColl.iterator(); i.hasNext();) {
 				Fattura_passiva_intraBulk rigaSelected = (Fattura_passiva_intraBulk)i.next();
 				impIntrastat = impIntrastat.add(rigaSelected.getAmmontare_euro());
 			}
-			impIntrastat = impIntrastat.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+			impIntrastat = impIntrastat.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 
 			if (fatturaPassiva.getIm_totale_imponibile() == null)
 				throw new it.cnr.jada.comp.ApplicationException("Attenzione: il totale dei dettagli intrastat di " + impIntrastat + " non corrisponde al totale di " + fatturaPassiva.getIm_totale_imponibile() + " (solo imponibile)!");
@@ -2537,12 +2537,12 @@ public void controllaQuadraturaObbligazioni(UserContext aUC,Fattura_passivaBulk 
 		if (obbligazioniHash != null) {
 			for (java.util.Enumeration e = obbligazioniHash.keys(); e.hasMoreElements();) {
 				Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk)e.nextElement();
-				java.math.BigDecimal totale = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+				java.math.BigDecimal totale = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 				java.math.BigDecimal delta = null;
 				if (fatturaPassiva.isEstera() &&
 					fatturaPassiva.getLettera_pagamento_estero() != null &&
 					fatturaPassiva.getLettera_pagamento_estero().getIm_pagamento() != null) {
-					if (fatturaPassiva.getLettera_pagamento_estero().getIm_pagamento().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) == 0) {
+					if (fatturaPassiva.getLettera_pagamento_estero().getIm_pagamento().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) == 0) {
 						totale = calcolaTotaleObbligazionePer(aUC, scadenza, fatturaPassiva).abs();
 						delta = scadenza.getIm_scadenza().subtract(totale);
 					} else {
@@ -4314,7 +4314,7 @@ private void liberaSospeso(UserContext userContext,SospesoBulk sospeso) throws C
 	try {
 		if (sospeso != null) {
 			SospesoHome sospesoHome = (SospesoHome)getHome(userContext, SospesoBulk.class);
-			sospeso.setIm_ass_mod_1210(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+			sospeso.setIm_ass_mod_1210(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 			sospeso.setToBeUpdated();
 			sospesoHome.aggiornaImportoAssociatoMod1210(sospeso);
 		}
@@ -4716,8 +4716,8 @@ private void rebuildObbligazioni(UserContext aUC, Fattura_passivaBulk fatturaPas
 				fatturaPassiva.addToFattura_passiva_obbligazioniHash(scadenza, riga);
 				if (riga instanceof Fattura_passiva_rigaIBulk) {
 					Fattura_passiva_rigaIBulk rigaFP = (Fattura_passiva_rigaIBulk)riga;
-					java.math.BigDecimal impStorni = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
-					java.math.BigDecimal impAddebiti = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+					java.math.BigDecimal impStorni = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
+					java.math.BigDecimal impAddebiti = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 					if (storniHashMap != null) {
 						impStorni = calcolaTotalePer((Vector)storniHashMap.get(riga), false);
 						rigaFP.setIm_totale_storni(impStorni);
@@ -5742,7 +5742,7 @@ public void validaRiga (UserContext aUC,Fattura_passiva_rigaBulk riga) throws Co
 		throw new it.cnr.jada.comp.ApplicationException("Il prezzo unitario o l'importo iva non devono essere 0.");
 
 	boolean isBeneSconto = isBeneServizioPerSconto(aUC, riga);
-	if (riga.getPrezzo_unitario().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) < 0 && !isBeneSconto)
+	if (riga.getPrezzo_unitario().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) < 0 && !isBeneSconto)
 		throw new it.cnr.jada.comp.ApplicationException("L'importo del prezzo unitario specificato NON è valido.");
 	if (riga.getIm_iva() == null || riga.getIm_iva().doubleValue() < 0 && !isBeneSconto)
 		throw new it.cnr.jada.comp.ApplicationException("L'importo IVA specificato NON è valido.");

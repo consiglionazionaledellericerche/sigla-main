@@ -72,7 +72,7 @@ public void addToAccertamenti_scadenzarioHash(
 	if (righeAssociate == null) {
 		righeAssociate = new Vector();
 		//accertamenti_scadenzarioHash.put(accertamento_scadenzario, righeAssociate);
-		addToFattura_passiva_ass_totaliMap(accertamento_scadenzario, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+		addToFattura_passiva_ass_totaliMap(accertamento_scadenzario, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	}
 	if (rigaNdC != null && !righeAssociate.contains(rigaNdC)) {
 		righeAssociate.add(rigaNdC);
@@ -166,8 +166,8 @@ public void copyFrom(
 	setCessionario(fattura_passiva.getCessionario());
 	setBanca(fattura_passiva.getBanca());
 
-	setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-	setIm_totale_imponibile_divisa(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+	setIm_totale_imponibile_divisa(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	
 	setFl_liquidazione_differita(fattura_passiva.getFl_liquidazione_differita());
 	setModalita_trasportoColl(fattura_passiva.getModalita_trasportoColl());

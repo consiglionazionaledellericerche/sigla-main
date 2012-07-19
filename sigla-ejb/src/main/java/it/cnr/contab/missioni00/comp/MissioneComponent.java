@@ -836,9 +836,9 @@ public RemoteIterator cercaObbligazioni(UserContext context, Filtro_ricerca_obbl
 	sql.addSQLClause("AND","OBBLIGAZIONE.DT_CANCELLAZIONE", sql.ISNULL, null);
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA", sql.NOT_EQUALS, new java.math.BigDecimal(0));
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM IS NULL");
-	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN),java.sql.Types.DECIMAL,2);
+	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE IS NULL");
-	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN),java.sql.Types.DECIMAL,2);
+	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
 	sql.addSQLClause("AND","OBBLIGAZIONE.CD_UNITA_ORGANIZZATIVA",sql.EQUALS, filtro.getCd_unita_organizzativa());
 	sql.addSQLClause("AND","OBBLIGAZIONE.RIPORTATO",sql.EQUALS, "N");
 	
@@ -1414,7 +1414,7 @@ private NazioneBulk findNazioneItalia(UserContext userContext) throws ComponentE
 
 	SQLBuilder sql = nazHome.createSQLBuilder();
 	sql.addSQLClause("AND","TI_NAZIONE", sql.EQUALS, NazioneBulk.ITALIA);
-
+	sql.addOrderBy("PG_NAZIONE");
 	SQLBroker broker = nazHome.createBroker(sql);
 	if (broker.next())
 		nazione = (NazioneBulk)nazHome.fetch(broker);
@@ -1937,10 +1937,10 @@ private BigDecimal getMassimaleEuro(UserContext aUC, Missione_dettaglioBulk spes
 		}	
 
 		// Converto massimale in Euro
-		importoMassimale = importoMassimale.setScale(2, BigDecimal.ROUND_HALF_EVEN);				
+		importoMassimale = importoMassimale.setScale(2, BigDecimal.ROUND_HALF_UP);				
 			
 		if(divisaMassimale.getFl_calcola_con_diviso().booleanValue())
-			importoMassimaleEuro = importoMassimale.divide(cambioMassimale.getCambio(), BigDecimal.ROUND_HALF_EVEN);
+			importoMassimaleEuro = importoMassimale.divide(cambioMassimale.getCambio(), BigDecimal.ROUND_HALF_UP);
 		else
 			importoMassimaleEuro = importoMassimale.multiply(cambioMassimale.getCambio());		
 
@@ -3099,9 +3099,9 @@ public SQLBuilder selectObbligazione_scadenzarioByClause(UserContext aUC, Missio
 
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.DT_SCADENZA",sql.GREATER_EQUALS, dataRegistrazione);	
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM IS NULL");
-	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN),java.sql.Types.DECIMAL,2);
+	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE IS NULL");
-	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN),java.sql.Types.DECIMAL,2);
+	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
 
 	if(clauses != null)
 		sql.addClause(clauses);
@@ -3703,9 +3703,9 @@ private Missione_dettaglioBulk validaMassimaleTipoSpesa(UserContext aUC, Mission
 		throw new it.cnr.jada.bulk.ValidationException("L'importo della spesa supera il massimale del Tipo Spesa selezionato (€"+massimaleSpesaEuro+")");
 		
 	spesa.setIm_spesa_max(massimaleSpesaEuro);
-	spesa.setIm_spesa_max(spesa.getIm_spesa_max().setScale(2, BigDecimal.ROUND_HALF_EVEN));	
+	spesa.setIm_spesa_max(spesa.getIm_spesa_max().setScale(2, BigDecimal.ROUND_HALF_UP));	
 	spesa.setIm_spesa_max_divisa(spesa.getTipo_spesa().getLimite_max_spesa());
-	spesa.setIm_spesa_max_divisa(spesa.getIm_spesa_max_divisa().setScale(2, BigDecimal.ROUND_HALF_EVEN));	
+	spesa.setIm_spesa_max_divisa(spesa.getIm_spesa_max_divisa().setScale(2, BigDecimal.ROUND_HALF_UP));	
 	
 	return spesa;
 }
@@ -3782,12 +3782,12 @@ public MissioneBulk validaMassimaliSpesa(UserContext aUC, MissioneBulk missione,
 		spesa.calcolaMaggiorazioneTrasporto();
 		spesa.convertiMaggiorazioneInEuro(divisaDefault);
 		spesa.setIm_totale_spesa(spesa.getIm_maggiorazione_euro().add(spesa.getIm_spesa_euro()));
-		spesa.setIm_totale_spesa(spesa.getIm_totale_spesa().setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));		
+		spesa.setIm_totale_spesa(spesa.getIm_totale_spesa().setScale(2, java.math.BigDecimal.ROUND_HALF_UP));		
 	}	
 	else
 	{
 		spesa.setIm_totale_spesa(spesa.getIm_spesa_euro());
-		spesa.setIm_totale_spesa(spesa.getIm_totale_spesa().setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));			
+		spesa.setIm_totale_spesa(spesa.getIm_totale_spesa().setScale(2, java.math.BigDecimal.ROUND_HALF_UP));			
 	}	
 	return missione;
 }

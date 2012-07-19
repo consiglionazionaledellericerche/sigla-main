@@ -252,7 +252,7 @@ private void aggiornaAccertamentiSuCancellazione(
 							fatturaAttiva, 
 							scadenza.getAccertamento(),
 							status);
-					scadenza.setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+					scadenza.setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 					updateImportoAssociatoDocAmm(userContext, scadenza);
 				}
 			}
@@ -517,11 +517,11 @@ public Fattura_attivaBulk aggiornaImportiTotali(it.cnr.jada.UserContext uc, Fatt
         return fattura;
 
     java.math.BigDecimal imp= new java.math.BigDecimal(0);
-    imp= imp.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+    imp= imp.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
     java.math.BigDecimal iva= new java.math.BigDecimal(0);
-    iva= iva.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+    iva= iva.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
     java.math.BigDecimal totale= new java.math.BigDecimal(0);
-    totale= totale.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+    totale= totale.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 
     try {
         for (Iterator i= dettaglio.iterator(); i.hasNext();) {
@@ -616,7 +616,7 @@ private void aggiornaObbligazioniSuCancellazione(
 								notaDiCredito, 
 								scadenza.getObbligazione(),
 								status);
-					scadenza.setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+					scadenza.setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 					updateImportoAssociatoDocAmm(userContext, scadenza);
 				}
             	/**
@@ -639,7 +639,7 @@ private void aggiornaObbligazioniSuCancellazione(
 				
 				for (Iterator i = ((Vector)obblTemporanee.get(obblT)).iterator(); i.hasNext();) {
 					Obbligazione_scadenzarioBulk scad = (Obbligazione_scadenzarioBulk)i.next();
-					scad.setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+					scad.setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 					updateImportoAssociatoDocAmm(userContext, scad);
 				}
 				aggiornaObbligazioniTemporanee(userContext, obblT);
@@ -939,7 +939,7 @@ private java.math.BigDecimal calcolaTotaleAccertamentoPer(
 	Fattura_attivaBulk fatturaAttiva)
 	throws it.cnr.jada.comp.ComponentException {
 
-	java.math.BigDecimal imp = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	java.math.BigDecimal imp = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	if (fatturaAttiva instanceof Nota_di_credito_attivaBulk) {
 		imp = calcolaTotaleAccertamentoPerNdC(
 									userContext,
@@ -967,8 +967,8 @@ private java.math.BigDecimal calcolaTotaleAccertamentoPerFA(
 	AccertamentiTable accertamentiHash = fatturaAttiva.getFattura_attiva_accertamentiHash();
 	Vector dettagli = (Vector)accertamentiHash.get(scadenza);
 	java.math.BigDecimal impTotaleDettagli = calcolaTotalePer(dettagli);
-	java.math.BigDecimal impTotaleStornati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
-	java.math.BigDecimal impTotaleAddebitati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	java.math.BigDecimal impTotaleStornati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
+	java.math.BigDecimal impTotaleAddebitati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	java.util.HashMap dettagliDaStornare = caricaStorniPer(userContext, dettagli);
 	java.util.HashMap dettagliDaAddebitare = caricaAddebitiPer(userContext, dettagli);
 	if (dettagliDaStornare != null) {
@@ -1046,7 +1046,7 @@ private java.math.BigDecimal calcolaTotaleAccertamentoPerNdC(
 
 	AccertamentiTable accertamentiHash = notaDiCredito.getFattura_attiva_accertamentiHash();
 	Vector dettagli = (Vector)accertamentiHash.get(scadenza);
-	java.math.BigDecimal impTotaleDettagli = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	java.math.BigDecimal impTotaleDettagli = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	java.math.BigDecimal impTotaleStornati = calcolaTotalePer(dettagli).add(calcolaTotalePer(caricaStorniExceptFor(userContext, scadenza, notaDiCredito)));
 	java.math.BigDecimal impTotaleAddebitati = calcolaTotalePer(caricaAddebitiExceptFor(userContext, scadenza, null));
 	Vector fattureContenute = new Vector();
@@ -1083,7 +1083,7 @@ private java.math.BigDecimal calcolaTotaleAccertamentoPerNdD(
 
 	AccertamentiTable accertamentiHash = notaDiDebito.getFattura_attiva_accertamentiHash();
 	Vector dettagli = (Vector)accertamentiHash.get(scadenza);
-	java.math.BigDecimal impTotaleDettagli = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	java.math.BigDecimal impTotaleDettagli = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	java.math.BigDecimal impTotaleStornati = calcolaTotalePer(caricaStorniExceptFor(userContext, scadenza, null));
 	java.math.BigDecimal impTotaleAddebitati = calcolaTotalePer(dettagli).add(calcolaTotalePer(caricaAddebitiExceptFor(userContext, scadenza, notaDiDebito)));
 	Vector fattureContenute = new Vector();
@@ -1124,7 +1124,7 @@ private java.math.BigDecimal calcolaTotalePer(java.util.List selectedModels)
 		}
 	}
 
-	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	return importo;
 }
 private java.math.BigDecimal calcolaTotaleScadenzaObbligazionePer(
@@ -4322,8 +4322,8 @@ private void rebuildAccertamenti(UserContext aUC, Fattura_attivaBulk fatturaAtti
 				fatturaAttiva.addToFattura_attiva_accertamentiHash(scadenza, riga);
 				if (riga instanceof Fattura_attiva_rigaIBulk) {
 					Fattura_attiva_rigaIBulk rigaFP = (Fattura_attiva_rigaIBulk)riga;
-					java.math.BigDecimal impStorni = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
-					java.math.BigDecimal impAddebiti = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+					java.math.BigDecimal impStorni = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
+					java.math.BigDecimal impAddebiti = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 					if (storniHashMap != null) {
 						impStorni = calcolaTotalePer((Vector)storniHashMap.get(riga));
 						rigaFP.setIm_totale_storni(impStorni);
@@ -5792,9 +5792,9 @@ public RemoteIterator cercaObbligazioni(UserContext context, Filtro_ricerca_obbl
 	sql.addSQLClause("AND","OBBLIGAZIONE.DT_CANCELLAZIONE", sql.ISNULL, null);
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA", sql.NOT_EQUALS, new java.math.BigDecimal(0));
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM IS NULL");
-	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN),java.sql.Types.DECIMAL,2);
+	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE = ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_CONTABILE IS NULL");
-	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN),java.sql.Types.DECIMAL,2);
+	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
 	sql.addSQLClause("AND","OBBLIGAZIONE.CD_UNITA_ORGANIZZATIVA",sql.EQUALS, filtro.getCd_unita_organizzativa());
 
 	if (filtro.getElemento_voce() != null) {

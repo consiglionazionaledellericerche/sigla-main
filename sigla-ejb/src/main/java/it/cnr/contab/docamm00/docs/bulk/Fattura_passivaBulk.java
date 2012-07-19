@@ -390,7 +390,7 @@ public void addToFattura_passiva_obbligazioniHash(
 	if (righeAssociate == null) {
 		righeAssociate = new Vector();
 		//fattura_passiva_obbligazioniHash.put(obbligazione, righeAssociate);
-		addToFattura_passiva_ass_totaliMap(obbligazione, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+		addToFattura_passiva_ass_totaliMap(obbligazione, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	}
 	if (rigaFattura != null && !righeAssociate.contains(rigaFattura)) {
 		righeAssociate.add(rigaFattura);
@@ -418,13 +418,13 @@ public int addToRiferimenti_bancari( Fattura_passiva_rigaBulk os )
 public void aggiornaImportiTotali() {
 
 	java.math.BigDecimal imp = new java.math.BigDecimal(0);
-	imp = imp.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	imp = imp.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	java.math.BigDecimal iva = new java.math.BigDecimal(0);
-	iva = iva.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	iva = iva.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	java.math.BigDecimal totale = new java.math.BigDecimal(0);
-	totale = totale.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	totale = totale.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	java.math.BigDecimal totaleImponibileDivisa = new java.math.BigDecimal(0);
-	totaleImponibileDivisa = totaleImponibileDivisa.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	totaleImponibileDivisa = totaleImponibileDivisa.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 
 	if (getFattura_passiva_dettColl() != null)
 		for (Iterator i = getFattura_passiva_dettColl().iterator(); i.hasNext();) {
@@ -456,14 +456,14 @@ public void calcolaTotaleFatturaFornitoreInEur() {
 	else {
 		java.math.BigDecimal cambioImpostato = getCambio();
 		if (cambioImpostato == null) {
-			cambioImpostato = new java.math.BigDecimal(0).setScale(0, java.math.BigDecimal.ROUND_HALF_EVEN);
+			cambioImpostato = new java.math.BigDecimal(0).setScale(0, java.math.BigDecimal.ROUND_HALF_UP);
 			setCambio(cambioImpostato);
 		}
 		importoTotale = (getChangeOperation() == MOLTIPLICA) ?
 						importoTotale.multiply(cambioImpostato) :
-						importoTotale.divide(cambioImpostato, java.math.BigDecimal.ROUND_HALF_EVEN);
+						importoTotale.divide(cambioImpostato, java.math.BigDecimal.ROUND_HALF_UP);
 	}
-	importoTotale = importoTotale.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	importoTotale = importoTotale.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	setIm_importo_totale_fattura_fornitore_euro(importoTotale);
 }
 public boolean existARowToBeInventoried() {

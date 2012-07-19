@@ -140,7 +140,7 @@ public void completeFrom(
 		}
 	}
 
-	setIm_accertamento(importo.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	setIm_accertamento(importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 }
 /**
  * <!-- @TODO: da completare -->

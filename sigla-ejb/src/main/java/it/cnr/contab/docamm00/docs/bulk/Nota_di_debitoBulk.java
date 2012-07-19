@@ -121,8 +121,8 @@ public void copyFrom(
 	setCessionario(fattura_passiva.getCessionario());
 	setBanca(fattura_passiva.getBanca());
 	
-	setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-	setIm_totale_imponibile_divisa(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+	setIm_totale_imponibile_divisa(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	setFl_liquidazione_differita(fattura_passiva.getFl_liquidazione_differita());
 	setModalita_trasportoColl(fattura_passiva.getModalita_trasportoColl());
 	setCondizione_consegnaColl(fattura_passiva.getCondizione_consegnaColl());

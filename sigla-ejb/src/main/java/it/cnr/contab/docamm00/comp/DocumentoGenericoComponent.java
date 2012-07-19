@@ -192,9 +192,9 @@ private void aggiornaAccertamentiSuCancellazione(
                         Documento_generico_rigaBulk riga= (Documento_generico_rigaBulk) r.next();
                         if (riga.getAccertamento_scadenziario().equalsByPrimaryKey(scadenza))
                             importoAssociatoAllaScadenza=
-                                importoAssociatoAllaScadenza.add((riga.getIm_riga_iniziale() == null ? riga.getIm_imponibile() : riga.getIm_riga_iniziale()).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+                                importoAssociatoAllaScadenza.add((riga.getIm_riga_iniziale() == null ? riga.getIm_imponibile() : riga.getIm_riga_iniziale()).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
                     }
-                    scadenza.setIm_associato_doc_amm((scadenza.getIm_associato_doc_amm().subtract(importoAssociatoAllaScadenza)).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+                    scadenza.setIm_associato_doc_amm((scadenza.getIm_associato_doc_amm().subtract(importoAssociatoAllaScadenza)).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 					updateImportoAssociatoDocAmm(userContext, scadenza);
 				}
 			}
@@ -513,15 +513,15 @@ private void aggiornaObbligazioniSuCancellazione(
                     if (!obbligs.containsKey(scadenza.getObbligazione()))
                         aggiornaSaldi(userContext, documento, scadenza.getObbligazione(), status);
                     if (!documento.isPassivo_ente())
-                        scadenza.setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+                        scadenza.setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
                     else {
                         for (Iterator r= documento.getDocumento_generico_dettColl().iterator(); r.hasNext();) {
                             Documento_generico_rigaBulk riga= (Documento_generico_rigaBulk) r.next();
                             if (riga.getObbligazione_scadenziario().equalsByPrimaryKey(scadenza))
                                 importoAssociatoAllaScadenza=
-                                    importoAssociatoAllaScadenza.add((riga.getIm_riga_iniziale() == null ? riga.getIm_imponibile() : riga.getIm_riga_iniziale()).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+                                    importoAssociatoAllaScadenza.add((riga.getIm_riga_iniziale() == null ? riga.getIm_imponibile() : riga.getIm_riga_iniziale()).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
                         }
-                        scadenza.setIm_associato_doc_amm((scadenza.getIm_associato_doc_amm().subtract(importoAssociatoAllaScadenza)).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+                        scadenza.setIm_associato_doc_amm((scadenza.getIm_associato_doc_amm().subtract(importoAssociatoAllaScadenza)).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
                     }
                     updateImportoAssociatoDocAmm(userContext, scadenza);
                 }
@@ -643,7 +643,7 @@ private void basicAggiornaLetteraPagamentoEstero(
 
 	if (lettera == null) return;
 	if (impAssDoc1210 == null)
-		impAssDoc1210 = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+		impAssDoc1210 = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 		
 	if (lettera.getSospesiCancellati() != null && !lettera.getSospesiCancellati().isEmpty())
 		for (Iterator i = lettera.getSospesiCancellati().iterator(); i.hasNext();) {
@@ -670,11 +670,11 @@ private java.math.BigDecimal calcolaTotale(it.cnr.jada.UserContext userContext, 
         //if (Documento_generico_rigaBulk.STATO_INIZIALE.equals(riga.getStato_cofi()))
             //numeroDiRigheNonContabilizzate++;
         if (riga.getIm_riga() != null) {
-            importo= importo.add(riga.getIm_riga()).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
-            riga.setIm_riga(riga.getIm_riga().setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+            importo= importo.add(riga.getIm_riga()).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
+            riga.setIm_riga(riga.getIm_riga().setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
         }
     }
-    importo.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+    importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 
     return importo;
 }
@@ -687,7 +687,7 @@ private java.math.BigDecimal calcolaTotaleAccertamentoPer(
 
 	AccertamentiTable accertamentiHash = documento.getDocumento_generico_accertamentiHash();
 	Vector dettagli = (Vector)accertamentiHash.get(scadenza);
-	java.math.BigDecimal impTotaleDettagli = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	java.math.BigDecimal impTotaleDettagli = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	impTotaleDettagli = calcolaTotalePer(userContext,dettagli, tipoTot);
 
 	if (tipoTot.equals(TIPO_TOTALE_PARZIALE)&&documento.getCrudStatus()!=OggettoBulk.TO_BE_CREATED) {
@@ -739,7 +739,7 @@ private java.math.BigDecimal calcolaTotaleEntePer(java.util.List selectedModels)
 		}
 	}
 
-	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	return importo;
 }
 private java.math.BigDecimal calcolaTotaleObbligazioneEntePer(
@@ -750,7 +750,7 @@ private java.math.BigDecimal calcolaTotaleObbligazioneEntePer(
 
 	ObbligazioniTable obbligazioniHash = documento.getDocumento_generico_obbligazioniHash();
 	Vector dettagli = (Vector)obbligazioniHash.get(scadenza);
-	java.math.BigDecimal impTotaleDettagli = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	java.math.BigDecimal impTotaleDettagli = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 
 		impTotaleDettagli = calcolaTotaleEntePer(dettagli);
 
@@ -764,7 +764,7 @@ private java.math.BigDecimal calcolaTotaleAccertamentoEntePer(
 
 		AccertamentiTable accertamentiHash = documento.getDocumento_generico_accertamentiHash();
 		Vector dettagli = (Vector)accertamentiHash.get(scadenza);
-		java.math.BigDecimal impTotaleDettagli = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+		java.math.BigDecimal impTotaleDettagli = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 
 		impTotaleDettagli = calcolaTotalePer(userContext,dettagli,TIPO_TOTALE_COMPLETO);
 
@@ -778,7 +778,7 @@ private java.math.BigDecimal calcolaTotaleObbligazionePer(
 
 	ObbligazioniTable obbligazioniHash = documento.getDocumento_generico_obbligazioniHash();
 	Vector dettagli = (Vector)obbligazioniHash.get(scadenza);
-	java.math.BigDecimal impTotaleDettagli = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	java.math.BigDecimal impTotaleDettagli = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 
 		impTotaleDettagli = calcolaTotalePer(userContext,dettagli, TIPO_TOTALE_COMPLETO);
 
@@ -817,7 +817,7 @@ private java.math.BigDecimal calcolaTotalePer(it.cnr.jada.UserContext userContex
 		}
 	}
 
-	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	return importo;
 }
 //^^@@
@@ -858,15 +858,15 @@ public IDocumentoAmministrativoBulk calcoloConsuntivi(UserContext aUC, IDocument
         if (!riga.isAnnullato()) {
             if (riga.getIm_riga() != null && riga.getIm_riga_divisa()!=null) {
 	            if (documento.getValuta().getFl_calcola_con_diviso().booleanValue())
-	                riga.setIm_riga(riga.getIm_riga_divisa().divide(documento.getCambio(),BigDecimal.ROUND_UP).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	                riga.setIm_riga(riga.getIm_riga_divisa().divide(documento.getCambio(),BigDecimal.ROUND_UP).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	            else
-	                riga.setIm_riga(riga.getIm_riga_divisa().multiply(documento.getCambio()).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-                importo= importo.add(riga.getIm_riga()).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);                
+	                riga.setIm_riga(riga.getIm_riga_divisa().multiply(documento.getCambio()).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+                importo= importo.add(riga.getIm_riga()).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);                
             }
         }
     }
 
-    documento.setIm_totale(importo.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+    documento.setIm_totale(importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
     return documento;
 }
 private void callRiportaAvanti(
@@ -1254,12 +1254,12 @@ public Documento_genericoBulk cercaCambio(it.cnr.jada.UserContext uc, Documento_
     //java.util.Collection dettagli= (java.util.Collection) genericoBulk.getDocumento_generico_dettColl();
     //for (java.util.Iterator i= dettagli.iterator(); i.hasNext();) {
     //Documento_generico_rigaBulk dettaglio= (Documento_generico_rigaBulk) i.next();
-    //dettaglio.setIm_riga((dettaglio.getIm_riga_divisa() != null ? dettaglio.getIm_riga_divisa() : new java.math.BigDecimal(0)).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+    //dettaglio.setIm_riga((dettaglio.getIm_riga_divisa() != null ? dettaglio.getIm_riga_divisa() : new java.math.BigDecimal(0)).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
     //java.math.BigDecimal imp_divisa= new java.math.BigDecimal(0);
     //if (dettaglio.getIm_riga().compareTo(new java.math.BigDecimal(0)) != 0)
     //imp_divisa=
-    //(genericoBulk.getChangeOperation() == genericoBulk_passivaBulk.MOLTIPLICA) ? dettaglio.getIm_riga().multiply(change) : dettaglio.getIm_riga().divide(change, java.math.BigDecimal.ROUND_HALF_EVEN);
-    //dettaglio.setIm_riga(imp_divisa.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+    //(genericoBulk.getChangeOperation() == genericoBulk_passivaBulk.MOLTIPLICA) ? dettaglio.getIm_riga().multiply(change) : dettaglio.getIm_riga().divide(change, java.math.BigDecimal.ROUND_HALF_UP);
+    //dettaglio.setIm_riga(imp_divisa.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
     //}
     //} else {
     //throw new it.cnr.jada.comp.ApplicationException("Non esiste una valuta per il periodo specificato!");
@@ -1840,7 +1840,7 @@ private void controllaContabilizzazioneDiTutteLeRighe(
 	throws ComponentException {
 
 	int numeroDiRigheNonContabilizzate=0;
-	java.math.BigDecimal importo=new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	java.math.BigDecimal importo=new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	Documento_generico_rigaBulk riga=null;
 
 	//for (java.util.Iterator i = doc.getDocumento_generico_dettColl().iterator(); i.hasNext();) {
@@ -1848,11 +1848,11 @@ private void controllaContabilizzazioneDiTutteLeRighe(
 		//if (Documento_generico_rigaBulk.STATO_INIZIALE.equals(riga.getStato_cofi()))
 			//numeroDiRigheNonContabilizzate++;
 		//if (riga.getIm_riga()!=null){
-			//importo=importo.add(riga.getIm_riga()).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
-			//riga.setIm_riga(riga.getIm_riga().setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+			//importo=importo.add(riga.getIm_riga()).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
+			//riga.setIm_riga(riga.getIm_riga().setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 		//}
 	//}
-	//importo.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	//importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	doc.setIm_totale(calcolaTotale(userContext,doc));
 	if (numeroDiRigheNonContabilizzate==1)
 		if (riga.getDs_riga()!=null)	
@@ -1924,7 +1924,7 @@ public void controllaQuadraturaAccertamenti(UserContext aUC,Documento_genericoBu
                 
 				controllaOmogeneitaTraTerzi(aUC, scadenza, (Vector)accertamentiHash.get(scadenza));
 
-				java.math.BigDecimal totale = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+				java.math.BigDecimal totale = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
                 java.math.BigDecimal delta = null;              
                 totale = calcolaTotaleAccertamentoPer(aUC, scadenza, doc, TIPO_TOTALE_COMPLETO);
                 delta = scadenza.getIm_scadenza().subtract(totale);
@@ -1965,7 +1965,7 @@ public void controllaQuadraturaObbligazioni(UserContext aUC, Documento_genericoB
         if (doc.getLettera_pagamento_estero() != null
             && doc.getLettera_pagamento_estero().getIm_pagamento() != null
             && doc.getLettera_pagamento_estero().getIm_pagamento().compareTo(
-                new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN))
+                new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP))
                 != 0
             && doc.getLettera_pagamento_estero().getIm_pagamento().compareTo(doc.getIm_totale()) != 0) {
             throw new it.cnr.jada.comp.ApplicationException(
@@ -1978,7 +1978,7 @@ public void controllaQuadraturaObbligazioni(UserContext aUC, Documento_genericoB
                 
                 controllaOmogeneitaTraTerzi(aUC, scadenza, (Vector)obbligazioniHash.get(scadenza));
 
-				java.math.BigDecimal totale = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+				java.math.BigDecimal totale = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
                 java.math.BigDecimal delta = null;              
                 totale = calcolaTotaleObbligazionePer(aUC, scadenza, doc); //.abs();
                 delta = scadenza.getIm_scadenza().subtract(totale);
@@ -2041,17 +2041,15 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 //^^@@
 public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext userContext, it.cnr.jada.bulk.OggettoBulk bulk, it.cnr.contab.doccont00.core.bulk.OptionRequestParameter status)
     throws it.cnr.jada.comp.ComponentException {
-
+	
     Documento_genericoBulk documento= (Documento_genericoBulk) bulk;
-
     try {
+    
         // controlla che la data di registrazione sia successiava all'ultima data di registrazione inserita
         java.sql.Timestamp ultimaRegistrazione= ((Documento_genericoHome) getHome(userContext, Documento_genericoBulk.class)).findForMaxDataRegistrazione(userContext, documento);
         if (ultimaRegistrazione != null && documento.getData_registrazione().before(ultimaRegistrazione))
             throw new it.cnr.jada.comp.ApplicationException("La data di registrazione non e' valida essendo precedente all'ultima data di registrazione immessa");
-    } catch (it.cnr.jada.persistency.PersistencyException ex) {
-        throw handleException(documento, ex);
-    }
+   
     //effettua il controllo di validazione    
     try {		
 			if (existARowToBeInventoried(userContext,documento)) {
@@ -2068,16 +2066,14 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext userCont
 	}
     Lettera_pagam_esteroBulk lettera = documento.getLettera_pagamento_estero();
 	if (lettera != null) {
-		try {
+		
 			Lettera_pagam_esteroBulk original1210 = (Lettera_pagam_esteroBulk)getHome(userContext, lettera).findByPrimaryKey(lettera);
 			aggiornaLetteraPagamentoEstero(userContext, lettera);
 			if (!documento.isFlagEnte() &&
 				(original1210 == null ||
 				lettera.getIm_pagamento().compareTo(original1210.getIm_pagamento()) != 0))
 				validaDisponibilitaDiCassaCDS(userContext, documento);
-		} catch (it.cnr.jada.persistency.PersistencyException e) {
-			throw handleException(lettera,e);
-		}
+		
 	}
 
     //assegna un progressivo al documento all'atto della creazione.
@@ -2129,6 +2125,10 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext userCont
 	
 	
 	controllaQuadraturaInventario(userContext,documento);
+   
+    } catch (it.cnr.jada.persistency.PersistencyException ex) {
+        throw handleException( ex);
+    }
     return documento;
 }
 //^^@@
@@ -2171,17 +2171,17 @@ private void deleteLogically(UserContext userContext, Documento_genericoBulk doc
                         if (riga instanceof Voidable && ((Voidable) riga).isVoidable()) {
                             ((Voidable) riga).setAnnullato(dataAnnullamento);
                             //if (riga.getDocumento_generico().isGenericoAttivo()) {
-                            //riga.getAccertamento_scadenziario().setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+                            //riga.getAccertamento_scadenziario().setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
                             //updateImportoAssociatoDocAmm(userContext, riga.getAccertamento_scadenziario());
                             //} else {
                             ////if (!riga.getDocumento_generico().isPassivo_ente())
-                            ////riga.getObbligazione_scadenziario().setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+                            ////riga.getObbligazione_scadenziario().setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
                             ////else
                             //if (riga.getDocumento_generico().isPassivo_ente()) {
                             //riga.getObbligazione_scadenziario().setIm_associato_doc_amm(
                             //riga.getObbligazione_scadenziario().getIm_associato_doc_amm().subtract((riga.getIm_riga_iniziale() == null ? riga.getIm_imponibile() : riga.getIm_riga_iniziale())).setScale(
                             //2,
-                            //java.math.BigDecimal.ROUND_HALF_EVEN));
+                            //java.math.BigDecimal.ROUND_HALF_UP));
                             //updateImportoAssociatoDocAmm(userContext, riga.getObbligazione_scadenziario());
                             //}
                             //}
@@ -3630,7 +3630,7 @@ private void liberaSospeso(UserContext userContext,SospesoBulk sospeso) throws C
 	try {
 		if (sospeso != null) {
 			SospesoHome sospesoHome = (SospesoHome)getHome(userContext, SospesoBulk.class);
-			sospeso.setIm_ass_mod_1210(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+			sospeso.setIm_ass_mod_1210(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 			sospeso.setToBeUpdated();
 			sospesoHome.aggiornaImportoAssociatoMod1210(sospeso);
 		}
@@ -5444,7 +5444,7 @@ private void aggiornaCarichiInventario(UserContext userContext,Documento_generic
 									WorkpackageBulk linea_att =dett.getLinea_attivita();
 								if (linea_att.getCd_centro_responsabilita()==cdraggr.getCodice()){
 								if ( dett.getObbligazione_scadenzario().getIm_scadenza().doubleValue() != 0)
-								     dett.setPrc((dett.getIm_voce().multiply( new BigDecimal(100)).divide(dett.getObbligazione_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_EVEN)));
+								     dett.setPrc((dett.getIm_voce().multiply( new BigDecimal(100)).divide(dett.getObbligazione_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_UP)));
 								if ( dett.getPrc()!=null && dett.getPrc().compareTo(new BigDecimal(0))!=0 && dett.getObbligazione_scadenzario().getIm_associato_doc_amm().doubleValue()!=0) {						    	
 									it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laBulk new_utilizzatore_la
 									= new it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laBulk(linea_att.getCd_linea_attivita(),linea_att.getCd_centro_responsabilita(),

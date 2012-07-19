@@ -272,7 +272,7 @@ public boolean isDoc1210Associato() {
 
 	return	getLettera_pagamento_estero() != null &&
 			getLettera_pagamento_estero().getIm_pagamento() != null &&
-			getLettera_pagamento_estero().getIm_pagamento().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) != 0;
+			getLettera_pagamento_estero().getIm_pagamento().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0;
 }
 public boolean isEditable() {
 	try{

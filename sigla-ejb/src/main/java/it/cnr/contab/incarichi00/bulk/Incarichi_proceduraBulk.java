@@ -819,7 +819,7 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 				if (!i.hasNext() && this.getImporto_complessivo().subtract(dett.getIm_complessivo_ripartito()).compareTo(Utility.ZERO)!=0)
 					repertorioAnno.setImporto_iniziale(this.getImporto_complessivo().subtract(dett.getIm_complessivo_ripartito()));
 				else
-					repertorioAnno.setImporto_iniziale(proceduraAnno.getImporto_iniziale().divide(new BigDecimal(this.getNr_contratti()),2,java.math.BigDecimal.ROUND_HALF_EVEN));
+					repertorioAnno.setImporto_iniziale(proceduraAnno.getImporto_iniziale().divide(new BigDecimal(this.getNr_contratti()),2,java.math.BigDecimal.ROUND_HALF_UP));
 				repertorioAnno.setImporto_complessivo(repertorioAnno.getImporto_iniziale());
 				repertorioAnno.setAnniList(proceduraAnno.getAnniList());
 			}

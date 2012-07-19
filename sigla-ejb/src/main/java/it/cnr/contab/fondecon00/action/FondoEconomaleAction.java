@@ -67,7 +67,7 @@ private java.math.BigDecimal calcolaTotaleSpesePer(
 	it.cnr.jada.action.ActionContext context, 
 	java.util.List spese) {
 
-	java.math.BigDecimal somma = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	java.math.BigDecimal somma = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	if (spese != null && !spese.isEmpty())
 		for (java.util.Iterator i = spese.iterator(); i.hasNext();)
 			somma = somma.add(((Fondo_spesaBulk)i.next()).getIm_ammontare_spesa());
@@ -472,9 +472,9 @@ public Forward doBringBackSearchMandato(ActionContext context,
 				fondo.setIm_ammontare_fondo(importo);
 				fondo.setIm_ammontare_iniziale(importo);
 				fondo.setIm_residuo_fondo(importo);
-				fondo.setIm_totale_reintegri(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-				fondo.setIm_totale_spese(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-				fondo.setIm_totale_netto_spese(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+				fondo.setIm_totale_reintegri(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+				fondo.setIm_totale_spese(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+				fondo.setIm_totale_netto_spese(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 			} else
 				fondo.setMandato(mandatoTrovato);
 		} 
@@ -532,7 +532,7 @@ public it.cnr.jada.action.Forward doCalcolaTotaleSpesePerObblig(it.cnr.jada.acti
 											context.getUserContext(),
 											fondo,
 											fondo.getScadenza_ricerca());
-		if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN).compareTo(tot) != 0) {
+		if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(tot) != 0) {
 			if (fondo.getScadenza_ricerca().getIm_scadenza().compareTo(tot) != 0)
 				fondo.setSquared(Boolean.FALSE);
 			else
@@ -1034,7 +1034,7 @@ private void resetRicercaSpese(
 	Fondo_economaleBulk fondo) {
 
 	if (fondo != null) {
-		java.math.BigDecimal tot = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+		java.math.BigDecimal tot = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 		fondo.setImporto_totale_scadenze_non_doc(tot);
 		fondo.setSpesaReintegrata(fondo.IGNORA);
 		fondo.setSpesaDocumentata(fondo.IGNORA);

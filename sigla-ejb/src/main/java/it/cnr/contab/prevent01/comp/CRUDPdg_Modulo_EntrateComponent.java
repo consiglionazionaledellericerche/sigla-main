@@ -231,7 +231,7 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext userContext,OggettoBu
 			return testata;
 
 		java.math.BigDecimal totale= new java.math.BigDecimal(0);
-		totale= totale.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+		totale= totale.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 
 		try {
 			for (Iterator i= dettaglio.iterator(); i.hasNext();) {

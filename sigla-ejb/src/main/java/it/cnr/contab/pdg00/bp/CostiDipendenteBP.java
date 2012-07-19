@@ -593,9 +593,9 @@ if (matricola_src.getTi_rapporto().equalsIgnoreCase(Costo_del_dipendenteBulk.TI_
 			java.math.BigDecimal prc_a3 = BD_100.subtract(matricola.getTotale_prc_ripartito_a3());
 
 			// Calcolo della percentuale ripartita per ogni anno
-			prc_a1 = prc_a1.divide(BD_LATT_S,2,java.math.BigDecimal.ROUND_HALF_EVEN);
-			prc_a2 = prc_a2.divide(BD_LATT_S,2,java.math.BigDecimal.ROUND_HALF_EVEN);
-			prc_a3 = prc_a3.divide(BD_LATT_S,2,java.math.BigDecimal.ROUND_HALF_EVEN);
+			prc_a1 = prc_a1.divide(BD_LATT_S,2,java.math.BigDecimal.ROUND_HALF_UP);
+			prc_a2 = prc_a2.divide(BD_LATT_S,2,java.math.BigDecimal.ROUND_HALF_UP);
+			prc_a3 = prc_a3.divide(BD_LATT_S,2,java.math.BigDecimal.ROUND_HALF_UP);
 
 			if ((matricola.getMese()==0 && (prc_a1.compareTo(BigDecimal.ZERO)!=0 || 
 											prc_a2.compareTo(BigDecimal.ZERO)!=0 ||

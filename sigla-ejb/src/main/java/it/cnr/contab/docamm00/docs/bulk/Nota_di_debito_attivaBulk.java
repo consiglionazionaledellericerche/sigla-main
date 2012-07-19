@@ -117,7 +117,7 @@ public void copyFrom(
 
 	setBanca_uo(fattura_attiva.getBanca_uo());
 	
-	setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	setFl_stampa(Boolean.FALSE);
 	setModalita_trasportoColl(fattura_attiva.getModalita_trasportoColl());
 	setCondizione_consegnaColl(fattura_attiva.getCondizione_consegnaColl());

@@ -95,17 +95,17 @@ public void calcolaCampiDiRiga() {
 	if (getPrezzo_unitario() == null) setPrezzo_unitario(new java.math.BigDecimal(0));
 	if (getIm_iva() == null) setIm_iva(new java.math.BigDecimal(0));
 
-	setIm_totale_divisa(getQuantita().multiply(getPrezzo_unitario()).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	setIm_totale_divisa(getQuantita().multiply(getPrezzo_unitario()).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	java.math.BigDecimal imp_divisa = new java.math.BigDecimal(0);
 	java.math.BigDecimal change = getFattura_attiva().getCambio();
 	imp_divisa = (getFattura_attiva().getChangeOperation() == Fattura_attivaBulk.MOLTIPLICA) ?
 						getIm_totale_divisa().multiply(change) :
-						getIm_totale_divisa().divide(change, java.math.BigDecimal.ROUND_HALF_EVEN);
-	setIm_imponibile(imp_divisa.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+						getIm_totale_divisa().divide(change, java.math.BigDecimal.ROUND_HALF_UP);
+	setIm_imponibile(imp_divisa.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	if (getFl_iva_forzata() == null) setFl_iva_forzata(Boolean.FALSE);
 	if (!getFl_iva_forzata().booleanValue()) {
 		if (voce_iva != null && voce_iva.getPercentuale() != null)
-			setIm_iva(imp_divisa.multiply(voce_iva.getPercentuale()).divide(new java.math.BigDecimal(100), 2, java.math.BigDecimal.ROUND_HALF_EVEN));
+			setIm_iva(imp_divisa.multiply(voce_iva.getPercentuale()).divide(new java.math.BigDecimal(100), 2, java.math.BigDecimal.ROUND_HALF_UP));
 		else
 			setIm_iva(new java.math.BigDecimal(0));
 	}
@@ -122,11 +122,11 @@ public void calcolaTotaliDiRigaForzaIva() {
     //setIm_imponibile(
         //getQuantita().multiply(getPrezzo_unitario()).setScale(
             //2,
-            //java.math.BigDecimal.ROUND_HALF_EVEN));
+            //java.math.BigDecimal.ROUND_HALF_UP));
    //setIm_totale_divisa(
             //(getIm_imponibile().add(getIm_iva())).setScale(
                 //2,
-                //java.math.BigDecimal.ROUND_HALF_EVEN));
+                //java.math.BigDecimal.ROUND_HALF_UP));
     //}
 }
 public boolean checkIfRiportata() {

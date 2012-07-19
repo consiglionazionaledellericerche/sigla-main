@@ -251,7 +251,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			 * /* calcolo la percentuale di ripartizione if (
 			 * scadenza.getIm_scadenza().compareTo( new BigDecimal(0)) != 0 )
 			 * prc = riga.getIm_mandato_riga().divide(
-			 * scadenza.getIm_scadenza(), 8,BigDecimal.ROUND_HALF_EVEN); else
+			 * scadenza.getIm_scadenza(), 8,BigDecimal.ROUND_HALF_UP); else
 			 * prc = new java.math.BigDecimal(0);
 			 */
 

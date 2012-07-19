@@ -231,7 +231,7 @@ public BigDecimal getPrc()
 	if ( !accertamento_scadenzario.getAccertamento().getFl_calcolo_automatico().booleanValue() )
 	{
 		if ( getIm_voce() != null && accertamento_scadenzario.getIm_scadenza() != null && accertamento_scadenzario.getIm_scadenza().doubleValue() != 0)
-			return  getIm_voce().multiply( new BigDecimal(100)).divide( getAccertamento_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_EVEN );
+			return  getIm_voce().multiply( new BigDecimal(100)).divide( getAccertamento_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_UP );
 		else
 			return null;	
 	}		

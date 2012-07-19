@@ -127,7 +127,7 @@ public java.lang.Long getNr_scadenza() {
 		setUser(context.getUserInfo().getUserid());
 		setCd_unita_organizzativa(it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(context.getUserContext()));
 		setData_scadenziario(getCurrentDate());
-		setIm_importo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+		setIm_importo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 		setEsercizio_ori_obbligazione(null);
 		setNr_obbligazione(null);
 		

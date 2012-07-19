@@ -1372,10 +1372,10 @@ public ObbligazioneBulk refreshNuoveLineeAttivitaColl( ObbligazioneBulk obbligaz
 			if ( osv.getObbligazione_scadenzario().getIm_scadenza().compareTo( new BigDecimal(0)) == 0 )
 			{
 				double nrDettagli = scadenza.getObbligazione_scad_voceColl().size();
-				nuovaLatt.setPrcImputazioneFin( new BigDecimal(100).divide( new BigDecimal( nrDettagli), 2, BigDecimal.ROUND_HALF_EVEN) );	
+				nuovaLatt.setPrcImputazioneFin( new BigDecimal(100).divide( new BigDecimal( nrDettagli), 2, BigDecimal.ROUND_HALF_UP) );	
 			}		
 			else
-				nuovaLatt.setPrcImputazioneFin( osv.getIm_voce().multiply( new BigDecimal(100)).divide( osv.getObbligazione_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_EVEN ));
+				nuovaLatt.setPrcImputazioneFin( osv.getIm_voce().multiply( new BigDecimal(100)).divide( osv.getObbligazione_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_UP ));
 			nuovaLatt.setObbligazione( obbligazione );
 			nuoveLineeAttivitaColl.add( nuovaLatt );
 			

@@ -583,7 +583,7 @@ private void validaSpesa(it.cnr.jada.UserContext userContext, Fondo_spesaBulk sp
 
 	if(spesa.getIm_ammontare_spesa() == null)
 		throw new it.cnr.jada.comp.ApplicationException("Specificare l'importo della spesa!");
-	if(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN).compareTo(spesa.getIm_ammontare_spesa()) >= 0)
+	if(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(spesa.getIm_ammontare_spesa()) >= 0)
 		throw new it.cnr.jada.comp.ApplicationException("L'importo della spesa deve essere positivo e diverso da 0!");
 
 	if(spesa.getDt_spesa() == null)

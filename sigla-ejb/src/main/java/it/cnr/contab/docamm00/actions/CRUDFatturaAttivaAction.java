@@ -91,7 +91,7 @@ private java.util.Vector basicAddDetailsTo(ActionContext context, CRUDNotaDiCred
 	}
 
 	if (!addedElements.isEmpty()) {
-		notaDiCredito.setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+		notaDiCredito.setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP ));
 	}
 	return addedElements;
 }
@@ -135,7 +135,7 @@ private java.util.Vector basicAddDetailsTo(ActionContext context, CRUDNotaDiDebi
 	}
 	
 	if (!addedElements.isEmpty()) {		
-		notaDiDebito.setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+		notaDiDebito.setIm_totale_fattura(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP ));
 	}
 	return addedElements;
 }
@@ -158,7 +158,7 @@ protected void basicCalcolaImportoDisponibileNC(
 	Fattura_attiva_rigaIBulk rigaFP = (Fattura_attiva_rigaIBulk)riga;
 	if (rigaFP.getQuantita() == null) rigaFP.setQuantita(new java.math.BigDecimal(1));
 	if (rigaFP.getPrezzo_unitario() == null) rigaFP.setPrezzo_unitario(new java.math.BigDecimal(0));
-	if (rigaFP.getIm_iva() == null) rigaFP.setIm_iva(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	if (rigaFP.getIm_iva() == null) rigaFP.setIm_iva(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP ));
 
 	java.math.BigDecimal nuovoTotale = rigaFP.getIm_imponibile().add(rigaFP.getIm_iva());
 	java.util.HashMap stroni = rigaFP.getFattura_attivaI().getStorniHashMap();
@@ -348,7 +348,7 @@ protected void basicDoCalcolaTotaliDiRiga(
 
 	if (riga.getQuantita() == null) riga.setQuantita(new java.math.BigDecimal(1));
 	if (riga.getPrezzo_unitario() == null) riga.setPrezzo_unitario(new java.math.BigDecimal(0));
-	if (riga.getIm_iva() == null) riga.setIm_iva(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	if (riga.getIm_iva() == null) riga.setIm_iva(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP ));
 
 	riga.setFl_iva_forzata(Boolean.FALSE);
 	riga.calcolaCampiDiRiga();
@@ -629,8 +629,8 @@ protected java.math.BigDecimal calcolaTotaleSelezionati(java.util.List selectedM
 		for (java.util.Iterator i = selectedModels.iterator(); i.hasNext();) {
 			Fattura_attiva_rigaBulk rigaSelected = (Fattura_attiva_rigaBulk)i.next();
 			java.math.BigDecimal imTotale = rigaSelected.getIm_imponibile().add(rigaSelected.getIm_iva());
-			java.math.BigDecimal imStornati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
-			java.math.BigDecimal imAddebitati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+			java.math.BigDecimal imStornati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP );
+			java.math.BigDecimal imAddebitati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP );
 			if (rigaSelected instanceof Fattura_attiva_rigaIBulk) {
 				imStornati = imStornati.add(((Fattura_attiva_rigaIBulk)rigaSelected).getIm_totale_storni());
 				imAddebitati = imAddebitati.add(((Fattura_attiva_rigaIBulk)rigaSelected).getIm_totale_addebiti());
@@ -639,7 +639,7 @@ protected java.math.BigDecimal calcolaTotaleSelezionati(java.util.List selectedM
 		}
 	}
 
-	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP );
 	return importo;
 }
 private void controllaQuadraturaAccertamenti(ActionContext context, Fattura_attivaBulk fatturaAttiva) 
@@ -1364,10 +1364,10 @@ public Forward doCalcolaTotalePerAccertamento(ActionContext context, Accertament
 			try {
 				fatt.setImportoTotalePerAccertamento(calcolaTotaleSelezionati((java.util.List)fatt.getFattura_attiva_accertamentiHash().get(scadenza)));
 			} catch (it.cnr.jada.comp.ApplicationException e) {
-				fatt.setImportoTotalePerAccertamento(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+				fatt.setImportoTotalePerAccertamento(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP ));
 			}
 		else
-			fatt.setImportoTotalePerAccertamento(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+			fatt.setImportoTotalePerAccertamento(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP ));
 	}
 	return context.findDefaultForward();	
 }
@@ -1598,7 +1598,7 @@ public Forward doForzaIVA(ActionContext context) {
 		fillModel(context);
 		//nel caso l'iva sia nulll imposto 0
 		if (riga.getIm_iva() == null) 
-			riga.setIm_iva(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+			riga.setIm_iva(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP ));
 		//controllo che non sia negativo
 		if (riga.getIm_iva().compareTo(new java.math.BigDecimal(0))<0)
 			throw new it.cnr.jada.comp.ApplicationException("Inserire un valore non negativo!");

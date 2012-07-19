@@ -736,7 +736,7 @@ public Obbligazione_scadenzarioBulk aggiornaScadenzaSuccessivaObbligazione (User
 		if (totaleSelVoci.compareTo(Utility.ZERO)<=0)
 			voceSel.setPrc_da_assegnare(new BigDecimal(0));
 		else
-			voceSel.setPrc_da_assegnare(Utility.nvl(voceSel.getImp_da_assegnare()).divide(totaleSelVoci, 4, java.math.BigDecimal.ROUND_HALF_EVEN).multiply(new BigDecimal(100)));
+			voceSel.setPrc_da_assegnare(Utility.nvl(voceSel.getImp_da_assegnare()).divide(totaleSelVoci, 4, java.math.BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)));
 	}				
 
 	spalmaImportiSuScadenza(aUC, scadenzario, hashVociList);
@@ -886,7 +886,7 @@ protected ObbligazioneBulk calcolaPercentualeImputazioneObbligazione (UserContex
 	for ( Iterator i = obbligazione.getLineeAttivitaSelezionateColl().iterator(); i.hasNext(); )
 	{
 		lattDaPdg = (V_pdg_obbligazione_speBulk) i.next();
-		lattDaPdg.setPrcImputazioneFin( lattDaPdg.getImporto().multiply(percentuale).divide(totaleLattDaPdg, 2, BigDecimal.ROUND_HALF_EVEN) );
+		lattDaPdg.setPrcImputazioneFin( lattDaPdg.getImporto().multiply(percentuale).divide(totaleLattDaPdg, 2, BigDecimal.ROUND_HALF_UP) );
 	}	
 
 	// calcolo gli importi e le percentuali per i dettagli delle scadenze
@@ -906,7 +906,7 @@ protected ObbligazioneBulk calcolaPercentualeImputazioneObbligazione (UserContex
 				if ( lattDaPdg.getCd_centro_responsabilita().equals( osv.getCd_centro_responsabilita()) &&
 					 lattDaPdg.getCd_linea_attivita().equals( osv.getCd_linea_attivita()))
 				{
-					osv.setIm_voce( os.getIm_scadenza().multiply( lattDaPdg.getPrcImputazioneFin()).divide( new BigDecimal(100), 2, BigDecimal.ROUND_HALF_EVEN));
+					osv.setIm_voce( os.getIm_scadenza().multiply( lattDaPdg.getPrcImputazioneFin()).divide( new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP));
 					totalePerScadenza = totalePerScadenza.add( osv.getIm_voce() );
 					if ( os.getIm_scadenza().doubleValue() != 0 )
 						osv.setPrc( lattDaPdg.getPrcImputazioneFin() );
@@ -922,7 +922,7 @@ protected ObbligazioneBulk calcolaPercentualeImputazioneObbligazione (UserContex
 				if ( latt.getLinea_att().getCentro_responsabilita().getCd_centro_responsabilita().equals( osv.getCd_centro_responsabilita()) &&
 					 latt.getLinea_att().getCd_linea_attivita().equals( osv.getCd_linea_attivita()))
 				{
-					osv.setIm_voce( os.getIm_scadenza().multiply(latt.getPrcImputazioneFin()).divide( new BigDecimal(100), 2, BigDecimal.ROUND_HALF_EVEN));
+					osv.setIm_voce( os.getIm_scadenza().multiply(latt.getPrcImputazioneFin()).divide( new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP));
 					totalePerScadenza = totalePerScadenza.add( osv.getIm_voce() );					
 					if ( os.getIm_scadenza().doubleValue() != 0 )
 						osv.setPrc( latt.getPrcImputazioneFin() );
@@ -2528,7 +2528,7 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk obbli
 				Obbligazione_scad_voceBulk osv = (Obbligazione_scad_voceBulk)j.next();
 				osv.setObbligazione_scadenzario( os );
 				if ( os.getIm_scadenza().doubleValue() != 0 )
-					osv.setPrc( (osv.getIm_voce().multiply( new BigDecimal(100)).divide( os.getIm_scadenza(), 2, BigDecimal.ROUND_HALF_EVEN)));
+					osv.setPrc( (osv.getIm_voce().multiply( new BigDecimal(100)).divide( os.getIm_scadenza(), 2, BigDecimal.ROUND_HALF_UP)));
 				else
 					osv.setPrc( new BigDecimal(0))	;
 			}	
@@ -4699,7 +4699,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 		obbligazione.setCd_iniziale_elemento_voce( obbligazione.getCd_elemento_voce());
 		obbligazione.setCd_terzo_iniziale( obbligazione.getCd_terzo());
 
-		BigDecimal totaleSelVoci = new BigDecimal( 0 ).setScale(2,BigDecimal.ROUND_HALF_EVEN);
+		BigDecimal totaleSelVoci = new BigDecimal( 0 ).setScale(2,BigDecimal.ROUND_HALF_UP);
 		
 		//Carico la lista delle voci con gli importi da ripartirre
 		PrimaryKeyHashtable hashVociList = new PrimaryKeyHashtable();  
@@ -4720,7 +4720,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 			for ( Enumeration e = hashVociList.keys(); e.hasMoreElements(); ) 
 			{
 				V_assestatoBulk voceSel = (V_assestatoBulk)e.nextElement();
-				voceSel.setPrc_da_assegnare(Utility.nvl(voceSel.getImp_da_assegnare()).divide(totaleSelVoci, 4, java.math.BigDecimal.ROUND_HALF_EVEN).multiply(new BigDecimal(100)));				
+				voceSel.setPrc_da_assegnare(Utility.nvl(voceSel.getImp_da_assegnare()).divide(totaleSelVoci, 4, java.math.BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)));				
 			}
 		}
 
@@ -4810,7 +4810,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 			for ( Iterator iteratorDel = recDaEliminare.iterator(); iteratorDel.hasNext(); )
 				obbligazione.getObbligazione_scadenzarioColl().remove(iteratorDel.next());
 
-			obbligazione.setIm_obbligazione(impAssegnatoObb.setScale(2,BigDecimal.ROUND_HALF_EVEN));
+			obbligazione.setIm_obbligazione(impAssegnatoObb.setScale(2,BigDecimal.ROUND_HALF_UP));
 			obbligazione.setFl_calcolo_automatico(Boolean.FALSE);
 		} 
 		else
@@ -4875,7 +4875,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 				{
 					//Importo scadenza moltiplicato per la percentuale ottenuto dalla divisione tra
 					//l'importo assegnato al CDR/VOCE/GAE e l'importo totale
-					osv.setIm_voce( prcDaAssegnareVoce.setScale(2,BigDecimal.ROUND_HALF_EVEN));
+					osv.setIm_voce( prcDaAssegnareVoce.setScale(2,BigDecimal.ROUND_HALF_UP));
 
 					//importo assegnato CDR/VOCE/LINEA
 					hashVociList.put(voceSel, ((BigDecimal) hashVociList.get( voceSel )).add(osv.getIm_voce()));
@@ -4912,14 +4912,14 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 					{
 						//Importo scadenza moltiplicato per la percentuale ottenuto dalla divisione tra
 						//l'importo assegnato al CDR/VOCE/GAE e l'importo totale
-						osv.setIm_voce( osv.getIm_voce().add(impDaAssegnareVoce.setScale(2,BigDecimal.ROUND_HALF_EVEN)));
+						osv.setIm_voce( osv.getIm_voce().add(impDaAssegnareVoce.setScale(2,BigDecimal.ROUND_HALF_UP)));
 						osv.setToBeUpdated();
 
 						//importo assegnato CDR/VOCE/LINEA
-						hashVociList.put(voceSel, ((BigDecimal) hashVociList.get( voceSel )).add(impDaAssegnareVoce.setScale(2,BigDecimal.ROUND_HALF_EVEN)));
+						hashVociList.put(voceSel, ((BigDecimal) hashVociList.get( voceSel )).add(impDaAssegnareVoce.setScale(2,BigDecimal.ROUND_HALF_UP)));
 
-						impDaAssegnareScadenza = impDaAssegnareScadenza.subtract(impDaAssegnareVoce.setScale(2,BigDecimal.ROUND_HALF_EVEN));
-						impAssegnatoScadenza = impAssegnatoScadenza.add(impDaAssegnareVoce.setScale(2,BigDecimal.ROUND_HALF_EVEN));
+						impDaAssegnareScadenza = impDaAssegnareScadenza.subtract(impDaAssegnareVoce.setScale(2,BigDecimal.ROUND_HALF_UP));
+						impAssegnatoScadenza = impAssegnatoScadenza.add(impDaAssegnareVoce.setScale(2,BigDecimal.ROUND_HALF_UP));
 
 						break;
 					}
@@ -4927,7 +4927,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 			}
 		}
 			
-		os.setIm_scadenza(impAssegnatoScadenza.setScale(2,BigDecimal.ROUND_HALF_EVEN));
+		os.setIm_scadenza(impAssegnatoScadenza.setScale(2,BigDecimal.ROUND_HALF_UP));
 		
 		if (os.getIm_scadenza().compareTo(os.getIm_associato_doc_amm())==-1)
 			throw new ApplicationException("Non è possibile attribuire all'obbligazione un importo inferiore a quanto "
@@ -4939,7 +4939,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 		{
 			osv = (Obbligazione_scad_voceBulk) j.next();
 			if ( os.getIm_scadenza().doubleValue() != 0 )
-				osv.setPrc( (osv.getIm_voce().multiply( new BigDecimal(100)).divide( os.getIm_scadenza(), 2, BigDecimal.ROUND_HALF_EVEN)));
+				osv.setPrc( (osv.getIm_voce().multiply( new BigDecimal(100)).divide( os.getIm_scadenza(), 2, BigDecimal.ROUND_HALF_UP)));
 			else
 				osv.setPrc( new BigDecimal(0));
 		}
@@ -5089,7 +5089,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 		
 			for (Iterator s = scadenzaVecchia.getObbligazione_scad_voceColl().iterator(); s.hasNext(); ) {
 				Obbligazione_scad_voceBulk osvOld = (Obbligazione_scad_voceBulk)s.next();
-				newImportoOsv = nuovoImportoScadenzaVecchia.multiply(osvOld.getIm_voce()).divide(vecchioImportoScadenzaVecchia, 2, BigDecimal.ROUND_HALF_EVEN); 
+				newImportoOsv = nuovoImportoScadenzaVecchia.multiply(osvOld.getIm_voce()).divide(vecchioImportoScadenzaVecchia, 2, BigDecimal.ROUND_HALF_UP); 
 				
 				for (Iterator n = scadenzaNuova.getObbligazione_scad_voceColl().iterator(); n.hasNext(); ) {
 					Obbligazione_scad_voceBulk osvNew = (Obbligazione_scad_voceBulk)n.next();

@@ -423,7 +423,7 @@ private java.math.BigDecimal callAliquotaMediaIrpef(
 	throws ComponentException {
 
 	LoggableStatement cs = null;
-	java.math.BigDecimal aliquota = new java.math.BigDecimal(0).setScale(6, java.math.BigDecimal.ROUND_HALF_EVEN);
+	java.math.BigDecimal aliquota = new java.math.BigDecimal(0).setScale(6, java.math.BigDecimal.ROUND_HALF_UP);
 
 	try {
 		try	{

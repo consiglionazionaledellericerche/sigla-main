@@ -493,7 +493,7 @@ public class FatturaAttivaComponentWS {
 						   	                    	AssociaValoreParamentro(FatturaElement,"desc_errore",Costanti.erroriFA.get(Costanti.ERRORE_FA_117),0);
 					    	                    }else
 					    	                    {
-				    	                    	rigaFP.setIm_diponibile_nc(nuovoImportoDisponibile.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+				    	                    	rigaFP.setIm_diponibile_nc(nuovoImportoDisponibile.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 				    	                    	((Nota_di_credito_attiva_rigaBulk)riga).setRiga_fattura_associata(rigaFP);
 					    	                    }
 			    	                    	}
@@ -841,7 +841,7 @@ public class FatturaAttivaComponentWS {
 		        	                    	Linea_attivitaBulk nuovaLatt = new it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk();
 		        	            			nuovaLatt.setLinea_att( obb_scad_voce.getLinea_attivita());
 		        	            			if(obb_scad_voce.getObbligazione_scadenzario().getIm_scadenza().compareTo(new BigDecimal(0))!=0)
-		        	            				nuovaLatt.setPrcImputazioneFin( obb_scad_voce.getIm_voce().multiply(new BigDecimal(100)).divide( obb_scad_voce.getObbligazione_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_EVEN ));
+		        	            				nuovaLatt.setPrcImputazioneFin( obb_scad_voce.getIm_voce().multiply(new BigDecimal(100)).divide( obb_scad_voce.getObbligazione_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_UP ));
 		        	            			nuovaLatt.setObbligazione(obb);
 		        	            			obb.getNuoveLineeAttivitaColl().add(nuovaLatt);
 		        	            			obb_scadenza.getObbligazione_scad_voceColl().add((obb_scad_voce));
@@ -1218,7 +1218,7 @@ public class FatturaAttivaComponentWS {
 						    	         if(fatr.getFl_iva_forzata().booleanValue())
 						    	        	 riga.setIm_iva(fatr.getIm_iva());
 						    	         else
-						    	        	 riga.setIm_iva(riga.getIm_imponibile().multiply(riga.getVoce_iva().getPercentuale()).divide(new BigDecimal(100)).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+						    	        	 riga.setIm_iva(riga.getIm_imponibile().multiply(riga.getVoce_iva().getPercentuale()).divide(new BigDecimal(100)).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 						    	         riga.setIm_totale_divisa(riga.getIm_imponibile().add(riga.getIm_iva()));
 						    	         riga.setIm_diponibile_nc(riga.getIm_totale_divisa());
 						    	         riga.setDs_riga_fattura(riga.getTariffario().getDs_tariffario());
@@ -1244,7 +1244,7 @@ public class FatturaAttivaComponentWS {
 		    	                	    if(fatr.getFl_iva_forzata().booleanValue())
 						    	        	 riga.setIm_iva(fatr.getIm_iva());
 						    	         else
-						    	        	 riga.setIm_iva(riga.getIm_imponibile().multiply(riga.getVoce_iva().getPercentuale()).divide(new BigDecimal(100)).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+						    	        	 riga.setIm_iva(riga.getIm_imponibile().multiply(riga.getVoce_iva().getPercentuale()).divide(new BigDecimal(100)).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 			    	                    
 			    	                    riga.setIm_totale_divisa(riga.getIm_imponibile().add(riga.getIm_iva()));
 			    	                    riga.setIm_diponibile_nc(riga.getIm_totale_divisa());
@@ -1264,7 +1264,7 @@ public class FatturaAttivaComponentWS {
 			    	               			if(nuovoImportoDisponibile.compareTo(new BigDecimal("0"))<0)
 			    	               				fat=ValorizzaErrore(fat,Costanti.ERRORE_FA_117.toString());               
 			    	               			else{
-			    	               				rigaFP.setIm_diponibile_nc(nuovoImportoDisponibile.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+			    	               				rigaFP.setIm_diponibile_nc(nuovoImportoDisponibile.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 			    	               				((Nota_di_credito_attiva_rigaBulk)riga).setRiga_fattura_associata(rigaFP);
 			    	               			}
 			    	               		}
@@ -1603,7 +1603,7 @@ public class FatturaAttivaComponentWS {
 					        	                    	Linea_attivitaBulk nuovaLatt = new it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk();
 					        	            		nuovaLatt.setLinea_att( obb_scad_voce.getLinea_attivita());
 					        	            		if(obb_scad_voce.getObbligazione_scadenzario().getIm_scadenza().compareTo(new BigDecimal(0))!=0)
-					        	            			nuovaLatt.setPrcImputazioneFin( obb_scad_voce.getIm_voce().multiply(new BigDecimal(100)).divide( obb_scad_voce.getObbligazione_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_EVEN ));
+					        	            			nuovaLatt.setPrcImputazioneFin( obb_scad_voce.getIm_voce().multiply(new BigDecimal(100)).divide( obb_scad_voce.getObbligazione_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_UP ));
 					        	            			nuovaLatt.setObbligazione(obb);
 					        	            			obb.getNuoveLineeAttivitaColl().add(nuovaLatt);
 					        	            			obb_scadenza.getObbligazione_scad_voceColl().add((obb_scad_voce));

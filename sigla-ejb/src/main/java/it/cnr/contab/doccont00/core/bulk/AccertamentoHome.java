@@ -1278,10 +1278,10 @@ public AccertamentoBulk refreshNuoveLineeAttivitaColl( AccertamentoBulk accertam
 				if ( osv.getAccertamento_scadenzario().getIm_scadenza().compareTo( new BigDecimal(0)) == 0 )
 				{
 					double nrDettagli = scadenza.getAccertamento_scad_voceColl().size();
-					nuovaLatt.setPrcImputazioneFin( new BigDecimal(100).divide( new BigDecimal( nrDettagli), 2, BigDecimal.ROUND_HALF_EVEN) );	
+					nuovaLatt.setPrcImputazioneFin( new BigDecimal(100).divide( new BigDecimal( nrDettagli), 2, BigDecimal.ROUND_HALF_UP) );	
 				}		
 				else
-					nuovaLatt.setPrcImputazioneFin( osv.getIm_voce().multiply( new BigDecimal(100)).divide( osv.getAccertamento_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_EVEN ));
+					nuovaLatt.setPrcImputazioneFin( osv.getIm_voce().multiply( new BigDecimal(100)).divide( osv.getAccertamento_scadenzario().getIm_scadenza(), 2, BigDecimal.ROUND_HALF_UP ));
 				nuovaLatt.setAccertamento( accertamento );
 				nuoveLineeAttivitaColl.add( nuovaLatt );
 			}			

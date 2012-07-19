@@ -145,7 +145,7 @@ public java.math.BigDecimal calcolaTotaleSpese(
 	Obbligazione_scadenzarioBulk scadenza)
 	throws  it.cnr.jada.comp.ComponentException {
 
-	java.math.BigDecimal tot = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	java.math.BigDecimal tot = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	Fondo_spesaHome home = (Fondo_spesaHome)getHome(userContext,Fondo_spesaBulk.class,"V_ASS_OBBSCAD_FONDO_SPESA");
 	SQLBuilder sql = home.getTotaleSpese(fondo, scadenza);
 	try {
@@ -169,7 +169,7 @@ public java.math.BigDecimal calcolaTotaleSpese(
 		throw handleException(ex);
 	}	
 	if (tot == null)
-		tot = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+		tot = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 
 	return tot;
 }
@@ -1010,10 +1010,10 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext, Oggett
 
 	fondo.resetImporti();
 
-	fondo.setIm_max_gg_spesa_doc(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-	fondo.setIm_max_gg_spesa_non_doc(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-	fondo.setIm_max_mm_spesa_doc(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-	fondo.setIm_max_mm_spesa_non_doc(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	fondo.setIm_max_gg_spesa_doc(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+	fondo.setIm_max_gg_spesa_non_doc(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+	fondo.setIm_max_mm_spesa_doc(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+	fondo.setIm_max_mm_spesa_non_doc(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 
 	return bulk;
 }
@@ -1406,7 +1406,7 @@ public SQLBuilder selectMandatoByClause(
 	sql.addSQLClause("AND", "V_ASS_MANDATO_FONDO_ECO.CD_CODICE_FONDO", sql.ISNULL, null);
 	//deve avere un importo pagato diverso da 0
 	sql.openParenthesis("AND");
-	sql.addSQLClause("OR", "V_ASS_MANDATO_FONDO_ECO.IM_PAGATO", sql.NOT_EQUALS, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+	sql.addSQLClause("OR", "V_ASS_MANDATO_FONDO_ECO.IM_PAGATO", sql.NOT_EQUALS, new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	sql.addSQLClause("AND", "V_ASS_MANDATO_FONDO_ECO.IM_PAGATO", sql.ISNOTNULL, null);
 	sql.addSQLClause("AND", "V_ASS_MANDATO_FONDO_ECO.TI_APERTURA_INCREMENTO", sql.ISNULL, null);
 	sql.closeParenthesis();
@@ -1461,7 +1461,7 @@ public SQLBuilder selectScadenza_ricercaByClause(
 	sql.addSQLClause("AND","OBBLIGAZIONE.DT_CANCELLAZIONE", sql.ISNULL, null);
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_SCADENZA", sql.NOT_EQUALS, new java.math.BigDecimal(0));
 	sql.addSQLClause("AND","OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM <> ? OR OBBLIGAZIONE_SCADENZARIO.IM_ASSOCIATO_DOC_AMM IS NOT NULL");
-	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN),java.sql.Types.DECIMAL,2);
+	sql.addParameter(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP),java.sql.Types.DECIMAL,2);
 
 	if (scadenza.getObbligazione().getCreditore() != null)
 		sql.addSQLClause("AND","OBBLIGAZIONE.CD_TERZO",sql.EQUALS, scadenza.getObbligazione().getCreditore().getCd_terzo());

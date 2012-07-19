@@ -344,10 +344,10 @@ public class Buono_carico_scaricoBulk extends Buono_carico_scaricoBase {
 						// Assegna il Prezzo unitario: il prezzo Þ diverso a seconda che il dettaglio della Fattura sia ISTITUZIONALE o COMMERCIALE
 						if (rigoFattura.getTi_istituz_commerc().equals(rigoFattura.ISTITUZIONALE)){
 							valore_unitario = rigoFattura.getIm_imponibile().add(rigoFattura.getIm_iva());
-							valore_unitario = valore_unitario.divide(rigoFattura.getQuantita(), 2 ,java.math.BigDecimal.ROUND_HALF_EVEN);
+							valore_unitario = valore_unitario.divide(rigoFattura.getQuantita(), 2 ,java.math.BigDecimal.ROUND_HALF_UP);
 							rigoInventario.setValore_unitario(valore_unitario);				
 						} else {
-							valore_unitario = rigoFattura.getIm_imponibile().divide(rigoFattura.getQuantita(), 2 ,java.math.BigDecimal.ROUND_HALF_EVEN);
+							valore_unitario = rigoFattura.getIm_imponibile().divide(rigoFattura.getQuantita(), 2 ,java.math.BigDecimal.ROUND_HALF_UP);
 							rigoInventario.setValore_unitario(valore_unitario);
 						}			
 						

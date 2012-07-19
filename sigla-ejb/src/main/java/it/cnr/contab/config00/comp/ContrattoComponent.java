@@ -531,7 +531,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			  sql = testataHome.calcolaTotAccertamenti( userContext, contratto);
 			else if (contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_PASSIVO))
 			  sql = testataHome.calcolaTotObbligazioni( userContext, contratto);
-			java.math.BigDecimal tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+			java.math.BigDecimal tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 			contratto.setTot_doc_cont_etr( tot_doc_cont );
 			contratto.setTot_doc_cont_spe( tot_doc_cont );
 			try {
@@ -555,7 +555,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				throw handleException(ex);
 			}	
 			if (tot_doc_cont == null)
-			  tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+			  tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 			if(contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_ATTIVO))  						  
 			   contratto.setTot_doc_cont_etr( tot_doc_cont );
 			else if (contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_PASSIVO))
@@ -592,7 +592,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			sqlEtr = testataHome.calcolaTotAccertamentiPadre( userContext, contratto);
 			sqlSpe = testataHome.calcolaTotObbligazioniPadre( userContext, contratto);
 			
-			java.math.BigDecimal tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+			java.math.BigDecimal tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 			contratto.setTot_doc_cont_etr( tot_doc_cont );
 			contratto.setTot_doc_cont_spe( tot_doc_cont );
 			try {
@@ -616,7 +616,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				throw handleException(ex);
 			}	
 			if (tot_doc_cont == null)
-			  tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+			  tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 			contratto.setTot_doc_cont_etr( tot_doc_cont );
 			
 			try {
@@ -640,7 +640,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				throw handleException(ex);
 			}	
 			if (tot_doc_cont == null)
-			  tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+			  tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 			contratto.setTot_doc_cont_spe( tot_doc_cont );			
 			return contratto;		
 		}
@@ -674,7 +674,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			sqlEtr = testataHome.calcolaTotAccertamenti( userContext, contratto);
 			sqlSpe = testataHome.calcolaTotObbligazioni( userContext, contratto);
 			
-			java.math.BigDecimal tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+			java.math.BigDecimal tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 			contratto.setTot_doc_cont_etr( tot_doc_cont );
 			contratto.setTot_doc_cont_spe( tot_doc_cont );
 			try {
@@ -698,7 +698,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				throw handleException(ex);
 			}	
 			if (tot_doc_cont == null)
-			  tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+			  tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 			contratto.setTot_doc_cont_etr( tot_doc_cont );
 			
 			try {
@@ -722,7 +722,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				throw handleException(ex);
 			}	
 			if (tot_doc_cont == null)
-			  tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+			  tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 			contratto.setTot_doc_cont_spe( tot_doc_cont );			
 			return contratto;		
 		}

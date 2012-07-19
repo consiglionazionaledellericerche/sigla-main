@@ -69,7 +69,7 @@ public class RepertorioLimitiComponent extends CRUDComponent implements ICRUDMgr
 						/*valorizzo la percentuale se trattasi di uo ente*/
 						if (isUoEnte) {
 							if (Utility.nvl(replim.getImporto_limite()).compareTo(Utility.ZERO)==1) {
-								inccds.setPrc_utilizzato(Utility.nvl(inccds.getIm_incarichi()).divide(Utility.nvl(replim.getImporto_limite()), 4, java.math.BigDecimal.ROUND_HALF_EVEN).multiply(new BigDecimal(100)));
+								inccds.setPrc_utilizzato(Utility.nvl(inccds.getIm_incarichi()).divide(Utility.nvl(replim.getImporto_limite()), 4, java.math.BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)));
 								totalePrcCds = totalePrcCds.add( inccds.getPrc_utilizzato() );
 							}
 							else
@@ -89,7 +89,7 @@ public class RepertorioLimitiComponent extends CRUDComponent implements ICRUDMgr
 							if (Utility.nvl(inccds.getIm_incarichi()).compareTo(Utility.ZERO)==1)
 								if (x.hasNext())
 								{
-									incuo.setPrc_utilizzato(Utility.nvl(incuo.getIm_incarichi()).divide(Utility.nvl(inccds.getIm_incarichi()), 4, java.math.BigDecimal.ROUND_HALF_EVEN).multiply(new BigDecimal(100)));
+									incuo.setPrc_utilizzato(Utility.nvl(incuo.getIm_incarichi()).divide(Utility.nvl(inccds.getIm_incarichi()), 4, java.math.BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)));
 									totalePrcUo = totalePrcUo.add( incuo.getPrc_utilizzato() );
 								}
 								else
@@ -229,7 +229,7 @@ public class RepertorioLimitiComponent extends CRUDComponent implements ICRUDMgr
 			
 			reperBulk = findAndLock( userContext, reperBulk.getEsercizio(), reperBulk.getCd_tipo_limite());
 
-			importo = importo.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+			importo = importo.setScale(2, BigDecimal.ROUND_HALF_UP);
 
 			if (reperBulk.getFl_raggiunto_limite() && importo.compareTo(Utility.ZERO)==1)
 				  throw new ApplicationException(

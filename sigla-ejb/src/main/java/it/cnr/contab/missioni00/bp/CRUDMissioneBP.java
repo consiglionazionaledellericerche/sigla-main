@@ -522,7 +522,7 @@ public void confermaSpesa(ActionContext context) throws BusinessProcessException
 			
 			if(!spesa.isRimborsoKm())
 			{
-				java.math.BigDecimal importoGiornaliero = spesa.getIm_spesa_divisa().divide(new java.math.BigDecimal(nGiorni), java.math.BigDecimal.ROUND_HALF_EVEN);
+				java.math.BigDecimal importoGiornaliero = spesa.getIm_spesa_divisa().divide(new java.math.BigDecimal(nGiorni), java.math.BigDecimal.ROUND_HALF_UP);
 				if(importoGiornaliero.compareTo(new java.math.BigDecimal(0)) < 1)
 					throw new it.cnr.jada.comp.ApplicationException( "L'importo giornaliero della spesa e' nullo!" );
 					
@@ -533,7 +533,7 @@ public void confermaSpesa(ActionContext context) throws BusinessProcessException
 			}		
 			else
 			{
-				java.math.BigDecimal kmGiornalieri = spesa.getChilometri().divide(new java.math.BigDecimal(nGiorni), java.math.BigDecimal.ROUND_HALF_EVEN);
+				java.math.BigDecimal kmGiornalieri = spesa.getChilometri().divide(new java.math.BigDecimal(nGiorni), java.math.BigDecimal.ROUND_HALF_UP);
 				if(kmGiornalieri.compareTo(new java.math.BigDecimal(0)) < 1)
 					throw new it.cnr.jada.comp.ApplicationException( "Il numero giornaliero dei chilometri e' nullo!" );
 					
@@ -1979,7 +1979,7 @@ public void setCambioSpesaDefault(ActionContext context, Missione_dettaglioBulk 
 	else
 	{
 		spesa.setCambio_spesa(cambio.getCambio());
-		spesa.setCambio_spesa(spesa.getCambio_spesa().setScale(3, java.math.BigDecimal.ROUND_HALF_EVEN));
+		spesa.setCambio_spesa(spesa.getCambio_spesa().setScale(3, java.math.BigDecimal.ROUND_HALF_UP));
 	}	
 	return;	
 }

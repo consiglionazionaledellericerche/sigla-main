@@ -184,7 +184,7 @@ public void completeFrom(
 		}
 	}
 
-	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN);
+	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	
 	Obbligazione_scadenzarioBulk scadenza = new Obbligazione_scadenzarioBulk(this);
 	scadenza.setUser(getUser());

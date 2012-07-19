@@ -377,17 +377,17 @@ public void calcolaConsuntiviDiaria()
 		if(diaria.getIm_diaria_netto() != null)
 		{
 			setIm_diaria_netto(getIm_diaria_netto().add(diaria.getIm_diaria_netto()));
-			setIm_diaria_netto(getIm_diaria_netto().setScale(2, BigDecimal.ROUND_HALF_EVEN));
+			setIm_diaria_netto(getIm_diaria_netto().setScale(2, BigDecimal.ROUND_HALF_UP));
 		}	
 		if(diaria.getIm_quota_esente() != null)
 		{
 			setIm_quota_esente(getIm_quota_esente().add(diaria.getIm_quota_esente()));
-			setIm_quota_esente(getIm_quota_esente().setScale(2, BigDecimal.ROUND_HALF_EVEN));
+			setIm_quota_esente(getIm_quota_esente().setScale(2, BigDecimal.ROUND_HALF_UP));
 		}	
 		if(diaria.getIm_diaria_lorda() != null)
 		{
 			setIm_diaria_lorda(getIm_diaria_lorda().add(diaria.getIm_diaria_lorda()));
-			setIm_diaria_lorda(getIm_diaria_lorda().setScale(2, BigDecimal.ROUND_HALF_EVEN));
+			setIm_diaria_lorda(getIm_diaria_lorda().setScale(2, BigDecimal.ROUND_HALF_UP));
 		}	
 	}
 }
@@ -510,7 +510,7 @@ public void calcolaConsuntiviMissione()
 	else	
 	{
 		setIm_totale_missione(getIm_spese().add(getIm_diaria_netto().add(getIm_rimborso())));
-		setIm_totale_missione(getIm_totale_missione().setScale(2, BigDecimal.ROUND_HALF_EVEN));
+		setIm_totale_missione(getIm_totale_missione().setScale(2, BigDecimal.ROUND_HALF_UP));
 
 		// 	In caso la missione non abbia il compenso i due importi seguenti sono uguali
 		//	al totale della missione
@@ -541,20 +541,20 @@ public void calcolaConsuntiviSpese()
 				//	L'importo della spesa anticipata e' uguale al campo im_spesa_euro questo perche'
 				//	nel caso di spesa anticipata di trasporto non deve includere la maggiorazione
 				setIm_spese_anticipate(getIm_spese_anticipate().add(spesa.getIm_spesa_euro()));
-				setIm_spese_anticipate(getIm_spese_anticipate().setScale(2, BigDecimal.ROUND_HALF_EVEN));
+				setIm_spese_anticipate(getIm_spese_anticipate().setScale(2, BigDecimal.ROUND_HALF_UP));
 
 				if(spesa.isTrasporto())
 				{
 					// 	La maggiorazione di una spesa anticipata deve essere
 					//	sommata all'im_spesa (cioe' all'importo non anticipato)
 					setIm_spese(getIm_spese().add(spesa.getIm_maggiorazione_euro()));
-					setIm_spese(getIm_spese().setScale(2, BigDecimal.ROUND_HALF_EVEN));						
+					setIm_spese(getIm_spese().setScale(2, BigDecimal.ROUND_HALF_UP));						
 				}	
 			}	
 			else
 			{
 				setIm_spese(getIm_spese().add(spesa.getIm_totale_spesa()));
-				setIm_spese(getIm_spese().setScale(2, BigDecimal.ROUND_HALF_EVEN));
+				setIm_spese(getIm_spese().setScale(2, BigDecimal.ROUND_HALF_UP));
 			}	
 		}	
 	}	

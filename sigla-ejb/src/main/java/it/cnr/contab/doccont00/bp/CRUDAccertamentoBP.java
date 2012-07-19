@@ -294,7 +294,7 @@ public OggettoBulk getBringBackModel() {
                             "Non è possibile modificare la scadenza associata al documento, perché esso ha degli addebiti o degli storni associati! Selezionare la scadenza \"" + scadCorrente.getDs_scadenza() + "\".",
                             ERROR_MESSAGE);
                     if (scadenzaSelezionata.getIm_associato_doc_amm() != null
-                        && scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) != 0
+                        && scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0
                         && !fatturaAttivaBP.isDeleting()) {
 							if (!new Fattura_attiva_IBulk(
 									scadenzaSelezionata.getAccertamento().getCd_cds_origine(),
@@ -310,7 +310,7 @@ public OggettoBulk getBringBackModel() {
 	                CRUDDocumentoGenericoAttivoBP docGenAttivoBP= (CRUDDocumentoGenericoAttivoBP) docAmmBP;
 	                Documento_genericoBulk docGenAttivo = (Documento_genericoBulk) docGenAttivoBP.getModel();
                     if (scadenzaSelezionata.getIm_associato_doc_amm() != null
-                        && scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) != 0) {
+                        && scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0) {
 	                        String cd_cds_doc_gen = (docGenAttivo.isFlagEnte()) ? 
 	                        										docGenAttivo.getCd_cds() : 
 	                        										scadenzaSelezionata.getAccertamento().getCd_cds_origine();
@@ -329,7 +329,7 @@ public OggettoBulk getBringBackModel() {
                 }
             }
             if (getParent() instanceof CRUDFatturaAttivaIBP || getParent() instanceof CRUDDocumentoGenericoAttivoBP) {
-                if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN).compareTo(scadenzaSelezionata.getIm_scadenza()) == 0)
+                if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(scadenzaSelezionata.getIm_scadenza()) == 0)
                     throw new MessageToUser("Non è possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" con importo 0.", ERROR_MESSAGE);
             }
         }

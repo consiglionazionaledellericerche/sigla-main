@@ -104,12 +104,12 @@ public java.math.BigDecimal getSaldo() {
 public boolean hasAddebiti() {
 	
 	return	getIm_totale_addebiti() != null && 
-			getIm_totale_addebiti().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) > 0;
+			getIm_totale_addebiti().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) > 0;
 }
 public boolean hasStorni() {
 	
 	return	getIm_totale_storni() != null && 
-			getIm_totale_storni().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) > 0;
+			getIm_totale_storni().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) > 0;
 }
 public void setCd_cds(java.lang.String cd_cds) {
 	this.getFattura_attivaI().setCd_cds(cd_cds);

@@ -923,9 +923,9 @@ public void ripartizioneResidui(it.cnr.jada.UserContext userContext, java.lang.S
 		try{rs.close();}catch( java.sql.SQLException e ){};
 
 		// Calcolo della percentuale ripartita per ogni anno
-		prc_a1 = prc_a1.divide(BD_LATT_S,2,java.math.BigDecimal.ROUND_HALF_EVEN);
-		prc_a2 = prc_a2.divide(BD_LATT_S,2,java.math.BigDecimal.ROUND_HALF_EVEN);
-		prc_a3 = prc_a3.divide(BD_LATT_S,2,java.math.BigDecimal.ROUND_HALF_EVEN);
+		prc_a1 = prc_a1.divide(BD_LATT_S,2,java.math.BigDecimal.ROUND_HALF_UP);
+		prc_a2 = prc_a2.divide(BD_LATT_S,2,java.math.BigDecimal.ROUND_HALF_UP);
+		prc_a3 = prc_a3.divide(BD_LATT_S,2,java.math.BigDecimal.ROUND_HALF_UP);
 
 		Ass_cdp_laBulk ass_cdp_la = null;
 		// Creazione/modifica delle Ass_cdp_la

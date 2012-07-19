@@ -6248,7 +6248,7 @@ private void validaValoreBeneDaFattura(Buono_carico_scaricoBulk buonoC) {
 			imponibile_totale =riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva());
 		else
 			imponibile_totale =riga_fattura.getIm_imponibile();
-		valore_unitario = imponibile_totale.divide(riga_fattura.getQuantita(), 2, java.math.BigDecimal.ROUND_HALF_EVEN);
+		valore_unitario = imponibile_totale.divide(riga_fattura.getQuantita(), 2, java.math.BigDecimal.ROUND_HALF_UP);
 		valore_residuo = imponibile_totale.subtract(valore_unitario.multiply(riga_fattura.getQuantita()));
 		dettagli_associati =(BulkList) righe_fatturaHash.get(riga_fattura);
 		for (java.util.Iterator i = dettagli_associati.iterator(); i.hasNext();){

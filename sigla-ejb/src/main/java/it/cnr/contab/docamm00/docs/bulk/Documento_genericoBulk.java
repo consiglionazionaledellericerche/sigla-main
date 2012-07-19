@@ -992,7 +992,7 @@ public boolean isDoc1210Associato() {
 	return	!isGenericoAttivo() &&
 			getLettera_pagamento_estero() != null &&
 			getLettera_pagamento_estero().getIm_pagamento() != null &&
-			getLettera_pagamento_estero().getIm_pagamento().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN)) != 0;
+			getLettera_pagamento_estero().getIm_pagamento().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0;
 }
 public boolean isEditable() {
 	try{
@@ -1195,7 +1195,7 @@ public void removeFromDocumento_generico_accertamentiHash(
 		righeAssociate.remove(riga);
 		if (righeAssociate.isEmpty()) {
 			documento_generico_accertamentiHash.remove(riga.getAccertamento_scadenziario());
-			riga.getAccertamento_scadenziario().setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+			riga.getAccertamento_scadenziario().setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 			addToDocumentiContabiliCancellati(riga.getAccertamento_scadenziario());
 		}
 	} else
@@ -1280,9 +1280,9 @@ public void removeFromDocumento_generico_obbligazioniHash(
 		if (righeAssociate.isEmpty()) {
 			documento_generico_obbligazioniHash.remove(riga.getObbligazione_scadenziario());
 			if (!isPassivo_ente())
-				riga.getObbligazione_scadenziario().setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+				riga.getObbligazione_scadenziario().setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 			else
-				riga.getObbligazione_scadenziario().setIm_associato_doc_amm(riga.getObbligazione_scadenziario().getIm_associato_doc_amm().subtract((riga.getIm_riga_iniziale()==null?riga.getIm_imponibile():riga.getIm_riga_iniziale())).setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
+				riga.getObbligazione_scadenziario().setIm_associato_doc_amm(riga.getObbligazione_scadenziario().getIm_associato_doc_amm().subtract((riga.getIm_riga_iniziale()==null?riga.getIm_imponibile():riga.getIm_riga_iniziale())).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 			addToDocumentiContabiliCancellati(riga.getObbligazione_scadenziario());
 		}
 	} else

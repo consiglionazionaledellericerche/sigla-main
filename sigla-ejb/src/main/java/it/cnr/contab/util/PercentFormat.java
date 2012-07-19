@@ -62,7 +62,7 @@ public Object parseObject(String source, java.text.ParsePosition status) {
 		bd = java.math.BigDecimal.valueOf(number.longValue());
 	else 
 		bd = new java.math.BigDecimal(number.doubleValue());
-	bd = bd.setScale(getPrecision(),bd.ROUND_HALF_EVEN);
+	bd = bd.setScale(getPrecision(),bd.ROUND_HALF_UP);
 	return bd;
 }
 }
