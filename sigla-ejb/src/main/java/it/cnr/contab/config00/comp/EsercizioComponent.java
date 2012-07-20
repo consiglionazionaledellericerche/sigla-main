@@ -1,25 +1,26 @@
 package it.cnr.contab.config00.comp;
 
-import it.cnr.contab.doccont00.core.bulk.*;
-import java.math.*;
-
-import java.sql.*;
-
-import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioHome;
-import java.io.Serializable;
-
-import java.util.*;
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.EnteBulk;
 import it.cnr.contab.config00.sto.bulk.EnteHome;
+import it.cnr.contab.doccont00.core.bulk.V_disp_cassa_cdsBulk;
+import it.cnr.contab.doccont00.core.bulk.V_disp_cassa_cnrBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.ejb.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Classe che ridefinisce alcune operazioni di CRUD su EsercizioBulk
@@ -653,5 +654,31 @@ public boolean isEsercizioChiuso (UserContext userContext) throws ComponentExcep
 	 }catch (PersistencyException ex) {
 					throw handleException(ex);	
 }
+}
+
+/**
+ * Estrae il bulk dell'esercizio dell'ultimo anno aperto del cds a partire dall'esercizio di scrivania
+ * Nel caso non trovi nulla restituisce valore vuoto
+ *
+ * @param userContext contesto
+ * @return l'esercizio del centro di spesa corrispondente all'ultimo anno aperto
+ */	
+public EsercizioBulk getLastEsercizioOpen( UserContext userContext ) throws it.cnr.jada.comp.ComponentException 
+{
+	try 
+	{
+		EsercizioHome home = (EsercizioHome)getHome(userContext, EsercizioBulk.class);
+		EsercizioBulk lastEsercizioOpen = null;
+		
+		for (Iterator esercizi = ((EsercizioHome)getHome(userContext,EsercizioBulk.class)).findEserciziSuccessivi(new EsercizioBulk(CNRUserContext.getCd_cds(userContext),CNRUserContext.getEsercizio(userContext))).iterator();esercizi.hasNext();){
+			EsercizioBulk esercizio = (EsercizioBulk)esercizi.next();
+			if (lastEsercizioOpen==null || esercizio.getEsercizio().compareTo(lastEsercizioOpen.getEsercizio())==1)
+				lastEsercizioOpen=esercizio;
+		}
+		
+		return lastEsercizioOpen;
+	} catch (Throwable e) {
+		throw handleException(e);
+	}
 }
 }

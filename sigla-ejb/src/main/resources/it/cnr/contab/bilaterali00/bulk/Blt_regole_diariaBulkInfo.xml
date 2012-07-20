@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cdAccordo"
+		property="cdAccordo"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdAccordo" />
+	<fieldProperty
+		name="pgRegola"
+		property="pgRegola"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="pgRegola" />
+	<fieldProperty
+		name="giornoMin"
+		property="giornoMin"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		nullable="false"
+		label="giornoMin" />
+	<fieldProperty
+		name="giornoMax"
+		property="giornoMax"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		nullable="false"
+		label="giornoMax" />
+	<fieldProperty
+		name="giorniDef"
+		property="giorniDef"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		label="giorniDef" />
+	<fieldProperty
+		name="flDiaria"
+		property="flDiaria"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="flDiaria" />
+	<fieldProperty
+		name="flMensile"
+		property="flMensile"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="flMensile" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdAccordo" />
+		<formFieldProperty
+			name="pgRegola" />
+	</form>
+	<formFieldProperty
+		name="pgRegola" />
+	<formFieldProperty
+		name="giornoMin" />
+	<formFieldProperty
+		name="giornoMax" />
+	<formFieldProperty
+		name="giorniDef" />
+	<formFieldProperty
+		name="flDiaria" />
+	<formFieldProperty
+		name="flMensile" />
+	<findFieldProperty
+		name="cdAccordo" />
+	<findFieldProperty
+		name="pgRegola" />
+	<findFieldProperty
+		name="giornoMin" />
+	<findFieldProperty
+		name="giornoMax" />
+	<findFieldProperty
+		name="giorniDef" />
+	<findFieldProperty
+		name="flDiaria" />
+	<findFieldProperty
+		name="flMensile" />
+	<columnFieldProperty
+		name="cdAccordo" />
+	<columnFieldProperty
+		name="pgRegola" />
+	<columnFieldProperty
+		name="giornoMin" />
+	<columnFieldProperty
+		name="giornoMax" />
+	<columnFieldProperty
+		name="giorniDef" />
+	<columnFieldProperty
+		name="flDiaria" />
+	<columnFieldProperty
+		name="flMensile" />
+</bulkInfo>

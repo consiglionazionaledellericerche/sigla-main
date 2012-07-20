@@ -1,5 +1,6 @@
 package it.cnr.contab.incarichi00.bp;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
@@ -20,6 +21,7 @@ import it.cnr.contab.incarichi00.bulk.Incarichi_richiestaBulk;
 import it.cnr.contab.incarichi00.bulk.Repertorio_limitiBulk;
 import it.cnr.contab.incarichi00.ejb.IncarichiProceduraComponentSession;
 import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
+import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_incaricoBulk;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
@@ -1913,5 +1915,77 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 
 	public void setCrudNote(SimpleDetailCRUDController crudNote) {
 		this.crudNote = crudNote;
+	}
+	public void validateSearchProcedura_amministrativa(ActionContext context, Incarichi_proceduraBulk procedura, Procedure_amministrativeBulk procamm) throws ValidationException {
+	    if (procedura != null && procedura.getNr_contratti()!=null &&procedura.getNr_contratti().compareTo(new Integer(1))==1) {
+	    	if (procamm != null &&
+	    	    procamm.getIncarico_ric_giorni_pubbl() != null &&
+	    	    procamm.getIncarico_ric_giorni_pubbl().compareTo(new Integer(0))==0) 
+	    		throw new ValidationException( "Procedura Ammininistrativa non selezionabile per un processo che prevede l'attivazione di più contratti.");
+	    }
+	
+    	if (procamm != null && procamm.isMeramenteOccasionaleRequired()) { 
+	    	procedura.setFl_meramente_occasionale(Boolean.TRUE);
+    		if (procedura.getTipo_incarico()!=null &&
+    	    	procedura.getTipo_incarico().getTipoRapporto()!=null &&
+    	    	procedura.getTipo_incarico().getTipoRapporto().getFl_inquadramento()!=null &&
+    		    procedura.getTipo_incarico().getTipoRapporto().getFl_inquadramento().booleanValue())
+	    		throw new ValidationException( "Procedura Ammininistrativa selezionabile solo per l'attivazione di contratti in favore di \"Collaboratori Occasionali\".");
+    	}
+	}
+	public Incarichi_proceduraBulk initializeProcedura_amministrativa(ActionContext context, Incarichi_proceduraBulk procedura, Procedure_amministrativeBulk procamm) throws BusinessProcessException {
+		try {
+			validateSearchProcedura_amministrativa(context, procedura, procamm);
+	
+			procedura.setProcedura_amministrativa(procamm);
+			if (procamm != null && !procamm.isMeramenteOccasionaleEnabled())
+	    		procedura.setFl_meramente_occasionale(Boolean.FALSE);
+			return procedura;
+		}
+		catch ( Exception e )
+		{
+			throw handleException( e )	;
+		}
+	}
+	public Incarichi_proceduraBulk initializeFind_tipo_incarico(ActionContext context, Incarichi_proceduraBulk procedura, Tipo_incaricoBulk tipo_incarico) throws BusinessProcessException {
+		procedura.setTipo_incarico(tipo_incarico);
+		changeImportoLordo(context, procedura, Utility.nvl(procedura.getImporto_lordo()));
+		findTipiRapporto(context);
+		if (procedura.getFl_meramente_occasionale()!=null && procedura.getFl_meramente_occasionale().booleanValue()) {
+		   if (!procedura.isProceduraForOccasionali())
+			   procedura.setFl_meramente_occasionale(Boolean.FALSE);
+		}
+		return procedura;
+	}
+	public void validateTerzo(ActionContext context, Incarichi_repertorioBulk incarico, V_terzo_per_compensoBulk terzo)  throws ValidationException {
+		if(terzo != null && terzo.getAnagrafico()!=null && terzo.getAnagrafico().getTitolo_studio()==null)
+			throw new ValidationException( "Terzo non selezionabile in quanto non risulta valorizzato il campo \"Titolo di studio\" in anagrafica.");
+	}
+	public Incarichi_repertorioBulk initializeTerzo(ActionContext context, Incarichi_repertorioBulk incarico, V_terzo_per_compensoBulk terzo)  throws BusinessProcessException {
+		try {
+			validateTerzo(context, incarico, terzo);
+			if (incarico!=null){
+				V_terzo_per_compensoBulk v_terzo = new V_terzo_per_compensoBulk();
+				v_terzo.setTerzo(new TerzoBulk());
+				
+				incarico.setV_terzo(v_terzo);
+				incarico.setCd_terzo(null);
+		
+				incarico.setTipiRapporto(null);
+				incarico.setTipo_rapporto(null);
+				incarico.setTipiTrattamento(null);
+				incarico.setTipo_trattamento(null);
+	
+				Incarichi_proceduraBulk procedura = incarico.getIncarichi_procedura();
+				Incarichi_repertorioBulk incaricoClone = Utility.createIncarichiRepertorioComponentSession().completaTerzo(context.getUserContext(), incarico, terzo);
+				incaricoClone.setIncarichi_procedura(procedura);
+				return incaricoClone;
+			}
+			return incarico; 
+		}
+		catch ( Exception e )
+		{
+			throw handleException( e )	;
+		}
 	}
 }

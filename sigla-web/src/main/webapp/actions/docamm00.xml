@@ -156,6 +156,12 @@
   </businessProcess>
 
   <businessProcess
+      name="NuovaObbligazioneBP" className="it.cnr.contab.docamm00.bp.RicercaObbligazioniBP">
+		<forward name="default" path="/RicercaObbligazioniAction.do?comando=doOpenObbligazioniWindow"/>    
+		<init-param name="defaultAction" value="RicercaObbligazioniAction"/>		
+  </businessProcess>
+
+  <businessProcess
       name="RicercaAccertamentiBP" className="it.cnr.contab.docamm00.bp.RicercaAccertamentiBP">
 		<forward name="default" path="/docamm00/ricerca_accertamenti.jsp"/>
 		<init-param name="defaultAction" value="RicercaAccertamentiAction"/>		

@@ -1,0 +1,1625 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Visite Accordi Bilaterali"
+	longDescription="Visite Accordi Bilaterali">
+	<fieldProperty
+		name="cdAccordo"
+		property="bltAutorizzatiDett.bltAutorizzati.bltProgetti.bltAccordo.cd_accordo"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		nullable="false"
+		readonlyProperty="ROAccordo"
+		label="Codice Accordo" />
+	<fieldProperty
+		name="dsAccordo"
+		property="bltAutorizzatiDett.bltAutorizzati.bltProgetti.bltAccordo.ds_accordo"
+		inputType="ROTEXT"
+		inputSize="30"
+		label="Descrizione Accordo" />
+	 <fieldProperty
+		name="findAccordo"
+		property="bltAutorizzatiDett.bltAutorizzati.bltProgetti.bltAccordo"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		readonlyProperty="ROAccordo"
+		label="Accordo Bilaterale"/>
+	<fieldProperty
+		name="cdProgetto"
+		property="bltAutorizzatiDett.bltAutorizzati.bltProgetti.cd_progetto"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		nullable="false"
+		readonlyProperty="ROProgetto"
+		label="Codice Progetto" />
+	<fieldProperty
+		name="dsProgetto"
+		property="bltAutorizzatiDett.bltAutorizzati.bltProgetti.ds_progetto_ita"
+		inputType="ROTEXT"
+		inputSize="30"
+		label="Descrizione Progetto" />
+	 <fieldProperty
+		name="findProgetto"
+		property="bltAutorizzatiDett.bltAutorizzati.bltProgetti"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		readonlyProperty="ROProgetto"
+		label="Progetto"/>
+	<fieldProperty
+		name="annoVisita"
+		property="bltAutorizzatiDett.annoVisita"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		nullable="false"
+		command="doOnAnnoVisitaChange"
+		readonlyProperty="ROAnnoVisita"
+		label="Anno Visita" />
+	<fieldProperty
+		name="findTerzo"
+		property="bltAutorizzatiDett.bltAutorizzati.terzo"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		nullable="false"
+		label="Terzo Autorizzato"
+		columnSet="columnSet01"
+		readonlyProperty="ROTerzo"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cdTerzo"
+		property="bltAutorizzatiDett.bltAutorizzati.terzo.cd_terzo"
+		label="Terzo Autorizzato"
+		inputType="TEXT"
+		maxLength="8"
+		inputSize="8"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		readonlyProperty="ROTerzo"
+		nullable="false" />
+	<fieldProperty
+		name="dsTerzo"
+		property="bltAutorizzatiDett.bltAutorizzati.terzo.denominazione_sede"
+		label=""
+		inputSize="60"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="pgVisita"
+		property="pgVisita"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		nullable="true"
+		label="Prog." />
+	<fieldProperty
+		name="numProtCandidatura"
+		property="numProtCandidatura"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		nullable="false"
+		readonlyProperty="ROPrimaFase"
+		label="Numero Protocollo Candidatura" />
+	<fieldProperty
+		name="dtProtCandidatura"
+		property="dtProtCandidatura"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		nullable="false"
+		readonlyProperty="ROPrimaFase"
+		label="Data Protocollo Candidatura" />
+	<fieldProperty
+		name="numProtAutorizzDirettore"
+		property="numProtAutorizzDirettore"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		nullable="true"
+		readonlyProperty="ROPrimaFase"
+		label="Numero Protocollo Autorizzazione Direttore" />
+	<fieldProperty
+		name="dtProtAutorizzDirettore"
+		property="dtProtAutorizzDirettore"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		nullable="true"
+		readonlyProperty="ROPrimaFase"
+		label="Data Protocollo Autorizzazione Direttore" />
+	<fieldProperty
+		name="dtIniVisita"
+		property="dtIniVisita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		nullable="false"
+		readonlyProperty="ROPrimaFase"
+		label="Data Inizio Visita" />
+	<fieldProperty
+		name="dtFinVisita"
+		property="dtFinVisita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		nullable="false"
+		readonlyProperty="ROPrimaFase"
+		label="Data Fine Visita" />
+	<fieldProperty
+		name="luogoVisita"
+		property="luogoVisita"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="200"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		nullable="false"
+		readonlyProperty="ROPrimaFase"
+		label="Luogo Visita" />
+	<fieldProperty
+		name="numProtDispFin"
+		property="numProtDispFin"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="true"
+		nullable="false"		
+		readonlyProperty="ROProtocolliDocumentiCandidatura"
+		label="Numero Protocollo Disposizioni Finanziarie" />
+	<fieldProperty
+		name="dtProtDispFin"
+		property="dtProtDispFin"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		nullable="false"		
+		readonlyProperty="ROProtocolliDocumentiCandidatura"
+		label="Data Protocollo Disposizioni Finanziarie" />
+	<fieldProperty
+		name="numProtTrasmissCandidatura"
+		property="numProtTrasmissCandidatura"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="true"
+		nullable="false"		
+		readonlyProperty="ROProtocolliDocumentiCandidatura"
+		label="Numero Protocollo Trasmissione Candidatura" />
+	<fieldProperty
+		name="dtProtTrasmissCandidatura"
+		property="dtProtTrasmissCandidatura"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		nullable="false"		
+		readonlyProperty="ROProtocolliDocumentiCandidatura"
+		label="Data Protocollo Trasmissione Candidatura" />
+	<fieldProperty
+		name="numProtAccettDispFin"
+		property="numProtAccettDispFin"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="true"
+		nullable="false"		
+		readonlyProperty="ROProtocolliDocumentiCandidatura"
+		label="Numero Protocollo Accettazione Disposizioni Finanziarie" />
+	<fieldProperty
+		name="dtProtAccettDispFin"
+		property="dtProtAccettDispFin"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		nullable="false"		
+		readonlyProperty="ROProtocolliDocumentiCandidatura"
+		label="Data Protocollo Accettazione Disposizioni Finanziarie" />
+	<fieldProperty
+		name="numProtAccettEnteStr"
+		property="numProtAccettEnteStr"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="true"
+		nullable="false"		
+		readonlyProperty="ROProtocolliDocumentiCandidatura"
+		label="Numero Protocollo Accettazione Ente Straniero" />
+	<fieldProperty
+		name="dtProtAccettEnteStr"
+		property="dtProtAccettEnteStr"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		nullable="false"		
+		readonlyProperty="ROProtocolliDocumentiCandidatura"
+		label="Data Protocollo Accettazione Ente Straniero" />
+	<fieldProperty
+		name="numProtAutorizPartenza"
+		property="numProtAutorizPartenza"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"		
+		readonlyProperty="ROProtocolloAutorizzazionePartenza"
+		enabledOnEdit="true"
+		label="Numero Protocollo Autorizzazione Partenza" />
+	<fieldProperty
+		name="dtProtAutorizPartenza"
+		property="dtProtAutorizPartenza"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"		
+		readonlyProperty="ROProtocolloAutorizzazionePartenza"
+		enabledOnEdit="true"
+		label="Data Protocollo Autorizzazione Partenza" />
+	<fieldProperty
+		name="incaricoRepertorio"
+		property="incaricoRepertorio"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Incarico" />
+	<fieldProperty
+		name="esercizioRepertorio"
+		property="incaricoRepertorio.esercizio"
+		inputType="ROTEXT"
+		inputSize="4"
+		label="Anno Incarico" />
+	<fieldProperty
+		name="pgRepertorio"
+		property="incaricoRepertorio.pg_repertorio"
+		inputType="ROTEXT"
+		inputSize="10"
+		label="Numero Incarico" />
+	<fieldProperty
+		name="statoIncarico"
+		property="incaricoRepertorio.statoText"
+		inputType="TEXT"
+		maxLength="30"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Stato Incarico" />
+	<fieldProperty
+		name="tipo_obbligazione"
+		property="tipo_obbligazione"
+        keysProperty="competenzaResiduoKeys"		
+        inputType="SELECT"
+		label="Tipo impegno"	
+		enabledOnSearch="true"
+		command="doDefault"
+		caseSensitiveSearch="false"/>
+	<fieldProperty
+		name="cdCdsObblig"
+		property="cdCdsObblig"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="Cds Obbligazione" />
+	<fieldProperty
+		name="esercizioObblig"
+		property="esercizioObblig"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="Esercizio Obbligazione" />
+	<fieldProperty
+		name="esercizioOriObblig"
+		property="esercizioOriObblig"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="Esercizio Originale Obbligazione" />
+	<fieldProperty
+		name="pgObbligazione"
+		property="pgObbligazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Numero Obbligazione" />
+	<fieldProperty
+		name="pgObbligazioneScadenzario"
+		property="pgObbligazioneScadenzario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Numero Scadenza Obbligazione" />
+	<fieldProperty
+		name="numProtAttestatoSogg"
+		property="numProtAttestatoSogg"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		readonlyProperty="ROProtocolloAttestatoSoggiorno"
+		nullable="false"
+		enabledOnEdit="true"
+		label="Numero Protocollo Attestato Soggiorno" />
+	<fieldProperty
+		name="dtProtAttestatoSogg"
+		property="dtProtAttestatoSogg"
+		inputType="TEXT"
+		formatName="date_short"
+		readonlyProperty="ROProtocolloAttestatoSoggiorno"
+		nullable="false"
+		enabledOnEdit="true"
+		label="Data Protocollo Attestato Soggiorno" />
+	<fieldProperty
+		name="numProtNotaAddebito"
+		property="numProtNotaAddebito"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="true"
+		nullable="false"
+		readonlyProperty="ROProtocolloNotaAddebito"
+		label="Numero Protocollo Nota Addebito" />
+	<fieldProperty
+		name="dtProtNotaAddebito"
+		property="dtProtNotaAddebito"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		nullable="false"
+		readonlyProperty="ROProtocolloNotaAddebito"
+		label="Data Protocollo Nota Addebito" />
+	<fieldProperty
+		name="numProtNotaAddebitoAnt"
+		property="numProtNotaAddebitoAnt"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="true"
+		nullable="false"
+		readonlyProperty="ROProtocolliDocumentiContratto"
+		label="Numero Protocollo Nota Addebito Anticipo" />
+	<fieldProperty
+		name="dtProtNotaAddebitoAnt"
+		property="dtProtNotaAddebitoAnt"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		nullable="false"
+		readonlyProperty="ROProtocolliDocumentiContratto"
+		label="Data Protocollo Nota Addebito Anticipo" />
+	<fieldProperty
+		name="numProtProvvImpegno"
+		property="numProtProvvImpegno"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+		enabledOnEdit="true"
+		readonlyProperty="ROProtocolloProvvedimentoImpegno"
+		label="Numero Protocollo Provvedimento Impegno" />
+	<fieldProperty
+		name="dtProtProvvImpegno"
+		property="dtProtProvvImpegno"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		enabledOnEdit="true"
+		readonlyProperty="ROProtocolloProvvedimentoImpegno"
+		label="Data Protocollo Provvedimento Impegno" />
+	<fieldProperty
+		name="numProtRimbSpese"
+		property="numProtRimbSpese"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+		enabledOnEdit="true"
+		readonlyProperty="ROProtocolloRimborsoSpese"
+		label="Numero Protocollo Rimborso Spese" />
+	<fieldProperty
+		name="dtProtRimbSpese"
+		property="dtProtRimbSpese"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		enabledOnEdit="true"
+		readonlyProperty="ROProtocolloRimborsoSpese"
+		label="Data Protocollo Rimborso Spese" />
+	<fieldProperty
+		name="numProtProvvPagamAnt"
+		property="numProtProvvPagamAnt"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		readonlyProperty="ROProtocolloAnticipoPagamento"
+		nullable="false"
+		enabledOnEdit="true"
+		label="Numero Protocollo Provvedimento Pagamento Anticipo" />
+	<fieldProperty
+		name="dtProtProvvPagamAnt"
+		property="dtProtProvvPagamAnt"
+		inputType="TEXT"
+		formatName="date_short"
+		readonlyProperty="ROProtocolloAnticipoPagamento"
+		nullable="false"
+		enabledOnEdit="true"
+		label="Data Protocollo Provvedimento Pagamento Anticipo" />
+	<fieldProperty
+		name="numProtProvvPagam"
+		property="numProtProvvPagam"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+		readonlyProperty="ROProtocolloPagamento"
+		enabledOnEdit="true"
+		label="Numero Protocollo Provvedimento Pagamento" />
+	<fieldProperty
+		name="dtProtProvvPagam"
+		property="dtProtProvvPagam"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		readonlyProperty="ROProtocolloPagamento"
+		enabledOnEdit="true"
+		label="Data Protocollo Provvedimento Pagamento" />
+	<fieldProperty
+		name="numProtAttribIncarico"
+		property="numProtAttribIncarico"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		readonlyProperty="ROProtocolliDocumentiCandidatura"
+		nullable="false"		
+		enabledOnEdit="true"
+		label="Numero Protocollo Attribuzione Incarico" />
+	<fieldProperty
+		name="dtProtAttribIncarico"
+		property="dtProtAttribIncarico"
+		inputType="TEXT"
+		formatName="date_short"
+		readonlyProperty="ROProtocolliDocumentiCandidatura"
+		nullable="false"		
+		enabledOnEdit="true"
+		label="Data Protocollo Attribuzione Incarico" />
+	<fieldProperty
+		name="numProtContratto"
+		property="numProtContratto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		readonlyProperty="ROProtocolliDocumentiContratto"
+		nullable="false"
+		enabledOnEdit="true"
+		label="Numero Protocollo Contratto" />
+	<fieldProperty
+		name="dataProtContratto"
+		property="dataProtContratto"
+		inputType="TEXT"
+		formatName="date_short"
+		readonlyProperty="ROProtocolliDocumentiContratto"
+		nullable="false"
+		enabledOnEdit="true"
+		label="Data Protocollo Contratto" />
+	<fieldProperty
+		name="dtStipulaContratto"
+		property="dtStipulaContratto"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		label="Data Stipula Contratto" />
+	<fieldProperty
+		name="numProtAccettConvenz"
+		property="numProtAccettConvenz"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		readonlyProperty="ROPrimaFase"
+		enabledOnEdit="true"
+		nullable="false"
+		label="Numero Protocollo Accettazione Convenzione" />
+	<fieldProperty
+		name="dtProtAccettConvenz"
+		property="dtProtAccettConvenz"
+		inputType="TEXT"
+		formatName="date_short"
+		readonlyProperty="ROPrimaFase"
+		enabledOnEdit="true"
+		nullable="false"
+		label="Data Protocollo Accettazione Convenzione" />
+	<fieldProperty
+		name="dtPagamAnt"
+		property="dtPagamAnt"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		nullable="false"
+		readonlyProperty="RODodicesimaFase"
+		label="Da pagare entro il" />
+		<fieldProperty
+		name="dtPagamSaldo"
+		property="dtPagamSaldo"
+		inputType="TEXT"
+		formatName="date_short"
+		readonlyProperty="ROProtocolloPagamento"
+		enabledOnEdit="true"
+		nullable="false"
+		label="Da Pagare entro il" />
+	<fieldProperty
+		name="numProtComunicCambioDate"
+		property="numProtComunicCambioDate"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="true"
+		label="Numero Protocollo Comunicazione Cambio Date" />
+	<fieldProperty
+		name="dtProtComunicCambioDate"
+		property="dtProtComunicCambioDate"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		label="Data Protocollo Comunicazione Cambio Date" />
+	<fieldProperty
+		name="dtNewInizioVisita"
+		property="dtNewInizioVisita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		label="Nuova Data Inizio Visita" />
+	<fieldProperty
+		name="dtNewFineVisita"
+		property="dtNewFineVisita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		label="Nuova Data Fine Visita" />
+	<fieldProperty
+		name="numProtProvvDiffVisita"
+		property="numProtProvvDiffVisita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="true"
+		label="Numero Protocollo Provvedimento Differimento Visita" />
+	<fieldProperty
+		name="dtProtProvvDiffVisita"
+		property="dtProtProvvDiffVisita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		label="Data Protocollo Provvedimento Differimento Visita" />
+	<fieldProperty
+		name="numProtModificaIncarico"
+		property="numProtModificaIncarico"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="true"
+		label="Numero Protocollo Modifica Incarico" />
+	<fieldProperty
+		name="dtProtModificaIncarico"
+		property="dtProtModificaIncarico"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		label="Data Protocollo Modifica Incarico" />
+	<fieldProperty
+		name="numProtRinunciaVisita"
+		property="numProtRinunciaVisita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="true"
+		readonlyProperty="ROProtocolloRinunciaVisita"
+		label="Numero Protocollo Rinuncia Visita" />
+	<fieldProperty
+		name="dtProtRinunciaVisita"
+		property="dtProtRinunciaVisita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		readonlyProperty="ROProtocolloRinunciaVisita"
+		label="Data Protocollo Rinuncia Visita" />
+	<fieldProperty
+		name="numProtAnnullaProvv"
+		property="numProtAnnullaProvv"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="true"
+		label="Numero Protocollo Annulla Provvedimento" />
+	<fieldProperty
+		name="dtProtAnnullaProvv"
+		property="dtProtAnnullaProvv"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		label="Data Protocollo Annulla Provvedimento" />
+	<fieldProperty
+		name="findTerzoEnte"
+		property="terzoEnte"
+		inputType="SEARCHTOOL"
+		label="Ente Straniero"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cdTerzoEnte"
+		property="terzoEnte.cd_terzo"
+		label="Ente Straniero"
+		inputType="TEXT"
+		maxLength="8"
+		inputSize="8"
+		enabledOnSearch="true"
+		nullable="true" />
+	<fieldProperty
+		name="dsTerzoEnte"
+		property="terzoEnte.denominazione_sede"
+		inputSize="50"
+		inputType="ROTEXT" 
+		label="Descrizione Terzo" />
+	<fieldProperty
+		name="flAccettazioneConvenzione"
+		property="flAccettazioneConvenzione"
+		inputType="CHECKBOX"
+		command="doDefault"
+		enabledOnSearch="true"
+		nullable="false"
+		readonlyProperty="ROPrimaFase"
+		label="Accettazione / non accettazione convenzione" />
+	<fieldProperty
+		name="flAutorizzDirettore"
+		property="flAutorizzDirettore"
+		label="Visita Autorizzata dal Direttore"
+		inputType="CHECKBOX"
+		command="doDefault"
+		maxLength="1"
+		inputSize="1"	
+		readonlyProperty="ROPrimaFase"	 />
+	<fieldProperty
+		name="flStampatoDocCandidatura"
+		property="flStampatoDocCandidatura"
+		label="Stampato Documento Candidatura"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="flStampatoAutorizPartenza"
+		property="flStampatoAutorizPartenza"
+		label="Stampato Autorizzazione Partenza"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="flStampatoProvvPagamAnt"
+		property="flStampatoProvvPagamAnt"
+		label="Stampato Provvedimento Pagamento Anticipo"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="flStampatoProvvPagamento"
+		property="flStampatoProvvPagamento"
+		label="Stampato Provvedimento Pagamento"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="flStampatoProvvImpegno"
+		property="flStampatoProvvImpegno"
+		label="Stampato Provvedimento Impegno"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="flStampatoAnnProvvImpegno"
+		property="flStampatoAnnProvvImpegno"
+		label="Stampato Annullamento Provvedimento Impegno"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="flStampatoModelloContratto"
+		property="flStampatoModelloContratto"
+		label="Stampato Modello Contratto"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="flStampatoNotaAddebito"
+		property="flStampatoNotaAddebito"
+		label="Stampato Nota Addebito"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="flPagamentoFineVisita"
+		property="flPagamentoFineVisita"
+		label="Pagamento unico a fine visita"
+		inputType="CHECKBOX"
+		readonlyProperty="ROPrimaFase"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="flPagamentoEnte"
+		property="flPagamentoEnte"
+		label="Pagamento ad Ente/Istituto Straniero"
+		inputType="CHECKBOX"
+		readonlyProperty="ROPrimaFase"
+		command="doDefault"
+		maxLength="1"
+		inputSize="1" 
+		nullable="false" />
+	<fieldProperty
+		name="flBrevePeriodo"
+		property="flBrevePeriodo"
+		label="Visita di breve periodo"
+		inputType="CHECKBOX"
+		readonlyProperty="ROPrimaFase"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="flPagamentoConBonifico"
+		property="flPagamentoConBonifico"
+		label="Pagamento tramite Bonifico"
+		inputType="CHECKBOX"
+		readonlyProperty="ROPrimaFase"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="flVisitaAnnullata"
+		property="flVisitaAnnullata"
+		label="Visita Annullata"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="imRimbSpeseAnt"
+		property="imRimbSpeseAnt"
+		label="Importo Rimborso Spese Anticipo"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		readonlyProperty="ROQuintaFase"
+		command="doOnImRimbSpeseAntChange"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="true" />
+	<fieldProperty
+		name="imRimbSpese"
+		property="imRimbSpese"
+		label="Importo Rimborso Spese"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		readonlyProperty="ROProtocolloRimborsoSpese"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="imRimbSpeseAntRO"
+		property="imRimbSpeseAnt"
+		label="Importo Rimborso Spese"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat" />
+	<fieldProperty
+		name="imRimbSpeseRO"
+		property="imRimbSpese"
+		label="Importo Rimborso Spese"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat" />
+	<fieldProperty
+		name="imRimbPrevisto"
+		property="imRimbPrevisto"
+		label="Importo Rimborso Previsto"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat" />
+	<fieldProperty
+		name="imRitenutaFiscaleAnticipo"
+		property="imRitenutaFiscaleAnticipo"
+		label="Importo Ritenute Anticipo"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat" />
+	<fieldProperty
+		name="imContributiAnticipo"
+		property="imContributiAnticipo"
+		label="Importo Contributi Anticipo"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat" />
+	<fieldProperty
+		name="imRimborsoLordoAnticipo"
+		property="imRimborsoLordoAnticipo"
+		label="Importo Rimborso Lordo Anticipo"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat" />
+	<fieldProperty
+		name="imRimborsoTotaleAnticipo"
+		property="imRimborsoTotaleAnticipo"
+		label="Importo Rimborso Totale Anticipo"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat" />
+	<fieldProperty
+		name="imRitenutaFiscaleSaldo"
+		property="imRitenutaFiscaleSaldo"
+		label="Importo Ritenute Saldo"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat" />
+	<fieldProperty
+		name="imContributiSaldo"
+		property="imContributiSaldo"
+		label="Importo Contributi Saldo"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat" />
+	<fieldProperty
+		name="imRimborsoLordoSaldo"
+		property="imRimborsoLordoSaldo"
+		label="Importo Rimborso Lordo Saldo"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat" />
+	<fieldProperty
+		name="imRimborsoTotaleSaldo"
+		property="imRimborsoTotaleSaldo"
+		label="Importo Rimborso Totale Saldo"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat" />
+
+	<fieldProperty
+		name="imRimborsoTotaleNetto"
+		property="imRimborsoTotaleNetto"
+		label="Importo Rimborso Totale Netto"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat" />
+	<fieldProperty
+		name="imRitenutaFiscaleTotale"
+		property="imRitenutaFiscaleTotale"
+		label="Importo Ritenuta Fiscale Totale"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat" />
+	<fieldProperty
+		name="imContributiTotale"
+		property="imContributiTotale"
+		label="Importo Contributi Totale"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat" />
+	<fieldProperty
+		name="imRimborsoTotale"
+		property="imRimborsoTotale"
+		label="Importo Rimborso Totale"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat" />
+
+
+<!-- banche ANTCIPO-->
+	<fieldProperty
+		name="contoAAnt"
+		property="bancaAnticipo"
+		inputType="FORM"
+		formName="A"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoPAnt"
+		property="bancaAnticipo"
+		inputType="FORM"
+		formName="P"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoBAnt"
+		property="bancaAnticipo"
+		inputType="FORM"
+		formName="BdocAmm"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoQAnt"
+		property="bancaAnticipo"
+		inputType="FORM"
+		formName="Q"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoNAnt"
+		property="bancaAnticipo"
+		inputType="FORM"
+		formName="N"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+
+	<fieldProperty 
+		name="listabancheAnt"
+		property="bancaAnticipo"
+		inputType="BUTTON"
+		img="img/find16.gif"
+		label="Conto/i"
+		readonlyProperty="RODecimaFase"
+		href="javascript:submitForm('doSearch(main.listabancheant)')" />
+	<fieldProperty
+		name="pg_banca_ant"
+		property="pgBancaAnt"
+		inputType="TEXT"
+		readonlyProperty="RODecimaFase"
+		label="banca Anticipo" />
+	<fieldProperty
+		name="cd_cessionario_ant"
+		property="cessionarioAnticipo.cd_terzo"
+		maxLength="30"
+		inputSize="6"
+		inputType="ROTEXT"
+		label="Cessionario Anticipo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="denom_sede_cessionario_ant"
+		property="cessionarioAnticipo.denominazione_sede"
+		inputSize="50"
+		inputType="ROTEXT"
+		label="Denom./Sede"
+		caseSensitiveSearch="false" />
+
+<!-- modalita' e termini -->
+	<fieldProperty
+		name="modalitaPagamentoAnticipo"
+		property="modalitaPagamentoAnticipo"
+		printProperty="cd_ds_modalita_pagamento"
+		optionsProperty="modalitaPagamentoAnticipoOptions"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		nullable="true"
+		readonlyProperty="RODodicesimaFase"
+		label="Mod. pagamento" />
+
+<!-- banche SALDO-->
+	<fieldProperty
+		name="contoA"
+		property="banca"
+		inputType="FORM"
+		formName="A"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoP"
+		property="banca"
+		inputType="FORM"
+		formName="P"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoB"
+		property="banca"
+		inputType="FORM"
+		formName="BdocAmm"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoQ"
+		property="banca"
+		inputType="FORM"
+		formName="Q"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="contoN"
+		property="banca"
+		inputType="FORM"
+		formName="N"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+
+	<fieldProperty 
+		name="listabanche"
+		property="banca"
+		inputType="BUTTON"
+		img="img/find16.gif"
+		label="Conto/i"
+		readonlyProperty="ROModalitaPagamento"
+		href="javascript:submitForm('doSearch(main.listabanche)')" />
+	<fieldProperty
+		name="pg_banca"
+		property="pgBanca"
+		inputType="TEXT"
+		readonlyProperty="ROModalitaPagamento"
+		label="banca" />
+	<fieldProperty
+		name="cd_cessionario"
+		property="cessionario.cd_terzo"
+		maxLength="30"
+		inputSize="6"
+		inputType="ROTEXT"
+		label="Cessionario"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="denom_sede_cessionario"
+		property="cessionario.denominazione_sede"
+		inputSize="50"
+		inputType="ROTEXT"
+		label="Denom./Sede"
+		caseSensitiveSearch="false" />
+
+<!-- modalita' e termini -->
+	<fieldProperty
+		name="modalitaPagamento"
+		property="modalitaPagamento"
+		printProperty="cd_ds_modalita_pagamento"
+		optionsProperty="modalitaPagamentoSaldoOptions"
+		maxLength="30"
+		inputSize="30"
+		inputType="SELECT"
+		nullable="true"
+		readonlyProperty="ROModalitaPagamento"
+		label="Mod. pagamento" />
+	<fieldProperty
+		name="statoText"
+		property="statoText"
+		inputType="TEXT"
+		inputSize="40"
+		maxLength="100"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Stato richiesta" />
+
+	<fieldProperty
+		name="dtIniVisitaEffettiva"
+		property="dtIniVisitaEffettiva"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		nullable="false"
+		readonlyProperty="ROProtocolloAttestatoSoggiorno"
+		label="Data Inizio Visita Effettiva" />
+	<fieldProperty
+		name="dtFinVisitaEffettiva"
+		property="dtFinVisitaEffettiva"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		nullable="false"
+		readonlyProperty="ROProtocolloAttestatoSoggiorno"
+		label="Data Fine Visita Effettiva" />
+
+
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdAccordo" />
+		<formFieldProperty
+			name="cdProgetto" />
+		<formFieldProperty
+			name="annoVisita" />
+		<formFieldProperty
+			name="cdTerzo" />
+		
+	</form>
+
+
+	<formFieldProperty
+		name="cdAccordo" />
+	<formFieldProperty
+		name="dsAccordo" />
+	<formFieldProperty
+		name="findAccordo" />
+	<formFieldProperty
+		name="cdProgetto" />
+	<formFieldProperty
+		name="dsProgetto" />
+	<formFieldProperty
+		name="findProgetto" />
+	<formFieldProperty
+		name="annoVisita" />
+	<formFieldProperty
+		name="findTerzo" />
+	<formFieldProperty
+		name="cdTerzo" />
+	<formFieldProperty
+		name="dsTerzo" />
+	<formFieldProperty
+		name="pgVisita" />
+	<formFieldProperty
+		name="findTerzoEnte" 
+		label="Terzo&lt;BR&gt;Ente Straniero"/>
+	<formFieldProperty
+		name="cdTerzoEnte" 
+		label="Terzo&lt;BR&gt;Ente Straniero"/>
+	<formFieldProperty
+		name="dsTerzoEnte" />
+	<formFieldProperty
+		name="numProtCandidatura" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dtProtCandidatura" 
+		label="Data"/>
+	<formFieldProperty
+		name="numProtAutorizzDirettore" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dtProtAutorizzDirettore" 
+		label="Data"/>
+	<formFieldProperty
+		name="dtIniVisita" />		
+	<formFieldProperty
+		name="dtFinVisita" />
+	<formFieldProperty
+		name="numProtDispFin" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dtProtDispFin" 
+		label="Data"/>
+	<formFieldProperty
+		name="numProtTrasmissCandidatura" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dtProtTrasmissCandidatura" 
+		label="Data"/>
+	<formFieldProperty
+		name="numProtAccettDispFin" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dtProtAccettDispFin" 
+		label="Data"/>
+	<formFieldProperty
+		name="numProtAccettEnteStr" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dtProtAccettEnteStr" 
+		label="Data"/>
+	<formFieldProperty
+		name="numProtAutorizPartenza" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dtProtAutorizPartenza" 
+		label="Data"/>
+	<formFieldProperty
+		name="dtPagamAnt" 
+		label="Da pagare entro il"/>
+	<formFieldProperty
+		name="dtPagamSaldo" 
+		label="Da pagare entro il"/>
+	<formFieldProperty 
+		name="incaricoRepertorio" />
+	<formFieldProperty 
+		name="esercizioRepertorio" />
+	<formFieldProperty 
+		name="pgRepertorio" />
+	<formFieldProperty
+		name="statoIncarico" />
+	<formFieldProperty 
+		name="tipo_obbligazione" />
+	<formFieldProperty
+		name="cdCdsObblig" />
+	<formFieldProperty
+		name="esercizioObblig" 
+		label="Bilancio di Esercizio" />
+	<formFieldProperty
+		name="esercizioOriObblig" />
+	<formFieldProperty
+		name="pgObbligazione" 
+		label="Impegno"/>
+	<formFieldProperty
+		name="numProtAttestatoSogg" 
+		label="Numero"/>
+	<formFieldProperty
+		name="pgObbligazioneScadenzario"
+		label="Scadenza" />
+	<formFieldProperty
+		name="dtProtAttestatoSogg" 
+		label="Data"/>
+	<formFieldProperty
+		name="numProtNotaAddebito" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dtProtNotaAddebito" 
+		label="Data"/>
+	<formFieldProperty
+		name="numProtNotaAddebitoAnt" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dtProtNotaAddebitoAnt" 
+		label="Data"/>
+	<formFieldProperty
+		name="numProtProvvImpegno" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dtProtProvvImpegno" 
+		label="Data"/>
+	<formFieldProperty
+		name="numProtRimbSpese" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dtProtRimbSpese" 
+		label="Data"/>
+	<formFieldProperty
+		name="numProtProvvPagamAnt" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dtProtProvvPagamAnt" 
+		label="Data"/>
+	<formFieldProperty
+		name="numProtProvvPagam" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dtProtProvvPagam" 
+		label="Data"/>
+	<formFieldProperty
+		name="luogoVisita" />
+	<formFieldProperty
+		name="numProtAttribIncarico" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dtProtAttribIncarico" 
+		label="Data"/>
+	<formFieldProperty
+		name="numProtContratto" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dataProtContratto" 
+		label="Data"/>
+	<formFieldProperty
+		name="dtStipulaContratto" />
+	<formFieldProperty
+		name="numProtAccettConvenz" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dtProtAccettConvenz" 
+		label="Data"/>
+	<formFieldProperty
+		name="numProtComunicCambioDate" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dtProtComunicCambioDate" 
+		label="Data"/>
+	<formFieldProperty
+		name="dtNewInizioVisita" />
+	<formFieldProperty
+		name="dtNewFineVisita" />
+	<formFieldProperty
+		name="numProtProvvDiffVisita" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dtProtProvvDiffVisita" 
+		label="Data"/>
+	<formFieldProperty
+		name="numProtModificaIncarico" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dtProtModificaIncarico" 
+		label="Data"/>
+	<formFieldProperty
+		name="numProtRinunciaVisita" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dtProtRinunciaVisita" 
+		label="Data"/>
+	<formFieldProperty
+		name="numProtAnnullaProvv" 
+		label="Numero"/>
+	<formFieldProperty
+		name="dtProtAnnullaProvv" 
+		label="Data"/>
+	<formFieldProperty
+		name="flAccettazioneConvenzione" />
+	<formFieldProperty
+		name="flAutorizzDirettore" />
+	<formFieldProperty
+		name="flStampatoDocCandidatura" />
+	<formFieldProperty
+		name="flStampatoAutorizPartenza" />
+	<formFieldProperty
+		name="flStampatoProvvPagamAnt" />
+	<formFieldProperty
+		name="flStampatoProvvPagamento" />
+	<formFieldProperty
+		name="flStampatoProvvImpegno" />
+	<formFieldProperty
+		name="flStampatoAnnProvvImpegno" />
+	<formFieldProperty
+		name="flStampatoModelloContratto" />
+	<formFieldProperty
+		name="flStampatoNotaAddebito" />
+	<formFieldProperty
+		name="flPagamentoFineVisita" />
+	<formFieldProperty
+		name="flPagamentoEnte" />
+	<formFieldProperty
+		name="flBrevePeriodo" />
+	<formFieldProperty
+		name="flPagamentoConBonifico" />
+	<formFieldProperty
+		name="flVisitaAnnullata" />
+	<formFieldProperty
+		name="imRimbSpeseAnt" 
+		label="Importo" />
+	<formFieldProperty
+		name="imRimbSpese" 
+		label="Importo" />
+	<formFieldProperty
+		name="imRimbSpeseAntRO" 
+		label="Importo" />
+	<formFieldProperty
+		name="imRimbSpeseRO" 
+		label="Importo" />
+	<formFieldProperty
+		name="imRimbPrevisto" 
+		label="Importo Previsto" />
+	<formFieldProperty
+		name="imRitenutaFiscaleAnticipo"
+		label="Ritenute" />
+	<formFieldProperty
+		name="imContributiAnticipo" 
+		label="Contributi" />
+	<formFieldProperty
+		name="imRimborsoLordoAnticipo" 
+		label="Rimborso Lordo" />
+	<formFieldProperty
+		name="imRimborsoTotaleAnticipo"
+		label="Rimborso Totale" />
+
+	<formFieldProperty
+		name="imRitenutaFiscaleSaldo"
+		label="Ritenute" />
+	<formFieldProperty
+		name="imContributiSaldo"
+		label="Contributi" />
+	<formFieldProperty
+		name="imRimborsoLordoSaldo"
+		label="Rimborso Lordo" />
+	<formFieldProperty
+		name="imRimborsoTotaleSaldo"
+		label="Rimborso Totale" />
+
+	<formFieldProperty
+		name="imRimborsoTotaleNetto" />
+	<formFieldProperty
+		name="imRitenutaFiscaleTotale" />
+	<formFieldProperty
+		name="imContributiTotale" />
+	<formFieldProperty
+		name="imRimborsoTotale"
+		label="Rimborso Totale" />
+
+<!-- banche ANTICIPO -->
+	<formFieldProperty name="contoAAnt" />
+	<formFieldProperty name="contoBAnt" />
+	<formFieldProperty name="contoPAnt" />
+	<formFieldProperty name="contoQAnt" />
+	<formFieldProperty name="contoNAnt" />
+	<formFieldProperty name="listabancheAnt" />
+	<formFieldProperty name="pg_banca_ant" />
+	<formFieldProperty name="cd_cessionario_ant" label="Cessionario"/>
+	<formFieldProperty name="denom_sede_cessionario_ant" />
+	<formFieldProperty name="modalitaPagamentoAnticipo" />
+
+<!-- banche SALDO -->
+	<formFieldProperty name="contoA" />
+	<formFieldProperty name="contoB" />
+	<formFieldProperty name="contoP" />
+	<formFieldProperty name="contoQ" />
+	<formFieldProperty name="contoN" />
+	<formFieldProperty name="listabanche" />
+	<formFieldProperty name="pg_banca" />
+	<formFieldProperty name="cd_cessionario" />
+	<formFieldProperty name="denom_sede_cessionario" />
+	<formFieldProperty name="modalitaPagamento" />
+
+	<formFieldProperty 
+		name="statoText" />
+	<formFieldProperty
+		name="dtIniVisitaEffettiva"
+		label="Data Inizio" />
+	<formFieldProperty
+		name="dtFinVisitaEffettiva" 
+		label="Data Fine" />
+	
+		
+	<findFieldProperty
+		name="cdAccordo" />
+	<findFieldProperty
+		name="cdProgetto" />
+	<findFieldProperty
+		name="annoVisita" />
+	<findFieldProperty
+		name="cdTerzo" />
+	<findFieldProperty
+		name="pgVisita" />
+	<findFieldProperty
+		name="numProtCandidatura" />
+	<findFieldProperty
+		name="dtProtCandidatura" />
+	<findFieldProperty
+		name="numProtAutorizzDirettore" />
+	<findFieldProperty
+		name="dtProtAutorizzDirettore" />
+	<findFieldProperty
+		name="dtIniVisita" />
+	<findFieldProperty
+		name="dtPagamAnt" />
+	<findFieldProperty
+		name="dtPagamSaldo" />
+	<findFieldProperty
+		name="dtFinVisita" />
+	<findFieldProperty
+		name="numProtDispFin" />
+	<findFieldProperty
+		name="dtProtDispFin" />
+	<findFieldProperty
+		name="numProtTrasmissCandidatura" />
+	<findFieldProperty
+		name="dtProtTrasmissCandidatura" />
+	<findFieldProperty
+		name="numProtAccettDispFin" />
+	<findFieldProperty
+		name="dtProtAccettDispFin" />
+	<findFieldProperty
+		name="numProtAccettEnteStr" />
+	<findFieldProperty
+		name="dtProtAccettEnteStr" />
+	<findFieldProperty
+		name="numProtAutorizPartenza" />
+	<findFieldProperty
+		name="dtProtAutorizPartenza" />
+	<findFieldProperty 
+		name="incaricoRepertorio" />
+	<findFieldProperty 
+		name="esercizioRepertorio" />
+	<findFieldProperty 
+		name="pgRepertorio" />
+	<findFieldProperty
+		name="cdCdsObblig" />
+	<findFieldProperty
+		name="esercizioObblig" />
+	<findFieldProperty
+		name="esercizioOriObblig" />
+	<findFieldProperty
+		name="pgObbligazione" />
+	<findFieldProperty
+		name="pgObbligazioneScadenzario" />
+	<findFieldProperty
+		name="numProtAttestatoSogg" />
+	<findFieldProperty
+		name="dtProtAttestatoSogg" />
+	<findFieldProperty
+		name="numProtNotaAddebito" />
+	<findFieldProperty
+		name="dtProtNotaAddebito" />
+	<findFieldProperty
+		name="numProtProvvImpegno" />
+	<findFieldProperty
+		name="dtProtProvvImpegno" />
+	<findFieldProperty
+		name="numProtRimbSpese" />
+	<findFieldProperty
+		name="dtProtRimbSpese" />
+	<findFieldProperty
+		name="numProtProvvPagam" />
+	<findFieldProperty
+		name="dtProtProvvPagam" />
+	<findFieldProperty
+		name="luogoVisita" />
+	<findFieldProperty
+		name="numProtAttribIncarico" />
+	<findFieldProperty
+		name="dtProtAttribIncarico" />
+	<findFieldProperty
+		name="numProtContratto" />
+	<findFieldProperty
+		name="dataProtContratto" />
+	<findFieldProperty
+		name="dtStipulaContratto" />
+	<findFieldProperty
+		name="numProtAccettazConvenz" />
+	<findFieldProperty
+		name="dtProtAccettazConvenz" />
+	<findFieldProperty
+		name="numProtComunicCambioDate" />
+	<findFieldProperty
+		name="dtProtComunicCambioDate" />
+	<findFieldProperty
+		name="dtNewInizioVisita" />
+	<findFieldProperty
+		name="dtNewFineVisita" />
+	<findFieldProperty
+		name="numProtProvvDiffVisita" />
+	<findFieldProperty
+		name="dtProtProvvDiffVisita" />
+	<findFieldProperty
+		name="numProtModificaIncarico" />
+	<findFieldProperty
+		name="dtProtModificaIncarico" />
+	<findFieldProperty
+		name="numProtRinunciaVisita" />
+	<findFieldProperty
+		name="dtProtRinunciaVisita" />
+	<findFieldProperty
+		name="numProtAnnullaProvv" />
+	<findFieldProperty
+		name="dtProtAnnullaProvv" />
+	<findFieldProperty
+		name="flStampatoDocCandidatura" />
+	<findFieldProperty
+		name="flStampatoAutorizPartenza" />
+	<findFieldProperty
+		name="flBrevePeriodo" />
+				
+	<columnFieldProperty
+		name="dsAccordo" />
+	<columnFieldProperty
+		name="dsProgetto" />
+	<columnFieldProperty
+		name="annoVisita" />
+	<columnFieldProperty
+		name="cdTerzo" />
+	<columnFieldProperty
+		name="dsTerzo" 
+		label="Nominativo"/>
+	<columnFieldProperty
+		name="pgVisita" 
+		label="Prog. Visita"/>
+	<columnFieldProperty
+		name="dtIniVisita" />
+	<columnFieldProperty
+		name="dtFinVisita" />
+	<columnFieldProperty
+		name="statoText" />
+</bulkInfo>

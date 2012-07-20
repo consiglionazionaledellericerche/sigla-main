@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.bilaterali00.bulk.Blt_autorizzatiBase"
+	keyClassName="it.cnr.contab.bilaterali00.bulk.Blt_autorizzatiKey"
+	homeClassName="it.cnr.contab.bilaterali00.bulk.Blt_autorizzatiHome">
+	<defaultColumnMap
+		tableName="BLT_AUTORIZZATI">
+		<columnMapping
+			columnName="CD_CDR_TERZO"
+			propertyName="cdCdrTerzo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_ITALIANO_ESTERO"
+			propertyName="tiItalianoEstero"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_ASSIMILATO_DIP"
+			propertyName="flAssimilatoDip"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_ASSOCIATO"
+			propertyName="flAssociato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="EMAIL_TERZO"
+			propertyName="emailTerzo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="TELEF_TERZO"
+			propertyName="telefTerzo"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="FAX_TERZO"
+			propertyName="faxTerzo"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="ENTE_DI_APPARTENENZA"
+			propertyName="enteDiAppartenenza"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="INDIRIZZO_ENTE_DI_APPARTENENZA"
+			propertyName="indirizzoEnteDiAppartenenza"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_COMUNE_ENTE_DI_APPARTENENZA"
+			propertyName="pgComuneEnteDiAppartenenza"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CAP_ENTE_DI_APPARTENENZA"
+			propertyName="capEnteDiAppartenenza"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdCdrTerzo" />
+	<persistentProperty
+		name="tiItalianoEstero" />
+	<persistentProperty
+		name="flAssimilatoDip" />
+	<persistentProperty
+		name="flAssociato" />
+	<persistentProperty
+		name="emailTerzo" />
+	<persistentProperty
+		name="telefTerzo" />
+	<persistentProperty
+		name="faxTerzo" />
+	<persistentProperty
+		name="enteDiAppartenenza" />
+	<persistentProperty
+		name="indirizzoEnteDiAppartenenza" />
+	<persistentProperty
+		name="pgComuneEnteDiAppartenenza" />
+	<persistentProperty
+		name="capEnteDiAppartenenza" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

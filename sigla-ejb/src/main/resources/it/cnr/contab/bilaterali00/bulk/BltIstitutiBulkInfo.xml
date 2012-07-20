@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cdCentroResponsabilita"
+		property="cdCentroResponsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdCentroResponsabilita" />
+	<fieldProperty
+		name="dsCdr"
+		property="dsCdr"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		enabledOnEdit="false"
+		nullable="false"
+		label="dsCdr" />
+	<fieldProperty
+		name="sedeCdr"
+		property="sedeCdr"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		enabledOnEdit="false"
+		label="sedeCdr" />
+	<fieldProperty
+		name="indirizzo"
+		property="indirizzo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		enabledOnEdit="false"
+		label="indirizzo" />
+	<fieldProperty
+		name="coIndirizzo"
+		property="coIndirizzo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		enabledOnEdit="false"
+		label="coIndirizzo" />
+	<fieldProperty
+		name="cdCap"
+		property="cdCap"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="cdCap" />
+	<fieldProperty
+		name="pgComune"
+		property="pgComune"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="pgComune" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdCentroResponsabilita" />
+	</form>
+	<formFieldProperty
+		name="cdCentroResponsabilita" />
+	<formFieldProperty
+		name="dsCdr" />
+	<formFieldProperty
+		name="sedeCdr" />
+	<formFieldProperty
+		name="indirizzo" />
+	<formFieldProperty
+		name="coIndirizzo" />
+	<formFieldProperty
+		name="cdCap" />
+	<findFieldProperty
+		name="cdCentroResponsabilita" />
+	<findFieldProperty
+		name="dsCdr" />
+	<findFieldProperty
+		name="sedeCdr" />
+	<findFieldProperty
+		name="indirizzo" />
+	<findFieldProperty
+		name="coIndirizzo" />
+	<findFieldProperty
+		name="cdCap" />
+	<findFieldProperty
+		name="pgComune" />
+	<columnFieldProperty
+		name="cdCentroResponsabilita" />
+	<columnFieldProperty
+		name="dsCdr" />
+	<columnFieldProperty
+		name="sedeCdr" />
+	<columnFieldProperty
+		name="indirizzo" />
+	<columnFieldProperty
+		name="coIndirizzo" />
+	<columnFieldProperty
+		name="cdCap" />
+	<columnFieldProperty
+		name="pgComune" />
+</bulkInfo>

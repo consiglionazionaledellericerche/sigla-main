@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_accordo"
+		property="bltAccordo.cd_accordo"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Codice" />
+	<fieldProperty
+		name="ds_accordo"
+		property="bltAccordo.ds_accordo"
+		inputType="ROTEXT"
+		label="Descrizione" />
+	<fieldProperty
+		name="cd_progetto"
+		property="cd_progetto"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Codice Progetto" />
+	<fieldProperty
+		name="ds_progetto_ita"
+		property="ds_progetto_ita"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="4"
+		maxLength="250"
+		nullable="false"
+		label="Descrizione Progetto (Lingua Italiana)" />
+	<fieldProperty
+		name="ds_progetto_eng"
+		property="ds_progetto_eng"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="4"
+		maxLength="250"
+		nullable="false"
+		label="Descrizione Progetto (Lingua Inglese)" />
+	<fieldProperty
+		name="find_responsabile_ita"
+		property="responsabileIta"
+		inputType="SEARCHTOOL"
+		label="Responsabile Italiano"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_respons_ita"
+		property="responsabileIta.cd_terzo"
+		label="Responsabile Italiano"
+		inputType="TEXT"
+		maxLength="8"
+		inputSize="8"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="ds_respons_ita"
+		property="responsabileIta.denominazione_sede"
+		label=""
+		inputSize="60"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="cd_cdr_respons_ita"
+		property="cd_cdr_respons_ita"
+		label="Codice completo CDR"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="30"
+		nullable="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_cdr_respons_ita"
+		property="centro_responsabilitaIta.ds_cdr"
+		label=""
+		inputSize="60"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="find_cdr_respons_ita"
+		property="centro_responsabilitaIta"
+		inputType="SEARCHTOOL" 
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="email_respons_ita"
+		property="email_respons_ita"
+		inputType="TEXT"
+		maxLength="100"
+		inputSize="30"
+		label="Email Responsabile Italiano" />
+	<fieldProperty
+		name="telef_respons_ita"
+		property="telef_respons_ita"
+		inputType="TEXT"
+		maxLength="30"
+		inputSize="30"
+		label="Telefono Responsabile Italiano" />
+	<fieldProperty
+		name="fax_respons_ita"
+		property="fax_respons_ita"
+		inputType="TEXT"
+		maxLength="30"
+		inputSize="30"
+		label="Fax Responsabile Italiano" />
+	<fieldProperty
+		name="find_responsabile_str"
+		property="responsabileStr"
+		inputType="SEARCHTOOL"
+		label="Responsabile Straniero"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_respons_str"
+		property="responsabileStr.cd_terzo"
+		label="Responsabile Straniero"
+		inputType="TEXT"
+		maxLength="8"
+		inputSize="8"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="ds_respons_str"
+		property="responsabileStr.denominazione_sede"
+		label=""
+		inputSize="60"
+		inputType="ROTEXT" />
+	<fieldProperty
+		name="email_respons_str"
+		property="email_respons_str"
+		inputType="TEXT"
+		maxLength="100"
+		inputSize="30"
+		label="Email Responsabile Straniero" />
+	<fieldProperty
+		name="telef_respons_str"
+		property="telef_respons_str"
+		inputType="TEXT"
+		maxLength="30"
+		inputSize="30"
+		label="Telefono Responsabile Straniero" />
+	<fieldProperty
+		name="fax_respons_str"
+		property="fax_respons_str"
+		inputType="TEXT"
+		maxLength="30"
+		inputSize="30"
+		label="Fax Responsabile Straniero" />
+	<fieldProperty
+		name="nome_istituzione_str"
+		property="nome_istituzione_str"
+		inputType="TEXT"
+		maxLength="100"
+		inputSize="100"
+		label="Nome Istituzione Straniera" />
+	<fieldProperty
+		name="sede_istituzione_str"
+		property="sede_istituzione_str"
+		inputType="TEXT"
+		maxLength="100"
+		inputSize="100"
+		label="Sede Istituzione Straniera" />
+	<fieldProperty
+		name="fl_associato_respons_ita"
+		property="fl_associato_respons_ita"
+		label="Associato CNR"
+		inputType="CHECKBOX"
+		command="doDefault"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="ente_respons_ita"
+		property="ente_respons_ita"
+		inputSize="70"
+		maxLength="100"
+		label="Ente di Appartenenza"
+		inputType="TEXT" 		
+		nullable="false" />
+	<fieldProperty
+		name="indirizzo_ente_respons_ita"
+		property="indirizzo_ente_respons_ita"
+		inputSize="70"
+		maxLength="100"
+		label="Indirizzo"
+		inputType="TEXT" 		
+		nullable="false" />
+	<fieldProperty
+		name="cap_ente_respons_ita"
+		property="cap_ente_respons_ita"
+		label="CAP"
+		inputSize="20"
+		optionsProperty="caps_comune"
+		inputType="SELECT"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="ds_comune_ente_respons_ita"
+		property="comuneEnteResponsIta.ds_comune"
+		readonlyProperty="ROdsComuneEnteResponsIta"
+		inputSize="30"
+		label="Citt&#224;/comune"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="findComuneEnteResponsIta"
+		property="comuneEnteResponsIta"
+		label="Citt&#224;/comune fiscale"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+
+	<formFieldProperty
+		name="cd_accordo" />
+	<formFieldProperty
+		name="ds_accordo" />
+	<formFieldProperty
+		name="cd_progetto" 
+		label="Codice"/>
+	<formFieldProperty
+		name="ds_progetto_ita" 
+		label="Descrizione&lt;BR&gt;in lingua italiana"/>
+	<formFieldProperty
+		name="ds_progetto_eng"
+		label="Descrizione&lt;BR&gt;in lingua inglese"/>
+	<formFieldProperty
+		name="find_responsabile_ita" />
+	<formFieldProperty
+		name="cd_respons_ita" 
+		label="Codice Terzo"/>
+	<formFieldProperty
+		name="ds_respons_ita" />
+	<formFieldProperty
+		name="cd_cdr_respons_ita" 
+		label="CDR Appartenenza"/>
+	<formFieldProperty
+		name="ds_cdr_respons_ita" />
+	<formFieldProperty
+		name="find_cdr_respons_ita" />
+	<formFieldProperty
+		name="email_respons_ita"
+		label="Email"/>
+	<formFieldProperty
+		name="telef_respons_ita"
+		label="Telefono"/>
+	<formFieldProperty
+		name="fax_respons_ita"
+		label="Fax"/>
+	<formFieldProperty
+		name="find_responsabile_str" />
+	<formFieldProperty
+		name="cd_respons_str"  
+		label="Codice Terzo"/>
+	<formFieldProperty
+		name="ds_respons_str" />
+	<formFieldProperty
+		name="email_respons_str" 
+		label="Email"/>
+	<formFieldProperty
+		name="telef_respons_str" 
+		label="Telefono"/>
+	<formFieldProperty
+		name="fax_respons_str" 
+		label="Fax"/>
+	<formFieldProperty
+		name="nome_istituzione_str"
+		label="Nome" />
+	<formFieldProperty
+		name="sede_istituzione_str"
+		label="Sede" />
+	<formFieldProperty
+		name="fl_associato_respons_ita" />
+	<formFieldProperty
+		name="ente_respons_ita" />
+	<formFieldProperty
+		name="indirizzo_ente_respons_ita" />
+	<formFieldProperty
+		name="cap_ente_respons_ita" />
+	<formFieldProperty
+		name="ds_comune_ente_respons_ita" />
+	<formFieldProperty
+		name="findComuneEnteResponsIta" />
+
+	<columnFieldProperty
+		name="cd_progetto" 
+		label="Codice"/>
+	<columnFieldProperty
+		name="ds_progetto_ita" 
+		label="Descrizione" />
+	<columnFieldProperty
+		name="ds_respons_ita" 
+		label="Responsabile Italiano" />
+	<columnFieldProperty
+		name="ds_respons_str" 
+		label="Responsabile Straniero" />
+		
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cd_progetto" />
+		<formFieldProperty
+			name="ds_progetto_ita"
+			inputType="TEXT" 
+			inputSize="80" />
+	</form>
+
+
+	<findFieldProperty
+		name="cd_accordo" />
+	<findFieldProperty
+		name="ds_accordo" />
+	<findFieldProperty
+		name="cd_progetto" 
+		label="Codice"/>
+	<findFieldProperty
+		name="ds_progetto_ita" 
+		label="Descrizione&lt;BR&gt;in lingua italiana"/>
+	<findFieldProperty
+		name="ds_progetto_eng"
+		label="Descrizione&lt;BR&gt;in lingua inglese"/>
+	<findFieldProperty
+		name="find_responsabile_ita" />
+	<findFieldProperty
+		name="cd_respons_ita" 
+		label="Codice Terzo"/>
+	<findFieldProperty
+		name="ds_respons_ita" />
+	<findFieldProperty
+		name="cd_cdr_respons_ita" 
+		label="CDR Appartenenza"/>
+	<findFieldProperty
+		name="ds_cdr_respons_ita" />
+	<findFieldProperty
+		name="find_cdr_respons_ita" />
+	<findFieldProperty
+		name="email_respons_ita"
+		label="Email"/>
+	<findFieldProperty
+		name="telef_respons_ita"
+		label="Telefono"/>
+	<findFieldProperty
+		name="fax_respons_ita"
+		label="Fax"/>
+	<findFieldProperty
+		name="find_responsabile_str" />
+	<findFieldProperty
+		name="cd_respons_str"  
+		label="Codice Terzo"/>
+	<findFieldProperty
+		name="ds_respons_str" />
+	<findFieldProperty
+		name="email_respons_str" 
+		label="Email"/>
+	<findFieldProperty
+		name="telef_respons_str" 
+		label="Telefono"/>
+	<findFieldProperty
+		name="fax_respons_str" 
+		label="Fax"/>
+	<findFieldProperty
+		name="nome_istituzione_str"
+		label="Nome" />
+	<findFieldProperty
+		name="sede_istituzione_str"
+		label="Sede"/>
+</bulkInfo>

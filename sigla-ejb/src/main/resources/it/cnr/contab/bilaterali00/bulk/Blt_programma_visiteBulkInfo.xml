@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cdAccordo"
+		property="bltProgetti.bltAccordo.cd_accordo"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Codice Accordo" />
+	<fieldProperty
+		name="cdProgetto"
+		property="bltProgetti.cd_progetto"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Codice Progetto" />
+	<fieldProperty
+		name="pgRecord"
+		property="pgRecord"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		nullable="false"
+		label="Progressivo Record" />
+	<fieldProperty
+		name="annoVisita"
+		property="annoVisita"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		nullable="false"
+		label="Anno Visita" />
+	<fieldProperty
+		name="flStraniero"
+		property="flStraniero"
+		label="Straniero"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="numVisiteAutorizzate"
+		property="numVisiteAutorizzate"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		nullable="false"
+		label="Numero Visite Autorizzate" />
+	<fieldProperty
+		name="numMaxGgVisita"
+		property="numMaxGgVisita"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		nullable="false"
+		label="Numero Massimo Giorni Visita" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdAccordo" />
+		<formFieldProperty
+			name="cdProgetto" />
+		<formFieldProperty
+			name="pgRecord" />
+	</form>
+
+	<formFieldProperty
+		name="cdAccordo" />
+	<formFieldProperty
+		name="cdProgetto" />
+	<formFieldProperty
+		name="pgRecord" />
+	<formFieldProperty
+		name="annoVisita" />
+	<formFieldProperty
+		name="numVisiteAutorizzate" />
+	<formFieldProperty
+		name="numMaxGgVisita" />
+
+	<findFieldProperty
+		name="cdAccordo" />
+	<findFieldProperty
+		name="cdProgetto" />
+	<findFieldProperty
+		name="annoVisita" />
+	<findFieldProperty
+		name="numVisiteAutorizzate" />
+	<findFieldProperty
+		name="numMaxGgVisita" />
+
+	<columnFieldProperty
+		name="annoVisita" />
+	<columnFieldProperty
+		name="numVisiteAutorizzate" />
+	<columnFieldProperty
+		name="numMaxGgVisita" />
+</bulkInfo>

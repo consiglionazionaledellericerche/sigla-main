@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="annoVisita"
+		property="annoVisita"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		nullable="false"
+		label="Anno Visita" />
+	<fieldProperty
+		name="numMaxGgVisita"
+		property="numMaxGgVisita"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		nullable="false"
+		label="Numero Massimo Giorni Visita" />
+	<fieldProperty
+		name="flVisitaEffettuata"
+		property="flVisitaEffettuata"
+		label="Visita Effettuata"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1" />
+	<fieldProperty
+		name="statoText"
+		property="bltVisitaValida.statoText"
+		inputType="TEXT"
+		inputSize="40"
+		maxLength="100"
+		enabledOnSearch="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Stato visita" />
+
+	<formFieldProperty
+		name="annoVisita" />
+	<formFieldProperty
+		name="numMaxGgVisita" />
+	<formFieldProperty
+		name="statoText" />
+
+	<findFieldProperty
+		name="annoVisita" />
+	<findFieldProperty
+		name="numMaxGgVisita" />
+
+	<columnFieldProperty
+		name="annoVisita" />
+	<columnFieldProperty
+		name="numMaxGgVisita" />
+	<columnFieldProperty
+		name="flVisitaEffettuata" />
+	<columnFieldProperty
+		name="statoText" />
+</bulkInfo>

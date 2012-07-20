@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.bilaterali00.bulk.Blt_accordiKey">
+	<defaultColumnMap
+		tableName="BLT_ACCORDI">
+		<columnMapping
+			columnName="CD_ACCORDO"
+			propertyName="cd_accordo"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_accordo"
+		partOfOid="true" />
+</SQLPersistentInfo>

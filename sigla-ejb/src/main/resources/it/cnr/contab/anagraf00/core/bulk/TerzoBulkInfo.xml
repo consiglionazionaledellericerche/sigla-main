@@ -234,6 +234,12 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		/>
+	<fieldProperty
+		name="italianoEstero"
+		property="anagrafico.ti_italiano_estero_anag"
+		label="Italiano/Estero"
+		inputType="ROTEXT"
+		/>
 
 	<form
 		name="searchtool" >
@@ -333,7 +339,10 @@
 	<formFieldProperty
 		name="dt_fine_validita"
 		/>
-
+	<formFieldProperty
+		name="italianoEstero"
+		/>
+		
 	<findFieldProperty
 		name="cd_terzo"
 		/>
@@ -453,8 +462,34 @@
 	<columnFieldProperty
 		name="dt_fine_rapporto"
 		label="Fine rapp." />
-
 	<columnFieldProperty
 		name="descrizioneAnagrafica" />
+
+	<columnSet
+		name="columnSet01" >
+		<columnFieldProperty
+			name="cd_terzo"
+			label="Codice" />
+		<columnFieldProperty
+			name="cd_anag"
+			label="Anagrafica" />
+		<columnFieldProperty
+			name="denominazione_sede"
+			headerStyle="width:100%" />
+		<columnFieldProperty
+			name="codice_fiscale_anagrafico"/>
+		<columnFieldProperty
+			name="partita_iva_anagrafico"/>
+		<columnFieldProperty
+			name="dt_fine_rapporto"
+			label="Fine rapp." />
+		<columnFieldProperty
+			name="descrizioneAnagrafica" />
+		<columnFieldProperty
+			name="descrizioneAnagrafica" />
+		<columnFieldProperty
+			name="italianoEstero" 
+			label="Italiano/&lt;BR&gt;Estero"/>
+	</columnSet>
 
 </bulkInfo>
