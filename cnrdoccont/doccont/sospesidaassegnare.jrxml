@@ -40,9 +40,12 @@
 	<queryString>
 		<![CDATA[SELECT *
 FROM PRT_STAMPA_SOSP_DA_ASS
-WHERE TI_ENTRATA_SPESA = decode($P{Tipo_ES},'*',TI_ENTRATA_SPESA,$P{Tipo_ES})
+WHERE
+esercizio =to_number(to_char($P{DaData},'yyyy')) and
+TI_ENTRATA_SPESA = decode($P{Tipo_ES},'*',TI_ENTRATA_SPESA,$P{Tipo_ES})
 AND  DT_REGISTRAZIONE between $P{DaData} AND $P{AData}]]>
 	</queryString>
+	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
 	<field name="TI_ENTRATA_SPESA" class="java.lang.String"/>
 	<field name="CD_SOSPESO" class="java.lang.String"/>
 	<field name="CD_CDS_ORIGINE" class="java.lang.String"/>
