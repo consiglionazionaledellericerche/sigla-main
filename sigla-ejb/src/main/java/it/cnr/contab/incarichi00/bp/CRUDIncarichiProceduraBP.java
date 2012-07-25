@@ -1518,7 +1518,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				aggiornato = false;
 				for (Iterator<Incarichi_repertorio_annoBulk> y=incarico.getIncarichi_repertorio_annoColl().iterator();y.hasNext();){
 					Incarichi_repertorio_annoBulk incarico_anno = y.next();
-					if (incarico_anno.getEsercizio_limite().equals(procedura_anno.getEsercizio_limite())){
+					if (procedura_anno.getEsercizio_limite().equals(incarico_anno.getEsercizio_limite())){
 						if (procedura.getNr_contratti_iniziale()==null || procedura.getNr_contratti_iniziale().compareTo(1)!=1){
 							incarico_anno.setImporto_iniziale(procedura_anno.getImporto_iniziale());
 						}
