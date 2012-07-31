@@ -537,6 +537,9 @@ private Var_bilancioBulk reloadVarBilancio(UserContext userContext, Var_bilancio
 **/
 public Var_bilancioBulk salvaDefinitivo(UserContext userContext, Var_bilancioBulk varBilancio) throws ComponentException{
     try {
+    	 if (varBilancio.getTi_variazione()!=null && (varBilancio.getTi_variazione().compareTo(varBilancio.VAR_QUADRATURA)==0)||(varBilancio.getTi_variazione().compareTo(varBilancio.STORNO_E)==0)||(varBilancio.getTi_variazione().compareTo(varBilancio.STORNO_S)==0))
+  			if (!verificaQuadratura(varBilancio))
+  				throw new it.cnr.jada.comp.ApplicationException("Attenzione, la variazione non è in quadratura, impossibile procedere al salvataggio definitivo.");
 	    lockBulk(userContext, varBilancio);
 	    validaModificaConBulk(userContext, varBilancio);
 	    varBilancio.setToBeUpdated();
@@ -839,7 +842,7 @@ private boolean verificaQuadratura(Var_bilancioBulk varBilancio) {
   *
 **/
 private void verificaVariazione(Var_bilancioBulk varBilancio) throws ComponentException{
-	if (varBilancio.getDettagli().isEmpty())
+ 	if (varBilancio.getDettagli().isEmpty()) 
 		throw new it.cnr.jada.comp.ApplicationException("Inserire almeno un dettaglio.");
 }
 public List findEsercizi_res(CNRUserContext userContext,Var_bilancioResiduiBulk var_bilancio) throws it.cnr.jada.comp.ComponentException {
@@ -993,6 +996,7 @@ public Var_bilancioBulk creaVariazioneBilancioDiRegolarizzazione(UserContext use
 		}
 
 		varBilancio = (Var_bilancioBulk) creaConBulk( userContext, varBilancio);
+		salvaDefinitivo(userContext, varBilancio);
 		return varBilancio;
 	}
 	catch ( Exception e )
