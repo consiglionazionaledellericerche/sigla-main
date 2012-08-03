@@ -1529,7 +1529,7 @@ private OggettoBulk inizializzaAccertamentoCdsPerModifica (UserContext aUC,Ogget
 	{
 		AccertamentoBulk accertamento = (AccertamentoBulk) super.inizializzaBulkPerModifica( aUC, bulk);
 		AccertamentoHome accertHome = (AccertamentoHome) getHome( aUC, accertamento.getClass());
-
+		Accertamento_scad_voceHome dettaglioHome = (Accertamento_scad_voceHome) getHome( aUC, Accertamento_scad_voceBulk.class );
 		// Carico i Cdr con Codice Unita' Organizzativa uguale al Codice Unita Organizzativa dell'accertamento
 //		accertamento.getCdrColl().addAll( accertHome.findCdr( accertamento ));
 		
@@ -1538,13 +1538,16 @@ private OggettoBulk inizializzaAccertamentoCdsPerModifica (UserContext aUC,Ogget
 		for (Iterator i = accertamento.getAccertamento_scadenzarioColl().iterator(); i.hasNext();)
 		{
 			Accertamento_scadenzarioBulk scadenza = (Accertamento_scadenzarioBulk) i.next();
+			
+			scadenza.setAccertamento_scad_voceColl(new BulkList( dettaglioHome.findDettagli_scadenze( accertamento )));
+			
 			scadenza.setStatus( Accertamento_scadenzarioBulk.STATUS_CONFIRMED);
 			scadenza.setAccertamento(accertamento);
 //			inizializzaScadenzaConDocumenti(aUC, scadenza);			
 		}
 		
 		// Lettura dei dettagli delle singole scadenze
-		Accertamento_scad_voceHome dettaglioHome = (Accertamento_scad_voceHome) getHome( aUC, Accertamento_scad_voceBulk.class );		
+				
 		BulkList dettagliScadenze = new BulkList();
 		dettagliScadenze =  new BulkList( dettaglioHome.findDettagli_scadenze( accertamento ));
 		String cdLA = ((Accertamento_scad_voceBulk)dettagliScadenze.get(0)).getCd_linea_attivita();		

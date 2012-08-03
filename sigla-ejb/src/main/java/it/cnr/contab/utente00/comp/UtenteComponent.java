@@ -897,6 +897,7 @@ public SelezionaCdsBulk findUo(UserContext userContext,SelezionaCdsBulk scds) th
 			sql.addClause("AND","cd_unita_organizzativa",sql.EQUALS,scds.getUo().getCd_unita_organizzativa());
 			sql.setOrderBy("livello", it.cnr.jada.util.OrderConstants.ORDER_ASC);
 			sql.setOrderBy("cd_unita_organizzativa", it.cnr.jada.util.OrderConstants.ORDER_ASC);
+			sql.setOrderBy("cd_centro_responsabilita", it.cnr.jada.util.OrderConstants.ORDER_ASC);
 			//}
 			List lista = home.fetchAll(sql);
 			if ((scds.getCdr()!=null && !scds.getCdr().equalsByPrimaryKey(findCdrEnte(userContext))) || scds.getCdr()==null)

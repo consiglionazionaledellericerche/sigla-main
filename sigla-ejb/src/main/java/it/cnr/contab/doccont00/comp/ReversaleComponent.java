@@ -1076,7 +1076,8 @@ public void annullaReversaleDiTrasferimento(UserContext userContext, ReversaleBu
 			dRiga = (Documento_generico_rigaBulk) i.next();
 			accertamento = new AccertamentoCdsBulk( dRiga.getAccertamento_scadenziario().getCd_cds(), dRiga.getAccertamento_scadenziario().getEsercizio(), dRiga.getAccertamento_scadenziario().getEsercizio_originale(), dRiga.getAccertamento_scadenziario().getPg_accertamento());
 			accertamento = (AccertamentoCdsBulk) acrSession.inizializzaBulkPerModifica( userContext, accertamento );
-			acrSession.eliminaConBulk( userContext, accertamento );
+			acrSession.annullaAccertamento(userContext, accertamento );
+			//acrSession.eliminaConBulk( userContext, accertamento );
 		}	
 		
 	}

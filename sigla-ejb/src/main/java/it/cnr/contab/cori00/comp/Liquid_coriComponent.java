@@ -926,10 +926,10 @@ public List EstraiListaTot(UserContext userContext,Liquid_coriBulk liquidazione)
 		F24ep_tempTotHome home = (F24ep_tempTotHome)getHome(userContext,F24ep_tempTotBulk.class);
 		SQLBuilder sql = home.createSQLBuilder();
 		sql.addClause("AND", "esercizio",sql.EQUALS,liquidazione.getEsercizio());
-		sql.addClause("AND", "cd_cds",sql.EQUALS,liquidazione.getCd_cds());
+		sql.addClause("AND", "cd_cds",sql.EQUALS,liquidazione.getCd_cds()); 
 		sql.addClause("AND", "cd_unita_organizzativa",sql.EQUALS,liquidazione.getCd_unita_organizzativa());
 		sql.addClause("AND", "pg_liquidazione",sql.EQUALS,liquidazione.getPg_liquidazione());
-		sql.addOrderBy("PROG");
+		sql.addOrderBy(" tipo_riga_f24,codice_tributo,codice_ente,mese_rif,anno_rif,esercizio,cd_cds,cd_unita_organizzativa,pg_liquidazione,cd_matricola_inps,periodo_da,periodo_a");
 		try {
 			return home.fetchAll(sql);
 		} catch (PersistencyException e) {
@@ -965,7 +965,8 @@ public void Popola_f24Tot(UserContext userContext,Liquid_coriBulk liquidazione) 
 	sql.addSQLClause("AND", "cd_cds",sql.EQUALS,liquidazione.getCd_cds());
 	sql.addSQLClause("AND", "cd_unita_organizzativa",sql.EQUALS,liquidazione.getCd_unita_organizzativa());
 	sql.addSQLClause("AND", "pg_liquidazione",sql.EQUALS,liquidazione.getPg_liquidazione());
-	sql.addOrderBy("PROG");
+	sql.addOrderBy(" tipo_riga_f24,codice_tributo,codice_ente,mese_rif,anno_rif,esercizio,cd_cds,cd_unita_organizzativa,pg_liquidazione,cd_matricola_inps,periodo_da,periodo_a");
+	
 	lista =home.fetchAll(sql);
 	for (Iterator i=lista.iterator();i.hasNext();){
 		F24ep_tempTotBulk F24ep_temp= (F24ep_tempTotBulk)i.next();
