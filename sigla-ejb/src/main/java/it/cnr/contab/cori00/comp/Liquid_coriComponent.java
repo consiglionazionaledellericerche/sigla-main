@@ -1018,6 +1018,14 @@ public String getSedeInpdapF24(UserContext userContext) throws it.cnr.jada.comp.
 		throw handleException(e);
 	}
 }
+public String getSedeInpgiF24(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
+	try {
+		it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configurazione = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession",it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
+		return configurazione.getVal01(userContext, new Integer(0),null,"F24_EP","SEDE_INPGI");
+	} catch(Throwable e) {
+		throw handleException(e);
+	}
+}
 public void eliminaPendenti_f24Tot(UserContext userContext) throws ComponentException
 {
 	try{

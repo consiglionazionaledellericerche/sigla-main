@@ -25,4 +25,5 @@ void eliminaPendenti_f24Tot(UserContext userContext) throws it.cnr.jada.comp.Com
 String getSedeInpsF24(UserContext userContext)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 Configurazione_cnrBulk getSedeInailF24(UserContext userContext)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 String getSedeInpdapF24(UserContext userContext)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+String getSedeInpgiF24(UserContext userContext)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }
