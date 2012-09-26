@@ -20,9 +20,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.management.RuntimeErrorException;
+
 import org.apache.chemistry.opencmis.client.api.Property;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisBaseException;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
 import org.apache.commons.httpclient.Credentials;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
@@ -158,7 +161,13 @@ public class CMISService {
 			//TODO non dovrebbe essere necessario, ma non so perchè i metadati non li prende in creazione
 			updateProperties(oggettoBulk, node);
 			return node;
-		} catch (Exception e) {
+		} catch (CmisBaseException e) {
+			e.printStackTrace();
+			System.err.println(e.getErrorContent());
+			throw e;
+		} catch (IllegalArgumentException e) {
+			throw e;
+		} catch (IllegalAccessException e) {
 			throw new RuntimeException(e);
 		}
 	}
