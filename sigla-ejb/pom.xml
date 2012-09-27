@@ -151,7 +151,14 @@
     	<artifactId>spring</artifactId>
     	<version>${spring.version}</version>
     </dependency>
-</dependencies>
+    <dependency>
+    	<groupId>org.apache.tika</groupId>
+    	<artifactId>tika-parsers</artifactId>
+    	<version>0.10</version>
+    	<classifier>jdk14</classifier>
+    	<scope>provided</scope>
+    </dependency>
+  </dependencies>
   <properties>
   	<cmisdl.version>1.5</cmisdl.version>
   	<spring.version>2.5.6</spring.version>

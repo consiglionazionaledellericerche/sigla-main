@@ -209,6 +209,12 @@
 	  <artifactId>bcprov-jdk15</artifactId>
 	  <version>1.44</version>
     </dependency>
+    <dependency>
+    	<groupId>org.apache.tika</groupId>
+    	<artifactId>tika-parsers</artifactId>
+    	<version>0.10</version>
+    	<classifier>jdk14</classifier>
+    </dependency>
    </dependencies>
   <properties>
   	<cmisdl.version>1.5</cmisdl.version>
