@@ -13,6 +13,7 @@ import it.cnr.contab.cmis.acl.Permission;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.jada.bulk.OggettoBulk;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.management.RuntimeErrorException;
 
 import org.apache.chemistry.opencmis.client.api.Property;
@@ -142,13 +144,21 @@ public class CMISService {
 		}
 	}
 	
+	public String getContentType(String contentType, String filename){
+		if (contentType != null && contentType.length() > 0)
+			return contentType;
+		MimetypesFileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap();
+		return mimetypesFileTypeMap.getContentType(filename);
+		
+	}
+	
 	public Node storeSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name, 
 				CMISPath cmisPath, Permission... permissions){
 		Node parentNode = nodeService.getNodeByPath(systemCredentials, cmisPath.getPath());
 		try {
 			name = sanitizeFilename(name);
 			Node node = nodeService.createContent(systemCredentials, parentNode, inputStream, name, 
-					contentType, cmisBulkInfo.getType(systemCredentials, oggettoBulk).getId(), 
+					getContentType(contentType, name), cmisBulkInfo.getType(systemCredentials, oggettoBulk).getId(), 
 					cmisBulkInfo.getProperty(systemCredentials, oggettoBulk), 
 					cmisBulkInfo.getAspect(systemCredentials, oggettoBulk), 
 					cmisBulkInfo.getAspectProperty(systemCredentials, oggettoBulk));
