@@ -13,7 +13,11 @@ import it.cnr.contab.cmis.acl.Permission;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.jada.bulk.OggettoBulk;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +37,14 @@ import org.apache.commons.httpclient.Credentials;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.tika.exception.TikaException;
+import org.apache.tika.io.IOUtils;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.AutoDetectParser;
+import org.apache.tika.parser.Parser;
+import org.apache.tika.sax.BodyContentHandler;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
 
 public class CMISService {
 	private transient static final Log logger = LogFactory.getLog(CMISService.class);
@@ -144,12 +156,16 @@ public class CMISService {
 		}
 	}
 	
-	public String getContentType(String contentType, String filename){
-		if (contentType != null && contentType.length() > 0)
-			return contentType;
-		MimetypesFileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap();
-		return mimetypesFileTypeMap.getContentType(filename);
-		
+	public String getContentType(InputStream inputStream,  String contentType){
+		ContentHandler contenthandler = new BodyContentHandler();
+		Metadata metadata = new Metadata();
+		AutoDetectParser parser = new AutoDetectParser();
+		try {
+			parser.parse(inputStream, contenthandler, metadata);
+			return metadata.get(Metadata.CONTENT_TYPE);
+		} catch(Throwable e){
+		}
+		return contentType;
 	}
 	
 	public Node storeSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name, 
@@ -157,8 +173,10 @@ public class CMISService {
 		Node parentNode = nodeService.getNodeByPath(systemCredentials, cmisPath.getPath());
 		try {
 			name = sanitizeFilename(name);
-			Node node = nodeService.createContent(systemCredentials, parentNode, inputStream, name, 
-					getContentType(contentType, name), cmisBulkInfo.getType(systemCredentials, oggettoBulk).getId(), 
+		    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		    IOUtils.copy(inputStream, baos);
+			Node node = nodeService.createContent(systemCredentials, parentNode, new ByteArrayInputStream(baos.toByteArray()), name, 
+					getContentType(new ByteArrayInputStream(baos.toByteArray()),contentType), cmisBulkInfo.getType(systemCredentials, oggettoBulk).getId(), 
 					cmisBulkInfo.getProperty(systemCredentials, oggettoBulk), 
 					cmisBulkInfo.getAspect(systemCredentials, oggettoBulk), 
 					cmisBulkInfo.getAspectProperty(systemCredentials, oggettoBulk));
@@ -175,9 +193,7 @@ public class CMISService {
 			e.printStackTrace();
 			System.err.println(e.getErrorContent());
 			throw e;
-		} catch (IllegalArgumentException e) {
-			throw e;
-		} catch (IllegalAccessException e) {
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
