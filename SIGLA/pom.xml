@@ -240,10 +240,6 @@
     			<artifactId>commons-codec</artifactId>
     			<groupId>commons-codec</groupId>
     		</exclusion>
-    		<exclusion>
-    			<artifactId>pdfbox</artifactId>
-    			<groupId>org.apache.pdfbox</groupId>
-    		</exclusion>
     	</exclusions>
     </dependency>
    </dependencies>
