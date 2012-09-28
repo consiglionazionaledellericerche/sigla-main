@@ -168,7 +168,7 @@ public SQLBuilder selectImpegno( MandatoBulk mandato ) throws IntrospectionExcep
 	PersistentHome home = getHomeCache().getHome( V_impegnoBulk.class );
 	SQLBuilder sql = home.createSQLBuilder();
 	sql.addClause( "AND", "esercizio", sql.EQUALS, mandato.getEsercizio());
-	sql.addSQLClause( "AND", "IM_ASSOCIATO_DOC_AMM-IM_ASSOCIATO_DOC_CONTABILE", sql.GREATER, new java.math.BigDecimal(0));
+	sql.addSQLClause( "AND", "IM_SCADENZA-IM_ASSOCIATO_DOC_CONTABILE", sql.GREATER, new java.math.BigDecimal(0));
 	//join su  VOCE_F per recuperare il cd_cds e la parte 1
 	sql.addTableToHeader( "VOCE_F");
 	sql.addSQLJoin("VOCE_F.ESERCIZIO", "V_IMPEGNO.ESERCIZIO");
