@@ -218,30 +218,6 @@
     	<artifactId>spring</artifactId>
     	<version>${spring.version}</version>
     </dependency>
-<!--     <dependency> -->
-<!--     	<groupId>org.apache.tika</groupId> -->
-<!--     	<artifactId>tika-parsers</artifactId> -->
-<!--     	<version>0.10</version> -->
-<!--     	<classifier>jdk14</classifier> -->
-<!--     	<exclusions> -->
-<!--     		<exclusion> -->
-<!--     			<artifactId>bcprov-jdk15</artifactId> -->
-<!--     			<groupId>org.bouncycastle</groupId> -->
-<!--     		</exclusion> -->
-<!--     		<exclusion> -->
-<!--     			<artifactId>bcmail-jdk15</artifactId> -->
-<!--     			<groupId>org.bouncycastle</groupId> -->
-<!--     		</exclusion> -->
-<!--     		<exclusion> -->
-<!--     			<artifactId>poi</artifactId> -->
-<!--     			<groupId>org.apache.poi</groupId> -->
-<!--     		</exclusion> -->
-<!--     		<exclusion> -->
-<!--     			<artifactId>commons-codec</artifactId> -->
-<!--     			<groupId>commons-codec</groupId> -->
-<!--     		</exclusion> -->
-<!--     	</exclusions> -->
-<!--     </dependency> -->
    </dependencies>
   <properties>
   	<cmisdl.version>1.5</cmisdl.version>
