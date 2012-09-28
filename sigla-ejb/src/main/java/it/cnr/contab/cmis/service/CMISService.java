@@ -147,7 +147,10 @@ public class CMISService {
 	
 	public String getContentType(String contentType, String filename){
 		FileNameMap fileNameMap = URLConnection.getFileNameMap();
-		return fileNameMap.getContentTypeFor(filename);
+		String result = fileNameMap.getContentTypeFor(filename);
+		if (result != null)
+			return result;
+		return contentType;
 	}
 	
 	public Node storeSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name, 
