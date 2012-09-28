@@ -218,6 +218,11 @@
     	<artifactId>spring</artifactId>
     	<version>${spring.version}</version>
     </dependency>
+    <dependency>
+	  <groupId>org.bouncycastle</groupId>
+	  <artifactId>bcprov-jdk15</artifactId>
+	  <version>1.44</version>
+    </dependency>
    </dependencies>
   <properties>
   	<cmisdl.version>1.5</cmisdl.version>
