@@ -367,8 +367,8 @@
 	<fieldProperty
 		name="nome_unita_organizzativa"
 		property="nome_unita_organizzativa"
-		maxLength="100"
-		inputSize="100"
+		maxLength="300"
+		inputSize="300"
 		inputType="TEXT"
 		label="nome_unita_organizzativa"
 		caseSensitiveSearch="false" />
