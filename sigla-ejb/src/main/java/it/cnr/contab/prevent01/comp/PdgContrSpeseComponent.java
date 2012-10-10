@@ -226,7 +226,13 @@ public class PdgContrSpeseComponent extends CRUDComponent {
 			
 			if (clause != null) 
 			  sql.addClause(clause);			
-
+			 
+			java.sql.Timestamp lastDayOfYear = it.cnr.contab.doccont00.comp.DateServices.getLastDayOfYear(CNRUserContext.getEsercizio(userContext));
+		 	sql.addClause("AND", "dt_istituzione", sql.LESS, lastDayOfYear);
+			sql.openParenthesis("AND");
+			sql.addClause("AND", "dt_soppressione", sql.GREATER_EQUALS,  lastDayOfYear);
+			sql.addClause("OR","dt_soppressione",sql.ISNULL,null);
+			sql.closeParenthesis();
 			UtenteBulk utente = (UtenteBulk)getHome(userContext, UtenteBulk.class).findByPrimaryKey(new UtenteBulk(CNRUserContext.getUser(userContext)));
 			sql.addClause("AND", "cd_dipartimento", SQLBuilder.EQUALS, utente.getCd_dipartimento());
 			sql.addOrderBy("cd_dipartimento");

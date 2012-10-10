@@ -4,6 +4,7 @@
 */
 package it.cnr.contab.config00.sto.bulk;
 import java.sql.Connection;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,6 +27,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBroker;
 import it.cnr.jada.persistency.sql.SQLBuilder;
@@ -92,4 +94,29 @@ public class DipartimentoHome extends BulkHome {
 		}
 	}
 	
+	@Override
+	public SQLBuilder selectByClause(CompoundFindClause compoundfindclause)
+			throws PersistencyException {
+		SQLBuilder sql = createSQLBuilder();
+		
+		//java.sql.Timestamp firstDayOfYear = it.cnr.contab.doccont00.comp.DateServices.getFirstDayOfYear(CNRUserContext.getEsercizio(usercontext));
+		//java.sql.Timestamp lastDayOfYear = it.cnr.contab.doccont00.comp.DateServices.getLastDayOfYear(CNRUserContext.getEsercizio(usercontext));
+	 	sql.addClause("AND", "dt_istituzione", sql.LESS, it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+		sql.openParenthesis("AND");
+		sql.addClause("AND", "dt_soppressione", sql.GREATER_EQUALS,  it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+		sql.addClause("OR","dt_soppressione",sql.ISNULL,null);
+		sql.closeParenthesis();
+		return sql;
+	}
+	public SQLBuilder selectByClause(UserContext uc,CompoundFindClause compoundfindclause)
+			throws PersistencyException {
+		SQLBuilder sql = createSQLBuilder(); 
+		java.sql.Timestamp lastDayOfYear = it.cnr.contab.doccont00.comp.DateServices.getLastDayOfYear(CNRUserContext.getEsercizio(uc));
+	 	sql.addClause("AND", "dt_istituzione", sql.LESS, lastDayOfYear);
+		sql.openParenthesis("AND");
+		sql.addClause("AND", "dt_soppressione", sql.GREATER_EQUALS,  lastDayOfYear);
+		sql.addClause("OR","dt_soppressione",sql.ISNULL,null);
+		sql.closeParenthesis();
+		return sql;
+	}
 }
