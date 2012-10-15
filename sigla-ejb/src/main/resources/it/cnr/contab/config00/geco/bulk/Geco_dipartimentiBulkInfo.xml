@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="id_dip"
+		property="id_dip"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="id_dip" />
+	<fieldProperty
+		name="cod_dip"
+		property="cod_dip"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="cod_dip" />
+	<fieldProperty
+		name="descrizione"
+		property="descrizione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="255"
+		label="descrizione" />
+	<fieldProperty
+		name="data_istituzione"
+		property="data_istituzione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="data_istituzione" />
+	<fieldProperty
+		name="ordine"
+		property="ordine"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="ordine" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio" />	
+	<formFieldProperty
+		name="id_dip" />
+	<formFieldProperty
+		name="cod_dip" />
+	<formFieldProperty
+		name="descrizione" />
+	<formFieldProperty
+		name="data_istituzione" />
+	<formFieldProperty
+		name="ordine" />
+	<formFieldProperty
+		name="esercizio" />	
+	<findFieldProperty
+		name="id_dip" />
+	<findFieldProperty
+		name="cod_dip" />
+	<findFieldProperty
+		name="descrizione" />
+	<findFieldProperty
+		name="data_istituzione" />
+	<findFieldProperty
+		name="ordine" />
+	<columnFieldProperty
+		name="id_dip" />
+	<columnFieldProperty
+		name="cod_dip" />
+	<columnFieldProperty
+		name="descrizione" />
+	<columnFieldProperty
+		name="data_istituzione" />
+	<columnFieldProperty
+		name="ordine" />
+</bulkInfo>

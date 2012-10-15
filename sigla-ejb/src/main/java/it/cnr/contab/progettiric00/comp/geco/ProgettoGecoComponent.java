@@ -3,8 +3,8 @@ package it.cnr.contab.progettiric00.comp.geco;
 import java.sql.Connection;
 import java.util.List;
 
-import it.cnr.contab.config00.geco.bulk.Geco_dipartimentoBulk;
-import it.cnr.contab.config00.geco.bulk.Geco_dipartimentoIBulk;
+import it.cnr.contab.config00.geco.bulk.Geco_dipartimentiBulk;
+import it.cnr.contab.config00.geco.bulk.Geco_dipartimentiIBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoHome;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
@@ -99,11 +99,11 @@ public class ProgettoGecoComponent extends CRUDComponent {
 		}
 	}
 	@SuppressWarnings("unchecked")
-	public List<Geco_dipartimentoIBulk> cercaDipartimentiGeco(UserContext userContext, OggettoBulk oggettoBulk, Class<? extends OggettoBulk> bulkClass) throws ComponentException{
+	public List<Geco_dipartimentiIBulk> cercaDipartimentiGeco(UserContext userContext, OggettoBulk oggettoBulk, Class<? extends OggettoBulk> bulkClass) throws ComponentException{
 		try {
 			DipartimentoBulk dipartimento = (DipartimentoBulk)oggettoBulk;
 			BulkHome gecoDipartimentoHome = getHome(userContext, bulkClass);
-			Geco_dipartimentoBulk gecoDipartimentoDummy = new Geco_dipartimentoBulk();
+			Geco_dipartimentiBulk gecoDipartimentoDummy = new Geco_dipartimentiBulk();
 			SQLBuilder sql = gecoDipartimentoHome.createSQLBuilder();
 			if (dipartimento!=null){
 				if (dipartimento.getCd_dipartimento() != null)
@@ -111,7 +111,7 @@ public class ProgettoGecoComponent extends CRUDComponent {
 			}
 			sql.addClause(gecoDipartimentoDummy.buildFindClauses(new Boolean(true)));
 			sql.addClause("AND","esercizio",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
-			return (List<Geco_dipartimentoIBulk>)gecoDipartimentoHome.fetchAll(sql);
+			return (List<Geco_dipartimentiIBulk>)gecoDipartimentoHome.fetchAll(sql);
 		} catch (PersistencyException e) {
 			throw handleException(e);
 		}

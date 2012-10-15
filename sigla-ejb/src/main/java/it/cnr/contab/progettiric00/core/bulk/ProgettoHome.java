@@ -348,7 +348,7 @@ public class ProgettoHome extends BulkHome {
 			handleExceptionMail(userContext, e);
 		}
 		try {
-			verificaProgetti(userContext,progetto, Geco_progetto_strategicoBulk.class);
+			verificaProgetti(userContext,progetto, Geco_progetto_pbBulk.class);
 		}catch (Exception e) {
 			handleExceptionMail(userContext, e);
 		}
@@ -370,7 +370,7 @@ public class ProgettoHome extends BulkHome {
 			handleExceptionMail(userContext, e);
 		}
 		try {
-			verificaCommesse(userContext, progetto, Geco_commessa_psBulk.class);
+			verificaCommesse(userContext, progetto, Geco_commessa_pbBulk.class);
 		} catch (Exception e) {
 			handleExceptionMail(userContext, e);
 		}
@@ -392,7 +392,7 @@ public class ProgettoHome extends BulkHome {
 			handleExceptionMail(userContext, e);
 		}
 		try {
-			verificaModuli(userContext, progetto, Geco_modulo_psBulk.class);
+			verificaModuli(userContext, progetto, Geco_modulo_pbBulk.class);
 		}catch (Exception e) {
 			handleExceptionMail(userContext, e);
 		}
