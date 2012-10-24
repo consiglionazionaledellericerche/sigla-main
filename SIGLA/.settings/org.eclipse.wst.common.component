@@ -68,24 +68,6 @@
         <dependent-module archiveName="itext-2.1.7.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/lowagie/itext/2.1.7/itext-2.1.7.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="bcmail-jdk14-138.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/bouncycastle/bcmail-jdk14/138/bcmail-jdk14-138.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="bcprov-jdk14-138.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/bouncycastle/bcprov-jdk14/138/bcprov-jdk14-138.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="bctsp-jdk14-1.38.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/bouncycastle/bctsp-jdk14/1.38/bctsp-jdk14-1.38.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="bcprov-jdk14-1.38.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/bouncycastle/bcprov-jdk14/1.38/bcprov-jdk14-1.38.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="bcmail-jdk14-1.38.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/bouncycastle/bcmail-jdk14/1.38/bcmail-jdk14-1.38.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="commons-codec-1.3.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-codec/commons-codec/1.3/commons-codec-1.3.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="commons-digester-1.6.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-digester/commons-digester/1.6/commons-digester-1.6.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -116,25 +98,25 @@
         <dependent-module archiveName="jdtcore-3.1.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/eclipse/jdtcore/3.1.0/jdtcore-3.1.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="poi-3.0-FINAL.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/poi/poi/3.0-FINAL/poi-3.0-FINAL.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="log4j-1.2.13.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/log4j/log4j/1.2.13/log4j-1.2.13.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="Base64-1.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/it/cnr/jada-libs/Base64/1.0.1/Base64-1.0.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="CopyResource-1.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/it/cnr/jada-libs/CopyResource/1.0.1/CopyResource-1.0.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="capi-full-31-all14-1.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/it/cnr/jada-libs/capi-full-31-all14/1.0.1/capi-full-31-all14-1.0.1.jar">
+        <dependent-module archiveName="capi-full-31-all14-1.0.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/it/cnr/jada-libs/capi-full-31-all14/1.0.2/capi-full-31-all14-1.0.2.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="spring-2.5.6.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring/2.5.6/spring-2.5.6.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="bcprov-jdk15-1.44.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/bouncycastle/bcprov-jdk15/1.44/bcprov-jdk15-1.44.jar">
+        <dependent-module archiveName="bcprov-jdk15-1.46.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/bouncycastle/bcprov-jdk15/1.46/bcprov-jdk15-1.46.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="bctsp-jdk15-1.46.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/bouncycastle/bctsp-jdk15/1.46/bctsp-jdk15-1.46.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="bcmail-jdk15-1.46.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/bouncycastle/bcmail-jdk15/1.46/bcmail-jdk15-1.46.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>

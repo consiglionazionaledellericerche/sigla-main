@@ -118,6 +118,10 @@
 				<artifactId>commons-codec</artifactId>
 				<groupId>commons-codec</groupId>
 			</exclusion>
+			<exclusion>
+				<artifactId>bcprov-jdk14</artifactId>
+				<groupId>bouncycastle</groupId>
+			</exclusion>
 		</exclusions>
    	</dependency>
    	<dependency>
@@ -162,6 +166,28 @@
 		<groupId>com.lowagie</groupId>
 		<artifactId>itext</artifactId>
 		<version>2.1.7</version>
+		<exclusions>
+			<exclusion>
+				<artifactId>bcmail-jdk14</artifactId>
+				<groupId>org.bouncycastle</groupId>
+			</exclusion>
+			<exclusion>
+				<artifactId>bcmail-jdk14</artifactId>
+				<groupId>bouncycastle</groupId>
+			</exclusion>
+			<exclusion>
+				<artifactId>bcprov-jdk14</artifactId>
+				<groupId>org.bouncycastle</groupId>
+			</exclusion>
+			<exclusion>
+				<artifactId>bcprov-jdk14</artifactId>
+				<groupId>bouncycastle</groupId>
+			</exclusion>
+			<exclusion>
+				<artifactId>bctsp-jdk14</artifactId>
+				<groupId>org.bouncycastle</groupId>
+			</exclusion>
+		</exclusions>
     </dependency>
     <dependency>
 		<groupId>commons-digester</groupId>
@@ -210,7 +236,7 @@
     <dependency>
 		<groupId>it.cnr.jada-libs</groupId>
 		<artifactId>capi-full-31-all14</artifactId>
-		<version>1.0.1</version>
+		<version>1.0.2</version>
 		<type>jar</type>
     </dependency>
     <dependency>
@@ -221,7 +247,17 @@
     <dependency>
 	  <groupId>org.bouncycastle</groupId>
 	  <artifactId>bcprov-jdk15</artifactId>
-	  <version>1.44</version>
+	  <version>1.46</version>
+    </dependency>
+    <dependency>
+	  <groupId>org.bouncycastle</groupId>
+	  <artifactId>bctsp-jdk15</artifactId>
+	  <version>1.46</version>
+    </dependency>
+    <dependency>
+	  <groupId>org.bouncycastle</groupId>
+	  <artifactId>bcmail-jdk15</artifactId>
+	  <version>1.46</version>
     </dependency>
    </dependencies>
   <properties>
