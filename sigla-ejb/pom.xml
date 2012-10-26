@@ -27,6 +27,36 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
+        <plugins>
+                <!-- Conversion of XML Schema into Java source code using JAXB-XJC -->
+                <plugin>
+                    <groupId>org.jvnet.jaxb2.maven2</groupId>
+                    <artifactId>maven-jaxb2-plugin</artifactId>
+                    <version>0.7.4</version>
+                    <executions>
+                       <execution>
+                           <goals>
+                               <goal>generate</goal>
+                           </goals>
+                       </execution>
+                    </executions>
+                    <configuration>
+                        <schemaDirectory>${project.basedir}/src/main/resources/xsd</schemaDirectory>
+                        <extension>true</extension>
+                        <args>
+                            <arg>-Xcollection-setter-injector</arg>
+                        </args>
+                        <strict>true</strict>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>net.java.dev.vcc.thirdparty</groupId>
+                            <artifactId>collection-setter-injector</artifactId>
+                            <version>0.5.0-1</version>
+                        </dependency>
+                   </dependencies>
+                </plugin>
+        </plugins>
 	</build>
   <dependencies>
   	<dependency>

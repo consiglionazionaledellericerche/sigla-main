@@ -4,7 +4,6 @@
  */
 package it.cnr.contab.incarichi00.xmlfp.bulk;
 
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.xmlfp.Comunicazione;
 import it.cnr.contab.incarichi00.xmlfp.EsitoComunicazione;
@@ -12,7 +11,9 @@ import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.persistency.sql.CHARToBooleanConverter;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Iterator;
 
@@ -291,6 +292,88 @@ public class Incarichi_comunicati_fpBulk extends Incarichi_comunicati_fpBase {
 		}
 	}
 
+	public static Incarichi_comunicati_fpBulk copyFrom(UserContext userContext, it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType nuovaComunicazione, it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ConsulenteType nuovoConsulente) throws it.cnr.jada.comp.ApplicationException {
+		return copyFrom(userContext, nuovaComunicazione, nuovoConsulente,null);
+	}
+	
+	public static Incarichi_comunicati_fpBulk copyFrom(UserContext userContext, it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType nuovaComunicazione, it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ConsulenteType nuovoConsulente, it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.EsitoConsulenteType nuovoConsulenteEsito) throws it.cnr.jada.comp.ApplicationException {
+		try {
+			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd");
+			int esercizio_repertorio = new Integer(nuovoConsulente.getIdMittente().substring(0,4)); 
+			Long pg_repertorio = new Long(nuovoConsulente.getIdMittente().substring(5)); 
+			Incarichi_comunicati_fpBulk incaricoFP = new Incarichi_comunicati_fpBulk(esercizio_repertorio,pg_repertorio, nuovoConsulenteEsito==null?Incarichi_comunicati_fpBulk.TIPO_RECORD_INVIATO_NEW:Incarichi_comunicati_fpBulk.TIPO_RECORD_INVIATO_NEW, new Long(1));
+			incaricoFP.setAnno_riferimento(nuovaComunicazione.getInserimentoIncarichi().getAnnoRiferimento().intValue());
+			incaricoFP.setSemestre_riferimento(nuovoConsulente.getIncarico().getSemestreRiferimento().intValue());
+			incaricoFP.setCodice_ente(String.valueOf(nuovaComunicazione.getInserimentoIncarichi().getCodiceEnte()));
+			incaricoFP.setCognome(nuovoConsulente.getIncaricato().getPersonaFisica().getCognome());
+			incaricoFP.setNome(nuovoConsulente.getIncaricato().getPersonaFisica().getNome());
+			incaricoFP.setData_nascita(new Timestamp(formatter.parse(nuovoConsulente.getIncaricato().getPersonaFisica().getDataNascita().toString()).getTime()));
+			incaricoFP.setTi_sesso(nuovoConsulente.getIncaricato().getPersonaFisica().getSesso().toString());
+			incaricoFP.setFl_estero((Boolean)new CHARToBooleanConverter().sqlToJava(nuovoConsulente.getIncaricato().getPersonaFisica().getEstero().name()));
+			incaricoFP.setCodice_fiscale_partita_iva(nuovoConsulente.getIncaricato().getPersonaFisica().getCodiceFiscale());
+			incaricoFP.setDescrizione_incarico(nuovoConsulente.getIncarico().getDescrizioneIncarico());
+			incaricoFP.setDt_inizio(new Timestamp(nuovoConsulente.getIncarico().getDataInizio().toGregorianCalendar().getTime().getTime()));
+			incaricoFP.setDt_fine(new Timestamp(nuovoConsulente.getIncarico().getDataFine().toGregorianCalendar().getTime().getTime()));
+			incaricoFP.setImporto_previsto(nuovoConsulente.getIncarico().getImporto());
+			incaricoFP.setFl_riferimento_regolamento((Boolean)new CHARToBooleanConverter().sqlToJava(nuovoConsulente.getIncarico().getRiferimentoRegolamento().name()));
+			incaricoFP.setFl_saldo(nuovoConsulente.getIncarico().getIncaricoSaldato().intValue()==2?Boolean.FALSE:Boolean.TRUE);
+			incaricoFP.setAttivita_economica(nuovoConsulente.getIncarico().getAttivitaEconomica());
+			incaricoFP.setTipo_rapporto(nuovoConsulente.getIncarico().getTipoRapporto());
+			incaricoFP.setModalita_acquisizione(nuovoConsulente.getIncarico().getModalitaAcquisizione());
+			incaricoFP.setTipologia_consulente(null);
+			if (nuovoConsulenteEsito!=null)
+				incaricoFP.setId_incarico(nuovoConsulenteEsito.getId().toString());
+			
+			if (nuovoConsulente.getPagamenti()!=null){
+				for (Iterator<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ConsulenteType.Pagamenti.NuovoPagamento> iterator = nuovoConsulente.getPagamenti().getNuovoPagamento().iterator(); iterator.hasNext();) {
+					it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ConsulenteType.Pagamenti.NuovoPagamento nuovoPagamento = iterator.next();
+					Incarichi_comunicati_fp_detBulk incaricoComunicatoDet = Incarichi_comunicati_fp_detBulk.copyFrom(userContext, incaricoFP, nuovoPagamento);
+					incaricoFP.addToIncarichi_comunicati_fp_detColl(incaricoComunicatoDet);
+				}
+			}
+			
+			incaricoFP.setToBeCreated();
+			return incaricoFP;
+		} catch (Exception e) {
+			throw new it.cnr.jada.comp.ApplicationException(e.toString());
+		}
+	}
+
+	public static Incarichi_comunicati_fpBulk copyFrom(UserContext userContext, it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType modificaComunicazione, it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ConsulenteType modificaConsulente) throws it.cnr.jada.comp.ApplicationException {
+		return copyFrom(userContext, modificaComunicazione, modificaConsulente,null);
+	}
+	
+	public static Incarichi_comunicati_fpBulk copyFrom(UserContext userContext, it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType modificaComunicazione, it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ConsulenteType modificaConsulente, it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.EsitoConsulenteType modificaConsulenteEsito) throws it.cnr.jada.comp.ApplicationException {
+		try {
+			int esercizio_repertorio = new Integer(modificaConsulente.getIdMittente().substring(0,4)); 
+			Long pg_repertorio = new Long(modificaConsulente.getIdMittente().substring(5)); 
+			Incarichi_comunicati_fpBulk incaricoFP = new Incarichi_comunicati_fpBulk(esercizio_repertorio, pg_repertorio, Incarichi_comunicati_fpBulk.TIPO_RECORD_INVIATO_UPD, null);
+			incaricoFP.setAttivita_economica(modificaConsulente.getIncarico().getAttivitaEconomica());
+			incaricoFP.setDescrizione_incarico(modificaConsulente.getIncarico().getDescrizioneIncarico());
+			incaricoFP.setModalita_acquisizione(modificaConsulente.getIncarico().getModalitaAcquisizione());
+			incaricoFP.setTipo_rapporto(modificaConsulente.getIncarico().getTipoRapporto());
+			incaricoFP.setDt_fine(modificaConsulente.getIncarico().getDataFine()!=null?new Timestamp(modificaConsulente.getIncarico().getDataFine().toGregorianCalendar().getTime().getTime()):null);
+			incaricoFP.setImporto_previsto(modificaConsulente.getIncarico().getImporto());
+			incaricoFP.setFl_saldo(modificaConsulente.getIncarico().getIncaricoSaldato()!=null?(modificaConsulente.getIncarico().getIncaricoSaldato().intValue()==2?Boolean.FALSE:Boolean.TRUE):null);
+
+			if (modificaConsulenteEsito!=null)
+				incaricoFP.setId_incarico(String.valueOf(modificaConsulenteEsito.getId()));
+			
+			if (modificaConsulente.getPagamenti()!=null){
+				for (Iterator<it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ConsulenteType.Pagamenti.NuovoPagamento> iterator = modificaConsulente.getPagamenti().getNuovoPagamento().iterator(); iterator.hasNext();) {
+					it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ConsulenteType.Pagamenti.NuovoPagamento nuovoPagamento = iterator.next();
+					Incarichi_comunicati_fp_detBulk incaricoComunicatoDet = Incarichi_comunicati_fp_detBulk.copyFrom(userContext, incaricoFP, nuovoPagamento);
+					incaricoFP.addToIncarichi_comunicati_fp_detColl(incaricoComunicatoDet);
+				}
+			}
+			
+			incaricoFP.setToBeCreated();
+			return incaricoFP;
+		} catch (Exception e) {
+			throw new it.cnr.jada.comp.ApplicationException(e.toString());
+		}
+	}
+
 	public void updateFrom(UserContext userContext, Incarichi_comunicati_fpBulk incaricoFP) throws it.cnr.jada.comp.ApplicationException {
 		try {
 			if (incaricoFP.getId_incarico()!=null) this.setId_incarico((incaricoFP.getId_incarico()));
@@ -357,7 +440,7 @@ public class Incarichi_comunicati_fpBulk extends Incarichi_comunicati_fpBase {
 		       Utility.equalsNull(this.getTi_sesso(), bulk.getTi_sesso()) &&
 		       Utility.equalsNull(this.getFl_estero(), bulk.getFl_estero()) &&
 		       Utility.equalsNull(this.getCodice_fiscale_partita_iva(), bulk.getCodice_fiscale_partita_iva()) &&
-		       Utility.equalsNull(this.getDescrizione_incarico(), bulk.getDescrizione_incarico()) &&
+		       //Utility.equalsNull(this.getDescrizione_incarico(), bulk.getDescrizione_incarico()) &&
 		       Utility.equalsNull(this.getDt_inizio(), bulk.getDt_inizio()) &&
 		       Utility.equalsNull(this.getDt_fine(), bulk.getDt_fine()) &&
 		       Utility.equalsNull(this.getImporto_previsto(), bulk.getImporto_previsto()) &&
