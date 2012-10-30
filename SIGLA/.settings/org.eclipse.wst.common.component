@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="SIGLA">
-        <wb-resource deploy-path="/" source-path="/src/main/application"/>
+    <wb-module deploy-name="sigla-ear-2.0.0-SNAPSHOT">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/application" tag="defaultRootSource"/>
         <dependent-module archiveName="jada.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/it/cnr/jada/2.0.1/jada-2.0.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -117,6 +118,12 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="bcmail-jdk15-1.46.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/bouncycastle/bcmail-jdk15/1.46/bcmail-jdk15-1.46.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="poi-3.8.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/poi/poi/3.8/poi-3.8.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-codec-1.5.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-codec/commons-codec/1.5/commons-codec-1.5.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>
