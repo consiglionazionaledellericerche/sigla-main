@@ -100,6 +100,8 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	setFl_check_terzo_siope(new Boolean( false ));
 	setFl_inv_beni_comp(new Boolean(false));
 	setFl_limite_spesa(new Boolean(false));
+	setFl_soggetto_prelievo(new Boolean(false));
+	setFl_prelievo(new Boolean(false));
 	return this;
 }
 /**

@@ -187,7 +187,10 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 	Elemento_voceHome subEvHome = (Elemento_voceHome) getHome(userContext,evBulk);
 	try
 	{
-
+	
+	if (evBulk.getFl_prelievo().booleanValue() && findElementoVocePrelievo(userContext) != null)
+			throw new  it.cnr.jada.comp.ApplicationException("Attenzione: esiste già un elemento voce di prelievo per l'esercizio.");
+	
 		if ( evBulk instanceof EV_cnr_spese_capitoloBulk )
 				return creaCnrSpeseCapitoloBulk( userContext,(EV_cnr_spese_capitoloBulk)evBulk );
 
@@ -520,7 +523,13 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 	// Aggiunto controllo sulla chiusura dell'esercizio
 	if (isEsercizioChiuso(userContext))
 		throw new ApplicationException("Non è possibile modificare voci ad esercizio chiuso.");
-	
+	try{
+		Elemento_voceBulk evBulk = (Elemento_voceBulk) bulk;
+		if (evBulk.getFl_prelievo().booleanValue() && findElementoVocePrelievo(userContext) != null)
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: esiste già un elemento voce di prelievo per l'esercizio.");
+	} catch (it.cnr.jada.persistency.PersistencyException pe){
+		throw handleException(pe);
+	}
 	return super.modificaConBulk(userContext,bulk);
 }
 
@@ -839,5 +848,15 @@ public OggettoBulk stampaConBulk(UserContext userContext, V_stampa_pdc_fin_ent_s
 			throw new ApplicationException( "Il campo ESERCIZIO e' obbligatorio");
 	return stampa;
 }	
-	
+private Elemento_voceBulk findElementoVocePrelievo(UserContext userContext) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
+	Elemento_voceHome home = (Elemento_voceHome)getHome(userContext, Elemento_voceBulk.class);
+	SQLBuilder sql = home.createSQLBuilder();
+	sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+	sql.addSQLClause("AND","FL_PRELIEVO",sql.EQUALS,	"Y");	
+	it.cnr.jada.persistency.Broker broker = home.createBroker(sql);
+	if (!broker.next())
+	    return null;	
+
+    return (Elemento_voceBulk)broker.fetch(Elemento_voceBulk.class);	
+}	
 }

@@ -622,6 +622,7 @@ public OggettoBulk inizializzaBulkPerRicerca(UserContext userContext,OggettoBulk
 		((V_obb_acc_xxxBulk)bulk).setCd_cds_ente( ente.getCd_unita_organizzativa());
 		((V_obb_acc_xxxBulk)bulk).setCd_cds_scrivania( ((CNRUserContext)userContext).getCd_cds());
 		verificaStatoEsercizio( userContext, ((CNRUserContext)userContext).getEsercizio(), ((CNRUserContext)userContext).getCd_cds()  );
+		verificaAbilitazioneRibaltamento( userContext);
 		return bulk;
 	} catch(Throwable e) {
 		throw handleException(e);
@@ -1768,4 +1769,12 @@ public OggettoBulk updateParametriCds (UserContext context) throws EJBException,
 		
 	return parametri_cds;
 }
+
+public void verificaAbilitazioneRibaltamento( UserContext userContext ) throws ComponentException, it.cnr.jada.persistency.PersistencyException
+{
+	Parametri_cdsBulk parametri_cds =(Parametri_cdsBulk)getHome(userContext,Parametri_cdsBulk.class).findByPrimaryKey(new Parametri_cdsBulk(((CNRUserContext)userContext).getCd_cds(),((CNRUserContext)userContext).getEsercizio()));
+	if(parametri_cds==null || !parametri_cds.getFl_riporta_avanti()) 
+		throw new ApplicationException("Il ribaltamento all'esercizio successivo non è abilitato per questo cds.");	
+}
+
 }

@@ -66,6 +66,10 @@ public class Elemento_voceBase extends Elemento_voceKey implements Keyed {
 	private java.lang.Boolean fl_inv_beni_comp;
 	
 	private java.lang.Boolean fl_limite_spesa;
+	
+	private java.lang.Boolean fl_prelievo;
+	private java.lang.Boolean fl_soggetto_prelievo;
+	
 public Elemento_voceBase() {
 	super();
 }
@@ -321,5 +325,17 @@ public void setTi_elemento_voce(java.lang.String ti_elemento_voce) {
 	}
 	public void setFl_limite_spesa(java.lang.Boolean fl_limite_spesa) {
 		this.fl_limite_spesa = fl_limite_spesa;
+	}
+	public java.lang.Boolean getFl_prelievo() {
+		return fl_prelievo;
+	}
+	public void setFl_prelievo(java.lang.Boolean fl_prelievo) {
+		this.fl_prelievo = fl_prelievo;
+	}
+	public java.lang.Boolean getFl_soggetto_prelievo() {
+		return fl_soggetto_prelievo;
+	}
+	public void setFl_soggetto_prelievo(java.lang.Boolean fl_soggetto_prelievo) {
+		this.fl_soggetto_prelievo = fl_soggetto_prelievo;
 	}
 }

@@ -206,12 +206,12 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 					// controlliamo che i moduli in pdg_modulo abbiano stato approvato
 					List listaModuliNA = findPdgModuloAttivitaNonApprovati(userContext, pdg_esercizio );
 					if (!listaModuliNA.isEmpty())
-						throw new ApplicationException( "Lo stato può essere aggiornato poichè esistono righe del PdGP con moduli di attività con stato NON APPROVATO");
+						throw new ApplicationException( "Lo stato non può essere aggiornato poichè esistono righe del PdGP con moduli di attività con stato NON APPROVATO");
 
 					// controlliamo che le righe di pdg_modulo siano tutte AP
 					List listaModuli = findPdgModulo(userContext, pdg_esercizio, Pdg_moduloBulk.STATO_AP );
 					if (!listaModuli.isEmpty())
-						throw new ApplicationException( "Lo stato può essere aggiornato poichè non tutte le righe del PdGP hanno stato "+Pdg_moduloBulk.STATO_AP);
+						throw new ApplicationException( "Lo stato non può essere aggiornato poichè non tutte le righe del PdGP hanno stato "+Pdg_moduloBulk.STATO_AP);
 
 					controllaStatoPianoRiparto(userContext, pdg_esercizio);
 					
@@ -1103,6 +1103,8 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 
 		BigDecimal impTotaleEntrate = new BigDecimal(0);
 		BigDecimal impTotaleSpese = new BigDecimal(0);
+		BigDecimal impTotaleSpesePrel = new BigDecimal(0);
+		BigDecimal impTotaleEntrateDaPrel = new BigDecimal(0);
 
 		try {
 			Pdg_Modulo_EntrateHome home = (Pdg_Modulo_EntrateHome)getHome(userContext,Pdg_Modulo_EntrateBulk.class);
@@ -1179,15 +1181,75 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 			throw handleException(e);
 		}
 
-		if (impTotaleSpese.compareTo(impTotaleEntrate)!=0){
-			if ( cds!=null ) {
-				if ( cds.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_AREA) ) 
-					throw new ApplicationException("Per l'area " + cds.getCd_unita_organizzativa() + " e per il modulo "+ pdg.getCd_progetto()+", il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");
-				else
-					throw new ApplicationException("Per il CDS " + cds.getCd_unita_organizzativa() + " e per il modulo "+ pdg.getCd_progetto()+", il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");
-			}
-			else
-				throw new ApplicationException("Per il modulo "+ pdg.getCd_progetto()+" il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");
+		try{
+			Parametri_cnrBulk pcnr = new Parametri_cnrBulk(pdg.getEsercizio());
+			pcnr = (Parametri_cnrBulk) getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(pcnr);
+			if (pcnr.getPerc_prelievo_pdgp_entrate()!=null && pcnr.getPerc_prelievo_pdgp_entrate().compareTo(BigDecimal.ZERO)!=0){					
+					Pdg_modulo_speseHome home = (Pdg_modulo_speseHome)getHome(userContext,Pdg_modulo_speseBulk.class);
+					SQLBuilder sql = home.createSQLBuilder();
+					sql.addTableToHeader("ELEMENTO_VOCE");
+					sql.addClause("AND","esercizio",SQLBuilder.EQUALS,pdg.getEsercizio());
+					sql.addClause("AND","cd_centro_responsabilita",SQLBuilder.EQUALS,pdg.getCd_centro_responsabilita());
+					sql.addClause("AND","pg_progetto",SQLBuilder.EQUALS,pdg.getPg_progetto());
+					sql.addSQLClause("AND","FL_PRELIEVO",SQLBuilder.EQUALS,"Y");
+					sql.addSQLJoin("PDG_MODULO_SPESE.ID_CLASSIFICAZIONE","ELEMENTO_VOCE.ID_CLASSIFICAZIONE");
+					if (cds!=null && cds.getCd_unita_organizzativa()!=null)
+						sql.addClause("AND","cd_cds_area",SQLBuilder.EQUALS,cds.getCd_unita_organizzativa());
+					SQLBroker broker = home.createBroker(sql);
+					while(broker.next()) {
+						Pdg_modulo_speseBulk pdgs = (Pdg_modulo_speseBulk)broker.fetch(Pdg_modulo_speseBulk.class);
+						if (pdgs.getIm_spese_gest_accentrata_est()!=null)
+							impTotaleSpesePrel = impTotaleSpesePrel.add(pdgs.getIm_spese_gest_accentrata_est());
+						if (pdgs.getIm_spese_gest_decentrata_est()!=null)
+							impTotaleSpesePrel = impTotaleSpesePrel.add(pdgs.getIm_spese_gest_decentrata_est());
+					}
+					Pdg_Modulo_EntrateHome homeEntr = (Pdg_Modulo_EntrateHome)getHome(userContext,Pdg_Modulo_EntrateBulk.class);
+					SQLBuilder sqlEntr = homeEntr.createSQLBuilder();
+					sqlEntr.addTableToHeader("CLASSIFICAZIONE_VOCI,ELEMENTO_VOCE");
+					sqlEntr.addSQLJoin("PDG_MODULO_ENTRATE.ID_CLASSIFICAZIONE","CLASSIFICAZIONE_VOCI.ID_CLASSIFICAZIONE");
+					sqlEntr.addSQLJoin("PDG_MODULO_ENTRATE.ID_CLASSIFICAZIONE","ELEMENTO_VOCE.ID_CLASSIFICAZIONE");
+					CdrBulk cdr = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(pdg.getCdr());
+					cdr.setUnita_padre((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdr.getCd_unita_organizzativa())));
+
+					if (pdg.getCdr().isCdrSAC())
+						sqlEntr.addSQLClause("AND","CLASSIFICAZIONE_VOCI.FL_ESTERNA_DA_QUADRARE_SAC",SQLBuilder.EQUALS,"Y");
+					sqlEntr.addClause("AND","esercizio",SQLBuilder.EQUALS,pdg.getEsercizio());
+					sqlEntr.addClause("AND","cd_centro_responsabilita",SQLBuilder.EQUALS,pdg.getCd_centro_responsabilita());
+					sqlEntr.addClause("AND","pg_progetto",SQLBuilder.EQUALS,pdg.getPg_progetto());
+					sqlEntr.addSQLClause("AND","FL_SOGGETTO_PRELIEVO",SQLBuilder.EQUALS,"Y");
+					if (cds!=null && cds.getCd_unita_organizzativa()!=null)
+						sqlEntr.addClause("AND","cd_cds_area",SQLBuilder.EQUALS,cds.getCd_unita_organizzativa());
+
+					SQLBroker brokerEntr = homeEntr.createBroker(sqlEntr);
+					
+					while(brokerEntr.next()) {
+						Pdg_Modulo_EntrateBulk pdge = (Pdg_Modulo_EntrateBulk)brokerEntr.fetch(Pdg_Modulo_EntrateBulk.class);
+						if (pdge.getIm_entrata()!=null)
+							impTotaleEntrateDaPrel = impTotaleEntrateDaPrel.add(pdge.getIm_entrata());
+					}
+					// se non ci sono entrate soggette a prelievo bisogna fare lo stesso il controllo
+					if(impTotaleEntrateDaPrel.compareTo(BigDecimal.ZERO)!=0)
+						if(impTotaleEntrateDaPrel.multiply(pcnr.getPerc_prelievo_pdgp_entrate()).divide(new BigDecimal("100"),2,BigDecimal.ROUND_HALF_DOWN).compareTo(impTotaleSpesePrel)!=0)
+							throw new ApplicationException("Per il modulo "+ pdg.getCd_progetto()+" il contributo per l'attività ordinaria è pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel.multiply(pcnr.getPerc_prelievo_pdgp_entrate()).divide(new BigDecimal("100"),2,BigDecimal.ROUND_HALF_DOWN))+
+									". Impossibile salvare, poichè rimane da imputare alla voce dedicata l'importo di "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel.multiply(pcnr.getPerc_prelievo_pdgp_entrate()).divide(new BigDecimal("100"),2,BigDecimal.ROUND_HALF_DOWN).subtract(impTotaleSpesePrel))+".");
+					
+				}
+			
+				if (impTotaleSpese.compareTo(impTotaleEntrate)!=0){
+					if ( cds!=null ) {
+						if ( cds.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_AREA) ) 
+							throw new ApplicationException("Per l'area " + cds.getCd_unita_organizzativa() + " e per il modulo "+ pdg.getCd_progetto()+", il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");
+						else
+							throw new ApplicationException("Per il CDS " + cds.getCd_unita_organizzativa() + " e per il modulo "+ pdg.getCd_progetto()+", il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");
+					}
+					else
+						throw new ApplicationException("Per il modulo "+ pdg.getCd_progetto()+" il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");
+				}
+			
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		} catch (ComponentException e) {
+			throw handleException(e);
 		}
 	}
 

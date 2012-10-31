@@ -108,6 +108,11 @@
 	  <td><% bp.getController().writeFormLabel( out, "fl_check_terzo_siope"); %></td>	
 	  <td><% bp.getController().writeFormInput( out,null,"fl_check_terzo_siope",(voce!=null?!voce.isGestoreOk(uc):false),null,null); %></td>
 	</tr>
+	<tr>
+	  <td><% bp.getController().writeFormLabel( out, "fl_soggetto_prelievo"); %></td>	
+	  <td><% bp.getController().writeFormInput( out, "fl_soggetto_prelievo"); %></td>
+	</tr>
+	
 	</table>
 
 <%	bp.closeFormWindow(pageContext); %>

@@ -219,8 +219,18 @@
 	<fieldProperty
 		name="fl_cup"
 		property="fl_cup"
-		label="Gestione Obbligatoria Cup" 
-		inputType="CHECKBOX" />			
+		inputType="CHECKBOX"
+		label="Gestione Obbligatoria Cup" />	
+	<fieldProperty
+		name="perc_prelievo_pdgp_entrate"
+		property="perc_prelievo_pdgp_entrate"
+		label="Percentuale di prelievo" 
+		formatName="it.cnr.contab.util.ConstrainedPercentFormat"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		nullable="true" />			
+		
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -284,10 +294,11 @@
 	<formFieldProperty
 		name="fl_obb_intrastat"/>
 	<formFieldProperty
-		name="fl_cup"/>	
+		name="perc_prelievo_pdgp_entrate"/>	
 	<formFieldProperty
 		name="clausolaOrdine"/>
-		       
+	<formFieldProperty
+		name="fl_cup"/>		       
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
@@ -346,7 +357,8 @@
 		name="fl_obb_intrastat"/>	
 	 <columnFieldProperty
 		name="fl_cup"/>	
-	               
+	 <columnFieldProperty
+		name="perc_prelievo_pdgp_entrate"/>	              
 	<columnFieldProperty
 		name="clausolaOrdine"/>
 		               

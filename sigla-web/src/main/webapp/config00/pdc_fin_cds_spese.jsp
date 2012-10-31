@@ -112,6 +112,10 @@
 	  <td><% bp.getController().writeFormInput( out,null,"fl_check_terzo_siope",(voce!=null?!voce.isGestoreOk(uc):false),null,null); %></td>
 	</tr>
 	<tr>
+	  <td><% bp.getController().writeFormLabel( out, "fl_prelievo"); %></td>	
+	  <td><% bp.getController().writeFormInput( out, "fl_prelievo"); %></td>
+	</tr>
+	<tr>
 	  <td><% bp.getController().writeFormLabel( out, "fl_limite_spesa"); %></td>	
 	  <td><% bp.getController().writeFormInput( out, "fl_limite_spesa"); %></td>
 	</tr>

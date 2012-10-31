@@ -288,7 +288,25 @@
 		enabledOnInsert="true"				
 		inputType="CHECKBOX"
 		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />		
+		enabledOnFreeSearch="false" />	
+	<fieldProperty
+		name="fl_soggetto_prelievo"
+		property="fl_soggetto_prelievo"
+		label="Soggetto a prelievo"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="fl_prelievo"
+		property="fl_prelievo"
+		label="Utilizzato per prelievo"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />			
 	<form
 		name="searchtool" >
 		<formFieldProperty
@@ -354,8 +372,12 @@
 		name="fl_inv_beni_patr" />
 	<columnFieldProperty
 		name="fl_check_terzo_siope" />	
-  <columnFieldProperty
+ 	<columnFieldProperty
 		name="fl_limite_spesa" />
+	<columnFieldProperty
+		name="fl_soggetto_prelievo" />
+	<columnFieldProperty
+		name="fl_prelievo" />		
 <columnSet
 	name="impegnoPGiro">
 		
@@ -474,9 +496,13 @@
 		name="fl_check_terzo_siope" />
    <formFieldProperty
 		name="fl_inv_beni_patr" />
-   <formFieldProperty
+   	<formFieldProperty
 		name="fl_limite_spesa" />
-		
+	<formFieldProperty
+		name="fl_soggetto_prelievo" />
+	<formFieldProperty
+		name="fl_prelievo" />
+			
 	<findFieldProperty
 		name="esercizio"
 		/>
@@ -513,6 +539,10 @@
 		name="fl_voce_fondo" />
 	<findFieldProperty
 		name="fl_limite_spesa" />
+	<findFieldProperty
+		name="fl_soggetto_prelievo" />
+	<findFieldProperty
+		name="fl_prelievo" />	
 
 	<form
 		name="searchtool_x_var_stanz_res" >

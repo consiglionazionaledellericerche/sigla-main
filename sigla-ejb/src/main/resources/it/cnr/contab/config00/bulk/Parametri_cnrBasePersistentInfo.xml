@@ -218,6 +218,13 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="PERC_PRELIEVO_PDGP_ENTRATE"
+			propertyName="perc_prelievo_pdgp_entrate"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="false" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="cd_tipo_rapporto" />
@@ -286,4 +293,6 @@
 		name="clausolaOrdine" />		
 	<persistentProperty
 		name="fl_cup" />	
+	<persistentProperty
+		name="perc_prelievo_pdgp_entrate" />	
 </SQLPersistentInfo>

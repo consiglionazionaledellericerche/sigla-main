@@ -166,6 +166,20 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />		
+		<columnMapping
+			columnName="FL_PRELIEVO"
+			propertyName="fl_prelievo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_SOGGETTO_PRELIEVO"
+			propertyName="fl_soggetto_prelievo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
 	</defaultColumnMap>
 
 	<persistentProperty
@@ -222,4 +236,8 @@
 		name="fl_inv_beni_comp" />	
 	<persistentProperty
 		name="fl_limite_spesa" />	
+	<persistentProperty
+		name="fl_prelievo" />
+	<persistentProperty
+		name="fl_soggetto_prelievo" />	
 </SQLPersistentInfo>

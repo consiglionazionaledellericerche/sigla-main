@@ -21,6 +21,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
@@ -469,6 +470,8 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 			BigDecimal totImportoSpesaNegativo = Utility.ZERO;
 			BigDecimal totSommaEntrata = Utility.ZERO;
 			BigDecimal totSommaSpesa = Utility.ZERO;
+			BigDecimal impTotaleEntrateDaPrel = Utility.ZERO;
+			BigDecimal impTotaleSpesePrel = Utility.ZERO;
 			int contaRigheEntrata = Utility.ZERO.intValue();
 			int contaRigheSpesa = Utility.ZERO.intValue();
 
@@ -567,9 +570,29 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 				if (contaRigheSpesa==Utility.ZERO.intValue()|| contaRigheEntrata==Utility.ZERO.intValue())
 					throw new ApplicationException("E' necessario inserire sia dettagli di spesa che di entrata in un variazione di tipo 'Variazione Positiva'");
 				if (totImportoSpesaNegativo.compareTo(Utility.ZERO)!=0 || totImportoEntrataNegativo.compareTo(Utility.ZERO)!=0)
-					throw new ApplicationException("In un variazione di tipo 'Variazione Positiva' non è possibile inserire dettagli di entrata/spesa con importi negativi.");
-				if (totSommaEntrata.compareTo(totSommaSpesa)!=0)
-					throw new ApplicationException("In un variazione di tipo 'Variazione Positiva' il totale delle variazioni di spesa ("+
+					throw new ApplicationException("In un variazione di tipo 'Variazione Positiva' non è possibile inserire dettagli di entrata/spesa con importi negativi.");			
+						Parametri_cnrBulk pcnr = new Parametri_cnrBulk(pdg.getEsercizio());
+						pcnr = (Parametri_cnrBulk) getHome(usercontext,Parametri_cnrBulk.class).findByPrimaryKey(pcnr);
+						if (pcnr.getPerc_prelievo_pdgp_entrate()!=null && pcnr.getPerc_prelievo_pdgp_entrate().compareTo(BigDecimal.ZERO)!=0){
+								Pdg_variazioneHome pdgHome = (Pdg_variazioneHome)getHome(usercontext, Pdg_variazioneBulk.class);
+									//Calcolo il totale delle entrate 
+									for (java.util.Iterator entrate = pdgHome.findDettagliEntrateVariazioneGestionaleSoggettePrelievo(pdg).iterator();entrate.hasNext();){
+										Pdg_variazione_riga_gestBulk etr_det = (Pdg_variazione_riga_gestBulk)entrate.next();
+										impTotaleEntrateDaPrel = impTotaleEntrateDaPrel.add(etr_det.getIm_variazione());
+									}
+									//Calcolo il totale delle spese 
+									for (java.util.Iterator spese = pdgHome.findDettagliSpesaVariazioneGestionalePrelievo(pdg).iterator();spese.hasNext();){
+										Pdg_variazione_riga_gestBulk spesa_det = (Pdg_variazione_riga_gestBulk)spese.next();
+										impTotaleSpesePrel = impTotaleSpesePrel.add(spesa_det.getIm_variazione());
+									}
+							if (impTotaleEntrateDaPrel.compareTo(ZERO)!=0){
+								if(impTotaleEntrateDaPrel.multiply(pcnr.getPerc_prelievo_pdgp_entrate()).divide(new BigDecimal("100"),2,BigDecimal.ROUND_HALF_DOWN).compareTo(impTotaleSpesePrel)!=0)
+									throw new ApplicationException("Il contributo per l'attività ordinaria è pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel.multiply(pcnr.getPerc_prelievo_pdgp_entrate()).divide(new BigDecimal("100"),2,BigDecimal.ROUND_HALF_DOWN))+
+										". Impossibile salvare, poichè rimane da imputare alla voce dedicata l'importo di "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel.multiply(pcnr.getPerc_prelievo_pdgp_entrate()).divide(new BigDecimal("100"),2,BigDecimal.ROUND_HALF_DOWN).subtract(impTotaleSpesePrel))+".");
+							}		
+						}
+						if (totSommaEntrata.compareTo(totSommaSpesa)!=0)
+								throw new ApplicationException("In un variazione di tipo 'Variazione Positiva' il totale delle variazioni di spesa ("+
 											   new it.cnr.contab.util.EuroFormat().format(totSommaSpesa)+")"+
 											   "\n" + "deve essere uguale al totale delle variazioni di entrata ("+
 											   new it.cnr.contab.util.EuroFormat().format(totSommaEntrata)+")");
@@ -591,6 +614,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 		}					
 	}
 
+	
 	public void inizializzaSommeCdR(UserContext userContext, Pdg_variazioneBulk pdg) throws ComponentException{
 		try {		
 			Ass_pdg_variazione_cdrHome testataHome = (Ass_pdg_variazione_cdrHome)getHome(userContext, Ass_pdg_variazione_cdrBulk.class);
