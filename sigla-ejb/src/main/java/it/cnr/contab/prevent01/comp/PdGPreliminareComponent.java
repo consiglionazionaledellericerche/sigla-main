@@ -1184,7 +1184,10 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 		try{
 			Parametri_cnrBulk pcnr = new Parametri_cnrBulk(pdg.getEsercizio());
 			pcnr = (Parametri_cnrBulk) getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(pcnr);
-			if (pcnr.getPerc_prelievo_pdgp_entrate()!=null && pcnr.getPerc_prelievo_pdgp_entrate().compareTo(BigDecimal.ZERO)!=0){					
+			CdrBulk cdr = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(pdg.getCdr());
+			cdr.setUnita_padre((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdr.getCd_unita_organizzativa())));
+			
+			if (!pdg.getCdr().isCdrSAC() && pcnr.getPerc_prelievo_pdgp_entrate()!=null && pcnr.getPerc_prelievo_pdgp_entrate().compareTo(BigDecimal.ZERO)!=0){					
 					Pdg_modulo_speseHome home = (Pdg_modulo_speseHome)getHome(userContext,Pdg_modulo_speseBulk.class);
 					SQLBuilder sql = home.createSQLBuilder();
 					sql.addTableToHeader("ELEMENTO_VOCE");
@@ -1208,11 +1211,11 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 					sqlEntr.addTableToHeader("CLASSIFICAZIONE_VOCI,ELEMENTO_VOCE");
 					sqlEntr.addSQLJoin("PDG_MODULO_ENTRATE.ID_CLASSIFICAZIONE","CLASSIFICAZIONE_VOCI.ID_CLASSIFICAZIONE");
 					sqlEntr.addSQLJoin("PDG_MODULO_ENTRATE.ID_CLASSIFICAZIONE","ELEMENTO_VOCE.ID_CLASSIFICAZIONE");
-					CdrBulk cdr = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(pdg.getCdr());
-					cdr.setUnita_padre((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdr.getCd_unita_organizzativa())));
+//					CdrBulk cdr = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(pdg.getCdr());
+//					cdr.setUnita_padre((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdr.getCd_unita_organizzativa())));
 
-					if (pdg.getCdr().isCdrSAC())
-						sqlEntr.addSQLClause("AND","CLASSIFICAZIONE_VOCI.FL_ESTERNA_DA_QUADRARE_SAC",SQLBuilder.EQUALS,"Y");
+//					if (pdg.getCdr().isCdrSAC())
+//						sqlEntr.addSQLClause("AND","CLASSIFICAZIONE_VOCI.FL_ESTERNA_DA_QUADRARE_SAC",SQLBuilder.EQUALS,"Y");
 					sqlEntr.addClause("AND","esercizio",SQLBuilder.EQUALS,pdg.getEsercizio());
 					sqlEntr.addClause("AND","cd_centro_responsabilita",SQLBuilder.EQUALS,pdg.getCd_centro_responsabilita());
 					sqlEntr.addClause("AND","pg_progetto",SQLBuilder.EQUALS,pdg.getPg_progetto());
