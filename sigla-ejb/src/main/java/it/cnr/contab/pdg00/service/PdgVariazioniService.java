@@ -24,19 +24,19 @@ public class PdgVariazioniService extends CMISService {
 		if (listNodePage.isEmpty())
 			return null;
 		if (listNodePage.getNumItems() > 1)
-			throw new ApplicationException("Errore di sistema, esistone più variazioni per l'anno "+ pdg_variazioneBulk.getEsercizio()+
+			throw new ApplicationException("Errore di sistema, esistone piu' variazioni per l'anno "+ pdg_variazioneBulk.getEsercizio()+
 					" e numero "+pdg_variazioneBulk.getPg_variazione_pdg());
 		return PdgVariazioneDocument.construct(listNodePage.get(0));
 	}
 
 	public List<Integer> findVariazioniSigned(Integer esercizio, String cds, String uo){
 		List<Integer> result = new ArrayList<Integer>();
-		StringBuffer query = new StringBuffer("select var.cmis:objectid, ");
+		StringBuffer query = new StringBuffer("select var.cmis:objectId, ");
 		query.append("var.").append(CMISProperty.VARPIANOGEST_NUMEROVARIAZIONE.value());
 		query.append(" from varpianogest:document var");
-		query.append(" join strorg:cds as cds on var.cmis:objectid = cds.cmis:objectid");
-		query.append(" join strorg:uo as uo on var.cmis:objectid = uo.cmis:objectid");
-		query.append(" join cnr:signedDocument as sig on var.cmis:objectid = sig.cmis:objectid");
+		query.append(" join strorg:cds as cds on var.cmis:objectId = cds.cmis:objectId");
+		query.append(" join strorg:uo as uo on var.cmis:objectId = uo.cmis:objectId");
+		query.append(" join cnr:signedDocument as sig on var.cmis:objectId = sig.cmis:objectId");
 		query.append(" where var.").append(CMISProperty.VARPIANOGEST_ESERCIZIO.value()).append(" = ").append(esercizio);
 		if (cds != null)
 			query.append(" and cds.").append(CMISProperty.STRORGCDS_CODICE.value()).append(" = ").append("'").append(cds).append("'");
