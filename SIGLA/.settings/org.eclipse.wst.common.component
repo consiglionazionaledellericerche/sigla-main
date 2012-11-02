@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project-modules id="moduleCoreId" project-version="1.5.0">
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="sigla-ear-2.0.0-SNAPSHOT">
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/application" tag="defaultRootSource"/>
@@ -12,16 +11,19 @@
         <dependent-module archiveName="sigla-web.war" deploy-path="/" handle="module:/resource/sigla-web/sigla-web">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="sigla-ws.jar" deploy-path="/" handle="module:/resource/sigla-ws/sigla-ws">
+        <dependent-module archiveName="sigla-ws.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/it/cnr/sigla-ws/2.0.0-SNAPSHOT/sigla-ws-2.0.0-SNAPSHOT.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="cmisdl-commons-1.5.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/it/cnr/cmisdl/cmisdl-commons/1.5/cmisdl-commons-1.5.jar">
+        <dependent-module archiveName="cmisdl-commons-2.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/it/cnr/cmisdl/cmisdl-commons/2.0/cmisdl-commons-2.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="chemistry-opencmis-client-api-0.2.0-incubating.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/chemistry/opencmis/chemistry-opencmis-client-api/0.2.0-incubating/chemistry-opencmis-client-api-0.2.0-incubating.jar">
+        <dependent-module archiveName="chemistry-opencmis-client-api-0.7.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/chemistry/opencmis/chemistry-opencmis-client-api/0.7.0/chemistry-opencmis-client-api-0.7.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="ical4j-0.9.20.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/ical4j/ical4j/0.9.20/ical4j-0.9.20.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-io-2.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-io/commons-io/2.1/commons-io-2.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="commons-httpclient-3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar">
@@ -30,31 +32,64 @@
         <dependent-module archiveName="gson-1.4.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/google/code/gson/gson/1.4/gson-1.4.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="cmisdl-web-scripts-1.5.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/it/cnr/cmisdl/cmisdl-web-scripts/1.5/cmisdl-web-scripts-1.5.jar">
+        <dependent-module archiveName="cmisdl-web-scripts-2.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/it/cnr/cmisdl/cmisdl-web-scripts/2.0/cmisdl-web-scripts-2.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="chemistry-opencmis-client-impl-0.2.0-incubating.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/chemistry/opencmis/chemistry-opencmis-client-impl/0.2.0-incubating/chemistry-opencmis-client-impl-0.2.0-incubating.jar">
+        <dependent-module archiveName="chemistry-opencmis-client-impl-0.7.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/chemistry/opencmis/chemistry-opencmis-client-impl/0.7.0/chemistry-opencmis-client-impl-0.7.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="chemistry-opencmis-commons-api-0.2.0-incubating.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/chemistry/opencmis/chemistry-opencmis-commons-api/0.2.0-incubating/chemistry-opencmis-commons-api-0.2.0-incubating.jar">
+        <dependent-module archiveName="chemistry-opencmis-commons-api-0.7.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/chemistry/opencmis/chemistry-opencmis-commons-api/0.7.0/chemistry-opencmis-commons-api-0.7.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="chemistry-opencmis-commons-impl-0.2.0-incubating.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/chemistry/opencmis/chemistry-opencmis-commons-impl/0.2.0-incubating/chemistry-opencmis-commons-impl-0.2.0-incubating.jar">
+        <dependent-module archiveName="chemistry-opencmis-commons-impl-0.7.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/chemistry/opencmis/chemistry-opencmis-commons-impl/0.7.0/chemistry-opencmis-commons-impl-0.7.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="chemistry-opencmis-client-bindings-0.2.0-incubating.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/chemistry/opencmis/chemistry-opencmis-client-bindings/0.2.0-incubating/chemistry-opencmis-client-bindings-0.2.0-incubating.jar">
+        <dependent-module archiveName="jaxws-rt-2.1.7.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/sun/xml/ws/jaxws-rt/2.1.7/jaxws-rt-2.1.7.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jaxws-api-2.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/xml/ws/jaxws-api/2.1/jaxws-api-2.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jaxb-api-2.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/xml/bind/jaxb-api/2.1/jaxb-api-2.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jaxb-impl-2.1.11.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/sun/xml/bind/jaxb-impl/2.1.11/jaxb-impl-2.1.11.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="saaj-impl-1.3.3.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/sun/xml/messaging/saaj/saaj-impl/1.3.3/saaj-impl-1.3.3.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="saaj-api-1.3.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/xml/soap/saaj-api/1.3/saaj-api-1.3.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="streambuffer-0.9.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/sun/xml/stream/buffer/streambuffer/0.9/streambuffer-0.9.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="activation-1.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/activation/activation/1.1/activation-1.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="wstx-asl-3.2.3.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/codehaus/woodstox/wstx-asl/3.2.3/wstx-asl-3.2.3.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="stax-ex-1.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/jvnet/staxex/stax-ex/1.2/stax-ex-1.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="junit-3.8.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/junit/junit/3.8/junit-3.8.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="resolver-20050927.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/sun/org/apache/xml/internal/resolver/20050927/resolver-20050927.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="mimepull-1.3.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/jvnet/mimepull/1.3/mimepull-1.3.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="chemistry-opencmis-client-bindings-0.7.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/chemistry/opencmis/chemistry-opencmis-client-bindings/0.7.0/chemistry-opencmis-client-bindings-0.7.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="org.osgi.core-1.0.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/felix/org.osgi.core/1.0.0/org.osgi.core-1.0.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="chemistry-opencmis-test-util-0.2.0-incubating.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/chemistry/opencmis/chemistry-opencmis-test-util/0.2.0-incubating/chemistry-opencmis-test-util-0.2.0-incubating.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="jopt-simple-3.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/net/sf/jopt-simple/jopt-simple/3.2/jopt-simple-3.2.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="opencmis-criteria-0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/it/spasia/opencmis-criteria/0.1-SNAPSHOT/opencmis-criteria-0.1-SNAPSHOT.jar">
+        <dependent-module archiveName="opencmis-criteria-1.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/it/spasia/opencmis-criteria/1.1/opencmis-criteria-1.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="json-20080701.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/json/json/20080701/json-20080701.jar">
@@ -64,6 +99,42 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="antlr-2.7.7.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/antlr/antlr/2.7.7/antlr-2.7.7.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.springframework.web-3.0.3.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/org.springframework.web/3.0.3.RELEASE/org.springframework.web-3.0.3.RELEASE.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="com.springsource.org.aopalliance-1.0.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/aopalliance/com.springsource.org.aopalliance/1.0.0/com.springsource.org.aopalliance-1.0.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.springframework.aop-3.0.3.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/org.springframework.aop/3.0.3.RELEASE/org.springframework.aop-3.0.3.RELEASE.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.springframework.beans-3.0.3.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/org.springframework.beans/3.0.3.RELEASE/org.springframework.beans-3.0.3.RELEASE.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.springframework.asm-3.0.3.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/org.springframework.asm/3.0.3.RELEASE/org.springframework.asm-3.0.3.RELEASE.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.springframework.context-3.0.3.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/org.springframework.context/3.0.3.RELEASE/org.springframework.context-3.0.3.RELEASE.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.springframework.expression-3.0.3.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/org.springframework.expression/3.0.3.RELEASE/org.springframework.expression-3.0.3.RELEASE.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.springframework.core-3.0.3.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/org.springframework.core/3.0.3.RELEASE/org.springframework.core-3.0.3.RELEASE.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.springframework.security.core-3.0.2.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/security/org.springframework.security.core/3.0.2.RELEASE/org.springframework.security.core-3.0.2.RELEASE.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="com.springsource.org.apache.commons.logging-1.1.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/commons/com.springsource.org.apache.commons.logging/1.1.1/com.springsource.org.apache.commons.logging-1.1.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.springframework.security.config-3.0.2.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/security/org.springframework.security.config/3.0.2.RELEASE/org.springframework.security.config-3.0.2.RELEASE.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.springframework.security.web-3.0.2.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/security/org.springframework.security.web/3.0.2.RELEASE/org.springframework.security.web-3.0.2.RELEASE.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="itext-2.1.7.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/lowagie/itext/2.1.7/itext-2.1.7.jar">
@@ -120,10 +191,10 @@
         <dependent-module archiveName="bcmail-jdk15-1.46.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/bouncycastle/bcmail-jdk15/1.46/bcmail-jdk15-1.46.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="poi-3.8.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/poi/poi/3.8/poi-3.8.jar">
+        <dependent-module archiveName="poi-3.0-FINAL.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/poi/poi/3.0-FINAL/poi-3.0-FINAL.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="commons-codec-1.5.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-codec/commons-codec/1.5/commons-codec-1.5.jar">
+        <dependent-module archiveName="log4j-1.2.13.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/log4j/log4j/1.2.13/log4j-1.2.13.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>

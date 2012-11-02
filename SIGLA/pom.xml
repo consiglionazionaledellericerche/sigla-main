@@ -266,7 +266,7 @@
     </dependency>
 	 </dependencies>
   <properties>
-  	<cmisdl.version>1.5</cmisdl.version>
+  	<cmisdl.version>2.0</cmisdl.version>
   	<spring.version>2.5.6</spring.version>
   	<jada.version>2.0.1</jada.version>
   	<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
