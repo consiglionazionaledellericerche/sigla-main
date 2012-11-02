@@ -9,6 +9,7 @@ import it.cnr.contab.cmis.service.CMISService;
 import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.cmis.AllegatoPdGVariazioneDocumentBulk;
+import it.cnr.contab.pdg00.bulk.cmis.PdgVariazioneDocument;
 import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
 import it.cnr.contab.pdg00.service.PdgVariazioniService;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
@@ -86,7 +87,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk)getModel();
 		for (AllegatoPdGVariazioneDocumentBulk result : archiviaStampaPdgVariazioneBulk.getArchivioAllegati()) {
 			if (!result.equals(allegato) && result.getNome().equals(allegato.getNome()))
-				throw new ValidationException("Attenzione file già presente!");
+				throw new ValidationException("Attenzione file giï¿½ presente!");
 		}
 	}
 
@@ -207,8 +208,9 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 			archiviaStampaPdgVariazioneBulk.setPdg_variazioneForPrint((Pdg_variazioneBulk) oggettobulk);
 		}
 		try {
-			archiviaStampaPdgVariazioneBulk.setPdgVariazioneDocument(
-					pdgVariazioniService.getPdgVariazioneDocument(archiviaStampaPdgVariazioneBulk.getPdg_variazioneForPrint()));
+			if (archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument() == null)
+				archiviaStampaPdgVariazioneBulk.setPdgVariazioneDocument(
+						pdgVariazioniService.getPdgVariazioneDocument(archiviaStampaPdgVariazioneBulk.getPdg_variazioneForPrint()));
 			if (archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().isSignedDocument())
 				archiviaStampaPdgVariazioneBulk.setTiSigned(ArchiviaStampaPdgVariazioneBulk.VIEW_SIGNED);
 			else
@@ -258,6 +260,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 			CMISPath cmisPath = getCMISPath(archiviaStampaPdgVariazioneBulk);
 			Node node = cmisService.storePrintDocument(archiviaStampaPdgVariazioneBulk, report, cmisPath);
 			archiviaAllegati(actioncontext, node);
+			archiviaStampaPdgVariazioneBulk.setPdgVariazioneDocument(PdgVariazioneDocument.construct(node));
 			setModel(actioncontext, archiviaStampaPdgVariazioneBulk);
 		} catch (ComponentException e) {
 			throw handleException(e);
