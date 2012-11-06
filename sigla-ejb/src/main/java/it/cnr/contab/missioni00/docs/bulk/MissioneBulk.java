@@ -2888,13 +2888,13 @@ public void setInizioFineTappe(java.sql.Timestamp data_fine_diaria_miss_estero) 
 				}
 				else //Italia oppure non diaria
 				{
-					if(!((inizioTappa.get(GregorianCalendar.HOUR_OF_DAY) == 0) && (inizioTappa.get(GregorianCalendar.MINUTE)==0)))
+					//if(!((inizioTappa.get(GregorianCalendar.HOUR_OF_DAY) == 0) && (inizioTappa.get(GregorianCalendar.MINUTE)==0)))
 						inizioTappa.add(java.util.Calendar.DATE, 1);					
-					if((inizioTappa.get(GregorianCalendar.HOUR_OF_DAY) == 0) && (inizioTappa.get(GregorianCalendar.MINUTE)==0))
-					{
-						inizioTappa.set(GregorianCalendar.HOUR_OF_DAY, 23);
-						inizioTappa.set(GregorianCalendar.MINUTE, 59);					
-					}						
+					//if((inizioTappa.get(GregorianCalendar.HOUR_OF_DAY) == 0) && (inizioTappa.get(GregorianCalendar.MINUTE)==0))
+					//{
+					//	inizioTappa.set(GregorianCalendar.HOUR_OF_DAY, 23);
+					//	inizioTappa.set(GregorianCalendar.MINUTE, 59);					
+					//}						
 				}	
 				tappa.setDt_fine_tappa(new java.sql.Timestamp(inizioTappa.getTime().getTime()));
 			}

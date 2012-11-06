@@ -1415,6 +1415,7 @@ private NazioneBulk findNazioneItalia(UserContext userContext) throws ComponentE
 	SQLBuilder sql = nazHome.createSQLBuilder();
 	sql.addSQLClause("AND","TI_NAZIONE", sql.EQUALS, NazioneBulk.ITALIA);
 	sql.addOrderBy("PG_NAZIONE");
+
 	SQLBroker broker = nazHome.createBroker(sql);
 	if (broker.next())
 		nazione = (NazioneBulk)nazHome.fetch(broker);
