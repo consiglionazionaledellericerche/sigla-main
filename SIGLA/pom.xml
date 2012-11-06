@@ -160,6 +160,10 @@
 				<artifactId>commons-codec</artifactId>
 				<groupId>commons-codec</groupId>
 			</exclusion>
+			<exclusion>
+				<artifactId>jaxws-rt</artifactId>
+				<groupId>com.sun.xml.ws</groupId>
+			</exclusion>
 		</exclusions>
 	</dependency>
     <dependency>
