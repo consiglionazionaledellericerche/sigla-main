@@ -488,7 +488,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 		SQLBuilder sql = ((CdsHome)getHome(userContext, CdsBulk.class)).createSQLBuilder();
 		if (clause != null) 
 		  sql.addClause(clause);		
-		if(dett.isNonAccentrata()){ 
+		if(dett.isNonAccentrata()|| (dett.getElemento_voce()!=null && dett.getElemento_voce().getFl_prelievo())){ 
 			sql.addTableToHeader("ASS_UO_AREA");
 			sql.addTableToHeader("UNITA_ORGANIZZATIVA UO");
 			sql.addTableToHeader("UNITA_ORGANIZZATIVA CDS");

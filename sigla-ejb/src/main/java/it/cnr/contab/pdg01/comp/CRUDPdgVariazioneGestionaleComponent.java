@@ -571,26 +571,33 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 					throw new ApplicationException("E' necessario inserire sia dettagli di spesa che di entrata in un variazione di tipo 'Variazione Positiva'");
 				if (totImportoSpesaNegativo.compareTo(Utility.ZERO)!=0 || totImportoEntrataNegativo.compareTo(Utility.ZERO)!=0)
 					throw new ApplicationException("In un variazione di tipo 'Variazione Positiva' non è possibile inserire dettagli di entrata/spesa con importi negativi.");			
-						Parametri_cnrBulk pcnr = new Parametri_cnrBulk(pdg.getEsercizio());
-						pcnr = (Parametri_cnrBulk) getHome(usercontext,Parametri_cnrBulk.class).findByPrimaryKey(pcnr);
-						if (pcnr.getPerc_prelievo_pdgp_entrate()!=null && pcnr.getPerc_prelievo_pdgp_entrate().compareTo(BigDecimal.ZERO)!=0){
+								CdrBulk cdr_prel=null;
 								Pdg_variazioneHome pdgHome = (Pdg_variazioneHome)getHome(usercontext, Pdg_variazioneBulk.class);
-									//Calcolo il totale delle entrate 
-									for (java.util.Iterator entrate = pdgHome.findDettagliEntrateVariazioneGestionaleSoggettePrelievo(pdg).iterator();entrate.hasNext();){
-										Pdg_variazione_riga_gestBulk etr_det = (Pdg_variazione_riga_gestBulk)entrate.next();
-										impTotaleEntrateDaPrel = impTotaleEntrateDaPrel.add(etr_det.getIm_variazione());
+								//Calcolo il totale delle entrate 
+								for (java.util.Iterator entrate = pdgHome.findDettagliEntrateVariazioneGestionaleSoggettePrelievo(pdg).iterator();entrate.hasNext();){
+									Pdg_variazione_riga_gestBulk etr_det = (Pdg_variazione_riga_gestBulk)entrate.next();
+									Elemento_voceBulk ev = (Elemento_voceBulk)getHome(usercontext, Elemento_voceBulk.class).findByPrimaryKey(etr_det.getElemento_voce());
+									if(etr_det.getElemento_voce()!=null &&etr_det.getElemento_voce().getPerc_prelievo_pdgp_entrate().compareTo(ZERO)!=0){
+										CdrBulk cdr = (CdrBulk)getHome(usercontext, CdrBulk.class).findByPrimaryKey(etr_det.getCdr_assegnatario());
+										cdr.setUnita_padre((Unita_organizzativaBulk)getHome(usercontext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdr.getCd_unita_organizzativa())));
+										if(!etr_det.getCdr_assegnatario().isCdrSAC()){
+											impTotaleEntrateDaPrel = impTotaleEntrateDaPrel.add(etr_det.getIm_entrata().multiply(ev.getPerc_prelievo_pdgp_entrate()).divide(new BigDecimal("100"),2,BigDecimal.ROUND_HALF_DOWN));
+										    cdr_prel=etr_det.getCdr_assegnatario();
+										}
 									}
-									//Calcolo il totale delle spese 
-									for (java.util.Iterator spese = pdgHome.findDettagliSpesaVariazioneGestionalePrelievo(pdg).iterator();spese.hasNext();){
-										Pdg_variazione_riga_gestBulk spesa_det = (Pdg_variazione_riga_gestBulk)spese.next();
-										impTotaleSpesePrel = impTotaleSpesePrel.add(spesa_det.getIm_variazione());
-									}
+								}
+								//Calcolo il totale delle spese 
+								for (java.util.Iterator spese = pdgHome.findDettagliSpesaVariazioneGestionalePrelievo(pdg).iterator();spese.hasNext();){
+									Pdg_variazione_riga_gestBulk spesa_det = (Pdg_variazione_riga_gestBulk)spese.next();
+									if(spesa_det.getCdr_assegnatario().getCd_centro_responsabilita().compareTo(cdr_prel.getCd_centro_responsabilita())==0)
+										impTotaleSpesePrel = impTotaleSpesePrel.add(spesa_det.getIm_spese_gest_accentrata_est()).add(spesa_det.getIm_spese_gest_decentrata_est());
+								}
 							if (impTotaleEntrateDaPrel.compareTo(ZERO)!=0){
-								if(impTotaleEntrateDaPrel.multiply(pcnr.getPerc_prelievo_pdgp_entrate()).divide(new BigDecimal("100"),2,BigDecimal.ROUND_HALF_DOWN).compareTo(impTotaleSpesePrel)!=0)
-									throw new ApplicationException("Il contributo per l'attività ordinaria è pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel.multiply(pcnr.getPerc_prelievo_pdgp_entrate()).divide(new BigDecimal("100"),2,BigDecimal.ROUND_HALF_DOWN))+
-										". Impossibile salvare, poichè rimane da imputare alla voce dedicata l'importo di "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel.multiply(pcnr.getPerc_prelievo_pdgp_entrate()).divide(new BigDecimal("100"),2,BigDecimal.ROUND_HALF_DOWN).subtract(impTotaleSpesePrel))+".");
+								if(impTotaleEntrateDaPrel.compareTo(impTotaleSpesePrel)!=0)
+									throw new ApplicationException("Il contributo per l'attività ordinaria per il cdr "+cdr_prel.getCd_centro_responsabilita()+" è pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel)+
+										". Impossibile salvare, poichè è stato imputato sulla voce dedicata l'importo di "+new it.cnr.contab.util.EuroFormat().format(impTotaleSpesePrel)+".");
 							}		
-						}
+						
 						if (totSommaEntrata.compareTo(totSommaSpesa)!=0)
 								throw new ApplicationException("In un variazione di tipo 'Variazione Positiva' il totale delle variazioni di spesa ("+
 											   new it.cnr.contab.util.EuroFormat().format(totSommaSpesa)+")"+

@@ -1,5 +1,7 @@
 package it.cnr.contab.config00.pdcfin.bulk;
 
+import java.math.BigDecimal;
+
 import it.cnr.jada.persistency.*;
 
 public class Elemento_voceBase extends Elemento_voceKey implements Keyed {
@@ -69,6 +71,7 @@ public class Elemento_voceBase extends Elemento_voceKey implements Keyed {
 	
 	private java.lang.Boolean fl_prelievo;
 	private java.lang.Boolean fl_soggetto_prelievo;
+	private BigDecimal perc_prelievo_pdgp_entrate;
 	
 public Elemento_voceBase() {
 	super();
@@ -337,5 +340,11 @@ public void setTi_elemento_voce(java.lang.String ti_elemento_voce) {
 	}
 	public void setFl_soggetto_prelievo(java.lang.Boolean fl_soggetto_prelievo) {
 		this.fl_soggetto_prelievo = fl_soggetto_prelievo;
+	}
+	public BigDecimal getPerc_prelievo_pdgp_entrate() {
+		return perc_prelievo_pdgp_entrate;
+	} 
+	public void setPerc_prelievo_pdgp_entrate(BigDecimal perc_prelievo_pdgp_entrate) {
+		this.perc_prelievo_pdgp_entrate = perc_prelievo_pdgp_entrate;
 	}
 }

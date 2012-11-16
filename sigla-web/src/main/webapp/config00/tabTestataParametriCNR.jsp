@@ -131,9 +131,5 @@
 			</TD><TD colspan="3">
 			<% bp.getController().writeFormInput(out,"fl_cup");%>
 		</TD></TR>		
-		<TR><TD>
-			<% bp.getController().writeFormLabel(out,"perc_prelievo_pdgp_entrate");%>
-			</TD><TD colspan="3">
-			<% bp.getController().writeFormInput(out,"perc_prelievo_pdgp_entrate");%>
-		</TD></TR>					
+					
 	</table>

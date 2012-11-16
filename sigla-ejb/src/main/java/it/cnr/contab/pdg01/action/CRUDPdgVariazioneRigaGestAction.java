@@ -118,6 +118,7 @@ public class CRUDPdgVariazioneRigaGestAction extends it.cnr.jada.util.action.CRU
 		bulk.setIm_spese_gest_decentrata_est(Utility.ZERO);
 		bulk.setIm_spese_gest_accentrata_int(Utility.ZERO);
 		bulk.setIm_spese_gest_decentrata_int(Utility.ZERO);
+		bulk.setArea(null);
 		return context.findDefaultForward();
 	}
 

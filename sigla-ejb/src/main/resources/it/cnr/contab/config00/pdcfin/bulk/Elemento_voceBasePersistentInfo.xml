@@ -9,7 +9,7 @@
 			columnName="CD_CAPOCONTO_FIN"
 			propertyName="cd_capoconto_fin"
 			sqlTypeName="VARCHAR"
-			columnSize="10" />
+			columnSize="10" /> 
 		<columnMapping
 			columnName="FL_PARTITA_GIRO"
 			propertyName="fl_partita_giro"
@@ -180,6 +180,13 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="PERC_PRELIEVO_PDGP_ENTRATE"
+			propertyName="perc_prelievo_pdgp_entrate"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="false" />	
 	</defaultColumnMap>
 
 	<persistentProperty
@@ -239,5 +246,7 @@
 	<persistentProperty
 		name="fl_prelievo" />
 	<persistentProperty
-		name="fl_soggetto_prelievo" />	
+		name="fl_soggetto_prelievo" />
+	<persistentProperty 
+		name ="perc_prelievo_pdgp_entrate"/>		
 </SQLPersistentInfo>

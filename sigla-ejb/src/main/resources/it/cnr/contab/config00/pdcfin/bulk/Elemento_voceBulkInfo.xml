@@ -306,7 +306,17 @@
 		enabledOnInsert="true"				
 		inputType="CHECKBOX"
 		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />			
+		enabledOnFreeSearch="false" />	
+	<fieldProperty
+		name="perc_prelievo_pdgp_entrate"
+		property="perc_prelievo_pdgp_entrate"
+		label="Percentuale di prelievo" 
+		formatName="it.cnr.contab.util.ConstrainedPercentFormat"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		nullable="true" />			
+					
 	<form
 		name="searchtool" >
 		<formFieldProperty
@@ -378,6 +388,8 @@
 		name="fl_soggetto_prelievo" />
 	<columnFieldProperty
 		name="fl_prelievo" />		
+	<columnFieldProperty
+		name="perc_prelievo_pdgp_entrate"/>		
 <columnSet
 	name="impegnoPGiro">
 		
@@ -502,6 +514,8 @@
 		name="fl_soggetto_prelievo" />
 	<formFieldProperty
 		name="fl_prelievo" />
+	<formFieldProperty
+		name="perc_prelievo_pdgp_entrate"/>		
 			
 	<findFieldProperty
 		name="esercizio"
@@ -543,6 +557,7 @@
 		name="fl_soggetto_prelievo" />
 	<findFieldProperty
 		name="fl_prelievo" />	
+		
 
 	<form
 		name="searchtool_x_var_stanz_res" >

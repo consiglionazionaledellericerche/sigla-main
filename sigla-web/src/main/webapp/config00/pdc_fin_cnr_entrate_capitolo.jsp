@@ -112,6 +112,11 @@
 	  <td><% bp.getController().writeFormLabel( out, "fl_soggetto_prelievo"); %></td>	
 	  <td><% bp.getController().writeFormInput( out, "fl_soggetto_prelievo"); %></td>
 	</tr>
+	<tr>
+	  <td><% bp.getController().writeFormLabel( out, "perc_prelievo_pdgp_entrate"); %></td>	
+	  <td><% bp.getController().writeFormInput( out, "perc_prelievo_pdgp_entrate"); %></td>
+	</tr>
+	
 	
 	</table>
 

@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociHome;
@@ -1182,12 +1183,10 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 		}
 
 		try{
-			Parametri_cnrBulk pcnr = new Parametri_cnrBulk(pdg.getEsercizio());
-			pcnr = (Parametri_cnrBulk) getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(pcnr);
 			CdrBulk cdr = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(pdg.getCdr());
 			cdr.setUnita_padre((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdr.getCd_unita_organizzativa())));
 			
-			if (!pdg.getCdr().isCdrSAC() && pcnr.getPerc_prelievo_pdgp_entrate()!=null && pcnr.getPerc_prelievo_pdgp_entrate().compareTo(BigDecimal.ZERO)!=0){					
+			if (!pdg.getCdr().isCdrSAC()){					
 					Pdg_modulo_speseHome home = (Pdg_modulo_speseHome)getHome(userContext,Pdg_modulo_speseBulk.class);
 					SQLBuilder sql = home.createSQLBuilder();
 					sql.addTableToHeader("ELEMENTO_VOCE");
@@ -1211,11 +1210,7 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 					sqlEntr.addTableToHeader("CLASSIFICAZIONE_VOCI,ELEMENTO_VOCE");
 					sqlEntr.addSQLJoin("PDG_MODULO_ENTRATE.ID_CLASSIFICAZIONE","CLASSIFICAZIONE_VOCI.ID_CLASSIFICAZIONE");
 					sqlEntr.addSQLJoin("PDG_MODULO_ENTRATE.ID_CLASSIFICAZIONE","ELEMENTO_VOCE.ID_CLASSIFICAZIONE");
-//					CdrBulk cdr = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(pdg.getCdr());
-//					cdr.setUnita_padre((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdr.getCd_unita_organizzativa())));
 
-//					if (pdg.getCdr().isCdrSAC())
-//						sqlEntr.addSQLClause("AND","CLASSIFICAZIONE_VOCI.FL_ESTERNA_DA_QUADRARE_SAC",SQLBuilder.EQUALS,"Y");
 					sqlEntr.addClause("AND","esercizio",SQLBuilder.EQUALS,pdg.getEsercizio());
 					sqlEntr.addClause("AND","cd_centro_responsabilita",SQLBuilder.EQUALS,pdg.getCd_centro_responsabilita());
 					sqlEntr.addClause("AND","pg_progetto",SQLBuilder.EQUALS,pdg.getPg_progetto());
@@ -1227,17 +1222,28 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 					
 					while(brokerEntr.next()) {
 						Pdg_Modulo_EntrateBulk pdge = (Pdg_Modulo_EntrateBulk)brokerEntr.fetch(Pdg_Modulo_EntrateBulk.class);
-						if (pdge.getIm_entrata()!=null)
-							impTotaleEntrateDaPrel = impTotaleEntrateDaPrel.add(pdge.getIm_entrata());
+						if (pdge.getIm_entrata()!=null){
+							SQLBuilder sql_voce = ((Elemento_voceHome)getHome(userContext, Elemento_voceBulk.class)).createSQLBuilder();
+							sql_voce.addSQLClause("AND","ID_CLASSIFICAZIONE" ,SQLBuilder.EQUALS,pdge.getId_classificazione());
+							sql_voce.addSQLClause("AND","FL_SOGGETTO_PRELIEVO",SQLBuilder.EQUALS,"Y");
+							Elemento_voceHome home_voce =(Elemento_voceHome)getHome(userContext,Elemento_voceBulk.class);
+							java.util.List voci=home_voce.fetchAll(sql_voce);
+							if(voci.size() >1)// non dovrebbe capitare mai
+								throw new ApplicationException("Esistono più voci sulla stessa classificazione.");
+
+								for(Iterator i=voci.iterator();i.hasNext();){
+									Elemento_voceBulk ev = (Elemento_voceBulk)i.next();
+									if(ev!=null && ev.getPerc_prelievo_pdgp_entrate().compareTo(Utility.ZERO)!=0)
+										impTotaleEntrateDaPrel = impTotaleEntrateDaPrel.add(pdge.getIm_entrata().multiply(ev.getPerc_prelievo_pdgp_entrate()).divide(new BigDecimal("100"),2,BigDecimal.ROUND_HALF_DOWN));
+								}
+							}
 					}
 					// se non ci sono entrate soggette a prelievo bisogna fare lo stesso il controllo
 					if(impTotaleEntrateDaPrel.compareTo(BigDecimal.ZERO)!=0)
-						if(impTotaleEntrateDaPrel.multiply(pcnr.getPerc_prelievo_pdgp_entrate()).divide(new BigDecimal("100"),2,BigDecimal.ROUND_HALF_DOWN).compareTo(impTotaleSpesePrel)!=0)
-							throw new ApplicationException("Per il modulo "+ pdg.getCd_progetto()+" il contributo per l'attività ordinaria è pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel.multiply(pcnr.getPerc_prelievo_pdgp_entrate()).divide(new BigDecimal("100"),2,BigDecimal.ROUND_HALF_DOWN))+
-									". Impossibile salvare, poichè rimane da imputare alla voce dedicata l'importo di "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel.multiply(pcnr.getPerc_prelievo_pdgp_entrate()).divide(new BigDecimal("100"),2,BigDecimal.ROUND_HALF_DOWN).subtract(impTotaleSpesePrel))+".");
-					
-				}
-			
+						if(impTotaleEntrateDaPrel.compareTo(impTotaleSpesePrel)!=0)
+							throw new ApplicationException("Per il modulo "+ pdg.getCd_progetto()+" il contributo per l'attività ordinaria è pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel)+
+									". Impossibile salvare, poichè è stato imputato sulla voce dedicata l'importo di "+new it.cnr.contab.util.EuroFormat().format(impTotaleSpesePrel)+".");
+				}	
 				if (impTotaleSpese.compareTo(impTotaleEntrate)!=0){
 					if ( cds!=null ) {
 						if ( cds.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_AREA) ) 

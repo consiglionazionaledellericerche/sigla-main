@@ -5,6 +5,7 @@ import java.util.Dictionary;
 
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ComponentException;
@@ -101,8 +102,9 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	setFl_inv_beni_comp(new Boolean(false));
 	setFl_limite_spesa(new Boolean(false));
 	setFl_soggetto_prelievo(new Boolean(false));
+	setPerc_prelievo_pdgp_entrate(Utility.ZERO);
 	setFl_prelievo(new Boolean(false));
-	return this;
+	return this; 
 }
 /**
  * Inizializza l'attributo <code>esercizio</code>.
