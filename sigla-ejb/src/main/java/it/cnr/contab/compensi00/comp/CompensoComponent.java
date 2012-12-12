@@ -4594,6 +4594,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		if (compenso.getFl_liquidazione_differita()
 				&& compenso.getDt_fattura_fornitore() != null) {
 			java.sql.Timestamp data_limite;
+			java.sql.Timestamp data_limite_sup;
 			try {
 				data_limite = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
 						.createEJB(
@@ -4601,10 +4602,16 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 								it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class))
 						.getDt01(userContext, new Integer(0), "*", "COSTANTI",
 								"LIMITE_CREAZIONE_FATT_PASS_ES_DIF");
+				data_limite_sup = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
+						.createEJB(
+								"CNRCONFIG00_EJB_Configurazione_cnrComponentSession",
+								it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class))
+						.getDt02(userContext, new Integer(0), "*", "COSTANTI",
+								"LIMITE_CREAZIONE_FATT_PASS_ES_DIF");				
 			} catch (RemoteException e) {
 				throw handleException(e);
 			}
-			if (compenso.getDt_fattura_fornitore().compareTo(data_limite) < 0) {
+			if ((compenso.getDt_fattura_fornitore().compareTo(data_limite) < 0)||(data_limite_sup!=null && compenso.getDt_fattura_fornitore().compareTo(data_limite_sup) > 0)) {
 				compenso.setFl_liquidazione_differita(false);
 				throw new it.cnr.jada.comp.ApplicationException(
 						"Non è possibile indicare la liquidazione differita con la data fattura fornitore indicata.");

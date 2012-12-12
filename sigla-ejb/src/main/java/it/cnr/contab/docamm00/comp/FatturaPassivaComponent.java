@@ -5876,12 +5876,14 @@ private void validazioneComune(UserContext aUC,Fattura_passivaBulk fatturaPassiv
 		//quella inserita in configurazione
 		if(fatturaPassiva.getFl_liquidazione_differita() && fatturaPassiva.getDt_fattura_fornitore()!=null){
 			java.sql.Timestamp data_limite;
+			java.sql.Timestamp data_limite_sup;
 			try {
 				data_limite = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class)).getDt01(aUC, new Integer(0), "*", "COSTANTI", "LIMITE_CREAZIONE_FATT_PASS_ES_DIF");
+				data_limite_sup = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class)).getDt02(aUC, new Integer(0), "*", "COSTANTI", "LIMITE_CREAZIONE_FATT_PASS_ES_DIF");
 			} catch (RemoteException e) {		
-				throw handleException(e);
+				throw handleException(e); 
 			}
-			if(fatturaPassiva.getDt_fattura_fornitore().compareTo(data_limite)<0){
+			if(fatturaPassiva.getDt_fattura_fornitore().compareTo(data_limite)<0||fatturaPassiva.getDt_fattura_fornitore().compareTo(data_limite_sup)>0){
 				fatturaPassiva.setFl_liquidazione_differita(false);
 				throw new it.cnr.jada.comp.ApplicationException("Non è possibile indicare la liquidazione differita con la data emissione inserita.");
 			}

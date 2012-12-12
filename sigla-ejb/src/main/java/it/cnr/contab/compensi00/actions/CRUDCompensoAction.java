@@ -1098,7 +1098,8 @@ public Forward doOnFlLiquidazioneDifferitaChange(ActionContext context){
 		CompensoBulk compenso = (CompensoBulk)bp.getModel();
 		if(compenso.getFl_liquidazione_differita() && compenso.getDt_fattura_fornitore()!=null){
 			java.sql.Timestamp data_limite = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class)).getDt01(context.getUserContext(), new Integer(0), "*", "COSTANTI", "LIMITE_CREAZIONE_FATT_PASS_ES_DIF");
-			if(compenso.getDt_fattura_fornitore().compareTo(data_limite)<0){
+			java.sql.Timestamp data_limite_sup = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class)).getDt02(context.getUserContext(), new Integer(0), "*", "COSTANTI", "LIMITE_CREAZIONE_FATT_PASS_ES_DIF");
+			if(compenso.getDt_fattura_fornitore().compareTo(data_limite)<0||compenso.getDt_fattura_fornitore().compareTo(data_limite_sup)>0){
 				compenso.setFl_liquidazione_differita(false);
 				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Non è possibile indicare la liquidazione differita con la data fattura fornitore indicata.");
 			}
