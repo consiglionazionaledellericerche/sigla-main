@@ -790,6 +790,8 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
 	   
 	   BigDecimal totImpS30Extra=new BigDecimal("0");
 	   
+	   BigDecimal totImpBeniExtra=new BigDecimal("0");
+	   BigDecimal totIvaBeniExtra=new BigDecimal("0");
 	   
 	   for (Iterator i = lista.iterator(); i.hasNext();) {
 		   VIntra12Bulk d=(VIntra12Bulk)i.next();
@@ -819,7 +821,10 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
 			   		}else if (d.getCdBeneServizio().compareTo("BENI")!=0){
 			   			totImpServExtra=totImpServExtra.add(d.getImponibile());
 			   	   		totIvaServExtra=totIvaServExtra.add(d.getIva());
-			   		}   			
+			   		} else if(d.getCdBeneServizio().compareTo("BENI")==0){
+			   			totImpBeniExtra=totImpBeniExtra.add(d.getImponibile());
+			   	   		totIvaBeniExtra=totIvaBeniExtra.add(d.getIva());
+			   		}
 	   		}
 	   }
 	   // Tipo Record A Testata
@@ -969,7 +974,7 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
 	   if(BigDecimal.ZERO.compareTo(BigDecimal.ZERO)!=0){
 			   bw.append("TR012004");// Iva Beni soggetti stabiliti in altri stati comunita (beni assemblati in Italia)
 			   bw.append(Formatta(BigDecimal.ZERO.toString(),"D",16," "));
-			   num_col++;
+	 		   num_col++;
 	   }		   
 	   if(totImpServIntra.compareTo(BigDecimal.ZERO)!=0){
 		   bw.append("TR012005");
@@ -986,14 +991,14 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
 		  bw.append(Formatta(totIvaServIntra.setScale(2, java.math.BigDecimal.ROUND_HALF_UP).toString().replace(".", ","),"D",16," "));
 		  num_col++;
 	  }	
-	  if(BigDecimal.ZERO.compareTo(BigDecimal.ZERO)!=0){
-		  bw.append("TR012008");// Bolle doganali ignorare imponibile
-		  bw.append(Formatta(BigDecimal.ZERO.toString(),"D",16," "));
+	  if(totImpBeniExtra.compareTo(BigDecimal.ZERO)!=0){
+		  bw.append("TR012008");// Bolle doganali ignorare imponibile - considerato beni san marino
+		  bw.append(Formatta(totImpBeniExtra.setScale(2, java.math.BigDecimal.ROUND_HALF_UP).toString().replace(".", ","),"D",16," "));
 		  num_col++;
 	  }	
-	  if(BigDecimal.ZERO.compareTo(BigDecimal.ZERO)!=0){
+	  if(totIvaBeniExtra.compareTo(BigDecimal.ZERO)!=0){
 		   bw.append("TR012009");// Bolle doganali ignorare iva
-		   bw.append(Formatta(BigDecimal.ZERO.toString(),"D",16," "));
+		   bw.append(Formatta(totIvaBeniExtra.setScale(2, java.math.BigDecimal.ROUND_HALF_UP).toString().replace(".", ","),"D",16," "));
 		   num_col++;
 	   }	
 	   if(totImpServExtra.compareTo(BigDecimal.ZERO)!=0){
@@ -1013,9 +1018,9 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
 		   bw.append(Formatta(totIvaServExtra.setScale(2, java.math.BigDecimal.ROUND_HALF_UP).toString().replace(".", ","),"D",16," "));
 		   num_col++;
 	}	
-	 if((totIvaServExtra.add(totIvaServIntra).add(totIvaBeniIntra)).compareTo(BigDecimal.ZERO)!=0){
+	 if((totIvaServExtra.add(totIvaServIntra).add(totIvaBeniIntra).add(totIvaBeniExtra)).compareTo(BigDecimal.ZERO)!=0){
 		   bw.append("TR012013");
-		   bw.append(Formatta((((totIvaServExtra.add(totIvaServIntra).add(totIvaBeniIntra)).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)).toString().replace(".", ",")),"D",16," "));
+		   bw.append(Formatta((((totIvaServExtra.add(totIvaServIntra).add(totIvaBeniIntra).add(totIvaBeniExtra)).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)).toString().replace(".", ",")),"D",16," "));
 		   num_col++;
 	 }	
 	// Campi non posizionali
