@@ -9,6 +9,7 @@ import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoHome;
+import it.cnr.contab.compensi00.tabrif.bulk.Esenzioni_addizionaliBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
@@ -30,6 +31,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
@@ -44,6 +46,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -57,6 +60,15 @@ import javax.ejb.EJBException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
+
+import org.apache.poi.hssf.dev.HSSF;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
+import com.googlecode.jcsv.reader.CSVReader;
+import com.googlecode.jcsv.reader.internal.CSVReaderBuilder;
 
 import oracle.sql.BLOB;
 
@@ -97,44 +109,16 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 			Incarichi_comunicati_fp_detHome incFpDetHome = (Incarichi_comunicati_fp_detHome)getTempHome(userContext, Incarichi_comunicati_fp_detBulk.class);
 			Incarichi_comunicati_fpBulk incaricoPrincFpDB = null;
 			
-			if (!bulk.getTipo_record().equals(Incarichi_comunicati_fpBulk.TIPO_RECORD_INVIATO_NEW) &&  
-				!bulk.getTipo_record().equals(Incarichi_comunicati_fpBulk.TIPO_RECORD_RICEVUTO_NEW)){
+			incaricoPrincFpDB = (Incarichi_comunicati_fpBulk)incFpHome.findIncaricoComunicatoAggFP(bulk);
 
-				incaricoPrincFpDB = (Incarichi_comunicati_fpBulk)incFpHome.findIncaricoComunicatoAggFP(bulk);
-				
-				if (incaricoPrincFpDB!=null){
-					bulk.setEsercizio_repertorio(incaricoPrincFpDB.getEsercizio_repertorio());
-					bulk.setPg_repertorio(incaricoPrincFpDB.getPg_repertorio());
-				} else
-					throw new ComponentException("Record di tipo aggiornamento ma manca il record principale.");
-			} else {
-				incaricoPrincFpDB = (Incarichi_comunicati_fpBulk)incFpHome.findByPrimaryKey(new Incarichi_comunicati_fpBulk(bulk.getEsercizio_repertorio(), bulk.getPg_repertorio(), Incarichi_comunicati_fpBulk.TIPO_RECORD_AGGIORNATO, new Long(1)));
-			}
-				
-			//verifico che non sia già stato inserito un record identico
+			//recupero l'ultimo progressivo necessario per verificare che l'ultimo record inserito non sia un record identico
 			Long maxProg = (Long)incFpHome.findMax(bulk,"pg_record");
-			
-			Incarichi_comunicati_fpBulk incFpLast = null;
-			if (maxProg!=null)
-				incFpLast = (Incarichi_comunicati_fpBulk)incFpHome.findByPrimaryKey(new Incarichi_comunicati_fpBulk(bulk.getEsercizio_repertorio(), bulk.getPg_repertorio(), bulk.getTipo_record(), maxProg));
 
-			if (incFpLast==null || !incFpLast.similar(bulk)){
-				bulk.setUser(CNRUserContext.getUser(userContext));
-				bulk.setToBeCreated();
-				insertBulk(userContext,bulk);
-				
-				for (Iterator<Incarichi_comunicati_fp_detBulk> iterator = bulk.getIncarichi_comunicati_fp_detColl().iterator(); iterator.hasNext();) {
-					Incarichi_comunicati_fp_detBulk pagam = iterator.next();
-					if (pagam.getAnno_pag()!=null && pagam.getSemestre_pag()!=null && pagam.getImporto_pag()!=null){
-						pagam.setUser(CNRUserContext.getUser(userContext));
-						pagam.setToBeCreated();
-						insertBulk(userContext, pagam);
-					}
-				}
-			}
-				
 			//Recupero il record principale
 			if (incaricoPrincFpDB!=null){
+				if (!incaricoPrincFpDB.getId_incarico().equals(bulk.getId_incarico()))
+					return;
+
 				//è stato già comunicato un nuovo incarico......devo aggiornarlo
 				incaricoPrincFpDB.updateFrom(userContext, bulk);
 				incaricoPrincFpDB.setToBeUpdated();
@@ -161,11 +145,16 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 					}
 				}
 			} else {
+				if (maxProg!=null) {
+					Incarichi_comunicati_fpBulk otherIncaricoPrincFp = (Incarichi_comunicati_fpBulk)incFpHome.findByPrimaryKey(new Incarichi_comunicati_fpBulk(bulk.getEsercizio_repertorio(), bulk.getPg_repertorio(), bulk.getTipo_record(), Incarichi_comunicati_fpBulk.PG_RECORD_PRINCIPALE));
+					if (!otherIncaricoPrincFp.getId_incarico().equals(bulk.getId_incarico()))
+						return;
+				}
 				incaricoPrincFpDB = (Incarichi_comunicati_fpBulk)bulk.clone();
 				incaricoPrincFpDB.setEsercizio_repertorio(bulk.getEsercizio_repertorio());
 				incaricoPrincFpDB.setPg_repertorio(bulk.getPg_repertorio());
 				incaricoPrincFpDB.setTipo_record(Incarichi_comunicati_fpBulk.TIPO_RECORD_AGGIORNATO);
-				incaricoPrincFpDB.setPg_record(new Long(1));
+				incaricoPrincFpDB.setPg_record(Incarichi_comunicati_fpBulk.PG_RECORD_PRINCIPALE);
 				incaricoPrincFpDB.setToBeCreated();
 				insertBulk(userContext,incaricoPrincFpDB);
 				
@@ -177,6 +166,27 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 						pagamPrincDB.setUser(CNRUserContext.getUser(userContext));
 						pagamPrincDB.setToBeCreated();
 						insertBulk(userContext, pagamPrincDB);
+					}
+				}
+			}
+
+			Incarichi_comunicati_fpBulk incFpLast = null;
+			if (maxProg!=null && maxProg>1)
+				incFpLast = (Incarichi_comunicati_fpBulk)incFpHome.findByPrimaryKey(new Incarichi_comunicati_fpBulk(bulk.getEsercizio_repertorio(), bulk.getPg_repertorio(), bulk.getTipo_record(), maxProg));
+
+			if (incFpLast==null || !incFpLast.similar(bulk)){
+				if (maxProg==null) 
+					bulk.setPg_record(Incarichi_comunicati_fpBulk.PG_RECORD_PRINCIPALE+1);
+				bulk.setUser(CNRUserContext.getUser(userContext));
+				bulk.setToBeCreated();
+				insertBulk(userContext,bulk);
+				
+				for (Iterator<Incarichi_comunicati_fp_detBulk> iterator = bulk.getIncarichi_comunicati_fp_detColl().iterator(); iterator.hasNext();) {
+					Incarichi_comunicati_fp_detBulk pagam = iterator.next();
+					if (pagam.getAnno_pag()!=null && pagam.getSemestre_pag()!=null && pagam.getImporto_pag()!=null){
+						pagam.setUser(CNRUserContext.getUser(userContext));
+						pagam.setToBeCreated();
+						insertBulk(userContext, pagam);
 					}
 				}
 			}
@@ -418,188 +428,170 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 			
 			
 			List<Incarichi_comunicati_fpBulk> listIncarichiComunicati = new ArrayList<Incarichi_comunicati_fpBulk>(); 
-			List<String> righeScartate = new ArrayList<String>(); 
+			List<String[]> righeScartate = new ArrayList<String[]>(); 
 			
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yy");
 			
-            try
+			try
             {
-				//create BufferedReader to read csv file
-            	BufferedReader br = new BufferedReader( new FileReader(incaricoArchivioXmlFp.getFile_ric()));
-            	String strLine = "";
-            	StringTokenizer st = null;
-            	int lineNumber = 0, tokenNumber = 0;
+				//read csv file
+				Reader reader = new FileReader(incaricoArchivioXmlFp.getFile_ric());
+				CSVReader<String[]> csvParser = CSVReaderBuilder.newDefaultReader(reader);
+				List<String[]> csvAllLine = csvParser.readAll();
+
+            	int lineNumber = 0;
                   
             	Incarichi_comunicati_fpBulk firstIncaricoComunicato = null;
             	Incarichi_comunicati_fpBulk incaricoComunicato = null;
             	
-            	//salto l'intestazione del file
-            	br.readLine();
-            	
             	//read comma separated file line by line
-            	while( (strLine = br.readLine()) != null)
-            	{
+				for (String[] csvLine : csvAllLine) {
             		lineNumber++;
-                           
-            		incaricoComunicato = new Incarichi_comunicati_fpBulk();
-            		incaricoComunicato.setTipo_record(Incarichi_comunicati_fpBulk.TIPO_RECORD_AGGIORNATO);
-            		incaricoComunicato.setToBeCreated();
-            		
-            		String nominativo=null, tipoImporto=null;
-            		BigDecimal importoPagamento=null;
-            		int annoPagamento=0, semestrePagamento=0; 
-
-            		//break comma separated line using ","
-            		st = new StringTokenizer(strLine, ";");
-            		while(st.hasMoreTokens())
-            		{
-            			//display csv values
-            			tokenNumber++;
-            			String token = st.nextToken();
-            			if (tokenNumber==1) {
-            				Unita_organizzativaBulk uo = (Unita_organizzativaBulk)findByPrimaryKey(userContext, new Unita_organizzativaBulk(token.substring(0, 3)));
-            				incaricoComunicato.setCodice_ente(uo.getId_funzione_pubblica());
-            			} else if (tokenNumber==2) {
-            				incaricoComunicato.setId_incarico(token);
-            			} else if (tokenNumber==3) {
-            				incaricoComunicato.setAnno_riferimento(new Integer(token));
-            			} else if (tokenNumber==4) {
-            				if (token.toUpperCase().equals("PRIMO SEMESTRE"))
-            					incaricoComunicato.setSemestre_riferimento(1);
-            				else if (token.toUpperCase().equals("SECONDO SEMESTRE"))
-            					incaricoComunicato.setSemestre_riferimento(2);
-            			} else if (tokenNumber==5) {
-            				incaricoComunicato.setCodice_fiscale_partita_iva(token);
-            			} else if (tokenNumber==7) {
-            				nominativo = token;
-            			} else if (tokenNumber==8) {
-            				incaricoComunicato.setTi_sesso(token);
-            			} else if (tokenNumber==9) {
-            				incaricoComunicato.setDescrizione_incarico(token);
-            				if (token.indexOf("(")==0) {
-            					int esercizio_repertorio = new Integer(token.substring(1,5)); 
-	            				Long pg_repertorio = new Long(token.substring(6,token.indexOf(")")));
-	            				Incarichi_repertorioBulk incaricoRepertorio = (Incarichi_repertorioBulk)findByPrimaryKey(userContext, new Incarichi_repertorioBulk(esercizio_repertorio, pg_repertorio));
-	            				V_terzo_per_compensoHome home = (V_terzo_per_compensoHome)getHome(userContext, V_terzo_per_compensoBulk.class, "DISTINCT_TERZO");
-	            				incaricoRepertorio.setV_terzo(home.loadVTerzo(userContext,Tipo_rapportoBulk.ALTRO, incaricoRepertorio.getCd_terzo(), incaricoRepertorio.getDt_inizio_validita(), incaricoRepertorio.getDt_inizio_validita()));
-	            				
-	            				incaricoComunicato.setIncarichi_repertorio(incaricoRepertorio);
-            				} else {
-            					break;
-            				}
-            			} else if (tokenNumber==10) {
-            				if (token.toUpperCase().equals("DI NATURA DISCREZIONALE"))
-            					incaricoComunicato.setModalita_acquisizione("10");
-            				else if (token.toUpperCase().equals("PREVISTO DA NORMA DI LEGGE"))
-            					incaricoComunicato.setModalita_acquisizione("1");
-            			} else if (tokenNumber==11) {
-            				if (token.toUpperCase().equals("COLLABORAZIONE COORDINATA E CONTINUATIVA"))
-            					incaricoComunicato.setTipo_rapporto("2");
-            				else if (token.toUpperCase().equals("PRESTAZIONE OCCASIONALE"))
-            					incaricoComunicato.setTipo_rapporto("1");
-            			} else if (tokenNumber==12) {
-               				if (token.toUpperCase().equals("ALTRE ATTIVITA' PROFESSIONALI ED IMPRENDITORIALI"))
-               					incaricoComunicato.setAttivita_economica("74");
-            				else if (token.toUpperCase().equals("ATTIVITA' DI STUDIO E RICERCA"))
-	            				incaricoComunicato.setAttivita_economica("963");
-	            			else if (token.toUpperCase().equals("CONSULENZA TECNICA"))
-	            				incaricoComunicato.setAttivita_economica("956");
-            			} else if (tokenNumber==13) {
-            				incaricoComunicato.setDt_inizio(new Timestamp(formatter.parse(token).getTime()));
-            			} else if (tokenNumber==14) {
-            				incaricoComunicato.setDt_fine(new Timestamp(formatter.parse(token).getTime()));
-            			} else if (tokenNumber==15) {
-            				if (token.toUpperCase().equals("PREVISTO"))
-            					tipoImporto = "1";
-            				else if (token.toUpperCase().equals("PRESUNTO"))
-            					tipoImporto = "2";
-            			} else if (tokenNumber==16) {
-            				incaricoComunicato.setImporto_previsto(new BigDecimal(token.replace(".", "").replace(",", ".")));
-            			} else if (tokenNumber==17 && !token.replace(" ","").equals("")) {
-            				importoPagamento = new BigDecimal(token.replace(".", "").replace(",", "."));
-            			} else if (tokenNumber==18 && !token.replace(" ","").equals("")) {
-            				annoPagamento = new Integer(token);
-            			} else if (tokenNumber==19 && !token.replace(" ","").equals("")) {
-            				if (token.toUpperCase().equals("PRIMO SEMESTRE"))
-            					semestrePagamento = 1;
-            				else if (token.toUpperCase().equals("SECONDO SEMESTRE"))
-            					semestrePagamento = 2;
-            			} else if (tokenNumber==20) {
-            				if (token.toUpperCase().equals("SI"))
-            					incaricoComunicato.setFl_saldo(Boolean.TRUE);	
-            				else if (token.toUpperCase().equals("NO"))
-            					incaricoComunicato.setFl_saldo(Boolean.FALSE);	
-            			}
+            		if (lineNumber==1013) {
+            			int a=1;
             		}
-            		
-            		if (incaricoComunicato.getIncarichi_repertorio()!=null) {
-        				if (firstIncaricoComunicato!=null && firstIncaricoComunicato.getId_incarico().equals(incaricoComunicato.getId_incarico())) {
-                			if (importoPagamento!=null && annoPagamento!=0 && semestrePagamento!=0) {
-                				Incarichi_comunicati_fp_detBulk incaricoComunicatoDet = new Incarichi_comunicati_fp_detBulk();
-                				incaricoComunicatoDet.setIncarichi_comunicati_fp(firstIncaricoComunicato);
-
-                				incaricoComunicatoDet.setTipo_record_det(Incarichi_comunicati_fpBulk.TIPO_RECORD_AGGIORNATO);
-                				incaricoComunicatoDet.setAnno_pag(annoPagamento);
-                				incaricoComunicatoDet.setSemestre_pag(semestrePagamento);
-                				incaricoComunicatoDet.setImporto_pag(importoPagamento);
-                				
-                				incaricoComunicatoDet.setToBeCreated();
-                				firstIncaricoComunicato.addToIncarichi_comunicati_fp_detColl(incaricoComunicatoDet);            				
-                			}
-        				} else {
-	            			if (nominativo!=null) {
-	            				if (incaricoComunicato.getIncarichi_repertorio().getTerzo().getAnagrafico().getCognome().
-	            						concat(" "+incaricoComunicato.getIncarichi_repertorio().getTerzo().getAnagrafico().getNome()).equals(nominativo)) {
-	            					incaricoComunicato.setCognome(incaricoComunicato.getIncarichi_repertorio().getTerzo().getAnagrafico().getCognome());
-	            					incaricoComunicato.setNome(incaricoComunicato.getIncarichi_repertorio().getTerzo().getAnagrafico().getNome());
-	            					incaricoComunicato.setData_nascita(incaricoComunicato.getIncarichi_repertorio().getTerzo().getAnagrafico().getDt_nascita());
-	            				}
-	            			}
-	            			if (importoPagamento!=null && annoPagamento!=0 && semestrePagamento!=0) {
-	            				Incarichi_comunicati_fp_detBulk incaricoComunicatoDet = new Incarichi_comunicati_fp_detBulk();
-	            				incaricoComunicatoDet.setIncarichi_comunicati_fp(incaricoComunicato);
+            		//salto la prima riga che è l'intestazione
+            		if (lineNumber>1 && !csvLine[1].replace(" ","").equals("") && csvLine.length==20){
+	            		incaricoComunicato = new Incarichi_comunicati_fpBulk();
+	            		incaricoComunicato.setTipo_record(Incarichi_comunicati_fpBulk.TIPO_RECORD_AGGIORNATO);
+	            		incaricoComunicato.setToBeCreated();
+	            		
+	            		String nominativo=null, tipoImporto=null;
+	            		BigDecimal importoPagamento=null;
+	            		int annoPagamento=0, semestrePagamento=0; 
 	
-	            				incaricoComunicatoDet.setTipo_record_det(Incarichi_comunicati_fpBulk.TIPO_RECORD_AGGIORNATO);
-	            				incaricoComunicatoDet.setAnno_pag(annoPagamento);
-	            				incaricoComunicatoDet.setSemestre_pag(semestrePagamento);
-	            				incaricoComunicatoDet.setImporto_pag(importoPagamento);
-	            				
-	            				incaricoComunicatoDet.setToBeCreated();
-	            				incaricoComunicato.addToIncarichi_comunicati_fp_detColl(incaricoComunicatoDet);            				
-	            			}
-	                		listIncarichiComunicati.add(incaricoComunicato);
-	                		firstIncaricoComunicato = incaricoComunicato;
-        				}
-            		} else {
-                        righeScartate.add(strLine);                  
+            			//display csv values
+           				Unita_organizzativaBulk uo = (Unita_organizzativaBulk)findByPrimaryKey(userContext, new Unita_organizzativaBulk(csvLine[0].substring(0, 3)));
+           				incaricoComunicato.setCodice_ente(uo.getId_funzione_pubblica());
+           				
+           				incaricoComunicato.setId_incarico(csvLine[1]);
+           				
+           				incaricoComunicato.setAnno_riferimento(new Integer(csvLine[2]));
+
+           				if (csvLine[3].toUpperCase().equals("PRIMO SEMESTRE"))
+           					incaricoComunicato.setSemestre_riferimento(1);
+           				else if (csvLine[3].toUpperCase().equals("SECONDO SEMESTRE"))
+           					incaricoComunicato.setSemestre_riferimento(2);
+	            		
+           				incaricoComunicato.setCodice_fiscale_partita_iva(csvLine[4]);
+           				
+           				nominativo = csvLine[6];
+           				
+           				incaricoComunicato.setTi_sesso(csvLine[7]);
+
+           				incaricoComunicato.setDescrizione_incarico(csvLine[8]);
+	            		
+           				if (csvLine[8].indexOf("(")==0) {
+	            			int esercizio_repertorio = new Integer(csvLine[8].substring(1,5)); 
+		            		Long pg_repertorio = new Long(csvLine[8].substring(6,csvLine[8].indexOf(")")));
+		            		Incarichi_repertorioBulk incaricoRepertorio = (Incarichi_repertorioBulk)findByPrimaryKey(userContext, new Incarichi_repertorioBulk(esercizio_repertorio, pg_repertorio));
+		            		if (incaricoRepertorio!=null){ 
+			            		V_terzo_per_compensoHome home = (V_terzo_per_compensoHome)getHome(userContext, V_terzo_per_compensoBulk.class, "DISTINCT_TERZO");
+			            		incaricoRepertorio.setV_terzo(home.loadVTerzo(userContext,Tipo_rapportoBulk.ALTRO, incaricoRepertorio.getCd_terzo(), incaricoRepertorio.getDt_inizio_validita(), incaricoRepertorio.getDt_inizio_validita()));
+			            				
+			            		incaricoComunicato.setIncarichi_repertorio(incaricoRepertorio);
+		            		}
+           				}
+
+           				if (csvLine[9].toUpperCase().equals("DI NATURA DISCREZIONALE"))
+           					incaricoComunicato.setModalita_acquisizione("10");
+           				else if (csvLine[9].toUpperCase().equals("PREVISTO DA NORMA DI LEGGE"))
+           					incaricoComunicato.setModalita_acquisizione("1");
+
+           				if (csvLine[10].toUpperCase().equals("COLLABORAZIONE COORDINATA E CONTINUATIVA"))
+           					incaricoComunicato.setTipo_rapporto("2");
+           				else if (csvLine[10].toUpperCase().equals("PRESTAZIONE OCCASIONALE"))
+           					incaricoComunicato.setTipo_rapporto("1");
+
+	               		if (csvLine[11].toUpperCase().equals("ALTRE ATTIVITA' PROFESSIONALI ED IMPRENDITORIALI"))
+	               			incaricoComunicato.setAttivita_economica("74");
+	            		else if (csvLine[11].toUpperCase().equals("ATTIVITA' DI STUDIO E RICERCA"))
+		            		incaricoComunicato.setAttivita_economica("963");
+		            	else if (csvLine[11].toUpperCase().equals("CONSULENZA TECNICA"))
+		            		incaricoComunicato.setAttivita_economica("956");
+
+	            		incaricoComunicato.setDt_inizio(new Timestamp(formatter.parse(csvLine[12]).getTime()));
+
+           				incaricoComunicato.setDt_fine(new Timestamp(formatter.parse(csvLine[13]).getTime()));
+
+           				if (csvLine[14].toUpperCase().equals("PREVISTO"))
+           					tipoImporto = "1";
+           				else if (csvLine[15].toUpperCase().equals("PRESUNTO"))
+           					tipoImporto = "2";
+
+	            		incaricoComunicato.setImporto_previsto(new BigDecimal(csvLine[15].replace(".", "").replace(",", ".")));
+
+	            		if (!csvLine[16].replace(" ","").equals(""))
+            				importoPagamento = new BigDecimal(csvLine[16].replace(".", "").replace(",", "."));
+
+            			if (!csvLine[17].replace(" ","").equals(""))
+            				annoPagamento = new Integer(csvLine[17]);
+            			
+            			if (!csvLine[18].replace(" ","").equals("")) {
+            				if (csvLine[18].toUpperCase().equals("PRIMO SEMESTRE"))
+            					semestrePagamento = 1;
+            				else if (csvLine[18].toUpperCase().equals("SECONDO SEMESTRE"))
+            					semestrePagamento = 2;
+            			}
+            			
+            			if (csvLine[19].toUpperCase().equals("SI"))
+           					incaricoComunicato.setFl_saldo(Boolean.TRUE);	
+           				else if (csvLine[19].toUpperCase().equals("NO"))
+           					incaricoComunicato.setFl_saldo(Boolean.FALSE);	
+	            		
+	            		if (incaricoComunicato.getIncarichi_repertorio()!=null) {
+	        				if (firstIncaricoComunicato!=null && firstIncaricoComunicato.getId_incarico().equals(incaricoComunicato.getId_incarico())) {
+	                			if (importoPagamento!=null && annoPagamento!=0 && semestrePagamento!=0) {
+	                				Incarichi_comunicati_fp_detBulk incaricoComunicatoDet = new Incarichi_comunicati_fp_detBulk();
+	                				incaricoComunicatoDet.setIncarichi_comunicati_fp(firstIncaricoComunicato);
+	
+	                				incaricoComunicatoDet.setTipo_record_det(Incarichi_comunicati_fpBulk.TIPO_RECORD_AGGIORNATO);
+	                				incaricoComunicatoDet.setAnno_pag(annoPagamento);
+	                				incaricoComunicatoDet.setSemestre_pag(semestrePagamento);
+	                				incaricoComunicatoDet.setImporto_pag(importoPagamento);
+	                				
+	                				incaricoComunicatoDet.setToBeCreated();
+	                				firstIncaricoComunicato.addToIncarichi_comunicati_fp_detColl(incaricoComunicatoDet);            				
+	                			}
+	        				} else {
+		            			if (nominativo!=null) {
+		            				if (incaricoComunicato.getIncarichi_repertorio().getTerzo().getAnagrafico().getCognome().toUpperCase().
+		            						concat(" "+incaricoComunicato.getIncarichi_repertorio().getTerzo().getAnagrafico().getNome().toUpperCase()).
+		            						equals(nominativo.toUpperCase())) {
+		            					incaricoComunicato.setCognome(incaricoComunicato.getIncarichi_repertorio().getTerzo().getAnagrafico().getCognome());
+		            					incaricoComunicato.setNome(incaricoComunicato.getIncarichi_repertorio().getTerzo().getAnagrafico().getNome());
+		            					incaricoComunicato.setData_nascita(incaricoComunicato.getIncarichi_repertorio().getTerzo().getAnagrafico().getDt_nascita());
+		            				}
+		            			}
+		            			if (importoPagamento!=null && annoPagamento!=0 && semestrePagamento!=0) {
+		            				Incarichi_comunicati_fp_detBulk incaricoComunicatoDet = new Incarichi_comunicati_fp_detBulk();
+		            				incaricoComunicatoDet.setIncarichi_comunicati_fp(incaricoComunicato);
+		
+		            				incaricoComunicatoDet.setTipo_record_det(Incarichi_comunicati_fpBulk.TIPO_RECORD_AGGIORNATO);
+		            				incaricoComunicatoDet.setAnno_pag(annoPagamento);
+		            				incaricoComunicatoDet.setSemestre_pag(semestrePagamento);
+		            				incaricoComunicatoDet.setImporto_pag(importoPagamento);
+		            				
+		            				incaricoComunicatoDet.setToBeCreated();
+		            				incaricoComunicato.addToIncarichi_comunicati_fp_detColl(incaricoComunicatoDet);            				
+		            			}
+		                		listIncarichiComunicati.add(incaricoComunicato);
+		                		firstIncaricoComunicato = incaricoComunicato;
+	        				}
+	            		} else {
+	                        righeScartate.add(csvLine);                  
+	            		}
             		}
-            		//reset token number
-            		tokenNumber = 0;
-            	}
-            	
-    			for (Iterator<Incarichi_comunicati_fpBulk> iterator = listIncarichiComunicati.iterator(); iterator.hasNext();) {
-    				Incarichi_comunicati_fpBulk incarico = iterator.next();
-    				incarico.setUser(CNRUserContext.getUser(userContext));
-    				incarico.setToBeCreated();
-    				insertBulk(userContext,incarico);
-    					
-    				for (Iterator<Incarichi_comunicati_fp_detBulk> iterator2 = incarico.getIncarichi_comunicati_fp_detColl().iterator(); iterator2.hasNext();) {
-    					Incarichi_comunicati_fp_detBulk pagam = iterator2.next();
-    					if (pagam.getAnno_pag()!=null && pagam.getSemestre_pag()!=null && pagam.getImporto_pag()!=null){
-    						pagam.setUser(CNRUserContext.getUser(userContext));
-    						pagam.setToBeCreated();
-    						insertBulk(userContext, pagam);
-    					}
-    				}
-    			}
+				}
+            	aggiornaIncarichiComunicatiFP(userContext, listIncarichiComunicati);
             }
             catch(Exception e)
             {
-                    System.out.println("Exception while reading csv file: " + e);                  
-    				throw new ComponentException(e);
+                System.out.println("Exception while reading csv file: " + e);                  
+    			throw new ComponentException(e);
             }
-    		for (Iterator iterator = righeScartate.iterator(); iterator.hasNext();) {
-                System.out.println("Riga Esclusa: " + (String) iterator.next());
+    		for (Iterator<String[]> iterator = righeScartate.iterator(); iterator.hasNext();) {
+                System.out.println("Riga Esclusa: " + (String[]) iterator.next());
     		}
 		}
 	}

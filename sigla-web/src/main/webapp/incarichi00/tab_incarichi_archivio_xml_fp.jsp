@@ -39,7 +39,7 @@ function doScaricaFile(path) {
 		<td><% bp.getController().writeFormLabel( out, "fl_perla"); %></td>
 		<td><% bp.getController().writeFormInput( out,"default", "fl_perla", true, "FormInput", null); %></td>
 		<td><% bp.getController().writeFormLabel( out, "fl_merge_perla"); %>
-			<% bp.getController().writeFormInput( out, "fl_merge_perla"); %></td>
+			<% bp.getController().writeFormInput( out,"default", "fl_merge_perla", true, "FormInput", null); %></td>
 	</tr>
 	
 	<% if (!bp.isInserting() && !bp.isSearching()) {%>

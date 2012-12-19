@@ -1410,6 +1410,19 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 								if (archivioXmlPerlaFP.getTipo_estrazione_pagamenti().equals(Incarichi_archivio_xml_fpBulk.PAGAMENTI_INCLUDI)){
 									//CREAZIONE TAG PAGAMENTO
 									List<Incarichi_comunicati_fp_detBulk> listPagamenti = comp.getPagatoPerSemestre(context.getUserContext(), incaricoElenco.getIncaricoRepertorio());
+									
+									//Rimuovo i pagamenti di semestri successivi a quello di comunicazione
+									List<Incarichi_comunicati_fp_detBulk> listPagamentiOltreLimite = new ArrayList<Incarichi_comunicati_fp_detBulk>();
+									for (Iterator<Incarichi_comunicati_fp_detBulk> iterator2 = listPagamenti.iterator(); iterator2.hasNext();) {
+										Incarichi_comunicati_fp_detBulk incarichiComunicatiFpDetBulk = iterator2.next();
+										if (incarichiComunicatiFpDetBulk.getAnno_pag().compareTo(archivioXmlPerlaFP.getEsercizio())==1 ||
+											(incarichiComunicatiFpDetBulk.getAnno_pag().compareTo(archivioXmlPerlaFP.getEsercizio())==0 &&
+											 incarichiComunicatiFpDetBulk.getSemestre_pag().compareTo(archivioXmlPerlaFP.getSemestre())==1))
+											listPagamentiOltreLimite.add(incarichiComunicatiFpDetBulk);
+									}
+									listPagamenti.removeAll(listPagamentiOltreLimite);
+
+									//scrivo il tag dei pagamenti rimasti
 									if (!listPagamenti.isEmpty()) {
 										elementNuovoConsulentePerla.setPagamenti(objAdd.createConsulenteTypePagamenti());
 										for (Iterator<Incarichi_comunicati_fp_detBulk> iterator2 = listPagamenti.iterator(); iterator2.hasNext();) {
@@ -1796,48 +1809,58 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 		
 		for (Iterator iterator = incaricoComunicatoFP.getIncarichi_comunicati_fp_detColl().iterator(); iterator.hasNext();) {
 			Incarichi_comunicati_fp_detBulk incarichiComunicatiFpDet = (Incarichi_comunicati_fp_detBulk) iterator.next();
-			boolean trovato=false;
-			for (Iterator iterator2 = listPagamenti.iterator(); iterator2.hasNext();) {
-				Incarichi_comunicati_fp_detBulk pagamento = (Incarichi_comunicati_fp_detBulk) iterator2.next();
-				if (incarichiComunicatiFpDet.getAnno_pag().equals(pagamento.getAnno_pag()) &&
-					incarichiComunicatiFpDet.getSemestre_pag().equals(pagamento.getSemestre_pag())) {
-					if (!incarichiComunicatiFpDet.getImporto_pag().equals(pagamento.getImporto_pag())) {
-						it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ConsulenteType.Pagamenti.ModificaPagamento elementModificaPagamento = new it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ConsulenteType.Pagamenti.ModificaPagamento();
-						elementModificaPagamento.setAnno(BigInteger.valueOf(pagamento.getAnno_pag()));
-						elementModificaPagamento.setSemestre(BigInteger.valueOf(pagamento.getSemestre_pag()));
-						elementModificaPagamento.setImporto(pagamento.getImporto_pag().setScale(2));
-						myModificaConsulente.getPagamenti().getModificaPagamento().add(elementModificaPagamento);
+			//lo aggiorno solo se di semestre non successivo a quello richiesto
+			if (!(incarichiComunicatiFpDet.getAnno_pag().compareTo(((Incarichi_archivio_xml_fpBulk)getModel()).getEsercizio())==1 ||
+			      (incarichiComunicatiFpDet.getAnno_pag().compareTo(((Incarichi_archivio_xml_fpBulk)getModel()).getEsercizio())==0 &&
+			       incarichiComunicatiFpDet.getSemestre_pag().compareTo(((Incarichi_archivio_xml_fpBulk)getModel()).getSemestre())==1))) {
+				boolean trovato=false;
+				for (Iterator iterator2 = listPagamenti.iterator(); iterator2.hasNext();) {
+					Incarichi_comunicati_fp_detBulk pagamento = (Incarichi_comunicati_fp_detBulk) iterator2.next();
+					if (incarichiComunicatiFpDet.getAnno_pag().equals(pagamento.getAnno_pag()) &&
+						incarichiComunicatiFpDet.getSemestre_pag().equals(pagamento.getSemestre_pag())) {
+						if (!incarichiComunicatiFpDet.getImporto_pag().setScale(2).equals(pagamento.getImporto_pag().setScale(2))) {
+							it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ConsulenteType.Pagamenti.ModificaPagamento elementModificaPagamento = new it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ConsulenteType.Pagamenti.ModificaPagamento();
+							elementModificaPagamento.setAnno(BigInteger.valueOf(pagamento.getAnno_pag()));
+							elementModificaPagamento.setSemestre(BigInteger.valueOf(pagamento.getSemestre_pag()));
+							elementModificaPagamento.setImporto(pagamento.getImporto_pag().setScale(2));
+							myModificaConsulente.getPagamenti().getModificaPagamento().add(elementModificaPagamento);
+						}
+						trovato=true;
+						break;
 					}
-					trovato=true;
-					break;
 				}
-			}
-			if (!trovato){
-				it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ConsulenteType.Pagamenti.CancellaPagamento elementCancellaPagamento = new it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ConsulenteType.Pagamenti.CancellaPagamento();
-				elementCancellaPagamento.setAnno(BigInteger.valueOf(incarichiComunicatiFpDet.getAnno_pag()));
-				elementCancellaPagamento.setSemestre(BigInteger.valueOf(incarichiComunicatiFpDet.getSemestre_pag()));
-				myModificaConsulente.getPagamenti().getCancellaPagamento().add(elementCancellaPagamento);
+				if (!trovato){
+					it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ConsulenteType.Pagamenti.CancellaPagamento elementCancellaPagamento = new it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ConsulenteType.Pagamenti.CancellaPagamento();
+					elementCancellaPagamento.setAnno(BigInteger.valueOf(incarichiComunicatiFpDet.getAnno_pag()));
+					elementCancellaPagamento.setSemestre(BigInteger.valueOf(incarichiComunicatiFpDet.getSemestre_pag()));
+					myModificaConsulente.getPagamenti().getCancellaPagamento().add(elementCancellaPagamento);
+				}
 			}
 		}
 
 		for (Iterator iterator2 = listPagamenti.iterator(); iterator2.hasNext();) {
 			Incarichi_comunicati_fp_detBulk pagamento = (Incarichi_comunicati_fp_detBulk) iterator2.next();
 
-			boolean trovato=false;
-			for (Iterator iterator = incaricoComunicatoFP.getIncarichi_comunicati_fp_detColl().iterator(); iterator.hasNext();) {
-				Incarichi_comunicati_fp_detBulk incarichiComunicatiFpDet = (Incarichi_comunicati_fp_detBulk) iterator.next();
-				if (incarichiComunicatiFpDet.getAnno_pag().equals(pagamento.getAnno_pag()) &&
-					incarichiComunicatiFpDet.getSemestre_pag().equals(pagamento.getSemestre_pag())) {
-					trovato=true;
-					break;
+			//lo aggiorno solo se di semestre non successivo a quello richiesto
+			if (!(pagamento.getAnno_pag().compareTo(((Incarichi_archivio_xml_fpBulk)getModel()).getEsercizio())==1 ||
+  			      (pagamento.getAnno_pag().compareTo(((Incarichi_archivio_xml_fpBulk)getModel()).getEsercizio())==0 &&
+				   pagamento.getSemestre_pag().compareTo(((Incarichi_archivio_xml_fpBulk)getModel()).getSemestre())==1))) {
+				boolean trovato=false;
+				for (Iterator iterator = incaricoComunicatoFP.getIncarichi_comunicati_fp_detColl().iterator(); iterator.hasNext();) {
+					Incarichi_comunicati_fp_detBulk incarichiComunicatiFpDet = (Incarichi_comunicati_fp_detBulk) iterator.next();
+					if (incarichiComunicatiFpDet.getAnno_pag().equals(pagamento.getAnno_pag()) &&
+						incarichiComunicatiFpDet.getSemestre_pag().equals(pagamento.getSemestre_pag())) {
+						trovato=true;
+						break;
+					}
 				}
-			}
-			if (!trovato){
-				it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ConsulenteType.Pagamenti.NuovoPagamento elementNuovoPagamento = new it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ConsulenteType.Pagamenti.NuovoPagamento();
-				elementNuovoPagamento.setAnno(BigInteger.valueOf(pagamento.getAnno_pag()));
-				elementNuovoPagamento.setSemestre(BigInteger.valueOf(pagamento.getSemestre_pag()));
-				elementNuovoPagamento.setImporto(pagamento.getImporto_pag().setScale(2));
-				myModificaConsulente.getPagamenti().getNuovoPagamento().add(elementNuovoPagamento);
+				if (!trovato){
+					it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ConsulenteType.Pagamenti.NuovoPagamento elementNuovoPagamento = new it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ConsulenteType.Pagamenti.NuovoPagamento();
+					elementNuovoPagamento.setAnno(BigInteger.valueOf(pagamento.getAnno_pag()));
+					elementNuovoPagamento.setSemestre(BigInteger.valueOf(pagamento.getSemestre_pag()));
+					elementNuovoPagamento.setImporto(pagamento.getImporto_pag().setScale(2));
+					myModificaConsulente.getPagamenti().getNuovoPagamento().add(elementNuovoPagamento);
+				}
 			}
 		}
 		if (myModificaConsulente.getPagamenti().getNuovoPagamento().isEmpty() &&
@@ -1860,7 +1883,7 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 		oggettobulk =  super.initializeModelForInsert(actioncontext, oggettobulk);
 		if (oggettobulk instanceof Incarichi_archivio_xml_fpBulk) {
 			((Incarichi_archivio_xml_fpBulk)oggettobulk).setFl_perla(Boolean.TRUE);
-			((Incarichi_archivio_xml_fpBulk)oggettobulk).setFl_merge_perla(Boolean.FALSE);
+			((Incarichi_archivio_xml_fpBulk)oggettobulk).setFl_merge_perla(Boolean.TRUE);
 			clearSelection(actioncontext, (Incarichi_archivio_xml_fpBulk)oggettobulk);
 		}
 		return oggettobulk;

@@ -3,7 +3,7 @@
  * Date 26/07/2007
  */
 package it.cnr.contab.incarichi00.xmlfp.bulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
+import it.cnr.contab.incarichi00.bulk.V_incarichi_elenco_fpBulk;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.IntrospectionException;
@@ -23,11 +23,13 @@ public class Incarichi_comunicati_fpHome extends BulkHome {
 	}
 	public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext, OggettoBulk bulk) throws PersistencyException {
 		try {
-			((Incarichi_comunicati_fpBulk)bulk).setPg_record(
-					new Long(
-					((Long)findAndLockMax( bulk, "pg_record", new Long(0) )).longValue()+1
-				)
-			);
+			if (((Incarichi_comunicati_fpBulk)bulk).getPg_record()==null) {
+				((Incarichi_comunicati_fpBulk)bulk).setPg_record(
+						new Long(
+						((Long)findAndLockMax( bulk, "pg_record", new Long(0) )).longValue()+1
+					)
+				);
+			}
 		} catch(it.cnr.jada.bulk.BusyResourceException e) {
 			throw new PersistencyException(e);
 		}
@@ -44,23 +46,13 @@ public class Incarichi_comunicati_fpHome extends BulkHome {
 		try{
 			SQLBuilder sql = super.createSQLBuilder();
 	
-			Long maxProg=null;
 			if (incComunicato.getEsercizio_repertorio()!=null && incComunicato.getPg_repertorio()!=null){
 				sql.addClause(FindClause.AND, "esercizio_repertorio", SQLBuilder.EQUALS, incComunicato.getEsercizio_repertorio());
 				sql.addClause(FindClause.AND, "pg_repertorio", SQLBuilder.EQUALS, incComunicato.getPg_repertorio());
-
-				Incarichi_comunicati_fpBulk bulk = new Incarichi_comunicati_fpBulk();
-				bulk.setIncarichi_repertorio(new Incarichi_repertorioBulk(incComunicato.getEsercizio_repertorio(), incComunicato.getPg_repertorio()));
-				bulk.setTipo_record(Incarichi_comunicati_fpBulk.TIPO_RECORD_AGGIORNATO);
-				maxProg = (Long)findMax(bulk,"pg_record");
 			}
 	
 			sql.addClause(FindClause.AND, "tipo_record", SQLBuilder.EQUALS, Incarichi_comunicati_fpBulk.TIPO_RECORD_AGGIORNATO);
-
-			if (maxProg==null)
-				sql.addClause(FindClause.AND, "pg_record", SQLBuilder.EQUALS, Long.decode("1"));
-			else
-				sql.addClause(FindClause.AND, "pg_record", SQLBuilder.EQUALS, maxProg);
+			sql.addClause(FindClause.AND, "pg_record", SQLBuilder.EQUALS, Incarichi_comunicati_fpBulk.PG_RECORD_PRINCIPALE);
 			
 			if (incComunicato.getId_incarico()!=null)
 				sql.addClause(FindClause.AND, "id_incarico", SQLBuilder.EQUALS, incComunicato.getId_incarico());
@@ -89,27 +81,19 @@ public class Incarichi_comunicati_fpHome extends BulkHome {
 	{
 		try{
 			SQLBuilder sql = super.createSQLBuilder();
+	
+			sql.addClause(FindClause.AND, "anno_riferimento", SQLBuilder.EQUALS, esercizio);
+			sql.addClause(FindClause.AND, "semestre_riferimento", SQLBuilder.EQUALS, semestre);
+			sql.addClause(FindClause.AND, "tipo_record", SQLBuilder.EQUALS, Incarichi_comunicati_fpBulk.TIPO_RECORD_AGGIORNATO);
+			sql.addClause(FindClause.AND, "pg_record", SQLBuilder.EQUALS, Incarichi_comunicati_fpBulk.PG_RECORD_PRINCIPALE);
+			sql.addClause(FindClause.AND, "id_incarico", SQLBuilder.ISNOTNULL, null);
+			
+			
+			SQLBuilder sqlNotExists = getHomeCache().getHome(V_incarichi_elenco_fpBulk.class).createSQLBuilder();
+			sqlNotExists.addSQLJoin("V_INCARICHI_ELENCO_FP.ESERCIZIO", "INCARICHI_COMUNICATI_FP.ESERCIZIO_REPERTORIO");
+			sqlNotExists.addSQLJoin("V_INCARICHI_ELENCO_FP.PG_REPERTORIO", "INCARICHI_COMUNICATI_FP.PG_REPERTORIO");
 
-			sql.setStatement(
-				"SELECT * FROM " + 
-				it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + 
-				"INCARICHI_COMUNICATI_FP " +
-				"WHERE ANNO_RIFERIMENTO = " + esercizio + " AND " +
-				"SEMESTRE_RIFERIMENTO = " + semestre + " AND " +
-				"TIPO_RECORD = '" + Incarichi_comunicati_fpBulk.TIPO_RECORD_AGGIORNATO + "' AND " +
-				"PG_RECORD = ( SELECT MAX(PG_RECORD) " +			
-				"FROM " + 
-				it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + 			
-				"INCARICHI_COMUNICATI_FP " +
-				"WHERE ANNO_RIFERIMENTO = " + esercizio + " AND " +
-				"SEMESTRE_RIFERIMENTO = " + semestre + " AND " +
-				"TIPO_RECORD = '" + Incarichi_comunicati_fpBulk.TIPO_RECORD_AGGIORNATO + "')" +
-				"AND NOT EXISTS( SELECT '1' " +
-				"FROM "+
-				it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
-				"V_INCARICHI_ELENCO_FP "+
-				"WHERE V_INCARICHI_ELENCO_FP.ESERCIZIO=INCARICHI_COMUNICATI_FP.ESERCIZIO_REPERTORIO AND " +
-				"V_INCARICHI_ELENCO_FP.PG_REPERTORIO=INCARICHI_COMUNICATI_FP.PG_REPERTORIO)");
+			sql.addSQLNotExistsClause(FindClause.AND, sqlNotExists);
 			
 			return fetchAll(sql);	
 		}
@@ -118,7 +102,6 @@ public class Incarichi_comunicati_fpHome extends BulkHome {
 			throw new PersistencyException( e );
 		}
 	}	
-
 	/**
 	 * Metodo per cercare i record di dettaglio collegati al record indicato
 	 *

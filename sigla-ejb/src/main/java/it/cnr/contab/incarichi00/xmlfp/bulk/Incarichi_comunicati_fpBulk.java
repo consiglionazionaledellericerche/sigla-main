@@ -13,7 +13,6 @@ import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.persistency.sql.CHARToBooleanConverter;
 
-import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Iterator;
 
@@ -26,6 +25,8 @@ public class Incarichi_comunicati_fpBulk extends Incarichi_comunicati_fpBase {
 	final public static String TIPO_RECORD_RICEVUTO_UPD = "UR";
 	final public static String TIPO_RECORD_RICEVUTO_DEL = "DR";
 	final public static String TIPO_RECORD_AGGIORNATO = "AGG";
+
+	final public static Long PG_RECORD_PRINCIPALE = Long.valueOf("1");
 
 	private Incarichi_repertorioBulk incarichi_repertorio;
 	
@@ -443,7 +444,7 @@ public class Incarichi_comunicati_fpBulk extends Incarichi_comunicati_fpBase {
 		       //Utility.equalsNull(this.getDescrizione_incarico(), bulk.getDescrizione_incarico()) &&
 		       Utility.equalsNull(this.getDt_inizio(), bulk.getDt_inizio()) &&
 		       Utility.equalsNull(this.getDt_fine(), bulk.getDt_fine()) &&
-		       Utility.equalsNull(this.getImporto_previsto(), bulk.getImporto_previsto()) &&
+		       Utility.equalsNull(this.getImporto_previsto().setScale(2), bulk.getImporto_previsto().setScale(2)) &&
 		       Utility.equalsNull(this.getFl_riferimento_regolamento(), bulk.getFl_riferimento_regolamento()) &&
 		       Utility.equalsNull(this.getFl_saldo(), bulk.getFl_saldo()) &&
 		       Utility.equalsNull(this.getAttivita_economica(), bulk.getAttivita_economica()) &&

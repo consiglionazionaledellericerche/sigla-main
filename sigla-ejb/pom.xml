@@ -181,6 +181,11 @@
     	<artifactId>spring</artifactId>
     	<version>${spring.version}</version>
     </dependency>
+    <dependency>
+        <groupId>com.googlecode.jcsv</groupId>
+        <artifactId>jcsv</artifactId>
+        <version>1.4.0</version>
+    </dependency>
   </dependencies>
   <properties>
   	<cmisdl.version>2.0</cmisdl.version>

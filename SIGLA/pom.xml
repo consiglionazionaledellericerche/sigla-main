@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
    <modelVersion>4.0.0</modelVersion>
    <groupId>it.cnr</groupId>
@@ -267,6 +267,11 @@
 		<groupId>org.apache.poi</groupId>
 		<artifactId>poi</artifactId>
 		<version>3.0-FINAL</version>
+    </dependency>
+    <dependency>
+        <groupId>com.googlecode.jcsv</groupId>
+        <artifactId>jcsv</artifactId>
+        <version>1.4.0</version>
     </dependency>
 	 </dependencies>
   <properties>
