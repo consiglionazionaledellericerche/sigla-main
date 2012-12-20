@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Contratto"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Contratto"
           longDescription="Repertorio contratti">
         <fieldProperty
                 name="esercizio"
@@ -72,7 +72,6 @@
                 enabledOnSearch="true"
                 enabledOnInsert="false"
                 enabledOnEdit="false"
-                readonlyProperty="RODefinitivo"
                 nullable="false"
                 label="Data di registrazione" />
         <fieldProperty
@@ -82,7 +81,6 @@
                 formName="searchtool"
                 enabledOnSearch="true"
                 nullable="false"
-                readonlyProperty="RODefinitivo"
                 label="Centro di responsabilità" />
         <fieldProperty
                 name="fig_giur_int"
@@ -91,7 +89,6 @@
                 inputSize="8"
                 maxLength="8"
                 nullable="false"
-                readonlyProperty="RODefinitivo"
                 label="Centro di responsabilità" />
         <fieldProperty
                 name="figura_giuridica_esterna"
@@ -116,8 +113,7 @@
                 property="responsabile"
                 inputType="SEARCHTOOL"
                 enabledOnSearch="true"
-                readonlyProperty="RODefinitivo"
-                label="Responsabile interno" />
+                label="Responsabile procedimento/RUP" />
         <fieldProperty
                 name="cd_terzo_resp"
                 property="responsabile.cd_terzo"
@@ -125,7 +121,7 @@
                 inputType="TEXT"
                 inputSize="20"
                 maxLength="8"
-                label="Responsabile interno" />
+                label="Responsabile procedimento/RUP" />
         <fieldProperty
                 name="ds_responsabile"
                 property="ds_responsabile"
@@ -137,9 +133,9 @@
                 name="firmatario"
                 property="firmatario"
                 inputType="SEARCHTOOL"
+                formName="searchtool"
                 enabledOnSearch="true"
-                readonlyProperty="RODefinitivo"
-                label="Firmatario" />
+               label="Firmatario" />
         <fieldProperty
                 name="cd_terzo_firmatario"
                 property="firmatario.cd_terzo"
@@ -163,7 +159,6 @@
                 rows="3"
                 maxLength="300"
                 enabledOnSearch="true"
-                readonlyProperty="RODefinitivo"
                 label="Responsabile esterno" />
         <fieldProperty
                 name="atto"
@@ -172,7 +167,6 @@
                 formName="searchtool"
                 nullable="false"
                 enabledOnSearch="true"
-                readonlyProperty="RODefinitivo"
                 label="Decisione a contrattare" />
         <fieldProperty
                 name="cd_tipo_atto"
@@ -181,13 +175,11 @@
                 inputSize="5"
                 maxLength="5"
                 nullable="false"
-                readonlyProperty="RODefinitivo"
-                label="Decisione a contrattare" />
+               label="Decisione a contrattare" />
         <fieldProperty
                 name="crea_atto"
                 property="atto"
                 inputType="CRUDTOOL"
-                readonlyProperty="RODefinitivo"                
                 CRUDBusinessProcessName="CRUDConfigAttoAmministrativoBP"/>
         <fieldProperty
                 name="ds_atto_non_definito"
@@ -198,8 +190,7 @@
                 nullable="false"
                 maxLength="100"
                 enabledOnSearch="true"
-                readonlyProperty="RODefinitivo"
-                label="Descrizione decisione a contrattare (non definita)" />
+               label="Descrizione decisione a contrattare (non definita)" />
         <fieldProperty
                 name="ds_atto"
                 property="ds_atto"
@@ -209,7 +200,6 @@
                 nullable="false"
                 maxLength="100"
                 enabledOnSearch="true"
-                readonlyProperty="RODefinitivo"
                 label="Estremi della decisione a contrattare" />
         <fieldProperty
                 name="ds_atto_ann_non_definito"
@@ -228,8 +218,7 @@
                 formName="searchtool"
                 nullable="false"
                 enabledOnSearch="true"
-                readonlyProperty="RODefinitivo"
-                label="Soggetto" />
+               label="Soggetto" />
         <fieldProperty
                 name="cd_organo"
                 property="organo.cd_organo"
@@ -237,14 +226,12 @@
                 inputSize="5"
                 maxLength="5"
                 nullable="false"
-                readonlyProperty="RODefinitivo"
-                label="Soggetto" />
+               label="Soggetto" />
         <fieldProperty
                 name="crea_organo"
                 property="organo"
                 inputType="CRUDTOOL"
-                readonlyProperty="RODefinitivo"
-                CRUDBusinessProcessName="CRUDConfigOrganoBP"/>
+               CRUDBusinessProcessName="CRUDConfigOrganoBP"/>
         <fieldProperty
                 name="ds_organo_non_definito"
                 property="ds_organo_non_definito"
@@ -254,7 +241,6 @@
                 nullable="false"
                 maxLength="100"
                 enabledOnSearch="true"
-                readonlyProperty="RODefinitivo"
                 label="Descrizione del soggetto (non definito)" />
         <fieldProperty
                 name="ds_organo_ann_non_definito"
@@ -273,7 +259,6 @@
                 keysProperty="ti_natura_contabileKeys"
                 nullable="false"
                 enabledOnSearch="true"
-                readonlyProperty="RODefinitivo"
                 label="Natura contabile del rapporto" />
         <fieldProperty
                 name="tipo_contratto"
@@ -282,7 +267,6 @@
                 formName="searchtool"
                 nullable="false"
                 enabledOnSearch="true"
-                readonlyProperty="RODefinitivo"
                 label="Tipologia" />
         <fieldProperty
                 name="cd_tipo_contratto"
@@ -291,13 +275,11 @@
                 inputSize="5"
                 maxLength="5"
                 nullable="false"
-                readonlyProperty="RODefinitivo"
                 label="Tipologia" />
         <fieldProperty
                 name="crea_tipo_contratto"
                 property="tipo_contratto"
                 inputType="CRUDTOOL"
-                readonlyProperty="RODefinitivo"
                 CRUDBusinessProcessName="CRUDConfigTipoContrattoBP"/>                
         <fieldProperty
                 name="oggetto"
@@ -308,7 +290,6 @@
                 nullable="false"
                 maxLength="500"
                 enabledOnSearch="true"
-                readonlyProperty="RODefinitivo"
                 label="Oggetto del contratto" />
         <fieldProperty
                 name="cd_protocollo"
@@ -325,7 +306,6 @@
                 formatName="date_short"
                 enabledOnSearch="true"
                 nullable="false"
-                readonlyProperty="RODefinitivo"
                 label="Data di stipula" />
         <fieldProperty
                 name="dt_inizio_validita"
@@ -333,7 +313,6 @@
                 inputType="TEXT"
                 formatName="date_short"
                 enabledOnSearch="true"
-                readonlyProperty="RODefinitivo"
                 label="Data di inizio" />
         <fieldProperty
                 name="dt_fine_validita"
@@ -341,7 +320,6 @@
                 inputType="TEXT"
                 formatName="date_short"
                 enabledOnSearch="true"
-                readonlyProperty="RODefinitivo"
                 label="Data di fine" />
         <fieldProperty
                 name="dt_proroga"
@@ -355,7 +333,6 @@
                 property="im_contratto_attivo"
                 inputType="TEXT"
                 enabledOnSearch="true"
-                readonlyProperty="RODefinitivo"
                 formatName = "it.cnr.contab.util.EuroFormat"
                 nullable="false"
                 label="Importo attivo" />
@@ -364,7 +341,6 @@
                 property="im_contratto_passivo"
                 inputType="TEXT"
                 enabledOnSearch="true"
-                readonlyProperty="RODefinitivo"
                 formatName = "it.cnr.contab.util.EuroFormat"
                 nullable="false"
                 label="Importo passivo" />                
@@ -504,7 +480,6 @@
                 formName="searchtool"
                 nullable="false"
                 enabledOnSearch="true"
-                readonlyProperty="RODefinitivo"
                 label="Procedura Amministrativa" />
         <fieldProperty
                 name="cd_proc_amm"
@@ -513,13 +488,11 @@
                 inputSize="5"
                 maxLength="5"
                 nullable="false"
-                readonlyProperty="RODefinitivo"
                 label="Procedura Amministrativa" />
         <fieldProperty
                 name="crea_procedura_amministrativa"
                 property="procedura_amministrativa"
                 inputType="CRUDTOOL"
-                readonlyProperty="RODefinitivo"
                 CRUDBusinessProcessName="CRUDConfigProcedureAmministrativeBP"/>
         <fieldProperty
                 name="fl_art82"
@@ -528,6 +501,48 @@
                 nullable="false"
                 readonlyProperty="RODati_cessazione"
                 label="Comportamento ex art. 82 comma 1" />
+        <fieldProperty
+                name="fl_mepa"
+                property="fl_mepa"
+                inputType="CHECKBOX"
+                nullable="true"
+                label="MEPA" />
+        <fieldProperty
+                name="fl_pubblica_contratto"
+                property="fl_pubblica_contratto"
+                inputType="CHECKBOX"
+                nullable="true"
+                label="Pubblica Contratto" />
+        <fieldProperty
+                name="tipoNormaPerla"
+                property="tipoNormaPerla"
+                inputType="SEARCHTOOL"
+                formName="searchtool"
+                nullable="true"
+                enabledOnSearch="true"
+                label="Norma o Titolo a base dell'attribuzione" />
+        <fieldProperty
+                name="direttore"
+                property="direttore"
+                inputType="SEARCHTOOL"
+                formName="searchtool"
+                nullable="false"
+                enabledOnSearch="true"
+                label="Direttore/Dirigente" />
+        <fieldProperty
+                name="cig"
+                property="cig"
+                inputType="SEARCHTOOL"
+                formName="searchtool"
+                nullable="true"
+                enabledOnSearch="true"
+                label="CIG" />
+        <fieldProperty
+                name="crea_cig"
+                property="cig"
+                inputType="CRUDTOOL"
+                CRUDBusinessProcessName="CRUDCodiciCIGBP"/>
+                
 	    <form name="searchtool">
 	          <formFieldProperty
 	                name="esercizio" />
@@ -667,6 +682,18 @@
         <formFieldProperty
                 name="fl_art82"
                 label="Comportamento&lt;BR&gt;ex art. 82 comma 1"/>
+        <formFieldProperty
+                name="fl_mepa"/>
+        <formFieldProperty
+                name="fl_pubblica_contratto" />
+        <formFieldProperty
+                name="tipoNormaPerla" />
+        <formFieldProperty
+                name="direttore" />
+        <formFieldProperty
+                name="cig" />
+        <formFieldProperty
+                name="crea_cig" />
 
         <findFieldProperty
                 name="stato"/>
@@ -740,7 +767,11 @@
                 name="cd_organo_ann"/>
         <findFieldProperty
                 name="ds_organo_ann_non_definito"/>
-                
+        <findFieldProperty
+                name="fl_mepa"/>
+        <findFieldProperty
+                name="fl_pubblica_contratto" />
+  
         <columnFieldProperty
                 name="stato"/>
         <columnFieldProperty
@@ -765,6 +796,10 @@
                 name="cd_terzo_firmatario"/>
         <columnFieldProperty
                 name="resp_esterno"/>
+        <columnFieldProperty
+                name="fl_mepa"/>
+        <columnFieldProperty
+                name="fl_pubblica_contratto" />
         <columnFieldProperty
                 name="oggetto"/>
         <columnFieldProperty

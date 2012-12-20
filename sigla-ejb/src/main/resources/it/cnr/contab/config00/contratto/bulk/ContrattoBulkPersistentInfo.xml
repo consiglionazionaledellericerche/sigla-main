@@ -81,7 +81,25 @@
 			sqlTypeName="VARCHAR"
 			nullable="false"
 			columnSize="5" />			
-			
+		<columnMapping
+			columnName="CD_TIPO_NORMA_PERLA"
+			propertyName="tipoNormaPerla.cd_tipo_norma"
+			sqlTypeName="VARCHAR"
+			nullable="true"
+			columnSize="3" />
+		<columnMapping
+			columnName="DIRETTORE"
+			propertyName="direttore.cd_terzo"
+			sqlTypeName="DECIMAL"
+			nullable="true"
+			columnSize="8" />
+		<columnMapping
+			columnName="CD_CIG"
+			propertyName="cig.cdCig"
+			sqlTypeName="VARCHAR"
+			nullable="true"
+			columnSize="10" />
+
 	</defaultColumnMap>
 	
 	<persistentProperty
@@ -108,4 +126,10 @@
 		name="unita_organizzativa" />		
 	<persistentProperty
 		name="procedura_amministrativa" />				
+	<persistentProperty
+		name="tipoNormaPerla" />		
+	<persistentProperty
+		name="direttore" />				
+	<persistentProperty
+		name="cig" />
 </SQLPersistentInfo>

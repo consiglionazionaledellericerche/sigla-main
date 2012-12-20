@@ -132,4 +132,10 @@
 			<% bp.getController().writeFormInput(out,"fl_cup");%>
 		</TD></TR>		
 					
+		<TR><TD>
+			<% bp.getController().writeFormLabel(out,"data_stipula_contratti");%>
+			</TD><TD colspan="3">
+			<% bp.getController().writeFormInput(out,"data_stipula_contratti");%>
+		</TD></TR>					
+
 	</table>

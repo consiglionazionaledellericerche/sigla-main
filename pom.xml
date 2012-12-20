@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>it.cnr</groupId>
+	<version>2.0.0-SNAPSHOT</version>
+	<artifactId>sigla</artifactId>
+	<packaging>pom</packaging>
+	<modules>
+		<module>sigla-ejb</module>
+		<module>sigla-web</module>
+		<module>sigla-ws</module>
+		<module>SIGLA</module>
+	</modules>
+	<properties>
+		<nexus.url>http://buildandtest.si.cnr.it:8081/nexus</nexus.url>
+		<java.version>1.6</java.version>
+		<cmisdl.version>2.1</cmisdl.version>
+		<spring.version>3.0.3.RELEASE</spring.version>
+		<jada.version>2.0.2</jada.version>
+		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+	</properties>
+	<repositories>
+		<repository>
+			<id>cnr</id>
+			<name>cnr public</name>
+			<url>${nexus.url}/content/groups/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>cnr-snapshots</id>
+			<name>cnr public snapshots</name>
+			<url>${nexus.url}/content/groups/public-snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>cnr</id>
+			<name>cnr public</name>
+			<url>${nexus.url}/content/groups/public</url>
+		</pluginRepository>
+	</pluginRepositories>
+	<distributionManagement>
+		<!-- Publish the versioned releases here -->
+		<repository>
+			<id>buildandtest</id>
+			<name>nexus buildandtest.si.cnr.it</name>
+			<url>${nexus.url}/content/repositories/releases</url>
+		</repository>
+
+		<!-- Publish the versioned releases here -->
+		<snapshotRepository>
+			<id>buildandtest</id>
+			<name>nexus buildandtest.si.cnr.it</name>
+			<url>${nexus.url}/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.5</source>
+						<target>1.5</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-eclipse-plugin</artifactId>
+					<configuration>
+						<ejbVersion>3.0</ejbVersion>
+						<projectNameTemplate>
+							[artifactId]-[version]
+						</projectNameTemplate>
+						<wtpmanifest>true</wtpmanifest>
+						<wtpapplicationxml>true</wtpapplicationxml>
+						<wtpversion>2.0</wtpversion>
+						<manifest>
+							${basedir}/src/main/resources/META-INF/MANIFEST.MF
+						</manifest>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

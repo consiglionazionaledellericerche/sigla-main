@@ -8,6 +8,7 @@ package it.cnr.contab.config00.action;
 
 import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
 import it.cnr.contab.config00.consultazioni.bulk.V_cons_commesse_contrattiBulk;
+import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.contratto.bulk.OrganoBulk;
@@ -53,12 +54,16 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 			SimpleCRUDBP bp = (SimpleCRUDBP)getBusinessProcess(context);
 			ContrattoBulk contratto = (ContrattoBulk)bp.getModel();
 			contratto.setTipo_contratto(null);
-			if (contratto.getNatura_contabile()!= null && contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_SENZA_FLUSSI_FINANZIARI)){
+			contratto.setFl_mepa(null);
+			if (contratto.getNatura_contabile()!= null && 
+					contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_SENZA_FLUSSI_FINANZIARI)){
 				contratto.setIm_contratto_attivo(null);
 				contratto.setIm_contratto_passivo(null);				
-			}else if (contratto.getNatura_contabile()!= null && contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_ATTIVO)){
+			}else if (contratto.getNatura_contabile()!= null && 
+					contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_ATTIVO)){
 				contratto.setIm_contratto_passivo(null);
-			}else if (contratto.getNatura_contabile()!= null && contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_PASSIVO)){
+			}else if (contratto.getNatura_contabile()!= null && 
+					contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_PASSIVO)){
 				contratto.setIm_contratto_attivo(null);
 			}
 			return context.findDefaultForward();
@@ -287,6 +292,19 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 		}
 
 	}	
+
+	public Forward doPubblicaContratto(ActionContext context) {
+		try {
+			fillModel(context);
+			CRUDConfigAnagContrattoBP bp = (CRUDConfigAnagContrattoBP)getBusinessProcess(context);
+			bp.pubblicaContratto(context);
+			setMessage(context,  it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Pubblicazione eseguita con successo");
+			return context.findDefaultForward();
+		}catch(Throwable ex){
+			return handleException(context, ex);
+		}
+
+	}		
 	/**
 	 * Gestisce la validazione di nuovo atto creato
 		 * @param context <code>ActionContext</code> in uso.
@@ -419,5 +437,24 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 		}
 		return super.doTab(actioncontext, s, s1);
 	}
-						
+	public it.cnr.jada.action.Forward doChangeTipologia(it.cnr.jada.action.ActionContext context) {
+		CRUDConfigAnagContrattoBP bp = (CRUDConfigAnagContrattoBP)getBusinessProcess(context);		
+		try {
+			fillModel(context);
+			ContrattoBulk contratto = (ContrattoBulk)bp.getModel();	
+			AllegatoContrattoDocumentBulk allegato = (AllegatoContrattoDocumentBulk) bp.getCrudArchivioAllegati().getModel();
+			if (!allegato.getType().equals(AllegatoContrattoDocumentBulk.GENERICO)){
+				for (AllegatoContrattoDocumentBulk child : contratto.getArchivioAllegati()) {
+					if (!child.equals(allegato) && child.getType().equals(allegato.getType())){
+						setErrorMessage(context,"Attenzione! Il tipo selezionato risulta gia' presente!");
+						allegato.setType(null);
+						break;
+					}
+				}
+			}
+		} catch (FillException ex) {
+			return handleException(context, ex);
+		}
+		return context.findDefaultForward();
+	}						
 }

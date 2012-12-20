@@ -1,6 +1,7 @@
 package it.cnr.contab.cmis.service;
 
 import it.cnr.cmisdl.service.DictionaryService;
+import it.cnr.contab.cmis.CMISTypeName;
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperties;
 import it.cnr.contab.cmis.annotation.CMISProperty;
@@ -64,25 +65,30 @@ public class CMISBulkInfo<T extends Serializable> {
 	}
 
 	public ObjectType getType(Credentials systemCredentials, OggettoBulk oggettoBulk){
-		if (cacheObjType.containsKey(oggettoBulk.getClass()))
+		if (!(oggettoBulk instanceof CMISTypeName) && cacheObjType.containsKey(oggettoBulk.getClass()))
 			return cacheObjType.get(oggettoBulk.getClass());
-		CMISType cmisType = oggettoBulk.getClass().getAnnotation(CMISType.class);
-		if (cmisType == null)
-			throw new RuntimeException("Type is missing!");
-		if (cmisType.parentName().length != 0 &&
-				cmisType.parentName()[0].length() != 0){
-			List<String> typeNames = Arrays.asList(cmisType.parentName());
-			ObjectType parentType = null;
-			for (String parentTypeName : typeNames) {
-				if (parentType == null){
-					parentType = getType(systemCredentials, parentTypeName);
-					continue;
+		if (oggettoBulk instanceof CMISTypeName)
+			cacheObjType.put(oggettoBulk.getClass(), getType(systemCredentials, ((CMISTypeName)oggettoBulk).getTypeName()));
+		else{
+			CMISType cmisType = oggettoBulk.getClass().getAnnotation(CMISType.class);
+			if (cmisType == null && !(oggettoBulk instanceof CMISTypeName))
+				throw new RuntimeException("Type is missing!");
+			if (cmisType != null && cmisType.parentName().length != 0 &&
+					cmisType.parentName()[0].length() != 0){
+				List<String> typeNames = Arrays.asList(cmisType.parentName());
+				ObjectType parentType = null;
+				for (String parentTypeName : typeNames) {
+					if (parentType == null){
+						parentType = getType(systemCredentials, parentTypeName);
+						continue;
+					}
+					parentType = getChildType(systemCredentials, parentType.getId(), parentTypeName);
 				}
-				parentType = getChildType(systemCredentials, parentType.getId(), parentTypeName);
+				return cacheObjType.put(oggettoBulk.getClass(), getChildType(systemCredentials, parentType.getId(), cmisType.name()));
 			}
-			return cacheObjType.put(oggettoBulk.getClass(), getChildType(systemCredentials, parentType.getId(), cmisType.name()));
+			cacheObjType.put(oggettoBulk.getClass(), getType(systemCredentials, cmisType.name()));
+
 		}
-		cacheObjType.put(oggettoBulk.getClass(), getType(systemCredentials, cmisType.name()));
 		return cacheObjType.get(oggettoBulk.getClass());
 	}
 	

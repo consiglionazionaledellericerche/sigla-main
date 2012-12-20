@@ -14,6 +14,12 @@
    			jndi-name="SIGLA/CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession/remote"
    			resource-ref="false">
    	</jee:jndi-lookup>
+   	
+	<bean id="httpClient" class="org.apache.commons.httpclient.HttpClient">
+		<constructor-arg>
+			<bean class="org.apache.commons.httpclient.MultiThreadedHttpConnectionManager"></bean>
+		</constructor-arg>
+	</bean>
 
     <bean id="printService" class="it.cnr.contab.reports.service.PrintService">
     	<property name="offlineReportComponent" ref="offlineReportComponent"/>

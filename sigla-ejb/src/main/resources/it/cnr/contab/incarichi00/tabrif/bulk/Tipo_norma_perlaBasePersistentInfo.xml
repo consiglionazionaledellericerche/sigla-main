@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBase"
+	keyClassName="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaKey"
+	homeClassName="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaHome">
+	<defaultColumnMap
+		tableName="TIPO_NORMA_PERLA">
+		<columnMapping
+			columnName="DS_TIPO_NORMA"
+			propertyName="ds_tipo_norma"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_NORMA_PERLA"
+			propertyName="cd_tipo_norma_perla"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="NUMERO_TIPO_NORMA"
+			propertyName="numero_tipo_norma"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_TIPO_NORMA"
+			propertyName="dt_tipo_norma"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="ARTICOLO_TIPO_NORMA"
+			propertyName="articolo_tipo_norma"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="COMMA_TIPO_NORMA"
+			propertyName="comma_tipo_norma"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="TIPO_ASSOCIAZIONE"
+			propertyName="tipo_associazione"
+			sqlTypeName="CHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="ds_tipo_norma" />
+	<persistentProperty
+		name="cd_tipo_norma_perla" />
+	<persistentProperty
+		name="numero_tipo_norma" />
+	<persistentProperty
+		name="dt_tipo_norma" />
+	<persistentProperty
+		name="articolo_tipo_norma" />
+	<persistentProperty
+		name="comma_tipo_norma" />
+	<persistentProperty
+		name="tipo_associazione" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

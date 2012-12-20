@@ -16,6 +16,7 @@ import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -280,27 +281,10 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 				archiviaStampaPdgVariazioneBulk.getDs_cds());
 		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, 
 				"CdR "+archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita()+
-				" Variazione "+ lpad(archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg(),5,'0'), 
+				" Variazione "+ Utility.lpad(archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg(),5,'0'), 
 				null, 
 				null);
 		return cmisPath;
-	}
-	
-	public static String lpad(double d, int size, char pad) {
-        return lpad(Double.toString(d), size, pad);
-	}
-
-	public static String lpad(long l, int size, char pad) {
-        return lpad(Long.toString(l), size, pad);
-	}
-
-	public static String lpad(String s, int size, char pad) {
-        StringBuilder builder = new StringBuilder();
-        while (builder.length() + s.length() < size) {
-                builder.append(pad);
-        }
-        builder.append(s);
-        return builder.toString();
 	}
 	
 	@Override

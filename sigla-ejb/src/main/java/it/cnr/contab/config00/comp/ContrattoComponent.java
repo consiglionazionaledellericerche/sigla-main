@@ -6,48 +6,59 @@
  */
 package it.cnr.contab.config00.comp;
 
-import java.io.Serializable;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
-
-import it.cnr.contab.utenze00.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
-import it.cnr.contab.client.docamm.FatturaAttiva;
-import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.contab.config00.bulk.*;
-import it.cnr.contab.config00.blob.bulk.*;
+import it.cnr.contab.config00.bulk.CigBulk;
+import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_cdsHome;
+import it.cnr.contab.config00.bulk.RicercaContrattoBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoHome;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
+import it.cnr.contab.config00.contratto.bulk.OrganoBulk;
 import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
 import it.cnr.contab.config00.contratto.bulk.Stampa_elenco_contrattiBulk;
-import it.cnr.contab.config00.contratto.bulk.Tipo_contrattoBulk;
-import it.cnr.contab.config00.contratto.bulk.OrganoBulk;
 import it.cnr.contab.config00.contratto.bulk.Tipo_atto_amministrativoBulk;
+import it.cnr.contab.config00.contratto.bulk.Tipo_contrattoBulk;
+import it.cnr.contab.config00.service.ContrattoService;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.utenze00.bp.*;
+import it.cnr.contab.incarichi00.bulk.V_incarichi_elencoBulk;
+import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.RemoveAccent;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkInfo;
-import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.IPrintMgr;
 import it.cnr.jada.persistency.Broker;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.Persistent;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.Query;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+
+import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.StringTokenizer;
+
+import javax.ejb.EJBException;
 /**
  * @author mspasiano
  *
@@ -123,6 +134,47 @@ public class ContrattoComponent extends it.cnr.jada.comp.CRUDDetailComponent imp
 		  sql.addClause(clause);
 		return sql;
 	}
+
+	/**
+	 * Pre:  Ricerca CIG
+	 * Post: Il CIG può essere collegato ad un contratto solo se vengono rispettate le seguenti regole:				
+			CD_TERZO_RUP del CIG è il medesimo del contratto che si sta inserendo quindi : 
+			CIG. CD_TERZO_RUP = CONTRATTO. CD_TERZO_RESP
+			Il CIG non deve risultare associato ad altri contratti.
+	 */
+	public SQLBuilder selectCigByClause (UserContext userContext, ContrattoBulk contratto, CigBulk cig, CompoundFindClause clause)	throws ComponentException, PersistencyException
+	{
+		if (clause == null) 
+		  clause = cig.buildFindClauses(null);
+		SQLBuilder sql = getHome(userContext, cig).createSQLBuilder();
+		if(contratto.getResponsabile() == null || contratto.getResponsabile().getCd_terzo() == null)
+		   throw new ApplicationException("Per effettuare la ricerca valorizzare il campo Responsabile!");  
+		sql.addSQLClause(FindClause.AND, "CD_TERZO_RUP", SQLBuilder.EQUALS, contratto.getResponsabile().getCd_terzo());
+		sql.addClause(FindClause.AND, "FL_VALIDO", SQLBuilder.EQUALS, Boolean.TRUE);
+		SQLBuilder sqlNotExists = getHome(userContext, contratto).createSQLBuilder();
+		sqlNotExists.addSQLJoin("CD_CIG", SQLBuilder.EQUALS, "CIG.CD_CIG");
+		
+		sqlNotExists.addSQLClause(FindClause.AND, "ESERCIZIO", SQLBuilder.NOT_EQUALS, contratto.getEsercizio());
+		sqlNotExists.addSQLClause(FindClause.AND, "STATO", SQLBuilder.NOT_EQUALS, contratto.getStato());
+		sqlNotExists.addSQLClause(FindClause.AND, "PG_CONTRATTO", SQLBuilder.NOT_EQUALS, contratto.getPg_contratto());
+		
+		sql.addSQLNotExistsClause(FindClause.AND, sqlNotExists);
+		if (clause != null) 
+		  sql.addClause(clause);
+		return sql;
+	}
+	
+	public SQLBuilder selectTipoNormaPerlaByClause (UserContext userContext, OggettoBulk bulk, Tipo_norma_perlaBulk tipo_norma_perla,CompoundFindClause clause)	throws ComponentException, PersistencyException
+	{
+		if (clause == null) 
+		  clause = tipo_norma_perla.buildFindClauses(null);
+		SQLBuilder sql = getHome(userContext, tipo_norma_perla).createSQLBuilder();
+		sql.addSQLClause("AND", "TIPO_ASSOCIAZIONE", SQLBuilder.EQUALS, Tipo_norma_perlaBulk.ASS_CONTRATTI);
+		if (clause != null) 
+		  sql.addClause(clause);
+		return sql;
+	}
+
 	/**
 	 * Pre:  Ricerca Tipo Provvedimento
 	 * Post: Limitazione ai tipi non annullati
@@ -278,6 +330,28 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			if(bulk.getCd_protocollo_generale() == null)
 			  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(bulk.getClass()).getFieldProperty("cd_protocollo_generale").getLabel());	  		   			
 		}
+		if (bulk.getCig() != null && bulk.getCd_terzo_resp() != null &&!bulk.getCig().getCdTerzoRup().equals(bulk.getCd_terzo_resp())){
+			throw new ApplicationException("Il Terzo del CIG non coincide con il Responsabile!");
+		}
+		try {
+			Date data_stipula_contratti = Utility.createParametriCnrComponentSession().
+			getParametriCnr(uc, CNRUserContext.getEsercizio(uc)).getData_stipula_contratti();
+			if (!(bulk.getDt_stipula().before(data_stipula_contratti) && bulk.isDefinitivo())){
+				if ((bulk.isPassivo() || bulk.isAttivo_e_Passivo() || bulk.isSenzaFlussiFinanziari()) && bulk.getDirettore() == null) 
+					  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(bulk.getClass()).getFieldProperty("direttore").getLabel());
+				if ((bulk.isPassivo() || bulk.isAttivo_e_Passivo()) && bulk.getFl_mepa() == null) 
+					  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(bulk.getClass()).getFieldProperty("fl_mepa").getLabel());
+				if ((bulk.isPassivo() || bulk.isAttivo_e_Passivo()) && bulk.getTipoNormaPerla() == null) 
+						  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(bulk.getClass()).getFieldProperty("tipoNormaPerla").getLabel());
+				if (bulk.getTipo_contratto() != null && bulk.getTipo_contratto().getFl_cig() && bulk.getCig() == null)
+					  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(bulk.getClass()).getFieldProperty("cig").getLabel());
+			}
+		} catch (RemoteException e) {
+			throw handleException(e);
+		} catch (EJBException e) {
+			throw handleException(e);
+		}
+		
 	}
 	public void controllaCancellazioneAssociazioneUo(UserContext userContext, Ass_contratto_uoBulk ass_contratto_uo) throws ComponentException{
 		Ass_contratto_uoHome home = (Ass_contratto_uoHome)getHome(userContext, Ass_contratto_uoBulk.class);
@@ -1114,4 +1188,11 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				throw handleException(ex);
 			}
 		}
+		public RemoteIterator findListaContrattiElenco(UserContext userContext,String query,String dominio,Integer anno,String cdCds,String order,String strRicerca) throws ComponentException {
+			ContrattoHome home = (ContrattoHome)getHome(userContext,ContrattoBulk.class);
+			SQLBuilder sql = home.createSQLBuilder();
+			sql.addClause(FindClause.AND, "fl_pubblica_contratto", SQLBuilder.EQUALS, Boolean.TRUE);
+			sql.addSQLClause(FindClause.AND, "to_char(dt_fine_validita,'yyyy-mm-dd')", SQLBuilder.GREATER_EQUALS, "2013-01-01");
+			return iterator(userContext, sql, ContrattoBulk.class, getFetchPolicyName("find"));
+		}		
 }

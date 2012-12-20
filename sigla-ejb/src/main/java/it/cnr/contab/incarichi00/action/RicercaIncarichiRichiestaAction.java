@@ -76,6 +76,7 @@ public class RicercaIncarichiRichiestaAction extends AbstractAction {
 			actioncontext.setUserContext(new CNRUserContext(user,actioncontext.getSessionId(),new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null));
 			bp.eseguiRicerca(actioncontext);
 		} catch (Exception e) {
+			e.printStackTrace();
 			bp.setCodiceErrore(Constants.ERRORE_INC_100);
 		}
 		return actioncontext.findDefaultForward();

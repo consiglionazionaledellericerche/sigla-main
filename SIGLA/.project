@@ -3,9 +3,9 @@
 	<name>SIGLA</name>
 	<comment>NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
 	<projects>
-		<project>sigla-ejb</project>
-		<project>sigla-web</project>
-		<project>sigla-ws</project>
+		<project>sigla-ejb-2.0.0-SNAPSHOT</project>
+		<project>sigla-web-2.0.0-SNAPSHOT</project>
+		<project>sigla-ws-2.0.0-SNAPSHOT</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

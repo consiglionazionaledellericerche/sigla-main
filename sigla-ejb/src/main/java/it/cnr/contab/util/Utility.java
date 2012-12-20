@@ -103,6 +103,24 @@ public final class Utility {
 		else 
 		  return null;
 	}
+	
+	
+	public static String lpad(double d, int size, char pad) {
+        return lpad(Double.toString(d), size, pad);
+	}
+
+	public static String lpad(long l, int size, char pad) {
+        return lpad(Long.toString(l), size, pad);
+	}
+
+	public static String lpad(String s, int size, char pad) {
+        StringBuilder builder = new StringBuilder();
+        while (builder.length() + s.length() < size) {
+                builder.append(pad);
+        }
+        builder.append(s);
+        return builder.toString();
+	}	
 	public static Parametri_cnrComponentSession createParametriCnrComponentSession()throws EJBException, RemoteException {
 		return (Parametri_cnrComponentSession)EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession", Parametri_cnrComponentSession.class);		
 	}

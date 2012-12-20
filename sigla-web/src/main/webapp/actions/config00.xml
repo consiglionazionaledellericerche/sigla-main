@@ -273,11 +273,24 @@
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
 		<init-param name="defaultAction" value="CRUDCodiciSiopeAction" />
   </businessProcess>  
+
+  <action 
+      path="/CRUDCodiciCIGAction" actionClass="it.cnr.jada.util.action.CRUDAction">
+  </action>
+
+  <businessProcess
+      name="CRUDCodiciCIGBP" className="it.cnr.contab.config00.bp.CRUDCodiciCIGBP">
+    <forward name="default" path="/util/form.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.config00.bulk.CigBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
+		<init-param name="defaultAction" value="CRUDCodiciCIGAction" />
+  </businessProcess>  
+  
    <action 
       path="/RicercaUOAction" actionClass="it.cnr.contab.config00.action.RicercaUOAction"
       needExistingSession="false">
  </action>
-  
+
   <businessProcess
         name="RicercaUOBP" className="it.cnr.contab.config00.bp.RicercaUOBP">
     <forward name="default" path="/config00/responseXML.jsp"/>

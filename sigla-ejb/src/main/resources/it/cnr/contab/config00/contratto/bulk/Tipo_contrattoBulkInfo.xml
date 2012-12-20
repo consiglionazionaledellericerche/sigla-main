@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="http://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Tipologie di Contratto"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Tipologie di Contratto"
           longDescription="Tipologie di Contratto">
 	<fieldProperty
 		name="cd_tipo_contratto"
@@ -39,6 +39,11 @@
 		enabledOnEdit="false"
 		enabledOnInsert="false"
 		label="Cancellato" />
+	<fieldProperty
+		name="fl_cig"
+		property="fl_cig"
+		inputType="CHECKBOX"
+		label="CIG" />
 		
     <form name="searchtool">
 	  <formFieldProperty
@@ -58,6 +63,8 @@
 		name="natura_contabile" />
 	<formFieldProperty
 		name="fl_cancellato" />
+	<formFieldProperty
+		name="fl_cig" />
 		
 	<columnFieldProperty
 		name="cd_tipo_contratto" />
@@ -67,6 +74,8 @@
 		name="natura_contabile" />
 	<columnFieldProperty
 		name="fl_cancellato" />
+	<columnFieldProperty
+		name="fl_cig" />
 		
 	<findFieldProperty
 		name="cd_tipo_contratto" />
@@ -76,4 +85,6 @@
 		name="natura_contabile" />
 	<findFieldProperty
 		name="fl_cancellato" />
+	<findFieldProperty
+		name="fl_cig" />
 </bulkInfo>

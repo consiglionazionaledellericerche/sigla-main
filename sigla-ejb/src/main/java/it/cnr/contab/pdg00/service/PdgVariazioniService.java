@@ -1,11 +1,7 @@
 package it.cnr.contab.pdg00.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import it.cnr.cmisdl.model.Node;
 import it.cnr.cmisdl.model.paging.ListNodePage;
-import it.cnr.contab.cmis.CMISAspect;
 import it.cnr.contab.cmis.CMISProperty;
 import it.cnr.contab.cmis.service.CMISService;
 import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
@@ -13,6 +9,9 @@ import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.cmis.PdgVariazioneDocument;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.comp.ApplicationException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PdgVariazioniService extends CMISService {
 

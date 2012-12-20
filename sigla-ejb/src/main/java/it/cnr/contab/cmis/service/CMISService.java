@@ -1,7 +1,9 @@
 package it.cnr.contab.cmis.service;
 
+import it.cnr.cmisdl.model.ACL;
 import it.cnr.cmisdl.model.Node;
 import it.cnr.cmisdl.model.paging.ListNodePage;
+import it.cnr.cmisdl.model.paging.PagingNode;
 import it.cnr.cmisdl.model.property.AspectMetdata;
 import it.cnr.cmisdl.service.AuthenticationService;
 import it.cnr.cmisdl.service.ContentService;
@@ -13,11 +15,7 @@ import it.cnr.contab.cmis.acl.Permission;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.jada.bulk.OggettoBulk;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.net.FileNameMap;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,11 +27,11 @@ import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisBaseException;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 import org.apache.commons.httpclient.Credentials;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.xml.sax.ContentHandler;
 
 public class CMISService {
 	private transient static final Log logger = LogFactory.getLog(CMISService.class);
@@ -98,7 +96,23 @@ public class CMISService {
 		}		
 	}
 
+	public Node getNodeByPath(CMISPath cmisPath){
+		return nodeService.getNodeByPath(systemCredentials, cmisPath.getPath());
+	}
+	
+	public Node getNodeByNodeRef(String nodeRef){
+		return nodeService.getNodeByNodeRef(systemCredentials, nodeRef);
+	}
+	
 	public CMISPath createFolderIfNotPresent(CMISPath cmisPath, String folderName, String title, String description){
+		return createFolderIfNotPresent(cmisPath, folderName, title, description, null);
+	}
+
+	public CMISPath createFolderIfNotPresent(CMISPath cmisPath, String folderName, String title, String description, OggettoBulk oggettoBulk){
+		return createFolderIfNotPresent(cmisPath, folderName, title, description, oggettoBulk, null);
+	}
+
+	public CMISPath createFolderIfNotPresent(CMISPath cmisPath, String folderName, String title, String description, OggettoBulk oggettoBulk, String objectTypeName){
 		Node node = nodeService.getNodeByPath(systemCredentials, cmisPath.getPath());
 		try{
 			List<Property<?>> metadataProperties = new ArrayList<Property<?>>();
@@ -121,14 +135,28 @@ public class CMISService {
 					nodeService.getDictionaryService().createProperty(systemCredentials, 
 							AspectMetdata.getCmisAspectName(AspectMetdata.ASPECT_TITLED), 
 							AspectMetdata.getPrefixLocalPart(AspectMetdata.PROPERTY_DESCRIPTION), 
-							Arrays.asList(description)));			
+							Arrays.asList(description)));
+
+			if (oggettoBulk != null) {
+				if (cmisBulkInfo.getType(systemCredentials, oggettoBulk)!=null || objectTypeName!=null)
+					metadataProperties.add(
+							nodeService.getDictionaryService().createProperty(systemCredentials, 
+									(objectTypeName==null?cmisBulkInfo.getType(systemCredentials, oggettoBulk).getId():objectTypeName),
+									PropertyIds.OBJECT_TYPE_ID, Arrays.asList(cmisBulkInfo.getType(systemCredentials, oggettoBulk).getId())));
+				metadataProperties.addAll(cmisBulkInfo.getProperty(systemCredentials, oggettoBulk));
+				aspectsToAdd.addAll(cmisBulkInfo.getAspect(systemCredentials, oggettoBulk));
+				aspectProperties.addAll(cmisBulkInfo.getAspectProperty(systemCredentials, oggettoBulk));
+			}
 			Node folder = nodeService.createFolder(systemCredentials, node, metadataProperties, aspectsToAdd, aspectProperties);
 			return CMISPath.construct(folder.getPath());
 		}catch(CmisConstraintException _ex){
 			return cmisPath.appendToPath(folderName);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 	
+
 	public void deleteNode(Node node){
 		nodeService.deleteNode(systemCredentials, node);
 	}
@@ -145,21 +173,18 @@ public class CMISService {
 		}
 	}
 	
-	public String getContentType(String contentType, String filename){
-		FileNameMap fileNameMap = URLConnection.getFileNameMap();
-		String result = fileNameMap.getContentTypeFor(filename);
-		if (result != null)
-			return result;
-		return contentType;
+	public Node storeSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name, 
+			CMISPath cmisPath, Permission... permissions){
+		return storeSimpleDocument(oggettoBulk, inputStream, contentType, name, cmisPath, null, false, permissions);
 	}
 	
 	public Node storeSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name, 
-				CMISPath cmisPath, Permission... permissions){
+				CMISPath cmisPath, String objectTypeName, boolean makeVersionable, Permission... permissions){
 		Node parentNode = nodeService.getNodeByPath(systemCredentials, cmisPath.getPath());
 		try {
 			name = sanitizeFilename(name);
 			Node node = nodeService.createContent(systemCredentials, parentNode, inputStream, name, 
-					getContentType(contentType, name), cmisBulkInfo.getType(systemCredentials, oggettoBulk).getId(), 
+					contentType, (objectTypeName==null?cmisBulkInfo.getType(systemCredentials, oggettoBulk).getId():objectTypeName), 
 					cmisBulkInfo.getProperty(systemCredentials, oggettoBulk), 
 					cmisBulkInfo.getAspect(systemCredentials, oggettoBulk), 
 					cmisBulkInfo.getAspectProperty(systemCredentials, oggettoBulk));
@@ -169,20 +194,36 @@ public class CMISService {
 					nodeService.addACL(systemCredentials, node, permission.getUserName(), permission.getRole().getRoleName());
 				}
 			}
-			//TODO non dovrebbe essere necessario, ma non so perch� i metadati non li prende in creazione
-			updateProperties(oggettoBulk, node);
+
+			if (makeVersionable)
+				nodeService.makeVersionable(systemCredentials, node);
 			return node;
-		} catch (CmisBaseException e) {
-			e.printStackTrace();
-			System.err.println(e.getErrorContent());
+		}catch (CmisBaseException e) {
 			throw e;
-		} catch (IllegalArgumentException e) {
-			throw e;
-		} catch (IllegalAccessException e) {
+		}catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 	
+	public Node restoreSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name, 
+			CMISPath cmisPath, Permission... permissions){
+		return restoreSimpleDocument(oggettoBulk, inputStream, contentType, name, cmisPath, null, false, permissions);
+	}
+
+	public Node restoreSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name, 
+			CMISPath cmisPath, String objectTypeName, boolean makeVersionable, Permission... permissions){
+		Node node = null;
+		try {
+			node = nodeService.getNodeByPath(systemCredentials, cmisPath.getPath()+
+											(cmisPath.getPath().equals("/")?"":"/")+
+											sanitizeFilename(name).toLowerCase());
+		} catch (CmisObjectNotFoundException e){
+			return storeSimpleDocument(oggettoBulk, inputStream, contentType, name, cmisPath, objectTypeName, makeVersionable, permissions);
+		}
+		updateContent(node.getId(), inputStream, contentType);
+		return node;
+	}
+
 	public void updateProperties(OggettoBulk oggettoBulk, Node node){
 		try {
 			nodeService.updateNode(systemCredentials, node, 
@@ -214,7 +255,35 @@ public class CMISService {
 		return nodeService.getRelationshipFromTarget(systemCredentials, 
 				nodeService.getNodeByNodeRef(systemCredentials, sourceNodeRef), relationship.value());	
 	}
-
+	
+	public void makeVersionable(Node node){
+		nodeService.makeVersionable(systemCredentials, node);
+	}
+	
+	public ListNodePage<Node> getChildren(Node node, String orderBy, PagingNode pagingNode){
+		if (pagingNode == null)
+			pagingNode = new PagingNode() {
+				public int getSkipCount() {
+					return 0;
+				}
+				public int getPage() {
+					return Integer.MAX_VALUE;
+				}
+				public int getMaxItems() {
+					return Integer.MAX_VALUE;
+				}
+			};
+		return nodeService.retreiveChildren(systemCredentials, node, orderBy, pagingNode);
+	}
+	
+	public List<ACL> addConsumerToEveryone(Node node){
+		return nodeService.addACL(systemCredentials, node, "GROUP_EVERYONE", "cmis:read");
+	}
+	
+	public void copyNode(Node source, Node target){
+		nodeService.copyNode(systemCredentials, source, target);
+	}
+	
 	public ListNodePage<Node> search(StringBuffer query){
 		return searchService.search(systemCredentials, query, null, null);
 	}

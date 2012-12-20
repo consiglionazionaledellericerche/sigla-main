@@ -138,6 +138,20 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
 		<columnMapping
+			columnName="FL_MEPA"
+			propertyName="fl_mepa"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+		<columnMapping
+			columnName="FL_PUBBLICA_CONTRATTO"
+			propertyName="fl_pubblica_contratto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+		<columnMapping
 			columnName="DACR"
 			propertyName="dacr"
 			sqlTypeName="TIMESTAMP"
@@ -213,6 +227,11 @@
                 name="ds_organo_ann_non_definito"/>
         <persistentProperty
                 name="fl_art82"/>
+        <persistentProperty
+                name="fl_mepa"/>
+        <persistentProperty
+                name="fl_pubblica_contratto"/>
+
         <persistentProperty
                 name="dacr"/>
         <persistentProperty

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk"
+	homeClassName="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaHome">
+	<defaultColumnMap
+		tableName="TIPO_NORMA_PERLA">
+	</defaultColumnMap>
+</SQLPersistentInfo>
