@@ -330,7 +330,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			if(bulk.getCd_protocollo_generale() == null)
 			  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(bulk.getClass()).getFieldProperty("cd_protocollo_generale").getLabel());	  		   			
 		}
-		if (bulk.getCig() != null && bulk.getCd_terzo_resp() != null &&!bulk.getCig().getCdTerzoRup().equals(bulk.getCd_terzo_resp())){
+		if (bulk.getCig() != null && bulk.getCd_terzo_resp() != null && bulk.getCig().getCdTerzoRup() != null && !bulk.getCig().getCdTerzoRup().equals(bulk.getCd_terzo_resp())){
 			throw new ApplicationException("Il Terzo del CIG non coincide con il Responsabile!");
 		}
 		try {

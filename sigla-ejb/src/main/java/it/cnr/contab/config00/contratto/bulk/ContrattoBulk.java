@@ -709,21 +709,29 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	
 	@CMISProperty(name="sigla_contratti:fig_giu_esterna_codice")
 	public Integer getFig_giu_esterna_codice(){
+		if (getFigura_giuridica_esterna() == null)
+			return null;
 		return getFigura_giuridica_esterna().getCd_terzo();
 	}
 
 	@CMISProperty(name="sigla_contratti:fig_giu_esterna_denominazione")
 	public String getFig_giu_esterna_denominazione(){
+		if (getFigura_giuridica_esterna() == null)
+			return null;
 		return getFigura_giuridica_esterna().getDenominazione_sede();
 	}
 
 	@CMISProperty(name="sigla_contratti:fig_giu_esterna_codfis")
 	public String getFig_giu_esterna_codfis(){
+		if (getFigura_giuridica_esterna() == null)
+			return null;
 		return getFigura_giuridica_esterna().getAnagrafico().getCodice_fiscale();
 	}
 
 	@CMISProperty(name="sigla_contratti:fig_giu_esterna_pariva")
 	public String getFig_giu_esterna_pariva(){
+		if (getFigura_giuridica_esterna() == null)
+			return null;
 		return getFigura_giuridica_esterna().getAnagrafico().getPartita_iva();
 	}
 
@@ -741,26 +749,36 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 
 	@CMISProperty(name="sigla_contratti:responsabile_codice")
 	public Integer getCodiceResponsabile(){
+		if (getDirettore() == null)
+			return null;
 		return getDirettore().getCd_terzo();
 	}
 
 	@CMISProperty(name="sigla_contratti:responsabile_denominazione")
 	public String getDenominazioneResponsabile(){
+		if (getDirettore() == null)
+			return null;
 		return getDirettore().getDenominazione_sede();
 	}
 
 	@CMISProperty(name="sigla_contratti:responsabile_procedimento_codice")
 	public Integer getCodiceResponsabileProcedimento(){
+		if (getResponsabile() == null)
+			return null;
 		return getResponsabile().getCd_terzo();
 	}
 
 	@CMISProperty(name="sigla_contratti:responsabile_procedimento_denominazione")
 	public String getDenominazioneResponsabileProcedimento(){
+		if (getResponsabile() == null)
+			return null;
 		return getResponsabile().getDenominazione_sede();
 	}
 	
 	@CMISProperty(name="sigla_contratti:mod_individuazione_beneficiario")
 	public String getModIndividuazioneBeneficiario(){
+		if (getProcedura_amministrativa() == null)
+			return null;
 		return getProcedura_amministrativa().getDs_proc_amm();
 	}
 	
