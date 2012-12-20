@@ -39,7 +39,6 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	private String oggettoEmail;
 	private String corpoEmail;
 	private Boolean fl_cup;
-	private BigDecimal perc_prelievo_pdgp_entrate;
 	private String clausolaOrdine;
 	private java.sql.Timestamp data_stipula_contratti;
 	
@@ -273,12 +272,6 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	}
 	public void setClausolaOrdine(String clausolaOrdine) {
 		this.clausolaOrdine = clausolaOrdine;
-	}
-	public BigDecimal getPerc_prelievo_pdgp_entrate() {
-		return perc_prelievo_pdgp_entrate;
-	}
-	public void setPerc_prelievo_pdgp_entrate(BigDecimal perc_prelievo_pdgp_entrate) {
-		this.perc_prelievo_pdgp_entrate = perc_prelievo_pdgp_entrate;
 	}
 
 	public java.sql.Timestamp getData_stipula_contratti() {

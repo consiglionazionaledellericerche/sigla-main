@@ -219,13 +219,6 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
 		<columnMapping
-			columnName="PERC_PRELIEVO_PDGP_ENTRATE"
-			propertyName="perc_prelievo_pdgp_entrate"
-			sqlTypeName="DECIMAL"
-			columnSize="5"
-			columnScale="2"
-			nullable="false" />		
-		<columnMapping
 			columnName="DATA_STIPULA_CONTRATTI"
 			propertyName="data_stipula_contratti"
 			sqlTypeName="TIMESTAMP"
@@ -299,8 +292,6 @@
 		name="clausolaOrdine" />		
 	<persistentProperty
 		name="fl_cup" />	
-	<persistentProperty
-		name="perc_prelievo_pdgp_entrate" />
 	<persistentProperty		
 		name="data_stipula_contratti" />											
 </SQLPersistentInfo>

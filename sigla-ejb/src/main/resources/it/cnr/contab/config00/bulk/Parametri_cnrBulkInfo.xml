@@ -223,15 +223,6 @@
 		label="Gestione Obbligatoria Cup" />	
 	
 	<fieldProperty
-		name="perc_prelievo_pdgp_entrate"
-		property="perc_prelievo_pdgp_entrate"
-		label="Percentuale di prelievo" 
-		formatName="it.cnr.contab.util.ConstrainedPercentFormat"
-		inputType="TEXT"
-		inputSize="7"
-		maxLength="7"
-		nullable="true" />			
-	<fieldProperty
 		name="data_stipula_contratti"
 		property="data_stipula_contratti"
 		inputType="TEXT"
@@ -363,8 +354,6 @@
 		name="fl_obb_intrastat"/>	
 	 <columnFieldProperty
 		name="fl_cup"/>	      
-	 <columnFieldProperty
-		name="perc_prelievo_pdgp_entrate"/>	    		   
 	<columnFieldProperty
 		name="clausolaOrdine"/>
 	<columnFieldProperty
