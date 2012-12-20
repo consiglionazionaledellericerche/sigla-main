@@ -377,7 +377,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		for (AllegatoContrattoDocumentBulk allegato : contratto.getArchivioAllegati()) {
 			if (allegato.getType().equals(AllegatoContrattoDocumentBulk.CONTRATTO)){
 				Element elementLink = xmldoc.createElement(getTagRadice()+":url_contratto");
-				dato = "genericdownload?nodeRef="+allegato.getNode().getId(); 
+				dato = "genericdownload/"+allegato.getNode().getName()+"?nodeRef="+allegato.getNode().getId(); 
 				elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 				elementContratto.appendChild(elementLink);
 			}else if (allegato.getType().equals(AllegatoContrattoDocumentBulk.PROGETTO)) {
@@ -385,7 +385,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 				if (allegato.getLink()!= null){
 					dato = allegato.getLink(); 					
 				}else{
-					dato = "genericdownload?nodeRef="+allegato.getNode().getId(); 
+					dato = "genericdownload/"+allegato.getNode().getName()+"?nodeRef="+allegato.getNode().getId(); 
 				}
 				elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 				elementContratto.appendChild(elementLink);
