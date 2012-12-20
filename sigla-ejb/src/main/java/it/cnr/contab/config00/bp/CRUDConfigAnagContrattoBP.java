@@ -122,6 +122,13 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	public boolean isPublishHidden(){
 		if (isSearching() || isInserting())
 			return false;
+		if (getModel()!=null){
+			ContrattoBulk contratto = (ContrattoBulk) getModel();
+			if (contratto.isProvvisorio())
+				return false;
+			if (contratto.isCessato())
+				return true;
+		}
 		return isPublishCRUDButtonHidden();
 	}
 
