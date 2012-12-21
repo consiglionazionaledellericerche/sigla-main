@@ -116,7 +116,7 @@
 		name="cambio"
 		property="cambio"
 		inputType="TEXT"
-		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		formatName="it.cnr.contab.util.Importo4CifrePositivoFormat"
 		nullable="false"
 		enabledOnEdit="true"
 		enabledOnSearch="false"

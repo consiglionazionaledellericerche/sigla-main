@@ -172,7 +172,7 @@
 		name="cambio_spesa"
 		property="cambio_spesa"
 		inputType="TEXT"
-		formatName="it.cnr.contab.util.PositiveDecimalFormat"				
+		formatName="it.cnr.contab.util.Importo4CifrePositivoFormat"				
 		label="Cambio"
 		nullable="false"		
 		/>

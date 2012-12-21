@@ -1979,7 +1979,7 @@ public void setCambioSpesaDefault(ActionContext context, Missione_dettaglioBulk 
 	else
 	{
 		spesa.setCambio_spesa(cambio.getCambio());
-		spesa.setCambio_spesa(spesa.getCambio_spesa().setScale(3, java.math.BigDecimal.ROUND_HALF_UP));
+		spesa.setCambio_spesa(spesa.getCambio_spesa().setScale(4, java.math.BigDecimal.ROUND_HALF_UP));
 	}	
 	return;	
 }

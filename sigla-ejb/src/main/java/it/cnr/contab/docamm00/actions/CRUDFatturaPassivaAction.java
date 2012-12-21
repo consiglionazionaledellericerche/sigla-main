@@ -2474,7 +2474,7 @@ public Forward doOnChangeModified(ActionContext context)
 			java.math.BigDecimal cambioAttuale = fp.getCambio();
 			if (cambioAttuale == null)
 				fp.setCambio((cambioAttuale = new java.math.BigDecimal(0)));
-        	cambioAttuale = cambioAttuale.setScale(3,java.math.BigDecimal.ROUND_HALF_UP);
+        	cambioAttuale = cambioAttuale.setScale(4,java.math.BigDecimal.ROUND_HALF_UP);
         	fp.setCambio(cambioAttuale);
 	        if (cambioAttuale.compareTo(new java.math.BigDecimal(0))==0){
 	        	fp.setCambio(vecchioCambio);

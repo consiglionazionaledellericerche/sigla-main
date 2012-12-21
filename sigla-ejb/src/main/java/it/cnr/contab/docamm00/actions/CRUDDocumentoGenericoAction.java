@@ -1690,7 +1690,7 @@ public Forward doOnChangeModified(ActionContext context) {
         BigDecimal cambioAttuale = documentoGenerico.getCambio();
         if (cambioAttuale == null)
         	documentoGenerico.setCambio((cambioAttuale = new java.math.BigDecimal(0)));
-        cambioAttuale = cambioAttuale.setScale(3,BigDecimal.ROUND_HALF_UP);
+        cambioAttuale = cambioAttuale.setScale(4,BigDecimal.ROUND_HALF_UP);
         documentoGenerico.setCambio(cambioAttuale);
         if (cambioAttuale.compareTo(new java.math.BigDecimal(0))==0){
         	documentoGenerico.setCambio(vecchioCambio);

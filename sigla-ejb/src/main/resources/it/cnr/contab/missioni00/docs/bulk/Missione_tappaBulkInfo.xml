@@ -67,7 +67,7 @@
 		inputType="TEXT"
 		maxLength="16"
 		inputSize="16"
-		formatName="it.cnr.contab.util.PositiveDecimalFormat"		
+		formatName="it.cnr.contab.util.Importo4CifrePositivoFormat"		
 		label="Cambio tappa"
 		nullable="false"		
 		/>
