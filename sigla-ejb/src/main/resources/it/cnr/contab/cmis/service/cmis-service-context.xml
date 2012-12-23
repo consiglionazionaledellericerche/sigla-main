@@ -21,19 +21,19 @@
     	<property name="cmisBulkInfo" ref="cmisBulkInfo"/>
     </bean>
 
-    <bean id="cmisPathConcFormazReddito" class="it.cnr.contab.cmis.service.CMISPath">
+    <bean id="cmisPathConcFormazReddito" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
     	<property name="path" value="/Altri pagamenti C.N.R/Concorrenti alla formazione del reddito (inclusi nel CUD)"/>
     </bean>
-    <bean id="cmisPathNonConcFormazReddito" class="it.cnr.contab.cmis.service.CMISPath">
+    <bean id="cmisPathNonConcFormazReddito" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
     	<property name="path" value="/Altri pagamenti C.N.R/Non concorrenti alla formazione del reddito"/>
     </bean>
-    <bean id="cmisPathIndAnzianita" class="it.cnr.contab.cmis.service.CMISPath">
+    <bean id="cmisPathIndAnzianita" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
     	<property name="path" value="/Altri pagamenti C.N.R/Indennità di anzianità"/>
     </bean>
-    <bean id="cmisPathVariazioniAlPianoDiGestione" class="it.cnr.contab.cmis.service.CMISPath">
+    <bean id="cmisPathVariazioniAlPianoDiGestione" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
     	<property name="path" value="/Variazioni Al Piano di Gestione"/>
     </bean>
- 	<bean id="cmisPathContratti" class="it.cnr.contab.cmis.service.CMISPath">
+ 	<bean id="cmisPathContratti" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
      	<property name="path" value="/Comunicazioni dal CNR"/>
     </bean>    
     <!-- Pemission Beans -->
