@@ -739,7 +739,7 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	public String getTipo_norma(){
 		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
 		Tipo_norma_perlaBulk perla = getTipoNormaPerla();
-		if (perla != null)
+		if (perla != null && perla.getDs_tipo_norma() != null)
 			return perla.getDs_tipo_norma().concat(" ").concat(perla.getNumero_tipo_norma()).
 				concat(" ").concat(formatter.format(perla.getDt_tipo_norma())).
 				concat(" ").concat(perla.getArticolo_tipo_norma()).

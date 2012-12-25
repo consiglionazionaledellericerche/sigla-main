@@ -343,7 +343,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 					  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(bulk.getClass()).getFieldProperty("fl_mepa").getLabel());
 				if ((bulk.isPassivo() || bulk.isAttivo_e_Passivo()) && bulk.getTipoNormaPerla() == null) 
 						  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(bulk.getClass()).getFieldProperty("tipoNormaPerla").getLabel());
-				if (bulk.getTipo_contratto() != null && bulk.getTipo_contratto().getFl_cig() && bulk.getCig() == null)
+				if (bulk.getTipo_contratto() != null && bulk.getTipo_contratto().getFl_cig() != null  && bulk.getTipo_contratto().getFl_cig() && bulk.getCig() == null)
 					  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(bulk.getClass()).getFieldProperty("cig").getLabel());
 			}
 		} catch (RemoteException e) {
