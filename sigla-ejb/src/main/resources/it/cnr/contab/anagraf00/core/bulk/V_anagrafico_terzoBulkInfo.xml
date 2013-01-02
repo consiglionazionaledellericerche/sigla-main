@@ -292,7 +292,8 @@
 		name="cd_terzo"
 		property="cd_terzo"
 		inputType="TEXT"
-		label="Codice terzo" />
+		label="Codice terzo"
+		enabledOnSearch="true" />
 	<fieldProperty
 		name="cd_ente_appartenenza"
 		property="cd_ente_appartenenza"

@@ -10,6 +10,7 @@ import it.cnr.jada.persistency.KeyedPersistent;
 public class ContrattoKey extends OggettoBulk implements KeyedPersistent {
 	@CMISPolicy(name="P:sigla_contratti_aspect:appalti", property=@CMISProperty(name="sigla_contratti_aspect_appalti:esercizio"))
 	private java.lang.Integer esercizio;
+	@CMISPolicy(name="P:sigla_contratti_aspect:appalti", property=@CMISProperty(name="sigla_contratti_aspect_appalti:stato"))
     private java.lang.String stato;	
 	@CMISPolicy(name="P:sigla_contratti_aspect:appalti", 
 			property=@CMISProperty(name="sigla_contratti_aspect_appalti:progressivo", converterBeanName="cmis.converter.longToIntegerConverter"))

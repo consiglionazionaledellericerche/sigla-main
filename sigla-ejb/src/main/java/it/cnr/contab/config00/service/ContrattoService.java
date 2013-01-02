@@ -16,12 +16,37 @@ public class ContrattoService extends CMISService {
 		StringBuffer query = new StringBuffer("select appalti.cmis:objectId from sigla_contratti:appalti as appalti");
 		query.append(" join sigla_contratti_aspect:appalti as aspect on appalti.cmis:objectId = aspect.cmis:objectId");
 		query.append(" where ").append("aspect.sigla_contratti_aspect_appalti:esercizio").append(" = ").append(contratto.getEsercizio());
+		query.append(" and ").append("aspect.sigla_contratti_aspect_appalti:stato").append(" = '").append(contratto.getStato()).append("'");
 		query.append(" and ").append("aspect.sigla_contratti_aspect_appalti:progressivo").append(" = ").append(contratto.getPg_contratto());
 		ListNodePage<Node> listNodePage = super.search(query, Boolean.TRUE);
 		if (!listNodePage.isEmpty())
 			return listNodePage.get(0);
 		return null;
 	}
+	
+	public ListNodePage<Node> findContrattiDefinitivi(){
+		StringBuffer query = new StringBuffer("select appalti.cmis:objectId from sigla_contratti:appalti as appalti");
+		query.append(" join sigla_contratti_aspect:appalti as aspect on appalti.cmis:objectId = aspect.cmis:objectId");
+		query.append(" where ").append("aspect.sigla_contratti_aspect_appalti:stato = 'D'");
+		return super.search(query, Boolean.TRUE);
+	}
+	
+	public void findContrattiDefinitiviWithoutFile(){
+		ListNodePage<Node> nodes = findContrattiDefinitivi();
+		for (Node node : nodes) {
+			boolean exist = false;
+			ListNodePage<Node> childs = getChildren(node, null, null);
+			for (Node child : childs) {
+				if (child.getTypeId().equals(AllegatoContrattoDocumentBulk.CONTRATTO))
+					exist = true;
+			}
+			if (!exist)
+				System.out.println(
+						(String)node.getPropertyValue("strorguo:codice")+" "+
+						node.getPropertyValue("sigla_contratti_aspect_appalti:progressivo"));
+		}
+	}
+	
 	
 	public ListNodePage<Node> findNodeAllegatiContratto(ContrattoBulk contratto){
 		Node node = getFolderContratto(contratto);

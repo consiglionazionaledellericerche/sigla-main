@@ -3,10 +3,7 @@
 * Date 09/04/2005
 */
 package it.cnr.contab.config00.contratto.bulk;
-import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.persistency.Keyed;
 public class ContrattoBase extends ContrattoKey implements Keyed {
 //    ESERCIZIO_PADRE DECIMAL(4,0)

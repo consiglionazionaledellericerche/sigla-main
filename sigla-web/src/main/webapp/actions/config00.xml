@@ -217,6 +217,14 @@
 		<init-param name="defaultAction" value="CRUDConfigContrattoAction" />
   </businessProcess>  
 
+  <businessProcess
+      name="CRUDConfigAnagContrattoMasterBP" className="it.cnr.contab.config00.bp.CRUDConfigAnagContrattoMasterBP">
+    <forward name="default" path="/config00/contratti.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.config00.contratto.bulk.ContrattoBulk" />
+		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_ContrattoComponentSession" />								
+		<init-param name="defaultAction" value="CRUDConfigContrattoAction" />
+  </businessProcess>  
+
   <action 
       path="/CRUDClassificazioneVociAction" actionClass="it.cnr.contab.config00.action.CRUDClassificazioneVociAction">
   </action>

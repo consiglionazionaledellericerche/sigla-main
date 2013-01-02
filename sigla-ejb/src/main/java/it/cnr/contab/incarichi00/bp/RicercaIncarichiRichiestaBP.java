@@ -381,12 +381,20 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 				elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 				elementContratto.appendChild(elementLink);
 			}else if (allegato.getType().equals(AllegatoContrattoDocumentBulk.PROGETTO)) {
-				Element elementLink = xmldoc.createElement(getTagRadice()+":url_progetto");
 				if (allegato.getLink()!= null){
+					Element elementLink = xmldoc.createElement(getTagRadice()+":url_esterno_progetto");
 					dato = allegato.getLink(); 					
-				}else{
+					elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+					elementContratto.appendChild(elementLink);
+				}else if (allegato.isContentStreamPresent()) {
+					Element elementLink = xmldoc.createElement(getTagRadice()+":url_progetto");
 					dato = "genericdownload/"+allegato.getNode().getName()+"?nodeRef="+allegato.getNode().getId(); 
+					elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+					elementContratto.appendChild(elementLink);
 				}
+			}else if (allegato.getType().equals(AllegatoContrattoDocumentBulk.CAPITOLATO)) {
+				Element elementLink = xmldoc.createElement(getTagRadice()+":url_capitolato");
+				dato = "genericdownload/"+allegato.getNode().getName()+"?nodeRef="+allegato.getNode().getId(); 
 				elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 				elementContratto.appendChild(elementLink);
 			}

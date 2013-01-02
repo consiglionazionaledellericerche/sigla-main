@@ -3,6 +3,8 @@
 * Date 09/04/2005
 */
 package it.cnr.contab.config00.contratto.bulk;
+import javax.persistence.Transient;
+
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.V_persona_fisicaBulk;
 import it.cnr.contab.cmis.annotation.CMISPolicy;
@@ -64,6 +66,7 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	
 	private BulkList associazioneUO = new BulkList();
 	private BulkList associazioneUODisponibili = new BulkList();
+	@Transient
 	private BulkList<AllegatoContrattoDocumentBulk> archivioAllegati = new BulkList();
 	
 	private java.math.BigDecimal tot_doc_cont_spe;

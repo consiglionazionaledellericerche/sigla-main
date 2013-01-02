@@ -466,6 +466,8 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		} catch (ApplicationException e) {
 			throw handleException(e);
 		}
+		Node node = contrattoService.getFolderContratto((ContrattoBulk) getModel());
+		contrattoService.updateProperties(getModel(), node);
 	}
 	
 	@Override
