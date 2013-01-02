@@ -168,7 +168,8 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 	}
 	public void setStatusAndEditableMap(){
 		if (getModel()!=null && ((ObbligazioneBulk)getModel()).isObbligazioneResiduo()) {
-			if (getTab( "tab" )!=null && getTab( "tab" ).equalsIgnoreCase("tabScadenzario") && isScadenzaModificabile() && !((ObbligazioneBulk)getModel()).isDocRiportato()) 
+			if (getTab( "tab" )!=null && (getTab( "tab" ).equalsIgnoreCase("tabScadenzario") && isScadenzaModificabile() && !((ObbligazioneBulk)getModel()).isDocRiportato()
+					|| getTab( "tab" ).equalsIgnoreCase("tabObbligazione") && isScadenzaModificabile() && !((ObbligazioneBulk)getModel()).isDocRiportato())) 
 				setStatusAndEditableMap(EDIT);
 			else
 				setStatusAndEditableMap(VIEW);

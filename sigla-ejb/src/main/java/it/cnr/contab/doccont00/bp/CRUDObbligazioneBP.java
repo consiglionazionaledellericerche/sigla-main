@@ -1050,6 +1050,15 @@ public boolean isROFindElemento_voce() {
 	if (isSiope_attiva())
 		return obbligazione.isAssociataADocCont();
 	return false;
+} 
+public boolean isRoCampiResiduoProprio(){
+	ObbligazioneBulk obbligazione = (ObbligazioneBulk)getModel();
+	if (obbligazione == null ||(obbligazione!=null &&!obbligazione.isObbligazioneResiduo()) || this.getStatus()==SEARCH)
+		return false;
+	if (obbligazione!=null && obbligazione.isObbligazioneResiduo()) {
+		return true;
+	}
+	return false;
 }
 public boolean isIncarichi_repertorio_attiva() {
 	return incarichi_repertorio_attiva;
