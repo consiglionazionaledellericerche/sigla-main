@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 
 import org.apache.chemistry.opencmis.client.api.Property;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
+import org.apache.chemistry.opencmis.commons.data.Ace;
 import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisBaseException;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
@@ -278,6 +279,10 @@ public class CMISService {
 	
 	public List<ACL> addConsumerToEveryone(Node node){
 		return nodeService.addACL(systemCredentials, node, "GROUP_EVERYONE", "cmis:read");
+	}
+
+	public List<ACL> removeConsumerToEveryone(Node node){
+		return null;//nodeService.removeACL(systemCredentials, node, "GROUP_EVERYONE", "cmis:read");
 	}
 	
 	public void copyNode(Node source, Node target){

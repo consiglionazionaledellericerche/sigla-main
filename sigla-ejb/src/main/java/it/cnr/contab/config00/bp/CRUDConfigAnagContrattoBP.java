@@ -53,7 +53,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 
 	private static final long serialVersionUID = 1L;
 
-	private ContrattoService contrattoService;
+	protected ContrattoService contrattoService;
 	private Date dataStipulaParametri;
 	
 	private SimpleDetailCRUDController crudAssUO = new SimpleDetailCRUDController( "Associazione UO", Ass_contratto_uoBulk.class, "associazioneUO", this);

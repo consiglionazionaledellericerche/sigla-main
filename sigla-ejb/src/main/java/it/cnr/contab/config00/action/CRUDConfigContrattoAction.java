@@ -7,6 +7,7 @@
 package it.cnr.contab.config00.action;
 
 import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
+import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoMasterBP;
 import it.cnr.contab.config00.consultazioni.bulk.V_cons_commesse_contrattiBulk;
 import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
@@ -303,8 +304,22 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 		}catch(Throwable ex){
 			return handleException(context, ex);
 		}
-
 	}		
+	public Forward doUnpublishContratto(ActionContext context) {
+		try {
+			fillModel(context);
+			if (!(getBusinessProcess(context) instanceof CRUDConfigAnagContrattoMasterBP))
+				return context.findDefaultForward();
+				
+			CRUDConfigAnagContrattoMasterBP bp = (CRUDConfigAnagContrattoMasterBP)getBusinessProcess(context);
+			bp.unpublishContratto(context);
+			setMessage(context,  it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Pubblicazione rimossa con successo");
+			return context.findDefaultForward();
+		}catch(Throwable ex){
+			return handleException(context, ex);
+		}
+	}		
+
 	/**
 	 * Gestisce la validazione di nuovo atto creato
 		 * @param context <code>ActionContext</code> in uso.
