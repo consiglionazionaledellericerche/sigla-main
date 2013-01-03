@@ -8,6 +8,7 @@ import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.jsp.Button;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class CRUDConfigAnagContrattoMasterBP extends CRUDConfigAnagContrattoBP {
 	@Override
 	public boolean isPublishCRUDButtonHidden() {
 		if (isSearching() || isInserting())
-			return false;
+			return true;
 		if (getModel()!=null){
 			ContrattoBulk contratto = (ContrattoBulk) getModel();
 			if (contratto.isProvvisorio())
@@ -41,6 +42,8 @@ public class CRUDConfigAnagContrattoMasterBP extends CRUDConfigAnagContrattoBP {
 	}
 
 	public boolean isUpublishCRUDButtonHidden() {
+		if (isSearching() || isInserting())
+			return true;
 		return !isPublishCRUDButtonHidden();
 	}
 
@@ -57,10 +60,12 @@ public class CRUDConfigAnagContrattoMasterBP extends CRUDConfigAnagContrattoBP {
 	@Override
 	protected Button[] createToolbar() {
 		Button[] baseToolbar = super.createToolbar();
-		List<Button> newToolbar = Arrays.asList(baseToolbar);
+		List<Button> newToolbar = new ArrayList<Button>();
+		newToolbar.addAll(Arrays.asList(baseToolbar));
 		Button unPublish = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.publish");
 		unPublish.setLabel("<u>A</u>nnulla<br>Pubblicazione");
 		unPublish.setTitle("Annulla Pubblicazione");
+		unPublish.setStyle("width:100px");
 		unPublish.setHiddenProperty("upublishCRUDButtonHidden");
 		unPublish.setHref("javascript:submitForm('doUnpublishContratto')");
 		newToolbar.add(unPublish);
