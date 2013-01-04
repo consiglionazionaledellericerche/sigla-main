@@ -15,7 +15,6 @@ import java.util.StringTokenizer;
 public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTypeName{
 	private static final long serialVersionUID = 1L;
 	private ContrattoBulk contrattoBulk;
-	private Node node;
 	private File file;
 	private String contentType;
 	private String nome;
@@ -24,6 +23,9 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTy
 	private String type;
 	private String link;
 	
+	private BigInteger contentlength;
+	private String nodeId;
+
 	private static final java.util.Dictionary ti_allegatoKeys =  new it.cnr.jada.util.OrderedHashtable();
 
 	final public static String CONTRATTO = "D:sigla_contratti_attachment:contratto";
@@ -52,7 +54,16 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTy
 	
 	public AllegatoContrattoDocumentBulk(Node node) {
 		super();
-		this.node = node;
+		contentlength = node.getContentLength();
+		nodeId = node.getId();
+	}
+
+	public String getNodeId() {
+		return nodeId;
+	}
+
+	public void setNodeId(String nodeId) {
+		this.nodeId = nodeId;
 	}
 
 	public String parseFilename(String file) {
@@ -72,13 +83,9 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTy
 	}
 	
 	public boolean isNodePresent(){
-		return getNode() == null;
+		return nodeId != null;
 	}
 	
-	public Node getNode() {
-		return node;
-	}
-
 	public File getFile() {
 		return file;
 	}
@@ -135,13 +142,10 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTy
 		this.contrattoBulk = contrattoBulk;
 	}
 
-	public void setNode(Node node) {
-		this.node = node;
-	}
-
 	public String getTypeName() {
 		return getType();
 	}
+	
 	@CMISPolicy(name="P:sigla_contratti_aspect:link", property=@CMISProperty(name="sigla_contratti_aspect_link:url"))	
 	public String getLink() {
 		return link;
@@ -156,7 +160,7 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTy
 	}
 	
 	public boolean isContentStreamPresent(){
-		return node!= null && node.getContentLength().compareTo(BigInteger.ZERO) == 1;
+		return isNodePresent() && contentlength.compareTo(BigInteger.ZERO) == 1;
 	}
 
 	@CMISProperty(name="cmis:name")

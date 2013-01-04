@@ -73,7 +73,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 						allegato.getType().equals(AllegatoContrattoDocumentBulk.PROGETTO))
 					throw new ValidationException("Attenzione: selezionare un File da caricare oppure valorizzare il Link al Progetto.");
 			}else{
-				if ((!allegato.isContentStreamPresent() && allegato.getLink() == null) && 
+				if ((!allegato.isContentStreamPresent() && (allegato.getLink() == null&&allegato.getFile() == null)) && 
 						allegato.getType().equals(AllegatoContrattoDocumentBulk.PROGETTO))
 					throw new ValidationException("Attenzione: selezionare un File da caricare oppure valorizzare il Link al Progetto.");
 			}
@@ -506,17 +506,20 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 
 	public String getNomeAllegato(){
 		AllegatoContrattoDocumentBulk allegato = (AllegatoContrattoDocumentBulk)getCrudArchivioAllegati().getModel();
-		if (allegato != null && allegato.getNode() != null)
-			return allegato.getNode().getName();
+		if (allegato != null && allegato.isNodePresent()){
+			Node node = contrattoService.getNodeByNodeRef(allegato.getNodeId());			
+			return node.getName();
+		}
 		return null;
 	}
 	
 	public void scaricaAllegato(ActionContext actioncontext) throws IOException, ServletException {
 		AllegatoContrattoDocumentBulk allegato = (AllegatoContrattoDocumentBulk)getCrudArchivioAllegati().getModel();
-		InputStream is = contrattoService.getResource(allegato.getNode());
-		((HttpActionContext)actioncontext).getResponse().setContentLength(allegato.getNode().getContentLength().intValue());
-		((HttpActionContext)actioncontext).getResponse().setContentType(allegato.getNode().getContentType());
-		((HttpActionContext)actioncontext).getResponse().setContentLength(allegato.getNode().getContentLength().intValue());
+		Node node = contrattoService.getNodeByNodeRef(allegato.getNodeId());
+		InputStream is = contrattoService.getResource(node);
+		((HttpActionContext)actioncontext).getResponse().setContentLength(node.getContentLength().intValue());
+		((HttpActionContext)actioncontext).getResponse().setContentType(node.getContentType());
+		((HttpActionContext)actioncontext).getResponse().setContentLength(node.getContentLength().intValue());
 		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
 		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
 		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
@@ -537,7 +540,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		for (Iterator<AllegatoContrattoDocumentBulk> iterator = contratto.getArchivioAllegati().deleteIterator(); iterator.hasNext();) {
 			AllegatoContrattoDocumentBulk allegato = iterator.next();
 			if (allegato.isToBeDeleted()){
-				contrattoService.deleteNode(allegato.getNode());
+				contrattoService.deleteNode(contrattoService.getNodeByNodeRef(allegato.getNodeId()));
 				allegato.setCrudStatus(OggettoBulk.NORMAL);
 			}
 		}
@@ -560,7 +563,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 						costruisciAlberaturaAlternativa(allegato, node);
 					
 					allegato.setCrudStatus(OggettoBulk.NORMAL);
-					allegato.setNode(node);
+					allegato.setNodeId(node.getId());
 				} catch (FileNotFoundException e) {
 					throw handleException(e);
 				}catch (CmisConstraintException e) {
@@ -569,10 +572,10 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 			}else if (allegato.isToBeUpdated()) {
 				try {
 					if (allegato.getFile() != null)
-						contrattoService.updateContent(allegato.getNode().getId(), 
+						contrattoService.updateContent(allegato.getNodeId(), 
 								new FileInputStream(allegato.getFile()),
 								allegato.getContentType());
-					contrattoService.updateProperties(allegato, allegato.getNode());
+					contrattoService.updateProperties(allegato, contrattoService.getNodeByNodeRef(allegato.getNodeId()));
 					allegato.setCrudStatus(OggettoBulk.NORMAL);
 				} catch (FileNotFoundException e) {
 					throw handleException(e);
