@@ -377,7 +377,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		for (AllegatoContrattoDocumentBulk allegato : contratto.getArchivioAllegati()) {
 			if (allegato.getType().equals(AllegatoContrattoDocumentBulk.CONTRATTO)){
 				Element elementLink = xmldoc.createElement(getTagRadice()+":url_contratto");
-				dato = "genericdownload/"+allegato.getNode().getName()+"?nodeRef="+allegato.getNode().getId(); 
+				dato = "genericdownload/"+allegato.getName()+"?nodeRef="+allegato.getNodeId(); 
 				elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 				elementContratto.appendChild(elementLink);
 			}else if (allegato.getType().equals(AllegatoContrattoDocumentBulk.PROGETTO)) {
@@ -388,13 +388,13 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 					elementContratto.appendChild(elementLink);
 				}else if (allegato.isContentStreamPresent()) {
 					Element elementLink = xmldoc.createElement(getTagRadice()+":url_progetto");
-					dato = "genericdownload/"+allegato.getNode().getName()+"?nodeRef="+allegato.getNode().getId(); 
+					dato = "genericdownload/"+allegato.getName()+"?nodeRef="+allegato.getNodeId(); 
 					elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 					elementContratto.appendChild(elementLink);
 				}
 			}else if (allegato.getType().equals(AllegatoContrattoDocumentBulk.CAPITOLATO)) {
 				Element elementLink = xmldoc.createElement(getTagRadice()+":url_capitolato");
-				dato = "genericdownload/"+allegato.getNode().getName()+"?nodeRef="+allegato.getNode().getId(); 
+				dato = "genericdownload/"+allegato.getName()+"?nodeRef="+allegato.getNodeId(); 
 				elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 				elementContratto.appendChild(elementLink);
 			}

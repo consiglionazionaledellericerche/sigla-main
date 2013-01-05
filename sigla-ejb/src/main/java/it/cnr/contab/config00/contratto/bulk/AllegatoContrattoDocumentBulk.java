@@ -25,6 +25,7 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTy
 	
 	private BigInteger contentlength;
 	private String nodeId;
+	private String name;
 
 	private static final java.util.Dictionary ti_allegatoKeys =  new it.cnr.jada.util.OrderedHashtable();
 
@@ -56,6 +57,11 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTy
 		super();
 		contentlength = node.getContentLength();
 		nodeId = node.getId();
+		name = node.getName();
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public String getNodeId() {
