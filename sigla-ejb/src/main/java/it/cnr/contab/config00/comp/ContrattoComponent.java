@@ -440,6 +440,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 					contrattoClone.setCrudStatus(OggettoBulk.TO_BE_CREATED);
 					contrattoClone.setDt_annullamento(EJBCommonServices.getServerTimestamp());
 					contrattoClone.setStato(ContrattoBulk.STATO_CESSSATO);
+					contrattoClone.setFl_pubblica_contratto(Boolean.FALSE);
 					super.creaConBulk(userContext,contrattoClone);
 					
 					Broker brokerAccertamenti = home.createBroker(home.findAccertamenti(userContext,contratto));

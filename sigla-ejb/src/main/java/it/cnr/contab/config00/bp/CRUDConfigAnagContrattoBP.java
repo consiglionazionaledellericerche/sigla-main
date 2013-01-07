@@ -455,6 +455,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		Node node = contrattoService.getFolderContratto((ContrattoBulk) getModel());
 		if (node != null){
 			contrattoService.addAspect(node, "P:sigla_contratti_aspect:stato_annullato");
+			contrattoService.removeConsumerToEveryone(node);
 		}
 	}
 	@Override
