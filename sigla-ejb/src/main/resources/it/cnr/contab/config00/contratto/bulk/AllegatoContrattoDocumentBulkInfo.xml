@@ -60,7 +60,6 @@
 		enabledOnSearch="false"
 		enabledOnInsert="false"
 		enabledOnView="true"
-		readonlyProperty="nodePresent"
 		img="img/import24.gif"
 		href="javascript:doScaricaAllegato()"
 		label="Apri File" />

@@ -6,7 +6,7 @@ Class-Path: itext-2.1.7.jar bcmail-jdk14-138.jar bcprov-jdk14-140.jar
  02.jar commons-fileupload-1.2.1.jar commons-lang-2.3.jar jasperreport
  s-3.7.2.jar jcommon-1.0.15.jar jfreechart-1.0.12.jar jdtcore-3.1.0.ja
  r poi-3.0-FINAL.jar log4j-1.2.14.jar Base64-1.0.1.jar cmisdl-commons-
- 2.1.jar chemistry-opencmis-client-api-0.7.0.jar chemistry-opencmis-co
+ 2.2.jar chemistry-opencmis-client-api-0.7.0.jar chemistry-opencmis-co
  mmons-api-0.7.0.jar commons-httpclient-3.1.jar ical4j-0.9.20.jar comm
  ons-io-2.1.jar org.springframework.security.core-3.0.2.RELEASE.jar co
  m.springsource.org.apache.commons.logging-1.1.1.jar org.springframewo
@@ -30,5 +30,5 @@ Class-Path: itext-2.1.7.jar bcmail-jdk14-138.jar bcprov-jdk14-140.jar
  sport-tcp-1.0.0.jar axis2-transport-sms-1.0.0.jar jsmpp-2.0.1.jar slf
  4j-log4j12-1.4.3.jar smslib-3.4.1.jar axis2-transport-xmpp-1.0.0.jar 
  smack-3.0.4.jar smackx-3.0.4.jar axis2-transport-udp-1.0.0.jar axis2-
- transport-local-1.5.4.jar rampart-core-1.5.1.jar
+ transport-local-1.5.4.jar rampart-core-1.5.1.jar jcsv-1.4.0.jar
 
