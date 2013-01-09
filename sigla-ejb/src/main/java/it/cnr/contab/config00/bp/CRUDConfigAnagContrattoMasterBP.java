@@ -58,6 +58,11 @@ public class CRUDConfigAnagContrattoMasterBP extends CRUDConfigAnagContrattoBP {
 	}
 
 	@Override
+	public boolean isContrattoDefinitivo() {
+		return false;
+	}
+	
+	@Override
 	protected Button[] createToolbar() {
 		Button[] baseToolbar = super.createToolbar();
 		List<Button> newToolbar = new ArrayList<Button>();

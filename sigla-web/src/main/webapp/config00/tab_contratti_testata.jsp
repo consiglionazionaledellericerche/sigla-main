@@ -60,7 +60,7 @@
       <div class="Group"><table>      
 	  <tr>         
          <td><% bp.getController().writeFormLabel(out,"figura_giuridica_esterna");%></td>
-         <td colspan="5"><% bp.getController().writeFormInput(out,"figura_giuridica_esterna");%></td>
+         <td colspan="5"><% bp.getController().writeFormInput(out,"default", "figura_giuridica_esterna", bp.isContrattoDefinitivo(),"FormInput",null);%></td>
       </tr>      
 	  <tr>         
          <td><% bp.getController().writeFormLabel(out,"resp_esterno");%></td>

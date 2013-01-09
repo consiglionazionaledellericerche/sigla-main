@@ -161,7 +161,14 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		}
 		return true;
 	}
-
+	
+	public boolean isContrattoDefinitivo(){
+		ContrattoBulk contratto = (ContrattoBulk) getModel();
+		if (contratto != null)
+			return contratto.isRODefinitivo();
+		return false;
+	}
+	
 	private Date getDataStipulaParametri(it.cnr.jada.action.ActionContext context) throws ComponentException, RemoteException, EJBException{
 		return Utility.createParametriCnrComponentSession().
 			getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())).getData_stipula_contratti();
@@ -265,9 +272,9 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		return toolbar;
 	}
 	/**
-	 * Restituisce il valore della proprietà 'salvaDefinitivoButtonEnabled'
+	 * Restituisce il valore della proprietï¿½ 'salvaDefinitivoButtonEnabled'
 	 *
-	 * @return Il valore della proprietà 'salvaDefinitivoButtonEnabled'
+	 * @return Il valore della proprietï¿½ 'salvaDefinitivoButtonEnabled'
 	 */
 	public boolean isSalvaDefinitivoButtonEnabled() {
 
@@ -334,6 +341,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 			ContrattoComponentSession comp = (ContrattoComponentSession)createComponentSession();
 			comp.modificaConBulk(context.getUserContext(), contratto);
 			if (node != null){
+				contrattoService.updateProperties(contratto, node);
 				contrattoService.addAspect(node, "P:sigla_contratti_aspect:stato_definitivo");
 				contrattoService.addConsumerToEveryone(node);
 			}
@@ -454,6 +462,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		super.delete(actioncontext);
 		Node node = contrattoService.getFolderContratto((ContrattoBulk) getModel());
 		if (node != null){
+			contrattoService.updateProperties((ContrattoBulk) getModel(), node);
 			contrattoService.addAspect(node, "P:sigla_contratti_aspect:stato_annullato");
 			contrattoService.removeConsumerToEveryone(node);
 		}
@@ -568,7 +577,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 				} catch (FileNotFoundException e) {
 					throw handleException(e);
 				}catch (CmisConstraintException e) {
-					throw new ApplicationException("CMIS - File ["+allegato.getNome()+"] già presente. Inserimento non possibile!");
+					throw new ApplicationException("CMIS - File ["+allegato.getNome()+"] giï¿½ presente. Inserimento non possibile!");
 				}
 			}else if (allegato.isToBeUpdated()) {
 				try {
@@ -581,7 +590,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 				} catch (FileNotFoundException e) {
 					throw handleException(e);
 				}catch (CmisConstraintException e) {
-					throw new ApplicationException("CMIS - File ["+allegato.getNome()+"] già presente. Inserimento non possibile!");
+					throw new ApplicationException("CMIS - File ["+allegato.getNome()+"] giï¿½ presente. Inserimento non possibile!");
 				}
 			}
 		}
