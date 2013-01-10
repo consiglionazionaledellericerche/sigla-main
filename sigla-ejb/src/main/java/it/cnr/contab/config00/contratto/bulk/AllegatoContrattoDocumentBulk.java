@@ -166,7 +166,7 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTy
 	}
 	
 	public boolean isContentStreamPresent(){
-		return isNodePresent() && contentlength.compareTo(BigInteger.ZERO) == 1;
+		return isNodePresent() && contentlength != null && contentlength.compareTo(BigInteger.ZERO) == 1;
 	}
 
 	@CMISProperty(name="cmis:name")
