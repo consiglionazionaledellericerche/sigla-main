@@ -157,18 +157,35 @@ public class Blt_progettiHome extends BulkHome {
 		sql.addSQLClause(FindClause.AND,"BLT_AUTORIZZATI.TI_ITALIANO_ESTERO",SQLBuilder.NOT_EQUALS, NazioneBulk.ITALIA);
 		return sql;
 	}
-	public java.util.List findBltVisiteItaList( it.cnr.jada.UserContext userContext,Blt_progettiBulk progetto) throws IntrospectionException,PersistencyException 
+
+	public java.util.List findBltVisiteItaList( it.cnr.jada.UserContext userContext,Blt_visiteBulk visita) throws IntrospectionException,PersistencyException 
 	{
 		Blt_visiteHome visiteHome = (Blt_visiteHome)getHomeCache().getHome(Blt_visiteBulk.class );
-		SQLBuilder sql = getSQLBuilderBltVisiteItaList(visiteHome, progetto);
+		SQLBuilder sql = getSQLBuilderBltVisiteItaList(visiteHome, visita.getBltAutorizzatiDett().getBltAutorizzati().getBltProgetti());
+
+		sql.addTableToHeader("BLT_AUTORIZZATI_DETT");
+		sql.addSQLJoin("BLT_AUTORIZZATI_DETT.CD_ACCORDO", SQLBuilder.EQUALS, "BLT_VISITE.CD_ACCORDO");
+		sql.addSQLJoin("BLT_AUTORIZZATI_DETT.CD_PROGETTO", SQLBuilder.EQUALS, "BLT_VISITE.CD_PROGETTO");
+		sql.addSQLJoin("BLT_AUTORIZZATI_DETT.CD_TERZO", SQLBuilder.EQUALS, "BLT_VISITE.CD_TERZO");
+		sql.addSQLJoin("BLT_AUTORIZZATI_DETT.PG_AUTORIZZAZIONE", SQLBuilder.EQUALS, "BLT_VISITE.PG_AUTORIZZAZIONE");
+		sql.addSQLClause(FindClause.AND,"BLT_AUTORIZZATI_DETT.ANNO_VISITA",SQLBuilder.EQUALS, visita.getAnnoVisita());
+		
 		List l =  visiteHome.fetchAll(sql);
 		getHomeCache().fetchAll(userContext);
 		return l;
 	}
-	public java.util.List findBltVisiteStrList( it.cnr.jada.UserContext userContext,Blt_progettiBulk progetto ) throws IntrospectionException,PersistencyException 
+	public java.util.List findBltVisiteStrList( it.cnr.jada.UserContext userContext,Blt_visiteBulk visita) throws IntrospectionException,PersistencyException 
 	{
 		Blt_visiteHome visiteHome = (Blt_visiteHome)getHomeCache().getHome(Blt_visiteBulk.class );
-		SQLBuilder sql = getSQLBuilderBltVisiteStrList(visiteHome, progetto);
+		SQLBuilder sql = getSQLBuilderBltVisiteStrList(visiteHome, visita.getBltAutorizzatiDett().getBltAutorizzati().getBltProgetti());
+
+		sql.addTableToHeader("BLT_AUTORIZZATI_DETT");
+		sql.addSQLJoin("BLT_AUTORIZZATI_DETT.CD_ACCORDO", SQLBuilder.EQUALS, "BLT_VISITE.CD_ACCORDO");
+		sql.addSQLJoin("BLT_AUTORIZZATI_DETT.CD_PROGETTO", SQLBuilder.EQUALS, "BLT_VISITE.CD_PROGETTO");
+		sql.addSQLJoin("BLT_AUTORIZZATI_DETT.CD_TERZO", SQLBuilder.EQUALS, "BLT_VISITE.CD_TERZO");
+		sql.addSQLJoin("BLT_AUTORIZZATI_DETT.PG_AUTORIZZAZIONE", SQLBuilder.EQUALS, "BLT_VISITE.PG_AUTORIZZAZIONE");
+		sql.addSQLClause(FindClause.AND,"BLT_AUTORIZZATI_DETT.ANNO_VISITA",SQLBuilder.EQUALS, visita.getAnnoVisita());
+		
 		List l =  visiteHome.fetchAll(sql);
 		getHomeCache().fetchAll(userContext);
 		return l;

@@ -590,16 +590,14 @@ public class BltVisiteComponent extends CRUDComponent {
 		try {
 			Blt_progettiHome prgHome = (Blt_progettiHome) getHome( usercontext, Blt_progettiBulk.class );
 	
-			Blt_progettiBulk progetto = visita.getBltAutorizzatiDett().getBltAutorizzati().getBltProgetti();
-
 			BulkList<Blt_programma_visiteBulk> programmiVisiteList = getListaProgrammaVisite(usercontext, visita);
 			
 			BulkList<Blt_visiteBulk> visiteList = new BulkList<Blt_visiteBulk>();
 
 			if (visita.isVisitaItaliano())
-				visiteList.addAll(new BulkList(prgHome.findBltVisiteItaList(usercontext, progetto)));
+				visiteList.addAll(new BulkList(prgHome.findBltVisiteItaList(usercontext, visita)));
 			else
-				visiteList.addAll(new BulkList(prgHome.findBltVisiteStrList(usercontext, progetto)));
+				visiteList.addAll(new BulkList(prgHome.findBltVisiteStrList(usercontext, visita)));
 
 			Hashtable<Blt_programma_visiteBulk, BulkList<Blt_visiteBulk>> tableAssociazione = new Hashtable<Blt_programma_visiteBulk, BulkList<Blt_visiteBulk>>();
 
