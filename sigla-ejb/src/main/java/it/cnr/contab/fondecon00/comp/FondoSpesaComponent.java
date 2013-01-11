@@ -165,7 +165,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk)
 
 		//Verifica della tracciabilit‡ dei pagamenti
 		try {
-			verificaTracciabilit‡Pagamenti(userContext, spesa);
+			verificaTracciabilitaPagamenti(userContext, spesa);
 		} catch (RemoteException e) {
 			throw handleException(spesa, e);
 		}
@@ -691,7 +691,7 @@ public boolean verificaStatoEsercizio(
 	}
 
 }
-public void verificaTracciabilit‡Pagamenti(UserContext context,
+public void verificaTracciabilitaPagamenti(UserContext context,
 		Fondo_spesaBulk spesa) throws ComponentException, RemoteException {
 	Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
 	java.math.BigDecimal limite=sess.getIm01(context, new Integer(0), null,"LIMITE_UTILIZZO_CONTANTI", "LIMITE1");
