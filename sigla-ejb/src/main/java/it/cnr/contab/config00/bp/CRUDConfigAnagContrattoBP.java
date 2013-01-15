@@ -296,27 +296,8 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 			throw handleException(e);
 		}
 		try {
-			Node oldNode = contrattoService.getFolderContratto((ContrattoBulk)getModel());
-			if (((ContrattoBulk)getModel()).getDt_stipula().after(dataStipulaParametri) ||
-					((ContrattoBulk)getModel()).getDt_stipula().equals(dataStipulaParametri)){
-				if (!((ContrattoBulk)getModel()).isAllegatoContrattoPresent())
-					throw handleException(new ApplicationException("Bisogna allegare il file del Contratto!"));
-				else{
-					if (((ContrattoBulk)getModel()).isPassivo() || ((ContrattoBulk)getModel()).isAttivo_e_Passivo())
-						((ContrattoBulk)getModel()).setFl_pubblica_contratto(Boolean.TRUE);
-				}
-			}
 			ContrattoComponentSession comp = (ContrattoComponentSession)createComponentSession();
 			ContrattoBulk contratto = comp.salvaDefinitivo(context.getUserContext(), (ContrattoBulk)getModel());
-			if (oldNode != null){
-				changeProgressivoNodeRef(oldNode, contratto);
-				Node node = contrattoService.getFolderContratto(contratto);
-				if (node != null){
-					contrattoService.addAspect(node, "P:sigla_contratti_aspect:stato_definitivo");
-					if (contratto.isPassivo() || contratto.isAttivo_e_Passivo())
-						contrattoService.addConsumerToEveryone(node);
-				}
-			}
 			edit(context,contratto);
 		}catch(it.cnr.jada.comp.ComponentException ex){
 			throw handleException(ex);
@@ -351,20 +332,6 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		}catch(java.rmi.RemoteException ex){
 			throw handleException(ex);
 		}
-	}
-
-	private void changeProgressivoNodeRef(Node oldNode, ContrattoBulk contratto) {
-		contrattoService.updateProperties(contratto, oldNode);
-		ListNodePage<Node> children = contrattoService.getChildren(oldNode, null, null);
-		for (Node child : children) {
-			AllegatoContrattoDocumentBulk allegato = AllegatoContrattoDocumentBulk.construct(child);
-			allegato.setNome((String) child.getPropertyValue("sigla_contratti_attachment:original_name"));
-			allegato.setType(child.getTypeId());
-			allegato.setContrattoBulk(contratto);
-			contrattoService.updateProperties(allegato, child);
-			if (!allegato.getType().equals(AllegatoContrattoDocumentBulk.GENERICO))
-				costruisciAlberaturaAlternativa(allegato, child);
-		}		
 	}
 
 	public void controllaCancellazioneAssociazioneUo(ActionContext context,Ass_contratto_uoBulk ass_contratto_uo) throws it.cnr.jada.action.BusinessProcessException{
@@ -424,38 +391,6 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		super.initialize(actioncontext);
 	}
 
-	private CMISPath getCMISPath(AllegatoContrattoDocumentBulk allegato){
-		CMISPath cmisPath = SpringUtil.getBean("cmisPathContratti",CMISPath.class);
-		cmisPath = contrattoService.createFolderIfNotPresent(cmisPath, allegato.getContrattoBulk().getUnita_organizzativa().getCd_unita_organizzativa(), 
-				allegato.getContrattoBulk().getUnita_organizzativa().getDs_unita_organizzativa(), 
-				allegato.getContrattoBulk().getUnita_organizzativa().getDs_unita_organizzativa());
-		cmisPath = contrattoService.createFolderIfNotPresent(cmisPath,"Contratti","Contratti","Contratti");
-		cmisPath = contrattoService.createFolderIfNotPresent(cmisPath, allegato.getContrattoBulk().getEsercizio().toString(), 
-				"Esercizio :"+allegato.getContrattoBulk().getEsercizio().toString(), 
-				"Esercizio :"+allegato.getContrattoBulk().getEsercizio().toString());		
-		cmisPath = contrattoService.createFolderIfNotPresent(cmisPath, allegato.getContrattoBulk().getCMISFolderName(), 
-				null, 
-				null, allegato.getContrattoBulk());
-		return cmisPath;
-	}
-
-	private CMISPath getCMISPathAlternativo(AllegatoContrattoDocumentBulk allegato){
-		CMISPath cmisPath = SpringUtil.getBean("cmisPathContratti",CMISPath.class);
-		cmisPath = contrattoService.createFolderIfNotPresent(cmisPath, allegato.getContrattoBulk().getUnita_organizzativa().getCd_unita_organizzativa(), 
-				allegato.getContrattoBulk().getUnita_organizzativa().getDs_unita_organizzativa(), 
-				allegato.getContrattoBulk().getUnita_organizzativa().getDs_unita_organizzativa());
-		cmisPath = contrattoService.createFolderIfNotPresent(cmisPath,"Contratti","Contratti","Contratti");
-		cmisPath = contrattoService.createFolderIfNotPresent(cmisPath, 
-					(String)allegato.getContrattoBulk().getTi_natura_contabileKeys().get(allegato.getContrattoBulk().getNatura_contabile()), 
-				null, 
-				null);
-		cmisPath = contrattoService.createFolderIfNotPresent(cmisPath, 
-				(String)allegato.getTi_allegatoKeys().get(allegato.getType()), 
-			null, 
-			null);
-		return cmisPath;
-	}
-	
 	@Override
 	public void delete(ActionContext actioncontext)
 			throws BusinessProcessException {
@@ -562,15 +497,15 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 						node = contrattoService.storeSimpleDocument(allegato, 
 								new FileInputStream(allegato.getFile()),
 								allegato.getContentType(),
-								allegato.getDocumentName(), getCMISPath(allegato), null, true);
+								allegato.getDocumentName(), contrattoService.getCMISPath(allegato), null, true);
 					}else {
 						node = contrattoService.storeSimpleDocument(allegato, 
 								null,
 								allegato.getContentType(),
-								allegato.getDocumentName(), getCMISPath(allegato), null, true);
+								allegato.getDocumentName(), contrattoService.getCMISPath(allegato), null, true);
 					}
 					if (contratto.isDefinitivo() && !allegato.getType().equals(AllegatoContrattoDocumentBulk.GENERICO))
-						costruisciAlberaturaAlternativa(allegato, node);
+						contrattoService.costruisciAlberaturaAlternativa(allegato, node);
 					
 					allegato.setCrudStatus(OggettoBulk.NORMAL);
 					allegato.setNodeId(node.getId());
@@ -594,10 +529,5 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 				}
 			}
 		}
-	}
-
-	private void costruisciAlberaturaAlternativa(
-			AllegatoContrattoDocumentBulk allegato, Node node) {
-		contrattoService.copyNode(node, contrattoService.getNodeByPath(getCMISPathAlternativo(allegato)));
 	}
 }

@@ -5,9 +5,11 @@ import java.util.List;
 
 import it.cnr.cmisdl.model.Node;
 import it.cnr.cmisdl.model.paging.ListNodePage;
+import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.CMISService;
 import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.bulk.OggettoBulk;
 
 public class ContrattoService extends CMISService {
@@ -74,4 +76,54 @@ public class ContrattoService extends CMISService {
 		return result;
 	}
 	
+	public CMISPath getCMISPathAlternativo(AllegatoContrattoDocumentBulk allegato){
+		CMISPath cmisPath = SpringUtil.getBean("cmisPathContratti",CMISPath.class);
+		cmisPath = createFolderIfNotPresent(cmisPath, allegato.getContrattoBulk().getUnita_organizzativa().getCd_unita_organizzativa(), 
+				allegato.getContrattoBulk().getUnita_organizzativa().getDs_unita_organizzativa(), 
+				allegato.getContrattoBulk().getUnita_organizzativa().getDs_unita_organizzativa());
+		cmisPath = createFolderIfNotPresent(cmisPath,"Contratti","Contratti","Contratti");
+		cmisPath = createFolderIfNotPresent(cmisPath, 
+					(String)allegato.getContrattoBulk().getTi_natura_contabileKeys().get(allegato.getContrattoBulk().getNatura_contabile()), 
+				null, 
+				null);
+		cmisPath = createFolderIfNotPresent(cmisPath, 
+				(String)allegato.getTi_allegatoKeys().get(allegato.getType()), 
+			null, 
+			null);
+		return cmisPath;
+	}
+	
+	public CMISPath getCMISPath(AllegatoContrattoDocumentBulk allegato){
+		CMISPath cmisPath = SpringUtil.getBean("cmisPathContratti",CMISPath.class);
+		cmisPath = createFolderIfNotPresent(cmisPath, allegato.getContrattoBulk().getUnita_organizzativa().getCd_unita_organizzativa(), 
+				allegato.getContrattoBulk().getUnita_organizzativa().getDs_unita_organizzativa(), 
+				allegato.getContrattoBulk().getUnita_organizzativa().getDs_unita_organizzativa());
+		cmisPath = createFolderIfNotPresent(cmisPath,"Contratti","Contratti","Contratti");
+		cmisPath = createFolderIfNotPresent(cmisPath, allegato.getContrattoBulk().getEsercizio().toString(), 
+				"Esercizio :"+allegato.getContrattoBulk().getEsercizio().toString(), 
+				"Esercizio :"+allegato.getContrattoBulk().getEsercizio().toString());		
+		cmisPath = createFolderIfNotPresent(cmisPath, allegato.getContrattoBulk().getCMISFolderName(), 
+				null, 
+				null, allegato.getContrattoBulk());
+		return cmisPath;
+	}	
+	
+	public void costruisciAlberaturaAlternativa(
+			AllegatoContrattoDocumentBulk allegato, Node node) {
+		copyNode(node, getNodeByPath(getCMISPathAlternativo(allegato)));
+	}	
+	
+	public void changeProgressivoNodeRef(Node oldNode, ContrattoBulk contratto) {
+		updateProperties(contratto, oldNode);
+		ListNodePage<Node> children = getChildren(oldNode, null, null);
+		for (Node child : children) {
+			AllegatoContrattoDocumentBulk allegato = AllegatoContrattoDocumentBulk.construct(child);
+			allegato.setNome((String) child.getPropertyValue("sigla_contratti_attachment:original_name"));
+			allegato.setType(child.getTypeId());
+			allegato.setContrattoBulk(contratto);
+			updateProperties(allegato, child);
+			if (!allegato.getType().equals(AllegatoContrattoDocumentBulk.GENERICO))
+				costruisciAlberaturaAlternativa(allegato, child);
+		}		
+	}	
 }

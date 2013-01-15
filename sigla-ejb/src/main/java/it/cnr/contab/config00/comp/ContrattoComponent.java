@@ -10,10 +10,13 @@ import it.cnr.cmisdl.model.Node;
 import it.cnr.cmisdl.model.paging.ListNodePage;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
+import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.RicercaContrattoBulk;
+import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoHome;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
@@ -833,6 +836,10 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	**/
 	public ContrattoBulk salvaDefinitivo(UserContext userContext, ContrattoBulk contratto) throws ComponentException{
 		try {
+			ContrattoService contrattoService = SpringUtil.getBean("contrattoService",
+					ContrattoService.class);
+			Date dataStipulaParametri = ((Parametri_cnrBulk)getHome(userContext, Parametri_cnrBulk.class).
+					findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(userContext)))).getData_stipula_contratti();
 			lockBulk(userContext, contratto);
 			validaModificaConBulk(userContext, contratto);
 			try {
@@ -846,6 +853,16 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(contratto.getClass()).getFieldProperty("dt_inizio_validita").getLabel()); 
 			if(contratto.getDt_fine_validita() == null)
 			  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(contratto.getClass()).getFieldProperty("dt_fine_validita").getLabel()); 
+			Node oldNode = contrattoService.getFolderContratto(contratto);
+			if (contratto.getDt_stipula().after(dataStipulaParametri) ||
+					contratto.getDt_stipula().equals(dataStipulaParametri)){
+				if (!contratto.isAllegatoContrattoPresent())
+					throw handleException(new ApplicationException("Bisogna allegare il file del Contratto!"));
+				else{
+					if (contratto.isPassivo() || contratto.isAttivo_e_Passivo())
+						contratto.setFl_pubblica_contratto(Boolean.TRUE);
+				}
+			}
 			
 			ContrattoBulk contrattoClone = (ContrattoBulk)contratto.clone();
 			try {
@@ -877,7 +894,18 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			}
 			contrattoClone.setCrudStatus(OggettoBulk.TO_BE_CREATED);
 			contrattoClone.setStato(ContrattoBulk.STATO_DEFINITIVO);
-			return (ContrattoBulk)super.creaConBulk(userContext,contrattoClone);
+
+			ContrattoBulk contrattoDefinitivo = (ContrattoBulk)super.creaConBulk(userContext,contrattoClone);
+			if (oldNode != null){
+				contrattoService.changeProgressivoNodeRef(oldNode, contrattoDefinitivo);
+				Node node = contrattoService.getFolderContratto(contrattoDefinitivo);
+				if (node != null){
+					contrattoService.addAspect(node, "P:sigla_contratti_aspect:stato_definitivo");
+					if (contrattoDefinitivo.isPassivo() || contrattoDefinitivo.isAttivo_e_Passivo())
+						contrattoService.addConsumerToEveryone(node);
+				}
+			}
+			return contrattoDefinitivo;
 		} catch (it.cnr.jada.persistency.PersistencyException e) {
 		 throw handleException(contratto,e);
 		} catch (it.cnr.jada.bulk.OutdatedResourceException e) {
@@ -886,7 +914,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		 throw handleException(contratto,e);
 		}
 	}
-	
+
 	/**
 	 * inizializzaBulkPerStampa method comment.
 	 */
