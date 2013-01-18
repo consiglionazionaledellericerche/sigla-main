@@ -82,6 +82,7 @@ private void doAzzeraTipoTrattamento(ActionContext context, MinicarrieraBulk car
 	if (carriera!=null){
 		carriera.setTipiTrattamento(null);
 		carriera.setTipo_trattamento(null);
+		carriera.setTipoPrestazioneCompenso(null);
 		carriera.resetTassazioneSeparataData();
 		
 		//carriera.setFl_tassazione_separata(Boolean.FALSE);
@@ -111,6 +112,7 @@ public Forward doBlankSearchFind_percipiente(ActionContext context, Minicarriera
 		carriera.setTipo_rapporto(null);
 		carriera.setTipiTrattamento(null);
 		carriera.setTipo_trattamento(null);
+		carriera.setTipoPrestazioneCompenso(null);
 		carriera.setIncarichi_repertorio(null);
 		//carriera.setTi_istituz_commerc(carriera.TIPO_COMPENSO_ISTITUZIONALE);
 		//carriera.setFl_tassazione_separata(Boolean.FALSE);
@@ -344,11 +346,21 @@ public Forward doCreaCompenso(ActionContext context) {
 			throw new it.cnr.jada.comp.ApplicationException("Specificare il tipo di rapporto prima di creare il compenso!");
 		if (carriera.getTipo_trattamento() == null)
 			throw new it.cnr.jada.comp.ApplicationException("Specificare il tipo di trattamento prima di creare il compenso!");
+		if (carriera.getTipoPrestazioneCompenso() == null && carriera.isVisualizzaPrestazione())
+			throw new it.cnr.jada.comp.ApplicationException("Specificare il tipo di prestazione prima di creare il compenso!");
+		
 		try {
 			carriera.validaCorpo();
 		} catch (it.cnr.jada.bulk.ValidationException e) {
 			throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
 		}
+		/*
+		if (bp.isGestitePrestazioni(context.getUserContext()))
+			carriera.impostaVisualizzaPrestazione();
+		else
+			carriera.setVisualizzaPrestazione(false);
+		*/
+		carriera.impostaVisualizzaPrestazione();
 		
 		if (bp.isGestitiIncarichi(context.getUserContext()))
 			carriera.impostaVisualizzaIncarico();
@@ -357,9 +369,14 @@ public Forward doCreaCompenso(ActionContext context) {
 		
 		if(carriera.getPg_minicarriera()!=null && !(carriera.getPg_minicarriera().compareTo(new Long(0)) <0))
 		{
+			if(carriera.isVisualizzaPrestazione() && (carriera.getTipoPrestazioneCompenso() == null || carriera.getTipoPrestazioneCompenso().getCrudStatus()== OggettoBulk.UNDEFINED))
+			{
+				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Inserire il tipo di prestazione.");
+				return context.findDefaultForward();			
+			}
 			if(carriera.isVisualizzaIncarico() && (carriera.getIncarichi_repertorio() == null || carriera.getIncarichi_repertorio().getCrudStatus()== OggettoBulk.UNDEFINED))
 			{
-				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Inserire l'incarico.");
+				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Inserire il Contratto.");
 				return context.findDefaultForward();			
 			}	
 		}
@@ -979,10 +996,35 @@ public Forward doOnTipoTrattamentoChange(ActionContext context) {
 		    "Utente non abilitato all'utilizzo del trattamento selezionato!");
 		}	
 		
+		bp.findTipiPrestazioneCompenso(context);
+		//carriera.setTipoPrestazioneCompenso(null);
+		
 		PostTipoTrattamentoChange(context);
 		
 		return context.findDefaultForward();
 	} catch (Throwable ex) {
+		return handleException(context, ex);
+	}
+}
+public Forward doOnTipoPrestazioneCompensoChange(ActionContext context) {
+
+	try {
+		fillModel(context);
+		CRUDMinicarrieraBP bp = (CRUDMinicarrieraBP)context.getBusinessProcess();
+		MinicarrieraBulk carriera = (MinicarrieraBulk)bp.getModel();
+		if(carriera.getTipoPrestazioneCompenso()== null 
+		   || 
+		   (carriera.getTipoPrestazioneCompenso()!= null && !carriera.getTipoPrestazioneCompenso().getFl_incarico()))
+		{
+		carriera.setIncarichi_repertorio(null);
+		carriera.setVisualizzaIncarico(false);
+		}
+		else
+			carriera.setVisualizzaIncarico(true);
+		
+		return context.findDefaultForward();
+
+	}catch (Throwable ex) {
 		return handleException(context, ex);
 	}
 }
@@ -1170,6 +1212,15 @@ public void PostTipoRapportoChange(ActionContext context) {
 
 		MinicarrieraBulk carriera = (MinicarrieraBulk)bp.getModel();
 		carriera.resetTassazioneSeparataData();
+		/*
+		if (bp.isGestitePrestazioni(context.getUserContext())) 
+			carriera.impostaVisualizzaPrestazione();
+		else
+			carriera.setVisualizzaPrestazione(false);
+		carriera.setTipoPrestazioneCompenso(null);
+		*/
+		bp.findTipiPrestazioneCompenso(context);
+		carriera.impostaVisualizzaPrestazione();
 		
 		if (bp.isGestitiIncarichi(context.getUserContext())) 
 			carriera.impostaVisualizzaIncarico();
@@ -1188,6 +1239,13 @@ public void PostTipoTrattamentoChange(ActionContext context) {
 	carriera.resetTassazioneSeparataData();
 
 	try {
+		/*
+		if (bp.isGestitePrestazioni(context.getUserContext())) 
+			carriera.impostaVisualizzaPrestazione();
+		else
+			carriera.setVisualizzaPrestazione(false);
+		*/
+		carriera.impostaVisualizzaPrestazione();
 		if (bp.isGestitiIncarichi(context.getUserContext())) 
 			carriera.impostaVisualizzaIncarico();
 		else

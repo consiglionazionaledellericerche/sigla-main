@@ -90,6 +90,17 @@
 		<columnMapping
 			columnName="ESERCIZIO_LIMITE_REP"
 			propertyName="incarichi_repertorio_anno.esercizio_limite" />
+			
+		<columnMapping
+			columnName="ESERCIZIO_CONTRATTO"
+			propertyName="contratto.esercizio"/>
+		<columnMapping
+			columnName="STATO_CONTRATTO"
+			propertyName="contratto.stato"/>			
+		<columnMapping
+			columnName="PG_CONTRATTO"
+			propertyName="contratto.pg_contratto"/>
+			
 		<columnMapping
 			columnName="ESERCIZIO_BONUS"
 			propertyName="bonus.esercizio" />
@@ -99,6 +110,11 @@
 		<columnMapping
 			columnName="CD_TERZO_PIGNORATO"
 			propertyName="pignorato.cd_terzo"/>	
+
+		<columnMapping
+			columnName="TI_PRESTAZIONE"
+			propertyName="tipoPrestazioneCompenso.cd_ti_prestazione" />
+					
 	</defaultColumnMap>		
 
 	<persistentProperty
@@ -130,7 +146,11 @@
 	<persistentProperty
 		name="incarichi_repertorio_anno" />
 	<persistentProperty
-		name="bonus" />			
+		name="contratto" />		
+	<persistentProperty
+		name="bonus" />	
+	<persistentProperty
+		name="tipoPrestazioneCompenso" />		
 	<columnMap 
 		name="V_COMPENSO"
 		tableName="V_COMPENSO">

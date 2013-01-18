@@ -550,6 +550,12 @@
 	                name="oggetto"
 	                inputType="TEXT"
 	                inputSize="40" />
+	    </form>            
+	    <form name="searchtoolMin">
+	          <formFieldProperty
+	                name="esercizio" />
+	          <formFieldProperty
+	                name="pg_contratto" />
 	    </form>
         <formFieldProperty
                 name="esercizio"/>

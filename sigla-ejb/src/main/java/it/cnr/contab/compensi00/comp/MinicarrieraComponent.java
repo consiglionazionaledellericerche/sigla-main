@@ -38,6 +38,7 @@ import it.cnr.jada.action.Forward;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashMap;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.ICRUDMgr;
 import it.cnr.jada.persistency.IntrospectionException;
@@ -568,6 +569,22 @@ private void completaMinicarriera(
 		completaPercipiente(userContext, carriera);
 		carriera.setTipiTrattamento(findTipiTrattamento(userContext, carriera));
 		loadTipoTrattamento(userContext, carriera);
+		
+		//if (isGestitePrestazioni(userContext))
+		//{	
+			carriera.impostaVisualizzaPrestazione();
+		    //carriera.setTipiPrestazioneCompenso(getHome(userContext,Tipo_prestazione_compensoBulk.class).findAll());
+		    carriera.setTipiPrestazioneCompenso(findTipiPrestazioneCompenso(userContext,
+					carriera));
+		//}    
+		//else
+			//carriera.setVisualizzaPrestazione(false);
+		
+		if (isGestitiIncarichi(userContext))
+			carriera.impostaVisualizzaIncarico();
+		else
+			carriera.setVisualizzaPrestazione(false);
+		
 		getHomeCache(userContext).fetchAll(userContext);
 		carriera.setAliquotaCalcolata(
 							carriera.getFl_tassazione_separata() != null &&
@@ -1230,6 +1247,13 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,Oggetto
 	
 	if (!verificaStatoEsercizio(userContext, new it.cnr.contab.config00.esercizio.bulk.EsercizioBulk( carriera.getCd_cds(), ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio())))
          throw new it.cnr.jada.comp.ApplicationException("Impossibile inserire una minicarriera per un esercizio non aperto!");
+	/*
+	if (isGestitePrestazioni(userContext))
+		carriera.impostaVisualizzaPrestazione();
+	else
+		carriera.setVisualizzaPrestazione(false);
+    */
+	carriera.impostaVisualizzaPrestazione();
 	
 	if (isGestitiIncarichi(userContext))
 		carriera.impostaVisualizzaIncarico();
@@ -1282,12 +1306,17 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 	}
 
 	completaMinicarriera(userContext, carriera);
-
+/*
+	if (isGestitePrestazioni(userContext))
+		carriera.impostaVisualizzaPrestazione();
+	else
+		carriera.setVisualizzaPrestazione(false);
+	
 	if (isGestitiIncarichi(userContext))
 		carriera.impostaVisualizzaIncarico();
 	else
 		carriera.setVisualizzaIncarico(false);
-	
+*/	
 	if (carriera.getPgMinicarrieraPerClone() == null) {
 		Long pgTmp = assegnaProgressivoTemporaneo(userContext, carriera);
 		carriera.setPgMinicarrieraPerClone(pgTmp);
@@ -1969,11 +1998,17 @@ private void validaMinicarriera(
 
 		if (carriera.getDt_cessazione()== null)
 		{
+			//if(isGestitePrestazioni(userContext))
+			//{
+				carriera.impostaVisualizzaPrestazione();
+				if(carriera.isVisualizzaPrestazione() && (carriera.getTipoPrestazioneCompenso() == null || carriera.getTipoPrestazioneCompenso().getCrudStatus()== OggettoBulk.UNDEFINED))
+					throw new it.cnr.jada.comp.ApplicationException("Inserire il tipo di prestazione.");
+			//}
 			if(isGestitiIncarichi(userContext))
 			{
 				carriera.impostaVisualizzaIncarico();
 				if(carriera.isVisualizzaIncarico() && (carriera.getIncarichi_repertorio() == null || carriera.getIncarichi_repertorio().getCrudStatus()== OggettoBulk.UNDEFINED))
-					throw new it.cnr.jada.comp.ApplicationException("Inserire l'incarico.");
+					throw new it.cnr.jada.comp.ApplicationException("Inserire il Contratto.");
 			}	
 		}
 		
@@ -2219,5 +2254,37 @@ public MinicarrieraBulk completaIncarico(UserContext userContext, MinicarrieraBu
 		}
 	}
 	return carriera;
+}
+/*
+public boolean isGestitePrestazioni(UserContext userContext) throws ComponentException {
+	try {
+		String attivaPrestazione = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession")).getVal01(userContext, CNRUserContext.getEsercizio(userContext), "*", "GESTIONE_COMPENSI", "ATTIVA_PRESTAZIONE");
+		if (attivaPrestazione==null)
+			throw new ApplicationException("Configurazione CNR: non sono stati impostati i valori per GESTIONE_COMPENSI - ATTIVA_PRESTAZIONE");
+		if (attivaPrestazione.compareTo(new String("Y"))==0)
+		    return true;
+		else
+			return false;
+		
+	} catch (Throwable e) {
+		throw handleException(e);
+	}
+}
+*/
+public java.util.Collection findTipiPrestazioneCompenso(UserContext userContext,
+		MinicarrieraBulk carriera) throws ComponentException {
+
+	try {
+		if (carriera.getTerzo() == null)
+			return null;
+
+		it.cnr.contab.compensi00.tabrif.bulk.Tipo_prestazione_compensoHome home = (it.cnr.contab.compensi00.tabrif.bulk.Tipo_prestazione_compensoHome) getHome(
+				userContext,
+				it.cnr.contab.compensi00.tabrif.bulk.Tipo_prestazione_compensoBulk.class);
+		return home.findTipiPrestazioneCompensoDaMinicarriera(carriera.getCd_tipo_rapporto());
+
+	} catch (it.cnr.jada.persistency.PersistencyException ex) {
+		throw handleException(carriera, ex);
+	}
 }
 }

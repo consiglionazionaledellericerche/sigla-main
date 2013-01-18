@@ -69,6 +69,8 @@ public class Tipo_trattamentoBase extends Tipo_trattamentoKey implements Keyed {
 	// FL_PIGNORATO_OBBL CHAR(1) NOT NULL
 	private java.lang.Boolean fl_pignorato_obbl;
 	
+	// FL_PIGNORATO_OBBL CHAR(1) NOT NULL
+	private java.lang.Boolean fl_tipo_prestazione_obbl;	
 public Tipo_trattamentoBase() {
 	super();
 }
@@ -280,4 +282,12 @@ public java.lang.Boolean getFl_pignorato_obbl() {
 public void setFl_pignorato_obbl(java.lang.Boolean fl_pignorato_obbl) {
 	this.fl_pignorato_obbl = fl_pignorato_obbl;
 }
+public java.lang.Boolean getFl_tipo_prestazione_obbl() {
+	return fl_tipo_prestazione_obbl;
+}
+public void setFl_tipo_prestazione_obbl(
+		java.lang.Boolean fl_tipo_prestazione_obbl) {
+	this.fl_tipo_prestazione_obbl = fl_tipo_prestazione_obbl;
+}
+
 }

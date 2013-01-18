@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_ti_prestazione"
+		property="cd_ti_prestazione"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice Tipo prestazione" />
+	<fieldProperty
+		name="ds_ti_prestazione"
+		property="ds_ti_prestazione"
+		maxLength="200"
+		inputSize="200"
+		inputType="TEXT"
+		label="Descrizione"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="fl_incarico"
+		property="fl_incarico"
+		inputType="CHECKBOX"
+		enabledOnInsert="true"	
+		enabledOnEdit="true"	
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Tipo di prestazione con Incarico obbligatorio" />
+	<fieldProperty
+		name="fl_contratto"
+		property="fl_contratto"
+		inputType="CHECKBOX"
+		enabledOnInsert="true"	
+		enabledOnEdit="true"	
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Tipo di prestazione con Contrato obbligatorio" />
+	<fieldProperty
+		name="fl_controllo_fondi"
+		property="fl_controllo_fondi"
+		inputType="CHECKBOX"
+		enabledOnInsert="true"	
+		enabledOnEdit="true"	
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Tipo di prestazione che prevede il controllo fondi" />
+	
+	<formFieldProperty name="cd_ti_prestazione" />
+	<formFieldProperty name="ds_ti_prestazione" />
+	<formFieldProperty name="fl_incarico" />	
+	<formFieldProperty name="fl_contratto" />
+	<formFieldProperty name="fl_controllo_fondi" />
+			
+	<columnFieldProperty name="cd_ti_prestazione" />
+	<columnFieldProperty name="ds_ti_prestazione" />
+	<columnFieldProperty name="fl_incarico" />
+	<columnFieldProperty name="fl_contratto" />
+	<columnFieldProperty name="fl_controllo_fondi" />	
+
+	<findFieldProperty name="cd_ti_prestazione" />
+	<findFieldProperty name="ds_ti_prestazione" />
+	<findFieldProperty name="fl_incarico" />
+	<findFieldProperty name="fl_contratto" />
+	<findFieldProperty name="fl_controllo_fondi" />
+
+</bulkInfo>

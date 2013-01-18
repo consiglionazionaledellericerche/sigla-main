@@ -210,6 +210,15 @@
 		enabledOnSearch="false"
 		enabledOnEdit="true"
 		enabledOnInsert="true" />
+	<fieldProperty
+		name="fl_tipo_prestazione_obbl"
+		property="fl_tipo_prestazione_obbl"
+		inputType="CHECKBOX"
+		label="Tipo prestazione obbligatorio"
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		enabledOnInsert="true" />		
+		
 	<formFieldProperty
 		name="cd_trattamento"
 		command="doCaricaIntervalli" />
@@ -236,6 +245,7 @@
 	<formFieldProperty name="fl_incarico" />	
 	<formFieldProperty name="fl_visibile_a_tutti" />	
 	<formFieldProperty name="fl_pignorato_obbl" />
+	<formFieldProperty name="fl_tipo_prestazione_obbl" />
 
 	<columnFieldProperty name="cd_trattamento" />
 	<columnFieldProperty name="ds_ti_trattamento" />
@@ -258,7 +268,8 @@
 	<columnFieldProperty name="fl_detrazioni_altre" />				
 	<columnFieldProperty name="fl_incarico" />		
 	<columnFieldProperty name="fl_visibile_a_tutti" />	
-	<columnFieldProperty name="fl_pignorato_obbl" />					
+	<columnFieldProperty name="fl_pignorato_obbl" />	
+	<columnFieldProperty name="fl_tipo_prestazione_obbl" />					
 
 	<columnSet name="cd_ds_trattamento">
 		<columnFieldProperty name="cd_trattamento" />
@@ -288,5 +299,6 @@
 	<findFieldProperty name="fl_detrazioni_altre" />			
 	<findFieldProperty name="fl_incarico" />				
 	<findFieldProperty name="fl_visibile_a_tutti" />	
-	<findFieldProperty name="fl_pignorato_obbl" />		
+	<findFieldProperty name="fl_pignorato_obbl" />	
+	<findFieldProperty name="fl_tipo_prestazione_obbl" />		
 </bulkInfo>

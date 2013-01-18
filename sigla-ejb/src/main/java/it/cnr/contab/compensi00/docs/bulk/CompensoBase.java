@@ -349,7 +349,7 @@ public class CompensoBase extends CompensoKey implements Keyed {
 	// IM_NETTO_DA_TRATTENERE(15,2) NULL
 	private java.math.BigDecimal im_netto_da_trattenere;
 
-	// TI_PRESTAZIONE CHAR(1) NULL
+	// TI_PRESTAZIONE CHAR(5) NULL
 	private java.lang.String ti_prestazione;		
 
 	private java.lang.Integer esercizio_bonus;
@@ -359,6 +359,15 @@ public class CompensoBase extends CompensoKey implements Keyed {
 	
 	// CD_TERZO_PIGNORATO DECIMAL(8,0) NOT NULL
 	private java.lang.Integer cd_terzo_pignorato;
+	
+	// ESERCIZIO_CONTRATTO DECIMAL(4,0)
+	public java.lang.Integer esercizio_contratto;
+	
+	// STATO_CONTRATTO CHAR(1) NULL
+		private java.lang.String stato_contratto;		
+	
+	// PG_CONTRATTO DECIMAL(10,0)
+		public java.lang.Long pg_contratto;	
 	
 public CompensoBase() {
 	super();
@@ -1723,4 +1732,23 @@ public void setTi_istituz_commerc(java.lang.String ti_istituz_commerc) {
 	public void setCd_terzo_pignorato(java.lang.Integer cd_terzo_pignorato) {
 		this.cd_terzo_pignorato = cd_terzo_pignorato;
 	}
+	public java.lang.Integer getEsercizio_contratto() {
+		return esercizio_contratto;
+	}
+	public void setEsercizio_contratto(java.lang.Integer esercizio_contratto) {
+		this.esercizio_contratto = esercizio_contratto;
+	}
+	public java.lang.String getStato_contratto() {
+		return stato_contratto;
+	}
+	public void setStato_contratto(java.lang.String stato_contratto) {
+		this.stato_contratto = stato_contratto;
+	}
+	public java.lang.Long getPg_contratto() {
+		return pg_contratto;
+	}
+	public void setPg_contratto(java.lang.Long pg_contratto) {
+		this.pg_contratto = pg_contratto;
+	}
+	
 }

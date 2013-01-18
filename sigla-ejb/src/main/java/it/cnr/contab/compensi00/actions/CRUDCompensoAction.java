@@ -250,6 +250,8 @@ private void doAzzeraTipoTrattamento(ActionContext context, CompensoBulk compens
 	if (compenso!=null){
 		compenso.setTipiTrattamento(null);
 		compenso.setTipoTrattamento(null);
+		compenso.setTipiPrestazioneCompenso(null);
+		compenso.setTipoPrestazioneCompenso(null);
 		compenso.resetDatiLiquidazione();
 	}
 }
@@ -288,6 +290,7 @@ public Forward doBlankSearchFind_terzo(ActionContext context, CompensoBulk compe
 		compenso.setTipoRapporto(null);
 		compenso.setTipiTrattamento(null);
 		compenso.setTipoTrattamento(null);
+		compenso.setTipoPrestazioneCompenso(null);
 		compenso.setCodici_rapporti_inps(null);
 		compenso.setVisualizzaCodici_rapporti_inps(false);
 		compenso.setCodici_attivita_inps(null);
@@ -296,8 +299,8 @@ public Forward doBlankSearchFind_terzo(ActionContext context, CompensoBulk compe
 		compenso.setVisualizzaCodici_altra_forma_ass_inps(false);
 		compenso.setComune_inps(null);
 		compenso.setIncarichi_repertorio_anno(null);
-		compenso.setTi_prestazione(null);
-		//compenso.setIncarichi_oggetto(null);
+		compenso.setContratto(null);
+		compenso.setOggetto_contratto(null);
 		
 		compenso.setPignorato(null);
 		compenso.setVisualizzaPignorato(false);
@@ -606,9 +609,15 @@ public Forward doContabilizzaCompensoCOFI(ActionContext context){
 
 		if (bp.isIncaricoRequired(context, compenso) && (compenso.getIncarichi_repertorio_anno()==null || compenso.getIncarichi_repertorio_anno().getCrudStatus()== OggettoBulk.UNDEFINED))
 		{
-			setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Inserire l'incarico.");
+			setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Inserire il contratto.");
 			return context.findDefaultForward();			
-		}			
+		}
+		
+		if (compenso.isContrattoEnabled() && (compenso.getContratto()==null || compenso.getContratto().getCrudStatus()== OggettoBulk.UNDEFINED))
+		{
+			setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Inserire il contratto.");
+			return context.findDefaultForward();			
+		}
 		
 		if (!compenso.getFl_compenso_conguaglio())
 		{
@@ -911,6 +920,26 @@ public Forward doOnDtACompetenzaCogeChange(ActionContext context) {
 			throw e;
 		}
 		
+		int errorCodeTerzo = bp.validaTerzo(context, false);
+		if (errorCodeTerzo==6){
+			String msg = null;
+			switch (errorCodeTerzo) {
+				case 6: {
+					msg = "Il tipo rapporto selezionato non è più valido! I dati verranno persi. Vuoi continuare?";
+					break;
+				}
+			}
+				
+			OptionBP option = openConfirm(context, msg , OptionBP.CONFIRM_YES_NO,"doConfermaModificaDataCompetenzaCoge");
+			option.addAttribute("oldDataCompCoge", oldDataCompCoge);
+			option.addAttribute("errorCodeTerzo", new Integer(errorCodeTerzo));
+			return option;
+		}
+
+		((CompensoBulk)bp.getModel()).setStatoCompensoToEseguiCalcolo();
+		bp.findTipiRapporto(context);
+		bp.ripristinaSelezioneTipoRapporto();
+		
 			java.sql.Timestamp CompetenzaA = compenso.getDt_a_competenza_coge();
 			java.util.GregorianCalendar tsOdiernoGregorian = new GregorianCalendar();
 			tsOdiernoGregorian.setTime(new Date(CompetenzaA.getTime()));
@@ -1064,7 +1093,8 @@ public Forward doOnFlSenzaCalcoliChange(ActionContext context) {
 		doAzzeraTipoTrattamento(context, compenso);
 		bp.findTipiTrattamento(context);
 		compenso.setIncarichi_repertorio_anno(null);
-		//compenso.setIncarichi_oggetto(null);
+		compenso.setContratto(null);
+		compenso.setOggetto_contratto(null);
 		compenso.resetDatiFattura();
 
 		// Puo' valere TRUE solo se il compenso è senza calcoli
@@ -1288,7 +1318,8 @@ public Forward doOnTipoIstituzCommercChange(ActionContext context) {
 		doAzzeraTipoTrattamento(context, compenso);
 		bp.findTipiTrattamento(context);
 		compenso.setIncarichi_repertorio_anno(null);
-		//compenso.setIncarichi_oggetto(null);
+		compenso.setContratto(null);
+		compenso.setOggetto_contratto(null);
 		return context.findDefaultForward();
 
 	}catch (Throwable ex) {
@@ -1346,7 +1377,14 @@ public Forward doOnTipoTrattamentoChange(ActionContext context) {
 			throw new it.cnr.jada.comp.ApplicationException(
 		    "Utente non abilitato all'utilizzo del trattamento selezionato!");
 		}	
-	
+		
+		compenso.setTipoPrestazioneCompenso(null);
+		compenso.setIncarichi_repertorio_anno(null);
+		compenso.setImporto_utilizzato(null);
+		compenso.setContratto(null);
+		compenso.setOggetto_contratto(null);
+		bp.findTipiPrestazioneCompenso(context);
+		
 		if (compenso.getTipoTrattamento()!=null && compenso.getTipoTrattamento().getFl_pignorato_obbl())
 		{
 			compenso.setVisualizzaPignorato(true);
@@ -1359,8 +1397,41 @@ public Forward doOnTipoTrattamentoChange(ActionContext context) {
 		}
 		
 		bp.onTipoTrattamentoChange(context);
+		
 		((CompensoBulk)bp.getModel()).setStatoCompensoToEseguiCalcolo();
 
+		return context.findDefaultForward();
+
+	}catch (Throwable ex) {
+		return handleException(context, ex);
+	}
+}
+public Forward doOnTipoPrestazioneCompensoChange(ActionContext context) {
+
+	try {
+		fillModel(context);
+		CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);
+
+		CompensoBulk compenso = (CompensoBulk)bp.getModel();
+		if(compenso.getTipoPrestazioneCompenso()== null) 
+		{
+			compenso.setIncarichi_repertorio_anno(null);
+			compenso.setImporto_utilizzato(null);
+			compenso.setContratto(null);
+			compenso.setOggetto_contratto(null);
+		} 
+	    if (compenso.getTipoPrestazioneCompenso()!= null && !compenso.getTipoPrestazioneCompenso().getFl_incarico())
+		{
+		compenso.setIncarichi_repertorio_anno(null);
+		compenso.setImporto_utilizzato(null);
+		}
+		
+		if (compenso.getTipoPrestazioneCompenso()!= null && !compenso.getTipoPrestazioneCompenso().getFl_contratto())
+		{
+			compenso.setContratto(null);
+			compenso.setOggetto_contratto(null);
+		}
+		
 		return context.findDefaultForward();
 
 	}catch (Throwable ex) {
@@ -1677,7 +1748,7 @@ public Forward doBringBackSearchIncarichi_repertorio_anno(ActionContext context,
 				//compenso.setIncarichi_oggetto(incarico_anno.getIncarichi_repertorio().getOggetto());
 				compenso.setImporto_utilizzato(bp.prendiUtilizzato(context, compenso, incarico_anno));
 				if (compenso.getImporto_utilizzato().compareTo(compenso.getImporto_complessivo())>=0)
-					setMessage(context, FormBP.ERROR_MESSAGE, "Incarico già completamente utilizzato. Non sarà possibile completare la registrazione del compenso.");
+					setMessage(context, FormBP.ERROR_MESSAGE, "Contratto già completamente utilizzato. Non sarà possibile completare la registrazione del compenso.");
 
 				//bp.completaIncarico(context, compenso,incarico_anno);
 				bp.setDirty(true);
@@ -1703,8 +1774,11 @@ public void PostTipoRapportoChange(ActionContext context) {
         	
 		doAzzeraTipoTrattamento(context, compenso);
 		bp.findTipiTrattamento(context);
+		compenso.setTipiPrestazioneCompenso(null);
+		compenso.setTipoPrestazioneCompenso(null);
 		compenso.setIncarichi_repertorio_anno(null);
-		//compenso.setIncarichi_oggetto(null);
+		compenso.setContratto(null);
+		compenso.setOggetto_contratto(null);
 		//P.R. Reinizializzo l'oggetto perchè il metodo precedente ha risettato
 		//     il model
 		compenso = (CompensoBulk)bp.getModel();

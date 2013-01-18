@@ -873,6 +873,10 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			
 			loadPignorato(userContext, compenso);
 			
+			//compenso.setTipiPrestazioneCompenso(getHome(userContext,Tipo_prestazione_compensoBulk.class).findAll());
+			compenso.setTipiPrestazioneCompenso(findTipiPrestazioneCompenso(userContext,
+					compenso));
+			
 			loadDatiLiquidazione(userContext, compenso);
 			loadContributiERitenute(userContext, compenso);
 			loadMinicarriera(userContext, compenso);
@@ -1242,6 +1246,9 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
 			validaIncarico(userContext, compenso.getObbligazioneScadenzario(),
 					compenso);
+			
+			validaContratto(userContext, compenso);
+			
 			return compenso;
 		} catch (it.cnr.jada.persistency.PersistencyException ex) {
 			throw handleException(bulk, ex);
@@ -2051,6 +2058,23 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		}
 	}
 
+	public java.util.Collection findTipiPrestazioneCompenso(UserContext userContext,
+			CompensoBulk compenso) throws ComponentException {
+
+		try {
+			if (compenso.getTerzo() == null)
+				return null;
+
+			it.cnr.contab.compensi00.tabrif.bulk.Tipo_prestazione_compensoHome home = (it.cnr.contab.compensi00.tabrif.bulk.Tipo_prestazione_compensoHome) getHome(
+					userContext,
+					it.cnr.contab.compensi00.tabrif.bulk.Tipo_prestazione_compensoBulk.class);
+			return home.findTipiPrestazioneCompenso(compenso.getCd_tipo_rapporto());
+
+		} catch (it.cnr.jada.persistency.PersistencyException ex) {
+			throw handleException(compenso, ex);
+		}
+	}
+	
 	/**
 	 * Aggiornamento dell'obbligazione e della scadenza associata al compenso a
 	 * seguito di una richiesta di salvataggio (modifica/creazione) di un
@@ -2702,6 +2726,8 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			throw new it.cnr.jada.comp.ApplicationException(
 					"Il tipo rapporto specificato non è valido per il periodo definito per la/e rata/e selezionata/e!");
 		compenso.impostaTipoTrattamento(minicarriera.getTipo_trattamento());
+		
+		compenso.impostaTipoPrestazioneCompenso(minicarriera.getTipoPrestazioneCompenso()); 
 
 		// per settare i dati inps a seconda del trattamento
 		try {
@@ -3026,6 +3052,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
 			Tipo_rapportoHome home = (Tipo_rapportoHome) getHome(userContext,
 					Tipo_rapportoBulk.class);
+			
 			return home
 					.isTipoRapportoValido(compenso.getV_terzo(), compenso
 							.getCd_tipo_rapporto(), compenso
@@ -3305,7 +3332,20 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			throw handleException(ex);
 		}
 	}
+/*
+	private Tipo_prestazione_compensoBulk loadTipoPrestazione(UserContext userContext, CompensoBulk compenso)
+			throws ComponentException {
 
+		try {
+
+			Tipo_prestazione_compensoHome home = (Tipo_prestazione_compensoHome) getHome(userContext, Tipo_prestazione_compensoBulk.class);
+			return (Tipo_prestazione_compensoBulk) home.findByPrimaryKey(new Tipo_prestazione_compensoBulk(compenso
+					.getTi_prestazione()));
+		} catch (it.cnr.jada.persistency.PersistencyException ex) {
+			throw handleException(ex);
+		}
+	}
+*/	
 	/**
 	 * Viene caricata da db la REGIONE di appartenenza del terzo associato
 	 * all'Unita Organizzativa di scrivania
@@ -3664,6 +3704,8 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		validaIncarico(userContext, compenso.getObbligazioneScadenzario(),
 				compenso);
 
+		validaContratto(userContext, compenso);
+		
 		return compenso;
 
 	}
@@ -5004,7 +5046,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 							.getEsercizio_limite().compareTo(
 									obblig.getEsercizio_originale()) != 0)
 				throw new it.cnr.jada.comp.ApplicationException(
-						"La tipologia dell'impegno (competenza/residuo) non è coerente con la riga dell'incarico prescelta.");
+						"La tipologia dell'impegno (competenza/residuo) non è coerente con la riga del contratto prescelta.");
 
 			validaTerzoObbligazione(userContext, compenso, obblig);
 		}
@@ -5300,7 +5342,12 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		if (checkModPag && compenso.getBanca() != null
 				&& compenso.getBanca().getFl_cancellato())
 			return 13;
-
+		// tipo prestazione assente
+		if (//isGestitePrestazioni(userContext) &&
+				compenso.getTipoPrestazioneCompenso() == null 
+				&& compenso.isPrestazioneCompensoEnabled())
+			return 14;
+				
 		// pignorato assente
 		if (compenso.isVisualizzaPignorato()
 				&& compenso.getCd_terzo_pignorato() == null)
@@ -5812,6 +5859,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		}
 	}
 
+	
 	public SQLBuilder selectIncarichi_repertorio_annoByClause(
 			UserContext userContext, CompensoBulk compenso,
 			Incarichi_repertorio_annoBulk repertorio, CompoundFindClause clauses)
@@ -5823,6 +5871,9 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		if (compenso.getTerzo() == null)
 			throw new it.cnr.jada.comp.ApplicationException(
 					"Ricercare prima il codice del Terzo");
+		if (compenso.getCd_tipo_rapporto() == null)
+			throw new it.cnr.jada.comp.ApplicationException(
+					"Inserire prima il Tipo Rapporto");		
 
 		SQLBuilder sql = getHome(userContext,
 				Incarichi_repertorio_annoBulk.class).createSQLBuilder();
@@ -5953,6 +6004,96 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		return sql;
 	}
 
+	public SQLBuilder selectContrattoByClause(
+			UserContext userContext, CompensoBulk compenso,
+			ContrattoBulk contratto, CompoundFindClause clauses)
+			throws ComponentException,
+			it.cnr.jada.persistency.PersistencyException {
+		if (compenso.getCd_terzo() == null)
+			throw new it.cnr.jada.comp.ApplicationException(
+					"Inserire prima il codice del Terzo");
+		if (compenso.getTerzo() == null)
+			throw new it.cnr.jada.comp.ApplicationException(
+					"Ricercare prima il codice del Terzo");
+
+		SQLBuilder sql = getHome(userContext,
+				ContrattoBulk.class).createSQLBuilder();
+		// getHomeCache(userContext).fetchAll(userContext);
+		if (clauses != null)
+			sql.addClause(clauses);
+
+		SQLBuilder sqlUoExists = getHome(userContext, Ass_contratto_uoBulk.class)
+				.createSQLBuilder();
+		sqlUoExists.addSQLJoin("ASS_CONTRATTO_UO.ESERCIZIO",
+				"CONTRATTO.ESERCIZIO");
+		sqlUoExists.addSQLJoin("ASS_CONTRATTO_UO.STATO_CONTRATTO",
+				"CONTRATTO.STATO");
+		sqlUoExists.addSQLJoin("ASS_CONTRATTO_UO.PG_CONTRATTO",
+				"CONTRATTO.PG_CONTRATTO");
+		sqlUoExists.addSQLClause("AND",
+				"ASS_CONTRATTO_UO.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS,
+				compenso.getCd_unita_organizzativa());
+
+		sql.openParenthesis(FindClause.AND);
+		sql.openParenthesis(FindClause.OR);
+		sql.addSQLClause("AND", "CONTRATTO.CD_UNITA_ORGANIZZATIVA",
+				SQLBuilder.EQUALS, compenso.getCd_unita_organizzativa());
+		sql.closeParenthesis();
+		sql.addSQLExistsClause(FindClause.OR, sqlUoExists);
+		sql.closeParenthesis();
+
+		sql.addSQLClause("AND", "CONTRATTO.STATO",
+				SQLBuilder.EQUALS, ContrattoBulk.STATO_DEFINITIVO);
+
+		sql.addSQLClause("AND", "CONTRATTO.FIG_GIUR_EST",
+					SQLBuilder.EQUALS, compenso.getCd_terzo());
+		
+		sql.openParenthesis(FindClause.AND);
+		sql.openParenthesis(FindClause.OR);
+		sql.addSQLClause("AND", "CONTRATTO.NATURA_CONTABILE",
+				SQLBuilder.EQUALS, ContrattoBulk.NATURA_CONTABILE_ATTIVO_E_PASSIVO);
+		sql.closeParenthesis();
+		sql.openParenthesis("OR");
+		sql.addSQLClause("AND", "CONTRATTO.NATURA_CONTABILE",
+				SQLBuilder.EQUALS, ContrattoBulk.NATURA_CONTABILE_PASSIVO);
+		sql.closeParenthesis();
+		sql.closeParenthesis();
+		
+/*
+		if (compenso.isApertoDaMinicarriera()
+				&& compenso.getMinicarriera().getContratto() != null) {
+			sql.addSQLClause("AND", "CONTRATTO.ESERCIZIO",
+					SQLBuilder.EQUALS, compenso.getMinicarriera()
+							.getContratto().getEsercizio());
+			sql.addSQLClause("AND", "CONTRATTO.STATO_CONTRATTO",
+					SQLBuilder.EQUALS, compenso.getMinicarriera()
+							.getContratto().getStato_contratto());
+			sql.addSQLClause("AND", "CONTRATTO.PG_CONTRATTO",
+					SQLBuilder.EQUALS, compenso.getMinicarriera()
+							.getContratto().getPg_contratto());
+		}
+*/
+		sql.addSQLClause("AND", "CONTRATTO.DT_INIZIO_VALIDITA",
+				SQLBuilder.LESS_EQUALS, compenso.getDt_da_competenza_coge());
+		
+		sql.openParenthesis("AND");
+		
+		sql.openParenthesis("");
+		sql.addSQLClause("AND", "CONTRATTO.DT_FINE_VALIDITA",
+				SQLBuilder.GREATER_EQUALS, compenso.getDt_a_competenza_coge());
+		sql.closeParenthesis();
+		sql.openParenthesis("OR");
+		sql.addSQLClause("AND", "CONTRATTO.DT_PROROGA",
+				SQLBuilder.ISNOTNULL, null);
+		sql.addSQLClause("AND", "CONTRATTO.DT_PROROGA",
+				SQLBuilder.GREATER_EQUALS, compenso.getDt_a_competenza_coge());
+		sql.closeParenthesis();
+		
+		sql.closeParenthesis();
+
+		return sql;
+	}
+
 	private boolean isGestitiIncarichi(UserContext userContext,
 			CompensoBulk compenso) throws ComponentException {
 		try {
@@ -6012,32 +6153,69 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		if (compenso.getIncarichi_repertorio_anno() == null
 				|| compenso.getIncarichi_repertorio_anno().getCrudStatus() == OggettoBulk.UNDEFINED)
 			throw new it.cnr.jada.comp.ApplicationException(
-					"Inserire l'incarico.");
+					"Inserire il contratto.");
+		
+		//se sono state cambiate le date di competenza controllo la coerenza con le date dell'incarico
+		if (compenso.getIncarichi_repertorio_anno()!= null
+			&&
+			 (
+				(compenso.getDt_da_competenza_coge().compareTo(compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_inizio_validita()) < 0)
+				||
+				(compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_proroga()== null &&
+				 compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_proroga_pagam()== null &&
+				 compenso.getDt_a_competenza_coge().compareTo(compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_fine_validita()) > 0)
+		     	||
+			    (compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_proroga_pagam()== null &&
+	    		 compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_proroga()!= null && 
+	    		 (compenso.getDt_a_competenza_coge().compareTo(compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_proroga()) > 0))
+	     	    ||
+		        (compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_proroga()== null && 
+		         compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_proroga_pagam()!= null && 
+		        (compenso.getDt_a_competenza_coge().compareTo(compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_proroga_pagam()) > 0))
+		        ||
+		        (compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_proroga()!= null && 
+		         compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_proroga_pagam()!= null &&
+		         compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_proroga_pagam().compareTo(compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_proroga()) > 0 &&
+		        (compenso.getDt_a_competenza_coge().compareTo(compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_proroga_pagam()) > 0))
+		        ||
+		        (compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_proroga()!= null && 
+		         compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_proroga_pagam()!= null &&
+		         compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_proroga().compareTo(compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_proroga_pagam()) > 0 &&
+		        (compenso.getDt_a_competenza_coge().compareTo(compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_proroga()) > 0))
+		      )
+		    )
+			throw new it.cnr.jada.comp.ApplicationException(
+					"La competenza del compenso non è interna alle date di validità del contratto. ");
 
-		Obbligazione_scadenzarioHome obblHome = (Obbligazione_scadenzarioHome) getHome(
-				userContext, Obbligazione_scadenzarioBulk.class);
-		Iterator listaScad_voce;
-		try {
-			listaScad_voce = obblHome.findObbligazione_scad_voceList(
-					userContext, scadenza).iterator();
-
-			for (Iterator x = listaScad_voce; x.hasNext();) {
-				Obbligazione_scad_voceBulk dett = (Obbligazione_scad_voceBulk) x
-						.next();
-				getHomeCache(userContext).fetchAll(userContext);
-				WorkpackageBulk linea_att = dett.getLinea_attivita();
-				if (!linea_att.getNatura().getTipo().equals(
-						compenso.getIncarichi_repertorio_anno()
-								.getIncarichi_repertorio()
-								.getIncarichi_procedura().getTipo_natura()))
-					throw new it.cnr.jada.comp.ApplicationException(
-							"La tipologia della natura dell'impegno è diversa da quella dell'incarico prescelto.");
+		//le borse e gli assegni possono andare su più fondi
+		if (compenso.getTipoPrestazioneCompenso().getFl_controllo_fondi())
+		{
+			Obbligazione_scadenzarioHome obblHome = (Obbligazione_scadenzarioHome) getHome(
+					userContext, Obbligazione_scadenzarioBulk.class);
+			Iterator listaScad_voce;
+			try {
+				listaScad_voce = obblHome.findObbligazione_scad_voceList(
+						userContext, scadenza).iterator();
+	
+				for (Iterator x = listaScad_voce; x.hasNext();) {
+					Obbligazione_scad_voceBulk dett = (Obbligazione_scad_voceBulk) x
+							.next();
+					getHomeCache(userContext).fetchAll(userContext);
+					WorkpackageBulk linea_att = dett.getLinea_attivita();
+					if (!linea_att.getNatura().getTipo().equals(
+							compenso.getIncarichi_repertorio_anno()
+									.getIncarichi_repertorio()
+									.getIncarichi_procedura().getTipo_natura()))
+						throw new it.cnr.jada.comp.ApplicationException(
+								"La tipologia della natura dell'impegno è diversa da quella del contratto prescelto.");
+				}
+			} catch (it.cnr.jada.persistency.PersistencyException e) {
+				throw handleException(e);
+			} catch (it.cnr.jada.persistency.IntrospectionException e) {
+				throw handleException(e);
 			}
-		} catch (it.cnr.jada.persistency.PersistencyException e) {
-			throw handleException(e);
-		} catch (it.cnr.jada.persistency.IntrospectionException e) {
-			throw handleException(e);
-		}
+		}		
+		
 		try {
 			Incarichi_repertorio_annoBulk incarichi_repertorio_annoBulk = (Incarichi_repertorio_annoBulk) getHome(
 					userContext, Incarichi_repertorio_annoBulk.class)
@@ -6058,11 +6236,40 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 						"Il totale del compenso supera il limite ancora esistente ("
 								+ new it.cnr.contab.util.EuroFormat()
 										.format(differenza.abs())
-								+ ") per l'incarico prescelto.");
+								+ ") per il contratto prescelto.");
 
 		} catch (PersistencyException e) {
 			throw handleException(e);
 		}
+	}
+	private void validaContratto(UserContext userContext, OggettoBulk bulk)
+			throws ComponentException {
+
+		CompensoBulk compenso = (CompensoBulk) bulk;
+
+		if (compenso == null || !compenso.isContrattoEnabled())         
+			return;
+
+		if (compenso.getContratto() == null
+				|| compenso.getContratto().getCrudStatus() == OggettoBulk.UNDEFINED)
+			throw new it.cnr.jada.comp.ApplicationException(
+					"Inserire il contratto.");
+		
+		//se sono state cambiate le date di competenza controllo la coerenza con le date del contratto
+		if (compenso.getContratto()!= null
+			&&
+			 (
+				(compenso.getDt_da_competenza_coge().compareTo(compenso.getContratto().getDt_inizio_validita()) < 0)
+				||
+				(compenso.getContratto().getDt_proroga()== null &&
+				 compenso.getDt_a_competenza_coge().compareTo(compenso.getContratto().getDt_fine_validita()) > 0)
+		     	||
+		     	(compenso.getContratto().getDt_proroga()!= null &&
+				 compenso.getDt_a_competenza_coge().compareTo(compenso.getContratto().getDt_proroga()) > 0)
+		     	)
+		    )
+			throw new it.cnr.jada.comp.ApplicationException(
+					"La competenza del compenso non è interna alle date di validità del contratto. ");
 	}
 
 	public BigDecimal prendiUtilizzato(UserContext userContext,
@@ -6451,6 +6658,20 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		
 		return sql;
 	}	
+/*	
+	private boolean isGestitePrestazioni(UserContext userContext) throws ComponentException {
+		try {
+			String attivaPrestazione = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession")).getVal01(userContext, CNRUserContext.getEsercizio(userContext), "*", "GESTIONE_COMPENSI", "ATTIVA_PRESTAZIONE");
+			if (attivaPrestazione.compareTo(new String("Y"))==0)
+			    return true;
+			else
+				return false;
+			
+		} catch (Throwable e) {
+			throw handleException(e);
+		}
+	}
+	*/
 	private void loadPignorato(UserContext userContext,
 			CompensoBulk compenso) throws ComponentException {
 		try {  
@@ -6467,6 +6688,19 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			}
 		} catch (it.cnr.jada.persistency.PersistencyException ex) {
 			throw handleException(ex);
+		}
+	}
+	
+	private boolean isGestitePrestazioni(UserContext userContext) throws ComponentException {
+		try {
+			String attivaPrestazione = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession")).getVal01(userContext, CNRUserContext.getEsercizio(userContext), "*", "GESTIONE_COMPENSI", "ATTIVA_PRESTAZIONE");
+			if (attivaPrestazione.compareTo(new String("Y"))==0)
+			    return true;
+			else
+				return false;
+			
+		} catch (Throwable e) {
+			throw handleException(e);
 		}
 	}
 }

@@ -48,11 +48,38 @@
 		<td width="25%"><% bp.getController().writeFormLabel(out,"tipo_trattamento");%></td>
 		<td width="75%"><% bp.getController().writeFormInput(out,null,"tipo_trattamento",false,null,"onChange=\"submitForm('doOnTipoTrattamentoChange')\""); %></td>
 	</tr>
-	<% if (carriera.isVisualizzaIncarico()) { %>
+    <% if (carriera.isVisualizzaPrestazione()) { %>
 	<tr>
-  		<td><% bp.getController().writeFormLabel(out,"incarichi_repertorio"); %></td>
+		<td width="25%"><% bp.getController().writeFormLabel(out,"tipoPrestazioneCompenso");%></td>
+		<td width="75%"><% bp.getController().writeFormInput(out,null,"tipoPrestazioneCompenso",false,null,"onChange=\"submitForm('doOnTipoPrestazioneCompensoChange')\""); %></td>
+	</tr>
+	<% } %>	
+	
+	
+	<% if (carriera.isVisualizzaIncarico()) { %>
+	<tr><td>
+	<div class="Group" style="width:100%">
+	<fieldset class="fieldset">
+
+		<% if (carriera!=null && carriera.getCd_tipo_rapporto()!=null && carriera.getCd_tipo_rapporto().equals(new String ("BORS"))) { %>
+		<legend class="GroupLabel">Borsa di studio</legend>
+		<% } else { %>
+			<% if (carriera!=null && carriera.getCd_tipo_rapporto()!=null && carriera.getCd_tipo_rapporto().equals(new String ("ASS"))) { %>
+			<legend class="GroupLabel">Assegno di ricerca</legend>
+			<% } else {%>
+				<legend class="GroupLabel">Incarico</legend>
+			<% } %>
+		<% } %>
+
+	<table width="100%">
+	<tr>
+  		<td ><% bp.getController().writeFormLabel(out,"incarichi_repertorio"); %></td>
  		<td colspan="3"><% bp.getController().writeFormInput(out,"incarichi_repertorio"); %></td>
     </tr>
+    </table>
+	</fieldset>
+	</div>
+	</td></tr>
     <% } %>
 </table>
 </div>

@@ -12,8 +12,10 @@ import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
+import it.cnr.contab.compensi00.tabrif.bulk.Tipo_prestazione_compensoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipologia_rischioBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
@@ -68,6 +70,9 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	private java.math.BigDecimal importo_iniziale;
 	private java.math.BigDecimal importo_complessivo;
 	private java.math.BigDecimal importo_utilizzato;
+	
+	private ContrattoBulk contratto;
+	private java.lang.String oggetto_contratto;
 
 	private PrimaryKeyHashMap deferredSaldi = new PrimaryKeyHashMap();
 	private PrimaryKeyHashMap relationsDocContForSaldi = null;
@@ -111,10 +116,11 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	public final static java.util.Dictionary TIPI_COMPENSO;
 
 	// Tipo prestazione
+	/*
 	public final static String TIPO_PRESTAZIONE_SERVIZI = "C";
 	public final static String TIPO_PRESTAZIONE_COLLABORAZIONE_IND = "I";
 	public final static Dictionary TIPI_PRESTAZIONE;
-
+    */
 	static {
 		STATO_FONDO_ECO = new it.cnr.jada.util.OrderedHashtable();
 		STATO_FONDO_ECO.put(LIBERO_FONDO_ECO, "Non usare fondo economale");
@@ -140,12 +146,13 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		TIPI_COMPENSO = new it.cnr.jada.util.OrderedHashtable();
 		TIPI_COMPENSO.put(TIPO_COMPENSO_COMMERCIALE, "Commerciale");
 		TIPI_COMPENSO.put(TIPO_COMPENSO_ISTITUZIONALE, "Istituzionale");
-
+        /*
 		TIPI_PRESTAZIONE = new it.cnr.jada.util.OrderedHashtable();
 		TIPI_PRESTAZIONE
 				.put(TIPO_PRESTAZIONE_SERVIZI, "Prestazione di Servizi");
 		TIPI_PRESTAZIONE.put(TIPO_PRESTAZIONE_COLLABORAZIONE_IND,
 				"Incarico di collaborazione individuale");
+        */
 	}
 
 	// Stato compenso - mi serve per gestire i bottoni di Esegui Calcolo,
@@ -185,6 +192,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	private BonusBulk bonus;
 	private it.cnr.contab.anagraf00.core.bulk.TerzoBulk pignorato = new it.cnr.contab.anagraf00.core.bulk.TerzoBulk();
 	private boolean visualizzaPignorato = false;
+	private Tipo_prestazione_compensoBulk tipoPrestazioneCompenso;
+	private java.util.Collection tipiPrestazioneCompenso;
 
 	public CompensoBulk() {
 		super();
@@ -287,6 +296,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 
 		setTipiTrattamento(null);
 		setTipoTrattamento(null);
+		setTipoPrestazioneCompenso(null);
 		resetDatiLiquidazione();
 	}
 
@@ -1275,7 +1285,14 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		getTipiTrattamento().add(newTipoTrattamento);
 		setTipoTrattamento(newTipoTrattamento);
 	}
+	
+	public void impostaTipoPrestazioneCompenso(Tipo_prestazione_compensoBulk newTipoPrestazioneCompenso) {
 
+		setTipiPrestazioneCompenso(new java.util.Vector());
+		getTipiPrestazioneCompenso().add(newTipoPrestazioneCompenso);
+		setTipoPrestazioneCompenso(newTipoPrestazioneCompenso);
+	}
+	
 	public static java.sql.Timestamp incrementaData(java.sql.Timestamp data) {
 
 		java.util.GregorianCalendar gc = (java.util.GregorianCalendar) java.util.GregorianCalendar
@@ -1819,6 +1836,10 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		return isROTerzo();
 	}
 
+	public boolean isROTipoPrestazioneCompenso() {
+
+		return isROTerzo();
+	}
 	/**
 	 * Insert the method's description here. Creation date: (25/02/2002
 	 * 11.24.00)
@@ -2877,6 +2898,12 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		if (getTipoTrattamento() == null)
 			throw new it.cnr.jada.comp.ApplicationException(
 					"Inserire il tipo trattamento");
+		
+		// Controllo se ho inserito il tipo prestazione
+		/*
+		if (getTipoPrestazioneCompenso() == null && isPrestazioneCompensoEnabled())
+			throw new it.cnr.jada.comp.ApplicationException(
+					"Inserire il tipo prestazione");*/
 	}
 
 	public void validaTestata() throws it.cnr.jada.comp.ApplicationException,
@@ -3054,18 +3081,48 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	public boolean isIncaricoEnabled() {
 		if (this.isDaMissione()
 				|| this.isSenzaCalcoli()
+				|| this.getTipoPrestazioneCompenso()==null
+				/*
 				|| (this.getTipoTrattamento() != null
 						&& this.getTipoTrattamento().getFl_incarico() != null && !this
 						.getTipoTrattamento().getFl_incarico())
+				*/		
+				/*		
 				|| (this.getTerzo() != null
 						&& this.getTerzo().isStudioAssociato() && (this
 						.getTi_prestazione() == null || this
 						.getTi_prestazione().equals(
-								CompensoBulk.TIPO_PRESTAZIONE_SERVIZI))))
+								CompensoBulk.TIPO_PRESTAZIONE_SERVIZI)))
+				*/
+				|| (this.isPrestazioneCompensoEnabled() 
+					&& this.getTipoPrestazioneCompenso()!=null
+					&& this.getTipoPrestazioneCompenso().getFl_incarico() != null 
+					&& !this.getTipoPrestazioneCompenso().getFl_incarico()))
 			return false;
 		return true;
 	}
 
+	public boolean isContrattoEnabled() {
+		if (this.isDaMissione()
+				|| this.isSenzaCalcoli()
+				|| this.getTipoPrestazioneCompenso()==null
+				|| (this.isPrestazioneCompensoEnabled() 
+					&& this.getTipoPrestazioneCompenso()!=null
+					&& this.getTipoPrestazioneCompenso().getFl_contratto() != null 
+					&& !this.getTipoPrestazioneCompenso().getFl_contratto()))
+			return false;
+		return true;
+	}
+	public boolean isPrestazioneCompensoEnabled() {
+		if (this.isDaMissione()
+				|| this.isSenzaCalcoli()
+				|| (this.getTipoTrattamento() != null
+						&& this.getTipoTrattamento().getFl_tipo_prestazione_obbl() != null && !this
+						.getTipoTrattamento().getFl_tipo_prestazione_obbl()))
+			return false;
+		return true;
+	}
+	
 	public java.lang.String getIncarichi_oggetto() {
 		if (this.getIncarichi_repertorio_anno() == null
 				|| this.getIncarichi_repertorio_anno()
@@ -3134,11 +3191,11 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	public boolean isROIm_netto_da_trattenere() {
 		return (isDaConguaglio() || isDaMissione());
 	}
-
+/*
 	public java.util.Dictionary getTi_prestazioneKeys() {
 		return TIPI_PRESTAZIONE;
 	}
-
+*/
 	public BonusBulk getBonus() {
 		return bonus;
 	}
@@ -3180,6 +3237,24 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 			return null;
 		return getUnitaOrganizzativa().getDs_unita_organizzativa();
 	}
+	public Tipo_prestazione_compensoBulk getTipoPrestazioneCompenso() {
+		return tipoPrestazioneCompenso;
+	}
+
+	public void setTipoPrestazioneCompenso(
+			Tipo_prestazione_compensoBulk tipoPrestazioneCompenso) {
+		this.tipoPrestazioneCompenso = tipoPrestazioneCompenso;
+	}
+	public java.lang.String getTi_prestazione() {
+		Tipo_prestazione_compensoBulk tipoPrestazioneCompenso = this
+				.getTipoPrestazioneCompenso();
+		if (tipoPrestazioneCompenso == null)
+			return null;
+		return tipoPrestazioneCompenso.getCd_ti_prestazione();
+	}
+	public void setTi_prestazione(java.lang.String ti_prestazione) {
+		this.getTipoPrestazioneCompenso().setCd_ti_prestazione(ti_prestazione);
+	}
 	
 	public it.cnr.contab.anagraf00.core.bulk.TerzoBulk getPignorato() {
 		return pignorato;
@@ -3212,4 +3287,63 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	public void setVisualizzaPignorato(boolean visualizzaPignorato) {
 		this.visualizzaPignorato = visualizzaPignorato;
 	}
+	
+	public ContrattoBulk getContratto() {
+		return contratto;
+	}
+
+	public void setContratto(
+			ContrattoBulk contratto) {
+		this.contratto = contratto;
+	}
+
+	public java.lang.Integer getEsercizio_contratto() {
+		if (getContratto() == null)
+			return null;
+		return getContratto().getEsercizio();
+	}
+
+	public void setEsercizio_contratto(java.lang.Integer esercizio_contratto) {
+		this.getContratto().setEsercizio(esercizio_contratto);
+	}
+	
+	public java.lang.String getStato_contratto() {
+		if (getContratto() == null)
+			return null;
+		return getContratto().getStato();
+	}
+
+	public void setStato_contratto(java.lang.String stato_contratto) {
+		this.getContratto().setStato(stato_contratto);
+	}
+
+	public java.lang.Long getPg_contratto() {
+		if (getContratto() == null)
+			return null;
+		return getContratto().getPg_contratto();
+	}
+
+	public void setPg_contratto(java.lang.Long pg_contratto) {
+		this.getContratto().setPg_contratto(pg_contratto);
+	}
+
+	public java.lang.String getOggetto_contratto() {
+		if (this.getContratto() == null)
+			return null;
+		return this.getContratto().getOggetto();
+	}
+
+	public void setOggetto_contratto(java.lang.String oggetto_contratto) {
+		this.oggetto_contratto = oggetto_contratto;
+		//this.getContratto().setOggetto(oggetto_contratto);
+	}
+	public java.util.Collection getTipiPrestazioneCompenso() {
+		return tipiPrestazioneCompenso;
+	}
+
+	public void setTipiPrestazioneCompenso(
+			java.util.Collection tipiPrestazioneCompenso) {
+		this.tipiPrestazioneCompenso = tipiPrestazioneCompenso;
+	}
+		
 }

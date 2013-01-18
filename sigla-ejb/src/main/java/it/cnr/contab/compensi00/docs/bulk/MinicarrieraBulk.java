@@ -4,6 +4,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import java.util.*;
 
 
+import it.cnr.contab.compensi00.tabrif.bulk.Tipo_prestazione_compensoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 
@@ -81,6 +82,11 @@ public class MinicarrieraBulk
 	
 	private Incarichi_repertorioBulk  incarichi_repertorio;
 	private boolean visualizzaIncarico = true;
+	
+	private Tipo_prestazione_compensoBulk tipoPrestazioneCompenso;
+	private java.util.Collection tipiPrestazioneCompenso;
+	
+	private boolean visualizzaPrestazione = true;
 	
 public MinicarrieraBulk() {
 	super();
@@ -1436,9 +1442,17 @@ public void impostaTipo_tratt(Tipo_trattamentoBulk newTipoTrattamento) {
 			setTipo_trattamento(tipo);
 	}
 }
+
 public void impostaVisualizzaIncarico()
 {
-	if((this.getTipo_trattamento()!=null && this.getTipo_trattamento().getFl_incarico()!=null && !this.getTipo_trattamento().getFl_incarico()))
+	if(!this.isVisualizzaPrestazione()
+		|| 
+		(this.isVisualizzaPrestazione() 
+			&& this.getTipoPrestazioneCompenso()!=null
+			&& this.getTipoPrestazioneCompenso().getFl_incarico() != null 
+			&& !this.getTipoPrestazioneCompenso().getFl_incarico()
+		)
+	  )
     {
 		if(getIncarichi_repertorio()!=null)
 		{
@@ -1450,5 +1464,63 @@ public void impostaVisualizzaIncarico()
 	{
 		setVisualizzaIncarico(true);
 	}
+}
+
+public Tipo_prestazione_compensoBulk getTipoPrestazioneCompenso() {
+	return tipoPrestazioneCompenso;
+}
+
+public void setTipoPrestazioneCompenso(
+		Tipo_prestazione_compensoBulk tipoPrestazioneCompenso) {
+	this.tipoPrestazioneCompenso = tipoPrestazioneCompenso;
+}
+public java.lang.String getTi_prestazione() {
+	Tipo_prestazione_compensoBulk tipoPrestazioneCompenso = this
+			.getTipoPrestazioneCompenso();
+	if (tipoPrestazioneCompenso == null)
+		return null;
+	return tipoPrestazioneCompenso.getCd_ti_prestazione();
+}
+public void setTi_prestazione(java.lang.String ti_prestazione) {
+	this.getTipoPrestazioneCompenso().setCd_ti_prestazione(ti_prestazione);
+}
+
+public java.util.Collection getTipiPrestazioneCompenso() {
+	return tipiPrestazioneCompenso;
+}
+
+public void setTipiPrestazioneCompenso(
+		java.util.Collection tipiPrestazioneCompenso) {
+	this.tipiPrestazioneCompenso = tipiPrestazioneCompenso;
+}
+
+public boolean isVisualizzaPrestazione() {
+	return visualizzaPrestazione;
+}
+public void setVisualizzaPrestazione(boolean visualizzaPrestazione) {
+	this.visualizzaPrestazione = visualizzaPrestazione;
+}
+
+public void impostaVisualizzaPrestazione()
+{
+	if(isPrestazioneCompensoEnabled())
+	{
+		setVisualizzaPrestazione(true);
+	}
+	else
+    {
+		if(getTipoPrestazioneCompenso()!=null)
+			setTipoPrestazioneCompenso(null);
+		setVisualizzaPrestazione(false);
+    }
+	
+}
+
+public boolean isPrestazioneCompensoEnabled() {
+	if ( (this.getTipo_trattamento() != null
+					&& this.getTipo_trattamento().getFl_tipo_prestazione_obbl() != null && !this
+					.getTipo_trattamento().getFl_tipo_prestazione_obbl()))
+		return false;
+	return true;
 }
 }

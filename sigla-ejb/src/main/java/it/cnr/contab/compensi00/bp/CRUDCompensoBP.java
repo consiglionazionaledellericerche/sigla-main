@@ -29,6 +29,7 @@ import it.cnr.jada.*;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.*;
 
@@ -74,6 +75,8 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
 	private boolean ribaltato;
 	private boolean nocompenso = true;
 	private Boolean isGestioneIncarichiEnabled=null; 
+	
+	//private Boolean isGestionePrestazioneCompensoEnabled = null;
 	
 /**
  * CRUDCompensoBP constructor comment.
@@ -437,6 +440,28 @@ public void findTipiTrattamento(ActionContext context) throws BusinessProcessExc
 		throw handleException(ex);
 	}
 }
+public void findTipiPrestazioneCompenso(ActionContext context) throws BusinessProcessException{
+
+	try{
+		CompensoBulk compenso = (CompensoBulk)getModel();
+		if (compenso.getTipoRapporto()!= null) {
+			CompensoComponentSession component = (CompensoComponentSession)createComponentSession();
+			java.util.Collection coll = component.findTipiPrestazioneCompenso(context.getUserContext(), compenso);
+			compenso.setTipiPrestazioneCompenso(coll);
+
+			if(coll == null || coll.isEmpty()){
+				compenso.setTipoPrestazioneCompenso(null);
+				throw new it.cnr.jada.comp.ApplicationException("Non esistono Tipi di prestazione associati al Tipo di Rapporto selezionato");
+			}
+		}else
+			compenso.setTipoPrestazioneCompenso(null);
+			
+	}catch(it.cnr.jada.comp.ComponentException ex){
+		throw handleException(ex);
+	}catch(java.rmi.RemoteException ex){
+		throw handleException(ex);
+	}
+}
 /**
  * Insert the method's description here.
  * Creation date: (27/05/2002 14.40.04)
@@ -556,6 +581,15 @@ protected void init(Config config, ActionContext context) throws BusinessProcess
 
 	try {
 		setGestioneIncarichiEnabled(Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())).getFl_incarico());
+/*
+		String attivaPrestazione = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession")).getVal01(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext()), "*", "GESTIONE_COMPENSI", "ATTIVA_PRESTAZIONE");
+		if (attivaPrestazione==null)
+			throw new ApplicationException("Configurazione CNR: non sono stati impostati i valori per GESTIONE_COMPENSI - ATTIVA_PRESTAZIONE");
+		if (attivaPrestazione.compareTo(new String("Y"))==0)
+		    setGestionePrestazioneCompensoEnabled(true);
+		else
+			setGestionePrestazioneCompensoEnabled(false);
+*/
 	}catch(it.cnr.jada.comp.ComponentException ex){
 		throw handleException(ex);
 	}catch(java.rmi.RemoteException ex){
@@ -1511,10 +1545,10 @@ public void validaIncaricoAnno(ActionContext context, Incarichi_repertorio_annoB
 	try {
 		if (incAnno!=null){
 			if (Utility.createIncarichiRepertorioComponentSession().hasVariazioneIntegrazioneIncaricoProvvisoria(context.getUserContext(), incAnno.getIncarichi_repertorio())) {
-				throw new it.cnr.jada.bulk.ValidationException("Incarico "+incAnno.getEsercizio()+"-"+incAnno.getPg_repertorio()+
+				throw new it.cnr.jada.bulk.ValidationException("Contratto "+incAnno.getEsercizio()+"-"+incAnno.getPg_repertorio()+
 						" non utilizzabile in quanto risulta associata una variazione di " +
 						"tipo \n\"Periodo transitorio - Adeguamento alla durata del progetto\" in stato \"Provvisorio\".\n"+
-						"Rendere \"Definitiva\" la variazione dell'incarico e successivamente registrare il compenso.");
+						"Rendere \"Definitiva\" la variazione del contratto e successivamente registrare il compenso.");
 			}
 		}
 	}catch(it.cnr.jada.comp.ComponentException ex){
@@ -1534,4 +1568,12 @@ public boolean isSospensioneIrpefOkPerContabil(UserContext userContext, Compenso
 		throw handleException(ex);
 	}
 }
+/*
+public Boolean isGestionePrestazioneCompensoEnabled() {
+	return isGestionePrestazioneCompensoEnabled;
+}
+private void setGestionePrestazioneCompensoEnabled(Boolean isGestionePrestazioneCompensoEnabled) {
+	this.isGestionePrestazioneCompensoEnabled = isGestionePrestazioneCompensoEnabled;
+}
+*/
 }

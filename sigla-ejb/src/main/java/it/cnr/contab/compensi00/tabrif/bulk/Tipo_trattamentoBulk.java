@@ -91,6 +91,7 @@ private void resetFlags() {
 	this.setFl_anno_prec(Boolean.FALSE);
 	this.setFl_detrazioni_altre(Boolean.FALSE);
 	this.setFl_incarico(Boolean.FALSE);
+	this.setFl_tipo_prestazione_obbl(Boolean.FALSE);
 }
 /**
  * Insert the method's description here.
