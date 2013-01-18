@@ -1335,6 +1335,7 @@ public class FatturaAttivaComponentWS {
 		    	                    acc.setFromDocAmm(new Boolean(true));
 		    	                    acc.setFl_calcolo_automatico(new Boolean(false));
 		    	                    acc.setUtcr(testata.getUtcr());
+		    	                    acc.setUser(testata.getUtcr());
 		    	                    it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk voce=new it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk();
 		    	                    voce.setEsercizio(acc.getEsercizio());
 		    	                    voce.setTi_appartenenza(Elemento_voceHome.APPARTENENZA_CNR);
@@ -1522,6 +1523,7 @@ public class FatturaAttivaComponentWS {
 		    	                    obb.setFl_spese_costi_altrui(new Boolean(false));
 		    	                    obb.setFl_gara_in_corso(new Boolean(false));
 		    	                    obb.setUtcr(testata.getUtcr());
+		    	                    obb.setUser(testata.getUtcr());
 		    	                    it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk voce=new it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk();
 		    	                    voce.setEsercizio(obb.getEsercizio());
 		                    	    voce.setTi_appartenenza(Elemento_voceHome.APPARTENENZA_CDS);

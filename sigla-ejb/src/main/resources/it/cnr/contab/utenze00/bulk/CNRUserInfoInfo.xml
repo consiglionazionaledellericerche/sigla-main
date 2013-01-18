@@ -38,23 +38,23 @@
 		label="Password"
 		inputType="password"
 		maxLength="200"
-		inputSize="15"
+		inputSize="20"
 		/>
 	<fieldProperty
 		name="nuovaPassword"
 		property="nuovaPassword"
 		label="Nuova password"
 		inputType="password"
-		maxLength="15"
-		inputSize="10"
+		maxLength="20"
+		inputSize="20"
 		/>
 	<fieldProperty
 		name="confermaPassword"
 		property="confermaPassword"
 		label="Conferma"
 		inputType="password"
-		maxLength="15"
-		inputSize="10"
+		maxLength="20"
+		inputSize="20"
 		/>
 	<fieldProperty
 		name="userid"
@@ -101,7 +101,7 @@
 		label="Password (quella di SIPER)"
 		inputType="password"
 		maxLength="200"
-		inputSize="15"
+		inputSize="20"
 		/>
 
 	<fieldProperty
