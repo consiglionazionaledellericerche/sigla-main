@@ -104,7 +104,7 @@
 		name="password"
 		property="password"
 		inputType="TEXT"
-		inputSize="20" 
+		inputSize="10" 
 		maxLength="20"
 		label="password" />
 	<fieldProperty
