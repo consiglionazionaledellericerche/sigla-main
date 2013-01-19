@@ -540,6 +540,13 @@
                 property="cig"
                 inputType="CRUDTOOL"
                 CRUDBusinessProcessName="CRUDCodiciCIGBP"/>
+        <fieldProperty
+                name="cdCig"
+                property="cig.cdCig"
+                inputType="TEXT"
+                inputSize="20"
+                maxLength="10"
+                label="Codice CIG" />
                 
 	    <form name="searchtool">
 	          <formFieldProperty
@@ -775,6 +782,8 @@
                 name="fl_mepa"/>
         <findFieldProperty
                 name="fl_pubblica_contratto" />
+        <findFieldProperty
+                name="cdCig" />
   
         <columnFieldProperty
                 name="stato"/>
