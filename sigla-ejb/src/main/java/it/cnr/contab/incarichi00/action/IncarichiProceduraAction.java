@@ -1323,7 +1323,7 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 
 			if (esercizio!=null && password.equals("MIGRA21012013")) {
 				IncarichiProceduraComponentSession proceduraComponent = Utility.createIncarichiProceduraComponentSession();
-				List l = proceduraComponent.getIncarichiForMigrateFromDBToCMIS(actioncontext.getUserContext(), Integer.valueOf(esercizio), Long.valueOf(nr_procedura));
+				List l = proceduraComponent.getIncarichiForMigrateFromDBToCMIS(actioncontext.getUserContext(), Integer.valueOf(esercizio), nr_procedura!=null?Long.valueOf(nr_procedura):null);
 				
 				logger.debug("Esercizio: "+esercizio+" - Nr record: "+l.size());
 				int i=0;
