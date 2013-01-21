@@ -862,13 +862,6 @@ public boolean isSuperUtenteFunzioniIncarichi(UserContext userContext)throws it.
 		SQLBuilder sql = null; 
 		SQLBroker broker = null;
 		
-		try{
-			if (CNRUserContext.getUser(userContext)==null)
-				return false;
-		} catch (Exception e){
-			return false;
-		}
-		
 		UtenteBulk utente = (UtenteBulk)(getHome(userContext, UtenteBulk.class).findByPrimaryKey(new UtenteBulk(CNRUserContext.getUser(userContext))));
 		
 		if (utente.isSupervisore() && utente.getCd_ruolo_supervisore()!=null) {
@@ -912,7 +905,9 @@ public boolean isSuperUtenteFunzioniIncarichi(UserContext userContext)throws it.
 		throw new ComponentException(e);
 	} catch(java.sql.SQLException e) {
 		throw handleException(e);
-	}	
+	} catch (Exception e){
+		return false;
+	}
 	return (false);
 }
 public boolean isAbilitatoSospensioneCori(UserContext userContext)throws it.cnr.jada.comp.ComponentException{
