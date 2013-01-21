@@ -16,6 +16,7 @@ import it.cnr.contab.incarichi00.ejb.IncarichiProceduraComponentSession;
 import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_incaricoBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_prestazioneBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -1322,8 +1323,10 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 			String password = ((HttpActionContext)actioncontext).getParameter("password");
 
 			if (esercizio!=null && password.equals("MIGRA21012013")) {
+
 				IncarichiProceduraComponentSession proceduraComponent = Utility.createIncarichiProceduraComponentSession();
-				List l = proceduraComponent.getIncarichiForMigrateFromDBToCMIS(actioncontext.getUserContext(), Integer.valueOf(esercizio), nr_procedura!=null?Long.valueOf(nr_procedura):null);
+				CNRUserContext userContext = new CNRUserContext("MIGRA", "sessionId", 2013, "999.000", "999", "999.000.000");
+				List l = proceduraComponent.getIncarichiForMigrateFromDBToCMIS(userContext, Integer.valueOf(esercizio), nr_procedura!=null?Long.valueOf(nr_procedura):null);
 				
 				logger.debug("Esercizio: "+esercizio+" - Nr record: "+l.size());
 				int i=0;
@@ -1331,7 +1334,7 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 					i++;
 					Incarichi_proceduraBulk procedura = (Incarichi_proceduraBulk)object;
 					try{
-						proceduraComponent.migrateAllegatiFromDBToCMIS(actioncontext.getUserContext(), (Incarichi_proceduraBulk)object);
+						proceduraComponent.migrateAllegatiFromDBToCMIS(userContext, (Incarichi_proceduraBulk)object);
 						logger.debug("OK - Esercizio: "+esercizio+" - Rec "+i+" di "+l.size()+" - Procedura: "+procedura.getEsercizio()+"/"+procedura.getPg_procedura());
 					} catch (Exception e) {
 						logger.error("ERRORE: Procedura: "+procedura.getEsercizio()+"/"+procedura.getPg_procedura(),e);
