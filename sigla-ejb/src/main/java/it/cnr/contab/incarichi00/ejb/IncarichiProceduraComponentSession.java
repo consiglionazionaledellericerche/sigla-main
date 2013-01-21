@@ -20,6 +20,6 @@ it.cnr.jada.bulk.OggettoBulk caricaSedeUnitaOrganizzativa(it.cnr.jada.UserContex
 it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk getIncarichiParametri(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void salvaDefinitivoCMIS(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void annullaDefinitivoCMIS(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-List getIncarichiForMigrateFromDBToCMIS(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+List getIncarichiForMigrateFromDBToCMIS(it.cnr.jada.UserContext param0, Integer param1, Long param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void migrateAllegatiFromDBToCMIS(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

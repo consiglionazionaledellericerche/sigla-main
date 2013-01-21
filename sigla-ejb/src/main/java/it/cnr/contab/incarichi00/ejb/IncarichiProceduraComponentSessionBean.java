@@ -213,10 +213,10 @@ public class IncarichiProceduraComponentSessionBean extends it.cnr.jada.ejb.CRUD
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	public java.util.List getIncarichiForMigrateFromDBToCMIS(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	public java.util.List getIncarichiForMigrateFromDBToCMIS(it.cnr.jada.UserContext param0, Integer param1, Long param2) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
-			java.util.List result = ((IncarichiProceduraComponent)componentObj).getIncarichiForMigrateFromDBToCMIS(param0);
+			java.util.List result = ((IncarichiProceduraComponent)componentObj).getIncarichiForMigrateFromDBToCMIS(param0, param1, param2);
 			component_invocation_succes(param0,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {

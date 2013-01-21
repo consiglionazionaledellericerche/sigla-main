@@ -22,6 +22,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
 import it.cnr.contab.doccont00.comp.DateServices;
+import it.cnr.contab.incarichi00.bp.CRUDIncarichiProceduraBP;
 import it.cnr.contab.incarichi00.bulk.Ass_incarico_uoBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
@@ -80,8 +81,11 @@ import oracle.sql.BLOB;
 
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisRuntimeException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class IncarichiProceduraComponent extends CRUDComponent {
+	private transient static final Log logger = LogFactory.getLog(IncarichiProceduraComponent.class);
 	private final static int INSERIMENTO = 1;
 	private final static int MODIFICA    = 2;
 	private final static int CANCELLAZIONE = 3;	
@@ -1715,14 +1719,18 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		}		
 	}
 
-	public List getIncarichiForMigrateFromDBToCMIS(UserContext userContext) throws ComponentException{
+	public List getIncarichiForMigrateFromDBToCMIS(UserContext userContext, Integer esercizio, Long procedura) throws ComponentException{
 		try{
 			Incarichi_proceduraHome procHome = (Incarichi_proceduraHome)getHome(userContext, Incarichi_proceduraBulk.class);
 			SQLBuilder sql = procHome.createSQLBuilder();
-			sql.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, Integer.valueOf("2012"));
-			sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, String.valueOf("044"));
+
+			sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+			if (procedura!=null) 
+				sql.addClause(FindClause.AND, "pg_procedura", SQLBuilder.EQUALS, procedura);
 			
-			sql.addOrderBy("ESERCIZIO, PG_PROCEDURA");
+			sql.addClause(FindClause.AND, "fl_migrata_to_cmis", SQLBuilder.EQUALS, Boolean.FALSE);
+			
+			sql.addOrderBy("PG_PROCEDURA DESC");
 			return procHome.fetchAll(sql);
 		} catch (PersistencyException e) {
 			throw new ApplicationException("Errore in fase di ricerca procedure conferimento incarichi");			
@@ -1763,8 +1771,10 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 			procedura.setToBeUpdated();
 			updateBulk(userContext, procedura);
 		} catch (RemoteException e) {
+			logger.error("Errore in fase attivazione EJB IncarichiComponent",e);
 			throw new ApplicationException("Errore in fase attivazione EJB IncarichiComponent");			
 		} catch (PersistencyException e) {
+			logger.error("Errore in fase aggiornamento flag su IncarichiProcedura",e);
 			throw new ApplicationException("Errore in fase aggiornamento flag su IncarichiProcedura");			
 		}
 	}

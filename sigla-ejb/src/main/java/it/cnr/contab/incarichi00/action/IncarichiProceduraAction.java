@@ -12,6 +12,7 @@ import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_rappBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_varBulk;
+import it.cnr.contab.incarichi00.ejb.IncarichiProceduraComponentSession;
 import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_incaricoBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_prestazioneBulk;
@@ -19,8 +20,11 @@ import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
+import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.OptionBP;
@@ -30,8 +34,13 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.Iterator;
+import java.util.List;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction{
+	private transient static final Log logger = LogFactory.getLog(IncarichiProceduraAction.class);
 	public IncarichiProceduraAction() {
 		super();
 	}
@@ -1304,5 +1313,35 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 				bp.getIncarichiParametri(actioncontext.getUserContext(), (Incarichi_proceduraBulk)bp.getModel());
 		} catch (Exception e){}
 		return forward;
+	}
+	
+	public Forward doMigraFromDBToCMIS(ActionContext actioncontext) {
+		try{
+			String esercizio = ((HttpActionContext)actioncontext).getParameter("esercizio");
+			String nr_procedura = ((HttpActionContext)actioncontext).getParameter("procedura");
+			String password = ((HttpActionContext)actioncontext).getParameter("password");
+
+			if (esercizio!=null && password.equals("MIGRA21012013")) {
+				IncarichiProceduraComponentSession proceduraComponent = Utility.createIncarichiProceduraComponentSession();
+				List l = proceduraComponent.getIncarichiForMigrateFromDBToCMIS(actioncontext.getUserContext(), Integer.valueOf(esercizio), Long.valueOf(nr_procedura));
+				
+				logger.debug("Esercizio: "+esercizio+" - Nr record: "+l.size());
+				int i=0;
+				for (Object object : l) {
+					i++;
+					Incarichi_proceduraBulk procedura = (Incarichi_proceduraBulk)object;
+					try{
+						proceduraComponent.migrateAllegatiFromDBToCMIS(actioncontext.getUserContext(), (Incarichi_proceduraBulk)object);
+						logger.debug("OK - Esercizio: "+esercizio+" - Rec "+i+" di "+l.size()+" - Procedura: "+procedura.getEsercizio()+"/"+procedura.getPg_procedura());
+					} catch (Exception e) {
+						logger.error("ERRORE: Procedura: "+procedura.getEsercizio()+"/"+procedura.getPg_procedura(),e);
+					}
+				}
+				logger.debug("PROCEDURA MIGRAZIONE TERMINATA - Esercizio: "+esercizio);
+			}
+		} catch (Exception e) {
+			logger.error("Errore: ",e);
+		}
+		return actioncontext.findDefaultForward();
 	}
 }

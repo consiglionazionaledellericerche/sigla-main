@@ -2,6 +2,7 @@ package it.cnr.contab.incarichi00.bp;
 
 import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.cmis.service.CMISService;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
@@ -58,6 +59,9 @@ import java.util.List;
 import java.util.TreeMap;
 
 import javax.servlet.ServletException;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	private final SimpleDetailCRUDController ripartizionePerAnno = new SimpleDetailCRUDController("ProceduraAnno",Incarichi_procedura_annoBulk.class,"incarichi_procedura_annoColl",this){
@@ -2229,26 +2233,5 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 		}
 		is.close();
 		os.flush();
-	}
-	
-	public void migrateAllegatiFromDBToCMIS(ActionContext actioncontext) throws ComponentException{
-		try{
-			IncarichiProceduraComponentSession proceduraComponent = ((IncarichiProceduraComponentSession)createComponentSession());
-			List l = proceduraComponent.getIncarichiForMigrateFromDBToCMIS(actioncontext.getUserContext());
-			
-			for (Object object : l) {
-				Incarichi_proceduraBulk procedura = (Incarichi_proceduraBulk)object;
-				try{
-					proceduraComponent.migrateAllegatiFromDBToCMIS(actioncontext.getUserContext(), (Incarichi_proceduraBulk)object);
-					System.out.println("OK: Procedura: "+procedura.getEsercizio()+"/"+procedura.getPg_procedura());
-				} catch (Exception e) {
-					System.out.println("ERRORE: Procedura: "+procedura.getEsercizio()+"/"+procedura.getPg_procedura()+"-"+e.getMessage());
-				}
-			}
-		} catch (RemoteException e) {
-			throw new ApplicationException("Errore in fase attivazione EJB IncarichiProceduraComponentSession");			
-		} catch (BusinessProcessException e) {
-			throw new ApplicationException("Errore in fase attivazione EJB IncarichiProceduraComponentSession");			
-		}
 	}
 }
