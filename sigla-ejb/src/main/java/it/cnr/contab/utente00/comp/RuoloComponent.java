@@ -862,6 +862,13 @@ public boolean isSuperUtenteFunzioniIncarichi(UserContext userContext)throws it.
 		SQLBuilder sql = null; 
 		SQLBroker broker = null;
 		
+		try{
+			if (CNRUserContext.getUser(userContext)==null)
+				return false;
+		} catch (Exception e){
+			return false;
+		}
+		
 		UtenteBulk utente = (UtenteBulk)(getHome(userContext, UtenteBulk.class).findByPrimaryKey(new UtenteBulk(CNRUserContext.getUser(userContext))));
 		
 		if (utente.isSupervisore() && utente.getCd_ruolo_supervisore()!=null) {
