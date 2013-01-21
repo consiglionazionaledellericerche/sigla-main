@@ -38,6 +38,17 @@
 		caseSensitiveSearch="false"
 		label="Descrizione" />
 	<fieldProperty
+		name="url_file"
+		property="url_file"
+		inputType="TEXTAREA"
+		inputSize="500"
+		maxLength="500"
+		cols="80"
+		rows="2"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		label="URL" />
+	<fieldProperty
 		name="blob"
 		property="blob"
 		inputType="FILE"
@@ -100,6 +111,8 @@
 		name="ds_file"
 		label="Descrizione del File" />
 	<formFieldProperty
+		name="url_file" />
+	<formFieldProperty
 		name="blob" />
 	<formFieldProperty
 		name="tipo_archivio" />
@@ -123,6 +136,8 @@
 	<columnFieldProperty
 		name="ds_file" />
 	<columnFieldProperty
+		name="url_file" />
+	<columnFieldProperty
 		name="tipo_archivio" />
 	<columnFieldProperty
 		name="stato" />
@@ -141,6 +156,8 @@
 		name="nome_file" />
 	<findFieldProperty
 		name="ds_file" />
+	<findFieldProperty
+		name="url_file" />
 	<findFieldProperty
 		name="tipo_archivio" />
 	<findFieldProperty

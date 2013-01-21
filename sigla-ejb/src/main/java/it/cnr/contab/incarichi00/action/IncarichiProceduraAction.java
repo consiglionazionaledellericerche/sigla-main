@@ -10,9 +10,11 @@ import it.cnr.contab.incarichi00.bulk.Ass_incarico_uoBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_rappBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_varBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_incaricoBulk;
+import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_prestazioneBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -36,18 +38,12 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 	public Forward doBringBackSearchTerzo(ActionContext context, Incarichi_repertorioBulk incarico, V_terzo_per_compensoBulk terzo) {
 		try {
 			if(terzo != null) {
-				CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP) getBusinessProcess(context);
-				if (terzo.getAnagrafico()!=null && terzo.getAnagrafico().getTitolo_studio()==null) {
-					bp.setErrorMessage("Terzo non selezionabile in quanto non risulta valorizzato il campo \"Titolo di studio\" in anagrafica.");
-					return context.findDefaultForward();
-				}
-				Incarichi_repertorioBulk incaricoSel = (Incarichi_repertorioBulk)bp.getIncarichiColl().getModel(); 
-				doBlankSearchTerzo(context, incaricoSel);
-	
-				bp.completaTerzo(context, incaricoSel, terzo);
-			} 
+				CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)getBusinessProcess(context);
+				Incarichi_proceduraBulk procedura = incarico.getIncarichi_procedura();
+				procedura.getIncarichi_repertorioColl().set(procedura.getIncarichi_repertorioColl().indexOf(incarico), bp.initializeTerzo(context, incarico, terzo));
+				bp.getIncarichiColl().resync(context);
+			}
 			return context.findDefaultForward();
-	
 		} catch(BusinessProcessException e) {
 			return handleException(context,e);
 		}
@@ -66,8 +62,6 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 	
 			incarico.setTipiRapporto(null);
 			incarico.setTipo_rapporto(null);
-			incarico.setTipiTrattamento(null);
-			incarico.setTipo_trattamento(null);
 		}
 		return context.findDefaultForward();
 	}
@@ -91,58 +85,10 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 	{
 		try{
 			fillModel(context);
-	
-			CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)getBusinessProcess(context);
-			procedura.setTipo_incarico(tipo_incarico);
-			bp.changeImportoLordo(context, procedura, Utility.nvl(procedura.getImporto_lordo()));
-			bp.findTipiRapporto(context);
-			if (procedura.getFl_meramente_occasionale()!=null && procedura.getFl_meramente_occasionale().booleanValue()) {
-			   if (!procedura.isProceduraForOccasionali())
-				   procedura.setFl_meramente_occasionale(Boolean.FALSE);
-			}
 
-			bp.setModel(context, procedura);
-			
-			return context.findDefaultForward();
-		}catch (Throwable ex) {
-			return handleException(context, ex);
-		}
-	}
-	/**
-	 * Alla selezione del Tipo Rapporto vengono caricati i relativi tipi trattamento
-	 */  
-	
-	public Forward doOnTipoRapportoChange(ActionContext context) {
-	
-		try {
-			fillModel(context);
 			CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)getBusinessProcess(context);
-	
-			Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)bp.getIncarichiColl().getModel();
-			doAzzeraTipoTrattamento(context, incarico);
-			bp.findTipiTrattamento(context, incarico);
-	
+			bp.setModel(context, bp.initializeFind_tipo_incarico(context, procedura, tipo_incarico));
 			return context.findDefaultForward();
-	
-		}catch (Throwable ex) {
-			return handleException(context, ex);
-		}
-	}
-	public Forward doOnTipoIstituzCommercChange(ActionContext context) {
-	
-		try {
-			fillModel(context);
-			CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)getBusinessProcess(context);
-	
-			if (bp.isSearching())
-				return context.findDefaultForward();
-	
-			Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)bp.getIncarichiColl().getModel();
-			doAzzeraTipoTrattamento(context, incarico);
-			bp.findTipiTrattamento(context, incarico);
-	
-			return context.findDefaultForward();
-	
 		}catch (Throwable ex) {
 			return handleException(context, ex);
 		}
@@ -218,10 +164,34 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 		}
 	}
 	
-	private void doAzzeraTipoTrattamento(ActionContext context, Incarichi_repertorioBulk incarico) {
-		if (incarico!=null){
-			incarico.setTipiTrattamento(null);
-			incarico.setTipo_trattamento(null);
+	public Forward doOnDtDichiarazioneChange(ActionContext context) {
+		CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)getBusinessProcess(context);
+		Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)(bp.getIncarichiColl().getModel());
+		Incarichi_repertorio_rappBulk incaricoRapp = (Incarichi_repertorio_rappBulk)(bp.getIncarichiRappColl().getModel());
+	
+		java.sql.Timestamp oldDate=null;
+		if (incaricoRapp.getDt_dichiarazione()!=null)
+			oldDate = (java.sql.Timestamp)incaricoRapp.getDt_dichiarazione().clone();
+	
+		try {
+			fillModel(context);
+			if (incarico!=null && incarico.getDt_stipula()!=null && 
+				incaricoRapp !=null && incaricoRapp.getDt_dichiarazione()!=null && 
+				incarico.getDt_stipula().after(incaricoRapp.getDt_dichiarazione()))
+				throw new ValidationException( "La \"Data di dichiarazione\" deve essere superiore o uguale alla \"Data di stipula\" del contratto.");
+			return context.findDefaultForward();
+		}
+		catch (Throwable ex) {
+			// In caso di errore ripropongo la data precedente
+			incaricoRapp.setDt_dichiarazione(oldDate);
+			try
+			{
+				return handleException(context, ex);			
+			}
+			catch (Throwable e) 
+			{
+				return handleException(context, e);
+			}
 		}
 	}
 	public Forward doOnImportoLordoChange(ActionContext context) {
@@ -556,6 +526,30 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 	        return handleException(actioncontext, exception);
 	    }
 	}
+	public Forward doAddCurriculumVincitoreToCRUD(ActionContext actioncontext, String s) {
+	    try
+	    {
+	        fillModel(actioncontext);
+	        ((Incarichi_archivioCRUDController)getController(actioncontext, s)).addCurriculumVincitore(actioncontext);        
+	        return actioncontext.findDefaultForward();
+	    }
+	    catch(Exception exception)
+	    {
+	        return handleException(actioncontext, exception);
+	    }
+	}
+	public Forward doAddProgettoToCRUD(ActionContext actioncontext, String s) {
+	    try
+	    {
+	        fillModel(actioncontext);
+	        ((Incarichi_archivioCRUDController)getController(actioncontext, s)).addProgetto(actioncontext);        
+	        return actioncontext.findDefaultForward();
+	    }
+	    catch(Exception exception)
+	    {
+	        return handleException(actioncontext, exception);
+	    }
+	}
 	public Forward doAddDecisioneAContrattareToCRUD(ActionContext actioncontext, String s) {
 	    try
 	    {
@@ -600,28 +594,7 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 			fillModel(context);
 	
 			CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)getBusinessProcess(context);
-	
-		    if (procedura != null && procedura.getNr_contratti()!=null && 
-		    	procedura.getNr_contratti().compareTo(new Integer(1))==1) {
-		    	if (procamm != null &&
-		    	    procamm.getIncarico_ric_giorni_pubbl() != null &&
-		    	    procamm.getIncarico_ric_giorni_pubbl().compareTo(new Integer(0))==0) 
-					return handleException(context, new it.cnr.jada.bulk.ValidationException ("Procedura Ammininistrativa non selezionabile per un processo che prevede l'attivazione di più contratti."));
-		    }
-	
-	    	if (procamm != null && procamm.isMeramenteOccasionaleRequired()) { 
-		    	procedura.setFl_meramente_occasionale(Boolean.TRUE);
-	    		if (procedura.getTipo_incarico()!=null &&
-	    	    	procedura.getTipo_incarico().getTipoRapporto()!=null &&
-	    	    	procedura.getTipo_incarico().getTipoRapporto().getFl_inquadramento()!=null &&
-	    		    procedura.getTipo_incarico().getTipoRapporto().getFl_inquadramento().booleanValue())
-	    		    return handleException(context, new it.cnr.jada.bulk.ValidationException ("Procedura Ammininistrativa selezionabile solo per l'attivazione di contratti in favore di \"Collaboratori Occasionali\"."));
-	    	}
-	    	else if (procamm != null && !procamm.isMeramenteOccasionaleEnabled())
-	    		procedura.setFl_meramente_occasionale(Boolean.FALSE);
-    		
-		    procedura.setProcedura_amministrativa(procamm);
-			bp.setModel(context, procedura);
+			bp.setModel(context, bp.initializeProcedura_amministrativa(context, procedura, procamm));
 				
 			return context.findDefaultForward();
 		} catch(Throwable e) {
@@ -822,7 +795,7 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 			}
 
 			java.math.BigDecimal prcIncrementoVar = Utility.nvl(variazione.getIncarichi_repertorio().getIncarichi_procedura().getTipo_incarico().getPrc_incremento_var());
-			BigDecimal importoMaxVar = variazione.getIncarichi_repertorio().getIncarichi_procedura().getImporto_complessivo().multiply(prcIncrementoVar.divide(new BigDecimal(100),2,BigDecimal.ROUND_HALF_UP));
+			BigDecimal importoMaxVar = variazione.getIncarichi_repertorio().getIncarichi_procedura().getImporto_complessivo().multiply(prcIncrementoVar.divide(new BigDecimal(100),2,BigDecimal.ROUND_HALF_EVEN));
 			if (variazione.getImporto_complessivo().compareTo(importoMaxVar)==1) {
 				variazione.setImporto_complessivo(oldImporto);
 				bp.setMessage("Attenzione: la variazione massima consentita per \"Adeguamento Incremento Aliquote\" è " + 
@@ -889,7 +862,7 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 			variazione.setDt_fine_validita(null);
 			variazione.setFile(null);
 			variazione.setNome_file(null);
-			variazione.setTipo_archivio(null);
+			variazione.setTipo_archivio(Incarichi_archivioBulk.TIPO_GENERICO);
 
 			if (variazione.getTipo_variazione()!=null) {
 				if (variazione.getDs_variazione()==null||(oldTipoVariazione!=null&&variazione.getDs_variazione().equals(oldTipoVariazione)))
@@ -1219,5 +1192,117 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 				return handleException(context, e);
 			}
 		}
+	}
+
+	public Forward doOnDtEfficaciaChange(ActionContext context) {
+		CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)getBusinessProcess(context);
+		Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)(bp.getIncarichiColl().getModel());
+	
+		java.sql.Timestamp oldDate=null;
+		if (incarico.getDt_efficacia()!=null)
+			oldDate = (java.sql.Timestamp)incarico.getDt_efficacia().clone();
+	
+		try {
+			fillModel(context);
+			incarico.validaDateContratto();
+			return context.findDefaultForward();
+		}
+		catch (Throwable ex) {
+			// In caso di errore ripropongo la data precedente
+			incarico.setDt_efficacia(oldDate);
+			try
+			{
+				return handleException(context, ex);			
+			}
+			catch (Throwable e) 
+			{
+				return handleException(context, e);
+			}
+		}
+	}
+
+	public Forward doOnFlInviatoCorteContiChange(ActionContext context) {
+		CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)getBusinessProcess(context);
+		Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)(bp.getIncarichiColl().getModel());
+	
+		try {
+			fillModel(context);
+			if (incarico.getFl_inviato_corte_conti() && 
+				incarico.getIncarichi_procedura().getTipo_prestazione()!=null && 
+				incarico.getIncarichi_procedura().getTipo_prestazione().isPrevistaDaNormeDiLegge()){
+				incarico.setFl_inviato_corte_conti(Boolean.FALSE);
+				throw new ValidationException( "Non \350 possibile selezionare il flag in quanto l'incarico è per prestazioni previste da norme di legge!");
+			}
+			return context.findDefaultForward();
+		}
+		catch (Throwable ex) {
+			return handleException(context, ex);
+		}
+	}
+
+	public Forward doOnTipoPrestazioneChange(ActionContext context) {
+		try {
+			CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)getBusinessProcess(context);
+			Incarichi_proceduraBulk procedura = (Incarichi_proceduraBulk)(bp.getModel());
+		
+			Tipo_prestazioneBulk oldTipoPrestazione=procedura.getTipo_prestazione();
+
+			fillModel(context);
+			if (procedura.getTipo_prestazione()!=null && procedura.getTipo_prestazione().isPrevistaDaNormeDiLegge()){
+				for (Iterator<Incarichi_repertorioBulk> i = procedura.getIncarichi_repertorioColl().iterator(); i.hasNext();) {
+					Incarichi_repertorioBulk incarico = i.next();
+					if (incarico.getFl_inviato_corte_conti()) {
+						procedura.setTipo_prestazione(oldTipoPrestazione);
+						throw new ValidationException( "Non \350 possibile selezionare una prestazione prevista da norme di legge in quanto l'incarico risulta inviato alla corte dei conti!");
+					}
+				} 
+			}
+			return context.findDefaultForward();
+		}
+		catch (Throwable ex) {
+			return handleException(context, ex);
+		}
+	}
+
+	public Forward doOnFlApplicazioneNormaChange(ActionContext context) {
+		CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)getBusinessProcess(context);
+		Incarichi_proceduraBulk procedura = (Incarichi_proceduraBulk)bp.getModel();
+	
+		try {
+			fillModel(context);
+			if (!procedura.isApplicazioneNormaAttiva()){
+				procedura.setTipo_norma_perla(null);
+				procedura.setDs_libera_norma_perla(null);
+			}
+			return context.findDefaultForward();
+		}
+		catch (Throwable ex) {
+			return handleException(context, ex);
+		}
+	}
+
+	public Forward doOnTipoNormaPerlaChange(ActionContext context) {
+		CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)getBusinessProcess(context);
+		Incarichi_proceduraBulk procedura = (Incarichi_proceduraBulk)bp.getModel();
+	
+		try {
+			fillModel(context);
+			if (procedura.getCd_tipo_norma_perla()==null || !procedura.getCd_tipo_norma_perla().equals("999"))
+				procedura.setDs_libera_norma_perla(null);
+			return context.findDefaultForward();
+		}
+		catch (Throwable ex) {
+			return handleException(context, ex);
+		}
+	}
+	@Override
+	public Forward doTab(ActionContext actioncontext, String s, String s1) {
+		Forward forward = super.doTab(actioncontext, s, s1);
+		try{
+			CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)getBusinessProcess(actioncontext);
+			if (bp.getModel()!=null)
+				bp.getIncarichiParametri(actioncontext.getUserContext(), (Incarichi_proceduraBulk)bp.getModel());
+		} catch (Exception e){}
+		return forward;
 	}
 }

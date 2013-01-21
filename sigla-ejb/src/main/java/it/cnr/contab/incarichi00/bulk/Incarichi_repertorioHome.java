@@ -157,4 +157,40 @@ public class Incarichi_repertorioHome extends BulkHome {
 		sql.addOrderBy("CD_UNITA_ORGANIZZATIVA");
 		return dettHome.fetchAll(sql);
 	}
+
+	public java.util.List findIncarichi_repertorio_rappList( it.cnr.jada.UserContext userContext,Incarichi_repertorioBulk increp ) throws IntrospectionException,PersistencyException 
+	{
+		PersistentHome incHome = getHomeCache().getHome(Incarichi_repertorio_rappBulk.class );
+		SQLBuilder sql = incHome.createSQLBuilder();
+		if (increp.getEsercizio()==null)
+			sql.addClause("AND","esercizio",SQLBuilder.ISNULL, null);
+		else
+			sql.addClause("AND","esercizio",SQLBuilder.EQUALS, increp.getEsercizio());
+		
+		if (increp.getPg_repertorio()==null)
+			sql.addClause("AND","pg_repertorio",SQLBuilder.ISNULL, null);
+		else
+			sql.addClause("AND","pg_repertorio",SQLBuilder.EQUALS, increp.getPg_repertorio());
+		
+		sql.addOrderBy("ANNO_COMPETENZA");
+		return incHome.fetchAll(sql);
+	}
+
+	public java.util.List findIncarichi_repertorio_rapp_detList( it.cnr.jada.UserContext userContext,Incarichi_repertorioBulk increp ) throws IntrospectionException,PersistencyException 
+	{
+		PersistentHome incHome = getHomeCache().getHome(Incarichi_repertorio_rapp_detBulk.class );
+		SQLBuilder sql = incHome.createSQLBuilder();
+		if (increp.getEsercizio()==null)
+			sql.addClause("AND","esercizio",SQLBuilder.ISNULL, null);
+		else
+			sql.addClause("AND","esercizio",SQLBuilder.EQUALS, increp.getEsercizio());
+		
+		if (increp.getPg_repertorio()==null)
+			sql.addClause("AND","pg_repertorio",SQLBuilder.ISNULL, null);
+		else
+			sql.addClause("AND","pg_repertorio",SQLBuilder.EQUALS, increp.getPg_repertorio());
+		
+		sql.addOrderBy("PROGRESSIVO_RIGA");
+		return incHome.fetchAll(sql);
+	}
 }

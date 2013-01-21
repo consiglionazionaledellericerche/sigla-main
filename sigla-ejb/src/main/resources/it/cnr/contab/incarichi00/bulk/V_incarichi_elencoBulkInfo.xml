@@ -18,6 +18,13 @@
 		maxLength="10"
 		label="Id. Incarico" />
 	<fieldProperty
+		name="cd_tipo_attivita"
+		property="cd_tipo_attivita"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Tipo Attività" />
+	<fieldProperty
 		name="cd_cds"
 		property="cd_cds"
 		inputType="TEXT"
@@ -48,13 +55,43 @@
 		maxLength="300"
 		label="Descrizione" />
 	<fieldProperty
-		name="nominativo"
-		property="nominativo"
+		name="benef_codice_fiscale"
+		property="benef_codice_fiscale"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Codice Fiscale del Terzo" />
+	<fieldProperty
+		name="benef_partita_iva"
+		property="benef_partita_iva"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		label="Partita Iva del Terzo" />
+	<fieldProperty
+		name="benef_denominazione_sede"
+		property="benef_denominazione_sede"
 		inputType="TEXTAREA"
 		cols="60"
 		rows="5"
-		maxLength="100"
-		label="Nominativo" />
+		maxLength="200"
+		label="Denominazione Sede del Terzo" />
+	<fieldProperty
+		name="resp_denominazione_sede"
+		property="resp_denominazione_sede"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Denominazione Sede del Responsabile" />
+	<fieldProperty
+		name="firm_denominazione_sede"
+		property="firm_denominazione_sede"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Denominazione Sede del Firmatario" />
 	<fieldProperty
 		name="oggetto"
 		property="oggetto"
@@ -122,11 +159,27 @@
 		inputSize="10"
 		maxLength="10"
 		label="Id. Procedura" />
+	<fieldProperty
+		name="ds_tipo_norma"
+		property="ds_tipo_norma"
+		inputType="TEXT"
+		inputSize="200"
+		maxLength="200"
+		label="Descrizione Tipo Norma" />
+	<fieldProperty
+		name="ds_proc_amm"
+		property="ds_proc_amm"
+		inputType="TEXT"
+		inputSize="200"
+		maxLength="200"
+		label="Descrizione Procedura Amministrativa" />
 		
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
 		name="pg_repertorio" />
+	<formFieldProperty
+		name="cd_tipo_attivita" />
 	<formFieldProperty
 		name="cd_cds" />
 	<formFieldProperty
@@ -136,7 +189,15 @@
 	<formFieldProperty
 		name="ds_unita_organizzativa" />
 	<formFieldProperty
-		name="nominativo" />
+		name="benef_codice_fiscale" />
+	<formFieldProperty
+		name="benef_partita_iva" />
+	<formFieldProperty
+		name="benef_denominazione_sede" />
+	<formFieldProperty
+		name="resp_denominazione_sede" />
+	<formFieldProperty
+		name="firm_denominazione_sede" />
 	<formFieldProperty
 		name="oggetto" />
 	<formFieldProperty
@@ -157,6 +218,10 @@
 		name="esercizio_procedura" />
 	<formFieldProperty
 		name="pg_procedura" />
+	<formFieldProperty
+		name="ds_tipo_norma" />
+	<formFieldProperty
+		name="ds_proc_amm" />
 		
 
 	<findFieldProperty
@@ -172,7 +237,15 @@
 	<findFieldProperty
 		name="ds_unita_organizzativa" />
 	<findFieldProperty
-		name="nominativo" />
+		name="benef_codice_fiscale" />
+	<findFieldProperty
+		name="benef_partita_iva" />
+	<findFieldProperty
+		name="benef_denominazione_sede" />
+	<findFieldProperty
+		name="resp_denominazione_sede" />
+	<findFieldProperty
+		name="firm_denominazione_sede" />
 	<findFieldProperty
 		name="oggetto" />
 	<findFieldProperty
@@ -193,6 +266,10 @@
 		name="esercizio_procedura" />
 	<findFieldProperty
 		name="pg_procedura" />
+	<findFieldProperty
+		name="ds_tipo_norma" />
+	<findFieldProperty
+		name="ds_proc_amm" />
 
 	<columnFieldProperty
 		name="esercizio" />
@@ -207,7 +284,15 @@
 	<columnFieldProperty
 		name="ds_unita_organizzativa" />
 	<columnFieldProperty
-		name="nominativo" />
+		name="benef_codice_fiscale" />
+	<columnFieldProperty
+		name="benef_partita_iva" />
+	<columnFieldProperty
+		name="benef_denominazione_sede" />
+	<columnFieldProperty
+		name="resp_denominazione_sede" />
+	<columnFieldProperty
+		name="firm_denominazione_sede" />
 	<columnFieldProperty
 		name="oggetto" />
 	<columnFieldProperty
@@ -228,6 +313,10 @@
 		name="esercizio_procedura" />
 	<columnFieldProperty
 		name="pg_procedura" />
+	<columnFieldProperty
+		name="ds_tipo_norma" />
+	<columnFieldProperty
+		name="ds_proc_amm" />
 
 	<columnSet
 		name="basic" >
@@ -244,7 +333,7 @@
 		<columnFieldProperty
 			name="ds_unita_organizzativa" />
 		<columnFieldProperty
-			name="nominativo" />
+			name="benef_denominazione_sede" />
 		<columnFieldProperty
 			name="oggetto" />
 		<columnFieldProperty

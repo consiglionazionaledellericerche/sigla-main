@@ -75,6 +75,15 @@
 		enabledOnEdit="false"
 		nullable="false"
 		label="Eliminato" />
+	<fieldProperty
+		name="tipo_associazione"
+		property="tipo_associazione"
+		inputType="SELECT"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		keysProperty="tipiAssociazioneKeys"
+		label="Tipo Associazione" />
 
 	<formFieldProperty
 		name="cd_tipo_incarico" />
@@ -90,6 +99,8 @@
 		name="find_tipo_rapporto" />
 	<formFieldProperty
 		name="fl_cancellato" />
+	<formFieldProperty
+		name="tipo_associazione" />
 
 	<columnFieldProperty
 		name="cd_tipo_incarico" />
@@ -118,6 +129,8 @@
 		name="prc_incremento" />
 	<findFieldProperty
 		name="fl_cancellato" />
+	<findFieldProperty
+		name="tipo_associazione" />
 
 	<form
 		name="searchtool" >

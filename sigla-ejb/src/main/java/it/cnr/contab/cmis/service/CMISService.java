@@ -24,7 +24,6 @@ import java.util.regex.Pattern;
 
 import org.apache.chemistry.opencmis.client.api.Property;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
-import org.apache.chemistry.opencmis.commons.data.Ace;
 import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisBaseException;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
@@ -115,10 +114,10 @@ public class CMISService {
 
 	public CMISPath createFolderIfNotPresent(CMISPath cmisPath, String folderName, String title, String description, OggettoBulk oggettoBulk, String objectTypeName){
 		Node node = nodeService.getNodeByPath(systemCredentials, cmisPath.getPath());
+		List<Property<?>> metadataProperties = new ArrayList<Property<?>>();
+		List<String> aspectsToAdd = new ArrayList<String>();
+		List<Property<?>> aspectProperties = new ArrayList<Property<?>>();
 		try{
-			List<Property<?>> metadataProperties = new ArrayList<Property<?>>();
-			List<String> aspectsToAdd = new ArrayList<String>();
-			List<Property<?>> aspectProperties = new ArrayList<Property<?>>();
 			folderName = sanitizeFolderName(folderName);
 			metadataProperties.add(
 					nodeService.getDictionaryService().createProperty(systemCredentials, 
@@ -151,6 +150,13 @@ public class CMISService {
 			Node folder = nodeService.createFolder(systemCredentials, node, metadataProperties, aspectsToAdd, aspectProperties);
 			return CMISPath.construct(folder.getPath());
 		}catch(CmisConstraintException _ex){
+			if (oggettoBulk!=null){
+				Node folder = nodeService.getNodeByPath(systemCredentials, cmisPath.getPath()+
+																    (cmisPath.getPath().equals("/")?"":"/")+
+																    sanitizeFilename(folderName).toLowerCase());
+				folder = nodeService.updateNode(systemCredentials, folder, metadataProperties, aspectsToAdd, null, aspectProperties);
+				return CMISPath.construct(folder.getPath());
+			}
 			return cmisPath.appendToPath(folderName);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -282,9 +288,9 @@ public class CMISService {
 	}
 
 	public List<ACL> removeConsumerToEveryone(Node node){
-		return null;//nodeService.removeACL(systemCredentials, node, "GROUP_EVERYONE", "cmis:read");
+		return nodeService.removeACL(systemCredentials, node, "GROUP_EVERYONE", "cmis:read");
 	}
-	
+
 	public void copyNode(Node source, Node target){
 		nodeService.copyNode(systemCredentials, source, target);
 	}
@@ -303,5 +309,9 @@ public class CMISService {
 
 	public void removeAspect(Node node, String... aspectName){
 		nodeService.updateNode(systemCredentials, node, null, null, Arrays.asList(aspectName), null);		
+	}
+
+	public void setInheritedPermission(CMISPath cmisPath, Boolean inheritedPermission){
+		nodeService.setInheritedPermission(systemCredentials, nodeService.getNodeByPath(systemCredentials, cmisPath.getPath()), inheritedPermission);
 	}
 }

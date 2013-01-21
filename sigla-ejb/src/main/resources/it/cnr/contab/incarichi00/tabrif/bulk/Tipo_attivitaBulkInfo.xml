@@ -40,6 +40,15 @@
 		enabledOnEdit="false"
 		nullable="false"
 		label="Eliminato" />
+	<fieldProperty
+		name="tipo_associazione"
+		property="tipo_associazione"
+		inputType="SELECT"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		keysProperty="tipiAssociazioneKeys"
+		label="Tipo Associazione" />
 
 	<formFieldProperty
 		name="cd_tipo_attivita" />
@@ -49,6 +58,8 @@
 		name="fl_pubblica_contratto" />
 	<formFieldProperty
 		name="fl_cancellato" />
+	<formFieldProperty
+		name="tipo_associazione" />
 
 	<columnFieldProperty
 		name="cd_tipo_attivita" />
@@ -67,6 +78,8 @@
 		name="fl_pubblica_contratto" />
 	<findFieldProperty
 		name="fl_cancellato" />
+	<findFieldProperty
+		name="tipo_associazione" />
 
 	<form
 		name="searchtool" >

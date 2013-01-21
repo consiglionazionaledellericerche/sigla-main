@@ -3,7 +3,10 @@
  * Date 03/04/2008
  */
 package it.cnr.contab.incarichi00.bulk;
+import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.jada.persistency.KeyedPersistent;
+
+import java.io.InputStream;
 public class Incarichi_procedura_archivioKey extends Incarichi_archivioBulk implements KeyedPersistent {
 	private java.lang.Integer esercizio;
 	private java.lang.Long pg_procedura;
@@ -50,20 +53,5 @@ public class Incarichi_procedura_archivioKey extends Incarichi_archivioBulk impl
 	}
 	public java.lang.Long getProgressivo_riga() {
 		return progressivo_riga;
-	}
-	public String getDownloadUrl()
-	{
-		if(this == null ||this.getNome_file() == null)
-			return null;
-		StringBuffer stringbuffer = new StringBuffer("download_incarichi/fileProceduraAllegato");
-		stringbuffer.append("/");
-		stringbuffer.append(this.getEsercizio());
-		stringbuffer.append("/");
-		stringbuffer.append(this.getPg_procedura());	
-		stringbuffer.append("/");
-		stringbuffer.append(this.getProgressivo_riga());	
-		stringbuffer.append("/");
-		stringbuffer.append(this.getNome_file());	
-		return stringbuffer.toString();
 	}
 }

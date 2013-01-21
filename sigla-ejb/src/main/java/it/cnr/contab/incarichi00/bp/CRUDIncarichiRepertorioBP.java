@@ -1,9 +1,5 @@
 package it.cnr.contab.incarichi00.bp;
 
-import java.io.File;
-import java.rmi.RemoteException;
-import java.util.Iterator;
-
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -25,6 +21,9 @@ import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
 import it.cnr.jada.util.upload.UploadedFile;
+
+import java.rmi.RemoteException;
+import java.util.Iterator;
 
 public class CRUDIncarichiRepertorioBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	private static final long LUNGHEZZA_MAX=0x1000000;
@@ -175,8 +174,6 @@ public class CRUDIncarichiRepertorioBP extends it.cnr.jada.util.action.SimpleCRU
 
 				if(coll == null || coll.isEmpty()){
 					incarico.setTipo_rapporto(null);
-					incarico.setTipiTrattamento(null);
-					incarico.setTipo_trattamento(null);
 					throw new it.cnr.jada.comp.ApplicationException("Non esistono Tipi Rapporto validi associati al contraente selezionato");
 				} 
 				else if (incarico.getTipo_rapporto()!=null) {
@@ -187,16 +184,11 @@ public class CRUDIncarichiRepertorioBP extends it.cnr.jada.util.action.SimpleCRU
 							break;	
 						}
 					}
-					if (!trovato) {
+					if (!trovato)
 						incarico.setTipo_rapporto(null);
-						incarico.setTipiTrattamento(null);
-						incarico.setTipo_trattamento(null);
-					}							
 				}
 			}else{
 				incarico.setTipo_rapporto(null);
-				incarico.setTipiTrattamento(null);
-				incarico.setTipo_trattamento(null);
 			}
 
 		}catch(it.cnr.jada.comp.ComponentException ex){
@@ -205,29 +197,6 @@ public class CRUDIncarichiRepertorioBP extends it.cnr.jada.util.action.SimpleCRU
 			throw handleException(ex);
 		}
 	}
-	public void findTipiTrattamento(ActionContext context) throws BusinessProcessException{
-		try{
-			Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)getModel();
-			
-			if (incarico.getTipo_rapporto()!= null) {
-				IncarichiRepertorioComponentSession sess = (IncarichiRepertorioComponentSession)createComponentSession();
-				java.util.Collection coll = sess.findTipiTrattamento(context.getUserContext(), incarico);
-				incarico.setTipiTrattamento(coll);
-
-				if(coll == null || coll.isEmpty()){
-					incarico.setTipo_trattamento(null);
-					throw new it.cnr.jada.comp.ApplicationException("Non esistono Tipi Trattamento associabili all'incarico selezionato");
-				}
-			}else
-				incarico.setTipo_trattamento(null);
-			
-		}catch(it.cnr.jada.comp.ComponentException ex){
-			throw handleException(ex);
-		}catch(java.rmi.RemoteException ex){
-			throw handleException(ex);
-		}
-	}
-
 	public final SimpleDetailCRUDController getRipartizionePerAnno() {
 		return ripartizionePerAnno;
 	}

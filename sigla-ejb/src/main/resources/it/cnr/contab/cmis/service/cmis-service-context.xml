@@ -58,6 +58,6 @@
     	</constructor-arg>
 	</bean>
     <bean id="pdgVariazioniService" class="it.cnr.contab.pdg00.service.PdgVariazioniService" parent="cmisService"/>
+    <bean id="contrattiService" class="it.cnr.contab.incarichi00.service.ContrattiService" parent="cmisService"/>
     <bean id="contrattoService" class="it.cnr.contab.config00.service.ContrattoService" parent="cmisService"/>
-
 </beans>

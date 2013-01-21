@@ -13,6 +13,7 @@ import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.persistency.sql.CHARToBooleanConverter;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Iterator;
 

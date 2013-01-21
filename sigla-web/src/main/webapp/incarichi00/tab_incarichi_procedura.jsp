@@ -83,33 +83,43 @@
          <td><% bp.getController().writeFormLabel(out,"oggetto");%></td>
          <td colspan=4><% bp.getController().writeFormInput(out,"oggetto");%></td>
       </tr>                     	
-	  <tr>
-        <td><% bp.getController().writeFormLabel(out,"procedura_amministrativa");%></td>
-        <td><% bp.getController().writeFormInput(out,"procedura_amministrativa");%></td>
-        <td>&nbsp;&nbsp;</td>
-        <td><% bp.getController().writeFormLabel(out,"fl_art51");%></td>
-        <td><% bp.getController().writeFormInput(out,"fl_art51");%></td>
-      </tr>
+	  <%if (bp==null||bp.isIncarichiProceduraBP()) {%>
+		  <tr>
+	        <td><% bp.getController().writeFormLabel(out,"procedura_amministrativa");%></td>
+	        <td><% bp.getController().writeFormInput(out,"procedura_amministrativa");%></td>
+	        <td>&nbsp;&nbsp;</td>
+	        <td><% bp.getController().writeFormLabel(out,"fl_art51");%></td>
+	        <td><% bp.getController().writeFormInput(out,"fl_art51");%></td>
+	      </tr>
+	  <%}%>
       </table></div>
       </td></tr>
       <tr><td colspan=4>
       <div class="Group"><table>            
 	  <tr>         
-         <td><% bp.getController().writeFormLabel(out,"find_tipo_attivita");%></td>
-         <td><% bp.getController().writeFormInput(out,"find_tipo_attivita");%></td>
-         <td>&nbsp;</td>
+		 <%if (bp==null||bp.isIncarichiProceduraBP()) {%>
+	         <td><% bp.getController().writeFormLabel(out,"find_tipo_attivita");%></td>
+	         <td><% bp.getController().writeFormInput(out,"find_tipo_attivita");%></td>
+	         <td>&nbsp;</td>
+	     <%}%>
 	 	 <td><% bp.getController().writeFormLabel(out,"tipo_natura");%></td>
 		 <td><% bp.getController().writeFormInput(out,"tipo_natura");%></td>
       </tr>
-	  <tr>
-	  	 <td><% bp.getController().writeFormLabel(out,"find_tipo_incarico");%></td>
-	 	 <td><% bp.getController().writeFormInput(out,"find_tipo_incarico");%></td>
-		<% if (model.isMeramenteOccasionaleEnabled()) { %>
-			 <td>&nbsp;</td>
-		 	 <td><% bp.getController().writeFormLabel(out,"fl_meramente_occasionale");%></td>
-			 <td><% bp.getController().writeFormInput(out,"fl_meramente_occasionale");%></td>
-		<% } %>
-	  </tr>
+	  <%if (bp==null||bp.isIncarichiProceduraBP()) {%>
+		  <tr>
+		  	 <td><% bp.getController().writeFormLabel(out,"find_tipo_incarico");%></td>
+		 	 <td><% bp.getController().writeFormInput(out,"find_tipo_incarico");%></td>
+			<% if (model.isMeramenteOccasionaleEnabled()) { %>
+				 <td>&nbsp;</td>
+			 	 <td><% bp.getController().writeFormLabel(out,"fl_meramente_occasionale");%></td>
+				 <td><% bp.getController().writeFormInput(out,"fl_meramente_occasionale");%></td>
+			<% } %>
+		  </tr>
+		  <tr>
+		  	 <td><% bp.getController().writeFormLabel(out,"tipo_prestazione");%></td>
+		 	 <td><% bp.getController().writeFormInput(out,"tipo_prestazione");%></td>
+		  </tr>
+      <%}%>
       </table></div>
       </td></tr>
       <tr><td colspan=4>
@@ -213,21 +223,23 @@
 <% } %>	  
       </table></div>
       </td></tr>
-      <tr><td colspan=4>
-      <div class="Group"><table>            
-	  <tr>
-         <td><% bp.getController().writeFormLabel(out,"incarichi_richiesta");%></td>
-         <td colspan=3><% bp.getController().writeFormInput(out,"default","incarichi_richiesta",bp.isROIncaricoRichiesta(),"FormInput",null); %></td>
-      </tr>
-      </table></div>
-      </td></tr>
-      <tr><td colspan=4>
-      <div class="Group"><table>            
-	  <tr>
-         <td><% bp.getController().writeFormLabel(out,"incarichi_procedura_padre");%></td>
-         <td colspan=3><% bp.getController().writeFormInput(out,"incarichi_procedura_padre");%></td>
-      </tr>
-      </table></div>
-      </td></tr>		
+	  <%if (bp==null||bp.isIncarichiProceduraBP()) {%>
+	      <tr><td colspan=4>
+	      <div class="Group"><table>            
+		  <tr>
+	         <td><% bp.getController().writeFormLabel(out,"incarichi_richiesta");%></td>
+	         <td colspan=3><% bp.getController().writeFormInput(out,"default","incarichi_richiesta",bp.isROIncaricoRichiesta(),"FormInput",null); %></td>
+	      </tr>
+	      </table></div>
+	      </td></tr>
+	      <tr><td colspan=4>
+	      <div class="Group"><table>            
+		  <tr>
+	         <td><% bp.getController().writeFormLabel(out,"incarichi_procedura_padre");%></td>
+	         <td colspan=3><% bp.getController().writeFormInput(out,"incarichi_procedura_padre");%></td>
+	      </tr>
+	      </table></div>
+	      </td></tr>		
+	<% } %>	  
  	</table>   
    </fieldset>

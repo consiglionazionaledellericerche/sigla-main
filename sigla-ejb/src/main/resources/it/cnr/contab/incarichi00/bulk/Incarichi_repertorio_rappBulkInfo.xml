@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="pg_repertorio"
+		property="incarichi_repertorio.pg_repertorio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Identificativo Incarico" />
+	<fieldProperty
+		name="anno_competenza"
+		property="anno_competenza"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Anno di conferimento" />
+	<fieldProperty
+		name="dt_dichiarazione"
+		property="dt_dichiarazione"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnSearch="true"
+		nullable="false"
+		command="doOnDtDichiarazioneChange"
+		label="Data dichiarazione" />
+	<fieldProperty
+		name="fl_altri_rapporti"
+		property="fl_altri_rapporti"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		nullable="false"
+		label="Altri Rapporti stipulati" />
+
+	<formFieldProperty
+		name="pg_repertorio" />
+	<formFieldProperty
+		name="anno_competenza" />
+	<formFieldProperty
+		name="dt_dichiarazione" />
+	<formFieldProperty
+		name="fl_altri_rapporti" />
+
+	<columnSet
+		name="dichiarazione">
+		<columnFieldProperty
+			name="dt_dichiarazione" />
+		<columnFieldProperty
+			name="fl_altri_rapporti" />
+		<columnFieldProperty
+			name="nome_file"
+	 		label="File archiviato" />
+		<columnFieldProperty
+			name="stato" 
+			label="Stato" />
+	</columnSet>
+		
+	<findFieldProperty
+		name="dt_dichiarazione" />
+	<findFieldProperty
+		name="fl_altri_rapporti" />
+</bulkInfo>

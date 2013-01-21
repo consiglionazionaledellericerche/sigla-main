@@ -1,34 +1,18 @@
 package it.cnr.contab.incarichi00.bp;
 
-import java.io.IOException;
-import java.rmi.RemoteException;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.servlet.ServletException;
-import javax.servlet.jsp.PageContext;
-
-import javax.xml.parsers.*;
-import javax.xml.transform.*;
-import javax.xml.transform.stream.*;
-import javax.xml.transform.dom.*;
-import org.w3c.dom.*;
-
 import it.cnr.contab.config00.bp.ResponseXMLBP;
 import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.util.Constants;
-import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
+import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioBulk;
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_rapp_detBulk;
 import it.cnr.contab.incarichi00.bulk.V_incarichi_collaborazioneBulk;
 import it.cnr.contab.incarichi00.bulk.V_incarichi_elencoBulk;
 import it.cnr.contab.incarichi00.bulk.V_incarichi_richiestaBulk;
 import it.cnr.contab.incarichi00.ejb.IncarichiRichiestaComponentSession;
-import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
@@ -40,6 +24,32 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
+
+import java.io.IOException;
+import java.rmi.RemoteException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.jsp.PageContext;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements ResponseXMLBP {
 	private String query;
@@ -319,7 +329,6 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 	}
 
 	private Element generaDettaglioContratti(Document xmldoc, ContrattoBulk contratto) throws ParseException{
-		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
 		String dato;
 		Element elementContratto = xmldoc.createElement(getTagRadice()+":contratto");
 
@@ -402,6 +411,87 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		return elementContratto;
 	}	
 		
+	private Element generaDettaglioIncarichiArt18(Document xmldoc, V_incarichi_elencoBulk incarico) throws ParseException{
+		String dato;
+		Element elementIncarico = xmldoc.createElement(getTagRadice()+":contratto");
+
+		Element elementChiave = xmldoc.createElement(getTagRadice()+":chiave");
+		dato = String.valueOf(incarico.getEsercizio()).concat("/").concat(String.valueOf(incarico.getPg_repertorio())); 
+		elementChiave.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+		elementIncarico.appendChild(elementChiave);
+		
+		Element elementDenominazione = xmldoc.createElement(getTagRadice()+":denominazione");
+		dato = incarico.getBenef_denominazione_sede(); 
+		Node nodeNumeroRichiesta = xmldoc.createTextNode(dato!=null?dato:"");
+		elementDenominazione.appendChild(nodeNumeroRichiesta);
+		elementIncarico.appendChild(elementDenominazione);
+
+		Element elementCodFis = xmldoc.createElement(getTagRadice()+":codicefiscale");
+		dato = incarico.getBenef_codice_fiscale(); 
+		elementCodFis.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+		elementIncarico.appendChild(elementCodFis);
+		
+		Element elementPariva = xmldoc.createElement(getTagRadice()+":partitaiva");
+		dato = incarico.getBenef_partita_iva(); 
+		elementPariva.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+		elementIncarico.appendChild(elementPariva);
+		
+		Element elementImporto = xmldoc.createElement(getTagRadice()+":importo");
+		dato = new it.cnr.contab.util.EuroFormat().format(incarico.getImporto_lordo_con_variazioni()); 
+		elementImporto.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+		elementIncarico.appendChild(elementImporto);
+
+		Element elementTipoNorma = xmldoc.createElement(getTagRadice()+":tiponorma");
+		dato = incarico.getDs_tipo_norma(); 
+		elementTipoNorma.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+		elementIncarico.appendChild(elementTipoNorma);
+
+		Element elementDenominazioneCDR = xmldoc.createElement(getTagRadice()+":cdr");
+		dato = incarico.getDs_unita_organizzativa(); 
+		elementDenominazioneCDR.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+		elementIncarico.appendChild(elementDenominazioneCDR);
+
+		Element elementDirettore = xmldoc.createElement(getTagRadice()+":responsabile");
+		dato = incarico.getFirm_denominazione_sede(); 
+		elementDirettore.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+		elementIncarico.appendChild(elementDirettore);
+
+		Element elementResponsabileProcedimento = xmldoc.createElement(getTagRadice()+":responsabile_procedimento");
+		dato = incarico.getResp_denominazione_sede();
+		elementResponsabileProcedimento.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+		elementIncarico.appendChild(elementResponsabileProcedimento);
+		
+		Element elementBeneficiario = xmldoc.createElement(getTagRadice()+":mod_individuazione_beneficiario");
+		dato = incarico.getDs_proc_amm(); 
+		elementBeneficiario.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+		elementIncarico.appendChild(elementBeneficiario);
+
+		Incarichi_repertorio_archivioBulk contratto = incarico.getIncaricoRepertorio().getContratto();
+		if (contratto!=null && contratto.getCms_node_ref()!=null) {
+			Element elementLink = xmldoc.createElement(getTagRadice()+":url_contratto");
+			dato = "genericdownload/"+contratto.getNome_file()+"?nodeRef="+contratto.getCms_node_ref(); 
+			elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+			elementIncarico.appendChild(elementLink);
+		}
+
+		Incarichi_repertorio_archivioBulk curriculum = incarico.getIncaricoRepertorio().getCurriculumVincitore();
+		if (curriculum!=null && curriculum.getCms_node_ref()!=null) {
+			Element elementLink = xmldoc.createElement(getTagRadice()+":url_capitolato");
+			dato = "genericdownload/"+curriculum.getNome_file()+"?nodeRef="+curriculum.getCms_node_ref(); 
+			elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+			elementIncarico.appendChild(elementLink);
+		}
+
+		Incarichi_procedura_archivioBulk progetto = incarico.getIncaricoRepertorio().getIncarichi_procedura().getProgetto();
+		if (progetto!=null && progetto.getCms_node_ref()!=null) {
+			Element elementLink = xmldoc.createElement(getTagRadice()+":url_progetto");
+			dato = "genericdownload/"+progetto.getNome_file()+"?nodeRef="+progetto.getCms_node_ref(); 
+			elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+			elementIncarico.appendChild(elementLink);
+		}
+		return elementIncarico;
+	}	
+
 	private Element generaDettaglioIncarichiElenco(Document xmldoc, V_incarichi_elencoBulk incarico) throws ParseException{
 		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
 		String dato;
@@ -457,7 +547,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		*/
 		
 		Element elementNominativo = xmldoc.createElement(getTagRadice()+":nominativo");
-		dato = incarico.getNominativo();
+		dato = incarico.getBenef_denominazione_sede();
 		Node nodeNominativo = xmldoc.createTextNode(dato!=null?dato:"");
 		elementNominativo.appendChild(nodeNominativo);
 		elementRichiesta.appendChild(elementNominativo);
@@ -513,6 +603,43 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		Node nodeProvvedimento = xmldoc.createCDATASection(dato!=null?dato:"");
 		elementProvvedimento.appendChild(nodeProvvedimento);
 		elementRichiesta.appendChild(elementProvvedimento);
+
+		if (incarico.getIncarichi_repertorio_rapp_detColl()!=null && !incarico.getIncarichi_repertorio_rapp_detColl().isEmpty()){
+			Element elementAltriRapporti = xmldoc.createElement(getTagRadice()+":altrirapporti");
+		
+			for (Iterator<Incarichi_repertorio_rapp_detBulk> i = incarico.getIncarichi_repertorio_rapp_detColl().iterator();i.hasNext();){
+				Incarichi_repertorio_rapp_detBulk rapDett = i.next();
+
+				Element elementRapporto = xmldoc.createElement(getTagRadice()+":rapporto");
+
+				Element elementConferenteRapporto = xmldoc.createElement(getTagRadice()+":conferente");
+				dato = rapDett.getConferente_rapporto();
+				Node nodeConferenteRapporto = xmldoc.createCDATASection(dato!=null?dato:"");
+				elementConferenteRapporto.appendChild(nodeConferenteRapporto);
+				elementRapporto.appendChild(elementConferenteRapporto);
+
+				Element elementNaturaRapporto = xmldoc.createElement(getTagRadice()+":natura");
+				dato = Incarichi_repertorio_rapp_detBulk.tipoRapportoKeys.get(rapDett.getNatura_rapporto()).toString();
+				Node nodeNaturaRapporto = xmldoc.createTextNode(dato!=null?dato:"");
+				elementNaturaRapporto.appendChild(nodeNaturaRapporto);
+				elementRapporto.appendChild(elementNaturaRapporto);
+
+				Element elementDataInizioRapporto = xmldoc.createElement(getTagRadice()+":datainizio");
+				dato = formatter.format(rapDett.getDt_ini_rapporto()).toString();
+				Node nodeDataInizioRapporto = xmldoc.createTextNode(dato!=null?dato:"");
+				elementDataInizioRapporto.appendChild(nodeDataInizioRapporto);
+				elementRapporto.appendChild(elementDataInizioRapporto);
+
+				Element elementImportoRapporto = xmldoc.createElement(getTagRadice()+":importo");
+				dato = new it.cnr.contab.util.EuroFormat().format(rapDett.getImporto_rapporto());
+				Node nodeImportoRapporto = xmldoc.createTextNode(dato!=null?dato:"");
+				elementImportoRapporto.appendChild(nodeImportoRapporto);
+				elementRapporto.appendChild(elementImportoRapporto);
+				
+				elementAltriRapporti.appendChild(elementRapporto);
+			}
+			elementRichiesta.appendChild(elementAltriRapporti);
+		}
 /*
 		// si dovranno togliere i due if innestati
 		if(incarico.getDt_stipula()!=null) {
@@ -566,6 +693,8 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		    				elem = generaDettaglioIncarichiElenco(xmldoc,(V_incarichi_elencoBulk)incarico);
 		    			else if (getTipofile().equals("4"))
 		    				elem = generaDettaglioContratti(xmldoc,(ContrattoBulk)incarico);
+		    			else if (getTipofile().equals("5"))
+		    				elem = generaDettaglioIncarichiArt18(xmldoc,(V_incarichi_elencoBulk)incarico);
 		    			if (elem!=null)
 		    				root.appendChild(elem);
 		    		}
@@ -633,6 +762,8 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 				this.setIterator(context, componentSession.findListaIncarichiElenco(context.getUserContext(),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic()));			
 			else if (getTipofile().equals("4"))
 				this.setIterator(context, contrattoComponentSession.findListaContrattiElenco(context.getUserContext(),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic()));			
+			else if (getTipofile().equals("5"))
+				this.setIterator(context, componentSession.findListaIncarichiElencoArt18(context.getUserContext(),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic()));			
 
 		} catch (ComponentException e) {
 			e.printStackTrace();
@@ -695,7 +826,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 				setIncarichi(componentSession.completaListaIncarichiRichiesta(context.getUserContext(), list));
 			else if (getTipofile().equals("2"))
 				setIncarichi(componentSession.completaListaIncarichiCollaborazione(context.getUserContext(),list));
-			else if (getTipofile().equals("3"))
+			else if (getTipofile().equals("3") || getTipofile().equals("5"))
 				setIncarichi(componentSession.completaListaIncarichiElenco(context.getUserContext(),list));
 			else if (getTipofile().equals("4"))
 				setIncarichi(completaListaContrattiElenco(context.getUserContext(),list));
@@ -790,7 +921,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 			return "incarichi";
 		else if (getTipofile().equals("2"))
 			return "collaborazioni";
-		else if (getTipofile().equals("3"))
+		else if (getTipofile().equals("3") || getTipofile().equals("5"))
 			return "elenco";
 		else if (getTipofile().equals("4"))
 			return "contratti";

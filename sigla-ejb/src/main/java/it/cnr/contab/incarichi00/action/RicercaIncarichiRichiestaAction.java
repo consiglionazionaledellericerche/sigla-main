@@ -37,6 +37,10 @@ public class RicercaIncarichiRichiestaAction extends AbstractAction {
 	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&dominio=data&query=s           * solo incarichi di collaborazione scadute (e quelle non ancora attive)
 	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&dominio=data&query=c&anno=2008 * solo incarichi di collaborazione in corso pubblicate nel 2008
 	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&dominio=data&query=s&anno=2008 * solo incarichi di collaborazione scadute (e quelle non ancora attive) pubblicate nel 2008
+
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=4                                * elenco contratti conferiti
+
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=5                                * elenco incarichi per art.18
 	*/
 			 
 	public RicercaIncarichiRichiestaAction() {

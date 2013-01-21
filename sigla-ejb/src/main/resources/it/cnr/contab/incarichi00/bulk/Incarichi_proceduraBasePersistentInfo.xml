@@ -95,6 +95,12 @@
 			columnSize="5"
 			nullable="false" />
 		<columnMapping
+			columnName="CD_PROC_AMM_BENEF"
+			propertyName="cd_proc_amm_benef"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
 			columnName="CD_TIPO_ATTO"
 			propertyName="cd_tipo_atto"
 			sqlTypeName="VARCHAR"
@@ -206,6 +212,43 @@
 			columnSize="500"
 			nullable="true" />
 		<columnMapping
+			columnName="CD_TIPO_PRESTAZIONE"
+			propertyName="cd_tipo_prestazione"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TIPO_ATTIVITA_FP"
+			propertyName="cd_tipo_attivita_fp"
+			sqlTypeName="VARCHAR"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="FL_APPLICAZIONE_NORMA"
+			propertyName="fl_applicazione_norma"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TIPO_NORMA_PERLA"
+			propertyName="cd_tipo_norma_perla"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_LIBERA_NORMA_PERLA"
+			propertyName="ds_libera_norma_perla"
+			sqlTypeName="VARCHAR"
+			columnSize="500"
+			nullable="true" />
+		<columnMapping
+			columnName="FL_MIGRATA_TO_CMIS"
+			propertyName="fl_migrata_to_cmis"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="UTCR"
 			propertyName="utcr"
 			sqlTypeName="VARCHAR"
@@ -267,6 +310,8 @@
 	<persistentProperty
 		name="cd_proc_amm" />
 	<persistentProperty
+		name="cd_proc_amm_benef" />
+	<persistentProperty
 		name="cd_tipo_atto" />
 	<persistentProperty
 		name="ds_atto" />
@@ -302,6 +347,18 @@
 		name="fl_sbloccato" />
 	<persistentProperty
 		name="ds_motivazione_sblocco" />
+	<persistentProperty
+		name="cd_tipo_prestazione" />
+	<persistentProperty
+		name="cd_tipo_attivita_fp" />
+  	<persistentProperty
+		name="fl_applicazione_norma" />
+  	<persistentProperty
+		name="cd_tipo_norma_perla" />
+  	<persistentProperty
+		name="ds_libera_norma_perla" />
+  	<persistentProperty
+		name="fl_migrata_to_cmis" />
 	<persistentProperty
 		name="utcr" />
 	<persistentProperty

@@ -28,7 +28,8 @@
 
 	boolean isRODettaglio = false;
 	if (allegato!=null && ((allegato.isContratto() && (bp.isSuperUtente() || bp.isUtenteAbilitatoModificaAllegatoContratto())) ||
-						   (allegato.isAllegatoGenerico() && bp.isSuperUtente()))) {
+						   (allegato.isAllegatoGenerico() && bp.isSuperUtente()) ||
+						   (allegato.isCurriculumVincitore()))) {
 		isRODettaglio = incarico==null||allegato==null||!allegato.isToBeCreated()||
 						!allegato.isAllegatoValido()||
 						incarico.getIncarichi_procedura().getFaseProcesso().compareTo(Incarichi_proceduraBulk.FASE_PUBBLICAZIONE)==0||
@@ -47,12 +48,9 @@
 %>
 
 <script language="JavaScript">
+<script language="JavaScript">
 function doScaricaFile() {	
-   larghFinestra=5;
-   altezFinestra=5;
-   sinistra=(screen.width)/2;
-   alto=(screen.height)/2;
-   window.open("<%= (allegato==null?null:allegato.getDownloadUrl()) %>","DOWNLOAD","left="+sinistra+",top="+alto+",width="+larghFinestra+", height="+altezFinestra+",menubar=no,toolbar=no,location=no")
+	doPrint('<%=(allegato==null?null:allegato.getDownloadUrl())%>');
 }
 </script>
 
@@ -63,7 +61,7 @@ function doScaricaFile() {
 	</tr>
     <% if (allegato==null || allegato.getTipo_archivio()!=null) {%>
 	    <% if (allegato!=null && allegato.getTipo_archivio()!=null &&
-	    	  (allegato.isContratto() || allegato.isAllegatoDaPubblicare())) {%>
+	    	  (allegato.isContratto())) {%>
 		<tr>
 			<td colspan=5>
 			<div class="Group"><table>
@@ -81,7 +79,7 @@ function doScaricaFile() {
 					</span>
 				</td></tr>
 				<% } %>
- 				<% if (allegato.isContratto() || allegato.isAllegatoDaPubblicare()) { %>
+ 				<% if (allegato.isContratto()) { %>
 				<tr><td valign=top>
 			    	<span class="FormLabel" style="color:red">Attenzione:</span>
 			    </td>
