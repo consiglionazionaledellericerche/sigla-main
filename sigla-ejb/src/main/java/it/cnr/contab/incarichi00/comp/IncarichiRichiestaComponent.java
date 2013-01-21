@@ -1,10 +1,7 @@
 package it.cnr.contab.incarichi00.comp;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
-import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
-import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -25,7 +22,6 @@ import it.cnr.contab.incarichi00.bulk.V_incarichi_collaborazioneBulk;
 import it.cnr.contab.incarichi00.bulk.V_incarichi_collaborazioneHome;
 import it.cnr.contab.incarichi00.bulk.V_incarichi_elencoBulk;
 import it.cnr.contab.incarichi00.bulk.V_incarichi_elencoHome;
-import it.cnr.contab.incarichi00.bulk.V_incarichi_elenco_fpBulk;
 import it.cnr.contab.incarichi00.bulk.V_incarichi_richiestaBulk;
 import it.cnr.contab.incarichi00.bulk.V_incarichi_richiestaHome;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_attivitaBulk;
@@ -40,7 +36,6 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
-import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
@@ -410,7 +405,7 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 			sql.openParenthesis(FindClause.AND);
 			sql.addSQLClause(FindClause.OR,"instr(ESERCIZIO||'/'||PG_REPERTORIO,'"+strRicerca+"')>0");
 			sql.addSQLClause(FindClause.OR,"instr(UPPER(DS_UNITA_ORGANIZZATIVA),'"+strRicerca.toUpperCase()+"')>0");
-			sql.addSQLClause(FindClause.OR,"instr(UPPER(NOMINATIVO),'"+strRicerca.toUpperCase()+"')>0");
+			sql.addSQLClause(FindClause.OR,"instr(UPPER(BENEF_DENOMINAZIONE_SEDE),'"+strRicerca.toUpperCase()+"')>0");
 			sql.addSQLClause(FindClause.OR,"instr(UPPER(OGGETTO),'"+strRicerca.toUpperCase()+"')>0");
 			sql.addSQLClause(FindClause.OR,"instr(to_char(nvl(IMPORTO_LORDO,0)+nvl(IMPORTO_VARIAZIONE,0), '999999999999999D99'),'"+strRicerca.toUpperCase()+"')>0");
 			sql.addSQLClause(FindClause.OR,"instr(to_char(nvl(IMPORTO_LORDO,0)+nvl(IMPORTO_VARIAZIONE,0), '999G999G999G999G999D99'),'"+strRicerca.toUpperCase()+"')>0");
@@ -429,7 +424,7 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 			else if (order.equals("cdr"))
 				sql.addOrderBy("DS_UNITA_ORGANIZZATIVA");
 			else if (order.equals("nominativo"))
-				sql.addOrderBy("NOMINATIVO");
+				sql.addOrderBy("BENEF_DENOMINAZIONE_SEDE");
 			else if (order.equals("oggetto"))
 				sql.addOrderBy("OGGETTO");
 			else if (order.equals("importo"))
