@@ -449,7 +449,7 @@ public void findTipiPrestazioneCompenso(ActionContext context) throws BusinessPr
 			java.util.Collection coll = component.findTipiPrestazioneCompenso(context.getUserContext(), compenso);
 			compenso.setTipiPrestazioneCompenso(coll);
 
-			if(coll == null || coll.isEmpty()){
+			if((coll == null || coll.isEmpty()) && compenso.isPrestazioneCompensoEnabled()){
 				compenso.setTipoPrestazioneCompenso(null);
 				throw new it.cnr.jada.comp.ApplicationException("Non esistono Tipi di prestazione associati al Tipo di Rapporto selezionato");
 			}
