@@ -922,20 +922,26 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
     }
     public boolean isProceduraForBorseStudio(){
     	return this.getTipo_incarico()!=null &&
+    		   this.getTipo_incarico().getTipo_associazione()!=null &&
     		   this.getTipo_incarico().getTipo_associazione().equals(Tipo_incaricoBulk.ASS_BORSE_STUDIO) &&
     		   this.getTipo_attivita()!=null &&
+    		   this.getTipo_attivita().getTipo_associazione()!=null &&
     		   this.getTipo_attivita().getTipo_associazione().equals(Tipo_attivitaBulk.ASS_BORSE_STUDIO);
     }
     public boolean isProceduraForAssegniRicerca(){
     	return this.getTipo_incarico()!=null &&
+     		   this.getTipo_incarico().getTipo_associazione()!=null &&
     		   this.getTipo_incarico().getTipo_associazione().equals(Tipo_incaricoBulk.ASS_ASSEGNI_RICERCA) &&
     		   this.getTipo_attivita()!=null &&
+    		   this.getTipo_attivita().getTipo_associazione()!=null &&
     		   this.getTipo_attivita().getTipo_associazione().equals(Tipo_attivitaBulk.ASS_ASSEGNI_RICERCA);
     }
     public boolean isProceduraForIncarichi(){
     	return this.getTipo_incarico()!=null &&
+     		   this.getTipo_incarico().getTipo_associazione()!=null &&
     		   this.getTipo_incarico().getTipo_associazione().equals(Tipo_incaricoBulk.ASS_INCARICHI) &&
     		   this.getTipo_attivita()!=null &&
+    		   this.getTipo_attivita().getTipo_associazione()!=null &&
     		   this.getTipo_attivita().getTipo_associazione().equals(Tipo_attivitaBulk.ASS_INCARICHI);
     }
     public boolean isDichiarazioneContraenteRequired(){
