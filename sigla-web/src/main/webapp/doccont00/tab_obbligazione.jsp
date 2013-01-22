@@ -102,7 +102,6 @@
 			             <% bp.getController().writeFormInput(out,"pg_repertorio");%>
 			             <% bp.getController().writeFormInput(out,"oggetto_repertorio");%>
 						 <% bp.getController().writeFormInput(out,"find_incarico_repertorio"); %>
-			 			 <% bp.getController().writeFormInput(out,"crea_repertorio"); %>
 			         </td>
 			      </tr>
 			      <% } %>

@@ -2,7 +2,6 @@ package it.cnr.contab.incarichi00.bp;
 
 import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.cmis.service.CMISService;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
@@ -55,13 +54,9 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 import java.util.TreeMap;
 
 import javax.servlet.ServletException;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	private final SimpleDetailCRUDController ripartizionePerAnno = new SimpleDetailCRUDController("ProceduraAnno",Incarichi_procedura_annoBulk.class,"incarichi_procedura_annoColl",this){
@@ -1214,9 +1209,10 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 		int i=0;
 
 		hash.put(i++, new String[]{"tabTestata", "Procedura", "/incarichi00/tab_incarichi_procedura.jsp" });
-		if (isSearching())
+		if (isSearching()) {
 			hash.put(i++, new String[]{"tabSearchTerzo", "Terzo", "/incarichi00/tab_incarichi_procedura_search_terzo.jsp"});
-		else {
+			hash.put(i++, new String[]{"tabSearchIncarico", "Incarico", "/incarichi00/tab_incarichi_procedura_search_incarico.jsp"});
+		} else {
 			hash.put(i++, new String[]{"tabIncarichi_procedura_anno", "Importo per anno", "/incarichi00/tab_incarichi_procedura_anno.jsp" });
 
 			if (isContrattoEnable())

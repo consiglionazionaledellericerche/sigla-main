@@ -100,6 +100,8 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 	private Tipo_prestazioneBulk tipo_prestazione, tipo_prestazione_orig;
 	private Incarichi_proceduraBulk incarichi_procedura_padre; 
 	private V_terzo_per_compensoBulk v_terzoForSearch = new V_terzo_per_compensoBulk();
+	private Incarichi_repertorioBulk incaricoRepertorioForSearch = new Incarichi_repertorioBulk();
+	
 	protected java.util.Collection tipologie_prestazioni;
 	private Tipo_norma_perlaBulk tipo_norma_perla, tipo_norma_perla_orig;
 	protected java.util.Collection tipologie_norma_perla;
@@ -1271,5 +1273,13 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 		if (getIncarichi_parametriLink()==null)
 			return null;
 		return getIncarichi_parametriLink().getIncarichiParametri();
+	}
+	
+	public Incarichi_repertorioBulk getIncaricoRepertorioForSearch() {
+		return incaricoRepertorioForSearch;
+	}
+	
+	public void setIncaricoRepertorioForSearch(Incarichi_repertorioBulk incaricoRepertorioForSearch) {
+		this.incaricoRepertorioForSearch = incaricoRepertorioForSearch;
 	}
 }

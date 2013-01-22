@@ -579,6 +579,30 @@
 		enabledOnSearch="true"
 		label="Contraente" />
 	<fieldProperty
+		name="incaricoRepertorioSearch"
+		property="incaricoRepertorioForSearch"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		label="Incarico" />
+	<fieldProperty
+		name="esercizio_repertorioSearch"
+		property="incaricoRepertorioForSearch.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnSearch="true"
+		nullable="true"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_repertorioSearch"
+		property="incaricoRepertorioForSearch.pg_repertorio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		nullable="true"
+		label="Identificativo Incarico" />
+	<fieldProperty
 		name="ragione_sociale"
 		property="v_terzoForSearch.ragione_sociale"
 		inputType="TEXT"
@@ -962,6 +986,15 @@
 	<formFieldProperty
 		name="ds_provincia" />
 <!-- FINE DATI PER RICERCA TERZO -->
+
+<!-- DATI PER RICERCA INCARICO -->
+	<formFieldProperty
+		name="incaricoRepertorioSearch" />
+	<formFieldProperty
+		name="esercizio_repertorioSearch"  />
+	<formFieldProperty
+		name="pg_repertorioSearch" />
+<!-- FINE DATI PER RICERCA INCARICO -->
 
 	<columnFieldProperty
 		name="esercizio" />

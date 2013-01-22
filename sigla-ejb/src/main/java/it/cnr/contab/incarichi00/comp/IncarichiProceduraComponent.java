@@ -22,7 +22,6 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
 import it.cnr.contab.doccont00.comp.DateServices;
-import it.cnr.contab.incarichi00.bp.CRUDIncarichiProceduraBP;
 import it.cnr.contab.incarichi00.bulk.Ass_incarico_uoBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
@@ -264,13 +263,24 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 				sql.addSQLExistsClause(FindClause.OR,sqlCdsExists);
 			sql.closeParenthesis();
 		}
-		if (((Incarichi_proceduraBulk)bulk).getV_terzoForSearch()!=null &&
-			((Incarichi_proceduraBulk)bulk).getV_terzoForSearch().getTerzo()!=null &&
-			((Incarichi_proceduraBulk)bulk).getV_terzoForSearch().getTerzo().getCd_terzo()!=null) {
+
+		Incarichi_proceduraBulk procedura = (Incarichi_proceduraBulk)bulk;
+		boolean searchTerzo = procedura.getV_terzoForSearch()!=null && procedura.getV_terzoForSearch().getTerzo()!=null &&
+				 			  procedura.getV_terzoForSearch().getTerzo().getCd_terzo()!=null;
+		boolean searchIncarico = procedura.getIncaricoRepertorioForSearch()!=null &&
+							  	 procedura.getIncaricoRepertorioForSearch().getEsercizio()!=null &&
+							  	 procedura.getIncaricoRepertorioForSearch().getPg_repertorio()!=null;
+
+		if (searchTerzo || searchIncarico) {
 			SQLBuilder sqlExists = getHome(userContext, Incarichi_repertorioBulk.class).createSQLBuilder();
 			sqlExists.addSQLJoin( "INCARICHI_REPERTORIO.ESERCIZIO_PROCEDURA", "INCARICHI_PROCEDURA.ESERCIZIO");
 			sqlExists.addSQLJoin( "INCARICHI_REPERTORIO.PG_PROCEDURA", "INCARICHI_PROCEDURA.PG_PROCEDURA");
-			sqlExists.addClause(FindClause.AND, "cd_terzo", SQLBuilder.EQUALS, ((Incarichi_proceduraBulk)bulk).getV_terzoForSearch().getTerzo().getCd_terzo());
+			if (searchTerzo)
+				sqlExists.addClause(FindClause.AND, "cd_terzo", SQLBuilder.EQUALS, procedura.getV_terzoForSearch().getTerzo().getCd_terzo());
+			if (searchIncarico) {
+				sqlExists.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, procedura.getIncaricoRepertorioForSearch().getEsercizio());
+				sqlExists.addClause(FindClause.AND, "pg_repertorio", SQLBuilder.EQUALS, procedura.getIncaricoRepertorioForSearch().getPg_repertorio());
+			}
 			sql.addSQLExistsClause(FindClause.AND, sqlExists);
 		}
 
@@ -898,6 +908,8 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 						cmisService.updateProperties(cmisFile, cmisFile.getNode());
 					}
 				}
+				if (allegato!=null && allegato.getFile()!=null)
+					allegato.getFile().delete();
 			}
 		} catch (Exception e){
 			//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
