@@ -284,11 +284,14 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		elementRichiesta.appendChild(elementRichiedente);
 		
 		// aggiungiamo le Informazioni sull'URL del bando
-		Element elementUrl = xmldoc.createElement(getTagRadice()+":url");
-		dato = incarico.getDownloadUrl(); 
-		Node nodeUrl = xmldoc.createTextNode(dato!=null?dato:"");
-		elementUrl.appendChild(nodeUrl);
-		elementRichiesta.appendChild(elementUrl);
+		Incarichi_procedura_archivioBulk bando = incarico.getIncaricoProcedura().getBando();
+		if (bando!=null && bando.getCms_node_ref()!=null) {
+			Element elementUrl = xmldoc.createElement(getTagRadice()+":url");
+			dato = "genericdownload/"+bando.getNome_file()+"?nodeRef="+bando.getCms_node_ref(); 
+			Node nodeUrl = xmldoc.createTextNode(dato!=null?dato:"");
+			elementUrl.appendChild(nodeUrl);
+			elementRichiesta.appendChild(elementUrl);
+		}
 
 		// aggiungiamo le Informazioni sull'Attività
 		Element elementAttivita = xmldoc.createElement(getTagRadice()+":attivita");

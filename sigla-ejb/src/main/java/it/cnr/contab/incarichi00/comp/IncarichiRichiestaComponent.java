@@ -290,7 +290,7 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 			}
 
 		if(anno!=null)
-			sql.addSQLClause("AND","to_char(DATA_PUBBLICAZIONE, 'YYYY')",SQLBuilder.EQUALS,anno);
+			sql.addSQLClause("AND","to_char(DT_PUBBLICAZIONE, 'YYYY')",SQLBuilder.EQUALS,anno);
 
 		if(cdCds!=null)
 			sql.addSQLClause("AND","CD_CDS",SQLBuilder.EQUALS,cdCds);
@@ -358,6 +358,10 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
         			sediUo.put(incarico.getCd_unita_organizzativa(), indirizzo);
     			}
     			incarico.setSede(indirizzo);
+    			
+				Incarichi_proceduraBulk incaricoProcedura = (Incarichi_proceduraBulk)getHome(userContext, Incarichi_proceduraBulk.class).findByPrimaryKey(new Incarichi_proceduraBulk(incarico.getEsercizio(), incarico.getPg_procedura()));
+				incaricoProcedura.setArchivioAllegati( new BulkList( ((Incarichi_proceduraHome) getHome( userContext, Incarichi_proceduraBulk.class )).findArchivioAllegati( incaricoProcedura ) ));
+				incarico.setIncaricoProcedura(incaricoProcedura);
 			}
 
 			return list;
@@ -366,6 +370,8 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 		} catch (RemoteException ex) {
 			throw handleException(ex);
 		} catch (EJBException ex) {
+			throw handleException(ex);
+		} catch (IntrospectionException ex) {
 			throw handleException(ex);
 		}
 	}
