@@ -854,7 +854,9 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			if(contratto.getDt_fine_validita() == null)
 			  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(contratto.getClass()).getFieldProperty("dt_fine_validita").getLabel()); 
 			Node oldNode = contrattoService.getFolderContratto(contratto);
-			if (contratto.getDt_stipula().after(dataStipulaParametri) ||
+			if (oldNode == null || !contrattoService.isDocumentoContrattoPresent(contratto))
+				throw handleException(new ApplicationException("Bisogna allegare il file del Contratto!"));
+				if (contratto.getDt_stipula().after(dataStipulaParametri) ||
 					contratto.getDt_stipula().equals(dataStipulaParametri)){
 				if (!contratto.isAllegatoContrattoPresent())
 					throw handleException(new ApplicationException("Bisogna allegare il file del Contratto!"));
@@ -1228,6 +1230,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			SQLBuilder sql = home.createSQLBuilder();
 			sql.addClause(FindClause.AND, "fl_pubblica_contratto", SQLBuilder.EQUALS, Boolean.TRUE);
 			sql.addSQLClause(FindClause.AND, "to_char(dt_fine_validita,'yyyy-mm-dd')", SQLBuilder.GREATER_EQUALS, "2013-01-01");
+			sql.addOrderBy("ESERCIZIO DESC, PG_CONTRATTO DESC");
 			return iterator(userContext, sql, ContrattoBulk.class, getFetchPolicyName("find"));
 		}		
 }

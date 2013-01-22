@@ -57,6 +57,15 @@ public class ContrattoService extends CMISService {
 		return null;
 	}
 	
+	public boolean isDocumentoContrattoPresent(ContrattoBulk contratto){
+		List<AllegatoContrattoDocumentBulk> result = findAllegatiContratto(contratto);
+		for (AllegatoContrattoDocumentBulk allegatoContrattoDocumentBulk : result) {
+			if (allegatoContrattoDocumentBulk.getType().equalsIgnoreCase(AllegatoContrattoDocumentBulk.CONTRATTO))
+				return true;
+		}
+		return false;
+	}
+	
 	public List<AllegatoContrattoDocumentBulk> findAllegatiContratto(ContrattoBulk contratto){
 		List<AllegatoContrattoDocumentBulk> result = new ArrayList<AllegatoContrattoDocumentBulk>();
 		ListNodePage<Node> children = findNodeAllegatiContratto(contratto);

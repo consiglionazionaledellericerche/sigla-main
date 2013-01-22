@@ -512,7 +512,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 				} catch (FileNotFoundException e) {
 					throw handleException(e);
 				}catch (CmisConstraintException e) {
-					throw new ApplicationException("CMIS - File ["+allegato.getNome()+"] gi� presente. Inserimento non possibile!");
+					throw new ApplicationException("CMIS - File ["+allegato.getNome()+"] gia' presente. Inserimento non possibile!");
 				}
 			}else if (allegato.isToBeUpdated()) {
 				try {
@@ -525,7 +525,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 				} catch (FileNotFoundException e) {
 					throw handleException(e);
 				}catch (CmisConstraintException e) {
-					throw new ApplicationException("CMIS - File ["+allegato.getNome()+"] gi� presente. Inserimento non possibile!");
+					throw new ApplicationException("CMIS - File ["+allegato.getNome()+"] gia' presente. Inserimento non possibile!");
 				}
 			}
 		}
