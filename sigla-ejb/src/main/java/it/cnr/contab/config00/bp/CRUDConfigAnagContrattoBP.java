@@ -82,17 +82,11 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 				allegato.setFile(file.getFile());
 				allegato.setContentType(file.getContentType());
 				allegato.setNome(allegato.parseFilename(file.getName()));
-				allegato.setToBeUpdated();
-				getParentController().setDirty(true);
 			}
-			validaAllegatoNomeFile(actioncontext, allegato);
+			if (allegato.isContentStreamPresent())
+				allegato.setToBeUpdated();
+			getParentController().setDirty(true);
 			super.validate(actioncontext, oggettobulk);
-		}
-		
-		private void validaAllegatoNomeFile(ActionContext actioncontext,
-				AllegatoContrattoDocumentBulk allegato) {
-			// TODO Auto-generated method stub
-			
 		}
 
 		public void validateForDelete(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {

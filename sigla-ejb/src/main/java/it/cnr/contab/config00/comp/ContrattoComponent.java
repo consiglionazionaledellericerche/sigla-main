@@ -856,16 +856,12 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			Node oldNode = contrattoService.getFolderContratto(contratto);
 			if (oldNode == null || !contrattoService.isDocumentoContrattoPresent(contratto))
 				throw handleException(new ApplicationException("Bisogna allegare il file del Contratto!"));
-				if (contratto.getDt_stipula().after(dataStipulaParametri) ||
-					contratto.getDt_stipula().equals(dataStipulaParametri)){
-				if (!contratto.isAllegatoContrattoPresent())
-					throw handleException(new ApplicationException("Bisogna allegare il file del Contratto!"));
-				else{
-					if (contratto.isPassivo() || contratto.isAttivo_e_Passivo())
-						contratto.setFl_pubblica_contratto(Boolean.TRUE);
-				}
+			if (contratto.getDt_stipula().after(dataStipulaParametri) ||
+				contratto.getDt_stipula().equals(dataStipulaParametri)){
+				if (contratto.isPassivo() || contratto.isAttivo_e_Passivo())
+					contratto.setFl_pubblica_contratto(Boolean.TRUE);
 			}
-			
+
 			ContrattoBulk contrattoClone = (ContrattoBulk)contratto.clone();
 			try {
 				it.cnr.contab.config00.tabnum.ejb.Numerazione_baseComponentSession numerazione =
