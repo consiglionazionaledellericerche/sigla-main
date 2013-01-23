@@ -589,15 +589,16 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 								//Calcolo il totale delle spese 
 								for (java.util.Iterator spese = pdgHome.findDettagliSpesaVariazioneGestionalePrelievo(pdg).iterator();spese.hasNext();){
 									Pdg_variazione_riga_gestBulk spesa_det = (Pdg_variazione_riga_gestBulk)spese.next();
-									if(spesa_det.getCdr_assegnatario().getCd_centro_responsabilita().compareTo(cdr_prel.getCd_centro_responsabilita())==0)
+									if(cdr_prel!= null && cdr_prel.getCd_centro_responsabilita()!=null && spesa_det.getCdr_assegnatario().getCd_centro_responsabilita().compareTo(cdr_prel.getCd_centro_responsabilita())==0)
 										impTotaleSpesePrel = impTotaleSpesePrel.add(spesa_det.getIm_spese_gest_accentrata_est()).add(spesa_det.getIm_spese_gest_decentrata_est());
 								}
 							if (impTotaleEntrateDaPrel.compareTo(ZERO)!=0){
-								if(impTotaleEntrateDaPrel.compareTo(impTotaleSpesePrel)!=0)
-									throw new ApplicationException("Il contributo per l'attività ordinaria per il cdr "+cdr_prel.getCd_centro_responsabilita()+" è pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel)+
-										". Impossibile salvare, poichè è stato imputato sulla voce dedicata l'importo di "+new it.cnr.contab.util.EuroFormat().format(impTotaleSpesePrel)+".");
-							}		
-						
+								//if(impTotaleSpesePrel.compareTo(ZERO)!=0){
+									if(impTotaleEntrateDaPrel.compareTo(impTotaleSpesePrel)!=0)
+										throw new ApplicationException("Il contributo per l'attività ordinaria per il cdr "+cdr_prel.getCd_centro_responsabilita()+" è pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel)+
+											". Impossibile salvare, poichè è stato imputato sulla voce dedicata l'importo di "+new it.cnr.contab.util.EuroFormat().format(impTotaleSpesePrel)+".");
+								//}		
+							}
 						if (totSommaEntrata.compareTo(totSommaSpesa)!=0)
 								throw new ApplicationException("In un variazione di tipo 'Variazione Positiva' il totale delle variazioni di spesa ("+
 											   new it.cnr.contab.util.EuroFormat().format(totSommaSpesa)+")"+
