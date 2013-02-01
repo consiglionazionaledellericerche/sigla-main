@@ -1,5 +1,7 @@
 package it.cnr.contab.incarichi00.comp;
 
+import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_attivitaBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_incaricoBulk;
 import it.cnr.jada.UserContext;
@@ -48,6 +50,35 @@ public class AssegniRicercaProceduraComponent extends IncarichiProceduraComponen
 		if (clause != null) 
 		  sql.addClause(clause);
 		sql.addOrderBy("CD_TIPO_INCARICO");
+		return sql;
+	}
+	public it.cnr.jada.persistency.sql.SQLBuilder selectIncarichi_procedura_padreByClause(UserContext userContext, Incarichi_proceduraBulk procedura, Incarichi_proceduraBulk proceduraPadre, it.cnr.jada.persistency.sql.CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException{
+		SQLBuilder sql = selectBaseIncarichi_procedura_padreByClause(userContext, procedura, proceduraPadre, clauses);
+		sql.addTableToHeader("TIPO_ATTIVITA");
+		sql.addSQLJoin("INCARICHI_PROCEDURA.CD_TIPO_ATTIVITA","TIPO_ATTIVITA.CD_TIPO_ATTIVITA");
+		sql.addSQLClause(FindClause.AND, "TIPO_ATTIVITA.TIPO_ASSOCIAZIONE", SQLBuilder.EQUALS, Tipo_attivitaBulk.ASS_ASSEGNI_RICERCA);
+
+		sql.addTableToHeader("TIPO_INCARICO");
+		sql.addSQLJoin("INCARICHI_PROCEDURA.CD_TIPO_INCARICO","TIPO_INCARICO.CD_TIPO_INCARICO");
+		sql.addSQLClause(FindClause.AND, "TIPO_INCARICO.TIPO_ASSOCIAZIONE", SQLBuilder.EQUALS, Tipo_incaricoBulk.ASS_ASSEGNI_RICERCA);
+		return sql;
+	}
+	public it.cnr.jada.persistency.sql.SQLBuilder selectIncaricoRepertorioForSearchByClause(UserContext userContext, Incarichi_proceduraBulk procedura, Incarichi_repertorioBulk incarico, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
+	{
+		SQLBuilder sql = selectBaseIncaricoRepertorioForSearchByClause(userContext, procedura, incarico, clauses);
+
+		sql.addTableToHeader("INCARICHI_PROCEDURA");
+		sql.addSQLJoin("INCARICHI_REPERTORIO.ESERCIZIO_PROCEDURA", "INCARICHI_PROCEDURA.ESERCIZIO");
+		sql.addSQLJoin("INCARICHI_REPERTORIO.PG_PROCEDURA", "INCARICHI_PROCEDURA.PG_PROCEDURA");
+
+		sql.addTableToHeader("TIPO_ATTIVITA");
+		sql.addSQLJoin("INCARICHI_PROCEDURA.CD_TIPO_ATTIVITA","TIPO_ATTIVITA.CD_TIPO_ATTIVITA");
+		sql.addSQLClause(FindClause.AND, "TIPO_ATTIVITA.TIPO_ASSOCIAZIONE", SQLBuilder.EQUALS, Tipo_attivitaBulk.ASS_ASSEGNI_RICERCA);
+	
+		sql.addTableToHeader("TIPO_INCARICO");
+		sql.addSQLJoin("INCARICHI_PROCEDURA.CD_TIPO_INCARICO","TIPO_INCARICO.CD_TIPO_INCARICO");
+		sql.addSQLClause(FindClause.AND, "TIPO_INCARICO.TIPO_ASSOCIAZIONE", SQLBuilder.EQUALS, Tipo_incaricoBulk.ASS_ASSEGNI_RICERCA);
+
 		return sql;
 	}
 }

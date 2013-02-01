@@ -24,8 +24,6 @@ import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.OptionBP;
@@ -1346,5 +1344,63 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 			logger.error("Errore: ",e);
 		}
 		return actioncontext.findDefaultForward();
+	}
+	public Forward doMergeAllegatiWithCMIS(ActionContext actioncontext) {
+		try{
+			String esercizio = ((HttpActionContext)actioncontext).getParameter("esercizio");
+			String nr_procedura = ((HttpActionContext)actioncontext).getParameter("procedura");
+			String password = ((HttpActionContext)actioncontext).getParameter("password");
+
+			if (esercizio!=null && password.equals("MERGE21012013")) {
+				IncarichiProceduraComponentSession proceduraComponent = Utility.createIncarichiProceduraComponentSession();
+				CNRUserContext userContext = new CNRUserContext("MERGE", "sessionId", 2013, "999.000", "999", "999.000.000");
+				List l = proceduraComponent.getIncarichiForMergeWithCMIS(userContext, Integer.valueOf(esercizio), nr_procedura!=null?Long.valueOf(nr_procedura):null);
+				
+				logger.debug("Esercizio: "+esercizio+" - Nr record: "+l.size());
+				int i=0;
+				for (Object object : l) {
+					i++;
+					Incarichi_proceduraBulk procedura = (Incarichi_proceduraBulk)object;
+					try{
+						List<String> listError = proceduraComponent.mergeAllegatiWithCMIS(userContext, (Incarichi_proceduraBulk)object);
+						for (String error : listError)
+							logger.debug(error);
+						logger.debug("OK - Esercizio: "+esercizio+" - Rec "+i+" di "+l.size()+" - Procedura: "+procedura.getEsercizio()+"/"+procedura.getPg_procedura());
+					} catch (Exception e) {
+						logger.error("ERRORE: Procedura: "+procedura.getEsercizio()+"/"+procedura.getPg_procedura(),e);
+					}
+				}
+				logger.debug("PROCEDURA MIGRAZIONE TERMINATA - Esercizio: "+esercizio);
+			}
+		} catch (Exception e) {
+			logger.error("Errore: ",e);
+		}
+		return actioncontext.findDefaultForward();
+	}
+	public Forward doMergeCMIS(ActionContext context){
+		try 
+		{
+			fillModel( context );
+			return openConfirm(context, "Attenzione! Confermi il merge dei dati SIGLA con i dati sul documentale per l'incarico evidenziato?", OptionBP.CONFIRM_YES_NO, "doConfirmMergeCMIS");
+		}		
+		catch(Throwable e) 
+		{
+			return handleException(context,e);
+		}
+	}
+	public Forward doConfirmMergeCMIS(ActionContext context,int option) {
+		try 
+		{
+			if ( option == OptionBP.YES_BUTTON) 
+			{
+				CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)getBusinessProcess(context);
+				bp.mergeWithCMIS(context);
+			}
+			return context.findDefaultForward();
+		}		
+		catch(Throwable e) 
+		{
+			return handleException(context,e);
+		}
 	}
 }

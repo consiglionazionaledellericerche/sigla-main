@@ -1,5 +1,6 @@
 package it.cnr.contab.incarichi00.comp;
 
+import it.cnr.cmisdl.model.ACL;
 import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
@@ -33,6 +34,12 @@ import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_rappBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_richiestaBulk;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFileAssegniRicerca;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFileBorseStudio;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFileIncarichi;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFileProcedura;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFolderContrattiModel;
+import it.cnr.contab.incarichi00.bulk.cmis.CMISFolderProcedura;
 import it.cnr.contab.incarichi00.cmis.CMISContrattiAspect;
 import it.cnr.contab.incarichi00.ejb.IncarichiRepertorioComponentSession;
 import it.cnr.contab.incarichi00.ejb.RepertorioLimitiComponentSession;
@@ -78,6 +85,8 @@ import javax.ejb.EJBException;
 
 import oracle.sql.BLOB;
 
+import org.apache.axis2.databinding.types.soapencoding.Array;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisBaseException;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisRuntimeException;
 import org.apache.commons.logging.Log;
@@ -299,7 +308,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		
 		return gc;
 	}
-	public it.cnr.jada.persistency.sql.SQLBuilder selectIncarichi_procedura_padreByClause(UserContext userContext, Incarichi_proceduraBulk procedura, Incarichi_proceduraBulk proceduraPadre, it.cnr.jada.persistency.sql.CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException{
+	protected it.cnr.jada.persistency.sql.SQLBuilder selectBaseIncarichi_procedura_padreByClause(UserContext userContext, Incarichi_proceduraBulk procedura, Incarichi_proceduraBulk proceduraPadre, it.cnr.jada.persistency.sql.CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException{
 		it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(userContext, proceduraPadre).createSQLBuilder();
 
 		Unita_organizzativaBulk uoScrivania = ((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext))));
@@ -321,6 +330,17 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 			sql.closeParenthesis();
 		}
 		sql.addClause(clauses);
+		return sql;
+	}
+	public it.cnr.jada.persistency.sql.SQLBuilder selectIncarichi_procedura_padreByClause(UserContext userContext, Incarichi_proceduraBulk procedura, Incarichi_proceduraBulk proceduraPadre, it.cnr.jada.persistency.sql.CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException{
+		SQLBuilder sql = selectBaseIncarichi_procedura_padreByClause(userContext, procedura, proceduraPadre, clauses);
+		sql.addTableToHeader("TIPO_ATTIVITA");
+		sql.addSQLJoin("INCARICHI_PROCEDURA.CD_TIPO_ATTIVITA","TIPO_ATTIVITA.CD_TIPO_ATTIVITA");
+		sql.addSQLClause(FindClause.AND, "TIPO_ATTIVITA.TIPO_ASSOCIAZIONE", SQLBuilder.EQUALS, Tipo_attivitaBulk.ASS_INCARICHI);
+
+		sql.addTableToHeader("TIPO_INCARICO");
+		sql.addSQLJoin("INCARICHI_PROCEDURA.CD_TIPO_INCARICO","TIPO_INCARICO.CD_TIPO_INCARICO");
+		sql.addSQLClause(FindClause.AND, "TIPO_INCARICO.TIPO_ASSOCIAZIONE", SQLBuilder.EQUALS, Tipo_incaricoBulk.ASS_INCARICHI);
 		return sql;
 	}
 	public it.cnr.jada.persistency.sql.SQLBuilder selectUnita_organizzativaByClause(UserContext userContext, Incarichi_proceduraBulk procedura, Unita_organizzativaBulk uo, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
@@ -876,6 +896,8 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 								allegato.setCms_node_ref(node.getId());
 								allegato.setToBeUpdated();
 								updateBulk(userContext, allegato);
+							} catch (CmisBaseException e) {
+								throw new ApplicationException("CMIS - Errore nella registrazione degli allegati (" + e.getErrorContent() + ")");
 							} catch (Exception e) {
 								if (e.getCause() instanceof CmisConstraintException)
 									throw new ApplicationException("CMIS - File ["+cmisFile.getFileName()+"] già presente o non completo di tutte le proprietà obbligatorie. Inserimento non possibile!");
@@ -1814,5 +1836,248 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 			}
 		}
 		return listArchivioForCMIS;
+	}
+	
+	public List getIncarichiForMergeWithCMIS(UserContext userContext, Integer esercizio, Long procedura) throws ComponentException{
+		try{
+			Incarichi_proceduraHome procHome = (Incarichi_proceduraHome)getHome(userContext, Incarichi_proceduraBulk.class);
+			SQLBuilder sql = procHome.createSQLBuilder();
+
+			sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, esercizio);
+			if (procedura!=null) 
+				sql.addClause(FindClause.AND, "pg_procedura", SQLBuilder.EQUALS, procedura);
+			
+			sql.addOrderBy("PG_PROCEDURA DESC");
+			return procHome.fetchAll(sql);
+		} catch (PersistencyException e) {
+			throw new ApplicationException("Errore in fase di ricerca procedure conferimento incarichi");			
+		}
+	}
+
+	public List<String> mergeAllegatiWithCMIS(UserContext userContext, Incarichi_proceduraBulk procedura) throws ComponentException{
+		List<String> listError = new ArrayList<String>();
+
+		IncarichiRepertorioComponentSession incaricoSession = Utility.createIncarichiRepertorioComponentSession();
+			
+		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
+		procedura = (Incarichi_proceduraBulk)inizializzaBulkPerModifica(userContext, procedura);
+		
+		boolean existIncaricoDefinitivo = false; 
+
+		for (Iterator<Incarichi_repertorioBulk> iterator = procedura.getIncarichi_repertorioColl().iterator(); iterator.hasNext();) {
+			Incarichi_repertorioBulk incarico = iterator.next();
+
+			boolean isIncaricoDefinitivo = incarico.isIncaricoDefinitivo() || incarico.isIncaricoChiuso(); 
+
+			//Controlli su Cartella INCARICHI
+			CMISFolderContrattiModel cmisFolderIncarico = incarico.getCMISFolder();
+			Node nodeFolderIncarico = contrattiService.getNodeByPath(cmisFolderIncarico.getCMISPath(contrattiService));
+			if (!cmisFolderIncarico.isEqualsTo(nodeFolderIncarico, listError))
+				listError.add("Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - Disallineamento dati ");
+
+			ACL aclFolderIncarico = contrattiService.getACL(nodeFolderIncarico, "GROUP_EVERYONE", "cmis:read");
+			if (isIncaricoDefinitivo) {
+				existIncaricoDefinitivo = true;
+				if (aclFolderIncarico==null){
+					listError.add("Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - addConsumerToEveryone");
+//					contrattiService.addConsumerToEveryone(nodeFolderIncarico);
+				}
+				if (!nodeFolderIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+					listError.add("Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - addAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
+//					contrattiService.addAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+				}
+			} else {
+				if (aclFolderIncarico!=null && aclFolderIncarico.isDirect()) {
+					listError.add("Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeConsumerToEveryone");
+//					contrattiService.removeConsumerToEveryone(nodeFolderIncarico);
+				}
+				if (nodeFolderIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+					listError.add("Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
+//					contrattiService.removeAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+				}
+			}
+
+			for (Iterator<Incarichi_archivioBulk> iterator2 = incarico.getArchivioAllegati().iterator(); iterator2.hasNext();) {
+				Incarichi_archivioBulk archivio = iterator2.next();
+				if (archivio.getCms_node_ref()==null)
+					listError.add("Allegato Incarico alla procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - Manca Archiviazione");
+				else {
+					//Controlli su Allegati INCARICHI
+					Node nodeArchivioIncarico = contrattiService.getNodeByNodeRef(archivio.getCms_node_ref());
+					CMISFile cmisFile = (CMISFile)archivio.getCMISFile(nodeArchivioIncarico);
+					if (cmisFile instanceof CMISFileIncarichi) {
+						if (!((CMISFileIncarichi)cmisFile).isEqualsTo(nodeArchivioIncarico, listError))
+							listError.add("Allegato Incarico "+((CMISFileIncarichi)cmisFile).getEsercizioIncarico().toString()+"/"+((CMISFileIncarichi)cmisFile).getPgIncarico().toString()+" - Disallineamento dati ");
+					} else if (cmisFile instanceof CMISFileAssegniRicerca) {
+						if (!((CMISFileAssegniRicerca)cmisFile).isEqualsTo(nodeArchivioIncarico, listError))
+							listError.add("Allegato Incarico CMISFileAssegniRicerca "+((CMISFileAssegniRicerca)cmisFile).getEsercizioIncarico().toString()+"/"+((CMISFileAssegniRicerca)cmisFile).getPgIncarico().toString()+" - Disallineamento dati ");
+					} else if (cmisFile instanceof CMISFileBorseStudio) {
+						if (!((CMISFileBorseStudio)cmisFile).isEqualsTo(nodeArchivioIncarico, listError))
+							listError.add("Allegato Incarico CMISFileBorseStudio "+((CMISFileBorseStudio)cmisFile).getEsercizioIncarico().toString()+"/"+((CMISFileBorseStudio)cmisFile).getPgIncarico().toString()+" - Disallineamento dati ");
+					}
+
+					if (isIncaricoDefinitivo) {
+						if (!nodeArchivioIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+							listError.add("Allegato Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - addAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
+//							contrattiService.addAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+						}
+					} else {
+						if (nodeArchivioIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())){
+							listError.add("Allegato Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
+//							contrattiService.removeAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+						}
+					}
+
+					if (archivio.isAnnullato()) {
+						if (!nodeArchivioIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
+							listError.add("Allegato Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - addAspect SIGLA_CONTRATTI_STATO_ANNULLATO");
+//							contrattiService.addAspect(nodeArchivioIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
+						}
+					} else {
+						if (nodeArchivioIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
+							listError.add("Allegato Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_ANNULLATO");
+//							contrattiService.removeAspect(nodeArchivioIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
+						}
+					}
+				}
+			}
+		}
+		
+		//Controlli su Cartella PROCEDURA
+		CMISFolderProcedura cmisFolderProcedura = procedura.getCMISFolder();
+		Node nodeFolderProcedura = contrattiService.getNodeByPath(cmisFolderProcedura.getCMISPath(contrattiService));
+		if (!cmisFolderProcedura.isEqualsTo(nodeFolderProcedura, listError))
+			listError.add("Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - Disallineamento dati ");
+
+		boolean isProceduraDefinitiva = procedura.isProceduraDefinitiva() || procedura.isProceduraChiusa(); 
+		
+		ACL aclFolderProcedura = contrattiService.getACL(nodeFolderProcedura, "GROUP_EVERYONE", "cmis:read");
+		if (isProceduraDefinitiva || existIncaricoDefinitivo) {
+			if (aclFolderProcedura==null) {
+				listError.add("Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addConsumerToEveryone");
+//				contrattiService.addConsumerToEveryone(nodeFolderProcedura);
+			}
+			if (procedura.isProceduraDefinitiva() && !nodeFolderProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+				listError.add("Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
+//				contrattiService.addAspect(nodeFolderProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+			}
+		} else {
+			if (aclFolderProcedura!=null && aclFolderProcedura.isDirect()) {
+				listError.add("Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeConsumerToEveryone");
+//				contrattiService.removeConsumerToEveryone(nodeFolderProcedura);
+			}
+			if (nodeFolderProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+				listError.add("Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
+//				contrattiService.removeAspect(nodeFolderProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+			}
+		}
+		
+		for (Iterator<Incarichi_archivioBulk> iterator = procedura.getArchivioAllegati().iterator(); iterator.hasNext();) {
+			Incarichi_procedura_archivioBulk archivio = (Incarichi_procedura_archivioBulk)iterator.next();
+			if (archivio.getCms_node_ref()==null)
+				listError.add("Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+"/"+archivio.getProgressivo_riga()+" - Manca Archiviazione");
+			else {
+				//Controlli su Allegati PROCEDURA
+				Node nodeArchivioProcedura = contrattiService.getNodeByNodeRef(archivio.getCms_node_ref());
+				CMISFileProcedura cmisFileProcedura = (CMISFileProcedura)archivio.getCMISFile(nodeArchivioProcedura);
+				if (!cmisFileProcedura.isEqualsTo(nodeArchivioProcedura, listError))
+					listError.add("Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+"/"+archivio.getProgressivo_riga()+" - Disallineamento dati ");
+
+				ACL aclArchivioProcedura = contrattiService.getACL(nodeArchivioProcedura, "GROUP_EVERYONE", "cmis:read");
+				if (archivio.isBando() && !procedura.isProceduraProvvisoria() && procedura.getDt_pubblicazione()!=null) {
+					if (aclArchivioProcedura==null) {
+						listError.add("Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addConsumerToEveryone");
+//						contrattiService.addConsumerToEveryone(nodeArchivioProcedura);
+					}
+				} else {
+					if (aclArchivioProcedura!=null && aclArchivioProcedura.isDirect()) {
+						listError.add("Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeConsumerToEveryone");
+//						contrattiService.removeConsumerToEveryone(nodeArchivioProcedura);
+					}
+				}
+
+				if (isProceduraDefinitiva) {
+					if (!nodeArchivioProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+						listError.add("Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
+//						contrattiService.addAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+					}
+				} else {
+					if (nodeArchivioProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+						listError.add("Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
+//						contrattiService.removeAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+					}
+				}
+				
+				if (archivio.isAnnullato()) {
+					if (!nodeArchivioProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
+						listError.add("Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addAspect SIGLA_CONTRATTI_STATO_ANNULLATO");
+//						contrattiService.addAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
+					}
+				} else {
+					if (nodeArchivioProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
+						listError.add("Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_ANNULLATO");
+//						contrattiService.removeAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
+					}
+				}
+			}
+		}
+		return listError;
+	}
+	public it.cnr.jada.persistency.sql.SQLBuilder selectBaseIncaricoRepertorioForSearchByClause(UserContext userContext, Incarichi_proceduraBulk procedura, Incarichi_repertorioBulk incarico, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
+	{
+		if (clauses == null) 
+			clauses = incarico.buildFindClauses(null);
+
+		Unita_organizzativaBulk uoScrivania = ((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext))));
+		boolean isUoEnte = uoScrivania.getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)==0;
+		boolean isUoSac  = uoScrivania.getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC)==0;
+		
+		SQLBuilder sqlCdsExists = getHome(userContext, Ass_incarico_uoBulk.class).createSQLBuilder();
+		sqlCdsExists.addSQLJoin("ASS_INCARICO_UO.ESERCIZIO","INCARICHI_REPERTORIO.ESERCIZIO");
+		sqlCdsExists.addSQLJoin("ASS_INCARICO_UO.PG_REPERTORIO","INCARICHI_REPERTORIO.PG_REPERTORIO");
+
+		if (isUoSac)
+			sqlCdsExists.addSQLClause(FindClause.AND, "ASS_INCARICO_UO.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, CNRUserContext.getCd_unita_organizzativa(userContext));
+		else {
+			sqlCdsExists.addTableToHeader("V_STRUTTURA_ORGANIZZATIVA");
+			sqlCdsExists.addSQLClause(FindClause.AND, "V_STRUTTURA_ORGANIZZATIVA.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+			sqlCdsExists.addSQLJoin("V_STRUTTURA_ORGANIZZATIVA.CD_ROOT","ASS_INCARICO_UO.CD_UNITA_ORGANIZZATIVA");
+			sqlCdsExists.addSQLClause(FindClause.AND, "V_STRUTTURA_ORGANIZZATIVA.CD_CDS", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(userContext));
+		}
+
+		SQLBuilder sql = getHome(userContext, Incarichi_repertorioBulk.class).createSQLBuilder();
+		if (!isUoEnte) {
+			sql.openParenthesis(FindClause.AND);
+				sql.openParenthesis(FindClause.OR);
+					sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(userContext));
+					if (isUoSac)
+						sql.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, CNRUserContext.getCd_unita_organizzativa(userContext));
+				sql.closeParenthesis();
+			sql.closeParenthesis();
+		} else if (isUoSac) {
+			sql.openParenthesis(FindClause.AND);
+				sql.addClause(FindClause.OR, "cd_unita_organizzativa", SQLBuilder.EQUALS, CNRUserContext.getCd_unita_organizzativa(userContext));
+				sql.addSQLExistsClause(FindClause.OR,sqlCdsExists);
+			sql.closeParenthesis();
+		}
+		return sql;
+	}
+	public it.cnr.jada.persistency.sql.SQLBuilder selectIncaricoRepertorioForSearchByClause(UserContext userContext, Incarichi_proceduraBulk procedura, Incarichi_repertorioBulk incarico, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
+	{
+		SQLBuilder sql = selectBaseIncaricoRepertorioForSearchByClause(userContext, procedura, incarico, clauses);
+
+		sql.addTableToHeader("INCARICHI_PROCEDURA");
+		sql.addSQLJoin("INCARICHI_REPERTORIO.ESERCIZIO_PROCEDURA", "INCARICHI_PROCEDURA.ESERCIZIO");
+		sql.addSQLJoin("INCARICHI_REPERTORIO.PG_PROCEDURA", "INCARICHI_PROCEDURA.PG_PROCEDURA");
+
+		sql.addTableToHeader("TIPO_ATTIVITA");
+		sql.addSQLJoin("INCARICHI_PROCEDURA.CD_TIPO_ATTIVITA","TIPO_ATTIVITA.CD_TIPO_ATTIVITA");
+		sql.addSQLClause(FindClause.AND, "TIPO_ATTIVITA.TIPO_ASSOCIAZIONE", SQLBuilder.EQUALS, Tipo_attivitaBulk.ASS_INCARICHI);
+	
+		sql.addTableToHeader("TIPO_INCARICO");
+		sql.addSQLJoin("INCARICHI_PROCEDURA.CD_TIPO_INCARICO","TIPO_INCARICO.CD_TIPO_INCARICO");
+		sql.addSQLClause(FindClause.AND, "TIPO_INCARICO.TIPO_ASSOCIAZIONE", SQLBuilder.EQUALS, Tipo_incaricoBulk.ASS_INCARICHI);
+
+		return sql;
 	}
 }

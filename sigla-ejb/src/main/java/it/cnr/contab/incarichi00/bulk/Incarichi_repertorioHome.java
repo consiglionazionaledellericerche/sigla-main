@@ -3,13 +3,21 @@
  * Date 26/07/2007
  */
 package it.cnr.contab.incarichi00.bulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.incarichi00.tabrif.bulk.Ass_incarico_attivitaBulk;
+import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_attivitaBulk;
+import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_incaricoBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.Broker;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.PersistentHome;
@@ -192,5 +200,19 @@ public class Incarichi_repertorioHome extends BulkHome {
 		
 		sql.addOrderBy("PROGRESSIVO_RIGA");
 		return incHome.fetchAll(sql);
+	}
+
+	public Persistent completeBulkRowByRow(UserContext userContext, Persistent persistent) throws PersistencyException {
+		if (persistent instanceof Incarichi_repertorioBulk) {
+			Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)persistent;
+			try {
+				if (((Incarichi_repertorioBulk)persistent).getCd_terzo()!=null) { 
+					V_terzo_per_compensoHome home = (V_terzo_per_compensoHome)getHomeCache().getHome(V_terzo_per_compensoBulk.class, "DISTINCT_TERZO");
+					V_terzo_per_compensoBulk bulk = home.loadVTerzo(userContext,Tipo_rapportoBulk.ALTRO, incarico.getCd_terzo(), incarico.getDt_inizio_validita(), incarico.getDt_inizio_validita());
+					incarico.setV_terzo(bulk);
+				}
+			} catch (Exception e) {}
+		}
+		return persistent;
 	}
 }

@@ -8,9 +8,15 @@ import it.cnr.contab.incarichi00.cmis.CMISContrattiAttachment;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class CMISFileProceduraBando extends CMISFileProcedura implements CMISTypeName{
 	private static final long serialVersionUID = -1775673719677028944L;
+	private transient static final Log logger = LogFactory.getLog(CMISFileProceduraBando.class);
 
 	public CMISFileProceduraBando(File file, String originalName, Incarichi_procedura_archivioBulk incaricoProceduraArchivio) throws IOException {
 		super(file, originalName, incaricoProceduraArchivio);
@@ -41,4 +47,40 @@ public class CMISFileProceduraBando extends CMISFileProcedura implements CMISTyp
 			return null;
 		return this.getIncaricoProceduraArchivio().getIncarichi_procedura().getDt_fine_pubblicazione();
 	}
+	
+	public boolean isEqualsTo(Node node, List<String> listError){
+		String initTesto = "Procedura "+this.getEsercizioProcedura().toString()+"/"+this.getPgProcedura().toString()+" - Disallineamento dato ";
+		boolean isEquals = super.isEqualsTo(node, listError);
+		String valueDB=null, valueCMIS=null; 
+
+		GregorianCalendar gcDB = (GregorianCalendar)GregorianCalendar.getInstance(); 
+		gcDB.setTime(this.getDataInizioPubblicazione());
+		valueDB=Integer.toString(gcDB.get(GregorianCalendar.DAY_OF_MONTH)) + "/" + 
+				Integer.toString(gcDB.get(GregorianCalendar.MONTH)) + "/" + 
+				Integer.toString(gcDB.get(GregorianCalendar.YEAR));
+		GregorianCalendar gcCMIS = (GregorianCalendar)node.getPropertyValue("sigla_contratti_attachment:data_inizio");
+		valueCMIS=Integer.toString(gcCMIS.get(GregorianCalendar.DAY_OF_MONTH)) + "/" + 
+				  Integer.toString(gcCMIS.get(GregorianCalendar.MONTH)) + "/" + 
+				  Integer.toString(gcCMIS.get(GregorianCalendar.YEAR));
+		if (!valueCMIS.equals(valueDB)) {
+			logger.debug(initTesto+" - Data Inizio Bando - DB:"+valueDB+" - CMIS:"+valueCMIS);
+			isEquals = false;
+		}
+
+		gcDB = (GregorianCalendar)GregorianCalendar.getInstance(); 
+		gcDB.setTime(this.getDataFinePubblicazione());
+		valueDB=Integer.toString(gcDB.get(GregorianCalendar.DAY_OF_MONTH)) + "/" + 
+				Integer.toString(gcDB.get(GregorianCalendar.MONTH)) + "/" + 
+				Integer.toString(gcDB.get(GregorianCalendar.YEAR));
+		gcCMIS = (GregorianCalendar)node.getPropertyValue("sigla_contratti_attachment:data_fine");
+		valueCMIS=Integer.toString(gcCMIS.get(GregorianCalendar.DAY_OF_MONTH)) + "/" + 
+				  Integer.toString(gcCMIS.get(GregorianCalendar.MONTH)) + "/" + 
+				  Integer.toString(gcCMIS.get(GregorianCalendar.YEAR));
+		if (!valueCMIS.equals(valueDB)) {
+			logger.debug(initTesto+" - Data Fine Bando - DB:"+valueDB+" - CMIS:"+valueCMIS);
+			isEquals = false;
+		}
+
+		return isEquals;
+	}	
 }

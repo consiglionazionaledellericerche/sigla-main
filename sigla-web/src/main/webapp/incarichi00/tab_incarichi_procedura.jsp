@@ -232,14 +232,14 @@
 	      </tr>
 	      </table></div>
 	      </td></tr>
-	      <tr><td colspan=4>
-	      <div class="Group"><table>            
-		  <tr>
-	         <td><% bp.getController().writeFormLabel(out,"incarichi_procedura_padre");%></td>
-	         <td colspan=3><% bp.getController().writeFormInput(out,"incarichi_procedura_padre");%></td>
-	      </tr>
-	      </table></div>
-	      </td></tr>		
 	<% } %>	  
+      <tr><td colspan=4>
+      <div class="Group"><table>            
+	  <tr>
+         <td><% bp.getController().writeFormLabel(out,"incarichi_procedura_padre");%></td>
+         <td colspan=3><% bp.getController().writeFormInput(out,"incarichi_procedura_padre");%></td>
+      </tr>
+      </table></div>
+      </td></tr>		
  	</table>   
    </fieldset>

@@ -15,6 +15,7 @@ import it.cnr.contab.incarichi00.cmis.CMISContrattiProperty;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.List;
 
 public class CMISFileProcedura extends CMISFile implements CMISTypeName{
 	private static final long serialVersionUID = -1775673719677028944L;
@@ -120,4 +121,47 @@ public class CMISFileProcedura extends CMISFile implements CMISTypeName{
 			return this.getIncaricoProceduraArchivio().getUrl_file();
 		return null;
 	}
+	
+	public boolean isEqualsTo(Node node, List<String> listError){
+		String initTesto = "Procedura "+this.getEsercizioProcedura().toString()+"/"+this.getPgProcedura().toString()+" - Disallineamento dato ";
+		boolean isEquals = true;
+		String valueDB=null, valueCMIS=null; 
+
+		valueDB=String.valueOf(this.getEsercizioProcedura());
+		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_PROCEDURA_ESERCIZIO.value()));
+		if (!valueCMIS.equals(valueDB)) {
+			listError.add(initTesto+" - Esercizio Procedura - DB:"+valueDB+" - CMIS:"+valueCMIS);
+			isEquals = false;
+		}
+
+		valueDB=String.valueOf(this.getPgProcedura());
+		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_PROCEDURA_PROGRESSIVO.value()));
+		if (!valueCMIS.equals(valueDB)) {
+			listError.add(initTesto+" - Pg_procedura - DB:"+valueDB+" - CMIS:"+valueCMIS);
+			isEquals = false;
+		}
+
+		valueDB=String.valueOf(this.getOriginalName());
+		valueCMIS=String.valueOf(node.getPropertyValue("sigla_contratti_attachment:original_name"));
+		if (!valueCMIS.equals(valueDB)) {
+			listError.add(initTesto+" - Nome Originale File - DB:"+valueDB+" - CMIS:"+valueCMIS);
+			isEquals = false;
+		}
+
+		valueDB=String.valueOf(this.getLinkUrl());
+		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_LINK_URL.value()));
+		if (!valueCMIS.equals(valueDB)) {
+			listError.add(initTesto+" - Link URL - DB:"+valueDB+" - CMIS:"+valueCMIS);
+			isEquals = false;
+		}
+
+		valueDB=String.valueOf(this.getTypeName());
+		valueCMIS=String.valueOf(node.getTypeId());
+		if (!valueCMIS.equals(valueDB)) {
+			listError.add(initTesto+" - Type documento - DB:"+valueDB+" - CMIS:"+valueCMIS);
+			isEquals = false;
+		}
+
+		return isEquals;
+	}	
 }

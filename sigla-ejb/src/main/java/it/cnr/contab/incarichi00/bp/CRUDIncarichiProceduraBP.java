@@ -54,11 +54,16 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUDBP {
+	private transient static final Log logger = LogFactory.getLog(CRUDIncarichiProceduraBP.class);
 	private final SimpleDetailCRUDController ripartizionePerAnno = new SimpleDetailCRUDController("ProceduraAnno",Incarichi_procedura_annoBulk.class,"incarichi_procedura_annoColl",this){
 		protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
 			Incarichi_procedura_annoBulk proceduraAnno = (Incarichi_procedura_annoBulk)oggettobulk;
@@ -1171,7 +1176,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 	}
 	protected Button[] createToolbar() {
 		Button[] toolbar = super.createToolbar();
-		Button[] newToolbar = new Button[ toolbar.length + 7];
+		Button[] newToolbar = new Button[ toolbar.length + 8];
 		int i;
 		for ( i = 0; i < toolbar.length; i++ )
 			newToolbar[i] = toolbar[i];
@@ -1189,6 +1194,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 		newToolbar[ i+5 ].setSeparator(true);
 		newToolbar[ i+6 ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.sendEmailCds");
 		newToolbar[ i+6 ].setSeparator(true);
+		newToolbar[ i+7 ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.mergeCMIS");
+		newToolbar[ i+7 ].setSeparator(true);
 		
 		return newToolbar;
 	}
@@ -1993,6 +2000,10 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 		return true;
 //		return !(isUoEnte()) && !isUtenteAbilitatoSbloccoProcedura();
 	}
+	public boolean isMergeCMISButtonHidden()	{
+		return !isUoEnte() || !isSuperUtente() ||
+		 	   !isEditing() ||getModel()==null;
+	}
 	public Incarichi_parametriBulk getIncarichiParametri(UserContext userContext, Incarichi_proceduraBulk procedura) throws it.cnr.jada.action.BusinessProcessException {
 		if (!procedura.isEqualsFieldParameter()) {
 			try{
@@ -2229,5 +2240,39 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 		}
 		is.close();
 		os.flush();
+	}
+	
+	public void mergeWithCMIS(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException 
+	{
+		try {
+			IncarichiProceduraComponentSession proceduraComponent = (IncarichiProceduraComponentSession)createComponentSession();
+			Incarichi_proceduraBulk procedura = (Incarichi_proceduraBulk)getModel();
+			if (procedura!=null && procedura.getEsercizio()!=null && procedura.getPg_procedura()!=null) {
+				List l = proceduraComponent.getIncarichiForMergeWithCMIS(context.getUserContext(), procedura.getEsercizio(), procedura.getPg_procedura());
+
+				int i=0;
+				for (Object object : l) {
+					i++;
+					Incarichi_proceduraBulk currProcedura = (Incarichi_proceduraBulk)object;
+					try{
+						List<String> listError = proceduraComponent.mergeAllegatiWithCMIS(context.getUserContext(), (Incarichi_proceduraBulk)object);
+						if (listError.isEmpty()) {
+							this.setMessage("Operazione Effettuata. Non è stata riscontrato alcun disallineamento dei dati nella gestione documentale.");
+							logger.debug("MergeWithCMIS OK - Esercizio: "+procedura.getEsercizio()+" - Rec "+i+" di "+l.size()+" - Procedura: "+procedura.getEsercizio()+"/"+procedura.getPg_procedura());
+						} else {
+							for (String error : listError)
+								logger.debug(error);
+							this.setMessage("Operazione Effettuata. Sono stati riscontrati disallineamenti dei dati nella gestione documentale. Controllare il file incarichi.log.");
+						}
+					} catch (Exception e) {
+						logger.error("MergeWithCMIS ERRORE: Procedura: "+procedura.getEsercizio()+"/"+procedura.getPg_procedura(),e);
+					}
+				}
+			}
+		}
+		catch(Exception e) 
+		{
+			throw handleException(e);
+		}
 	}
 }

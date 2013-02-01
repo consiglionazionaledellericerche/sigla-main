@@ -1,5 +1,6 @@
 package it.cnr.contab.incarichi00.bulk.cmis;
 
+import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
@@ -7,11 +8,13 @@ import it.cnr.contab.cmis.converter.Converter;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.CMISService;
 import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
+import it.cnr.contab.incarichi00.cmis.CMISContrattiProperty;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.OggettoBulk;
 
 import java.util.GregorianCalendar;
+import java.util.List;
 
 @CMISType(name="F:sigla_contratti:procedura")
 public class CMISFolderProcedura extends OggettoBulk {
@@ -127,5 +130,81 @@ public class CMISFolderProcedura extends OggettoBulk {
 			cmisService.setInheritedPermission(cmisPath, Boolean.FALSE);
 		}
 		return cmisPath;
+	}
+	
+	public boolean isEqualsTo(Node node, List<String> listError){
+		String initTesto = "Procedura "+this.getEsercizio().toString()+"/"+this.getPg_procedura().toString()+" - Disallineamento dato ";
+		boolean isEquals = true;
+		String valueDB=null, valueCMIS=null; 
+
+		valueDB=String.valueOf(this.getEsercizio());
+		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_PROCEDURA_ESERCIZIO.value()));
+		if (!valueCMIS.equals(valueDB)) {
+			listError.add(initTesto+" - Esercizio - DB:"+valueDB+" - CMIS:"+valueCMIS);
+			isEquals = false;
+		}
+
+		valueDB=String.valueOf(this.getPg_procedura());
+		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_PROCEDURA_PROGRESSIVO.value()));
+		if (!valueCMIS.equals(valueDB)) {
+			listError.add(initTesto+" - Pg_procedura - DB:"+valueDB+" - CMIS:"+valueCMIS);
+			isEquals = false;
+		}
+
+		valueDB=String.valueOf(this.getOggetto());
+		valueCMIS=String.valueOf(node.getPropertyValue("sigla_contratti:oggetto"));
+		if (!valueCMIS.equals(valueDB)) {
+			listError.add(initTesto+" - Oggetto - DB:"+valueDB+" - CMIS:"+valueCMIS);
+			isEquals = false;
+		}
+
+		valueDB=String.valueOf(this.getDescrizioneProceduraAmministrativa());
+		valueCMIS=String.valueOf(node.getPropertyValue("sigla_contratti:procedura_amministrativa"));
+		if (!valueCMIS.equals(valueDB)) {
+			listError.add(initTesto+" - Procedura Amministrativa - DB:"+valueDB+" - CMIS:"+valueCMIS);
+			isEquals = false;
+		}
+
+		valueDB=String.valueOf(this.getTipoNormaDescrizione());
+		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_TIPO_NORMA_DESCRIZIONE.value()));
+		if (!valueCMIS.equals(valueDB)) {
+			listError.add(initTesto+" - Descrizione Tipo Norma - DB:"+valueDB+" - CMIS:"+valueCMIS);
+			isEquals = false;
+		}
+		
+		valueDB=String.valueOf(this.getTipoNormaNumero());
+		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_TIPO_NORMA_NUMERO.value()));
+		if (!valueCMIS.equals(valueDB)) {
+			listError.add(initTesto+" - Numero Tipo Norma - DB:"+valueDB+" - CMIS:"+valueCMIS);
+			isEquals = false;
+		}
+
+		valueDB=String.valueOf(this.getTipoNormaArticolo());
+		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_TIPO_NORMA_ARTICOLO.value()));
+		if (!valueCMIS.equals(valueDB)) {
+			listError.add(initTesto+" - Articolo Tipo Norma - DB:"+valueDB+" - CMIS:"+valueCMIS);
+			isEquals = false;
+		}
+
+		valueDB=String.valueOf(this.getTipoNormaComma());
+		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_TIPO_NORMA_COMMA.value()));
+		if (!valueCMIS.equals(valueDB)) {
+			listError.add(initTesto+" - Comma Tipo Norma - DB:"+valueDB+" - CMIS:"+valueCMIS);
+			isEquals = false;
+		}
+
+		valueDB=this.getTipoNormaData()==null?"":Integer.toString(this.getTipoNormaData().get(GregorianCalendar.DAY_OF_MONTH)) + "/" + 
+												 Integer.toString(this.getTipoNormaData().get(GregorianCalendar.MONTH)) + "/" + 
+												 Integer.toString(this.getTipoNormaData().get(GregorianCalendar.YEAR));
+		GregorianCalendar gcCMIS = (GregorianCalendar)node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_TIPO_NORMA_DATA.value());
+		valueCMIS=gcCMIS==null?"":Integer.toString(gcCMIS.get(GregorianCalendar.DAY_OF_MONTH)) + "/" + 
+				  				  Integer.toString(gcCMIS.get(GregorianCalendar.MONTH)) + "/" + 
+				  				  Integer.toString(gcCMIS.get(GregorianCalendar.YEAR));
+
+		if (!valueCMIS.equals(valueDB)) {
+			listError.add(initTesto+" - Data Tipo Norma - DB:"+valueDB+" - CMIS:"+valueCMIS);
+			isEquals = false;
+		}
+		return isEquals;
 	}
 }

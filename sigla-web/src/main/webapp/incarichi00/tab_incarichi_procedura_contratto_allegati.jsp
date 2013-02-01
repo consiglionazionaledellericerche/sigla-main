@@ -48,7 +48,6 @@
 %>
 
 <script language="JavaScript">
-<script language="JavaScript">
 function doScaricaFile() {	
 	doPrint('<%=(allegato==null?null:allegato.getDownloadUrl())%>');
 }
@@ -61,11 +60,11 @@ function doScaricaFile() {
 	</tr>
     <% if (allegato==null || allegato.getTipo_archivio()!=null) {%>
 	    <% if (allegato!=null && allegato.getTipo_archivio()!=null &&
-	    	  (allegato.isContratto())) {%>
+	    	  (allegato.isContratto() || allegato.isCurriculumVincitore())) {%>
 		<tr>
 			<td colspan=5>
 			<div class="Group"><table>
-				<% if (allegato.isContratto()) { %>
+				<% if (allegato.isContratto() || allegato.isCurriculumVincitore()) { %>
 				<tr><td valign=top>
 			    	<span class="FormLabel" style="color:red">Attenzione:</span>
 			    </td>
@@ -78,8 +77,6 @@ function doScaricaFile() {
 					Ogni altro dato personale dovrà essere <b><i>"<u>oscurato</u>"</i></b><br><br>
 					</span>
 				</td></tr>
-				<% } %>
- 				<% if (allegato.isContratto()) { %>
 				<tr><td valign=top>
 			    	<span class="FormLabel" style="color:red">Attenzione:</span>
 			    </td>

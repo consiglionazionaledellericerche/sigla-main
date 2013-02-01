@@ -69,11 +69,11 @@ function doScaricaFile() {
 	</tr>
     <% if (allegato==null || allegato.getTipo_archivio()!=null) {%>
 	    <% if (allegato!=null && allegato.getTipo_archivio()!=null &&
-	    	  (allegato.isBando() || allegato.isContratto())) {%>
+	    	  (allegato.isBando() || allegato.isContratto() || allegato.isCurriculumVincitore())) {%>
 		<tr>
 			<td colspan=5>
 			<div class="Group"><table>
-				<% if (allegato.isContratto()) { %>
+				<% if (allegato.isContratto() || allegato.isCurriculumVincitore()) { %>
 				<tr><td valign=top>
 			    	<span class="FormLabel" style="color:red">Attenzione:</span>
 			    </td>
@@ -87,7 +87,7 @@ function doScaricaFile() {
 					</span>
 				</td></tr>
 				<% } %>
- 				<% if (allegato.isBando() || allegato.isContratto()) { %>
+ 				<% if (allegato.isBando() || allegato.isContratto() || allegato.isCurriculumVincitore()) { %>
 				<tr><td valign=top>
 			    	<span class="FormLabel" style="color:red">Attenzione:</span>
 			    </td>

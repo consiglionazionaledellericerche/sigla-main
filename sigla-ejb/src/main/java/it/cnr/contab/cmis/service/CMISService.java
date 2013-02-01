@@ -223,7 +223,7 @@ public class CMISService {
 		try {
 			node = nodeService.getNodeByPath(systemCredentials, cmisPath.getPath()+
 											(cmisPath.getPath().equals("/")?"":"/")+
-											sanitizeFilename(name).toLowerCase());
+											name);
 		} catch (CmisObjectNotFoundException e){
 			return storeSimpleDocument(oggettoBulk, inputStream, contentType, name, cmisPath, objectTypeName, makeVersionable, permissions);
 		}
@@ -313,5 +313,14 @@ public class CMISService {
 
 	public void setInheritedPermission(CMISPath cmisPath, Boolean inheritedPermission){
 		nodeService.setInheritedPermission(systemCredentials, nodeService.getNodeByPath(systemCredentials, cmisPath.getPath()), inheritedPermission);
+	}
+	
+	public ACL getACL(Node node, String userName, String permission) {
+		List<ACL> listACL = nodeService.getACL(systemCredentials, node);
+		for (ACL acl : listACL) {
+			if (acl.getPrincipal().getName().equals(userName) && acl.getPermission().getKey().equals(permission))
+				return acl;
+		}
+		return null;
 	}
 }

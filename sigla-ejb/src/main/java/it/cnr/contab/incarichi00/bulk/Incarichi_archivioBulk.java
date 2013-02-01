@@ -55,6 +55,7 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 		tipo_archivioKeys.put(TIPO_ATTO_ESITO_CONTROLLO,"Esito Controllo Corte Conti");
 		tipo_archivioKeys.put(TIPO_PROGETTO,"Progetto");
 		tipo_archivioKeys.put(TIPO_GENERICO,"Allegato generico");
+		tipo_archivioKeys.put(TIPO_ALLEGATO_CONTRATTO,"Allegato Contratto");
 	}
 
 	public Incarichi_archivioBulk() {

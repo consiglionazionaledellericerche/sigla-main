@@ -248,5 +248,40 @@ public class IncarichiProceduraComponentSessionBean extends it.cnr.jada.ejb.CRUD
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	
+	public java.util.List getIncarichiForMergeWithCMIS(it.cnr.jada.UserContext param0, Integer param1, Long param2) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			java.util.List result = ((IncarichiProceduraComponent)componentObj).getIncarichiForMergeWithCMIS(param0, param1, param2);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public java.util.List<String> mergeAllegatiWithCMIS(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			java.util.List<String> result = ((IncarichiProceduraComponent)componentObj).mergeAllegatiWithCMIS(param0, param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}	
 }
