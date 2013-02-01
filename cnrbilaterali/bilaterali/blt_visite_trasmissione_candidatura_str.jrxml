@@ -1,47 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProvvedimentoTrasmissioneCandidatura" pageWidth="595" pageHeight="842" columnWidth="465" leftMargin="65" rightMargin="65" topMargin="30" bottomMargin="20" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.Blt_visite_stampe_candidaturaScriptlet">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProvvedimentoTrasmissioneCandidatura" pageWidth="595" pageHeight="842" columnWidth="465" leftMargin="65" rightMargin="65" topMargin="20" bottomMargin="20" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.Blt_visite_stampe_candidaturaScriptlet">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="1.1000000000000005"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
-	<import value="net.sf.jasperreports.engine.data.*"/>
 	<import value="java.util.*"/>
-	<style name="TNR8" isDefault="false" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
-	<style name="TNRG8" isDefault="false" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC8" isDefault="false" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNR9" isDefault="false" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
-	<style name="TNRG9" isDefault="false" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC9" isDefault="false" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNR10" isDefault="false" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
-	<style name="TNRG10" isDefault="false" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC10" isDefault="false" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRG11" isDefault="false" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNR12" isDefault="false" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman"/>
-	<style name="TNRG12" isDefault="false" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC12" isDefault="false" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRGC12" isDefault="false" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNRGC14" isDefault="false" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNRG14" isDefault="false" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNR16" isDefault="false" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
-	<style name="TNRC16" isDefault="false" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRG16" isDefault="false" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRGC16" isDefault="false" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNR11" isDefault="false" fontName="Times New Roman" fontSize="11" pdfFontName="Times-Roman"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC8" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC9" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG11" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR12" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman"/>
+	<style name="TNRG12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC12" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRG14" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
+	<style name="TNRC16" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG16" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRGC16" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNR11" fontName="Times New Roman" fontSize="11" pdfFontName="Times-Roman"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
-	<parameter name="cd_accordo" class="java.lang.String">
+	<parameter name="cd_accordo" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["00002"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cd_progetto" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["00001"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="cd_progetto" class="java.lang.String">
-		<defaultValueExpression><![CDATA["00001"]]></defaultValueExpression>
+	<parameter name="cd_terzo" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[92873]]></defaultValueExpression>
 	</parameter>
-	<parameter name="cd_terzo" class="java.lang.Integer"/>
-	<parameter name="pg_autorizzazione" class="java.lang.Long"/>
-	<parameter name="pg_visita" class="java.lang.Long"/>
-	<parameter name="pg_ver_rec" class="java.lang.Long" isForPrompting="false"/>
+	<parameter name="pg_autorizzazione" class="java.lang.Long" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Long("1")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pg_visita" class="java.lang.Long" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Long("1")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pg_ver_rec" class="java.lang.Long" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Long("1")]]></defaultValueExpression>
+	</parameter>
 	<parameter name="flag_to_update" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
@@ -137,7 +145,7 @@ and s.cd_anag= b.cd_anag]]>
 		<band splitType="Prevent"/>
 	</title>
 	<pageHeader>
-		<band height="60" splitType="Prevent">
+		<band height="50" splitType="Prevent">
 			<staticText>
 				<reportElement key="staticText-23" style="TNR11" x="25" y="28" width="174" height="14" forecolor="#244061"/>
 				<textElement textAlignment="Center">
@@ -154,8 +162,8 @@ and s.cd_anag= b.cd_anag]]>
 	<detail>
 		<band height="18" splitType="Prevent">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-2" style="TNR11" x="237" y="0" width="62" height="14"/>
-				<textElement textAlignment="Justified">
+				<reportElement key="textField-2" style="TNR11" x="216" y="0" width="83" height="14"/>
+				<textElement textAlignment="Right">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[($F{SESSO_RESPONSABILE_ITA}.equals("M")?"Al Dott.":"Alla Dott.ssa")]]></textFieldExpression>
@@ -199,23 +207,23 @@ $F{INDIRIZZO_ENTE_RESPONS_ITA}]]></textFieldExpression>
 ""+$F{CAP_ENTE_RESPONS_ITA}+" "+$F{PG_COMUNE_ENTE_RESPONS_ITA}+""]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="45" splitType="Prevent">
+		<band height="30" splitType="Prevent">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-2" style="TNR11" x="51" y="25" width="414" height="14"/>
+				<reportElement key="textField-2" style="TNR11" x="51" y="10" width="414" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Accordo di cooperazione scientifica tra CNR e "+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+"), "+$F{DS_NAZIONE_ENTE_STR}+" - "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"Biennio":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"Triennio":"Anni"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+". Progetto comune di ricerca "+$F{RESPONSABILE_ITA}.toUpperCase()+" / "+$F{RESPONSABILE_STR}.toUpperCase()+"."]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-1" style="TNR11" x="0" y="25" width="51" height="14"/>
+				<reportElement key="staticText-1" style="TNR11" x="0" y="10" width="51" height="14"/>
 				<textElement>
 					<font fontName="Times New Roman" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Oggetto:]]></text>
 			</staticText>
 		</band>
-		<band height="35" splitType="Prevent">
+		<band height="28" splitType="Prevent">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="51" y="0" width="414" height="14"/>
 				<textElement textAlignment="Justified">
@@ -356,7 +364,7 @@ $F{INDIRIZZO_ENTE_RESPONS_ITA}]]></textFieldExpression>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["a fine soggiorno, il saldo Euro di "+new java.text.DecimalFormat("#,##0.00").format($F{IM_RIMB_SPESE})+" sul conto corrente estero personale dello studioso, eventualmente decurtata di "+($F{FL_BREVE_PERIODO}.equals("Y")?"Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IMPORTO_DIARIA_STR})+"":"Euro "+new java.text.DecimalFormat("#,##0.00").format($F{DIARIA_LUNGO_PERIODO})+"")+" al giorno nel caso in cui la durata del soggiorno venisse ridotta. Nel caso in cui la riduzione della durata del soggiorno determinasse un compenso superiore all'acconto ricevuto, lo studioso dovrà restituire la somma non dovuta, calcolata sulla base di "+($F{FL_BREVE_PERIODO}.equals("Y")?"Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IMPORTO_DIARIA_STR})+"":"Euro "+new java.text.DecimalFormat("#,##0.00").format($F{DIARIA_LUNGO_PERIODO})+"")+" al giorno, mediante bonifico bancario (i cui riferimenti dovranno essere riportati nell'attestato di soggiorno) a favore del:\nConsiglio Nazionale delle Ricerche \nBanca Nazionale del Lavoro – Sportello CNR n. 6392 \nPiazzale Aldo Moro, 7 00185 Roma - Italy \nConto di evidenza n. 218155 denominato 'CNR - Incassi e pagamenti giornalieri'.\nNella causale del versamento indicare 'Ufficio Accordi e Relazioni Internazionali, mandato n. ............ - giorni non usufruiti n. .......'"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["a fine soggiorno, il saldo Euro di "+new java.text.DecimalFormat("#,##0.00").format($F{IM_RIMB_SPESE})+" sul conto corrente estero personale dello studioso, eventualmente decurtata di "+($F{FL_BREVE_PERIODO}.equals("Y")?"Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IMPORTO_DIARIA_STR})+"":"Euro "+new java.text.DecimalFormat("#,##0.00").format($F{DIARIA_LUNGO_PERIODO})+"")+" al giorno nel caso in cui la durata del soggiorno venisse ridotta. Nel caso in cui la riduzione della durata del soggiorno determinasse un compenso superiore all'acconto ricevuto, lo studioso dovrà restituire la somma non dovuta, calcolata sulla base di "+($F{FL_BREVE_PERIODO}.equals("Y")?"Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IMPORTO_DIARIA_STR})+"":"Euro "+new java.text.DecimalFormat("#,##0.00").format($F{DIARIA_LUNGO_PERIODO})+"")+" al giorno, mediante bonifico bancario (i cui riferimenti dovranno essere riportati nell'attestato di soggiorno) a favore del:\nConsiglio Nazionale delle Ricerche \nBanca Nazionale del Lavoro – Sportello CNR n. 6392 \nPiazzale Aldo Moro, 7 - 00185 Roma - Italia \nConto di evidenza n. 218155 denominato 'CNR - Incassi e pagamenti giornalieri'.\nNella causale del versamento indicare 'Ufficio Accordi e Relazioni Internazionali, mandato n. ............ - giorni non usufruiti n. .......'"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-1" style="TNRG11" x="40" y="0" width="15" height="14"/>
@@ -385,17 +393,17 @@ $F{INDIRIZZO_ENTE_RESPONS_ITA}]]></textFieldExpression>
 				<textFieldExpression class="java.lang.String"><![CDATA["Nel caso in cui la durata del soggiorno venisse ridotta, lo studioso dovrà restituire una somma, calcolata sulla base di Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IMPORTO_DIARIA_STR})+" al giorno, mediante bonifico bancario (i cui riferimenti dovranno essere riportati nell'attestato di soggiorno) a favore del:"]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="61" splitType="Prevent">
+		<band height="72" splitType="Prevent">
 			<printWhenExpression><![CDATA[$F{FL_PAGAMENTO_ENTE_ACCORDO}.equals( "N" ) && $F{FL_PAGAMENTO_CON_BONIFICO}.equals( "N" )]]></printWhenExpression>
 			<staticText>
-				<reportElement key="staticText-1" style="TNR11" x="0" y="0" width="465" height="61"/>
+				<reportElement key="staticText-1" style="TNR11" x="0" y="0" width="465" height="72"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Consiglio Nazionale delle Ricerche
-Banca Nazionale del Lavoro – Sportello CNR n. 6392 – Piazzale Aldo Moro, 7 00185 Roma - Italy
-Conto di evidenza n. 218155 denominato “CNR - Incassi e pagamenti giornalieri”.
-Nella causale del versamento indicare "Ufficio Accordi e Relazioni Internazionali, mandato n. ............ - giorni non usufruiti n. .......]]></text>
+Banca Nazionale del Lavoro - Sportello CNR n. 6392 - Piazzale Aldo Moro, 7 - 00185 Roma - Italia
+Codice IBAN IT57S0100503392000000218155, Codice SWIFT BNLIITRR
+Nella causale del versamento indicare 'Ufficio Accordi e Relazioni Internazionali, mandato n. ............ - giorni non usufruiti n. .......']]></text>
 			</staticText>
 		</band>
 		<band height="50">

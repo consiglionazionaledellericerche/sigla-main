@@ -2,33 +2,33 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TrasmissioneCandidatura" pageWidth="595" pageHeight="842" columnWidth="465" leftMargin="65" rightMargin="65" topMargin="30" bottomMargin="20" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.Blt_visite_stampe_candidaturaScriptlet">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="1.464100000000001"/>
+	<property name="ireport.zoom" value="1.1000000000000005"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
-	<import value="net.sf.jasperreports.engine.data.*"/>
 	<import value="java.util.*"/>
-	<style name="TNR8" isDefault="false" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
-	<style name="TNRG8" isDefault="false" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC8" isDefault="false" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNR9" isDefault="false" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
-	<style name="TNRG9" isDefault="false" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC9" isDefault="false" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNR10" isDefault="false" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
-	<style name="TNRG10" isDefault="false" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC10" isDefault="false" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRG11" isDefault="false" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNR12" isDefault="false" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman"/>
-	<style name="TNRG12" isDefault="false" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC12" isDefault="false" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRGC12" isDefault="false" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNRGC14" isDefault="false" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNRG14" isDefault="false" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNR16" isDefault="false" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
-	<style name="TNRC16" isDefault="false" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRG16" isDefault="false" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRGC16" isDefault="false" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNR11" isDefault="false" fontName="Times New Roman" fontSize="11" pdfFontName="Times-Roman"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC8" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC9" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG11" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR12" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman"/>
+	<style name="TNRG12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC12" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRG14" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
+	<style name="TNRC16" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG16" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRGC16" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNR11" fontName="Times New Roman" fontSize="11" pdfFontName="Times-Roman"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
@@ -159,7 +159,7 @@ and e.pg_nazione_str = f.pg_nazione]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Attn. "+$F{NOME_RESPONS_STR}.toUpperCase()+" "+$F{COGNOME_RESPONS_STR}.toUpperCase()+""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Attn. "+$F{COGNOME_RESPONS_STR}+" "+$F{NOME_RESPONS_STR}+""]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="70" splitType="Prevent">

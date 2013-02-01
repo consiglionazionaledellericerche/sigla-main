@@ -2,33 +2,33 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ModelloContratto" pageWidth="595" pageHeight="842" columnWidth="465" leftMargin="65" rightMargin="65" topMargin="30" bottomMargin="40" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.Blt_visite_stampe_candidaturaScriptlet">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="895"/>
+	<property name="ireport.y" value="768"/>
 	<import value="net.sf.jasperreports.engine.*"/>
-	<import value="net.sf.jasperreports.engine.data.*"/>
 	<import value="java.util.*"/>
-	<style name="TNR8" isDefault="false" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
-	<style name="TNRG8" isDefault="false" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC8" isDefault="false" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNR9" isDefault="false" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
-	<style name="TNRG9" isDefault="false" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC9" isDefault="false" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNR10" isDefault="false" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
-	<style name="TNRG10" isDefault="false" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC10" isDefault="false" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRG11" isDefault="false" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNR12" isDefault="false" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman"/>
-	<style name="TNRG12" isDefault="false" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC12" isDefault="false" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRGC12" isDefault="false" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNRGC14" isDefault="false" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNRG14" isDefault="false" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNR16" isDefault="false" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
-	<style name="TNRC16" isDefault="false" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRG16" isDefault="false" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRGC16" isDefault="false" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNR11" isDefault="false" fontName="Times New Roman" fontSize="11" pdfFontName="Times-Roman"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC8" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC9" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG11" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR12" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman"/>
+	<style name="TNRG12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC12" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRG14" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
+	<style name="TNRC16" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG16" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRGC16" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNR11" fontName="Times New Roman" fontSize="11" pdfFontName="Times-Roman"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
@@ -48,7 +48,7 @@
 	</parameter>
 	<queryString>
 		<![CDATA[select
-a.dt_ini_visita, a.dt_fin_visita, s.codice_fiscale, s.dt_nascita, l.ds_comune comune_nascita, l.cd_provincia provincia_autorizzato, e.anno_ini, e.anno_fin, e.fl_viaggi_interni, e.im_diaria_contrib_sogg_ita, e.im_mensile_contrib_sogg_ita, b.denominazione_sede ds_terzo_autorizzato, a.num_prot_attrib_incarico, a.dt_prot_attrib_incarico, e.acronimo_ente_str, f.ds_nazione ds_nazione_ente_str, e.nome_ente_str, a.num_prot_accett_ente_str,
+a.dt_ini_visita, a.dt_fin_visita, s.codice_fiscale, s.dt_nascita, l.ds_comune comune_nascita, l.cd_provincia provincia_autorizzato, e.anno_ini, e.anno_fin, e.fl_viaggi_interni, e.im_diaria_contrib_sogg_ita, e.im_mensile_contrib_sogg_ita, b.denominazione_sede ds_terzo_autorizzato, a.num_prot_attrib_incarico, a.dt_prot_attrib_incarico, e.acronimo_ente_str, f.ds_nazione ds_nazione_ente_str, e.nome_ente_str, a.num_prot_accett_ente_str, e.fl_lettera_invito,
 (select b.denominazione_sede from terzo b where b.cd_terzo = g.cd_respons_ita) responsabile_ita,
 (select b.denominazione_sede from terzo b where b.cd_terzo = g.cd_respons_str) responsabile_str,
 s.ti_sesso sesso_autorizzato, a.dt_prot_accett_ente_str, a.luogo_visita, e.num_articolo_prop_intel,
@@ -89,6 +89,7 @@ and s.pg_comune_nascita = l.pg_comune]]>
 	<field name="DS_NAZIONE_ENTE_STR" class="java.lang.String"/>
 	<field name="NOME_ENTE_STR" class="java.lang.String"/>
 	<field name="NUM_PROT_ACCETT_ENTE_STR" class="java.math.BigDecimal"/>
+	<field name="FL_LETTERA_INVITO" class="java.lang.String"/>
 	<field name="RESPONSABILE_ITA" class="java.lang.String"/>
 	<field name="RESPONSABILE_STR" class="java.lang.String"/>
 	<field name="SESSO_AUTORIZZATO" class="java.lang.String"/>
@@ -441,7 +442,7 @@ and s.pg_comune_nascita = l.pg_comune]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["visto d’ingresso nel paese di destinazione e la tassa d’imbarco aeroportuale;"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["il visto d’ingresso nel paese di destinazione"+($F{FL_LETTERA_INVITO}.equals("Y")?", assicurazione sanitaria (obbligatoria per la concessione del visto ed esclusivamente per il periodo di soggiorno autorizzato)":"")+" e la tassa d’imbarco aeroportuale;"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-1" style="TNRG11" x="24" y="0" width="16" height="14"/>
@@ -629,7 +630,7 @@ and s.pg_comune_nascita = l.pg_comune]]>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["in caso di riduzione della durata del soggiorno, una copia dell'avvenuta restituzione all'ente straniero della somma non dovuta. Si ricorda, infatti, che il contributo di soggiorno assagnato dall'ente straniero e' calcolato sulla base della durata inizialmente concordata."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["in caso di riduzione della durata del soggiorno, una copia dell'avvenuta restituzione all'ente straniero della somma non dovuta. Si ricorda, infatti, che il contributo di soggiorno assegnato dall'ente straniero e' calcolato sulla base della durata inizialmente concordata."]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-1" style="TNR11" x="26" y="0" width="16" height="14"/>
@@ -696,24 +697,7 @@ and s.pg_comune_nascita = l.pg_comune]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["la fornitura dell'alloggio;"]]></textFieldExpression>
-			</textField>
-		</band>
-		<band height="15" splitType="Prevent">
-			<printWhenExpression><![CDATA[$F{IM_DIARIA_CONTRIB_SOGG_ITA}!= null]]></printWhenExpression>
-			<staticText>
-				<reportElement key="staticText-1" style="TNRG11" x="25" y="0" width="16" height="14"/>
-				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" size="10" isBold="false"/>
-				</textElement>
-				<text><![CDATA[-]]></text>
-			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-2" style="TNR11" x="40" y="0" width="425" height="14"/>
-				<textElement textAlignment="Justified">
-					<font fontName="Times New Roman" size="10"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["il rimborso delle spese per l'alloggio fino ad un massimo di "+$F{CD_DIVISA_ITA}+" "+new java.text.DecimalFormat("#,##0.00").format($F{IM_DIARIA_CONTRIB_SOGG_ITA})+" al giorno o, in alternativa, un contributo mensile di "+$F{CD_DIVISA_ITA}+" "+new java.text.DecimalFormat("#,##0.00").format($F{IM_MENSILE_CONTRIB_SOGG_ITA})+";"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{IM_DIARIA_CONTRIB_SOGG_ITA}!=null?"il rimborso delle spese per l'alloggio fino ad un massimo di "+$F{CD_DIVISA_ITA}+" "+new java.text.DecimalFormat("#,##0.00").format($F{IM_DIARIA_CONTRIB_SOGG_ITA})+" al giorno o per soggiorni di lunga durata un contributo mensile di "+$F{CD_DIVISA_ITA}+" "+new java.text.DecimalFormat("#,##0.00").format($F{IM_MENSILE_CONTRIB_SOGG_ITA})+";":"la fornitura dell'alloggio;"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="15" splitType="Prevent">
@@ -729,7 +713,7 @@ and s.pg_comune_nascita = l.pg_comune]]>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["un contributo di soggiorno, pari a "+$F{CD_DIVISA_ITA}+" "+new java.text.DecimalFormat("#,##0.00").format($F{IMPORTO_DIARIA_ITA})+" al giorno."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["un contributo di soggiorno, così come previsto dall'Accordo CNR - "+$F{ACRONIMO_ENTE_STR}+"."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="18" splitType="Prevent">

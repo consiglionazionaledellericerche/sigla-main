@@ -4,31 +4,31 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.2100000000000006"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="288"/>
+	<property name="ireport.y" value="325"/>
 	<import value="net.sf.jasperreports.engine.*"/>
-	<import value="net.sf.jasperreports.engine.data.*"/>
 	<import value="java.util.*"/>
-	<style name="TNR8" isDefault="false" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
-	<style name="TNRG8" isDefault="false" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC8" isDefault="false" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNR9" isDefault="false" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
-	<style name="TNRG9" isDefault="false" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC9" isDefault="false" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNR10" isDefault="false" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
-	<style name="TNRG10" isDefault="false" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC10" isDefault="false" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRG11" isDefault="false" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNR12" isDefault="false" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman"/>
-	<style name="TNRG12" isDefault="false" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRC12" isDefault="false" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRGC12" isDefault="false" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNRGC14" isDefault="false" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNRG14" isDefault="false" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNR16" isDefault="false" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
-	<style name="TNRC16" isDefault="false" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
-	<style name="TNRG16" isDefault="false" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
-	<style name="TNRGC16" isDefault="false" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
-	<style name="TNR11" isDefault="false" fontName="Times New Roman" fontSize="11" pdfFontName="Times-Roman"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC8" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC9" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG11" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR12" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman"/>
+	<style name="TNRG12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC12" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRG14" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
+	<style name="TNRC16" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG16" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRGC16" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNR11" fontName="Times New Roman" fontSize="11" pdfFontName="Times-Roman"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
@@ -332,7 +332,7 @@ and b.cd_anag = s.cd_anag]]>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>VISTI</style> l’Accordo di cooperazione scientifica tra CNR e "+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+"), "+$F{DS_NAZIONE_ENTE_STR}+", sottoscritto dalle Parti il "+new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_FIRMA_ACCORDO})+" ed il relativo Addendum del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_DELIBERA})+", riguardante le attivita' "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"del biennio":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"del triennio":"per gli anni"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+";"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>VISTI</style> l’Accordo di cooperazione scientifica tra CNR e "+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+"), "+$F{DS_NAZIONE_ENTE_STR}+", sottoscritto dalle Parti il "+new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_FIRMA_ACCORDO})+" ed il relativo Addendum del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_FIRMA_ADDENDUM})+", riguardante le attivita' "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"del biennio":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"del triennio":"per gli anni"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+";"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
@@ -429,7 +429,7 @@ and b.cd_anag = s.cd_anag]]>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>CONSIDERATO</style> che la presente spesa è obbligatoria ed indifferibile;"]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="20" splitType="Prevent">
+		<band height="18" splitType="Prevent">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
@@ -438,17 +438,14 @@ and b.cd_anag = s.cd_anag]]>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>RITENUTA</style> l’opportunità di provvedere;"]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="37" splitType="Prevent">
+		<band height="36" splitType="Prevent">
 			<staticText>
-				<reportElement key="staticText-1" style="TNRG11" x="0" y="15" width="465" height="14" isPrintWhenDetailOverflows="true"/>
-				<textElement textAlignment="Center">
+				<reportElement key="staticText-1" style="TNRG11" x="0" y="11" width="465" height="14" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Center" markup="styled">
 					<font fontName="Times New Roman" size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DISPONE]]></text>
 			</staticText>
-			<break>
-				<reportElement x="0" y="0" width="465" height="1"/>
-			</break>
 		</band>
 		<band height="20">
 			<printWhenExpression><![CDATA[$F{FL_PAGAMENTO_ENTE}.equals( "Y")]]></printWhenExpression>
@@ -475,7 +472,7 @@ and b.cd_anag = s.cd_anag]]>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{FL_PAGAMENTO_ENTE}.equals("N")?
 "La liquidazione del compenso, per un importo di Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IM_OBBLIGAZIONE})+", a favore di "+$F{DS_TERZO_ENTE_DA_PAGARE}+", Codice terzo n. "+$F{ENTE_DA_PAGARE}+", da far gravare sull'impegno n. "+$F{PG_OBBLIGAZIONE}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_REGISTRAZIONE})+", se necessario da incrementare o diminuire da parte della Ragioneria della SAC, con competenza economica dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+" al "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_FIN_VISITA})+", mediante accreditamento su conto corrente bancario estero identificato con il Codice SWIFT n. "+$F{CODICE_SWIFT_ENTE_DA_PAGARE}+" e Codice IBAN n. "+$F{CODICE_IBAN_ENTE_DA_PAGARE}+"."
-:"La liquidazione del compenso, con competenza economica dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+" al "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_FIN_VISITA})+", mediante accreditamento su conto corrente bancario estero identificato con il Codice SWIFT n. "+($F{PAGAMENTO_ENTE_VISITA}.equals("Y")?""+$F{CODICE_SWIFT_ENTE_DA_PAGARE}+"":""+$F{CODICE_SWIFT}+"")+" e Codice IBAN n. "+($F{PAGAMENTO_ENTE_VISITA}.equals("Y")?""+$F{CODICE_IBAN_ENTE_DA_PAGARE}+"":""+$F{CODICE_IBAN}+"")+"."]]></textFieldExpression>
+:"La liquidazione del compenso, con competenza economica dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+" al "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_FIN_VISITA})+", mediante accreditamento su conto corrente bancario estero identificato con il Codice SWIFT n. "+($F{PAGAMENTO_ENTE_VISITA}.equals("Y")?""+$F{CODICE_SWIFT_ENTE_DA_PAGARE}+"":""+$F{CODICE_SWIFT}+"")+" e Codice IBAN n. "+($F{PAGAMENTO_ENTE_VISITA}.equals("Y")?""+$F{CODICE_IBAN_ENTE_DA_PAGARE}+"":""+$F{CODICE_IBAN}+"")+", con modello 1210."]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="13" height="14"/>

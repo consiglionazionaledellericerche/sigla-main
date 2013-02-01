@@ -2,9 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProvvedimentoPagamentoSTR" pageWidth="595" pageHeight="842" columnWidth="465" leftMargin="65" rightMargin="65" topMargin="30" bottomMargin="20" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.Blt_visite_stampe_candidaturaScriptlet">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="1.100000000000001"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="275"/>
+	<property name="ireport.y" value="205"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -263,7 +263,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="51" y="0" width="414" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Accordo di cooperazione scientifica tra CNR e "+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+"), "+$F{DS_NAZIONE_ENTE_STR}+" – "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"Biennio":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"Triennio":"Anni"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+". Progetto comune di ricerca "+$F{DS_RESPONSABILE_ITA}+" / "+$F{DS_RESPONSABILE_STR}.toUpperCase()+"."]]></textFieldExpression>
 			</textField>
@@ -273,10 +272,8 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="51" y="0" width="414" height="14"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Liquidazione compenso "+($F{SESSO_AUTORIZZATO}.equals("M")?"del Dott.":"della Dott.ssa")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+" (studioso straniero)."
-]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Liquidazione compenso "+($F{SESSO_AUTORIZZATO}.equals("M")?"del Dott.":"della Dott.ssa")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+" (studioso straniero)."]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="20" splitType="Prevent">
@@ -293,7 +290,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>VISTO</style> il Regolamento di amministrazione, contabilità e finanza del CNR, pubblicato sulla Gazzetta Ufficiale n. 124 del 30/05/2005, supplemento ordinario n. 101;"]]></textFieldExpression>
 			</textField>
@@ -303,7 +299,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>VISTA</style> la deliberazione del Consiglio di Amministrazione n. "+$F{NUM_DELIBERA}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_DELIBERA})+", con la quale e' stato approvato il Bilancio di Previsione del CNR per l’esercizio finanziario "+$F{ESERCIZIO_OBBLIG}+";"]]></textFieldExpression>
 			</textField>
@@ -313,7 +308,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>VISTA</style> la voce di spesa "+$F{CD_ELEMENTO_VOCE}+" '"+$F{DS_ELEMENTO_VOCE}+"', U.O. "+$F{CD_UNITA_ORGANIZZATIVA}+", G.A.E. '"+$F{CD_LINEA_ATTIVITA}+"' '"+$F{DS_LINEA_ATTIVITA}+
 (!$F{ESERCIZIO_OBBLIG}.equals($F{ESERCIZIO_ORI_OBBLIG})?"', in conto residui;":", in conto competenza;")]]></textFieldExpression>
@@ -324,7 +318,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>VISTI</style> l’Accordo di cooperazione scientifica tra CNR e "+$F{NOME_ENTE_STR}+" ("+$F{ACRONIMO_ENTE_STR}+"), "+$F{DS_NAZIONE_ENTE_STR}+", sottoscritto dalle Parti il "+new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_FIRMA_ACCORDO})+" ed il relativo Addendum del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_DELIBERA})+", riguardante le attivita' "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"del biennio":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"del triennio":"per gli anni"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+";"]]></textFieldExpression>
 			</textField>
@@ -334,7 +327,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>VISTO</style> il parere favorevole, prot. AMMCNT - CNR n. "+$F{NUM_PROT_PARERE_COMMISSIONE}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_PROT_PARERE_COMMISSIONE})+", espresso dalla Commissione di valutazione scientifica del CNR, riferito al progetto comune di ricerca '"+$F{DS_PROGETTO_ITA}+"' (Responsabile italiano "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{DS_RESPONSABILE_ITA}.toUpperCase()+", Responsabile straniero "+($F{SESSO_AUTORIZZATO}.equals("M")?"Dott.":"Dott.ssa")+" "+$F{DS_RESPONSABILE_STR}.toUpperCase()+"), presentato nell'ambito dell'Accordo CNR/"+$F{ACRONIMO_ENTE_STR}+" "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"per il biennio":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"per il triennio":"per gli anni"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+";"]]></textFieldExpression>
 			</textField>
@@ -344,7 +336,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>VISTA</style> la lista congiunta CNR/"+$F{ACRONIMO_ENTE_STR}+", prot. AMMCNT - CNR n. "+$F{NUM_PROT_LISTA_CONGIUNTA}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_PROT_LISTA_CONGIUNTA})+", nella quale il Progetto sopra citato è inserito tra i Progetti comuni selezionati "+($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(BigDecimal.ONE)==0?"per il biennio":($F{ANNO_FIN}.subtract($F{ANNO_INI}).compareTo(new BigDecimal(2))==0?"per il triennio":"per gli anni"))+ " " +$F{ANNO_INI}+"-"+$F{ANNO_FIN}+";"]]></textFieldExpression>
 			</textField>
@@ -354,7 +345,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" stretchType="RelativeToBandHeight" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>VISTO</style> il provvedimento, prot. AMMCNT - CNR n. "+$F{NUM_PROT_DEC_CONTR}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_PROT_DEC_CONT})+", con il quale il Direttore dell'Ufficio Accordi e Relazioni Internazionali emana la decisione di contrattare per l'affidamento di collaborazioni aventi ad oggetto soggiorni di ricerca in "+$F{DS_NAZIONE_ENTE_STR}+" ed in Italia, nell'ambito dell'Accordo CNR/"+$F{ACRONIMO_ENTE_STR}+";"]]></textFieldExpression>
 			</textField>
@@ -364,7 +354,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>VISTA</style> la candidatura proposta dall'Ente straniero, prot. AMMCNT - CNR n. "+$F{NUM_PROT_CANDIDATURA}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_PROT_CANDIDATURA})+", del Dott. "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+" (studioso), relativa ad un soggiorno di ricerca da effettuarsi in Italia nell'ambito del sopra citato progetto, dal "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA})+" al "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_FIN_VISITA})+";"]]></textFieldExpression>
 			</textField>
@@ -374,7 +363,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>VISTA</style> l’accettazione, prot. AMMCNT - CNR n. "+$F{NUM_PROT_ACCETT_ENTE_STR}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_PROT_ACCETT_ENTE_STR})+", del soggiorno di ricerca sopra citato da parte dell’Istituzione ospitante;"]]></textFieldExpression>
 			</textField>
@@ -384,7 +372,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>VISTO</style> il provvedimento, prot. AMMCNT - CNR n. "+$F{NUM_PROT_ATTRIB_INCARICO}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_PROT_ATTRIB_INCARICO})+", di individuazione contraente e attribuzione incarico di collaborazione allo studioso;"]]></textFieldExpression>
 			</textField>
@@ -394,7 +381,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>VISTO</style> l’Accordo CNR/"+$F{ACRONIMO_ENTE_STR}+" nel quale e' stabilito che è a carico del CNR il compenso di soggiorno per lo studioso, quantificato in Euro "+new java.text.DecimalFormat("#,##0.00").format($V{TOTALE_LORDO_PERCIPIENTE})+" (importo lordo);"]]></textFieldExpression>
 			</textField>
@@ -404,7 +390,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>VISTA</style> la dichiarazione, prot. AMMCNT - CNR n. "+$F{NUM_PROT_ACCETT_CONVENZ}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_PROT_ACCETT_CONVENZ})+", con la quale lo studioso straniero richiede "+("Y".equals($F{FL_ACCETTAZIONE_CONVENZIONE})?"l'applicazione":"la non applicazione")+" della Convenzione vigente tra Italia e "+$F{DS_NAZIONE_ENTE_STR}+", intesa ad evitare le doppie imposizioni in materia di imposta sul reddito e sul patrimonio;"]]></textFieldExpression>
 			</textField>
@@ -414,7 +399,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>VISTO</style> il contratto di prestazione d’opera in regime di lavoro autonomo occasionale, prot. AMMCNT – CNR n. "+$F{NUM_PROT_CONTRATTO}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_PROT_CONTRATTO})+", relativo al soggiorno di ricerca dello studioso;"]]></textFieldExpression>
 			</textField>
@@ -424,7 +408,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>VISTO</style> il Repertorio Incarichi, numero identificativo incarico "+$F{PG_REPERTORIO}+" del "+$F{ESERCIZIO_REPERTORIO}+";"]]></textFieldExpression>
 			</textField>
@@ -434,7 +417,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>VISTO</style> l'impegno n. "+$F{PG_OBBLIGAZIONE}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_REGISTRAZIONE})+", preso a copertura delle spese complessive relative al compenso dovuto allo studioso, per un importo di Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IM_OBBLIGAZIONE})+";"]]></textFieldExpression>
 			</textField>
@@ -445,7 +427,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>CONSIDERATO</style> che per consentire di affrontare le spese iniziali del soggiorno sarà erogato un acconto sul compenso pari a Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IM_RIMB_SPESE_ANT})+" (importo netto);"]]></textFieldExpression>
 			</textField>
@@ -457,7 +438,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>VISTO</style> il provvedimento, prot. AMMCNT - CNR "+$F{NUM_PROT_PROVV_PAGAM_ANT}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_PROT_PROVV_PAGAM_ANT})+", relativo all'acconto del compenso di Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IM_RIMB_SPESE_ANT})+", erogato per consentire allo studioso di affrontare le spese iniziali del soggiorno;"]]></textFieldExpression>
 			</textField>
@@ -468,7 +448,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>VISTA</style> l'attestazione, prot. AMMCNT - CNR n. "+$F{NUM_PROT_ATTESTATO_SOGG}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_PROT_ATTESTATO_SOGG})+", del Responsabile italiano di progetto nella quale vengono indicati i seguenti dati relativi al soggiorno di ricerca dello studioso: data di inizio soggiorno "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_INI_VISITA_EFFETTIVA})+", data di fine soggiorno "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_FIN_VISITA_EFFETTIVA})+";"]]></textFieldExpression>
 			</textField>
@@ -479,7 +458,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>CONSIDERATO</style> che nella attestazione sopra citata risulta che lo studioso ha effettuato un soggiorno di ricerca più breve di quanto previsto ("+$V{numGiorniEffettivi}+" giorni anzichè giorni "+$V{numGiorni}+") e che quindi la somma dovuta "+($F{SESSO_AUTORIZZATO}.equals("M")?"al Dott.":"alla Dott.ssa")+" "+$F{DS_TERZO_AUTORIZZATO}.toUpperCase()+" deve essere decurtata di euro Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IMPORTO_DIARIA_STR})+" per ogni giorno di riduzione;"]]></textFieldExpression>
 			</textField>
@@ -490,7 +468,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>CONSIDERATO</style> che allo studioso deve essere erogata la somma di Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IM_RIMB_SPESE})+" (importo netto) a saldo del compenso dovuto;"]]></textFieldExpression>
 			</textField>
@@ -500,7 +477,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>VISTA</style>" + ($P{anticipo}.equals("Y")
 ?" la nota di addebito, prot. AMMCNT - CNR n. "+$F{NUM_PROT_NOTA_ADDEBITO_ANT}+" del "+new SimpleDateFormat("dd/MM/yyyy").format($F{DT_PROT_NOTA_ADDEBITO_ANT})+", riguardante l'acconto del compenso dello studioso, pari a Euro "+new java.text.DecimalFormat("#,##0.00").format($F{IM_RIMB_SPESE_ANT})+" (importo netto)"
@@ -512,7 +488,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>CONSIDERATO</style> che la presente spesa è obbligatoria ed indifferibile;"]]></textFieldExpression>
 			</textField>
@@ -522,7 +497,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="465" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Justified" markup="styled">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>RITENUTA</style> l’opportunità di provvedere;"]]></textFieldExpression>
 			</textField>
@@ -542,7 +516,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="14" height="14"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["1)"]]></textFieldExpression>
 			</textField>
@@ -559,7 +532,6 @@ and b.cd_anag = s.cd_anag]]>
 				<reportElement key="textField-2" style="TNR11" x="0" y="0" width="13" height="14"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top">
 					<font fontName="Times New Roman" size="11"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["2)"]]></textFieldExpression>
 			</textField>
