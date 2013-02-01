@@ -1055,8 +1055,8 @@ public boolean isRoCampiResiduoProprio(){
 	ObbligazioneBulk obbligazione = (ObbligazioneBulk)getModel();
 	if (obbligazione == null ||(obbligazione!=null &&!obbligazione.isObbligazioneResiduo()) || this.getStatus()==SEARCH)
 		return false;
-	if (obbligazione!=null && obbligazione.isObbligazioneResiduo()) {
-		return true;
+	if (obbligazione!=null && obbligazione.isObbligazioneResiduo() &&  this.getStatus()!= INSERT) {
+		return true; 
 	}
 	return false;
 }

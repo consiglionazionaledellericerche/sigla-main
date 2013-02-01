@@ -1,5 +1,8 @@
 package it.cnr.contab.doccont00.comp;
 
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
+import it.cnr.contab.anagraf00.core.bulk.Anagrafico_terzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
@@ -5316,8 +5319,7 @@ private void validaCampi(UserContext uc, ObbligazioneBulk obbligazione) throws C
 		sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Incarichi_repertorioBulk.STATO_INVIATO);
 		sql.closeParenthesis();
 	
-	    if((obbligazione.getCreditore() != null && obbligazione.getCreditore().getCd_terzo()!=null))
-			sql.addClause(FindClause.AND, "cd_terzo",SQLBuilder.EQUALS,obbligazione.getCreditore().getCd_terzo());
+	 
 
 	    sql.addTableToHeader("INCARICHI_REPERTORIO_ANNO");
 	    sql.addSQLJoin("INCARICHI_REPERTORIO_ANNO.ESERCIZIO", "INCARICHI_REPERTORIO.ESERCIZIO");
@@ -5326,6 +5328,29 @@ private void validaCampi(UserContext uc, ObbligazioneBulk obbligazione) throws C
 	    sql.addTableToHeader("TERZO");
 		sql.addSQLJoin("INCARICHI_REPERTORIO.CD_TERZO", SQLBuilder.EQUALS,"TERZO.CD_TERZO");
 		sql.addSQLClause("AND","TERZO.DT_FINE_RAPPORTO",SQLBuilder.ISNULL,null);
+		sql.openParenthesis("AND");
+	    sql.openParenthesis("AND");
+	    if((obbligazione.getCreditore() != null && obbligazione.getCreditore().getCd_terzo()!=null))
+				sql.addClause(FindClause.AND, "cd_terzo",SQLBuilder.EQUALS,obbligazione.getCreditore().getCd_terzo());
+		AnagraficoHome anagraficoHome = (AnagraficoHome) getHome(
+				userContext, AnagraficoBulk.class);
+		sql.closeParenthesis();
+		try {
+			for (Iterator<Anagrafico_terzoBulk> i = anagraficoHome
+					
+					.findAssociatiStudio(
+							obbligazione.getCreditore().getAnagrafico()).iterator(); i
+					.hasNext();) {
+				sql.openParenthesis("OR");
+				Anagrafico_terzoBulk associato = i.next();
+					sql.addSQLClause("OR", "INCARICHI_REPERTORIO.CD_TERZO",
+							SQLBuilder.EQUALS, associato.getCd_terzo());
+					sql.closeParenthesis();
+			}
+		} catch (IntrospectionException e) {
+		}
+		
+		sql.closeParenthesis();
 		return sql;
 	}
 	/**
