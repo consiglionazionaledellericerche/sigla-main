@@ -2060,6 +2060,9 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 				sql.addSQLExistsClause(FindClause.OR,sqlCdsExists);
 			sql.closeParenthesis();
 		}
+		if (clauses != null) 
+			sql.addClause(clauses);
+		sql.addOrderBy("ESERCIZIO, PG_REPERTORIO");		
 		return sql;
 	}
 	public it.cnr.jada.persistency.sql.SQLBuilder selectIncaricoRepertorioForSearchByClause(UserContext userContext, Incarichi_proceduraBulk procedura, Incarichi_repertorioBulk incarico, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 

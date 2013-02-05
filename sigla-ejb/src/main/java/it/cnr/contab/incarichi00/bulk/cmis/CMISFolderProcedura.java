@@ -151,21 +151,21 @@ public class CMISFolderProcedura extends OggettoBulk {
 			isEquals = false;
 		}
 
-		valueDB=String.valueOf(this.getOggetto());
+		valueDB=String.valueOf(this.getOggetto()).replaceAll("  ", " ").replaceAll("\r\n", "\n");
 		valueCMIS=String.valueOf(node.getPropertyValue("sigla_contratti:oggetto"));
 		if (!valueCMIS.equals(valueDB)) {
 			listError.add(initTesto+" - Oggetto - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;
 		}
 
-		valueDB=String.valueOf(this.getDescrizioneProceduraAmministrativa());
+		valueDB=String.valueOf(this.getDescrizioneProceduraAmministrativa()).replaceAll("  ", " ").replaceAll("\r\n", "\n");
 		valueCMIS=String.valueOf(node.getPropertyValue("sigla_contratti:procedura_amministrativa"));
 		if (!valueCMIS.equals(valueDB)) {
 			listError.add(initTesto+" - Procedura Amministrativa - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;
 		}
 
-		valueDB=String.valueOf(this.getTipoNormaDescrizione());
+		valueDB=String.valueOf(this.getTipoNormaDescrizione()).replaceAll("  ", " ").replaceAll("\r\n", "\n");
 		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_TIPO_NORMA_DESCRIZIONE.value()));
 		if (!valueCMIS.equals(valueDB)) {
 			listError.add(initTesto+" - Descrizione Tipo Norma - DB:"+valueDB+" - CMIS:"+valueCMIS);

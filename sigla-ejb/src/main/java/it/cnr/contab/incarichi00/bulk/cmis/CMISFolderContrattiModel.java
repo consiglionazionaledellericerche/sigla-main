@@ -127,20 +127,6 @@ public class CMISFolderContrattiModel extends OggettoBulk {
 			isEquals = false;
 		}
 
-		valueDB=String.valueOf(this.getEsercizio());
-		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_INCARICHI_ESERCIZIO.value()));
-		if (!valueCMIS.equals(valueDB)) {
-			listError.add(initTesto+" - Esercizio Incarico - DB:"+valueDB+" - CMIS:"+valueCMIS);
-			isEquals = false;
-		}
-
-		valueDB=String.valueOf(this.getPg_repertorio());
-		valueCMIS=String.valueOf(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_INCARICHI_PROGRESSIVO.value()));
-		if (!valueCMIS.equals(valueDB)) {
-			listError.add(initTesto+" - Pg_repertorio - DB:"+valueDB+" - CMIS:"+valueCMIS);
-			isEquals = false;
-		}
-
 		valueDB=String.valueOf(this.getImporto_lordo());
 		valueCMIS=String.valueOf(node.getPropertyValue("sigla_contratti:importo_contratto"));
 		if (!valueCMIS.equals(valueDB)) {
