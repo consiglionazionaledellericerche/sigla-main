@@ -9,6 +9,7 @@ import it.cnr.contab.bilaterali00.bulk.Blt_autorizzatiBulk;
 import it.cnr.contab.bilaterali00.bulk.Blt_progettiBulk;
 import it.cnr.contab.bilaterali00.bulk.Blt_visiteBulk;
 import it.cnr.contab.bilaterali00.ejb.BltVisiteComponentSession;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.doccont00.bp.CRUDObbligazioneBP;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.incarichi00.bp.CRUDIncarichiProceduraBP;
@@ -989,5 +990,17 @@ public class BltVisiteAction extends it.cnr.jada.util.action.CRUDAction{
             return handleException(actioncontext, businessprocessexception);
         }
     }
-    
+ 
+    /**
+     * Ricerca le banche valide
+     */
+    public Forward doSearchListabanche(ActionContext context) {
+    	Blt_visiteBulk visita = (Blt_visiteBulk)getBusinessProcess(context).getModel();
+   		return search(context, getFormField(context, "main.listabanche"), visita.getModalitaPagamento().getTi_pagamento());
+    }
+
+    public Forward doSearchListabancheAnt(ActionContext context) {
+    	Blt_visiteBulk visita = (Blt_visiteBulk)getBusinessProcess(context).getModel();
+   		return search(context, getFormField(context, "main.listabancheAnt"), visita.getModalitaPagamentoAnticipo().getTi_pagamento());
+    }
 }
