@@ -1258,10 +1258,10 @@ VP_FATTURA_ATTIVA_N.ESERCIZIO,ti_stampa,VP_FATTURA_ATTIVA_N.PG_FATTURA_ATTIVA,ti
 					<textElement textAlignment="Center">
 						<font isBold="true" pdfFontName="Times-Bold"/>
 					</textElement>
-					<text><![CDATA[IVA PERCENTUALE %]]></text>
+					<text><![CDATA[IVA]]></text>
 				</staticText>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-43" style="TNR10BOLD" x="194" y="11" width="199" height="12"/>
+					<reportElement key="textField-43" style="TNR10BOLD" x="262" y="11" width="125" height="12"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1274,7 +1274,7 @@ VP_FATTURA_ATTIVA_N.ESERCIZIO,ti_stampa,VP_FATTURA_ATTIVA_N.PG_FATTURA_ATTIVA,ti
 ($F{FL_ESCLUSO}.equals("Y"))?"FUORI CAMPO ":"IMPONIBILE"]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-77" positionType="Float" stretchType="RelativeToTallestObject" x="192" y="6" width="1" height="19" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-77" positionType="Float" stretchType="RelativeToTallestObject" x="256" y="6" width="1" height="19" isRemoveLineWhenBlank="true"/>
 				</line>
 				<line>
 					<reportElement key="line-80" positionType="Float" stretchType="RelativeToTallestObject" x="395" y="7" width="1" height="18" isRemoveLineWhenBlank="true"/>
@@ -1382,7 +1382,7 @@ VP_FATTURA_ATTIVA_N.ESERCIZIO,ti_stampa,VP_FATTURA_ATTIVA_N.PG_FATTURA_ATTIVA,ti
 			<band height="20" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean ($F{TI_RECORD}.compareTo("C")==0 && $F{TI_FATTURA}.compareTo("D")!=0)]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-81" style="TNR10" stretchType="RelativeToBandHeight" x="7" y="7" width="182" height="12"/>
+					<reportElement key="textField-81" style="TNR10" stretchType="RelativeToBandHeight" x="7" y="7" width="242" height="12"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1393,7 +1393,7 @@ VP_FATTURA_ATTIVA_N.ESERCIZIO,ti_stampa,VP_FATTURA_ATTIVA_N.PG_FATTURA_ATTIVA,ti
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_VOCE_IVA}+" - "+$F{DS_VOCE_IVA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00€" isBlankWhenNull="false">
-					<reportElement key="textField-82" style="TNR10" x="196" y="7" width="196" height="12"/>
+					<reportElement key="textField-82" style="TNR10" x="262" y="7" width="125" height="12"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1415,7 +1415,7 @@ VP_FATTURA_ATTIVA_N.ESERCIZIO,ti_stampa,VP_FATTURA_ATTIVA_N.PG_FATTURA_ATTIVA,ti
 					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_TOTALE_V_IVA}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-195" positionType="Float" stretchType="RelativeToBandHeight" x="192" y="0" width="1" height="20" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-195" positionType="Float" stretchType="RelativeToBandHeight" x="256" y="0" width="1" height="20" isRemoveLineWhenBlank="true"/>
 				</line>
 				<line>
 					<reportElement key="line-196" positionType="Float" stretchType="RelativeToBandHeight" x="395" y="0" width="1" height="20" isRemoveLineWhenBlank="true"/>
