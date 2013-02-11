@@ -35,4 +35,5 @@ Timestamp findMaxDataCompValida(UserContext param0,AnagraficoBulk param1) throws
 boolean verificaStrutturaPiva(UserContext userContext, AnagraficoBulk anagrafico) throws ComponentException, it.cnr.jada.bulk.ValidationException,java.rmi.RemoteException;
 void checkCaricoAlreadyExistFor(UserContext userContext,
 		AnagraficoBulk anagrafico, Carico_familiare_anagBulk carico)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+void controllaUnicitaCaricoInAnnoImposta(it.cnr.jada.UserContext param0, it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk param1, it.cnr.contab.anagraf00.core.bulk.Carico_familiare_anagBulk param2)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

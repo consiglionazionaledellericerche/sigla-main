@@ -409,5 +409,23 @@ public void checkCaricoAlreadyExistFor(UserContext param0,
 		}
 	}
 }
+public void controllaUnicitaCaricoInAnnoImposta(it.cnr.jada.UserContext param0, it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk param1, it.cnr.contab.anagraf00.core.bulk.Carico_familiare_anagBulk param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		invoke("controllaUnicitaCaricoInAnnoImposta",new Object[] {
+			param0,
+			param1,
+			param2});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
 
 }

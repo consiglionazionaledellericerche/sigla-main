@@ -59,6 +59,7 @@ public class CRUDAnagraficaBP extends SimpleCRUDBP {
 			super.validate(context,bulk);
 			validaCarico(context,(Carico_familiare_anagBulk)bulk);
 		}
+		
 		public OggettoBulk removeDetail(int i) {
 			if (!getModel().isNew()){	
 				List list = getDetails();
@@ -80,6 +81,7 @@ public class CRUDAnagraficaBP extends SimpleCRUDBP {
 		}
 			return super.removeDetail(i);	
 		}
+	
 	};
 
 	private final SimpleDetailCRUDController crudRapporti = new SimpleDetailCRUDController("Rapporti",RapportoBulk.class,"rapporti",this) {
@@ -496,6 +498,9 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 		if(carico.isToBeCreated()){
 		try {
 			AnagraficoComponentSession sess = (AnagraficoComponentSession)createComponentSession();
+
+			sess.controllaUnicitaCaricoInAnnoImposta(context.getUserContext(),carico.getAnagrafico(),carico);
+			
 			if (carico.isConiuge()|| carico.isFiglio()){
 				sess.checkConiugeAlreadyExistFor(context.getUserContext(),carico.getAnagrafico(),carico);
 			}

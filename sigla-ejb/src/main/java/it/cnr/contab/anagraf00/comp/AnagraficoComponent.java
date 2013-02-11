@@ -2226,4 +2226,29 @@ public void checkCaricoAlreadyExistFor(UserContext userContext,
 	}
 	}
 }
+public void controllaUnicitaCaricoInAnnoImposta(UserContext userContext,AnagraficoBulk anagrafico,Carico_familiare_anagBulk carico)throws ComponentException  
+{
+	GregorianCalendar dataInCarico = new GregorianCalendar();
+	GregorianCalendar dataFinCarico = new GregorianCalendar();
+	dataInCarico.setTime(carico.getDt_ini_validita());
+	dataFinCarico.setTime(carico.getDt_fin_validita());
+	
+	GregorianCalendar dataInCaricoFamiliare = new GregorianCalendar();
+	GregorianCalendar dataFinCaricoFamiliare = new GregorianCalendar();
+
+	for (java.util.Iterator i = anagrafico.getCarichi_familiari_anag().iterator();i.hasNext();) {
+			Carico_familiare_anagBulk carico_familiare = (Carico_familiare_anagBulk)i.next();
+			dataInCaricoFamiliare.setTime(carico_familiare.getDt_ini_validita());
+			dataFinCaricoFamiliare.setTime(carico_familiare.getDt_fin_validita());
+			if (!carico.equals(carico_familiare) &&
+				carico.getTi_persona().equals(carico_familiare.getTi_persona()) &&
+				carico.getCodice_fiscale().equals(carico_familiare.getCodice_fiscale()) &&
+				(dataInCarico.get(GregorianCalendar.YEAR) == (dataInCaricoFamiliare.get(GregorianCalendar.YEAR))||
+				dataInCarico.get(GregorianCalendar.YEAR) == (dataFinCaricoFamiliare.get(GregorianCalendar.YEAR))||
+				dataFinCarico.get(GregorianCalendar.YEAR) == (dataInCaricoFamiliare.get(GregorianCalendar.YEAR))||
+				dataFinCarico.get(GregorianCalendar.YEAR) == (dataFinCaricoFamiliare.get(GregorianCalendar.YEAR)))
+			   )	
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: Non è possibile inserire per lo stesso carico familiare più dettagli relativi ad uno stesso anno d'imposta!");
+	}
+}
 }
