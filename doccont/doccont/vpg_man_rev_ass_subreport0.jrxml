@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="482"/>
+	<property name="ireport.y" value="0"/>
 	<property name="ireport.background.image.properties" value="false,true,0.25,0,0,0,0,0,0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -31,8 +31,8 @@
 	<parameter name="UO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["000.407"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="pg_mandato" class="java.lang.Long" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Long("47")]]></defaultValueExpression>
+	<parameter name="pg_mandato" class="java.math.BigDecimal" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select * from VPG_MANDATO
