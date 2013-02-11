@@ -46,11 +46,11 @@ WHERE MAN.CD_CDS         = $P{aCd_cds}
                 AND MRIGA.ESERCIZIO    = MAN.ESERCIZIO
                 AND MRIGA.PG_MANDATO   = MAN.PG_MANDATO
                 AND TO_CHAR(MRIGA.CD_TERZO) LIKE $P{aCd_terzo})
-ORDER BY ESERCIZIO,CD_CDS,PG_MANDATO]]>
+ORDER BY ESERCIZIO,CD_CDS,PG_MANDATO ]]>
 	</queryString>
 	<field name="CD_CDS" class="java.lang.String"/>
 	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
-	<field name="PG_MANDATO" class="java.lang.Long"/>
+	<field name="PG_MANDATO" class="java.math.BigDecimal"/>
 	<field name="CD_UNITA_ORGANIZZATIVA" class="java.lang.String"/>
 	<field name="CD_CDS_ORIGINE" class="java.lang.String"/>
 	<field name="CD_UO_ORIGINE" class="java.lang.String"/>
