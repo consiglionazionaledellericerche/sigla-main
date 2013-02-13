@@ -340,9 +340,11 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	}
 	public void initializzaUnita_Organizzativa(ActionContext context) throws it.cnr.jada.action.BusinessProcessException{
 		try {
-
-			ContrattoComponentSession comp = (ContrattoComponentSession)createComponentSession();
-			setModel(context, comp.initializzaUnita_Organizzativa(context.getUserContext(), (ContrattoBulk)getModel()));
+			ContrattoBulk contratto = (ContrattoBulk)getModel();
+			if (contratto != null && contratto.getUnita_organizzativa() == null){
+				ContrattoComponentSession comp = (ContrattoComponentSession)createComponentSession();
+				setModel(context, comp.initializzaUnita_Organizzativa(context.getUserContext(), (ContrattoBulk)getModel()));
+			}
 		}catch(it.cnr.jada.comp.ComponentException ex){
 			throw handleException(ex);
 		}catch(java.rmi.RemoteException ex){

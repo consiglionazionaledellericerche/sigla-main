@@ -1,15 +1,32 @@
 package it.cnr.contab.doccont00.bp;
 
+import it.cnr.cmisdl.model.Node;
+import it.cnr.cmisdl.model.paging.ListNodePage;
+import it.cnr.cmisdl.service.NodeService;
+import it.cnr.contab.cmis.service.CMISService;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.*;
 
+import javax.servlet.ServletException;
+
+import org.apache.pdfbox.exceptions.COSVisitorException;
+import org.apache.pdfbox.io.IOUtils;
+import org.apache.pdfbox.util.PDFMergerUtility;
+
 import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.*;
@@ -35,6 +52,7 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP {
 	};
 	private boolean siope_attiva = false;
 	private boolean cup_attivo =false;
+	private CMISService cmisService;
 public CRUDMandatoBP() {
 	super();
 	setTab("tab","tabMandato");
@@ -159,7 +177,7 @@ public void create(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.
  */
 
 protected it.cnr.jada.util.jsp.Button[] createToolbar() {
-	Button[] toolbar = new Button[7];
+	Button[] toolbar = new Button[8];
 	int i = 0;
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.search");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.startSearch");
@@ -167,7 +185,8 @@ protected it.cnr.jada.util.jsp.Button[] createToolbar() {
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.new");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.save");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.delete");
-	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.print");	
+	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.print");
+	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.contabile");
 	return toolbar;
 }
 /**
@@ -281,7 +300,8 @@ public final it.cnr.jada.util.action.SimpleDetailCRUDController getCodiciSiopeCo
 }
 protected void initialize(ActionContext actioncontext) throws BusinessProcessException {
 	super.initialize(actioncontext);
-
+	cmisService = SpringUtil.getBean("cmisService",
+			CMISService.class);	
 	try {
 		setSiope_attiva(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope().booleanValue());
 		setCup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_cup().booleanValue());
@@ -433,4 +453,87 @@ protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionCo
     	resetForSearch(context);
 	}	
 }
+
+	public List<String> getNodeRefContabile(MandatoBulk mandato){
+		List<String> ids = new ArrayList<String>();
+		StringBuffer query = new StringBuffer("select doc.cmis:objectId from cmis:document doc ");
+		query.append(" join sigla_contabili_aspect:document contabili on doc.cmis:objectId = contabili.cmis:objectId");
+		query.append(" where contabili.sigla_contabili_aspect:esercizio = ").append(mandato.getEsercizio());
+		query.append(" and contabili.sigla_contabili_aspect:cds = '").append(mandato.getCd_cds()).append("'");
+		query.append(" and contabili.sigla_contabili_aspect:num_mandato = ").append(mandato.getPg_mandato());
+		query.append(" order by doc.cmis:creationDate DESC");
+		ListNodePage<Node> results = cmisService.search(query, Boolean.FALSE);
+		if (results.isEmpty())
+			return null;
+		else {
+			for (Node node : results) {
+				ids.add((String) node.getPropertyValue("cmis:objectId"));
+			}
+			return ids;
+		}
+	}
+	
+	public boolean isContabileButtonHidden(){
+		Boolean hidden = Boolean.TRUE;
+		if (getStatus() == SEARCH)
+			return hidden;
+		MandatoBulk mandato = (MandatoBulk)getModel();
+		if (mandato != null && mandato.getPg_mandato() != null)
+			return getNodeRefContabile(mandato) == null;
+		return hidden;
+	}
+	
+	private InputStream getStreamContabile(MandatoBulk mandato){
+		List<String> ids = getNodeRefContabile(mandato);
+		if (ids != null){
+			if (ids.size() == 1){
+				return cmisService.getResource(cmisService.getNodeByNodeRef(ids.get(0)));
+			}else{
+				PDFMergerUtility ut = new PDFMergerUtility();
+				ut.setDestinationStream(new ByteArrayOutputStream());
+				for (String id : ids) {
+					ut.addSource(cmisService.getResource(cmisService.getNodeByNodeRef(id)));
+				}
+				try {
+					ut.mergeDocuments();
+					return new ByteArrayInputStream(((ByteArrayOutputStream)ut.getDestinationStream()).toByteArray());
+				} catch (COSVisitorException e) {
+					handleException(e);
+				} catch (IOException e) {
+					handleException(e);
+				}
+				
+			}
+		}
+		return null;
+	}
+	
+	public String getContabileFileName(){
+		MandatoBulk mandato = (MandatoBulk)getModel();
+		if (mandato != null){
+			return "Contabile ".
+					concat(String.valueOf(mandato.getEsercizio())).
+					concat("-").concat(mandato.getCd_cds()==null?"":mandato.getCd_cds()).
+					concat("-").concat(String.valueOf(mandato.getPg_mandato())).
+					concat(" .pdf");
+		}
+		return null;
+	}
+	public void scaricaContabile(ActionContext actioncontext) throws IOException,ServletException {
+		MandatoBulk mandato = (MandatoBulk)getModel();
+		InputStream is = getStreamContabile(mandato);
+		if (is != null){
+			((HttpActionContext)actioncontext).getResponse().setContentLength(is.available());		
+			((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
+			OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
+			((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
+			byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
+			int buflength;
+			while ((buflength = is.read(buffer)) > 0) {
+				os.write(buffer,0,buflength);
+			}
+			is.close();
+			os.flush();
+		}
+	}
 }

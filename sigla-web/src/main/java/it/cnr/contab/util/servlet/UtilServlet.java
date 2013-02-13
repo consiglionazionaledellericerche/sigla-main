@@ -132,7 +132,7 @@ public class UtilServlet extends HttpServlet {
 			{
 				while (true){
 				  try{
-					Thread.sleep(1000*60*60);
+					Thread.sleep(1000*60*20);
 					if (new java.text.SimpleDateFormat("HH").format(new java.util.Date()).equalsIgnoreCase("02")){
 						deletePrintSpooler();
 						deleteExcel();

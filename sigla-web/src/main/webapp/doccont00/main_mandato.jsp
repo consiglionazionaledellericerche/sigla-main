@@ -21,12 +21,18 @@
 </head>
 <script language="javascript" src="scripts/css.js"></script>
 <title>Gestione Mandato</title>
-<body class="Form">
-
 <%  
 		CRUDMandatoBP bp = (CRUDMandatoBP)BusinessProcess.getBusinessProcess(request);
 		bp.openFormWindow(pageContext); 
 %>
+<script language="JavaScript">
+function doVisualizzaContabile() {	
+  doPrint('genericdownload/<%=bp.getContabileFileName()%>?methodName=scaricaContabile&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+}
+</script>
+
+<body class="Form">
+
 
 <table class="Panel">
 	<tr><td colspan=2>
