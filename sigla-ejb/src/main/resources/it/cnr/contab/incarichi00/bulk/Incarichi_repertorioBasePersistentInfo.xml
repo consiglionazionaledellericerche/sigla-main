@@ -191,7 +191,13 @@
 			propertyName="dt_proroga_pagam"
 			sqlTypeName="TIMESTAMP"
 			columnSize="7"
-			nullable="true" />			
+			nullable="true" />
+		<columnMapping
+			columnName="DT_EFFICACIA"
+			propertyName="dt_efficacia"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="cd_cds" />
@@ -255,4 +261,6 @@
 		name="nr_provv" />
 	<persistentProperty
 	    name="dt_provv" />
+	<persistentProperty
+	    name="dt_efficacia" />
 </SQLPersistentInfo>
