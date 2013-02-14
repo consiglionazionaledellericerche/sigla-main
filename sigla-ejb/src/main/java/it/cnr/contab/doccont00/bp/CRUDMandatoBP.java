@@ -523,7 +523,6 @@ protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionCo
 		MandatoBulk mandato = (MandatoBulk)getModel();
 		InputStream is = getStreamContabile(mandato);
 		if (is != null){
-			((HttpActionContext)actioncontext).getResponse().setContentLength(is.available());		
 			((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
 			OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
 			((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
