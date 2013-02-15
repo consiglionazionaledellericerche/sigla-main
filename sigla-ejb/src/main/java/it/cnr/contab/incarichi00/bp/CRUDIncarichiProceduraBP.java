@@ -820,14 +820,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(actioncontext, ri);
 				if (ri != null && ri.countElements() == 1)
 					procedura.setTipo_attivita((Tipo_attivitaBulk)ri.nextElement());
-				else {
-					it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
-					throw new it.cnr.jada.comp.ApplicationException("Errore di configurazione del tipo attività relativamente alla tipologia "+
-						(this.isAssegniRicercaBP()?"Assegni di Ricerca":"Borse di Studio")+". Contattare il Customer Support Team.");
-				}
 				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
-			}catch(it.cnr.jada.comp.ComponentException ex){
-				throw handleException(ex);
 			}catch(java.rmi.RemoteException ex){
 				throw handleException(ex);
 			}

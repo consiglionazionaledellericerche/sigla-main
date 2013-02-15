@@ -97,7 +97,7 @@
       <tr><td colspan=4>
       <div class="Group"><table>            
 	  <tr>         
-		 <%if (bp==null||bp.isIncarichiProceduraBP()) {%>
+		 <%if (bp==null||bp.isIncarichiProceduraBP()||bp.isBorseStudioBP()) {%>
 	         <td><% bp.getController().writeFormLabel(out,"find_tipo_attivita");%></td>
 	         <td><% bp.getController().writeFormInput(out,"find_tipo_attivita");%></td>
 	         <td>&nbsp;</td>
