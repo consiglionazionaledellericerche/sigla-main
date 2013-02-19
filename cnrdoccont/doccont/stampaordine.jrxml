@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="24"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -29,19 +29,19 @@
 		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Esercizio" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(2011)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer(2013)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CDS" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new String("004")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new String("035")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="UO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new String("004.001")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new String("035.000")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Numero_da" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Integer("1")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Numero_a" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer("6")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer("37")]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select * from prt_stampa_ordine
@@ -846,7 +846,7 @@ and NUM_ORD between $P{Numero_da} and $P{Numero_a}]]>
 				<reportElement key="line-29" x="1" y="148" width="532" height="1"/>
 			</line>
 			<line>
-				<reportElement key="line-30" positionType="Float" stretchType="RelativeToBandHeight" x="1" y="182" width="532" height="1"/>
+				<reportElement key="line-30" positionType="Float" x="1" y="182" width="532" height="1"/>
 			</line>
 			<line>
 				<reportElement key="line-31" positionType="Float" stretchType="RelativeToTallestObject" x="1" y="148" width="1" height="34"/>
