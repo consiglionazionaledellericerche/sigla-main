@@ -3513,8 +3513,23 @@ public SQLBuilder selectContrattoByClause(UserContext userContext, ObbligazioneB
 	sql.addTableToHeader("TERZO");
 	sql.addSQLJoin("CONTRATTO.FIG_GIUR_EST", SQLBuilder.EQUALS,"TERZO.CD_TERZO");
 	sql.addSQLClause("AND","TERZO.DT_FINE_RAPPORTO",SQLBuilder.ISNULL,null);
+		
 	if((obbligazione.getCreditore() != null && obbligazione.getCreditore().getCd_terzo()!=null)){
-		sql.addClause("AND", "figura_giuridica_esterna.cd_terzo",SQLBuilder.EQUALS,obbligazione.getCreditore().getCd_terzo());
+		sql.openParenthesis("AND");
+	    sql.openParenthesis("AND");
+	    sql.addSQLClause(FindClause.AND, "FIG_GIUR_EST",SQLBuilder.EQUALS,obbligazione.getCreditore().getCd_terzo());
+		AnagraficoHome anagraficoHome = (AnagraficoHome) getHome(userContext, AnagraficoBulk.class);
+		sql.closeParenthesis();
+		try {
+			for (Iterator<Anagrafico_terzoBulk> i = anagraficoHome.findAssociatiStudio(obbligazione.getCreditore().getAnagrafico()).iterator(); i.hasNext();) {
+				sql.openParenthesis("OR");
+					Anagrafico_terzoBulk associato = i.next();
+					sql.addSQLClause("OR", "CONTRATTO.FIG_GIUR_EST",SQLBuilder.EQUALS, associato.getCd_terzo());
+				sql.closeParenthesis();
+			}
+		} catch (IntrospectionException e) { 
+		}
+	  sql.closeParenthesis();
 	}
 	/*
     sql.openParenthesis("AND");	   
@@ -4264,13 +4279,13 @@ public void verificaObbligazione (UserContext aUC,ObbligazioneBulk obbligazione)
 
 	if ( totalObbligazione.compareTo( obbligazione.getIm_obbligazione()) < 0 )
 		throw handleException( new it.cnr.jada.comp.ApplicationException( "La somma degli importi delle singole scadenze e' inferiore all'importo complessivo dell'impegno"))	;
-	if(obbligazione.getContratto() != null && obbligazione.getContratto().getFigura_giuridica_esterna()!= null && 
-	   !obbligazione.getCreditore().equalsByPrimaryKey(obbligazione.getContratto().getFigura_giuridica_esterna()))
+	if((obbligazione.getContratto() != null && obbligazione.getContratto().getFigura_giuridica_esterna()!= null && 
+	   !(obbligazione.getCreditore().equalsByPrimaryKey(obbligazione.getContratto().getFigura_giuridica_esterna())||verificaAssociato(aUC, obbligazione.getContratto().getFigura_giuridica_esterna(),obbligazione))))
 	     throw new it.cnr.jada.comp.ApplicationException( "Il Creditore (Codice Terzo:"+obbligazione.getCreditore().getCd_terzo()+") \n"+"non è congruente con quello del contratto (Codice Terzo:"+obbligazione.getContratto().getFigura_giuridica_esterna().getCd_terzo()+")");
-	if (obbligazione.getIncarico_repertorio() != null && obbligazione.getIncarico_repertorio().getTerzo()!= null && 
-		!obbligazione.getCreditore().equalsByPrimaryKey(obbligazione.getIncarico_repertorio().getTerzo()))
+	if ((obbligazione.getIncarico_repertorio() != null && obbligazione.getIncarico_repertorio().getTerzo()!= null &&
+			!(obbligazione.getCreditore().equalsByPrimaryKey(obbligazione.getIncarico_repertorio().getTerzo())||verificaAssociato(aUC, obbligazione.getIncarico_repertorio().getTerzo(),obbligazione))))
 		     throw new it.cnr.jada.comp.ApplicationException( "Il Creditore (Codice Terzo:"+obbligazione.getCreditore().getCd_terzo()+") \n"+"non è congruente con quello dell'incarico (Codice Terzo:"+obbligazione.getIncarico_repertorio().getTerzo().getCd_terzo()+")");
-
+ 
 	verificaFl_spese_costi_altrui( aUC, obbligazione );
 	/*
 	 * Controllo l'eventuale obbligatorietà del Contratto
@@ -5328,29 +5343,23 @@ private void validaCampi(UserContext uc, ObbligazioneBulk obbligazione) throws C
 	    sql.addTableToHeader("TERZO");
 		sql.addSQLJoin("INCARICHI_REPERTORIO.CD_TERZO", SQLBuilder.EQUALS,"TERZO.CD_TERZO");
 		sql.addSQLClause("AND","TERZO.DT_FINE_RAPPORTO",SQLBuilder.ISNULL,null);
-		sql.openParenthesis("AND");
-	    sql.openParenthesis("AND");
-	    if((obbligazione.getCreditore() != null && obbligazione.getCreditore().getCd_terzo()!=null))
-				sql.addClause(FindClause.AND, "cd_terzo",SQLBuilder.EQUALS,obbligazione.getCreditore().getCd_terzo());
-		AnagraficoHome anagraficoHome = (AnagraficoHome) getHome(
-				userContext, AnagraficoBulk.class);
-		sql.closeParenthesis();
-		try {
-			for (Iterator<Anagrafico_terzoBulk> i = anagraficoHome
-					
-					.findAssociatiStudio(
-							obbligazione.getCreditore().getAnagrafico()).iterator(); i
-					.hasNext();) {
-				sql.openParenthesis("OR");
-				Anagrafico_terzoBulk associato = i.next();
-					sql.addSQLClause("OR", "INCARICHI_REPERTORIO.CD_TERZO",
-							SQLBuilder.EQUALS, associato.getCd_terzo());
+		if((obbligazione.getCreditore() != null && obbligazione.getCreditore().getCd_terzo()!=null)){
+			sql.openParenthesis("AND");
+				sql.openParenthesis("AND");
+					sql.addClause(FindClause.AND, "cd_terzo",SQLBuilder.EQUALS,obbligazione.getCreditore().getCd_terzo());
+					AnagraficoHome anagraficoHome = (AnagraficoHome) getHome(userContext, AnagraficoBulk.class);
+				sql.closeParenthesis();
+			try {
+				for (Iterator<Anagrafico_terzoBulk> i = anagraficoHome.findAssociatiStudio(obbligazione.getCreditore().getAnagrafico()).iterator(); i.hasNext();) {
+					sql.openParenthesis("OR");
+					   Anagrafico_terzoBulk associato = i.next();
+				       sql.addSQLClause("OR", "INCARICHI_REPERTORIO.CD_TERZO",SQLBuilder.EQUALS, associato.getCd_terzo());
 					sql.closeParenthesis();
+				}
+			} catch (IntrospectionException e) {
 			}
-		} catch (IntrospectionException e) {
-		}
-		
 		sql.closeParenthesis();
+		}
 		return sql;
 	}
 	/**
@@ -5488,4 +5497,19 @@ private void validaCampi(UserContext uc, ObbligazioneBulk obbligazione) throws C
 		}
 		
 	}	
+	private Boolean verificaAssociato(UserContext usercontext, TerzoBulk terzo, ObbligazioneBulk obbligazione)throws ComponentException {
+		try {
+			AnagraficoHome anagraficoHome = (AnagraficoHome) getHome(usercontext, AnagraficoBulk.class);
+			for (Iterator<Anagrafico_terzoBulk> i = anagraficoHome.findAssociatiStudio(obbligazione.getCreditore().getAnagrafico()).iterator(); i.hasNext();) {
+				Anagrafico_terzoBulk associato = i.next();
+				if( associato.getCd_terzo().compareTo(terzo.getCd_terzo())==0)
+					return true;
+			}
+		} catch (IntrospectionException e) {
+			handleException(e);
+		} catch (PersistencyException e) {
+			handleException(e);
+		}	
+		return false;
+	}
 }

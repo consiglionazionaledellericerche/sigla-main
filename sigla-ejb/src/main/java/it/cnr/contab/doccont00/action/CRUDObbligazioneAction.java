@@ -90,7 +90,8 @@ public Forward doBlankSearchFind_creditore(ActionContext context,ObbligazioneBul
 	{
 		obbligazione.setCreditore(new TerzoBulk());
 		obbligazione.getCreditore().setAnagrafico( new AnagraficoBulk());
-		
+		obbligazione.setIncarico_repertorio(new Incarichi_repertorioBulk());
+		obbligazione.setContratto(new ContrattoBulk());
 		return context.findDefaultForward();
 	} 
 	catch(Throwable e) {return handleException(context,e);}
