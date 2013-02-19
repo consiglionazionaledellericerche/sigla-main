@@ -6045,8 +6045,31 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		sql.addSQLClause("AND", "CONTRATTO.STATO",
 				SQLBuilder.EQUALS, ContrattoBulk.STATO_DEFINITIVO);
 
-		sql.addSQLClause("AND", "CONTRATTO.FIG_GIUR_EST",
+		if (!compenso.getTerzo().isStudioAssociato())
+			sql.addSQLClause("AND", "CONTRATTO.FIG_GIUR_EST",
 					SQLBuilder.EQUALS, compenso.getCd_terzo());
+		else {
+			AnagraficoHome anagraficoHome = (AnagraficoHome) getHome(
+					userContext, AnagraficoBulk.class);
+			sql.openParenthesis("AND");
+			sql.addSQLClause("OR", "CONTRATTO.FIG_GIUR_EST",
+					SQLBuilder.EQUALS, compenso.getCd_terzo());
+			try {
+				for (Iterator<Anagrafico_terzoBulk> i = anagraficoHome
+						.findAssociatiStudio(
+								compenso.getTerzo().getAnagrafico()).iterator(); i
+						.hasNext();) {
+					Anagrafico_terzoBulk associato = i.next();
+					if (associato.getDt_canc() == null
+							|| associato.getDt_canc().after(
+									compenso.getDt_a_competenza_coge()))
+						sql.addSQLClause("OR", "CONTRATTO.FIG_GIUR_EST",
+								SQLBuilder.EQUALS, associato.getCd_terzo());
+				}
+			} catch (IntrospectionException e) {
+			}
+			sql.closeParenthesis();
+		}
 		
 		sql.openParenthesis(FindClause.AND);
 		sql.openParenthesis(FindClause.OR);
