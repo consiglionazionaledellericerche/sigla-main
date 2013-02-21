@@ -564,7 +564,8 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		try {
 			Unita_organizzativaHome home = (Unita_organizzativaHome)getHome( usercontext, Unita_organizzativaBulk.class);
 			Unita_organizzativaBulk unita = (Unita_organizzativaBulk)home.findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(usercontext)));
-			contratto.setUnita_organizzativa(unita);
+			if (contratto.getUnita_organizzativa() == null)
+				contratto.setUnita_organizzativa(unita);
 			ContrattoHome testataHome = (ContrattoHome)getHome(usercontext, ContrattoBulk.class);
 			contratto.setAssociazioneUODisponibili(new it.cnr.jada.bulk.BulkList(testataHome.findAssociazioneUODisponibili(contratto)));
 			if (contratto != null && contratto.getPg_contratto() != null)
