@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="96"/>
 	<property name="ireport.background.image.properties" value="false,true,0.25,0,0,0,0,0,0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -814,7 +814,7 @@ $F{DENOMINAZIONE_SEDE} != null)]]></printWhenExpression>
              $F{DENOMINAZIONE_SEDE}!= null &&
              !$F{TI_MANDATO}.equals("S") ? true : false )]]></printWhenExpression>
 				<staticText>
-					<reportElement key="staticText-10" style="TNR9" x="7" y="3" width="110" height="13"/>
+					<reportElement key="staticText-10" style="TNR9" x="7" y="3" width="101" height="13"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -825,7 +825,7 @@ $F{DENOMINAZIONE_SEDE} != null)]]></printWhenExpression>
 					<text><![CDATA[Modalità di pagamento:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-29" style="TNRG10" x="120" y="3" width="440" height="13" isRemoveLineWhenBlank="true"/>
+					<reportElement key="textField-29" style="TNRG10" x="113" y="3" width="440" height="13" isRemoveLineWhenBlank="true"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -855,36 +855,6 @@ $F{DENOMINAZIONE_SEDE} != null)]]></printWhenExpression>
 				</line>
 				<line>
 					<reportElement key="line-11" positionType="Float" stretchType="RelativeToBandHeight" x="565" y="0" width="1" height="16"/>
-				</line>
-			</band>
-		</groupHeader>
-		<groupFooter>
-			<band splitType="Stretch"/>
-		</groupFooter>
-	</group>
-	<group name="PageHeaderJ" isReprintHeaderOnEachPage="true">
-		<groupExpression><![CDATA["DUMMY"]]></groupExpression>
-		<groupHeader>
-			<band height="16" splitType="Stretch">
-				<printWhenExpression><![CDATA[new Boolean(!$F{TI_RECORD_L1}.equals("B") &&
-             $F{CD_TERZO_CEDENTE}!= null &&
-             !$F{TI_MANDATO}.equals("S") ? true : false )]]></printWhenExpression>
-				<textField isBlankWhenNull="false">
-					<reportElement key="textField-30" style="TNR10" positionType="Float" stretchType="RelativeToBandHeight" x="10" y="3" width="550" height="13"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA["Cedente: "+$F{DENOM_SEDE_CEDENTE}]]></textFieldExpression>
-				</textField>
-				<line>
-					<reportElement key="line-12" positionType="Float" stretchType="RelativeToBandHeight" x="565" y="0" width="1" height="16"/>
-				</line>
-				<line>
-					<reportElement key="line-13" positionType="Float" stretchType="RelativeToBandHeight" x="4" y="0" width="1" height="16"/>
 				</line>
 			</band>
 		</groupHeader>
@@ -975,6 +945,36 @@ $F{CAB_TERZO}==null||
 				</line>
 				<line>
 					<reportElement key="line-16" positionType="Float" stretchType="RelativeToBandHeight" x="4" y="0" width="1" height="80"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<group name="PageHeaderJ" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA["DUMMY"]]></groupExpression>
+		<groupHeader>
+			<band height="16" splitType="Stretch">
+				<printWhenExpression><![CDATA[new Boolean(!$F{TI_RECORD_L1}.equals("B") &&
+             $F{CD_TERZO_CEDENTE}!= null &&
+             !$F{TI_MANDATO}.equals("S") ? true : false )]]></printWhenExpression>
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField-30" style="TNRG10" positionType="Float" stretchType="RelativeToBandHeight" x="10" y="3" width="550" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA["Cedente: "+$F{DENOM_SEDE_CEDENTE}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement key="line-12" positionType="Float" stretchType="RelativeToBandHeight" x="565" y="0" width="1" height="16"/>
+				</line>
+				<line>
+					<reportElement key="line-13" positionType="Float" stretchType="RelativeToBandHeight" x="4" y="0" width="1" height="16"/>
 				</line>
 			</band>
 		</groupHeader>
