@@ -28,7 +28,7 @@ public class PdgVariazioniService extends CMISService {
 		return PdgVariazioneDocument.construct(listNodePage.get(0));
 	}
 
-	public List<Integer> findVariazioniSigned(Integer esercizio, String cds, String uo){
+	public List<Integer> findVariazioniSigned(Integer esercizio, String cds, String uo, Long variazionePdg){
 		List<Integer> result = new ArrayList<Integer>();
 		StringBuffer query = new StringBuffer("select var.cmis:objectId, ");
 		query.append("var.").append(CMISProperty.VARPIANOGEST_NUMEROVARIAZIONE.value());
@@ -41,6 +41,8 @@ public class PdgVariazioniService extends CMISService {
 			query.append(" and cds.").append(CMISProperty.STRORGCDS_CODICE.value()).append(" = ").append("'").append(cds).append("'");
 		if (uo != null)
 			query.append(" and uo.").append(CMISProperty.STRORGUO_CODICE.value()).append(" = ").append("'").append(uo).append("'");
+		if (variazionePdg != null)
+			query.append(" and var.").append(CMISProperty.VARPIANOGEST_NUMEROVARIAZIONE.value()).append(" = ").append(variazionePdg);		
 		ListNodePage<Node> listNodePage =  search(query, Boolean.FALSE);
 		for (Node node : listNodePage) {
 			result.add(PdgVariazioneDocument.construct(node).getNumeroVariazione());
@@ -76,7 +78,7 @@ public class PdgVariazioniService extends CMISService {
 		}
 		if (tiSigned != null &&
 				tiSigned.equals(ArchiviaStampaPdgVariazioneBulk.VIEW_NOT_SIGNED)){
-			result.removeAll(findVariazioniSigned(esercizio, cds, uo));
+			result.removeAll(findVariazioniSigned(esercizio, cds, uo, variazionePdg));
 		}
 		return result;
 	}
