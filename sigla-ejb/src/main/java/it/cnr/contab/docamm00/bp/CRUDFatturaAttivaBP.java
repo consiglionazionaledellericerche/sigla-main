@@ -791,8 +791,8 @@ public void sdoppiaDettaglioInAutomatico(ActionContext context) throws Validatio
         if (documento.getStato_cofi() != null && documento.getStato_cofi().equals(documento.STATO_PAGATO))
        		setMessage("Non è possibile sdoppiare righe in un documento pagato.");
         if (dettaglioSelezionato.getIm_riga_sdoppia()==null ||
-        	dettaglioSelezionato.getIm_riga_sdoppia().equals(Utility.ZERO) ||
-       		dettaglioSelezionato.getIm_riga_sdoppia().compareTo(dettaglioSelezionato.getSaldo())!=-1) {
+        	//dettaglioSelezionato.getIm_riga_sdoppia().equals(Utility.ZERO) ||
+       		dettaglioSelezionato.getIm_riga_sdoppia().compareTo(dettaglioSelezionato.getSaldo())>1) {
        		setMessage("Il nuovo importo della riga da sdoppiare deve essere positivo ed inferiore " + 
        				   "al saldo originario.");
         	return;

@@ -2440,7 +2440,7 @@ public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext
 public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext userContext,	IScadenzaDocumentoContabileBulk scad,	BigDecimal nuovoImportoScadenzaVecchia) throws ComponentException 
 {
 	Accertamento_scadenzarioBulk scadenzaVecchia = (Accertamento_scadenzarioBulk)scad;
-	if (  nuovoImportoScadenzaVecchia.compareTo( scad.getIm_scadenza()) == 0  )
+	if (  nuovoImportoScadenzaVecchia.compareTo( scad.getIm_scadenza()) == 0  && (nuovoImportoScadenzaVecchia.compareTo(Utility.ZERO)!=0))
 		throw handleException( new ApplicationException( "Sdoppiamento in automatico non necessario!" ));			
 	if (  nuovoImportoScadenzaVecchia.compareTo( new BigDecimal(0)) < 0  )
 		throw handleException( new ApplicationException( "L'importo della scadenza deve essere maggiore di 0" ));	
@@ -2475,7 +2475,7 @@ public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext 
 	
 		// Rigenero i relativi dettagli	
 		generaDettagliScadenzaAccertamento(userContext, accertamento, scadenzaNuova, false);	
-	
+	if(vecchioImportoScadenzaVecchia.compareTo(Utility.ZERO)!=0){
 		for (Iterator s = scadenzaVecchia.getAccertamento_scad_voceColl().iterator(); s.hasNext(); ) {
 			Accertamento_scad_voceBulk asvOld = (Accertamento_scad_voceBulk)s.next();
 			newImportoAsv = nuovoImportoScadenzaVecchia.multiply(asvOld.getIm_voce()).divide(vecchioImportoScadenzaVecchia, 2, BigDecimal.ROUND_HALF_UP); 
@@ -2491,7 +2491,7 @@ public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext 
 			asvOld.setIm_voce(newImportoAsv);
 			asvOld.setToBeUpdated();
 		}		
-	
+	}
 		//Quadro la sommatoria sulla vecchia scadenza
 		for (Iterator s = scadenzaVecchia.getAccertamento_scad_voceColl().iterator(); s.hasNext(); )
 			totImporto = totImporto.add(((Accertamento_scad_voceBulk)s.next()).getIm_voce()); 
