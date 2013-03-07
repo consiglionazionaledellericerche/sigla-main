@@ -28,7 +28,7 @@ public class V_pdg_variazione_riepilogoBulk extends OggettoBulk implements Persi
 	private java.lang.String ds_dipartimento;
  
 //    IM_TOTALE DECIMAL(22,0)
-	private java.lang.Long im_totale;
+	private java.math.BigDecimal im_totale;
  
 	public java.lang.Integer getEsercizio() {
 		return esercizio;
@@ -72,10 +72,10 @@ public class V_pdg_variazione_riepilogoBulk extends OggettoBulk implements Persi
 	public void setDs_dipartimento(java.lang.String ds_dipartimento)  {
 		this.ds_dipartimento=ds_dipartimento;
 	}
-	public java.lang.Long getIm_totale() {
+	public java.math.BigDecimal getIm_totale() {
 		return im_totale;
 	}
-	public void setIm_totale(java.lang.Long im_totale)  {
+	public void setIm_totale(java.math.BigDecimal im_totale)  {
 		this.im_totale=im_totale;
 	}
 }
