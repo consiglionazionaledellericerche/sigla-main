@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.util.PDFMergerUtility;
 
@@ -43,20 +44,24 @@ public class ContabiliService extends CMISService {
 		List<String> ids = getNodeRefContabile(esercizio, cds, pgMandato);
 		if (ids != null){
 			if (ids.size() == 1){
-				return getResource(getNodeByNodeRef(ids.get(0)));
+				try{
+					return getResource(getNodeByNodeRef(ids.get(0)));
+				}catch (CmisObjectNotFoundException _ex){
+				}
 			}else{
 				PDFMergerUtility ut = new PDFMergerUtility();
 				ut.setDestinationStream(new ByteArrayOutputStream());
-				for (String id : ids) {
-					ut.addSource(getResource(getNodeByNodeRef(id)));
-				}
 				try {
+					for (String id : ids) {
+						ut.addSource(getResource(getNodeByNodeRef(id)));
+					}
 					ut.mergeDocuments();
 					return new ByteArrayInputStream(((ByteArrayOutputStream)ut.getDestinationStream()).toByteArray());
 				} catch (COSVisitorException e) {
 					throw e;
 				} catch (IOException e) {
 					throw e;
+				}catch (CmisObjectNotFoundException _ex){
 				}
 			}
 		}
