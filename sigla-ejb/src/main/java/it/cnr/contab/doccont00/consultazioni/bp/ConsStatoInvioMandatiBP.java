@@ -1,0 +1,104 @@
+package it.cnr.contab.doccont00.consultazioni.bp;
+
+import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_mandatiBulk;
+import it.cnr.contab.doccont00.service.ContabiliService;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Config;
+import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.util.action.ConsultazioniBP;
+import it.cnr.jada.util.jsp.Button;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.pdfbox.util.PDFMergerUtility;
+
+public class ConsStatoInvioMandatiBP extends ConsultazioniBP {
+	private static final long serialVersionUID = 1L;
+	private ContabiliService contabiliService;
+	private Boolean scaricaContabile;
+
+	public void setScaricaContabile(Boolean scaricaContabile) {
+		this.scaricaContabile = scaricaContabile;
+	}
+
+	public Boolean getScaricaContabile() {
+		return scaricaContabile;
+	}
+
+	@Override
+	protected void init(Config config, ActionContext context)
+			throws BusinessProcessException {
+		super.init(config, context);
+		contabiliService = SpringUtil.getBean("contabiliService",
+				ContabiliService.class);	
+		scaricaContabile = Boolean.FALSE;
+	}
+
+	@Override
+	public Button[] createToolbar() {
+		Button[] baseToolbar = super.createToolbar();
+		List<Button> listButton = new ArrayList<Button>();
+		listButton.addAll(Arrays.asList(baseToolbar));
+		listButton.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().
+				getProperties(getClass()),"CRUDToolbar.contabile"));
+		return listButton.toArray(new Button[listButton.size()]);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void scaricaContabili(ActionContext actioncontext) throws Exception {
+		if (!scaricaContabile)
+			return;
+		List<V_cons_stato_invio_mandatiBulk> selectelElements = getSelectedElements(actioncontext);
+		PDFMergerUtility ut = new PDFMergerUtility();
+		ut.setDestinationStream(new ByteArrayOutputStream());
+		for (V_cons_stato_invio_mandatiBulk cons : selectelElements) {
+			InputStream isToAdd = contabiliService.getStreamContabile(
+					cons.getEsercizio().intValue(), cons.getCd_cds(), cons.getPg_mandato());
+			if (isToAdd != null)
+				ut.addSource(isToAdd);
+		}
+		ut.mergeDocuments();
+		InputStream is = new ByteArrayInputStream(((ByteArrayOutputStream)ut.getDestinationStream()).toByteArray());
+		if (is != null){
+			((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
+			OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
+			((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
+			byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
+			int buflength;
+			while ((buflength = is.read(buffer)) > 0) {
+				os.write(buffer,0,buflength);
+			}
+			is.close();
+			os.flush();
+		}		
+		setScaricaContabile(Boolean.FALSE);
+	}
+	
+	public void scaricaContabile(ActionContext actioncontext) throws Exception {
+		Integer esercizio = Integer.valueOf(((HttpActionContext)actioncontext).getParameter("esercizio"));
+		String cds = ((HttpActionContext)actioncontext).getParameter("cds");
+		Long numero_mandato = Long.valueOf(((HttpActionContext)actioncontext).getParameter("numero_mandato"));
+		InputStream is = contabiliService.getStreamContabile(esercizio, cds, numero_mandato);
+		if (is != null){
+			((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
+			OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
+			((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
+			byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
+			int buflength;
+			while ((buflength = is.read(buffer)) > 0) {
+				os.write(buffer,0,buflength);
+			}
+			is.close();
+			os.flush();
+		}
+	}
+	
+}

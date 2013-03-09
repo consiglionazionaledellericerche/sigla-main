@@ -1,20 +1,28 @@
 package it.cnr.contab.doccont00.bp;
 
-import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
+import it.cnr.contab.doccont00.core.bulk.CompensoOptionRequestParameter;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
+import it.cnr.contab.doccont00.core.bulk.Sospeso_det_uscBulk;
+import it.cnr.contab.doccont00.core.bulk.V_ass_doc_contabiliBulk;
 import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
-
-import java.rmi.RemoteException;
-import java.util.*;
-
-import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.doccont00.service.ContabiliService;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.HookForward;
+import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.util.action.*;
-import it.cnr.jada.util.jsp.Button;
+import it.cnr.jada.util.action.AbstractPrintBP;
+import it.cnr.jada.util.action.SimpleDetailCRUDController;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.rmi.RemoteException;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Business Process che gestisce le attività di CRUD per l'entita' Mandato
@@ -24,6 +32,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 
 	private final CRUDSospesoController sospesiSelezionati = new CRUDSospesoController("SospesiSelezionati",Sospeso_det_uscBulk.class,"sospeso_det_uscColl",this);
 	private final SimpleDetailCRUDController reversaliMan = new SimpleDetailCRUDController("Reversali",V_ass_doc_contabiliBulk.class,"doc_contabili_collColl",this);			
+	private ContabiliService contabiliService;
 
 public CRUDAbstractMandatoBP() {}
 public CRUDAbstractMandatoBP( String function ) 
@@ -285,5 +294,48 @@ public boolean isDipendenteDaConguaglio(it.cnr.jada.action.ActionContext context
 		throw handleException(e);
 	}
 
+}
+protected void initialize(ActionContext actioncontext) throws BusinessProcessException {
+	super.initialize(actioncontext);
+	contabiliService = SpringUtil.getBean("contabiliService",
+			ContabiliService.class);	
+}
+
+public boolean isContabileButtonHidden(){
+	Boolean hidden = Boolean.TRUE;
+	if (getStatus() == SEARCH)
+		return hidden;
+	MandatoBulk mandato = (MandatoBulk)getModel();
+	if (mandato != null && mandato.getPg_mandato() != null)
+		return contabiliService.getNodeRefContabile(mandato) == null;
+	return hidden;
+}
+
+public String getContabileFileName(){
+	MandatoBulk mandato = (MandatoBulk)getModel();
+	if (mandato != null){
+		return "Contabile ".
+				concat(String.valueOf(mandato.getEsercizio())).
+				concat("-").concat(mandato.getCd_cds()==null?"":mandato.getCd_cds()).
+				concat("-").concat(String.valueOf(mandato.getPg_mandato())).
+				concat(" .pdf");
+	}
+	return null;
+}
+public void scaricaContabile(ActionContext actioncontext) throws Exception {
+	MandatoBulk mandato = (MandatoBulk)getModel();
+	InputStream is = contabiliService.getStreamContabile(mandato);
+	if (is != null){
+		((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
+		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
+		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
+		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
+		int buflength;
+		while ((buflength = is.read(buffer)) > 0) {
+			os.write(buffer,0,buflength);
+		}
+		is.close();
+		os.flush();
+	}
 }
 }

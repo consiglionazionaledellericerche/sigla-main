@@ -102,10 +102,6 @@
   </action>
 
   <action 
-      path="/ConsStatoInvioMandatiAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
-  </action>
-
-  <action 
       path="/ConsStatoInvioReversaliAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
   </action>
 
@@ -162,6 +158,10 @@
 
   <action 
       path="/ConsTerziDaConguagliareAction" actionClass="it.cnr.contab.docamm00.consultazioni.action.ConsTerziDaConguagliareAction">
+  </action>
+
+  <action 
+      path="/ConsStatoInvioMandatiAction" actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsStatoInvioMandatiAction">
   </action>
     
    <businessProcess
@@ -610,12 +610,14 @@
         <init-param name="multiSelezione" value="Y" />
   </businessProcess>   
 
+
   <businessProcess
-      name="ConsStatoInvioMandatiBP" className="it.cnr.jada.util.action.ConsultazioniBP">
-    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+      name="ConsStatoInvioMandatiBP" className="it.cnr.contab.doccont00.consultazioni.bp.ConsStatoInvioMandatiBP">
+     	<forward name="default" path="/doccont00/consStatoInvioMandati.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_mandatiBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
 	    <init-param name="defaultAction" value="ConsStatoInvioMandatiAction" />	
+        <init-param name="multiSelezione" value="Y" />	    
   </businessProcess> 
   
   <businessProcess
@@ -625,6 +627,7 @@
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
 	    <init-param name="defaultAction" value="ConsStatoInvioReversaliAction" />	
   </businessProcess> 
+  
   <businessProcess
       name="ConsPDGGAreaSpeBP" className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGAreaSpeBP">
     <forward name="default" path="/consultazioni/form_lista.jsp"/>

@@ -62,6 +62,8 @@ public class V_cons_stato_invio_mandatiBulk extends OggettoBulk implements Persi
 //    DT_INVIO_DIS TIMESTAMP(7)
 	private java.sql.Timestamp dt_invio_dis;
  
+	private String contabile;
+	
 	public V_cons_stato_invio_mandatiBulk() {
 		super();
 	}
@@ -172,5 +174,11 @@ public class V_cons_stato_invio_mandatiBulk extends OggettoBulk implements Persi
 	}
 	public void setDt_pagamento(java.sql.Timestamp dt_pagamento) {
 		this.dt_pagamento = dt_pagamento;
+	}
+	public String getContabile() {
+		return contabile;
+	}
+	public void setContabile(String contabile) {
+		this.contabile = contabile;
 	}
 }

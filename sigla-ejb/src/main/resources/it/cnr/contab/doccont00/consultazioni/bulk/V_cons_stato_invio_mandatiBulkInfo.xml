@@ -129,6 +129,11 @@
 		inputType="TEXT"
 		formatName="date_short"
 		label="Data pagamento" />	
+	<fieldProperty
+		name="contabile"
+		property="contabile"
+		inputType="TEXT"
+		label="Contabile" />		
 	<formFieldProperty
 		name="cd_cds" />
 	<formFieldProperty
@@ -237,4 +242,7 @@
 		name="dt_invio_dis" />
 	<columnFieldProperty
 		name="dt_pagamento" />		
+	<columnFieldProperty
+		name="contabile" />		
+
 </bulkInfo>
