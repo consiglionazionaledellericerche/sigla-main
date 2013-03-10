@@ -62,10 +62,12 @@ function focused(element) {
 		document.mainForm.focusedElement.value = element.name;
 }
 
-function _submitForm(aForm,command,lockForm,action) {
+function _submitForm(aForm,command,lockForm,action,target) {
 	if (aForm.modal) return;
 	if (action)
 		aForm.action = action;
+	if (target)
+		aForm.target = target;
 	aForm.comando.value = command;
 	if (aForm.scrollx) {
 		if (window.pageXOffset)
@@ -94,6 +96,10 @@ function _submitForm(aForm,command,lockForm,action) {
 
 function submitForm(command) {
 	_submitForm(document.mainForm,command,true);
+}
+
+function submitForm(command, target) {
+	_submitForm(document.mainForm,command,true, null, target);
 }
 
 function setFocusOnInput(inputName) {

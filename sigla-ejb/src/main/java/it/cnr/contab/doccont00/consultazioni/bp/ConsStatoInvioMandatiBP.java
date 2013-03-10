@@ -23,15 +23,6 @@ import org.apache.pdfbox.util.PDFMergerUtility;
 public class ConsStatoInvioMandatiBP extends ConsultazioniBP {
 	private static final long serialVersionUID = 1L;
 	private ContabiliService contabiliService;
-	private Boolean scaricaContabile;
-
-	public void setScaricaContabile(Boolean scaricaContabile) {
-		this.scaricaContabile = scaricaContabile;
-	}
-
-	public Boolean getScaricaContabile() {
-		return scaricaContabile;
-	}
 
 	@Override
 	protected void init(Config config, ActionContext context)
@@ -39,7 +30,6 @@ public class ConsStatoInvioMandatiBP extends ConsultazioniBP {
 		super.init(config, context);
 		contabiliService = SpringUtil.getBean("contabiliService",
 				ContabiliService.class);	
-		scaricaContabile = Boolean.FALSE;
 	}
 
 	@Override
@@ -54,8 +44,6 @@ public class ConsStatoInvioMandatiBP extends ConsultazioniBP {
 	
 	@SuppressWarnings("unchecked")
 	public void scaricaContabili(ActionContext actioncontext) throws Exception {
-		if (!scaricaContabile)
-			return;
 		List<V_cons_stato_invio_mandatiBulk> selectelElements = getSelectedElements(actioncontext);
 		PDFMergerUtility ut = new PDFMergerUtility();
 		ut.setDestinationStream(new ByteArrayOutputStream());
@@ -79,7 +67,6 @@ public class ConsStatoInvioMandatiBP extends ConsultazioniBP {
 			is.close();
 			os.flush();
 		}		
-		setScaricaContabile(Boolean.FALSE);
 	}
 	
 	public void scaricaContabile(ActionContext actioncontext) throws Exception {
