@@ -29,10 +29,8 @@ public class ConsStatoInvioMandatiAction extends ConsultazioniAction {
 			List<V_cons_stato_invio_mandatiBulk> selectelElements = bp.getSelectedElements(context);
 			if (selectelElements == null || selectelElements.isEmpty())
 				bp.setMessage("Selezionare almeno un Mandato");
-			else{
-				bp.scaricaContabili(context);		
-				return null;
-			}
+			else
+				bp.setScaricaContabile(Boolean.TRUE);		
 			return context.findDefaultForward();
 		} catch(Throwable e) {
 			return handleException(context,e);
