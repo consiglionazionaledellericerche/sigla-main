@@ -23,7 +23,7 @@
 		enabledOnEdit="true"
 		enabledOnSearch="true"
 		nullable="false"
-		label="Terzo" />
+		label="Terzo Responsabile Procedimento" />
 	<fieldProperty
 		name="unitaOrganizzativa"
 		property="unitaOrganizzativa"
