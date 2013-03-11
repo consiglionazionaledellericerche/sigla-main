@@ -7,6 +7,7 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
 import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.action.ConsultazioniBP;
 import it.cnr.jada.util.jsp.Button;
 
@@ -18,19 +19,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.http.HttpStatus;
 import org.apache.pdfbox.util.PDFMergerUtility;
 
 public class ConsStatoInvioMandatiBP extends ConsultazioniBP {
 	private static final long serialVersionUID = 1L;
 	private ContabiliService contabiliService;
-	private Boolean scaricaContabile;
-
-	public void setScaricaContabile(Boolean scaricaContabile) {
-		this.scaricaContabile = scaricaContabile;
+	
+	public ConsStatoInvioMandatiBP() {
+		super();
 	}
-
-	public Boolean getScaricaContabile() {
-		return scaricaContabile;
+	
+	@Override
+	public void setMultiSelection(boolean flag) {
+		super.setMultiSelection(flag);
+        super.table.setOnselect("select");
 	}
 
 	@Override
@@ -39,7 +42,6 @@ public class ConsStatoInvioMandatiBP extends ConsultazioniBP {
 		super.init(config, context);
 		contabiliService = SpringUtil.getBean("contabiliService",
 				ContabiliService.class);	
-		scaricaContabile = Boolean.FALSE;
 	}
 
 	@Override
@@ -54,9 +56,11 @@ public class ConsStatoInvioMandatiBP extends ConsultazioniBP {
 	
 	@SuppressWarnings("unchecked")
 	public void scaricaContabili(ActionContext actioncontext) throws Exception {
-		if (!scaricaContabile)
-			return;
 		List<V_cons_stato_invio_mandatiBulk> selectelElements = getSelectedElements(actioncontext);
+		if (selectelElements == null || selectelElements.isEmpty()){
+			((HttpActionContext)actioncontext).getResponse().setStatus(HttpStatus.SC_NO_CONTENT);
+			return;
+		}
 		PDFMergerUtility ut = new PDFMergerUtility();
 		ut.setDestinationStream(new ByteArrayOutputStream());
 		for (V_cons_stato_invio_mandatiBulk cons : selectelElements) {
@@ -79,7 +83,6 @@ public class ConsStatoInvioMandatiBP extends ConsultazioniBP {
 			is.close();
 			os.flush();
 		}		
-		setScaricaContabile(Boolean.FALSE);
 	}
 	
 	public void scaricaContabile(ActionContext actioncontext) throws Exception {

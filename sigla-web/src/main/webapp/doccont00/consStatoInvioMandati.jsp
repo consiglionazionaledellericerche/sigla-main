@@ -27,9 +27,9 @@ ConsStatoInvioMandatiBP bp = (ConsStatoInvioMandatiBP)BusinessProcess.getBusines
 function doVisualizzaSingolaContabile(esercizio, cds , numero_mandato) {	
   doPrint('genericdownload/Contabile '+esercizio+'-'+cds+'-'+numero_mandato+'.pdf?esercizio='+esercizio+'&cds='+cds+'&numero_mandato='+numero_mandato+'&methodName=scaricaContabile&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
-<% if (bp.getScaricaContabile()) {%>
+function doVisualizzaContabili() {	
 	doPrint('genericdownload/contabili.pdf?methodName=scaricaContabili&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
-<%}%>
+}
 </script>
 </head>
 <body class="Form">
