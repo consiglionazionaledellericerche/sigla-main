@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="147"/>
+	<property name="ireport.y" value="144"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -658,7 +658,7 @@ VP_FATTURA_ATTIVA_N.ESERCIZIO,ti_stampa,VP_FATTURA_ATTIVA_N.PG_FATTURA_ATTIVA,ti
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{PARTITA_IVA}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-192" style="TNR8" x="283" y="17" width="247" height="1"/>
+					<reportElement key="line-192" style="TNR8" positionType="FixRelativeToBottom" x="283" y="17" width="247" height="1"/>
 				</line>
 				<line>
 					<reportElement key="line-193" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="530" y="0" width="1" height="18"/>
@@ -1441,35 +1441,38 @@ VP_FATTURA_ATTIVA_N.ESERCIZIO,ti_stampa,VP_FATTURA_ATTIVA_N.PG_FATTURA_ATTIVA,ti
 					<reportElement key="subreport-2" style="TNR8" x="6" y="6" width="520" height="21">
 						<printWhenExpression><![CDATA[($F{FL_PAGAMENTO_ANTICIPATO}.compareTo("N")==0)]]></printWhenExpression>
 					</reportElement>
-					<subreportParameter name="pg_fattura">
-						<subreportParameterExpression><![CDATA[$F{PG_FATTURA_ATTIVA}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="abi">
-						<subreportParameterExpression><![CDATA[$F{ABI}]]></subreportParameterExpression>
-					</subreportParameter>
 					<subreportParameter name="cab">
 						<subreportParameterExpression><![CDATA[$F{CAB}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="ds_abi">
 						<subreportParameterExpression><![CDATA[$F{DS_ABICAB}]]></subreportParameterExpression>
 					</subreportParameter>
+					<subreportParameter name="int">
+						<subreportParameterExpression><![CDATA[$F{INTESTAZIONE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="pg_fattura">
+						<subreportParameterExpression><![CDATA[$F{PG_FATTURA_ATTIVA}]]></subreportParameterExpression>
+					</subreportParameter>
 					<subreportParameter name="data">
 						<subreportParameterExpression><![CDATA[$F{DT_REGISTRAZIONE}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="cin">
-						<subreportParameterExpression><![CDATA[$F{CIN}]]></subreportParameterExpression>
+					<subreportParameter name="abi">
+						<subreportParameterExpression><![CDATA[$F{ABI}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="conto">
 						<subreportParameterExpression><![CDATA[$F{NUMERO_CONTO}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="int">
-						<subreportParameterExpression><![CDATA[$F{INTESTAZIONE}]]></subreportParameterExpression>
+					<subreportParameter name="cd_prov_b">
+						<subreportParameterExpression><![CDATA[$F{CD_PROVINCIA_BANCA}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="ds_comune_b">
 						<subreportParameterExpression><![CDATA[$F{DS_COMUNE_BANCA}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="cd_prov_b">
-						<subreportParameterExpression><![CDATA[$F{CD_PROVINCIA_BANCA}]]></subreportParameterExpression>
+					<subreportParameter name="cin">
+						<subreportParameterExpression><![CDATA[$F{CIN}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="uo">
+						<subreportParameterExpression><![CDATA[$F{CD_UO_ORIGINE}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="iban">
 						<subreportParameterExpression><![CDATA[$F{IBAN}]]></subreportParameterExpression>
