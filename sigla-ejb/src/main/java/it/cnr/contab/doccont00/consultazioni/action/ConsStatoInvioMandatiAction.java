@@ -1,13 +1,10 @@
 package it.cnr.contab.doccont00.consultazioni.action;
 
 import it.cnr.contab.doccont00.consultazioni.bp.ConsStatoInvioMandatiBP;
-import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_mandatiBulk;
 import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.util.action.ConsultazioniAction;
-
-import java.util.List;
 
 public class ConsStatoInvioMandatiAction extends ConsultazioniAction {
 
@@ -20,18 +17,16 @@ public class ConsStatoInvioMandatiAction extends ConsultazioniAction {
 		super();
 	}
 
-	@SuppressWarnings("unchecked")
-	public Forward doVisualizzaContabili(ActionContext context) throws BusinessProcessException{
+	@Override
+	protected Forward perform(ActionContext actioncontext, String s) {
+		Forward forward = super.perform(actioncontext, s);
+		BusinessProcess bp = actioncontext.getBusinessProcess();
 		try {
-			ConsStatoInvioMandatiBP bp = (ConsStatoInvioMandatiBP)context.getBusinessProcess();
-			if (bp.getSelection() != null)
-				bp.setSelection(context);
-			List<V_cons_stato_invio_mandatiBulk> selectelElements = bp.getSelectedElements(context);
-			if (selectelElements == null || selectelElements.isEmpty())
-				bp.setMessage("Selezionare almeno un Mandato");
-			return context.findDefaultForward();
+			if (bp.getName().equals("ConsStatoInvioMandatiBP"))
+				((ConsStatoInvioMandatiBP)bp).setContabiliEnabled(actioncontext);
 		} catch(Throwable e) {
-			return handleException(context,e);
-		}
+			return handleException(actioncontext,e);
+		}		
+		return forward;
 	}
 }

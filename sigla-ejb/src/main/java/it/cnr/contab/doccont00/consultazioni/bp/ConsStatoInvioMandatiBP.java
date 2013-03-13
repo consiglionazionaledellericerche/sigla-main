@@ -7,7 +7,6 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
 import it.cnr.jada.action.HttpActionContext;
-import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.action.ConsultazioniBP;
 import it.cnr.jada.util.jsp.Button;
 
@@ -25,6 +24,7 @@ import org.apache.pdfbox.util.PDFMergerUtility;
 public class ConsStatoInvioMandatiBP extends ConsultazioniBP {
 	private static final long serialVersionUID = 1L;
 	private ContabiliService contabiliService;
+	private boolean contabiliEnabled;
 	
 	public ConsStatoInvioMandatiBP() {
 		super();
@@ -83,6 +83,24 @@ public class ConsStatoInvioMandatiBP extends ConsultazioniBP {
 			is.close();
 			os.flush();
 		}		
+	}
+	
+	public boolean isContabiliEnabled(){
+		return contabiliEnabled;
+	}
+	
+	public void setContabiliEnabled(ActionContext actioncontext) throws BusinessProcessException {
+		contabiliEnabled =  false;
+		for (it.cnr.jada.util.action.SelectionIterator i = getSelection().iterator();i.hasNext();){
+			V_cons_stato_invio_mandatiBulk cons = (V_cons_stato_invio_mandatiBulk) getElementAt(actioncontext,i.nextIndex());
+			List<String> nodeRefs = contabiliService.getNodeRefContabile(cons.getEsercizio().intValue(), 
+					cons.getCd_cds(), cons.getPg_mandato());
+			if (nodeRefs != null && !nodeRefs.isEmpty()){
+				contabiliEnabled =  true;
+				break;
+			}			
+			
+		}
 	}
 	
 	public void scaricaContabile(ActionContext actioncontext) throws Exception {
