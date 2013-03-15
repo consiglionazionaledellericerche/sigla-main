@@ -160,7 +160,7 @@
 		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
 		nullable="false"
-		label="importo" />
+		label="importo Reversale/Cup" />
 	<fieldProperty
 		name="dtEmissione"
 		property="dtEmissione"
