@@ -12,6 +12,7 @@ public class Fattura_passiva_rigaIBulk extends Fattura_passiva_rigaBulk {
 	private java.math.BigDecimal saldo = new java.math.BigDecimal(0);
 	private java.math.BigDecimal im_totale_storni = new java.math.BigDecimal(0);
 	private java.math.BigDecimal im_totale_addebiti = new java.math.BigDecimal(0);
+	private java.math.BigDecimal im_riga_sdoppia;
 /**
  * Fattura_passiva_rigaIBulk constructor comment.
  */
@@ -143,5 +144,11 @@ public void setIm_totale_storni(java.math.BigDecimal newIm_totale_storni) {
  */
 public void setSaldo(java.math.BigDecimal newSaldo) {
 	saldo = newSaldo;
+}
+public java.math.BigDecimal getIm_riga_sdoppia() {
+	return im_riga_sdoppia;
+}
+public void setIm_riga_sdoppia(java.math.BigDecimal im_riga_sdoppia) {
+	this.im_riga_sdoppia = im_riga_sdoppia;
 }
 }

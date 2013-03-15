@@ -7346,7 +7346,59 @@ public RemoteIterator cercaBeniAssociabili(UserContext userContext,Ass_inv_bene_
 			throw  handleException(e);
 		} 
 	}
-
+	public Ass_inv_bene_fatturaBulk sdoppiaAssociazioneFor (UserContext userContext,Fattura_passiva_rigaBulk riga_fattura,Fattura_passiva_rigaBulk riga_fattura_new) 
+	throws ComponentException
+	{
+		Ass_inv_bene_fatturaBulk ass=new Ass_inv_bene_fatturaBulk();
+		try{
+			if(riga_fattura instanceof Fattura_passiva_rigaIBulk){
+				Ass_inv_bene_fatturaHome home = (Ass_inv_bene_fatturaHome)getHome(userContext,Ass_inv_bene_fatturaBulk.class);
+				SQLBuilder sql= home.createSQLBuilder();
+				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.ESERCIZIO_FATT_PASS",sql.EQUALS,riga_fattura.getEsercizio());
+				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.CD_CDS_FATT_PASS",sql.EQUALS,riga_fattura.getCd_cds());
+				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.CD_UO_FATT_PASS",sql.EQUALS,riga_fattura.getCd_unita_organizzativa());
+				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.PG_FATTURA_PASSIVA",sql.EQUALS,riga_fattura.getPg_fattura_passiva());
+				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.PROGRESSIVO_RIGA_FATT_PASS",sql.EQUALS,riga_fattura.getProgressivo_riga());
+				if (home.fetchAll(sql).size() ==1){ 
+					ass=(Ass_inv_bene_fatturaBulk)home.fetchAll(sql).get(0); 
+					Ass_inv_bene_fatturaBulk new_ass=new Ass_inv_bene_fatturaBulk();
+					new_ass.setPg_riga(findMaxAssociazione(userContext,new_ass));
+					new_ass.setRiga_fatt_pass(ass.getRiga_fatt_pass());
+					new_ass.setTest_buono(ass.getTest_buono());
+					new_ass.setNr_inventario(ass.getNr_inventario());
+					new_ass.setProgressivo(ass.getProgressivo());
+					new_ass.setProgressivo_riga_fatt_pass(riga_fattura_new.getProgressivo_riga());
+					new_ass.setUser(userContext.getUser());
+					new_ass.setToBeCreated();
+					return new_ass;
+				}
+			}else if(riga_fattura instanceof Nota_di_credito_rigaBulk){
+				Ass_inv_bene_fatturaHome home = (Ass_inv_bene_fatturaHome)getHome(userContext,Ass_inv_bene_fatturaBulk.class);
+				SQLBuilder sql= home.createSQLBuilder();
+				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.ESERCIZIO_FATT_PASS",sql.EQUALS,riga_fattura.getEsercizio());
+				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.CD_CDS_FATT_PASS",sql.EQUALS,riga_fattura.getCd_cds());
+				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.CD_UO_FATT_PASS",sql.EQUALS,riga_fattura.getCd_unita_organizzativa());
+				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.PG_FATTURA_PASSIVA",sql.EQUALS,riga_fattura.getPg_fattura_passiva());
+				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.PROGRESSIVO_RIGA_FATT_PASS",sql.EQUALS,riga_fattura.getProgressivo_riga());
+				if (home.fetchAll(sql).size() ==1){ 
+					ass=(Ass_inv_bene_fatturaBulk)home.fetchAll(sql).get(0);
+					Ass_inv_bene_fatturaBulk new_ass=new Ass_inv_bene_fatturaBulk();
+					new_ass.setPg_riga(findMaxAssociazione(userContext,new_ass));
+					new_ass.setRiga_fatt_pass(ass.getRiga_fatt_pass());
+					new_ass.setTest_buono(ass.getTest_buono());
+					new_ass.setNr_inventario(ass.getNr_inventario());
+					new_ass.setProgressivo(ass.getProgressivo());
+					new_ass.setProgressivo_riga_fatt_pass(riga_fattura_new.getProgressivo_riga());
+					new_ass.setUser(userContext.getUser());
+					new_ass.setToBeCreated();
+					return new_ass;
+				}
+			}
+			}catch(it.cnr.jada.persistency.PersistencyException ex){
+				throw handleException( ex);
+			}
+		return null;			
+		}	
 }
 
 

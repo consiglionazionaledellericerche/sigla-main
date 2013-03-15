@@ -3,6 +3,7 @@ package it.cnr.contab.docamm00.bp;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
@@ -21,8 +22,25 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
 public class CRUDFatturaPassivaIBP extends CRUDFatturaPassivaBP implements IDocumentoAmministrativoSpesaBP {
 
 	private final FatturaPassivaRigaCRUDController dettaglio = new FatturaPassivaRigaCRUDController(
-		"Dettaglio",Fattura_passiva_rigaIBulk.class,"fattura_passiva_dettColl", this);
+		"Dettaglio",Fattura_passiva_rigaIBulk.class,"fattura_passiva_dettColl", this){
 
+			/**
+			 * Il metodo è stato sovrascritto per consentire all'utente di modificare la descrizione di una riga
+			 * che è stata sdoppiata quando il documento non risulta essere modificabile
+			 *  
+			 */
+			public void writeFormInput(javax.servlet.jsp.JspWriter jspwriter,String s,String s1,boolean flag,String s2,String s3) throws java.io.IOException {
+				if (isInputReadonly()&&
+					s1.equals("ds_riga_fattura") && 
+					getModel()!=null && 
+					getModel().isToBeCreated()&&
+					!((Fattura_passiva_rigaIBulk)getModel()).getFattura_passivaI().isDocumentoModificabile()&&
+					((Fattura_passiva_rigaIBulk)getModel()).getFattura_passivaI().isDetailDoubled()) 
+			        getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag, s2, s3, getInputPrefix(), getStatus(), getFieldValidationMap());
+				else
+					super.writeFormInput(jspwriter,s,s1,flag,s2,s3);
+			}
+		};
 /**
  * CRUDFatturaPassivaIBP constructor comment.
  */

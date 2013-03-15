@@ -21,6 +21,7 @@ import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettBulk;
 import it.cnr.contab.inventario00.docs.bulk.V_ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bp.CRUDCaricoInventarioBP;
+import it.cnr.contab.util.Utility;
 import it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP;
 
 /**
@@ -4482,5 +4483,58 @@ public Forward doOnFlMerceIntraUEChange(ActionContext context) {
 	} catch (Throwable t) {
 		return handleException(context, t);
 	}
+}
+/**
+ * Gestisce lo sdoppiamento della riga di dettaglio
+ * 
+ *
+ * @param context	L'ActionContext della richiesta
+ * @return Il Forward alla pagina di risposta
+ */
+public Forward doSdoppiaDettaglio(ActionContext context) {
+   try {
+	    CRUDFatturaPassivaBP bp= (CRUDFatturaPassivaBP) getBusinessProcess(context);
+        fillModel(context);
+        Fattura_passiva_rigaIBulk riga= (Fattura_passiva_rigaIBulk)bp.getDettaglio().getModel();
+        Forward forward= context.findDefaultForward();
+        if (riga == null)
+            bp.setErrorMessage("Per procedere, selezionare il dettaglio da sdoppiare!");
+        else {
+        	riga.setIm_riga_sdoppia(Utility.ZERO);
+            bp.setDetailDoubling(true);
+        }
+        return forward;
+    } catch (Throwable e) {
+        return handleException(context, e);
+    }
+}
+/**
+ * Gestisce lo sdoppiamento della riga di dettaglio
+ *
+ * @param context	L'ActionContext della richiesta
+ * @return Il Forward alla pagina di risposta
+ */
+public Forward doConfirmSdoppiaDettaglio(ActionContext context) {
+    try {
+    	CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
+        fillModel(context);
+        
+        bp.sdoppiaDettaglioInAutomatico(context);
+
+		Fattura_passivaBulk fattura = (Fattura_passivaBulk)bp.getModel();
+
+        if (fattura != null) {
+        	for (Iterator s = fattura.getFattura_passiva_dettColl().iterator(); s.hasNext(); ) {
+				Fattura_passiva_rigaIBulk riga = (Fattura_passiva_rigaIBulk)s.next();
+        		if ((riga.isToBeCreated() || riga.isToBeUpdated()) && riga.getObbligazione_scadenziario()!=null)
+    				basicDoBringBackOpenObbligazioniWindow(context, riga.getObbligazione_scadenziario());
+        	}
+        }
+
+        bp.setDirty(true);
+   		return context.findDefaultForward();
+    } catch (Throwable e) {
+        return handleException(context, e);
+    }
 }
 }

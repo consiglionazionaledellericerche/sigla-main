@@ -6,7 +6,6 @@ import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -38,7 +37,6 @@ import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
 import it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laBulk;
 import it.cnr.contab.inventario00.docs.bulk.Inventario_utilizzatori_laHome;
 import it.cnr.contab.inventario00.docs.bulk.V_ass_inv_bene_fatturaBulk;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.docamm00.tabrif.bulk.SezionaleBulk;
@@ -4553,15 +4551,19 @@ public OggettoBulk modificaConBulk(
 		throw new ComponentException(e);
 	}
 	if (aggiornaStatoCoge){
-		if (fatturaPassiva.CONTABILIZZATO_IN_COAN.equalsIgnoreCase(fatturaPassiva.getStato_coan())) {
-			fatturaPassiva.setStato_coan(fatturaPassiva.DA_RICONTABILIZZARE_IN_COAN);
-			fatturaPassiva.setToBeUpdated();
-		}
-		if (fatturaPassiva.REGISTRATO_IN_COGE.equalsIgnoreCase(fatturaPassiva.getStato_coge())) {
-			fatturaPassiva.setStato_coge(fatturaPassiva.DA_RICONTABILIZZARE_IN_COGE);
-			fatturaPassiva.setToBeUpdated();
+		if (!(!fatturaPassiva.isDocumentoModificabile() && fatturaPassiva.isDetailDoubled())) {
+			//Aggiornamenti degli stati COGE e COAN
+			if (fatturaPassiva.CONTABILIZZATO_IN_COAN.equalsIgnoreCase(fatturaPassiva.getStato_coan())) {
+				fatturaPassiva.setStato_coan(fatturaPassiva.DA_RICONTABILIZZARE_IN_COAN);
+				fatturaPassiva.setToBeUpdated();
+			}
+			if (fatturaPassiva.REGISTRATO_IN_COGE.equalsIgnoreCase(fatturaPassiva.getStato_coge())) {
+				fatturaPassiva.setStato_coge(fatturaPassiva.DA_RICONTABILIZZARE_IN_COGE);
+				fatturaPassiva.setToBeUpdated();
+			}
 		}
 	}
+	
 	fatturaPassiva = (Fattura_passivaBulk)super.modificaConBulk(aUC, fatturaPassiva);
 
 	aggiornaCarichiInventario(aUC, fatturaPassiva);
@@ -4578,6 +4580,14 @@ public OggettoBulk modificaConBulk(
     if (fatturaPassiva.getDefferredSaldi() != null)
 		fatturaPassiva.getDefferredSaldi().putAll(aTempDiffSaldi);
 	aggiornaCogeCoanDocAmm(aUC, fatturaPassiva);
+
+	/*
+	 * Se il documento non era modificabile nei suoi elementi principali, ma si è solo proceduto a 
+	 * sdoppiare una riga di dettaglio allora il controllo sulla chiusura dell'esercizio del documento
+	 * non è necessario
+	 */
+	if (!fatturaPassiva.isDocumentoModificabile() && fatturaPassiva.isDetailDoubled())
+		return fatturaPassiva;
 	
 	aggiornaDataEsigibilitaIVA(aUC, fatturaPassiva, "M");
 	
@@ -6433,5 +6443,29 @@ private Fattura_passivaBulk completeWithModalitaErogazione(UserContext userConte
 	}
 return fatturaPassiva;
 }
+/**
+ * Metodo che serve per ricostruire sul documento alcune HashTable necessarie per il funzionamento
+ * del Business Process
+ *
+ * Pre:  E' stata modificato il documento o alcuni suoi dettagli  
+ * Post: Viene ricaricata l'HashTable delle Obbligazioni associate alle Nota Credito  
+ * o degli Accertamenti associati alla fattura attiva      
+ *
+ * @param userContext
+ * @param bulk fattura o nota credito da aggiornare
+ * @return fattura o nota credito aggiornato con le modifiche
+ * @throws it.cnr.jada.comp.ComponentException
+ */
+public OggettoBulk rebuildDocumento(it.cnr.jada.UserContext userContext, OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
+	 if (bulk instanceof Fattura_passivaBulk){
+		((Fattura_passivaBulk)bulk).setFattura_passiva_obbligazioniHash(null);
+		rebuildObbligazioni(userContext, (Fattura_passivaBulk)bulk);
+	    }else
+	if (bulk instanceof Nota_di_creditoBulk) {
+		rebuildAccertamenti(userContext, (Nota_di_creditoBulk)bulk);
+    } 
+	return bulk;
+}
+
 }
 

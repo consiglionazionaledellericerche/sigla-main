@@ -1,12 +1,21 @@
 package it.cnr.contab.docamm00.bp;
 
+import java.math.BigDecimal;
+import java.util.Iterator;
+
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
+import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
+import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
+import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
+import it.cnr.contab.util.Utility;
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.jada.action.*;
@@ -37,6 +46,7 @@ public abstract class CRUDFatturaPassivaBP
 	private boolean riportaAvantiIndietro = false;
 	private boolean carryingThrough = false;
 	private boolean ribaltato;
+	private boolean isDetailDoubling = false;
 /**
  * CRUDAnagraficaBP constructor comment.
  */
@@ -577,7 +587,7 @@ public boolean isSaveButtonEnabled() {
 			!fp.isCongelata() &&
 				// Gennaro Borriello - (02/11/2004 16.48.21)
 				// Fix sul controllo dello "Stato Riportato": 
-			((!fp.isRiportata() && isAnnoDiCompetenza()) || isCarryingThrough() ||
+			((!fp.isRiportata() && isAnnoDiCompetenza()) || isCarryingThrough() ||isDetailDoubleable()||
 			(!isAnnoDiCompetenza() && fp.COMPLETAMENTE_RIPORTATO.equals(fp.getRiportataInScrivania())) );
 }
 /**
@@ -871,4 +881,180 @@ public boolean isRibaltato() {
 public void setRibaltato(boolean b) {
 	ribaltato = b;
 }
+public boolean isDetailDoubling() {
+	return isDetailDoubling;
+}
+public void setDetailDoubling(boolean isDetailDoubling) {
+	this.isDetailDoubling = isDetailDoubling;
+}
+private Fattura_passiva_rigaIBulk copyByRigaDocumento(ActionContext context, Fattura_passiva_rigaIBulk nuovoDettaglio, Fattura_passiva_rigaIBulk origine){
+	//associo la riga creata al documento
+	origine.setUser( context.getUserContext().getUser() );
+	if (origine.getVoce_iva()!=null)
+		nuovoDettaglio.setVoce_iva((Voce_ivaBulk)origine.getVoce_iva().clone());
+//	nuovoDettaglio.setEsercizio( origine.getEsercizio());
+//	nuovoDettaglio.setCd_cds( origine.getCd_cds());
+//	nuovoDettaglio.setCd_unita_organizzativa( origine.getCd_unita_organizzativa());
+	nuovoDettaglio.setStato_cofi( origine.getStato_cofi() );
+	nuovoDettaglio.setDt_da_competenza_coge(origine.getDt_da_competenza_coge());
+	nuovoDettaglio.setDt_a_competenza_coge(origine.getDt_a_competenza_coge());
+	nuovoDettaglio.setDs_riga_fattura( origine.getDs_riga_fattura());
+	nuovoDettaglio.setTi_associato_manrev(origine.getTi_associato_manrev());
+	nuovoDettaglio.setBene_servizio(origine.getBene_servizio());
+	nuovoDettaglio.setInventariato(origine.isInventariato());
+	nuovoDettaglio.setToBeCreated();
+	return nuovoDettaglio;
+}
+public void sdoppiaDettaglioInAutomatico(ActionContext context) throws ValidationException,BusinessProcessException 
+{
+	try {
+    	it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession h= it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP.getVirtualComponentSession(context, true);
+		FatturaPassivaComponentSession session = (FatturaPassivaComponentSession)createComponentSession();
+		Fattura_passivaBulk documento = (Fattura_passivaBulk)getModel();
+		Fattura_passiva_rigaIBulk dettaglioSelezionato = (Fattura_passiva_rigaIBulk)getDettaglio().getModel();
+		Obbligazione_scadenzarioBulk scadenzaNuova = null;
+		
+        if (dettaglioSelezionato==null) return;
+        if (documento.getStato_cofi() != null && documento.getStato_cofi().equals(documento.STATO_PAGATO))
+       		setMessage("Non è possibile sdoppiare righe in un documento pagato.");
+        if (dettaglioSelezionato.getIm_riga_sdoppia()==null ||
+        	dettaglioSelezionato.getIm_riga_sdoppia().equals(Utility.ZERO) ||
+       		dettaglioSelezionato.getIm_riga_sdoppia().compareTo(dettaglioSelezionato.getSaldo())!=-1) {
+       		setMessage("Il nuovo importo della riga da sdoppiare deve essere positivo ed inferiore " + 
+       				   "al saldo originario.");
+        	return;
+        }        	
+
+        Obbligazione_scadenzarioBulk scadenzaVecchia = dettaglioSelezionato.getObbligazione_scadenziario();
+
+		BigDecimal newImportoRigaVecchia = dettaglioSelezionato.getIm_riga_sdoppia().add(dettaglioSelezionato.getIm_totale_divisa().subtract(dettaglioSelezionato.getSaldo())); 
+		BigDecimal newImportoRigaNuova = dettaglioSelezionato.getSaldo().subtract(dettaglioSelezionato.getIm_riga_sdoppia()); 
+
+		BigDecimal newPrezzoRigaVecchia = newImportoRigaVecchia.divide(dettaglioSelezionato.getQuantita().multiply(dettaglioSelezionato.getVoce_iva().getPercentuale().divide(new BigDecimal(100)).add(new java.math.BigDecimal(1))),2,BigDecimal.ROUND_HALF_UP);
+		BigDecimal newPrezzoRigaNuova = dettaglioSelezionato.getPrezzo_unitario().subtract(newPrezzoRigaVecchia); 
+
+		if (dettaglioSelezionato.getObbligazione_scadenziario()!=null) {
+			scadenzaNuova=(Obbligazione_scadenzarioBulk) h.sdoppiaScadenzaInAutomatico(context.getUserContext(),
+								                                                       scadenzaVecchia,
+																					   scadenzaVecchia.getIm_scadenza().subtract(dettaglioSelezionato.getSaldo()).add(dettaglioSelezionato.getIm_riga_sdoppia()));
+
+			//ricarico obbligazione e recupero i riferimenti alle scadenze
+			ObbligazioneBulk obbligazione = (ObbligazioneBulk)h.inizializzaBulkPerModifica(context.getUserContext(),
+																						   scadenzaNuova.getObbligazione());
+
+			if (!obbligazione.getObbligazione_scadenzarioColl().containsByPrimaryKey(scadenzaVecchia) ||
+				!obbligazione.getObbligazione_scadenzarioColl().containsByPrimaryKey(scadenzaNuova)) 
+        		throw new ValidationException("Errore nello sdoppiamento della scadenza dell'impegno.");
+
+        	scadenzaVecchia = (Obbligazione_scadenzarioBulk)obbligazione.getObbligazione_scadenzarioColl().get(obbligazione.getObbligazione_scadenzarioColl().indexOfByPrimaryKey(scadenzaVecchia));
+       	 	scadenzaNuova = (Obbligazione_scadenzarioBulk)obbligazione.getObbligazione_scadenzarioColl().get(obbligazione.getObbligazione_scadenzarioColl().indexOfByPrimaryKey(scadenzaNuova));
+        }
+
+		//creo la nuova riga di dettaglio e la associo al documento
+		Fattura_passiva_rigaIBulk nuovoDettaglio = new Fattura_passiva_rigaIBulk();
+
+		getDettaglio().addDetail(nuovoDettaglio);
+
+		nuovoDettaglio = copyByRigaDocumento(context, nuovoDettaglio, dettaglioSelezionato);
+		nuovoDettaglio.setQuantita(dettaglioSelezionato.getQuantita());
+		nuovoDettaglio.setPrezzo_unitario(newPrezzoRigaNuova);
+
+		nuovoDettaglio.calcolaCampiDiRiga();
+		if (nuovoDettaglio.getIm_totale_divisa().compareTo(newImportoRigaNuova)!=0) {
+			nuovoDettaglio.setIm_iva(nuovoDettaglio.getIm_iva().add(newImportoRigaNuova.subtract(nuovoDettaglio.getIm_totale_divisa())));
+			nuovoDettaglio.setIm_totale_divisa(newImportoRigaNuova);
+			nuovoDettaglio.setFl_iva_forzata(Boolean.TRUE);
+			nuovoDettaglio.calcolaCampiDiRiga();
+		}
+		nuovoDettaglio.setIm_diponibile_nc(nuovoDettaglio.getSaldo());
+		
+		//Aggiorno la vecchia riga di dettaglio ed in particolare l'importo della riga da sdoppiare 
+		//del doc amministrativo
+		BigDecimal oldImpTotaleDivisa = dettaglioSelezionato.getIm_totale_divisa();
+
+		dettaglioSelezionato.setPrezzo_unitario(newPrezzoRigaVecchia);
+		dettaglioSelezionato.calcolaCampiDiRiga();
+		if (dettaglioSelezionato.getIm_totale_divisa().compareTo(newImportoRigaVecchia)!=0) {
+			dettaglioSelezionato.setIm_iva(dettaglioSelezionato.getIm_iva().add(newImportoRigaVecchia.subtract(dettaglioSelezionato.getIm_totale_divisa())));
+			dettaglioSelezionato.setIm_totale_divisa(newImportoRigaVecchia);
+			dettaglioSelezionato.setFl_iva_forzata(Boolean.TRUE);
+			dettaglioSelezionato.calcolaCampiDiRiga();
+		}
+
+		dettaglioSelezionato.setIm_diponibile_nc(dettaglioSelezionato.getIm_diponibile_nc().add(dettaglioSelezionato.getIm_totale_divisa().subtract(oldImpTotaleDivisa)));
+
+		dettaglioSelezionato.setToBeUpdated();
+
+		if (scadenzaVecchia!=null) {
+			for (Iterator i = documento.getFattura_passiva_dettColl().iterator(); i.hasNext(); ) {
+				Fattura_passiva_rigaIBulk riga = (Fattura_passiva_rigaIBulk)i.next();
+				if (riga.getObbligazione_scadenziario()!=null&&
+					riga.getObbligazione_scadenziario().equalsByPrimaryKey(scadenzaVecchia)) {
+					riga.setObbligazione_scadenziario(scadenzaVecchia);
+					documento.addToDefferredSaldi(scadenzaVecchia.getObbligazione(), scadenzaVecchia.getObbligazione().getSaldiInfo());
+				}
+			}
+		}
+		if (scadenzaNuova!=null) {
+			BulkList selectedModels = new BulkList();
+			selectedModels.add(nuovoDettaglio);
+			documento = session.contabilizzaDettagliSelezionati(context.getUserContext(), documento, selectedModels, scadenzaNuova);
+			documento.addToFattura_passiva_obbligazioniHash(scadenzaNuova, nuovoDettaglio);
+			documento.addToDefferredSaldi(scadenzaNuova.getObbligazione(), scadenzaNuova.getObbligazione().getSaldiInfo());
+	        // Sdoppia associazione inventario in automatico
+			if(nuovoDettaglio.isInventariato()){
+				 
+				//r.p. Prendo il progressivo dalla fattura_passivaBulk perchè viene aggiornato
+				BuonoCaricoScaricoComponentSession r = (it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession)
+										it.cnr.jada.util.ejb.EJBCommonServices.createEJB(
+										"CNRINVENTARIO01_EJB_BuonoCaricoScaricoComponentSession",
+										it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession.class);
+				Ass_inv_bene_fatturaBulk newAss=r.sdoppiaAssociazioneFor(context.getUserContext(), (Fattura_passiva_rigaBulk)dettaglioSelezionato,(Fattura_passiva_rigaBulk)nuovoDettaglio);
+				documento.addToAssociazioniInventarioHash(newAss, nuovoDettaglio);
+			}
+		}
+
+		documento = (Fattura_passivaBulk)session.rebuildDocumento(context.getUserContext(), documento);
+		
+        getObbligazioniController().getSelection().clear();
+        getObbligazioniController().setModelIndex(context, -1);
+        getObbligazioniController().setModelIndex(
+			            context,
+			            it.cnr.jada.bulk.BulkCollections.indexOfByPrimaryKey(getObbligazioniController().getDetails(), dettaglioSelezionato));
+
+		documento.setDetailDoubled(true); 
+
+		setModel(context, documento);
+	} catch(Exception e) {
+		throw handleException(e);
+	}
+}
+/**
+ * Boolean
+ *   individua le condizioni per cui è possibile sdoppiare i dettagli del 
+ *   documento
+ *   
+ *   false: - se annullato
+ * 		    - se eliminato
+ * 		    - se interamente incassato
+ * 		    - se, indipendentemente dall'anno, è stata riportata all'esercizio successivo 
+ * 		    - se non di anno corrente e non riportata all'esercizio successivo 
+ *
+ * @return Returns the isDetailDoubleable.
+ */
+public boolean isDetailDoubleable() {
+	if (getModel() instanceof Fattura_passiva_IBulk) {
+		Fattura_passiva_IBulk fattura= (Fattura_passiva_IBulk)getModel();
+		return (!super.isInputReadonly() && 
+				!isModelVoided() && 
+				!isDeleting() &&
+				!(fattura!=null && fattura.getStato_cofi()!=null && fattura.isPagata()) &&
+				!(fattura.isRiportata())
+	//			!(!isAnnoDiCompetenza() && !fattura.isRiportataInScrivania()) &&
+	//			!(fattura.getTipo_documento()!=null && !fattura.getTipo_documento().getFl_utilizzo_doc_generico().booleanValue())
+				) && !this.isSearching();	
+	}
+	return false;
+}
+
 }

@@ -28,13 +28,26 @@
 		enabledOnEdit="true"
 		readonlyProperty="ROdetail"
 		label="Saldo" />
-	
+	<fieldProperty
+		name="im_riga_sdoppia"
+		property="im_riga_sdoppia"
+		inputType="TEXT"
+		maxLength="15"
+		inputSize="15"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		enabledOnEdit="true"
+		enabledOnView="true"
+		nullable="false"
+		label="Nuovo Totale" />	
 	<formFieldProperty
 		name="im_totale_storni" />
 	<formFieldProperty
 		name="im_totale_addebiti" />
 	<formFieldProperty
 		name="saldo" />
+	<formFieldProperty
+		name="im_riga_sdoppia" 
+	    command="doConfirmSdoppiaDettaglio"/>		
 
 	<columnFieldProperty
 		name="im_totale_storni" />

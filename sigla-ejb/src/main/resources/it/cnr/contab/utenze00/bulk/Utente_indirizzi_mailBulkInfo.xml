@@ -42,7 +42,7 @@
 		property="fl_com_app_var_stanz_comp"
 		inputType="CHECKBOX"
 		nullable="false"
-		label="omunica avvenuta approvazione Variazioni Competenza" />
+		label="Comunica avvenuta approvazione Variazioni Competenza" />
 
 	<formFieldProperty
 		name="cd_utente" />

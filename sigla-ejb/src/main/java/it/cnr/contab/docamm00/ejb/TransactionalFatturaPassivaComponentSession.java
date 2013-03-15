@@ -7,6 +7,7 @@ import java.util.List;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.ejb.*;
@@ -970,6 +971,25 @@ public java.util.List findManRevRigaCollegati(UserContext param0, Fattura_passiv
 			throw new java.rmi.RemoteException("Uncaugth exception",ex);
 		}
 	}
+}
+public OggettoBulk rebuildDocumento(UserContext param0, OggettoBulk param1)
+		throws ComponentException, RemoteException {
+	try {
+		return (OggettoBulk)invoke("rebuildDocumento",new Object[] {
+			param0,
+			param1 });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+
 }
 }
 

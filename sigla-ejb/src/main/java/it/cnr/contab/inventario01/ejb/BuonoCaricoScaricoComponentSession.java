@@ -5,6 +5,8 @@ import javax.ejb.Remote;
 
 import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaBulk;
@@ -77,4 +79,5 @@ public interface BuonoCaricoScaricoComponentSession	extends CRUDDetailComponentS
 		boolean isContabilizzato(UserContext userContext,Buono_carico_scaricoBulk buono) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 		it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk findCategoria_gruppo_voceforvoce(UserContext userContext,it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elem)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 		void scaricaTuttiBeniDef(UserContext userContext,Buono_carico_scaricoBulk buonoS) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+		Ass_inv_bene_fatturaBulk sdoppiaAssociazioneFor (UserContext userContext,Fattura_passiva_rigaBulk riga_fattura,Fattura_passiva_rigaBulk riga_fattura_new) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

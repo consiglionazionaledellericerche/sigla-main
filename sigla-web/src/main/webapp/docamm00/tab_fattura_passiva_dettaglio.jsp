@@ -110,7 +110,19 @@
 	  	<td>
 		  	<% bp.getDettaglio().writeFormInput(out,null,"prezzo_unitario",false,null,"");%>
 		</td>	  	
+      
+      <% if (bp.isDetailDoubling()) { %>
+	   	<td>
+	  		<% bp.getDettaglio().writeFormLabel(out,"im_riga_sdoppia");%>
+	  	</td>
+	  	<td>
+	  		<% bp.getDettaglio().writeFormInput(out,null,"im_riga_sdoppia",false,null,"");%>
+	  	</td>
+	 <%}%>
       </tr>
+   <% if (bp.isDetailDoubling()) { %>
+   	<script>setFocusOnInput('main.Dettaglio.im_riga_sdoppia')</script>
+   <% bp.setDetailDoubling(false);} %>
       <tr>
       	<td>
 	  		<% bp.getDettaglio().writeFormLabel(out,"im_totale_divisa");%>
@@ -213,3 +225,4 @@
 			</table>
 		</div>
 	<% } %>
+	

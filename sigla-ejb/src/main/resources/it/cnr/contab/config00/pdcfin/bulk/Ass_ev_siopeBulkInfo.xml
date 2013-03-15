@@ -2,17 +2,12 @@
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+		shortDescription="Associazioni Elemento Voce/Siope"
+		longDescription="Associazioni Elemento Voce/Siope">
 	<fieldProperty
 		name="esercizio"
 		property="elemento_voce.esercizio"
-		inputType="ROTEXT"
-		inputSize="4"
-		maxLength="4"
-		label="Esercizio" />
-	<fieldProperty
-		name="esercizio_scrivania"
-		property="esercizio_scrivania"
 		inputType="ROTEXT"
 		inputSize="4"
 		maxLength="4"
@@ -98,8 +93,6 @@
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
-		name="esercizio_scrivania" />
-	<formFieldProperty
 		name="ti_appartenenza" />
 	<formFieldProperty
 		name="ti_gestione" />
@@ -131,9 +124,7 @@
 	<findFieldProperty
 		name="cd_siope" />
 	<findFieldProperty
-		name="esercizio_siope" />
-	<findFieldProperty
-		name="ti_gestione_siope" />
+		name="ds_siope" />
 		
 	<columnFieldProperty
 		name="esercizio" />
@@ -148,8 +139,7 @@
 	<columnFieldProperty
 		name="cd_siope" />
 	<columnFieldProperty
-		name="esercizio_siope" />
-	<columnFieldProperty
-		name="ti_gestione_siope" />
+		name="ds_siope" />
+	
 	
 </bulkInfo>

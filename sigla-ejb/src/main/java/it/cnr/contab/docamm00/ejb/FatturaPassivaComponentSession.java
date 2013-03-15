@@ -65,4 +65,5 @@ java.util.Collection findListabanchedett(it.cnr.jada.UserContext param0,it.cnr.c
 it.cnr.contab.anagraf00.core.bulk.TerzoBulk findCessionario(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.util.List findListaFattureSIP(UserContext userContext,String query,String dominio,String uo,String terzo,String voce,String cdr,String gae,String tipoRicerca,Timestamp data_inizio,Timestamp data_fine)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.util.List findManRevRigaCollegati(UserContext param0, Fattura_passiva_rigaBulk param1) throws it.cnr.jada.comp.ComponentException,it.cnr.jada.persistency.PersistencyException,it.cnr.jada.persistency.IntrospectionException,java.rmi.RemoteException;
+it.cnr.jada.bulk.OggettoBulk rebuildDocumento(it.cnr.jada.UserContext param0, it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

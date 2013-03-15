@@ -49,6 +49,14 @@ public abstract class Fattura_passivaBulk
 	private char changeOperation = MOLTIPLICA;
 	private java.sql.Timestamp inizio_validita_valuta;
 	private java.sql.Timestamp fine_validita_valuta;
+	/*
+	 * Le variabili isDetailDoubled e isDocumentoModificabile servono per gestire il caso in cui l'utente
+	 * non potendo modificare il documento procede solo a sdoppiare la riga di dettaglio. In tal caso la 
+	 * procedura provvede a non rieffettuare la ricontabilizzazione in COAN e COGE.
+	 *    
+	 */
+	private boolean isDetailDoubled = false; //serve per sapere se è stata sdoppiata una riga di dettaglio 
+	private boolean isDocumentoModificabile = true; //serve per sapere se il documento è modificabile o meno
 					
 	private java.math.BigDecimal im_totale_fattura_calcolato = new java.math.BigDecimal(0);
 
@@ -2667,5 +2675,17 @@ public void validateDate() throws ValidationException {
 			}
 		}	
 		return false;
+	}
+	public boolean isDetailDoubled() {
+		return isDetailDoubled;
+	}
+	public void setDetailDoubled(boolean isDetailDoubled) {
+		this.isDetailDoubled = isDetailDoubled;
+	}
+	public boolean isDocumentoModificabile() {
+		return isDocumentoModificabile;
+	}
+	public void setDocumentoModificabile(boolean isDocumentoModificabile) {
+		this.isDocumentoModificabile = isDocumentoModificabile;
 	}
 }
