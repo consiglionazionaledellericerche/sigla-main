@@ -430,8 +430,8 @@ public RemoteIterator cercaSospesiDiChiusuraFondo(
 
 	//Errore segnalato. Il controllo sull'importo è rimanadato 
 	//alla reversale di chiusura 03/12/2003
-	//sql.addSQLClause("AND", "(IM_SOSPESO - IM_ASSOCIATO)", sql.GREATER_EQUALS, fondo.getIm_residuo_fondo());
-	
+	sql.addSQLClause("AND", "(IM_SOSPESO - IM_ASSOCIATO)", sql.GREATER_EQUALS, fondo.getIm_residuo_fondo());
+	// r.p. 12/02/2013 la condizione precedente era commentata
 	sql.addClause("AND", "stato_sospeso", sql.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
 	sql.addClause("AND", "fl_stornato", sql.EQUALS, Boolean.FALSE);
 	sql.addClause("AND", "cd_cds", sql.EQUALS, fondo.getCd_cds());

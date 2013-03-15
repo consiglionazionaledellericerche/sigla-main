@@ -166,12 +166,13 @@ public boolean isGeneraNdCButtonEnabled() {
 			!fp.isByFondoEconomale() &&
 			!fp.isGenerataDaCompenso() &&
 			!fp.isBollaDoganale() &&
-			!fp.isSpedizioniere() && 	// RP 16/03/2010 Da commentare per generare NC di anni precedenti
-			((isAnnoDiCompetenza() && !fp.isRiportata()) || 				
+			!fp.isSpedizioniere() && 
+			((isAnnoDiCompetenza() && !fp.isRiportata())   				
+			// RP 16/03/2010 Da commentare per generare NC di anni precedenti
 				// Gennaro Borriello - (02/11/2004 16.48.21)
 				// 	Fix sul controllo dello "Stato Riportato": controlla che il documento sia stato riportato
 				//	DA UN ES. PRECEDENTE a quello di scrivania. 
-				(!isAnnoDiCompetenza() && fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania())));
+					 ||(!isAnnoDiCompetenza() && (fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania())|| fp.PARZIALMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania()))));
 }
 public boolean isGeneraNdCButtonHidden() {
 	

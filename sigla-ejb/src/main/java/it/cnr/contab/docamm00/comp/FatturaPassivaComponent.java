@@ -1747,10 +1747,10 @@ public RemoteIterator cercaDettagliFatturaPerNdC(UserContext context, Fattura_pa
 	}
 	
 	// RP 16/03/2010 Da commentare per generare NC di anni precedenti
-	else {
-		if (!fatturaPassiva.COMPLETAMENTE_RIPORTATO.equals(statoRipInScrivania))
-			throw new it.cnr.jada.comp.ApplicationException("La fattura selezionata o è stata riportata parzialmente o non è stata riportata nell'esercizio corrente! Operazione annullata.");
-	}
+//	else {
+//		if (!fatturaPassiva.COMPLETAMENTE_RIPORTATO.equals(statoRipInScrivania))
+//			throw new it.cnr.jada.comp.ApplicationException("La fattura selezionata o è stata riportata parzialmente o non è stata riportata nell'esercizio corrente! Operazione annullata.");
+//	}
 		
 	Fattura_passiva_rigaIHome home = (Fattura_passiva_rigaIHome)getHome(context, Fattura_passiva_rigaIBulk.class);
 	it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
@@ -6202,7 +6202,7 @@ private void controllaOmogeneitaTraTerzi(
 					TerzoBulk unTerzo = dettaglio.getFornitore();
 					if (!primoDettaglio.getFornitore().equalsByPrimaryKey(unTerzo))
 		               	throw new ApplicationException("Attenzione: i terzi della scadenza " + scadenza.getDs_scadenza() + " non sono compatibili! Operazione interrotta.");
-		            if (dettaglio.getFattura_passiva() instanceof Nota_di_creditoBulk) {
+		           // if (dettaglio.getFattura_passiva() instanceof Nota_di_creditoBulk) {
 		            	/*
 						if (!dettaglio.getModalita_pagamento_uo_cds().equalsByPrimaryKey(primoDettaglio.getModalita_pagamento_uo_cds()))
 			               	throw new ApplicationException("Attenzione: le modalità di pagamento del dettaglio \"" + dettaglio.getDs_riga() + "\" non sono compatibili con le altre modalità di pagamento insistenti sulla scadenza \"" + scadenza.getDs_scadenza() + "\"!");
@@ -6211,14 +6211,15 @@ private void controllaOmogeneitaTraTerzi(
 						if (!dettaglio.getBanca_uo_cds().equalsByPrimaryKey(primoDettaglio.getBanca_uo_cds()))
 			               	throw new ApplicationException("Attenzione: la banca d'appoggio del dettaglio \"" + dettaglio.getDs_riga() + "\" non è compatibile con la banca insistente sulla scadenza \"" + scadenza.getDs_scadenza() + "\"!");
 			            */
-		            } else {
-			            if (!dettaglio.getModalita_pagamento().equalsByPrimaryKey(primoDettaglio.getModalita_pagamento()))
-			               	throw new ApplicationException("Attenzione: le modalità di pagamento del dettaglio \"" + dettaglio.getDs_riga_fattura() + "\" non sono compatibili con le altre modalità di pagamento insistenti sulla scadenza \"" + scadenza.getDs_scadenza() + "\"!");
+		            //} else {
+		            	// r.p. commentato il codice seguente non coerente con equitalia
+			            //if (!dettaglio.getModalita_pagamento().equalsByPrimaryKey(primoDettaglio.getModalita_pagamento()))
+			              // 	throw new ApplicationException("Attenzione: le modalità di pagamento del dettaglio \"" + dettaglio.getDs_riga_fattura() + "\" non sono compatibili con le altre modalità di pagamento insistenti sulla scadenza \"" + scadenza.getDs_scadenza() + "\"!");
 			            //Errore 704: controllo aggiunto per correggere comportamento anomalo di
 			            //mandati e reversali su richiesta di Paolo. 01/12/2003
-						if (!dettaglio.getBanca().equalsByPrimaryKey(primoDettaglio.getBanca()))
-			               	throw new ApplicationException("Attenzione: la banca d'appoggio del dettaglio \"" + dettaglio.getDs_riga_fattura() + "\" non è compatibile con la banca insistente sulla scadenza \"" + scadenza.getDs_scadenza() + "\"!");
-					}
+						//if (!dettaglio.getBanca().equalsByPrimaryKey(primoDettaglio.getBanca()))
+			              // 	throw new ApplicationException("Attenzione: la banca d'appoggio del dettaglio \"" + dettaglio.getDs_riga_fattura() + "\" non è compatibile con la banca insistente sulla scadenza \"" + scadenza.getDs_scadenza() + "\"!");
+					//}
 				}
 			}
 		}

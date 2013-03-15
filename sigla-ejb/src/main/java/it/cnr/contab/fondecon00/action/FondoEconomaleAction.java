@@ -1,5 +1,7 @@
 package it.cnr.contab.fondecon00.action;
 
+import java.rmi.RemoteException;
+
 import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
@@ -13,6 +15,7 @@ import it.cnr.contab.fondecon00.bp.*;
 import it.cnr.contab.fondecon00.core.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.util.action.BulkBP;
@@ -43,10 +46,11 @@ private it.cnr.jada.action.Forward basicDoConfermaChiudiFondo(
 	try {
 		fondo.setSospeso_di_chiusura(sospesoDiChiusura);
 		fondo.setToBeUpdated();
-		FondoEconomaleComponentSession session = (FondoEconomaleComponentSession)bp.createComponentSession();
-		fondo = session.chiudeFondo(context.getUserContext(), fondo);
-		bp.commitUserTransaction();
-		bp.edit(context, fondo);
+		setErrorMessage(context, "Per confermare la chiusura del fondo è necessario effettuare il salvataggio!");
+//		FondoEconomaleComponentSession session = (FondoEconomaleComponentSession)bp.createComponentSession();
+//		fondo = session.chiudeFondo(context.getUserContext(), fondo);
+//		bp.commitUserTransaction();
+//		bp.edit(context, fondo);
 		return context.findDefaultForward();
 	} catch(Throwable e) {
 		try {
@@ -1040,5 +1044,40 @@ private void resetRicercaSpese(
 		fondo.setSpesaDocumentata(fondo.IGNORA);
 	}
 }
-	
+public Forward doSalva(ActionContext context)
+        throws RemoteException
+    {
+	FondoEconomaleBP bp = (FondoEconomaleBP)getBusinessProcess(context);
+	Fondo_economaleBulk fondo = (Fondo_economaleBulk)bp.getModel();
+	if (fondo.getCd_sospeso()!=null && fondo.isReversaleNecessaria()){
+        	try {
+			return openConfirm(
+							context,
+							"Sei sicuro di voler chiudere il fondo economale con un sospeso "+fondo.getSospeso_di_chiusura().getEsercizio()+"?",
+							it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO,"doConfermaSalvaChiudiFondo");
+			} catch (BusinessProcessException e) {
+				return super.handleException(context,e);
+			}
+        }
+        return super.doSalva(context);
+    }
+
+public it.cnr.jada.action.Forward doConfermaSalvaChiudiFondo(
+		it.cnr.jada.action.ActionContext context,
+		int option) {
+		FondoEconomaleBP bp = (FondoEconomaleBP)getBusinessProcess(context);
+		Fondo_economaleBulk fondo = (Fondo_economaleBulk)bp.getModel();
+		if (option == it.cnr.jada.util.action.OptionBP.YES_BUTTON) {
+			try {
+				FondoEconomaleComponentSession session = (FondoEconomaleComponentSession)bp.createComponentSession();
+				fondo = session.chiudeFondo(context.getUserContext(), fondo);
+				bp.commitUserTransaction();
+				bp.edit(context, fondo);
+			} catch(Throwable e) {
+				return super.handleException(context,e);
+			}
+		}
+		return context.findDefaultForward();
+	}
+
 }

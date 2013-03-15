@@ -498,8 +498,8 @@ private Forward basicDoGeneraNotaDiCredito(ActionContext context)
 		// 	Fix sul controllo dello "Stato Riportato": controlla che il documento sia stato 
 		//	riportato DA UN ES. PRECEDENTE a quello di scrivania.
 	// RP 16/03/2010 Da commentare per generare NC di fatture di anni precedenti
-	else if (!fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania()) && esercizioScrivania.intValue() != fp.getEsercizio().intValue())
-		throw new it.cnr.jada.comp.ApplicationException("Non è possibile generare note di credito per fatture non completamente riportate nell'esercizio di scrivania!");
+	//else if (!fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania()) && esercizioScrivania.intValue() != fp.getEsercizio().intValue())
+		//throw new it.cnr.jada.comp.ApplicationException("Non è possibile generare note di credito per fatture non completamente riportate nell'esercizio di scrivania!");
 
 	//if (fp.isRiportata() && !fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportata()))
 		//throw new it.cnr.jada.comp.ApplicationException("Non è possibile generare note di credito per fatture non riportate completamente!");
