@@ -16,6 +16,24 @@
 			propertyName="mese"
 			primary="true" />
 	</defaultColumnMap>
+	<columnMap
+		name="V_DIPENDENTE_RID"
+		tableName="V_DIPENDENTE" >
+		<columnMapping
+			columnName="ID_MATRICOLA"
+			propertyName="id_matricola"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />	
+		<columnMapping
+			columnName="NOMINATIVO"
+			propertyName="nominativo"
+			sqlTypeName="VARCHAR"
+			columnSize="60" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unita_organizzativa.cd_unita_organizzativa" />	
+	</columnMap>
 	<persistentProperty
 		name="unita_organizzativa" />
 	<persistentProperty

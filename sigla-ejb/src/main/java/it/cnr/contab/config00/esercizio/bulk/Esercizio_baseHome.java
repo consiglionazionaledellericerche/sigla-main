@@ -44,7 +44,7 @@ public SQLBuilder selectEserciziByClause(Stampa_ripartizione_costiVBulk bulk) th
 	{
 	PersistentHome pHome = getHomeCache().getHome(Esercizio_baseBulk.class);
 	SQLBuilder sql = pHome.createSQLBuilder();
-		
+	sql.setOrderBy("esercizio",it.cnr.jada.util.OrderConstants.ORDER_DESC);
 	return sql;
 	}	
 

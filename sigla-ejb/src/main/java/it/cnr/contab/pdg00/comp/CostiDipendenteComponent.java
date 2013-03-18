@@ -1148,15 +1148,17 @@ public SQLBuilder selectUoForPrintByClause(UserContext usercontext, Stampa_ripar
 public SQLBuilder selectDipendenteForPrintByClause(UserContext usercontext, Stampa_ripartizione_costiVBulk stampa_ripartizione_costivbulk, V_dipendenteBulk dipendenteBulk, CompoundFindClause compoundfindclause)
 	throws ComponentException, it.cnr.jada.persistency.PersistencyException
 {
-	V_dipendenteHome dipendentehome = (V_dipendenteHome)getHome(usercontext, V_dipendenteBulk.class);
+	V_dipendenteHome dipendentehome = (V_dipendenteHome)getHome(usercontext, V_dipendenteBulk.class,"V_DIPENDENTE_RID");
 	SQLBuilder sqlbuilder = dipendentehome.createSQLBuilder();
-	sqlbuilder.addClause("AND","esercizio",sqlbuilder.EQUALS,CNRUserContext.getEsercizio(usercontext));
+	sqlbuilder.addSQLClause("AND", "ESERCIZIO", sqlbuilder.EQUALS, stampa_ripartizione_costivbulk.getEsercizio_base().getEsercizio());
 	// Se uo 999.000 in scrivania: visualizza tutti i dipendenti
 	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( usercontext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 	if (!((CNRUserContext) usercontext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
-		sqlbuilder.addClause("AND","cd_unita_organizzativa",sqlbuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(usercontext));	
+		sqlbuilder.addSQLClause("AND","cd_unita_organizzativa",sqlbuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(usercontext));	
 	}
+	sqlbuilder.setDistinctClause(Boolean.TRUE);
 	sqlbuilder.addClause(compoundfindclause);
+	sqlbuilder.setOrderBy("nominativo",it.cnr.jada.util.OrderConstants.ORDER_ASC);
 	return sqlbuilder;
 }
 public SQLBuilder selectCommessaForPrintByClause(UserContext usercontext, Stampa_ripartizione_costiVBulk stampa_ripartizione_costivbulk, ProgettoBulk progettoBulk, CompoundFindClause compoundfindclause)
