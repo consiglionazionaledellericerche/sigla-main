@@ -181,7 +181,7 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTy
 		else if (getType().equals(GENERICO)) 
 			name.append("GEN");
 		name.append("-").append(contrattoBulk.getUnita_organizzativa().getCd_unita_organizzativa());
-		name.append("-").append(contrattoBulk.getEsercizio()).append(Utility.lpad(contrattoBulk.getPg_contratto(), 9, '0'));
+		name.append("-").append(contrattoBulk.getEsercizio()).append(contrattoBulk.getStato()).append(Utility.lpad(contrattoBulk.getPg_contratto(), 9, '0'));
 		name.append(".").append(getNome()==null?"Progetto.link":getNome());
 		return name.toString();
 	}

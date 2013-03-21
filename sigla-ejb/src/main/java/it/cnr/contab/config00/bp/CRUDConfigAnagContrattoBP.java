@@ -389,12 +389,6 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	public void delete(ActionContext actioncontext)
 			throws BusinessProcessException {
 		super.delete(actioncontext);
-		Node node = contrattoService.getFolderContratto((ContrattoBulk) getModel());
-		if (node != null){
-			contrattoService.updateProperties((ContrattoBulk) getModel(), node);
-			contrattoService.addAspect(node, "P:sigla_contratti_aspect:stato_annullato");
-			contrattoService.removeConsumerToEveryone(node);
-		}
 	}
 	@Override
 	public void update(ActionContext actioncontext)

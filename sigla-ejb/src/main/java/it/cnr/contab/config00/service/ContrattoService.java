@@ -131,7 +131,7 @@ public class ContrattoService extends CMISService {
 			allegato.setType(child.getTypeId());
 			allegato.setContrattoBulk(contratto);
 			updateProperties(allegato, child);
-			if (!allegato.getType().equals(AllegatoContrattoDocumentBulk.GENERICO))
+			if (contratto.isDefinitivo() && !allegato.getType().equals(AllegatoContrattoDocumentBulk.GENERICO))
 				costruisciAlberaturaAlternativa(allegato, child);
 		}		
 	}	

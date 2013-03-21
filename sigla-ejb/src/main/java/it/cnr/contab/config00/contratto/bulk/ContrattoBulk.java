@@ -679,7 +679,7 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	}
 	@CMISProperty(name="cmis:name")
 	public String getCMISFolderName(){
-		return "Contratto ".concat(String.valueOf(getEsercizio())).concat(Utility.lpad(getPg_contratto(), 9, '0'));
+		return "Contratto ".concat(String.valueOf(getEsercizio())).concat(getStato()).concat(Utility.lpad(getPg_contratto(), 9, '0'));
 	}
 	
 	public boolean isAllegatoContrattoPresent(){
