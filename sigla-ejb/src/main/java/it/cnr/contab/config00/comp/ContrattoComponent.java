@@ -162,11 +162,11 @@ public class ContrattoComponent extends it.cnr.jada.comp.CRUDDetailComponent imp
 		sql.addClause(FindClause.AND, "FL_VALIDO", SQLBuilder.EQUALS, Boolean.TRUE);
 		SQLBuilder sqlNotExists = getHome(userContext, contratto).createSQLBuilder();
 		sqlNotExists.addSQLJoin("CD_CIG", SQLBuilder.EQUALS, "CIG.CD_CIG");
-		
-		sqlNotExists.addSQLClause(FindClause.AND, "ESERCIZIO", SQLBuilder.NOT_EQUALS, contratto.getEsercizio());
-		sqlNotExists.addSQLClause(FindClause.AND, "STATO", SQLBuilder.NOT_EQUALS, contratto.getStato());
-		sqlNotExists.addSQLClause(FindClause.AND, "PG_CONTRATTO", SQLBuilder.NOT_EQUALS, contratto.getPg_contratto());
-		
+		if (contratto.getPg_contratto() != null){
+			sqlNotExists.addSQLClause(FindClause.AND, "ESERCIZIO", SQLBuilder.NOT_EQUALS, contratto.getEsercizio());
+			sqlNotExists.addSQLClause(FindClause.AND, "STATO", SQLBuilder.NOT_EQUALS, contratto.getStato());
+			sqlNotExists.addSQLClause(FindClause.AND, "PG_CONTRATTO", SQLBuilder.NOT_EQUALS, contratto.getPg_contratto());
+		}
 		sql.addSQLNotExistsClause(FindClause.AND, sqlNotExists);
 		if (clause != null) 
 		  sql.addClause(clause);
@@ -1229,5 +1229,14 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			sql.addSQLClause(FindClause.AND, "to_char(dt_fine_validita,'yyyy-mm-dd')", SQLBuilder.GREATER_EQUALS, "2013-01-01");
 			sql.addOrderBy("ESERCIZIO DESC, PG_CONTRATTO DESC");
 			return iterator(userContext, sql, ContrattoBulk.class, getFetchPolicyName("find"));
+		}
+		
+		public RemoteIterator findContrattoByCig(UserContext userContext,
+				ContrattoBulk contratto, CigBulk cig) throws ComponentException {
+			try {
+				return iterator(userContext, selectCigByClause(userContext, contratto, cig, null), CigBulk.class, getFetchPolicyName("find"));
+			} catch (PersistencyException e) {
+				throw handleException(e);
+			}
 		}		
 }

@@ -11,6 +11,7 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
 import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoMasterBP;
+import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.consultazioni.bulk.V_cons_commesse_contrattiBulk;
 import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
@@ -455,6 +456,33 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 	
 		catch(Throwable e) {return handleException(context,e);}
 	}
+	public Forward doBringBackCRUDCrea_cig(ActionContext context, ContrattoBulk contratto, CigBulk cig) 
+	{
+		CRUDConfigAnagContrattoBP bp = (CRUDConfigAnagContrattoBP)getBusinessProcess(context);
+		try 
+		{
+			if (cig != null )
+			{
+				it.cnr.jada.util.RemoteIterator ri = ((ContrattoComponentSession)bp.createComponentSession()).
+						findContrattoByCig(context.getUserContext(),contratto,cig);
+				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
+				if (ri.countElements() == 0) {
+					it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,ri);
+					throw new it.cnr.jada.action.MessageToUser("CIG non valido!");
+				}		
+				contratto.setCig(cig);
+			}	
+			return context.findDefaultForward();
+		}
+		catch(it.cnr.jada.action.MessageToUser e) 
+		{
+			getBusinessProcess(context).setErrorMessage(e.getMessage());
+			return context.findDefaultForward();
+		}		
+	
+		catch(Throwable e) {return handleException(context,e);}
+	}
+
 	public Forward doTab(ActionContext actioncontext, String s, String s1)
 	{
 		if (s1.equals("tabAss_contratto_uo")){
