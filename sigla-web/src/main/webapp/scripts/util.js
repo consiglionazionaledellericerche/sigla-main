@@ -160,7 +160,7 @@ function doNuovo() {
 }
 
 function doElimina() {
-	if (confirm('Vuoi continuare?'))
+	if (confirm('Vuoi confermare la cancellazione?'))
 		submitForm('doElimina');
 }
 
