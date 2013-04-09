@@ -61,6 +61,7 @@
 		name="it.cnr.contab.doccont00.comp.ObbligazioneComponent.find.creditore">
 		<exclude pattern="*" />
 		<include pattern="anagrafico"/>
+		<include pattern="comune_sede"/>
 		<exclude pattern="anagrafico.*"/>		
 	</fetchPolicy>
 

@@ -127,6 +127,7 @@
 		inputSize="10"
 		inputType="TEXT"
 		nullable="false"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
 		readonlyProperty="RODivisa"
 		enabledOnInsert="true"
 		enabledOnEdit="true"

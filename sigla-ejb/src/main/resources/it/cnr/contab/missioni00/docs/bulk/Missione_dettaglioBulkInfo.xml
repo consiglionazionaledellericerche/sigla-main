@@ -155,6 +155,7 @@
 		name="cd_divisa_spesa"
 		property="divisa_spesa.cd_divisa"
 		label="Valuta"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
 		inputType="TEXT"
 		maxLength="10"
 		inputSize="10"

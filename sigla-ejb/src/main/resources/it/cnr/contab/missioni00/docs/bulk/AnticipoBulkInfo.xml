@@ -326,6 +326,7 @@
 		property="divisa.cd_divisa"
 		readonlyProperty="RODivisa"		
 		label="Valuta"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
 		inputType="TEXT"
 		maxLength="10"
 		inputSize="10"

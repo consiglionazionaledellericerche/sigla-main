@@ -221,6 +221,7 @@
 		property="anagrafico.codice_fiscale"
 		label="Codice Fiscale"
 		inputType="TEXT"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
 		enabledOnEdit="false"
 		enabledOnInsert="false"
 		enabledOnSearch="true"
@@ -466,6 +467,10 @@
 		label="Fine rapp." />
 	<columnFieldProperty
 		name="descrizioneAnagrafica" />
+	<columnFieldProperty
+		name="via_sede" />
+	<columnFieldProperty
+		name="comune_sede" />
 
 	<columnSet
 		name="columnSet01" >

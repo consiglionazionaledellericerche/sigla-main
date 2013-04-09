@@ -74,6 +74,7 @@
 		maxLength="10"
 		inputSize="10"
 		inputType="TEXT"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
 		enabledOnInsert="true"
 		enabledOnEdit="true"
 		enabledOnSearch="true"

@@ -267,7 +267,8 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		
 		TerzoHome home = (TerzoHome)getHome(userContext, TerzoBulk.class, "V_TERZO_CF_PI");
 		SQLBuilder sql = home.createSQLBuilder();
-		sql.addClause(clauses);
+		sql.addSQLClause("AND","DT_FINE_RAPPORTO",sql.ISNULL,null);
+		sql.addClause(clauses); 
 		return sql;
 }
 	/**

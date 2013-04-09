@@ -19,7 +19,7 @@
 		inputType="TEXT"
 		readonlyProperty="ROValuta"
 		label="Divisa"
-		caseSensitiveSearch="true"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		nullable="false"
