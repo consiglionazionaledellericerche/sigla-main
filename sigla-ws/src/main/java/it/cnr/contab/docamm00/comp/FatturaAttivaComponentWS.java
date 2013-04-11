@@ -1237,9 +1237,10 @@ public class FatturaAttivaComponentWS {
 			    	                   riga.setCd_voce_iva(fatr.getCd_voce_iva());
 		    	             	}
 		    	                riga.setVoce_iva((Voce_ivaBulk)(((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).completaOggetto(userContext,riga.getVoce_iva())));
-		    	                if (riga.getVoce_iva()==null){
+		    	                if (riga.getVoce_iva()==null||(riga.getVoce_iva().getDt_cancellazione()!=null)){
 		    	   	            	    fat=ValorizzaErrore(fat,Costanti.ERRORE_FA_106.toString());
-		    	                }else{
+		    	                }
+		    	                else{
 		    	                	    riga.setIm_imponibile(riga.getPrezzo_unitario().multiply(riga.getQuantita()));
 		    	                	    if(fatr.getFl_iva_forzata().booleanValue())
 						    	        	 riga.setIm_iva(fatr.getIm_iva());
