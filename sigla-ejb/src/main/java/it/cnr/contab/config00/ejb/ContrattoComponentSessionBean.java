@@ -10,6 +10,7 @@ import it.cnr.contab.config00.bulk.RicercaContrattoBulk;
 import it.cnr.contab.config00.comp.ContrattoComponent;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.RemoteIterator;
@@ -339,4 +340,5 @@ public class ContrattoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponent
 			throw uncaughtError(userContext,componentObj,e);
 		}
 	}	
+	
 }

@@ -2,10 +2,16 @@ package it.cnr.contab.doccont00.comp;
 
 import it.cnr.contab.config00.esercizio.bulk.*;
 import it.cnr.contab.doccont00.intcass.bulk.*;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.ejb.*;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
+import it.cnr.contab.docamm00.views.bulk.V_stm_paramin_ft_attivaBulk;
+import it.cnr.contab.docamm00.views.bulk.V_stm_paramin_ft_attivaHome;
 import it.cnr.contab.docamm00.ejb.*;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.config00.pdcfin.bulk.*;
@@ -15,13 +21,33 @@ import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.doccont00.tabrif.bulk.*;
 import it.cnr.contab.config00.sto.bulk.*;
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.sql.*;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 
 import java.util.*;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRParameter;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+
 import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
+import it.cnr.contab.reports.bp.OfflineReportPrintBP;
+import it.cnr.contab.reports.bp.ReportPrintBP;
+import it.cnr.contab.reports.bulk.Print_spoolerBulk;
+import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
+import it.cnr.contab.reports.bulk.Report;
+import it.cnr.contab.reports.service.PrintService;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.*;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
@@ -3891,4 +3917,114 @@ public SQLBuilder selectCupByClause(UserContext userContext, ReversaleCupIBulk r
 	sql.addClause(clauses);
 	return sql;
 }
+
+private java.sql.Timestamp getFirstDayOfYear(int year) {
+
+	java.util.Calendar calendar = java.util.GregorianCalendar.getInstance();
+	calendar.set(java.util.Calendar.DAY_OF_MONTH, 1);
+	calendar.set(java.util.Calendar.MONTH, 0);
+	calendar.set(java.util.Calendar.YEAR, year);
+	calendar.set(java.util.Calendar.HOUR, 0);
+	calendar.set(java.util.Calendar.MINUTE, 0);
+	calendar.set(java.util.Calendar.SECOND, 0);
+	calendar.set(java.util.Calendar.MILLISECOND, 0);
+	calendar.set(java.util.Calendar.AM_PM, java.util.Calendar.AM);
+	return new java.sql.Timestamp(calendar.getTime().getTime());
+}
+
+public static java.sql.Timestamp getLastDayOfYear(int year){
+
+	java.util.Calendar calendar = java.util.GregorianCalendar.getInstance();
+	calendar.set(java.util.Calendar.DAY_OF_MONTH, 31);
+	calendar.set(java.util.Calendar.MONTH, 11);
+	calendar.set(java.util.Calendar.YEAR, year);
+	calendar.set(java.util.Calendar.HOUR, 0);
+	calendar.set(java.util.Calendar.MINUTE, 0);
+	calendar.set(java.util.Calendar.SECOND, 0);
+	calendar.set(java.util.Calendar.MILLISECOND, 0);
+	calendar.set(java.util.Calendar.AM_PM, java.util.Calendar.AM);
+	return new java.sql.Timestamp(calendar.getTime().getTime());
+}
+
+public byte[] lanciaStampa(UserContext userContext,String cds,Integer esercizio,Long pgReversale) 
+		throws PersistencyException, ComponentException, RemoteException, javax.ejb.EJBException, ParseException {
+	    
+	ReversaleIHome home = (ReversaleIHome) getHome(userContext, ReversaleIBulk.class);
+	SQLBuilder sql =  home.createSQLBuilder();
+	String cdsEnte = "999";
+	String tipoReversaleSospeso = "S"; // S = Sospeso. Reversale a regolamento di sospeso
+	String statoIncassato ="P"; // P = Incassata. La reversale risulta incassata
+	sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, esercizio);
+	sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, cdsEnte);
+	sql.addSQLClause("AND", "PG_REVERSALE", sql.EQUALS, pgReversale);
+	sql.addSQLClause("AND", "CD_CDS_ORIGINE", sql.EQUALS, cds);
+	sql.addSQLClause("AND", "TI_REVERSALE", sql.EQUALS, tipoReversaleSospeso);
+	sql.addSQLClause("AND", "STATO", sql.EQUALS, statoIncassato);
+	
+	java.util.List list = home.fetchAll(sql);
+	if(list.isEmpty())
+		throw new FatturaNonTrovataException("Reversale non trovata");
+	
+try {
+	
+	java.sql.Timestamp dataInizio =  getFirstDayOfYear(esercizio);
+	Timestamp dataFine = getLastDayOfYear(esercizio);
+	
+      File output = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/", File.separator + getOutputFileName("vpg_reversale.jasper",cds,esercizio,pgReversale));
+  	
+      Print_spoolerBulk print = new Print_spoolerBulk();
+      Print_spooler_paramBulk printparam = new Print_spooler_paramBulk();
+      print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
+      print.setFlEmail(false);
+      print.setReport("/doccont/doccont/vpg_reversale.jasper");
+      print.setNomeFile(getOutputFileName("vpg_reversale.jasper", cds, esercizio, pgReversale));
+      print.setUtcr(userContext.getUser());
+      
+      print.addParam("aCd_cds",cdsEnte, String.class);
+      print.addParam("aEs",esercizio, Integer.class);
+      print.addParam("aPg_da",pgReversale, Long.class);
+      print.addParam("aPg_a",pgReversale, Long.class);
+      
+      printparam = new Print_spooler_paramBulk();
+      printparam.setNomeParam("aDt_da");
+      printparam.setValoreParam(new SimpleDateFormat("yyyy/MM/dd").format(dataInizio));
+      printparam.setParamType("java.util.Date");
+      print.addParam(printparam);
+      
+      printparam = new Print_spooler_paramBulk();
+      printparam.setNomeParam("aDt_a");
+      printparam.setValoreParam(new SimpleDateFormat("yyyy/MM/dd").format(dataFine));
+      printparam.setParamType("java.util.Date");
+      print.addParam(printparam);
+      print.addParam("aCd_terzo","%", String.class);
+      
+      Report report = SpringUtil.getBean("printService", PrintService.class).executeReport(userContext, print);
+      
+      FileOutputStream f = new FileOutputStream(output);
+      f.write(report.getBytes());
+      f.flush();
+	  f.close();
+	  
+      return report.getBytes();
+	}  catch (IOException e) {
+		throw new GenerazioneReportException("Generazione Stampa non riuscita",e);
+	}
+}      
+
+private static final DateFormat PDF_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
+
+private String getOutputFileName(String reportName, String cds,Integer esercizio,Long pgReversale)
+	{
+		String fileName = reportName;
+		fileName = fileName.replace('/', '_');
+		fileName = fileName.replace('\\', '_');
+		if(fileName.startsWith("_"))
+		    fileName = fileName.substring(1);
+		if(fileName.endsWith(".jasper"))
+		    fileName = fileName.substring(0, fileName.length() - 7);
+		fileName = fileName + ".pdf";
+		fileName = PDF_DATE_FORMAT.format(new java.util.Date()) + '_' + fileName + '_' + esercizio + '_' + cds + '_' + pgReversale;
+		return fileName;
+	}
+
 }

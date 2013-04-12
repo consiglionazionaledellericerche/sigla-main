@@ -8,6 +8,9 @@
     <ejb>sigla-ws.jar</ejb>
   </module>
   <module>
+    <ejb>sigla-ws-ns.jar</ejb>
+  </module>
+  <module>
     <web>
       <web-uri>sigla-web.war</web-uri>
       <context-root>SIGLA</context-root>

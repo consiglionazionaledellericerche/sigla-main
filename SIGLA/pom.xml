@@ -58,6 +58,11 @@
 							<artifactId>sigla-ws</artifactId>
 							<bundleFileName>sigla-ws.jar</bundleFileName>
 						</ejbModule>
+						<ejbModule>
+							<groupId>it.cnr</groupId>
+							<artifactId>sigla-ws-ns</artifactId>
+							<bundleFileName>sigla-ws-ns.jar</bundleFileName>
+						</ejbModule>
 					</modules>
 					<charset>${project.build.sourceEncoding}</charset>
 					<encoding>${project.build.sourceEncoding}</encoding>
@@ -104,6 +109,13 @@
 		<dependency>
 			<groupId>it.cnr</groupId>
 			<artifactId>sigla-ws</artifactId>
+			<version>${project.version}</version>
+			<type>ejb</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>it.cnr</groupId>
+			<artifactId>sigla-ws-ns</artifactId>
 			<version>${project.version}</version>
 			<type>ejb</type>
 			<scope>provided</scope>

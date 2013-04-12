@@ -1,5 +1,11 @@
 package it.cnr.contab.pdg00.ejb;
+import java.rmi.RemoteException;
+
+import it.cnr.contab.doccont00.comp.ReversaleComponent;
 import it.cnr.contab.pdg00.comp.PdGVariazioniComponent;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -372,4 +378,25 @@ public void archiviaVariazioneDocumentale(it.cnr.jada.UserContext param0,it.cnr.
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
+
+public  byte[] lanciaStampa(UserContext userContext,Integer esercizio,Integer pgVariazione) throws PersistencyException, ComponentException, RemoteException, javax.ejb.EJBException{
+	pre_component_invocation(userContext,componentObj);
+	try {
+		byte[] result=((PdGVariazioniComponent)componentObj).lanciaStampa(userContext,esercizio,pgVariazione);
+		component_invocation_succes(userContext,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(userContext,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(userContext,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(userContext,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(userContext,componentObj,e);
+	}
+}
+
+
 }
