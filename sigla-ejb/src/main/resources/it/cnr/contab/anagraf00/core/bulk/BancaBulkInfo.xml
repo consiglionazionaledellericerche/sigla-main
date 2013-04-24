@@ -254,6 +254,21 @@
 		readonlyProperty="ROBanca"
 		nullable="false"
 		/>
+	<fieldProperty
+		name="cd_terzo_delegato"
+		property="terzo_delegato.cd_terzo"
+		readonlyProperty="ROterzo_delegato"
+		label="Cessionario"
+		inputType="TEXT" 
+		inputSize="10"
+		nullable="false" />
+	<fieldProperty
+		name="ds_terzo_delegato"
+		property="terzo_delegato.denominazione_sede"
+		readonlyProperty="ROterzo_delegato"
+		label="Denominazione"
+		inputType="ROTEXT" 
+		inputSize="50" />
 	
 	<columnSet
 		name="B">
@@ -345,6 +360,12 @@
 		<columnFieldProperty
 			name="fl_cancellato"
 			/>
+		<columnFieldProperty
+			name="cd_terzo_delegato"
+			/>
+		<columnFieldProperty
+			name="ds_terzo_delegato"
+			/>	
 	</columnSet>
 		
 	<columnSet

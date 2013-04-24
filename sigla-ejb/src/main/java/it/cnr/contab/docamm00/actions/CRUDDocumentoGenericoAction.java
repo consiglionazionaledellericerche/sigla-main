@@ -1042,12 +1042,24 @@ public Forward doBringBackRemoveToCRUDMain_Dettaglio(ActionContext context) {
 public Forward doBringBackSearchListabanche(ActionContext context, Documento_generico_rigaBulk documentoGenericoRiga, BancaBulk banca) throws java.rmi.RemoteException {
 //imposta la banca selezionata
     try {
+    	fillModel(context);
+		it.cnr.jada.util.action.CRUDBP bp= (it.cnr.jada.util.action.CRUDBP) getBusinessProcess(context);
+		DocumentoGenericoComponentSession component= null;
+
+		Documento_genericoBulk documentoGenerico= (Documento_genericoBulk) bp.getModel();
+		if (!documentoGenerico.isGenericoAttivo()) {
+			component= (DocumentoGenericoComponentSession) ((CRUDDocumentoGenericoPassivoBP) bp).createComponentSession();
+		} else {
+			component= (DocumentoGenericoComponentSession) ((CRUDDocumentoGenericoAttivoBP) bp).createComponentSession();
+		}
+
 	    if (banca != null) {//per attivi la banca è quella sulla uo
 	        if (documentoGenericoRiga.getDocumento_generico().isGenericoAttivo()) {
 	            documentoGenericoRiga.setBanca_uo_cds(banca);
 	        } else
 	        //per passivi è quella del terzo
 	            documentoGenericoRiga.setBanca(banca);
+	        	documentoGenericoRiga.setCessionario(component.findCessionario(context.getUserContext(), documentoGenericoRiga));
 	    }
         return context.findDefaultForward();
 

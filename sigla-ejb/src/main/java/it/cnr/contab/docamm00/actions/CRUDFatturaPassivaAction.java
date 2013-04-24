@@ -3245,7 +3245,7 @@ public Forward doOnModalitaPagamentoDetChange(ActionContext context) {
  			java.util.Collection coll = fpcs.findListabanchedett(context.getUserContext(), fattura_riga);
  			
  			fattura_riga.setBanca((coll == null || coll.isEmpty()) ? null : (BancaBulk)new java.util.Vector(coll).firstElement());
- 			fattura_riga.setCessionario(fpcs.findCessionario(context.getUserContext(), fattura_riga));
+ 			 fattura_riga.setCessionario(fpcs.findCessionario(context.getUserContext(), fattura_riga));
  		} else {
  			fattura_riga.setBanca(null);
  			fattura_riga.setCessionario(null);
@@ -4536,5 +4536,33 @@ public Forward doConfirmSdoppiaDettaglio(ActionContext context) {
     } catch (Throwable e) {
         return handleException(context, e);
     }
+}
+public Forward doBringBackSearchListabanchedett(ActionContext context,Fattura_passiva_rigaBulk riga,BancaBulk banca){
+	try{
+		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+		FatturaPassivaComponentSession fpcs = (FatturaPassivaComponentSession)bp.createComponentSession();
+		
+		if(banca!=null && banca.getCd_terzo_delegato()!=null){
+			riga.setBanca(banca);
+			riga.setCessionario(fpcs.findCessionario(context.getUserContext(), riga));
+		}
+		return context.findDefaultForward();
+	} catch (Throwable e) {
+	    return handleException(context, e);
+	}
+}
+	public Forward doBringBackSearchListabanche(ActionContext context,Fattura_passivaBulk fattura,BancaBulk banca){
+		try{
+			CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+			FatturaPassivaComponentSession fpcs = (FatturaPassivaComponentSession)bp.createComponentSession();
+			
+			if(banca!=null && banca.getCd_terzo_delegato()!=null){
+				fattura.setBanca(banca);
+				fattura.setCessionario(fpcs.findCessionario(context.getUserContext(), fattura));
+			}
+			return context.findDefaultForward();
+	} catch (Throwable e) {
+	    return handleException(context, e);
+	}
 }
 }

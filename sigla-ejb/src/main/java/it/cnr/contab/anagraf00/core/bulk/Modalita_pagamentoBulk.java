@@ -53,8 +53,8 @@ public java.lang.String getChiavePerBanca() {
 
 	if (isPerCessione()){
 		perCessione = "Y";
-		if (getTerzo_delegato() != null && getTerzo_delegato().getCd_terzo() != null)
-			cdTerzoDelegato = Integer.toString(getTerzo_delegato().getCd_terzo().intValue());
+		//if (getTerzo_delegato() != null && getTerzo_delegato().getCd_terzo() != null)
+			//cdTerzoDelegato = Integer.toString(getTerzo_delegato().getCd_terzo().intValue());
 	} 
 
 	String chiave = getRif_modalita_pagamento().getTi_pagamento() +

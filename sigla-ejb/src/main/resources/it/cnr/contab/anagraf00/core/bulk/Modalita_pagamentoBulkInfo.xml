@@ -80,10 +80,6 @@
 	<columnFieldProperty
 		name="ti_pagamento"
 		/>
-	<columnFieldProperty
-		name="cd_terzo_delegato"
-		/>
-
 	<formFieldProperty
 		name="cd_modalita_pag"
 		/>
@@ -118,9 +114,7 @@
 	<findFieldProperty
 		name="cd_modalita_pag"
 		/>
-	<findFieldProperty
-		name="cd_terzo_delegato"
-		/>
+	
 
 
 </bulkInfo>

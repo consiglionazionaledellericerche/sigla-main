@@ -1,5 +1,7 @@
 package it.cnr.contab.anagraf00.action;
 
+import java.util.Iterator;
+
 import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.*;
@@ -109,10 +111,10 @@ public Forward doAddToCRUDMain_Modalita_pagamento_Banche(ActionContext context) 
 public Forward doBlankSearchFind_terzo_delegato(ActionContext context, Modalita_pagamentoBulk modalita_pagamento) {
 	try {
 		CRUDTerzoBP bp = (CRUDTerzoBP)getBusinessProcess(context);		
-		
-		if (bp.getCrudBanche().getElements() != null && bp.getCrudBanche().countDetails() >0){
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione: cancellare prima tutte le Banche.");
-		}
+		//r.p. controllo disabilitato per permettere la gestione di più delegati attivi contemporaneamente
+//		if (bp.getCrudBanche().getElements() != null && bp.getCrudBanche().countDetails() >0){
+//			throw new it.cnr.jada.comp.ApplicationException("Attenzione: cancellare prima tutte le Banche.");
+//		}
 
 		modalita_pagamento.setTerzo_delegato(new TerzoBulk());
 		
@@ -135,7 +137,7 @@ public Forward doBringBackBanchePerCessionario(ActionContext context) {
 				BancaBulk nuova_banca = (BancaBulk)banca_selezionata.clone();
 				
 				nuova_banca.setTerzo(terzo);
-				nuova_banca.setCd_terzo_delegato(modalita_pagamento.getTerzo_delegato().getCd_terzo());
+				nuova_banca.setTerzo_delegato(modalita_pagamento.getTerzo_delegato());
 				nuova_banca.setPg_banca_delegato(nuova_banca.getPg_banca());
 				nuova_banca.setOrigine(BancaBulk.ORIGINE_ON_LINE);
 				nuova_banca.setFl_cc_cds(new Boolean(false));
@@ -427,10 +429,21 @@ public Forward doSalva(ActionContext context) {
 		fillModel(context);
 		CRUDTerzoBP bp = (CRUDTerzoBP)context.getBusinessProcess();
 		TerzoBulk terzo = (TerzoBulk)bp.getModel();
-
+		boolean existBanca=true;
 		for (java.util.Iterator i = terzo.getModalita_pagamento().iterator();i.hasNext();) {
-		
 			Modalita_pagamentoBulk modalita_pagamento = (Modalita_pagamentoBulk)i.next();
+			if (modalita_pagamento.isPerCessione() ){
+				if(modalita_pagamento.getCd_terzo_delegato()==null)
+					throw new it.cnr.jada.comp.ApplicationException("Non sono state specificati i dati relativi ai riferimenti al cessionario.");
+				existBanca=false;
+				for (java.util.Iterator it = terzo.getBanche(modalita_pagamento).iterator();it.hasNext();) {
+					BancaBulk banca=(BancaBulk) it.next();
+					if (modalita_pagamento.getCd_terzo_delegato()!=null && banca.getCd_terzo_delegato()!=null && banca.getCd_terzo_delegato().compareTo(modalita_pagamento.getCd_terzo_delegato())==0)
+						existBanca=true;
+				}
+			}
+			if(!existBanca)	
+				throw new it.cnr.jada.comp.ApplicationException("Non sono state specificati i dati relativi ai riferimenti di pagamento per il cessionario "+modalita_pagamento.getCd_terzo_delegato()+".");
 			if (terzo.getBanche(modalita_pagamento).isEmpty()) {
 				OptionBP optionBP = openConfirm(context,"Attenzione: la modalità di pagamento <b><u>" 
 					+ modalita_pagamento.getCd_modalita_pag()

@@ -235,7 +235,7 @@ public SQLBuilder selectRif_modalita_pagamento(TerzoBulk terzo, Boolean flPerCes
 	sql.addTableToHeader("MODALITA_PAGAMENTO");
 	sql.addSQLJoin("MODALITA_PAGAMENTO.CD_MODALITA_PAG","RIF_MODALITA_PAGAMENTO.CD_MODALITA_PAG");
 	sql.addSQLClause("AND","MODALITA_PAGAMENTO.CD_TERZO",sql.EQUALS,terzo.getCd_terzo());
-
+	
 	sql.addClause("AND","fl_per_cessione", sql.EQUALS, flPerCessione);
 	return sql;
 }
@@ -247,4 +247,13 @@ public SQLBuilder selectRif_termini_pagamento(TerzoBulk terzo) throws Persistenc
 	sql.addSQLClause("AND","TERMINI_PAGAMENTO.CD_TERZO",sql.EQUALS,terzo.getCd_terzo());
 	return sql;
 }
+
+@Override
+public SQLBuilder selectByClause(CompoundFindClause compoundfindclause)
+		throws PersistencyException {
+		PersistentHome home = getHomeCache().getHome(TerzoBulk.class,"V_TERZO_CF_PI");
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause(compoundfindclause);
+		return sql;
+	}
 }
