@@ -927,16 +927,23 @@ public void sdoppiaDettaglioInAutomatico(ActionContext context) throws Validatio
 
         Obbligazione_scadenzarioBulk scadenzaVecchia = dettaglioSelezionato.getObbligazione_scadenziario();
 
-		BigDecimal newImportoRigaVecchia = dettaglioSelezionato.getIm_riga_sdoppia().add(dettaglioSelezionato.getIm_totale_divisa().subtract(dettaglioSelezionato.getSaldo())); 
+		BigDecimal newImportoRigaVecchia = dettaglioSelezionato.getIm_riga_sdoppia().add(dettaglioSelezionato.getIm_diponibile_nc().subtract(dettaglioSelezionato.getSaldo())); 
 		BigDecimal newImportoRigaNuova = dettaglioSelezionato.getSaldo().subtract(dettaglioSelezionato.getIm_riga_sdoppia()); 
-
-		BigDecimal newPrezzoRigaVecchia = newImportoRigaVecchia.divide(dettaglioSelezionato.getQuantita().multiply(dettaglioSelezionato.getVoce_iva().getPercentuale().divide(new BigDecimal(100)).add(new java.math.BigDecimal(1))),2,BigDecimal.ROUND_HALF_UP);
-		BigDecimal newPrezzoRigaNuova = dettaglioSelezionato.getPrezzo_unitario().subtract(newPrezzoRigaVecchia); 
-
+		
+		BigDecimal newPrezzoRigaVecchia = newImportoRigaVecchia.divide(documento.getCambio(),2,BigDecimal.ROUND_HALF_UP).divide(dettaglioSelezionato.getQuantita().multiply(dettaglioSelezionato.getVoce_iva().getPercentuale().divide(new BigDecimal(100)).add(new java.math.BigDecimal(1))),2,BigDecimal.ROUND_HALF_UP);
+		BigDecimal newPrezzoRigaNuova = dettaglioSelezionato.getPrezzo_unitario().subtract(newPrezzoRigaVecchia);
+		BigDecimal oldImportoIvaVecchia=BigDecimal.ZERO;
+		BigDecimal tot_imp=BigDecimal.ZERO;
+        if(documento.quadraturaInDeroga()){
+        	 oldImportoIvaVecchia =dettaglioSelezionato.getIm_iva();
+        	 tot_imp=newPrezzoRigaVecchia.multiply(documento.getCambio()).multiply(dettaglioSelezionato.getQuantita()).setScale(2,BigDecimal.ROUND_HALF_UP);
+        }
+        else
+        	 tot_imp=dettaglioSelezionato.getIm_riga_sdoppia();
 		if (dettaglioSelezionato.getObbligazione_scadenziario()!=null) {
 			scadenzaNuova=(Obbligazione_scadenzarioBulk) h.sdoppiaScadenzaInAutomatico(context.getUserContext(),
 								                                                       scadenzaVecchia,
-																					   scadenzaVecchia.getIm_scadenza().subtract(dettaglioSelezionato.getSaldo()).add(dettaglioSelezionato.getIm_riga_sdoppia()));
+																					   scadenzaVecchia.getIm_scadenza().subtract(dettaglioSelezionato.getSaldo().subtract(oldImportoIvaVecchia)).add(tot_imp));
 
 			//ricarico obbligazione e recupero i riferimenti alle scadenze
 			ObbligazioneBulk obbligazione = (ObbligazioneBulk)h.inizializzaBulkPerModifica(context.getUserContext(),
@@ -954,15 +961,17 @@ public void sdoppiaDettaglioInAutomatico(ActionContext context) throws Validatio
 		Fattura_passiva_rigaIBulk nuovoDettaglio = new Fattura_passiva_rigaIBulk();
 
 		getDettaglio().addDetail(nuovoDettaglio);
-
+ 
 		nuovoDettaglio = copyByRigaDocumento(context, nuovoDettaglio, dettaglioSelezionato);
 		nuovoDettaglio.setQuantita(dettaglioSelezionato.getQuantita());
 		nuovoDettaglio.setPrezzo_unitario(newPrezzoRigaNuova);
 
 		nuovoDettaglio.calcolaCampiDiRiga();
-		if (nuovoDettaglio.getIm_totale_divisa().compareTo(newImportoRigaNuova)!=0) {
-			nuovoDettaglio.setIm_iva(nuovoDettaglio.getIm_iva().add(newImportoRigaNuova.subtract(nuovoDettaglio.getIm_totale_divisa())));
-			nuovoDettaglio.setIm_totale_divisa(newImportoRigaNuova);
+		// setto im_diponibile prime per la verifica e dopo
+		nuovoDettaglio.setIm_diponibile_nc(nuovoDettaglio.getSaldo());
+		if (nuovoDettaglio.getIm_diponibile_nc().compareTo(newImportoRigaNuova)!=0) {
+			nuovoDettaglio.setIm_iva(nuovoDettaglio.getIm_iva().add(newImportoRigaNuova.subtract(nuovoDettaglio.getIm_diponibile_nc())));
+			nuovoDettaglio.setIm_totale_divisa(newImportoRigaNuova.subtract(nuovoDettaglio.getIm_iva()));
 			nuovoDettaglio.setFl_iva_forzata(Boolean.TRUE);
 			nuovoDettaglio.calcolaCampiDiRiga();
 		}
@@ -974,14 +983,16 @@ public void sdoppiaDettaglioInAutomatico(ActionContext context) throws Validatio
 
 		dettaglioSelezionato.setPrezzo_unitario(newPrezzoRigaVecchia);
 		dettaglioSelezionato.calcolaCampiDiRiga();
-		if (dettaglioSelezionato.getIm_totale_divisa().compareTo(newImportoRigaVecchia)!=0) {
-			dettaglioSelezionato.setIm_iva(dettaglioSelezionato.getIm_iva().add(newImportoRigaVecchia.subtract(dettaglioSelezionato.getIm_totale_divisa())));
-			dettaglioSelezionato.setIm_totale_divisa(newImportoRigaVecchia);
+		// setto im_diponibile prime per la verifica e dopo
+		dettaglioSelezionato.setIm_diponibile_nc(dettaglioSelezionato.getSaldo());
+		if (dettaglioSelezionato.getIm_diponibile_nc().compareTo(newImportoRigaVecchia)!=0) {
+			dettaglioSelezionato.setIm_iva(dettaglioSelezionato.getIm_iva().add(newImportoRigaVecchia.subtract(dettaglioSelezionato.getIm_diponibile_nc())));
+			dettaglioSelezionato.setIm_totale_divisa(newImportoRigaVecchia.subtract(dettaglioSelezionato.getIm_iva()));
 			dettaglioSelezionato.setFl_iva_forzata(Boolean.TRUE);
 			dettaglioSelezionato.calcolaCampiDiRiga();
 		}
 
-		dettaglioSelezionato.setIm_diponibile_nc(dettaglioSelezionato.getIm_diponibile_nc().add(dettaglioSelezionato.getIm_totale_divisa().subtract(oldImpTotaleDivisa)));
+		dettaglioSelezionato.setIm_diponibile_nc(dettaglioSelezionato.getSaldo());
 
 		dettaglioSelezionato.setToBeUpdated();
 
@@ -1052,7 +1063,8 @@ public boolean isDetailDoubleable() {
 				!(fattura.isRiportata())
 	//			!(!isAnnoDiCompetenza() && !fattura.isRiportataInScrivania()) &&
 	//			!(fattura.getTipo_documento()!=null && !fattura.getTipo_documento().getFl_utilizzo_doc_generico().booleanValue())
-				) && !this.isSearching();	
+				) && !this.isSearching() &&
+				!fattura.hasAddebiti() && !fattura.hasStorni();	
 	}
 	return false;
 }
