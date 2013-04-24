@@ -2730,6 +2730,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		SQLBuilder sql =  home.createSQLBuilder();
 		sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, esercizio);
 		sql.addSQLClause("AND", "PG_VARIAZIONE", sql.EQUALS, pgVariazione);
+		sql.addSQLClause("AND", "STATO", sql.EQUALS, Var_stanz_resBulk.STATO_APPROVATA);
 		
 		java.util.List list = home.fetchAll(sql);
 		if(list.isEmpty())
