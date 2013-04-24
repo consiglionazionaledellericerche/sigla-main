@@ -2726,10 +2726,10 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 	public byte[] lanciaStampa(UserContext userContext,Integer esercizio,Integer pgVariazione) 
 			throws PersistencyException, ComponentException, RemoteException, javax.ejb.EJBException {
 		    
-		Pdg_variazioneHome home = (Pdg_variazioneHome) getHome(userContext, Pdg_variazioneBulk.class);
+		Var_stanz_resHome home = (Var_stanz_resHome) getHome(userContext, Var_stanz_resBulk.class);
 		SQLBuilder sql =  home.createSQLBuilder();
 		sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, esercizio);
-		sql.addSQLClause("AND", "PG_VARIAZIONE_PDG", sql.EQUALS, pgVariazione);
+		sql.addSQLClause("AND", "PG_VARIAZIONE", sql.EQUALS, pgVariazione);
 		
 		java.util.List list = home.fetchAll(sql);
 		if(list.isEmpty())
