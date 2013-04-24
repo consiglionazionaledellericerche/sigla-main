@@ -35,6 +35,7 @@ public class Incarichi_archivioCRUDController extends it.cnr.jada.util.action.Si
 
 			allegato.setFile(file.getFile());
 			allegato.setNome_file(allegato.parseFilename(file.getName()));
+			allegato.setContentType(file.getContentType());
 			((OggettoBulk)allegato).setToBeUpdated();
 			getParentController().setDirty(true);
 		}

@@ -35,7 +35,7 @@ public class CMISFileProcedura extends CMISFile implements CMISTypeName{
 	}
 
 	public CMISFileProcedura(File file, String originalName, Incarichi_procedura_archivioBulk incaricoProceduraArchivio) throws IOException{
-    	super(file, incaricoProceduraArchivio.constructCMISNomeFile());
+    	super(file, incaricoProceduraArchivio.getContentType(), incaricoProceduraArchivio.constructCMISNomeFile());
     	setIncaricoProceduraArchivio(incaricoProceduraArchivio);
 		this.setAuthor(getIncaricoProceduraArchivio().getUtcr());
 		this.setTitle((String)Incarichi_archivioBulk.getTipo_archivioKeys().get(getIncaricoProceduraArchivio().getTipo_archivio()));

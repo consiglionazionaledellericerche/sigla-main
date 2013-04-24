@@ -81,11 +81,11 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.ejb.EJBException;
 
 import oracle.sql.BLOB;
 
-import org.apache.axis2.databinding.types.soapencoding.Array;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisBaseException;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisRuntimeException;
@@ -480,6 +480,8 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 	}	
 
 	private void validaProceduraIncarico(UserContext aUC,Incarichi_proceduraBulk procedura) throws ComponentException {
+		if (procedura.getTerzo_resp()==null || procedura.getTerzo_resp().getCd_terzo()==null)
+			throw handleException( new ApplicationException( "Il campo \"Responsabile del procedimento\" non può essere vuoto.") );
 		/*
 		 *Recupero l'eventuale nuova parametrizzazione 
 		 */
@@ -498,8 +500,6 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 				throw handleException( new ApplicationException( "Il campo \"Decisione a contrattare\" non può essere vuoto.") );
 			if (procedura.getDs_atto()==null)
 				throw handleException( new ApplicationException( "Il campo \"Estremi della decisione a contrattare\" non può essere vuoto.") );
-			if (procedura.getTerzo_resp()==null || procedura.getTerzo_resp().getCd_terzo()==null)
-				throw handleException( new ApplicationException( "Il campo \"Responsabile del procedimento\" non può essere vuoto.") );
 		}
 
 		if (procedura.getProcedura_amministrativa().isMeramenteOccasionaleRequired() && !procedura.getFl_meramente_occasionale().booleanValue())
@@ -1872,71 +1872,93 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 			//Controlli su Cartella INCARICHI
 			CMISFolderContrattiModel cmisFolderIncarico = incarico.getCMISFolder();
 			Node nodeFolderIncarico = contrattiService.getNodeByPath(cmisFolderIncarico.getCMISPath(contrattiService));
-			if (!cmisFolderIncarico.isEqualsTo(nodeFolderIncarico, listError))
-				listError.add("Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - Disallineamento dati ");
+			if (!cmisFolderIncarico.isEqualsTo(nodeFolderIncarico, listError)) {
+				contrattiService.updateProperties(cmisFolderIncarico, nodeFolderIncarico);
+				listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - Disallineamento dati ");
+			}
 
 			ACL aclFolderIncarico = contrattiService.getACL(nodeFolderIncarico, "GROUP_EVERYONE", "cmis:read");
 			if (isIncaricoDefinitivo) {
 				existIncaricoDefinitivo = true;
 				if (aclFolderIncarico==null){
-					listError.add("Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - addConsumerToEveryone");
-//					contrattiService.addConsumerToEveryone(nodeFolderIncarico);
+					listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - addConsumerToEveryone");
+					contrattiService.addConsumerToEveryone(nodeFolderIncarico);
 				}
 				if (!nodeFolderIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
-					listError.add("Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - addAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
-//					contrattiService.addAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+					listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - addAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
+					contrattiService.addAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 				}
 			} else {
 				if (aclFolderIncarico!=null && aclFolderIncarico.isDirect()) {
-					listError.add("Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeConsumerToEveryone");
-//					contrattiService.removeConsumerToEveryone(nodeFolderIncarico);
+					listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeConsumerToEveryone");
+					contrattiService.removeConsumerToEveryone(nodeFolderIncarico);
 				}
 				if (nodeFolderIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
-					listError.add("Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
-//					contrattiService.removeAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+					listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
+					contrattiService.removeAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 				}
 			}
 
+			if (isIncaricoDefinitivo && incarico.getFl_pubblica_contratto().equals(Boolean.TRUE)) {
+				if (!nodeFolderIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value())) {
+					listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - addAspect SIGLA_CONTRATTI_PUBBLICATO");
+					contrattiService.addAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value());
+				}
+			} else {
+				if (nodeFolderIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value())) {
+					listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeAspect SIGLA_CONTRATTI_PUBBLICATO");
+					contrattiService.removeAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value());
+				}
+			}
+
+			//Controlli su Allegati Cartella INCARICHI
 			for (Iterator<Incarichi_archivioBulk> iterator2 = incarico.getArchivioAllegati().iterator(); iterator2.hasNext();) {
 				Incarichi_archivioBulk archivio = iterator2.next();
 				if (archivio.getCms_node_ref()==null)
-					listError.add("Allegato Incarico alla procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - Manca Archiviazione");
+					listError.add("ERRORE GRAVE: Allegato Incarico alla procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - Manca Archiviazione");
 				else {
 					//Controlli su Allegati INCARICHI
 					Node nodeArchivioIncarico = contrattiService.getNodeByNodeRef(archivio.getCms_node_ref());
 					CMISFile cmisFile = (CMISFile)archivio.getCMISFile(nodeArchivioIncarico);
+					boolean makeUpdateProperties = false;
+					if (cmisFile.getContentType().equals("application/octet-stream")) {
+						String newContentType = new MimetypesFileTypeMap().getContentType(cmisFile.getFileName());
+						if (!newContentType.equals("application/octet-stream")) {
+							makeUpdateProperties = true;
+							cmisFile.setContentType(newContentType);
+						}
+					}
 					if (cmisFile instanceof CMISFileIncarichi) {
-						if (!((CMISFileIncarichi)cmisFile).isEqualsTo(nodeArchivioIncarico, listError))
-							listError.add("Allegato Incarico "+((CMISFileIncarichi)cmisFile).getEsercizioIncarico().toString()+"/"+((CMISFileIncarichi)cmisFile).getPgIncarico().toString()+" - Disallineamento dati ");
+						if (!((CMISFileIncarichi)cmisFile).isEqualsTo(nodeArchivioIncarico, listError) || makeUpdateProperties) {
+							contrattiService.updateProperties(cmisFile, nodeArchivioIncarico);
+							listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Incarico "+((CMISFileIncarichi)cmisFile).getEsercizioIncarico().toString()+"/"+((CMISFileIncarichi)cmisFile).getPgIncarico().toString()+" - Disallineamento dati ");
+						}
 					} else if (cmisFile instanceof CMISFileAssegniRicerca) {
-						if (!((CMISFileAssegniRicerca)cmisFile).isEqualsTo(nodeArchivioIncarico, listError))
-							listError.add("Allegato Incarico CMISFileAssegniRicerca "+((CMISFileAssegniRicerca)cmisFile).getEsercizioIncarico().toString()+"/"+((CMISFileAssegniRicerca)cmisFile).getPgIncarico().toString()+" - Disallineamento dati ");
+						if (!((CMISFileAssegniRicerca)cmisFile).isEqualsTo(nodeArchivioIncarico, listError) || makeUpdateProperties) {
+							contrattiService.updateProperties(cmisFile, nodeArchivioIncarico);
+							listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Incarico CMISFileAssegniRicerca "+((CMISFileAssegniRicerca)cmisFile).getEsercizioIncarico().toString()+"/"+((CMISFileAssegniRicerca)cmisFile).getPgIncarico().toString()+" - Disallineamento dati ");
+						}
 					} else if (cmisFile instanceof CMISFileBorseStudio) {
-						if (!((CMISFileBorseStudio)cmisFile).isEqualsTo(nodeArchivioIncarico, listError))
-							listError.add("Allegato Incarico CMISFileBorseStudio "+((CMISFileBorseStudio)cmisFile).getEsercizioIncarico().toString()+"/"+((CMISFileBorseStudio)cmisFile).getPgIncarico().toString()+" - Disallineamento dati ");
+						if (!((CMISFileBorseStudio)cmisFile).isEqualsTo(nodeArchivioIncarico, listError) || makeUpdateProperties) {
+							contrattiService.updateProperties(cmisFile, nodeArchivioIncarico);
+							listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Incarico CMISFileBorseStudio "+((CMISFileBorseStudio)cmisFile).getEsercizioIncarico().toString()+"/"+((CMISFileBorseStudio)cmisFile).getPgIncarico().toString()+" - Disallineamento dati ");
+						}
 					}
 
-					if (isIncaricoDefinitivo) {
-						if (!nodeArchivioIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
-							listError.add("Allegato Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - addAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
-//							contrattiService.addAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
-						}
-					} else {
-						if (nodeArchivioIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())){
-							listError.add("Allegato Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
-//							contrattiService.removeAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
-						}
+					if (nodeArchivioIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())){
+						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
+						contrattiService.removeAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 					}
 
 					if (archivio.isAnnullato()) {
 						if (!nodeArchivioIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
-							listError.add("Allegato Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - addAspect SIGLA_CONTRATTI_STATO_ANNULLATO");
-//							contrattiService.addAspect(nodeArchivioIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
+							listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - addAspect SIGLA_CONTRATTI_STATO_ANNULLATO");
+							contrattiService.addAspect(nodeArchivioIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
 						}
 					} else {
 						if (nodeArchivioIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
-							listError.add("Allegato Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_ANNULLATO");
-//							contrattiService.removeAspect(nodeArchivioIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
+							listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_ANNULLATO");
+							contrattiService.removeAspect(nodeArchivioIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
 						}
 					}
 				}
@@ -1946,77 +1968,91 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		//Controlli su Cartella PROCEDURA
 		CMISFolderProcedura cmisFolderProcedura = procedura.getCMISFolder();
 		Node nodeFolderProcedura = contrattiService.getNodeByPath(cmisFolderProcedura.getCMISPath(contrattiService));
-		if (!cmisFolderProcedura.isEqualsTo(nodeFolderProcedura, listError))
-			listError.add("Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - Disallineamento dati ");
+		if (!cmisFolderProcedura.isEqualsTo(nodeFolderProcedura, listError)) {
+			contrattiService.updateProperties(cmisFolderProcedura, nodeFolderProcedura);
+			listError.add("AGGIORNAMENTO EFFETTUATO: Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - Disallineamento dati ");
+		}
 
 		boolean isProceduraDefinitiva = procedura.isProceduraDefinitiva() || procedura.isProceduraChiusa(); 
 		
 		ACL aclFolderProcedura = contrattiService.getACL(nodeFolderProcedura, "GROUP_EVERYONE", "cmis:read");
 		if (isProceduraDefinitiva || existIncaricoDefinitivo) {
 			if (aclFolderProcedura==null) {
-				listError.add("Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addConsumerToEveryone");
-//				contrattiService.addConsumerToEveryone(nodeFolderProcedura);
+				listError.add("AGGIORNAMENTO EFFETTUATO: Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addConsumerToEveryone");
+				contrattiService.addConsumerToEveryone(nodeFolderProcedura);
 			}
 			if (procedura.isProceduraDefinitiva() && !nodeFolderProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
-				listError.add("Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
-//				contrattiService.addAspect(nodeFolderProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+				listError.add("AGGIORNAMENTO EFFETTUATO: Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
+				contrattiService.addAspect(nodeFolderProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 			}
 		} else {
 			if (aclFolderProcedura!=null && aclFolderProcedura.isDirect()) {
-				listError.add("Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeConsumerToEveryone");
-//				contrattiService.removeConsumerToEveryone(nodeFolderProcedura);
+				listError.add("AGGIORNAMENTO EFFETTUATO: Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeConsumerToEveryone");
+				contrattiService.removeConsumerToEveryone(nodeFolderProcedura);
 			}
 			if (nodeFolderProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
-				listError.add("Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
-//				contrattiService.removeAspect(nodeFolderProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
+				listError.add("AGGIORNAMENTO EFFETTUATO: Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
+				contrattiService.removeAspect(nodeFolderProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 			}
 		}
 		
+		//Controlli su Allegati Cartella PROCEDURA
 		for (Iterator<Incarichi_archivioBulk> iterator = procedura.getArchivioAllegati().iterator(); iterator.hasNext();) {
 			Incarichi_procedura_archivioBulk archivio = (Incarichi_procedura_archivioBulk)iterator.next();
 			if (archivio.getCms_node_ref()==null)
-				listError.add("Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+"/"+archivio.getProgressivo_riga()+" - Manca Archiviazione");
+				listError.add("ERRORE GRAVE: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+"/"+archivio.getProgressivo_riga()+" - Manca Archiviazione");
 			else {
 				//Controlli su Allegati PROCEDURA
 				Node nodeArchivioProcedura = contrattiService.getNodeByNodeRef(archivio.getCms_node_ref());
 				CMISFileProcedura cmisFileProcedura = (CMISFileProcedura)archivio.getCMISFile(nodeArchivioProcedura);
-				if (!cmisFileProcedura.isEqualsTo(nodeArchivioProcedura, listError))
-					listError.add("Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+"/"+archivio.getProgressivo_riga()+" - Disallineamento dati ");
+				boolean makeUpdateProperties = false;
+				if (cmisFileProcedura.getContentType().equals("application/octet-stream")) {
+					String newContentType = new MimetypesFileTypeMap().getContentType(cmisFileProcedura.getFileName());
+					if (!newContentType.equals("application/octet-stream")) {
+						makeUpdateProperties = true;
+						cmisFileProcedura.setContentType(newContentType);
+					}
+				}
+				if (!cmisFileProcedura.isEqualsTo(nodeArchivioProcedura, listError) || makeUpdateProperties) {
+					contrattiService.updateProperties(cmisFileProcedura, nodeArchivioProcedura);
+					listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+"/"+archivio.getProgressivo_riga()+" - Disallineamento dati ");
+				}
 
 				ACL aclArchivioProcedura = contrattiService.getACL(nodeArchivioProcedura, "GROUP_EVERYONE", "cmis:read");
 				if (archivio.isBando() && !procedura.isProceduraProvvisoria() && procedura.getDt_pubblicazione()!=null) {
 					if (aclArchivioProcedura==null) {
-						listError.add("Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addConsumerToEveryone");
-//						contrattiService.addConsumerToEveryone(nodeArchivioProcedura);
+						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addConsumerToEveryone");
+						contrattiService.addConsumerToEveryone(nodeArchivioProcedura);
+					}
+					if (!nodeArchivioProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value())) {
+						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addAspect SIGLA_CONTRATTI_PUBBLICATO");
+						contrattiService.addAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value());
 					}
 				} else {
 					if (aclArchivioProcedura!=null && aclArchivioProcedura.isDirect()) {
-						listError.add("Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeConsumerToEveryone");
-//						contrattiService.removeConsumerToEveryone(nodeArchivioProcedura);
+						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeConsumerToEveryone");
+						contrattiService.removeConsumerToEveryone(nodeArchivioProcedura);
+					}
+					if (nodeArchivioProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value())) {
+						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeAspect SIGLA_CONTRATTI_PUBBLICATO");
+						contrattiService.removeAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value());
 					}
 				}
 
-				if (isProceduraDefinitiva) {
-					if (!nodeArchivioProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
-						listError.add("Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
-//						contrattiService.addAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
-					}
-				} else {
-					if (nodeArchivioProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
-						listError.add("Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
-//						contrattiService.removeAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
-					}
+				if (nodeArchivioProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+					listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
+					contrattiService.removeAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 				}
 				
 				if (archivio.isAnnullato()) {
 					if (!nodeArchivioProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
-						listError.add("Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addAspect SIGLA_CONTRATTI_STATO_ANNULLATO");
-//						contrattiService.addAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
+						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addAspect SIGLA_CONTRATTI_STATO_ANNULLATO");
+						contrattiService.addAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
 					}
 				} else {
 					if (nodeArchivioProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
-						listError.add("Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_ANNULLATO");
-//						contrattiService.removeAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
+						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_ANNULLATO");
+						contrattiService.removeAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
 					}
 				}
 			}

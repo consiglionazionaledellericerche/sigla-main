@@ -45,20 +45,20 @@ public class CMISFileIncarichi extends CMISFile implements CMISTypeName{
 	}
 
 	public CMISFileIncarichi(File file, String originalName, Incarichi_repertorio_archivioBulk incaricoRepertorioArchivio) throws IOException{
-    	super(file, incaricoRepertorioArchivio.constructCMISNomeFile());
+    	super(file, incaricoRepertorioArchivio.getContentType(), incaricoRepertorioArchivio.constructCMISNomeFile());
     	setIncaricoArchivio(incaricoRepertorioArchivio);
     	initCMISField(incaricoRepertorioArchivio.getEsercizio(), incaricoRepertorioArchivio.getPg_repertorio(), originalName);
     }
 
 	public CMISFileIncarichi(File file, String originalName, Incarichi_repertorio_rappBulk incaricoRepertorioRapp) throws IOException{
-    	super(file, incaricoRepertorioRapp.constructCMISNomeFile());
+    	super(file, incaricoRepertorioRapp.getContentType(), incaricoRepertorioRapp.constructCMISNomeFile());
     	setIncaricoArchivio(incaricoRepertorioRapp);
 		this.setOriginalName(originalName);
 		initCMISField(incaricoRepertorioRapp.getEsercizio(), incaricoRepertorioRapp.getPg_repertorio(), originalName);
     }
 
     public CMISFileIncarichi(File file, String originalName, Incarichi_repertorio_varBulk incaricoRepertorioVar) throws IOException{
-    	super(file, incaricoRepertorioVar.constructCMISNomeFile());
+    	super(file,incaricoRepertorioVar.getContentType(), incaricoRepertorioVar.constructCMISNomeFile());
     	setIncaricoArchivio(incaricoRepertorioVar);
     	initCMISField(incaricoRepertorioVar.getEsercizio(), incaricoRepertorioVar.getPg_repertorio(), originalName);
     }

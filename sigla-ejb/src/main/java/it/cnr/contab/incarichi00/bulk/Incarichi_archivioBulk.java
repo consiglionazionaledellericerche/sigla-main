@@ -18,6 +18,7 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 
 	private java.lang.String blob;
 	private File file;
+	private String contentType;
 	private boolean fileRequired=Boolean.TRUE;
 	private boolean urlRequired=Boolean.FALSE;
  
@@ -200,5 +201,11 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
     	else 
     		nome = nome.append("GEN");
     	return nome.toString();
+	}
+	public String getContentType() {
+		return contentType;
+	}
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 }

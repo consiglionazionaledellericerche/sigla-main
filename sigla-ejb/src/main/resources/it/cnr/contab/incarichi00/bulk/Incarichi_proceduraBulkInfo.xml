@@ -184,6 +184,7 @@
 		readonlyProperty="ROPrimaFaseProcedura"
 		inputType="SEARCHTOOL"
 		enabledOnSearch="true"
+		nullable="false"
 		label="Responsabile del procedimento" />
 	<fieldProperty
 		name="cd_terzo_resp"

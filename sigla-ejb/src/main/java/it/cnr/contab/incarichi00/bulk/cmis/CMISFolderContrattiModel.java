@@ -142,11 +142,12 @@ public class CMISFolderContrattiModel extends OggettoBulk {
 		}
 
 		GregorianCalendar gcDB = (GregorianCalendar)GregorianCalendar.getInstance(); 
-		gcDB.setTime(this.getDt_provv());
+		if (this.getDt_provv()!=null) gcDB.setTime(this.getDt_provv());
 		valueDB=Integer.toString(gcDB.get(GregorianCalendar.DAY_OF_MONTH)) + "/" + 
 				Integer.toString(gcDB.get(GregorianCalendar.MONTH)) + "/" + 
 				Integer.toString(gcDB.get(GregorianCalendar.YEAR));
 		GregorianCalendar gcCMIS = (GregorianCalendar)node.getPropertyValue("sigla_contratti:dt_provvedimento_nomina");
+		if (gcCMIS==null) gcCMIS = (GregorianCalendar)GregorianCalendar.getInstance(); 
 		valueCMIS=Integer.toString(gcCMIS.get(GregorianCalendar.DAY_OF_MONTH)) + "/" + 
 				  Integer.toString(gcCMIS.get(GregorianCalendar.MONTH)) + "/" + 
 				  Integer.toString(gcCMIS.get(GregorianCalendar.YEAR));
@@ -156,11 +157,12 @@ public class CMISFolderContrattiModel extends OggettoBulk {
 		}
 		
 		gcDB = (GregorianCalendar)GregorianCalendar.getInstance(); 
-		gcDB.setTime(this.getDt_stipula());
+		if (this.getDt_stipula()!=null) gcDB.setTime(this.getDt_stipula());
 		valueDB=Integer.toString(gcDB.get(GregorianCalendar.DAY_OF_MONTH)) + "/" + 
 				Integer.toString(gcDB.get(GregorianCalendar.MONTH)) + "/" + 
 				Integer.toString(gcDB.get(GregorianCalendar.YEAR));
 		gcCMIS = (GregorianCalendar)node.getPropertyValue("sigla_contratti:data_stipula");
+		if (gcCMIS==null) gcCMIS = (GregorianCalendar)GregorianCalendar.getInstance(); 
 		valueCMIS=Integer.toString(gcCMIS.get(GregorianCalendar.DAY_OF_MONTH)) + "/" + 
 				  Integer.toString(gcCMIS.get(GregorianCalendar.MONTH)) + "/" + 
 				  Integer.toString(gcCMIS.get(GregorianCalendar.YEAR));
@@ -169,11 +171,13 @@ public class CMISFolderContrattiModel extends OggettoBulk {
 			isEquals = false;
 		}
 
-		gcDB.setTime(this.getDt_inizio_validita());
+		gcDB = (GregorianCalendar)GregorianCalendar.getInstance(); 
+		if (this.getDt_inizio_validita()!=null) gcDB.setTime(this.getDt_inizio_validita());
 		valueDB=Integer.toString(gcDB.get(GregorianCalendar.DAY_OF_MONTH)) + "/" + 
 				Integer.toString(gcDB.get(GregorianCalendar.MONTH)) + "/" + 
 				Integer.toString(gcDB.get(GregorianCalendar.YEAR));
 		gcCMIS = (GregorianCalendar)node.getPropertyValue("sigla_contratti:data_inizio");
+		if (gcCMIS==null) gcCMIS = (GregorianCalendar)GregorianCalendar.getInstance(); 
 		valueCMIS=Integer.toString(gcCMIS.get(GregorianCalendar.DAY_OF_MONTH)) + "/" + 
 				  Integer.toString(gcCMIS.get(GregorianCalendar.MONTH)) + "/" + 
 				  Integer.toString(gcCMIS.get(GregorianCalendar.YEAR));

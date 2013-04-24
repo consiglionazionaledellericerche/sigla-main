@@ -10,6 +10,7 @@ public enum CMISContrattiAspect {
 	SIGLA_CONTRATTI_TIPO_NORMA("P:sigla_contratti_aspect:tipo_norma"),
 	SIGLA_CONTRATTI_STATO_ANNULLATO("P:sigla_contratti_aspect:stato_annullato"),
 	SIGLA_CONTRATTI_STATO_DEFINITIVO("P:sigla_contratti_aspect:stato_definitivo"),
+	SIGLA_CONTRATTI_PUBBLICATO("P:sigla_contratti_aspect:pubblicato"),
 	SIGLA_CONTRATTI_LINK("P:sigla_contratti_aspect_link");
 	
 	private final String value;
