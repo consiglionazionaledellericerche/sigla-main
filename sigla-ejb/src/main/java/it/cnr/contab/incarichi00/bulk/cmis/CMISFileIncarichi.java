@@ -66,19 +66,28 @@ public class CMISFileIncarichi extends CMISFile implements CMISTypeName{
     public CMISFileIncarichi(Node node, Incarichi_repertorio_archivioBulk incaricoRepertorioArchivio) {
 		super(node);
     	setIncaricoArchivio(incaricoRepertorioArchivio);
-		this.setOriginalName(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_ATTACHMENT_ORIGINAL_NAME.value()).toString());
+    	if (node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_ATTACHMENT_ORIGINAL_NAME.value())!=null)
+    		this.setOriginalName(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_ATTACHMENT_ORIGINAL_NAME.value()).toString());
+    	else
+    		this.setOriginalName(incaricoRepertorioArchivio.getNome_file());
 	}
 
     public CMISFileIncarichi(Node node, Incarichi_repertorio_rappBulk incaricoRepertorioRapp) {
 		super(node);
 		setIncaricoArchivio(incaricoRepertorioRapp);
-		this.setOriginalName(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_ATTACHMENT_ORIGINAL_NAME.value()).toString());
+    	if (node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_ATTACHMENT_ORIGINAL_NAME.value())!=null)
+    		this.setOriginalName(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_ATTACHMENT_ORIGINAL_NAME.value()).toString());
+    	else
+    		this.setOriginalName(incaricoRepertorioRapp.getNome_file());
 	}
 
     public CMISFileIncarichi(Node node, Incarichi_repertorio_varBulk incaricoRepertorioVar) {
 		super(node);
 		setIncaricoArchivio(incaricoRepertorioVar);
-		this.setOriginalName(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_ATTACHMENT_ORIGINAL_NAME.value()).toString());
+    	if (node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_ATTACHMENT_ORIGINAL_NAME.value())!=null)
+    		this.setOriginalName(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_ATTACHMENT_ORIGINAL_NAME.value()).toString());
+    	else
+    		this.setOriginalName(incaricoRepertorioVar.getNome_file());
 	}
     
 	private void initCMISField(Integer esercizio, Long progressivo, String originalName){

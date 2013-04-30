@@ -47,7 +47,10 @@ public class CMISFileProcedura extends CMISFile implements CMISTypeName{
     public CMISFileProcedura(Node node, Incarichi_procedura_archivioBulk incaricoProceduraArchivio) {
 		super(node);
     	setIncaricoProceduraArchivio(incaricoProceduraArchivio);
-		this.setOriginalName((String)node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_ATTACHMENT_ORIGINAL_NAME.value()));
+    	if (node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_ATTACHMENT_ORIGINAL_NAME.value())!=null)
+    		this.setOriginalName(node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_ATTACHMENT_ORIGINAL_NAME.value()).toString());
+    	else
+    		this.setOriginalName(incaricoProceduraArchivio.getNome_file());
 	}
 	
     private void setIncaricoProceduraArchivio(Incarichi_procedura_archivioBulk incaricoProceduraArchivio) {
