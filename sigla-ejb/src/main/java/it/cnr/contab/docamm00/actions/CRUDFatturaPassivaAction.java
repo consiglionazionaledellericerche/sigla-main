@@ -4542,9 +4542,10 @@ public Forward doBringBackSearchListabanchedett(ActionContext context,Fattura_pa
 		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
 		FatturaPassivaComponentSession fpcs = (FatturaPassivaComponentSession)bp.createComponentSession();
 		
-		if(banca!=null && banca.getCd_terzo_delegato()!=null){
+		if(banca!=null ){
 			riga.setBanca(banca);
-			riga.setCessionario(fpcs.findCessionario(context.getUserContext(), riga));
+			if(banca.getCd_terzo_delegato()!=null)
+				riga.setCessionario(fpcs.findCessionario(context.getUserContext(), riga));
 		}
 		return context.findDefaultForward();
 	} catch (Throwable e) {
@@ -4556,9 +4557,10 @@ public Forward doBringBackSearchListabanchedett(ActionContext context,Fattura_pa
 			CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
 			FatturaPassivaComponentSession fpcs = (FatturaPassivaComponentSession)bp.createComponentSession();
 			
-			if(banca!=null && banca.getCd_terzo_delegato()!=null){
+			if(banca!=null ){
 				fattura.setBanca(banca);
-				fattura.setCessionario(fpcs.findCessionario(context.getUserContext(), fattura));
+				if( banca.getCd_terzo_delegato()!=null)
+					fattura.setCessionario(fpcs.findCessionario(context.getUserContext(), fattura));
 			}
 			return context.findDefaultForward();
 	} catch (Throwable e) {
