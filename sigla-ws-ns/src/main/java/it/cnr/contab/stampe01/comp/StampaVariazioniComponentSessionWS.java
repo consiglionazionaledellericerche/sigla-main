@@ -16,5 +16,6 @@ public interface StampaVariazioniComponentSessionWS {
 	@WebMethod @WebResult(name="result") byte[] DownloadVariazione(
 			 @WebParam (name="user") String user,
 			 @WebParam (name="esercizio") String esercizio,
-			 @WebParam (name="pgVariazione") String pgVariazione);
+			 @WebParam (name="pgVariazione") String pgVariazione,
+			 @WebParam (name="tipoVariazione") String tipoVariazione);
 }

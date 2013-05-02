@@ -31,23 +31,19 @@ import org.jboss.wsf.spi.annotation.WebContext;
 @WebContext(contextRoot="/SIGLA-SIGLAEJB_1")
 public class StampaVariazioniComponentWS {
 	
-public byte[] DownloadVariazione(String user,String esercizio,String pg) throws NumberFormatException, PersistencyException, ComponentException, RemoteException, EJBException, Exception {
+public byte[] DownloadVariazione(String user,String esercizio,String pg,String tipoVar) throws NumberFormatException, PersistencyException, ComponentException, RemoteException, EJBException, Exception {
     	UserContext userContext = new WSUserContext(user,null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
-    	 if(pg==null||esercizio==null)
-    		 throw new SOAPFaultException(faultChiaveVariazioneNonCompleta());
 		try{	
-		   return  ((PdGVariazioniComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPDG00_EJB_PdGVariazioniComponentSession",PdGVariazioniComponentSession.class)).lanciaStampa(userContext, new Integer(esercizio), new Integer(pg));
+		   return  ((PdGVariazioniComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPDG00_EJB_PdGVariazioniComponentSession",PdGVariazioniComponentSession.class)).
+				   lanciaStampa(userContext, new Integer(esercizio), new Integer(pg), new String(tipoVar));
 		}catch(GenerazioneReportException e){
 			throw new SOAPFaultException(faultGenerazioneStampa());
 		}catch(FatturaNonTrovataException e){
-			throw new SOAPFaultException(faultVariazioneNonTrovata());
+			throw new SOAPFaultException(faultFatturaNonTrovata());
 		}
   }
 
-	private SOAPFault faultChiaveVariazioneNonCompleta() throws SOAPException{
-		return generaFault("001","Identificativo Variazione non valido e/o incompleto");
-	}
-	private SOAPFault faultVariazioneNonTrovata() throws SOAPException{
+	private SOAPFault faultFatturaNonTrovata() throws SOAPException{
 		return generaFault("002","Variazione non trovata");
 	}
 	private SOAPFault faultGenerazioneStampa() throws SOAPException{

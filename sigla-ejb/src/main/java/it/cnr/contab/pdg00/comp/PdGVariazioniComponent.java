@@ -103,9 +103,6 @@ import java.util.UUID;
 
 import javax.ejb.EJBException;
 
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.JasperRunManager;
-
 public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		implements Cloneable, Serializable, IPrintMgr {
 
@@ -2723,44 +2720,102 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		return pdgVariazioniService.findVariazioniPresenti(CNRUserContext.getEsercizio(userContext),tiSigned, cds, uo, variazionePdg);
 	}
 	
-	public byte[] lanciaStampa(UserContext userContext,Integer esercizio,Integer pgVariazione) 
+	
+//	per la stampa delle variazioni residuo conto terzi
+	public byte[] lanciaStampa(UserContext userContext, Integer esercizio,Integer pgVariazione, String tipo_variazione) 
 			throws PersistencyException, ComponentException, RemoteException, javax.ejb.EJBException {
-		    
-		Var_stanz_resHome home = (Var_stanz_resHome) getHome(userContext, Var_stanz_resBulk.class);
-		SQLBuilder sql =  home.createSQLBuilder();
-		sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, esercizio);
-		sql.addSQLClause("AND", "PG_VARIAZIONE", sql.EQUALS, pgVariazione);
-		sql.addSQLClause("AND", "STATO", sql.EQUALS, it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk.STATO_APPROVATA);
 		
-		java.util.List list = home.fetchAll(sql);
-		if(list.isEmpty())
-			throw new FatturaNonTrovataException("Variazione non trovata");
-	
-	try {
-		  	
-	      File output = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/", File.separator + getOutputFileName("stampa_var_stanziamento_res.jasper",esercizio,pgVariazione));
-	      Print_spoolerBulk print = new Print_spoolerBulk();
-	      print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
-	      print.setFlEmail(false);
-	      print.setReport("/cnrpreventivo/pdg/stampa_var_stanziamento_res.jasper");
-	      print.setNomeFile(getOutputFileName("stampa_var_stanziamento_res.jasper", esercizio, pgVariazione));
-	      print.setUtcr(userContext.getUser());
-	      print.addParam("Esercizio", esercizio, Integer.class);
-	      print.addParam("Variazione",pgVariazione, Integer.class);
-	      Report report = SpringUtil.getBean("printService", PrintService.class).executeReport(userContext, print);
-	      
-	      FileOutputStream f = new FileOutputStream(output);
-	      	
-	      f.write(report.getBytes());
-	      f.flush();
-		  f.close();
-		  
-		   return report.getBytes();
-		}  catch (IOException e) {
-			throw new GenerazioneReportException("Generazione Stampa non riuscita",e);
-		}
-	}      
-	
+		SQLBuilder sqlCDR = getHome(userContext, Configurazione_cnrBulk.class).createSQLBuilder();
+		sqlCDR.resetColumns();
+		sqlCDR.addColumn("VAL01");
+		sqlCDR.addSQLClause("AND", "CD_CHIAVE_PRIMARIA", SQLBuilder.EQUALS, Configurazione_cnrBulk.PK_CDR_SPECIALE);
+		sqlCDR.addSQLClause("AND", "CD_CHIAVE_SECONDARIA", SQLBuilder.EQUALS, Configurazione_cnrBulk.SK_CDR_PERSONALE);
+
+		if (tipo_variazione.equals("R")){
+			it.cnr.contab.varstanz00.bulk.Var_stanz_resHome home = (it.cnr.contab.varstanz00.bulk.Var_stanz_resHome) getHome(userContext, it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk.class);
+				
+				SQLBuilder sql = home.createSQLBuilder();
+				
+				sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, esercizio);
+				sql.addSQLClause("AND", "PG_VARIAZIONE", sql.EQUALS, pgVariazione);
+				sql.addSQLClause("AND", "STATO", sql.EQUALS, it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk.STATO_APPROVATA);
+								
+				java.util.List list = home.fetchAll(sql);
+				if(list.isEmpty())
+					throw new FatturaNonTrovataException("Variazione non trovata");
+				
+			try {
+			      File output = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/", File.separator + getOutputFileName("stampa_var_stanziamento_res.jasper",esercizio,pgVariazione));
+			      Print_spoolerBulk print = new Print_spoolerBulk();
+			      print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
+			      print.setFlEmail(false);
+			      print.setReport("/cnrpreventivo/pdg/stampa_var_stanziamento_res.jasper");
+			      print.setNomeFile(getOutputFileName("stampa_var_stanziamento_res.jasper", esercizio, pgVariazione));
+			      print.setUtcr(userContext.getUser());
+			      print.addParam("Esercizio", esercizio, Integer.class);
+			      print.addParam("Variazione",pgVariazione, Integer.class);
+			      Report report = SpringUtil.getBean("printService", PrintService.class).executeReport(userContext, print);
+			      
+			      FileOutputStream f = new FileOutputStream(output);
+			      	
+			      f.write(report.getBytes());
+			      f.flush();
+				  f.close();
+				  
+				   return report.getBytes();
+				}  catch (IOException e) {
+					throw new GenerazioneReportException("Generazione Stampa non riuscita",e);
+				}
+			}
+		
+		if (tipo_variazione.equals("C")){
+			
+			Configurazione_cnrHome homeCDR = (Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class);
+			
+				Pdg_variazioneHome home = (Pdg_variazioneHome) getHome(userContext, Pdg_variazioneBulk.class);
+				SQLBuilder sql =  home.createSQLBuilder();
+					sql.addSQLClause("AND", "PDG_VARIAZIONE.ESERCIZIO", SQLBuilder.EQUALS, esercizio);
+					sql.addSQLClause("AND", "PDG_VARIAZIONE.PG_VARIAZIONE_PDG", SQLBuilder.EQUALS, pgVariazione);
+				
+				sql.addTableToHeader("PDG_VARIAZIONE_RIGA_GEST");
+				sql.addSQLClause("AND", "PDG_VARIAZIONE_RIGA_GEST.CD_CDR_ASSEGNATARIO", SQLBuilder.EQUALS, sqlCDR);
+				sql.addSQLJoin("PDG_VARIAZIONE.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
+				sql.addSQLJoin("PDG_VARIAZIONE.PG_VARIAZIONE_PDG", "PDG_VARIAZIONE_RIGA_GEST.PG_VARIAZIONE_PDG");
+				sql.openParenthesis("AND");
+					sql.addSQLClause("AND", "PDG_VARIAZIONE.STATO", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVATA);
+					sql.addSQLClause("OR", "PDG_VARIAZIONE.STATO", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
+				sql.closeParenthesis();
+				
+				java.util.List list = home.fetchAll(sql);
+				if(list.isEmpty())
+					throw new FatturaNonTrovataException("Variazione non trovata");
+				
+			try {
+			      File output = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/", File.separator + getOutputFileName("stampa_variazioni_pdg.jasper",esercizio,pgVariazione));
+			      Print_spoolerBulk print = new Print_spoolerBulk();
+			      print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
+			      print.setFlEmail(false);
+			      print.setReport("/cnrpreventivo/pdg/stampa_variazioni_pdg.jasper");
+			      print.setNomeFile(getOutputFileName("stampa_variazioni_pdg.jasper", esercizio, pgVariazione));
+			      print.setUtcr(userContext.getUser());
+			      print.addParam("Esercizio", esercizio, Integer.class);
+			      print.addParam("Variazione",pgVariazione, Integer.class);
+			      Report report = SpringUtil.getBean("printService", PrintService.class).executeReport(userContext, print);
+			      
+			      FileOutputStream f = new FileOutputStream(output);
+			      	
+			      f.write(report.getBytes());
+			      f.flush();
+				  f.close();
+				  
+				   return report.getBytes();
+				}  catch (IOException e) {
+					throw new GenerazioneReportException("Generazione Stampa non riuscita",e);
+				}
+			}
+		
+	return null;
+	}
 	
 	private static final DateFormat PDF_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
 

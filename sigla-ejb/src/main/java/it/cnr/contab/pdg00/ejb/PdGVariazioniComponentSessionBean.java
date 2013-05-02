@@ -379,10 +379,10 @@ public void archiviaVariazioneDocumentale(it.cnr.jada.UserContext param0,it.cnr.
 	}
 }
 
-public  byte[] lanciaStampa(UserContext userContext,Integer esercizio,Integer pgVariazione) throws PersistencyException, ComponentException, RemoteException, javax.ejb.EJBException{
+public  byte[] lanciaStampa(UserContext userContext,Integer esercizio,Integer pgVariazione,String tipoVariazione) throws PersistencyException, ComponentException, RemoteException, javax.ejb.EJBException{
 	pre_component_invocation(userContext,componentObj);
 	try {
-		byte[] result=((PdGVariazioniComponent)componentObj).lanciaStampa(userContext,esercizio,pgVariazione);
+		byte[] result=((PdGVariazioniComponent)componentObj).lanciaStampa(userContext,esercizio,pgVariazione,tipoVariazione);
 		component_invocation_succes(userContext,componentObj);
 		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
