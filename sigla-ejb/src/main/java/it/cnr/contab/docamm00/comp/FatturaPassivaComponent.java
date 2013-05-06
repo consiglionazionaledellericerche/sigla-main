@@ -2460,7 +2460,7 @@ public void controllaQuadraturaIntrastat(UserContext aUC,Fattura_passivaBulk fat
 				if (par!=null && par.getFl_obb_intrastat()!=null && par.getFl_obb_intrastat().booleanValue()){	
 				for (Iterator i = fattura.getFattura_passiva_dettColl().iterator(); i.hasNext();) {
 					Fattura_passiva_rigaBulk dettaglio = (Fattura_passiva_rigaBulk)i.next();
-					if(dettaglio.getBene_servizio()!=null && dettaglio.getBene_servizio().getFl_obb_intrastat_acq().booleanValue() && dettaglio.getIm_diponibile_nc().compareTo(BigDecimal.ZERO)!=0)
+					if(dettaglio.getBene_servizio()!=null && dettaglio.getBene_servizio().getFl_obb_intrastat_acq().booleanValue() && (dettaglio.getIm_diponibile_nc()!=null && dettaglio.getIm_diponibile_nc().compareTo(BigDecimal.ZERO)!=0))
 						obbligatorio=true;
 					
 				}
