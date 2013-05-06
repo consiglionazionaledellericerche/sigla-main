@@ -100,7 +100,8 @@ public SQLQuery cercaObb_scad(it.cnr.jada.UserContext context, it.cnr.contab.fon
 
 	SQLBuilder sql1 = cercaObb_scad_Libere(context, filtro);
 	SQLUnion union = sql1.union(cercaObb_scad_Associate(context, filtro), true);
-	union.setOrderBy("obbligazione.esercizio_originale, obbligazione.pg_obbligazione", it.cnr.jada.util.Orderable.ORDER_ASC);
+	union.setOrderBy("obbligazione.esercizio_originale", it.cnr.jada.util.Orderable.ORDER_ASC);
+	union.setOrderBy("obbligazione.pg_obbligazione", it.cnr.jada.util.Orderable.ORDER_ASC);
 	return union;
 }
 

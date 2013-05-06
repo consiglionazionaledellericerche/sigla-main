@@ -363,7 +363,7 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 			SQLBuilder sql = home.createSQLBuilder();
 			sql.addSQLClause("AND","CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrAcc);
 			sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,pdg.getEsercizio());
-			sql.setOrderBy("PG_PROGETTO", it.cnr.jada.util.OrderConstants.ORDER_ASC);
+			sql.setOrderBy("pg_progetto", it.cnr.jada.util.OrderConstants.ORDER_ASC);
 			
 			List lista_mod = home.fetchAll(sql);
 	
@@ -378,7 +378,7 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 			sql.addSQLClause("AND","CD_CENTRO_RESPONSABILITA",SQLBuilder.EQUALS,cdrAcc);
 			//sql.addSQLClause("AND","PG_PROGETTO",SQLBuilder.EQUALS,pdgm.getPg_progetto());
 			sql.addSQLClause("AND","ID_CLASSIFICAZIONE",SQLBuilder.EQUALS,pdgm.getPg_progetto());
-			sql.setOrderBy("PG_PROGETTO", it.cnr.jada.util.OrderConstants.ORDER_ASC);
+			sql.setOrderBy("pg_progetto", it.cnr.jada.util.OrderConstants.ORDER_ASC);
 		
 			List lista_spese = home.fetchAll(sql);
 			if (!lista_spese.isEmpty()) {
