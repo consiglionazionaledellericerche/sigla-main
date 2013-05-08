@@ -62,8 +62,11 @@ import it.cnr.contab.utenze00.bulk.UtenteHome;
 import it.cnr.contab.utenze00.bulk.UtenteKey;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.varstanz00.bulk.V_var_stanz_resBulk;
+import it.cnr.contab.varstanz00.bulk.V_var_stanz_resHome;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.FieldProperty;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -2732,12 +2735,14 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		sqlCDR.addSQLClause("AND", "CD_CHIAVE_SECONDARIA", SQLBuilder.EQUALS, Configurazione_cnrBulk.SK_CDR_PERSONALE);
 
 		if (tipo_variazione.equals("R")){
-			it.cnr.contab.varstanz00.bulk.Var_stanz_resHome home = (it.cnr.contab.varstanz00.bulk.Var_stanz_resHome) getHome(userContext, it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk.class);
-				
+//			it.cnr.contab.varstanz00.bulk.Var_stanz_resHome home = (it.cnr.contab.varstanz00.bulk.Var_stanz_resHome) getHome(userContext, it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk.class);
+//			SQLBuilder sql = home.createSQLBuilder();
+			V_var_stanz_resHome home = (V_var_stanz_resHome) getHome(userContext, V_var_stanz_resBulk.class);
 				SQLBuilder sql = home.createSQLBuilder();
 				
 				sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, esercizio);
 				sql.addSQLClause("AND", "PG_VARIAZIONE", sql.EQUALS, pgVariazione);
+				sql.addSQLClause("AND", "CD_CDR_ASSEGNATARIO", sql.EQUALS, sqlCDR);
 				sql.addSQLClause("AND", "STATO", sql.EQUALS, it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk.STATO_APPROVATA);
 								
 				java.util.List list = home.fetchAll(sql);

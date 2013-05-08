@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		label="Esercizio" />
+	<fieldProperty
+		name="esercizio_res"
+		property="esercizio_res"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		label="Esercizio Residuo" />
+	<fieldProperty
+		name="pg_variazione"
+		property="pg_variazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		label="Numero Variazione" />
+    <fieldProperty
+		name="ds_variazione"
+		property="ds_variazione"
+		inputType="TEXTAREA"
+		cols="80"
+		rows="4"
+        enabledOnSearch="true"		
+		maxLength="1000"
+		nullable="false"
+		label="Descrizione" />	
+	<fieldProperty
+		name="cd_cdr_proponente"
+		property="centro_di_responsabilita.cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CdR Proponente" />
+	<fieldProperty
+		name="ds_cdr_proponente"
+		property="centro_di_responsabilita.ds_cdr"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="50"
+		nullable="false"
+		label="Descrizione CdR Proponente" />
+	<fieldProperty
+		name="cd_cdr_assegnatario"
+		property="centro_di_responsabilita.cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="CdR Assegnatario" />
+	<fieldProperty
+		name="ds_cdr_assegnatario"
+		property="centro_di_responsabilita.ds_cdr"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="50"
+		nullable="false"
+		label="Descrizione CdR Assegnatario" />	
+	<fieldProperty
+		name="im_spesa"
+		property="im_spesa"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		nullable="false"
+		label="Importo Spesa" />
+	<fieldProperty
+		name="im_variazione"
+		property="im_variazione"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		nullable="false"
+		label="Importo Variazione" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="Stato della Variazione" />
+	
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="esercizio_res" />
+	<formFieldProperty
+		name="pg_variazione" />		
+	<formFieldProperty
+		name="ds_variazione" />
+	<formFieldProperty
+		name="cd_cdr_proponente" />
+	<formFieldProperty
+		name="ds_cdr_proponente" />		
+	<formFieldProperty
+		name="cd_cdr_assegnatario" />
+	<formFieldProperty
+		name="ds_cdr_assegnatario" />
+	<formFieldProperty
+		name="im_variazione" />
+	<formFieldProperty
+		name="im_spesa" />		
+	<formFieldProperty
+		name="stato" />
+	
+		
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_variazione" />
+	<findFieldProperty
+		name="ds_variazione" />
+	<findFieldProperty
+		name="cd_cdr_proponente" />
+	<findFieldProperty
+		name="ds_cdr_proponente" />		
+	<findFieldProperty
+		name="cd_cdr_assegnatario" />
+	<findFieldProperty
+		name="ds_cdr_assegnatario" />
+	<findFieldProperty
+		name="im_variazione" />
+	<findFieldProperty
+		name="im_spesa" />		
+	<findFieldProperty
+		name="stato" />
+	
+		
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_variazione" />
+	<columnFieldProperty
+		name="ds_variazione" />
+	<columnFieldProperty
+		name="cd_cdr_proponente" />
+	<columnFieldProperty
+		name="ds_cdr_proponente" />		
+	<columnFieldProperty
+		name="cd_cdr_assegnatario" />
+	<columnFieldProperty
+		name="ds_cdr_assegnatario" />
+	<columnFieldProperty
+		name="im_variazione" />
+	<columnFieldProperty
+		name="im_spesa" />		
+	<columnFieldProperty
+		name="stato" />
+		
+
+</bulkInfo>
