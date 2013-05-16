@@ -13,4 +13,14 @@ public Tipo_missioneBulk() {
 public Tipo_missioneBulk(java.lang.String cd_tipo_missione) {
 	super(cd_tipo_missione);
 }
+public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
+
+	setFl_valido(null);
+	return super.initializeForSearch(bp,context);
+}
+public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
+
+	setFl_valido(new Boolean(true));
+	return super.initializeForInsert(bp,context);
+}
 }

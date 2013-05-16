@@ -3333,11 +3333,14 @@ public void validaTabTestata() throws it.cnr.jada.action.MessageToUser
 {
 	if(getDt_registrazione() == null)
 		throw new it.cnr.jada.action.MessageToUser( "Inserire la data di registrazione !" );
-		
+	
 	validaPeriodoMissione();
 	
 	if(getDs_missione() == null)
-		throw new it.cnr.jada.action.MessageToUser( "Inserire una descrizione !" );		
+		throw new it.cnr.jada.action.MessageToUser( "Inserire una descrizione !" );
+	if(getCd_tipo_missione() == null)
+		throw new it.cnr.jada.action.MessageToUser( "Selezionare l' ambito della missione" );
+	
 } 
 /**
  * Il metodo valida la missione che si sta creando/modificando

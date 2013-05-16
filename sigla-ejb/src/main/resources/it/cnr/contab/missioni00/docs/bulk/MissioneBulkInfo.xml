@@ -25,7 +25,8 @@
 		maxLength="10"
 		inputSize="10"
 		inputType="SELECT"		
-		label="Tipo missione"
+		nullable="false"
+		label="Ambito missione"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"				
 		/>
@@ -35,7 +36,7 @@
 		maxLength="10"
 		inputSize="10"
 		inputType="TEXT"
-		label="Tipo missione"
+		label="Ambito missione"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		/>		
