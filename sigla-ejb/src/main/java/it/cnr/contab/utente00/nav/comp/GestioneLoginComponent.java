@@ -320,6 +320,7 @@ public class GestioneLoginComponent
     		sql.addSQLClause("AND","ESERCIZIO_INIZIO",sql.LESS_EQUALS,esercizio);
     		sql.addSQLClause("AND","ESERCIZIO_FINE",sql.GREATER,esercizio);
     		sql.setOrderBy("livello", it.cnr.jada.util.OrderConstants.ORDER_ASC);
+    		sql.setOrderBy("cd_proprio_cdr", it.cnr.jada.util.OrderConstants.ORDER_ASC);
 			List result = home.fetchAll(sql);
 			if (!result.isEmpty())
 				return (CdrBulk) result.get(0);
