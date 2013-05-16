@@ -151,6 +151,12 @@
 			propertyName="pg_mandato"
 			sqlTypeName="VARCHAR"
 			columnSize="40"/>
+		<columnMapping
+			columnName="TIPO_DOC_AMM"
+			propertyName="tipo_doc_amm"
+			sqlTypeName="VARCHAR"
+			columnSize="100"/>
+		
 	</defaultColumnMap>	
 	<persistentProperty
 		name="pg_obbligazione_scadenzario" />
@@ -210,4 +216,6 @@
 		name="denominazione_sede" />
 	<persistentProperty
 		name="ti_fattura" />
+	<persistentProperty
+		name="tipo_doc_amm" />	
 </SQLPersistentInfo>

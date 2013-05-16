@@ -9,6 +9,8 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_mandatiBulk;
 import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_siope_mandatiHome;
 import it.cnr.contab.pdg00.bulk.*;
+import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
+import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
@@ -151,7 +153,7 @@ public class StampaSituazioneSinteticaGAEComponent extends it.cnr.jada.comp.CRUD
 		
 		if(!isUtenteEnte(userContext)){ 
 			CdrBulk cdrUtente = cdrFromUserContext(userContext);
-//			String uo_scrivania = CNRUserContext.getCd_unita_organizzativa(userContext);
+			String uo_scrivania = CNRUserContext.getCd_unita_organizzativa(userContext);
 			if (cdrUtente.getLivello().compareTo(CdrHome.CDR_PRIMO_LIVELLO)==0)
 			{
 				sql.addTableToHeader("V_CDR_VALIDO");
@@ -161,6 +163,7 @@ public class StampaSituazioneSinteticaGAEComponent extends it.cnr.jada.comp.CRUD
 					sql.openParenthesis("AND");
 					sql.addSQLClause("AND", "V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
 					sql.addSQLClause("OR", "V_CDR_VALIDO.CD_CDR_AFFERENZA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
+					//sql.addSQLClause("OR", "V_CDR_VALIDO.CD_UNITA_ORGANIZZATIVA",sql.EQUALS,uo_scrivania);
 					sql.closeParenthesis();
 //				}
 //				else
@@ -168,10 +171,20 @@ public class StampaSituazioneSinteticaGAEComponent extends it.cnr.jada.comp.CRUD
 			}else{
 				sql.addTableToHeader("V_CDR_VALIDO");
 				sql.addSQLJoin("LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA","V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA");
-				sql.addSQLClause("AND", "V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
 				sql.addSQLClause("AND", "V_CDR_VALIDO.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+				sql.openParenthesis("AND");
+				sql.addSQLClause("AND", "V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
+				sql.addSQLClause("OR", "V_CDR_VALIDO.CD_UNITA_ORGANIZZATIVA",sql.EQUALS,uo_scrivania);
+				sql.closeParenthesis();
 			}
+			
 		}
+		Voce_f_saldi_cdr_lineaHome saldiHome = (Voce_f_saldi_cdr_lineaHome)getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class);
+		SQLBuilder sql_saldi = saldiHome.createSQLBuilder();
+		sql_saldi.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+		sql_saldi.addSQLJoin("LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA","VOCE_F_SALDI_CDR_LINEA.CD_CENTRO_RESPONSABILITA");
+		sql_saldi.addSQLJoin("LINEA_ATTIVITA.CD_LINEA_ATTIVITA","VOCE_F_SALDI_CDR_LINEA.CD_LINEA_ATTIVITA");
+		sql.addSQLExistsClause("AND",sql_saldi);
 		sql.addClause(clause);
 		return iterator(userContext, sql, WorkpackageBulk.class, getFetchPolicyName("find"));
 		}

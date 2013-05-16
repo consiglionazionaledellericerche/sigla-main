@@ -25,6 +25,8 @@ public class ConsObbligazioniBase extends  OggettoBulk implements Persistent {
  
 	//	PG_MANDATO VARCHAR(40)
   	private java.lang.String pg_mandato;
+  	
+  	private java.lang.String tipo_doc_amm;
 //    UO VARCHAR(30)
 	private java.lang.String uo;
  
@@ -202,5 +204,11 @@ public class ConsObbligazioniBase extends  OggettoBulk implements Persistent {
 	public void setPg_obbligazione_scadenzario(
 			java.lang.Long pg_obbligazione_scadenzario) {
 		this.pg_obbligazione_scadenzario = pg_obbligazione_scadenzario;
+	}
+	public java.lang.String getTipo_doc_amm() {
+		return tipo_doc_amm;
+	}
+	public void setTipo_doc_amm(java.lang.String tipo_doc_amm) {
+		this.tipo_doc_amm = tipo_doc_amm;
 	}
 }
