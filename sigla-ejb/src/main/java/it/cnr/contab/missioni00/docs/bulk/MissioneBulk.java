@@ -3338,7 +3338,7 @@ public void validaTabTestata() throws it.cnr.jada.action.MessageToUser
 	
 	if(getDs_missione() == null)
 		throw new it.cnr.jada.action.MessageToUser( "Inserire una descrizione !" );
-	if(getCd_tipo_missione() == null)
+	if(!isMissioneDefinitiva() && getCd_tipo_missione() == null)
 		throw new it.cnr.jada.action.MessageToUser( "Selezionare l' ambito della missione" );
 	
 } 
