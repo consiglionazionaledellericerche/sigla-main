@@ -62,7 +62,8 @@ public class SelezionatoreUnitaOrganizzativaBP extends it.cnr.jada.util.action.S
 			((CNRUserInfo)getUserInfo()).setEsercizio(esercizio);
 		if (uo != null){
 			getUserInfo().setUnita_organizzativa(uo);
-			cdr=(CdrBulk)getComponentSession().cdrDaUo(context.getUserContext(), uo);
+			if(cdr==null)
+				cdr=(CdrBulk)getComponentSession().cdrDaUo(context.getUserContext(), uo);
 		}
 		if (cdr != null)
 			getUserInfo().setCdr(cdr);
