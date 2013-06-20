@@ -5,6 +5,7 @@ import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.bulk.V_incarichi_elenco_fpBulk;
 import it.cnr.contab.incarichi00.ejb.IncarichiEstrazioneFpComponentSession;
+import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_prestazioneBulk;
 import it.cnr.contab.incarichi00.xmlfp.Comunicazione;
 import it.cnr.contab.incarichi00.xmlfp.Esito;
 import it.cnr.contab.incarichi00.xmlfp.EsitoComunicazione;
@@ -25,6 +26,7 @@ import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.ConsultazioniBP;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.upload.UploadedFile;
+import it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ConsulenteType.Incarico.RiferimentoNormativo;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -644,15 +646,22 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 		
 		//MODALITA' DI ACQUISIZIONE
 		String modalitaAcquisizione; //DI NATURA DISCREZIONALE
-		if (incarico.getIncarichi_procedura().getOggetto().toUpperCase().indexOf("626")>=0 ||
-			incarico.getIncarichi_procedura().getOggetto().toUpperCase().indexOf("230")>=0 ||
-			incarico.getIncarichi_procedura().getOggetto().toUpperCase().indexOf("NOTARIL")>=0 ||
-			incarico.getIncarichi_procedura().getOggetto().toUpperCase().indexOf("NOTAI")>=0 ||
-			incarico.getIncarichi_procedura().getOggetto().toUpperCase().indexOf("AUDIT")>=0)
-			modalitaAcquisizione = "1"; //PREVISTO DA NORME DI LEGGE
-		else
-			modalitaAcquisizione = "10"; //DI NATURA DISCREZIONALE
-
+		if (incarico.getIncarichi_procedura().getTipo_prestazione()!=null && incarico.getIncarichi_procedura().getTipo_prestazione().getTipo_classificazione()!=null) {
+			if (incarico.getIncarichi_procedura().getTipo_prestazione().getTipo_classificazione().equals(Tipo_prestazioneBulk.PREVISTA_DA_NORME_DI_LEGGE))
+				modalitaAcquisizione = "1"; //PREVISTO DA NORME DI LEGGE
+			else
+				modalitaAcquisizione = "10"; //DI NATURA DISCREZIONALE
+		} else {
+			if (incarico.getIncarichi_procedura().getOggetto().toUpperCase().indexOf("626")>=0 ||
+				incarico.getIncarichi_procedura().getOggetto().toUpperCase().indexOf("230")>=0 ||
+				incarico.getIncarichi_procedura().getOggetto().toUpperCase().indexOf("NOTARIL")>=0 ||
+				incarico.getIncarichi_procedura().getOggetto().toUpperCase().indexOf("NOTAI")>=0 ||
+				incarico.getIncarichi_procedura().getOggetto().toUpperCase().indexOf("AUDIT")>=0)
+				modalitaAcquisizione = "1"; //PREVISTO DA NORME DI LEGGE
+			else
+				modalitaAcquisizione = "10"; //DI NATURA DISCREZIONALE
+		}
+		
 		elementConsulente.getIncarico().setModalitaAcquisizione(modalitaAcquisizione);
 		
 		//TIPO DI RAPPORTO
@@ -669,7 +678,10 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 
 		Incarichi_archivio_xml_fpBulk archivioXmlPerlaFP = (Incarichi_archivio_xml_fpBulk)getModel();
 		if (archivioXmlPerlaFP.getEsercizio().compareTo(new Integer(2010)) == 1){
-			attivitaEconomica="74"; //ALTRE ATTIVITA' PROFESSIONALI, SCIENTIFICHE E TECNICHE
+			if (incarico.getIncarichi_procedura().getTipo_attivita_fp()!=null && incarico.getIncarichi_procedura().getTipo_attivita_fp().getCd_tipo_attivita()!=null)
+				attivitaEconomica=incarico.getIncarichi_procedura().getTipo_attivita_fp().getCd_tipo_attivita();
+			else
+				attivitaEconomica="74"; //ALTRE ATTIVITA' PROFESSIONALI, SCIENTIFICHE E TECNICHE
 		} else {
 			if (incarico.getIncarichi_procedura().getTipo_attivita().getCd_tipo_attivita().equals("1") || //Studio
 				incarico.getIncarichi_procedura().getTipo_attivita().getCd_tipo_attivita().equals("2") || //Ricerca
@@ -690,6 +702,20 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 		
 		//RIFERIMENTO REGOLAMENTO
 		elementConsulente.getIncarico().setRiferimentoRegolamento(it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.YesNoType.N);
+
+		//RIFERIMENTO NORMATIVO
+		if (incarico.getIncarichi_procedura().getFl_applicazione_norma().equals(Boolean.TRUE) && !incarico.getIncarichi_procedura().getCd_tipo_norma_perla().equals("999")) {
+			RiferimentoNormativo riferimentoNormativo = objectFactory.createConsulenteTypeIncaricoRiferimentoNormativo();
+			riferimentoNormativo.setArticolo(incarico.getIncarichi_procedura().getTipo_norma_perla().getArticolo_tipo_norma());
+			riferimentoNormativo.setComma(incarico.getIncarichi_procedura().getTipo_norma_perla().getComma_tipo_norma());
+			riferimentoNormativo.setNumero(incarico.getIncarichi_procedura().getTipo_norma_perla().getNumero_tipo_norma());
+			//DATA
+			GregorianCalendar dtRif = new GregorianCalendar();
+			dtRif.setTime(incarico.getIncarichi_procedura().getTipo_norma_perla().getDt_tipo_norma());
+			riferimentoNormativo.setData(DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(dtRif.get(Calendar.YEAR), dtRif.get(Calendar.MONTH), dtRif.get(Calendar.DAY_OF_MONTH))));
+			riferimentoNormativo.setRiferimento(new BigInteger(incarico.getIncarichi_procedura().getTipo_norma_perla().getCd_tipo_norma_perla()));
+			elementConsulente.getIncarico().setRiferimentoNormativo(riferimentoNormativo);
+		}
 
 		//DATA AFFIDAMENTO
 		GregorianCalendar gcds = new GregorianCalendar(), dtLimite = new GregorianCalendar();
@@ -810,7 +836,8 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 		//verifico variazione
 		if (incaricoComunicatoFP.getAnno_riferimento().compareTo(Integer.valueOf(2010))==1 || 
 			(incaricoComunicatoFP.getAnno_riferimento().compareTo(Integer.valueOf(2010))==0 && incaricoComunicatoFP.getSemestre_riferimento().equals(Incarichi_archivio_xml_fpBulk.SECONDO_SEMESTRE))) {
-			if (!Utility.equalsNull(incaricoComunicatoFP.getAttivita_economica(), elementNuovoConsulentePerla.getIncarico().getAttivitaEconomica())) {
+			if (incaricoComunicatoFP.getAttivita_economica()!="74" &&
+				!Utility.equalsNull(incaricoComunicatoFP.getAttivita_economica(), elementNuovoConsulentePerla.getIncarico().getAttivitaEconomica())) {
 				elementModificaConsulentePerla.getIncarico().setAttivitaEconomica(elementNuovoConsulentePerla.getIncarico().getAttivitaEconomica());
 				isModificato=true;
 			}
