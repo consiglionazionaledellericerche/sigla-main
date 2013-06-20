@@ -614,7 +614,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 			Incarichi_repertorio_varBulk variazione = (Incarichi_repertorio_varBulk)oggettobulk;
 			if (variazione.getTipo_variazione()==null)
 				throw new ValidationException("Attenzione: indicare il tipo di variazione.");				
-			if (variazione.isVariazioneIntegrazioneIncarico() || variazione.isVariazioneIntegrazioneContributi()) {
+			if (variazione.isVariazioneIntegrazioneIncarico() || variazione.isVariazioneIntegrazioneContributi() || variazione.isVariazioneIntegrazioneMaternita()) {
 				for (Iterator<Incarichi_repertorio_varBulk> i = variazione.getIncarichi_repertorio().getIncarichi_repertorio_varColl().iterator(); i.hasNext();) {
 					Incarichi_repertorio_varBulk varia = i.next();
 					if (!varia.equalsByPrimaryKey(variazione))
@@ -1924,7 +1924,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 	public String getFieldTipoVariazione() {
 		if (this.getCrudIncarichiVariazioni().getModel()!=null) {
 			Incarichi_repertorio_varBulk incaricoVar = (Incarichi_repertorio_varBulk)this.getCrudIncarichiVariazioni().getModel(); 
-	    	if (isUoEnte() || incaricoVar.isNotNew()) 
+	    	if (isUoEnte() || incaricoVar.isNotNew())
 	    		return "tipo_variazioneForEnte";
 			if (incaricoVar.getIncarichi_repertorio()!=null &&
 				incaricoVar.getIncarichi_repertorio().getTipo_rapporto()!=null &&
@@ -1934,9 +1934,9 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				getDtLimiteVariazione().after(incaricoVar.getIncarichi_repertorio().getDt_stipula()) &&
 				incaricoVar.getIncarichi_repertorio().getDt_fine_validita()!=null && 
 				!getDtLimiteVariazione().after(incaricoVar.getIncarichi_repertorio().getDt_fine_validita()))
-				return "tipo_variazione";
+				return "tipo_variazione"+(isAssegniRicercaBP()?"ForAssegniRicerca":"");
 		}
-		return "tipo_variazioneMinima";
+		return "tipo_variazioneMinima"+(isAssegniRicercaBP()?"ForAssegniRicerca":"");
     }
 	public void validaDataIntegrazioneIncarico(ActionContext actioncontext, Incarichi_repertorio_varBulk incaricoVar) throws ValidationException {
 		if (incaricoVar!=null && incaricoVar.isVariazioneIntegrazioneIncarico()) {

@@ -16,7 +16,9 @@ import java.io.IOException;
 public class Incarichi_repertorio_varBulk extends Incarichi_repertorio_varKey {
 	public static final java.util.Dictionary tipo_variazioneForEnteKeys = new it.cnr.jada.util.OrderedHashtable();
 	public static final java.util.Dictionary tipo_variazioneKeys = new it.cnr.jada.util.OrderedHashtable();
+	public static final java.util.Dictionary tipo_variazioneForAssegniRicercaKeys = new it.cnr.jada.util.OrderedHashtable();
 	public static final java.util.Dictionary tipo_variazioneMinimaKeys = new it.cnr.jada.util.OrderedHashtable();
+	public static final java.util.Dictionary tipo_variazioneMinimaForAssegniRicercaKeys = new it.cnr.jada.util.OrderedHashtable();
 
 	private Incarichi_repertorioBulk incarichi_repertorio;
 
@@ -42,16 +44,25 @@ public class Incarichi_repertorio_varBulk extends Incarichi_repertorio_varKey {
 	final public static String TIPO_INTEGRAZIONE_INCARICO = "I";
 	final public static String TIPO_VARIAZIONE_CONTRIBUTI = "C";
 	final public static String TIPO_VARIAZIONE_GENERICA = "G";
+	final public static String TIPO_VARIAZIONE_MATERNITA = "M";
 
 	static {
 		tipo_variazioneMinimaKeys.put(TIPO_VARIAZIONE_CONTRIBUTI,"Adeguamento Incremento Aliquote");
 
+		tipo_variazioneMinimaForAssegniRicercaKeys.put(TIPO_VARIAZIONE_CONTRIBUTI,"Adeguamento Incremento Aliquote");
+		tipo_variazioneMinimaForAssegniRicercaKeys.put(TIPO_VARIAZIONE_MATERNITA,"Variazione per Maternità");
+
 		tipo_variazioneKeys.put(TIPO_INTEGRAZIONE_INCARICO_TRANS,"Periodo transitorio - Adeguamento alla durata del progetto");
 		tipo_variazioneKeys.put(TIPO_VARIAZIONE_CONTRIBUTI,"Adeguamento Incremento Aliquote");
+
+		tipo_variazioneForAssegniRicercaKeys.put(TIPO_INTEGRAZIONE_INCARICO_TRANS,"Periodo transitorio - Adeguamento alla durata del progetto");
+		tipo_variazioneForAssegniRicercaKeys.put(TIPO_VARIAZIONE_CONTRIBUTI,"Adeguamento Incremento Aliquote");
+		tipo_variazioneForAssegniRicercaKeys.put(TIPO_VARIAZIONE_MATERNITA,"Variazione per Maternità");
 
 		tipo_variazioneForEnteKeys.put(TIPO_INTEGRAZIONE_INCARICO_TRANS,"Periodo transitorio - Adeguamento alla durata del progetto");
 		tipo_variazioneForEnteKeys.put(TIPO_INTEGRAZIONE_INCARICO,"Adeguamento Incarico");
 		tipo_variazioneForEnteKeys.put(TIPO_VARIAZIONE_CONTRIBUTI,"Adeguamento Incremento Aliquote");
+		tipo_variazioneForEnteKeys.put(TIPO_VARIAZIONE_MATERNITA,"Variazione per Maternità");
 		tipo_variazioneForEnteKeys.put(TIPO_VARIAZIONE_GENERICA,"Variazione Generica");
 	}
 
@@ -144,6 +155,9 @@ public class Incarichi_repertorio_varBulk extends Incarichi_repertorio_varKey {
     }
     public boolean isVariazioneIntegrazioneContributi() {
 		return isAllegatoValido() && getTipo_variazione() != null && getTipo_variazione().equals(TIPO_VARIAZIONE_CONTRIBUTI);
+    }
+    public boolean isVariazioneIntegrazioneMaternita() {
+		return isAllegatoValido() && getTipo_variazione() != null && getTipo_variazione().equals(TIPO_VARIAZIONE_MATERNITA);
     }
     public boolean isVariazioneIntegrazioneGenerica() {
 		return isAllegatoValido() && getTipo_variazione() != null && getTipo_variazione().equals(TIPO_VARIAZIONE_GENERICA);
