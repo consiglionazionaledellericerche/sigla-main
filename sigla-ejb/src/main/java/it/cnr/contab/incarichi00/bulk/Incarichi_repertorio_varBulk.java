@@ -223,7 +223,7 @@ public class Incarichi_repertorio_varBulk extends Incarichi_repertorio_varKey {
 		nomeFile = nomeFile.append(super.constructCMISNomeFile());
 		nomeFile = nomeFile.append("-"+this.getIncarichi_repertorio().getCd_unita_organizzativa());
 		nomeFile = nomeFile.append("-"+this.getEsercizio().toString()+Utility.lpad(this.getPg_repertorio().toString(),9,'0'));
-		nomeFile = nomeFile.append("."+(this.getNome_file()!=null?this.getNome_file():Incarichi_archivioBulk.getTipo_archivioKeys().get(this.getTipo_archivio()).toString()+".txt"));
+		nomeFile = nomeFile.append("."+(this.getNome_file()!=null?this.getNome_file():Incarichi_archivioBulk.getTipo_archivioKeys().get(this.getTipo_archivio()).toString()+this.getProgressivo_riga()+".txt"));
 		return nomeFile.toString();
 	}
 }

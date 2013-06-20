@@ -642,7 +642,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 			}
 			else if (variazione.getImporto_complessivo()==null || variazione.getImporto_complessivo().compareTo(BigDecimal.ZERO)==0)
 				throw new ValidationException("Attenzione: è obbligatorio indicare l'importo dell'integrazione della \"Spesa complessiva presunta calcolata\".");
-			else if (!variazione.isAnnullato()){
+			else if (!variazione.isAnnullato() && variazione.isVariazioneIntegrazioneContributi()){
 				java.math.BigDecimal prcIncrementoVar = Utility.nvl(variazione.getIncarichi_repertorio().getIncarichi_procedura().getTipo_incarico().getPrc_incremento_var());
 				BigDecimal importoMaxVar = variazione.getIncarichi_repertorio().getIncarichi_procedura().getImporto_complessivo().multiply(prcIncrementoVar.divide(new BigDecimal(100),2,BigDecimal.ROUND_HALF_EVEN));
 				if (variazione.getImporto_complessivo().compareTo(importoMaxVar)==1)
