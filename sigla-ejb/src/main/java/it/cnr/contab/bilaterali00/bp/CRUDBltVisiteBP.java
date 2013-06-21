@@ -911,10 +911,8 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 
 			if (visita.isVisitaItaliano())
 				procedura.setImporto_lordo(BigDecimal.ZERO);
-			else if (visita.isVisitaStraniero() && visita.isConvenzioneAccettata())
+			else
 				procedura.setImporto_lordo(visita.getImRimbPrevisto());
-			else 
-				procedura.setImporto_lordo(visita.getImRimbPrevisto().add(visita.getImRitenutaFiscaleTotale()));
 			
 			incaricoProceduraBP.changeImportoLordo(context, procedura, Utility.nvl(procedura.getImporto_lordo()));
 			procedura.setToBeCreated();

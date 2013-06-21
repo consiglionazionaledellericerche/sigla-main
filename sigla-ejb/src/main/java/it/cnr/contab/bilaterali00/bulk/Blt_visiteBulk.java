@@ -1027,7 +1027,8 @@ public class Blt_visiteBulk extends Blt_visiteBase implements IDefferUpdateSaldi
 		if (importo!=null && importo.compareTo(BigDecimal.ZERO)==1 && 
 			this.getPrc_oneri_fiscali()!=null && this.getPrc_oneri_fiscali().compareTo(BigDecimal.ZERO)==1 &&
 			(this.getFlAccettazioneConvenzione()==null || !this.isConvenzioneAccettata()))
-			importoTemp = importo.divide(BigDecimal.ONE.subtract(this.getPrc_oneri_fiscali().divide(BigDecimal.TEN.multiply(BigDecimal.TEN))),2, BigDecimal.ROUND_HALF_EVEN).subtract(importo);
+//			importoTemp = importo.divide(BigDecimal.ONE.subtract(this.getPrc_oneri_fiscali().divide(BigDecimal.TEN.multiply(BigDecimal.TEN))),2, BigDecimal.ROUND_HALF_EVEN).subtract(importo);
+			importoTemp = importo.multiply(this.getPrc_oneri_fiscali()).divide(BigDecimal.TEN.multiply(BigDecimal.TEN),2, BigDecimal.ROUND_HALF_EVEN);
 		return importoTemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
 	}
 
@@ -1042,7 +1043,8 @@ public class Blt_visiteBulk extends Blt_visiteBase implements IDefferUpdateSaldi
 	private BigDecimal getImRimborsoLordo(BigDecimal importo) {
 		BigDecimal importoTemp = BigDecimal.ZERO;
 		if (importo!=null && importo.compareTo(BigDecimal.ZERO)==1)
-			importoTemp = importo.add(getImRitenutaFiscale(importo));
+			//importoTemp = importo.add(getImRitenutaFiscale(importo));
+			importoTemp = importo;
 		return importoTemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
 	}
 
