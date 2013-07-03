@@ -1,6 +1,8 @@
 package it.cnr.contab.fondecon00.comp;
 
 import java.util.Calendar;
+
+import it.cnr.contab.doccont00.comp.DateServices;
 import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.contab.fondecon00.views.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
@@ -1512,6 +1514,7 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_vp
 
 	try{
 		java.sql.Timestamp dataOdierna = getDataOdierna(userContext);
+		java.sql.Timestamp lastDayOfYear = DateServices.getLastDayOfYear(stampa.getEsercizio().intValue());
 
 		if (stampa.getFondoForPrint() == null || stampa.getFondoForPrint().getCd_codice_fondo() == null){
 			throw new ValidationException("Attenzione: indicare un Fondo Economale.");	
@@ -1529,9 +1532,9 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_vp
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
 			throw new ValidationException("Attenzione: la DATA INIZIO non può essere inferiore a " + formatter.format(firstDayOfYear));
 		}
-		if (stampa.getDataFine().compareTo(dataOdierna)>0){
+		if (stampa.getDataFine().compareTo(lastDayOfYear)>0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("Attenzione: la DATA di FINE PERIODO non può essere superiore a " + formatter.format(dataOdierna));
+			throw new ValidationException("Attenzione: la DATA di FINE PERIODO non può essere superiore a " + formatter.format(lastDayOfYear));
 		}
 
 		//Calendar cal_da = Calendar.getInstance();

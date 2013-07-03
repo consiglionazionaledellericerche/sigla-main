@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
+import it.cnr.contab.doccont00.comp.DateServices;
 /**
  * Insert the type's description here.
  * Creation date: (07/05/2002 17.44.39)
@@ -1419,6 +1420,7 @@ private void validaBene (UserContext aUC, Inventario_beniBulk bene)
 private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_beni_senza_utilizVBulk stampa) throws ComponentException{
 	try{
 		Timestamp dataOdierna = getDataOdierna(userContext);
+		java.sql.Timestamp lastDayOfYear = DateServices.getLastDayOfYear(stampa.getEsercizio().intValue());
 		if (stampa.getDataInizio()==null)
 			throw new ValidationException("Il campo DATA INIZIO PERIODO è obbligatorio");
 		if (stampa.getDataFine()==null)
@@ -1430,9 +1432,9 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_be
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
 			throw new ValidationException("La DATA di INIZIO PERIODO non può essere inferiore a " + formatter.format(firstDayOfYear));
 		}
-		if (stampa.getDataFine().compareTo(dataOdierna)>0){
+		if (stampa.getDataFine().compareTo(lastDayOfYear)>0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di FINE PERIODO non può essere superiore a " + formatter.format(dataOdierna));
+			throw new ValidationException("La DATA di FINE PERIODO non può essere superiore a " + formatter.format(lastDayOfYear));
 		}
 	}catch(ValidationException ex){
 		throw new ApplicationException(ex);

@@ -2867,6 +2867,7 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_re
 
   		
 		java.sql.Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(stampa.getEsercizio().intValue());
+		java.sql.Timestamp lastDayOfYear = DateServices.getLastDayOfYear(stampa.getEsercizio().intValue());
 		
 		// La Data di Inizio Periodo è superiore alla data di Fine Periodo
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
@@ -2878,9 +2879,9 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_re
 			throw new ValidationException("La DATA di INIZIO PERIODO non può essere inferiore a " + formatter.format(firstDayOfYear));
 		}
 		// La Data di Fine periodo è SUPERIORE alla data odierna
-		if (stampa.getDataFine().compareTo(dataOdierna)>0){
+		if (stampa.getDataFine().compareTo(lastDayOfYear)>0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di FINE PERIODO non può essere superiore a " + formatter.format(dataOdierna));
+			throw new ValidationException("La DATA di FINE PERIODO non può essere superiore a " + formatter.format(lastDayOfYear));
 		}
 
 		/**** Controlli sui PG_INIZIO/PG_FINE *****/
@@ -2927,15 +2928,16 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_re
 			throw new ValidationException("Il campo DATA FINE PERIODO è obbligatorio");
 
 		java.sql.Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(stampa.getEsercizio().intValue());
+		java.sql.Timestamp lastDayOfYear = DateServices.getLastDayOfYear(stampa.getEsercizio().intValue());
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
 			throw new ValidationException("La DATA di INIZIO PERIODO non può essere superiore alla DATA di FINE PERIODO");
 		if (stampa.getDataInizio().compareTo(firstDayOfYear)<0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
 			throw new ValidationException("La DATA di INIZIO PERIODO non può essere inferiore a " + formatter.format(firstDayOfYear));
 		}
-		if (stampa.getDataFine().compareTo(dataOdierna)>0){
+		if (stampa.getDataFine().compareTo(lastDayOfYear)>0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di FINE PERIODO non può essere superiore a " + formatter.format(dataOdierna));
+			throw new ValidationException("La DATA di FINE PERIODO non può essere superiore a " + formatter.format(lastDayOfYear));
 		}
 
 		if (stampa.getPgInizio()==null)
@@ -2973,18 +2975,7 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_sc
 			throw new ValidationException("Il campo DATA FINE PERIODO è obbligatorio");
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
 			throw new ValidationException("La DATA di INIZIO PERIODO non può essere superiore alla DATA di FINE PERIODO");
-//		
-//RP modif prova
-//		java.sql.Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(stampa.getEsercizio().intValue());
-//		if (stampa.getDataInizio().compareTo(firstDayOfYear)<0){
-//			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-//			throw new ValidationException("La DATA di INIZIO PERIODO non può essere inferiore a " + formatter.format(firstDayOfYear));
-//		}
-//		if (stampa.getDataFine().compareTo(lastDayOfYear)>0){
-//			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-//			throw new ValidationException("La DATA di FINE PERIODO non può essere superiore a " + formatter.format(lastDayOfYear));
-//		}
-//RP modif prova fine		
+	
 	}catch(ValidationException ex){
 		throw new ApplicationException(ex);
 	}
