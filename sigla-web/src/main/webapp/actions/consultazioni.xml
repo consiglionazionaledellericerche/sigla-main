@@ -1149,4 +1149,11 @@
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
 	    <init-param name="defaultAction" value="ConsultazioniAction" />	    
   </businessProcess>
+  <businessProcess
+      name="ConsStoGaeObbBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.consultazioni.bulk.VGaeTotaleStoricoSpeBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
+	    <init-param name="defaultAction" value="ConsultazioniAction" />	    
+  </businessProcess>
 </action-mappings>
