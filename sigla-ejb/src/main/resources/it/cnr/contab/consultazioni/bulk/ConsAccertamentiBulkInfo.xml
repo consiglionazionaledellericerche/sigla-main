@@ -2,7 +2,7 @@
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Impegni">
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Accertamenti">
 	<fieldProperty
 		name="cds"
 		property="cds"
@@ -60,28 +60,14 @@
 		inputType="TEXT"
 		inputSize="4"
 		maxLength="4"
-		label="Es. Impegno" />
+		label="Es.Orig.Acc." />
 	<fieldProperty
-		name="pg_obbligazione"
-		property="pg_obbligazione"
+		name="pg_accertamento"
+		property="pg_accertamento"
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
-		label="Numero impegno" />
-	<fieldProperty
-		name="esercizio_ori_ori_riporto"
-		property="esercizio_ori_ori_riporto"
-		inputType="TEXT"
-		inputSize="4"
-		maxLength="4"
-		label="Es. originario impegno" />
-	<fieldProperty
-		name="pg_obbligazione_ori_riporto"
-		property="pg_obbligazione_ori_riporto"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		label="Numero originario impegno" />
+		label="Numero accertamento" />
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
@@ -90,19 +76,12 @@
 		maxLength="4"
 		label="Esercizio" />
 	<fieldProperty
-		name="esercizio_ori_riporto"
-		property="esercizio_ori_riporto"
-		inputType="TEXT"
-		inputSize="4"
-		maxLength="4"
-		label="Esercizio originario" />
-	<fieldProperty
-		name="pg_obbligazione_scadenzario"
-		property="pg_obbligazione_scadenzario"
+		name="pg_accertamento_scadenzario"
+		property="pg_accertamento_scadenzario"
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
-		label="Scad. imp." />
+		label="Scad. acc." />
 	<fieldProperty
 		name="ds_scadenza"
 		property="ds_scadenza"
@@ -115,15 +94,13 @@
 		name="im_scadenza"
 		property="im_scadenza"
 		inputType="TEXT"
-		inputSize="15"
-		maxLength="15"
+		formatName = "it.cnr.contab.util.EuroFormat"
 		label="Importo scadenza" />
 	<fieldProperty
 		name="im_voce"
 		property="im_voce"
 		inputType="TEXT"
-		inputSize="15"
-		maxLength="15"
+		formatName = "it.cnr.contab.util.EuroFormat"
 		label="Importo dettaglio scadenza" />
 	<fieldProperty
 		name="esercizio_docamm"
@@ -131,31 +108,28 @@
 		inputType="TEXT"
 		inputSize="4"
 		maxLength="4"
-		label="Es.Doc." />		
+		label="Es.Doc." />	
 	<fieldProperty
 		name="pg_doc_amm"
 		property="pg_doc_amm"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="40"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
 		label="Num. doc. amm." />
 	<fieldProperty
-		name="pg_mandato"
-		property="pg_mandato"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="40"
-		label="N. mandato" />
+		name="pg_reversale"
+		property="pg_reversale"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="N. reversale" />
 	<fieldProperty
 		name="cd_terzo"
 		property="cd_terzo"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="40"
-		label="Beneficiario impegno" />
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		label="Debitore" />
 	<fieldProperty
 		name="denominazione_sede"
 		property="denominazione_sede"
@@ -164,13 +138,6 @@
 		rows="5"
 		maxLength="200"
 		label="Denominazione sede" />
-	<fieldProperty
-		name="ti_fattura"
-		property="ti_fattura"
-		inputType="TEXT"
-		inputSize="1"
-		maxLength="1"
-		label="Tipo fattura" />
 	<fieldProperty
 		name="tipo_doc_amm"
 		property="tipo_doc_amm"
@@ -194,17 +161,11 @@
 	<formFieldProperty
 		name="esercizio_originale" />
 	<formFieldProperty
-		name="pg_obbligazione" />
-	<formFieldProperty
-		name="esercizio_ori_ori_riporto" />
-	<formFieldProperty
-		name="pg_obbligazione_ori_riporto" />
+		name="pg_accertamento" />
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
-		name="esercizio_ori_riporto" />
-	<formFieldProperty
-		name="pg_obbligazione_scadenzario" />
+		name="pg_accertamento_scadenzario" />
 	<formFieldProperty
 		name="ds_scadenza" />
 	<formFieldProperty
@@ -214,11 +175,11 @@
 	<formFieldProperty
 		name="tipo_doc_amm" />
 	<formFieldProperty
-		name="esercizio_docamm" />		
+		name="esercizio_docamm" />	
 	<formFieldProperty
 		name="pg_doc_amm" />
 	<formFieldProperty
-		name="pg_mandato" />
+		name="pg_reversale" />
 	<formFieldProperty
 		name="cd_terzo" />
 	<formFieldProperty
@@ -243,17 +204,11 @@
 	<columnFieldProperty
 		name="esercizio_originale" />
 	<columnFieldProperty
-		name="pg_obbligazione" />
-	<columnFieldProperty
-		name="esercizio_ori_ori_riporto" />
-	<columnFieldProperty
-		name="pg_obbligazione_ori_riporto" />
+		name="pg_accertamento" />
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
-		name="esercizio_ori_riporto" />
-	<columnFieldProperty
-		name="pg_obbligazione_scadenzario" />
+		name="pg_accertamento_scadenzario" />
 	<columnFieldProperty
 		name="ds_scadenza" 		
 		label="Descrizione&#160;scadenza&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
@@ -264,11 +219,11 @@
 	<columnFieldProperty
 		name="tipo_doc_amm" />
 	<columnFieldProperty
-		name="esercizio_docamm" />		
+		name="esercizio_docamm" />	
 	<columnFieldProperty
 		name="pg_doc_amm" />
 	<columnFieldProperty
-		name="pg_mandato" />
+		name="pg_reversale" />
 	<columnFieldProperty
 		name="cd_terzo" />
 	<columnFieldProperty
@@ -291,17 +246,11 @@
 	<findFieldProperty
 		name="esercizio_originale" />
 	<findFieldProperty
-		name="pg_obbligazione" />
-	<findFieldProperty 
-		name="esercizio_ori_ori_riporto" />
-	<findFieldProperty
-		name="pg_obbligazione_ori_riporto" />
+		name="pg_accertamento" />
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
-		name="esercizio_ori_riporto" />
-	<findFieldProperty
-		name="pg_obbligazione_scadenzario" />
+		name="pg_accertamento_scadenzario" />
 	<findFieldProperty
 		name="ds_scadenza" />
 	<findFieldProperty
@@ -315,7 +264,7 @@
 	<findFieldProperty
 		name="pg_doc_amm" />
 	<findFieldProperty
-		name="pg_mandato" />
+		name="pg_reversale" />
 	<findFieldProperty
 		name="cd_terzo" />
 	<findFieldProperty

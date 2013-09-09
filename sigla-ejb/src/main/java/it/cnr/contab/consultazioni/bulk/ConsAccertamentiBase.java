@@ -5,7 +5,7 @@
 package it.cnr.contab.consultazioni.bulk;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.Persistent;
-public class ConsObbligazioniBase extends  OggettoBulk implements Persistent {
+public class ConsAccertamentiBase extends  OggettoBulk implements Persistent {
 //	 CD_CDS VARCHAR(30) NOT NULL (PK)
 	private java.lang.String cds;
 
@@ -15,16 +15,16 @@ public class ConsObbligazioniBase extends  OggettoBulk implements Persistent {
 	// ESERCIZIO_ORIGINALE DECIMAL(4,0) NOT NULL (PK)
 	private java.lang.Integer esercizio_originale;
 
-	// PG_OBBLIGAZIONE DECIMAL(10,0) NOT NULL (PK)
-	private java.lang.Long pg_obbligazione;
+	// pg_accertamento DECIMAL(10,0) NOT NULL (PK)
+	private java.lang.Long pg_accertamento;
 
-	private java.lang.Long pg_obbligazione_scadenzario;
+	private java.lang.Long pg_accertamento_scadenzario;
 
-	//	PG_DOC_AMM VARCHAR(40)
+	//	PG_DOC_AMM VARCHAR(15)
   	private java.lang.String pg_doc_amm;
  
-	//	PG_MANDATO VARCHAR(40)
-  	private java.lang.String pg_mandato;
+	//	PG_reversale VARCHAR(15)
+  	private java.lang.String pg_reversale;
   	
   	private java.lang.String tipo_doc_amm;
 //    UO VARCHAR(30)
@@ -45,15 +45,6 @@ public class ConsObbligazioniBase extends  OggettoBulk implements Persistent {
 //    DT_REGISTRAZIONE TIMESTAMP(7)
 	private java.sql.Timestamp dt_registrazione;
 
-//    ESERCIZIO_ORI_ORI_RIPORTO DECIMAL(4,0)
-	private java.lang.Integer esercizio_ori_ori_riporto;
-
-//    PG_OBBLIGAZIONE_ORI_RIPORTO DECIMAL(10,0)
-	private java.lang.Long pg_obbligazione_ori_riporto;
- 
-//    ESERCIZIO_ORI_RIPORTO DECIMAL(4,0)
-	private java.lang.Integer esercizio_ori_riporto;
- 
 //    DS_SCADENZA VARCHAR(300)
 	private java.lang.String ds_scadenza;
  
@@ -68,12 +59,10 @@ public class ConsObbligazioniBase extends  OggettoBulk implements Persistent {
  
 //    DENOMINAZIONE_SEDE VARCHAR(200)
 	private java.lang.String denominazione_sede;
- 
-//    TI_FATTURA VARCHAR(1)
-	private java.lang.String ti_fattura;
 	
-	private java.lang.Integer esercizio_docamm; 
- 
+	// ESERCIZIO_DOCAMM
+	private java.lang.Integer esercizio_docamm;
+  
 	public java.lang.String getUo () {
 		return uo;
 	}
@@ -110,24 +99,6 @@ public class ConsObbligazioniBase extends  OggettoBulk implements Persistent {
 	public void setDt_registrazione(java.sql.Timestamp dt_registrazione)  {
 		this.dt_registrazione=dt_registrazione;
 	}
-	public java.lang.Integer getEsercizio_ori_ori_riporto () {
-		return esercizio_ori_ori_riporto;
-	}
-	public void setEsercizio_ori_ori_riporto(java.lang.Integer esercizio_ori_ori_riporto)  {
-		this.esercizio_ori_ori_riporto=esercizio_ori_ori_riporto;
-	}
-	public java.lang.Long getPg_obbligazione_ori_riporto () {
-		return pg_obbligazione_ori_riporto;
-	}
-	public void setPg_obbligazione_ori_riporto(java.lang.Long pg_obbligazione_ori_riporto)  {
-		this.pg_obbligazione_ori_riporto=pg_obbligazione_ori_riporto;
-	}
-	public java.lang.Integer getEsercizio_ori_riporto () {
-		return esercizio_ori_riporto;
-	}
-	public void setEsercizio_ori_riporto(java.lang.Integer esercizio_ori_riporto)  {
-		this.esercizio_ori_riporto=esercizio_ori_riporto;
-	}
 	public java.lang.String getDs_scadenza () {
 		return ds_scadenza;
 	}
@@ -158,12 +129,6 @@ public class ConsObbligazioniBase extends  OggettoBulk implements Persistent {
 	public void setDenominazione_sede(java.lang.String denominazione_sede)  {
 		this.denominazione_sede=denominazione_sede;
 	}
-	public java.lang.String getTi_fattura () {
-		return ti_fattura;
-	}
-	public void setTi_fattura(java.lang.String ti_fattura)  {
-		this.ti_fattura=ti_fattura;
-	}
 	public java.lang.String getCds() {
 		return cds;
 	}
@@ -188,30 +153,31 @@ public class ConsObbligazioniBase extends  OggettoBulk implements Persistent {
 	public void setPg_doc_amm(java.lang.String pg_doc_amm) {
 		this.pg_doc_amm = pg_doc_amm;
 	}
-	public java.lang.String getPg_mandato() {
-		return pg_mandato;
-	}
-	public void setPg_mandato(java.lang.String pg_mandato) {
-		this.pg_mandato = pg_mandato;
-	}
-	public java.lang.Long getPg_obbligazione() {
-		return pg_obbligazione;
-	}
-	public void setPg_obbligazione(java.lang.Long pg_obbligazione) {
-		this.pg_obbligazione = pg_obbligazione;
-	}
-	public java.lang.Long getPg_obbligazione_scadenzario() {
-		return pg_obbligazione_scadenzario;
-	}
-	public void setPg_obbligazione_scadenzario(
-			java.lang.Long pg_obbligazione_scadenzario) {
-		this.pg_obbligazione_scadenzario = pg_obbligazione_scadenzario;
-	}
+	
 	public java.lang.String getTipo_doc_amm() {
 		return tipo_doc_amm;
 	}
 	public void setTipo_doc_amm(java.lang.String tipo_doc_amm) {
 		this.tipo_doc_amm = tipo_doc_amm;
+	}
+	public java.lang.Long getPg_accertamento() {
+		return pg_accertamento;
+	}
+	public void setPg_accertamento(java.lang.Long pg_accertamento) {
+		this.pg_accertamento = pg_accertamento;
+	}
+	public java.lang.Long getPg_accertamento_scadenzario() {
+		return pg_accertamento_scadenzario;
+	}
+	public void setPg_accertamento_scadenzario(
+			java.lang.Long pg_accertamento_scadenzario) {
+		this.pg_accertamento_scadenzario = pg_accertamento_scadenzario;
+	}
+	public java.lang.String getPg_reversale() {
+		return pg_reversale;
+	}
+	public void setPg_reversale(java.lang.String pg_reversale) {
+		this.pg_reversale = pg_reversale;
 	}
 	public java.lang.Integer getEsercizio_docamm() {
 		return esercizio_docamm;
