@@ -777,6 +777,15 @@ public void EstrazioneTot(ActionContext context) throws ComponentException, Remo
 		    		  bw.append(Formatta(f24ep.getPeriodo_a(),"S",6," "));
 		    		  bw.append(Formatta(f24ep.getImporto_debito().movePointRight(2).toString(),"D",15,"0"));
 	    		 }
+	    		 if(f24ep.getTipo_riga_f24().compareTo(Gruppo_crBulk.INPGI)==0){
+	    			  String sede_inpgi= ((Liquid_coriComponentSession)createComponentSession()).getSedeInpgiF24(context.getUserContext());
+	    			  bw.append(Formatta(null,"S",5," "));
+	    			  //??? FACOLTATIVO ???
+		    		  bw.append(Formatta(Formatta(sede_inpgi,"S",5,"0"),"S",17," "));  // ESTREMI IDENTIFICATIVI 
+		    		  bw.append(Formatta(Formatta(f24ep.getMese_rif(),"D",4,"0"),"S",6," "));
+		    		  bw.append(Formatta(Formatta(f24ep.getAnno_rif(),"D",4,"0"),"S",6," "));
+		    		  bw.append(Formatta(f24ep.getImporto_debito().movePointRight(2).toString(),"D",15,"0"));
+	    		 }
 	    	  }
     		  if(riga ==28){
     			  tot_righe=tot_righe+1;
