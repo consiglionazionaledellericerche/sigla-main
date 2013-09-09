@@ -290,7 +290,7 @@
 			propertyName="cd_tipo_missione"
 			sqlTypeName="VARCHAR"
 			columnSize="10"
-			nullable="false" />
+			nullable="true" />
 		<columnMapping
 			columnName="ESERCIZIO_ANTICIPO"
 			propertyName="esercizio_anticipo"

@@ -25,7 +25,6 @@
 		maxLength="10"
 		inputSize="10"
 		inputType="SELECT"		
-		nullable="false"
 		label="Ambito missione"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"				
