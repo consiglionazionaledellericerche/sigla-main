@@ -72,6 +72,12 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	private java.math.BigDecimal tot_doc_cont_spe;
 	private java.math.BigDecimal tot_doc_cont_etr;
 
+	private java.math.BigDecimal tot_docamm_cont_spe;
+	private java.math.BigDecimal tot_docamm_cont_etr;
+	
+	private java.math.BigDecimal tot_doccont_cont_spe;
+	private java.math.BigDecimal tot_doccont_cont_etr;
+	
 	public ContrattoBulk() {
 		super();
 	}
@@ -656,6 +662,30 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	}
 	public void setCig(CigBulk cig) {
 		this.cig = cig;
+	}
+	public java.math.BigDecimal getTot_docamm_cont_spe() {
+		return tot_docamm_cont_spe;
+	}
+	public void setTot_docamm_cont_spe(java.math.BigDecimal tot_docamm_cont_spe) {
+		this.tot_docamm_cont_spe = tot_docamm_cont_spe;
+	}
+	public java.math.BigDecimal getTot_docamm_cont_etr() {
+		return tot_docamm_cont_etr;
+	}
+	public void setTot_docamm_cont_etr(java.math.BigDecimal tot_docamm_cont_etr) {
+		this.tot_docamm_cont_etr = tot_docamm_cont_etr;
+	}
+	public java.math.BigDecimal getTot_doccont_cont_spe() {
+		return tot_doccont_cont_spe;
+	}
+	public void setTot_doccont_cont_spe(java.math.BigDecimal tot_doccont_cont_spe) {
+		this.tot_doccont_cont_spe = tot_doccont_cont_spe;
+	}
+	public java.math.BigDecimal getTot_doccont_cont_etr() {
+		return tot_doccont_cont_etr;
+	}
+	public void setTot_doccont_cont_etr(java.math.BigDecimal tot_doccont_cont_etr) {
+		this.tot_doccont_cont_etr = tot_doccont_cont_etr;
 	}
 
 

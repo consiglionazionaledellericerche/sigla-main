@@ -192,13 +192,34 @@
 			<tr>
 			<td><% bp.getController().writeFormLabel( out, "tot_doc_cont_etr"); %></td>
 			<td><% bp.getController().writeFormInput( out, "tot_doc_cont_etr"); %></td>
-			<td><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Documenti contabili associati","javascript:submitForm('doVisualizzaDocContEtr')", null, "Visualizza i documenti contabili associati al contratto", ((CRUDConfigAnagContrattoBP)bp).isVisualizzaDocContEtrButtonEnabled()  ); %></td>
+			<td><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Accertato","javascript:submitForm('doVisualizzaDocContEtr')", null, "Visualizza gli accertamenti associati al contratto", ((CRUDConfigAnagContrattoBP)bp).isVisualizzaDocContEtrButtonEnabled()  ); %></td>
+			
+			<td><% bp.getController().writeFormLabel( out, "tot_doc_cont_spe"); %></td>
+			<td><% bp.getController().writeFormInput( out, "tot_doc_cont_spe"); %></td>
+			<td><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Impegnato","javascript:submitForm('doVisualizzaDocContSpe')", null, "Visualizza gli impegni associati al contratto", ((CRUDConfigAnagContrattoBP)bp).isVisualizzaDocContSpeButtonEnabled()  ); %></td>
+			
 			<td rowspan="2"><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Commesse associate","javascript:submitForm('doVisualizzaDocContForCommessaContratto')", null, "Visualizza le commesse associate al contratto", ((CRUDConfigAnagContrattoBP)bp).isVisualizzaCommessaButtonEnabled() ); %></td>			
 			</tr>
 			<tr>
-			<td><% bp.getController().writeFormLabel( out, "tot_doc_cont_spe"); %></td>
-			<td><% bp.getController().writeFormInput( out, "tot_doc_cont_spe"); %></td>
-			<td><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Documenti contabili associati","javascript:submitForm('doVisualizzaDocContSpe')", null, "Visualizza i documenti contabili associati al contratto", ((CRUDConfigAnagContrattoBP)bp).isVisualizzaDocContSpeButtonEnabled()  ); %></td>
+			
+			<td><% bp.getController().writeFormLabel( out, "tot_docamm_cont_etr"); %></td>
+			<td><% bp.getController().writeFormInput( out, "tot_docamm_cont_etr"); %></td>
+			<td><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Liquidato Entrate","javascript:submitForm('doVisualizzaDocammContEtr')", null, "Visualizza i documenti amministrativi associati al contratto", ((CRUDConfigAnagContrattoBP)bp).isVisualizzaDocammContEtrButtonEnabled()  ); %></td>
+			
+			<td><% bp.getController().writeFormLabel( out, "tot_docamm_cont_spe"); %></td>
+			<td><% bp.getController().writeFormInput( out, "tot_docamm_cont_spe"); %></td>
+			<td><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Liquidato Spese","javascript:submitForm('doVisualizzaDocammContSpe')", null, "Visualizza  i documenti amministrativi associati al contratto", ((CRUDConfigAnagContrattoBP)bp).isVisualizzaDocammContSpeButtonEnabled()  ); %></td>
+			<td></td>
+			</tr>
+			<tr>
+			
+			<td><% bp.getController().writeFormLabel( out, "tot_doccont_cont_etr"); %></td>
+			<td><% bp.getController().writeFormInput( out, "tot_doccont_cont_etr"); %></td>
+			<td><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Incassato","javascript:submitForm('doVisualizzaDoccontContEtr')", null, "Visualizza le reversali associati al contratto", ((CRUDConfigAnagContrattoBP)bp).isVisualizzaDoccontContEtrButtonEnabled()  ); %></td>
+			
+			<td><% bp.getController().writeFormLabel( out, "tot_doccont_cont_spe"); %></td>
+			<td><% bp.getController().writeFormInput( out, "tot_doccont_cont_spe"); %></td>
+			<td><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Pagato","javascript:submitForm('doVisualizzaDoccontContSpe')", null, "Visualizza i mandati associati al contratto", ((CRUDConfigAnagContrattoBP)bp).isVisualizzaDoccontContSpeButtonEnabled()  ); %></td>
 			<td></td>
 			</tr>
 		   </table>

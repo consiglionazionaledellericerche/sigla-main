@@ -434,7 +434,7 @@
         <fieldProperty
                 name="tot_doc_cont_spe"
                 property="tot_doc_cont_spe"
-                label="Totale documenti di spesa associati"
+                label="Impegnato"
                 inputType="ROTEXT"
                 formatName = "it.cnr.contab.util.EuroFormat"
                 maxLength="18"
@@ -445,7 +445,7 @@
         <fieldProperty
                 name="tot_doc_cont_etr"
                 property="tot_doc_cont_etr"
-                label="Totale documenti di entrata associati"
+                label="Accertato"
                 inputType="ROTEXT"
                 formatName = "it.cnr.contab.util.EuroFormat"
                 maxLength="18"
@@ -453,6 +453,50 @@
                 enabledOnInsert="false"
                 enabledOnEdit="false"
                 enabledOnSearch="false"/>
+           <fieldProperty
+                name="tot_docamm_cont_spe"
+                property="tot_docamm_cont_spe"
+                label="Liquidato Spese"
+                inputType="ROTEXT"
+                formatName = "it.cnr.contab.util.EuroFormat"
+                maxLength="18"
+                inputSize="18"
+                enabledOnInsert="false"
+                enabledOnEdit="false"
+                enabledOnSearch="false"/>
+        <fieldProperty
+                name="tot_docamm_cont_etr"
+                property="tot_docamm_cont_etr"
+                label="Liquidato Entrate"
+                inputType="ROTEXT"
+                formatName = "it.cnr.contab.util.EuroFormat"
+                maxLength="18"
+                inputSize="18"
+                enabledOnInsert="false"
+                enabledOnEdit="false"
+                enabledOnSearch="false"/>
+          <fieldProperty
+                name="tot_doccont_cont_spe"
+                property="tot_doccont_cont_spe"
+                label="Pagato"
+                inputType="ROTEXT"
+                formatName = "it.cnr.contab.util.EuroFormat"
+                maxLength="18"
+                inputSize="18"
+                enabledOnInsert="false"
+                enabledOnEdit="false"
+                enabledOnSearch="false"/>
+        <fieldProperty
+                name="tot_doccont_cont_etr"
+                property="tot_doccont_cont_etr"
+                label="Incassato"
+                inputType="ROTEXT"
+                formatName = "it.cnr.contab.util.EuroFormat"
+                maxLength="18"
+                inputSize="18"
+                enabledOnInsert="false"
+                enabledOnEdit="false"
+                enabledOnSearch="false"/>               
         <fieldProperty
                 name="unita_organizzativa"
                 property="unita_organizzativa"
@@ -680,6 +724,14 @@
                 name="tot_doc_cont_spe"/>
         <formFieldProperty
                 name="tot_doc_cont_etr"/>
+        <formFieldProperty
+                name="tot_docamm_cont_spe"/>
+        <formFieldProperty
+                name="tot_docamm_cont_etr"/>
+        <formFieldProperty
+                name="tot_doccont_cont_spe"/>
+        <formFieldProperty
+                name="tot_doccont_cont_etr"/>               
         <formFieldProperty
                 name="unita_organizzativa"/>
         <formFieldProperty

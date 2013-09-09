@@ -515,4 +515,143 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 		}
 		return context.findDefaultForward();
 	}						
+	public it.cnr.jada.action.Forward doVisualizzaDoccontContEtr(it.cnr.jada.action.ActionContext context) {
+		try {
+			fillModel(context);
+			SimpleCRUDBP rootbp = (SimpleCRUDBP)getBusinessProcess(context);
+			ContrattoBulk contratto = (ContrattoBulk)rootbp.getModel(); 
+			CompoundFindClause clauses = new CompoundFindClause();
+			clauses.addClause("AND","tipo",SQLBuilder.EQUALS,"ETR");
+			it.cnr.jada.util.action.ConsultazioniBP bp = (it.cnr.jada.util.action.ConsultazioniBP)context.createBusinessProcess("ConsDocContrattoBP");				
+			if (contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_ATTIVO) ||
+				contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_PASSIVO)||
+				contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_ATTIVO_E_PASSIVO)){
+				clauses.addClause("AND","esercizioContratto",SQLBuilder.EQUALS,contratto.getEsercizio());
+				clauses.addClause("AND","statoContratto",SQLBuilder.EQUALS,contratto.getStato());
+				clauses.addClause("AND","pgContratto",SQLBuilder.EQUALS,contratto.getPg_contratto());
+				clauses.addClause("AND","pgManRev",SQLBuilder.ISNOTNULL,null);
+				bp.setSearchResultColumnSet("Doccont");
+			}else{
+				clauses.addClause("AND","esercizioContrattoPadre",SQLBuilder.EQUALS,contratto.getEsercizio());
+				clauses.addClause("AND","statoContrattoPadre",SQLBuilder.EQUALS,contratto.getStato());
+				clauses.addClause("AND","pgContrattoPadre",SQLBuilder.EQUALS,contratto.getPg_contratto());
+				clauses.addClause("AND","pgManRev",SQLBuilder.ISNOTNULL,null);
+				bp.setSearchResultColumnSet("Doccont");
+			}				
+			bp.addToBaseclause(clauses);
+			bp.openIterator(context);
+			return context.addBusinessProcess(bp);
+		} catch(Throwable e) {
+			return handleException(context,e);
+		}
+}	
+/**
+ * Gestione apertura della consultazione dei documenti contabili 
+ *
+ * @param context	L'ActionContext della richiesta
+ * @return Il Forward alla pagina di risposta
+ */
+public it.cnr.jada.action.Forward doVisualizzaDoccontContSpe(it.cnr.jada.action.ActionContext context) {
+		try {
+			fillModel(context);
+			SimpleCRUDBP rootbp = (SimpleCRUDBP)getBusinessProcess(context);
+			ContrattoBulk contratto = (ContrattoBulk)rootbp.getModel(); 
+			CompoundFindClause clauses = new CompoundFindClause();
+			clauses.addClause("AND","tipo",SQLBuilder.EQUALS,"SPE");
+			it.cnr.jada.util.action.ConsultazioniBP bp = (it.cnr.jada.util.action.ConsultazioniBP)context.createBusinessProcess("ConsDocContrattoBP");				
+			if (contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_ATTIVO) ||
+				contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_PASSIVO)||
+				contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_ATTIVO_E_PASSIVO)){
+				clauses.addClause("AND","esercizioContratto",SQLBuilder.EQUALS,contratto.getEsercizio());
+				clauses.addClause("AND","statoContratto",SQLBuilder.EQUALS,contratto.getStato());
+				clauses.addClause("AND","pgContratto",SQLBuilder.EQUALS,contratto.getPg_contratto());
+				clauses.addClause("AND","pgManRev",SQLBuilder.ISNOTNULL,null);
+				bp.setSearchResultColumnSet("Doccont");
+			}else{
+				clauses.addClause("AND","esercizioContrattoPadre",SQLBuilder.EQUALS,contratto.getEsercizio());
+				clauses.addClause("AND","statoContrattoPadre",SQLBuilder.EQUALS,contratto.getStato());
+				clauses.addClause("AND","pgContrattoPadre",SQLBuilder.EQUALS,contratto.getPg_contratto());
+				clauses.addClause("AND","pgManRev",SQLBuilder.ISNOTNULL,null);
+				bp.setSearchResultColumnSet("Doccont");
+			}				
+			bp.addToBaseclause(clauses);
+			bp.openIterator(context);
+			return context.addBusinessProcess(bp);
+		} catch(Throwable e) {
+			return handleException(context,e);
+		}
+		
+}		
+public it.cnr.jada.action.Forward doVisualizzaDocammContEtr(it.cnr.jada.action.ActionContext context) {
+	try {
+		fillModel(context);
+		SimpleCRUDBP rootbp = (SimpleCRUDBP)getBusinessProcess(context);
+		ContrattoBulk contratto = (ContrattoBulk)rootbp.getModel(); 
+		CompoundFindClause clauses = new CompoundFindClause();
+		clauses.addClause("AND","tipo",SQLBuilder.EQUALS,"ETR");
+		it.cnr.jada.util.action.ConsultazioniBP bp = (it.cnr.jada.util.action.ConsultazioniBP)context.createBusinessProcess("ConsDocContrattoBP");				
+		if (contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_ATTIVO) ||
+			contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_PASSIVO)||
+			contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_ATTIVO_E_PASSIVO)){
+			clauses.addClause("AND","esercizioContratto",SQLBuilder.EQUALS,contratto.getEsercizio());
+			clauses.addClause("AND","statoContratto",SQLBuilder.EQUALS,contratto.getStato());
+			clauses.addClause("AND","pgContratto",SQLBuilder.EQUALS,contratto.getPg_contratto());
+			clauses.addClause("AND","pgManRev",SQLBuilder.ISNULL,null);
+			clauses.addClause("AND","pgDocAmm",SQLBuilder.ISNOTNULL,null);
+			bp.setSearchResultColumnSet("Docamm");		
+		}else{
+			clauses.addClause("AND","esercizioContrattoPadre",SQLBuilder.EQUALS,contratto.getEsercizio());
+			clauses.addClause("AND","statoContrattoPadre",SQLBuilder.EQUALS,contratto.getStato());
+			clauses.addClause("AND","pgContrattoPadre",SQLBuilder.EQUALS,contratto.getPg_contratto());
+			clauses.addClause("AND","pgManRev",SQLBuilder.ISNULL,null);
+			clauses.addClause("AND","pgDocAmm",SQLBuilder.ISNOTNULL,null);
+			bp.setSearchResultColumnSet("Docamm");										
+		}		
+		
+		bp.addToBaseclause(clauses);
+		bp.openIterator(context);
+		return context.addBusinessProcess(bp);
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}	
+/**
+* Gestione apertura della consultazione dei documenti contabili per Commessa e Contratto
+*
+* @param context	L'ActionContext della richiesta
+* @return Il Forward alla pagina di risposta
+*/
+public it.cnr.jada.action.Forward doVisualizzaDocammContSpe(it.cnr.jada.action.ActionContext context) {
+	try {
+		fillModel(context);
+		SimpleCRUDBP rootbp = (SimpleCRUDBP)getBusinessProcess(context);
+		ContrattoBulk contratto = (ContrattoBulk)rootbp.getModel(); 
+		CompoundFindClause clauses = new CompoundFindClause();
+		clauses.addClause("AND","tipo",SQLBuilder.EQUALS,"SPE");
+		it.cnr.jada.util.action.ConsultazioniBP bp = (it.cnr.jada.util.action.ConsultazioniBP)context.createBusinessProcess("ConsDocContrattoBP");				
+		if (contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_ATTIVO) ||
+			contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_PASSIVO)||
+			contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_ATTIVO_E_PASSIVO)){
+			clauses.addClause("AND","esercizioContratto",SQLBuilder.EQUALS,contratto.getEsercizio());
+			clauses.addClause("AND","statoContratto",SQLBuilder.EQUALS,contratto.getStato());
+			clauses.addClause("AND","pgContratto",SQLBuilder.EQUALS,contratto.getPg_contratto());
+			clauses.addClause("AND","pgManRev",SQLBuilder.ISNULL,null);
+			clauses.addClause("AND","pgDocAmm",SQLBuilder.ISNOTNULL,null);
+			bp.setSearchResultColumnSet("Docamm");
+		}else{
+			clauses.addClause("AND","esercizioContrattoPadre",SQLBuilder.EQUALS,contratto.getEsercizio());
+			clauses.addClause("AND","statoContrattoPadre",SQLBuilder.EQUALS,contratto.getStato());
+			clauses.addClause("AND","pgContrattoPadre",SQLBuilder.EQUALS,contratto.getPg_contratto());
+			clauses.addClause("AND","pgManRev",SQLBuilder.ISNULL,null);
+			clauses.addClause("AND","pgDocAmm",SQLBuilder.ISNOTNULL,null);
+			bp.setSearchResultColumnSet("Docamm");	
+		}
+		
+		bp.addToBaseclause(clauses);
+		bp.openIterator(context);
+		return context.addBusinessProcess(bp);
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}
 }

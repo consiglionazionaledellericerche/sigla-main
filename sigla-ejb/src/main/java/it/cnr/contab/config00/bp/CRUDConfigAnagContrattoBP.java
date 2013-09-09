@@ -239,6 +239,47 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		  return false;
 		return true;  	
 	}
+	
+	public boolean isVisualizzaDocammContEtrButtonEnabled(){
+		ContrattoBulk contratto = (ContrattoBulk)getModel();
+		if (contratto==null)
+		  return false;
+		else if (contratto.getTot_docamm_cont_etr()==null)
+		  return false;
+		else if (contratto.getTot_docamm_cont_etr().compareTo(new java.math.BigDecimal(0))==0)
+		  return false;
+		return true;  	
+	}
+	public boolean isVisualizzaDocammContSpeButtonEnabled(){
+		ContrattoBulk contratto = (ContrattoBulk)getModel();
+		if (contratto==null)
+		  return false;
+		else if (contratto.getTot_docamm_cont_spe()==null)
+		  return false;
+		else if (contratto.getTot_docamm_cont_spe().compareTo(new java.math.BigDecimal(0))==0)
+		  return false;
+		return true;  	
+	}
+	public boolean isVisualizzaDoccontContEtrButtonEnabled(){
+		ContrattoBulk contratto = (ContrattoBulk)getModel();
+		if (contratto==null)
+		  return false;
+		else if (contratto.getTot_doccont_cont_etr()==null)
+		  return false;
+		else if (contratto.getTot_doccont_cont_etr().compareTo(new java.math.BigDecimal(0))==0)
+		  return false;
+		return true;  	
+	}
+	public boolean isVisualizzaDoccontContSpeButtonEnabled(){
+		ContrattoBulk contratto = (ContrattoBulk)getModel();
+		if (contratto==null)
+		  return false;
+		else if (contratto.getTot_doccont_cont_spe()==null)
+		  return false;
+		else if (contratto.getTot_doccont_cont_spe().compareTo(new java.math.BigDecimal(0))==0)
+		  return false;
+		return true;  	
+	}
 	public boolean isVisualizzaCommessaButtonEnabled(){
 		return isVisualizzaDocContSpeButtonEnabled()||isVisualizzaDocContEtrButtonEnabled();
 	}	
