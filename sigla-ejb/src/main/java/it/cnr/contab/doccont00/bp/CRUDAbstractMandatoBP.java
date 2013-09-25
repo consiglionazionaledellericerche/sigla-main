@@ -306,7 +306,10 @@ public boolean isContabileButtonHidden(){
 	if (getStatus() == SEARCH)
 		return hidden;
 	MandatoBulk mandato = (MandatoBulk)getModel();
-	if (mandato != null && mandato.getPg_mandato() != null)
+	if (mandato != null && mandato.getPg_mandato() != null && mandato.getStato() != null && 
+			mandato.getStato().equalsIgnoreCase(MandatoBulk.STATO_MANDATO_PAGATO) &&
+			mandato.getStato_trasmissione() != null && 
+			mandato.getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO))
 		return contabiliService.getNodeRefContabile(mandato) == null;
 	return hidden;
 }
