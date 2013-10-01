@@ -67,7 +67,7 @@
 				<textElement>
 					<font fontName="Times New Roman" size="9" isBold="false" pdfFontName="Times-Bold"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[" [ ] c/o  Banca Nazionale del Lavoro IBAN IT75N0100503392000000218150 SWIFT/BIC: BNLIITRR (ad uso esclusivo dei soggetti diversi dalle amministrazioni dello Stato e dalle amministrazioni del settore pubblico non titolari di c/c presso la BNL)"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[" [ ] c/o  Banca Nazionale del Lavoro IBAN IT75N0100503392000000218150 SWIFT/BIC: BNLIITRR, intestato a CNR Incassi e Pagamenti giornalieri (ad uso esclusivo dei soggetti diversi dalle amministrazioni dello Stato e dalle amministrazioni del settore pubblico non titolari di c/c presso la BNL)"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-6" x="5" y="145" width="520" height="27"/>
@@ -93,7 +93,7 @@
 				<textElement>
 					<font fontName="Times New Roman" size="9" isBold="false" pdfFontName="Times-Bold"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[" [ ]  c/o  Banca Nazionale del Lavoro IBAN IT57S0100503392000000218155 SWIFT/BIC: BNLIITRR (ad uso esclusivo dei soggetti diversi dalle amministrazioni dello Stato e dalle amministrazioni del settore pubblico titolari di c/c presso la BNL)"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[" [ ]  c/o  Banca Nazionale del Lavoro IBAN IT57S0100503392000000218155 SWIFT/BIC: BNLIITRR, intestato a CNR Incassi giornalieri da altre dipendenze (ad uso esclusivo dei soggetti diversi dalle amministrazioni dello Stato e dalle amministrazioni del settore pubblico titolari di c/c presso la BNL)"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-3" style="TNR10B" x="5" y="65" width="515" height="13"/>
