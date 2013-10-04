@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="144"/>
 	<property name="ireport.background.image.properties" value="false,true,0.25,0,0,0,0,0,0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -876,6 +876,7 @@ $F{CAB_TERZO}==null||
 :$F{TI_PAGAMENTO}.equals("P")?$F{DS_MODALITA_PAG} + " n. " + $F{NUMERO_CONTO_TERZO} + ($F{INTESTAZIONE_TERZO}!=null?", intestazione: " + $F{INTESTAZIONE_TERZO}:"")
 :$F{TI_PAGAMENTO}.equals("A")||
  $F{TI_PAGAMENTO}.equals("Q")||
+ $F{TI_PAGAMENTO}.equals("N")||
  $F{TI_PAGAMENTO}.equals("I")?$F{DS_MODALITA_PAG} + ($F{INTESTAZIONE_TERZO}!=null?", intestazione: " + $F{INTESTAZIONE_TERZO}:"")
 :$F{DS_MODALITA_PAG}) == null)
 ))]]></printWhenExpression>
