@@ -40,7 +40,7 @@ public class Ass_ev_siopeHome extends BulkHome {
 	
 	public SQLBuilder selectCodici_siopeByClause( Ass_ev_siopeBulk bulk, Codici_siopeHome home,it.cnr.jada.bulk.OggettoBulk bulkClause,CompoundFindClause clause) throws java.lang.reflect.InvocationTargetException,IllegalAccessException, it.cnr.jada.persistency.PersistencyException {
 		SQLBuilder sql = home.createSQLBuilder();
-		sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, bulk.getTi_gestione_siope());
+		sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, bulk.getTi_gestione());
 		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );	
 		sql.addClause( clause );
 		return sql;
