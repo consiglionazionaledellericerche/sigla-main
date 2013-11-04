@@ -10,6 +10,7 @@ import javax.ejb.EJBException;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
+import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
@@ -223,18 +224,21 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 	 * @param userContext lo userContext che ha generato la richiesta
 	 * @param clauses clausole di ricerca gia' specificate dall'utente
 	 * @return il SQLBuilder con la clausola aggiuntiva sul gestore
+	 * @throws RemoteException 
 	 */
 	public SQLBuilder selectLinea_attivitaByClause (UserContext userContext, 
 													Pdg_variazione_riga_spesa_gestBulk dett,
 													WorkpackageBulk latt, 
-													CompoundFindClause clause) throws ComponentException, PersistencyException {	
+													CompoundFindClause clause) throws ComponentException, PersistencyException, RemoteException {	
 		SQLBuilder sql = getHome(userContext, latt, "V_LINEA_ATTIVITA_VALIDA").createSQLBuilder();
 
 		sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
 		sql.addClause("AND","cd_centro_responsabilita",sql.EQUALS,dett.getCd_cdr_assegnatario());
 	    sql.addClause("AND","ti_gestione",sql.EQUALS,Elemento_voceHome.GESTIONE_SPESE);
 	    
-		
+	 // Obbligatorio cofog sulle GAE
+	 	if(((Parametri_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).isCofogObbligatorio(userContext))
+	 		sql.addSQLClause("AND","CD_COFOG",SQLBuilder.ISNOTNULL,null);
 		sql.addTableToHeader("FUNZIONE");
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_FUNZIONE","FUNZIONE.CD_FUNZIONE");
 		sql.addSQLClause("AND", "FUNZIONE.FL_UTILIZZABILE",sql.EQUALS,"Y");
@@ -320,7 +324,6 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO","PROGETTO_GEST.ESERCIZIO");
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO","PROGETTO_GEST.PG_PROGETTO");
 		sql.addSQLClause("AND","PROGETTO_GEST.FL_UTILIZZABILE",sql.EQUALS,"Y");
-		
 		/*
 		 * L’origine delle fonti pilota l’utilizzo delle GAE sui dettagli della variazione. 
 		 * In particolare:
@@ -387,7 +390,6 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 			sql.addSQLExistsClause("AND",progettoHome.abilitazioniModuli(userContext));
 		}	  
 		if (clause != null) sql.addClause(clause);
-		
 		return sql; 
 	}	
 	
@@ -435,7 +437,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 		sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", sql.ISNULL, null);	
 		sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", sql.EQUALS, "N");	
 		sql.closeParenthesis();
-
+		sql.addSQLClause( "AND", "V_ELEMENTO_VOCE_PDG_SPE.FL_SOLO_RESIDUO", sql.EQUALS, "N"); 
 		if (dett.getLinea_attivita() != null)
 			sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_FUNZIONE",sql.EQUALS,dett.getLinea_attivita().getCd_funzione());
 		if (dett.getCdr_assegnatario()!=null && dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita() != null)
@@ -472,7 +474,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 		sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_ETR.FL_PARTITA_GIRO", sql.ISNULL, null);	
 		sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_ETR.FL_PARTITA_GIRO", sql.EQUALS, "N");	
 		sql.closeParenthesis();
-
+		sql.addSQLClause( "AND", "V_ELEMENTO_VOCE_PDG_ETR.FL_SOLO_RESIDUO", sql.EQUALS, "N");
 		if (dett.getLinea_attivita() != null && dett.getCd_linea_attivita() != null)
 			sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_ETR.CD_NATURA",sql.EQUALS,dett.getLinea_attivita().getCd_natura());
 		if (dett.getCdr_assegnatario()!=null && dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita() != null && !dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita().equals(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC))

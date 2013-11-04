@@ -19,6 +19,7 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	private String cd_tipo_rapporto_prof;
 	private Integer livello_pdg_decis_spe;
 	private Integer livello_pdg_decis_etr;
+	private Integer livello_pdg_cofog;
 	private Integer livello_contratt_pdg_spe;
 	private Boolean fl_regolamento_2006;
 	private Boolean fl_diaria_miss_italia;
@@ -280,6 +281,12 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 
 	public void setData_stipula_contratti(java.sql.Timestamp data_stipula_contratti) {
 		this.data_stipula_contratti = data_stipula_contratti;
+	}
+	public Integer getLivello_pdg_cofog() {
+		return livello_pdg_cofog;
+	}
+	public void setLivello_pdg_cofog(Integer livello_pdg_cofog) {
+		this.livello_pdg_cofog = livello_pdg_cofog;
 	}
 	
 }

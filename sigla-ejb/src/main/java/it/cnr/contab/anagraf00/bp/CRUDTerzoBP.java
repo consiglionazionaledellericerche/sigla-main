@@ -329,7 +329,7 @@ public boolean isNewButtonEnabled() {
 	
 	TerzoBulk terzo = (TerzoBulk)getModel();
 	
-	if (terzo != null && (terzo.isDipendente() || terzo.isAnagraficoScaduto()|| terzo.isTerzo_speciale()))
+	if (terzo != null && (terzo.getAnagrafico()!=null && terzo.getAnagrafico().isPersonaFisica())||(terzo.isDipendente() || terzo.isAnagraficoScaduto()|| terzo.isTerzo_speciale()))
 		return false;
 	if(getStatus()==SEARCH) 
 		return false;	

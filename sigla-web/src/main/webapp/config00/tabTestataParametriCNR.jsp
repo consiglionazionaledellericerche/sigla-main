@@ -137,5 +137,9 @@
 			</TD><TD colspan="3">
 			<% bp.getController().writeFormInput(out,"data_stipula_contratti");%>
 		</TD></TR>					
-
+		<TR><TD>
+			<% bp.getController().writeFormLabel(out,"livello_pdg_cofog");%>
+			</TD><TD colspan="3">
+			<% bp.getController().writeFormInput(out,"default","livello_pdg_cofog", isLivelloPdgDecisionaleSpeEnabled, null, null);%>
+		</TD></TR>			
 	</table>

@@ -1571,6 +1571,7 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
 			sql.addClause("AND", "fl_voce_sac", SQLBuilder.EQUALS, new Boolean( false) );		
 		sql.addClause( clause );
 	}
+	
 /*	else if ( bulk instanceof ObbligazionePGiroBulk )
 	{
 		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );		
@@ -1582,7 +1583,7 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
 		sql.addClause( clause );
 	}*/
 	
-	/* non usato perchè ridefinito nella sottoclasse ImpegnoPGiroHome */
+	/* non usato perchè ridefinito nella sottoclasse ImpegnoPGiroHome, ma viene usato per ImpegnoPGiroResiduo */
 	else if ( bulk instanceof ImpegnoPGiroBulk )
 	{
 		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );
@@ -1598,6 +1599,10 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
 			sql.addClause("AND", "fl_voce_sac", SQLBuilder.EQUALS, new Boolean( false) );				
 		sql.addClause( clause );
 	}
+	if (bulk instanceof ObbligazioneResBulk || bulk instanceof ObbligazioneRes_impropriaBulk||bulk instanceof ImpegnoPGiroResiduoBulk)
+		 sql.addClause("AND", "fl_solo_competenza", SQLBuilder.EQUALS, new Boolean( false) );
+	else
+		sql.addClause("AND", "fl_solo_residuo", SQLBuilder.EQUALS, new Boolean( false) );
 	return sql;
 		
 }

@@ -271,7 +271,23 @@
 		enabledOnInsert="false"		
 		inputType="CHECKBOX"
 		/>
-		
+	<fieldProperty
+		name="cofog"
+		property="cofog"
+		label="Cofog"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		readonlyPropertyOnEdit="ROCofog"
+		completeOnSave="false" />
+	<fieldProperty
+		name="cd_cofog"
+		property="cofog.cd_cofog"
+		label="cofog"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnFreeSearch="true" />	
 	<form
 		name="searchtool" >
 		<formFieldProperty
@@ -367,7 +383,11 @@
 		name="crea_modulo" />
 	<formFieldProperty
 		name="fl_limite_ass_obblig"/>
-				
+	<formFieldProperty
+		name="cd_cofog"/>	
+	<formFieldProperty
+		name="cofog"/>
+							
 	<columnFieldProperty
 		name="cd_linea_attivita"
 		label="Cod." />
@@ -405,7 +425,9 @@
 		name="cd_responsabile_terzo" />		
 	<columnFieldProperty
 		name="fl_limite_ass_obblig"/>
-
+	<columnFieldProperty
+		name="cd_cofog"/>
+	
 	<columnSet name="columnSetPerAccertamento">
 		<columnFieldProperty name="cd_centro_responsabilita" label="CDR" />	
 		<columnFieldProperty name="cd_progetto" label="Mod. Attivita'" />		
@@ -477,5 +499,7 @@
 		name="cd_responsabile_terzo" />		
 	<findFieldProperty
 		name="fl_limite_ass_obblig"/>
+	<findFieldProperty
+		name="cd_cofog"/>
 		
 </bulkInfo>

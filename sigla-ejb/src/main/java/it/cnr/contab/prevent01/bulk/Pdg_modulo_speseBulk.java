@@ -6,6 +6,7 @@ package it.cnr.contab.prevent01.bulk;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+import it.cnr.contab.config00.latt.bulk.CofogBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
 import it.cnr.contab.config00.sto.bulk.Ass_uo_areaBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
@@ -31,11 +32,12 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 	private java.math.BigDecimal totale_spese_accentrate_esterne_gest;
 	private boolean limiteInt=false;
 	private boolean limiteEst=false;
+	private CofogBulk cofog;
 	public Pdg_modulo_speseBulk() {
 		super();
 	}
-	public Pdg_modulo_speseBulk(java.lang.Integer esercizio, java.lang.String cd_centro_responsabilita, java.lang.Integer pg_progetto, java.lang.Integer id_classificazione, java.lang.String cd_cds_area) {
-		super(esercizio, cd_centro_responsabilita, pg_progetto, id_classificazione, cd_cds_area);
+	public Pdg_modulo_speseBulk(java.lang.Integer esercizio, java.lang.String cd_centro_responsabilita, java.lang.Integer pg_progetto, java.lang.Integer id_classificazione, java.lang.String cd_cds_area,Integer pg_dettaglio) {
+		super(esercizio, cd_centro_responsabilita, pg_progetto, id_classificazione, cd_cds_area,pg_dettaglio);
 		setPdg_modulo_costi(new Pdg_modulo_costiBulk(esercizio, cd_centro_responsabilita, pg_progetto));
 		setClassificazione(new V_classificazione_vociBulk(id_classificazione));
 		setArea(new CdsBulk(cd_cds_area));
@@ -399,5 +401,23 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 	}
 	public boolean isLimiteEst() {
 		return limiteEst;
+	}
+	public CofogBulk getCofog() {
+		return cofog;
+	}
+	public void setCofog(CofogBulk cofog) {
+		this.cofog = cofog;
+	}
+	@Override
+	public String getCd_cofog() {
+		CofogBulk cofog = this.getCofog();
+		if (cofog == null)
+			return null;
+		return cofog.getCd_cofog();
+	}
+	@Override
+	public void setCd_cofog(String cd_cofog) {
+		// TODO Auto-generated method stub
+		getCofog().setCd_cofog(cd_cofog);
 	}
 }

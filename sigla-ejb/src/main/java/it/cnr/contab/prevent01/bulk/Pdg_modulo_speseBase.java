@@ -3,6 +3,7 @@
 * Date 29/09/2005
 */
 package it.cnr.contab.prevent01.bulk;
+
 import it.cnr.jada.persistency.Keyed;
 public class Pdg_modulo_speseBase extends Pdg_modulo_speseKey implements Keyed {
 //    IM_SPESE_GEST_DECENTRATA_INT DECIMAL(15,2) NOT NULL
@@ -22,12 +23,14 @@ public class Pdg_modulo_speseBase extends Pdg_modulo_speseKey implements Keyed {
  
 //    IM_SPESE_A3 DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal im_spese_a3;
+	
+	private String cd_cofog;
  
 	public Pdg_modulo_speseBase() {
 		super();
 	}
-	public Pdg_modulo_speseBase(java.lang.Integer esercizio, java.lang.String cd_centro_responsabilita, java.lang.Integer pg_progetto, java.lang.Integer id_classificazione, java.lang.String cd_cds_area) {
-		super(esercizio, cd_centro_responsabilita, pg_progetto, id_classificazione, cd_cds_area);
+	public Pdg_modulo_speseBase(java.lang.Integer esercizio, java.lang.String cd_centro_responsabilita, java.lang.Integer pg_progetto, java.lang.Integer id_classificazione, java.lang.String cd_cds_area,Integer pg_dettaglio) {
+		super(esercizio, cd_centro_responsabilita, pg_progetto, id_classificazione, cd_cds_area,pg_dettaglio);
 	}
 	public java.math.BigDecimal getIm_spese_gest_decentrata_int () {
 		return im_spese_gest_decentrata_int;
@@ -65,4 +68,11 @@ public class Pdg_modulo_speseBase extends Pdg_modulo_speseKey implements Keyed {
 	public void setIm_spese_a3(java.math.BigDecimal im_spese_a3)  {
 		this.im_spese_a3=im_spese_a3;
 	}
+	public String getCd_cofog() {
+		return cd_cofog;
+	}
+	public void setCd_cofog(String cd_cofog) {
+		this.cd_cofog = cd_cofog;
+	}
+	
 }

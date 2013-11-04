@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.EJBException;
 import java.util.Collection;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.*;
 import it.cnr.contab.pdg00.cdip.bulk.*;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
@@ -605,7 +606,9 @@ public it.cnr.jada.util.RemoteIterator listaCdr(UserContext userContext,String c
   *		 - la linea di attività deve essere valida nell'esercizio di scrivania
   */
 public it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(UserContext userContext,CdrBulk cdr,int mese, String tipo_rapporto, boolean isRapporto13) throws ComponentException {
+	it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 	SQLBuilder sql = getHome(userContext,it.cnr.contab.config00.latt.bulk.WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA").createSQLBuilder();
+try {	
 	if (mese == 0) {
 		sql.addTableToHeader("PDG_MODULO");
 		sql.addSQLJoin("PDG_MODULO.ESERCIZIO","V_LINEA_ATTIVITA_VALIDA.ESERCIZIO");
@@ -616,6 +619,9 @@ public it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(UserContext use
 		sql.addSQLClause(FindClause.OR,"PDG_MODULO.STATO", SQLBuilder.EQUALS, Pdg_moduloBulk.STATO_AD);
 		sql.closeParenthesis();
 	}
+	// Obbligatorio cofog sulle GAE
+	if(((Parametri_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).isCofogObbligatorio(userContext))
+		sql.addSQLClause("AND","CD_COFOG",SQLBuilder.ISNOTNULL,null);
 //Filtro che estrae solo le linee di attività di spesa: 25/02/2002
 	sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.TI_GESTIONE",SQLBuilder.EQUALS, it.cnr.contab.config00.latt.bulk.WorkpackageBulk.TI_GESTIONE_SPESE);
 	sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
@@ -639,9 +645,7 @@ public it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(UserContext use
 	/**
 	 * Escludo la linea di attività dell'IVA C20
 	 */
-	it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
-	try {
-		config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_LINEA_ATTIVITA_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_LINEA_COMUNE_VERSAMENTO_IVA);
+			config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_LINEA_ATTIVITA_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_LINEA_COMUNE_VERSAMENTO_IVA);
 	} catch (RemoteException e) {
 		throw new ComponentException(e);
 	} catch (EJBException e) {
@@ -682,6 +686,10 @@ public java.util.List listaLinea_attivitaPerRipartizioneResidui(UserContext user
 		sql.addSQLClause(FindClause.AND,"CDR.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,cd_unita_organizzativa);
 		sql.addClause(FindClause.AND,"ti_gestione",SQLBuilder.EQUALS,it.cnr.contab.config00.latt.bulk.WorkpackageBulk.TI_GESTIONE_SPESE);
 		sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		
+		// Obbligatorio cofog sulle GAE
+		if(((Parametri_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).isCofogObbligatorio(userContext))
+			sql.addSQLClause("AND","CD_COFOG",SQLBuilder.ISNOTNULL,null);
 // Tolta perchè voglio vedere tutte le linee di attività anche se sono già
 // state scaricate
 //		sql.addSQLClause("AND","NOT EXISTS ( SELECT 1 FROM ASS_CDP_LA WHERE ASS_CDP_LA.ESERCIZIO = LINEA_ATTIVITA.ESERCIZIO AND ASS_CDP_LA.CD_CENTRO_RESPONSABILITA = LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA AND ASS_CDP_LA.CD_LINEA_ATTIVITA = LINEA_ATTIVITA.CD_LINEA_ATTIVITA )");
@@ -1539,6 +1547,8 @@ public boolean isSpeseFromScaricoDipendente(UserContext userContext, Pdg_modulo_
 		sql.addSQLClause("AND","PG_PROGETTO_SPESE",sql.EQUALS,pdg_modulo_spese.getPg_progetto());
 		sql.addSQLClause("AND","ID_CLASSIFICAZIONE",sql.EQUALS,pdg_modulo_spese.getId_classificazione());
 		sql.addSQLClause("AND","CD_CDS_AREA",sql.EQUALS,pdg_modulo_spese.getCd_cds_area());
+		//sql.addSQLClause("AND","PG_DETTAGLIO",sql.EQUALS,pdg_modulo_spese.getPg_dettaglio());
+		
 		PreparedStatement stm = sql.prepareStatement(getConnection(userContext));
 		try {
 			java.sql.ResultSet rs = stm.executeQuery();
@@ -1547,7 +1557,7 @@ public boolean isSpeseFromScaricoDipendente(UserContext userContext, Pdg_modulo_
 		} finally {
 			try{stm.close();}catch( java.sql.SQLException e ){};
 		}
-		return false;
+	return false;
 	}
 	catch( Exception e )
 	{

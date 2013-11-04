@@ -389,7 +389,7 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 				updateBulk(userContext, spese);
 			}
 			else {
-				Pdg_modulo_speseBulk spese = new Pdg_modulo_speseBulk(pdg.getEsercizio(), cdrAcc, pdgm.getPg_progetto(), idCla, null);
+				Pdg_modulo_speseBulk spese = new Pdg_modulo_speseBulk(pdg.getEsercizio(), cdrAcc, pdgm.getPg_progetto(), idCla, null,null);
 
 				CdrBulk cdr = new CdrBulk(spese.getPdg_modulo_costi().getPdg_modulo().getCd_centro_responsabilita());
 				cdr.getCd_unita_organizzativa();

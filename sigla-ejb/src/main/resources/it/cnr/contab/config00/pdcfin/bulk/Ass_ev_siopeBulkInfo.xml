@@ -35,7 +35,8 @@
 		property="elemento_voce"
 		inputType="SEARCHTOOL"
 		readonlyPropertyOnEdit="ROGiaAssociato"
-		enabledOnSearch="true"/>
+		enabledOnSearch="true"
+		label="Elemento voce"/>
 	<fieldProperty
 		name="cd_elemento_voce"
 		property="elemento_voce.cd_elemento_voce"
@@ -57,7 +58,8 @@
 		property="codici_siope"
 		inputType="SEARCHTOOL"
 		readonlyPropertyOnEdit="ROGiaAssociato"
-		enabledOnSearch="true"/>
+		enabledOnSearch="true"
+		label="Codice Siope"/>
 	<fieldProperty
 		name="cd_siope"
 		property="codici_siope.cd_siope"

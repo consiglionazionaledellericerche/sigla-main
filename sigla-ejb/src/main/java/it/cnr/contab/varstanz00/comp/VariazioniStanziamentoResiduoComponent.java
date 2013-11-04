@@ -309,7 +309,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", sql.ISNULL, null);	
 			sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", sql.EQUALS, "N");	
 			sql.closeParenthesis();
-
+			sql.addSQLClause( "AND", "V_ELEMENTO_VOCE_PDG_SPE.FL_SOLO_COMPETENZA", sql.EQUALS, "N");
 			if (var_stanz_res_riga.getLinea_di_attivita() != null)
 				sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_FUNZIONE",sql.EQUALS,var_stanz_res_riga.getLinea_di_attivita().getCd_funzione());
 			if (var_stanz_res_riga.getCentroTestata()!=null && var_stanz_res_riga.getCentroTestata().getUnita_padre().getCd_tipo_unita() != null)

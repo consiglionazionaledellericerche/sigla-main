@@ -185,7 +185,22 @@
 		maxLength="22"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Importo Previsione Spese Decentrate Interne da Ripartire" />
-
+	<fieldProperty
+		name="pg_dettaglio"
+		property="pg_dettaglio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnFreeSearch="false"
+		label="Progressivo" />
+	<fieldProperty
+		name="cd_cofog"
+		property="cd_cofog"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnFreeSearch="false"
+		label="cofog" />	
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -232,6 +247,10 @@
 		name="im_spese_gest_dec_est_da_rip" />
 	<formFieldProperty
 		name="im_spese_gest_dec_int_da_rip" />
+	<formFieldProperty
+		name="pg_dettaglio" />	
+	<formFieldProperty
+		name="cd_cofog" />		
 
 	<findFieldProperty
 		name="esercizio" />
@@ -292,6 +311,8 @@
 		name="cd_classificazione" />
 	<columnFieldProperty
 		name="ds_classificazione" />
+	<columnFieldProperty
+		name="cd_cofog" />	
 	<columnFieldProperty
 		name="cd_cds_area" />
 	<columnFieldProperty
@@ -323,12 +344,14 @@
 	
 	<columnSet
 	    name="pdgModuloSpeseGest">
-		<columnFieldProperty
+	  	<columnFieldProperty
 			name="cd_progetto" />
 		<columnFieldProperty
 			name="cd_classificazione" />
 		<columnFieldProperty
 			name="ds_classificazione" />
+		<columnFieldProperty
+			name="cd_cofog" />	
        	<columnFieldProperty
        		name="im_spese_gest_dec_int_pdgp"
        		label="Prev."

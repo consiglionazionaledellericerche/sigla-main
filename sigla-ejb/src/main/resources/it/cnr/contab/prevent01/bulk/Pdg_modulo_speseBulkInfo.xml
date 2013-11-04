@@ -78,7 +78,14 @@
 		maxLength="30"
 		nullable="false"
 		label="Area" />
-		
+	<fieldProperty
+		name="pg_dettaglio"
+		property="pg_dettaglio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+		label="Progressivo" />	
 	<fieldProperty
 		name="im_spese_gest_decentrata_int"
 		property="im_spese_gest_decentrata_int"
@@ -363,7 +370,17 @@
 		maxLength="30"
 		nullable="false"
 		label="Area" />	
-
+	<fieldProperty
+		name="desctool_cofog"
+		property="cofog.cd_cofog"
+		descProperty="cofog.dsCofog"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Cofog" />	
 	<fieldProperty
 		name="label_gestione_decentrata"
 		label="Gestione Decentrata" />
@@ -406,7 +423,22 @@
 		name="label_totale_spese"
 		labelStyle="color:blue"
 		label="Totale Spese" />
-		
+	<fieldProperty
+		name="cofog"
+		property="cofog"
+		label="Cofog"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		completeOnSave="false" />
+	<fieldProperty
+		name="cd_cofog"
+		property="cofog.cd_cofog"
+		label="cofog"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnFreeSearch="true" />		
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -415,6 +447,8 @@
 		name="ds_centro_responsabilita" />
 	<formFieldProperty
 		name="pg_progetto" />
+	<formFieldProperty
+		name="pg_dettaglio" />		
 	<formFieldProperty
         name="classificazione"/>		
 	<formFieldProperty
@@ -467,6 +501,8 @@
 	<formFieldProperty
 		name="desctool_area" />	
 	<formFieldProperty
+		name="desctool_cofog" />		
+	<formFieldProperty
 		name="label_previsione_assestata_impegno"/>		
 	<formFieldProperty
 		name="label_gestione_decentrata"/>
@@ -516,13 +552,18 @@
 		name="totale_spese_decentrate_interne_gest" />
 	<formFieldProperty
 		name="totale_spese_decentrate_esterne_gest" />
-		
+	<formFieldProperty
+		name="cd_cofog"/>	
+	<formFieldProperty
+		name="cofog"/>	
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
 		name="cd_centro_responsabilita" />
 	<findFieldProperty
 		name="pg_progetto" />
+	<findFieldProperty
+		name="pg_dettaglio" />
 	<findFieldProperty
 		name="id_classificazione" />
 	<findFieldProperty
@@ -592,5 +633,6 @@
 	<columnFieldProperty
 		name="cd_cds_area"
 		columnStyle="valign:center;"/>
-		
+	<columnFieldProperty
+		name="cd_cofog"/>		
 </bulkInfo>

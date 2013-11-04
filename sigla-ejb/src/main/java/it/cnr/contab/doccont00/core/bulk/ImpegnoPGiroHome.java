@@ -93,7 +93,8 @@ public SQLBuilder selectElemento_voceByClause( ImpegnoPGiroBulk bulk, Elemento_v
 	sql.addClause("AND", "fl_partita_giro", SQLBuilder.EQUALS, new Boolean(true) );	
 	if ( !Tipo_unita_organizzativaHome.TIPO_UO_SAC.equals(bulk.getCds().getCd_tipo_unita())  )
 			sql.addClause("AND", "fl_voce_sac", SQLBuilder.EQUALS, new Boolean( false) );		
-	sql.addClause( clause );
+	sql.addClause( clause ); 
+	sql.addClause("AND", "fl_solo_residuo", SQLBuilder.EQUALS, new Boolean( false) );
 	return sql;
 		
 }

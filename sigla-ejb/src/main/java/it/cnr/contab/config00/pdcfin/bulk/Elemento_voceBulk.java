@@ -104,6 +104,8 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	setFl_soggetto_prelievo(new Boolean(false));
 	setPerc_prelievo_pdgp_entrate(Utility.ZERO);
 	setFl_prelievo(new Boolean(false));
+	setFl_solo_competenza(new Boolean(false));
+	setFl_solo_residuo(new Boolean(false));
 	return this; 
 }
 /**

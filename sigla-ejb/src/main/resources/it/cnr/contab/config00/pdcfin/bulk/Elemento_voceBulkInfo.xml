@@ -316,6 +316,24 @@
 		inputSize="7"
 		maxLength="7"
 		nullable="true" />			
+	<fieldProperty
+		name="fl_solo_competenza"
+		property="fl_solo_competenza"
+		label="Solo competenza"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="fl_solo_residuo"
+		property="fl_solo_residuo"
+		label="Solo residuo"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />		
 					
 	<form
 		name="searchtool" >
@@ -390,6 +408,10 @@
 		name="fl_prelievo" />		
 	<columnFieldProperty
 		name="perc_prelievo_pdgp_entrate"/>		
+	<columnFieldProperty
+		name="fl_solo_competenza" />		
+	<columnFieldProperty
+		name="fl_solo_residuo"/>			
 <columnSet
 	name="impegnoPGiro">
 		
@@ -516,6 +538,10 @@
 		name="fl_prelievo" />
 	<formFieldProperty
 		name="perc_prelievo_pdgp_entrate"/>		
+	<formFieldProperty
+		name="fl_solo_competenza" />		
+	<formFieldProperty
+		name="fl_solo_residuo"/>		
 			
 	<findFieldProperty
 		name="esercizio"
@@ -557,7 +583,10 @@
 		name="fl_soggetto_prelievo" />
 	<findFieldProperty
 		name="fl_prelievo" />	
-		
+	<findFieldProperty
+		name="fl_solo_competenza" />		
+	<findFieldProperty
+		name="fl_solo_residuo"/>		
 
 	<form
 		name="searchtool_x_var_stanz_res" >

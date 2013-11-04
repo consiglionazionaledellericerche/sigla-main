@@ -4,10 +4,14 @@ import it.cnr.contab.compensi00.docs.bulk.VCompensoSIPBulk;
 import it.cnr.contab.compensi00.docs.bulk.VCompensoSIPHome;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
+import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.*;
 
 import java.io.FileInputStream;
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
@@ -116,6 +120,10 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext uc, it.c
 		// Aggiunto controllo sulla chiusura dell'esercizio
 		if (isEsercizioChiuso(uc,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(uc),latt))
 			throw new ApplicationException("Non è possibile creare nuovi GAE ad esercizio chiuso.");
+		
+		if (latt.getTi_gestione().compareTo(Tipo_linea_attivitaBulk.TI_GESTIONE_SPESE)==0 && 
+				((Parametri_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).isCofogObbligatorio(uc)&& (latt.getCd_cofog()==null))
+				throw new ApplicationException("Non è possibile creare GAE di spesa senza indicare la classificazione Cofog.");	
 			
 		if ((latt.getProgetto() == null ||(latt.getProgetto() != null && latt.getProgetto().getPg_progetto() == null))&& isCommessaObbligatoria(uc,latt ))
 			throw new ApplicationException( "La Commessa sul GAE non può essere nulla. " );
@@ -151,6 +159,8 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext uc, it.c
 		/*Fine PostIt*/		
 		return super.creaConBulk( uc, bulk );
 	} catch(PersistencyException e) {
+		throw handleException(bulk,e);
+	} catch (RemoteException e) {
 		throw handleException(bulk,e);
 	} 
 }
@@ -553,7 +563,16 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 	// Aggiunto controllo sulla chiusura dell'esercizio
 	if (isEsercizioChiuso(userContext,linea_attivita))
 		throw new ApplicationException("Non è possibile modificare GAE con esercizio di fine validità chiuso.");
-		
+	
+	try {
+		if (linea_attivita.getTi_gestione().compareTo(Tipo_linea_attivitaBulk.TI_GESTIONE_SPESE)==0 && 
+				((Parametri_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).isCofogObbligatorio(userContext)
+				&& (linea_attivita.getCd_cofog()==null))
+				throw new ApplicationException("Non è possibile modificare GAE di spesa senza indicare la classificazione Cofog.");
+	} catch (RemoteException e) {
+		throw handleException(bulk,e);
+	}	
+
 	if (linea_attivita.getProgetto() == null && isCommessaObbligatoria(userContext,linea_attivita ))
 		throw new ApplicationException( "La Commessa sul GAE non può essere nulla. " );
 

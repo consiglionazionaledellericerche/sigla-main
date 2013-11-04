@@ -15,6 +15,8 @@ import it.cnr.contab.config00.pdcfin.cla.bulk.Parametri_livelliBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.Parametri_livelliHome;
 import it.cnr.contab.prevent00.bulk.Pdg_piano_ripartoBulk;
 import it.cnr.contab.prevent00.bulk.Pdg_piano_ripartoHome;
+import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateHome;
+import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_contrattazione_speseBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_contrattazione_speseHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -78,10 +80,10 @@ public class Parametri_cnrComponent extends CRUDComponent {
 	}
 	public boolean isLivelloPdgDecisionaleEtrEnabled(UserContext userContext, Parametri_cnrBulk parCnr) throws ComponentException{
 		try{
-			Pdg_piano_ripartoHome home = (Pdg_piano_ripartoHome)getHome(userContext, Pdg_piano_ripartoBulk.class);
+			Pdg_Modulo_EntrateHome home = (Pdg_Modulo_EntrateHome)getHome(userContext, Pdg_Modulo_EntrateBulk.class);
 			SQLBuilder sql = home.createSQLBuilder();
 			sql.addToHeader("CLASSIFICAZIONE_VOCI");
-			sql.addSQLJoin("PDG_PIANO_RIPARTO.ID_CLASSIFICAZIONE", "CLASSIFICAZIONE_VOCI.ID_CLASSIFICAZIONE");
+			sql.addSQLJoin("PDG_MODULO_ENTRATE.ID_CLASSIFICAZIONE", "CLASSIFICAZIONE_VOCI.ID_CLASSIFICAZIONE");
 			sql.addSQLClause("AND", "CLASSIFICAZIONE_VOCI.ESERCIZIO", sql.EQUALS, parCnr.getEsercizio());
 			sql.addSQLClause("AND", "CLASSIFICAZIONE_VOCI.TI_GESTIONE", sql.EQUALS, Elemento_voceHome.GESTIONE_ENTRATE);
 			List result = home.fetchAll( sql );
@@ -115,4 +117,16 @@ public class Parametri_cnrComponent extends CRUDComponent {
 			throw handleException(ex);
 		}
 	}
+	public boolean isCofogObbligatorio(UserContext userContext) throws ComponentException {
+		try {
+			Parametri_cnrHome home = (Parametri_cnrHome)getHome(userContext,Parametri_cnrBulk.class);
+			if (home.livelloCofogObbligatorio(userContext)!=0) 
+					return true;
+			
+			return false;
+		} catch(it.cnr.jada.persistency.PersistencyException e) {
+			throw handleException(e);
+		}
+	}
+
 }

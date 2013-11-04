@@ -706,7 +706,10 @@ public SQLBuilder selectCapitoloByClause(AccertamentoBulk bulk, V_voce_f_partita
 
     // Ricerco tutti i capitolo di Entrata Cnr non in partita di giro
     // la cui natura non e' nulla nella tabella ASS_EV_EV
-    
+    if(bulk instanceof AccertamentoOrdBulk )
+    	sql.addSQLClause( "AND", "fl_solo_residuo", sql.EQUALS, "N"); 
+    if (bulk instanceof AccertamentoResiduoBulk)
+    	sql.addSQLClause( "AND", "fl_solo_competenza", sql.EQUALS, "N");
 	sql.addClause( clause );
 	sql.addSQLClause( "AND", "cd_unita_organizzativa", sql.EQUALS, bulk.getCd_uo_origine());
 	sql.addSQLClause( "AND", "esercizio", sql.EQUALS, bulk.getEsercizio());

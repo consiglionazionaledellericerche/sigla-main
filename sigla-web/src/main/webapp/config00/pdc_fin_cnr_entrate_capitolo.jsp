@@ -116,7 +116,12 @@
 	  <td><% bp.getController().writeFormLabel( out, "perc_prelievo_pdgp_entrate"); %></td>	
 	  <td><% bp.getController().writeFormInput( out, "perc_prelievo_pdgp_entrate"); %></td>
 	</tr>
-	
+	<tr>
+	  <td><% bp.getController().writeFormLabel( out, "fl_solo_residuo"); %></td>	
+	  <td><% bp.getController().writeFormInput( out, "fl_solo_residuo"); %></td>
+	  <td><% bp.getController().writeFormLabel( out, "fl_solo_competenza"); %></td>	
+	  <td><% bp.getController().writeFormInput( out, "fl_solo_competenza"); %></td>
+	</tr>
 	
 	</table>
 

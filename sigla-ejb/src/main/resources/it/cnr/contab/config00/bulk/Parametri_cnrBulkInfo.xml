@@ -105,7 +105,7 @@
 		name="fl_motivazione_su_imp"
 		property="fl_motivazione_su_imp"
 		inputType="CHECKBOX"
-		label="Obbligatoriet� campo Motivazione su Impegno" />
+		label="Obbligatoriet? campo Motivazione su Impegno" />
 	<fieldProperty
 		name="importo_max_imp"
 		property="importo_max_imp"
@@ -228,6 +228,14 @@
 		inputType="TEXT"
 		formatName="date_short"
 		label="Data minima per pubblicazione contratti" />		
+	<fieldProperty
+		name="livello_pdg_cofog"
+		property="livello_pdg_cofog"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		nullable="false"
+		label="Livello COFOG PDG Decisionale" />	
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -274,10 +282,10 @@
 	        name="fl_siope" />
 	<formFieldProperty
 		name="ricerca_prof_int_giorni_pubbl"
-	    label="Giorni di pubblicazione per la&lt;BR&gt;Verifica Professionalit� Interne" />
+	    label="Giorni di pubblicazione per la&lt;BR&gt;Verifica Professionalit? Interne" />
 	<formFieldProperty
 		name="ricerca_prof_int_giorni_scad" 
-		label="Giorni di validita per la&lt;BR&gt;Verifica Professionalit� Interne&lt;BR&gt;dopo la pubblicazione" />
+		label="Giorni di validita per la&lt;BR&gt;Verifica Professionalit? Interne&lt;BR&gt;dopo la pubblicazione" />
 	<formFieldProperty
 	        name="fl_incarico" />
 	<formFieldProperty
@@ -295,7 +303,10 @@
 	<formFieldProperty
 		name="fl_cup"/>
 	<formFieldProperty
-		name="data_stipula_contratti" />						
+		name="data_stipula_contratti" />						       
+	<formFieldProperty
+		name="livello_pdg_cofog"/>
+					       
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
@@ -358,6 +369,8 @@
 		name="clausolaOrdine"/>
 	<columnFieldProperty
 		name="data_stipula_contratti" />						
+	<columnFieldProperty
+		name="livello_pdg_cofog"/>
 		               
 	<findFieldProperty
 		name="esercizio" />

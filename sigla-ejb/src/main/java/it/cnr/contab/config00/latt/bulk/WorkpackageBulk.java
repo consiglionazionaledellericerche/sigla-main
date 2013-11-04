@@ -37,6 +37,7 @@ public class WorkpackageBulk extends WorkpackageBase implements CostantiTi_gesti
 	}	
 	private Insieme_laBulk insieme_la;
 
+	private CofogBulk cofog;
 	private java.util.Collection tipi_risultato;
 	
 public WorkpackageBulk() {
@@ -244,6 +245,7 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	setEsercizio_fine( it.cnr.contab.config00.esercizio.bulk.EsercizioBulk.ESERCIZIO_FINE);
 	setCentro_responsabilita(new it.cnr.contab.config00.sto.bulk.CdrBulk());
 	setFl_limite_ass_obblig(Boolean.TRUE);
+	setCofog(new CofogBulk());
 	return super.initializeForInsert(bp,context);
 }
 public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
@@ -286,6 +288,11 @@ public boolean isROprogetto() {
 	
 	return getProgetto() == null ||
 			getProgetto().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL;
+}
+public boolean isROCofog() {
+	
+	return getCofog() != null &&
+		  getCofog().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL;
 }
 /**
  * Restituisce il valore della proprietà 'rODescrizione'
@@ -426,6 +433,18 @@ public void setTipi_risultato(java.util.Collection newTipi_risultato) {
 public void setTipo_linea_attivita(Tipo_linea_attivitaBulk newTipo_linea_attivita) {
 	tipo_linea_attivita = newTipo_linea_attivita;
 }
+@Override
+public String getCd_cofog() {
+	CofogBulk cofog = this.getCofog();
+	if (cofog == null)
+		return null;
+	return cofog.getCd_cofog();
+}
+@Override
+public void setCd_cofog(String cd_cofog) {
+	// TODO Auto-generated method stub
+	getCofog().setCd_cofog(cd_cofog);
+}
 /**
  * Esegue la validazione formale dei campi di input
  */
@@ -517,6 +536,12 @@ public void validate() throws ValidationException
 	 */
 	public void setResponsabile(TerzoBulk obj) {
 		responsabile = obj;
+	}
+	public CofogBulk getCofog() {
+		return cofog;
+	}
+	public void setCofog(CofogBulk cofog) {
+		this.cofog = cofog;
 	}
 	
 	

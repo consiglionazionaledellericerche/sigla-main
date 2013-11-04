@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
+import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_livelliComponentSession;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
@@ -65,7 +66,7 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 	private CrudDettagliSpeseBP crudDettagliSpese = new CrudDettagliSpeseBP( "DettagliSpese", Pdg_modulo_speseBulk.class, "dettagliSpese", this);
 	private Integer livelloContrattazione;
 	private Boolean pdgApprovatoDefinitivo;
-
+    private boolean cofogObb;
 	private SimpleDetailCRUDController crudDettagliContrSpese = new SimpleDetailCRUDController( "DettagliContrSpese", Pdg_contrattazione_speseBulk.class, "dettagliContrSpese", this, false) {
 
 		public boolean isFiltered()
@@ -129,7 +130,7 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 		}
 		setUoSrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(actioncontext));
 		setPdg_esercizio(cercaPdg_esercizio(actioncontext));
-
+		
 		if (!isEditable())
 		  setStatus(VIEW);	
 		resetTabs(actioncontext);
@@ -138,6 +139,7 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 			setDescrizioneClassificazioneContrSpese(createParametriLivelliComponentSession().getDescrizioneLivelloContrSpese(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())));
 			setPdgApprovatoDefinitivo(Utility.createPdgContrSpeseComponentSession().isApprovatoDefinitivo(actioncontext.getUserContext()));
 			setLivelloContrattazione(Utility.createPdgContrSpeseComponentSession().livelloContrattazioneSpese(actioncontext.getUserContext()));
+			setCofogObb((((Parametri_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).isCofogObbligatorio(actioncontext.getUserContext())));
 		}catch (ComponentException e) {
 			throw new BusinessProcessException(e);
 		} catch (RemoteException e) {
@@ -381,5 +383,13 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 
 	private void setLivelloContrattazione(Integer livelloContrattazione) {
 		this.livelloContrattazione = livelloContrattazione;
+	}
+
+	public boolean isCofogObb() {
+		return cofogObb;
+	}
+
+	public void setCofogObb(boolean cofogObb) {
+		this.cofogObb = cofogObb;
 	}
 }

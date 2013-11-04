@@ -64,6 +64,11 @@
 	<tr>
 	  <% bp.getCrudDettagliSpese().writeFormField(out,"area");%>
 	</tr>
+ <% if (bp.isCofogObb()){%>
+	<tr>
+	  <% bp.getCrudDettagliSpese().writeFormField(out,"cofog");%>
+	</tr>
+	<%} %>
   </table>
  </td>
  <td align=right valign=top>

@@ -187,6 +187,20 @@
 			columnSize="5"
 			columnScale="2"
 			nullable="false" />	
+		<columnMapping
+			columnName="FL_SOLO_RESIDUO"
+			propertyName="fl_solo_residuo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_SOLO_COMPETENZA"
+			propertyName="fl_solo_competenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
 	</defaultColumnMap>
 
 	<persistentProperty
@@ -248,5 +262,9 @@
 	<persistentProperty
 		name="fl_soggetto_prelievo" />
 	<persistentProperty 
-		name ="perc_prelievo_pdgp_entrate"/>		
+		name ="perc_prelievo_pdgp_entrate"/>	
+	<persistentProperty
+		name="fl_solo_residuo" />	
+	<persistentProperty
+		name="fl_solo_competenza" />		
 </SQLPersistentInfo>

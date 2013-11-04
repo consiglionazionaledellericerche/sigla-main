@@ -1,7 +1,10 @@
 package it.cnr.contab.config00.latt.bulk;
 
+import java.rmi.RemoteException;
 import java.sql.PreparedStatement;
 import java.util.List;
+
+import javax.ejb.EJBException;
 
 import it.cnr.contab.config00.blob.bulk.PostItBulk;
 import it.cnr.contab.config00.sto.bulk.*;
@@ -12,8 +15,11 @@ import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipHome;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
@@ -127,5 +133,29 @@ public DipartimentoBulk findDipartimento( UserContext userContext, WorkpackageBu
 }
 	@Override
 	public void handleObjectNotFoundException(ObjectNotFoundException objectnotfoundexception) throws ObjectNotFoundException {
+	}
+	public SQLBuilder selectCofogByClause(it.cnr.jada.UserContext userContext, WorkpackageBulk linea,CofogHome home,CofogBulk bulk,CompoundFindClause clauses) throws ComponentException, EJBException, RemoteException {
+		
+		CdsBulk cds = Utility.createParametriEnteComponentSession().getCds(userContext,CNRUserContext.getCd_cds(userContext));
+		PersistentHome dettHome = getHomeCache().getHome(CofogBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.addTableToHeader("PARAMETRI_CNR"); 
+		sql.addClause( clauses );
+		sql.addSQLClause("AND","PARAMETRI_CNR.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.addSQLJoin("COFOG.NR_LIVELLO","PARAMETRI_CNR.LIVELLO_PDG_COFOG");
+		if(cds.getCd_tipo_unita().compareTo(Tipo_unita_organizzativaHome.TIPO_UO_SAC)==0){
+			sql.openParenthesis("AND");
+		 	sql.addSQLClause("AND", "COFOG.FL_ACCENTRATO", sql.EQUALS, "Y");
+			sql.addSQLClause("OR", "COFOG.FL_DECENTRATO", sql.EQUALS, "Y");
+			sql.closeParenthesis();
+		}
+		else{
+			sql.addSQLClause("AND", "COFOG.FL_DECENTRATO", sql.EQUALS, "Y");
+		}
+		sql.openParenthesis("AND");
+		sql.addSQLClause("AND", "COFOG.DT_CANCELLAZIONE", sql.ISNULL, null);
+		sql.addSQLClause("OR","COFOG.DT_CANCELLAZIONE",sql.GREATER,it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+		sql.closeParenthesis(); 
+		return sql;
 	}
 }

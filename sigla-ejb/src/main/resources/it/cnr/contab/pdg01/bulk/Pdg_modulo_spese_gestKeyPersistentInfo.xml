@@ -73,6 +73,13 @@
 			columnSize="20"
 			nullable="false"
 			primary="true" />
+		<columnMapping
+			columnName="PG_DETTAGLIO"
+			propertyName="pg_dettaglio"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />	
 	</defaultColumnMap>
 	<persistentProperty
 		name="esercizio"
@@ -104,4 +111,7 @@
 	<persistentProperty
 		name="cd_elemento_voce"
 		partOfOid="true" />
+	<persistentProperty
+		name="pg_dettaglio"
+		partOfOid="true" />	
 </SQLPersistentInfo>

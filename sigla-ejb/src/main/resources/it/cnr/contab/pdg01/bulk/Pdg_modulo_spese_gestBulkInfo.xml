@@ -243,7 +243,13 @@
 		readonlyProperty="ROElemento_voce"
 		nullable="false"
 		label="Voce del Piano" />
-
+	<fieldProperty
+		name="pg_dettaglio"
+		property="pg_dettaglio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="det" />	
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -304,7 +310,8 @@
 		name="find_linea_attivita" />
 	<formFieldProperty
 		name="find_cdr_assegnatario" />
-
+	<formFieldProperty
+		name="pg_dettaglio" />	
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
@@ -444,7 +451,6 @@
 		name="esercizio_pdg_variazione" />
 	<columnFieldProperty
 		name="pg_variazione_pdg" />
-
 	<columnSet name="insertGestionale">
 		<columnFieldProperty
 			name="cd_cdr_assegnatario" />

@@ -71,6 +71,8 @@ public class Elemento_voceBase extends Elemento_voceKey implements Keyed {
 	
 	private java.lang.Boolean fl_prelievo;
 	private java.lang.Boolean fl_soggetto_prelievo;
+	private java.lang.Boolean fl_solo_residuo;
+	private java.lang.Boolean fl_solo_competenza;
 	private BigDecimal perc_prelievo_pdgp_entrate;
 	
 public Elemento_voceBase() {
@@ -346,5 +348,17 @@ public void setTi_elemento_voce(java.lang.String ti_elemento_voce) {
 	} 
 	public void setPerc_prelievo_pdgp_entrate(BigDecimal perc_prelievo_pdgp_entrate) {
 		this.perc_prelievo_pdgp_entrate = perc_prelievo_pdgp_entrate;
+	}
+	public java.lang.Boolean getFl_solo_residuo() {
+		return fl_solo_residuo;
+	}
+	public void setFl_solo_residuo(java.lang.Boolean fl_solo_residuo) {
+		this.fl_solo_residuo = fl_solo_residuo;
+	}
+	public java.lang.Boolean getFl_solo_competenza() {
+		return fl_solo_competenza;
+	}
+	public void setFl_solo_competenza(java.lang.Boolean fl_solo_competenza) {
+		this.fl_solo_competenza = fl_solo_competenza;
 	}
 }

@@ -81,4 +81,8 @@
 	<tr>
 		<% bp.getController().writeFormField( out, "fl_limite_ass_obblig"); %>
 	</tr>	
+	<tr>
+		<% if (workpackage.getTi_gestione() != null && workpackage.getTi_gestione().equals(workpackage.TI_GESTIONE_SPESE))
+			bp.getController().writeFormField(out,"cofog");%>
+	</tr>
 </table>

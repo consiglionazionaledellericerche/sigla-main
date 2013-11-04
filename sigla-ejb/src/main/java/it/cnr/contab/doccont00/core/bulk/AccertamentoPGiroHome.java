@@ -55,7 +55,12 @@ public SQLBuilder selectCapitoloByClause(AccertamentoBulk acc, V_voce_f_partita_
 {
 	AccertamentoPGiroBulk bulk = (AccertamentoPGiroBulk) acc;
 	SQLBuilder sql = getHomeCache().getHome( Voce_fBulk.class, "V_VOCE_F_PARTITA_GIRO" ).createSQLBuilder();
-	if ( bulk.getCd_uo_ente().equals( bulk.getCd_unita_organizzativa()))
+	  
+	if (acc instanceof AccertamentoPGiroResiduoBulk)
+    	sql.addSQLClause( "AND", "fl_solo_competenza", sql.EQUALS, "N");
+	else if(acc instanceof AccertamentoPGiroBulk )
+	    	sql.addSQLClause( "AND", "fl_solo_residuo", sql.EQUALS, "N"); 
+	 if ( bulk.getCd_uo_ente().equals( bulk.getCd_unita_organizzativa()))
 	{
 		sql.addClause("AND", "ti_appartenenza", SQLBuilder.EQUALS, Elemento_voceHome.APPARTENENZA_CNR );
 		/* simona 14.5.2002 

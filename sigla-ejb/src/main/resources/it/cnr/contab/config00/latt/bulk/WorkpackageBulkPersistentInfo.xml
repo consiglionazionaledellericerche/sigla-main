@@ -37,7 +37,11 @@
 		<columnMapping
 			columnName="CD_RESPONSABILE_TERZO"
 			propertyName="responsabile.cd_terzo"
-			fetchOnly="false" />			
+			fetchOnly="false" />		
+		<columnMapping
+			columnName="CD_COFOG"
+			propertyName="cofog.cd_cofog"
+			fetchOnly="false" />				
 	</defaultColumnMap>
 	<columnMap 
 		name="V_LINEA_ATTIVITA_VALIDA"
@@ -122,6 +126,8 @@
 		name="insieme_la" />
 	<persistentProperty
 		name="progetto" />
+	<persistentProperty
+		name="cofog" />	
 	<persistentProperty
 		name="responsabile" />		
 	<fetchPolicy name="it.cnr.contab.pdg00.comp.StampaSituazioneSinteticaGAEComponent.find">

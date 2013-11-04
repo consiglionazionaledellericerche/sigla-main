@@ -27,7 +27,12 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-			
+		<columnMapping 
+		columnName="CD_COFOG" 
+		propertyName="cd_cofog" 
+		sqlTypeName="VARCHAR" 
+		columnSize="10"
+		nullable="true"/>	
 	</defaultColumnMap>
 	<persistentProperty name="pg_ver_rec"/>
 	<persistentProperty name="cd_natura"/>
@@ -48,6 +53,7 @@
 	<persistentProperty name="utuv"/>
 	<persistentProperty name="pg_progetto"/>
 	<persistentProperty name="cd_responsabile_terzo"/>				
-	<persistentProperty name="fl_limite_ass_obblig"/>				
+	<persistentProperty name="fl_limite_ass_obblig"/>
+	<persistentProperty name="cd_cofog"/>				
 	
 </SQLPersistentInfo>

@@ -223,7 +223,12 @@
 			propertyName="data_stipula_contratti"
 			sqlTypeName="TIMESTAMP"
 			columnSize="7" />
-			
+		<columnMapping
+			columnName="LIVELLO_PDG_COFOG"
+			propertyName="livello_pdg_cofog"
+			sqlTypeName="DECIMAL"
+			columnSize="1"
+			nullable="false" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="cd_tipo_rapporto" />
@@ -294,4 +299,6 @@
 		name="fl_cup" />	
 	<persistentProperty		
 		name="data_stipula_contratti" />											
+	<persistentProperty
+		name="livello_pdg_cofog" />	
 </SQLPersistentInfo>
