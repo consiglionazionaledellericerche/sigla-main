@@ -33,10 +33,12 @@
 	<queryString>
 		<![CDATA[select * from PRT_STAMPA_SOSP_CDS
 where
+esercizio =to_number(to_char($P{da_data},'yyyy')) and
 TI_ENTRATA_SPESA LIKE DECODE($P{tipo},'*','%', $P{tipo}) AND
 DT_REGISTRAZIONE between $P{da_data} AND $P{a_data} and
 CD_CDS_ORIGINE LIKE decode($P{cds},'*','%',$P{cds})]]>
 	</queryString>
+	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
 	<field name="TI_ENTRATA_SPESA" class="java.lang.String"/>
 	<field name="CD_SOSPESO" class="java.lang.String"/>
 	<field name="CD_CDS_ORIGINE" class="java.lang.String"/>
