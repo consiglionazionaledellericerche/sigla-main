@@ -2670,6 +2670,7 @@ public class DistintaCassiereComponent extends
 		sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS",
 				"DISTINTA_CASSIERE_DET.CD_CDS");
 		sql2.openParenthesis("AND");
+		sql2.openParenthesis("AND");
 		sql2.addSQLClause("AND",
 				"V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
 				sql2.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
@@ -2680,6 +2681,7 @@ public class DistintaCassiereComponent extends
 				sql2.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
 		sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
 				"DISTINTA_CASSIERE_DET.PG_REVERSALE");
+		sql2.closeParenthesis();
 		sql2.closeParenthesis();
 		sql2.addSQLClause("AND", "DISTINTA_CASSIERE_DET.ESERCIZIO", sql.EQUALS,
 				distinta.getEsercizio());

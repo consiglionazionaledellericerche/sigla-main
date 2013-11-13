@@ -278,8 +278,7 @@
 		inputType="SEARCHTOOL"
 		formName="searchtool"
 		enabledOnSearch="true"
-		readonlyPropertyOnEdit="ROCofog"
-		completeOnSave="false" />
+		readonlyPropertyOnEdit="ROCofog"/>
 	<fieldProperty
 		name="cd_cofog"
 		property="cofog.cd_cofog"
