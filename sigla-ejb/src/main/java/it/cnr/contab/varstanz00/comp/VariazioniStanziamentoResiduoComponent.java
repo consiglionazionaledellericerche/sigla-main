@@ -33,6 +33,7 @@ import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
+import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioHome;
 import it.cnr.contab.config00.esercizio.bulk.Esercizio_baseBulk;
@@ -284,6 +285,16 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			}
 			sql.closeParenthesis();
 		}
+		 // Obbligatorio cofog sulle GAE
+		try{
+			if(((Parametri_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).isCofogObbligatorio(userContext))
+				sql.addSQLClause("AND","CD_COFOG",SQLBuilder.ISNOTNULL,null);
+		
+		} catch (RemoteException e) {
+			throw new ComponentException(e);
+		} catch (EJBException e) {
+			throw new ComponentException(e);
+		}
 		return sql;
 	}
 	public SQLBuilder selectElemento_voceByClause (UserContext userContext,Var_stanz_res_rigaBulk var_stanz_res_riga, Elemento_voceBulk elemento_voce, CompoundFindClause clause) throws ComponentException, PersistencyException{
@@ -342,8 +353,23 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			sql.addSQLJoin("V_ASSESTATO_RESIDUO.CD_LINEA_ATTIVITA","LINEA_ATTIVITA.CD_LINEA_ATTIVITA");
 			sql.addSQLJoin("V_ASSESTATO_RESIDUO.CD_CENTRO_RESPONSABILITA","LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA");
 			sql.addSQLJoin("LINEA_ATTIVITA.CD_NATURA","NATURA.CD_NATURA");
-			sql.addSQLClause("AND","NATURA.TIPO",SQLBuilder.EQUALS,var_stanz_res.getTipologia_fin());			
-		}		
+			sql.addSQLClause("AND","NATURA.TIPO",SQLBuilder.EQUALS,var_stanz_res.getTipologia_fin());	
+		}else{
+			sql.addTableToHeader("LINEA_ATTIVITA");  
+			sql.addSQLJoin("V_ASSESTATO_RESIDUO.CD_LINEA_ATTIVITA","LINEA_ATTIVITA.CD_LINEA_ATTIVITA");
+			sql.addSQLJoin("V_ASSESTATO_RESIDUO.CD_CENTRO_RESPONSABILITA","LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA");
+			
+		}
+		 // Obbligatorio cofog sulle GAE
+		try{
+			if(((Parametri_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).isCofogObbligatorio(userContext))
+				sql.addSQLClause("AND","CD_COFOG",SQLBuilder.ISNOTNULL,null);
+		
+		} catch (RemoteException e) {
+			throw new ComponentException(e);
+		} catch (EJBException e) {
+			throw new ComponentException(e);
+		}
 		if (var_stanz_res.getCdr() != null){
 			sql.addClause("AND", "cd_centro_responsabilita", SQLBuilder.EQUALS, var_stanz_res.getCdr().getCd_centro_responsabilita());		
 		}else{

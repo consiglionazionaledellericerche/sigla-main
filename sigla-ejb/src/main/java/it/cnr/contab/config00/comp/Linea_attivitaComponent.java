@@ -115,7 +115,7 @@ protected void checkCessazioneLa(UserContext userContext,WorkpackageBulk la) thr
 public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext uc, it.cnr.jada.bulk.OggettoBulk bulk) throws ComponentException {
 	try {
 		WorkpackageBulk latt = (WorkpackageBulk) bulk;
-
+		
 		// 05/09/2003
 		// Aggiunto controllo sulla chiusura dell'esercizio
 		if (isEsercizioChiuso(uc,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(uc),latt))
@@ -1005,18 +1005,5 @@ public void Inserimento_BLOB(UserContext userContext,it.cnr.jada.bulk.OggettoBul
 		  file.delete();
 	}	
   }
-@Override
-public OggettoBulk inizializzaBulkPerInserimento(UserContext usercontext,
-		OggettoBulk oggettobulk) throws ComponentException {
-	String uo = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(usercontext);
-	try {
-		Unita_organizzativaBulk bulk = (Unita_organizzativaBulk)getHome(usercontext,Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(uo));
-		if (bulk.getCd_tipo_unita().compareTo(Tipo_unita_organizzativaHome.TIPO_UO_AREA)==0){
-			throw new it.cnr.jada.comp.ApplicationException("Le Aree non sono abilitate a generare GAE!");
-		}
-	} catch (PersistencyException e) {
-		throw new ComponentException (e);
-	}
-	return super.inizializzaBulkPerInserimento(usercontext, oggettobulk);
-}
+
 }

@@ -19,7 +19,7 @@
 	  <td>
 		<% bp.getController().writeFormLabel(out,"cd_progetto_padre");%>
 	  </td>
-	  <td>
+	  <td>	
 		<% bp.getController().writeFormInput(out,"cd_progetto_padre");%>
 		<% bp.getController().writeFormInput(out,"ds_progetto_padre");%>
 		<% bp.getController().writeFormInput(out,"find_nodo_progettopadre");%>
@@ -29,26 +29,38 @@
 	  <td>
 		<% bp.getController().writeFormLabel(out,"cd_progetto");%>
 	  </td>
-	  <td>
-		<% bp.getController().writeFormInput(out,"cd_progetto");%>
-		<% bp.getController().writeFormInput(out,"ds_progetto");%>
-		<% bp.getController().writeFormInput(out,"find_nodo_padre");%>
+	   <td colspan="3">	
+		<% bp.getController().writeFormInput(out,null,"cd_progetto",bp.isUoArea(),null,null); %>
+		<% bp.getController().writeFormInput(out,null,"ds_progetto",bp.isUoArea(),null,null); %>
+		<% bp.getController().writeFormInput(out,null,"find_nodo_padre",bp.isUoArea(),null,null); %>
 		<!--<% bp.getController().writeFormInput(out,"crea_modulo");%>-->
 	  </td>
 	</tr>
 	<tr>
-		<% bp.getController().writeFormField(out,"centro_responsabilita"); %>
+	 <td>
+		<% bp.getController().writeFormLabel(out,"centro_responsabilita"); %>
+	</td>
+	 <td colspan="3">	
+		<% bp.getController().writeFormInput(out,null,"centro_responsabilita",bp.isUoArea(),null,null); %> 
+	 </td>
 	</tr>
-	<TR>
-	    <TD>
-	  	 <%  bp.getController().writeFormLabel(out,"responsabile");%>
-	  	</TD>
-	  	<TD colspan="3">
-	  	 <% bp.getController().writeFormInput(out,"responsabile");%>
-	    </TD>
-	</TR>	
+	
 	<tr>
-		<% bp.getController().writeFormField( out, "insieme_la"); %>
+	 <td>
+		<% bp.getController().writeFormLabel(out,"responsabile"); %>
+	</td>
+	 <td colspan="3">	
+		<% bp.getController().writeFormInput(out,"responsabile"); %> 
+	 </td>
+	</tr>
+		
+	<tr>
+	 <td>
+		<% bp.getController().writeFormLabel(out,"insieme_la"); %>
+	</td>
+	 <td colspan="3">	
+		<% bp.getController().writeFormInput(out,null,"insieme_la",bp.isUoArea(),null,null); %> 
+	 </td>
 	</tr>
 	<tr>
 		<td>
@@ -67,14 +79,31 @@
 		<% bp.getController().writeFormField(out,"natura"); %>
 	</tr>
 	<tr>
-		<% bp.getController().writeFormField(out,"gruppo_linea_attivita"); %>
-	</tr>
+	 <td>
+		<% bp.getController().writeFormLabel(out,"gruppo_linea_attivita"); %>
+	</td>
+	 <td colspan="3">	
+		<% bp.getController().writeFormInput(out,null,"gruppo_linea_attivita",bp.isUoArea(),null,null); %> 
+	 </td>
+	 </tr>
 	<tr>
-		<% bp.getController().writeFormField(out,"denominazione"); %>
+	 <td>
+		<% bp.getController().writeFormLabel(out,"denominazione"); %>
+	</td>
+	 <td colspan="3">	
+		<% bp.getController().writeFormInput(out,null,"denominazione",bp.isUoArea(),null,null); %> 
+	 </td>
 	</tr>
+	
 	<tr>
-		<% bp.getController().writeFormField(out,"ds_linea_attivita"); %>
+	 <td>
+		<% bp.getController().writeFormLabel(out,"ds_linea_attivita"); %>
+	</td>
+	 <td colspan="3">	
+		<% bp.getController().writeFormInput(out,null,"ds_linea_attivita",bp.isUoArea(),null,null); %> 
+	 </td>
 	</tr>
+	
 	<tr>
 		<% bp.getController().writeFormField( out, "esercizio_fine"); %>
 	</tr>

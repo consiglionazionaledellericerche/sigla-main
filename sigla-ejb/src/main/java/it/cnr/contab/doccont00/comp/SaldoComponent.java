@@ -4,6 +4,7 @@ import it.cnr.contab.prevent00.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.*;
@@ -12,17 +13,23 @@ import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 
 import java.math.*;
+import java.rmi.RemoteException;
 import java.util.*;
 
 import it.cnr.contab.doccont00.core.bulk.*;
 import java.io.Serializable;
+
+import javax.ejb.EJBException;
+
 import it.cnr.contab.config00.bulk.*;
+import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioHome;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements ISaldoMgr,Cloneable,Serializable
 {
 
@@ -871,7 +878,12 @@ public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, 
 																		  );
 					WorkpackageBulk workpackage = (WorkpackageBulk)getHome(userContext,WorkpackageBulk.class).findByPrimaryKey(
 													new WorkpackageBulk(cd_cdr,cd_linea_attivita)
-													);           
+													);
+					 // Obbligatorio cofog sulle GAE 
+					Parametri_cnrBulk par = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey( new Parametri_cnrBulk(esercizio.getEsercizio()));
+					if (par != null && par.getLivello_pdg_cofog()!=0)
+						if( (workpackage.getTi_gestione().compareTo(CostantiTi_gestione.TI_GESTIONE_SPESE)==0) && workpackage.getCd_cofog()==null)
+							throw new ApplicationException("Non è possibile utilizzare GAE di spesa in cui non è indicata la classificazione Cofog.");
 																		  
 					getHomeCache(userContext).fetchAll(userContext);																		  
 

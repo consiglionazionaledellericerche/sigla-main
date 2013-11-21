@@ -3,6 +3,7 @@ package it.cnr.contab.config00.bp;
 
 import it.cnr.contab.config00.blob.bulk.*;
 import it.cnr.contab.config00.latt.bulk.*;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaPadreComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
@@ -14,6 +15,8 @@ import it.cnr.jada.util.action.*;
 public class CRUDWorkpackageBP extends SimpleCRUDBP {
 	private final SimpleDetailCRUDController risultati = new SimpleDetailCRUDController("risultati",it.cnr.contab.config00.latt.bulk.RisultatoBulk.class,"risultati",this);
 	private SimpleDetailCRUDController crudDettagliPostIt = new SimpleDetailCRUDController( "DettagliPostIt", PostItBulk.class, "dettagliPostIt", this);
+	
+	private Unita_organizzativaBulk uoScrivania;
 public CRUDWorkpackageBP() {
 	super();
 }
@@ -77,6 +80,7 @@ private void aggiornaGECO(UserContext userContext) {
 
 @Override
 protected void initialize(ActionContext actioncontext) throws BusinessProcessException {
+	setUoScrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(actioncontext));
 	aggiornaGECO(actioncontext.getUserContext());
 	super.initialize(actioncontext);
 }
@@ -98,6 +102,22 @@ public boolean isActive(OggettoBulk bulk,int sel) {
 		e.printStackTrace();
 	}
 	return false;
+}
+@Override
+public boolean isNewButtonEnabled() {
+    if(isUoArea())
+    	return false;
+    else
+    	return super.isNewButtonEnabled();
+}
+public boolean isUoArea(){
+	return (getUoScrivania().getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_AREA)==0);
+}
+public Unita_organizzativaBulk getUoScrivania() {
+	return uoScrivania;
+}
+public void setUoScrivania(Unita_organizzativaBulk uoScrivania) {
+	this.uoScrivania = uoScrivania;
 }
 
 }
