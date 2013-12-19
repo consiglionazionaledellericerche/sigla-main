@@ -119,7 +119,7 @@ VP_FATTURA_ATTIVA_N.ESERCIZIO,ti_stampa,VP_FATTURA_ATTIVA_N.PG_FATTURA_ATTIVA,ti
 		<variableExpression><![CDATA[($F{TI_RECORD}=="A"?$F{CAP_COMUNE_UO}+" - "+ $F{DS_COMUNE_UO}+ ", "+ $F{CD_PROVINCIA_UO}:$V{CAP})]]></variableExpression>
 		<initialValueExpression><![CDATA[$F{CAP_COMUNE_UO}+" - "+ $F{DS_COMUNE_UO}+ ", "+ $F{CD_PROVINCIA_UO}]]></initialValueExpression>
 	</variable>
-	<variable name="P_IVA" class="java.lang.String">
+	<variable name="P_IVA" class="java.lang.String" resetType="Group" resetGroup="CHIAVE">
 		<variableExpression><![CDATA[($F{TI_RECORD}=="A"?!($F{CODICE_FISCALE_ENTE}.equals(null))&&!($F{PARTITA_IVA_ENTE}.equals(null))?"Codice Fiscale " + $F{CODICE_FISCALE_ENTE} + " - Partita IVA " + $F{PARTITA_IVA_ENTE}:
 !($F{CODICE_FISCALE_ENTE}.equals(null))?"Codice Fiscale " + $F{CODICE_FISCALE_ENTE}:
 !($F{PARTITA_IVA_ENTE}.equals(null))?" Partita IVA " + $F{PARTITA_IVA_ENTE}:"":$V{P_IVA})]]></variableExpression>
