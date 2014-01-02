@@ -41,6 +41,7 @@ public class CRUDDocumentoGenericoAttivoBP
 	private boolean riportaAvantiIndietro = false;
 	private boolean carryingThrough = false;
 	private boolean ribaltato;
+	private boolean contoEnte;
 public CRUDDocumentoGenericoAttivoBP() {
 	super();
 	setTab("tab","tabDocumentoAttivo");
@@ -984,5 +985,17 @@ public boolean isROBank_ModPag(Documento_generico_rigaBulk riga) {
 	if(riga!=null && (riga.getStato_cofi().equals(Documento_generico_rigaBulk.STATO_CONTABILIZZATO)))
 		return false;
 	return isInputReadonly();
+}
+public boolean isROBank(Documento_generico_rigaBulk riga) {
+	if(isROBank_ModPag(riga) || isContoEnte() )
+		return true;
+	return isInputReadonly();
+}
+
+public boolean isContoEnte() {
+	return contoEnte;
+}
+public void setContoEnte(boolean contoEnte) {
+	this.contoEnte = contoEnte;
 }
 }

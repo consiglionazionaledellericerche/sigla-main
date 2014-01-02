@@ -2077,6 +2077,7 @@ public Forward doOnModalitaPagamentoUOChange(ActionContext context) {
     try {
         fillModel(context);
         CRUDFatturaAttivaBP bp = (CRUDFatturaAttivaBP) getBusinessProcess(context);
+        bp.setContoEnte(false);
         Fattura_attivaBulk fattura = (Fattura_attivaBulk) bp.getModel();
         if (fattura.getModalita_pagamento_uo() != null) {
             FatturaAttivaSingolaComponentSession fpcs =
@@ -2089,8 +2090,10 @@ public Forward doOnModalitaPagamentoUOChange(ActionContext context) {
             else {
 				if (!Rif_modalita_pagamentoBulk.BANCARIO.equals(fattura.getModalita_pagamento_uo().getTi_pagamento()))
 	            	fattura.setBanca_uo((BancaBulk) new java.util.Vector(coll).firstElement());
-	            else
-		        	fattura = fpcs.setContoEnteIn(context.getUserContext(), fattura, coll);
+	            else{
+		        		fattura = fpcs.setContoEnteIn(context.getUserContext(), fattura, coll);
+		        		bp.setContoEnte(true);
+	            	}
             }
         } else {
             fattura.setBanca_uo(null);

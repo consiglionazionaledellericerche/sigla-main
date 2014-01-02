@@ -318,6 +318,7 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	
 	setEsercizio( it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context) );
 	setUnita_organizzativa( it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context));
+	setFl_flusso(Boolean.FALSE);
 	return this;
 }
 /**

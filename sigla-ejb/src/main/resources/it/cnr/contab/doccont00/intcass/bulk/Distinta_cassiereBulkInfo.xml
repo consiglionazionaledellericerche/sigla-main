@@ -323,7 +323,16 @@
 		enabledOnSearch="true"				
 		maxLength="10"
 		inputSize="10"/>
-		
+	<fieldProperty
+		name="fl_flusso"
+		property="fl_flusso"
+		inputType="CHECKBOX"
+		nullable="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Generato flusso" />
 
 	<formFieldProperty
 		name="cd_cds" />
@@ -415,7 +424,8 @@
 		name="totReversaliTrasferimentoAnnullate" />
 	<formFieldProperty
 		name="pg_distinta_def" />
-		
+	<formFieldProperty
+		name="fl_flusso" />
 
 	<columnFieldProperty
 		name="esercizio" />
@@ -431,7 +441,8 @@
 		name="dt_invio" />
 	<columnFieldProperty
 		name="pg_distinta_def" />
-
+	<columnFieldProperty
+		name="fl_flusso" />
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty

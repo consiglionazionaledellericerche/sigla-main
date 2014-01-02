@@ -2883,7 +2883,15 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 			}
 			if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, reversale.getEsercizio()).getFl_cup().booleanValue()) {
 				riga.setReversaleCupColl(new BulkList(((Reversale_rigaHome) getHome( aUC, Reversale_rigaBulk.class)).findCodiciCupCollegati(aUC, riga)));
-			}			
+			}else{
+					if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, reversale.getEsercizio()).getFl_siope_cup().booleanValue()) {
+						for (Iterator j=riga.getReversale_siopeColl().iterator();j.hasNext();){
+							Reversale_siopeIBulk rigaSiope = (Reversale_siopeIBulk)j.next();
+							rigaSiope.setReversaleSiopeCupColl(new BulkList(((Reversale_siopeHome) getHome( aUC,Reversale_siopeBulk.class)).findCodiciSiopeCupCollegati(aUC, rigaSiope)));
+						}
+					}
+				}	
+						
 			inizializzaTi_fattura( aUC, riga );
   		    ((Reversale_rigaHome)getHome( aUC, riga.getClass())).initializeElemento_voce(aUC, riga );
 		}
@@ -3930,6 +3938,16 @@ private java.sql.Timestamp getFirstDayOfYear(int year) {
 	calendar.set(java.util.Calendar.MILLISECOND, 0);
 	calendar.set(java.util.Calendar.AM_PM, java.util.Calendar.AM);
 	return new java.sql.Timestamp(calendar.getTime().getTime());
+}
+public SQLBuilder selectCupByClause(UserContext userContext, ReversaleSiopeCupIBulk bulk, CupBulk cup, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException
+{
+	SQLBuilder sql = getHome( userContext, CupBulk.class ).createSQLBuilder();
+	sql.openParenthesis("AND");
+ 	sql.addClause("AND", "dt_canc", sql.ISNULL, null);
+	sql.addClause("OR","dt_canc",sql.GREATER,it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+	sql.closeParenthesis();
+	sql.addClause(clauses);
+	return sql;
 }
 
 public static java.sql.Timestamp getLastDayOfYear(int year){

@@ -277,7 +277,7 @@
       	</td>   
 		<td>
 			<% 	if (fatturaAttiva.getBanca_uo() != null) {
-					bp.getController().getBulkInfo().writeFormInput(out,bp.getModel(),null,"listabancheuo",bp.isROBank_ModPag(uc,fatturaAttiva),null,null,bp.getInputPrefix(), bp.getStatus(), bp.getFieldValidationMap());
+					bp.getController().getBulkInfo().writeFormInput(out,bp.getModel(),null,"listabancheuo",bp.isROBank(uc,fatturaAttiva),null,null,bp.getInputPrefix(), bp.getStatus(), bp.getFieldValidationMap());
 				} %>
    		</td>
       </tr>

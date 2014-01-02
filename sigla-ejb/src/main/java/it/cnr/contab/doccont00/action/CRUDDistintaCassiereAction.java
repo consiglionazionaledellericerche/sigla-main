@@ -161,4 +161,26 @@ public Forward doOnCheckIbanFailed( ActionContext context, int option)
 	}
 	return context.findDefaultForward();
 }
+public Forward doEstrai(ActionContext context) {
+	try {
+		CRUDBP bp = getBusinessProcess(context);
+		fillModel(context);
+		if (bp.isDirty())
+			return openContinuePrompt(context,"doConfermaEstrai");
+		return doConfermaEstrai(context,OptionBP.YES_BUTTON);
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}
+public Forward doConfermaEstrai(ActionContext context,int option) {
+	try {
+		if (option == OptionBP.YES_BUTTON) {
+			CRUDDistintaCassiereBP bp = (CRUDDistintaCassiereBP) getBusinessProcess( context );
+			bp.generaXML(context);
+		}
+		return context.findDefaultForward();
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}
 }

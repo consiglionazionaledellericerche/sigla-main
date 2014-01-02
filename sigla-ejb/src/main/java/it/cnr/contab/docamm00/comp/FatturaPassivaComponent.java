@@ -5326,7 +5326,7 @@ public Nota_di_creditoBulk setContoEnteIn(
 					if (bancaEnte == null) {
 						if (banca.getAbi().equalsIgnoreCase(configBanca.getVal01()) &&
 							banca.getCab().equalsIgnoreCase(configBanca.getVal02()) &&
-							banca.getNumero_conto().equalsIgnoreCase(configBanca.getVal03()))
+							banca.getNumero_conto().contains(configBanca.getVal03()))
 							bancaEnte = banca;
 					}
 				}

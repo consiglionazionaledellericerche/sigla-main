@@ -91,6 +91,13 @@
 			columnSize="15"
 			columnScale="2"
 			nullable="false" />
+		<columnMapping
+			columnName="FL_FLUSSO"
+			propertyName="fl_flusso"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_distinta_def" />
@@ -120,4 +127,6 @@
 		name="im_man_ini_acc" />
 	<persistentProperty
 		name="im_rev_ini_tra" />
+	<persistentProperty
+		name="fl_flusso" />	
 </SQLPersistentInfo>

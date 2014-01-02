@@ -1,8 +1,18 @@
 package it.cnr.contab.doccont00.ejb;
 import java.rmi.*;
+import java.util.List;
 
+import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk;
+import it.cnr.contab.doccont00.intcass.bulk.ExtCassiereCdsBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_logsBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Ext_cassiere00_scartiBulk;
+import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.contab.doccont00.intcass.xmlbnl.*;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.ejb.*;
 
 public class TransactionalDistintaCassiereComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements DistintaCassiereComponentSession {
@@ -353,6 +363,100 @@ public void caricaFile(it.cnr.jada.UserContext param0, java.io.File param1) thro
 		invoke("caricaFile",new Object[] {
 			param0,
 			param1 });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public ExtCassiereCdsBulk recuperaCodiciCdsCassiere(UserContext param0,
+		Distinta_cassiereBulk param1) throws ComponentException,
+		PersistencyException, RemoteException {
+	try {
+		return (ExtCassiereCdsBulk)invoke("recuperaCodiciCdsCassiere",new Object[] {
+			param0,
+			param1 });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public BancaBulk recuperaIbanUo(UserContext param0,
+		Unita_organizzativaBulk param1) throws ComponentException,
+		PersistencyException, RemoteException {
+		try {
+			return (BancaBulk)invoke("recuperaIbanUo",new Object[] {
+				param0,
+				param1 });
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+}
+public Mandato recuperaDatiMandatoFlusso(UserContext param0,
+		V_mandato_reversaleBulk param1) throws ComponentException,PersistencyException, RemoteException {
+			try {
+				return (Mandato)invoke("recuperaDatiMandatoFlusso",new Object[] {
+					param0,
+					param1 });
+			} catch(java.rmi.RemoteException e) {
+				throw e;
+			} catch(java.lang.reflect.InvocationTargetException e) {
+				try {
+					throw e.getTargetException();
+				} catch(it.cnr.jada.comp.ComponentException ex) {
+					throw ex;
+				} catch(Throwable ex) {
+					throw new java.rmi.RemoteException("Uncaugth exception",ex);
+				}
+			}
+}
+public Reversale recuperaDatiReversaleFlusso(UserContext param0,
+		V_mandato_reversaleBulk param1) throws ComponentException,PersistencyException, RemoteException {
+			try {
+				return (Reversale)invoke("recuperaDatiReversaleFlusso",new Object[] {
+					param0,
+					param1 });
+			} catch(java.rmi.RemoteException e) {
+				throw e;
+			} catch(java.lang.reflect.InvocationTargetException e) {
+				try {
+					throw e.getTargetException();
+				} catch(it.cnr.jada.comp.ComponentException ex) {
+					throw ex;
+				} catch(Throwable ex) {
+					throw new java.rmi.RemoteException("Uncaugth exception",ex);
+				}
+			}
+}
+public List dettagliDistinta(UserContext param0,
+		Distinta_cassiereBulk param1, String param2)
+		throws PersistencyException, ComponentException, RemoteException {
+	try {
+		return (List)invoke("dettagliDistinta",new Object[] {
+			param0,
+			param1,
+			param2});
 	} catch(java.rmi.RemoteException e) {
 		throw e;
 	} catch(java.lang.reflect.InvocationTargetException e) {

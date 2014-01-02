@@ -5,6 +5,7 @@ import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.ejb.ReversaleComponentSession;
 
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.*;
 
@@ -38,8 +39,14 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 			validateCupCollegati(context,model);
 		}
 	};
+	private final SimpleDetailCRUDController siopeCupCollegati = new SimpleDetailCRUDController("siopeCupCollegati",ReversaleSiopeCupIBulk.class,"reversaleSiopeCupColl",codiciSiopeCollegati){
+		public void validate(ActionContext context,OggettoBulk model) throws ValidationException {			
+			validateSiopeCupCollegati(context,model);
+		}
+	};
 	private boolean siope_attiva = false;
 	private boolean cup_attivo =false;
+	private boolean siope_cup_attivo =false;
 	private Unita_organizzativaBulk uoSrivania;
 
 public CRUDReversaleBP() {
@@ -442,6 +449,7 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 		setSiope_attiva(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope().booleanValue());
 		setUoSrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(actioncontext));
 		setCup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_cup().booleanValue());
+		setSiope_cup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope_cup().booleanValue());
 	}
     catch(Throwable throwable)
     {
@@ -568,5 +576,48 @@ private void validateCupCollegati(ActionContext context, OggettoBulk model) thro
 	   }
 		
 	}
+private void validateSiopeCupCollegati(ActionContext context, OggettoBulk model) throws ValidationException {
+	try {
+		if (getSiopeCupCollegati() != null && getSiopeCupCollegati().getModel() != null){
+			getSiopeCupCollegati().getModel().validate(getModel());
+		   completeSearchTools(context, this);
+		}
+	} catch (BusinessProcessException e) {
+		handleException(e);
+	} 
+	
+   ReversaleSiopeCupBulk bulk =(ReversaleSiopeCupBulk)model;
+   BigDecimal tot_col=BigDecimal.ZERO;
+   if (bulk!=null && bulk.getReversaleSiope()!=null && bulk.getReversaleSiope().getReversaleSiopeCupColl()!=null && !bulk.getReversaleSiope().getReversaleSiopeCupColl().isEmpty()){
+	if(bulk.getCdCup()==null)
+	   throw new ValidationException("Attenzione. Il codice Cup è obbligatorio");
+	if(bulk.getImporto()==null)
+		   throw new ValidationException("Attenzione. L'importo associato al codice Cup è obbligatorio");
+		
+	BulkList list=bulk.getReversaleSiope().getReversaleSiopeCupColl();
+	for (Iterator i = list.iterator(); i.hasNext();){
+		ReversaleSiopeCupBulk l=(ReversaleSiopeCupBulk)i.next();
+		if(l.getCdCup()!=null){
+			if(bulk!=l && bulk.getCdCup().compareTo(l.getCdCup())==0)
+				throw new ValidationException("Attenzione. Ogni Cup può essere utilizzato una sola volta per ogni riga della reversale/siope. ");
+			tot_col=tot_col.add(l.getImporto());
+		}
+	}
+	if(tot_col.compareTo(bulk.getReversaleSiope().getImporto())>0)
+		throw new ValidationException("Attenzione. Il totale associato al CUP è superiore all'importo della riga della reversale associato al siope.");
+   }
+}
 
+
+public boolean isSiope_cup_attivo() {
+	return siope_cup_attivo;
+}
+
+public void setSiope_cup_attivo(boolean siope_cup_attivo) {
+	this.siope_cup_attivo = siope_cup_attivo;
+}
+
+public SimpleDetailCRUDController getSiopeCupCollegati() {
+	return siopeCupCollegati;
+}
 }

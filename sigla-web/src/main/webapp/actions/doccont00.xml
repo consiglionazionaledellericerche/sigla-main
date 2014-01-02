@@ -291,7 +291,7 @@
 			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_DistintaCassiereComponentSession"/>		
 			<init-param name="defaultAction" value="CRUDDistintaCassiereAction" />
 			<init-param name="printbp" value="OfflineReportPrintBP" />
-			
+			<init-param name="flusso" value="false" />
 	</businessProcess>
   <businessProcess
 		name="RicercaMandatoReversaleBP" className="it.cnr.contab.doccont00.bp.RicercaMandatoReversaleBP">
@@ -445,4 +445,13 @@
 		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_CupComponentSession" />
 		<init-param name="defaultAction" value="CRUDCupAction" />
     </businessProcess>
+     <businessProcess
+		name="CRUDDistintaCassiereFBP" className="it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP">
+		<forward name="default" path="/doccont00/main_distinta_cassiere.jsp"/>
+			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk" />
+			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_DistintaCassiereComponentSession"/>		
+			<init-param name="defaultAction" value="CRUDDistintaCassiereAction" />
+			<init-param name="printbp" value="OfflineReportPrintBP" />
+			<init-param name="flusso" value="true" />	
+	</businessProcess>
 </action-mappings>

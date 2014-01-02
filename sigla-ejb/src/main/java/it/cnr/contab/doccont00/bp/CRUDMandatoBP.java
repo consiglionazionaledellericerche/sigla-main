@@ -50,8 +50,14 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP {
 			validateCupCollegati(context,model);
 		}
 	};
+	private final SimpleDetailCRUDController siopeCupCollegati = new SimpleDetailCRUDController("siopeCupCollegati",MandatoSiopeCupIBulk.class,"mandatoSiopeCupColl",codiciSiopeCollegati){
+		public void validate(ActionContext context,OggettoBulk model) throws ValidationException {			
+			validateSiopeCupCollegati(context,model);
+		}
+	};
 	private boolean siope_attiva = false;
 	private boolean cup_attivo =false;
+	private boolean siope_cup_attivo =false;
 public CRUDMandatoBP() {
 	super();
 	setTab("tab","tabMandato");
@@ -302,6 +308,7 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 	try {
 		setSiope_attiva(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope().booleanValue());
 		setCup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_cup().booleanValue());
+		setSiope_cup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope_cup().booleanValue());
 	}
     catch(Throwable throwable)
     {
@@ -408,6 +415,37 @@ private void validateCupCollegati(ActionContext context, OggettoBulk model) thro
    }
 	
 }
+private void validateSiopeCupCollegati(ActionContext context, OggettoBulk model) throws ValidationException {
+	try {
+		if (getSiopeCupCollegati() != null && getSiopeCupCollegati().getModel() != null){
+			getSiopeCupCollegati().getModel().validate(getModel());
+		   completeSearchTools(context, this);
+		}
+	} catch (BusinessProcessException e) {
+		handleException(e);
+	} 
+	
+   MandatoSiopeCupBulk bulk =(MandatoSiopeCupBulk)model;
+   BigDecimal tot_col=BigDecimal.ZERO;
+   if (bulk!=null && bulk.getMandatoSiope()!=null && bulk.getMandatoSiope().getMandatoSiopeCupColl()!=null && !bulk.getMandatoSiope().getMandatoSiopeCupColl().isEmpty()){
+	if(bulk.getCdCup()==null)
+	   throw new ValidationException("Attenzione. Il codice Cup è obbligatorio");
+	if(bulk.getImporto()==null)
+		   throw new ValidationException("Attenzione. L'importo associato al codice Cup è obbligatorio");
+		
+	BulkList list=bulk.getMandatoSiope().getMandatoSiopeCupColl();
+	for (Iterator i = list.iterator(); i.hasNext();){
+		MandatoSiopeCupBulk l=(MandatoSiopeCupBulk)i.next();
+		if(l.getCdCup()!=null){
+			if(bulk!=l && bulk.getCdCup().compareTo(l.getCdCup())==0)
+				throw new ValidationException("Attenzione. Ogni Cup può essere utilizzato una sola volta per ogni riga di mandato/siope. ");
+			tot_col=tot_col.add(l.getImporto());
+		}
+	}
+	if(tot_col.compareTo(bulk.getMandatoSiope().getImporto())>0)
+		throw new ValidationException("Attenzione. Il totale associato al CUP è superiore all'importo della riga del mandato associato al siope.");
+   }
+}
 
 public boolean isCup_attivo() {
 	return cup_attivo;
@@ -450,4 +488,16 @@ protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionCo
     	resetForSearch(context);
 	}	
 }
+
+public boolean isSiope_cup_attivo() {
+	return siope_cup_attivo;
 }
+
+public void setSiope_cup_attivo(boolean siope_cup_attivo) {
+	this.siope_cup_attivo = siope_cup_attivo;
+}
+
+public SimpleDetailCRUDController getSiopeCupCollegati() {
+	return siopeCupCollegati;
+}
+}	

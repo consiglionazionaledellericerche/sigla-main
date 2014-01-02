@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cdCds" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizio" />
+	<fieldProperty
+		name="pgDocumento"
+		property="pgDocumento"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="pgDocumento" />
+	<fieldProperty
+		name="cdUnitaOrganizzativa"
+		property="cdUnitaOrganizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cdUnitaOrganizzativa" />
+	<fieldProperty
+		name="cdCdsOrigine"
+		property="cdCdsOrigine"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cdCdsOrigine" />
+	<fieldProperty
+		name="cdUoOrigine"
+		property="cdUoOrigine"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cdUoOrigine" />
+	<fieldProperty
+		name="cdTipoDocumentoCont"
+		property="cdTipoDocumentoCont"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cdTipoDocumentoCont" />
+	<fieldProperty
+		name="tiDocumento"
+		property="tiDocumento"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="tiDocumento" />
+	<fieldProperty
+		name="tiCompetenzaResiduo"
+		property="tiCompetenzaResiduo"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="tiCompetenzaResiduo" />
+	<fieldProperty
+		name="dsDocumento"
+		property="dsDocumento"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1200"
+		enabledOnEdit="false"
+		label="dsDocumento" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="stato" />
+	<fieldProperty
+		name="dtEmissione"
+		property="dtEmissione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtEmissione" />
+	<fieldProperty
+		name="dtTrasmissione"
+		property="dtTrasmissione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtTrasmissione" />
+	<fieldProperty
+		name="dtPagamento"
+		property="dtPagamento"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtPagamento" />
+	<fieldProperty
+		name="dtAnnullamento"
+		property="dtAnnullamento"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtAnnullamento" />
+	<fieldProperty
+		name="imDocumento"
+		property="imDocumento"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="imDocumento" />
+	<fieldProperty
+		name="imPagato"
+		property="imPagato"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="imPagato" />
+	<fieldProperty
+		name="statoTrasmissione"
+		property="statoTrasmissione"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="statoTrasmissione" />
+	<fieldProperty
+		name="dtRitrasmissione"
+		property="dtRitrasmissione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtRitrasmissione" />
+	<fieldProperty
+		name="cdTerzo"
+		property="cdTerzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		label="cdTerzo" />
+	<fieldProperty
+		name="cdAnag"
+		property="cdAnag"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		label="cdAnag" />
+	<fieldProperty
+		name="denominazioneSede"
+		property="denominazioneSede"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		enabledOnEdit="false"
+		label="denominazioneSede" />
+	<fieldProperty
+		name="cdSiope"
+		property="cdSiope"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="45"
+		enabledOnEdit="false"
+		label="cdSiope" />
+	<fieldProperty
+		name="cdCup"
+		property="cdCup"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		enabledOnEdit="false"
+		label="cdCup" />
+	<fieldProperty
+		name="dtRegistrazioneSosp"
+		property="dtRegistrazioneSosp"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtRegistrazioneSosp" />
+	<fieldProperty
+		name="tiEntrataSpesa"
+		property="tiEntrataSpesa"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="tiEntrataSpesa" />
+	<fieldProperty
+		name="cdSospeso"
+		property="cdSospeso"
+		inputType="TEXT"
+		inputSize="24"
+		maxLength="24"
+		enabledOnEdit="false"
+		label="cdSospeso" />
+	<fieldProperty
+		name="imSospeso"
+		property="imSospeso"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="imSospeso" />
+	<fieldProperty
+		name="viaSede"
+		property="viaSede"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="viaSede" />
+	<fieldProperty
+		name="capComuneSede"
+		property="capComuneSede"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="capComuneSede" />
+	<fieldProperty
+		name="dsComune"
+		property="dsComune"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="dsComune" />
+	<fieldProperty
+		name="cdProvincia"
+		property="cdProvincia"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cdProvincia" />
+	<fieldProperty
+		name="codiceFiscale"
+		property="codiceFiscale"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="codiceFiscale" />
+	<fieldProperty
+		name="numeroConto"
+		property="numeroConto"
+		inputType="TEXT"
+		inputSize="34"
+		maxLength="34"
+		enabledOnEdit="false"
+		label="numeroConto" />
+	<fieldProperty
+		name="bic"
+		property="bic"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="bic" />	
+	<fieldProperty
+		name="cdIso"
+		property="cdIso"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cdIso" />
+	<fieldProperty
+		name="imAssociato"
+		property="imAssociato"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="imAssociato" />
+	<fieldProperty
+		name="importoCge"
+		property="importoCge"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="importoCge" />
+	<fieldProperty
+		name="importoCup"
+		property="importoCup"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="importoCup" />
+	<fieldProperty
+		name="cdIso"
+		property="cdIso"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cdIso" />
+	<fieldProperty
+		name="assoggettamentoBollo"
+		property="assoggettamentoBollo"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="assoggettamentoBollo" />		
+	<fieldProperty
+		name="causaleBollo"
+		property="causaleBollo"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="causaleBollo" />		
+	<fieldProperty
+		name="pgDocAmm"
+		property="pgDocAmm"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="pgDocAmm" />
+	<fieldProperty
+		name="cdTipoDocumentoAmm"
+		property="cdTipoDocumentoAmm"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cdTipoDocumentoAmm" />	
+	<fieldProperty
+		name="modalitaPagamento"
+		property="modalitaPagamento"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="modalitaPagamento" />		
+	<form
+		name="searchtool">
+	</form>
+	<formFieldProperty
+		name="cdCds" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="pgDocumento" />
+	<formFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<formFieldProperty
+		name="cdCdsOrigine" />
+	<formFieldProperty
+		name="cdUoOrigine" />
+	<formFieldProperty
+		name="cdTipoDocumentoCont" />
+	<formFieldProperty
+		name="tiDocumento" />
+	<formFieldProperty
+		name="tiCompetenzaResiduo" />
+	<formFieldProperty
+		name="dsDocumento" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="dtEmissione" />
+	<formFieldProperty
+		name="dtTrasmissione" />
+	<formFieldProperty
+		name="dtPagamento" />
+	<formFieldProperty
+		name="dtAnnullamento" />
+	<formFieldProperty
+		name="imDocumento" />
+	<formFieldProperty
+		name="imPagato" />
+	<formFieldProperty
+		name="statoTrasmissione" />
+	<formFieldProperty
+		name="dtRitrasmissione" />
+	<formFieldProperty
+		name="cdTerzo" />
+	<formFieldProperty
+		name="cdAnag" />
+	<formFieldProperty
+		name="denominazioneSede" />
+	<formFieldProperty
+		name="cdSiope" />
+	<formFieldProperty
+		name="cdCup" />
+	<formFieldProperty
+		name="dtRegistrazioneSosp" />
+	<formFieldProperty
+		name="tiEntrataSpesa" />
+	<formFieldProperty
+		name="cdSospeso" />
+	<formFieldProperty
+		name="imSospeso" />
+	<formFieldProperty
+		name="viaSede" />
+	<formFieldProperty
+		name="capComuneSede" />
+	<formFieldProperty
+		name="dsComune" />
+	<formFieldProperty
+		name="cdProvincia" />
+	<formFieldProperty
+		name="codiceFiscale" />
+	<formFieldProperty
+		name="numeroConto" />
+	<formFieldProperty
+		name="cdIso" />
+	<formFieldProperty
+		name="imAssociato" />
+	<formFieldProperty
+		name="importoCge" />
+	<formFieldProperty
+		name="importoCup" />
+	<formFieldProperty
+		name="assoggettamentoBollo" />
+	<formFieldProperty
+		name="causaleBollo" />
+	<formFieldProperty
+		name="bic" />	
+	<formFieldProperty
+		name="cdTipoDocumentoAmm" />
+	<formFieldProperty
+		name="pgDocAmm" />		
+	<formFieldProperty
+		name="modalitaPagamento" />	
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pgDocumento" />
+	<findFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<findFieldProperty
+		name="cdCdsOrigine" />
+	<findFieldProperty
+		name="cdUoOrigine" />
+	<findFieldProperty
+		name="cdTipoDocumentoCont" />
+	<findFieldProperty
+		name="tiDocumento" />
+	<findFieldProperty
+		name="tiCompetenzaResiduo" />
+	<findFieldProperty
+		name="dsDocumento" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="dtEmissione" />
+	<findFieldProperty
+		name="dtTrasmissione" />
+	<findFieldProperty
+		name="dtPagamento" />
+	<findFieldProperty
+		name="dtAnnullamento" />
+	<findFieldProperty
+		name="imDocumento" />
+	<findFieldProperty
+		name="imPagato" />
+	<findFieldProperty
+		name="statoTrasmissione" />
+	<findFieldProperty
+		name="dtRitrasmissione" />
+	<findFieldProperty
+		name="cdTerzo" />
+	<findFieldProperty
+		name="cdAnag" />
+	<findFieldProperty
+		name="denominazioneSede" />
+	<findFieldProperty
+		name="cdSiope" />
+	<findFieldProperty
+		name="cdCup" />
+	<findFieldProperty
+		name="dtRegistrazioneSosp" />
+	<findFieldProperty
+		name="tiEntrataSpesa" />
+	<findFieldProperty
+		name="cdSospeso" />
+	<findFieldProperty
+		name="imSospeso" />
+	<findFieldProperty
+		name="viaSede" />
+	<findFieldProperty
+		name="capComuneSede" />
+	<findFieldProperty
+		name="dsComune" />
+	<findFieldProperty
+		name="cdProvincia" />
+	<findFieldProperty
+		name="codiceFiscale" />
+	<findFieldProperty
+		name="numeroConto" />
+	<findFieldProperty
+		name="cdIso" />
+	<findFieldProperty
+		name="imAssociato" />
+	<findFieldProperty
+		name="importoCge" />
+	<findFieldProperty
+		name="importoCup" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pgDocumento" />
+	<columnFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<columnFieldProperty
+		name="cdCdsOrigine" />
+	<columnFieldProperty
+		name="cdUoOrigine" />
+	<columnFieldProperty
+		name="cdTipoDocumentoCont" />
+	<columnFieldProperty
+		name="tiDocumento" />
+	<columnFieldProperty
+		name="tiCompetenzaResiduo" />
+	<columnFieldProperty
+		name="dsDocumento" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="dtEmissione" />
+	<columnFieldProperty
+		name="dtTrasmissione" />
+	<columnFieldProperty
+		name="dtPagamento" />
+	<columnFieldProperty
+		name="dtAnnullamento" />
+	<columnFieldProperty
+		name="imDocumento" />
+	<columnFieldProperty
+		name="imPagato" />
+	<columnFieldProperty
+		name="statoTrasmissione" />
+	<columnFieldProperty
+		name="dtRitrasmissione" />
+	<columnFieldProperty
+		name="cdTerzo" />
+	<columnFieldProperty
+		name="cdAnag" />
+	<columnFieldProperty
+		name="denominazioneSede" />
+	<columnFieldProperty
+		name="cdSiope" />
+	<columnFieldProperty
+		name="cdCup" />
+	<columnFieldProperty
+		name="dtRegistrazioneSosp" />
+	<columnFieldProperty
+		name="tiEntrataSpesa" />
+	<columnFieldProperty
+		name="cdSospeso" />
+	<columnFieldProperty
+		name="imSospeso" />
+	<columnFieldProperty
+		name="viaSede" />
+	<columnFieldProperty
+		name="capComuneSede" />
+	<columnFieldProperty
+		name="dsComune" />
+	<columnFieldProperty
+		name="cdProvincia" />
+	<columnFieldProperty
+		name="codiceFiscale" />
+	<columnFieldProperty
+		name="numeroConto" />
+	<columnFieldProperty
+		name="cdIso" />
+	<columnFieldProperty
+		name="imAssociato" />
+	<columnFieldProperty
+		name="importoCge" />
+	<columnFieldProperty
+		name="importoCup" />
+	<columnFieldProperty
+		name="assoggettamentoBollo" />
+	<columnFieldProperty
+		name="causaleBollo" />
+	<columnFieldProperty
+		name="bic" />		
+	<columnSet name="CLASSIFICAZIONE">
+		<columnFieldProperty name="esercizio" />
+		<columnFieldProperty name="cdUnitaOrganizzativa" />
+		<columnFieldProperty name="pgDocumento" />		
+		<columnFieldProperty name="cdSiope" />
+		<columnFieldProperty name="cdCup" />
+		<columnFieldProperty name="imDocumento" />	
+		<columnFieldProperty name="importoCup" />
+		<columnFieldProperty name="importoCge" />
+		<columnFieldProperty name="cdTipoDocumentoAmm" />
+		<columnFieldProperty name="pgDocAmm" />	
+	</columnSet>
+	<columnSet name="SOSPESO">
+		<columnFieldProperty name="esercizio" />
+		<columnFieldProperty name="cdUnitaOrganizzativa" />
+		<columnFieldProperty name="pgDocumento" />		
+		<columnFieldProperty name="dtRegistrazioneSosp" />
+		<columnFieldProperty name="tiEntrataSpesa" />
+		<columnFieldProperty name="cdSospeso" />	
+		<columnFieldProperty name="imSospeso" />
+		<columnFieldProperty name="imAssociato" />
+	</columnSet>	
+</bulkInfo>

@@ -130,6 +130,11 @@
 			<% bp.getController().writeFormLabel(out,"fl_cup");%>
 			</TD><TD colspan="3">
 			<% bp.getController().writeFormInput(out,"fl_cup");%>
+		</TD></TR>	
+		<TR><TD>
+			<% bp.getController().writeFormLabel(out,"fl_siope_cup");%>
+			</TD><TD colspan="3">
+			<% bp.getController().writeFormInput(out,"fl_siope_cup");%>
 		</TD></TR>		
 					
 		<TR><TD>

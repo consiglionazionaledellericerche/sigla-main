@@ -502,6 +502,24 @@ public Forward doConfirmSalvaCup(ActionContext actioncontext,int option) {
 					  return openConfirm(actioncontext,"Attenzione! Alcune o tutte le righe della reversale non risultano associate completamente al CUP. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmSalva");
 				}
 			}
+			
+			if (bp.isSiope_cup_attivo() && reversale.isRequiredSiope() ){
+				boolean trovato =false;
+				if (reversale instanceof ReversaleIBulk){
+					bp.getSiopeCupCollegati().validate(actioncontext);
+					for (Iterator i=reversale.getReversale_rigaColl().iterator();i.hasNext()&&!trovato;){
+						Reversale_rigaBulk riga = (Reversale_rigaBulk)i.next();
+						for (Iterator j=riga.getReversale_siopeColl().iterator();j.hasNext()&&!trovato;){
+							Reversale_siopeBulk rigaSiope = (Reversale_siopeBulk)j.next();
+						
+							if(rigaSiope.getReversaleSiopeCupColl().isEmpty()||rigaSiope.getTipoAssociazioneCup().compareTo(Mandato_rigaBulk.SIOPE_TOTALMENTE_ASSOCIATO)!=0)
+								trovato =true;
+						}
+					if(trovato)
+					  return openConfirm(actioncontext,"Attenzione! Alcune o tutte le righe siope non risultano associate completamente al CUP. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmSalva");
+					}
+				}
+			}
 			return doConfirmSalva(actioncontext,OptionBP.YES_BUTTON);
 		}
 		return doConfirmSalva(actioncontext,OptionBP.NO_BUTTON);

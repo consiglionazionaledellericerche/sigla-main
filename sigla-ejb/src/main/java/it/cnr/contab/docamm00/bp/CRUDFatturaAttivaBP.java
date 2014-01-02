@@ -54,6 +54,7 @@ public abstract class CRUDFatturaAttivaBP
 	private boolean ribaltato;
 	private boolean isDetailDoubling = false;
 	private boolean isGestoreBancaFatturaAttiva;
+	private boolean contoEnte;
 	private final FatturaAttivaRigaIntrastatCRUDController dettaglioIntrastatController = new FatturaAttivaRigaIntrastatCRUDController("Intrastat",Fattura_attiva_intraBulk.class,"fattura_attiva_intrastatColl", this);
 public CRUDFatturaAttivaBP() {
 
@@ -951,6 +952,11 @@ public boolean isROBank_ModPag(UserContext context, Fattura_attivaBulk fattura) 
 	}
 	return isInputReadonly();
 }
+public boolean isROBank(UserContext context, Fattura_attivaBulk fattura) throws ComponentException, RemoteException {
+	if(isROBank_ModPag(context,fattura) || isContoEnte() )
+		return true;
+	return isInputReadonly();
+}
 
 
 	public void setGestoreBancaFatturaAttiva(boolean b) {
@@ -967,5 +973,11 @@ public boolean isROBank_ModPag(UserContext context, Fattura_attivaBulk fattura) 
 	}
 	public FatturaAttivaRigaIntrastatCRUDController getDettaglioIntrastatController() {
 		return dettaglioIntrastatController;
+	}
+	public void setContoEnte(boolean b) {
+		contoEnte=b;
+	}
+	public boolean isContoEnte() {
+		return contoEnte;
 	}
 }

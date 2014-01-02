@@ -1912,10 +1912,12 @@ public Forward doOnModalitaPagamentoChange(ActionContext context) {
                 if (coll == null || coll.isEmpty())
                     throw new it.cnr.jada.comp.ApplicationException("Non e' stato possibile trovare i riferimenti bancari");
                 if (documentoGenerico.isGenericoAttivo()) {
+                	((CRUDDocumentoGenericoAttivoBP)bp).setContoEnte(false);
 					if (!Rif_modalita_pagamentoBulk.BANCARIO.equals(riga.getModalita_pagamento_uo_cds().getTi_pagamento()))
 		            	riga.setBanca_uo_cds(getBancaDefaultForCdsFrom(context, riga, coll));
 		            else {
 			        	BancaBulk banca = component.setContoEnteIn(context.getUserContext(), riga, coll);
+			        	((CRUDDocumentoGenericoAttivoBP)bp).setContoEnte(true);
 			        	if (banca == null)
 			        		banca = getBancaDefaultForCdsFrom(context, riga, coll);
 			        	riga.setBanca_uo_cds(banca);

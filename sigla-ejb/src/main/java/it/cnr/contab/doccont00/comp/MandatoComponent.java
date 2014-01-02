@@ -49,10 +49,12 @@ import it.cnr.contab.doccont00.core.bulk.MandatoCupIBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoHome;
 import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoIHome;
+import it.cnr.contab.doccont00.core.bulk.MandatoSiopeCupIBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaHome;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_siopeBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_siopeHome;
 import it.cnr.contab.doccont00.core.bulk.Mandato_siopeIBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_terzoBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_terzoIBulk;
@@ -3683,8 +3685,14 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				}
 			if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, mandato.getEsercizio()).getFl_cup().booleanValue()) {
 				riga.setMandatoCupColl(new BulkList(((Mandato_rigaHome) getHome( aUC, Mandato_rigaBulk.class)).findCodiciCupCollegati(aUC, riga)));
+			}else{
+				if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, mandato.getEsercizio()).getFl_siope_cup().booleanValue()) {
+					for (Iterator j=riga.getMandato_siopeColl().iterator();j.hasNext();){
+						Mandato_siopeIBulk rigaSiope = (Mandato_siopeIBulk)j.next();
+						rigaSiope.setMandatoSiopeCupColl(new BulkList(((Mandato_siopeHome) getHome( aUC, Mandato_siopeBulk.class)).findCodiciSiopeCupCollegati(aUC, rigaSiope)));
+					}
+				}
 			}
-			
 				inizializzaTi_fattura(aUC, riga);
 				((Mandato_rigaHome) getHome(aUC, riga.getClass()))
 						.initializeElemento_voce(aUC, riga);
@@ -6320,6 +6328,16 @@ public java.lang.Boolean isDipendenteDaConguaglio(
 	} catch (Exception e) {
 		throw handleException(e);
 	}
+}
+public SQLBuilder selectCupByClause(UserContext userContext, MandatoSiopeCupIBulk bulk, CupBulk cup, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException
+{
+	SQLBuilder sql = getHome( userContext, CupBulk.class ).createSQLBuilder();
+	sql.openParenthesis("AND");
+ 	sql.addClause("AND", "dt_canc", sql.ISNULL, null);
+	sql.addClause("OR","dt_canc",sql.GREATER,it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+	sql.closeParenthesis();
+	sql.addClause(clauses);
+	return sql;
 }
 private void verificaTracciabilitaPagamenti(UserContext userContext,
 		MandatoBulk mandato) throws ComponentException {

@@ -51,6 +51,7 @@ public class CRUDNotaDiCreditoAction extends CRUDFatturaPassivaAction {
 /**
  * CRUDNotaDiCreditoAction constructor comment.
  */
+
 public CRUDNotaDiCreditoAction() {
 	super();
 }
@@ -936,7 +937,7 @@ public Forward doModificaScadenzaInAutomatico(ActionContext context, String pref
 				notaDiCredito.setEnte(fpcs.findTerzoUO(context.getUserContext(), notaDiCredito.getEsercizio()));
 			java.util.List coll = (java.util.List)fpcs.findListabancheuo(context.getUserContext(), notaDiCredito);
 //			notaDiCredito.setBanca_uo((coll == null || coll.isEmpty()) ? null : (BancaBulk)new java.util.Vector(coll).firstElement());
-
+			bp.setContoEnte(false);
             if (coll==null || coll.isEmpty())
 	            notaDiCredito.setBanca_uo(null);
             else if (coll.size() == 1)
@@ -944,8 +945,10 @@ public Forward doModificaScadenzaInAutomatico(ActionContext context, String pref
             else {
 				if (!Rif_modalita_pagamentoBulk.BANCARIO.equals(notaDiCredito.getModalita_pagamento_uo().getTi_pagamento()))
 	            	notaDiCredito.setBanca_uo((BancaBulk) new java.util.Vector(coll).firstElement());
-	            else
+	            else{
 		        	notaDiCredito = fpcs.setContoEnteIn(context.getUserContext(), notaDiCredito, coll);
+		        	bp.setContoEnte(true);
+	            }
             }
 		} else {
 			notaDiCredito.setBanca_uo(null);

@@ -4,7 +4,12 @@
  */
 package it.cnr.contab.doccont00.core.bulk;
 
+import java.math.BigDecimal;
+import java.util.Iterator;
+
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 
@@ -12,6 +17,7 @@ public abstract class Mandato_siopeBulk extends Mandato_siopeBase {
 
 	Codici_siopeBulk  codice_siope  = new Codici_siopeBulk();
 	
+	protected BulkList mandatoSiopeCupColl = new BulkList();
 	public Mandato_siopeBulk() {
 		super();
 	}
@@ -201,5 +207,69 @@ public abstract class Mandato_siopeBulk extends Mandato_siopeBase {
 	public void setCd_siope(String cd_siope) {
 		it.cnr.contab.config00.bulk.Codici_siopeBulk codice_siope = this.getCodice_siope();
 		if (codice_siope != null) this.getCodice_siope().setCd_siope(cd_siope);
+	}
+
+	public BulkList getMandatoSiopeCupColl() {
+		return mandatoSiopeCupColl;
+	}
+
+	public void setMandatoSiopeCupColl(BulkList mandatoSiopeCupColl) {
+		this.mandatoSiopeCupColl = mandatoSiopeCupColl;
+	}
+	/**
+	 * Aggiunge un nuovo dettaglio (MandatoCupBulk) alla lista di dettagli definiti per il mandato
+	 * inizializzandone alcuni campi
+	 * @param mr dettaglio da aggiungere alla lista
+	 * @return int
+	 */
+	public int addToMandatoSiopeCupColl( MandatoSiopeCupBulk mandato_siope_cup ) 
+	{
+		mandatoSiopeCupColl.add(mandato_siope_cup);
+		mandato_siope_cup.setMandatoSiope(this); 
+		if (mandato_siope_cup.getImporto()==null && mandatoSiopeCupColl.size()==1) 
+			mandato_siope_cup.setImporto(this.getImporto());
+		else
+			mandato_siope_cup.setImporto(BigDecimal.ZERO);
+		return mandatoSiopeCupColl.size()-1;
+	}
+	/**
+	 * Metodo per l'eliminazione di un elemento <code>MandatoCupBulk</code> dalla <code>Collection</code>
+	 * delle righe del mandato.
+	 * @param index L'indice per scorrere la collezione dei codici cup legati alla riga del mandato.
+	 * @return MandatoCupBulk La riga da rimuovere.
+	 */
+	public MandatoSiopeCupBulk removeFromMandatoSiopeCupColl(int index) 
+	{
+		MandatoSiopeCupBulk mandato_siope_cup = (MandatoSiopeCupBulk)mandatoSiopeCupColl.remove(index);
+		
+		return mandato_siope_cup;
+	}
+	public BigDecimal getIm_associato_cup(){
+		BigDecimal totale = Utility.ZERO;
+		for (Iterator i = getMandatoSiopeCupColl().iterator(); i.hasNext();) totale = totale.add(((MandatoSiopeCupBulk)i.next()).getImporto());
+		return Utility.nvl(totale);
+	}
+	public BigDecimal getIm_da_associare_cup(){
+		return Utility.nvl(getImporto()).subtract(Utility.nvl(getIm_associato_cup()));
+	}
+	/*
+	 * Ritorna l'informazione circa la totale o parziale associazione della
+	 * riga a codici CUP.
+	 * 
+	 * return
+	 * 	"T" = SIOPE_TOTALMENTE_ASSOCIATO
+	 *  "P" = SIOPE_PARZIALMENTE_ASSOCIATO
+	 *  "N" = SIOPE_NON_ASSOCIATO
+	 * 		
+	 */
+	public String getTipoAssociazioneCup() {
+		BigDecimal totCup = getIm_associato_cup();
+		if (getIm_da_associare_cup().compareTo(Utility.ZERO)==0) return Mandato_rigaBulk.SIOPE_TOTALMENTE_ASSOCIATO;
+		if (totCup.compareTo(Utility.ZERO)==0) return Mandato_rigaBulk.SIOPE_NON_ASSOCIATO;
+		return Mandato_rigaBulk.SIOPE_PARZIALMENTE_ASSOCIATO;
+	}
+	public BulkCollection[] getBulkLists() {
+		 return new it.cnr.jada.bulk.BulkCollection[] { mandatoSiopeCupColl};
+
 	}
 }

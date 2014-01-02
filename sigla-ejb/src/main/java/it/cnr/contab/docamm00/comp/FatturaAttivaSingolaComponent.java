@@ -4705,6 +4705,9 @@ public it.cnr.jada.persistency.sql.SQLBuilder selectVoce_ivaByClause(UserContext
 	sql.addSQLClause("AND","TI_APPLICAZIONE",sql.EQUALS,voce_iva.ENTRAMBE);
 	sql.addSQLClause("OR","TI_APPLICAZIONE",sql.EQUALS,voce_iva.VENDITE);
 	sql.closeParenthesis();
+// da valutare	
+//	if (riga!=null && riga.getFattura_attiva()!=null && ((Fattura_attiva_IBulk)riga.getFattura_attiva()).getFl_intra_ue())
+//		sql.addSQLClause("AND", "FL_INTRA", sql.EQUALS, "Y");
 	if(riga instanceof Nota_di_credito_attiva_rigaBulk && !riga.getFattura_attiva().isIvaRecuperabile())
 		sql.addSQLClause("AND","FL_IVA_NON_RECUPERABILE",sql.EQUALS,"Y");
 	sql.addClause(clauses);
@@ -4828,7 +4831,7 @@ public Fattura_attivaBulk setContoEnteIn(
 					if (bancaEnte == null) {
 						if (banca.getAbi().equalsIgnoreCase(configBanca.getVal01()) &&
 							banca.getCab().equalsIgnoreCase(configBanca.getVal02()) &&
-							banca.getNumero_conto().equalsIgnoreCase(configBanca.getVal03()))
+							banca.getNumero_conto().contains(configBanca.getVal03()))
 							bancaEnte = banca;
 					}
 				}

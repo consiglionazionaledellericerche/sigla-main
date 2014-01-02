@@ -40,6 +40,8 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	private String oggettoEmail;
 	private String corpoEmail;
 	private Boolean fl_cup;
+	private Boolean fl_siope_cup;
+	
 	private String clausolaOrdine;
 	private java.sql.Timestamp data_stipula_contratti;
 	
@@ -289,4 +291,10 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 		this.livello_pdg_cofog = livello_pdg_cofog;
 	}
 	
+	public Boolean getFl_siope_cup() {
+		return fl_siope_cup;
+	}
+	public void setFl_siope_cup(Boolean fl_siope_cup) {
+		this.fl_siope_cup = fl_siope_cup;
+	}
 }

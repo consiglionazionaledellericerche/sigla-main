@@ -42,6 +42,7 @@ import it.cnr.contab.doccont00.ejb.*;
 import java.math.BigDecimal;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.cori00.docs.bulk.Liquid_gruppo_coriIBulk;
+import it.cnr.contab.doccont00.comp.DateServices;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaHome;
@@ -4595,7 +4596,7 @@ public BancaBulk setContoEnteIn(
 					if (bancaEnte == null) {
 						if (banca.getAbi().equalsIgnoreCase(configBanca.getVal01()) &&
 							banca.getCab().equalsIgnoreCase(configBanca.getVal02()) &&
-							banca.getNumero_conto().equalsIgnoreCase(configBanca.getVal03()))
+							banca.getNumero_conto().contains(configBanca.getVal03()))
 							bancaEnte = banca;
 					}
 				}
@@ -5030,8 +5031,9 @@ public void validaRiga(
 private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_vpg_doc_genericoBulk stampa) throws ComponentException{
 
 	try{
-		Timestamp dataOdierna = getDataOdierna(userContext);
+		
 		java.sql.Timestamp firstDayOfYear = getFirstDayOfYear(stampa.getEsercizio().intValue());
+		java.sql.Timestamp lastDayOfYear = DateServices.getLastDayOfYear(stampa.getEsercizio().intValue());
 	
 		/**** Controlli sui PG_INIZIO/PG_FINE *****/
 		if (stampa.getPgInizio()==null)
@@ -5057,10 +5059,10 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_vp
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
 			throw new ValidationException("La DATA di INIZIO PERIODO non può essere inferiore a " + formatter.format(firstDayOfYear));
 		}
-		// La Data di Fine periodo è SUPERIORE alla data odierna
-		if (stampa.getDataFine().compareTo(dataOdierna)>0){
+		// La Data di Fine periodo è SUPERIORE alla data lastDayOfYear
+		if (stampa.getDataFine().compareTo(lastDayOfYear)>0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di FINE PERIODO non può essere superiore a " + formatter.format(dataOdierna));
+			throw new ValidationException("La DATA di FINE PERIODO non può essere superiore a " + formatter.format(lastDayOfYear));
 		}
 
 		

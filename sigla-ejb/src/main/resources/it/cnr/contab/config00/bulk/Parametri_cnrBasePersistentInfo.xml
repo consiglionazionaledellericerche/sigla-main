@@ -229,6 +229,14 @@
 			sqlTypeName="DECIMAL"
 			columnSize="1"
 			nullable="false" />
+		<columnMapping
+			columnName="FL_SIOPE_CUP"
+			propertyName="fl_siope_cup"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		
 	</defaultColumnMap>
 	<persistentProperty
 		name="cd_tipo_rapporto" />
@@ -301,4 +309,6 @@
 		name="data_stipula_contratti" />											
 	<persistentProperty
 		name="livello_pdg_cofog" />	
+	<persistentProperty
+		name="fl_siope_cup" />	
 </SQLPersistentInfo>

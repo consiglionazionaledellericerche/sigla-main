@@ -18,7 +18,13 @@
 <script language="JavaScript" src="scripts/disableRightClick.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
 </head>
-<title>Gestione Distinta cassiere</title>
+ <% it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP bp2=(it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP)BusinessProcess.getBusinessProcess(request); %>
+<% if (bp2.isFlusso()) { %>
+	<title>Gestione Distinta cassiere - Flusso Ordinativo </title>
+<% } else {%>
+	<title>Gestione Distinta cassiere</title>
+<% } %>
+
 <body class="Form">
 <% 	it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP bp = (it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP)BusinessProcess.getBusinessProcess(request);
 	 bp.openFormWindow(pageContext); %>

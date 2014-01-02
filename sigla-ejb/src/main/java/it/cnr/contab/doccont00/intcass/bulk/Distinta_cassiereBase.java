@@ -34,6 +34,8 @@ public class Distinta_cassiereBase extends Distinta_cassiereKey implements Keyed
 
 	// PG_DISTINTA_DEF DECIMAL(10,0)
 	private java.lang.Long pg_distinta_def;
+	
+	private java.lang.Boolean fl_flusso;
 
 public Distinta_cassiereBase() {
 	super();
@@ -148,5 +150,11 @@ public void setIm_rev_ini_tra(java.math.BigDecimal im_rev_ini_tra) {
  */
 public void setPg_distinta_def(java.lang.Long pg_distinta_def) {
 	this.pg_distinta_def = pg_distinta_def;
+}
+public java.lang.Boolean getFl_flusso() {
+	return fl_flusso;
+}
+public void setFl_flusso(java.lang.Boolean fl_flusso) {
+	this.fl_flusso = fl_flusso;
 }
 }

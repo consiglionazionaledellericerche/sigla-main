@@ -1,24 +1,44 @@
 package it.cnr.contab.doccont00.bp;
 
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.util.*;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
+import javax.xml.bind.JAXBContext;
+import javax.xml.datatype.DatatypeFactory;
+
+import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.cori00.ejb.Liquid_coriComponentSession;
+import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.contab.doccont00.ejb.*;
 import it.cnr.contab.doccont00.intcass.bulk.*;
+import it.cnr.contab.doccont00.intcass.xmlbnl.FlussoOrdinativi;
+import it.cnr.contab.doccont00.intcass.xmlbnl.Mandato;
+import it.cnr.contab.doccont00.intcass.xmlbnl.Reversale;
+
+import it.cnr.contab.doccont00.intcass.xmlbnl.ObjectFactory;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
-import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.*;
 import it.cnr.jada.util.action.*;
+import it.cnr.jada.util.jsp.Button;
+import it.cnr.jada.util.jsp.JSPUtils;
 /**
  * Business Process che gestisce le attività di CRUD per l'entita' Distinta Cassiere
  * @version 1.1 by Aurelio D'Amico
@@ -29,6 +49,8 @@ public class CRUDDistintaCassiereBP extends it.cnr.jada.util.action.SimpleCRUDBP
 	private final RemoteDetailCRUDController distinteCassCollegateDet = new RemoteDetailCRUDController("DistinteCassCollegateDet", it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk.class,"distinte_cassiere_detCollegateColl","CNRDOCCONT00_EJB_DistintaCassiereComponentSession",this);
 	private Parametri_cnrBulk parametriCnr;
 	public boolean elencoConUo;
+	public Boolean flusso;
+	private String file;
 	private Unita_organizzativaBulk uoSrivania;
 
 public CRUDDistintaCassiereBP() {
@@ -38,6 +60,22 @@ public CRUDDistintaCassiereBP() {
 public CRUDDistintaCassiereBP(String function) {
 	super(function+"Tn");
 
+}
+protected it.cnr.jada.util.jsp.Button[] createToolbar() 
+{
+	Button[] toolbar = super.createToolbar();
+	
+		if (this.isFlusso()){
+			Button[] newToolbar = new Button[ toolbar.length + 2];
+			int i;
+			for ( i = 0; i < toolbar.length; i++ )
+				newToolbar[i] = toolbar[i];
+			newToolbar[ i ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.flusso");
+			newToolbar[ i +1] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.download");
+			return newToolbar;
+		}
+		else
+			return toolbar;
 }
 /** 
   * Viene richiesta alla component che gestisce la distinta cassiere di calcolare gli importi totali
@@ -74,6 +112,7 @@ public final it.cnr.jada.util.action.RemoteDetailCRUDController getDistintaCassD
 protected void init( it.cnr.jada.action.Config config,ActionContext context) throws BusinessProcessException 
 {
 	context.getBusinessProcess("/GestioneUtenteBP").removeChild("CRUDDistintaCassiereBP");
+	this.setFlusso(new Boolean(config.getInitParameter("flusso")));
 	try {
 		isUoDistintaTuttaSac(context);
 	} catch (ComponentException e) {
@@ -310,5 +349,120 @@ public void setUoSrivania(Unita_organizzativaBulk bulk) {
 protected void initialize(ActionContext actioncontext) throws BusinessProcessException {
 	super.initialize(actioncontext);
 	setUoSrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(actioncontext));
+	if(this.isEditable())
+		((Distinta_cassiereBulk)this.getModel()).setFl_flusso(flusso);
 }
+
+public OggettoBulk createNewSearchBulk(ActionContext context) throws BusinessProcessException {
+	Distinta_cassiereBulk fs = (Distinta_cassiereBulk)super.createNewSearchBulk(context);
+	this.setFile(null);
+	if(this.isEditable())
+		fs.setFl_flusso(isFlusso());
+	return fs;
+}
+
+public Boolean isFlusso() {
+	return flusso;
+}
+public void setFlusso(Boolean flusso) {
+	this.flusso = flusso;
+}
+public boolean isScaricaButtonEnabled() {
+	if(!isEstraiButtonHidden()&& getFile()!=null)
+		return true;
+	else
+		return false;
+}
+public boolean isEstraiButtonHidden() {
+	 return (((Distinta_cassiereBulk)getModel()).getDt_invio() == null); 
+}
+public void writeToolbar(PageContext pagecontext) throws IOException, ServletException {
+	Button[] toolbar = getToolbar();
+	if(getFile()!=null){
+		HttpServletResponse httpservletresp = (HttpServletResponse)pagecontext.getResponse();
+		HttpServletRequest httpservletrequest = (HttpServletRequest)pagecontext.getRequest();
+	    StringBuffer stringbuffer = new StringBuffer();
+	    stringbuffer.append(pagecontext.getRequest().getScheme());
+	    stringbuffer.append("://");
+	    stringbuffer.append(pagecontext.getRequest().getServerName());
+	    stringbuffer.append(':');
+	    stringbuffer.append(pagecontext.getRequest().getServerPort());
+	    stringbuffer.append(JSPUtils.getAppRoot(httpservletrequest));
+	    toolbar[10].setHref("javascript:doPrint('"+stringbuffer+getFile()+ "')");
+	}
+	super.writeToolbar(pagecontext);
+}
+public String getFile() {
+	return file;
+}
+public void setFile(String file) {
+	this.file = file;
+}
+public void generaXML(ActionContext context) throws ComponentException, RemoteException, BusinessProcessException{
+   try{
+	     
+	    JAXBContext jc = JAXBContext.newInstance("it.cnr.contab.doccont00.intcass.xmlbnl");
+		ObjectFactory obj = new ObjectFactory();
+		//creo i file del flusso
+		
+		// Testata
+		FlussoOrdinativi currentFlusso = null;
+		currentFlusso = obj.createFlussoOrdinativi();
+		
+		Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
+		if ( sess.getVal01(context.getUserContext(),it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context), null, "FLUSSO_ORDINATIVI", "CODICE_ABI_BT") == null)
+				throw new ApplicationException("Configurazione mancante per flusso Ordinativo");
+		Distinta_cassiereBulk distinta =(Distinta_cassiereBulk)this.getModel();
+		String CodiceAbi=sess.getVal01(context.getUserContext(),it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context), null, "FLUSSO_ORDINATIVI", "CODICE_ABI_BT");
+		currentFlusso.setCodiceABIBT(new BigInteger(CodiceAbi));
+		currentFlusso.setIdentificativoFlusso(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context).toString()+"-"+distinta.getCd_unita_organizzativa()+"-"+distinta.getPg_distinta_def().toString()+"-I");// Inserito "I" alla fine in caso di gestione Rinvio
+		GregorianCalendar gcdi = new GregorianCalendar();
+		gcdi.setTimeInMillis(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp().getTime());
+		currentFlusso.setDataOraCreazioneFlusso(DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(gcdi.get(Calendar.YEAR), gcdi.get(Calendar.MONTH), gcdi.get(Calendar.DAY_OF_MONTH),gcdi.get(Calendar.HOUR_OF_DAY), gcdi.get(Calendar.MINUTE), gcdi.get(Calendar.SECOND))));
+		
+		ExtCassiereCdsBulk extcas=((DistintaCassiereComponentSession)createComponentSession()).recuperaCodiciCdsCassiere(context.getUserContext(), (Distinta_cassiereBulk)getModel());
+		
+		currentFlusso.setCodiceEnte(extcas.getCodiceProto());
+		currentFlusso.setDescrizioneEnte(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getDs_unita_organizzativa());
+		BancaBulk banca =((DistintaCassiereComponentSession)createComponentSession()).recuperaIbanUo(context.getUserContext(), ((Distinta_cassiereBulk)getModel()).getUnita_organizzativa()); 
+		currentFlusso.setCodiceEnteBT(extcas.getCodiceProto()+"-"+banca.getCodice_iban()+ "-"+extcas.getCodiceSia());
+		currentFlusso.setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
+		
+		List dettagliRev=((DistintaCassiereComponentSession)createComponentSession()).dettagliDistinta(context.getUserContext(), distinta, it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_REV);
+		// Elaboriamo prima le reversali
+		Reversale currentReversale=null;
+		for(Iterator i=dettagliRev.iterator();i.hasNext();){
+	    	V_mandato_reversaleBulk bulk=(V_mandato_reversaleBulk) i.next();
+	    		currentReversale=(Reversale)((DistintaCassiereComponentSession)createComponentSession()).recuperaDatiReversaleFlusso(context.getUserContext(), bulk);
+	    		if(bulk.getTi_cc_bi().compareTo(SospesoBulk.TIPO_BANCA_ITALIA)==0){
+	    			// bisogna aggiornare l'iban se banca d'italia ma lo posso sapere solo in questo punto 
+	    			Liquid_coriComponentSession component = (Liquid_coriComponentSession)this.createComponentSession("CNRCORI00_EJB_Liquid_coriComponentSession",Liquid_coriComponentSession.class );
+	    			currentFlusso.setCodiceEnteBT(extcas.getCodiceProto()+"-"+
+	    					component.getContoSpecialeEnteF24(context.getUserContext())+ "-"+extcas.getCodiceSia());
+	    		}
+	    		currentFlusso.getReversale().add(currentReversale);
+	    }
+		List dettagliMan=((DistintaCassiereComponentSession)createComponentSession()).dettagliDistinta(context.getUserContext(), distinta, it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_MAN);
+		//Mandati
+		Mandato currentMandato=null;
+		for(Iterator i=dettagliMan.iterator();i.hasNext();){
+	    	V_mandato_reversaleBulk bulk=(V_mandato_reversaleBulk) i.next();
+	    		currentMandato=(Mandato)((DistintaCassiereComponentSession)createComponentSession()).recuperaDatiMandatoFlusso(context.getUserContext(), bulk);
+	    		currentFlusso.getMandato().add(currentMandato);
+	    } 
+		String fileName =currentFlusso.getIdentificativoFlusso()+".xml";
+		File file = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/",fileName);
+		 
+		FileOutputStream fileOutputStream = new FileOutputStream(file);					
+		jc.createMarshaller().marshal(currentFlusso, fileOutputStream);
+		fileOutputStream.flush();
+		fileOutputStream.close();
+		setFile("/tmp/"+file.getName());	  
+		setMessage("Flusso generato");
+   } 
+   catch (Exception e){
+	   throw handleException(e);
+   }
+ }
+
 }

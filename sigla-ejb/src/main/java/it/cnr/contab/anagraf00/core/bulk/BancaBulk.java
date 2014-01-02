@@ -345,6 +345,12 @@ public void validate(OggettoBulk parent) throws ValidationException {
 		else
 			setCodice_iban(null);
 	}
+	if (!isROBanca() &&((Rif_modalita_pagamentoBulk.IBAN.equals(getTi_pagamento())||Rif_modalita_pagamentoBulk.BANCARIO.equals(getTi_pagamento())))){
+		if ((this.getNazione_iban()==null)||(this.getNazione_iban()!=null && this.getNazione_iban().getCd_iso().compareTo(new String("IT"))!=0 ))
+			if(this.getCodice_swift()==null) 
+				throw new ValidationException("Il codice swift è obbligatorio.");
+	}
+			
 }
 public NazioneBulk getNazione_iban() {
 	return nazione_iban;

@@ -220,8 +220,12 @@
 		name="fl_cup"
 		property="fl_cup"
 		inputType="CHECKBOX"
-		label="Gestione Obbligatoria Cup" />	
-	
+		label="Gestione Cup" />	
+	<fieldProperty
+		name="fl_siope_cup"
+		property="fl_siope_cup"
+		inputType="CHECKBOX"
+		label="Gestione Siope con Cup" />	
 	<fieldProperty
 		name="data_stipula_contratti"
 		property="data_stipula_contratti"
@@ -307,6 +311,10 @@
 	<formFieldProperty
 		name="livello_pdg_cofog"/>
 					       
+		name="fl_cup"/>
+	<formFieldProperty
+		name="fl_siope_cup"/>		       
+				       
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
@@ -365,6 +373,8 @@
 		name="fl_obb_intrastat"/>	
 	 <columnFieldProperty
 		name="fl_cup"/>	      
+	<columnFieldProperty
+		name="fl_siope_cup"/>	
 	<columnFieldProperty
 		name="clausolaOrdine"/>
 	<columnFieldProperty

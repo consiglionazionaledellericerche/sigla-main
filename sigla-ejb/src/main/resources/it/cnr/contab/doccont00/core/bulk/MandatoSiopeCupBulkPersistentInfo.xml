@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.MandatoSiopeCupBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.MandatoSiopeCupHome">
+	<defaultColumnMap
+		tableName="MANDATO_SIOPE_CUP">
+		<columnMapping
+			columnName="CD_CUP"
+			propertyName="cup.cdCup" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cup"
+		partOfOid="true" />
+</SQLPersistentInfo>
