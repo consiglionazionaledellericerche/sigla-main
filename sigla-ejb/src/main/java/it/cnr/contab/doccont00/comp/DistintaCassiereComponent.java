@@ -2689,6 +2689,7 @@ public class DistintaCassiereComponent extends
 				"DISTINTA_CASSIERE_DET.ESERCIZIO");
 		sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS",
 				"DISTINTA_CASSIERE_DET.CD_CDS");
+		// da committare
 		sql2.openParenthesis("AND");
 		sql2.openParenthesis("AND");
 		sql2.addSQLClause("AND",
@@ -2703,6 +2704,7 @@ public class DistintaCassiereComponent extends
 				"DISTINTA_CASSIERE_DET.PG_REVERSALE");
 		sql2.closeParenthesis();
 		sql2.closeParenthesis();
+		// da committare
 		sql2.addSQLClause("AND", "DISTINTA_CASSIERE_DET.ESERCIZIO", sql.EQUALS,
 				distinta.getEsercizio());
 		sql2.addSQLClause("AND", "DISTINTA_CASSIERE_DET.CD_CDS", sql.EQUALS,
@@ -3814,11 +3816,14 @@ public class DistintaCassiereComponent extends
 			
 			infover.setProgressivoVersante(1);// Dovrebbe essere sempre 1 ?
 			infover.setImportoVersante(docContabile.getImDocumento());
-			if(bulk.getPg_documento_cont_padre()!=bulk.getPg_documento_cont())
-				infover.setTipoRiscossione("COMPENSAZIONE");
+			// tipologia non gestita da committare
+			//if(bulk.getPg_documento_cont_padre()!=bulk.getPg_documento_cont())
+				//infover.setTipoRiscossione("COMPENSAZIONE");
 			if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_REGOLAM_SOSPESO)==0)
 				infover.setTipoRiscossione("REGOLARIZZAZIONE");
-			if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_INCASSO)==0 && bulk.getPg_documento_cont_padre().compareTo(bulk.getPg_documento_cont())==0)
+			// da committare
+			//if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_INCASSO)==0 && bulk.getPg_documento_cont_padre().compareTo(bulk.getPg_documento_cont())==0)
+			if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_INCASSO)==0)
 				infover.setTipoRiscossione("CASSA");
 		
 			// Classificazioni
@@ -3863,7 +3868,7 @@ public class DistintaCassiereComponent extends
 			infover.setVersante(versante);
 			
 			if (docContabile.getDsDocumento().length() >105)
-				infover.setCausale(docContabile.getDsDocumento().substring(0, 105));
+				infover.setCausale(docContabile.getDsDocumento().substring(0, 104));
 			else
 				infover.setCausale(docContabile.getDsDocumento());
 			// SOSPESO			
@@ -3991,7 +3996,7 @@ public class DistintaCassiereComponent extends
 				for(Iterator c=listClass.iterator();c.hasNext();){
 					VDocumentiFlussoBulk doc=(VDocumentiFlussoBulk)c.next();
 					if(doc.getCdSiope()!=null){
-						if(oldDoc!=null && oldDoc.getCdSiope().compareTo(doc.getCdSiope())!=0 && doc.getCdCup()==null && totAssSiope.compareTo(totAssCup)!=0){
+						if(oldDoc!=null && oldDoc.getCdSiope().compareTo(doc.getCdSiope())!=0 && doc.getCdCup()==null && totAssSiope.compareTo(totAssCup)!=0 && totAssCup.compareTo(BigDecimal.ZERO)!=0){
 							clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
 							clas.setCodiceCgu(oldDoc.getCdSiope());
 							clas.setImporto(totAssSiope.subtract(totAssCup));
@@ -4058,18 +4063,20 @@ public class DistintaCassiereComponent extends
 				infoben.setBeneficiario(benef);
 				if (obb_iban){
 					sepa.setIban(docContabile.getNumeroConto());
-					if(docContabile.getBic()!=null && docContabile.getNumeroConto()!=null && docContabile.getNumeroConto().substring(0, 2).compareTo("IT")!=0 ) 
-						sepa.setBic(docContabile.getBic()); 
-				
+					if(docContabile.getBic()!=null && docContabile.getNumeroConto()!=null && (docContabile.getBic().length()>8 && docContabile.getBic().length()<11  ))// && docContabile.getNumeroConto().substring(0, 2).compareTo("IT")!=0 ) 
+						sepa.setBic(docContabile.getBic());
+					else 
+						throw new ApplicationException("Formato del codice bic non valido.");
+					sepa.setIdentificativoEndToEnd(docContabile.getEsercizio().toString()+"-"+docContabile.getCdUoOrigine()+"-"+docContabile.getPgDocumento().toString());
 					infoben.setSepaCreditTransfer(sepa);
 				}
 				if (infoben.getCausale() !=null && (infoben.getCausale()+docContabile.getDsDocumento()).length() >105)
-					infoben.setCausale(infoben.getCausale()+" "+docContabile.getDsDocumento().substring(0, 105));
+					infoben.setCausale(infoben.getCausale()+" "+docContabile.getDsDocumento().substring(0, 104));
 				else if(infoben.getCausale()!=null)
 					infoben.setCausale(infoben.getCausale()+" "+docContabile.getDsDocumento());
 				else
 					if (docContabile.getDsDocumento().length() >105)
-						infoben.setCausale(docContabile.getDsDocumento().substring(0,105));
+						infoben.setCausale(docContabile.getDsDocumento().substring(0,104));
 					else 
 						infoben.setCausale(docContabile.getDsDocumento());
 				// SOSPESO			
@@ -4143,7 +4150,8 @@ public class DistintaCassiereComponent extends
 		
 		sql.addSQLJoin("V_MANDATO_REVERSALE.ESERCIZIO","DISTINTA_CASSIERE_DET.ESERCIZIO");
 		sql.addSQLJoin("V_MANDATO_REVERSALE.CD_CDS","DISTINTA_CASSIERE_DET.CD_CDS");
-		sql.addSQLJoin("V_MANDATO_REVERSALE.CD_UNITA_ORGANIZZATIVA","DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA");
+		// da committare
+		//sql.addSQLJoin("V_MANDATO_REVERSALE.CD_UNITA_ORGANIZZATIVA","DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA");
 		
 		if (tipo.compareTo(Numerazione_doc_contBulk.TIPO_MAN)==0){
 			sql.addSQLClause("AND","V_MANDATO_REVERSALE.CD_TIPO_DOCUMENTO_CONT",sql.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
