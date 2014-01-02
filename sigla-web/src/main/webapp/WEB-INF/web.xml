@@ -212,6 +212,10 @@
 		<extension>ivl</extension>
 		<mime-type>text/text</mime-type>
 	</mime-mapping>
+	<mime-mapping>
+		<extension>ccf</extension>
+		<mime-type>text/text</mime-type>
+	</mime-mapping>
 	
 	<mime-mapping>
 		<extension>I01</extension>

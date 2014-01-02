@@ -8,6 +8,8 @@ import it.cnr.contab.docamm00.docs.bulk.VIntra12Bulk;
 import it.cnr.contab.docamm00.docs.bulk.VIntra12Home;
 import it.cnr.contab.docamm00.docs.bulk.VIntrastatBulk;
 import it.cnr.contab.docamm00.docs.bulk.VIntrastatHome;
+import it.cnr.contab.docamm00.docs.bulk.VSpesometroBulk;
+import it.cnr.contab.docamm00.docs.bulk.VSpesometroHome;
 import it.cnr.contab.docamm00.intrastat.bulk.FatturaAttivaIntraSBulk;
 import it.cnr.contab.docamm00.intrastat.bulk.FatturaAttivaIntraSHome;
 import it.cnr.contab.docamm00.intrastat.bulk.FatturaPassivaIntraSBulk;
@@ -506,21 +508,40 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 	}
 
 	public List EstraiBlacklist(UserContext context, OggettoBulk bulk,OggettoBulk bulkterzo)  throws ComponentException {
-		VFatcomBlacklistHome home = (VFatcomBlacklistHome)getHome(context,VFatcomBlacklistBulk.class);
-		SQLBuilder sql = home.createSQLBuilder();
-		sql.addClause("AND", "esercizio", sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context));
-		sql.addClause("AND", "mese",sql.EQUALS,((VFatcomBlacklistBulk)bulk).getMese());
-		if(bulkterzo !=null && (bulkterzo instanceof TerzoBulk)){
-			TerzoBulk terzo=(TerzoBulk)bulkterzo;
-			if(terzo.getCd_terzo()!=null)
-				sql.addClause("AND", "cd_terzo", sql.EQUALS,terzo.getCd_terzo());
+		if(bulk instanceof VFatcomBlacklistBulk){
+		
+				VFatcomBlacklistHome home = (VFatcomBlacklistHome)getHome(context,VFatcomBlacklistBulk.class);
+				SQLBuilder sql = home.createSQLBuilder();
+				sql.addClause("AND", "esercizio", sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context));
+				sql.addClause("AND", "mese",sql.EQUALS,((VFatcomBlacklistBulk)bulk).getMese());
+				if(bulkterzo !=null && (bulkterzo instanceof TerzoBulk)){
+					TerzoBulk terzo=(TerzoBulk)bulkterzo;
+					if(terzo.getCd_terzo()!=null)
+						sql.addClause("AND", "cd_terzo", sql.EQUALS,terzo.getCd_terzo());
+				}
+				sql.addOrderBy("esercizio,mese,cd_terzo,tipo,bene_servizio");
+				try {
+					return home.fetchAll(sql);
+				} catch (PersistencyException e) {
+					handleException(e);
+				}
+		}else if (bulk instanceof VSpesometroBulk){
+			VSpesometroHome home = (VSpesometroHome)getHome(context,VSpesometroBulk.class);
+			SQLBuilder sql = home.createSQLBuilder();
+			sql.addClause("AND", "esercizio", sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context));
+			if(((VSpesometroBulk)bulk).getMese()!=null){
+				sql.addClause("AND", "mese",sql.EQUALS,((VSpesometroBulk)bulk).getMese());
+				sql.addClause("AND", "tipoFiscalita",sql.EQUALS,"FS");
+			}else
+				sql.addClause("AND", "mese",sql.ISNULL,null);
+			sql.addOrderBy("esercizio,quadro,tipo,ti_bene_servizio,prog");
+			try {
+				return home.fetchAll(sql);
+			} catch (PersistencyException e) {
+				handleException(e);
+			}
 		}
-		sql.addOrderBy("esercizio,mese,cd_terzo,tipo,bene_servizio");
-		try {
-			return home.fetchAll(sql);
-		} catch (PersistencyException e) {
-			handleException(e);
-		}
+					
 	return null;
 	}
 }
