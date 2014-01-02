@@ -4,6 +4,7 @@ package it.cnr.contab.doccont00.bp;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.util.*;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
 import javax.xml.datatype.DatatypeFactory;
 
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
@@ -52,7 +54,7 @@ public class CRUDDistintaCassiereBP extends it.cnr.jada.util.action.SimpleCRUDBP
 	public Boolean flusso;
 	private String file;
 	private Unita_organizzativaBulk uoSrivania;
-
+	
 public CRUDDistintaCassiereBP() {
 	super("Tn");
 
@@ -414,18 +416,18 @@ public void generaXML(ActionContext context) throws ComponentException, RemoteEx
 				throw new ApplicationException("Configurazione mancante per flusso Ordinativo");
 		Distinta_cassiereBulk distinta =(Distinta_cassiereBulk)this.getModel();
 		String CodiceAbi=sess.getVal01(context.getUserContext(),it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context), null, "FLUSSO_ORDINATIVI", "CODICE_ABI_BT");
-		currentFlusso.setCodiceABIBT(new BigInteger(CodiceAbi));
+		currentFlusso.setCodiceABIBT(CodiceAbi);
 		currentFlusso.setIdentificativoFlusso(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context).toString()+"-"+distinta.getCd_unita_organizzativa()+"-"+distinta.getPg_distinta_def().toString()+"-I");// Inserito "I" alla fine in caso di gestione Rinvio
 		GregorianCalendar gcdi = new GregorianCalendar();
 		gcdi.setTimeInMillis(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp().getTime());
 		currentFlusso.setDataOraCreazioneFlusso(DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(gcdi.get(Calendar.YEAR), gcdi.get(Calendar.MONTH), gcdi.get(Calendar.DAY_OF_MONTH),gcdi.get(Calendar.HOUR_OF_DAY), gcdi.get(Calendar.MINUTE), gcdi.get(Calendar.SECOND))));
 		
 		ExtCassiereCdsBulk extcas=((DistintaCassiereComponentSession)createComponentSession()).recuperaCodiciCdsCassiere(context.getUserContext(), (Distinta_cassiereBulk)getModel());
-		
-		currentFlusso.setCodiceEnte(extcas.getCodiceProto());
+		 
+		currentFlusso.setCodiceEnte(Formatta(extcas.getCodiceProto(),"D",6,"0"));
 		currentFlusso.setDescrizioneEnte(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getDs_unita_organizzativa());
 		BancaBulk banca =((DistintaCassiereComponentSession)createComponentSession()).recuperaIbanUo(context.getUserContext(), ((Distinta_cassiereBulk)getModel()).getUnita_organizzativa()); 
-		currentFlusso.setCodiceEnteBT(extcas.getCodiceProto()+"-"+banca.getCodice_iban()+ "-"+extcas.getCodiceSia());
+		currentFlusso.setCodiceEnteBT(currentFlusso.getCodiceEnte()+"-"+banca.getCodice_iban()+ "-"+extcas.getCodiceSia());
 		currentFlusso.setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
 		
 		List dettagliRev=((DistintaCassiereComponentSession)createComponentSession()).dettagliDistinta(context.getUserContext(), distinta, it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_REV);
@@ -437,7 +439,7 @@ public void generaXML(ActionContext context) throws ComponentException, RemoteEx
 	    		if(bulk.getTi_cc_bi().compareTo(SospesoBulk.TIPO_BANCA_ITALIA)==0){
 	    			// bisogna aggiornare l'iban se banca d'italia ma lo posso sapere solo in questo punto 
 	    			Liquid_coriComponentSession component = (Liquid_coriComponentSession)this.createComponentSession("CNRCORI00_EJB_Liquid_coriComponentSession",Liquid_coriComponentSession.class );
-	    			currentFlusso.setCodiceEnteBT(extcas.getCodiceProto()+"-"+
+	    			currentFlusso.setCodiceEnteBT(currentFlusso.getCodiceEnte()+"-"+
 	    					component.getContoSpecialeEnteF24(context.getUserContext())+ "-"+extcas.getCodiceSia());
 	    		}
 	    		currentFlusso.getReversale().add(currentReversale);
@@ -450,11 +452,15 @@ public void generaXML(ActionContext context) throws ComponentException, RemoteEx
 	    		currentMandato=(Mandato)((DistintaCassiereComponentSession)createComponentSession()).recuperaDatiMandatoFlusso(context.getUserContext(), bulk);
 	    		currentFlusso.getMandato().add(currentMandato);
 	    } 
-		String fileName =currentFlusso.getIdentificativoFlusso()+".xml";
+		String fileName =currentFlusso.getIdentificativoFlusso()+".xslt";
 		File file = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/",fileName);
 		 
-		FileOutputStream fileOutputStream = new FileOutputStream(file);					
-		jc.createMarshaller().marshal(currentFlusso, fileOutputStream);
+		FileOutputStream fileOutputStream = new FileOutputStream(file);
+		
+		Marshaller jaxbMarshaller = jc.createMarshaller(); 
+		jaxbMarshaller.setProperty( Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE );	
+		jaxbMarshaller.marshal(currentFlusso, fileOutputStream);
+		
 		fileOutputStream.flush();
 		fileOutputStream.close();
 		setFile("/tmp/"+file.getName());	  
@@ -464,5 +470,25 @@ public void generaXML(ActionContext context) throws ComponentException, RemoteEx
 	   throw handleException(e);
    }
  }
-
+public String Formatta(String s, String allineamento,Integer dimensione,String riempimento){
+	if (s==null)
+		s=riempimento;
+	if (s.length()< dimensione){
+		if (allineamento.compareTo("D")==0){
+			while (s.length()<dimensione)
+			 s=riempimento+s;
+		   return s.toUpperCase();
+		}
+		else
+		{
+			while (s.length()<dimensione)
+				 s=s+riempimento;
+			return s.toUpperCase();
+		}
+	}else if (s.length()> dimensione){
+		s=s.substring(0,dimensione);
+		return s.toUpperCase();
+	}
+	return s.toUpperCase();
+}
 }

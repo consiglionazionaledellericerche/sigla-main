@@ -2881,16 +2881,33 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 				riga.setReversale_siopeColl(new BulkList(((Reversale_rigaHome) getHome( aUC, Reversale_rigaBulk.class)).findCodiciCollegatiSIOPE(aUC, riga)));
 				setCodiciSIOPECollegabili(aUC, riga);
 			}
-			if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, reversale.getEsercizio()).getFl_cup().booleanValue()) {
-				riga.setReversaleCupColl(new BulkList(((Reversale_rigaHome) getHome( aUC, Reversale_rigaBulk.class)).findCodiciCupCollegati(aUC, riga)));
-			}else{
+			
+			
+//			if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, reversale.getEsercizio()).getFl_cup().booleanValue() &&
+//					Utility.createParametriCnrComponentSession().getParametriCnr(aUC, reversale.getEsercizio()).getFl_siope_cup().booleanValue()){
+//				Timestamp dataLimite=Utility.createConfigurazioneCnrComponentSession().getDt01(aUC, "DATA_LIMITE_CUP_SIOPE_CUP");
+//				if(reversale.getDt_emissione().after(dataLimite)){
+//					for (Iterator j=riga.getReversale_siopeColl().iterator();j.hasNext();){
+//						Reversale_siopeIBulk rigaSiope = (Reversale_siopeIBulk)j.next();
+//						rigaSiope.setReversaleSiopeCupColl(new BulkList(((Reversale_siopeHome) getHome( aUC,Reversale_siopeBulk.class)).findCodiciSiopeCupCollegati(aUC, rigaSiope)));
+//					}
+//				}else
+//				{
+//					riga.setReversaleCupColl(new BulkList(((Reversale_rigaHome) getHome( aUC, Reversale_rigaBulk.class)).findCodiciCupCollegati(aUC, riga)));
+//				}
+//				
+//			}else{
+				if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, reversale.getEsercizio()).getFl_cup().booleanValue()) {
+					riga.setReversaleCupColl(new BulkList(((Reversale_rigaHome) getHome( aUC, Reversale_rigaBulk.class)).findCodiciCupCollegati(aUC, riga)));
+				}else{
 					if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, reversale.getEsercizio()).getFl_siope_cup().booleanValue()) {
 						for (Iterator j=riga.getReversale_siopeColl().iterator();j.hasNext();){
 							Reversale_siopeIBulk rigaSiope = (Reversale_siopeIBulk)j.next();
 							rigaSiope.setReversaleSiopeCupColl(new BulkList(((Reversale_siopeHome) getHome( aUC,Reversale_siopeBulk.class)).findCodiciSiopeCupCollegati(aUC, rigaSiope)));
 						}
 					}
-				}	
+				}
+//			}
 						
 			inizializzaTi_fattura( aUC, riga );
   		    ((Reversale_rigaHome)getHome( aUC, riga.getClass())).initializeElemento_voce(aUC, riga );

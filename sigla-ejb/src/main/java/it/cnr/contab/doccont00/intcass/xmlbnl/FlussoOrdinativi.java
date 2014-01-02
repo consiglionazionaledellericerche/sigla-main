@@ -102,7 +102,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class FlussoOrdinativi {
 
     @XmlElement(name = "codice_ABI_BT", required = true)
-    protected BigInteger codiceABIBT;
+    protected String codiceABIBT;
     @XmlElement(name = "identificativo_flusso", required = true)
     protected String identificativoFlusso;
     @XmlElement(name = "data_ora_creazione_flusso")
@@ -128,7 +128,7 @@ public class FlussoOrdinativi {
      *     {@link BigInteger }
      *     
      */
-    public BigInteger getCodiceABIBT() {
+    public String getCodiceABIBT() {
         return codiceABIBT;
     }
 
@@ -140,7 +140,7 @@ public class FlussoOrdinativi {
      *     {@link BigInteger }
      *     
      */
-    public void setCodiceABIBT(BigInteger value) {
+    public void setCodiceABIBT(String value) {
         this.codiceABIBT = value;
     }
 

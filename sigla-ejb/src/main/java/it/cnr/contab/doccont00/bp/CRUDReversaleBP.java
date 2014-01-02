@@ -7,6 +7,7 @@ import it.cnr.contab.doccont00.ejb.ReversaleComponentSession;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 import java.util.*;
 
 import it.cnr.contab.doccont00.comp.ReversaleComponent;
@@ -448,8 +449,21 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 	try {
 		setSiope_attiva(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope().booleanValue());
 		setUoSrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(actioncontext));
-		setCup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_cup().booleanValue());
-		setSiope_cup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope_cup().booleanValue());
+		
+//		if (Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), ((ReversaleBulk)this.getModel()).getEsercizio()).getFl_cup().booleanValue() &&
+//				Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),  ((ReversaleBulk)this.getModel()).getEsercizio()).getFl_siope_cup().booleanValue()){
+//			
+//			 if (((ReversaleBulk)this.getModel()).getDt_emissione()!=null){
+//					Timestamp dataLimite=Utility.createConfigurazioneCnrComponentSession().getDt01(actioncontext.getUserContext(), "DATA_LIMITE_CUP_SIOPE_CUP");
+//					if( ((ReversaleBulk)this.getModel()).getDt_emissione().after(dataLimite))
+//						setSiope_cup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope_cup().booleanValue());
+//					else
+//						setCup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_cup().booleanValue());
+//			 }
+//		}else{
+			setCup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_cup().booleanValue());
+			setSiope_cup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope_cup().booleanValue());
+//		}
 	}
     catch(Throwable throwable)
     {
