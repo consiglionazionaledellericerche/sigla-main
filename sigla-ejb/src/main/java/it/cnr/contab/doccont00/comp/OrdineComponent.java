@@ -481,7 +481,7 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_vp
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
 			throw new ValidationException("La DATA di INIZIO PERIODO non può essere inferiore a " + formatter.format(firstDayOfYear));
 		}
-		if (stampa.getDataFine().compareTo(lastDayOfYear)>0){
+		if (stampa.getDataFine().compareTo(lastDayOfYear)>0 && lastDayOfYear.compareTo(dataOdierna)>0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
 			throw new ValidationException("La DATA di FINE PERIODO non può essere superiore a " + formatter.format(lastDayOfYear));
 		}
