@@ -3330,6 +3330,7 @@ public class DistintaCassiereComponent extends
 															new CdsBulk(
 																	reversale
 																			.getCd_cds())));
+								    distintaRev.setFl_flusso(Boolean.FALSE);
 									insertBulk(userContext, distintaRev);
 								} catch (ApplicationException e) {
 									if (e.getDetail() instanceof it.cnr.jada.persistency.sql.BusyRecordException)
