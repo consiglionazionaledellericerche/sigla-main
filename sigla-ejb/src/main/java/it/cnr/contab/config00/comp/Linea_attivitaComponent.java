@@ -121,6 +121,8 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext uc, it.c
 		if (isEsercizioChiuso(uc,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(uc),latt))
 			throw new ApplicationException("Non è possibile creare nuovi GAE ad esercizio chiuso.");
 		
+		if (latt.getTi_gestione()==null ) throw new ApplicationException( "E' obbligatorio indicare il tipo di gestione. " );
+		
 		if (latt.getTi_gestione().compareTo(Tipo_linea_attivitaBulk.TI_GESTIONE_SPESE)==0 && 
 				((Parametri_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).isCofogObbligatorio(uc)&& (latt.getCd_cofog()==null))
 				throw new ApplicationException("Non è possibile creare GAE di spesa senza indicare la classificazione Cofog.");	
