@@ -2,6 +2,7 @@ package it.cnr.contab.doccont00.consultazioni.comp;
 
 
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.doccont00.consultazioni.bulk.VRendicontazioneBulk;
 import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_comp_res_sintesiBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
@@ -52,7 +53,7 @@ public class ConsGAEComResSintComponent extends CRUDComponent {
 	 * @return SQLBuilder la query da effettuare
 	 */
 	private SQLBuilder completaSQL(SQLBuilder sql, String tabAlias, CompoundFindClause baseClause, CompoundFindClause findClause){ 
-		sql.addClause(baseClause);		
+		sql.addClause(baseClause); 		
 		sql.addClause(findClause);
 		return sql;
 	}
@@ -182,6 +183,14 @@ public class ConsGAEComResSintComponent extends CRUDComponent {
 		} catch (it.cnr.jada.persistency.PersistencyException e) {
 			throw new ComponentException(e);
 		}
+	}
+
+	public RemoteIterator findConsultazioneRend(UserContext userContext,  CompoundFindClause baseClause, CompoundFindClause findClause) throws it.cnr.jada.comp.ComponentException {
+		BulkHome home = getHome(userContext, VRendicontazioneBulk.class);
+		SQLBuilder sql = home.createSQLBuilder();
+		String tabAlias = sql.getColumnMap().getTableName();
+		//addBaseColumns(userContext, sql, tabAlias);
+		return iterator(userContext,completaSQL(sql,tabAlias,baseClause,findClause),VRendicontazioneBulk.class,null);
 	}
 
 }

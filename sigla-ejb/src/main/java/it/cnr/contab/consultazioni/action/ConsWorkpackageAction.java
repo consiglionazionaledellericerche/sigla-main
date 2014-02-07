@@ -141,6 +141,7 @@ public class ConsWorkpackageAction extends SelezionatoreListaAction {
 			bp.setSelection(context);
 			java.util.List wp = bp.getSelectedElements(context);
 			
+			
 			if (wp.isEmpty()) {
 				bp.setMessage("Non è stata selezionata nessuna riga.");
 				return context.findDefaultForward();
@@ -150,10 +151,14 @@ public class ConsWorkpackageAction extends SelezionatoreListaAction {
 				return (Forward)context.findDefaultForward();
 
 			CompoundFindClause clauses = new CompoundFindClause();
-			for (Iterator i = wp.iterator();i.hasNext();) 
-			{
-				WorkpackageBulk wpb = (WorkpackageBulk) i.next();
-				clauses.addClause("OR","cd_linea_attivita",SQLBuilder.EQUALS,wpb.getCd_linea_attivita());
+			long selectElements = bp.getSelection().size();
+			if ((bp.getElementsCount()!=selectElements||bp.getFindclause()!=null)){
+				for (Iterator i = wp.iterator();i.hasNext();) 
+				{
+					WorkpackageBulk wpb = (WorkpackageBulk) i.next();
+					clauses.addClause("OR","cd_linea_attivita",SQLBuilder.EQUALS,wpb.getCd_linea_attivita());
+					clauses.addClause("AND","cd_centro_responsabilita",SQLBuilder.EQUALS,wpb.getCd_centro_responsabilita());
+				}
 			}
 			CompoundFindClause findclause = bp.getFindclause();
 			if (findclause==null)
@@ -185,12 +190,16 @@ public class ConsWorkpackageAction extends SelezionatoreListaAction {
 
 			if ( wp == null )
 				return (Forward)context.findDefaultForward();
-
+				
 			CompoundFindClause clauses = new CompoundFindClause();
-			for (Iterator i = wp.iterator();i.hasNext();) 
-			{
-				WorkpackageBulk wpb = (WorkpackageBulk) i.next();
-				clauses.addClause("OR","cd_linea_attivita",SQLBuilder.EQUALS,wpb.getCd_linea_attivita());
+			long selectElements = bp.getSelection().size();
+			if ((bp.getElementsCount()!=selectElements||bp.getFindclause()!=null)){
+				for (Iterator i = wp.iterator();i.hasNext();) 
+				{
+					WorkpackageBulk wpb = (WorkpackageBulk) i.next();
+					clauses.addClause("OR","cd_linea_attivita",SQLBuilder.EQUALS,wpb.getCd_linea_attivita());
+					clauses.addClause("AND","cd_centro_responsabilita",SQLBuilder.EQUALS,wpb.getCd_centro_responsabilita());
+				}
 			}
 			CompoundFindClause findclause = bp.getFindclause();
 			if (findclause==null)

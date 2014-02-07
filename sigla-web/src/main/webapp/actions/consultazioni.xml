@@ -1156,4 +1156,16 @@
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
 	    <init-param name="defaultAction" value="ConsultazioniAction" />	    
   </businessProcess>
+  <action
+		path="/ConsGAERendAction" actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsGAERendAction">
+	</action>
+	<businessProcess
+		name="ConsGAERendBP" className="it.cnr.contab.doccont00.consultazioni.bp.ConsGAERendBP">
+			<forward name="default" path="/consultazioni/form_lista.jsp"/>
+			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.consultazioni.bulk.VRendicontazioneBulk" />
+			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ConsGAEComResSintComponentSession"/>		
+			<init-param name="defaultAction" value="ConsGAERendAction" />
+	</businessProcess>
+	
+	
 </action-mappings>

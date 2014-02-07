@@ -65,8 +65,8 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 			return super.isReadonly() && !isUtenteAbilitato() && !isCdrPdGPUtilizzabile();
 		}
 		public boolean isGrowable()
-		{
-			return super.isGrowable() && isUtenteAbilitato() && isCdrPdGPUtilizzabile();	
+		{	// r.p. 05/06/2014 Equiparato al controllo che viene da fatto da PDGP! aggiunto isModuloInseribile()
+			return super.isGrowable() && isUtenteAbilitato() && isCdrPdGPUtilizzabile() && isModuloInseribile();	
 		}
 		public boolean isShrinkable()
 		{
@@ -349,6 +349,10 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 		if (!isEditable())
 			return false;
 		else
+			// r.p. 05/06/2014 Equiparato al controllo che viene da fatto da PDGP!
+			//if(isGestionaleAccessibile()) 
+			if (isModuloInseribile())
+				return false;
 			return true;
 	}
 	
