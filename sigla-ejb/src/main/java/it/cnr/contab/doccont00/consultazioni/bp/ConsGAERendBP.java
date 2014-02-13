@@ -32,11 +32,11 @@ public class ConsGAERendBP extends ConsultazioniBP {
 		try {
 			super.init(config,context);
 			setMultiSelection(true);
-			setPageSize(10);
+			setPageSize(20);  
 			setBulkInfo(it.cnr.jada.bulk.BulkInfo.getBulkInfo(WorkpackageBulk.class));
 		} catch (RemoteException e) {
 			  throw new BusinessProcessException(e);
-		}
+		}	
 	}
 	public void initVariabili(it.cnr.jada.action.ActionContext context,  String livello_destinazione) throws it.cnr.jada.action.BusinessProcessException {
 		   try {
@@ -69,24 +69,20 @@ public class ConsGAERendBP extends ConsultazioniBP {
 	
 	   public CompoundFindClause getSelezione(ActionContext context,String livello_destinazione) throws it.cnr.jada.action.BusinessProcessException {
 		   try	{
+			   
 			   CompoundFindClause clauses = new CompoundFindClause();
-			   Integer esercizio = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext());
-			   	 
+			   if (livello_destinazione.compareTo(DETT)==0){	 
 			      for (Iterator i = getSelectedElements(context).iterator();i.hasNext();) 
 				   {
 					   WorkpackageBulk bulk = (WorkpackageBulk)i.next();
 					   CompoundFindClause parzclause = new CompoundFindClause();
-					   if (livello_destinazione.compareTo(DETT)==0){
-						   parzclause.addClause("AND","cdr",SQLBuilder.EQUALS,bulk.getCd_centro_responsabilita());
-						   parzclause.addClause("AND","gae",SQLBuilder.EQUALS,bulk.getCd_linea_attivita());
-					   }   
-					    clauses.addChild(parzclause);
-					    parzclause.setLogicalOperator("OR");
+					   parzclause.addClause("AND","cdr",SQLBuilder.EQUALS,bulk.getCd_centro_responsabilita());
+					   parzclause.addClause("AND","gae",SQLBuilder.EQUALS,bulk.getCd_linea_attivita());
+					   clauses.addChild(parzclause);
+					   parzclause.setLogicalOperator("OR");
 				   }
-			      CompoundFindClause clausola_es=new CompoundFindClause();
-			      clausola_es.addClause("AND","esercizio",SQLBuilder.EQUALS,esercizio);
-			      clauses=clauses.and(clauses,clausola_es);
-			      return clauses;
+			   }
+			   return clauses;
 		   }catch(Throwable e) {
 			   throw new BusinessProcessException(e);
 		   }
@@ -95,7 +91,7 @@ public class ConsGAERendBP extends ConsultazioniBP {
 			try {
 				setFindclause(compoundfindclause);
 				if(getPathConsultazione()!=null)
-					return createConsGAEComResSintComponentSession().findConsultazione(context.getUserContext(),getBaseclause(),compoundfindclause);
+					return createConsGAEComResSintComponentSession().findConsultazioneRend(context.getUserContext(),getBaseclause(),compoundfindclause);
 				else{
 					 return ((StampaSituazioneSinteticaGAEComponentSession)EJBCommonServices.createEJB(
 							"CNRPDG00_EJB_StampaSituazioneSinteticaGAEComponentSession",
