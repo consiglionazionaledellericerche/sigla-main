@@ -793,6 +793,9 @@ public class FirmaDigitalePdgVariazioniBP extends
 					CMISRelationship.CNR_SIGNEDDOCUMENT);
 		}
 
+		//rp 21/01/2014 inserisco data firma sulla variazione
+		createComponentSession().aggiornaDataFirma(context.getUserContext(),archiviaStampaPdgVariazioneBulk
+				.getPdgVariazioneDocument().getEsercizio(),archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNumeroVariazione());
 		setFocusedElement(context, null);
 		refresh(context);
 	}
@@ -875,6 +878,9 @@ public class FirmaDigitalePdgVariazioniBP extends
 					CMISRelationship.CNR_SIGNEDDOCUMENT);
 		}
 
+		//rp 21/01/2014 inserisco data firma sulla variazione
+		createComponentSession().aggiornaDataFirma(context.getUserContext(),archiviaStampaPdgVariazioneBulk
+				.getPdgVariazioneDocument().getEsercizio(),archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNumeroVariazione());
 		setFocusedElement(context, null);
 		refresh(context);
 	}

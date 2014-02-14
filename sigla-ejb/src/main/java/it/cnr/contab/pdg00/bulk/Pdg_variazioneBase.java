@@ -62,6 +62,8 @@ public class Pdg_variazioneBase extends Pdg_variazioneKey implements Keyed {
 	//  FL_VISTO_DIP_VARIAZIONI VARCHAR(1)
 	private Boolean fl_visto_dip_variazioni;
 
+	private java.sql.Timestamp dt_firma;
+	
 	public Pdg_variazioneBase() {
 		super();
 	}
@@ -194,6 +196,12 @@ public java.lang.String getStato_invio() {
 }
 public void setStato_invio(java.lang.String statoInvio) {
 	stato_invio = statoInvio;
+}
+public java.sql.Timestamp getDt_firma() {
+	return dt_firma;
+}
+public void setDt_firma(java.sql.Timestamp dt_firma) {
+	this.dt_firma = dt_firma;
 }
 
 

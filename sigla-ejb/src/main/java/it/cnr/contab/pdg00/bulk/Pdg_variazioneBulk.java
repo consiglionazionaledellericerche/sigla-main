@@ -98,7 +98,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	private BulkList riepilogoSpese = new BulkList();
 	private BulkList riepilogoEntrate = new BulkList();
     private String statoDocumentale;
-		   
+    	   
 	public String getStatoDocumentale() {
 		return statoDocumentale;
 	}

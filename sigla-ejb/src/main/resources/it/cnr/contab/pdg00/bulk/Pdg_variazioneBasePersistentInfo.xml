@@ -149,6 +149,12 @@
 			sqlTypeName="VARCHAR"
 			columnSize="3"
 			nullable="true" />	
+		 <columnMapping
+			columnName="DT_FIRMA"
+			propertyName="dt_firma"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" /> 	
 	</defaultColumnMap>
 		
 	<persistentProperty
@@ -199,4 +205,6 @@
 		name="pg_ver_rec" />
 	<persistentProperty
 		name="stato_invio" />	
+	<persistentProperty
+		name="dt_firma" /> 		
 </SQLPersistentInfo>

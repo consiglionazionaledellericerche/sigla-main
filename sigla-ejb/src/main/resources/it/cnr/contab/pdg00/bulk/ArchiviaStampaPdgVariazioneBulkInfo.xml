@@ -85,24 +85,35 @@
 		nullable="false"
 		inputSize="40"
 		inputType="TEXT" />		
-	
+	<fieldProperty
+		name="dt_firma"
+		property="dt_firma"
+		inputType="TEXT"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		formatName="date_short"
+		inputSize="8"
+		label="Data firma" />	
 	<formFieldProperty name="findpdg_variazioneForPrint" />
-	<formFieldProperty name="pg_variazione_pdgForPrint" />
+	
 	<formFieldProperty name="ds_variazione" /> 
 	<formFieldProperty name="attivaFile" />
 	<formFieldProperty name="ti_signed" />
 	<formFieldProperty name="ti_signedText" />
-		
+	<formFieldProperty name="dt_firma" />	
+			
 	<columnFieldProperty
 		name="pg_variazione_pdg"/>
 	<columnFieldProperty
 		name="cd_centro_responsabilita"/>	
 	<columnFieldProperty
 		name="ds_variazione" />
-		
+	<columnFieldProperty 
+		name="dt_firma" />		
 	<findFieldProperty
 		name="pg_variazione_pdg"/>
-	<findFieldProperty
+	<findFieldPropertyobb
 		name="cd_centro_responsabilita"/>	
 	<findFieldProperty
 		name="ds_variazione" />

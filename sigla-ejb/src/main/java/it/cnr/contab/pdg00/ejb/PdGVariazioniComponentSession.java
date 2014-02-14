@@ -29,4 +29,5 @@ CompoundFindClause aggiornaClausole(UserContext context ,Pdg_variazioneBulk pdg,
 it.cnr.jada.util.RemoteIterator cercaVariazioniForDocumentale(it.cnr.jada.UserContext param0, it.cnr.jada.persistency.sql.CompoundFindClause param1, it.cnr.jada.bulk.OggettoBulk param2, String param3, Boolean param4) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void archiviaVariazioneDocumentale(it.cnr.jada.UserContext userContext,	Pdg_variazioneBulk bulk) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 byte[] lanciaStampa(it.cnr.jada.UserContext userContext,Integer esercizio,Integer pg_variazione,String tipo_variazione) throws PersistencyException, ComponentException,java.rmi.RemoteException, javax.ejb.EJBException;
+void aggiornaDataFirma(UserContext userContext, Integer esercizio,Integer numeroVariazione) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

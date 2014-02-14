@@ -2664,13 +2664,41 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 				Boolean clausolaIn)
 			throws ComponentException,
 			it.cnr.jada.persistency.PersistencyException {
+		try{
 		SQLBuilder sql = selectBase(userContext, clauses, bulk);
 		// RosPuc 28/01/2011
 //		sql.openParenthesis(FindClause.AND);
 //		sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVATA);
 //		sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
 //		sql.closeParenthesis();
+		if(tiSigned ==null && clausolaIn){
+			sql.openParenthesis(FindClause.AND);
+			sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
+			sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVATA);
+			sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
+			sql.closeParenthesis();
+		}
+		else if (tiSigned ==null && !clausolaIn){
 		sql.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
+		}
+		else if(tiSigned.compareTo(ArchiviaStampaPdgVariazioneBulk.VIEW_APPROVED)==0){
+			sql.openParenthesis(FindClause.AND);
+			sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVATA);
+			sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
+			sql.closeParenthesis();
+		}
+		else if(tiSigned.compareTo(ArchiviaStampaPdgVariazioneBulk.VIEW_ALL) ==0){
+			sql.openParenthesis(FindClause.AND);
+			sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVATA);
+			sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
+			sql.addClause(FindClause.OR, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
+			sql.closeParenthesis();
+		}
+		else
+		{
+			sql.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
+		}
+		
 		String cds = null, uo = null;
 		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome(
 				userContext, Unita_organizzativa_enteBulk.class).findAll()
@@ -2715,6 +2743,9 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		}
 		sql.closeParenthesis();
 		return sql;
+		}catch (Exception e) {
+			throw new ComponentException(e);
+	}
 	}
 
 	private List<Integer> variazioniPresentiSulDocumentale(UserContext userContext, String tiSigned, String cds, String uo, Long variazionePdg) throws ComponentException, PersistencyException{
@@ -2722,7 +2753,6 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 				PdgVariazioniService.class);
 		return pdgVariazioniService.findVariazioniPresenti(CNRUserContext.getEsercizio(userContext),tiSigned, cds, uo, variazionePdg);
 	}
-	
 	
 //	per la stampa delle variazioni residuo conto terzi
 	public byte[] lanciaStampa(UserContext userContext, Integer esercizio,Integer pgVariazione, String tipo_variazione) 
@@ -2771,6 +2801,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 				}  catch (IOException e) {
 					throw new GenerazioneReportException("Generazione Stampa non riuscita",e);
 				}
+
 			}
 		
 		if (tipo_variazione.equals("C")){
@@ -2837,7 +2868,21 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 			fileName = PDF_DATE_FORMAT.format(new java.util.Date()) + '_' + fileName + '_' + esercizio + '_' +  pgVariazione;
 			return fileName;
 		}
+public void aggiornaDataFirma(UserContext userContext, Integer esercizio,
+			Integer numeroVariazione) throws  ComponentException {
+		try{
+			Pdg_variazioneBulk varPdg = (Pdg_variazioneBulk) getHome(userContext, Pdg_variazioneBulk.class).
+					findByPrimaryKey(new Pdg_variazioneBulk(esercizio,new Long(numeroVariazione)));
+			varPdg.setToBeUpdated();
+			varPdg.setDt_firma(EJBCommonServices.getServerDate());
+			varPdg = (Pdg_variazioneBulk)super.modificaConBulk(userContext, varPdg);
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		} catch (EJBException e) {
+			throw new ComponentException(e);
 
-	
+		}
+
+	}
 }
- 
+	

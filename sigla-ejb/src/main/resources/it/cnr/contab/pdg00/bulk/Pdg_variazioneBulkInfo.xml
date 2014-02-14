@@ -396,7 +396,16 @@
         enabledOnSearch="true"		
 		nullable="true"
 		label="Stato Invio" />	
-		
+	<fieldProperty
+		name="dt_firma"
+		property="dt_firma"
+		inputType="TEXT"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		formatName="date_short"
+		inputSize="8"
+		label="Data firma" />	
     <form
         name="searchtool">
 	 	<formFieldProperty
@@ -514,7 +523,9 @@
 		name="fl_visto_dip_variazioni" />
 	<formFieldProperty
 		name="stato_invio" />	
-				
+	<formFieldProperty
+		name="dt_firma" />	
+							
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
@@ -555,7 +566,8 @@
 		name="fl_visto_dip_variazioni" />
 	<findFieldProperty
 		name="stato_invio" />
-		
+	<findFieldProperty
+		name="dt_firma" />	
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
@@ -591,7 +603,9 @@
 	<columnFieldProperty
 		name="cd_elemento_voce" />
 	<columnFieldProperty
-		name="stato_invio" />		
+		name="stato_invio" />	
+	<columnFieldProperty
+		name="dt_firma" />		
 	<columnSet
 	        name="RiepilogoVariazioni">
         	<columnFieldProperty
@@ -601,7 +615,7 @@
         	<columnFieldProperty
         		name="ds_variazione"/> 
         	<columnFieldProperty
-        		name="stato"/> 
+        		name="stato"/> 	
 	</columnSet> 
 	
 	<columnSet
@@ -613,8 +627,8 @@
         	<columnFieldProperty
         		name="ds_variazione"/> 
         	<columnFieldProperty
-        		name="stato"/> 
-	</columnSet>
+        		name="stato"/>
+       </columnSet>
 	
   	<columnSet
 		name="vp_pdg_variazione">
@@ -656,6 +670,8 @@
 				name="cd_elemento_voce" />
 			<columnFieldProperty
 				name="stato_invio" />	
+			<columnFieldProperty
+				name="dt_firma" />	
 	</columnSet>
 	
 	
