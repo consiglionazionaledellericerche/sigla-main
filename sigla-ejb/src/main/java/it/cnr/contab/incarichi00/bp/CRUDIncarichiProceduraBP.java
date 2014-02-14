@@ -57,6 +57,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
 
+import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 
 import org.apache.commons.logging.Log;
@@ -857,7 +858,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 			if (!procedura.getFl_migrata_to_cmis())
 				throw handleException(new ApplicationException("Procedura non utilizzabile. E' in corso una operazione di migrazione dei dati. La procedura tornera' disponibile al termine della stessa."));
 
-			completaUnitaOrganizzativa(actioncontext, procedura, procedura.getUnita_organizzativa());
+//			completaUnitaOrganizzativa(actioncontext, procedura, procedura.getUnita_organizzativa());
 			for ( Iterator i = procedura.getIncarichi_procedura_annoColl().iterator(); i.hasNext(); ) {
 				Incarichi_procedura_annoBulk procAnno = (Incarichi_procedura_annoBulk) i.next();
 				procAnno.caricaAnniList(actioncontext);
@@ -1045,9 +1046,9 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 	}
 
     public void completaUnitaOrganizzativa(it.cnr.jada.action.ActionContext context, Incarichi_proceduraBulk procedura, Unita_organizzativaBulk uo) throws BusinessProcessException {
-		procedura.setUnita_organizzativa(uo);
+				
 		try {
-			setModel(context, ((IncarichiProceduraComponentSession)createComponentSession()).caricaSedeUnitaOrganizzativa(context.getUserContext(),getModel()));
+			setModel(context, ((IncarichiProceduraComponentSession)createComponentSession()).caricaSedeUnitaOrganizzativa(context.getUserContext(),procedura));
 		}catch(it.cnr.jada.comp.ComponentException ex){
 			throw handleException(ex);
 		}catch(java.rmi.RemoteException ex){

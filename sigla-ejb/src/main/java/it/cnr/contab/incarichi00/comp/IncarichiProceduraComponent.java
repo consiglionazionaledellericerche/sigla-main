@@ -180,6 +180,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 					procedura.setTipo_attivita_fp1(procedura.getTipo_attivita_fp().getTipo_attivita_fp_padre());
 					procedura.setTipo_attivita_fp0(procedura.getTipo_attivita_fp1().getTipo_attivita_fp_padre());
 				}
+				procedura = (Incarichi_proceduraBulk)caricaSedeUnitaOrganizzativa(usercontext, procedura);
 				getHomeCache(usercontext).fetchAll(usercontext);
 			}
 			return oggettobulk;
