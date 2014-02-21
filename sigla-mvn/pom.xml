@@ -14,7 +14,7 @@
 	<repositories>
 		<repository>
 			<id>sigla</id>
-			<url>http://buildandtest.si.cnr.it:8081/nexus/content/repositories/SIGLAGROUP</url>
+			<url>http://bandt.si.cnr.it:8280/nexus/content/repositories/SIGLAGROUP</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -43,13 +43,13 @@
 	    <repository>
 	        <id>sigla-releases</id>
 	        <name>SIGLA Releases</name>
-	        <url>http://buildandtest.si.cnr.it:8081/nexus/content/repositories/sigla-releases</url>
+	        <url>http://bandt.si.cnr.it:8280/nexus/content/repositories/sigla-releases</url>
 	    </repository>
 	 
 	    <snapshotRepository>
 	        <id>sigla-snapshots</id>
 	        <name>SIGLA Internal Snapshots</name>
-	        <url>http://buildandtest.si.cnr.it:8081/nexus/content/repositories/sigla-snapshots</url>
+	        <url>http://bandt.si.cnr.it:8280/nexus/content/repositories/sigla-snapshots</url>
 	    </snapshotRepository>
 	</distributionManagement>
 	<build>
