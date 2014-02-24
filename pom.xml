@@ -56,14 +56,14 @@
 	<distributionManagement>
 		<!-- Publish the versioned releases here -->
 		<repository>
-			<id>bandt</id>
+			<id>buildandtest</id>
 			<name>nexus bandt.si.cnr.it</name>
 			<url>${nexus.url}/content/repositories/releases</url>
 		</repository>
 
 		<!-- Publish the versioned releases here -->
 		<snapshotRepository>
-			<id>bandt</id>
+			<id>buildandtest</id>
 			<name>nexus bandt.si.cnr.it</name>
 			<url>${nexus.url}/content/repositories/snapshots</url>
 		</snapshotRepository>
