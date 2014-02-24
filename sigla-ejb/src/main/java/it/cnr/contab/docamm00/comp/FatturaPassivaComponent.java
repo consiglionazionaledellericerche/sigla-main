@@ -5227,7 +5227,13 @@ public it.cnr.jada.persistency.sql.SQLBuilder selectVoce_ivaByClause(
 	it.cnr.jada.persistency.sql.SQLBuilder sql = voceIvaHome.createSQLBuilder();
 	sql.addSQLClause("AND", "ti_applicazione", sql.NOT_EQUALS, Voce_ivaBulk.VENDITE);
 	//Richista 658 del 29/01/2004
-	if (dettaglio.isVoceIVAOnlyIntraUE())
+	
+	// rospuc 29/11/2013 da verificare !!!
+	if((dettaglio.getFattura_passiva().isCommerciale() && dettaglio.getFattura_passiva().getFl_intra_ue() != null && dettaglio.getFattura_passiva().getFl_intra_ue().booleanValue()) ||
+		(dettaglio.getFattura_passiva().isCommerciale() && dettaglio.getFattura_passiva().getFl_merce_intra_ue() != null && dettaglio.getFattura_passiva().getFl_merce_intra_ue().booleanValue()) ||
+		(dettaglio.getFattura_passiva().isCommerciale() && dettaglio.getFattura_passiva().getFl_san_marino_senza_iva() != null && dettaglio.getFattura_passiva().getFl_san_marino_senza_iva().booleanValue())||
+   	    (dettaglio.isVoceIVAOnlyIntraUE()))
+	//if (dettaglio.isVoceIVAOnlyIntraUE())
 		sql.addSQLClause("AND", "fl_intra", sql.EQUALS, "Y");
 	//***************************
 	if(dettaglio instanceof Nota_di_credito_rigaBulk && !dettaglio.getFattura_passiva().isIvaRecuperabile()){
