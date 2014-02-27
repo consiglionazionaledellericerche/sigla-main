@@ -469,6 +469,9 @@ public class FirmaDigitalePdgVariazioniBP extends
 				pdgVariazioniService.addAspect(archiviaStampaPdgVariazioneBulk
 						.getPdgVariazioneDocument().getNode(),
 						CMISAspect.CNR_SIGNEDDOCUMENT.value());
+							//rp 21/01/2014 inserisco data firma sulla variazione
+				createComponentSession().aggiornaDataFirma(context.getUserContext(),archiviaStampaPdgVariazioneBulk
+				.getPdgVariazioneDocument().getEsercizio(),archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNumeroVariazione());		
 				setFocusedElement(context, null);
 				refresh(context);
 			}
