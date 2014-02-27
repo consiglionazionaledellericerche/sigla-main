@@ -4077,17 +4077,47 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 */
 	private void inizializzaBulkPerStampa(UserContext userContext,
 			Stampa_vpg_mandatoBulk stampa) throws ComponentException {
+		try {
+			CdsHome cds_home = (CdsHome) getHome(userContext, CdsBulk.class);
+			CdsBulk cds_scrivania = (CdsBulk) cds_home
+					.findByPrimaryKey(new CdsBulk(CNRUserContext
+							.getCd_cds(userContext)));
 
-		stampa.setEsercizio(CNRUserContext.getEsercizio(userContext));
-		stampa.setCd_cds(CNRUserContext.getCd_cds(userContext));
+			if (cds_scrivania.getCd_tipo_unita().equals(
+					Tipo_unita_organizzativaHome.TIPO_UO_ENTE)) {
+				stampa.setUoEmittenteForPrint(new Unita_organizzativaBulk());
+				stampa.setIsUOForPrintEnabled(false);
+			} else {
+				Unita_organizzativaHome uoHome = (Unita_organizzativaHome) getHome(
+						userContext, Unita_organizzativaBulk.class);
+				Unita_organizzativaBulk uo = (Unita_organizzativaBulk) uoHome
+						.findByPrimaryKey(new Unita_organizzativaBulk(
+								CNRUserContext
+										.getCd_unita_organizzativa(userContext)));
 
-		stampa.setDataInizio(DateServices.getFirstDayOfYear(CNRUserContext
-				.getEsercizio(userContext).intValue()));
-		stampa.setDataFine(getDataOdierna(userContext));
-		// stampa.setPgInizio(new Long(0));
-		// stampa.setPgFine(new Long("9999999999"));
-
-		stampa.setTerzoForPrint(new TerzoBulk());
+				if (!uo.isUoCds()) {
+					stampa.setUoEmittenteForPrint(uo);
+					stampa.setIsUOForPrintEnabled(false);
+				} else {
+					stampa
+							.setUoEmittenteForPrint(new Unita_organizzativaBulk());
+					stampa.setIsUOForPrintEnabled(true);
+				}
+			}
+			stampa.setEsercizio(CNRUserContext.getEsercizio(userContext));
+			stampa.setCd_cds(CNRUserContext.getCd_cds(userContext));
+			stampa.setDataInizio(DateServices.getFirstDayOfYear(CNRUserContext
+					.getEsercizio(userContext).intValue()));
+			stampa.setDataFine(getDataOdierna(userContext));
+			//stampa.setPgInizio(new Long(0)); 
+			//stampa.setPgFine(new Long("9999999999"));
+	 
+			stampa.setTerzoForPrint(new TerzoBulk());
+		} catch (it.cnr.jada.persistency.PersistencyException pe) {
+			throw new ComponentException(pe);
+		}
+		
+		
 	}
 
 	/**
@@ -4907,6 +4937,18 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 **/
 	public SQLBuilder selectUoEmittenteForPrintByClause(
 			UserContext userContext, Stampa_giornale_mandatiBulk bulk,
+			Unita_organizzativaBulk uo, CompoundFindClause clauses)
+			throws ComponentException {
+
+		Unita_organizzativaHome home = (Unita_organizzativaHome) getHome(
+				userContext, Unita_organizzativaBulk.class);
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause("AND", "cd_unita_padre", sql.EQUALS, bulk.getCd_cds());
+		sql.addClause(clauses);
+		return sql;
+	}
+	public SQLBuilder selectUoEmittenteForPrintByClause(
+			UserContext userContext, Stampa_vpg_mandatoBulk bulk,
 			Unita_organizzativaBulk uo, CompoundFindClause clauses)
 			throws ComponentException {
 
