@@ -35,10 +35,14 @@
 	<parameter name="aCd_terzo" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="UO_emittente" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT * FROM MANDATO MAN
 WHERE MAN.CD_CDS         = $P{aCd_cds}
   AND MAN.ESERCIZIO      = $P{aEs}
+  and man.CD_UO_ORIGINE  like  $P{UO_emittente}
   AND MAN.PG_MANDATO   between $P{aPg_da} and $P{aPg_a}
   AND MAN.DT_EMISSIONE   between $P{aDt_da} and $P{aDt_a}
   AND EXISTS (SELECT 1 FROM MANDATO_RIGA MRIGA
@@ -46,7 +50,7 @@ WHERE MAN.CD_CDS         = $P{aCd_cds}
                 AND MRIGA.ESERCIZIO    = MAN.ESERCIZIO
                 AND MRIGA.PG_MANDATO   = MAN.PG_MANDATO
                 AND TO_CHAR(MRIGA.CD_TERZO) LIKE $P{aCd_terzo})
-ORDER BY ESERCIZIO,CD_CDS,PG_MANDATO ]]>
+ORDER BY ESERCIZIO,CD_CDS,PG_MANDATO]]>
 	</queryString>
 	<field name="CD_CDS" class="java.lang.String"/>
 	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
@@ -80,20 +84,14 @@ ORDER BY ESERCIZIO,CD_CDS,PG_MANDATO ]]>
 			<band height="16" splitType="Stretch">
 				<subreport isUsingCache="true">
 					<reportElement key="subreport-1" positionType="Float" stretchType="RelativeToBandHeight" x="1" y="0" width="572" height="16" isRemoveLineWhenBlank="true"/>
-					<subreportParameter name="aEs">
-						<subreportParameterExpression><![CDATA[$P{aEs}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="aCd_cds">
-						<subreportParameterExpression><![CDATA[$P{aCd_cds}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="aPg_da">
-						<subreportParameterExpression><![CDATA[$P{aPg_da}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="aPg_a">
-						<subreportParameterExpression><![CDATA[$P{aPg_a}]]></subreportParameterExpression>
+					<subreportParameter name="pg_mandato">
+						<subreportParameterExpression><![CDATA[$F{PG_MANDATO}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="aDt_da">
 						<subreportParameterExpression><![CDATA[$P{aDt_da}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="aCd_terzo">
+						<subreportParameterExpression><![CDATA[$P{aCd_terzo}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="aDt_a">
 						<subreportParameterExpression><![CDATA[$P{aDt_a}]]></subreportParameterExpression>
@@ -101,11 +99,17 @@ ORDER BY ESERCIZIO,CD_CDS,PG_MANDATO ]]>
 					<subreportParameter name="DIR_IMAGE">
 						<subreportParameterExpression><![CDATA[$P{DIR_IMAGE}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="aCd_terzo">
-						<subreportParameterExpression><![CDATA[$P{aCd_terzo}]]></subreportParameterExpression>
+					<subreportParameter name="aCd_cds">
+						<subreportParameterExpression><![CDATA[$P{aCd_cds}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="pg_mandato">
-						<subreportParameterExpression><![CDATA[$F{PG_MANDATO}]]></subreportParameterExpression>
+					<subreportParameter name="aEs">
+						<subreportParameterExpression><![CDATA[$P{aEs}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="aPg_a">
+						<subreportParameterExpression><![CDATA[$P{aPg_a}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="aPg_da">
+						<subreportParameterExpression><![CDATA[$P{aPg_da}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression class="java.lang.String"><![CDATA[$P{DIR_SUBREPORT}+"vpg_man_rev_ass_subreport0.jasper"]]></subreportExpression>
