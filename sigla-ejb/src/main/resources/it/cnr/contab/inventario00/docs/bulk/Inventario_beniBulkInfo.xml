@@ -658,8 +658,9 @@
 	<findFieldProperty
 		name="cd_barre" />
 	<findFieldProperty
-		name="targa" />	
-		
+		name="targa" />
+	<findFieldProperty
+		name="fl_totalmente_scaricato" />	
 	<freeSearchSet name="freeSearchWithoutProgressivoSet">
 		<findFieldProperty
 			name="etichetta" />

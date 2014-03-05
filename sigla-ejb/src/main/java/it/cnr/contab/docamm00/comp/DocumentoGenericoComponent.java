@@ -2047,6 +2047,7 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext userCont
     throws it.cnr.jada.comp.ComponentException {
 	
     Documento_genericoBulk documento= (Documento_genericoBulk) bulk;
+    documento.setAndVerifyStatus();
     try {
     
         // controlla che la data di registrazione sia successiava all'ultima data di registrazione inserita
@@ -3764,7 +3765,7 @@ public OggettoBulk modificaConBulk(UserContext aUC, OggettoBulk bulk) throws Com
 //^^@@
 public it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserContext aUC, it.cnr.jada.bulk.OggettoBulk bulk, it.cnr.contab.doccont00.core.bulk.OptionRequestParameter status) throws it.cnr.jada.comp.ComponentException {
     Documento_genericoBulk documento= (Documento_genericoBulk) bulk;
-
+    documento.setAndVerifyStatus();
     //  effettua il controllo di validazione    
     try {		
 			if (existARowToBeInventoried(aUC,documento)) {
