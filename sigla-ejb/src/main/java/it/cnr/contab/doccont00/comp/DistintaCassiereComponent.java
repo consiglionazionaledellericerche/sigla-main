@@ -4064,7 +4064,7 @@ public class DistintaCassiereComponent extends
 				infoben.setBeneficiario(benef);
 				if (obb_iban){
 					sepa.setIban(docContabile.getNumeroConto());
-					if(docContabile.getBic()!=null && docContabile.getNumeroConto()!=null && (docContabile.getBic().length()>8 && docContabile.getBic().length()<11  ))// && docContabile.getNumeroConto().substring(0, 2).compareTo("IT")!=0 ) 
+					if(docContabile.getBic()!=null && docContabile.getNumeroConto()!=null && (docContabile.getBic().length()>=8 && docContabile.getBic().length()<=11  ))// && docContabile.getNumeroConto().substring(0, 2).compareTo("IT")!=0 ) 
 						sepa.setBic(docContabile.getBic());
 					else 
 						throw new ApplicationException("Formato del codice bic non valido.");
