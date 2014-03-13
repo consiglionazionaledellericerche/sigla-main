@@ -1166,6 +1166,21 @@
 			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ConsGAEComResSintComponentSession"/>		
 			<init-param name="defaultAction" value="ConsGAERendAction" />
 	</businessProcess>
-	
-	
+	 <action
+	 	path="/ConsInventarioRicAction" actionClass="it.cnr.contab.inventario00.actions.ConsInventarioRicAction">
+	</action>
+	  <businessProcess
+		name="ConsInventarioRicBP" className="it.cnr.contab.inventario00.bp.ConsInventarioRicBP">
+    <forward name="default" path="/inventario00/inventario_ric_per_data.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.inventario00.consultazioni.bulk.VInventarioRicognizioneBulk"/>
+		<init-param name="componentSessionName" value="CNRINVENTARIO00_EJB_ConsRegistroInventarioComponentSession"/>								
+	    <init-param name="defaultAction" value="ConsInventarioRicAction"/>	 
+    </businessProcess>  
+      <businessProcess
+		name="ConsInventarioRicRaggruppatiBP" className="it.cnr.contab.inventario00.bp.ConsInventarioRicRaggruppatiBP">
+    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.inventario00.consultazioni.bulk.VInventarioRicognizioneBulk"/>
+		<init-param name="componentSessionName" value="CNRINVENTARIO00_EJB_ConsRegistroInventarioComponentSession"/>								
+	    <init-param name="defaultAction" value="ConsultazioniAction"/>	
+    </businessProcess>   
 </action-mappings>

@@ -11,6 +11,8 @@
 		maxLength="15"
 		enabledOnEdit="false"
 		enabledOnSearch="true"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		caseSensitiveSearch="false"
 		nullable="false"
 		label="Codice" />
 	<fieldProperty

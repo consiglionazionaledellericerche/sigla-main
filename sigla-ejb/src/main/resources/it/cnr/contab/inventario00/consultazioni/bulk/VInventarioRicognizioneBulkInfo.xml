@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Elenco beni- Ricognizione"
+    longDescription="Elenco beni- Ricognizione">
+	<fieldProperty
+		name="categoria"
+		property="categoria"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Categoria" />
+	<fieldProperty
+		name="gruppo"
+		property="gruppo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Categoria gruppo" />	
+	<fieldProperty
+		name="dsCategoriaGruppo"
+		property="dsCategoriaGruppo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="100"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Descr. Categoria" />
+	<fieldProperty
+		name="uo"
+		property="uo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Uo" />
+	<fieldProperty
+		name="pgInventario"
+		property="pgInventario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Inventario" />
+	<fieldProperty
+		name="nrInventario"
+		property="nrInventario"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Codice bene" />
+	<fieldProperty
+		name="progressivo"
+		property="progressivo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Progressivo" />
+	<fieldProperty
+		name="dsBene"
+		property="dsBene"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1000"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Descr. Bene" />
+	<fieldProperty
+		name="dataRegistrazione"
+		property="dataRegistrazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="dataRegistrazione" />
+	<fieldProperty
+		name="etichetta"
+		property="etichetta"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Etichetta" />
+	<fieldProperty
+		name="esercizioCaricoBene"
+		property="esercizioCaricoBene"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Esercizio di acquisizione" />
+	<fieldProperty
+		name="ubicazione"
+		property="ubicazione"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Ubicazione" />
+	<fieldProperty
+		name="dsUbicazione"
+		property="dsUbicazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Descr. Ubicazione" />
+	<fieldProperty
+		name="assegnatario"
+		property="assegnatario"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Assegnatario" />
+	<fieldProperty
+		name="dsAssegnatario"
+		property="dsAssegnatario"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Descr. Assegnatario" />	
+	<fieldProperty
+		name="totalmenteScaricato"
+		property="totalmenteScaricato"
+		inputType="CHECKBOX"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Scaricato" />
+	<fieldProperty
+		name="valore"
+		property="valore"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="Valore finale" />
+	<fieldProperty
+		name="dataScaricoDef"
+		property="dataScaricoDef"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="dataScarico" />	
+	<fieldProperty
+		name="data"
+		property="data"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		nullable="false"
+		label="Alla data" />
+	<fieldProperty
+		name="find_categoria"
+		property="categoriaForPrint"
+		inputType="searchtool" 
+		columnSet="categorie"
+		label="Categoria"	 />
+	<fieldProperty
+		name="cd_categoria"
+		property="categoriaForPrint.cd_categoria_gruppo"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		nullable="true"
+		label="Categoria"	
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_categoria"
+		property="categoriaForPrint.ds_categoria_gruppo"
+		maxLength="300"
+		inputSize="50"
+		inputType="ROTEXT"
+		label="Categoria"
+		caseSensitiveSearch="false"/>
+	<fieldProperty
+		name="findUoForPrint"
+		property="uoForPrint"
+		inputType="searchtool"
+		label="Unita Organizzativa" />
+	<fieldProperty
+		name="cdUoForPrint"
+		property="uoForPrint.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="true"
+		readonlyProperty="ROUoForPrint"
+		label="Codice UO" />
+	<fieldProperty
+		name="dsUoForPrint"
+		property="uoForPrint.ds_unita_organizzativa"
+		maxLength="80"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Descrizione UO" />
+	
+	<formFieldProperty
+		name="uo" />
+	<formFieldProperty
+		name="pgInventario" />
+	<formFieldProperty
+		name="nrInventario" />
+	<formFieldProperty
+		name="progressivo" />
+	<formFieldProperty
+		name="dsBene" />
+	<formFieldProperty
+		name="dataRegistrazione" />
+	<formFieldProperty
+		name="etichetta" />
+	<formFieldProperty
+		name="categoria" />
+	<formFieldProperty
+		name="gruppo" />	
+	<formFieldProperty
+		name="dsCategoriaGruppo" />	
+	<formFieldProperty
+		name="esercizioCaricoBene" />
+	<formFieldProperty
+		name="ubicazione" />
+	<formFieldProperty
+		name="dsUbicazione" />
+	<formFieldProperty
+		name="assegnatario" />
+	<formFieldProperty
+		name="dsAssegnatario" />	
+	<formFieldProperty
+		name="totalmenteScaricato" />
+	<formFieldProperty
+		name="valore" />
+	<formFieldProperty
+		name="dataScaricoDef" />	
+	<formFieldProperty
+		name="data" />
+	
+	<formFieldProperty name="find_categoria" />	
+	<formFieldProperty name="cd_categoria" />	
+	<formFieldProperty name="ds_categoria" />	
+	<formFieldProperty name="findUoForPrint" />
+	<formFieldProperty name="cdUoForPrint" />
+	<formFieldProperty name="dsUoForPrint" />	
+	<findFieldProperty
+		name="uo" />
+	<findFieldProperty
+		name="nrInventario" />
+	<findFieldProperty
+		name="progressivo" />
+	<findFieldProperty
+		name="dsBene" />
+	<findFieldProperty
+		name="etichetta" />
+	<findFieldProperty
+		name="categoria" />
+	<findFieldProperty
+		name="gruppo" />	
+	<findFieldProperty
+		name="dsCategoriaGruppo" />		
+	<findFieldProperty
+		name="esercizioCaricoBene" />
+	<findFieldProperty
+		name="ubicazione" />
+	<findFieldProperty
+		name="dsUbicazione" />
+	<findFieldProperty
+		name="assegnatario" />
+	<findFieldProperty
+		name="dsAssegnatario" />		
+	
+	<findFieldProperty
+		name="valore" />
+	
+	<columnFieldProperty
+		name="uo" />
+	<columnFieldProperty
+		name="etichetta" />
+	<columnFieldProperty
+		name="progressivo" />
+	<columnFieldProperty
+		name="nrInventario" />
+	<columnFieldProperty
+		name="dsBene" />
+	<columnFieldProperty
+		name="categoria" />
+	<columnFieldProperty
+		name="gruppo" />	
+	<columnFieldProperty
+		name="dsCategoriaGruppo" />		
+	<columnFieldProperty
+		name="esercizioCaricoBene" />
+	<columnFieldProperty
+		name="ubicazione" />
+	<columnFieldProperty
+		name="dsUbicazione" />
+	<columnFieldProperty
+		name="assegnatario" />
+	<columnFieldProperty
+		name="dsAssegnatario" />		
+	<columnFieldProperty
+		name="valore" />
+	<columnSet name="BASECONS">	
+		<columnFieldProperty 	name="uo" />
+		<columnFieldProperty  	name="esercizioCaricoBene" />
+		<columnFieldProperty	name="nrInventario" />
+		<columnFieldProperty	name="progressivo" />
+		<columnFieldProperty	name="etichetta" />
+		<columnFieldProperty	name="dsBene" />
+		<columnFieldProperty	name="valore" />
+		<columnFieldProperty	name="categoria" />
+		<columnFieldProperty	name="gruppo" />
+		<columnFieldProperty	name="dsCategoriaGruppo" />
+		<columnFieldProperty	name="ubicazione" />
+		<columnFieldProperty	name="dsUbicazione" />
+		<columnFieldProperty	name="assegnatario" />
+		<columnFieldProperty	name="dsAssegnatario" />	
+	</columnSet>	
+</bulkInfo>
