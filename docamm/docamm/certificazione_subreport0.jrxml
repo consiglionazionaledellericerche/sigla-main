@@ -5,8 +5,8 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<style name="TNR10" fontName="Times New Roman" pdfFontName="Times-Roman"/>
 	<style name="TNR10B" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
@@ -377,8 +377,7 @@ trattenuti ]]></text>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<text><![CDATA[Importo
-netto ]]></text>
+					<text><![CDATA[Importo erogato]]></text>
 				</staticText>
 			</band>
 		</groupHeader>
