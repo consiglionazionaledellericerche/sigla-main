@@ -2,9 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificazione_subreport0" pageWidth="595" pageHeight="842" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="5">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="21"/>
+	<property name="ireport.y" value="103"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -702,7 +702,7 @@ $F{DT_NASCITA}==null?"":" - "+(new SimpleDateFormat("dd/MM/yyyy")).format($F{DT_
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[($F{IMPONIBILE_FI}.compareTo(new BigDecimal(0))==0?new BigDecimal(0):$F{IM_NON_SOGG_RIT})]]></textFieldExpression>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[($F{IM_NON_SOGG_RIT}.compareTo($F{IM_LORDO})>0?$F{IM_LORDO}:$F{IM_NON_SOGG_RIT})]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,## %" isBlankWhenNull="true">
 					<reportElement key="textField-15" style="TNR8" x="270" y="3" width="36" height="14"/>
@@ -735,7 +735,7 @@ $F{DT_NASCITA}==null?"":" - "+(new SimpleDateFormat("dd/MM/yyyy")).format($F{DT_
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[($F{IMPONIBILE_PR}.compareTo(new BigDecimal(0))==0?new BigDecimal(0):$F{IM_NON_SOGG_CORI})]]></textFieldExpression>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[($F{IM_NON_SOGG_CORI}.compareTo($F{IM_LORDO})>0?$F{IM_LORDO}:$F{IM_NON_SOGG_CORI})]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern=" #,##0.00" isBlankWhenNull="true">
 					<reportElement key="textField-18" style="TNR8" x="412" y="3" width="49" height="14"/>
