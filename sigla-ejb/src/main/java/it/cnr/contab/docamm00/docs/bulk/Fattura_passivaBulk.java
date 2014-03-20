@@ -2491,7 +2491,9 @@ public void validaDateCompetenza()
 		throw new ValidationException("Inserire la data di \"competenza da\" per la testata documento.");
 	if (getDt_a_competenza_coge() == null)
 		throw new ValidationException("Inserire la data di \"competenza a\" per la testata documento.");
-
+	if (getStato_cofi().compareTo(STATO_INIZIALE)==0 && getDt_scadenza() == null) 
+		throw new ValidationException("La data di scadenza non può essere nulla!");
+	
 	Calendar competenzaDa = getDateCalendar(getDt_da_competenza_coge());
 	Calendar competenzaA = getDateCalendar(getDt_a_competenza_coge());
 	
@@ -2597,7 +2599,6 @@ public void validateDate() throws ValidationException {
 		if(dataRegistrazione.before(dataEmissioneFattura) &&
 			!dataRegistrazione.equals(dataEmissioneFattura))
 			throw new ValidationException("La data di registrazione  non può essere precedente alla data di emissione del documento del fornitore!");
-
 		if (getDt_scadenza() != null) {
 			java.util.Calendar dataScadenzaFattura = getDateCalendar(getDt_scadenza());
 
