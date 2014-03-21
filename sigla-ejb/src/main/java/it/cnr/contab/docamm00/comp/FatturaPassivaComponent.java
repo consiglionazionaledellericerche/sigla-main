@@ -4515,6 +4515,9 @@ public OggettoBulk modificaConBulk(
                 fatturaPassiva.getEsercizio(),
                 fatturaPassiva.getPg_fattura_passiva()
                 ));
+		if(fatturaPassiva.getDt_scadenza() == null && fatturaPassivaDB.getDt_scadenza()!=null)
+			 throw new it.cnr.jada.comp.ApplicationException("La data di scadenza non può essere nulla!");
+				
 		if (!Utility.equalsNull(fatturaPassiva.getTi_fattura(),fatturaPassivaDB.getTi_fattura())||
 			!Utility.equalsNull(fatturaPassiva.getFl_congelata(),fatturaPassivaDB.getFl_congelata())||
 			!Utility.equalsNull(fatturaPassiva.getFl_intra_ue(),fatturaPassivaDB.getFl_intra_ue())||
