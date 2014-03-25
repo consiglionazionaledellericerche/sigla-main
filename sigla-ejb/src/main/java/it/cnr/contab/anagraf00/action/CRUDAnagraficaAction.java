@@ -621,7 +621,12 @@ protected Forward riporta(ActionContext context,OggettoBulk model) {
 				//NB: per le fatture att il creditore è un debitore
 				if (tb.getAnagrafico().getTi_italiano_estero()!=null && tb.getAnagrafico().getTi_italiano_estero().equals(NazioneBulk.ITALIA) && ((tb.getAnagrafico().getPartita_iva()==null  && !tb.getAnagrafico().getFl_non_obblig_p_iva()) ||tb.getAnagrafico().getCodice_fiscale()==null))
 					throw new MessageToUser("Il terzo selezionato non è valido!",bp.ERROR_MESSAGE);
-			
+				
+				it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk fa = (it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk)docAmm;
+				String cond = fa.getSupplierNationType();
+				if (!cond.equalsIgnoreCase(tb.getAnagrafico().getTi_italiano_estero()))
+					throw new MessageToUser("E' necessario selezionare un terzo con nazionalità compatibile con quella del documento amministrativo.", bp.ERROR_MESSAGE);
+				
 				if (tb.CREDITORE.equalsIgnoreCase(tb.getTi_terzo()))
 					throw new MessageToUser("Il terzo selezionato non è valido per il documento attivo perché è un creditore!", bp.ERROR_MESSAGE);
 			}
