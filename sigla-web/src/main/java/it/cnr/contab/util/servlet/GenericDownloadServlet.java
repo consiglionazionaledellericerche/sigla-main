@@ -17,11 +17,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+import javax.xml.bind.DatatypeConverter;
+
+import org.apache.commons.httpclient.Credentials;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.log4j.Logger;
+
+
+
 /**
  * Servlet implementation class GenericDownload
  */
 public class GenericDownloadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOGGER = Logger.getLogger(GenericDownloadServlet.class);
+	private static final String AUTHORIZATION = "Authorization";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -36,7 +47,9 @@ public class GenericDownloadServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CMISService cmisService = SpringUtil.getBean("cmisService", CMISService.class);
 		if (request.getParameter("nodeRef")!= null){
-			Node node = cmisService.getNodeByNodeRef(request.getParameter("nodeRef"));
+
+			Credentials customCredentials = getCredentials(request.getHeader(AUTHORIZATION));
+			Node node = cmisService.getNodeByNodeRef(request.getParameter("nodeRef"), customCredentials);
 			InputStream is = cmisService.getResource(node);
 			response.setContentLength(node.getContentLength().intValue());
 			response.setContentType(node.getContentType());
@@ -69,6 +82,40 @@ public class GenericDownloadServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
+	}
+
+	private Credentials getCredentials(String authorization){
+
+		if (authorization != null) {
+			String[] values = authorization.split(" ");
+
+			if (values.length == 2 && values[0].equals("Basic")) {
+
+				String base64 = values[1];
+				String decoded = new String(
+						DatatypeConverter.parseBase64Binary(base64));
+
+				int sep = decoded.indexOf(':');
+				LOGGER.debug("decoded value: " + decoded);
+
+				String username = decoded.substring(0, sep);
+				String password = decoded.substring(sep + 1);
+
+				LOGGER.info("username: " + username);
+				LOGGER.info("password: " + password);
+
+				return new UsernamePasswordCredentials(username,
+						password);
+
+
+			} else {
+				LOGGER.info("Problemi con Authorization Header: " + authorization);
+			}
+		} else {
+			LOGGER.info("authorization is null");
+		}
+
+		return null;
 	}
 
 }

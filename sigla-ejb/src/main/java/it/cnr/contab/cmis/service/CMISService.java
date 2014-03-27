@@ -103,6 +103,10 @@ public class CMISService {
 	public Node getNodeByNodeRef(String nodeRef){
 		return nodeService.getNodeByNodeRef(systemCredentials, nodeRef);
 	}
+
+	public Node getNodeByNodeRef(String nodeRef, Credentials customCredentials){
+		return nodeService.getNodeByNodeRef(customCredentials, nodeRef);
+	}
 	
 	public CMISPath createFolderIfNotPresent(CMISPath cmisPath, String folderName, String title, String description){
 		return createFolderIfNotPresent(cmisPath, folderName, title, description, null);
