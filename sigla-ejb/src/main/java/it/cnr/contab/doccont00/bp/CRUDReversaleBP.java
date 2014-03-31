@@ -293,7 +293,7 @@ protected void initializePrintBP(AbstractPrintBP bp)
 
 	param = new Print_spooler_paramBulk();
 	param.setNomeParam("aCd_cds");
-	param.setValoreParam(reversale.getCd_cds());
+	param.setValoreParam(reversale.getCd_cds_origine());
 	param.setParamType("java.lang.String");
 	printbp.addToPrintSpoolerParam(param);
 	
