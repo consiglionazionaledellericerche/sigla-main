@@ -595,6 +595,8 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 			else if (incarico.getTerzo()==null || incarico.getTerzo().getCd_terzo()==null)
 				throw handleException( new ApplicationException(incarico.getPg_repertorio()!=null?"Contratto "+incarico.getEsercizio()+"/"+incarico.getPg_repertorio()+" - completare le informazioni relative al terzo!":"Completare le informazioni relative al terzo!") );
 			else if (incarico.getTerzo()!=null || incarico.getTerzo().getCd_terzo()!=null) {
+				if (incarico.getTerzo().getAnagrafico()!=null && !incarico.getTerzo().getAnagrafico().isPersonaFisica())
+					throw handleException( new ApplicationException( "Il terzo selezionato (cod: "+incarico.getTerzo().getCd_terzo()+") non risulta essere una persona fisica!") );
 				if (incarico.getDt_inizio_validita()!=null && incarico.getDt_fine_validita()!=null) {
 					if (incarico.getTipo_rapporto()==null)
 						throw handleException( new ApplicationException( "Completare le informazioni relative al tipo rapporto da applicare al terzo selezionato (cod: "+incarico.getTerzo().getCd_terzo()+")!") );
