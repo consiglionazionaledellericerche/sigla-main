@@ -52,6 +52,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -1664,6 +1665,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				incarico_anno.setImporto_complessivo(Utility.ZERO);
 				incarico_anno.setToBeUpdated();
 			}
+
 			boolean aggiornato = false;
 			for (Iterator<Incarichi_procedura_annoBulk> i=procedura.getIncarichi_procedura_annoColl().iterator();i.hasNext();){
 				Incarichi_procedura_annoBulk procedura_anno = i.next();
@@ -1691,11 +1693,32 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 					incarico_anno.setToBeCreated();
 				}
 			}				
+			List<Incarichi_repertorio_annoBulk> incaricoAnnoListToBeDeleted = new ArrayList<Incarichi_repertorio_annoBulk>();
 			for (Iterator i=incarico.getIncarichi_repertorio_annoColl().iterator();i.hasNext();){
 				Incarichi_repertorio_annoBulk incarico_anno = (Incarichi_repertorio_annoBulk)i.next();
-				if (incarico_anno.getImporto_iniziale().compareTo(Utility.ZERO)==0 &&
-					incarico_anno.getImporto_complessivo().compareTo(Utility.ZERO)==0)
-					incarico_anno.setToBeDeleted();
+				if (incarico_anno.getImporto_iniziale().compareTo(Utility.ZERO)==0 && incarico_anno.getImporto_complessivo().compareTo(Utility.ZERO)==0) {
+					boolean trovatoAnno=false;
+					for (Iterator<Incarichi_procedura_annoBulk> y=procedura.getIncarichi_procedura_annoColl().iterator();y.hasNext();) {
+						Incarichi_procedura_annoBulk proceduraAnno = y.next();
+						if (proceduraAnno.getEsercizio_limite().compareTo(incarico_anno.getEsercizio_limite())==0)
+							trovatoAnno=true;
+					}
+					if (!trovatoAnno) {
+						incarico_anno.setToBeDeleted();
+						incaricoAnnoListToBeDeleted.add(incarico_anno);
+					}
+				}
+			}
+			for (Incarichi_repertorio_annoBulk incaricoAnnoToBeDelete : incaricoAnnoListToBeDeleted)
+				incarico.removeFromIncarichi_repertorio_annoColl(incarico.getIncarichi_repertorio_annoColl().indexOf(incaricoAnnoToBeDelete));
+			
+			if (incarico.getIncarichi_repertorio_annoColl().isEmpty()) {
+				Incarichi_repertorio_annoBulk incarico_anno = new Incarichi_repertorio_annoBulk();
+				incarico.addToIncarichi_repertorio_annoColl(incarico_anno);
+				incarico_anno.setEsercizio_limite(procedura.getEsercizio());
+				incarico_anno.setImporto_iniziale(Utility.ZERO);
+				incarico_anno.setImporto_complessivo(Utility.ZERO);
+				incarico_anno.setToBeCreated();
 			}
 			//AGGIORNO ANCHE GLI IMPORTI SULLA TESTATA DELL'INCARICO
 			incarico.setImporto_lordo(procedura.getImporto_lordo());
