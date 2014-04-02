@@ -15,7 +15,7 @@
 	</parameter>
 	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="aCd_cds" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["073"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["999"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aEs" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Integer("2014")]]></defaultValueExpression>
@@ -37,7 +37,9 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT * FROM REVERSALE REV
-WHERE REV.CD_CDS_origine         = $P{aCd_cds}
+WHERE (
+($P{aCd_cds}=CNRCTB020.GETCDCDSENTE(rev.esercizio) and rev.cd_cds =$P{aCd_cds})
+  or REV.CD_CDS_origine         = $P{aCd_cds})
   AND REV.ESERCIZIO      = $P{aEs}
   AND REV.PG_REVERSALE   between $P{aPg_da} and $P{aPg_a}
   AND REV.DT_EMISSIONE   between $P{aDt_da} and $P{aDt_a}
