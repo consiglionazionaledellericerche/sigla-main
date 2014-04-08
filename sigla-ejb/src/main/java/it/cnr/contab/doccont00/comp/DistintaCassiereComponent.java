@@ -3857,9 +3857,14 @@ public class DistintaCassiereComponent extends
 					clas.setCodiceCge(doc.getCdSiope());
 					clas.setImporto(doc.getImportoCge());
 					infover.getClassificazione().add(clas);
-				} 
+				}
+				if(infover.getCausale()!=null ){
+					if (!infover.getCausale().contains(doc.getCdCup()))
+						infover.setCausale(infover.getCausale()+"-"+doc.getCdCup());
+				}else
+					infover.setCausale("CUP "+doc.getCdCup());
 			}
-			// Fine classificazioni
+			// Fine classificazioni		
 			bollo=new it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Bollo();
 			bollo.setAssoggettamentoBollo(docContabile.getAssoggettamentoBollo());
 			bollo.setCausaleEsenzioneBollo(docContabile.getCausaleBollo());
@@ -3867,11 +3872,17 @@ public class DistintaCassiereComponent extends
 			infover.setBollo(bollo);
 			versante.setAnagraficaVersante(docContabile.getDenominazioneSede());
 			infover.setVersante(versante);
-			
-			if (docContabile.getDsDocumento().length() >105)
-				infover.setCausale(docContabile.getDsDocumento().substring(0, 104));
+			// gestito inserimento cup nella CAUSALE 
+			if (infover.getCausale() !=null && (infover.getCausale()+docContabile.getDsDocumento()).length() >105)
+				infover.setCausale(infover.getCausale()+" "+docContabile.getDsDocumento().substring(0, 104));
+			else if(infover.getCausale()!=null)
+				infover.setCausale(infover.getCausale()+" "+docContabile.getDsDocumento());
 			else
-				infover.setCausale(docContabile.getDsDocumento());
+				if (docContabile.getDsDocumento().length() >105)
+					infover.setCausale(docContabile.getDsDocumento().substring(0,104));
+				else 
+					infover.setCausale(docContabile.getDsDocumento());
+
 			// SOSPESO			
 			if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_REGOLAM_SOSPESO)==0){
 				it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeSosp=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class,"SOSPESO");
