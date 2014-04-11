@@ -886,6 +886,7 @@
 	<findFieldProperty name="ds_fattura_passiva"/>
 	<findFieldProperty name="nr_fattura_fornitore" />
 	<findFieldProperty name="dt_fattura_fornitore" />
+	<findFieldProperty name="dt_scadenza" />
 	<findFieldProperty name="dt_registrazione" />
 	<findFieldProperty name="ti_istituz_commercSearch" />
 	<findFieldProperty name="sezionale" />
@@ -1150,6 +1151,8 @@
 		name="nr_fattura_fornitore" />
 	<columnFieldProperty
 		name="dt_fattura_fornitore" />
+	<columnFieldProperty
+		name="dt_scadenza" />	
 	<columnFieldProperty
 		name="cd_fornitore" />
 	<columnFieldProperty
