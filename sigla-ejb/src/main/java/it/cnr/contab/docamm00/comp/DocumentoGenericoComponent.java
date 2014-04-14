@@ -3115,9 +3115,13 @@ private void impostaDatiEnteNelDocumento(
         }
 
 		if (!documento.isGenericoAttivo()){
-			documento.setPassivo_ente(true);
-			if (documento.getCd_uo_origine().equals(documento.getUo_CNR()))
+			if (documento.getCd_uo_origine().equals(documento.getUo_CNR())){
 				documento.setFlagEnte(true);
+				documento.setPassivo_ente(true);
+			}
+			else
+				documento.setPassivo_ente(false);
+			
 			documento.setStato_pagamento_fondo_eco(documento.NO_FONDO_ECO);
 		}
     }
