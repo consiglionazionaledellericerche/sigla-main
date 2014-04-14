@@ -1183,4 +1183,16 @@
 		<init-param name="componentSessionName" value="CNRINVENTARIO00_EJB_ConsRegistroInventarioComponentSession"/>								
 	    <init-param name="defaultAction" value="ConsultazioniAction"/>	
     </businessProcess>   
+   <action 
+      path="/ConsConfrontoEntSpeTotAction" actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsConfrontoEntSpeTotAction">
+  </action>
+  <businessProcess
+      name="ConsConfrontoEntSpeTotBP" className="it.cnr.contab.doccont00.consultazioni.bp.ConsConfrontoEntSpeTotBP">
+   	<forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_confronto_ent_spe_totBulk" />
+		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ConsConfrontoEntSpeTotComponentSession" />								
+	    <init-param name="defaultAction" value="ConsConfrontoEntSpeTotAction" />
+	    <init-param name="multiSelezione" value="Y" />
+  </businessProcess> 
+  
 </action-mappings>

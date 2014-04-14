@@ -1,13 +1,13 @@
-package it.cnr.contab.doccont00.bp;
+package it.cnr.contab.doccont00.consultazioni.bp;
 
 import java.util.Iterator;
 
 
 
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_confronto_ent_speBulk;
+import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_confronto_ent_spe_totBulk;
 
-import it.cnr.contab.doccont00.ejb.ConsConfrontoEntSpeComponentSession;
+import it.cnr.contab.doccont00.ejb.ConsConfrontoEntSpeTotComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -19,7 +19,7 @@ import it.cnr.jada.util.action.ConsultazioniBP;
 import it.cnr.jada.util.jsp.Button;
 
 
-public class ConsConfrontoEntSpeBP extends ConsultazioniBP {
+public class ConsConfrontoEntSpeTotBP extends ConsultazioniBP {
 	
 	public static final String LIV_BASE= "BASE";
 	public static final String LIV_BASEMOD= "MOD";
@@ -31,8 +31,8 @@ public class ConsConfrontoEntSpeBP extends ConsultazioniBP {
 	private String pathConsultazione;
 	
 	
-	public ConsConfrontoEntSpeComponentSession createConsConfrontoEntSpeComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
-		return (ConsConfrontoEntSpeComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_ConsConfrontoEntSpeComponentSession", ConsConfrontoEntSpeComponentSession.class);
+	public ConsConfrontoEntSpeTotComponentSession createConsConfrontoEntSpeTotComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
+		return (ConsConfrontoEntSpeTotComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_ConsConfrontoEntSpeTotComponentSession", ConsConfrontoEntSpeTotComponentSession.class);
 }
 	
 	
@@ -40,7 +40,7 @@ public class ConsConfrontoEntSpeBP extends ConsultazioniBP {
 		try {
 			setFindclause(compoundfindclause);
 			CompoundFindClause clause = new CompoundFindClause(getBaseclause(), compoundfindclause);
-			return createConsConfrontoEntSpeComponentSession().findConsultazioneModulo(context.getUserContext(),getPathConsultazione(),getLivelloConsultazione(),getBaseclause(),compoundfindclause);
+			return createConsConfrontoEntSpeTotComponentSession().findConsultazioneModulo(context.getUserContext(),getPathConsultazione(),getLivelloConsultazione(),getBaseclause(),compoundfindclause);
 		}catch(Throwable e) {
 			throw new BusinessProcessException(e);
 		}
@@ -48,7 +48,7 @@ public class ConsConfrontoEntSpeBP extends ConsultazioniBP {
 
 	public void openIterator(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
 		try	{	
-			setIterator(context,createConsConfrontoEntSpeComponentSession().findConsultazioneModulo(context.getUserContext(),getPathConsultazione(),getLivelloConsultazione(),getBaseclause(),null));
+			setIterator(context,createConsConfrontoEntSpeTotComponentSession().findConsultazioneModulo(context.getUserContext(),getPathConsultazione(),getLivelloConsultazione(),getBaseclause(),null));
 		}catch(Throwable e) {
 			throw new BusinessProcessException(e);
 		}
@@ -154,7 +154,7 @@ public class ConsConfrontoEntSpeBP extends ConsultazioniBP {
 			   CompoundFindClause clauses = null;
 			   for (Iterator i = getSelectedElements(context).iterator();i.hasNext();) 
 			   {
-			   	V_cons_confronto_ent_speBulk wpb = (V_cons_confronto_ent_speBulk)i.next();
+			   	V_cons_confronto_ent_spe_totBulk wpb = (V_cons_confronto_ent_spe_totBulk)i.next();
 				   CompoundFindClause parzclause = new CompoundFindClause();
 				
 				   		parzclause.addClause("AND","cds",SQLBuilder.EQUALS,wpb.getCds());
@@ -202,7 +202,7 @@ public class ConsConfrontoEntSpeBP extends ConsultazioniBP {
 	public void setTitle() {
 		
 		   String title=null;
-		   		   title = "Confronto Entrate-Spese per CDS Competenza";
+		   		   title = "Confronto Entrate-Spese per CDS Totale";
 			
 			if (isPresenteMOD()) title = title.concat(" - Modulo");
 			if (isPresenteGAE()) title = title.concat(" - GAE");

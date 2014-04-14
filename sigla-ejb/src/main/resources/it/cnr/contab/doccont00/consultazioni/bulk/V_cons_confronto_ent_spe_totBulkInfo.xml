@@ -219,22 +219,7 @@
 		maxLength="22"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Pagato" />
-	<fieldProperty
-		name="tratt_econ_int"
-		property="tratt_econ_int"
-		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
-		formatName="it.cnr.contab.util.EuroFormat"
-		label="Fonti Interne" />
-	<fieldProperty
-		name="tratt_econ_est"
-		property="tratt_econ_est"
-		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
-		formatName="it.cnr.contab.util.EuroFormat"
-		label="Fonti Esterne" />
+	
 		
 		
 	<formFieldProperty
@@ -293,11 +278,6 @@
 		name="im_mandati_reversali_pro_etr" />
 	<formFieldProperty
 		name="im_mandati_reversali_pro_spe" />
-	<formFieldProperty
-		name="tratt_econ_int" />
-	<formFieldProperty
-		name="tratt_econ_est" />
-		
 		
 	<findFieldProperty
 		name="esercizio" />
@@ -355,11 +335,6 @@
 		name="im_mandati_reversali_pro_etr" />
 	<findFieldProperty
 		name="im_mandati_reversali_pro_spe" />
-	<findFieldProperty
-		name="tratt_econ_int" />
-	<findFieldProperty
-		name="tratt_econ_est" />
-		
 		
 	<columnFieldProperty
 		name="esercizio" />
@@ -417,12 +392,6 @@
 		name="im_mandati_reversali_pro_etr" />
 	<columnFieldProperty
 		name="im_mandati_reversali_pro_spe" />
-	<columnFieldProperty
-		name="tratt_econ_int" />
-	<columnFieldProperty
-		name="tratt_econ_est" />
-		
-		
 	<columnSet name="BASE">
 			<columnFieldProperty name="esercizio" />
 			<columnFieldProperty name="cds" />
@@ -434,8 +403,6 @@
 			<columnFieldProperty name="im_obbl_acc_comp_spe" headerLabel="Spese"/>
 			<columnFieldProperty name="im_ass_doc_amm_spe" headerLabel="Spese"/>
 			<columnFieldProperty name="im_mandati_reversali_pro_spe" headerLabel="Spese"/>
-			<columnFieldProperty name="tratt_econ_int" headerLabel="Previsione Gest. Acc. Tratt. Economico"/>
-			<columnFieldProperty name="tratt_econ_est" headerLabel="Previsione Gest. Acc. Tratt. Economico"/>
 	</columnSet>
 			
 	<columnSet name="BASEMOD">
@@ -450,8 +417,6 @@
 			<columnFieldProperty name="im_obbl_acc_comp_spe" headerLabel="Spese"/>
 			<columnFieldProperty name="im_ass_doc_amm_spe" headerLabel="Spese"/>
 			<columnFieldProperty name="im_mandati_reversali_pro_spe" headerLabel="Spese"/>
-			<columnFieldProperty name="tratt_econ_int" headerLabel="Previsione Gest. Acc. Tratt. Economico"/>
-			<columnFieldProperty name="tratt_econ_est" headerLabel="Previsione Gest. Acc. Tratt. Economico"/>
 	</columnSet>
 	
 	<columnSet name="BASEMODGAE">
@@ -466,8 +431,6 @@
 			<columnFieldProperty name="im_obbl_acc_comp"/>
 			<columnFieldProperty name="im_ass_doc_amm"/>
 			<columnFieldProperty name="im_mandati_reversali_pro"/>
-			<columnFieldProperty name="tratt_econ_int" headerLabel="Previsione Gest. Acc. Tratt. Economico"/>
-			<columnFieldProperty name="tratt_econ_est" headerLabel="Previsione Gest. Acc. Tratt. Economico"/>
 	</columnSet>
 	
 	<columnSet name="BASEMODGAEVOCE">
@@ -483,8 +446,6 @@
 			<columnFieldProperty name="im_obbl_acc_comp"/>
 			<columnFieldProperty name="im_ass_doc_amm"/>
 			<columnFieldProperty name="im_mandati_reversali_pro"/>
-			<columnFieldProperty name="tratt_econ_int" headerLabel="Previsione Gest. Acc. Tratt. Economico"/>
-			<columnFieldProperty name="tratt_econ_est" headerLabel="Previsione Gest. Acc. Tratt. Economico"/>
 	</columnSet>
 	
 	
@@ -499,8 +460,6 @@
 			<findFieldProperty name="im_obbl_acc_comp_spe"/>
 			<findFieldProperty name="im_ass_doc_amm_spe"/>
 			<findFieldProperty name="im_mandati_reversali_pro_spe"/>
-			<findFieldProperty name="tratt_econ_int"/>
-			<findFieldProperty name="tratt_econ_est"/>
 	</freeSearchSet>
 	
 	<freeSearchSet name="BASEMOD">	
@@ -515,8 +474,6 @@
 			<findFieldProperty name="im_obbl_acc_comp_spe"/>
 			<findFieldProperty name="im_ass_doc_amm_spe"/>
 			<findFieldProperty name="im_mandati_reversali_pro_spe"/>
-			<findFieldProperty name="tratt_econ_int"/>
-			<findFieldProperty name="tratt_econ_est"/>
 	</freeSearchSet>
 	
 	<freeSearchSet name="BASEMODGAE">
@@ -531,8 +488,6 @@
 			<findFieldProperty name="im_obbl_acc_comp"/>
 			<findFieldProperty name="im_ass_doc_amm"/>
 			<findFieldProperty name="im_mandati_reversali_pro"/>
-			<findFieldProperty name="tratt_econ_int"/>
-			<findFieldProperty name="tratt_econ_est"/>
 	</freeSearchSet>
 	
 	<freeSearchSet name="BASEMODGAEVOCE">
@@ -548,8 +503,6 @@
 			<findFieldProperty name="im_obbl_acc_comp"/>
 			<findFieldProperty name="im_ass_doc_amm"/>
 			<findFieldProperty name="im_mandati_reversali_pro"/>
-			<findFieldProperty name="tratt_econ_int"/>
-			<findFieldProperty name="tratt_econ_est"/>
 	</freeSearchSet>
 	
 </bulkInfo>
