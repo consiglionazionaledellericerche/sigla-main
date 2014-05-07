@@ -3615,7 +3615,7 @@ public void modificaBeniAssociati(UserContext userContext,Ass_inv_bene_fatturaBu
 							sql.addSQLClause("AND","PROGRESSIVO_RIGA",sql.EQUALS,documento.getProgressivo_riga());
 							sql.addSQLClause("AND","CD_TIPO_DOCUMENTO_AMM",sql.EQUALS,documento.getCd_tipo_documento_amm());
 						}
-									
+						//??			
 						List beni_canc = home.fetchAll(sql); 
 						for(Iterator iteratore= beni_canc.iterator();iteratore.hasNext();){
 							Inventario_beni_apgBulk new_bene_apg =(Inventario_beni_apgBulk)iteratore.next();
@@ -5274,7 +5274,7 @@ public void validaRiportaAssFattura_Bene(UserContext userContext, Ass_inv_bene_f
 							sql_ass.addSQLJoin("ASS_INV_BENE_FATTURA.PROGRESSIVO",sql_ass.EQUALS,"INVENTARIO_BENI_APG.PROGRESSIVO");
 							sql_ass.addSQLJoin("ASS_INV_BENE_FATTURA.TI_DOCUMENTO",sql_ass.EQUALS,"INVENTARIO_BENI_APG.TI_DOCUMENTO");
 							sql.addSQLNotExistsClause("AND",sql_ass);
-						}
+						} 
 					if (sql.executeCountQuery(getConnection(userContext))==0)
 						throw new ApplicationException("Attenzione: è necessario indicare per ogni riga di Fattura almeno un bene.\n La riga " + riga_fattura.getDs_riga_fattura() +  " non ha beni associati.");
 					
@@ -5807,7 +5807,7 @@ private void callTrasferisciBeni(
 		cs.setInt(4, esercizio); 								// ESERCIZIO
 		cs.setString(5, buonoT.getTipoMovimentoCarico().getCd_tipo_carico_scarico()); 		// TIPO_MOVIMENTO_CARICO
 		cs.setString(6, buonoT.getTipoMovimentoScarico().getCd_tipo_carico_scarico()); 		// TIPO_MOVIMENTO_SCARICO
-		cs.setString(7, buonoT.getDs_buono_carico_scarico()); 	// DS_TRASFERIMENTO
+		cs.setString(7, buonoT.getDs_buono_carico_scarico().replace("'"," ")); 	// DS_TRASFERIMENTO
 		cs.setTimestamp(8, buonoT.getData_registrazione()); 	// DT_REGISRAZIONE
 		cs.setString(9, fl_trasf_tutti); 						// FL_TRASFERISCI_TUTTI
 		cs.setString(10, it.cnr.contab.utenze00.bp.CNRUserContext.getUser(userContext));	// USER
