@@ -163,6 +163,9 @@
   <action 
       path="/ConsStatoInvioMandatiAction" actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsStatoInvioMandatiAction">
   </action>
+  <action 
+      path="/ConsVarCompResAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+  </action>
     
    <businessProcess
       name="ConsObbligazioniBP" className="it.cnr.contab.consultazioni.bp.ConsObbligazioniBP">
@@ -667,6 +670,13 @@
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
 	    <init-param name="defaultAction" value="ConsVarBilancioAction" />	    
   </businessProcess>
+  <businessProcess
+      name="ConsVarCompResBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.pdg01.consultazioni.bulk.VConsVarCompResBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
+	    <init-param name="defaultAction" value="ConsVarCompResAction" />	    
+  </businessProcess>  
    <businessProcess
       name="ConsPDGGDipFoSpeBP" className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGDipFoSpeBP">
     <forward name="default" path="/consultazioni/form_lista.jsp"/>
