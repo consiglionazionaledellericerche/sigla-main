@@ -2451,7 +2451,13 @@ private void verificaSospesoRiscontro (UserContext aUC,SospesoBulk sospeso) thro
 			if ( today.after(lastDayOfTheYear ) &&
 				  sospeso.getDt_registrazione().compareTo( lastDayOfTheYear) != 0 )
 				throw  new ApplicationException( "La data di registrazione deve essere " +
-   									java.text.DateFormat.getDateInstance().format( lastDayOfTheYear ));					
+   									java.text.DateFormat.getDateInstance().format( lastDayOfTheYear ));
+			// Rospuc 08/05/2014 
+			if( sospeso.TI_RISCONTRO.equals( sospeso.getTi_sospeso_riscontro()) ){
+				// Prefisso di numerazione automatica dei riscontri effettuati via interfaccia cassiere
+				if(sospeso.getCd_sospeso()!=null && sospeso.getCd_sospeso().toUpperCase().startsWith("XSRC")) 
+					throw  new ApplicationException( "Il campo codice può iniziare con XSRC solo per gli inserimenti automatici.");
+			}
 		}
 
 		java.math.BigDecimal totDettagli;
