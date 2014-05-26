@@ -44,6 +44,8 @@ public class Tipo_contributo_ritenutaBase extends Tipo_contributo_ritenutaKey im
 	// FL_SOSPENSIONE_IRPEF CHAR(1) NOT NULL
 	private java.lang.Boolean fl_sospensione_irpef;
 	
+	private java.lang.Boolean fl_credito_irpef;
+	
 public Tipo_contributo_ritenutaBase() {
 	super();
 }
@@ -187,5 +189,11 @@ public java.lang.Boolean getFl_sospensione_irpef() {
 }
 public void setFl_sospensione_irpef(java.lang.Boolean fl_sospensione_irpef) {
 	this.fl_sospensione_irpef = fl_sospensione_irpef;
+}
+public java.lang.Boolean getFl_credito_irpef() {
+	return fl_credito_irpef;
+}
+public void setFl_credito_irpef(java.lang.Boolean fl_credito_irpef) {
+	this.fl_credito_irpef = fl_credito_irpef;
 }
 }

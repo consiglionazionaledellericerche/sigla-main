@@ -146,5 +146,10 @@
 			<% bp.getController().writeFormLabel(out,"livello_pdg_cofog");%>
 			</TD><TD colspan="3">
 			<% bp.getController().writeFormInput(out,"default","livello_pdg_cofog", isLivelloPdgDecisionaleSpeEnabled, null, null);%>
+		</TD></TR>
+		<TR><TD>
+			<% bp.getController().writeFormLabel(out,"fl_credito_irpef");%>
+			</TD><TD colspan="3">
+			<% bp.getController().writeFormInput(out,"fl_credito_irpef");%>
 		</TD></TR>			
 	</table>

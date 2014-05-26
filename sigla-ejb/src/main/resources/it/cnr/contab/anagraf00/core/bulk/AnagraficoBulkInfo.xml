@@ -526,8 +526,8 @@
 		name="im_reddito_complessivo"
 		property="anagrafico_esercizio.im_reddito_complessivo"
 		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
-		label="Reddito Complessivo (escluso Reddito CNR&lt;BR&gt;e Reddito Abitazione Principale)" 		
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Imponibile Irpef aggiuntivo all'imponibile Irpef CNR&lt;BR&gt;(escluso Reddito Abitazione Principale)" 		
 		nullable="true" />
 	<fieldProperty
 		name="im_reddito_abitaz_princ"
@@ -541,7 +541,13 @@
 		property="anagrafico_esercizio.fl_applica_detr_pers_max"
 		inputType="CHECKBOX"
 		label="Applica Detrazione Personale massima" 		
-		nullable="false" />					
+		nullable="false" />				
+	<fieldProperty
+		name="fl_no_credito_irpef"
+		property="anagrafico_esercizio.fl_no_credito_irpef"
+		inputType="CHECKBOX"
+		label="No Credito Irpef" 		
+		nullable="false" />		
 	<fieldProperty
 		name="fl_non_obblig_p_iva"
 		property="fl_non_obblig_p_iva"
@@ -870,8 +876,9 @@
 	<formFieldProperty
 		name="fl_applica_detr_pers_max" />
 	<formFieldProperty
-		name="fl_non_obblig_p_iva"/>
+		name="fl_no_credito_irpef" />
 	<formFieldProperty
+		name="fl_non_obblig_p_iva"/>	<formFieldProperty
 		name="pg_tipologia_istat"/>
 	<formFieldProperty
 		name="ds_tipologia_istat"/>   

@@ -41,7 +41,7 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	private String corpoEmail;
 	private Boolean fl_cup;
 	private Boolean fl_siope_cup;
-	
+	private Boolean fl_credito_irpef;
 	private String clausolaOrdine;
 	private java.sql.Timestamp data_stipula_contratti;
 	
@@ -289,6 +289,12 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	}
 	public void setLivello_pdg_cofog(Integer livello_pdg_cofog) {
 		this.livello_pdg_cofog = livello_pdg_cofog;
+	}
+	public Boolean getFl_credito_irpef() {
+		return fl_credito_irpef;
+	}
+	public void setFl_credito_irpef(Boolean fl_credito_irpef) {
+		this.fl_credito_irpef = fl_credito_irpef;
 	}
 	
 	public Boolean getFl_siope_cup() {

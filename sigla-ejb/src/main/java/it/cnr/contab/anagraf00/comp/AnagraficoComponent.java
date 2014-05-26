@@ -473,6 +473,8 @@ public TerzoBulk getDefaultTerzo(UserContext userContext,AnagraficoBulk anagrafi
 		anagrafico_esercizio.setIm_deduzione_family_area(new java.math.BigDecimal(0));
 		anagrafico_esercizio.setIm_reddito_complessivo(new java.math.BigDecimal(0));
 		anagrafico_esercizio.setIm_reddito_abitaz_princ(new java.math.BigDecimal(0));
+		anagrafico_esercizio.setFl_no_credito_irpef(Boolean.FALSE);
+		
 		anagrafico_esercizio.setToBeCreated();		
 		anagrafico.setAnagrafico_esercizio(anagrafico_esercizio);
 		anagrafico.setFl_sospensione_irpef(Boolean.FALSE);
@@ -1278,7 +1280,8 @@ private void validaCreaModificaAnagrafico_esercizio(UserContext userContext, Ana
 					||(anag_eserc.getIm_reddito_complessivo() != null && anag_eserc.getIm_reddito_complessivo().compareTo(new java.math.BigDecimal(0))>0)
 					||(anag_eserc.getIm_reddito_abitaz_princ() != null && anag_eserc.getIm_reddito_abitaz_princ().compareTo(new java.math.BigDecimal(0))>0)
 					||(anag_eserc.getFl_applica_detr_pers_max() != null && anag_eserc.getFl_applica_detr_pers_max().booleanValue())
-				    ||(anag_eserc.getIm_deduzione_family_area() != null && anag_eserc.getIm_deduzione_family_area().compareTo(new java.math.BigDecimal(0))>0)){
+				    ||(anag_eserc.getIm_deduzione_family_area() != null && anag_eserc.getIm_deduzione_family_area().compareTo(new java.math.BigDecimal(0))>0)
+				    			    ||(anag_eserc.getFl_no_credito_irpef() != null && anag_eserc.getFl_no_credito_irpef().booleanValue())){
 					
 					//inizializzo i flag se non valorizzati
 					if (anag_eserc.getFl_nofamilyarea()== null)
@@ -1308,6 +1311,16 @@ private void validaCreaModificaAnagrafico_esercizio(UserContext userContext, Ana
 							anag_eserc.setFl_no_detrazioni_altre(new Boolean(false));
 						else
 							anag_eserc.setFl_no_detrazioni_altre(new Boolean(true));
+					}
+					if (anag_eserc.getFl_no_credito_irpef()== null)
+					{
+						// potrebbero attivarlo dopo l'inserimento di anagrafico_esercizio negli esercizi futuri
+						// quindi lo inizializziamo sempre a NO, il calcolo del Bonus viene fatto solo con gestione attiva  
+						// if (isGestitoCreditoIrpef(userContext))
+						//		anag_eserc.setFl_no_credito_irpef(new Boolean(false));
+						// else
+						//		anag_eserc.setFl_no_credito_irpef(new Boolean(true));
+						anag_eserc.setFl_no_credito_irpef(new Boolean(false));
 					}
 					anag_eserc.setCd_anag(anagrafico.getCd_anag());				
 					insertBulk(userContext, anag_eserc);
@@ -2151,6 +2164,8 @@ public Timestamp findMaxDataCompValida(UserContext context,AnagraficoBulk anagra
 	return (Timestamp)value;
 }
 public boolean verificaStrutturaPiva(UserContext userContext, AnagraficoBulk anagrafico) throws ComponentException, ValidationException{
+	if (anagrafico!=null && anagrafico.getPartita_iva()==null && anagrafico.getFl_non_obblig_p_iva().booleanValue())
+		return true;
 	if (anagrafico==null || anagrafico.getPartita_iva()==null)
 		return false;
 	if (anagrafico.getPartita_iva().contains(" "))
@@ -2224,6 +2239,15 @@ public void checkCaricoAlreadyExistFor(UserContext userContext,
 	 			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non è possibile indicare un carico in questo periodo con questo codice fiscale, esiste già un carico valido nello stesso periodo!");
 			}
 	}
+	}
+}
+public boolean isGestitoCreditoIrpef(UserContext userContext) throws ComponentException {
+	try {
+		Parametri_cnrBulk par = ((Parametri_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).getParametriCnr(userContext,CNRUserContext.getEsercizio(userContext));
+		return 
+		    par.getFl_credito_irpef();
+	} catch(Throwable e) {
+		throw handleException(e);
 	}
 }
 public void controllaUnicitaCaricoInAnnoImposta(UserContext userContext,AnagraficoBulk anagrafico,Carico_familiare_anagBulk carico)throws ComponentException  

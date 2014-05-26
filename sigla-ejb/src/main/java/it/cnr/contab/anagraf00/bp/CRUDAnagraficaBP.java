@@ -603,6 +603,16 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 			throw handleException(ex);
 		}
 	}	
+	public boolean isGestitoCreditoIrpef(UserContext userContext) throws BusinessProcessException {
+		try{
+			AnagraficoComponentSession sess = (AnagraficoComponentSession)createComponentSession();
+			return sess.isGestitoCreditoIrpef(userContext);
+		}catch(it.cnr.jada.comp.ComponentException ex){
+			throw handleException(ex);
+		}catch(java.rmi.RemoteException ex){
+			throw handleException(ex);
+		}
+	}	
 	public boolean isElencoButtonEnabled() {
 		return isElenco();
 	}

@@ -240,6 +240,11 @@
 		maxLength="1"
 		nullable="false"
 		label="Livello COFOG PDG Decisionale" />	
+	<fieldProperty
+		name="fl_credito_irpef"
+		property="fl_credito_irpef"
+		inputType="CHECKBOX"
+		label="Gestione Credito Irpef" />		
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -310,7 +315,8 @@
 		name="data_stipula_contratti" />						       
 	<formFieldProperty
 		name="livello_pdg_cofog"/>
-					       
+	<formFieldProperty
+		name="fl_credito_irpef"/>				       
 		name="fl_cup"/>
 	<formFieldProperty
 		name="fl_siope_cup"/>		       
@@ -381,7 +387,8 @@
 		name="data_stipula_contratti" />						
 	<columnFieldProperty
 		name="livello_pdg_cofog"/>
-		               
+	<columnFieldProperty
+		name="fl_credito_irpef"/>	               
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty

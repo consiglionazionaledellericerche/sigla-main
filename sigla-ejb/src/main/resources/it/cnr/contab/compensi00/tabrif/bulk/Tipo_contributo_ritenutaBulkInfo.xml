@@ -188,7 +188,16 @@
 		enabledOnEdit="true"	
 		enabledOnSearch="false"
 		enabledOnFreeSearch="true"
-		label="Soggetto a sospensione" />			
+		label="Soggetto a sospensione" />	
+	<fieldProperty
+		name="fl_credito_irpef"
+		property="fl_credito_irpef"
+		inputType="CHECKBOX"
+		enabledOnInsert="true"	
+		enabledOnEdit="true"	
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Credito Irpef" />				
 	<form
 		name="searchtool" >
 		<formFieldProperty
@@ -216,6 +225,7 @@
 	<formFieldProperty name="fl_gla" />
 	<formFieldProperty name="cd_ente_prev_sti" />
 	<formFieldProperty name="fl_sospensione_irpef" />	
+	<formFieldProperty name="fl_credito_irpef" />	
 	
 	<columnFieldProperty name="cd_contributo_ritenuta" />
 	<columnFieldProperty name="ds_contributo_ritenuta" />
@@ -229,7 +239,8 @@
 	<columnFieldProperty name="cd_classificazione_cori" />
 	<columnFieldProperty name="dt_inizio_validita" />
 	<columnFieldProperty name="dataFineValidita" />
-
+	<columnFieldProperty name="fl_credito_irpef" />
+	
 	<findFieldProperty name="cd_contributo_ritenuta" />
 	<findFieldProperty name="ds_contributo_ritenuta" />
 	<findFieldProperty name="dt_inizio_validita" />
@@ -249,5 +260,6 @@
 	<findFieldProperty name="cd_ente_prev_sti" />
 	<findFieldProperty name="fl_gla" />
 	<findFieldProperty name="fl_sospensione_irpef" />
+	<findFieldProperty name="fl_credito_irpef" />
 	
 </bulkInfo>

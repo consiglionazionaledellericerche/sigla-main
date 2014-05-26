@@ -237,6 +237,13 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
 		
+		<columnMapping
+			columnName="FL_CREDITO_IRPEF"
+			propertyName="fl_credito_irpef"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
 	</defaultColumnMap>
 	<persistentProperty
 		name="cd_tipo_rapporto" />
@@ -311,4 +318,6 @@
 		name="livello_pdg_cofog" />	
 	<persistentProperty
 		name="fl_siope_cup" />	
+	<persistentProperty
+		name="fl_credito_irpef" />		
 </SQLPersistentInfo>
