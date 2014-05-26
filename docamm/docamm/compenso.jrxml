@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="22"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -46,7 +46,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select a.*,b.FL_DEDUZIONE_IRPEF,b.FL_DEDUZIONE_FAMILY,b.FL_DETRAZIONI_ALTRE,b.FL_DETRAZIONI_FAMILY
+		<![CDATA[select a.*,b.FL_DEDUZIONE_IRPEF,b.FL_DEDUZIONE_FAMILY,b.FL_DETRAZIONI_ALTRE,b.FL_DETRAZIONI_FAMILY,FL_CREDITO_IRPEF
 from v_compenso a, parametri_cnr b
 WHERE a.ESERCIZIO = $P{Esercizio}
   AND a.CD_CDS like $P{CDS}
@@ -141,10 +141,12 @@ order by a.cd_unita_organizzativa,a.pg_compenso, a.ordinamento, a.ti_ente_percip
 	<field name="DACR" class="java.sql.Timestamp"/>
 	<field name="UTCR" class="java.lang.String"/>
 	<field name="DS_UNITA_ORGANIZZATIVA" class="java.lang.String"/>
+	<field name="FL_NO_CREDITO_IRPEF" class="java.lang.String"/>
 	<field name="FL_DEDUZIONE_IRPEF" class="java.lang.String"/>
 	<field name="FL_DEDUZIONE_FAMILY" class="java.lang.String"/>
 	<field name="FL_DETRAZIONI_ALTRE" class="java.lang.String"/>
 	<field name="FL_DETRAZIONI_FAMILY" class="java.lang.String"/>
+	<field name="FL_CREDITO_IRPEF" class="java.lang.String"/>
 	<variable name="AMM_LORDO" class="java.math.BigDecimal">
 		<variableExpression><![CDATA[($F{CLASSIFICAZIONE}.equals("PR")&& $F{TI_ENTE_PERCIPIENTE}.equals("P")?$F{AMMONTARE_LORDO}.negate():
 ($F{CLASSIFICAZIONE}.equals("IL")&& $F{TI_ENTE_PERCIPIENTE}.equals("P")?$F{AMMONTARE_LORDO}.negate():
@@ -523,7 +525,7 @@ $F{DS_COMUNE_NASCITA}+
 	<group name="DS_COMPENSO">
 		<groupExpression><![CDATA[$F{PG_COMPENSO}]]></groupExpression>
 		<groupHeader>
-			<band height="72" splitType="Stretch">
+			<band height="86" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_DIPENDENTE_ALTRO}.equals("A"))]]></printWhenExpression>
 				<staticText>
 					<reportElement key="staticText-2" style="TNRG9" x="14" y="4" width="247" height="13" isRemoveLineWhenBlank="true"/>
@@ -668,11 +670,37 @@ $F{DS_COMUNE_NASCITA}+
 					<reportElement key="line-70" x="7" y="2" width="257" height="1"/>
 				</line>
 				<line>
-					<reportElement key="line-73" positionType="Float" stretchType="RelativeToBandHeight" x="7" y="2" width="1" height="70" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-73" positionType="Float" stretchType="RelativeToBandHeight" x="7" y="2" width="1" height="84" isRemoveLineWhenBlank="true"/>
 				</line>
 				<line>
-					<reportElement key="line-74" positionType="Float" stretchType="RelativeToBandHeight" x="263" y="2" width="1" height="70" isRemoveLineWhenBlank="true"/>
+					<reportElement key="line-74" positionType="Float" stretchType="RelativeToBandHeight" x="263" y="2" width="1" height="84" isRemoveLineWhenBlank="true"/>
 				</line>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField-37" style="TNR9" x="229" y="71" width="32" height="13" isRemoveLineWhenBlank="true" printWhenGroupChanges="PG_COMPENSO">
+						<printWhenExpression><![CDATA[new Boolean($F{FL_CREDITO_IRPEF}.equals("Y"))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[($F{FL_NO_CREDITO_IRPEF}.equals("Y")?"NO":"SI")]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="staticText-39" style="TNRG9" x="13" y="72" width="176" height="13" isRemoveLineWhenBlank="true">
+						<printWhenExpression><![CDATA[new Boolean($F{FL_CREDITO_IRPEF}.equals("Y"))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement/>
+					<text><![CDATA[Applicazione BONUS DL 66/2014]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
