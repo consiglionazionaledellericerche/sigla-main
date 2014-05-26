@@ -748,6 +748,13 @@
 			propertyName="stato_contratto"
 			sqlTypeName="VARCHAR"
 			columnSize="1" />
+		<columnMapping
+			columnName="IM_TOT_REDDITO_COMPLESSIVO"
+			propertyName="im_tot_reddito_complessivo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />			
 			
 	</defaultColumnMap>
 	<persistentProperty
@@ -1001,5 +1008,7 @@
 	<persistentProperty
 		name="stato_contratto" />
 	<persistentProperty
-		name="pg_contratto" />			
+		name="pg_contratto" />	
+	<persistentProperty
+		name="im_tot_reddito_complessivo" />				
 </SQLPersistentInfo>

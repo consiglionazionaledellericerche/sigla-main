@@ -537,7 +537,28 @@
 			sqlTypeName="CHAR"
 			columnSize="1"
 			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />											
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_NO_CREDITO_IRPEF"
+			propertyName="fl_no_credito_irpef"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="IM_CREDITO_IRPEF_GODUTO"
+			propertyName="im_credito_irpef_goduto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_CREDITO_IRPEF_DOVUTO"
+			propertyName="im_credito_irpef_dovuto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />			
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -707,5 +728,10 @@
 		name="fl_no_detrazioni_family" />			
 	<persistentProperty
 		name="fl_detrazioni_altri_tipi" />			
-			
+	<persistentProperty
+		name="fl_no_credito_irpef" />			
+	<persistentProperty
+		name="im_credito_irpef_goduto" />	
+	<persistentProperty
+		name="im_credito_irpef_dovuto" />			
 </SQLPersistentInfo>

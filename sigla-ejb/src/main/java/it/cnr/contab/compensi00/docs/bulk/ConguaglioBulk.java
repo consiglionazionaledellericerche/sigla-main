@@ -213,6 +213,12 @@ public java.math.BigDecimal getIm_irpef() {
 		return null;
 	return getIm_irpef_dovuto().add(getIm_irpef_goduto().negate());
 }
+public java.math.BigDecimal getIm_credito_irpef() {
+
+	if (getIm_credito_irpef_dovuto()==null || getIm_credito_irpef_goduto()==null)
+		return null;
+	return getIm_credito_irpef_dovuto().add(getIm_credito_irpef_goduto().negate());
+}
 /**
  * Insert the method's description here.
  * Creation date: (22/02/2002 18.34.06)
@@ -468,6 +474,7 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	setFl_no_detrazioni_altre(Boolean.FALSE);
 	setFl_no_detrazioni_family(Boolean.FALSE);
 	setFl_detrazioni_altri_tipi(Boolean.FALSE);
+	setFl_no_credito_irpef(Boolean.FALSE);	
 	
 	return this;
 }
@@ -624,6 +631,7 @@ private void resetImportiDovuto(){
 	setIm_deduzione_dovuto(new java.math.BigDecimal(0));
 	setIm_family_dovuto(new java.math.BigDecimal(0));
 	setIm_deduzione_family_dovuto(new java.math.BigDecimal(0));
+	setIm_credito_irpef_dovuto(new java.math.BigDecimal(0));
 }
 /**
  * Insert the method's description here.
@@ -651,7 +659,7 @@ private void resetImportiGoduto(){
 	setIm_deduzione_goduto(new java.math.BigDecimal(0));
 	setIm_family_goduto(new java.math.BigDecimal(0));
 	setIm_deduzione_family_goduto(new java.math.BigDecimal(0));
-	
+	setIm_credito_irpef_goduto(new java.math.BigDecimal(0));
 }
 /**
  * Insert the method's description here.

@@ -242,6 +242,15 @@ public class ConguaglioBase extends ConguaglioKey implements Keyed {
 	
 	// FL_DETRAZIONI_ALTRI_TIPI CHAR(1) NOT NULL
 	private java.lang.Boolean fl_detrazioni_altri_tipi;	
+	
+	// FL_NO_CREDITO_IRPEF CHAR(1) NOT NULL
+	private java.lang.Boolean fl_no_credito_irpef;
+	
+	// IM_CREDITO_IRPEF_GODUTO(15,2)
+	private java.math.BigDecimal im_credito_irpef_goduto;
+	
+	// IM_CREDITO_IRPEF_DOVUTO(15,2)
+	private java.math.BigDecimal im_credito_irpef_dovuto;
 public ConguaglioBase() {
 	super();
 }
@@ -1163,5 +1172,22 @@ public void setTi_anagrafico(java.lang.String ti_anagrafico) {
 			java.lang.Boolean fl_detrazioni_altri_tipi) {
 		this.fl_detrazioni_altri_tipi = fl_detrazioni_altri_tipi;
 	}
-
+	public java.lang.Boolean getFl_no_credito_irpef() {
+		return fl_no_credito_irpef;
+	}
+	public void setFl_no_credito_irpef(java.lang.Boolean fl_no_credito_irpef) {
+		this.fl_no_credito_irpef = fl_no_credito_irpef;
+	}
+	public java.math.BigDecimal getIm_credito_irpef_dovuto() {
+		return im_credito_irpef_dovuto;
+	}
+	public void setIm_credito_irpef_dovuto(java.math.BigDecimal im_credito_irpef_dovuto) {
+		this.im_credito_irpef_dovuto = im_credito_irpef_dovuto;
+	}
+	public java.math.BigDecimal getIm_credito_irpef_goduto() {
+		return im_credito_irpef_goduto;
+	}	
+	public void setIm_credito_irpef_goduto(java.math.BigDecimal im_credito_irpef_goduto) {
+		this.im_credito_irpef_goduto = im_credito_irpef_goduto;
+	}	
 }
