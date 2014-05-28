@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="221"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -166,7 +166,7 @@ new BigDecimal("0")))))]]></variableExpression>
 			<band splitType="Stretch"/>
 		</groupFooter>
 	</group>
-	<group name="PG_COMPENSO" isStartNewPage="true">
+	<group name="PG_COMPENSO" isStartNewPage="true" isResetPageNumber="true">
 		<groupExpression><![CDATA[$F{PG_COMPENSO}]]></groupExpression>
 		<groupHeader>
 			<band height="46" splitType="Stretch">
@@ -1669,7 +1669,7 @@ $F{TI_DIPENDENTE_ALTRO}.equals("A"))||($F{TI_DIPENDENTE_ALTRO}.equals("D")&&
 				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR9" x="392" y="17" width="73" height="11"/>
+				<reportElement key="textField" style="TNR9" x="467" y="17" width="43" height="11"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1679,8 +1679,8 @@ $F{TI_DIPENDENTE_ALTRO}.equals("A"))||($F{TI_DIPENDENTE_ALTRO}.equals("D")&&
 				<textElement textAlignment="Right"/>
 				<textFieldExpression class="java.lang.String"><![CDATA["Pagina " + $V{PAGE_NUMBER} + " di "]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR9" x="465" y="17" width="67" height="11"/>
+			<textField evaluationTime="Group" evaluationGroup="PG_COMPENSO" isBlankWhenNull="false">
+				<reportElement key="textField" style="TNR9" x="515" y="17" width="17" height="11"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1688,7 +1688,7 @@ $F{TI_DIPENDENTE_ALTRO}.equals("A"))||($F{TI_DIPENDENTE_ALTRO}.equals("D")&&
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement key="textField-46" style="TNR9" x="0" y="0" width="529" height="14"/>
