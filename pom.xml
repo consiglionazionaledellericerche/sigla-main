@@ -15,7 +15,7 @@
 	</modules>
 	<properties>
 		<nexus.url>http://bandt.si.cnr.it:8280/nexus</nexus.url>
-		<java.version>1.6</java.version>
+		<java.version>1.5</java.version>
 		<cmisdl.version>2.2</cmisdl.version>
 		<spring.version>3.0.3.RELEASE</spring.version>
 		<jada.version>2.1.0</jada.version>
