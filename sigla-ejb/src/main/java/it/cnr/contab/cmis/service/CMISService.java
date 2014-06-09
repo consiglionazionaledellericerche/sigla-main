@@ -9,6 +9,7 @@ import it.cnr.cmisdl.service.AuthenticationService;
 import it.cnr.cmisdl.service.ContentService;
 import it.cnr.cmisdl.service.DictionaryService;
 import it.cnr.cmisdl.service.NodeService;
+import it.cnr.cmisdl.service.RepositoryService;
 import it.cnr.cmisdl.service.SearchService;
 import it.cnr.contab.cmis.CMISRelationship;
 import it.cnr.contab.cmis.acl.Permission;
@@ -41,6 +42,7 @@ public class CMISService {
 	private AuthenticationService authenticationService;
 	private ContentService contentService;
 	private CMISBulkInfo<?> cmisBulkInfo;
+	private RepositoryService repositoryService;
 	protected Credentials systemCredentials;
 	
 	public void init(){
@@ -70,6 +72,16 @@ public class CMISService {
 
 	public void setCmisBulkInfo(CMISBulkInfo cmisBulkInfo) {
 		this.cmisBulkInfo = cmisBulkInfo;
+	}
+
+	public void setRepositoryService(RepositoryService repositoryService) {
+		this.repositoryService = repositoryService;
+	}
+
+	public String getRepositoyURL(){
+		String target = repositoryService.getRepositoryApiURL().toString();
+		target = target.replace("/service/api/cmis", "/service").replace("/cmisatom", "/service");
+		return target;
 	}
 
 	public String sanitizeFilename(String name) {
@@ -227,7 +239,7 @@ public class CMISService {
 		try {
 			node = nodeService.getNodeByPath(systemCredentials, cmisPath.getPath()+
 											(cmisPath.getPath().equals("/")?"":"/")+
-											name);
+											sanitizeFilename(name).toLowerCase());
 		} catch (CmisObjectNotFoundException e){
 			return storeSimpleDocument(oggettoBulk, inputStream, contentType, name, cmisPath, objectTypeName, makeVersionable, permissions);
 		}
@@ -318,7 +330,6 @@ public class CMISService {
 	public void setInheritedPermission(CMISPath cmisPath, Boolean inheritedPermission){
 		nodeService.setInheritedPermission(systemCredentials, nodeService.getNodeByPath(systemCredentials, cmisPath.getPath()), inheritedPermission);
 	}
-	
 	public ACL getACL(Node node, String userName, String permission) {
 		List<ACL> listACL = nodeService.getACL(systemCredentials, node);
 		for (ACL acl : listACL) {

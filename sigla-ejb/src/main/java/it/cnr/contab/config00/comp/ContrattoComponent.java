@@ -51,6 +51,7 @@ import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
@@ -634,7 +635,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			contratto.setTot_doccont_cont_etr( tot_doc_cont );
 			try {
 				java.sql.ResultSet rs = null;
-				PreparedStatement ps = null;
+				LoggableStatement ps = null;
 				try {
 					ps = sql.prepareStatement(getConnection(userContext));
 					try {
@@ -662,7 +663,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			
 			try {
 				java.sql.ResultSet rs = null;
-				PreparedStatement ps = null;
+				LoggableStatement ps = null;
 				try {
 					ps = sql_liq.prepareStatement(getConnection(userContext));
 					try {
@@ -690,7 +691,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			
 			try {
 				java.sql.ResultSet rs = null;
-				PreparedStatement ps = null;
+				LoggableStatement ps = null;
 				try {
 					ps = sql_pag.prepareStatement(getConnection(userContext));
 					try {
@@ -757,7 +758,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			contratto.setTot_doc_cont_spe( tot_doc_cont );
 			try {
 				java.sql.ResultSet rs = null;
-				PreparedStatement ps = null;
+				LoggableStatement ps = null;
 				try {
 					ps = sqlEtr.prepareStatement(getConnection(userContext));
 					try {
@@ -781,7 +782,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			
 			try {
 				java.sql.ResultSet rs = null;
-				PreparedStatement ps = null;
+				LoggableStatement ps = null;
 				try {
 					ps = sqlSpe.prepareStatement(getConnection(userContext));
 					try {
@@ -808,7 +809,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			contratto.setTot_docamm_cont_spe( tot_doc_cont );
 			try {
 				java.sql.ResultSet rs = null;
-				PreparedStatement ps = null;
+				LoggableStatement ps = null;
 				try {
 					ps = sqlLiqEtr.prepareStatement(getConnection(userContext));
 					try {
@@ -832,7 +833,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			
 			try {
 				java.sql.ResultSet rs = null;
-				PreparedStatement ps = null;
+				LoggableStatement ps = null;
 				try {
 					ps = sqlLiqSpe.prepareStatement(getConnection(userContext));
 					try {
@@ -859,7 +860,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			contratto.setTot_doccont_cont_spe( tot_doc_cont );
 			try {
 				java.sql.ResultSet rs = null;
-				PreparedStatement ps = null;
+				LoggableStatement ps = null;
 				try {
 					ps = sqlPagEtr.prepareStatement(getConnection(userContext));
 					try {
@@ -883,7 +884,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			
 			try {
 				java.sql.ResultSet rs = null;
-				PreparedStatement ps = null;
+				LoggableStatement ps = null;
 				try {
 					ps = sqlPagSpe.prepareStatement(getConnection(userContext));
 					try {
@@ -945,7 +946,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			contratto.setTot_doc_cont_spe( tot_doc_cont );
 			try {
 				java.sql.ResultSet rs = null;
-				PreparedStatement ps = null;
+				LoggableStatement ps = null;
 				try {
 					ps = sqlEtr.prepareStatement(getConnection(userContext));
 					try {
@@ -969,7 +970,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			
 			try {
 				java.sql.ResultSet rs = null;
-				PreparedStatement ps = null;
+				LoggableStatement ps = null;
 				try {
 					ps = sqlSpe.prepareStatement(getConnection(userContext));
 					try {
@@ -993,7 +994,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			
 			try {
 				java.sql.ResultSet rs = null;
-				PreparedStatement ps = null;
+				LoggableStatement ps = null;
 				try {
 					ps = sqlLiqEtr.prepareStatement(getConnection(userContext));
 					try {
@@ -1017,7 +1018,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			
 			try {
 				java.sql.ResultSet rs = null;
-				PreparedStatement ps = null;
+				LoggableStatement ps = null;
 				try {
 					ps = sqlLiqSpe.prepareStatement(getConnection(userContext));
 					try {
@@ -1041,7 +1042,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			
 			try {
 				java.sql.ResultSet rs = null;
-				PreparedStatement ps = null;
+				LoggableStatement ps = null;
 				try {
 					ps = sqlPagEtr.prepareStatement(getConnection(userContext));
 					try {
@@ -1065,7 +1066,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			
 			try {
 				java.sql.ResultSet rs = null;
-				PreparedStatement ps = null;
+				LoggableStatement ps = null;
 				try {
 					ps = sqlPagSpe.prepareStatement(getConnection(userContext));
 					try {

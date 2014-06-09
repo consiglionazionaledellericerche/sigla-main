@@ -12,7 +12,6 @@ public final class SpringUtil {
 		beanFactory =  (BeanFactory) appContext;		
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static <T extends Object> T getBean(String beanName, Class<T> clazz){
 		return (T) beanFactory.getBean(beanName, clazz);
 	}

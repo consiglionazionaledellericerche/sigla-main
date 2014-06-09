@@ -99,8 +99,28 @@
 							<% bp.getController().writeFormInput(out,"ds_tipologia_istat");%></td>
 			<td><% bp.getController().writeFormInput(out,null,"find_tipologia_istat",(anagrafico!=null?!bp.isGestoreOk(uc):false),null,null);%></td>
 		</tr>
-
 	</table>
+	<%if (!anagrafico.isPersonaFisica()) {%>
+	<table>
+		<%	if(bp.isGestoreIstat(uc, anagrafico)){ %>
+			<tr>
+				<% bp.writeFormField(out,"codiceAmministrazioneIpa");%>
+			</tr>
+			<tr>
+				<% bp.writeFormField(out,"dataAvvioFattElettr");%>
+			</tr>			
+		<%} else { %> 
+			<tr>
+				<td><%bp.writeFormLabel(out,"default","codiceAmministrazioneIpa"); %></td>
+				<td><% bp.writeFormInput(out,"default","codiceAmministrazioneIpa",true,null,null);%></td>
+			</tr>
+			<tr>
+				<td><%bp.writeFormLabel(out,"default","dataAvvioFattElettr"); %></td>
+				<td><% bp.writeFormInput(out,"default","dataAvvioFattElettr",true,null,null);%></td>
+			</tr>				
+		<%} %>
+	</table>
+	<%} %>
 </fieldset>
 
 <fieldset class="fieldset">
@@ -133,9 +153,7 @@
 			<td colspan="2"><%bp.getController().writeFormLabel(out,"classificazione_anag");%></td>
 		<%} %>
 		</tr>
-	<%} %>
-
-	
+	<%} %>		
 		<tr><% bp.getController().writeFormField(out,"partita_iva");%>
 		<%if (anagrafico.isPersonaGiuridica()) { %>
 			<td colspan="2"><%bp.getController().writeFormInput(out,"classificazione_anag");%></td>

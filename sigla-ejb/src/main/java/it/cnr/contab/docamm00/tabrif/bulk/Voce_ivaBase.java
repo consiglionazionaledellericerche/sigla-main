@@ -1,8 +1,5 @@
 package it.cnr.contab.docamm00.tabrif.bulk;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.Keyed;
 
 public class Voce_ivaBase extends Voce_ivaKey implements Keyed {
 	// CD_GRUPPO_IVA VARCHAR(10) NOT NULL
@@ -248,6 +245,14 @@ public void setPercentuale_detraibilita(java.math.BigDecimal percentuale_detraib
 	// TI_APPLICAZIONE CHAR(1) NOT NULL
 	private java.lang.String ti_applicazione;
 
+	// NATURA_OPER_NON_IMP_SDI CHAR(2) NOT NULL
+	private java.lang.String naturaOperNonImpSdi;
+
+	// RIF_NORM_OPER_NON_IMP_SDI CHAR(30) NOT NULL
+	private java.lang.String rifNormOperNonImpSdi;
+
+
+
 /* 
  * Getter dell'attributo ti_applicazione
  */
@@ -278,6 +283,22 @@ public java.lang.Boolean getFl_iva_non_recuperabile() {
 
 public void setFl_iva_non_recuperabile(java.lang.Boolean fl_iva_non_recuperabile) {
 	this.fl_iva_non_recuperabile = fl_iva_non_recuperabile;
+}
+
+public java.lang.String getNaturaOperNonImpSdi() {
+	return naturaOperNonImpSdi;
+}
+
+public void setNaturaOperNonImpSdi(java.lang.String naturaOperNonImpSdi) {
+	this.naturaOperNonImpSdi = naturaOperNonImpSdi;
+}
+
+public java.lang.String getRifNormOperNonImpSdi() {
+	return rifNormOperNonImpSdi;
+}
+
+public void setRifNormOperNonImpSdi(java.lang.String rifNormOperNonImpSdi) {
+	this.rifNormOperNonImpSdi = rifNormOperNonImpSdi;
 }
 
 }

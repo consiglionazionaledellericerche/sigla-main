@@ -55,7 +55,7 @@ public void associaTutteSpese(
 	Obbligazione_scadenzarioBulk obbScad)
 	throws  it.cnr.jada.comp.ComponentException {
 
-		PreparedStatement ps = null;
+	LoggableStatement ps = null;
 		try {
 			lockBulk(context, testata);
 			Fondo_spesaHome spesaHome = (Fondo_spesaHome)getHome(context, Fondo_spesaBulk.class);
@@ -152,7 +152,7 @@ public java.math.BigDecimal calcolaTotaleSpese(
 	SQLBuilder sql = home.getTotaleSpese(fondo, scadenza);
 	try {
 		java.sql.ResultSet rs = null;
-		PreparedStatement ps = null;
+		LoggableStatement ps = null;
 		try {
 			ps = sql.prepareStatement(getConnection(userContext));
 			try {
@@ -744,7 +744,7 @@ public void dissociaTutteSpese(
 	Obbligazione_scadenzarioBulk obbScad)
 	throws  it.cnr.jada.comp.ComponentException {
 
-	PreparedStatement ps = null;
+	LoggableStatement ps = null;
 		try {
 			lockBulk(context, testata);
 			Fondo_spesaHome spesaHome = (Fondo_spesaHome)getHome(context, Fondo_spesaBulk.class);

@@ -1,14 +1,43 @@
 package it.cnr.contab.docamm00.actions;
 
-import java.rmi.RemoteException;
-import java.sql.Date;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.ejb.EJBException;
-
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.docamm00.bp.CRUDFatturaAttivaBP;
+import it.cnr.contab.docamm00.bp.CRUDFatturaAttivaIBP;
+import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
+import it.cnr.contab.docamm00.bp.CRUDNotaDiCreditoAttivaBP;
+import it.cnr.contab.docamm00.bp.CRUDNotaDiDebitoAttivaBP;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
+import it.cnr.contab.docamm00.bp.RisultatoEliminazioneBP;
+import it.cnr.contab.docamm00.bp.TitoloDiCreditoDebitoBP;
+import it.cnr.contab.docamm00.comp.FatturaAttivaSingolaComponent;
+import it.cnr.contab.docamm00.docs.bulk.AccertamentiTable;
+import it.cnr.contab.docamm00.docs.bulk.AssociazioniInventarioTable;
+import it.cnr.contab.docamm00.docs.bulk.CarichiInventarioTable;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_accertamentiVBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_attivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_attiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk;
+import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
+import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
+import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
+import it.cnr.contab.docamm00.intrastat.bulk.Fattura_attiva_intraBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
+import it.cnr.contab.doccont00.bp.CRUDVirtualAccertamentoBP;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
 import it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession;
 import it.cnr.contab.inventario00.bp.AssBeneFatturaBP;
@@ -20,30 +49,30 @@ import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
 import it.cnr.contab.inventario01.ejb.NumerazioneTempBuonoComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
-
-/**
- * <!-- @TODO: da completare -->
- */
-
-import it.cnr.contab.docamm00.docs.bulk.*;
-import it.cnr.contab.anagraf00.core.bulk.*;
-import it.cnr.contab.docamm00.tabrif.bulk.*;
-import it.cnr.contab.docamm00.bp.*;
-import it.cnr.contab.docamm00.ejb.*;
-import it.cnr.contab.docamm00.intrastat.bulk.Fattura_attiva_intraBulk;
-import it.cnr.contab.doccont00.bp.CRUDVirtualAccertamentoBP;
-import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
-import it.cnr.jada.action.*;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Forward;
+import it.cnr.jada.action.HookForward;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.action.BulkBP;
+import it.cnr.jada.util.action.OptionBP;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+
+import java.rmi.RemoteException;
+import java.sql.Date;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.ejb.EJBException;
 
 public class CRUDFatturaAttivaAction extends it.cnr.jada.util.action.CRUDAction {
 public CRUDFatturaAttivaAction() {
@@ -1115,6 +1144,109 @@ public Forward doBringBackAssociaInventario(ActionContext context) {
 		return handleException(context,e);
 	}
 }
+//public Forward doSearchFind_trovato(ActionContext context) 
+//{
+//	try{
+//		fillModel(context);
+//		CRUDFatturaAttivaBP bp = (CRUDFatturaAttivaBP)context.getBusinessProcess();
+//
+//		BulkList<TrovatoBulk> listaTrovati = bp.listaTrovati(context);
+//		
+//		it.cnr.jada.util.action.SelezionatoreListaBP slbp=null;
+//		if (!listaTrovati.isEmpty()) {
+//			slbp = (it.cnr.jada.util.action.SelezionatoreListaBP) select(
+//					context,
+//					new it.cnr.jada.util.ListRemoteIterator((java.util.List)listaTrovati),
+//					it.cnr.jada.bulk.BulkInfo.getBulkInfo(TrovatoBulk.class),
+//					null,
+//					"doBringBackSearchFind_trovato");
+//
+//			slbp.setMultiSelection(false);
+//		} else
+//			bp.setMessage("La ricerca non ha fornito alcun risultato.");
+//		return slbp;
+//	}catch (Throwable ex) {
+//		return handleException(context, ex);
+//	}
+//}
+
+/**
+ * Viene richiamato nel momento in cui viene inserito/cambiato il trovato
+ * nel dettaglio della fattura.
+ */
+ 
+public Forward doVerificaEsistenzaTrovato(ActionContext context) {
+	try {
+		fillModel( context );
+		CRUDFatturaAttivaBP bp = (CRUDFatturaAttivaBP)getBusinessProcess(context);
+		bp.ricercaDatiTrovato(context);
+	} catch (Exception e) {
+		return handleException(context, e);
+	}
+	return context.findDefaultForward();
+}
+/**
+
+//public Forward doFreeSearchFind_trovato(ActionContext actioncontext) {
+//    try 	
+//    {
+//    	BulkBP bulkbp = (BulkBP)actioncontext.getBusinessProcess();
+//		CRUDFatturaAttivaBP bp = (CRUDFatturaAttivaBP)bulkbp;
+//		bp.fillModel(actioncontext);
+//		
+//		//TrovatoBulk oggettobulk = ((Fattura_attiva_rigaIBulk)bp.getDettaglio().getModel()).getTrovato();
+//		TrovatoBulk oggettobulk = new TrovatoBulk();
+//		FormField formfield = getFormField(actioncontext,"main.Dettaglio.find_trovato");
+//        OggettoBulk oggettobulk1 = formfield.getModel();
+//        RicercaLiberaTrovatoBP ricercaliberabp = (RicercaLiberaTrovatoBP)actioncontext.createBusinessProcess("RicercaLiberaTrovato");
+//        ricercaliberabp.setSearchProvider(bp.getSearchProvider(oggettobulk1, formfield.getField().getProperty()));
+//        ricercaliberabp.setFreeSearchSet(formfield.getField().getFreeSearchSet());
+//        ricercaliberabp.setPrototype(oggettobulk);
+//        ricercaliberabp.setColumnSet(formfield.getField().getColumnSet());
+//        actioncontext.addHookForward("seleziona", this, "doBringBackSearchFind_trovato");
+//        HookForward hookforward = (HookForward)actioncontext.findForward("seleziona");
+//        hookforward.addParameter("field", formfield);
+//        Forward fricercaliberabp = actioncontext.addBusinessProcess(ricercaliberabp);
+//        
+//		BulkList<TrovatoBulk> listaTrovati = bp.listaTrovati(actioncontext);
+//        ricercaliberabp.setListaTtovati(listaTrovati);
+//        return fricercaliberabp;
+//    }
+//    catch(Exception exception)
+//    {
+//        return handleException(actioncontext, exception);
+//    }
+//
+//}
+//public Forward doBringBackSearchFind_trovato(ActionContext context) 
+//{
+//	try{
+//		HookForward caller = (HookForward)context.getCaller();
+//		TrovatoBulk trovato = (TrovatoBulk)caller.getParameter("focusedElement");
+//
+//		CRUDFatturaAttivaBP bp = (CRUDFatturaAttivaBP)getBusinessProcess(context);
+//		if (trovato != null) {
+//			Fattura_attiva_rigaBulk riga = (Fattura_attiva_rigaBulk) bp.getDettaglio().getModel();
+//			riga.setTrovato(trovato);
+//			riga.setPg_trovato(trovato.getPg_trovato());
+//			riga.setToBeUpdated();
+//		}
+//		return context.findDefaultForward();
+//	}catch (Throwable ex) {
+//		return handleException(context, ex);
+//	}
+//}
+//public Forward doBlankSearchFind_trovato(ActionContext context, TrovatoBulk trovato) {
+//
+//	if (trovato!=null) {
+//		TrovatoBulk newt = new TrovatoBulk();
+//		CRUDFatturaAttivaBP bp = (CRUDFatturaAttivaBP)getBusinessProcess(context);
+//		Fattura_attiva_rigaBulk riga = (Fattura_attiva_rigaBulk) bp.getDettaglio().getModel();
+//		riga.setTrovato(newt);
+//		riga.setPg_trovato(null);
+//	}
+//	return context.findDefaultForward();
+//}
 /**
  * Richiede la conferma per la cancellazione
  * 
@@ -1235,14 +1367,11 @@ public Forward doBringBackSearchCliente(
     Fattura_attivaBulk fattura_attiva,
     TerzoBulk fornitoreTrovato)
     throws java.rmi.RemoteException {
-
     try {
-
-
 	    //controlli post selezione del cliente
-
         if (fornitoreTrovato != null) {
-	        //controllo se il terzo non può essere un creditore ne un diversi
+        	controlloCodiceIPA(fattura_attiva, fornitoreTrovato);
+        	//controllo se il terzo non può essere un creditore ne un diversi
        	    if (fornitoreTrovato.getAnagrafico().getTi_entita().equals(AnagraficoBulk.DIVERSI) || fornitoreTrovato.getTi_terzo().equals(TerzoBulk.CREDITORE))
        	    	throw new it.cnr.jada.comp.ApplicationException("Il terzo selezionato non è un cliente valido, non può essere un creditore ne un diversi!");
        	    //controllo se il rapporto con il terzo selezionato è finito precedentemente 
@@ -1272,12 +1401,27 @@ public Forward doBringBackSearchCliente(
 
             crudFattura.setModel(context,fattura_attiva);
             crudFattura.resyncChildren(context);
+                        
         }
         return context.findDefaultForward();
 
     } catch (Exception e) {
         return handleException(context, e);
     }
+}
+private void controlloCodiceIPA(Fattura_attivaBulk fattura_attiva,
+		TerzoBulk fornitoreTrovato) throws ApplicationException {
+    //Controllo codice IPA
+    if (fornitoreTrovato.getAnagrafico() != null && 
+    	fornitoreTrovato.getAnagrafico().getCodiceAmministrazioneIpa() != null &&
+    	fornitoreTrovato.getCodiceUnivocoUfficioIpa() == null &&
+    	!fattura_attiva.getDt_registrazione().before(fornitoreTrovato.getAnagrafico().getDataAvvioFattElettr())){
+	    	throw new it.cnr.jada.comp.ApplicationException(
+	    			"Il codice terzo utilizzato si riferisce ad un'anagrafica censita nell'indice delle " +
+	    			"pubbliche amministrazioni. Richiedere tramite helpdesk l'inserimento del codice IPA " +
+	    			"relativo al terzo per il quale si sta tentando di emettere fattura.");            	
+    	
+    }	        	
 }
 /**
  * Gestisce una richiesta di ricerca del searchtool "tariffario"
@@ -2380,16 +2524,35 @@ public Forward doRiportaIndietro(ActionContext context) throws java.rmi.RemoteEx
 	}
 	
 }
-public Forward doSalva(ActionContext context) throws java.rmi.RemoteException {
+public Forward doSalva(ActionContext actioncontext) throws java.rmi.RemoteException {
+    CRUDFatturaAttivaBP bp= (CRUDFatturaAttivaBP) getBusinessProcess(actioncontext);
+    try
+    {
+        fillModel(actioncontext);
+
+        if (bp.getAccertamentiController()!=null)
+    	    bp.getAccertamentiController().setModelIndex(actioncontext, -1);
+        controlloCodiceIPA((Fattura_attivaBulk)bp.getModel(), ((Fattura_attivaBulk)bp.getModel()).getCliente());
+        bp.save(actioncontext);
+		postSalvataggio(actioncontext);
+        return actioncontext.findDefaultForward();
+    }
+    catch(ValidationException validationexception)
+    {
+        getBusinessProcess(actioncontext).setErrorMessage(validationexception.getMessage());
+    }
+    catch(Throwable throwable)
+    {
+        return handleException(actioncontext, throwable);
+    }
+    return actioncontext.findDefaultForward();
+}
+private void postSalvataggio(ActionContext context) throws BusinessProcessException {
 
     CRUDFatturaAttivaBP bp= (CRUDFatturaAttivaBP) getBusinessProcess(context);
-
-    if (bp.getAccertamentiController()!=null)
-	    bp.getAccertamentiController().setModelIndex(context, -1);
-    
-    return super.doSalva(context);
-
+	bp.gestioneAllegatiFatturazioneElettronica(context);
 }
+
 /**
  * Viene richiamato nel momento in cui si seleziona la lista delle banche nella
  * riga del documento generico.
@@ -3004,4 +3167,64 @@ public Forward doBringBackSearchBene_servizio(ActionContext context,
 	}
 }
 
+public Forward doGeneraNotaDiCreditoAutomatica(ActionContext context) {
+	try {
+		fillModel(context);
+		CRUDFatturaAttivaIBP bp = (CRUDFatturaAttivaIBP)context.getBusinessProcess();
+
+		Integer esercizioScrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext());
+		Fattura_attiva_IBulk fa = (Fattura_attiva_IBulk)bp.getModel();
+
+		if (bp.isDirty() && bp.getDettaglio().getSelection().size() != 0)
+			throw new it.cnr.jada.comp.ApplicationException("Il documento risulta modificato! Per continuare o salvare o deselezionare i dettagli da aggiungere alla nota di credito e ricercarli successivamente.");
+
+		if (fa.isRiportata() && esercizioScrivania.intValue() == fa.getEsercizio().intValue())
+			throw new it.cnr.jada.comp.ApplicationException("Non è possibile generare note di credito per fatture riportate!");
+		else if (!fa.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fa.getRiportataInScrivania()) && esercizioScrivania.intValue() != fa.getEsercizio().intValue())
+			throw new it.cnr.jada.comp.ApplicationException("Non è possibile generare note di credito per fatture non completamente riportate nell'esercizio di scrivania!");
+		try {
+			java.sql.Timestamp date = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
+			int annoSolare = fa.getDateCalendar(date).get(java.util.Calendar.YEAR);
+			if (annoSolare != esercizioScrivania.intValue())
+				throw new it.cnr.jada.comp.ApplicationException("Non è possibile inserire note di credito in esercizi non corrispondenti all'anno solare!");
+		} catch (javax.ejb.EJBException e) {
+			return handleException(context, e);
+		}
+		
+		return openConfirm(context,"Attenzione! Sarà generata una nota credito a storno totale della fattura. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmGeneraNotaDiCreditoAutomatica");
+	} catch (it.cnr.jada.bulk.FillException e) {
+		return handleException(context, e);
+	} catch (it.cnr.jada.comp.ComponentException e) {
+		return handleException(context, e);
+	} catch (BusinessProcessException e) {
+		return handleException(context, e);
+	}
+}
+/**
+ * Creo in automatico una nuova nota di credito di storno totale della fattura. 
+ * Viene eseguito rollback prima di questa operazione per permettere il rilascio della fattura!
+ *
+ * @param context	L'ActionContext della richiesta
+ * @return Il Forward alla pagina di risposta
+ */
+public Forward doConfirmGeneraNotaDiCreditoAutomatica(ActionContext context,int option) {
+	try
+	{
+		if (option == OptionBP.YES_BUTTON) {
+			CRUDFatturaAttivaIBP bp = (CRUDFatturaAttivaIBP)context.getBusinessProcess();
+
+			Integer esercizioScrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext());
+
+			Nota_di_credito_attivaBulk notaDiCredito = bp.generaNotaCreditoAutomatica(context, (Fattura_attiva_IBulk)bp.getModel(), esercizioScrivania);
+
+			bp.setMessage("Operazione effettuata!");
+			return doChiusuraNotaDiCredito(context);
+		}
+		return context.findDefaultForward();
+	} catch (it.cnr.jada.comp.ComponentException e) {
+		return handleException(context, e);
+	} catch (RemoteException e) {
+		return handleException(context, e);
+	}
+}
 }

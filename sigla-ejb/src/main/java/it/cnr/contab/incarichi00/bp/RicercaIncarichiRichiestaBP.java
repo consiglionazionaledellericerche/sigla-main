@@ -1,5 +1,6 @@
 package it.cnr.contab.incarichi00.bp;
 
+import it.cnr.cmisdl.model.Calendar;
 import it.cnr.contab.config00.bp.ResponseXMLBP;
 import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
@@ -22,6 +23,7 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 
@@ -30,6 +32,7 @@ import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -65,7 +68,8 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 	private String tipofile="1";
 	private String order;
 	private String strRic;
-	private String cdCds;	
+	private String cdCds;
+	private String tipoInc;
 	
 	public RicercaIncarichiRichiestaBP() {
 		super();
@@ -607,6 +611,18 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		elementProvvedimento.appendChild(nodeProvvedimento);
 		elementRichiesta.appendChild(elementProvvedimento);
 
+		Incarichi_repertorio_archivioBulk curriculum = incarico.getIncaricoRepertorio().getCurriculumVincitore();
+		if (curriculum!=null && curriculum.getCms_node_ref()!=null && incarico.getDt_stipula()!=null) {
+			GregorianCalendar gc = (java.util.GregorianCalendar)GregorianCalendar.getInstance();
+			gc.setTime(incarico.getDt_stipula());
+			if (gc.get(GregorianCalendar.YEAR)>=2013) {
+				Element elementLink = xmldoc.createElement(getTagRadice()+":url_curriculum");
+				dato = "genericdownload/"+curriculum.getNome_file()+"?nodeRef="+curriculum.getCms_node_ref(); 
+				elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+				elementRichiesta.appendChild(elementLink);
+			}
+		}
+
 		if (incarico.getIncarichi_repertorio_rapp_detColl()!=null && !incarico.getIncarichi_repertorio_rapp_detColl().isEmpty()){
 			Element elementAltriRapporti = xmldoc.createElement(getTagRadice()+":altrirapporti");
 		
@@ -762,7 +778,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 			else if (getTipofile().equals("2"))
 				this.setIterator(context, componentSession.findListaIncarichiCollaborazione(context.getUserContext(),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic()));
 			else if (getTipofile().equals("3"))
-				this.setIterator(context, componentSession.findListaIncarichiElenco(context.getUserContext(),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic()));			
+				this.setIterator(context, componentSession.findListaIncarichiElenco(context.getUserContext(),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic(),getTipoInc()));			
 			else if (getTipofile().equals("4"))
 				this.setIterator(context, contrattoComponentSession.findListaContrattiElenco(context.getUserContext(),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic()));			
 			else if (getTipofile().equals("5"))
@@ -991,5 +1007,13 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 
 	public void setCdCds(String cdCds) {
 		this.cdCds = cdCds;
+	}
+	
+	public String getTipoInc() {
+		return tipoInc;
+	}
+	
+	public void setTipoInc(String tipoInc) {
+		this.tipoInc = tipoInc;
 	}
 }

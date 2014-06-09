@@ -83,7 +83,6 @@ public class GenericDownloadServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 	private Credentials getCredentials(String authorization){
 
 		if (authorization != null) {

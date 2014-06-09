@@ -1,70 +1,141 @@
 package it.cnr.contab.compensi00.comp;
 
-import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
-import it.cnr.contab.config00.sto.bulk.*;
-
-import java.sql.*;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.StringTokenizer;
-import java.util.Vector;
-
-import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
-import it.cnr.contab.config00.bulk.Parametri_cdsHome;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
+import it.cnr.contab.anagraf00.core.bulk.Anagrafico_terzoBulk;
+import it.cnr.contab.anagraf00.core.bulk.Ass_rapp_impiegoBulk;
+import it.cnr.contab.anagraf00.core.bulk.Ass_rapp_impiegoHome;
+import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.anagraf00.core.bulk.BancaHome;
+import it.cnr.contab.anagraf00.core.bulk.RapportoBulk;
+import it.cnr.contab.anagraf00.core.bulk.RapportoHome;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
+import it.cnr.contab.anagraf00.tabrif.bulk.Codici_rapporti_inpsBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Codici_rapporti_inpsHome;
+import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoHome;
+import it.cnr.contab.anagraf00.tabter.bulk.RegioneBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.RegioneHome;
+import it.cnr.contab.compensi00.docs.bulk.BonusBulk;
+import it.cnr.contab.compensi00.docs.bulk.BonusHome;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
+import it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk;
+import it.cnr.contab.compensi00.docs.bulk.ConguaglioHome;
+import it.cnr.contab.compensi00.docs.bulk.Contributo_ritenutaBulk;
+import it.cnr.contab.compensi00.docs.bulk.Contributo_ritenutaHome;
+import it.cnr.contab.compensi00.docs.bulk.Estrazione770Bulk;
+import it.cnr.contab.compensi00.docs.bulk.EstrazioneCUDBulk;
+import it.cnr.contab.compensi00.docs.bulk.EstrazioneCUDVBulk;
+import it.cnr.contab.compensi00.docs.bulk.EstrazioneINPSBulk;
+import it.cnr.contab.compensi00.docs.bulk.EstrazioneINPSMensileBulk;
+import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
+import it.cnr.contab.compensi00.docs.bulk.Minicarriera_rataBulk;
+import it.cnr.contab.compensi00.docs.bulk.Minicarriera_rataHome;
+import it.cnr.contab.compensi00.docs.bulk.StampaCertificazioneVBulk;
+import it.cnr.contab.compensi00.docs.bulk.StampaCompensiBulk;
+import it.cnr.contab.compensi00.docs.bulk.StampaPartitarioCompensiVBulk;
+import it.cnr.contab.compensi00.docs.bulk.StampaRiepilogoCompensiVBulk;
+import it.cnr.contab.compensi00.docs.bulk.VCompensoSIPBulk;
+import it.cnr.contab.compensi00.docs.bulk.VCompensoSIPHome;
+import it.cnr.contab.compensi00.docs.bulk.V_doc_cont_compBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_doc_cont_compHome;
+import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoHome;
+import it.cnr.contab.compensi00.tabrif.bulk.Acconto_classific_coriBulk;
+import it.cnr.contab.compensi00.tabrif.bulk.Acconto_classific_coriHome;
+import it.cnr.contab.compensi00.tabrif.bulk.Filtro_trattamentoBulk;
+import it.cnr.contab.compensi00.tabrif.bulk.Quadri_770Bulk;
+import it.cnr.contab.compensi00.tabrif.bulk.Quadri_770Home;
+import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
+import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoHome;
+import it.cnr.contab.compensi00.tabrif.bulk.Tipologia_rischioBulk;
+import it.cnr.contab.compensi00.tabrif.bulk.Tipologia_rischioHome;
+import it.cnr.contab.compensi00.tabrif.bulk.V_tipo_trattamento_tipo_coriBulk;
+import it.cnr.contab.compensi00.tabrif.bulk.V_tipo_trattamento_tipo_coriHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
-import it.cnr.contab.anagraf00.tabrif.bulk.*;
-import java.io.Serializable;
-import java.math.BigDecimal;
-
-import java.rmi.RemoteException;
-
-import javax.ejb.EJBException;
-
-import it.cnr.contab.compensi00.bp.CRUDCompensoBP;
-import it.cnr.contab.compensi00.docs.bulk.*;
-import it.cnr.contab.compensi00.tabrif.bulk.*;
-import it.cnr.contab.docamm00.tabrif.bulk.*;
-import it.cnr.contab.anagraf00.core.bulk.*;
-import it.cnr.contab.docamm00.ejb.*;
-import it.cnr.contab.docamm00.docs.bulk.*;
-import it.cnr.contab.doccont00.core.bulk.*;
-import it.cnr.contab.anagraf00.tabter.bulk.*;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.config00.sto.bulk.CdsHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.docamm00.client.RicercaTrovato;
+import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
+import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
+import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
+import it.cnr.contab.docamm00.ejb.NumerazioneTempDocAmmComponentSession;
+import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
+import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
+import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileHome;
+import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contHome;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
+import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
 import it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
 import it.cnr.contab.incarichi00.bulk.Ass_incarico_uoBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioHome;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_varBulk;
 import it.cnr.contab.incarichi00.ejb.IncarichiRepertorioComponentSession;
-import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
-import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
-import it.cnr.contab.missioni00.docs.bulk.MissioneHome;
-import it.cnr.contab.pdg00.bulk.Stampa_situazione_analitica_x_GAEBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.action.MessageToUser;
-import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashMap;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.comp.ICRUDMgr;
+import it.cnr.jada.comp.FatturaNonTrovataException;
 import it.cnr.jada.comp.IPrintMgr;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.Query;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.SQLExceptionHandler;
 import it.cnr.jada.util.RemoteIterator;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
 /**
  * Insert the type's description here. Creation date: (21/02/2002 16.13.52)
@@ -2494,7 +2565,30 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		if (compenso.isDaMissione())
 			compenso.setDocumentiContabiliCancellati(docContCancellati);
 
+
+		try {
+			compenso.setTrovato(ricercaDatiTrovato(userContext, compenso.getPg_trovato()));
+		} catch (RemoteException e) {
+			throw handleException(e);
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+		
 		return compenso;
+	}
+
+	public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
+		RicercaTrovato ricercaTrovato;
+		try {
+			ricercaTrovato = new RicercaTrovato();
+			return ricercaTrovato.ricercaDatiTrovato(userContext, trovato);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			throw handleException(e);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			throw handleException(e);
+		}
 	}
 
 	/**
@@ -4687,6 +4781,28 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				compenso);
 
 		validaCompensoPerContabilizzazione(userContext, compenso);
+		if (compenso.getObbligazioneScadenzario() == null){
+			compenso.setPg_trovato(null);
+		} else {
+			Elemento_voceBulk voce = compenso.getObbligazioneScadenzario().getObbligazione().getElemento_voce();
+		    if (compenso.getPg_trovato()!=null && compenso.getObbligazioneScadenzario()!=null && isInibitaIndicazioneTrovato(voce))
+		    	compenso.setPg_trovato(null);
+		    if (isObbligatoriaIndicazioneTrovato(voce) && compenso.getPg_trovato()==null )
+		        throw new it.cnr.jada.comp.ApplicationException(
+		            "Attenzione! Non è stato inserito il Brevetto/Trovato mentre la voce di bilancio utilizzata per la contabilizzazione del dettaglio collegato ne prevede l'indicazione obbligatoria");
+		}
+	}
+
+	private boolean isObbligatoriaIndicazioneTrovato(Elemento_voceBulk voce) throws ComponentException {
+		if (voce == null)
+			return false;
+		return voce.isObbligatoriaIndicazioneTrovato();
+	}
+
+	private boolean isInibitaIndicazioneTrovato(Elemento_voceBulk voce) throws ComponentException {
+		if (voce == null)
+			return false;
+		return voce.isInibitaIndicazioneTrovato();
 	}
 
 	/**
@@ -6724,6 +6840,89 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			
 		} catch (Throwable e) {
 			throw handleException(e);
+		}
+	}
+
+	private CompensoBulk ricercaCompensoTrovato(
+			UserContext userContext,
+			Long esercizio,
+			String cd_cds,
+			String cd_unita_organizzativa,
+			Long pg_compenso,
+			boolean byKey) throws PersistencyException, ComponentException {
+		CompensoBulk compenso = new CompensoBulk();
+		compenso.setEsercizio(esercizio.intValue());
+		if (byKey) {
+			compenso.setCd_cds(cd_cds);
+			compenso.setCd_unita_organizzativa(cd_unita_organizzativa);
+		} else {
+			compenso.setCd_cds_origine(cd_cds);
+			compenso.setCd_uo_origine(cd_unita_organizzativa);
+		}
+		compenso.setPg_compenso(pg_compenso);
+
+		List compensi = (getHome(userContext, CompensoBulk.class).find(compenso));
+		if (compensi.size()==0)
+			compenso=null;
+		else if (compensi.size()==1){
+			compenso=(CompensoBulk)compensi.get(0);
+			recuperoInfoAggiuntiveCompensoPerBrevetto(userContext, compenso);
+		}
+		else  //non dovrebbe capitare mai!
+			throw new FatturaNonTrovataException("Compenso non trovato!");
+
+		if (compenso!=null)
+			return compenso;
+		else 
+			throw new FatturaNonTrovataException("Compenso non trovato!");
+	}
+
+	public CompensoBulk ricercaCompensoTrovato(it.cnr.jada.UserContext userContext,Long esercizio,String cd_cds,String cd_unita_organizzativa,Long pg_compenso)throws ComponentException,java.rmi.RemoteException,PersistencyException{
+		return ricercaCompensoTrovato(userContext, esercizio, cd_cds, cd_unita_organizzativa, pg_compenso, false);
+	}
+
+	public CompensoBulk ricercaCompensoByKey(it.cnr.jada.UserContext userContext,Long esercizio,String cd_cds,String cd_unita_organizzativa,Long pg_compenso)throws ComponentException,java.rmi.RemoteException,PersistencyException{
+		return ricercaCompensoTrovato(userContext, esercizio, cd_cds, cd_unita_organizzativa, pg_compenso, true);
+	}
+
+	public List<CompensoBulk> ricercaCompensiTrovato(
+			UserContext userContext,
+			Long trovato) throws PersistencyException, ComponentException {
+		CompensoBulk compenso = new CompensoBulk();
+		compenso.setPg_trovato(trovato);
+		List compensiList =(getHome(userContext, CompensoBulk.class).find(compenso));
+		for (Iterator<CompensoBulk> i = compensiList.iterator(); i.hasNext(); ) {
+			CompensoBulk comp = (CompensoBulk) i.next();
+//			List listaDocContAssociati = loadDocContAssociati(userContext, comp);
+//			if (listaDocContAssociati!=null && !listaDocContAssociati.isEmpty()) {
+//				for (Iterator<V_doc_cont_compBulk> iterator = listaDocContAssociati.iterator(); iterator.hasNext(); ) {
+//					V_doc_cont_compBulk docContComp = (V_doc_cont_compBulk) iterator.next();
+//
+//					if (V_doc_cont_compBulk.TIPO_DOC_CONT_MANDATO.equals(docContComp.getTipo_doc_cont())){
+						recuperoInfoAggiuntiveCompensoPerBrevetto(userContext, comp);
+//					}
+//				}
+//			}
+		}
+		return compensiList;
+	}
+
+	private void recuperoInfoAggiuntiveCompensoPerBrevetto(
+			UserContext userContext, CompensoBulk comp)
+			throws ComponentException, PersistencyException {
+		SQLBuilder sql = getHome( userContext, Mandato_rigaIBulk.class ).createSQLBuilder();
+		sql.addClause(FindClause.AND, "cd_cds_doc_amm", SQLBuilder.EQUALS, comp.getCd_cds() );
+		sql.addClause(FindClause.AND, "cd_uo_doc_amm", SQLBuilder.EQUALS, comp.getCd_unita_organizzativa() );
+		sql.addClause(FindClause.AND, "esercizio_doc_amm", SQLBuilder.EQUALS, comp.getEsercizio() );
+		sql.addClause(FindClause.AND, "cd_tipo_documento_amm", SQLBuilder.EQUALS, Numerazione_doc_ammBulk.TIPO_COMPENSO);
+		sql.addClause(FindClause.AND, "pg_doc_amm", SQLBuilder.EQUALS, comp.getPg_compenso() );
+		sql.addClause(FindClause.AND, "stato", SQLBuilder.NOT_EQUALS, Mandato_rigaBulk.STATO_ANNULLATO);
+		List result = getHome( userContext, Mandato_rigaIBulk.class ).fetchAll( sql );
+		List bl = comp.getDocContAssociati();
+		for (Iterator k = result.iterator(); k.hasNext(); ) {
+			Mandato_rigaIBulk manr = (Mandato_rigaIBulk)k.next();
+			manr.setMandato((MandatoIBulk)getHome(userContext, MandatoIBulk.class).findByPrimaryKey(manr.getMandato()));
+			bl.add(manr);
 		}
 	}
 }

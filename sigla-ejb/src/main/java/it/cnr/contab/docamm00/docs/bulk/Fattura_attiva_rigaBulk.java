@@ -38,6 +38,7 @@ public abstract class Fattura_attiva_rigaBulk extends Fattura_attiva_rigaBase im
 	public final static String NON_ASSOCIATO_A_MANDATO = "N";
 	public final static String ASSOCIATO_A_MANDATO = "T";
 	private Bene_servizioBulk bene_servizio;
+	private Boolean collegatoCapitoloPerTrovato = false;
 	static{
 		
 		STATO = new it.cnr.jada.util.OrderedHashtable();
@@ -59,6 +60,7 @@ public abstract class Fattura_attiva_rigaBulk extends Fattura_attiva_rigaBase im
 	private it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk accertamento_scadenzario;
 	private boolean inventariato = false;
 	private java.lang.String riportata = NON_RIPORTATO;
+	private TrovatoBulk trovato = new TrovatoBulk(); // inizializzazione necessaria per i bulk non persistenti
 
 public Fattura_attiva_rigaBulk() {
 	super();
@@ -442,5 +444,26 @@ public Bene_servizioBulk getBene_servizio() {
 }
 public void setBene_servizio(Bene_servizioBulk bene_servizio) {
 	this.bene_servizio = bene_servizio;
+}
+public void setTrovato(TrovatoBulk trovato) {
+	this.trovato = trovato;
+}
+public TrovatoBulk getTrovato() {
+	return trovato;
+}
+public java.lang.Long getPg_trovato() {
+	if (this.getTrovato() == null)
+		return null;
+	return this.getTrovato().getPg_trovato();
+}
+public void setPg_trovato(java.lang.Long pg_trovato) {
+	if (this.getTrovato() != null)
+		this.getTrovato().setPg_trovato(pg_trovato);
+}
+public Boolean getCollegatoCapitoloPerTrovato() {
+	return collegatoCapitoloPerTrovato;
+}
+public void setCollegatoCapitoloPerTrovato(Boolean collegatoCapitoloPerTrovato) {
+	this.collegatoCapitoloPerTrovato = collegatoCapitoloPerTrovato;
 }
 }

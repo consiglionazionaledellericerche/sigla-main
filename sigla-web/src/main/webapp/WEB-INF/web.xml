@@ -17,6 +17,11 @@
 		<load-on-startup>0</load-on-startup>
 	</servlet>
 	<servlet>
+		<servlet-name>RestServlet</servlet-name>
+		<servlet-class>it.cnr.contab.util.servlet.RESTServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
 		<servlet-name>HelpServlet</servlet-name>
 		<servlet-class>it.cnr.jada.action.HelpServlet</servlet-class>
 		<load-on-startup>-1</load-on-startup>
@@ -79,6 +84,10 @@
 	<servlet-mapping>
 		<servlet-name>ActionServlet</servlet-name>
 		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>RestServlet</servlet-name>
+		<url-pattern>*.json</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>HelpServlet</servlet-name>

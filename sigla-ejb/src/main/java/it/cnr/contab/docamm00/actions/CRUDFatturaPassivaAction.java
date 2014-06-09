@@ -1,45 +1,64 @@
 package it.cnr.contab.docamm00.actions;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
-import javax.ejb.EJBException;
-
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
-import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
-import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
+import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaIBP;
+import it.cnr.contab.docamm00.bp.CRUDNotaDiCreditoBP;
+import it.cnr.contab.docamm00.bp.CRUDNotaDiDebitoBP;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
+import it.cnr.contab.docamm00.bp.RisultatoEliminazioneBP;
+import it.cnr.contab.docamm00.bp.TitoloDiCreditoDebitoBP;
+import it.cnr.contab.docamm00.docs.bulk.AssociazioniInventarioTable;
+import it.cnr.contab.docamm00.docs.bulk.CarichiInventarioTable;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
+import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_creditoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_debitoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
+import it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk;
+import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
+import it.cnr.contab.docamm00.ejb.CategoriaGruppoInventComponentSession;
+import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
+import it.cnr.contab.docamm00.ejb.VoceIvaComponentSession;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
+import it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
+import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
-import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario00.bp.AssBeneFatturaBP;
-import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
-import it.cnr.contab.inventario01.ejb.NumerazioneTempBuonoComponentSession;
-import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
-import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettBulk;
+import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario00.docs.bulk.V_ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bp.CRUDCaricoInventarioBP;
+import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
+import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
+import it.cnr.contab.inventario01.ejb.NumerazioneTempBuonoComponentSession;
 import it.cnr.contab.util.Utility;
-import it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP;
-
-/**
- * <!-- @TODO: da completare -->
- */
-
-import it.cnr.contab.docamm00.docs.bulk.*;
-import it.cnr.contab.anagraf00.core.bulk.*;
-import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.*;
-import it.cnr.contab.docamm00.bp.*;
-import it.cnr.contab.docamm00.ejb.*;
-import it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.action.*;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Forward;
+import it.cnr.jada.action.HookForward;
+import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -48,6 +67,15 @@ import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.FormField;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+
+import java.rmi.RemoteException;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+
+import javax.ejb.EJBException;
 
 public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction {	
 public CRUDFatturaPassivaAction() {
@@ -1797,6 +1825,57 @@ public Forward doCalcolaTotaliDiRiga(ActionContext context) {
 	return context.findDefaultForward();
 }
 /**
+ * Viene richiamato nel momento in cui viene inserito/cambiato il trovato
+ * nel dettaglio della fattura.
+ */
+ 
+public Forward doVerificaEsistenzaTrovato(ActionContext context) {
+	
+	try {
+		fillModel( context );
+		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+		try {
+			FatturaPassivaComponentSession h = (FatturaPassivaComponentSession)bp.createComponentSession();
+			Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk)bp.getDettaglio().getModel();
+			TrovatoBulk trovato = h.ricercaDatiTrovato(context.getUserContext(), riga.getPg_trovato());
+			riga.setTrovato(trovato);
+		} catch (java.rmi.RemoteException e) {
+			bp.handleException(e);
+		} catch (BusinessProcessException e) {
+			bp.handleException(e);
+		} catch (ComponentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PersistencyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	} catch (FillException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return context.findDefaultForward();
+//	try {
+//		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+//		Fattura_passivaBulk fattura = (Fattura_passivaBulk)bp.getModel();
+//		java.sql.Timestamp dataEmissione = fattura.getDt_fattura_fornitore();
+//		try	{
+//			fillModel( context );
+//			if (!bp.isSearching())
+//				fattura.validateDate();
+//			creaEsercizioPerFatturaFornitore(context, fattura);
+//			
+//			return context.findDefaultForward();
+//		} catch(Throwable e) {
+//			fattura.setDt_fattura_fornitore(dataEmissione);
+//			bp.setModel(context,fattura);
+//			throw e;
+//		}
+//	} catch(Throwable e) {
+//		return handleException(context, e);
+//	}
+}
+/**
  * Viene richiamato nel momento in cui viene cambiata la data di emissione
  * fattura fornitore nella testata della fattura.
  */
@@ -1840,8 +1919,6 @@ public Forward doCambiaDataEmissioneFattura(ActionContext context) {
 	} catch(Throwable e) {
 		return handleException(context, e);
 	}
-
-	
 }
 /**
  * Viene richiamato nel momento in cui viene cambiata la data di registrazione
@@ -4484,6 +4561,33 @@ public Forward doOnFlMerceIntraUEChange(ActionContext context) {
 		return handleException(context, t);
 	}
 }
+
+//public Forward doSearchFind_trovato(ActionContext context) 
+//{
+//	try{
+//		fillModel(context);
+//		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)context.getBusinessProcess();
+//
+//		BulkList<TrovatoBulk> listaTrovati = bp.listaTrovati(context);
+//		
+//		it.cnr.jada.util.action.SelezionatoreListaBP slbp=null;
+//		if (!listaTrovati.isEmpty()) {
+//			slbp = (it.cnr.jada.util.action.SelezionatoreListaBP) select(
+//					context,
+//					new it.cnr.jada.util.ListRemoteIterator((java.util.List)listaTrovati),
+//					it.cnr.jada.bulk.BulkInfo.getBulkInfo(TrovatoBulk.class),
+//					null,
+//					"doBringBackSearchFind_trovato");
+//
+//			slbp.setMultiSelection(false);
+//		} else
+//			bp.setMessage("La ricerca non ha fornito alcun risultato.");
+//		return slbp;
+//	}catch (Throwable ex) {
+//		return handleException(context, ex);
+//	}
+//}
+
 /**
  * Gestisce lo sdoppiamento della riga di dettaglio
  * 
@@ -4566,5 +4670,66 @@ public Forward doBringBackSearchListabanchedett(ActionContext context,Fattura_pa
 	} catch (Throwable e) {
 	    return handleException(context, e);
 	}
+}
+
+//public Forward doFreeSearchFind_trovato(ActionContext actioncontext) {
+//    try 	
+//    {
+//    	BulkBP bulkbp = (BulkBP)actioncontext.getBusinessProcess();
+//		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)bulkbp;
+//		bp.fillModel(actioncontext);
+//		
+//		//TrovatoBulk oggettobulk = ((Fattura_attiva_rigaIBulk)bp.getDettaglio().getModel()).getTrovato();
+//		TrovatoBulk oggettobulk = new TrovatoBulk();
+//		FormField formfield = getFormField(actioncontext,"main.Dettaglio.find_trovato");
+//        OggettoBulk oggettobulk1 = formfield.getModel();
+//        RicercaLiberaTrovatoBP ricercaliberabp = (RicercaLiberaTrovatoBP)actioncontext.createBusinessProcess("RicercaLiberaTrovato");
+//        ricercaliberabp.setSearchProvider(bp.getSearchProvider(oggettobulk1, formfield.getField().getProperty()));
+//        ricercaliberabp.setFreeSearchSet(formfield.getField().getFreeSearchSet());
+//        ricercaliberabp.setPrototype(oggettobulk);
+//        ricercaliberabp.setColumnSet(formfield.getField().getColumnSet());
+//        actioncontext.addHookForward("seleziona", this, "doBringBackSearchFind_trovato");
+//        HookForward hookforward = (HookForward)actioncontext.findForward("seleziona");
+//        hookforward.addParameter("field", formfield);
+//        Forward fricercaliberabp = actioncontext.addBusinessProcess(ricercaliberabp);
+//        
+//		BulkList<TrovatoBulk> listaTrovati = bp.listaTrovati(actioncontext);
+//        ricercaliberabp.setListaTtovati(listaTrovati);
+//        return fricercaliberabp;
+//    }
+//    catch(Exception exception)
+//    {
+//        return handleException(actioncontext, exception);
+//    }
+//
+//}
+//public Forward doBringBackSearchFind_trovato(ActionContext context) 
+//{
+//	try{
+//		HookForward caller = (HookForward)context.getCaller();
+//		TrovatoBulk trovato = (TrovatoBulk)caller.getParameter("focusedElement");
+//
+//		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+//		if (trovato != null) {
+//			Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) bp.getDettaglio().getModel();
+//			riga.setTrovato(trovato);
+//			riga.setPg_trovato(trovato.getPg_trovato());
+//			riga.setToBeUpdated();
+//		}
+//		return context.findDefaultForward();
+//	}catch (Throwable ex) {
+//		return handleException(context, ex);
+//	}
+//}
+public Forward doBlankSearchFind_trovato(ActionContext context, TrovatoBulk trovato) {
+
+	if (trovato!=null) {
+		TrovatoBulk newt = new TrovatoBulk();
+		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+		Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) bp.getDettaglio().getModel();
+		riga.setTrovato(newt);
+		riga.setPg_trovato(null);
+	}
+	return context.findDefaultForward();
 }
 }

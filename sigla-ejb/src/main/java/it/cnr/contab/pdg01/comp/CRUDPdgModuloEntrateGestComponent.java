@@ -244,7 +244,7 @@ public class CRUDPdgModuloEntrateGestComponent extends it.cnr.jada.comp.CRUDComp
 		BigDecimal totale = Utility.ZERO;
 		try {
 			java.sql.ResultSet rs = null;
-			PreparedStatement ps = null;
+			LoggableStatement ps = null;
 			try {
 				ps = sql.prepareStatement(getConnection(userContext));
 				try {

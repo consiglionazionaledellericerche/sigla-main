@@ -1,5 +1,6 @@
 <%@ page 
 	import="it.cnr.jada.action.*,
+		it.cnr.jada.UserContext,
 		it.cnr.jada.bulk.*,
 		it.cnr.jada.util.action.*,
 		it.cnr.jada.util.jsp.*,
@@ -9,6 +10,8 @@
 
 <%
 	CRUDTerzoBP bp = (CRUDTerzoBP)BusinessProcess.getBusinessProcess(request);
+	UserContext uc = HttpActionContext.getUserContext(session);
+	TerzoBulk terzo = (TerzoBulk)bp.getModel();
 %>
 
 <table>
@@ -48,6 +51,16 @@
 <% }%>
 <tr>
 	<% bp.writeFormField(out,"note");%>
+</tr>
+<tr>
+  <% if(bp.getAnagrafico() != null && bp.getAnagrafico().getCodiceAmministrazioneIpa() != null ){ %>
+	<%	if(bp.isGestoreIstat(uc, terzo)){ %>
+		<% bp.writeFormField(out,"codiceUnivocoUfficioIpa");%>
+	<%} else { %> 
+		<td><%bp.writeFormLabel(out,"default","codiceUnivocoUfficioIpa"); %></td>
+		<td><% bp.writeFormInput(out,"default","codiceUnivocoUfficioIpa",true,null,null);%></td>
+	<%} %>
+  <%} %>
 </tr>
 <tr>
 	<%	if(bp.getAnagrafico() != null && bp.getAnagrafico().isStrutturaCNR() ){ %>

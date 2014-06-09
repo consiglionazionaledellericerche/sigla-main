@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.Dictionary;
 
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
@@ -19,6 +20,18 @@ public class Elemento_voceBulk extends Elemento_voceBase {
 	private java.util.Hashtable ti_gestioneKeys; 
 	private java.util.Hashtable ti_elemento_voceKeys;
 	private java.util.Hashtable associazioni = new java.util.Hashtable();
+
+	public static final String INDICAZIONE_TROVATO_BLOCCANTE ="E";
+	public static final String INDICAZIONE_TROVATO_NON_BLOCCANTE ="W";
+	public static final String INDICAZIONE_TROVATO_NESSUNA ="N";
+	
+	public final static Dictionary indicazioneTrovatoKeys;
+	static {
+		indicazioneTrovatoKeys = new it.cnr.jada.util.OrderedHashtable();
+		indicazioneTrovatoKeys.put(INDICAZIONE_TROVATO_BLOCCANTE,"Sì - Bloccante");
+		indicazioneTrovatoKeys.put(INDICAZIONE_TROVATO_NON_BLOCCANTE,"Sì - Non Bloccante");
+		indicazioneTrovatoKeys.put(INDICAZIONE_TROVATO_NESSUNA,"No");	
+    };
 
 	protected Elemento_voceBulk elemento_padre;
 	protected Capoconto_finBulk capoconto_fin = new Capoconto_finBulk();
@@ -106,7 +119,8 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	setFl_prelievo(new Boolean(false));
 	setFl_solo_competenza(new Boolean(false));
 	setFl_solo_residuo(new Boolean(false));
-	return this; 
+	setFl_trovato( INDICAZIONE_TROVATO_NESSUNA );
+	return this;
 }
 /**
  * Inizializza l'attributo <code>esercizio</code>.
@@ -303,4 +317,24 @@ public void setCod_cla_e(java.lang.String v_cod_cla_e) {
 			return isGestoreIstat;		
 		
 	}
+	
+	public boolean isObbligatoriaIndicazioneTrovato() {
+		if (getFl_trovato() == null)
+			return false;
+		return getFl_trovato().equals(INDICAZIONE_TROVATO_BLOCCANTE);		
+	}
+	public boolean isFacoltativaIndicazioneTrovato() {
+		if (getFl_trovato() == null)
+			return false;
+		return getFl_trovato().equals(INDICAZIONE_TROVATO_NON_BLOCCANTE);		
+	}
+	public boolean isInibitaIndicazioneTrovato() {
+		if (getFl_trovato() == null)
+			return true;
+		return getFl_trovato().equals(INDICAZIONE_TROVATO_NESSUNA);		
+	}
+	public boolean isVocePerTrovati() {
+		return isObbligatoriaIndicazioneTrovato() || isFacoltativaIndicazioneTrovato();
+	}
+
 }

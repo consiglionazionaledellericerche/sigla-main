@@ -18,6 +18,9 @@ public class Rif_modalita_pagamentoBase extends Rif_modalita_pagamentoKey implem
 	// TI_PAGAMENTO CHAR(1) NOT NULL
 	private java.lang.String ti_pagamento;
 	
+	// TIPO_PAGAMENTO_SDI VARCHAR(5) NOT NULL
+	private java.lang.String tipoPagamentoSdi;
+	
 	// fl_utilizzabile_art35 CHAR(1) NOT NULL
 	private java.lang.Boolean fl_utilizzabile_art35;
 
@@ -89,5 +92,11 @@ public java.lang.Boolean getFl_cancellato() {
 }
 public void setFl_cancellato(java.lang.Boolean fl_cancellato) {
 	this.fl_cancellato = fl_cancellato;
+}
+public java.lang.String getTipoPagamentoSdi() {
+	return tipoPagamentoSdi;
+}
+public void setTipoPagamentoSdi(java.lang.String tipoPagamentoSdi) {
+	this.tipoPagamentoSdi = tipoPagamentoSdi;
 }
 }

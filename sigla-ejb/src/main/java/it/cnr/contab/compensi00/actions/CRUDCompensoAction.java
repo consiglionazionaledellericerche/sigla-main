@@ -13,6 +13,7 @@ import it.cnr.contab.compensi00.tabrif.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.Codici_rapporti_inpsBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.*;
 import it.cnr.contab.docamm00.docs.bulk.*;
+import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.compensi00.docs.bulk.*;
 import it.cnr.contab.compensi00.bp.*;
@@ -27,6 +28,7 @@ import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.*;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.action.*;
 
 /**
@@ -52,6 +54,7 @@ public Forward basicDoBringBackOpenObbligazioniWindow(ActionContext context, Obb
 
 		CompensoBulk compenso = (CompensoBulk)bp.getModel();
 		TerzoBulk creditore = scadenza.getObbligazione().getCreditore();
+//        compenso.setCollegatoCapitoloPerTrovato(scadenza.getObbligazione().getElemento_voce().isVocePerTrovati());
 		if (!compenso.getTerzo().equalsByPrimaryKey(creditore) &&
 			!AnagraficoBulk.DIVERSI.equalsIgnoreCase(creditore.getAnagrafico().getTi_entita()))
 			setMessage(context, FormBP.ERROR_MESSAGE, "La scadenza selezionata deve appartenere ad un'obbligazione che ha come creditore il fornitore del compenso!");
@@ -136,6 +139,53 @@ private Forward basicDoEliminaCompenso(ActionContext context) {
 		return handleException(context, ex);
 	}
 }
+public Forward doVerificaEsistenzaTrovato(ActionContext context) {
+	
+	try {
+		fillModel( context );
+		CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);
+		try {
+			CompensoComponentSession h = (CompensoComponentSession)bp.createComponentSession();
+			CompensoBulk compenso = (CompensoBulk)bp.getModel();
+			TrovatoBulk trovato = h.ricercaDatiTrovato(context.getUserContext(), compenso.getPg_trovato());
+			compenso.setTrovato(trovato);
+		} catch (java.rmi.RemoteException e) {
+			bp.handleException(e);
+		} catch (BusinessProcessException e) {
+			bp.handleException(e);
+		} catch (ComponentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PersistencyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	} catch (FillException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return context.findDefaultForward();
+//	try {
+//		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+//		Fattura_passivaBulk fattura = (Fattura_passivaBulk)bp.getModel();
+//		java.sql.Timestamp dataEmissione = fattura.getDt_fattura_fornitore();
+//		try	{
+//			fillModel( context );
+//			if (!bp.isSearching())
+//				fattura.validateDate();
+//			creaEsercizioPerFatturaFornitore(context, fattura);
+//			
+//			return context.findDefaultForward();
+//		} catch(Throwable e) {
+//			fattura.setDt_fattura_fornitore(dataEmissione);
+//			bp.setModel(context,fattura);
+//			throw e;
+//		}
+//	} catch(Throwable e) {
+//		return handleException(context, e);
+//	}
+}
+
 private Forward basicDoLoadDocContAssociati(ActionContext context) throws BusinessProcessException{
 
 	CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);

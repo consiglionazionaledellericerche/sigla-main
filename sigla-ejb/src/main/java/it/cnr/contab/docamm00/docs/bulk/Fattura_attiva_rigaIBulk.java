@@ -1,5 +1,8 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
+import it.cnr.contab.doccont00.core.bulk.Reversale_rigaIBulk;
+import it.cnr.jada.bulk.BulkList;
+
 /**
  * Insert the type's description here.
  * Creation date: (10/25/2001 11:52:17 AM)
@@ -14,6 +17,11 @@ public class Fattura_attiva_rigaIBulk extends Fattura_attiva_rigaBulk {
 	private java.math.BigDecimal im_totale_addebiti = new java.math.BigDecimal(0);
 
     private java.math.BigDecimal im_riga_sdoppia;
+
+    /*
+     * lista righe reversali associate, utilizzato per l'integrazione con i brevetti
+     */
+    private BulkList<Reversale_rigaIBulk> reversaliRighe = new BulkList();
 /**
  * Fattura_passiva_rigaIBulk constructor comment.
  */
@@ -171,6 +179,12 @@ public java.math.BigDecimal getIm_riga_sdoppia() {
 
 public void setIm_riga_sdoppia(java.math.BigDecimal im_riga_sdoppia) {
 	this.im_riga_sdoppia = im_riga_sdoppia;
+}
+public void setReversaliRighe(BulkList<Reversale_rigaIBulk> reversaliRighe) {
+	this.reversaliRighe = reversaliRighe;
+}
+public BulkList<Reversale_rigaIBulk> getReversaliRighe() {
+	return reversaliRighe;
 }
 
 }

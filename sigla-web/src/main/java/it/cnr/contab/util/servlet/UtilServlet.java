@@ -1,48 +1,47 @@
 package it.cnr.contab.util.servlet;
 
-import it.cnr.contab.config00.bulk.*;
+import it.cnr.contab.config00.bulk.Parametri_enteBulk;
+import it.cnr.contab.config00.bulk.Parametri_enteHome;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaPadreComponentSession;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Print_spoolerHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.blobs.bulk.*;
 import it.cnr.jada.excel.bulk.Excel_spoolerBulk;
 import it.cnr.jada.excel.bulk.Excel_spoolerHome;
 import it.cnr.jada.persistency.sql.LoggableStatement;
-import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.Status;
-import javax.transaction.SystemException;
-import javax.transaction.UserTransaction;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.DeleteMethod;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * @version 	1.0
  * @author Marco Spasiano
  */
 public class UtilServlet extends HttpServlet {
+	private static final String MANIFEST_PATH = "/META-INF/MANIFEST.MF";
+	private static final Log logger = LogFactory.getLog(UtilServlet.class);
 	/**
 	* @see javax.servlet.http.HttpServlet#void (javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	*/
@@ -67,7 +66,7 @@ public class UtilServlet extends HttpServlet {
 		}else{
 		  try{	
 			Connection conn = null;
-			PreparedStatement statement = null;
+			LoggableStatement statement = null;
 			ResultSet rs = null;
 			try{
 				conn = it.cnr.jada.util.ejb.EJBCommonServices.getConnection();
@@ -149,8 +148,31 @@ public class UtilServlet extends HttpServlet {
 			{
 			}
 		}
-		new Thread(new PrintThread()).start();							
+		new Thread(new PrintThread()).start();		
+		
+		
+		String version  = "01.001.000";
+		InputStream is = getServletContext().getResourceAsStream(MANIFEST_PATH);
+		if (is != null) {
+			try {
+				Manifest manifest = new Manifest(is);
+				Attributes attributes = manifest.getMainAttributes();
+
+				version = attributes.getValue("Implementation-Version");
+			} catch (IOException e) {
+				logger.warn(e);
+			}
+		}
+		String APPLICATION_TITLE = "SIGLA - Sistema Informativo per la Gestione delle Linee di Attività";
+		String APPLICATION_VERSION = "Documenti contabili/amministrativi transact. " + version;
+		String APPLICATION_TITLE_VERSION = APPLICATION_TITLE + " - " + APPLICATION_VERSION;
+
+		getServletContext().setAttribute("VERSION", version);
+		getServletContext().setAttribute("APPLICATION_TITLE", APPLICATION_TITLE);
+		getServletContext().setAttribute("APPLICATION_VERSION", APPLICATION_VERSION);
+		getServletContext().setAttribute("APPLICATION_TITLE_VERSION", APPLICATION_TITLE_VERSION);
 	}
+	
 	private void aggiornaGECO(String esercizio, String cds) {
 		UserContext userContext = new CNRUserContext("GECO",null,esercizio!=null?Integer.valueOf(esercizio):null,null,cds,null);
 		try {
@@ -164,7 +186,7 @@ public class UtilServlet extends HttpServlet {
 	public void deletePrintSpooler()
 	{
 		try{	
-		  PreparedStatement statement = null;
+		  LoggableStatement statement = null;
 		  ResultSet rs = null;
 		  Connection conn = null;
 		  try{
@@ -217,7 +239,7 @@ public class UtilServlet extends HttpServlet {
 	public void deleteExcel()
 	{
 		try{	
-		  PreparedStatement statement = null;
+		  LoggableStatement statement = null;
 		  ResultSet rs = null;
 		  Connection conn = null;
 		  try{
@@ -272,7 +294,7 @@ public class UtilServlet extends HttpServlet {
 	public void deleteMessaggi()
 	{
 		try{	
-		  PreparedStatement statement = null;
+		  LoggableStatement statement = null;
 		  ResultSet rs = null;
 		  Connection conn = null;
 		  try{

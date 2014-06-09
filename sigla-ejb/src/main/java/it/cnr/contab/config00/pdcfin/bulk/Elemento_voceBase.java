@@ -75,6 +75,8 @@ public class Elemento_voceBase extends Elemento_voceKey implements Keyed {
 	private java.lang.Boolean fl_solo_competenza;
 	private BigDecimal perc_prelievo_pdgp_entrate;
 	
+	// FL_TROVATO CHAR(1) NOT NULL
+	private String fl_trovato;
 public Elemento_voceBase() {
 	super();
 }
@@ -360,5 +362,11 @@ public void setTi_elemento_voce(java.lang.String ti_elemento_voce) {
 	}
 	public void setFl_solo_competenza(java.lang.Boolean fl_solo_competenza) {
 		this.fl_solo_competenza = fl_solo_competenza;
+	}
+	public void setFl_trovato(String fl_trovato) {
+		this.fl_trovato = fl_trovato;
+	}
+	public String getFl_trovato() {
+		return fl_trovato;
 	}
 }

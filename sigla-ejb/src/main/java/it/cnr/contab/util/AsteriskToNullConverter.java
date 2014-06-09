@@ -1,5 +1,6 @@
 package it.cnr.contab.util;
 
+import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.SQLConverter;
 
 /**
@@ -22,7 +23,7 @@ public Class getTargetJavaType(int sqlType,boolean nullable) {
 /**
  * javaToSql method comment.
  */
-public void javaToSql(java.sql.PreparedStatement statement, java.lang.Object value, int position, int sqlType) throws java.sql.SQLException {
+public void javaToSql(LoggableStatement statement, java.lang.Object value, int position, int sqlType) throws java.sql.SQLException {
 	if (value == null)
 		statement.setString(position,"*");
 	else

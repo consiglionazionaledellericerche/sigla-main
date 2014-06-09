@@ -218,25 +218,25 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
-		<columnMapping
-			columnName="DATA_STIPULA_CONTRATTI"
-			propertyName="data_stipula_contratti"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7" />
-		<columnMapping
-			columnName="LIVELLO_PDG_COFOG"
-			propertyName="livello_pdg_cofog"
-			sqlTypeName="DECIMAL"
-			columnSize="1"
-			nullable="false" />
-		<columnMapping
+	<columnMapping
 			columnName="FL_SIOPE_CUP"
 			propertyName="fl_siope_cup"
 			sqlTypeName="CHAR"
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
-		
+	<columnMapping
+			columnName="DATA_STIPULA_CONTRATTI"
+			propertyName="data_stipula_contratti"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+			
+		<columnMapping
+			columnName="LIVELLO_PDG_COFOG"
+			propertyName="livello_pdg_cofog"
+			sqlTypeName="DECIMAL"
+			columnSize="1"
+			nullable="false" />
 		<columnMapping
 			columnName="FL_CREDITO_IRPEF"
 			propertyName="fl_credito_irpef"
@@ -312,12 +312,12 @@
 		name="clausolaOrdine" />		
 	<persistentProperty
 		name="fl_cup" />	
+	<persistentProperty
+		name="fl_siope_cup" />	
 	<persistentProperty		
-		name="data_stipula_contratti" />											
+		name="data_stipula_contratti" />		
 	<persistentProperty
 		name="livello_pdg_cofog" />	
 	<persistentProperty
-		name="fl_siope_cup" />	
-	<persistentProperty
 		name="fl_credito_irpef" />		
-</SQLPersistentInfo>
+	</SQLPersistentInfo>

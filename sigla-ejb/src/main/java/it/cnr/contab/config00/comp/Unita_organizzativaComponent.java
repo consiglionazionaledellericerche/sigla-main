@@ -355,7 +355,7 @@ private OggettoBulk creaCdsConBulk(UserContext userContext,OggettoBulk bulk) thr
 			CdsBulk tmp = new CdsBulk();
 			tmp.setCd_tipo_unita( Tipo_unita_organizzativaHome.TIPO_UO_SAC );
 			it.cnr.jada.persistency.sql.SQLBuilder sql = getHome( userContext,tmp).select( tmp, false );
-			PreparedStatement stm = sql.prepareStatement(getConnection(userContext));
+			LoggableStatement stm = sql.prepareStatement(getConnection(userContext));
 			try
 			{
 				ResultSet rs = stm.executeQuery();

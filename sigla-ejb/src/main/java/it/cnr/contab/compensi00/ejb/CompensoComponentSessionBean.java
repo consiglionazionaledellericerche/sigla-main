@@ -1,28 +1,22 @@
 package it.cnr.contab.compensi00.ejb;
 
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Date;
-
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-
-import javax.annotation.PostConstruct;
-import javax.ejb.Stateless;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
-
-import it.cnr.contab.anagraf00.comp.AnagraficoComponent;
 import it.cnr.contab.compensi00.comp.CompensoComponent;
 import it.cnr.contab.compensi00.docs.bulk.BonusBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Acconto_classific_coriBulk;
-import it.cnr.contab.docamm00.consultazioni.ejb.MonitoCococoComponentSession;
-import it.cnr.contab.missioni00.comp.MissioneComponent;
-import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
+
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.Stateless;
 
 @Stateless(name = "CNRCOMPENSI00_EJB_CompensoComponentSession")
 public class CompensoComponentSessionBean extends
@@ -1286,4 +1280,80 @@ public class CompensoComponentSessionBean extends
 		
 	}
 	
+	public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException{
+		pre_component_invocation(userContext, componentObj);
+		try {
+			TrovatoBulk result = ((CompensoComponent) componentObj).ricercaDatiTrovato(userContext, trovato);
+			component_invocation_succes(userContext, componentObj);
+			 return result;
+		} catch (it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext, componentObj);
+			throw e;
+		} catch (it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext, componentObj);
+			throw e;
+		} catch (RuntimeException e) {
+			throw uncaughtRuntimeException(userContext, componentObj, e);
+		} catch (Error e) {
+			throw uncaughtError(userContext, componentObj, e);
+		}
+		
+	}
+
+	public CompensoBulk ricercaCompensoTrovato(it.cnr.jada.UserContext userContext,Long esercizio,String cd_cds,String cd_unita_organizzativa,Long pg_compenso)throws ComponentException,java.rmi.RemoteException,PersistencyException{
+		pre_component_invocation(userContext, componentObj);
+		try {
+			CompensoBulk result = ((CompensoComponent) componentObj).ricercaCompensoTrovato(userContext, esercizio, cd_cds, cd_unita_organizzativa, pg_compenso);
+			component_invocation_succes(userContext, componentObj);
+			 return result;
+		} catch (it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext, componentObj);
+			throw e;
+		} catch (it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext, componentObj);
+			throw e;
+		} catch (RuntimeException e) {
+			throw uncaughtRuntimeException(userContext, componentObj, e);
+		} catch (Error e) {
+			throw uncaughtError(userContext, componentObj, e);
+		}
+	}
+	
+	public CompensoBulk ricercaCompensoByKey(it.cnr.jada.UserContext userContext,Long esercizio,String cd_cds,String cd_unita_organizzativa,Long pg_compenso)throws ComponentException,java.rmi.RemoteException,PersistencyException{
+		pre_component_invocation(userContext, componentObj);
+		try {
+			CompensoBulk result = ((CompensoComponent) componentObj).ricercaCompensoByKey(userContext, esercizio, cd_cds, cd_unita_organizzativa, pg_compenso);
+			component_invocation_succes(userContext, componentObj);
+			 return result;
+		} catch (it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext, componentObj);
+			throw e;
+		} catch (it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext, componentObj);
+			throw e;
+		} catch (RuntimeException e) {
+			throw uncaughtRuntimeException(userContext, componentObj, e);
+		} catch (Error e) {
+			throw uncaughtError(userContext, componentObj, e);
+		}
+	}
+
+	public java.util.List<CompensoBulk> ricercaCompensiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException{
+		pre_component_invocation(userContext, componentObj);
+		try {
+			List<CompensoBulk> result = ((CompensoComponent) componentObj).ricercaCompensiTrovato(userContext, trovato);
+			component_invocation_succes(userContext, componentObj);
+			 return result;
+		} catch (it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext, componentObj);
+			throw e;
+		} catch (it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext, componentObj);
+			throw e;
+		} catch (RuntimeException e) {
+			throw uncaughtRuntimeException(userContext, componentObj, e);
+		} catch (Error e) {
+			throw uncaughtError(userContext, componentObj, e);
+		}
+	}
 }

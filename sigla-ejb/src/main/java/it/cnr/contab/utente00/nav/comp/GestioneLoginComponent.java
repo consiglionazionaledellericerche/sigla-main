@@ -236,7 +236,7 @@ public class GestioneLoginComponent
 			
 			sql.addOrderBy("ESERCIZIO");
 	
-			PreparedStatement stm = sql.prepareStatement(getConnection(userContext));
+			LoggableStatement stm = sql.prepareStatement(getConnection(userContext));
 			try {
 				java.sql.ResultSet rs = stm.executeQuery();
 				while (rs.next())
@@ -462,8 +462,8 @@ public class GestioneLoginComponent
 			sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",sql.EQUALS,cd_unita_organizzativa);
 			sql.addSQLClause("AND","BUSINESS_PROCESS",sql.EQUALS,bp);
 			sql.addSQLClause("AND","CD_UTENTE",sql.EQUALS,utente.getCd_utente());
-			sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,esercizio);
-			PreparedStatement stm = sql.prepareStatement(getConnection(userContext));
+			sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,esercizio);			
+			LoggableStatement stm = sql.prepareStatement(getConnection(userContext));
 			try {
 				java.sql.ResultSet rs = stm.executeQuery();
 				String mode = null, accesso = null;
@@ -481,6 +481,10 @@ public class GestioneLoginComponent
 						java.util.List listBlocco = ruoloBloccoHome.fetchAll(sqlRuoloBlocco);
 						if (!listBlocco.isEmpty())
 							return null;
+					}
+					if (mode == null) {
+						try{rs.close();}catch( java.sql.SQLException e ){};
+						return "V";						
 					}
                     if ("M".equals(mode)) {
 						try{rs.close();}catch( java.sql.SQLException e ){};
@@ -588,10 +592,8 @@ public class GestioneLoginComponent
 			Parametri_enteBulk ente = (Parametri_enteBulk) getHome(userContext, Parametri_enteBulk.class).fetchAll(sqlEnte).get(0);
 			UtenteHome home = null;
 			UtenteBulk utenteReale = null;
-			
 			// in caso sia su ldap...
-			if (ente.isAutenticazioneLdap()) {
-				
+			if (ente.isAutenticazioneLdap()) {				
 				String userid = null;
 				if (utente.getCd_utente_uid()!=null)
 					userid=utente.getCd_utente_uid().toLowerCase();

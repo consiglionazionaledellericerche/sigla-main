@@ -376,12 +376,28 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 		}
 	}
 
-	public RemoteIterator findListaIncarichiElenco(UserContext userContext,String query,String dominio,Integer anno,String cdCds,String order,String strRicerca) throws ComponentException {
+	public RemoteIterator findListaIncarichiElenco(UserContext userContext,String query,String dominio,Integer anno,String cdCds,String order,String strRicerca,String tipoInc) throws ComponentException {
 		V_incarichi_elencoHome home = (V_incarichi_elencoHome)getHome(userContext, V_incarichi_elencoBulk.class);
 		SQLBuilder sql = home.createSQLBuilder();
 		sql.addTableToHeader("TIPO_ATTIVITA");
 		sql.addSQLJoin("V_INCARICHI_ELENCO.CD_TIPO_ATTIVITA", "TIPO_ATTIVITA.CD_TIPO_ATTIVITA");
-		sql.addSQLClause(FindClause.AND,"TIPO_ATTIVITA.TIPO_ASSOCIAZIONE",SQLBuilder.EQUALS,Tipo_attivitaBulk.ASS_INCARICHI);
+		if (tipoInc==null)
+			sql.addSQLClause(FindClause.AND,"TIPO_ATTIVITA.TIPO_ASSOCIAZIONE",SQLBuilder.EQUALS,Tipo_attivitaBulk.ASS_INCARICHI);
+		else if (tipoInc.equals("1"))
+			sql.addSQLClause(FindClause.AND,"TIPO_ATTIVITA.TIPOLOGIA",SQLBuilder.EQUALS,Tipo_attivitaBulk.TIPO_CONSULENZA);
+		else if (tipoInc.equals("2")) {
+			sql.openParenthesis(FindClause.AND);
+			sql.addSQLClause(FindClause.OR,"TIPO_ATTIVITA.TIPOLOGIA",SQLBuilder.EQUALS,Tipo_attivitaBulk.TIPO_STUDIO);
+			sql.addSQLClause(FindClause.OR,"TIPO_ATTIVITA.TIPOLOGIA",SQLBuilder.EQUALS,Tipo_attivitaBulk.TIPO_RICERCA);
+			sql.addSQLClause(FindClause.OR,"TIPO_ATTIVITA.TIPOLOGIA",SQLBuilder.EQUALS,Tipo_attivitaBulk.TIPO_ALTRO);
+			sql.closeParenthesis();
+		} else if (tipoInc.equals("3"))
+			sql.addSQLClause(FindClause.AND,"TIPO_ATTIVITA.TIPOLOGIA",SQLBuilder.EQUALS,Tipo_attivitaBulk.TIPO_ASSEGNO_RICERCA);
+		else if (tipoInc.equals("4"))
+			sql.addSQLClause(FindClause.AND,"TIPO_ATTIVITA.TIPOLOGIA",SQLBuilder.EQUALS,Tipo_attivitaBulk.TIPO_BORSA_STUDIO);
+		else if (tipoInc.equals("5"))
+			sql.addSQLClause(FindClause.AND,"TIPO_ATTIVITA.TIPOLOGIA",SQLBuilder.EQUALS,Tipo_attivitaBulk.TIPO_TIROCINIO);
+
 		sql = addFiltriListaIncarichiElenco(sql, query, dominio, anno, cdCds, order, strRicerca);
 		return iterator(userContext, sql, V_incarichi_elencoBulk.class, getFetchPolicyName("find"));
 	}

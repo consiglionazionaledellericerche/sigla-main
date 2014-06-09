@@ -109,7 +109,7 @@ public java.util.Collection findUO_accessi_propri(UtenteTemplateBulk utente) thr
 	sql.setHeader("SELECT DISTINCT CD_UNITA_ORGANIZZATIVA");
 	sql.addTableToHeader("UTENTE_UNITA_ACCESSO");
 	sql.addSQLClause("AND","CD_UTENTE",sql.EQUALS,utente.getCd_utente());
-	PreparedStatement stm = sql.prepareStatement(getConnection());
+	LoggableStatement stm = sql.prepareStatement(getConnection());
 	try {
 		java.sql.ResultSet rs = stm.executeQuery();
 		java.util.ArrayList aAL =  new java.util.ArrayList();
@@ -137,7 +137,7 @@ public java.util.Collection findUO_ruoli_propri(UtenteTemplateBulk utente) throw
 	sql.setHeader("SELECT DISTINCT CD_UNITA_ORGANIZZATIVA");
 	sql.addTableToHeader("UTENTE_UNITA_RUOLO");
 	sql.addSQLClause("AND","CD_UTENTE",sql.EQUALS,utente.getCd_utente());
-	PreparedStatement stm = sql.prepareStatement(getConnection());
+	LoggableStatement stm = sql.prepareStatement(getConnection());
 	try {
 		java.sql.ResultSet rs = stm.executeQuery();
 		java.util.ArrayList aAL =  new java.util.ArrayList();

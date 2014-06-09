@@ -88,7 +88,7 @@ public void controlloQuadrature(
 	if( spesa.getDt_spesa() == null)
 		throw new it.cnr.jada.comp.ApplicationException("Data Spesa non può essere nulla.");
 
-	PreparedStatement ps = null;
+	LoggableStatement ps = null;
 	try {
 		lockBulk(context, fondo);
 		Fondo_spesaHome spesaHome = (Fondo_spesaHome)getHome(context, Fondo_spesaBulk.class);

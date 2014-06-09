@@ -25,6 +25,12 @@
 			columnSize="3"
 			nullable="false" />
 		<columnMapping
+			columnName="TIPOLOGIA"
+			propertyName="tipologia"
+			sqlTypeName="CHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
 			columnName="FL_CANCELLATO"
 			propertyName="fl_cancellato"
 			sqlTypeName="CHAR"
@@ -66,6 +72,8 @@
 		name="ds_tipo_attivita" />
 	<persistentProperty
 		name="tipo_associazione" />
+	<persistentProperty
+		name="tipologia" />
 	<persistentProperty
 		name="fl_pubblica_contratto" />
 	<persistentProperty

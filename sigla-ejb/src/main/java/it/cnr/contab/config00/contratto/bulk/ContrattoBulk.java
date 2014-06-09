@@ -12,6 +12,7 @@ import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
 import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ICancellatoLogicamente;
@@ -62,6 +63,7 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	private Tipo_norma_perlaBulk tipoNormaPerla;
 	private V_persona_fisicaBulk direttore;
 	private CigBulk cig;
+	private CupBulk cup;
 	
 	
 	private BulkList associazioneUO = new BulkList();
@@ -813,6 +815,12 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 		if (getProcedura_amministrativa() == null)
 			return null;
 		return getProcedura_amministrativa().getDs_proc_amm();
+	}
+	public CupBulk getCup() {
+		return cup;
+	}
+	public void setCup(CupBulk cup) {
+		this.cup = cup;
 	}
 	
 }

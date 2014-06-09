@@ -1,0 +1,46 @@
+package it.cnr.contab.docamm00.cmis;
+
+public enum CMISDocAmmAspect {
+	
+	SIGLA_CONTRATTI_PROCEDURA("P:sigla_contratti_aspect:procedura"),
+	SIGLA_CONTRATTI_INCARICHI("P:sigla_contratti_aspect:incarichi"),
+	SIGLA_CONTRATTI_BORSE_STUDIO("P:sigla_contratti_aspect:borse_studio"),
+	SIGLA_CONTRATTI_ASSEGNI_RICERCA("P:sigla_contratti_aspect:assegni_ricerca"),
+	SIGLA_CONTRATTI_APPALTI("P:sigla_contratti_aspect:appalti"),
+	SIGLA_CONTRATTI_TIPO_NORMA("P:sigla_contratti_aspect:tipo_norma"),
+	SIGLA_CONTRATTI_STATO_ANNULLATO("P:sigla_contratti_aspect:stato_annullato"),
+	SIGLA_CONTRATTI_STATO_DEFINITIVO("P:sigla_contratti_aspect:stato_definitivo"),
+	SIGLA_STRUTTURA_ORGANIZZATIVA_CDR("P:strorg:cdr"),
+	SIGLA_CONTRATTI_LINK("P:sigla_contratti_aspect_link"),
+	SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_PRIMA_PROTOCOLLO("P:sigla_fatture_attachment:stampa_fattura_prima_protocollo"),
+	SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_DOPO_PROTOCOLLO("P:sigla_fatture_attachment:stampa_fattura_dopo_protocollo"),
+	SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_ANTE_FIRMA("P:sigla_fatture_attachment:fattura_elettronica_xml_ante_firma"),
+	SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_POST_FIRMA("P:sigla_fatture_attachment:fattura_elettronica_xml_post_firma"),
+	SIGLA_FATTURE_ATTACHMENT_RICEVUTA_CONSEGNA("P:sigla_fatture_attachment:ricevuta_consegna"),
+	SIGLA_FATTURE_ATTACHMENT_MANCATA_CONSEGNA("P:sigla_fatture_attachment:mancata_consegna"),
+	SIGLA_FATTURE_ATTACHMENT_SCARTO("P:sigla_fatture_attachment:scarto"),
+	SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO("P:sigla_fatture_attachment:esito_accettato"),
+	SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO("P:sigla_fatture_attachment:esito_rifiutato"),
+	SIGLA_FATTURE_ATTACHMENT_DECORRENZA_TERMINI("P:sigla_fatture_attachment:decorrenza_termini"),
+	SIGLA_FATTURE_ATTACHMENT_TRASMISSIONE_FATTURA("P:sigla_fatture_attachment:trasmissione_fattura");
+	
+	
+	private final String value;
+
+	private CMISDocAmmAspect(String value) {
+		this.value = value;
+	}
+
+	public String value() {
+		return value;
+	}
+
+	public static CMISDocAmmAspect fromValue(String v) {
+		for (CMISDocAmmAspect c : CMISDocAmmAspect.values()) {
+			if (c.value.equals(v)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(v);
+	}	
+}

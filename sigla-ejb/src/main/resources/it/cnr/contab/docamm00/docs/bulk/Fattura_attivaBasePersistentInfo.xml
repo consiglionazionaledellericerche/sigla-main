@@ -309,6 +309,41 @@
 			sqlTypeName="CHAR"
 			columnSize="1"
 			nullable="false" />			
+		<columnMapping
+			columnName="CODICE_UNIVOCO_UFFICIO_IPA"
+			propertyName="codiceUnivocoUfficioIpa"
+			sqlTypeName="VARCHAR"
+			columnSize="6" />
+		<columnMapping
+			columnName="CODICE_INVIO_SDI"
+			propertyName="codiceInvioSdi"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="STATO_INVIO_SDI"
+			propertyName="statoInvioSdi"
+			sqlTypeName="VARCHAR"
+			columnSize="3" />
+		<columnMapping
+			columnName="NOTE_INVIO_SDI"
+			propertyName="noteInvioSdi"
+			sqlTypeName="VARCHAR"
+			columnSize="500" />
+		<columnMapping
+			columnName="NC_ANNULLO_SDI"
+			propertyName="ncAnnulloSdi"
+			sqlTypeName="VARCHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="PROGR_UNIVOCO_ANNO"
+			propertyName="progrUnivocoAnno"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="DT_CONSEGNA_SDI"
+			propertyName="dtConsegnaSdi"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -414,4 +449,18 @@
 		name="ti_bene_servizio" />	
 	<persistentProperty
 		name="fl_pagamento_anticipato" />			
+	<persistentProperty
+		name="codiceUnivocoUfficioIpa" />			
+	<persistentProperty
+		name="codiceInvioSdi" />			
+	<persistentProperty
+		name="progrUnivocoAnno" />			
+	<persistentProperty
+		name="dtConsegnaSdi" />			
+	<persistentProperty
+		name="statoInvioSdi" />			
+	<persistentProperty
+		name="noteInvioSdi" />			
+	<persistentProperty
+		name="ncAnnulloSdi" />
 </SQLPersistentInfo>

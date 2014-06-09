@@ -1,13 +1,16 @@
 package it.cnr.contab.docamm00.ejb;
-import java.rmi.*;
-import java.util.List;
-
-
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.util.ejb.*;
+
+import java.rmi.RemoteException;
+import java.util.List;
+
+import javax.xml.datatype.XMLGregorianCalendar;
 
 public class TransactionalFatturaAttivaSingolaComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements FatturaAttivaSingolaComponentSession {
 public it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_attivaBulk addebitaDettagli(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_attivaBulk param1,java.util.List param2,java.util.Hashtable param3) throws RemoteException,it.cnr.jada.comp.ComponentException {
@@ -1067,6 +1070,27 @@ public it.cnr.jada.bulk.OggettoBulk completaOggetto(it.cnr.jada.UserContext auc,
 	}
 	
 }
+
+public void gestioneAllegatiPerFatturazioneElettronica(it.cnr.jada.UserContext userContext, it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk testata)
+		throws ComponentException, RemoteException {
+	try {
+		invoke("gestioneAllegatiPerFatturazioneElettronica",new Object[] {
+				userContext,
+				testata
+				});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+
 public boolean VerificaDuplicati(it.cnr.jada.UserContext userContext, it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk testata)
 		throws ComponentException, RemoteException {
 	try {
@@ -1183,6 +1207,68 @@ public Fattura_attivaBulk ricercaFattura(it.cnr.jada.UserContext userContext,
 				cd_cds,
 				cd_unita_organizzativa,
 				pg_fattura});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public Fattura_attivaBulk ricercaFatturaTrovato(it.cnr.jada.UserContext userContext,
+		Long esercizio, String cd_cds, String cd_unita_organizzativa,
+		Long pg_fattura) throws ComponentException, RemoteException {
+	try {
+		return (Fattura_attivaBulk)invoke("ricercaFatturaTrovato",new Object[] {
+				userContext,
+				esercizio,
+				cd_cds,
+				cd_unita_organizzativa,
+				pg_fattura});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public Fattura_attivaBulk ricercaFatturaByKey(it.cnr.jada.UserContext userContext,
+		Long esercizio, String cd_cds, String cd_unita_organizzativa,
+		Long pg_fattura) throws ComponentException, RemoteException {
+	try {
+		return (Fattura_attivaBulk)invoke("ricercaFatturaByKey",new Object[] {
+				userContext,
+				esercizio,
+				cd_cds,
+				cd_unita_organizzativa,
+				pg_fattura});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk> ricercaFattureTrovato(it.cnr.jada.UserContext userContext,
+		Long trovato) throws ComponentException, RemoteException {
+	try {
+		return (java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk>)invoke("ricercaFattureTrovato",new Object[] {
+				userContext,
+				trovato});
 	} catch(java.rmi.RemoteException e) {
 		throw e;
 	} catch(java.lang.reflect.InvocationTargetException e) {
@@ -1450,4 +1536,79 @@ public List findListaCondizioneConsegnaWS(UserContext userContext, String query,
 			}
 		}
 	}
+	public Nota_di_credito_attivaBulk generaNotaCreditoAutomatica(it.cnr.jada.UserContext userContext, Fattura_attiva_IBulk fa, Integer esercizio) throws ComponentException,java.rmi.RemoteException {
+		try {
+			return (Nota_di_credito_attivaBulk)invoke("generaNotaCreditoAutomatica",new Object[] {
+					userContext,
+					fa,
+					esercizio});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+	public Fattura_attiva_IBulk ricercaFatturaSDI(UserContext userContext, String codiceInvioSdi) throws PersistencyException, ComponentException, java.rmi.RemoteException {
+		try {
+			return (Fattura_attiva_IBulk)invoke("ricercaFatturaSDI",new Object[] {
+					userContext,
+					codiceInvioSdi});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+	public Fattura_attiva_IBulk aggiornaDatiFatturaSDI(UserContext userContext, String codiceInvioSdi, String statoInvioSdi, String noteInvioSdi, XMLGregorianCalendar dataConsegnaSdi, boolean stornaFattura) throws PersistencyException, ComponentException, java.rmi.RemoteException {
+		try {
+			return (Fattura_attiva_IBulk)invoke("aggiornaDatiFatturaSDI",new Object[] {
+					userContext,
+					codiceInvioSdi,
+					statoInvioSdi,
+					dataConsegnaSdi,
+					stornaFattura});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+	public Fattura_attiva_IBulk aggiornaDatiFatturaSDI(UserContext userContext, Fattura_attiva_IBulk fatturaAttiva, String statoInvioSdi, String noteInvioSdi, XMLGregorianCalendar dataConsegnaSdi, boolean stornaFattura) throws PersistencyException, ComponentException, java.rmi.RemoteException {
+		try {
+			return (Fattura_attiva_IBulk)invoke("aggiornaDatiFatturaSDI",new Object[] {
+					userContext,
+					fatturaAttiva,
+					statoInvioSdi,
+					dataConsegnaSdi,
+					stornaFattura});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}	
 }

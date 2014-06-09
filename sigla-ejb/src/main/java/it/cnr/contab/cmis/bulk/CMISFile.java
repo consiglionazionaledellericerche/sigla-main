@@ -82,6 +82,10 @@ public class CMISFile extends OggettoBulk {
 		this(new FileInputStream(file), contentType!=null?contentType:new MimetypesFileTypeMap().getContentType(file), originalName);
     }
 
+    public CMISFile(File file, String originalName) throws IOException{
+		this(new FileInputStream(file), new MimetypesFileTypeMap().getContentType(file), originalName);
+    }
+
     public Node getNode() {
 		return node;
 	}
@@ -106,7 +110,6 @@ public class CMISFile extends OggettoBulk {
 	/**
      * Returns the content type of the file that the user selected and uploaded.
      */
-	@CMISProperty(name="cmis:contentStreamMimeType")
 	public String getContentType() {
         return contentType;
     }

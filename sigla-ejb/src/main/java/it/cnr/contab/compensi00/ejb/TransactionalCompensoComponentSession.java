@@ -8,6 +8,7 @@ import java.util.List;
 
 import it.cnr.contab.compensi00.docs.bulk.BonusBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
@@ -1103,6 +1104,78 @@ public class TransactionalCompensoComponentSession extends
 		try {
 			invoke("archiviaStampa", new Object[] { userContext, fromDate,
 					untilDate, compensoBulk, years });
+		} catch (java.rmi.RemoteException e) {
+			throw e;
+		} catch (java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch (it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch (Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception", ex);
+			}
+		}
+	}
+	
+	public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
+		try {
+			return ((TrovatoBulk) invoke("ricercaDatiTrovato", new Object[] { userContext, trovato }));
+		} catch (java.rmi.RemoteException e) {
+			throw e;
+		} catch (java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch (it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch (Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception", ex);
+			}
+		}
+	}
+
+	public CompensoBulk ricercaCompensoTrovato(UserContext userContext,
+			Long esercizio, String cd_cds, String cd_unita_organizzativa,
+			Long pg_compenso) throws ComponentException, RemoteException,
+			PersistencyException {
+		try {
+			return ((CompensoBulk) invoke("ricercaCompensoTrovato", new Object[] { userContext, esercizio, cd_cds, cd_unita_organizzativa, pg_compenso }));
+		} catch (java.rmi.RemoteException e) {
+			throw e;
+		} catch (java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch (it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch (Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception", ex);
+			}
+		}
+	}
+
+	public CompensoBulk ricercaCompensoByKey(UserContext userContext,
+			Long esercizio, String cd_cds, String cd_unita_organizzativa,
+			Long pg_compenso) throws ComponentException, RemoteException,
+			PersistencyException {
+		try {
+			return ((CompensoBulk) invoke("ricercaCompensoByKey", new Object[] { userContext, esercizio, cd_cds, cd_unita_organizzativa, pg_compenso }));
+		} catch (java.rmi.RemoteException e) {
+			throw e;
+		} catch (java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch (it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch (Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception", ex);
+			}
+		}
+	}
+
+	public List<CompensoBulk> ricercaCompensiTrovato(UserContext userContext,
+			Long trovato) throws ComponentException, RemoteException,
+			PersistencyException {
+		try {
+			return ((List<CompensoBulk>) invoke("ricercaCompensiTrovato", new Object[] { userContext, trovato }));
 		} catch (java.rmi.RemoteException e) {
 			throw e;
 		} catch (java.lang.reflect.InvocationTargetException e) {

@@ -49,6 +49,15 @@
 		enabledOnSearch = "true"
 		keysProperty="tipiAssociazioneKeys"
 		label="Tipo Associazione" />
+	<fieldProperty
+		name="tipologia"
+		property="tipologia"
+		inputType="SELECT"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		keysProperty="tipologieKeys"
+		label="Tipologie" />
 
 	<formFieldProperty
 		name="cd_tipo_attivita" />

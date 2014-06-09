@@ -29,6 +29,13 @@
 		inputType="SELECT"  
 		nullable="false" />
 	<fieldProperty
+		name="tipoPagamentoSdi"
+		property="tipoPagamentoSdi"
+		label="Tipo pagamento per SDI"
+		keysProperty="tipoPagamentoSdiKeys"
+		inputType="SELECT"  
+		nullable="true" />
+	<fieldProperty
 		name="fl_per_cessione"
 		property="fl_per_cessione"
 		label="Tipo per cessione"
@@ -65,6 +72,9 @@
 		name="ti_pagamento"
 		/>
 	<columnFieldProperty
+		name="tipoPagamentoSdi"
+		/>
+	<columnFieldProperty
 		name="fl_per_cessione"
 		/>
 	<columnFieldProperty
@@ -86,6 +96,9 @@
 	<formFieldProperty
 		name="ti_pagamento"		
 		command="doDefault"
+		/>
+	<formFieldProperty
+		name="tipoPagamentoSdi"		
 		/>
 	<formFieldProperty
 		name="fl_per_cessione"

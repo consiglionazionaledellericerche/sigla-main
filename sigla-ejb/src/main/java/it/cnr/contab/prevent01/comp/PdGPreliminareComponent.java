@@ -298,7 +298,7 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 			BigDecimal impInt = Utility.ZERO;
 			try {
 				java.sql.ResultSet rs = null;
-				PreparedStatement ps = null;
+				LoggableStatement ps = null;
 				try {
 					ps = sql.prepareStatement(getConnection(userContext));
 					try {
@@ -427,7 +427,7 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 			sql.addSQLClause("AND","CD_CENTRO_RESPONSABILITA",sql.EQUALS,pdg_esercizio.getCd_centro_responsabilita());
 			sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,pdg_esercizio.getEsercizio());
 			sql.setForUpdate(true);
-			PreparedStatement stm = sql.prepareStatement(getConnection(userContext));
+			LoggableStatement stm = sql.prepareStatement(getConnection(userContext));
 			try {
 				java.sql.ResultSet rs = stm.executeQuery();
 				while (rs.next());
@@ -657,7 +657,7 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 
 			try {
 				java.sql.ResultSet rs = null;
-				PreparedStatement ps = null;
+				LoggableStatement ps = null;
 				try {
 					ps = sql.prepareStatement(getConnection(userContext));
 					try {
@@ -823,7 +823,7 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 
 			try {
 				java.sql.ResultSet rs = null;
-				PreparedStatement ps = null;
+				LoggableStatement ps = null;
 				try {
 					ps = sql.prepareStatement(getConnection(userContext));
 					try {
@@ -1274,7 +1274,7 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 
 		try {
 			java.sql.ResultSet rs = null;
-			PreparedStatement ps = null;
+			LoggableStatement ps = null;
 			try {
 				ps = sql.prepareStatement(getConnection(userContext));
 				try {
@@ -1319,7 +1319,7 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 		Integer pgProgetto=null;
 		try {
 			java.sql.ResultSet rs = null;
-			PreparedStatement ps = null;
+			LoggableStatement ps = null;
 			try {
 				ps = sql.prepareStatement(getConnection(userContext));
 				try {

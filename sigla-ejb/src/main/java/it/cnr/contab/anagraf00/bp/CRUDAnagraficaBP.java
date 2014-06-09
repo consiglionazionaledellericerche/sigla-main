@@ -24,6 +24,7 @@ import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
 import it.cnr.contab.utente00.ejb.RuoloComponentSession;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
@@ -50,7 +51,6 @@ import it.cnr.jada.util.jsp.JSPUtils;
  */
 
 public class CRUDAnagraficaBP extends SimpleCRUDBP {
-	private boolean isGestoreIstat;
 	
 	private final SimpleDetailCRUDController crudDichiarazioni_intento = new SimpleDetailCRUDController("Dichiarazioni_intento",Dichiarazione_intentoBulk.class,"dichiarazioni_intento",this);
 
@@ -540,18 +540,13 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 		}
 	}
 	
-	public void setGestoreIstat(boolean b) {
-		isGestoreIstat = b;
-	}
 	
-	public boolean isGestoreIstat() {
-		return isGestoreIstat;
+	public boolean isGestoreIstat(UserContext context, AnagraficoBulk anagraficoBulk) throws ComponentException, RemoteException {
+		return !anagraficoBulk.isNotGestoreIstat();
 	}
-	
+
 	public boolean isGestoreOk(UserContext context) throws ComponentException, RemoteException {
-    		setGestoreIstat(UtenteBulk.isGestoreIstatSiope(context));
-			return isGestoreIstat;		
-		
+		return UtenteBulk.isGestoreIstatSiope(context);
 	}
 	
 	protected void validaRemoveDetail(Carico_familiare_anagBulk carico_familiare) {
@@ -1259,6 +1254,34 @@ protected void initialize(ActionContext context) throws BusinessProcessException
 	}
 	super.initialize(context);
 }
+
+public OggettoBulk initializeModelForInsert(ActionContext context,OggettoBulk bulk) throws BusinessProcessException {
+	AnagraficoBulk anagrafico = (AnagraficoBulk)super.initializeModelForInsert(context,bulk);
+	try {
+		anagrafico.setNotGestoreIstat(!UtenteBulk.isGestoreIstatSiope(context.getUserContext()));
+	} catch (ComponentException e1) {
+		handleException(e1);
+	} catch (RemoteException e1) {
+		handleException(e1);
+	}
+	return anagrafico;
+}
+@Override
+public OggettoBulk initializeModelForEdit(ActionContext actioncontext,OggettoBulk oggettobulk) throws BusinessProcessException {
+	oggettobulk = super.initializeModelForEdit(actioncontext,oggettobulk);
+	if (oggettobulk instanceof AnagraficoBulk) {
+		AnagraficoBulk anagrafico = (AnagraficoBulk)oggettobulk;
+		try {
+			anagrafico.setNotGestoreIstat(!UtenteBulk.isGestoreIstatSiope(actioncontext.getUserContext()));
+		} catch (ComponentException e1) {
+			handleException(e1);
+		} catch (RemoteException e1) {
+			handleException(e1);
+		}		
+	}
+	return oggettobulk;
+}
+
 public void writeToolbar(PageContext pagecontext) throws IOException, ServletException {
 	Button[] toolbar = getToolbar();
 	if(getFile()!=null){

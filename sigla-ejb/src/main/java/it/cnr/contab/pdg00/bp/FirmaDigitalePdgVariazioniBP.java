@@ -1,6 +1,7 @@
 package it.cnr.contab.pdg00.bp;
 
 import it.cnr.cmisdl.model.Node;
+import it.cnr.cmisdl.model.SessionCredential;
 import it.cnr.cmisdl.model.paging.ListNodePage;
 import it.cnr.contab.cmis.CMISAspect;
 import it.cnr.contab.cmis.CMISRelationship;
@@ -13,14 +14,13 @@ import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
-import it.cnr.contab.pdg00.bulk.cmis.AllegatoPdGVariazioneDocumentBulk;
 import it.cnr.contab.pdg00.bulk.cmis.AllegatoPdGVariazioneSignedDocument;
 import it.cnr.contab.pdg00.bulk.cmis.PdgVariazioneDocument;
 import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
 import it.cnr.contab.pdg00.service.PdgVariazioniService;
-import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
@@ -41,7 +41,6 @@ import it.cnr.jada.firma.NotSignedEnvelopeException;
 import it.cnr.jada.firma.Verifica;
 import it.cnr.jada.firma.bp.SendPecMail;
 import it.cnr.jada.util.ListRemoteIterator;
-import it.cnr.jada.util.action.Selection;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
 import it.cnr.jada.util.jsp.JSPUtils;
@@ -53,12 +52,24 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.rmi.RemoteException;
 import java.util.List;
 
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
+
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.auth.AuthScope;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.StringRequestEntity;
+import org.apache.commons.httpclient.util.URIUtil;
+import org.apache.commons.io.IOUtils;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 /**
  * Insert the type's description here. Creation date: (11/04/2002 17:28:04)
@@ -135,7 +146,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 	}
 	
 	public it.cnr.jada.util.jsp.Button[] createToolbar() {
-		Button[] toolbar = new Button[7];
+		Button[] toolbar = new Button[8];
 		int i = 0;
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.refresh");
@@ -145,6 +156,8 @@ public class FirmaDigitalePdgVariazioniBP extends
 				.getHandler().getProperties(getClass()), "Toolbar.download");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.sign");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
+				.getHandler().getProperties(getClass()), "Toolbar.signOTP");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.upload");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
@@ -801,6 +814,76 @@ public class FirmaDigitalePdgVariazioniBP extends
 				.getPdgVariazioneDocument().getEsercizio(),archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNumeroVariazione());
 		setFocusedElement(context, null);
 		refresh(context);
+	}
+	public void firmaOTP(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Exception {
+		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
+		Node pdgVariazioneDocumentNode = archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNode();
+		String webScriptURL = pdgVariazioniService.getRepositoyURL().concat("/sigla/firma/variazioni");
+		String json = "{" +
+				"\"nodeRefSource\" : \"" + pdgVariazioneDocumentNode.getId() + "\"," +
+				"\"username\" : \"" + firmaOTPBulk.getUserName() + "\"," +
+				"\"password\" : \"" + firmaOTPBulk.getPassword() + "\"," +
+				"\"otp\" : \"" + firmaOTPBulk.getOtp() + "\""
+				+ "}";
+		PostMethod method = null;
+		Node node = null;
+		try {		
+			method = new PostMethod(URIUtil.encodePath(webScriptURL));
+			method.setRequestEntity(new StringRequestEntity(json, "application/json", "UTF-8"));
+			HttpClient client = pdgVariazioniService.getHttpClient();
+			client.getState().setCredentials(AuthScope.ANY, 
+					((SessionCredential)pdgVariazioniService.getCredentials()).getUsernamePasswordCredentials());
+			client.getParams().setAuthenticationPreemptive(true);
+			client.executeMethod(method);
+			int status = method.getStatusCode();
+			if (status == HttpStatus.SC_NOT_FOUND
+					|| status == HttpStatus.SC_INTERNAL_SERVER_ERROR
+					|| status == HttpStatus.SC_UNAUTHORIZED
+					|| status == HttpStatus.SC_BAD_REQUEST) {
+				JSONTokener tokenizer = new JSONTokener(new InputStreamReader(method.getResponseBodyAsStream()));
+			    JSONObject jsonObject = new JSONObject(tokenizer);
+			    String jsonMessage = jsonObject.getString("message");
+				throw new ApplicationException(FirmaOTPBulk.errorMessage(jsonMessage));
+			} else {
+				JSONTokener tokenizer = new JSONTokener(new InputStreamReader(method.getResponseBodyAsStream()));
+			    JSONObject jsonObject = new JSONObject(tokenizer);
+			    node = pdgVariazioniService.getNodeByNodeRef(jsonObject.getString("nodeRef"));
+			}
+		} catch (HttpException e) {
+			throw new BusinessProcessException(e);
+		} catch (IOException e) {
+			throw new BusinessProcessException(e);
+		} catch (Exception e) {
+			throw new BusinessProcessException(e);
+		} finally {
+			if (method != null)
+				method.releaseConnection();
+		}
+	
+		try {
+			File fileNew = File.createTempFile("docFirmatoVariazioni", "p7m");
+			OutputStream outputStream = new FileOutputStream(fileNew);
+			IOUtils.copy(pdgVariazioniService.getResource(node), outputStream);
+			outputStream.close();			
+			List<String> lista = datiPEC.emailListTotale();
+			if (!lista.isEmpty())
+				SendPecMail.sendMail(datiPEC.getOggetto(), datiPEC.getOggetto(), fileNew,
+						lista, datiPEC);
+		} catch (Exception ex) {
+			if (!isTestSession()) {
+				pdgVariazioniService.removeAspect(archiviaStampaPdgVariazioneBulk
+						.getPdgVariazioneDocument().getNode(),
+						CMISAspect.CNR_SIGNEDDOCUMENT.value());
+				pdgVariazioniService.deleteNode(node);
+			}
+			throw new ApplicationException("Errore nell'invio della mail PEC al protocollo informatico. Ripetere l'operazione di firma!");
+		}
+
+		//rp 21/01/2014 inserisco data firma sulla variazione
+		createComponentSession().aggiornaDataFirma(context.getUserContext(),archiviaStampaPdgVariazioneBulk
+				.getPdgVariazioneDocument().getEsercizio(),archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNumeroVariazione());
+		setFocusedElement(context, null);
+		refresh(context);	
 	}
 
 	public void persistUploadedFile(ActionContext context, UploadedFile ufile)

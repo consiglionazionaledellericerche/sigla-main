@@ -1,9 +1,6 @@
 package it.cnr.contab.anagraf00.core.bulk;
 
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.Keyed;
 
 public class TerzoBase extends TerzoKey implements Keyed {
 	// CAP_COMUNE_SEDE VARCHAR(5)
@@ -35,6 +32,9 @@ public class TerzoBase extends TerzoKey implements Keyed {
 
 	// NOTE VARCHAR(300)
 	private java.lang.String note;
+
+	// CODICE_UNIVOCO_UFFICIO_IPA VARCHAR(6)
+	private java.lang.String codiceUnivocoUfficioIpa;
 
 	// NUMERO_CIVICO_SEDE VARCHAR(5)
 	private java.lang.String numero_civico_sede;
@@ -236,5 +236,11 @@ public void setTi_terzo(java.lang.String ti_terzo) {
  */
 public void setVia_sede(java.lang.String via_sede) {
 	this.via_sede = via_sede;
+}
+public java.lang.String getCodiceUnivocoUfficioIpa() {
+	return codiceUnivocoUfficioIpa;
+}
+public void setCodiceUnivocoUfficioIpa(java.lang.String codiceUnivocoUfficioIpa) {
+	this.codiceUnivocoUfficioIpa = codiceUnivocoUfficioIpa;
 }
 }

@@ -99,6 +99,12 @@
 			sqlTypeName="VARCHAR"
 			nullable="true"
 			columnSize="10" />
+		<columnMapping
+			columnName="CD_CUP"
+			propertyName="cup.cdCup"
+			sqlTypeName="VARCHAR"
+			nullable="true"
+			columnSize="15" />
 
 	</defaultColumnMap>
 	
@@ -132,4 +138,6 @@
 		name="direttore" />				
 	<persistentProperty
 		name="cig" />
+	<persistentProperty
+		name="cup" />
 </SQLPersistentInfo>

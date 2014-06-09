@@ -117,9 +117,19 @@ function escludiPrimo(index){
 			</tr>	   
 			<tr>
 				<% bp.getController().writeFormField(out,"fl_default_istituzionale"); %>
+					<%	if (voce_iva != null && voce_iva.isOperazioneNonImponibile()) { %>
+				  	  <td>
+					  	<% bp.getController().writeFormField(out,"naturaOperNonImpSdi");%>
+					  </td>
+					<%	}  %>
 			</tr>	
 			<tr>
 				<% bp.getController().writeFormField(out,"fl_iva_non_recuperabile"); %>
+					<%	if (voce_iva != null && voce_iva.isOperazioneNonImponibile()) { %>
+				  	  <td>
+					  	<% bp.getController().writeFormField(out,"rifNormOperNonImpSdi");%>
+					  </td>
+					<%	}  %>
 			</tr>
 		</table>
 	</div>

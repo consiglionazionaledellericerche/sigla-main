@@ -132,6 +132,12 @@
 		rows="2"
 		inputType="TEXTAREA" />
 	<fieldProperty
+		name="codiceUnivocoUfficioIpa"
+		property="codiceUnivocoUfficioIpa"
+		readonlyPropertyOnEdit="notGestoreIstat"
+		label="Codice Univoco Ufficio IPA"
+		inputType="TEXT" />
+	<fieldProperty
 		name="numero_civico_sede"
 		property="numero_civico_sede"
 		readonlyPropertyOnEdit="dipendente"
@@ -307,6 +313,9 @@
 		name="note"
 		/>
 	<formFieldProperty
+		name="codiceUnivocoUfficioIpa"
+		/>
+	<formFieldProperty
 		name="numero_civico_sede"
 		/>
 	<formFieldProperty
@@ -400,6 +409,9 @@
 			name="cd_precedente"
 			enabledOnFreeSearch="true"
 			/>
+		<findFieldProperty
+			name="codiceUnivocoUfficioIpa"
+			enabledOnFreeSearch="true" />
 	</freeSearchSet>
 	
 	<freeSearchSet
@@ -471,6 +483,9 @@
 		name="via_sede" />
 	<columnFieldProperty
 		name="comune_sede" />
+	<columnFieldProperty
+		name="codiceUnivocoUfficioIpa"
+		label="Codice IPA" />
 
 	<columnSet
 		name="columnSet01" >

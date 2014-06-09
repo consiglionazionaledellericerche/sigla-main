@@ -403,7 +403,7 @@ private Integer getNumLiquidazione(
 	Liquid_coriBulk liquidazione_cori)
 	throws  it.cnr.jada.comp.ComponentException {
 
-	CallableStatement cs = null;
+	LoggableStatement cs = null;
 	Integer pg = null;
 	try {
 		try	{
@@ -742,7 +742,7 @@ public OggettoBulk cercaBatch(
 		//recupero le note dalla testata del batch
 		SQLBuilder sql;	
 		String schema = it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema();
-		PreparedStatement ps = null;
+		LoggableStatement ps = null;
 		java.sql.ResultSet rs = null;
 		String note=null;
 		sql = getHome(userContext, Batch_log_tstaBulk.class).createSQLBuilder();

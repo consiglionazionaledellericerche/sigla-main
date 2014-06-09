@@ -1,11 +1,10 @@
 package it.cnr.contab.docamm00.tabrif.bulk;
 
-import java.util.Dictionary;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
+import java.math.BigDecimal;
+import java.util.Dictionary;
 
 public class Voce_ivaBulk extends Voce_ivaBase {
 	protected Voce_ivaBulk voce_iva;
@@ -31,7 +30,25 @@ public class Voce_ivaBulk extends Voce_ivaBase {
 		TAPPLICAZIONE.put(VENDITE,"Vendite");
 		TAPPLICAZIONE.put(ENTRAMBE,"Entrambe");
 	}
-public Voce_ivaBulk() {
+
+	public final static String ESCLUSE_ART_15   = "N1";
+	public final static String NON_SOGGETTE    	= "N2";
+	public final static String NON_IMPONIBILI  	= "N3";
+	public final static String ESENTI		  	= "N4";
+	public final static String REGIME_MARGINE  	= "N5";
+
+	
+	public final static Dictionary naturaOperazioniNonImponibiliKeys;
+	static {
+		naturaOperazioniNonImponibiliKeys = new it.cnr.jada.util.OrderedHashtable();
+		naturaOperazioniNonImponibiliKeys.put(ESCLUSE_ART_15,"Escluse ex art. 15");
+		naturaOperazioniNonImponibiliKeys.put(NON_SOGGETTE,"Non Soggette");
+		naturaOperazioniNonImponibiliKeys.put(NON_IMPONIBILI,"Non Imponibili");	
+		naturaOperazioniNonImponibiliKeys.put(ESENTI,"Esenti");	
+		naturaOperazioniNonImponibiliKeys.put(REGIME_MARGINE,"Regime del Margine");	
+    };
+
+ public Voce_ivaBulk() {
 	super();
 }
 public Voce_ivaBulk(java.lang.String cd_voce_iva) {
@@ -138,6 +155,13 @@ public void setGruppo_iva(Gruppo_ivaBulk newGruppoiva) {
 	gruppo_iva = newGruppoiva;
 	if (newGruppoiva!=null)
 		setCd_gruppo_iva(gruppo_iva.getCd_gruppo_iva());
+}
+
+public Boolean isOperazioneNonImponibile(){
+	if (getPercentuale() == null || getPercentuale().compareTo(BigDecimal.ZERO) != 0){
+		return false;
+	}
+	return true;
 }
 public void validate() throws ValidationException {
     super.validate();

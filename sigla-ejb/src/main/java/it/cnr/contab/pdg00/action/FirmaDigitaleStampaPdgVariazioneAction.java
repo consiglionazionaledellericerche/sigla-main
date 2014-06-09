@@ -1,16 +1,19 @@
 package it.cnr.contab.pdg00.action;
 
-import it.cnr.contab.doccont00.bp.CaricaFileCassiereBP;
+import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.pdg00.bp.FirmaDigitalePdgVariazioniBP;
 import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
 import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.Forward;
+import it.cnr.jada.action.HookForward;
 import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.OptionBP;
 import it.cnr.jada.util.upload.UploadedFile;
 
 public class FirmaDigitaleStampaPdgVariazioneAction extends it.cnr.jada.util.action.SelezionatoreListaAction {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * SpoolerStatusAction constructor comment.
 	 */
@@ -62,9 +65,31 @@ public class FirmaDigitaleStampaPdgVariazioneAction extends it.cnr.jada.util.act
 		}
 	}
 
+	public Forward doSignOTP(ActionContext context) {
+		try {
+			BulkBP firmaOTPBP = (BulkBP) context.createBusinessProcess("FirmaOTPBP");
+			firmaOTPBP.setModel(context, new FirmaOTPBulk());
+			context.addHookForward("firmaOTP",this,"doBackFirmaOTP");			
+			return context.addBusinessProcess(firmaOTPBP);
+		} catch(Exception e) {
+			return handleException(context,e);
+		}
+	}
+	
+	public Forward doBackFirmaOTP(ActionContext context) {
+		FirmaDigitalePdgVariazioniBP bp = (FirmaDigitalePdgVariazioniBP)context.getBusinessProcess();
+		HookForward caller = (HookForward)context.getCaller();
+		FirmaOTPBulk firmaOTPBulk = (FirmaOTPBulk) caller.getParameter("firmaOTP");
+		try {
+			bp.firmaOTP(context, firmaOTPBulk);			
+		} catch(Exception e) {
+			return handleException(context,e);
+		}
+		return context.findDefaultForward();
+	}	
+	
 	public Forward doInstalla(ActionContext context) {
 		try {
-			FirmaDigitalePdgVariazioniBP bp = (FirmaDigitalePdgVariazioniBP)context.getBusinessProcess();
 			OptionBP option = openConfirm(context,"L'installazione del software di firma digitale va effettuata avviando il browser quando la chiavetta USB Actalis NON è inserita nel computer. Procedere con l'installazione?",
 					OptionBP.CONFIRM,"doConfirmInstalla");
 			//option.addAttribute("discrepanze", e.getLista());

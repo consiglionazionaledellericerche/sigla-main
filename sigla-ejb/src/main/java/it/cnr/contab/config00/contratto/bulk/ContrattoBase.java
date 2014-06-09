@@ -42,6 +42,9 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
 //    CD_TIPO_CONTRATTO VARCHAR(5) NOT NULL
 	private java.lang.String cd_tipo_contratto;
  
+//  CD_CIG_FATTURA_ATTIVA VARCHAR(10) NOT NULL
+	private java.lang.String cdCigFatturaAttiva;
+
 //    PROC_AMM VARCHAR(5) NOT NULL
 	private java.lang.String cd_proc_amm;
  
@@ -508,5 +511,11 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
 	public void setFl_pubblica_contratto(java.lang.Boolean fl_pubblica_contratto) {
 		this.fl_pubblica_contratto = fl_pubblica_contratto;
 	}
-
+	
+	public java.lang.String getCdCigFatturaAttiva() {
+		return cdCigFatturaAttiva;
+	}
+	public void setCdCigFatturaAttiva(java.lang.String cdCigFatturaAttiva) {
+		this.cdCigFatturaAttiva = cdCigFatturaAttiva;
+	}
 }

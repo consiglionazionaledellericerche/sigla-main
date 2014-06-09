@@ -804,7 +804,7 @@ public void	selectAll(UserContext userContext, V_obb_acc_xxxBulk doc, String pro
 		String result = insertStmt.concat( sql.getStatement());
 		sql.setStatement( result);
 
-		PreparedStatement ps = sql.prepareStatement(getConnection(userContext));
+		LoggableStatement ps = sql.prepareStatement(getConnection(userContext));
 		try
 		{
 			ps.executeUpdate();

@@ -17,6 +17,7 @@ import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.esercizio.bulk.Esercizio_baseBulk;
 import it.cnr.contab.config00.esercizio.bulk.Esercizio_baseHome;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.bulk.FunzioneBulk;
@@ -31,6 +32,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk;
@@ -96,6 +98,7 @@ import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBroker;
 import it.cnr.jada.persistency.sql.SQLBuilder;
@@ -4322,7 +4325,71 @@ public void verificaObbligazione (UserContext aUC,ObbligazioneBulk obbligazione)
  				obbligazione.getPg_contratto() == null && obbligazione.getPg_repertorio() == null)
  				throw new it.cnr.jada.comp.ApplicationException("I campi contratto e incarico non possono essere contemporaneamente nulli in assenza di una gara in corso di espletamento. Importo dell'Impegno superiore al limite stabilito!");		
 	}
+	verificaGestioneTrovato(aUC, obbligazione, elemento_voce);
 }
+private void verificaGestioneTrovato(UserContext aUC,
+		ObbligazioneBulk obbligazione, Elemento_voceBulk elemento_voce)
+				throws ComponentException {
+//	if (obbligazione.getCd_iniziale_elemento_voce() != null && !elemento_voce.getCd_elemento_voce().equals(obbligazione.getCd_iniziale_elemento_voce())){
+	if (obbligazione.getPg_obbligazione() != null){
+		try {
+			if(elemento_voce.isObbligatoriaIndicazioneTrovato()){
+				controlliGestioneTrovatoAttiva(aUC, obbligazione);
+			} else if (elemento_voce.isInibitaIndicazioneTrovato()){
+				controlliGestioneTrovatoNonAttiva(aUC, obbligazione);
+			}
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
+	}
+//	}
+}
+private void controlliGestioneTrovatoNonAttiva(UserContext aUC,
+		ObbligazioneBulk obbligazione) throws ComponentException, SQLException,
+		ApplicationException {
+	SQLBuilder sql = condizioneRigheFatturaConTrovatoValorizzato(aUC,obbligazione);
+	if (sql.executeCountQuery(getConnection(aUC)) > 0){
+		throw new it.cnr.jada.comp.ApplicationException("Attenzione! La voce del piano indicata non ha attiva la gestione dei brevetti ma sono state trovate fatture con l'indicazione del trovato.");		
+	}
+}
+private void controlliGestioneTrovatoAttiva(UserContext aUC,
+		ObbligazioneBulk obbligazione) throws ComponentException, SQLException,
+		ApplicationException {
+	SQLBuilder sql = condizioneRigheFatturaConTrovatoNonValorizzato(aUC, obbligazione);
+	if (sql.executeCountQuery(getConnection(aUC)) > 0){
+		throw new it.cnr.jada.comp.ApplicationException("Attenzione! La voce del piano indicata ha attiva la gestione dei brevetti ma sono state trovate fatture senza l'indicazione del trovato.");		
+	}
+}
+private SQLBuilder condizioneRigheFatturaConTrovatoNonValorizzato(
+		UserContext aUC, ObbligazioneBulk obbligazione)
+		throws ComponentException {
+	SQLBuilder sql = preparaCondizionePerTrovato(aUC, obbligazione);
+	sql.addSQLClause(FindClause.AND,"FATTURA_PASSIVA_RIGA.pg_trovato",sql.ISNULL, null);
+	return sql;
+}
+private SQLBuilder condizioneRigheFatturaConTrovatoValorizzato(UserContext aUC,
+		ObbligazioneBulk obbligazione) throws ComponentException {
+	SQLBuilder sql = preparaCondizionePerTrovato(aUC, obbligazione);
+	sql.addSQLClause(FindClause.AND,"FATTURA_PASSIVA_RIGA.pg_trovato",sql.ISNOTNULL, null);
+	return sql;
+}
+private SQLBuilder preparaCondizionePerTrovato(UserContext aUC,
+		ObbligazioneBulk obbligazione) throws ComponentException {
+	PersistentHome osHome = getHomeCache(aUC).getHome(Obbligazione_scadenzarioBulk.class);
+	SQLBuilder sql = osHome.createSQLBuilder();
+	sql.addClause(FindClause.AND,"cd_cds",sql.EQUALS, obbligazione.getCds().getCd_unita_organizzativa());
+	sql.addClause(FindClause.AND,"esercizio",sql.EQUALS, obbligazione.getEsercizio());
+	sql.addClause(FindClause.AND,"esercizio_originale",sql.EQUALS, obbligazione.getEsercizio_originale());
+	sql.addClause(FindClause.AND,"pg_obbligazione",sql.EQUALS, obbligazione.getPg_obbligazione());
+	sql.addTableToHeader("FATTURA_PASSIVA_RIGA");
+	sql.addSQLJoin( "FATTURA_PASSIVA_RIGA.CD_CDS_OBBLIGAZIONE", "OBBLIGAZIONE_SCADENZARIO.CD_CDS");
+	sql.addSQLJoin( "FATTURA_PASSIVA_RIGA.ESERCIZIO_OBBLIGAZIONE", "OBBLIGAZIONE_SCADENZARIO.ESERCIZIO");
+	sql.addSQLJoin( "FATTURA_PASSIVA_RIGA.ESERCIZIO_ORI_OBBLIGAZIONE", "OBBLIGAZIONE_SCADENZARIO.ESERCIZIO_ORIGINALE");
+	sql.addSQLJoin( "FATTURA_PASSIVA_RIGA.PG_OBBLIGAZIONE", "OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE");
+	sql.addSQLJoin( "FATTURA_PASSIVA_RIGA.PG_OBBLIGAZIONE_SCADENZARIO", "OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE_SCADENZARIO");
+	return sql;
+}
+
 public void verificaCoperturaContratto (UserContext aUC,ObbligazioneBulk obbligazione, int flag) throws ComponentException
 {
 	//	Controllo che l'obbligazione non abbia sfondato il contratto
@@ -4335,7 +4402,7 @@ public void verificaCoperturaContratto (UserContext aUC,ObbligazioneBulk obbliga
 		  BigDecimal totale = null; 
 			try {
 				java.sql.ResultSet rs = null;
-				PreparedStatement ps = null;
+				LoggableStatement ps = null;
 				try {
 					ps = sql.prepareStatement(getConnection(aUC));
 					try {
@@ -5383,7 +5450,7 @@ private void validaCampi(UserContext uc, ObbligazioneBulk obbligazione) throws C
 			  BigDecimal totale = null; 
 				try {
 					java.sql.ResultSet rs = null;
-					PreparedStatement ps = null;
+					LoggableStatement ps = null;
 					try {
 						ps = sql.prepareStatement(getConnection(aUC));
 						try {

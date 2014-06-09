@@ -123,7 +123,10 @@
 	  <td><% bp.getController().writeFormInput( out, "fl_solo_competenza"); %></td>
 	</tr>
 	
-	</table>
+	<tr>
+	  <td><% bp.getController().writeFormLabel( out, "fl_trovato"); %></td>
+	  <td><% bp.getController().writeFormInput( out, "fl_trovato"); %></td>
+	</tr>	
 
 <%	bp.closeFormWindow(pageContext); %>
 </body>

@@ -71,10 +71,10 @@ public class IncarichiRichiestaComponentSessionBean extends it.cnr.jada.ejb.CRUD
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	public it.cnr.jada.util.RemoteIterator findListaIncarichiElenco(it.cnr.jada.UserContext param0,String param1,String param2,Integer param3,String param4,String param5,String param6) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	public it.cnr.jada.util.RemoteIterator findListaIncarichiElenco(it.cnr.jada.UserContext param0,String param1,String param2,Integer param3,String param4,String param5,String param6,String param7) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
-			it.cnr.jada.util.RemoteIterator result = ((IncarichiRichiestaComponent)componentObj).findListaIncarichiElenco(param0,param1,param2,param3,param4,param5,param6);
+			it.cnr.jada.util.RemoteIterator result = ((IncarichiRichiestaComponent)componentObj).findListaIncarichiElenco(param0,param1,param2,param3,param4,param5,param6,param7);
 			component_invocation_succes(param0,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {

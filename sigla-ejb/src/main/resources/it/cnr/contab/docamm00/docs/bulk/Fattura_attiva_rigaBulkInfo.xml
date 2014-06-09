@@ -232,6 +232,27 @@
 		property="data_esigibilita_iva"
 		inputType="TEXT"
 		label="data_esigibilita_iva" />
+	<fieldProperty
+		name="pg_trovato"
+		property="trovato.pg_trovato"
+		inputType="TEXT"
+		inputSize="10"
+		label="Identificativo del Trovato"
+        enabledOnEdit="true" />	
+	<fieldProperty
+		name="titoloTrovato"
+		property="trovato.titolo"
+		maxLength="500"
+		inputSize="24"
+		inputType="ROTEXT"
+		label="Titolo del Trovato"/>
+	<fieldProperty
+		name="inventoreTrovato"
+		property="trovato.inventore"
+		maxLength="500"
+		inputSize="24"
+		inputType="ROTEXT"
+		label="Inventore del Trovato"/>
 
 	<formFieldProperty
 		name="dt_da_competenza_coge"
@@ -293,6 +314,13 @@
 	<formFieldProperty
 		name="data_esigibilita_iva" />
 			
+	<formFieldProperty
+		name="pg_trovato" 
+		command="doVerificaEsistenzaTrovato" />
+	<formFieldProperty
+		name="titoloTrovato" />
+	<formFieldProperty
+		name="inventoreTrovato" />
 	<columnFieldProperty
 		name="cd_cds" />
 	<columnFieldProperty
@@ -323,6 +351,8 @@
 		name="quantita" />
 	<columnFieldProperty
 		name="ti_associato_manrev" />
+	<columnFieldProperty
+		name="pg_trovato" />
 
 	<columnSet
 		name="righiSet">

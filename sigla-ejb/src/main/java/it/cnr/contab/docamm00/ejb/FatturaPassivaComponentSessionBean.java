@@ -6,8 +6,10 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
 import it.cnr.contab.compensi00.comp.CompensoComponent;
+import it.cnr.contab.docamm00.comp.FatturaAttivaSingolaComponent;
 import it.cnr.contab.docamm00.comp.FatturaPassivaComponent;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -1006,6 +1008,80 @@ public it.cnr.jada.bulk.OggettoBulk rebuildDocumento(it.cnr.jada.UserContext par
 	pre_component_invocation(param0,componentObj);
 	try {
 		it.cnr.jada.bulk.OggettoBulk result = ((FatturaPassivaComponent)componentObj).rebuildDocumento(param0,param1);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+
+public  it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk ricercaFatturaTrovato(it.cnr.jada.UserContext param0,Long esercizio,String cd_cds,String cd_unita_organizzativa,Long pg_fattura) throws it.cnr.jada.comp.ComponentException,RemoteException, it.cnr.jada.persistency.PersistencyException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk result=((FatturaPassivaComponent)componentObj).ricercaFatturaTrovato(param0,esercizio,cd_cds,cd_unita_organizzativa,pg_fattura);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public  it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk ricercaFatturaByKey(it.cnr.jada.UserContext param0,Long esercizio,String cd_cds,String cd_unita_organizzativa,Long pg_fattura) throws it.cnr.jada.comp.ComponentException,RemoteException, it.cnr.jada.persistency.PersistencyException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk result=((FatturaPassivaComponent)componentObj).ricercaFatturaByKey(param0,esercizio,cd_cds,cd_unita_organizzativa,pg_fattura);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
+	pre_component_invocation(userContext,componentObj);
+	try {
+		TrovatoBulk trovatoBulk =((FatturaPassivaComponent)componentObj).ricercaDatiTrovato(userContext,trovato);
+		component_invocation_succes(userContext,componentObj);
+		return trovatoBulk;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(userContext,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(userContext,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(userContext,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(userContext,componentObj,e);
+	}
+}
+
+public java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk> ricercaFattureTrovato(it.cnr.jada.UserContext param0,Long param1) throws it.cnr.jada.comp.ComponentException,RemoteException, it.cnr.jada.persistency.PersistencyException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk> result=((FatturaPassivaComponent)componentObj).ricercaFattureTrovato(param0,param1);
 		component_invocation_succes(param0,componentObj);
 		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {

@@ -18,7 +18,8 @@
     	<property name="authenticationService" ref="authenticationService"/>
     	<property name="dictionaryService" ref="dictionaryService"/>
     	<property name="contentService" ref="contentService"/>
-    	<property name="cmisBulkInfo" ref="cmisBulkInfo"/>
+    	<property name="repositoryService" ref="repositoryService"/>
+   		<property name="cmisBulkInfo" ref="cmisBulkInfo"/>
     </bean>
 
     <bean id="cmisPathConcFormazReddito" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
@@ -34,6 +35,9 @@
     	<property name="path" value="/Variazioni Al Piano di Gestione"/>
     </bean>
  	<bean id="cmisPathContratti" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
+     	<property name="path" value="/Comunicazioni dal CNR"/>
+    </bean>    
+ 	<bean id="cmisPathFatture" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
      	<property name="path" value="/Comunicazioni dal CNR"/>
     </bean>    
     <!-- Pemission Beans -->
@@ -57,9 +61,15 @@
     		<value>{http://www.alfresco.org/model/content/1.0}cmobject.Collaborator</value>
     	</constructor-arg>
 	</bean>
-    <bean id="pdgVariazioniService" class="it.cnr.contab.pdg00.service.PdgVariazioniService" parent="cmisService"/>
+    <bean id="pdgVariazioniService" class="it.cnr.contab.pdg00.service.PdgVariazioniService" parent="cmisService">
+    	<property name="gson" ref="gson"/>
+    	<property name="httpClient" ref="httpClient"/>
+    </bean>
     <bean id="contrattiService" class="it.cnr.contab.incarichi00.service.ContrattiService" parent="cmisService"/>
     <bean id="contrattoService" class="it.cnr.contab.config00.service.ContrattoService" parent="cmisService"/>
     <bean id="contabiliService" class="it.cnr.contab.doccont00.service.ContabiliService" parent="cmisService"/>
-
+    <bean id="documentiCollegatiDocAmmService" class="it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService" parent="cmisService"> 
+    	<property name="gson" ref="gson"/>
+    	<property name="httpClient" ref="httpClient"/>
+    </bean>
 </beans>

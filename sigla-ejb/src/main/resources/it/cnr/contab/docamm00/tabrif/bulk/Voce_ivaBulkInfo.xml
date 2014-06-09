@@ -101,7 +101,27 @@
 		label="Esente"
 		enabledOnFreeSearch="false"
 		enabledOnSearch="false"/>
-		
+	<fieldProperty
+		name="naturaOperNonImpSdi"
+		property="naturaOperNonImpSdi"
+		keysProperty="naturaOperazioniNonImponibiliKeys"
+		label="Natura Operazioni non imponibili per invio SDI"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		inputType="SELECT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="rifNormOperNonImpSdi"
+		property="rifNormOperNonImpSdi"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnInsert="true"				
+		enabledOnEdit="true"
+		enabledOnFreeSearch="true" 
+	 	label="Riferimento Normativo Operazioni non imponibili per invio SDI" />
 	<fieldProperty
 		name="ti_applicazione"
 		property="ti_applicazione"
@@ -164,6 +184,10 @@
 	<formFieldProperty
 		name="ti_applicazione" />
 	<formFieldProperty
+		name="naturaOperNonImpSdi" />
+	<formFieldProperty
+		name="rifNormOperNonImpSdi" />
+	<formFieldProperty
 		name="percentuale_detraibilita" />
 	<formFieldProperty
 		name="fl_non_imponibile" />
@@ -212,6 +236,10 @@
 		name="fl_default_istituzionale" />
 	<columnFieldProperty
 		name="fl_iva_non_recuperabile" />
+	<columnFieldProperty
+		name="naturaOperNonImpSdi" />
+	<columnFieldProperty
+		name="rifNormOperNonImpSdi" />
 		
 	<findFieldProperty
 		name="cd_voce_iva" />	

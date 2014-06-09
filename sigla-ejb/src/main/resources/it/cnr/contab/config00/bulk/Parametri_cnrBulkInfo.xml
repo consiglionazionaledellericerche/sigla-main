@@ -312,15 +312,14 @@
 	<formFieldProperty
 		name="fl_cup"/>
 	<formFieldProperty
-		name="data_stipula_contratti" />						       
+		name="fl_siope_cup"/>		       
+	<formFieldProperty
+		name="data_stipula_contratti" />						      
+
 	<formFieldProperty
 		name="livello_pdg_cofog"/>
 	<formFieldProperty
 		name="fl_credito_irpef"/>				       
-		name="fl_cup"/>
-	<formFieldProperty
-		name="fl_siope_cup"/>		       
-				       
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty

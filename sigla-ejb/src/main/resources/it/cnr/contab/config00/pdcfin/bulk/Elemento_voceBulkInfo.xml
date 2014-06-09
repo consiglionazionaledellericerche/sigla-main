@@ -334,7 +334,16 @@
 		inputType="CHECKBOX"
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false" />		
-					
+	<fieldProperty
+		name="fl_trovato"
+		property="fl_trovato"
+		keysProperty="indicazioneTrovatoKeys"
+		label="Capitolo per documenti amministrativi collegati con Brevetti/Trovati"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		inputType="SELECT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
 	<form
 		name="searchtool" >
 		<formFieldProperty
@@ -412,6 +421,9 @@
 		name="fl_solo_competenza" />		
 	<columnFieldProperty
 		name="fl_solo_residuo"/>			
+	<columnFieldProperty
+		name="fl_trovato" />					
+
 <columnSet
 	name="impegnoPGiro">
 		
@@ -530,7 +542,7 @@
 		name="fl_check_terzo_siope" />
    <formFieldProperty
 		name="fl_inv_beni_patr" />
-   	<formFieldProperty
+   <formFieldProperty
 		name="fl_limite_spesa" />
 	<formFieldProperty
 		name="fl_soggetto_prelievo" />
@@ -542,7 +554,9 @@
 		name="fl_solo_competenza" />		
 	<formFieldProperty
 		name="fl_solo_residuo"/>		
-			
+   <formFieldProperty
+		name="fl_trovato" />
+
 	<findFieldProperty
 		name="esercizio"
 		/>
@@ -587,6 +601,8 @@
 		name="fl_solo_competenza" />		
 	<findFieldProperty
 		name="fl_solo_residuo"/>		
+	<findFieldProperty
+		name="fl_trovato" />
 
 	<form
 		name="searchtool_x_var_stanz_res" >

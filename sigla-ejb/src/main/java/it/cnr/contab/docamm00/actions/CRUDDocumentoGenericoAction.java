@@ -385,7 +385,7 @@ private Forward basicDoRicercaObbligazione(ActionContext context, Documento_gene
         Filtro_ricerca_obbligazioniVBulk filtro= new Filtro_ricerca_obbligazioniVBulk();
 
         CRUDDocumentoGenericoPassivoBP bp= (CRUDDocumentoGenericoPassivoBP) context.getBusinessProcess();
-
+//        filtro.setSoloVociSenzaIndicazioneTrovato(true);
         //Documento_genericoBulk documento = ((Documento_genericoBulk) bp.getModel());
 
         //imposta il tipo documento

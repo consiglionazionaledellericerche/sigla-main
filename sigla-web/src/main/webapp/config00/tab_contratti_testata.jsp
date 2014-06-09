@@ -144,6 +144,23 @@
 		         <td><% bp.getController().writeFormInput(out,"default","tipoNormaPerla", bp.isPublishHidden(),"FormInput",null);%></td>
 		      </tr>
 		      <%}%>
+			  <tr>         
+		        <td><% bp.getController().writeFormLabel(out,"cup");%></td>
+		      <% if (((ContrattoBulk)bp.getModel() == null)  || ((ContrattoBulk)bp.getModel() != null && (((ContrattoBulk)bp.getModel()).getCup() == null || ((ContrattoBulk)bp.getModel()).getCup().getCdCup() == null ))){%>
+        			<td><% bp.getController().writeFormInput(out,"default","cup",false,null,"");%></td>                	            
+		      <%} else {%>
+        			<td><% bp.getController().writeFormInput(out,"default","cup", bp.isPublishHidden(),"FormInput",null);%></td>                	            
+		      <%}%>
+		      </tr>
+		      <% if ((ContrattoBulk)bp.getModel() != null && (((ContrattoBulk)bp.getModel()).isAttivo() || ((ContrattoBulk)bp.getModel()).isAttivo_e_Passivo())){%>
+			  <tr>         
+		        <td><% bp.getController().writeFormLabel(out,"cdCigFatturaAttiva");%></td>
+		      	  <% if (((ContrattoBulk)bp.getModel()).getCdCigFatturaAttiva() == null ){%>
+        			<td><% bp.getController().writeFormInput(out,null,"cdCigFatturaAttiva",false,null,"");%></td>                	            
+			      <%} else {%>
+        			<td><% bp.getController().writeFormInput(out,"default","cdCigFatturaAttiva", bp.isPublishHidden(),"FormInput",null);%></td>                	            
+			      <%}%>
+		      <%}%>
 	      </table>
       </div>
       </td></tr>

@@ -258,6 +258,9 @@ public static boolean isAbilitatoPubblicazioneSito(it.cnr.jada.UserContext param
 public static boolean isAbilitatoFunzioniIncarichi(it.cnr.jada.UserContext param0) throws ComponentException, RemoteException{
 	return getRuoloComponentSession().isAbilitatoFunzioniIncarichi(param0);
 }
+public static boolean isAbilitatoFirmaFatturazioneElettronica(it.cnr.jada.UserContext param0) throws ComponentException, RemoteException{
+	return getRuoloComponentSession().isAbilitatoFirmaFatturazioneElettronica(param0);
+}
 public static boolean isSuperUtenteFunzioniIncarichi(it.cnr.jada.UserContext param0) throws ComponentException, RemoteException{
 	return getRuoloComponentSession().isSuperUtenteFunzioniIncarichi(param0);
 }

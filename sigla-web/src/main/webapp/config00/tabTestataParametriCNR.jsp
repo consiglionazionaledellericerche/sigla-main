@@ -136,12 +136,6 @@
 			</TD><TD colspan="3">
 			<% bp.getController().writeFormInput(out,"fl_siope_cup");%>
 		</TD></TR>		
-					
-		<TR><TD>
-			<% bp.getController().writeFormLabel(out,"data_stipula_contratti");%>
-			</TD><TD colspan="3">
-			<% bp.getController().writeFormInput(out,"data_stipula_contratti");%>
-		</TD></TR>					
 		<TR><TD>
 			<% bp.getController().writeFormLabel(out,"livello_pdg_cofog");%>
 			</TD><TD colspan="3">
@@ -152,4 +146,10 @@
 			</TD><TD colspan="3">
 			<% bp.getController().writeFormInput(out,"fl_credito_irpef");%>
 		</TD></TR>			
+		<TR><TD>
+			<% bp.getController().writeFormLabel(out,"data_stipula_contratti");%>
+			</TD><TD colspan="3">
+			<% bp.getController().writeFormInput(out,"data_stipula_contratti");%>
+		</TD></TR>					
+
 	</table>

@@ -427,8 +427,7 @@ public void controllaUnicitaCaricoInAnnoImposta(it.cnr.jada.UserContext param0, 
 		}
 	}
 }
-public boolean isGestitoCreditoIrpef(UserContext param0)
-		throws ComponentException, RemoteException {
+public boolean isGestitoCreditoIrpef(UserContext param0)throws ComponentException, RemoteException {
 	try {
 		return ((Boolean)invoke("isGestitoCreditoIrpef",new Object[] {
 			param0})).booleanValue();
@@ -444,5 +443,5 @@ public boolean isGestitoCreditoIrpef(UserContext param0)
 		}
 	}
 }
-
 }
+

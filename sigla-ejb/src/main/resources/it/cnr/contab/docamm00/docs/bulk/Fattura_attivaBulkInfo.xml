@@ -596,11 +596,42 @@
 		enabledOnSearch="false"
 		enabledOnEdit="false"
 		label="Valuta"/>
-
-		
-	
-	
-	
+	<fieldProperty
+		name="codiceUnivocoUfficioIpa"
+		property="codiceUnivocoUfficioIpa"
+		maxLength="6"
+		inputSize="6"
+		inputType="ROTEXT"
+		label="Codice IPA"/>	
+	<fieldProperty
+		name="statoInvioSdi"
+		property="statoInvioSdi"
+		keysProperty="statoInvioSdiKeys"
+		label="Stato invio Fatturazione Elettronica"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		inputType="SELECT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="noteInvioSdi"
+		property="noteInvioSdi"
+		maxLength="500"
+		inputType="TEXTAREA"
+		cols="80"
+		rows="5"
+		label="Note di scarto Fatturazione Elettronica"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"/>	
+	<fieldProperty
+		name="dtConsegnaSdi"
+		property="dtConsegnaSdi"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Data Consegna SDI"/>		
 	<fieldProperty
 		name="im_totale_iva"
 		property="im_totale_iva"
@@ -727,6 +758,12 @@
 		enabledOnFreeSearch="true"
 		label="Servizi/Beni"
 		caseSensitiveSearch="false" />	
+	<fieldProperty
+		name="collegamentoDocumentale"
+		property="collegamentoDocumentale"
+		inputType="TEXT"
+		label="Documenti Elettronici Collegati" />		
+
 	<findFieldProperty name="pg_fattura_attiva"/>
 	<findFieldProperty name="protocollo_iva" />	
 	<findFieldProperty name="ti_associato_manrevForSearch" />
@@ -753,6 +790,9 @@
 	<findFieldProperty name="cd_precedente" />
 	<findFieldProperty name="fl_congelata" />
 	<findFieldProperty name="ti_bene_servizioForSearch" />
+	<findFieldProperty name="statoInvioSdi" />
+	<findFieldProperty name="codiceUnivocoUfficioIpa" />
+	<findFieldProperty name="dtConsegnaSdi" />
 	
 	<formFieldProperty
 		name="ti_bene_servizio" />
@@ -860,6 +900,14 @@
 		name="dt_emissione" />
 	<formFieldProperty
 		name="riportata" />
+	<formFieldProperty
+		name="codiceUnivocoUfficioIpa" />
+	<formFieldProperty
+		name="dtConsegnaSdi" />
+	<formFieldProperty
+		name="statoInvioSdi" />
+	<formFieldProperty
+		name="noteInvioSdi" />
 
 	<formFieldProperty
 		name="sezionaliFlagsRadioGroup" />
@@ -965,6 +1013,14 @@
 		name="ti_associato_manrev" />
 	<columnFieldProperty
 		name="stato_cofi" />
+	<columnFieldProperty
+		name="codiceUnivocoUfficioIpa" />
+	<columnFieldProperty
+		name="dtConsegnaSdi" />
+	<columnFieldProperty
+		name="statoInvioSdi" />
+	<columnFieldProperty
+		name="collegamentoDocumentale" />		
 		
 	<columnSet
 		name="protocollazioneIvaSet">

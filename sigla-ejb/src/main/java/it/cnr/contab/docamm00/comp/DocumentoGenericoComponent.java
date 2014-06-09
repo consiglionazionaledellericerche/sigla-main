@@ -1466,8 +1466,14 @@ public RemoteIterator cercaObbligazioni(UserContext context, Filtro_ricerca_obbl
 		//sql.addSQLClause("AND","OBBLIGAZIONE.PG_OBBLIGAZIONE",sql.GREATER_EQUALS, new Long(0));
 
 
+//	sql.addTableToHeader("ELEMENTO_VOCE");
 	sql.addTableToHeader("TERZO");
 	sql.addTableToHeader("ANAGRAFICO");
+//	sql.addSQLClause("AND","ELEMENTO_VOCE.FL_TROVATO",sql.EQUALS,Elemento_voceBulk.INDICAZIONE_TROVATO_NESSUNA);
+//	sql.addSQLJoin("OBBLIGAZIONE.ESERCIZIO", "ELEMENTO_VOCE.ESERCIZIO");
+//	sql.addSQLJoin("OBBLIGAZIONE.TI_APPARTENENZA", "ELEMENTO_VOCE.TI_APPARTENENZA");
+//	sql.addSQLJoin("OBBLIGAZIONE.TI_GESTIONE", "ELEMENTO_VOCE.TI_GESTIONE");
+//	sql.addSQLJoin("OBBLIGAZIONE.CD_ELEMENTO_VOCE", "ELEMENTO_VOCE.CD_ELEMENTO_VOCE");
 	sql.addSQLJoin("OBBLIGAZIONE.CD_TERZO", "TERZO.CD_TERZO");
 	sql.addSQLJoin("TERZO.CD_ANAG", "ANAGRAFICO.CD_ANAG");
 	//con terzo (non diverso )
@@ -1949,6 +1955,7 @@ public void controllaQuadraturaAccertamenti(UserContext aUC,Documento_genericoBu
 					sb.append(delta.abs().doubleValue() + " EUR!");
 					throw new it.cnr.jada.comp.ApplicationException(sb.toString());
 				}
+            	controlloTrovato(aUC, scadenza);		
 			}
 		}
 	}
@@ -2004,9 +2011,61 @@ public void controllaQuadraturaObbligazioni(UserContext aUC, Documento_genericoB
                         sb.append(delta.abs().doubleValue() + " EUR!");
                         throw new it.cnr.jada.comp.ApplicationException(sb.toString());
                     }
+            	
+            	controlloTrovato(aUC, scadenza);		
             }
         }
     }
+}
+private void controlloTrovato(UserContext aUC,
+		Obbligazione_scadenzarioBulk scadenza) throws ComponentException,
+		ApplicationException {
+	Elemento_voceHome evHome=(Elemento_voceHome)getHome(aUC,Elemento_voceBulk.class);
+	SQLBuilder sql= evHome.createSQLBuilder();
+	
+	sql.addSQLClause("AND","esercizio",SQLBuilder.EQUALS,scadenza.getObbligazione().getEsercizio());
+	sql.addSQLClause("AND","ti_appartenenza",SQLBuilder.EQUALS,scadenza.getObbligazione().getTi_appartenenza());
+	sql.addSQLClause("AND","ti_gestione",SQLBuilder.EQUALS,scadenza.getObbligazione().getTi_gestione());
+	sql.addSQLClause("AND","cd_elemento_voce",SQLBuilder.EQUALS,scadenza.getObbligazione().getCd_elemento_voce());
+
+	try {
+		List voce=evHome.fetchAll(sql);
+		if (!voce.isEmpty()){
+			Elemento_voceBulk elementoVoce = (Elemento_voceBulk)voce.get(0);
+			if (elementoVoce.isVocePerTrovati()){
+	            throw new it.cnr.jada.comp.ApplicationException(
+	                    "Sui documenti generici non è possibile selezionare obbligazioni su capitoli collegati a Brevetti/Trovati.");
+			}
+		}
+		
+	} catch (PersistencyException ex) {
+		throw handleException(ex);
+	}
+}
+private void controlloTrovato(UserContext aUC,
+		Accertamento_scadenzarioBulk scadenza) throws ComponentException,
+		ApplicationException {
+	Elemento_voceHome evHome=(Elemento_voceHome)getHome(aUC,Elemento_voceBulk.class);
+	SQLBuilder sql= evHome.createSQLBuilder();
+	
+	sql.addSQLClause("AND","esercizio",SQLBuilder.EQUALS,scadenza.getAccertamento().getEsercizio());
+	sql.addSQLClause("AND","ti_appartenenza",SQLBuilder.EQUALS,scadenza.getAccertamento().getTi_appartenenza());
+	sql.addSQLClause("AND","ti_gestione",SQLBuilder.EQUALS,scadenza.getAccertamento().getTi_gestione());
+	sql.addSQLClause("AND","cd_elemento_voce",SQLBuilder.EQUALS,scadenza.getAccertamento().getCd_elemento_voce());
+
+	try {
+		List voce=evHome.fetchAll(sql);
+		if (!voce.isEmpty()){
+			Elemento_voceBulk elementoVoce = (Elemento_voceBulk)voce.get(0);
+			if (elementoVoce.isVocePerTrovati()){
+	            throw new it.cnr.jada.comp.ApplicationException(
+	                    "Sui documenti generici non è possibile selezionare accertamenti su capitoli collegati a Brevetti/Trovati.");
+			}
+		}
+		
+	} catch (PersistencyException ex) {
+		throw handleException(ex);
+	}
 }
 /** 
   *  Creazione di un nuovo documento
@@ -4890,6 +4949,7 @@ public void validaDocumento(UserContext aUC, Documento_genericoBulk documentoGen
 	            for (java.util.Enumeration e = obbligazioniHash.keys(); e.hasMoreElements();) {
 	                Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk) e.nextElement();
 	                controllaOmogeneitaTraTerzi(aUC, scadenza, (Vector)obbligazioniHash.get(scadenza));
+	            	controlloTrovato(aUC, scadenza);		
 	            }
         } else {
 	        AccertamentiTable accertamentiHash = documentoGenerico.getAccertamentiHash();
@@ -4897,6 +4957,7 @@ public void validaDocumento(UserContext aUC, Documento_genericoBulk documentoGen
 	            for (java.util.Enumeration e = accertamentiHash.keys(); e.hasMoreElements();) {
 	                Accertamento_scadenzarioBulk scadenza = (Accertamento_scadenzarioBulk) e.nextElement();
 	                controllaOmogeneitaTraTerzi(aUC, scadenza, (Vector)accertamentiHash.get(scadenza));
+	            	controlloTrovato(aUC, scadenza);		
 	            }
         }
     }

@@ -1,0 +1,8 @@
+<definitions name='TrasmissioneFattureWSService' targetNamespace='http://comp.docamm00.contab.cnr.it/' xmlns='http://schemas.xmlsoap.org/wsdl/' xmlns:ns1='http://www.fatturapa.gov.it/sdi/ws/trasmissione/v1.0/types' xmlns:ns2='http://www.fatturapa.gov.it/sdi/ws/trasmissione/v1.0' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:tns='http://comp.docamm00.contab.cnr.it/' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+ <import location='TrasmissioneFattureWS2.wsdl' namespace='http://www.fatturapa.gov.it/sdi/ws/trasmissione/v1.0'></import>
+ <service name='TrasmissioneFattureWSService'>
+  <port binding='ns2:TrasmissioneFattureBinding' name='TrasmissioneFattureWSPort'>
+   <soap:address location='http://rpagano3:8180/SIGLA-SIGLAEJB_1/TrasmissioneFattureWS'/>
+  </port>
+ </service>
+</definitions>

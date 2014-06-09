@@ -31,9 +31,10 @@
 				<td>
 					<% bp.getController().writeFormLabel(out,"cd_precedente");%>
 				</td>
-				<td colspan="3">
+				<td >
 					<% bp.getController().writeFormInput(out, null, "cd_precedente", roOnAutoGen, null, "");%>
 				</td>
+				<% bp.getController().writeFormField(out,"codiceUnivocoUfficioIpa");%>
 			</tr>
 			
 			<%	if (cliente != null && cliente.getAnagrafico() != null) {
@@ -125,3 +126,28 @@
 	      </tr> 
 		</table>
 	</div>
+    <div class="Group">
+       <% if (
+    		   (fatturaAttiva != null && fatturaAttiva.getCodiceUnivocoUfficioIpa() != null )) { 
+				%>
+  	<table>
+		      <tr>     	
+		      	<td>
+				<% bp.getController().writeFormField(out,"noteInvioSdi");%>
+		      	</td>      	
+		      </tr>
+		      <tr>     	
+		      	<td>
+				<% bp.getController().writeFormField(out,"statoInvioSdi");%>
+		      	</td>      	
+		      </tr>
+		      <tr>     	
+		      	<td>
+				<% bp.getController().writeFormField(out,"dtConsegnaSdi");%>
+		      	</td>      	
+		      </tr>
+     </table>
+	  <% 	
+	  	} %>
+    </div>
+	

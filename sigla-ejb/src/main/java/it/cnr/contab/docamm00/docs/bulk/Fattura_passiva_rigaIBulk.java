@@ -1,5 +1,9 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
+import it.cnr.contab.doccont00.core.bulk.Reversale_rigaIBulk;
+import it.cnr.jada.bulk.BulkList;
+
 /**
  * Insert the type's description here.
  * Creation date: (10/25/2001 11:52:17 AM)
@@ -13,6 +17,11 @@ public class Fattura_passiva_rigaIBulk extends Fattura_passiva_rigaBulk {
 	private java.math.BigDecimal im_totale_storni = new java.math.BigDecimal(0);
 	private java.math.BigDecimal im_totale_addebiti = new java.math.BigDecimal(0);
 	private java.math.BigDecimal im_riga_sdoppia;
+
+    /*
+     * lista righe mandati associati, utilizzato per l'integrazione con i brevetti
+     */
+    private BulkList<Mandato_rigaIBulk> mandatiRighe = new BulkList();
 /**
  * Fattura_passiva_rigaIBulk constructor comment.
  */
@@ -148,7 +157,14 @@ public void setSaldo(java.math.BigDecimal newSaldo) {
 public java.math.BigDecimal getIm_riga_sdoppia() {
 	return im_riga_sdoppia;
 }
+public void setMandatiRighe(BulkList<Mandato_rigaIBulk> mandatiRighe) {
+	this.mandatiRighe = mandatiRighe;
+}
 public void setIm_riga_sdoppia(java.math.BigDecimal im_riga_sdoppia) {
 	this.im_riga_sdoppia = im_riga_sdoppia;
+}
+
+public BulkList<Mandato_rigaIBulk> getMandatiRighe() {
+	return mandatiRighe;
 }
 }

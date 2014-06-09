@@ -18,6 +18,7 @@ import it.cnr.contab.compensi00.tabrif.bulk.Tipologia_rischioBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaBulk;
+import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
@@ -76,6 +77,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 
 	private PrimaryKeyHashMap deferredSaldi = new PrimaryKeyHashMap();
 	private PrimaryKeyHashMap relationsDocContForSaldi = null;
+	private TrovatoBulk trovato = new TrovatoBulk(); // inizializzazione necessaria per i bulk non persistenti
 
 	private int annoSolare;
 	private int esercizioScrivania;
@@ -3256,6 +3258,15 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		this.getTipoPrestazioneCompenso().setCd_ti_prestazione(ti_prestazione);
 	}
 	
+	public java.util.Collection getTipiPrestazioneCompenso() {
+		return tipiPrestazioneCompenso;
+	}
+
+	public void setTipiPrestazioneCompenso(
+			java.util.Collection tipiPrestazioneCompenso) {
+		this.tipiPrestazioneCompenso = tipiPrestazioneCompenso;
+	}
+		
 	public it.cnr.contab.anagraf00.core.bulk.TerzoBulk getPignorato() {
 		return pignorato;
 	}
@@ -3337,13 +3348,28 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		this.oggetto_contratto = oggetto_contratto;
 		//this.getContratto().setOggetto(oggetto_contratto);
 	}
-	public java.util.Collection getTipiPrestazioneCompenso() {
-		return tipiPrestazioneCompenso;
+	public TrovatoBulk getTrovato() {
+		return trovato;
 	}
 
-	public void setTipiPrestazioneCompenso(
-			java.util.Collection tipiPrestazioneCompenso) {
-		this.tipiPrestazioneCompenso = tipiPrestazioneCompenso;
+	public void setTrovato(TrovatoBulk trovato) {
+		this.trovato = trovato;
 	}
-		
+
+	public java.lang.Long getPg_trovato() {
+		if (this.getTrovato() == null)
+			return null;
+		return this.getTrovato().getPg_trovato();
+	}
+	public void setPg_trovato(java.lang.Long pg_trovato) {
+		if (this.getTrovato() != null)
+			this.getTrovato().setPg_trovato(pg_trovato);
+	}
+
+	public Boolean isCollegatoCapitoloPerTrovato() {
+//		return collegatoCapitoloPerTrovato;
+		if (getObbligazioneScadenzario() == null || getObbligazioneScadenzario().getObbligazione() == null)
+			return false;
+		return getObbligazioneScadenzario().getObbligazione().getElemento_voce().isVocePerTrovati();
+	}
 }

@@ -372,6 +372,9 @@ public class CompensoBase extends CompensoKey implements Keyed {
 	// IM_TOT_REDDITO_COMPLESSIVO(15,2) NOT NULL
 	private java.math.BigDecimal im_tot_reddito_complessivo;		
 	
+		// PG_TROVATO DECIMAL(10,0)
+		private java.lang.Long pg_trovato;
+
 public CompensoBase() {
 	super();
 }
@@ -1753,12 +1756,11 @@ public void setTi_istituz_commerc(java.lang.String ti_istituz_commerc) {
 	public void setPg_contratto(java.lang.Long pg_contratto) {
 		this.pg_contratto = pg_contratto;
 	}
-	public java.math.BigDecimal getIm_tot_reddito_complessivo() {
-		return im_tot_reddito_complessivo;
+	public java.lang.Long getPg_trovato() {
+		return pg_trovato;
 	}
-	public void setIm_tot_reddito_complessivo(
-			java.math.BigDecimal im_tot_reddito_complessivo) {
-		this.im_tot_reddito_complessivo = im_tot_reddito_complessivo;
+	public void setPg_trovato(java.lang.Long pg_trovato) {
+		this.pg_trovato = pg_trovato;
 	}
 	
 }

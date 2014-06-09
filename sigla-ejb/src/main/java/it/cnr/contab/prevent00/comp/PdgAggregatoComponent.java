@@ -119,7 +119,7 @@ private boolean controllaStatoPdgFigliPadre(UserContext userContext,Pdg_preventi
 		sql.addSQLClause("AND", "V_PDG_CDR_FIGLI_PADRE.CD_CDR_ROOT", sql.EQUALS, pdg.getCd_centro_responsabilita());
 		sql.setForUpdateOf("stato");
 
-		PreparedStatement stm = sql.prepareStatement(getConnection(userContext));
+		LoggableStatement stm = sql.prepareStatement(getConnection(userContext));
 		try {
 			java.sql.ResultSet rs = stm.executeQuery();
 			try {

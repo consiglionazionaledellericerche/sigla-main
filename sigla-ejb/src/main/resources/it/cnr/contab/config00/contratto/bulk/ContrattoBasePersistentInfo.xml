@@ -181,6 +181,12 @@
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="false" />
+		<columnMapping
+			columnName="CD_CIG_FATTURA_ATTIVA"
+			propertyName="cdCigFatturaAttiva"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
 	</defaultColumnMap>
 	
         <persistentProperty
@@ -225,6 +231,8 @@
                 name="ds_organo_non_definito"/>
         <persistentProperty
                 name="ds_organo_ann_non_definito"/>
+        <persistentProperty
+                name="cdCigFatturaAttiva"/>
         <persistentProperty
                 name="fl_art82"/>
         <persistentProperty

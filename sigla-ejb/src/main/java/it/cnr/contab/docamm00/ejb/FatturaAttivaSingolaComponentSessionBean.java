@@ -1,10 +1,21 @@
 package it.cnr.contab.docamm00.ejb;
 
+import it.cnr.contab.docamm00.comp.FatturaAttivaSingolaComponent;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
+
 import java.rmi.RemoteException;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
-import it.cnr.contab.docamm00.comp.FatturaAttivaSingolaComponent;
+import javax.xml.datatype.XMLGregorianCalendar;
+import it.cnr.contab.docamm00.comp.FatturaPassivaComponent;
+import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 @Stateless(name="CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession")
 public class FatturaAttivaSingolaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements FatturaAttivaSingolaComponentSession {
 @PostConstruct
@@ -1087,6 +1098,24 @@ public it.cnr.jada.bulk.OggettoBulk completaOggetto(it.cnr.jada.UserContext para
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
+
+public void gestioneAllegatiPerFatturazioneElettronica(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		((FatturaAttivaSingolaComponent)componentObj).gestioneAllegatiPerFatturazioneElettronica(param0,param1);
+		component_invocation_succes(param0,componentObj);
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
 public boolean VerificaDuplicati(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException {
 	pre_component_invocation(param0,componentObj);
 	try {
@@ -1164,6 +1193,60 @@ public  it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk ricercaFattura(it.cn
 	pre_component_invocation(param0,componentObj);
 	try {
 		it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk result=((FatturaAttivaSingolaComponent)componentObj).ricercaFattura(param0,esercizio,cd_cds,cd_unita_organizzativa,pg_fattura);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public  it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk ricercaFatturaTrovato(it.cnr.jada.UserContext param0,Long esercizio,String cd_cds,String cd_unita_organizzativa,Long pg_fattura) throws it.cnr.jada.comp.ComponentException,RemoteException, it.cnr.jada.persistency.PersistencyException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk result=((FatturaAttivaSingolaComponent)componentObj).ricercaFatturaTrovato(param0,esercizio,cd_cds,cd_unita_organizzativa,pg_fattura);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public  it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk ricercaFatturaByKey(it.cnr.jada.UserContext param0,Long esercizio,String cd_cds,String cd_unita_organizzativa,Long pg_fattura) throws it.cnr.jada.comp.ComponentException,RemoteException, it.cnr.jada.persistency.PersistencyException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk result=((FatturaAttivaSingolaComponent)componentObj).ricercaFatturaByKey(param0,esercizio,cd_cds,cd_unita_organizzativa,pg_fattura);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk> ricercaFattureTrovato(it.cnr.jada.UserContext param0,Long param1) throws it.cnr.jada.comp.ComponentException,RemoteException, it.cnr.jada.persistency.PersistencyException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk> result=((FatturaAttivaSingolaComponent)componentObj).ricercaFattureTrovato(param0,param1);
 		component_invocation_succes(param0,componentObj);
 		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
@@ -1418,5 +1501,85 @@ public  java.lang.Long inserisciDatiPerStampaIva(it.cnr.jada.UserContext param0,
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
+public Nota_di_credito_attivaBulk generaNotaCreditoAutomatica(it.cnr.jada.UserContext param0, Fattura_attiva_IBulk fa, Integer esercizio) throws ComponentException,java.rmi.RemoteException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk result = ((FatturaAttivaSingolaComponent)componentObj).generaNotaCreditoAutomatica(param0, fa, esercizio);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
 }
-
+public Fattura_attiva_IBulk ricercaFatturaSDI(UserContext userContext, String codiceInvioSdi) throws PersistencyException, ComponentException, java.rmi.RemoteException {
+	pre_component_invocation(userContext,componentObj);
+	try {
+		Fattura_attiva_IBulk result = ((FatturaAttivaSingolaComponent)componentObj).ricercaFatturaSDI(userContext,codiceInvioSdi);
+		component_invocation_succes(userContext,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(userContext,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(userContext,componentObj);
+		throw e;
+	} catch(it.cnr.jada.persistency.PersistencyException e) {
+		component_invocation_failure(userContext,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(userContext,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(userContext,componentObj,e);
+	}
+}
+public Fattura_attiva_IBulk aggiornaDatiFatturaSDI(UserContext userContext, String codiceInvioSdi, String statoInvioSdi, String noteInvioSdi, XMLGregorianCalendar dataConsegnaSdi, boolean stornaFattura) throws PersistencyException, ComponentException, java.rmi.RemoteException {
+	pre_component_invocation(userContext,componentObj);
+	try {
+		Fattura_attiva_IBulk result = ((FatturaAttivaSingolaComponent)componentObj).aggiornaDatiFatturaSDI(userContext, codiceInvioSdi, statoInvioSdi, noteInvioSdi, dataConsegnaSdi, stornaFattura);
+		component_invocation_succes(userContext,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(userContext,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(userContext,componentObj);
+		throw e;
+	} catch(it.cnr.jada.persistency.PersistencyException e) {
+		component_invocation_failure(userContext,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(userContext,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(userContext,componentObj,e);
+	}
+}
+public Fattura_attiva_IBulk aggiornaDatiFatturaSDI(UserContext userContext, Fattura_attiva_IBulk fatturaAttiva, String statoInvioSdi, String noteInvioSdi, XMLGregorianCalendar dataConsegnaSdi, boolean stornaFattura) throws PersistencyException, ComponentException, java.rmi.RemoteException {
+	pre_component_invocation(userContext,componentObj);
+	try {
+		Fattura_attiva_IBulk result = ((FatturaAttivaSingolaComponent)componentObj).aggiornaDatiFatturaSDI(userContext, fatturaAttiva, statoInvioSdi, noteInvioSdi, dataConsegnaSdi, stornaFattura);
+		component_invocation_succes(userContext,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(userContext,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(userContext,componentObj);
+		throw e;
+	} catch(it.cnr.jada.persistency.PersistencyException e) {
+		component_invocation_failure(userContext,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(userContext,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(userContext,componentObj,e);
+	}
+}
+}

@@ -163,6 +163,12 @@ public class AnagraficoBase extends AnagraficoKey implements Keyed {
 	// FL_SPECIALE CHAR(1) NOT NULL
 	private java.lang.Boolean fl_speciale;
 	
+	// CODICE_AMMINISTRAZIONE_IPA VARCHAR(100)
+	private java.lang.String codiceAmministrazioneIpa;
+
+	// DATA_AVVIO_FATT_ELETTR TIMESTAMP
+	private java.sql.Timestamp dataAvvioFattElettr;
+	
 public AnagraficoBase() {
 	super();
 }
@@ -733,5 +739,18 @@ public java.lang.String getTitolo_studio() {
 }
 public void setTitolo_studio(java.lang.String titolo_studio) {
 	this.titolo_studio = titolo_studio;
+}
+public java.lang.String getCodiceAmministrazioneIpa() {
+	return codiceAmministrazioneIpa;
+}
+public void setCodiceAmministrazioneIpa(
+		java.lang.String codiceAmministrazioneIpa) {
+	this.codiceAmministrazioneIpa = codiceAmministrazioneIpa;
+}
+public java.sql.Timestamp getDataAvvioFattElettr() {
+	return dataAvvioFattElettr;
+}
+public void setDataAvvioFattElettr(java.sql.Timestamp dataAvvioFattElettr) {
+	this.dataAvvioFattElettr = dataAvvioFattElettr;
 }
 }

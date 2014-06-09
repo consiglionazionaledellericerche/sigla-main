@@ -1,9 +1,12 @@
 package it.cnr.contab.docamm00.ejb;
 
-import javax.ejb.Remote;
-
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
+
+import javax.ejb.Remote;
+
 @Remote
 public interface FatturaAttivaSingolaComponentSession extends it.cnr.contab.docamm00.comp.DocumentoAmministrativoComponentSession, it.cnr.jada.ejb.CRUDComponentSession {
 it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_attivaBulk addebitaDettagli(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_attivaBulk param1,java.util.List param2,java.util.Hashtable param3) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
@@ -65,11 +68,15 @@ it.cnr.jada.bulk.OggettoBulk rebuildDocumento(it.cnr.jada.UserContext param0, it
 it.cnr.jada.util.RemoteIterator cercaObbligazioni(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 byte[] lanciaStampa(it.cnr.jada.UserContext userContext,java.lang.Long pg_stampa) throws PersistencyException, ComponentException,java.rmi.RemoteException;
 it.cnr.jada.bulk.OggettoBulk completaOggetto(it.cnr.jada.UserContext aUC,it.cnr.jada.bulk.OggettoBulk oggetto) throws PersistencyException,it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+void gestioneAllegatiPerFatturazioneElettronica(it.cnr.jada.UserContext aUC,it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk fatturaAttiva)throws PersistencyException,it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 boolean VerificaDuplicati(it.cnr.jada.UserContext aUC,it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk fatturaAttiva)throws PersistencyException,it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.util.List findListaModalitaPagamentoWS(it.cnr.jada.UserContext userContext,String terzo,String query,String dominio,String tipoRicerca)throws ComponentException,java.rmi.RemoteException;
 java.util.List findListaBancheWS(it.cnr.jada.UserContext userContext,String terzo,String modalita,String query,String dominio,String tipoRicerca)throws ComponentException,java.rmi.RemoteException;
 java.util.List findListaRigheperNCWS(it.cnr.jada.UserContext userContext,String uo,String terzo,String ti_causale,String esercizio,String query,String dominio,String tipoRicerca)throws ComponentException,java.rmi.RemoteException;
 it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk ricercaFattura(it.cnr.jada.UserContext userContext,Long esercizio,String cd_cds,String cd_unita_organizzativa,Long pg_fattura)throws ComponentException,java.rmi.RemoteException,PersistencyException;
+it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk ricercaFatturaTrovato(it.cnr.jada.UserContext userContext,Long esercizio,String cd_cds,String cd_unita_organizzativa,Long pg_fattura)throws ComponentException,java.rmi.RemoteException,PersistencyException;
+it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk ricercaFatturaByKey(it.cnr.jada.UserContext userContext,Long esercizio,String cd_cds,String cd_unita_organizzativa,Long pg_fattura)throws ComponentException,java.rmi.RemoteException,PersistencyException;
+java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk> ricercaFattureTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException;
 java.util. List recuperoScadVoce(it.cnr.jada.UserContext userContext,it.cnr.jada.bulk.OggettoBulk bulk) throws ComponentException,java.rmi.RemoteException;
 java.util.List findManRevRigaCollegati(it.cnr.jada.UserContext param0, it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk param1) throws it.cnr.jada.comp.ComponentException,it.cnr.jada.persistency.PersistencyException,it.cnr.jada.persistency.IntrospectionException,java.rmi.RemoteException;
 java.util.List findListaBeneServizioWS(it.cnr.jada.UserContext userContext,String query,String tipo,String dominio,String tipoRicerca)throws ComponentException,java.rmi.RemoteException;
@@ -83,4 +90,8 @@ java.util.List findListaModalitaTrasportoWS(it.cnr.jada.UserContext userContext,
 java.util.List findListaCondizioneConsegnaWS(it.cnr.jada.UserContext userContext,String query,String dominio,String tipoRicerca)throws ComponentException,java.rmi.RemoteException;
 java.util.List findListaProvinciaWS(it.cnr.jada.UserContext userContext,String query,String dominio,String tipoRicerca)throws ComponentException,java.rmi.RemoteException;
 java.lang.Long inserisciDatiPerStampaIva(it.cnr.jada.UserContext userContext,Long esercizio,String cd_cds,String cd_unita_organizzativa,java.lang.Long pg_fattura) throws PersistencyException, ComponentException,java.rmi.RemoteException;
+Nota_di_credito_attivaBulk generaNotaCreditoAutomatica(it.cnr.jada.UserContext userContext, Fattura_attiva_IBulk fa, Integer esercizio) throws ComponentException,java.rmi.RemoteException;
+Fattura_attiva_IBulk ricercaFatturaSDI(it.cnr.jada.UserContext userContext, String codiceInvioSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException;
+Fattura_attiva_IBulk aggiornaDatiFatturaSDI(it.cnr.jada.UserContext userContext, String codiceInvioSdi, String statoInvioSdi, String noteInvioSdi, javax.xml.datatype.XMLGregorianCalendar dataConsegnaSdi, boolean stornaFattura) throws PersistencyException, ComponentException,java.rmi.RemoteException;
+Fattura_attiva_IBulk aggiornaDatiFatturaSDI(it.cnr.jada.UserContext userContext, Fattura_attiva_IBulk fatturaAttiva, String statoInvioSdi, String noteInvioSdi, javax.xml.datatype.XMLGregorianCalendar dataConsegnaSdi, boolean stornaFattura) throws PersistencyException, ComponentException,java.rmi.RemoteException;
 }

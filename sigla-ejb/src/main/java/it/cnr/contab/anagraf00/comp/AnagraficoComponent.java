@@ -1,27 +1,36 @@
 package it.cnr.contab.anagraf00.comp;
 
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
-import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
-import it.cnr.contab.missioni00.docs.bulk.MissioneHome;
-import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.CallableStatement;
-import java.sql.Timestamp;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import it.cnr.contab.anagraf00.core.bulk.*;
-import it.cnr.contab.anagraf00.tabrif.bulk.*;
-import it.cnr.contab.anagraf00.tabter.bulk.*;
-import it.cnr.contab.anagraf00.util.*;
-import java.util.Iterator;
-
-import javax.ejb.EJBException;
-
-import it.cnr.contab.compensi00.docs.bulk.*;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
+import it.cnr.contab.anagraf00.core.bulk.Anagrafico_esercizioBulk;
+import it.cnr.contab.anagraf00.core.bulk.Anagrafico_esercizioHome;
+import it.cnr.contab.anagraf00.core.bulk.Carico_familiare_anagBulk;
+import it.cnr.contab.anagraf00.core.bulk.InquadramentoBulk;
+import it.cnr.contab.anagraf00.core.bulk.IpaServFattBulk;
+import it.cnr.contab.anagraf00.core.bulk.IpaServFattHome;
+import it.cnr.contab.anagraf00.core.bulk.Pagamento_esternoBulk;
+import it.cnr.contab.anagraf00.core.bulk.Pagamento_esternoHome;
+import it.cnr.contab.anagraf00.core.bulk.RapportoBulk;
+import it.cnr.contab.anagraf00.core.bulk.Stampa_previdenziale_dipendentiVBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
+import it.cnr.contab.anagraf00.core.bulk.V_prev_dipBulk;
+import it.cnr.contab.anagraf00.core.bulk.V_prev_dipHome;
+import it.cnr.contab.anagraf00.core.bulk.V_terzo_anagrafico_sipBulk;
+import it.cnr.contab.anagraf00.core.bulk.V_terzo_anagrafico_sipHome;
+import it.cnr.contab.anagraf00.tabrif.bulk.EcfBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.EcfHome;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.anagraf00.util.CodiceFiscaleControllo;
+import it.cnr.contab.anagraf00.util.ExCodiceFiscale;
+import it.cnr.contab.anagraf00.util.ExPartitaIVA;
+import it.cnr.contab.anagraf00.util.PartitaIVAControllo;
+import it.cnr.contab.anagraf00.util.TerzoNonPresenteSIPException;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
@@ -30,14 +39,42 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaHome;
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneHome;
+import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.ejb.*;
+import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.BusyResourceException;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.OutdatedResourceException;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.comp.ICRUDMgr;
+import it.cnr.jada.comp.IPrintMgr;
+import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.Broker;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.DuplicateKeyException;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.Query;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.SimpleFindClause;
+
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.ejb.EJBException;
 
 /**
  * Questa classe svolge le operazioni fondamentali di lettura, scrittura e filtro dei dati
@@ -193,8 +230,21 @@ private void controllaNomeCognome(AnagraficoBulk anagrafico) throws ApplicationE
 	}
 }
 
+@SuppressWarnings("unchecked")
 public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
-
+	try {
+		IpaServFattHome ipaHome = (IpaServFattHome)getHome(userContext,IpaServFattBulk.class);
+		SQLBuilder sql = ipaHome.createSQLBuilder();
+		sql.addClause("AND", "cf", SQLBuilder.EQUALS, ((AnagraficoBulk)bulk).getCodice_fiscale());
+		List<IpaServFattBulk> listaIPA = ipaHome.fetchAll(sql);
+		if (!listaIPA.isEmpty()) {
+			IpaServFattBulk ipa = listaIPA.get(0);
+			((AnagraficoBulk)bulk).setCodiceAmministrazioneIpa(ipa.getCodAmm());
+			((AnagraficoBulk)bulk).setDataAvvioFattElettr(ipa.getDataAvvioSfe());			
+		}		
+	} catch (PersistencyException e) {
+		throw new ComponentException(e);
+	}
 	AnagraficoBulk anagrafico = (AnagraficoBulk)super.creaConBulk(userContext,bulk);
 	creaDefaultTerzo(userContext,anagrafico);
 	calcolaMontantePerPagamentoEsterno(userContext, anagrafico, true);	
@@ -670,6 +720,26 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 
 	AnagraficoBulk anagrafico = (AnagraficoBulk)bulk;
 	
+	if (anagrafico.getCodiceAmministrazioneIpa() == null){
+		TerzoHome home = (TerzoHome)getHome(aUC,TerzoBulk.class);
+
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause("AND","cd_anag",SQLBuilder.EQUALS,anagrafico.getCd_anag());
+		it.cnr.jada.persistency.Broker broker;
+		try {
+			broker = home.createBroker(sql);
+			while(broker.next()) {
+				TerzoBulk terzo = (TerzoBulk)broker.fetch(TerzoBulk.class);
+
+				if (terzo.getCodiceUnivocoUfficioIpa() != null)
+					throw new ApplicationException("Il codice Amministrazione dell'IPA deve essere valorizzato perchè esiste il terzo "+terzo.getCd_terzo() +" con il codice Ufficio IPA valorizzato.");
+			}
+		} catch (PersistencyException e) {
+			// TODO Auto-generated catch block
+			throw handleException(e);
+		}
+
+	}
 	calcolaMontantePerPagamentoEsterno(aUC, (AnagraficoBulk)bulk);
 	/* Segnalazione Err. CNR 643 - BORRIELLO	*/ 
 	//if (!isItalianoEsteroModificabile(aUC, (AnagraficoBulk)bulk)){ 
@@ -2241,15 +2311,6 @@ public void checkCaricoAlreadyExistFor(UserContext userContext,
 	}
 	}
 }
-public boolean isGestitoCreditoIrpef(UserContext userContext) throws ComponentException {
-	try {
-		Parametri_cnrBulk par = ((Parametri_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).getParametriCnr(userContext,CNRUserContext.getEsercizio(userContext));
-		return 
-		    par.getFl_credito_irpef();
-	} catch(Throwable e) {
-		throw handleException(e);
-	}
-}
 public void controllaUnicitaCaricoInAnnoImposta(UserContext userContext,AnagraficoBulk anagrafico,Carico_familiare_anagBulk carico)throws ComponentException  
 {
 	GregorianCalendar dataInCarico = new GregorianCalendar();
@@ -2273,6 +2334,15 @@ public void controllaUnicitaCaricoInAnnoImposta(UserContext userContext,Anagrafi
 				dataFinCarico.get(GregorianCalendar.YEAR) == (dataFinCaricoFamiliare.get(GregorianCalendar.YEAR)))
 			   )	
 				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: Non è possibile inserire per lo stesso carico familiare più dettagli relativi ad uno stesso anno d'imposta!");
+			}
+	}	
+public boolean isGestitoCreditoIrpef(UserContext userContext) throws ComponentException {
+	try {
+		Parametri_cnrBulk par = ((Parametri_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).getParametriCnr(userContext,CNRUserContext.getEsercizio(userContext));
+		return 
+		    par.getFl_credito_irpef();
+	} catch(Throwable e) {
+		throw handleException(e);
 	}
 }
 }

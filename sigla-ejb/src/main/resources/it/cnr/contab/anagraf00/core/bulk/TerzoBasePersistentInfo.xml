@@ -79,6 +79,11 @@
 			sqlTypeName="VARCHAR"
 			columnSize="300" />
 		<columnMapping
+			columnName="CODICE_UNIVOCO_UFFICIO_IPA"
+			propertyName="codiceUnivocoUfficioIpa"
+			sqlTypeName="VARCHAR"
+			columnSize="6" />
+		<columnMapping
 			columnName="DT_FINE_RAPPORTO"
 			propertyName="dt_fine_rapporto"
 			sqlTypeName="TIMESTAMP"
@@ -142,6 +147,8 @@
 		name="ti_terzo" />
 	<persistentProperty
 		name="note" />
+	<persistentProperty
+		name="codiceUnivocoUfficioIpa" />
 	<persistentProperty
 		name="dt_fine_rapporto" />
 	<persistentProperty

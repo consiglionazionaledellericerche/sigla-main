@@ -1,9 +1,6 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.Keyed;
 
 public class Fattura_attivaBase extends Fattura_attivaKey implements Keyed {
 	// CAMBIO DECIMAL(15,4) NOT NULL
@@ -44,6 +41,21 @@ public class Fattura_attivaBase extends Fattura_attivaKey implements Keyed {
 
 	// COGNOME VARCHAR(50)
 	private java.lang.String cognome;
+	
+	// CODICE_UNIVOCO_UFFICIO_IPA VARCHAR(6)
+	private java.lang.String codiceUnivocoUfficioIpa;
+
+	// CODICE_INVIO_SDI VARCHAR(30)
+	private java.lang.String codiceInvioSdi;
+	
+	// STATO_INVIO_SDI VARCHAR(3)
+	private java.lang.String statoInvioSdi;
+
+	// NOTE_INVIO_SDI VARCHAR(500)
+	private java.lang.String noteInvioSdi;
+
+	// NC_ANNULLO_SDI VARCHAR(1)
+	private java.lang.String ncAnnulloSdi;
 
 	// DS_FATTURA_ATTIVA VARCHAR(200)
 	private java.lang.String ds_fattura_attiva;
@@ -113,6 +125,12 @@ public class Fattura_attivaBase extends Fattura_attivaKey implements Keyed {
 
 	// PROTOCOLLO_IVA_GENERALE DECIMAL(10,0)
 	private java.lang.Long protocollo_iva_generale;
+
+	// PROGR_UNIVOCO_ANNO DECIMAL(10,0)
+	private java.lang.Long progrUnivocoAnno;
+
+	// DT_CONSEGNA_SDI TIMESTAMP 
+	private java.sql.Timestamp dtConsegnaSdi;
 
 	// RAGIONE_SOCIALE VARCHAR(100)
 	private java.lang.String ragione_sociale;
@@ -697,5 +715,47 @@ public java.lang.String getFl_pagamento_anticipato() {
 }
 public void setFl_pagamento_anticipato(java.lang.String fl_pagamento_anticipato) {
 	this.fl_pagamento_anticipato = fl_pagamento_anticipato;
+}
+public java.lang.String getCodiceUnivocoUfficioIpa() {
+	return codiceUnivocoUfficioIpa;
+}
+public void setCodiceUnivocoUfficioIpa(java.lang.String codiceUnivocoUfficioIpa) {
+	this.codiceUnivocoUfficioIpa = codiceUnivocoUfficioIpa;
+}
+public java.lang.String getCodiceInvioSdi() {
+	return codiceInvioSdi;
+}
+public void setCodiceInvioSdi(java.lang.String codiceInvioSdi) {
+	this.codiceInvioSdi = codiceInvioSdi;
+}
+public java.lang.String getStatoInvioSdi() {
+	return statoInvioSdi;
+}
+public void setStatoInvioSdi(java.lang.String statoInvioSdi) {
+	this.statoInvioSdi = statoInvioSdi;
+}
+public java.lang.String getNoteInvioSdi() {
+	return noteInvioSdi;
+}
+public void setNoteInvioSdi(java.lang.String noteInvioSdi) {
+	this.noteInvioSdi = noteInvioSdi;
+}
+public java.lang.String getNcAnnulloSdi() {
+	return ncAnnulloSdi;
+}
+public void setNcAnnulloSdi(java.lang.String ncAnnulloSdi) {
+	this.ncAnnulloSdi = ncAnnulloSdi;
+}
+public java.lang.Long getProgrUnivocoAnno() {
+	return progrUnivocoAnno;
+}
+public void setProgrUnivocoAnno(java.lang.Long progrUnivocoAnno) {
+	this.progrUnivocoAnno = progrUnivocoAnno;
+}
+public java.sql.Timestamp getDtConsegnaSdi() {
+	return dtConsegnaSdi;
+}
+public void setDtConsegnaSdi(java.sql.Timestamp dtConsegnaSdi) {
+	this.dtConsegnaSdi = dtConsegnaSdi;
 }
 }

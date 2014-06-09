@@ -125,6 +125,10 @@
 	  <td><% bp.getController().writeFormLabel( out, "fl_solo_competenza"); %></td>	
 	  <td><% bp.getController().writeFormInput( out, "fl_solo_competenza"); %></td>
 	</tr>
+	<tr>
+	  <td><% bp.getController().writeFormLabel( out, "fl_trovato"); %></td>
+	  <td><% bp.getController().writeFormInput( out, "fl_trovato"); %></td>
+	</tr>	
 	</table>		
 	<% ((EV_cds_spese_capitoloBulk) bp.getModel()).writeTable( out, ((EV_cds_spese_capitoloBulk) bp.getModel()).getAssociazioni() ); %>
 

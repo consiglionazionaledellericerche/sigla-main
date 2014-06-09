@@ -585,13 +585,32 @@
                 inputType="CRUDTOOL"
                 CRUDBusinessProcessName="CRUDCodiciCIGBP"/>
         <fieldProperty
-                name="cdCig"
-                property="cig.cdCig"
+                name="cup"
+                property="cup"
+                inputType="SEARCHTOOL"
+                formName="searchtool"
+                nullable="true"
+                enabledOnSearch="true"
+                label="CUP" />
+        <fieldProperty
+                name="crea_cup"
+                property="cup"
+                inputType="CRUDTOOL"
+                CRUDBusinessProcessName="CRUDCUPBP"/>
+        <fieldProperty
+                name="cdCup"
+                property="cup.cdCup"
+                inputType="TEXT"
+                inputSize="20"
+                maxLength="15"
+                label="Codice CUP" />
+        <fieldProperty
+                name="cdCigFatturaAttiva"
+                property="cdCigFatturaAttiva"
                 inputType="TEXT"
                 inputSize="20"
                 maxLength="10"
-                label="Codice CIG" />
-                
+               	label="CIG comunicato dal Committente da esporre sulla Fattura Attiva" />
 	    <form name="searchtool">
 	          <formFieldProperty
 	                name="esercizio" />
@@ -691,6 +710,8 @@
         <formFieldProperty
                 name="dt_stipula"/>
         <formFieldProperty
+                name="cdCigFatturaAttiva"/>
+        <formFieldProperty
                 name="dt_inizio_validita"/>
         <formFieldProperty
                 name="dt_fine_validita"/>
@@ -757,6 +778,10 @@
                 name="cig" />
         <formFieldProperty
                 name="crea_cig" />
+        <formFieldProperty
+                name="cup" />
+        <formFieldProperty
+                name="crea_cup" />
 
         <findFieldProperty
                 name="stato"/>
@@ -809,6 +834,8 @@
         <findFieldProperty
                 name="dt_stipula"/>
         <findFieldProperty
+                name="cdCigFatturaAttiva"/>
+        <findFieldProperty
                 name="dt_inizio_validita"/>
         <findFieldProperty
                 name="dt_fine_validita"/>
@@ -835,7 +862,7 @@
         <findFieldProperty
                 name="fl_pubblica_contratto" />
         <findFieldProperty
-                name="cdCig" />
+                name="cdCup" />
   
         <columnFieldProperty
                 name="stato"/>
@@ -879,6 +906,8 @@
                 name="im_contratto_passivo"/>
         <columnFieldProperty
                 name="dt_stipula"/>
+        <columnFieldProperty
+                name="cdCigFatturaAttiva"/>
         <columnFieldProperty
                 name="dt_inizio_validita"/>
         <columnFieldProperty

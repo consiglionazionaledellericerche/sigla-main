@@ -37,6 +37,11 @@ public class RicercaIncarichiRichiestaAction extends AbstractAction {
 	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&dominio=data&query=s           * solo incarichi di collaborazione scadute (e quelle non ancora attive)
 	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&dominio=data&query=c&anno=2008 * solo incarichi di collaborazione in corso pubblicate nel 2008
 	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&dominio=data&query=s&anno=2008 * solo incarichi di collaborazione scadute (e quelle non ancora attive) pubblicate nel 2008
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=1                  * Incarichi di collaborazione relativi ad attività di consulenza con tipo attività 3 e 7
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=2                  * Incarichi di collaborazione relativi ad altre tipologie di attività con tipo attività 1,2,4,5,6 e 8
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=3                  * Assegni di ricerca con tipo attività 10
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=4                  * Borse di studio con tipo attività 11
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=5                  * Tirocini con tipo attività 12
 
 	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=4                                * elenco contratti conferiti
 
@@ -64,6 +69,7 @@ public class RicercaIncarichiRichiestaAction extends AbstractAction {
 			valorizzaParametri(actioncontext,bp,"order");
 			valorizzaParametri(actioncontext,bp,"strRic");			
 			valorizzaParametri(actioncontext,bp,"cdCds");
+			valorizzaParametri(actioncontext,bp,"tipoInc");
 			
 			if (bp.getUser()!= null)
 				user = bp.getUser();

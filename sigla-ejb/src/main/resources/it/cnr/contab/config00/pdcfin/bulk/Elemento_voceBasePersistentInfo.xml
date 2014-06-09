@@ -201,6 +201,12 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_TROVATO"
+			propertyName="fl_trovato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"/>
 	</defaultColumnMap>
 
 	<persistentProperty
@@ -267,4 +273,6 @@
 		name="fl_solo_residuo" />	
 	<persistentProperty
 		name="fl_solo_competenza" />		
+	<persistentProperty
+		name="fl_trovato" />
 </SQLPersistentInfo>

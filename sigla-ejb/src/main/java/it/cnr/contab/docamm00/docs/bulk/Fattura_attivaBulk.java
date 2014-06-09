@@ -5,27 +5,52 @@ package it.cnr.contab.docamm00.docs.bulk;
  * Creation date: (9/5/2001 5:02:18 PM)
  * @author: Ardire Alfonso
  */
+import it.cnr.cmisdl.model.Node;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.cmis.bulk.CMISFile;
+import it.cnr.contab.docamm00.cmis.CMISFileFatturaAttiva;
+import it.cnr.contab.docamm00.cmis.CMISFolderFatturaAttiva;
+import it.cnr.contab.docamm00.intrastat.bulk.Fattura_attiva_intraBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.SezionaleBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
-import it.cnr.contab.utenze00.bulk.UtenteBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
-import it.cnr.contab.docamm00.intrastat.bulk.Fattura_attiva_intraBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.*;
-import it.cnr.contab.anagraf00.core.bulk.*;
-import it.cnr.contab.anagraf00.tabrif.bulk.*;
-import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
-
-import java.rmi.RemoteException;
-import java.util.*;
-
-import it.cnr.contab.doccont00.core.bulk.*;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.comp.ComponentException;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkCollections;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.PrimaryKeyHashMap;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.OrderedHashtable;
-import it.cnr.jada.util.action.*;
+import it.cnr.jada.util.StrServ;
+import it.cnr.jada.util.action.CRUDBP;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 
 public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements IDocumentoAmministrativoBulk, Voidable, it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi {
@@ -34,6 +59,10 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	public final static String LIBERA              = "L";
 	public final static String TARIFFARIO          = "T";
 	private int num_dettColl=0;
+	
+	private File file;
+	private String nomeFile;
+	private String typeNameForCMIS;
 
 	public final static String STATO_INIZIALE = "I";
 	public final static String STATO_CONTABILIZZATO = "C";
@@ -74,6 +103,28 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	public final static String FATTURA_DI_SERVIZI = Bene_servizioBulk.SERVIZIO;
 	public final static String FATTURA_DI_BENI = Bene_servizioBulk.BENE;
 	public final static Dictionary FATTURA_BENI_SERVIZI;
+
+	
+	public final static String FATT_ELETT_ALLA_FIRMA = "FIR";
+	public final static String FATT_ELETT_SCARTATA_DA_SDI = "SCA";
+	public final static String FATT_ELETT_CONSEGNATA_SDI = "COS";
+	public final static String FATT_ELETT_MANCATA_CONSEGNA = "MAC";
+	public final static String FATT_ELETT_NON_RECAPITABILE = "NRE";
+	public final static String FATT_ELETT_CONSEGNATA_DESTINATARIO = "CON";
+	public final static String FATT_ELETT_ACCETTATA_DESTINATARIO = "ACC";
+	public final static String FATT_ELETT_RIFIUTATA_DESTINATARIO =  "RIF";
+	public final static String FATT_ELETT_DECORRENZA_TERMINI = "DEC";
+	public final static String FATT_ELETT_FIRMATA_NC = "FIN";
+	
+		
+	public final static String TIPO_FATTURA_ATTIVA = "F";
+	public final static String TIPO_NOTA_DI_CREDITO = "C";
+	public final static String TIPO_NOTA_DI_DEBITO = "D";
+
+	public final static Dictionary statoInvioSdiKeys;
+
+	public final static Dictionary tipoFatturaKeys;
+
 	/*
 	Definizione del motivo di emissione.
 
@@ -143,6 +194,23 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 		FATTURA_BENI_SERVIZI.put(FATTURA_DI_BENI,"Fattura di beni");
 		FATTURA_BENI_SERVIZI.put(FATTURA_DI_SERVIZI,"Fattura di servizi");
 
+		statoInvioSdiKeys = new it.cnr.jada.util.OrderedHashtable();
+		statoInvioSdiKeys.put(FATT_ELETT_ALLA_FIRMA,"Alla Firma");
+		statoInvioSdiKeys.put(FATT_ELETT_SCARTATA_DA_SDI,"Scartata da SDI");
+		statoInvioSdiKeys.put(FATT_ELETT_CONSEGNATA_SDI,"Consegnata SDI");	
+		statoInvioSdiKeys.put(FATT_ELETT_MANCATA_CONSEGNA,"Mancata consegna");	
+		statoInvioSdiKeys.put(FATT_ELETT_NON_RECAPITABILE,"Non recapitabile");	
+		statoInvioSdiKeys.put(FATT_ELETT_CONSEGNATA_DESTINATARIO,"Consegnata al destinatario");	
+		statoInvioSdiKeys.put(FATT_ELETT_ACCETTATA_DESTINATARIO,"Accettata dal destinatario");	
+		statoInvioSdiKeys.put(FATT_ELETT_RIFIUTATA_DESTINATARIO,"Rifiutata dal destinatario");	
+		statoInvioSdiKeys.put(FATT_ELETT_DECORRENZA_TERMINI,"Decorrenza termini accettazione/rifiuto da parte del destinatario");	
+		statoInvioSdiKeys.put(FATT_ELETT_FIRMATA_NC,"Firmata(solo per le note di credito)");	
+
+		tipoFatturaKeys = new it.cnr.jada.util.OrderedHashtable();
+		tipoFatturaKeys.put(TIPO_FATTURA_ATTIVA,"Fattura");
+		tipoFatturaKeys.put(TIPO_NOTA_DI_CREDITO,"Nota Credito");
+		tipoFatturaKeys.put(TIPO_NOTA_DI_DEBITO,"Nota Debito");	
+	
 	}
 	protected SezionaleBulk sezionale;
 	protected Tipo_sezionaleBulk tipo_sezionale;
@@ -182,10 +250,6 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	private java.util.Collection modalita_uo;
 	private java.util.Collection termini_uo;
 
-	public final static String TIPO_FATTURA_ATTIVA = "F";
-	public final static String TIPO_NOTA_DI_CREDITO = "C";
-	public final static String TIPO_NOTA_DI_DEBITO = "D";
-
 	public final static String STATO_IVA_A = "A";
 	public final static String STATO_IVA_B = "B";
 	public final static String STATO_IVA_C = "C";
@@ -201,6 +265,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	private java.lang.String riportata = NON_RIPORTATO;
 	private java.lang.String riportataInScrivania = NON_RIPORTATO;
 	private Integer esercizioInScrivania;
+
+	private String collegamentoDocumentale;
 
 	/*
 	 * Le variabili isDetailDoubled e isDocumentoModificabile servono per gestire il caso in cui l'utente
@@ -241,6 +307,10 @@ public void addToCarichiInventarioHash(
 		righeAssociate.add(rigaFattura);
 }
 
+public static java.util.Dictionary getTipoFatturaKeys() {
+	return tipoFatturaKeys;
+}
+
 /**
  * Insert the method's description here.
  * Creation date: (5/15/2002 10:50:29 AM)
@@ -262,6 +332,18 @@ public void addToDefferredSaldi(
 		}
 	}
 }
+
+public static java.util.Dictionary getStatoInvioSdiKeys() {
+	return statoInvioSdiKeys;
+}
+
+public Object recuperoStatoInvioSdiKeys() {
+	if (getStatoInvioSdi() != null){
+		return getStatoInvioSdiKeys().get(getStatoInvioSdi());
+	}
+	return null;
+}
+
 public void addToDettagliCancellati(IDocumentoAmministrativoRigaBulk dettaglio) {
 
 	if (dettaglio != null && ((OggettoBulk)dettaglio).getCrudStatus() == OggettoBulk.NORMAL) {
@@ -1967,5 +2049,40 @@ public boolean hasIntrastatInviati() {
 	}	
 	return false;
 }
+public boolean isDocumentoFatturazioneElettronica() {
+	if (getCodiceUnivocoUfficioIpa() != null){
+		return true;
+	}
+	return false;
+}
+public String getCollegamentoDocumentale() {
+	return collegamentoDocumentale;
+}
+public void setCollegamentoDocumentale(String collegamentoDocumentale) {
+	this.collegamentoDocumentale = collegamentoDocumentale;
+}
+//public CMISFileFatturaAttiva getCMISFile(String typeName) throws IOException{
+//	CMISFileFatturaAttiva cmisFile = null;
+//	this.setTypeNameForCMIS(typeName);
+//	if (this.getFile()==null)
+//		cmisFile = new CMISFileFatturaAttiva(this);
+//	else 
+//		cmisFile = new CMISFileFatturaAttiva(this.getFile(), this.getNomeFile(), this);
+//	return cmisFile;
+//}
+//public CMISFile getCMISFile(Node node) {
+//	return new CMISFileFatturaAttiva(node, this);
+//}
+
+public String constructCMISNomeFile() {
+	StringBuffer nomeFile = new StringBuffer();
+	nomeFile = nomeFile.append(getTi_fattura());
+	nomeFile = nomeFile.append("-"+this.getCd_unita_organizzativa());
+	nomeFile = nomeFile.append("-"+this.getEsercizio().toString()+Utility.lpad(this.getPg_fattura_attiva().toString(),9,'0'));
+	return nomeFile.toString();
 }
 
+public String recuperoIdFatturaAsString(){
+	return StrServ.replace(getCd_unita_organizzativa(), ".", "")+getEsercizio()+StrServ.lpad(getPg_fattura_attiva().toString(), 5);
+}
+}

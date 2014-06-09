@@ -92,9 +92,21 @@
 			     	</td>
 				</tr>
 	    <%	} %>
+      <tr>
+		<%	it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk riga = (it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk)bp.getDettaglio().getModel();
+			if (riga != null && riga.getCollegatoCapitoloPerTrovato()) { %>
+			  	  <td>
+				  	<% bp.getDettaglio().writeFormLabel(out,"pg_trovato");%>
+				  </td>
+				  <td colspan="3">	
+				  <% bp.getDettaglio().writeFormInput(out,null,"pg_trovato",false,null,"");%>
+				  	<% bp.getDettaglio().writeFormField(out,"titoloTrovato");%>
+				  	<% bp.getDettaglio().writeFormField(out,"inventoreTrovato");%>
+			  	</td>
+		<%	}  %>
+ 	  </tr>
     </table>
    </div>
-
     <div class="Group">
   	<table>
 	  <tr>
@@ -141,8 +153,7 @@
 	  	<td>
 		  	<% bp.getDettaglio().writeFormLabel(out,"im_iva");%>
 	  	</td>
-		<%	it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk riga = (it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk)bp.getDettaglio().getModel();
-			if (riga != null && riga.getFl_iva_forzata() != null && riga.getFl_iva_forzata().booleanValue()) { %>
+		<%	if (riga != null && riga.getFl_iva_forzata() != null && riga.getFl_iva_forzata().booleanValue()) { %>
 			  	<td>
 				  	<% bp.getDettaglio().writeFormInput(out,null,"im_iva",false,null,"style=\"color:red\"");%>
 			  	</td>

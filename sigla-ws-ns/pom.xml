@@ -15,8 +15,8 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<configuration>
-						<source>1.5</source>
-						<target>1.5</target>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -26,8 +26,86 @@
 						<ejbVersion>3.0</ejbVersion>
 					</configuration>
 				</plugin>
+	            <!--This plugin's configuration is used to store Eclipse 
+	                m2e settings only. It has no influence on the Maven build itself. -->
+	            <plugin>
+	                <groupId>org.eclipse.m2e</groupId>
+	                <artifactId>lifecycle-mapping</artifactId>
+	                <version>1.0.0</version>
+	                <configuration>
+	                    <lifecycleMappingMetadata>
+	                        <pluginExecutions>
+	                            <pluginExecution>
+	                                <pluginExecutionFilter>
+	                                    <groupId>org.codehaus.mojo</groupId>
+	                                    <artifactId>jaxws-maven-plugin</artifactId>
+	                                    <versionRange>[1.0,)</versionRange>
+	                                    <goals>
+	                                        <goal>wsimport</goal>
+	                                    </goals>
+	                                </pluginExecutionFilter>
+	                                <action>
+	                                    <execute />
+	                                </action>
+	                            </pluginExecution>
+	                        </pluginExecutions>
+	                    </lifecycleMappingMetadata>
+	                </configuration>
+	            </plugin>
 			</plugins>
 		</pluginManagement>
+		<plugins>
+	    	<plugin>
+        		<groupId>org.codehaus.mojo</groupId>
+		        <artifactId>jaxws-maven-plugin</artifactId>
+		        <version>1.12</version>
+		        <executions>
+        			<execution>
+            			<goals>
+              				<goal>wsimport</goal>
+            			</goals>
+		          	</execution>
+        		</executions>
+        		<configuration>
+					<args>
+			            <arg>-B-XautoNameResolution</arg>
+	        		</args>
+           			<wsdlUrls>
+            			<wsdlUrl>${project.basedir}/src/main/resources/wsdl/SdIRiceviFile_v1.0.wsdl</wsdlUrl>
+            			<wsdlUrl>${project.basedir}/src/main/resources/wsdl/TrasmissioneFatture_v1.1.wsdl</wsdlUrl>
+					</wsdlUrls>
+          			<packageName>it.gov.fatturapa</packageName>
+				</configuration>
+		    </plugin>
+			<!-- Conversion of XML Schema into Java source code using JAXB-XJC -->
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<version>0.7.4</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<schemaDirectory>${project.basedir}/src/main/resources/xsd</schemaDirectory>
+					<extension>true</extension>
+					<args>
+						<arg>-Xcollection-setter-injector</arg>
+					</args>
+					<strict>true</strict>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>net.java.dev.vcc.thirdparty</groupId>
+						<artifactId>collection-setter-injector</artifactId>
+						<version>0.5.0-1</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+    	</plugins>
 	</build>
 	<dependencies>
 		<dependency>
@@ -126,5 +204,11 @@
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
+	    <dependency>
+	    	<groupId>junit</groupId>
+	      	<artifactId>junit</artifactId>
+	      	<version>3.8.1</version>
+	      	<scope>test</scope>
+	    </dependency>
 	</dependencies>
 </project>

@@ -166,6 +166,10 @@
   <action 
       path="/ConsVarCompResAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
   </action>
+
+  <action 
+      path="/ConsStatoInvioMandatiAction" actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsStatoInvioMandatiAction">
+  </action>
     
    <businessProcess
       name="ConsObbligazioniBP" className="it.cnr.contab.consultazioni.bp.ConsObbligazioniBP">

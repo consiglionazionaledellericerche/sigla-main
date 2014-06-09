@@ -314,6 +314,16 @@
 			propertyName="titolo_studio"
 			sqlTypeName="VARCHAR"
 			columnSize="6" />
+		<columnMapping
+			columnName="CODICE_AMMINISTRAZIONE_IPA"
+			propertyName="codiceAmministrazioneIpa"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="DATA_AVVIO_FATT_ELETTR"
+			propertyName="dataAvvioFattElettr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />	
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_nazione_nazionalita" />
@@ -429,4 +439,8 @@
 		name ="fl_sospensione_irpef" />
 	<persistentProperty
 		name ="titolo_studio"	/>		
+	<persistentProperty
+		name ="codiceAmministrazioneIpa"	/>		
+	<persistentProperty
+		name ="dataAvvioFattElettr"	/>	
 </SQLPersistentInfo>

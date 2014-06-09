@@ -602,8 +602,20 @@
 		keysProperty="ti_titoloStudioKeys"
 		inputType="SELECT"
 		/>
-
-		
+	<fieldProperty
+		name="codiceAmministrazioneIpa"
+		property="codiceAmministrazioneIpa"
+		readonlyPropertyOnEdit="notGestoreIstat"
+		inputSize="100"
+		label="Codice dell'Amministrazione IPA"
+		inputType="TEXT" />
+	<fieldProperty
+		name="dataAvvioFattElettr"
+		property="dataAvvioFattElettr"
+		readonlyPropertyOnEdit="notGestoreIstat"
+		label="Data di avvio della Fatturazione Elettronica"
+		inputType="TEXT"
+		formatName="date_short" />
 	<columnFieldProperty
 		name="cd_anag"
 		label="Codice anagrafico"
@@ -648,6 +660,14 @@
 	<columnFieldProperty
 		name="fl_cervellone"
 		label="Cervellone"
+		/>
+	<columnFieldProperty
+		name="codiceAmministrazioneIpa"
+		label="Codice Amministrazione IPA"
+		/>
+	<columnFieldProperty
+		name="dataAvvioFattElettr"
+		label="Data avvio Fatturazione Elettronica"
 		/>
  <!--   <columnFieldProperty
 		name="pg_tipologia_istat"
@@ -890,6 +910,12 @@
 		name="fl_sospensione_irpef"/>		
 	<formFieldProperty
 		name="titolo_studio"/>
+	<formFieldProperty
+		name="codiceAmministrazioneIpa"
+		/>
+	<formFieldProperty
+		name="dataAvvioFattElettr"
+		/>
 		
 	<findFieldProperty
 		name="cd_anag"
@@ -943,4 +969,8 @@
 		name="ds_tipologia_istat"/> 
 	<findFieldProperty
 		name="fl_sospensione_irpef"/>		
+	<findFieldProperty
+		name="codiceAmministrazioneIpa"	/>
+	<findFieldProperty
+		name="dataAvvioFattElettr"	/>
 </bulkInfo>

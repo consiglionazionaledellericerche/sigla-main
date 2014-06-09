@@ -1,28 +1,32 @@
 package it.cnr.contab.config00.latt.bulk;
 
-import java.rmi.RemoteException;
-import java.sql.PreparedStatement;
-import java.util.List;
-
-import javax.ejb.EJBException;
-
 import it.cnr.contab.config00.blob.bulk.PostItBulk;
-import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
-import it.cnr.contab.doccont00.core.bulk.Reversale_rigaBulk;
-import it.cnr.contab.doccont00.core.bulk.Reversale_rigaIBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
+import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.*;
+import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BusyResourceException;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.OutdatedResourceException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.ObjectNotFoundException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.Persistent;
+import it.cnr.jada.persistency.sql.ApplicationPersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.PersistentHome;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+
+import java.rmi.RemoteException;
+
+import javax.ejb.EJBException;
 
 public class WorkpackageHome extends BulkHome {
 /**
@@ -71,7 +75,7 @@ public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,Og
 				sql.setHeader("SELECT MAX(CD_LINEA_ATTIVITA)");
 				sql.addClause("AND","cd_centro_responsabilita",sql.EQUALS,linea_attivita.getCentro_responsabilita().getCd_centro_responsabilita());
 				sql.addClause("AND","cd_linea_attivita",sql.LIKE,aSuffix+"%");
-				PreparedStatement stm = sql.prepareStatement(getConnection());
+				LoggableStatement stm = sql.prepareStatement(getConnection());
 				try {
 					java.sql.ResultSet rs = stm.executeQuery();
 					if (rs.next())

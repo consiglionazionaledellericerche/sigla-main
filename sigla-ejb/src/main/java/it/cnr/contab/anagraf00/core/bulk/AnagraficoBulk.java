@@ -31,6 +31,7 @@ public class AnagraficoBulk extends AnagraficoBase {
 	public final static Dictionary SESSO;
 	public final static Dictionary ti_titoloStudioKeys;
 
+	private boolean notGestoreIstat;
 	private ComuneBulk  comune_fiscale;
 	private ComuneBulk  comune_nascita;
 	private NazioneBulk nazionalita;
@@ -955,5 +956,11 @@ public void setTi_entita_persona_struttura(int newTi_entita_persona_struttura) {
 	}
 	public Dictionary getTi_titoloStudioKeys() {
 		return ti_titoloStudioKeys;
+	}
+	public boolean isNotGestoreIstat() {
+		return notGestoreIstat;
+	}
+	public void setNotGestoreIstat(boolean notGestoreIstat) {
+		this.notGestoreIstat = notGestoreIstat;
 	}
 }

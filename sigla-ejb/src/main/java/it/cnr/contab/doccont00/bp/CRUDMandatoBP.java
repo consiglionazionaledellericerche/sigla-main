@@ -514,4 +514,4 @@ public void setSiope_cup_attivo(boolean siope_cup_attivo) {
 public SimpleDetailCRUDController getSiopeCupCollegati() {
 	return siopeCupCollegati;
 }
-}	
+}

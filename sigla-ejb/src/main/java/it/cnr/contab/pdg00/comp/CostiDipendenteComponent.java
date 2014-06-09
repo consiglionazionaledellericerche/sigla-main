@@ -854,7 +854,7 @@ public void lockMatricola(UserContext userContext,String id_matricola,int mese) 
 		sql.addSQLClause(FindClause.AND,"ID_MATRICOLA",SQLBuilder.EQUALS,id_matricola);
 		sql.addSQLClause(FindClause.AND,"MESE",SQLBuilder.EQUALS,new Integer(mese));
 		sql.setForUpdate(true);
-		PreparedStatement stm = sql.prepareStatement(getConnection(userContext));
+		LoggableStatement stm = sql.prepareStatement(getConnection(userContext));
 		try {
 			java.sql.ResultSet rs = stm.executeQuery();
 			while (rs.next());
@@ -1549,7 +1549,7 @@ public boolean isSpeseFromScaricoDipendente(UserContext userContext, Pdg_modulo_
 		sql.addSQLClause("AND","CD_CDS_AREA",sql.EQUALS,pdg_modulo_spese.getCd_cds_area());
 		//sql.addSQLClause("AND","PG_DETTAGLIO",sql.EQUALS,pdg_modulo_spese.getPg_dettaglio());
 		
-		PreparedStatement stm = sql.prepareStatement(getConnection(userContext));
+		LoggableStatement stm = sql.prepareStatement(getConnection(userContext));
 		try {
 			java.sql.ResultSet rs = stm.executeQuery();
 			if (rs.next())

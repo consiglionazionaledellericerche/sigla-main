@@ -13,7 +13,14 @@ import it.cnr.jada.comp.ApplicationException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.httpclient.Credentials;
+import org.apache.commons.httpclient.HttpClient;
+
+import com.google.gson.Gson;
+
 public class PdgVariazioniService extends CMISService {
+	private HttpClient httpClient;
+	private Gson gson;
 
 	public PdgVariazioneDocument getPdgVariazioneDocument(Pdg_variazioneBulk pdg_variazioneBulk) throws DetailedException{
 		StringBuffer query = new StringBuffer("select * from varpianogest:document");
@@ -81,5 +88,25 @@ public class PdgVariazioniService extends CMISService {
 			result.removeAll(findVariazioniSigned(esercizio, cds, uo, variazionePdg));
 		}
 		return result;
+	}
+	
+	public Credentials getCredentials(){
+		return systemCredentials;
+	}
+
+	public HttpClient getHttpClient() {
+		return httpClient;
+	}
+
+	public void setHttpClient(HttpClient httpClient) {
+		this.httpClient = httpClient;
+	}
+
+	public Gson getGson() {
+		return gson;
+	}
+
+	public void setGson(Gson gson) {
+		this.gson = gson;
 	}
 }

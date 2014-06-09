@@ -71,6 +71,16 @@
 			columnSize="1"
 			nullable="false" />
 		<columnMapping
+			columnName="NATURA_OPER_NON_IMP_SDI"
+			propertyName="naturaOperNonImpSdi"
+			sqlTypeName="CHAR"
+			columnSize="2" />
+		<columnMapping
+			columnName="RIF_NORM_OPER_NON_IMP_SDI"
+			propertyName="rifNormOperNonImpSdi"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
 			columnName="DACR"
 			propertyName="dacr"
 			sqlTypeName="TIMESTAMP"
@@ -169,6 +179,10 @@
 		name="fl_non_imponibile" />
 	<persistentProperty
 		name="ti_applicazione" />
+	<persistentProperty
+		name="naturaOperNonImpSdi" />
+	<persistentProperty
+		name="rifNormOperNonImpSdi" />
 	<persistentProperty
 		name="dacr" />
 	<persistentProperty

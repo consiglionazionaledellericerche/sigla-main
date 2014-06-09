@@ -9,6 +9,10 @@
 		inputType="TEXT"
 		inputSize="4"
 		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" 
 		label="Esercizio" />
 	<fieldProperty
 		name="ti_gestione"

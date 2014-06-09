@@ -2,6 +2,8 @@ package it.cnr.contab.missioni00.comp;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.*;
 import java.io.Serializable;
 
@@ -1086,6 +1088,33 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk, it.cnr.
 		throw handleException(e);
 	} 	
 }
+
+private void controlloTrovato(UserContext aUC,
+		Obbligazione_scadenzarioBulk scadenza) throws ComponentException,
+		ApplicationException {
+	Elemento_voceHome evHome=(Elemento_voceHome)getHome(aUC,Elemento_voceBulk.class);
+	SQLBuilder sql= evHome.createSQLBuilder();
+	
+	sql.addSQLClause("AND","esercizio",SQLBuilder.EQUALS,scadenza.getObbligazione().getEsercizio());
+	sql.addSQLClause("AND","ti_appartenenza",SQLBuilder.EQUALS,scadenza.getObbligazione().getTi_appartenenza());
+	sql.addSQLClause("AND","ti_gestione",SQLBuilder.EQUALS,scadenza.getObbligazione().getTi_gestione());
+	sql.addSQLClause("AND","cd_elemento_voce",SQLBuilder.EQUALS,scadenza.getObbligazione().getCd_elemento_voce());
+
+	try {
+		List voce=evHome.fetchAll(sql);
+		if (!voce.isEmpty()){
+			Elemento_voceBulk elementoVoce = (Elemento_voceBulk)voce.get(0);
+			if (elementoVoce.isVocePerTrovati()){
+	            throw new it.cnr.jada.comp.ApplicationException(
+	                    "Non è possibile selezionare per missioni obbligazioni su capitoli collegati a Brevetti/Trovati.");
+			}
+		}
+		
+	} catch (PersistencyException ex) {
+		throw handleException(ex);
+	}
+}
+
 /**
  * Cancellazione logica missione
  *
@@ -3860,6 +3889,7 @@ public void validaObbligazione(UserContext userContext, Obbligazione_scadenzario
 		throw new it.cnr.jada.comp.ApplicationException("La data della scadenza dell'impegno deve essere successiva alla data di registrazione della missione!");
 		
 	validaTerzoObbligazione(userContext, missione, obbligazione);
+	controlloTrovato(userContext, scadenza);
 }
 /**
  * stampaConBulk method comment.

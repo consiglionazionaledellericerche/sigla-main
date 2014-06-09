@@ -75,6 +75,9 @@ public abstract class Fattura_passiva_rigaBulk
 	private java.util.Collection banche;
 	private java.util.Collection modalita;
 	private java.util.Collection termini;
+
+	private TrovatoBulk trovato = new TrovatoBulk(); // inizializzazione necessaria per i bulk non persistenti
+//	private Boolean collegatoCapitoloPerTrovato = false;
 public Fattura_passiva_rigaBulk() {
 	super();
 }
@@ -577,4 +580,29 @@ public boolean isAbledToInsertBank() {
 		getModalita_pagamento() != null &&
 		!isROModalita_pagamento_dett());
 }
+public void setTrovato(TrovatoBulk trovato) {
+	this.trovato = trovato;
+}
+public TrovatoBulk getTrovato() {
+	return trovato;
+}
+public java.lang.Long getPg_trovato() {
+	if (this.getTrovato() == null)
+		return null;
+	return this.getTrovato().getPg_trovato();
+}
+public void setPg_trovato(java.lang.Long pg_trovato) {
+	if (this.getTrovato() != null)
+		this.getTrovato().setPg_trovato(pg_trovato);
+}
+public Boolean getCollegatoCapitoloPerTrovato() {
+	if (getObbligazione_scadenziario() == null)
+		return false;
+	return getObbligazione_scadenziario().getObbligazione().getElemento_voce().isVocePerTrovati();
+	//	return collegatoCapitoloPerTrovato;
+}
+//public void setCollegatoCapitoloPerTrovato(
+//		Boolean collegatoCapitoloPerTrovato) {
+//	this.collegatoCapitoloPerTrovato = collegatoCapitoloPerTrovato;
+//}
 }
