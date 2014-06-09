@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.IpaAmministrazioniBase"
+	keyClassName="it.cnr.contab.anagraf00.core.bulk.IpaAmministrazioniKey"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.IpaAmministrazioniHome">
+	<defaultColumnMap
+		tableName="IPA_AMMINISTRAZIONI">
+		<columnMapping
+			columnName="DES_AMM"
+			propertyName="desAmm"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />
+		<columnMapping
+			columnName="COMUNE"
+			propertyName="comune"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="NOME_RESP"
+			propertyName="nomeResp"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="COGN_RESP"
+			propertyName="cognResp"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="CAP"
+			propertyName="cap"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="PROVINCIA"
+			propertyName="provincia"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="REGIONE"
+			propertyName="regione"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="SITO_ISTITUZIONALE"
+			propertyName="sitoIstituzionale"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="INDIRIZZO"
+			propertyName="indirizzo"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="TITOLO_RESP"
+			propertyName="titoloResp"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPOLOGIA_ISTAT"
+			propertyName="tipologiaIstat"
+			sqlTypeName="VARCHAR"
+			columnSize="150"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPOLOGIA_AMM"
+			propertyName="tipologiaAmm"
+			sqlTypeName="VARCHAR"
+			columnSize="140"
+			nullable="true" />
+		<columnMapping
+			columnName="ACRONIMO"
+			propertyName="acronimo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="CF_VALIDATO"
+			propertyName="cfValidato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CF"
+			propertyName="cf"
+			sqlTypeName="VARCHAR"
+			columnSize="11"
+			nullable="true" />
+		<columnMapping
+			columnName="MAIL1"
+			propertyName="mail1"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_MAIL1"
+			propertyName="tipoMail1"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="MAIL2"
+			propertyName="mail2"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_MAIL2"
+			propertyName="tipoMail2"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="MAIL3"
+			propertyName="mail3"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_MAIL3"
+			propertyName="tipoMail3"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="MAIL4"
+			propertyName="mail4"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_MAIL4"
+			propertyName="tipoMail4"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="MAIL5"
+			propertyName="mail5"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_MAIL5"
+			propertyName="tipoMail5"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="URL_FACEBOOK"
+			propertyName="urlFacebook"
+			sqlTypeName="VARCHAR"
+			columnSize="1024"
+			nullable="true" />
+		<columnMapping
+			columnName="URL_TWITTER"
+			propertyName="urlTwitter"
+			sqlTypeName="VARCHAR"
+			columnSize="1024"
+			nullable="true" />
+		<columnMapping
+			columnName="URL_GOOGLEPLUS"
+			propertyName="urlGoogleplus"
+			sqlTypeName="VARCHAR"
+			columnSize="1024"
+			nullable="true" />
+		<columnMapping
+			columnName="URL_YOUTUBE"
+			propertyName="urlYoutube"
+			sqlTypeName="VARCHAR"
+			columnSize="1024"
+			nullable="true" />
+		<columnMapping
+			columnName="LIV_ACCESSIBILI"
+			propertyName="livAccessibili"
+			sqlTypeName="DECIMAL"
+			columnSize="11"
+			nullable="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="desAmm" />
+	<persistentProperty
+		name="comune" />
+	<persistentProperty
+		name="nomeResp" />
+	<persistentProperty
+		name="cognResp" />
+	<persistentProperty
+		name="cap" />
+	<persistentProperty
+		name="provincia" />
+	<persistentProperty
+		name="regione" />
+	<persistentProperty
+		name="sitoIstituzionale" />
+	<persistentProperty
+		name="indirizzo" />
+	<persistentProperty
+		name="titoloResp" />
+	<persistentProperty
+		name="tipologiaIstat" />
+	<persistentProperty
+		name="tipologiaAmm" />
+	<persistentProperty
+		name="acronimo" />
+	<persistentProperty
+		name="cfValidato" />
+	<persistentProperty
+		name="cf" />
+	<persistentProperty
+		name="mail1" />
+	<persistentProperty
+		name="tipoMail1" />
+	<persistentProperty
+		name="mail2" />
+	<persistentProperty
+		name="tipoMail2" />
+	<persistentProperty
+		name="mail3" />
+	<persistentProperty
+		name="tipoMail3" />
+	<persistentProperty
+		name="mail4" />
+	<persistentProperty
+		name="tipoMail4" />
+	<persistentProperty
+		name="mail5" />
+	<persistentProperty
+		name="tipoMail5" />
+	<persistentProperty
+		name="urlFacebook" />
+	<persistentProperty
+		name="urlTwitter" />
+	<persistentProperty
+		name="urlGoogleplus" />
+	<persistentProperty
+		name="urlYoutube" />
+	<persistentProperty
+		name="livAccessibili" />
+</SQLPersistentInfo>
