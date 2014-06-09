@@ -86,6 +86,11 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>it.cnr.commons</groupId>
+			<artifactId>firmadigitale</artifactId>
+			<version>0.2</version>
+		</dependency>		
+		<dependency>
 			<groupId>it.cnr</groupId>
 			<artifactId>sigla-ws-client</artifactId>
 			<version>${project.version}</version>
@@ -346,7 +351,6 @@
 			<groupId>org.apache.rampart</groupId>
 			<artifactId>rampart-core</artifactId>
 			<version>1.5.1</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
@@ -373,6 +377,11 @@
       		<artifactId>pdfbox</artifactId>
       		<version>1.7.1</version>
     	</dependency>	    		
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.9</version>
+		</dependency>
  		<dependency>
       		<groupId>org.apache.pdfbox</groupId>
       		<artifactId>pdfbox</artifactId>
