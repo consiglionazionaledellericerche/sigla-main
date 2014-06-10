@@ -1700,7 +1700,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 					boolean trovatoAnno=false;
 					for (Iterator<Incarichi_procedura_annoBulk> y=procedura.getIncarichi_procedura_annoColl().iterator();y.hasNext();) {
 						Incarichi_procedura_annoBulk proceduraAnno = y.next();
-						if (proceduraAnno.getEsercizio_limite().compareTo(incarico_anno.getEsercizio_limite())==0)
+						if (incarico_anno.getEsercizio_limite()!=null && 
+							proceduraAnno.getEsercizio_limite().compareTo(incarico_anno.getEsercizio_limite())==0)
 							trovatoAnno=true;
 					}
 					if (!trovatoAnno) {
