@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="240"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -34,6 +34,7 @@ f.esercizio = vp_fattura_attiva_n.esercizio and
 f.CD_CDS = vp_fattura_attiva_n.CD_CDS and
 f.CD_UNITA_ORGANIZZATIVA = vp_fattura_attiva_n.CD_UNITA_ORGANIZZATIVA and
 f.PG_FATTURA_ATTIVA = vp_fattura_attiva_n.PG_FATTURA_ATTIVA and
+f.codice_univoco_ufficio_ipa is null and
 (($P{Ti_stampa}='R' and
 id_report =$P{id_report} and
 ti_stampa='R') or
