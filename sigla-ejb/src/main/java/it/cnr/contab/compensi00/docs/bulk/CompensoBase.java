@@ -1763,4 +1763,11 @@ public void setTi_istituz_commerc(java.lang.String ti_istituz_commerc) {
 		this.pg_trovato = pg_trovato;
 	}
 	
+	public java.math.BigDecimal getIm_tot_reddito_complessivo() {
+		return im_tot_reddito_complessivo;
+	}
+	public void setIm_tot_reddito_complessivo(
+			java.math.BigDecimal im_tot_reddito_complessivo) {
+		this.im_tot_reddito_complessivo = im_tot_reddito_complessivo;
+	}
 }
