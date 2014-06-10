@@ -22,8 +22,8 @@ public class RicercaTrovato {
 	public RicercaTrovato() throws FileNotFoundException, IOException {
 		super();
 		// carica le proprietà solo alla prima occorrenza della classe
-		if (getTargetEndpoint()==null)
-			loadProperties();
+		// if (getTargetEndpoint()==null)
+			// loadProperties();
 	}
 
 	public static String getTargetEndpoint() {
