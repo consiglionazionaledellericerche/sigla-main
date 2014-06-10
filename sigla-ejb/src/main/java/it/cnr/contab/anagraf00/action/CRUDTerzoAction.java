@@ -623,6 +623,14 @@ public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 							addBanca.getTerzo().getCd_terzo()) == 0)) {
 				return true;
 			}
+			if (terzo.getAnagrafico() != null && terzo.getAnagrafico().getCodiceAmministrazioneIpa() != null &&
+					terzo.getAnagrafico().getDataAvvioFattElettr() != null && 
+					terzo.getCodiceUnivocoUfficioIpa() == null &&
+					!terzo.getAnagrafico().getDataAvvioFattElettr().after(EJBCommonServices.getServerDate()) ) {
+				bp.setMessage("Attenzione, l'anagrafica è censita nell'indice delle "+
+					"pubbliche amministrazioni, richiedere tramite helpdesk l'inserimento del codice IPA relativo al terzo che si sta tentando di modificare/creare." +
+						"Salvataggio eseguito in modo corretto.");					
+			}			
 		}
 
 		return false;
