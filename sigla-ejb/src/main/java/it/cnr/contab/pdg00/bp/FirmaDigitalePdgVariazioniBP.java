@@ -214,7 +214,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 					signedFileName= signedFileName.replace("\\", "/");
 			}
 			if (signedFileName!=null)
-				toolbar[5]
+				toolbar[6]
 					.setHref("doPrint('"
 							+ JSPUtils
 									.buildAbsoluteUrl(
@@ -228,7 +228,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		else {
 			toolbar[1].setHref(null);
 			toolbar[2].setHref(null);
-			toolbar[5].setHref(null);
+			toolbar[6].setHref(null);
 		}
 		writeToolbar(pageContext.getOut(), toolbar);
 	}
