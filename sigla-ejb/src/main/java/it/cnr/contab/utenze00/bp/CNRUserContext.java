@@ -38,7 +38,7 @@ public class CNRUserContext implements it.cnr.jada.UserContext {
 			attributes.put("sessionId", sessionId);
 		if (cd_cds != null)		
 			attributes.put("cd_cds", cd_cds);
-		if (cd_cds != null)				
+		if (cd_cdr != null)				
 			attributes.put("cd_cdr", cd_cdr);
 		attributes.put("hiddenColumns", new Hashtable<Object, Object>());
 	}
