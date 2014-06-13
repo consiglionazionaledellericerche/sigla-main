@@ -1765,6 +1765,8 @@ public FatturaAttiva RicercaFattura(String user,Long esercizio,String cds,String
 	FatturaAttivaRiga rigaRitorno=new FatturaAttivaRiga();
 	FatturaAttivaScad scad=new FatturaAttivaScad();
 	FatturaAttivaIntra intra=new FatturaAttivaIntra();
+	if(user==null)
+	  user="IIT";
 	UserContext userContext = new WSUserContext(user,null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
 	 if(cds==null||uo==null||pg==null||esercizio==null)
 		 throw new SOAPFaultException(faultChiaveFatturaNonCompleta());
