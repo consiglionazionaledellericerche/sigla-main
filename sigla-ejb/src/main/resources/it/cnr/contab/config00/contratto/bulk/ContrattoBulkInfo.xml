@@ -863,7 +863,8 @@
                 name="fl_pubblica_contratto" />
         <findFieldProperty
                 name="cdCup" />
-  
+   			<findFieldProperty
+                name="cdCig" />
         <columnFieldProperty
                 name="stato"/>
         <columnFieldProperty
