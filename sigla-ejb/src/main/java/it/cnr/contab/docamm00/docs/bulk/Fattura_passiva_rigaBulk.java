@@ -4,15 +4,15 @@ import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.*;
-
-import java.util.*;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
+
+import java.util.Calendar;
+import java.util.Dictionary;
 
 public abstract class Fattura_passiva_rigaBulk 
 	extends Fattura_passiva_rigaBase 
@@ -77,7 +77,7 @@ public abstract class Fattura_passiva_rigaBulk
 	private java.util.Collection termini;
 
 	private TrovatoBulk trovato = new TrovatoBulk(); // inizializzazione necessaria per i bulk non persistenti
-//	private Boolean collegatoCapitoloPerTrovato = false;
+	private Boolean collegatoCapitoloPerTrovato = false;
 public Fattura_passiva_rigaBulk() {
 	super();
 }
@@ -596,13 +596,10 @@ public void setPg_trovato(java.lang.Long pg_trovato) {
 		this.getTrovato().setPg_trovato(pg_trovato);
 }
 public Boolean getCollegatoCapitoloPerTrovato() {
-	if (getObbligazione_scadenziario() == null)
-		return false;
-	return getObbligazione_scadenziario().getObbligazione().getElemento_voce().isVocePerTrovati();
-	//	return collegatoCapitoloPerTrovato;
+		return collegatoCapitoloPerTrovato;
 }
-//public void setCollegatoCapitoloPerTrovato(
-//		Boolean collegatoCapitoloPerTrovato) {
-//	this.collegatoCapitoloPerTrovato = collegatoCapitoloPerTrovato;
-//}
+public void setCollegatoCapitoloPerTrovato(
+		Boolean collegatoCapitoloPerTrovato) {
+	this.collegatoCapitoloPerTrovato = collegatoCapitoloPerTrovato;
+}
 }

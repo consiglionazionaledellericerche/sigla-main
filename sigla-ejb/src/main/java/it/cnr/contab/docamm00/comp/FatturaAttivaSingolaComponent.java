@@ -2200,7 +2200,7 @@ public Fattura_attivaBulk contabilizzaDettagliSelezionati(
 				Fattura_attiva_rigaBulk rigaSelected = (Fattura_attiva_rigaBulk)i.next();
                 validaScadenze(fatturaAttiva, accertamentoSelezionato);
 				rigaSelected.setAccertamento_scadenzario(accertamentoSelezionato);
-                rigaSelected.setCollegatoCapitoloPerTrovato(isVocePerTrovati(context, accertamentoSelezionato));
+				impostaCollegamentoCapitoloPerTrovato(context, rigaSelected);
 				rigaSelected.setStato_cofi(rigaSelected.STATO_CONTABILIZZATO);
 				rigaSelected.setToBeUpdated();
 				fatturaAttiva.addToFattura_attiva_accertamentiHash(accertamentoSelezionato, rigaSelected);
@@ -3792,7 +3792,7 @@ public OggettoBulk inizializzaBulkPerModifica(
 			for (java.util.Iterator i = fattura.getFattura_attiva_dettColl().iterator();i.hasNext();){	
 				riga=(Fattura_attiva_rigaBulk)i.next();
 				riga.setTariffario(findTariffario(aUC,riga));
-                riga.setCollegatoCapitoloPerTrovato(isVocePerTrovati(aUC, riga.getAccertamento_scadenzario()));
+				impostaCollegamentoCapitoloPerTrovato(aUC, riga);
                 riga.setTrovato(ricercaDatiTrovato(aUC, riga.getPg_trovato()));
 			}
 		}
@@ -3841,6 +3841,19 @@ public OggettoBulk inizializzaBulkPerModifica(
 		throw handleException(fattura, e);
 	}
 	return fattura;
+}
+private void impostaCollegamentoCapitoloPerTrovato(UserContext aUC,
+		Fattura_attiva_rigaBulk riga) throws ComponentException {
+	if (riga.getAccertamento_scadenzario() != null && riga.getAccertamento_scadenzario().getPg_accertamento() != null){
+	    riga.setCollegatoCapitoloPerTrovato(isVocePerTrovati(aUC, riga.getAccertamento_scadenzario()));
+	} else {
+		if (riga instanceof Nota_di_credito_attiva_rigaBulk){
+			Nota_di_credito_attiva_rigaBulk rigaNc = (Nota_di_credito_attiva_rigaBulk)riga;
+			if (rigaNc.getObbligazione_scadenzario() != null && rigaNc.getObbligazione_scadenzario().getPg_obbligazione() != null){
+				riga.setCollegatoCapitoloPerTrovato(rigaNc.getObbligazione_scadenzario().getObbligazione().getElemento_voce().isVocePerTrovati());
+			}
+		}
+	}
 }
 //^^@@
 /** 

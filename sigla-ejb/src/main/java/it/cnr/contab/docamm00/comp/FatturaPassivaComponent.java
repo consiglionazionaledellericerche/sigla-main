@@ -25,6 +25,7 @@ import it.cnr.contab.docamm00.docs.bulk.AutofatturaHome;
 import it.cnr.contab.docamm00.docs.bulk.CarichiInventarioTable;
 import it.cnr.contab.docamm00.docs.bulk.Consuntivo_rigaVBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_passivoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaHome;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
@@ -39,6 +40,7 @@ import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_creditoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_creditoHome;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaHome;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_debitoBulk;
@@ -2303,6 +2305,7 @@ public Fattura_passivaBulk contabilizzaDettagliSelezionati(
 //                rigaSelected.setCollegatoCapitoloPerTrovato(obbligazioneSelezionata.getObbligazione().getElemento_voce().isVocePerTrovati());
                 
                 rigaSelected.setObbligazione_scadenziario(obbligazioneSelezionata);
+    			impostaCollegamentoCapitoloPerTrovato(context, rigaSelected);
 				rigaSelected.setStato_cofi(rigaSelected.STATO_CONTABILIZZATO);
 				rigaSelected.setToBeUpdated();
 				fatturaPassiva.addToFattura_passiva_obbligazioniHash(obbligazioneSelezionata, rigaSelected);
@@ -4209,6 +4212,7 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 			}
 		fattura_passiva.setFattura_passiva_intrastatColl(dettagliIntrastat);
 
+
 		getHomeCache(aUC).fetchAll(aUC);
 		int dettagliRiportati = 0;
 		for (Iterator i = dettagli.iterator(); i.hasNext();) {
@@ -4250,6 +4254,13 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 		if (fattura_passiva instanceof Nota_di_creditoBulk)
 			rebuildAccertamenti(aUC, (Nota_di_creditoBulk)fattura_passiva);
 	
+		Fattura_passiva_rigaBulk riga=null;
+		for (java.util.Iterator i = fattura_passiva.getFattura_passiva_dettColl().iterator();i.hasNext();){	
+			riga=(Fattura_passiva_rigaBulk)i.next();
+			impostaCollegamentoCapitoloPerTrovato(aUC, riga);
+			riga.setTrovato(ricercaDatiTrovato(aUC, riga.getPg_trovato()));
+		}
+
 	} catch (it.cnr.jada.persistency.PersistencyException e) {
 		throw handleException(fattura_passiva, e);
 	} catch (RemoteException e) {
@@ -4267,6 +4278,44 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 	}
 	return fattura_passiva;
 }
+private void impostaCollegamentoCapitoloPerTrovato(UserContext aUC,
+		Fattura_passiva_rigaBulk riga) throws ComponentException {
+	if (riga.getObbligazione_scadenziario() != null && riga.getObbligazione_scadenziario().getPg_obbligazione() != null){
+		riga.setCollegatoCapitoloPerTrovato(riga.getObbligazione_scadenziario().getObbligazione().getElemento_voce().isVocePerTrovati());
+	} else {
+		if (riga instanceof Nota_di_credito_rigaBulk){
+			Nota_di_credito_rigaBulk rigaNc = (Nota_di_credito_rigaBulk)riga;
+			if (rigaNc.getAccertamento_scadenzario() != null && rigaNc.getAccertamento_scadenzario().getPg_accertamento() != null){
+				riga.setCollegatoCapitoloPerTrovato(isVocePerTrovati(aUC, rigaNc.getAccertamento_scadenzario()));
+			}
+		}
+	}
+}
+
+private boolean isVocePerTrovati(UserContext aUC, Accertamento_scadenzarioBulk scadenza) throws ComponentException {
+
+	if (scadenza.getAccertamento()==null)
+		return false;
+	
+	Elemento_voceHome evHome=(Elemento_voceHome)getHome(aUC,Elemento_voceBulk.class);
+	SQLBuilder sql= evHome.createSQLBuilder();
+	
+	sql.addSQLClause("AND","esercizio",SQLBuilder.EQUALS,scadenza.getAccertamento().getEsercizio());
+	sql.addSQLClause("AND","ti_appartenenza",SQLBuilder.EQUALS,scadenza.getAccertamento().getTi_appartenenza());
+	sql.addSQLClause("AND","ti_gestione",SQLBuilder.EQUALS,scadenza.getAccertamento().getTi_gestione());
+	sql.addSQLClause("AND","cd_elemento_voce",SQLBuilder.EQUALS,scadenza.getAccertamento().getCd_elemento_voce());
+	sql.addSQLClause("AND","fl_trovato",SQLBuilder.NOT_EQUALS,"N");
+
+	try {
+		List voce=evHome.fetchAll(sql);
+		if (voce.isEmpty())
+			return false;
+	} catch (PersistencyException e) {
+		throw handleException(e);
+	}		
+	return true;
+}
+
 //^^@@
 /** 
   *  Oggetto non esistente
