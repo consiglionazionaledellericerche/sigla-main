@@ -584,6 +584,13 @@
                 property="cig"
                 inputType="CRUDTOOL"
                 CRUDBusinessProcessName="CRUDCodiciCIGBP"/>
+         <fieldProperty
+                name="cdCig"
+                property="cig.cdCig"
+                inputType="TEXT"
+                inputSize="20"
+                maxLength="10"
+                label="Codice CIG" />       
         <fieldProperty
                 name="cup"
                 property="cup"
