@@ -34,6 +34,8 @@ public class StampaComponentWS {
 	
 @RolesAllowed({"WSUserRole","IITRole"})
 public byte[] DownloadFattura(String user,Long pg_stampa) throws NumberFormatException, PersistencyException, ComponentException, RemoteException, EJBException, Exception {
+	if (user ==null)
+		user="IIT";
     	UserContext userContext = new WSUserContext(user,null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
     	 try{	
 			return ((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).lanciaStampa(userContext, pg_stampa);
@@ -54,6 +56,8 @@ public byte[] DownloadFattura(String user,Long pg_stampa) throws NumberFormatExc
 		return generaFault("004","Generazione stampa non riuscita");
 	}
 	public Long inserisciDatiPerStampa(String user,String esercizio,String cds, String uo, String pg)throws NumberFormatException, PersistencyException, ComponentException, RemoteException, EJBException, Exception {
+		if (user ==null)
+		user="IIT";
 		UserContext userContext = new WSUserContext(user,null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
    	 if(cds==null||uo==null||pg==null||esercizio==null)
    		 throw new SOAPFaultException(faultChiaveFatturaNonCompleta());
