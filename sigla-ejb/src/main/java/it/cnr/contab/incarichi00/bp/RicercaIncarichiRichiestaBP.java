@@ -730,11 +730,14 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 	    	serializer.setOutputProperty(OutputKeys.STANDALONE,"no");
 	    	//serializer.setOutputProperty(OutputKeys.MEDIA_TYPE,"text/xml");
 	    	serializer.transform(domSource, streamResult); 
+			closed();
 		} catch (ParserConfigurationException e) {
 		} catch (TransformerConfigurationException e) {
 		} catch (TransformerException e) {
 		} catch (ParseException e) {
+		} catch (BusinessProcessException e) {
 		}
+
     }
     
 	public void eseguiRicerca(it.cnr.jada.action.ActionContext context)throws BusinessProcessException{
@@ -854,7 +857,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 			codiceErrore = Constants.ERRORE_INC_100;
 		} catch (RemoteException e) {
 			codiceErrore = Constants.ERRORE_INC_100;
-		}
+		}		
 	}	
 	
 	@SuppressWarnings("rawtypes")

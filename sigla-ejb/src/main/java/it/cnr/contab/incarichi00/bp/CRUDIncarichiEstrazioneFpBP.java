@@ -25,6 +25,7 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.ConsultazioniBP;
 import it.cnr.jada.util.action.SimpleCRUDBP;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.upload.UploadedFile;
 import it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ConsulenteType.Incarico.RiferimentoNormativo;
 
@@ -917,6 +918,7 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 		    		return;
 				}
 			}
+			EJBCommonServices.closeRemoteIterator(newBp.detachIterator());
 		} catch (Exception e){
 			throw handleException(e);
 		}
@@ -1113,6 +1115,7 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 				arraylist.add((V_incarichi_elenco_fpBulk)sourceIterator.nextElement());
 			
 			generaXML(context, arraylist);
+			EJBCommonServices.closeRemoteIterator(sourceIterator);
 		} catch (Exception e){
 			throw handleException(e);
 		}
@@ -1381,6 +1384,7 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 				arraylist.add((V_incarichi_elenco_fpBulk)sourceIterator.nextElement());
 			
 			generaXMLPerla(context, arraylist);
+			EJBCommonServices.closeRemoteIterator(sourceIterator);
 		} catch (Exception e){
 			throw handleException(e);
 		}
