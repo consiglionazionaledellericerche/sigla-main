@@ -10,7 +10,10 @@ document.write("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/themes/alp
 function apriListaMessaggi(url) {
 	var winWidth= (screen.width*50)/100;
 	var winHeight= (screen.height*50)/100;
-    var win = new Window({className:"alphacube", width:winWidth, height:winHeight, title: "Messaggi",url: url, destroyOnClose:true, showEffect:Effect.BlindDown, hideEffect: Effect.SwitchOff, draggable:true, wiredDrag: true});
+    var win = new Window({className:"alphacube", width:winWidth, height:winHeight, title: "Messaggi",url: url, destroyOnClose:true, showEffect:Effect.BlindDown, hideEffect: Effect.SwitchOff, draggable:true, wiredDrag: true, onClose: function() { 
+    	event.getContent().contentDocument.messaggiForm.comando.value = 'doCloseForm';
+  		event.getContent().contentDocument.messaggiForm.submit();
+	}});
     win.showCenter(true);    
 	setMessage("img/spacer.gif",null);
 }
@@ -233,7 +236,6 @@ function mouseUp(element) {
 	element.className=element.upClassName
 //	window.focus();
 }
-
 // Funzione per evitare propagazioni di eventi in IE
 function cancelBubble(event) {
 	if (event)
