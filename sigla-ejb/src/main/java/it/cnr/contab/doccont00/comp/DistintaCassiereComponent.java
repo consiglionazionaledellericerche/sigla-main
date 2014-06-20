@@ -3949,6 +3949,7 @@ public class DistintaCassiereComponent extends
 			it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
 			it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Bollo bollo=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Bollo();
 			it.cnr.contab.doccont00.intcass.xmlbnl.SepaCreditTransfer sepa= new it.cnr.contab.doccont00.intcass.xmlbnl.SepaCreditTransfer();
+			it.cnr.contab.doccont00.intcass.xmlbnl.Piazzatura piazzatura= new it.cnr.contab.doccont00.intcass.xmlbnl.Piazzatura();
 			it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk docContabile=null;
 			it.cnr.contab.doccont00.intcass.xmlbnl.Beneficiario benef =new it.cnr.contab.doccont00.intcass.xmlbnl.Beneficiario();
 			it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso sosp=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso();
@@ -3976,7 +3977,9 @@ public class DistintaCassiereComponent extends
 					obb_dati_beneficiario=true;
 				}
 				else if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO)==0 && docContabile.getCdIso()!=null ){
-					infoben.setTipoPagamento("SEPA CREDIT TRANSFER");
+					//18/06/2014 BNL non gestisce sepa 
+					//infoben.setTipoPagamento("SEPA CREDIT TRANSFER");
+					infoben.setTipoPagamento("BONIFICO BANCARIO E POSTALE"); 
 					obb_iban =true;
 				}			
 				// Classificazioni
@@ -4074,13 +4077,21 @@ public class DistintaCassiereComponent extends
 				}
 				infoben.setBeneficiario(benef);
 				if (obb_iban){
-					sepa.setIban(docContabile.getNumeroConto());
+					piazzatura.setAbiBeneficiario(docContabile.getAbi());
+					piazzatura.setCabBeneficiario(docContabile.getCab());
+					piazzatura.setNumeroContoCorrenteBeneficiario(docContabile.getNumeroConto());
+					piazzatura.setCaratteriControllo(docContabile.getCodiceIban().substring(2,4));
+					piazzatura.setCodiceCin(docContabile.getCin());
+					piazzatura.setCodicePaese(docContabile.getCdIso());
+					infoben.setPiazzatura(piazzatura);
+					//18/06/2014 BNL non gestisce sepa 
+					/* sepa.setIban(docContabile.getNumeroConto());
 					if(docContabile.getBic()!=null && docContabile.getNumeroConto()!=null && (docContabile.getBic().length()>=8 && docContabile.getBic().length()<=11  ))// && docContabile.getNumeroConto().substring(0, 2).compareTo("IT")!=0 ) 
 						sepa.setBic(docContabile.getBic());
 					else 
 						throw new ApplicationException("Formato del codice bic non valido.");
 					sepa.setIdentificativoEndToEnd(docContabile.getEsercizio().toString()+"-"+docContabile.getCdUoOrigine()+"-"+docContabile.getPgDocumento().toString());
-					infoben.setSepaCreditTransfer(sepa);
+					infoben.setSepaCreditTransfer(sepa); */
 				}
 				if (infoben.getCausale() !=null && (infoben.getCausale()+docContabile.getDsDocumento()).length() >105)
 					infoben.setCausale(infoben.getCausale()+" "+docContabile.getDsDocumento().substring(0, 104));

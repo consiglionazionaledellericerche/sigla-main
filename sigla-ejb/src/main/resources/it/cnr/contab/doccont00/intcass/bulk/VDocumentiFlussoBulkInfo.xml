@@ -267,10 +267,18 @@
 		name="numeroConto"
 		property="numeroConto"
 		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="numeroConto" />
+	<fieldProperty
+		name="codiceIban"
+		property="codiceIban"
+		inputType="TEXT"
 		inputSize="34"
 		maxLength="34"
 		enabledOnEdit="false"
-		label="numeroConto" />
+		label="iban" />	
 	<fieldProperty
 		name="bic"
 		property="bic"
@@ -279,6 +287,30 @@
 		maxLength="20"
 		enabledOnEdit="false"
 		label="bic" />	
+	<fieldProperty
+		name="abi"
+		property="abi"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		label="abi" />
+	<fieldProperty
+		name="cab"
+		property="cab"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		label="cab" />
+	<fieldProperty
+		name="cin"
+		property="cin"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="cin" />			
 	<fieldProperty
 		name="cdIso"
 		property="cdIso"
@@ -428,6 +460,14 @@
 	<formFieldProperty
 		name="numeroConto" />
 	<formFieldProperty
+		name="codiceIban" />
+	<formFieldProperty
+		name="abi" />
+	<formFieldProperty
+		name="cab" />
+	<formFieldProperty
+		name="cin" />
+	<formFieldProperty
 		name="cdIso" />
 	<formFieldProperty
 		name="imAssociato" />
@@ -516,6 +556,14 @@
 	<findFieldProperty
 		name="numeroConto" />
 	<findFieldProperty
+		name="codiceIban" />
+	<findFieldProperty
+		name="abi" />
+	<findFieldProperty
+		name="cab" />
+	<findFieldProperty
+		name="cin" />	
+	<findFieldProperty
 		name="cdIso" />
 	<findFieldProperty
 		name="imAssociato" />
@@ -591,6 +639,14 @@
 		name="codiceFiscale" />
 	<columnFieldProperty
 		name="numeroConto" />
+	<columnFieldProperty
+		name="codiceIban" />
+	<columnFieldProperty
+		name="abi" />
+	<columnFieldProperty
+		name="cab" />
+	<columnFieldProperty
+		name="cin" />	
 	<columnFieldProperty
 		name="cdIso" />
 	<columnFieldProperty

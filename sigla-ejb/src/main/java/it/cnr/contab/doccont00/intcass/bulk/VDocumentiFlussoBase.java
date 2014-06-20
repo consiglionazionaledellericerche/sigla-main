@@ -109,6 +109,18 @@ public class VDocumentiFlussoBase extends OggettoBulk implements Persistent {
  
 //    NUMERO_CONTO VARCHAR(30)
 	private java.lang.String numeroConto;
+	
+//  IBAN VARCHAR(34)
+	private java.lang.String codiceIban;
+	
+//  ABI VARCHAR(5)
+	private java.lang.String abi;
+	
+//  CAB VARCHAR(5)	
+	private java.lang.String cab;
+	
+//  cin VARCHAR(1)	
+	private java.lang.String cin;
  
 //    CD_ISO VARCHAR(10)
 	private java.lang.String cdIso;
@@ -710,5 +722,29 @@ public class VDocumentiFlussoBase extends OggettoBulk implements Persistent {
 	}
 	public void setModalitaPagamento(java.lang.String modalitaPagamento) {
 		this.modalitaPagamento = modalitaPagamento;
+	}
+	public java.lang.String getCodiceIban() {
+		return codiceIban;
+	}
+	public void setCodiceIban(java.lang.String codiceIban) {
+		this.codiceIban = codiceIban;
+	}
+	public java.lang.String getAbi() {
+		return abi;
+	}
+	public void setAbi(java.lang.String abi) {
+		this.abi = abi;
+	}
+	public java.lang.String getCab() {
+		return cab;
+	}
+	public void setCab(java.lang.String cab) {
+		this.cab = cab;
+	}
+	public java.lang.String getCin() {
+		return cin;
+	}
+	public void setCin(java.lang.String cin) {
+		this.cin = cin;
 	}
 }

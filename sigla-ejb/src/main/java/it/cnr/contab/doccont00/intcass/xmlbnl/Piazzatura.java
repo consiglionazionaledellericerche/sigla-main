@@ -100,9 +100,9 @@ import javax.xml.bind.annotation.XmlType;
 public class Piazzatura {
 
     @XmlElement(name = "abi_beneficiario")
-    protected Integer abiBeneficiario;
+    protected String abiBeneficiario;
     @XmlElement(name = "cab_beneficiario")
-    protected Integer cabBeneficiario;
+    protected String cabBeneficiario;
     @XmlElement(name = "numero_conto_corrente_beneficiario", required = true)
     protected String numeroContoCorrenteBeneficiario;
     @XmlElement(name = "caratteri_controllo")
@@ -122,7 +122,7 @@ public class Piazzatura {
      *     {@link Integer }
      *     
      */
-    public Integer getAbiBeneficiario() {
+    public String getAbiBeneficiario() {
         return abiBeneficiario;
     }
 
@@ -134,7 +134,7 @@ public class Piazzatura {
      *     {@link Integer }
      *     
      */
-    public void setAbiBeneficiario(Integer value) {
+    public void setAbiBeneficiario(String value) {
         this.abiBeneficiario = value;
     }
 
@@ -146,7 +146,7 @@ public class Piazzatura {
      *     {@link Integer }
      *     
      */
-    public Integer getCabBeneficiario() {
+    public String getCabBeneficiario() {
         return cabBeneficiario;
     }
 
@@ -158,7 +158,7 @@ public class Piazzatura {
      *     {@link Integer }
      *     
      */
-    public void setCabBeneficiario(Integer value) {
+    public void setCabBeneficiario(String value) {
         this.cabBeneficiario = value;
     }
 
