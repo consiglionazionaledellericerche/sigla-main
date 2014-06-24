@@ -60,5 +60,7 @@ public class Utente_indirizzi_mailBulk extends Utente_indirizzi_mailBase {
 		setFl_com_app_var_stanz_res(false); 
 		setFl_err_appr_var_bil_cnr_comp(false);
 		setFl_err_appr_var_bil_cnr_res(false);
+		setFlEsitoNegFattElettr(false);
+		setFlEsitoPosFattElettr(false);
 	}
 }

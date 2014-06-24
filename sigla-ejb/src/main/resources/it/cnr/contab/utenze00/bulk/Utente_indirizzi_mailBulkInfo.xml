@@ -25,6 +25,18 @@
 		nullable="false"
 		label="Invia errore di mancata approvazione Variazioni al Bilancio dell'Ente generate da Variazioni agli Stanziamenti Residui" />
 	<fieldProperty
+		name="flEsitoNegFattElettr"
+		property="flEsitoNegFattElettr"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Comunicazione Via Mail dell'esito negativo della Fatturazione Elettronica" />
+	<fieldProperty
+		name="flEsitoPosFattElettr"
+		property="flEsitoPosFattElettr"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Comunicazione Via Mail degli esiti positivi della Fatturazione Elettronica" />
+	<fieldProperty
 		name="fl_com_app_var_stanz_res"
 		property="fl_com_app_var_stanz_res"
 		inputType="CHECKBOX"
@@ -53,6 +65,10 @@
 	<formFieldProperty
 		name="fl_com_app_var_stanz_res" />
 	<formFieldProperty
+		name="flEsitoPosFattElettr" />
+	<formFieldProperty
+		name="flEsitoNegFattElettr" />
+	<formFieldProperty
 		name="fl_err_appr_var_bil_cnr_comp" />
 	<formFieldProperty
 		name="fl_com_app_var_stanz_comp" />
@@ -75,6 +91,14 @@
 		name="fl_com_app_var_stanz_comp"
 		label="Comunica avvenuta approvazione"
 		headerLabel="Variazioni Competenza" />
+	<columnFieldProperty
+		name="flEsitoPosFattElettr"
+		label="Comunica esiti positivi"
+		headerLabel="Fatturazione Elettronica" />
+	<columnFieldProperty
+		name="flEsitoNegFattElettr"
+		label="Comunica esiti negativi"
+		headerLabel="Fatturazione Elettronica" />
 
 	<findFieldProperty
 		name="cd_utente" />
@@ -84,6 +108,10 @@
 		name="fl_err_appr_var_bil_cnr_res" />
 	<findFieldProperty
 		name="fl_com_app_var_stanz_res" />
+	<findFieldProperty
+		name="flEsitoPosFattElettr" />
+	<findFieldProperty
+		name="flEsitoNegFattElettr" />
 	<findFieldProperty
 		name="fl_err_appr_var_bil_cnr_comp" />
 	<findFieldProperty

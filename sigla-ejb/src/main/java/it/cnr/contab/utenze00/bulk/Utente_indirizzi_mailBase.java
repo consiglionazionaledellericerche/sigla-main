@@ -13,6 +13,10 @@ public class Utente_indirizzi_mailBase extends Utente_indirizzi_mailKey implemen
 	private java.lang.Boolean fl_err_appr_var_bil_cnr_comp;
 	//  FL_COM_APP_VAR_STANZ_COMP CHAR(1) NOT NULL
 	private java.lang.Boolean fl_com_app_var_stanz_comp;
+	//  FL_ESITO_POS_FATT_ELETTR CHAR(1) NOT NULL
+	private java.lang.Boolean flEsitoPosFattElettr;
+	//  FL_ESITO_NEG_FATT_ELETTR CHAR(1) NOT NULL
+	private java.lang.Boolean flEsitoNegFattElettr;
  
 	public Utente_indirizzi_mailBase() {
 		super();
@@ -47,6 +51,18 @@ public class Utente_indirizzi_mailBase extends Utente_indirizzi_mailKey implemen
 	public void setFl_com_app_var_stanz_comp(
 			java.lang.Boolean fl_com_app_var_stanz_comp) {
 		this.fl_com_app_var_stanz_comp = fl_com_app_var_stanz_comp;
+	}
+	public java.lang.Boolean getFlEsitoPosFattElettr() {
+		return flEsitoPosFattElettr;
+	}
+	public void setFlEsitoPosFattElettr(java.lang.Boolean flEsitoPosFattElettr) {
+		this.flEsitoPosFattElettr = flEsitoPosFattElettr;
+	}
+	public java.lang.Boolean getFlEsitoNegFattElettr() {
+		return flEsitoNegFattElettr;
+	}
+	public void setFlEsitoNegFattElettr(java.lang.Boolean flEsitoNegFattElettr) {
+		this.flEsitoNegFattElettr = flEsitoNegFattElettr;
 	}
 	
 }
