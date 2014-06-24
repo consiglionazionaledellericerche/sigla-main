@@ -175,7 +175,7 @@ public class CRUDTerzoBP extends SimpleCRUDBP {
 		super.save(actioncontext);
 		TerzoBulk terzo = (TerzoBulk) getModel();
 		
-		if (terzo != null && terzo.getCodiceUnivocoUfficioIpa() == null && terzo.getAnagrafico() != null && !terzo.getAnagrafico().getDataAvvioFattElettr().after(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate())){
+		if (terzo != null && terzo.getCodiceUnivocoUfficioIpa() == null && terzo.getAnagrafico() != null && terzo.getAnagrafico().getDataAvvioFattElettr() != null && !terzo.getAnagrafico().getDataAvvioFattElettr().after(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate())){
 			setMessage("Attenzione! L'anagrafica è censita nell'indice delle pubbliche amministrazioni, richiedere tramite helpdesk l'inserimento del codice IPA per questo terzo "+terzo.getCd_terzo()+". Salvataggio eseguito in modo corretto.");
 		}
 	}
