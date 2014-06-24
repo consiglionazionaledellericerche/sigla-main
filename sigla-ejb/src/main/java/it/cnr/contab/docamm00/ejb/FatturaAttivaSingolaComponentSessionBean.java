@@ -17,6 +17,10 @@ import it.cnr.contab.docamm00.comp.FatturaPassivaComponent;
 import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.contab.docamm00.comp.FatturaPassivaComponent;
+import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 @Stateless(name="CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession")
 public class FatturaAttivaSingolaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements FatturaAttivaSingolaComponentSession {
 @PostConstruct

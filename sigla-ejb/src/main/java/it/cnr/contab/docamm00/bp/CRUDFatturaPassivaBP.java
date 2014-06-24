@@ -1,30 +1,36 @@
 package it.cnr.contab.docamm00.bp;
 
-import java.math.BigDecimal;
-import java.util.Iterator;
-
-import java.net.URL;
-
-import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.docamm00.client.RicercaTrovato;
-import it.cnr.contab.docamm00.docs.bulk.*;
+import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
+import it.cnr.contab.docamm00.docs.bulk.Consuntivo_rigaVBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Voidable;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
-import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
 import it.cnr.contab.util.Utility;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
-import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.util.action.*;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.action.SimpleCRUDBP;
+import it.cnr.jada.util.action.SimpleDetailCRUDController;
+
+import java.math.BigDecimal;
+import java.util.Iterator;
 
 /**
  * Gestisce le catene di elementi correlate con la fattura passiva in uso.
@@ -1074,128 +1080,19 @@ public boolean isDetailDoubleable() {
 	return false;
 }
 
-//public BulkList<TrovatoBulk> listaTrovati(it.cnr.jada.action.ActionContext context)
-//		throws	it.cnr.jada.action.BusinessProcessException {
-//		
-//		try {
-//			//Fattura_attivaBulk fattura = (Fattura_attivaBulk)bp.getModel();
-//			
-//			/*
-//			//String sAxis2Conf = ((HttpActionContext)context).getServlet().getServletContext().getRealPath("/WEB-INF/axis2/axis2-brevetti.xml");
-//			String sAxis2Conf = ((HttpActionContext)context).getServlet().getServletContext().getRealPath("/WEB-INF/axis2/axis2-nosecurity.xml");
-//			String sAxis2Repo = ((HttpActionContext)context).getServlet().getServletContext().getRealPath("/WEB-INF/axis2");
-//			BulkList<TrovatoBulk> listaTrovati = bp.listaTrovati(context, sAxis2Conf, sAxis2Repo);
-//			*/
-//			
-//			/*
-//			URL urlAxis2Conf = ((HttpActionContext)context).getServlet().getServletContext().getResource("/WEB-INF/axis2/axis2-nosecurity.xml");
-//			URL urlAxis2Repo = ((HttpActionContext)context).getServlet().getServletContext().getResource("/WEB-INF/axis2/");
-//			//String sAxis2Repo = ((HttpActionContext)context).getServlet().getServletContext().getRealPath("/WEB-INF/axis2");
-//			//URL urlAxis2Repo = (new File(sAxis2Repo)).toURL();
-//			//File fAxis2Repo = (new File(sAxis2Repo)).toURL();
-//			BulkList<TrovatoBulk> listaTrovati = bp.listaTrovati(context, urlAxis2Conf, urlAxis2Repo);
-//			*/
-//
-//			//String sAxis2Conf = ((HttpActionContext)context).getServlet().getServletContext().getRealPath("/WEB-INF/axis2/axis2-brevetti.xml");
-//			//URL urlAxis2Conf=Thread.currentThread().getContextClassLoader().getResource("axis2/axis2-nosecurity.xml");
-//			URL urlAxis2Conf=Thread.currentThread().getContextClassLoader().getResource("axis2/axis2-brevetti.xml");
-//			String sAxis2Conf=null;
-//			if (urlAxis2Conf==null)
-//				sAxis2Conf=((HttpActionContext)context).getServlet().getServletContext().getRealPath("/WEB-INF/axis2/axis2-brevetti.xml");
-//			else
-//				sAxis2Conf=urlAxis2Conf.getPath();
-//			String sAxis2Repo = ((HttpActionContext)context).getServlet().getServletContext().getRealPath("/WEB-INF/axis2");
-//
-//			RicercaTrovato rt = new RicercaTrovato();
-//			BulkList<TrovatoBulk> listaTrovati = rt.cerca(sAxis2Conf, sAxis2Repo, CNRUserContext.getCd_unita_organizzativa(context.getUserContext()));
-//			
-//			boolean bTest=false;
-//			if (bTest) {
-//				TrovatoBulk tr1 = new TrovatoBulk();
-//				tr1.setNsrif(new Long(1));
-//				tr1.setTitolo("ABC1");
-//				TrovatoBulk tr2 = new TrovatoBulk();
-//				tr2.setNsrif(new Long(2));
-//				tr2.setTitolo("ABC2");
-//				TrovatoBulk tr3 = new TrovatoBulk();
-//				tr3.setNsrif(new Long(3));
-//				tr3.setTitolo("ABC3");
-//				TrovatoBulk tr4 = new TrovatoBulk();
-//				tr4.setNsrif(new Long(4));
-//				tr4.setTitolo("ABC4");
-//				listaTrovati.add(tr1);
-//				listaTrovati.add(tr2);
-//				listaTrovati.add(tr3);
-//				listaTrovati.add(tr4);
-//			}
-//			return listaTrovati;
-//
-//		} catch(Exception e) {
-//			throw handleException(e);
-//		}
-//	}
-
-public BulkList<TrovatoBulk> listaTrovati(it.cnr.jada.action.ActionContext context)
-		throws	it.cnr.jada.action.BusinessProcessException {
-		
+	public void ricercaDatiTrovato(ActionContext context)  throws Exception {
+		FatturaPassivaComponentSession h;
 		try {
-			//Fattura_attivaBulk fattura = (Fattura_attivaBulk)bp.getModel();
-			
-			/*
-			//String sAxis2Conf = ((HttpActionContext)context).getServlet().getServletContext().getRealPath("/WEB-INF/axis2/axis2-brevetti.xml");
-			String sAxis2Conf = ((HttpActionContext)context).getServlet().getServletContext().getRealPath("/WEB-INF/axis2/axis2-nosecurity.xml");
-			String sAxis2Repo = ((HttpActionContext)context).getServlet().getServletContext().getRealPath("/WEB-INF/axis2");
-			BulkList<TrovatoBulk> listaTrovati = bp.listaTrovati(context, sAxis2Conf, sAxis2Repo);
-			*/
-			
-			/*
-			URL urlAxis2Conf = ((HttpActionContext)context).getServlet().getServletContext().getResource("/WEB-INF/axis2/axis2-nosecurity.xml");
-			URL urlAxis2Repo = ((HttpActionContext)context).getServlet().getServletContext().getResource("/WEB-INF/axis2/");
-			//String sAxis2Repo = ((HttpActionContext)context).getServlet().getServletContext().getRealPath("/WEB-INF/axis2");
-			//URL urlAxis2Repo = (new File(sAxis2Repo)).toURL();
-			//File fAxis2Repo = (new File(sAxis2Repo)).toURL();
-			BulkList<TrovatoBulk> listaTrovati = bp.listaTrovati(context, urlAxis2Conf, urlAxis2Repo);
-			*/
-
-			//String sAxis2Conf = ((HttpActionContext)context).getServlet().getServletContext().getRealPath("/WEB-INF/axis2/axis2-brevetti.xml");
-			//URL urlAxis2Conf=Thread.currentThread().getContextClassLoader().getResource("axis2/axis2-brevetti.xml");
-			URL urlAxis2Conf=getClass().getClassLoader().getResource("axis2/axis2-brevetti.xml");
-			String sAxis2Conf=null;
-			if (urlAxis2Conf==null)
-				sAxis2Conf=((HttpActionContext)context).getServlet().getServletContext().getRealPath("/WEB-INF/axis2/axis2-brevetti.xml");
-			else
-				sAxis2Conf=urlAxis2Conf.getPath();
-			String sAxis2Repo = ((HttpActionContext)context).getServlet().getServletContext().getRealPath("/WEB-INF/axis2");
-
-			RicercaTrovato rt = new RicercaTrovato();
-			BulkList<TrovatoBulk> listaTrovati;
-			boolean bTest = false;
-//			bTest=true;
-			if (!bTest) {
-				listaTrovati = rt.cerca(sAxis2Conf, sAxis2Repo, CNRUserContext.getCd_unita_organizzativa(context.getUserContext()));
-			} else {
-				listaTrovati = new BulkList<TrovatoBulk>();		
-				TrovatoBulk tr1 = new TrovatoBulk();
-				tr1.setPg_trovato(new Long(1));
-				tr1.setTitolo("ABC1");
-				TrovatoBulk tr2 = new TrovatoBulk();
-				tr2.setPg_trovato(new Long(2));
-				tr2.setTitolo("ABC2");
-				TrovatoBulk tr3 = new TrovatoBulk();
-				tr3.setPg_trovato(new Long(3));
-				tr3.setTitolo("ABC3");
-				TrovatoBulk tr4 = new TrovatoBulk();
-				tr4.setPg_trovato(new Long(4));
-				tr4.setTitolo("ABC4");
-				listaTrovati.add(tr1);
-				listaTrovati.add(tr2);
-				listaTrovati.add(tr3);
-				listaTrovati.add(tr4);
-			}
-			return listaTrovati;
-
-		} catch(Exception e) {
-			throw handleException(e);
+			h = (FatturaPassivaComponentSession)createComponentSession();
+			Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk)getDettaglio().getModel();
+			TrovatoBulk trovato = h.ricercaDatiTrovato(context.getUserContext(), riga.getPg_trovato());
+			riga.setTrovato(trovato);
+		} catch (java.rmi.RemoteException e) {
+			handleException(e);
+		} catch (BusinessProcessException e) {
+			handleException(e);
+		} catch (Exception e) {
+			throw e;
 		}
 	}
 }

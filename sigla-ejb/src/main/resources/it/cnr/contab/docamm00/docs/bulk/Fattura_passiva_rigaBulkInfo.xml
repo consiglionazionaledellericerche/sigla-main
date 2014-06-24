@@ -328,14 +328,14 @@
 		name="titoloTrovato"
 		property="trovato.titolo"
 		maxLength="500"
-		inputSize="24"
+		inputSize="48"
 		inputType="ROTEXT"
 		label="Titolo del Trovato"/>
 	<fieldProperty
 		name="inventoreTrovato"
 		property="trovato.inventore"
 		maxLength="500"
-		inputSize="24"
+		inputSize="48"
 		inputType="ROTEXT"
 		label="Inventore del Trovato"/>
 	<formFieldProperty

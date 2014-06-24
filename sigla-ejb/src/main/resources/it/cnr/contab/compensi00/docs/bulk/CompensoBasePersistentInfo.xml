@@ -1018,4 +1018,6 @@
 		name="im_tot_reddito_complessivo" />				
 	<persistentProperty
 		name="pg_trovato" />		
+	<persistentProperty
+		name="pg_trovato" />		
 </SQLPersistentInfo>

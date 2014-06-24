@@ -27,7 +27,6 @@ import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_attiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk;
-import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.intrastat.bulk.Fattura_attiva_intraBulk;

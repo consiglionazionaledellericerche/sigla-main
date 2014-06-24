@@ -1,37 +1,43 @@
 package it.cnr.contab.compensi00.bp;
 
+import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
+import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk;
+import it.cnr.contab.compensi00.docs.bulk.Contributo_ritenutaBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_doc_cont_compBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
+import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
+import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
+import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
+import it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession;
+import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
+import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
+import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
+import it.cnr.contab.doccont00.bp.IValidaDocContBP;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
+import it.cnr.contab.reports.bp.OfflineReportPrintBP;
+import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bp.GestioneUtenteBP;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Config;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.action.AbstractPrintBP;
+import it.cnr.jada.util.action.SimpleDetailCRUDController;
+
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.util.Iterator;
-
-import it.cnr.contab.reports.bp.*;
-import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
-import it.cnr.contab.utenze00.bp.*;
-import it.cnr.contab.util.Utility;
-import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
-import it.cnr.contab.compensi00.tabrif.bulk.*;
-import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
-import it.cnr.contab.anagraf00.tabrif.bulk.*;
-import it.cnr.contab.compensi00.ejb.*;
-import it.cnr.contab.compensi00.comp.CompensoComponent;
-import it.cnr.contab.compensi00.docs.bulk.*;
-import it.cnr.contab.doccont00.bp.*;
-import it.cnr.contab.docamm00.docs.bulk.*;
-import it.cnr.contab.docamm00.bp.*;
-import it.cnr.contab.doccont00.core.bulk.*;
-import it.cnr.contab.docamm00.ejb.*;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_varBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_richiestaBulk;
-import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
-import it.cnr.jada.*;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.util.action.*;
 
 /**
  * Insert the type's description here.
@@ -1566,6 +1572,22 @@ public boolean isSospensioneIrpefOkPerContabil(UserContext userContext, Compenso
 		throw handleException(ex);
 	}catch(java.rmi.RemoteException ex){
 		throw handleException(ex);
+	}
+}
+
+public void ricercaDatiTrovato(ActionContext context)  throws Exception {
+	FatturaPassivaComponentSession h;
+	try {
+		h = (FatturaPassivaComponentSession)createComponentSession("CNRDOCAMM00_EJB_FatturaPassivaComponentSession", FatturaPassivaComponentSession.class) ;
+		CompensoBulk riga = (CompensoBulk)getModel();
+		TrovatoBulk trovato = h.ricercaDatiTrovato(context.getUserContext(), riga.getPg_trovato());
+		riga.setTrovato(trovato);
+	} catch (java.rmi.RemoteException e) {
+		handleException(e);
+	} catch (BusinessProcessException e) {
+		handleException(e);
+	} catch (Exception e) {
+		throw e;
 	}
 }
 /*

@@ -2578,17 +2578,20 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	}
 
 	public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
-		RicercaTrovato ricercaTrovato;
-		try {
-			ricercaTrovato = new RicercaTrovato();
-			return ricercaTrovato.ricercaDatiTrovato(userContext, trovato);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			throw handleException(e);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			throw handleException(e);
+		if (trovato != null){
+			RicercaTrovato ricercaTrovato;
+			try {
+				ricercaTrovato = new RicercaTrovato();
+				return ricercaTrovato.ricercaDatiTrovato(userContext, trovato);
+			} catch (FileNotFoundException e) {
+				throw new ApplicationException("File in configurazione non trovato "+e.getMessage());
+			} catch (IOException e) {
+				throw new ApplicationException("Eccezione di IO "+ e.getMessage());
+			} catch (Exception e) {
+				throw new ApplicationException("Eccezione generica "+e.getMessage());
+			}
 		}
+		return new TrovatoBulk();
 	}
 
 	/**

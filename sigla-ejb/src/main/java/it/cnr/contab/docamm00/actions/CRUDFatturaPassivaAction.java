@@ -4,6 +4,7 @@ import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.compensi00.bp.CRUDCompensoBP;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaIBP;
@@ -1834,25 +1835,9 @@ public Forward doVerificaEsistenzaTrovato(ActionContext context) {
 	try {
 		fillModel( context );
 		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
-		try {
-			FatturaPassivaComponentSession h = (FatturaPassivaComponentSession)bp.createComponentSession();
-			Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk)bp.getDettaglio().getModel();
-			TrovatoBulk trovato = h.ricercaDatiTrovato(context.getUserContext(), riga.getPg_trovato());
-			riga.setTrovato(trovato);
-		} catch (java.rmi.RemoteException e) {
-			bp.handleException(e);
-		} catch (BusinessProcessException e) {
-			bp.handleException(e);
-		} catch (ComponentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (PersistencyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	} catch (FillException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		bp.ricercaDatiTrovato(context);
+	} catch (Exception e) {
+		return handleException(context, e);
 	}
 	return context.findDefaultForward();
 //	try {

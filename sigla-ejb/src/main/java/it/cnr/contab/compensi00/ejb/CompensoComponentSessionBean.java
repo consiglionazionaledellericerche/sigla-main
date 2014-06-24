@@ -1280,26 +1280,6 @@ public class CompensoComponentSessionBean extends
 		
 	}
 	
-	public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException{
-		pre_component_invocation(userContext, componentObj);
-		try {
-			TrovatoBulk result = ((CompensoComponent) componentObj).ricercaDatiTrovato(userContext, trovato);
-			component_invocation_succes(userContext, componentObj);
-			 return result;
-		} catch (it.cnr.jada.comp.NoRollbackException e) {
-			component_invocation_succes(userContext, componentObj);
-			throw e;
-		} catch (it.cnr.jada.comp.ComponentException e) {
-			component_invocation_failure(userContext, componentObj);
-			throw e;
-		} catch (RuntimeException e) {
-			throw uncaughtRuntimeException(userContext, componentObj, e);
-		} catch (Error e) {
-			throw uncaughtError(userContext, componentObj, e);
-		}
-		
-	}
-
 	public CompensoBulk ricercaCompensoTrovato(it.cnr.jada.UserContext userContext,Long esercizio,String cd_cds,String cd_unita_organizzativa,Long pg_compenso)throws ComponentException,java.rmi.RemoteException,PersistencyException{
 		pre_component_invocation(userContext, componentObj);
 		try {

@@ -3212,7 +3212,7 @@ private SQLBuilder preparaCondizionePerTrovato(UserContext aUC,
 	sql.addClause(FindClause.AND,"cd_cds",SQLBuilder.EQUALS, accertamento.getCds().getCd_unita_organizzativa());
 	sql.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS, accertamento.getEsercizio());
 	sql.addClause(FindClause.AND,"esercizio_originale",SQLBuilder.EQUALS, accertamento.getEsercizio_originale());
-	sql.addClause(FindClause.AND,"accertamento",SQLBuilder.EQUALS, accertamento.getPg_accertamento());
+	sql.addClause(FindClause.AND,"pg_accertamento",SQLBuilder.EQUALS, accertamento.getPg_accertamento());
 	sql.addTableToHeader("FATTURA_ATTIVA_RIGA");
 	sql.addSQLJoin( "FATTURA_ATTIVA_RIGA.CD_CDS_ACCERTAMENTO", "ACCERTAMENTO_SCADENZARIO.CD_CDS");
 	sql.addSQLJoin( "FATTURA_ATTIVA_RIGA.ESERCIZIO_ACCERTAMENTO", "ACCERTAMENTO_SCADENZARIO.ESERCIZIO");

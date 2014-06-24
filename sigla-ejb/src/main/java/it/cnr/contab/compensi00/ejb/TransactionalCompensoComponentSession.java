@@ -1117,22 +1117,6 @@ public class TransactionalCompensoComponentSession extends
 		}
 	}
 	
-	public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
-		try {
-			return ((TrovatoBulk) invoke("ricercaDatiTrovato", new Object[] { userContext, trovato }));
-		} catch (java.rmi.RemoteException e) {
-			throw e;
-		} catch (java.lang.reflect.InvocationTargetException e) {
-			try {
-				throw e.getTargetException();
-			} catch (it.cnr.jada.comp.ComponentException ex) {
-				throw ex;
-			} catch (Throwable ex) {
-				throw new java.rmi.RemoteException("Uncaugth exception", ex);
-			}
-		}
-	}
-
 	public CompensoBulk ricercaCompensoTrovato(UserContext userContext,
 			Long esercizio, String cd_cds, String cd_unita_organizzativa,
 			Long pg_compenso) throws ComponentException, RemoteException,

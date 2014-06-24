@@ -6786,17 +6786,22 @@ public List<Fattura_passivaBulk> ricercaFattureTrovato(
 }
 
 public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
+	if (trovato != null){
 		RicercaTrovato ricercaTrovato;
 		try {
 			ricercaTrovato = new RicercaTrovato();
 			return ricercaTrovato.ricercaDatiTrovato(userContext, trovato);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			throw handleException(e);
+			throw new ApplicationException("File in configurazione non trovato "+e.getMessage());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			throw handleException(e);
+			throw new ApplicationException("Eccezione di IO "+ e.getMessage());
+		} catch (ComponentException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new ApplicationException("Eccezione generica "+e.getMessage());
 		}
+	}
+	return new TrovatoBulk();
 }
 
 private boolean isObbligatoriaIndicazioneTrovato(Elemento_voceBulk voce) throws ComponentException {

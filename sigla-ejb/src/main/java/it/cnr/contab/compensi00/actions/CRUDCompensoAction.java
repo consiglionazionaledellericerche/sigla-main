@@ -1,35 +1,45 @@
 package it.cnr.contab.compensi00.actions;
 
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.Date;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import it.cnr.contab.anagraf00.core.bulk.*;
-import it.cnr.contab.doccont00.bp.*;
-import it.cnr.contab.docamm00.tabrif.bulk.*;
-import it.cnr.contab.compensi00.tabrif.bulk.*;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Codici_rapporti_inpsBulk;
-import it.cnr.contab.anagraf00.tabter.bulk.*;
-import it.cnr.contab.docamm00.docs.bulk.*;
-import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
-import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
-import it.cnr.contab.compensi00.docs.bulk.*;
-import it.cnr.contab.compensi00.bp.*;
-import it.cnr.contab.compensi00.ejb.*;
-import it.cnr.contab.doccont00.core.bulk.*;
-import it.cnr.contab.docamm00.bp.*;
+import it.cnr.contab.anagraf00.tabter.bulk.RegioneBulk;
+import it.cnr.contab.compensi00.bp.CRUDCompensoBP;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.Contributo_ritenutaBulk;
+import it.cnr.contab.compensi00.docs.bulk.Contributo_ritenuta_detBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_doc_cont_compBulk;
+import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
+import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
+import it.cnr.contab.compensi00.tabrif.bulk.Tipologia_rischioBulk;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
+import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
+import it.cnr.contab.doccont00.bp.CRUDMandatoBP;
+import it.cnr.contab.doccont00.bp.CRUDReversaleBP;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneOrdBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
+import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.FillException;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Forward;
+import it.cnr.jada.action.HookForward;
+import it.cnr.jada.action.MessageToUser;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.util.action.*;
+import it.cnr.jada.util.action.BulkBP;
+import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.jada.util.action.FormBP;
+import it.cnr.jada.util.action.OptionBP;
+
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Insert the type's description here.
@@ -144,25 +154,9 @@ public Forward doVerificaEsistenzaTrovato(ActionContext context) {
 	try {
 		fillModel( context );
 		CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);
-		try {
-			CompensoComponentSession h = (CompensoComponentSession)bp.createComponentSession();
-			CompensoBulk compenso = (CompensoBulk)bp.getModel();
-			TrovatoBulk trovato = h.ricercaDatiTrovato(context.getUserContext(), compenso.getPg_trovato());
-			compenso.setTrovato(trovato);
-		} catch (java.rmi.RemoteException e) {
-			bp.handleException(e);
-		} catch (BusinessProcessException e) {
-			bp.handleException(e);
-		} catch (ComponentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (PersistencyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	} catch (FillException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		bp.ricercaDatiTrovato(context);
+	} catch (Exception e) {
+		return handleException(context, e);
 	}
 	return context.findDefaultForward();
 //	try {
