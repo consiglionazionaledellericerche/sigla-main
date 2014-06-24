@@ -1,14 +1,22 @@
 package it.cnr.contab.docamm00.comp;
 
+import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attiva_rigaBulk;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
+import it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.util.Utility;
@@ -62,6 +70,7 @@ import java.util.List;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
+import javax.ejb.EJBException;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -285,9 +294,9 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		try {
 			TerzoBulk terzoCnr = ((TerzoHome)getHome( userContext, TerzoBulk.class)).findTerzoEnte();
 
-			String codiceFiscaleEnte = impostaDatiFiscali(userContext, terzoCnr);
+			String codiceFiscaleEnte = impostaCodiceFiscale(userContext, terzoCnr);
 			String idPaese = impostaCodicePaese(userContext, terzoCnr);
-			return idPaese+codiceFiscaleEnte+fattura.getProgrUnivocoAnno()+"_"+recuperoCodiceUnivocoFile(fattura)+".xml";
+			return idPaese+codiceFiscaleEnte+"_"+recuperoCodiceUnivocoFile(fattura)+".xml";
 		} catch(Exception e) {
 			throw handleException(e);
 		}
@@ -327,7 +336,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 			if (terzoCnr != null){
 				DatiTrasmissioneType datiTrasmissione = factory.createDatiTrasmissioneType();
 
-				datiTrasmissione.setIdTrasmittente(impostaIdFiscale(userContext, factory, terzoCnr));
+				datiTrasmissione.setIdTrasmittente(impostaIdTrasmittente(userContext, factory, terzoCnr));
 
 				datiTrasmissione.setProgressivoInvio(fattura.getEsercizio().toString() + Utility.lpad(fattura.getProgrUnivocoAnno().toString(),6,'0'));
 
@@ -350,18 +359,15 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 				anagraficiCedenteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, terzoCnr));
 
-				if (terzoCnr.getAnagrafico().getCodice_fiscale() == null){
+				if (terzoCnr.getAnagrafico().getCodice_fiscale() == null)
 					throw new ApplicationException("Impossibile Procedere! Manca il Codice Fiscale per il codice Anagrafica: "+terzoCnr.getCd_anag()+" del terzo: "+ terzoCnr.getCd_terzo()); 
-				}
+
 				anagraficiCedenteType.setCodiceFiscale(terzoCnr.getAnagrafico().getCodice_fiscale());
 
 				anagraficiCedenteType.setAnagrafica(impostaAnagrafica(factory, terzoCnr));
 
 				anagraficiCedenteType.setRegimeFiscale(RegimeFiscaleType.RF_01);
 				cedentePrestatoreType.setDatiAnagrafici(anagraficiCedenteType);
-
-				IndirizzoType indirizzoCedente = factory.createIndirizzoType();
-
 				cedentePrestatoreType.setSede(impostaIndirizzo(userContext, factory, terzoUo));
 
 				// TODO: Per il momento non lo gestiamo. Il dato non è obbligatorio.
@@ -377,12 +383,12 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 				datiAnagraficiClienteType.setAnagrafica(impostaAnagrafica(factory, cliente));
 
-				if (cliente.getAnagrafico().getCodice_fiscale() == null){
+				if (cliente.getAnagrafico().getCodice_fiscale() == null)
 					throw new ApplicationException("Impossibile Procedere! Manca il Codice Fiscale per il codice Anagrafica: "+cliente.getCd_anag()+" del terzo: "+ cliente.getCd_terzo()); 
-				}
+
 				datiAnagraficiClienteType.setCodiceFiscale(fattura.getCodice_fiscale());
 
-				datiAnagraficiClienteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, cliente));
+//				datiAnagraficiClienteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, cliente));
 
 				clienteType.setDatiAnagrafici(datiAnagraficiClienteType);
 
@@ -402,7 +408,9 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				datiGeneraliDocumento.setData(convertDateToXmlGregorian(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()));
 				datiGeneraliDocumento.setNumero(fattura.recuperoIdFatturaAsString());
 				datiGeneraliDocumento.setImportoTotaleDocumento(fattura.getIm_totale_fattura().setScale(2));
-				datiGeneraliDocumento.setCausale(fattura.getDs_fattura_attiva().length() > 200 ? fattura.getDs_fattura_attiva().substring(0,200):fattura.getDs_fattura_attiva());
+				if (fattura.getDs_fattura_attiva() != null){
+					datiGeneraliDocumento.setCausale(fattura.getDs_fattura_attiva().length() > 200 ? fattura.getDs_fattura_attiva().substring(0,200):fattura.getDs_fattura_attiva());
+				}
 				datiGenerali.setDatiGeneraliDocumento(datiGeneraliDocumento);
 				
 				List dettaglio = (List)((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).findDettagli(userContext, fattura);
@@ -422,11 +430,17 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 					rigaFattura.setNumeroLinea(riga.getProgressivo_riga().intValue());
 					rigaFattura.setDescrizione(riga.getDs_riga_fattura().length() > 100 ? riga.getDs_riga_fattura().substring(0,100):riga.getDs_riga_fattura() );
 					rigaFattura.setQuantita(riga.getQuantita().setScale(2));
-					rigaFattura.setUnitaMisura(riga.getTariffario() == null ? null : riga.getTariffario().getUnita_misura());
+					if (riga.getTariffario()!=null && riga.getTariffario().getCd_tariffario()!=null) {
+						if (riga.getTariffario().getUnita_misura()==null)
+							riga.setTariffario((TariffarioBulk)findByPrimaryKey(userContext, riga.getTariffario()));
+						rigaFattura.setUnitaMisura(riga.getTariffario().getUnita_misura());
+					}
 					rigaFattura.setDataInizioPeriodo(convertDateToXmlGregorian(riga.getDt_da_competenza_coge()));
 					rigaFattura.setDataFinePeriodo(convertDateToXmlGregorian(riga.getDt_a_competenza_coge()));
 					rigaFattura.setPrezzoUnitario(riga.getPrezzo_unitario().setScale(2));
 					rigaFattura.setPrezzoTotale(rigaFattura.getPrezzoUnitario().multiply(rigaFattura.getQuantita()).setScale(2));
+					if (riga.getVoce_iva()!=null && riga.getVoce_iva().getCd_voce_iva()!=null && riga.getVoce_iva().getPercentuale()==null)
+						riga.setVoce_iva((Voce_ivaBulk)findByPrimaryKey(userContext, riga.getVoce_iva()));
 					rigaFattura.setAliquotaIVA(Utility.nvl(riga.getVoce_iva().getPercentuale()).setScale(2));
 					rigaFattura.setNatura(impostaDatiNatura(riga.getVoce_iva().getNaturaOperNonImpSdi()));
 					listaDettagli.add(rigaFattura);
@@ -481,10 +495,10 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				if (fattura.getTi_fattura().equals(Fattura_attivaBulk.TIPO_NOTA_DI_CREDITO)){
 					for(Iterator<Fattura_attivaBulk> y = mappaDocumentiCollegati.keySet().iterator(); y.hasNext();) {
 						Fattura_attivaBulk fatturaCollegata = y.next();
-						listaDettagliPagamento.add(impostaDatiPagamento(userContext, factory, fatturaCollegata));
+						listaDettagliPagamento.add(impostaDatiPagamento(userContext, terzoCnr, factory, fatturaCollegata));
 					}
 				} else {
-					DettaglioPagamentoType dettaglioPagamento = impostaDatiPagamento(userContext, factory, fattura); 
+					DettaglioPagamentoType dettaglioPagamento = impostaDatiPagamento(userContext, terzoCnr, factory, fattura); 
 					dettaglioPagamento.setCodicePagamento(fattura.recuperoIdFatturaAsString());
 					listaDettagliPagamento.add(dettaglioPagamento);
 				}
@@ -585,42 +599,45 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 	private void preparaDatiContratto(UserContext userContext, 
 			HashMap<ContrattoBulk, List<Integer>> mappaContratti,
 			Fattura_attiva_rigaBulk riga, Integer progressivoRiga) throws PersistencyException, ComponentException {
-		Accertamento_scadenzarioBulk accSca = null;
-		AccertamentoBulk accert = null;
+		ContrattoBulk contrattoBulk = recuperoContrattoCollegato(userContext, riga);
+		caricaDatiContratto(mappaContratti, progressivoRiga, contrattoBulk);
+	}
 
-//		if (riga.getAccertamento_scadenzario().getEsercizio() == null){
-			accSca= ((Accertamento_scadenzarioBulk)getHome(userContext, Accertamento_scadenzarioBulk.class).findByPrimaryKey(riga.getAccertamento_scadenzario()));
-//		} else {
-//			accSca = riga.getAccertamento_scadenzario();
-//		}
-		
-//		if (accSca.getAccertamento().getEsercizio() == null){
-			accert= ((AccertamentoBulk)getHome(userContext, AccertamentoBulk.class).findByPrimaryKey(accSca.getAccertamento()));
-//		} else {
-//			accert = accSca.getAccertamento();
-//		}
-		if (accert.getContratto() != null && accert.getContratto().getEsercizio() != null){
-			if (mappaContratti.containsKey(accert.getContratto())){
-				mappaContratti.get(accert.getContratto()).add(progressivoRiga);
+	private void caricaDatiContratto(
+			HashMap<ContrattoBulk, List<Integer>> mappaContratti,
+			Integer progressivoRiga, ContrattoBulk contrattoBulk) {
+		if (contrattoBulk != null && contrattoBulk.getEsercizio() != null){
+			if (mappaContratti.containsKey(contrattoBulk)){
+				mappaContratti.get(contrattoBulk).add(progressivoRiga);
 			} else {
 				List<Integer> lista = new ArrayList<Integer>();
 				lista.add(progressivoRiga);
-				mappaContratti.put(accert.getContratto(), lista);
+				mappaContratti.put(contrattoBulk, lista);
 			}
 		}
 	}
 
-	private DettaglioPagamentoType impostaDatiPagamento(UserContext userContext, ObjectFactory factory,
-			Fattura_attivaBulk fattura)  throws ComponentException {
+	private ContrattoBulk recuperoContrattoCollegato(UserContext userContext, Fattura_attiva_rigaBulk riga) throws PersistencyException, ComponentException {
+		Accertamento_scadenzarioBulk accSca= ((Accertamento_scadenzarioBulk)getHome(userContext, Accertamento_scadenzarioBulk.class).findByPrimaryKey(riga.getAccertamento_scadenzario()));
+		AccertamentoBulk accert = ((AccertamentoBulk)getHome(userContext, AccertamentoBulk.class).findByPrimaryKey(accSca.getAccertamento()));
+		if (accert.getContratto() != null && accert.getContratto().getEsercizio() != null){
+			ContrattoBulk contrattoBulk= ((ContrattoBulk)getHome(userContext, ContrattoBulk.class).findByPrimaryKey(accert.getContratto()));
+			return contrattoBulk;
+		}
+		return null;
+	}
+		
+	private DettaglioPagamentoType impostaDatiPagamento(UserContext userContext, TerzoBulk terzoCnr, ObjectFactory factory,
+			Fattura_attivaBulk fattura)  throws ComponentException, RemoteException, EJBException, PersistencyException {
 		DettaglioPagamentoType dettaglioPagamento = factory.createDettaglioPagamentoType();
-		if (fattura.getModalita_pagamento_uo().getTipoPagamentoSdi() == null){
+		Rif_modalita_pagamentoBulk modPag = ((Rif_modalita_pagamentoBulk)getHome(userContext, Rif_modalita_pagamentoBulk.class).findByPrimaryKey(fattura.getModalita_pagamento_uo()));
+		
+		if (modPag.getTipoPagamentoSdi() == null){
 			throw new ApplicationException("Impossibile Procedere! Per la modalità di Pagamento: "+fattura.getModalita_pagamento_uo().getCd_ds_modalita_pagamento()+" non è stato indicato il Tipo Pagamento per SDI"); 
 		}
 		dettaglioPagamento.setModalitaPagamento(ModalitaPagamentoType.fromValue(fattura.getModalita_pagamento_uo().getTipoPagamentoSdi()));				
-
+		
 		dettaglioPagamento.setImportoPagamento(fattura.getIm_totale_fattura().setScale(2));
-// TODO: Da chiedere a Claudia.....recupero i dati da Banca_uo... E' corretto? Ci sono altri casi? 
-
 			
 		if (fattura.getBanca_uo() != null && fattura.getBanca_uo().getAbi() != null){
 		    dettaglioPagamento.setIstitutoFinanziario(fattura.getBanca_uo().getAbi_cab().getDs_abicab());
@@ -628,7 +645,18 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		    dettaglioPagamento.setABI(fattura.getBanca_uo().getAbi());
 		    dettaglioPagamento.setCAB(fattura.getBanca_uo().getCab());
 		    dettaglioPagamento.setBIC(fattura.getBanca_uo().getCodice_swift());
+		} else if (fattura.getModalita_pagamento_uo().isModalitaBancaItalia()){
+			String conto = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_CONTO_CORRENTE_BANCA_ITALIA, Configurazione_cnrBulk.SK_CODICE);
+			if (conto == null){
+				throw new ApplicationException("Impossibile Procedere! Nell'archivio CONFIGURAZIONE_CNR non è inserito il valore relativo al numero di conto in Banca d'Italia"); 
+			}
+			try {
+				dettaglioPagamento.setIBAN(impostaCodicePaese(userContext, terzoCnr)+Utility.lpad(conto,25,'0'));
+			} catch (PersistencyException e) {
+				throw new ComponentException(e);
+			}
 		}
+
 		return dettaglioPagamento;
 	}
 	
@@ -639,12 +667,16 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		return null;
 	}
 
-	private String impostaDatiFiscali(UserContext userContext, TerzoBulk terzo) throws ComponentException{
-		String rit = terzo.getAnagrafico().getPartita_iva() == null ? terzo.getAnagrafico().getCodice_fiscale() : terzo.getAnagrafico().getPartita_iva();
-		if (rit == null){
-			throw new ApplicationException("Impossibile Procedere! Manca la Partita IVA e il Codice Fiscale per il codice Anagrafica: "+terzo.getCd_anag()+" del terzo: "+ terzo.getCd_terzo()); 
-		}
-		return rit;
+	private String impostaCodiceFiscale(UserContext userContext, TerzoBulk terzo) throws ComponentException{
+		if (terzo.getAnagrafico() == null || terzo.getAnagrafico().getCodice_fiscale() == null)
+			throw new ApplicationException("Impossibile Procedere! Manca il Codice Fiscale per il codice Anagrafica: "+terzo.getCd_anag()+" del terzo: "+ terzo.getCd_terzo()); 
+		return terzo.getAnagrafico().getCodice_fiscale();
+	}
+
+	private String impostaPartitaIva(UserContext userContext, TerzoBulk terzo) throws ComponentException{
+		if (terzo.getAnagrafico() == null || terzo.getAnagrafico().getPartita_iva() == null)
+			throw new ApplicationException("Impossibile Procedere! Manca la Partita Iva per il codice Anagrafica: "+terzo.getCd_anag()+" del terzo: "+ terzo.getCd_terzo()); 
+		return terzo.getAnagrafico().getPartita_iva();
 	}
 
 	private String impostaCodicePaese(UserContext userContext, TerzoBulk terzo) throws ComponentException, PersistencyException{
@@ -653,20 +685,29 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 	private String impostaCodicePaese(UserContext userContext, ComuneBulk comune) throws ComponentException, PersistencyException{
 		comune= ((ComuneBulk)getHome(userContext, ComuneBulk.class).findByPrimaryKey(comune));
-		NazioneBulk nazione;
+		NazioneBulk nazione=null;
 		if (comune.getNazione().getCd_iso() == null ){
 			nazione= ((NazioneBulk)getHome(userContext, NazioneBulk.class).findByPrimaryKey(comune.getNazione()));
 		} else {
 			nazione = comune.getNazione();
 		}
-		return comune.getNazione().getCd_iso();
+		return nazione.getCd_iso();
 	}
+	
+	private IdFiscaleType impostaIdTrasmittente(UserContext userContext, ObjectFactory factory, TerzoBulk terzo) throws ComponentException, PersistencyException{
+		IdFiscaleType idTrasmittente = factory.createIdFiscaleType();
+		idTrasmittente.setIdCodice(impostaCodiceFiscale(userContext, terzo));
+		idTrasmittente.setIdPaese(impostaCodicePaese(userContext, terzo));
+		return idTrasmittente;
+	}
+
 	private IdFiscaleType impostaIdFiscale(UserContext userContext, ObjectFactory factory, TerzoBulk terzo) throws ComponentException, PersistencyException{
 		IdFiscaleType idFiscale= factory.createIdFiscaleType();
-		idFiscale.setIdCodice(impostaDatiFiscali(userContext, terzo));
+		idFiscale.setIdCodice(impostaPartitaIva(userContext, terzo));
 		idFiscale.setIdPaese(impostaCodicePaese(userContext, terzo));
 		return idFiscale;
 	}
+
 	private AnagraficaType impostaAnagrafica(ObjectFactory factory, TerzoBulk terzo){
 		AnagraficaType anagrafica = factory.createAnagraficaType();
 		anagrafica.setDenominazione(substring80(terzo.getDenominazione_sede()));
@@ -736,11 +777,13 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		listaRiepilogo.add(riepilogo);
 	}
 
-	private void impostaDatiPerNoteCredito(UserContext userContext, HashMap<Fattura_attivaBulk, HashMap<ContrattoBulk, List<Integer>>> mappaDocumentiCollegati, Fattura_attiva_rigaBulk riga, HashMap<Fattura_attivaBulk,List<Integer>> dettagliSenzaContratto) throws PersistencyException, ComponentException {
-		Fattura_attiva_rigaBulk rigaFattura = (Fattura_attiva_rigaBulk)riga.getOriginalDetail();
+	private void impostaDatiPerNoteCredito(UserContext userContext, HashMap<Fattura_attivaBulk, HashMap<ContrattoBulk, List<Integer>>> mappaDocumentiCollegati, Fattura_attiva_rigaBulk riga, HashMap<Fattura_attivaBulk,List<Integer>> dettagliSenzaContratto) throws PersistencyException, ComponentException, RemoteException, EJBException {
+		Fattura_attiva_rigaIBulk rigaFattura = new Fattura_attiva_rigaIBulk(riga.getCd_cds_assncna_fin(), riga.getCd_uo_assncna_fin(), riga.getEsercizio_assncna_fin(), riga.getPg_fattura_assncna_fin(), riga.getPg_riga_assncna_fin());
+		rigaFattura = (Fattura_attiva_rigaIBulk)Utility.createFatturaAttivaSingolaComponentSession().findByPrimaryKey(userContext, rigaFattura);
 		Fattura_attivaBulk fattura = rigaFattura.getFattura_attiva();
 
 		if (fattura != null){
+			fattura = ((Fattura_attivaBulk)getHome(userContext, Fattura_attivaBulk.class).findByPrimaryKey(fattura));
 			if (mappaDocumentiCollegati.containsKey(fattura)){
 				HashMap<ContrattoBulk, List<Integer>> mappaContratti = mappaDocumentiCollegati.get(fattura);
 				impostaDatiNoteCreditoCollegate(userContext, riga, dettagliSenzaContratto,rigaFattura, fattura, mappaContratti);
@@ -757,7 +800,8 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 			HashMap<Fattura_attivaBulk, List<Integer>> dettagliSenzaContratto,
 			Fattura_attiva_rigaBulk rigaFattura, Fattura_attivaBulk fattura,
 			HashMap<ContrattoBulk, List<Integer>> mappaContratti) throws PersistencyException, ComponentException {
-		if (rigaFattura.getAccertamento_scadenzario().getAccertamento().getContratto() == null || rigaFattura.getAccertamento_scadenzario().getAccertamento().getContratto().getEsercizio() == null){
+		ContrattoBulk contrattoBulk = recuperoContrattoCollegato(userContext, rigaFattura);
+		if (contrattoBulk == null || contrattoBulk.getEsercizio() == null){
 			if (dettagliSenzaContratto.containsKey(fattura)){
 				dettagliSenzaContratto.get(fattura).add(riga.getProgressivo_riga().intValue());
 			} else {
@@ -765,7 +809,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				dettagliSenzaContratto.put(fattura, lista);
 			}
 		} else {
-			preparaDatiContratto(userContext, mappaContratti, rigaFattura, riga.getProgressivo_riga().intValue());
+			caricaDatiContratto(mappaContratti, riga.getProgressivo_riga().intValue(), contrattoBulk);
 		}
 	}
 }

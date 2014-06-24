@@ -108,7 +108,7 @@
     <init-param name="defaultAction" value="RicercaDocumentiAmministrativiFatturazioneElettronicaAction"/>
 	<init-param name="printbp" value="OfflineReportPrintBP" />
   </businessProcess>
-  <businessProcess name="SelezionatoreDocAmmFatturazioneElettronica" className="it.cnr.contab.docamm00.bp.SelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP">
+  <businessProcess name="SelezionatoreDocAmmFatturazioneElettronica" className="it.cnr.contab.docamm00.bp.CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP">
     <forward name="default" path="/docamm00/lista_docamm_fatturazione_elettronica.jsp"/>
 	<init-param name="defaultAction" value="SelezionatoreDocumentiAmministrativiFatturazioneElettronicaAction" />
     <init-param name="componentSessionName" value="CNRDOCAMM00_EJB_DocAmmFatturazioneElettronicaComponentSession"/>

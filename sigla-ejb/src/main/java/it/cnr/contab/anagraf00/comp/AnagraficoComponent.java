@@ -232,40 +232,54 @@ private void controllaNomeCognome(AnagraficoBulk anagrafico) throws ApplicationE
 
 @SuppressWarnings("unchecked")
 public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
-	try {
-		IpaServFattHome ipaHome = (IpaServFattHome)getHome(userContext,IpaServFattBulk.class);
-		SQLBuilder sql = ipaHome.createSQLBuilder();
-		sql.addClause("AND", "cf", SQLBuilder.EQUALS, ((AnagraficoBulk)bulk).getCodice_fiscale());
-		List<IpaServFattBulk> listaIPA = ipaHome.fetchAll(sql);
-		if (!listaIPA.isEmpty()) {
-			IpaServFattBulk ipa = listaIPA.get(0);
-			((AnagraficoBulk)bulk).setCodiceAmministrazioneIpa(ipa.getCodAmm());
-			((AnagraficoBulk)bulk).setDataAvvioFattElettr(ipa.getDataAvvioSfe());			
-		}		
-	} catch (PersistencyException e) {
-		throw new ComponentException(e);
-	}
+	valorizzaDatiIpa(userContext, bulk);
 	AnagraficoBulk anagrafico = (AnagraficoBulk)super.creaConBulk(userContext,bulk);
 	creaDefaultTerzo(userContext,anagrafico);
 	calcolaMontantePerPagamentoEsterno(userContext, anagrafico, true);	
 	//try{
-		//// Controlla ed, eventualmente, crea l'ANAGRAFICO_ESERCIZIO
-		//if (anagrafico.getAnagrafico_esercizio() != null && 
-				//anagrafico.getAnagrafico_esercizio().getFl_notaxarea() != null &&
-				//anagrafico.getAnagrafico_esercizio().getFl_notaxarea().booleanValue()){
+	//// Controlla ed, eventualmente, crea l'ANAGRAFICO_ESERCIZIO
+	//if (anagrafico.getAnagrafico_esercizio() != null && 
+	//anagrafico.getAnagrafico_esercizio().getFl_notaxarea() != null &&
+	//anagrafico.getAnagrafico_esercizio().getFl_notaxarea().booleanValue()){
 
-			//anagrafico.getAnagrafico_esercizio().setCd_anag(anagrafico.getCd_anag());
+	//anagrafico.getAnagrafico_esercizio().setCd_anag(anagrafico.getCd_anag());
 
-			//insertBulk(userContext, anagrafico.getAnagrafico_esercizio());
-		//}
+	//insertBulk(userContext, anagrafico.getAnagrafico_esercizio());
+	//}
 	//} catch (it.cnr.jada.persistency.PersistencyException e){
-		//throw new ComponentException (e);
+	//throw new ComponentException (e);
 	//}
 
 	validaCreaModificaAnagrafico_esercizio(userContext, anagrafico);
-	
+
 	return anagrafico;
 }
+private void valorizzaDatiIpa(UserContext userContext, OggettoBulk bulk)
+		throws ComponentException {
+	IpaServFattBulk ipa = recuperoDatiIpa(userContext, bulk);
+	if (ipa != null){
+		((AnagraficoBulk)bulk).setCodiceAmministrazioneIpa(ipa.getCodAmm());
+		((AnagraficoBulk)bulk).setDataAvvioFattElettr(ipa.getDataAvvioSfe());			
+	} else {
+		((AnagraficoBulk)bulk).setCodiceAmministrazioneIpa(null);
+		((AnagraficoBulk)bulk).setDataAvvioFattElettr(null);
+	}
+}
+private IpaServFattBulk recuperoDatiIpa(UserContext userContext, OggettoBulk bulk) throws ComponentException {
+	try {
+		IpaServFattHome ipaHome = (IpaServFattHome)getHome(userContext,IpaServFattBulk.class);
+		SQLBuilder sql = ipaHome.createSQLBuilder();
+		sql.addClause("AND", "cf", SQLBuilder.EQUALS, ((AnagraficoBulk)bulk).getCodice_fiscale());
+		sql.addOrderBy("dt_Verifica_Cf desc");
+		List<IpaServFattBulk> listaIPA = ipaHome.fetchAll(sql);
+		if (!listaIPA.isEmpty()) 
+			return listaIPA.get(0);
+		return null;
+	} catch (PersistencyException e) {
+		throw new ComponentException(e);
+	}
+}
+
 public void eliminaBulkForSIP(UserContext userContext,String cd_terzo) throws it.cnr.jada.comp.ComponentException {
 	try {
 		TerzoHome terzoHome = (TerzoHome)getHome(userContext,TerzoBulk.class);
@@ -718,8 +732,20 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 	throws ComponentException
 {	
 
+
 	AnagraficoBulk anagrafico = (AnagraficoBulk)bulk;
-	
+	if (anagrafico.getCodice_fiscale() != null){
+		try {
+			AnagraficoBulk anagraficoDB = (AnagraficoBulk)getHome(aUC,AnagraficoBulk.class).findByPrimaryKey(new AnagraficoBulk(anagrafico.getCd_anag()));
+			if ((anagraficoDB.getCodice_fiscale() != null && !anagraficoDB.getCodice_fiscale().equals(anagrafico.getCodice_fiscale())) || anagraficoDB.getCodice_fiscale() == null){
+				valorizzaDatiIpa(aUC, anagrafico);
+			}
+		} catch (PersistencyException e1) {
+			// TODO Auto-generated catch block
+			throw new ComponentException(e1);
+		}
+	}
+
 	if (anagrafico.getCodiceAmministrazioneIpa() == null){
 		TerzoHome home = (TerzoHome)getHome(aUC,TerzoBulk.class);
 

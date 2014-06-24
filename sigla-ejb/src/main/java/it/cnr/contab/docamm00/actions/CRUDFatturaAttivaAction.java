@@ -1016,6 +1016,7 @@ public Forward doBlankSearchCliente(ActionContext context, Fattura_attivaBulk fa
         fattura_attiva.setRagione_sociale(null);
         fattura_attiva.setCodice_fiscale(null);
         fattura_attiva.setPartita_iva(null);
+        fattura_attiva.setCodiceUnivocoUfficioIpa(null);
         //fattura_attiva.setFl_liquidazione_differita(Boolean.FALSE);
         
 
@@ -1370,7 +1371,11 @@ public Forward doBringBackSearchCliente(
     try {
 	    //controlli post selezione del cliente
         if (fornitoreTrovato != null) {
-        	controlloCodiceIPA(fattura_attiva, fornitoreTrovato);
+            CRUDFatturaAttivaBP crudFattura =
+                    (CRUDFatturaAttivaBP) getBusinessProcess(context);
+                FatturaAttivaSingolaComponentSession fpcs =
+                    (FatturaAttivaSingolaComponentSession) crudFattura.createComponentSession();
+//        	controlloCodiceIPA(fattura_attiva, fornitoreTrovato);
         	//controllo se il terzo non può essere un creditore ne un diversi
        	    if (fornitoreTrovato.getAnagrafico().getTi_entita().equals(AnagraficoBulk.DIVERSI) || fornitoreTrovato.getTi_terzo().equals(TerzoBulk.CREDITORE))
        	    	throw new it.cnr.jada.comp.ApplicationException("Il terzo selezionato non è un cliente valido, non può essere un creditore ne un diversi!");
@@ -1384,10 +1389,6 @@ public Forward doBringBackSearchCliente(
 
 
             //richiamo il metodo della component completaterzo
-            CRUDFatturaAttivaBP crudFattura =
-                (CRUDFatturaAttivaBP) getBusinessProcess(context);
-            FatturaAttivaSingolaComponentSession fpcs =
-                (FatturaAttivaSingolaComponentSession) crudFattura.createComponentSession();
             fattura_attiva =
                 fpcs.completaTerzo(context.getUserContext(), fattura_attiva, fornitoreTrovato);
 
@@ -1409,20 +1410,20 @@ public Forward doBringBackSearchCliente(
         return handleException(context, e);
     }
 }
-private void controlloCodiceIPA(Fattura_attivaBulk fattura_attiva,
-		TerzoBulk fornitoreTrovato) throws ApplicationException {
-    //Controllo codice IPA
-    if (fornitoreTrovato.getAnagrafico() != null && 
-    	fornitoreTrovato.getAnagrafico().getCodiceAmministrazioneIpa() != null &&
-    	fornitoreTrovato.getCodiceUnivocoUfficioIpa() == null &&
-    	!fattura_attiva.getDt_registrazione().before(fornitoreTrovato.getAnagrafico().getDataAvvioFattElettr())){
-	    	throw new it.cnr.jada.comp.ApplicationException(
-	    			"Il codice terzo utilizzato si riferisce ad un'anagrafica censita nell'indice delle " +
-	    			"pubbliche amministrazioni. Richiedere tramite helpdesk l'inserimento del codice IPA " +
-	    			"relativo al terzo per il quale si sta tentando di emettere fattura.");            	
-    	
-    }	        	
-}
+//private void controlloCodiceIPA(Fattura_attivaBulk fattura_attiva,
+//		TerzoBulk fornitoreTrovato) throws ApplicationException {
+//    //Controllo codice IPA
+//    if (fornitoreTrovato.getAnagrafico() != null && 
+//    	fornitoreTrovato.getAnagrafico().getCodiceAmministrazioneIpa() != null &&
+//    	fornitoreTrovato.getCodiceUnivocoUfficioIpa() == null &&
+//    	!fattura_attiva.getDt_registrazione().before(fornitoreTrovato.getAnagrafico().getDataAvvioFattElettr())){
+//	    	throw new it.cnr.jada.comp.ApplicationException(
+//	    			"Il codice terzo utilizzato si riferisce ad un'anagrafica censita nell'indice delle " +
+//	    			"pubbliche amministrazioni. Richiedere tramite helpdesk l'inserimento del codice IPA " +
+//	    			"relativo al terzo per il quale si sta tentando di emettere fattura.");            	
+//    	
+//    }	        	
+//}
 /**
  * Gestisce una richiesta di ricerca del searchtool "tariffario"
  *
@@ -2532,7 +2533,7 @@ public Forward doSalva(ActionContext actioncontext) throws java.rmi.RemoteExcept
 
         if (bp.getAccertamentiController()!=null)
     	    bp.getAccertamentiController().setModelIndex(actioncontext, -1);
-        controlloCodiceIPA((Fattura_attivaBulk)bp.getModel(), ((Fattura_attivaBulk)bp.getModel()).getCliente());
+//        controlloCodiceIPA((Fattura_attivaBulk)bp.getModel(), ((Fattura_attivaBulk)bp.getModel()).getCliente());
         bp.save(actioncontext);
 		postSalvataggio(actioncontext);
         return actioncontext.findDefaultForward();

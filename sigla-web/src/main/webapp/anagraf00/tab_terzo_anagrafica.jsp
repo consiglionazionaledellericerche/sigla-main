@@ -53,7 +53,7 @@
 	<% bp.writeFormField(out,"note");%>
 </tr>
 <tr>
-  <% if(bp.getAnagrafico() != null && bp.getAnagrafico().getCodiceAmministrazioneIpa() != null ){ %>
+  <% if(terzo != null && terzo.getAnagrafico() != null && terzo.getAnagrafico().getCodiceAmministrazioneIpa() != null ){ %>
 	<%	if(bp.isGestoreIstat(uc, terzo)){ %>
 		<% bp.writeFormField(out,"codiceUnivocoUfficioIpa");%>
 	<%} else { %> 

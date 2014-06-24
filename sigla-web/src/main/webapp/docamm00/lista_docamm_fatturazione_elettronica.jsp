@@ -17,9 +17,9 @@
 <title>Risultato ricerca</title>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
-<%  
-	SelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP bp = (SelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP)BusinessProcess.getBusinessProcess(request);
-		bp.openFormWindow(pageContext); 
+<%
+	CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP bp = (CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP)BusinessProcess.getBusinessProcess(request);
+		bp.openFormWindow(pageContext);
 %>
 <script language="JavaScript">
 function doVisualizzaSingoloDocumentiCollegati(esercizio, cd_cds , cd_unita_organizzativa, pg_fattura) {	

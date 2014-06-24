@@ -32,6 +32,22 @@ public it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_attivaBulk addebitaDettag
 		}
 	}
 }
+public void preparaProtocollazioneEProtocolla(UserContext userContext, Long pgProtocollazione, Integer offSet, Long pgStampa, java.sql.Timestamp dataStampa,Fattura_attivaBulk fattura) throws PersistencyException, ComponentException, java.rmi.RemoteException{
+	try {
+		invoke("preparaProtocollazioneEProtocolla",new Object[] {
+			userContext, pgProtocollazione, offSet, pgStampa, dataStampa, fattura });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
 public void aggiornaStatoDocumentiAmministrativi(it.cnr.jada.UserContext param0,java.lang.String param1,java.lang.String param2,java.lang.String param3,java.lang.Integer param4,java.lang.Long param5,java.lang.String param6) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		invoke("aggiornaStatoDocumentiAmministrativi",new Object[] {
@@ -1559,6 +1575,25 @@ public List findListaCondizioneConsegnaWS(UserContext userContext, String query,
 			return (Fattura_attiva_IBulk)invoke("ricercaFatturaSDI",new Object[] {
 					userContext,
 					codiceInvioSdi});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+	public Fattura_attivaBulk aggiornaFatturaInvioSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, String codiceInvioSdi, XMLGregorianCalendar dataConsegnaSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException {
+		try {
+			return (Fattura_attivaBulk)invoke("aggiornaFatturaInvioSDI",new Object[] {
+					userContext,
+					fatturaAttiva,
+					codiceInvioSdi,
+					dataConsegnaSdi});
 		} catch(java.rmi.RemoteException e) {
 			throw e;
 		} catch(java.lang.reflect.InvocationTargetException e) {

@@ -111,4 +111,10 @@ public boolean isROfl_per_cessione() {
 	return false;
 }
 
+public boolean isModalitaBancaItalia() {
+	if (getTi_pagamento() != null && getTi_pagamento().equals(Rif_modalita_pagamentoBulk.BANCA_ITALIA)){
+		return true;
+	}
+	return false;
+}
 }

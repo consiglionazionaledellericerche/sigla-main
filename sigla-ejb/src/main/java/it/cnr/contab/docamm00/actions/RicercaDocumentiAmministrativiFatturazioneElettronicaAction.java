@@ -5,7 +5,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.bp.DocumentiAmministrativiFatturazioneElettronicaBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.IGenericSearchDocAmmBP;
-import it.cnr.contab.docamm00.bp.SelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP;
+import it.cnr.contab.docamm00.bp.CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
@@ -89,7 +89,7 @@ public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,In
 			bp.setModel(context,filtro);
 
 			IDocumentoAmministrativoBP docAmmBP = getBusinessProcessForDocAmm(context, (IDocumentoAmministrativoBulk)instance);
-			SelezionatoreListaBP nbp = (SelezionatoreListaBP)context.createBusinessProcess("SelezionatoreDocAmmFatturazioneElettronica", new Object[] { "Th" });
+			SelezionatoreListaBP nbp = (SelezionatoreListaBP)context.createBusinessProcess("SelezionatoreDocAmmFatturazioneElettronica", new Object[] { "Tn" });
 			nbp.setMultiSelection(true);
 //			nbp.setOrderBy(context, "pg_fattura_attiva", 0);
 //			nbp.setSelectionListener(

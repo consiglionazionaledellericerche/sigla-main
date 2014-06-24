@@ -26,7 +26,7 @@
 							canAdd = false;
 						if (fatturaAttiva.getStato_cofi() != null && fatturaAttiva.getStato_cofi().equals(fatturaAttiva.STATO_ANNULLATO))
 							canDel = false;
-						bp.getAccertamentiController().writeHTMLTable(pageContext,"default",canAdd,false,canDel,"100%","100px"); %>
+						bp.getAccertamentiController().writeHTMLTable(pageContext,"accertamentoFatturaAttiva",canAdd,false,canDel,"100%","100px"); %>
 			  	</td>
 			</tr>
 			<tr>

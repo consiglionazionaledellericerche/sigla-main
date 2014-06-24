@@ -186,6 +186,20 @@
 		<columnFieldProperty name="pg_doc_attivo"/>
 	</columnSet>
 
+	<columnSet name="accertamentoFatturaAttiva">
+	<columnFieldProperty name="esercizio"/>
+	<columnFieldProperty name="cd_cds"/>
+	<columnFieldProperty name="esercizio_originale"/>
+	<columnFieldProperty name="pg_accertamento"/>
+	<columnFieldProperty name="dt_scadenza_incasso"/>
+	<columnFieldProperty name="im_scadenza"	columnStyle="width:80px; text-align: right; padding-right:20px"/>
+	<columnFieldProperty name="importo_disponibile" columnStyle="width:80px; text-align: right; padding-right:20px"/>
+	<columnFieldProperty name="ds_scadenza"/>
+	<columnFieldProperty name="cd_terzo" label="Beneficiario" property="accertamento.cd_terzo"/>
+	<columnFieldProperty name="cdCup" label="CUP" property="accertamento.contratto.cup.cdCup"/>
+	<columnFieldProperty name="cdCigFatturaAttiva" label="CIG Comunicato dal Committente" property="accertamento.contratto.cdCigFatturaAttiva"/>
+	</columnSet>
+
 	<columnSet
 		name="regolarizzazione">
 	<columnFieldProperty

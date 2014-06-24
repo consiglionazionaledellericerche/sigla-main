@@ -271,6 +271,9 @@ public String getColumnsetForGenericSearch() {
 		(getParent() instanceof DocumentiAmministrativiProtocollabiliBP ||
 		 getParent() instanceof DocumentiAmministrativiRistampabiliBP))
 		return "protocollazioneIvaSet";
+	if (getParent() != null && 
+			(getParent() instanceof DocumentiAmministrativiFatturazioneElettronicaBP))
+			return "fatturazioneElettronicaSet";
 	return "default";
 }
 /**
@@ -675,6 +678,28 @@ public void salvaRiportandoAvanti(ActionContext context)
 public void save(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException,ValidationException {
 
 	super.save(context);
+	
+	Fattura_attivaBulk documento = (Fattura_attivaBulk)getModel();
+	if (documento.isDocumentoFatturazioneElettronica()){
+		for (Iterator i = documento.getFattura_attiva_dettColl().iterator(); i.hasNext(); ) {
+			Fattura_attiva_rigaIBulk riga = (Fattura_attiva_rigaIBulk)i.next();
+			if (riga.getAccertamento_scadenzario()!=null &&
+				riga.getAccertamento_scadenzario().getAccertamento() != null) {
+				AccertamentoBulk accertamento = riga.getAccertamento_scadenzario().getAccertamento();
+				if (accertamento.getContratto() == null ){
+					setMessage("Attenzione! Per alcune righe del documento sono collegati accertamenti che non hanno il riferimento al contratto e quindi al Codice CUP o al Codice CIG comunicato dal Committente. "+
+							"Il committente potrebbe rifiutare il documento in mancanza di tali dati. Salvataggio Effettuato.");
+				break;
+				} else {
+					if ( accertamento.getContratto().getCdCigFatturaAttiva() == null || (accertamento.getContratto().getCup() == null || accertamento.getContratto().getCup().getCdCup() == null)){
+						setMessage("Attenzione! Per alcune righe del documento sono collegati accertamenti su contratti che non hanno indicato il Codice CUP o il Codice CIG comunicato dal Committente. "+
+									"Il committente potrebbe rifiutare il documento in mancanza di tali dati. Salvataggio Effettuato.");
+						break;
+					}
+				}
+			}
+		}
+	}
 	setCarryingThrough(false);
 	resetTabs();
 }

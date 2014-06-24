@@ -1,7 +1,7 @@
 package it.cnr.contab.docamm00.actions;
 
 import it.cnr.contab.docamm00.bp.DocumentiAmministrativiFatturazioneElettronicaBP;
-import it.cnr.contab.docamm00.bp.SelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP;
+import it.cnr.contab.docamm00.bp.CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
@@ -81,7 +81,7 @@ public Forward basicDoBringBackFirma(ActionContext actioncontext)
 	}
 
 public Forward doBackFirmaOTP(ActionContext context) {
-	SelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP bp = (SelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP)context.getBusinessProcess();
+	CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP bp = (CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP)context.getBusinessProcess();
 	HookForward caller = (HookForward)context.getCaller();
 	FirmaOTPBulk firmaOTPBulk = (FirmaOTPBulk) caller.getParameter("firmaOTP");
 	try {

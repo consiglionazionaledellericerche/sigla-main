@@ -154,17 +154,29 @@
 		<%} %>
 		</tr>
 	<%} %>		
-		<tr><% bp.getController().writeFormField(out,"partita_iva");%>
+	
+	<tr>
+		<%	if(anagrafico != null && anagrafico.getDataAvvioFattElettr() != null && anagrafico.getCodiceAmministrazioneIpa() != null){ %>
+				<td><%bp.writeFormLabel(out,"default","partita_iva"); %></td>
+				<td><% bp.writeFormInput(out,"default","partita_iva",true,null,null);%></td>
+		<%} else { %> 
+			<% bp.getController().writeFormField(out,"partita_iva");%>
+		<%} %>
 		<%if (anagrafico.isPersonaGiuridica()) { %>
 			<td colspan="2"><%bp.getController().writeFormInput(out,"classificazione_anag");%></td>
 		<%} %>
-		</tr>
-	
-		<tr><% bp.getController().writeFormField(out,"codice_fiscale");%>
+	</tr>
+
+	<tr>
+		<%	if(anagrafico != null && anagrafico.getDataAvvioFattElettr() != null && anagrafico.getCodiceAmministrazioneIpa() != null){ %>
+				<td><%bp.writeFormLabel(out,"default","codice_fiscale"); %></td>
+				<td><% bp.writeFormInput(out,"default","codice_fiscale",true,null,null);%></td>
+		<%} else { %> 
+			<% bp.getController().writeFormField(out,"codice_fiscale");%>
+		<%} %>
 		<%if(anagrafico.isPersonaFisica())
 			bp.getController().writeFormField(out,"ti_sesso");%>
-		</tr>
-
+	</tr>
 		<tr><% bp.getController().writeFormField(out,"titolo_studio");%></tr>
 	</table>
 </fieldset>

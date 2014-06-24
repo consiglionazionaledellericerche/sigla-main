@@ -105,6 +105,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	public final static Dictionary FATTURA_BENI_SERVIZI;
 
 	
+	public final static String FATT_ELETT_INVIATA_SDI = "INV";
 	public final static String FATT_ELETT_ALLA_FIRMA = "FIR";
 	public final static String FATT_ELETT_SCARTATA_DA_SDI = "SCA";
 	public final static String FATT_ELETT_CONSEGNATA_SDI = "COS";
@@ -195,6 +196,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 		FATTURA_BENI_SERVIZI.put(FATTURA_DI_SERVIZI,"Fattura di servizi");
 
 		statoInvioSdiKeys = new it.cnr.jada.util.OrderedHashtable();
+		statoInvioSdiKeys.put(FATT_ELETT_INVIATA_SDI,"Inviata a SDI");
 		statoInvioSdiKeys.put(FATT_ELETT_ALLA_FIRMA,"Alla Firma");
 		statoInvioSdiKeys.put(FATT_ELETT_SCARTATA_DA_SDI,"Scartata da SDI");
 		statoInvioSdiKeys.put(FATT_ELETT_CONSEGNATA_SDI,"Consegnata SDI");	

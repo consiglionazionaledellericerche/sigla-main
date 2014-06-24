@@ -34,6 +34,9 @@ public class DocumentiCollegatiDocAmmService extends CMISService {
 	public List<String> getNodeRefContabile(Integer esercizio, String cds, String cdUo, Long pgFattura, String tipoDocumento)throws DetailedException{
 		List<String> ids = new ArrayList<String>();
 		Node node = recuperoFolderFattura(esercizio, cds, cdUo, pgFattura);
+		if (node == null){
+			throw new ApplicationException("Non esistono documenti collegati alla fattura.  Anno:"+ esercizio+ " cds:" +cds +" uo:"+cdUo+" numero:"+pgFattura);
+		}
 		String folder = (String) node.getPropertyValue("cmis:objectId"); 
 		StringBuffer query = new StringBuffer("select cmis:objectId from sigla_fatture_attachment:stampa_fattura_prima_protocollo ");
 		//				query.append(" join sigla_contabili_aspect:document contabili on doc.cmis:objectId = contabili.cmis:objectId");
@@ -55,11 +58,13 @@ public class DocumentiCollegatiDocAmmService extends CMISService {
 	}
 	
 	public Node recuperoFolderFattura(Integer esercizio, String cds, String cdUo, Long pgFattura)throws DetailedException{
+		int posizionePunto = cdUo.indexOf(".");
 		StringBuffer query = new StringBuffer("select fat.cmis:objectId from sigla_fatture:fatture_attive fat join strorg:uo uo on fat.cmis:objectId = uo.cmis:objectId ");
 		query.append(" join strorg:cds cds on fat.cmis:objectId = cds.cmis:objectId ");
 		query.append(" where fat.sigla_fatture:esercizio = ").append(esercizio);
 		query.append(" and fat.sigla_fatture:pg_fattura = ").append(pgFattura);
-		query.append(" and uo.strorguo:codice = '").append(cdUo).append("'");
+//		query.append(" and uo.strorguo:codice like '").append(cdUo.replace(".", "%")).append("'");
+		query.append(" and uo.strorguo:codice like '").append(cdUo.substring(0, posizionePunto)+"%").append("'");
 		query.append(" and cds.strorgcds:codice = '").append(cds).append("'");
 		//		query.append(" and contabili.sigla_contabili_aspect:num_mandato = ").append(pgMandato);
 		//		query.append(" order by doc.cmis:creationDate DESC");

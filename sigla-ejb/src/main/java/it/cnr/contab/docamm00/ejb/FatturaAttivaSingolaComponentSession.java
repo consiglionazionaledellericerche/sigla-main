@@ -1,11 +1,14 @@
 package it.cnr.contab.docamm00.ejb;
 
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 
 import javax.ejb.Remote;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 @Remote
 public interface FatturaAttivaSingolaComponentSession extends it.cnr.contab.docamm00.comp.DocumentoAmministrativoComponentSession, it.cnr.jada.ejb.CRUDComponentSession {
@@ -94,4 +97,6 @@ Nota_di_credito_attivaBulk generaNotaCreditoAutomatica(it.cnr.jada.UserContext u
 Fattura_attiva_IBulk ricercaFatturaSDI(it.cnr.jada.UserContext userContext, String codiceInvioSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException;
 Fattura_attiva_IBulk aggiornaDatiFatturaSDI(it.cnr.jada.UserContext userContext, String codiceInvioSdi, String statoInvioSdi, String noteInvioSdi, javax.xml.datatype.XMLGregorianCalendar dataConsegnaSdi, boolean stornaFattura) throws PersistencyException, ComponentException,java.rmi.RemoteException;
 Fattura_attiva_IBulk aggiornaDatiFatturaSDI(it.cnr.jada.UserContext userContext, Fattura_attiva_IBulk fatturaAttiva, String statoInvioSdi, String noteInvioSdi, javax.xml.datatype.XMLGregorianCalendar dataConsegnaSdi, boolean stornaFattura) throws PersistencyException, ComponentException,java.rmi.RemoteException;
+Fattura_attivaBulk aggiornaFatturaInvioSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, String codiceInvioSdi, XMLGregorianCalendar dataConsegnaSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException;
+public void preparaProtocollazioneEProtocolla(UserContext userContext, Long pgProtocollazione, Integer offSet, Long pgStampa, java.sql.Timestamp dataStampa,Fattura_attivaBulk fattura) throws PersistencyException, ComponentException,java.rmi.RemoteException;
 }

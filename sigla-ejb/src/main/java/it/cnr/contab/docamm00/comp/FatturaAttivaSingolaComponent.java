@@ -65,6 +65,7 @@ import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
 import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Voidable;
+import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.VoceIvaComponentSession;
@@ -2148,12 +2149,15 @@ public Fattura_attivaBulk completaTerzo(UserContext aUC, Fattura_attivaBulk fatt
 private void impostaDatiPerFatturazioneElettronica(UserContext aUC,
 		Fattura_attivaBulk fatturaAttiva, TerzoBulk terzo)
 		throws ComponentException {
-	if (isAttivaFatturazioneElettronica(aUC, fatturaAttiva.getDt_registrazione())){
+	if (isAttivaFatturazioneElettronica(aUC, terzo.getAnagrafico(), fatturaAttiva.getDt_registrazione())){
+		controlloCodiceIpaValorizzato(terzo);
 		fatturaAttiva.setCodiceUnivocoUfficioIpa(terzo.getCodiceUnivocoUfficioIpa());
+	} else {
+		fatturaAttiva.setCodiceUnivocoUfficioIpa(null);
 	}
 }
 
-public Boolean isAttivaFatturazioneElettronica(UserContext aUC, Date dataFattura) throws ComponentException {
+public Boolean isAttivaFatturazioneElettronica(UserContext aUC, AnagraficoBulk anagraficoBulk, Date dataFattura) throws ComponentException {
 	Date dataInizio;
 	try {
 		dataInizio = Utility.createConfigurazioneCnrComponentSession().getDt01(aUC, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC), null, Configurazione_cnrBulk.PK_FATTURAZIONE_ELETTRONICA, Configurazione_cnrBulk.SK_ATTIVA);
@@ -2164,7 +2168,7 @@ public Boolean isAttivaFatturazioneElettronica(UserContext aUC, Date dataFattura
 	} catch (EJBException e) {
     	throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
 	}
-	if (dataFattura == null || dataInizio == null || dataFattura.before(dataInizio)){
+	if (dataFattura == null || dataInizio == null || dataFattura.before(dataInizio) || anagraficoBulk.getDataAvvioFattElettr() == null || dataFattura.before(anagraficoBulk.getDataAvvioFattElettr())){
 		return false;
 	}
 	return true;
@@ -2556,14 +2560,20 @@ public OggettoBulk creaConBulk(
 private void completaDatiPerFatturazioneElettronica(UserContext userContext,
 		Fattura_attivaBulk fattura) throws ComponentException {
 	if (fattura.getCliente() != null){
-		if (isAttivaFatturazioneElettronica(userContext, fattura.getDt_registrazione())){
-	        fattura.setCodiceUnivocoUfficioIpa(fattura.getCliente().getCodiceUnivocoUfficioIpa());
-		} else {
-	        fattura.setCodiceUnivocoUfficioIpa(null);
-		}
+		impostaDatiPerFatturazioneElettronica(userContext, fattura, fattura.getCliente());
 		if (fattura.isDocumentoFatturazioneElettronica()){
 	        fattura.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_ALLA_FIRMA);
+	        controlloModalitaPagamentoFatturazioneElettronica(fattura);
 		}
+	}
+}
+private void controlloCodiceIpaValorizzato(TerzoBulk terzo)
+		throws ApplicationException {
+	if (terzo.getCodiceUnivocoUfficioIpa() == null){
+		throw new it.cnr.jada.comp.ApplicationException(
+				"Il codice terzo utilizzato si riferisce ad un'anagrafica censita nell'indice delle " +
+				"pubbliche amministrazioni. Richiedere tramite helpdesk l'inserimento del codice IPA " +
+				"relativo al terzo per il quale si sta tentando di emettere fattura.");
 	}
 }
 
@@ -4281,7 +4291,9 @@ public OggettoBulk modificaConBulk(
 		throw handleException(bulk, e);
 	}
 
-    // Salvo temporaneamente l'hash map dei saldi
+	controlloModalitaPagamentoFatturazioneElettronica(fattura);
+
+// Salvo temporaneamente l'hash map dei saldi
     PrimaryKeyHashMap aTempDiffSaldi=new PrimaryKeyHashMap();
     if (fattura.getDefferredSaldi() != null)
 	    aTempDiffSaldi=(PrimaryKeyHashMap)fattura.getDefferredSaldi().clone();    
@@ -4392,6 +4404,48 @@ public OggettoBulk modificaConBulk(
 
 	return fattura;
 }
+private void controlloModalitaPagamentoFatturazioneElettronica(
+		Fattura_attivaBulk fattura) throws ApplicationException {
+	if (fattura.isDocumentoFatturazioneElettronica()){
+		if (fattura.getModalita_pagamento_uo() == null || fattura.getModalita_pagamento_uo().getTi_pagamento() == null || !fattura.getModalita_pagamento_uo().isModalitaBancaItalia()){
+            throw new it.cnr.jada.comp.ApplicationException("Non è possibile effettuare il salvataggio! Per i documenti relativi alle pubbliche amministrazioni è necessario selezionare la Mod. Pagamento Banca d'Italia.");
+		}
+//		try {
+//		if (fatturaAttiva.getModalita_pagamento_uo() == null || fatturaAttiva.getModalita_pagamento_uo().getTi_pagamento() == null || !fatturaAttiva.getModalita_pagamento_uo().isModalitaBancaItalia()){
+//			List<Rif_modalita_pagamentoBulk> listaModPag = (List<Rif_modalita_pagamentoBulk>)findModalita_uo(aUC,fatturaAttiva);
+//			if (listaModPag != null && !listaModPag.isEmpty()){
+//				for (Iterator i = listaModPag.iterator(); i.hasNext(); ) {
+//					Rif_modalita_pagamentoBulk modalitaPagamento = (Rif_modalita_pagamentoBulk)i.next();
+//					if (modalitaPagamento.isModalitaBancaItalia()){
+//						fatturaAttiva.setModalita_pagamento_uo(modalitaPagamento);
+//						java.util.List coll = findListabancheuo(aUC, fatturaAttiva);
+//						if (coll==null || coll.isEmpty())
+//							fatturaAttiva.setBanca_uo(null);
+//						else if (coll.size() == 1)
+//							fatturaAttiva.setBanca_uo((BancaBulk) new java.util.Vector(coll).firstElement());
+//						else {
+//							if (!Rif_modalita_pagamentoBulk.BANCARIO.equals(fatturaAttiva.getModalita_pagamento_uo().getTi_pagamento()))
+//								fatturaAttiva.setBanca_uo((BancaBulk) new java.util.Vector(coll).firstElement());
+//							else{
+//								fatturaAttiva = setContoEnteIn(aUC, fatturaAttiva, coll);
+//								//							        		bp.setContoEnte(true);
+//							}
+//						}
+//					} else {
+//						fatturaAttiva.setBanca_uo(null);
+//					}
+//				}
+//			}
+//		}
+//	} catch (PersistencyException e) {
+//		// TODO Auto-generated catch block
+//		throw new ComponentException(e);
+//	} catch (IntrospectionException e) {
+//		// TODO Auto-generated catch block
+//		throw new ComponentException(e);
+//	}
+	}
+}
 private Fattura_attiva_rigaBulk caricaRigaDB(UserContext userContext,Fattura_attiva_rigaBulk fatturaAttivaRiga) throws ComponentException, PersistencyException{
 	Fattura_attiva_rigaIHome home = (Fattura_attiva_rigaIHome)getTempHome(userContext, Fattura_attiva_rigaIBulk.class);
 	it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
@@ -4440,10 +4494,7 @@ public Integer modificaSelezionePerStampa(
 			if (old_ass.get(i) != ass.get(i)) {
 				Fattura_attivaBulk fattura = (Fattura_attivaBulk)fatture[i];
 				if (ass.get(i)) {
-					if (pgProtocollazione != null)
-						inserisciDatiPerProtocollazioneIva(userContext, fattura, pgProtocollazione, offSet, dataStampa);
-					inserisciDatiPerStampaIva(userContext, fattura, pgStampa, offSet);
-					offSet = new Integer(offSet.intValue()+1);
+					offSet = preparaProtocollazione(userContext, pgProtocollazione, offSet, pgStampa, dataStampa, fattura);
 				} else {
 					if (pgProtocollazione != null)
 						cancellaDatiPerProtocollazioneIva(userContext, fattura, pgProtocollazione);
@@ -4455,6 +4506,25 @@ public Integer modificaSelezionePerStampa(
 	} catch(it.cnr.jada.persistency.PersistencyException e) {
 		throw handleException(e);
 	}
+}
+
+public void preparaProtocollazioneEProtocolla(UserContext userContext, Long pgProtocollazione,
+		Integer offSet, Long pgStampa, java.sql.Timestamp dataStampa,
+		Fattura_attivaBulk fattura) throws PersistencyException,
+		ComponentException {
+	preparaProtocollazione(userContext, pgProtocollazione, offSet, pgStampa, dataStampa, fattura);
+	protocolla(userContext, dataStampa, pgProtocollazione);
+}
+
+private Integer preparaProtocollazione(UserContext userContext, Long pgProtocollazione,
+		Integer offSet, Long pgStampa, java.sql.Timestamp dataStampa,
+		Fattura_attivaBulk fattura) throws PersistencyException,
+		ComponentException {
+	if (pgProtocollazione != null)
+		inserisciDatiPerProtocollazioneIva(userContext, fattura, pgProtocollazione, offSet, dataStampa);
+	inserisciDatiPerStampaIva(userContext, fattura, pgStampa, offSet);
+	offSet = new Integer(offSet.intValue()+1);
+	return offSet;
 }
 /*private void prepareScarichiInventario(UserContext userContext,Fattura_attivaBulk fattura_attiva) throws ComponentException {
 
@@ -7325,4 +7395,12 @@ public Fattura_attiva_IBulk aggiornaDatiFatturaSDI(UserContext userContext, Fatt
 	return fatturaAttiva;
 }
 
+public Fattura_attivaBulk aggiornaFatturaInvioSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, String codiceInvioSdi, XMLGregorianCalendar dataConsegnaSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException {
+	fatturaAttiva.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI);
+	fatturaAttiva.setDtConsegnaSdi(dataConsegnaSdi!=null?new Timestamp(dataConsegnaSdi.toGregorianCalendar().getTime().getTime()):null);
+	fatturaAttiva.setToBeUpdated();
+	updateBulk(userContext, fatturaAttiva);
+
+	return fatturaAttiva;
+}
 }

@@ -86,7 +86,7 @@ public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,In
 			bp.setModel(context,filtro);
 
 			IDocumentoAmministrativoBP docAmmBP = getBusinessProcessForDocAmm(context, (IDocumentoAmministrativoBulk)instance);
-			SelezionatoreListaBP nbp = (SelezionatoreListaBP)context.createBusinessProcess("Selezionatore", new Object[] { "Th" });
+			SelezionatoreListaBP nbp = (SelezionatoreListaBP)context.createBusinessProcess("Selezionatore", new Object[] { "Tn" });
 			nbp.setMultiSelection(true);
 			
 //			nbp.setSelectionListener(
