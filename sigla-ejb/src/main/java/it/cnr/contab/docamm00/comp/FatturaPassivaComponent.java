@@ -1283,6 +1283,7 @@ private Nota_di_creditoBulk basicStornaDettaglio(
 		rigaNdC.setAccertamento_scadenzario(scadenza);
 		rigaNdC.setRiga_fattura_associata(rigaNdC.getRiga_fattura_origine());
 		rigaNdC.setStato_cofi(rigaNdC.STATO_CONTABILIZZATO);
+		impostaCollegamentoCapitoloPerTrovato(context, rigaNdC);
 		rigaNdC.setToBeUpdated();
 		ndC.addToAccertamenti_scadenzarioHash(scadenza, rigaNdC);
 		ndC.setAndVerifyStatus();

@@ -993,6 +993,7 @@ private Nota_di_credito_attivaBulk basicStornaDettaglio(
 		rigaNdC.setObbligazione_scadenzario(scadenza);
 		rigaNdC.setRiga_fattura_associata(rigaNdC.getRiga_fattura_associata());
 		rigaNdC.setStato_cofi(rigaNdC.STATO_CONTABILIZZATO);
+		impostaCollegamentoCapitoloPerTrovato(context, rigaNdC);
 		rigaNdC.setToBeUpdated();
 		ndC.addToObbligazioni_scadenzarioHash(scadenza, rigaNdC);
 		if (ndC.getStato_cofi() != ndC.STATO_PAGATO)

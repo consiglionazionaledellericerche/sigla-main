@@ -29,6 +29,9 @@ public class Compenso extends FatturaPassivaBase {
 	private Integer esercizio_mandato;
 	private Long pg_mandato;
 	private Date dt_emissione_mandato;
+	private Date dt_emissione_obbligazione_impegno;
+	private Integer esercizio_obbligazione_impegno;
+	private Long pg_obbligazione_impegno;
 	private Date dt_pagamento_fondo_eco;
 	private String stato_pagamento_fondo_eco;
 	
@@ -45,6 +48,7 @@ public class Compenso extends FatturaPassivaBase {
 		fab.setDt_fattura_fornitore(this.getDt_fattura_fornitore());
 		fab.setPartita_iva(this.getPartita_iva());
 		fab.setCodice_fiscale(this.getCodice_fiscale());
+		fab.setCd_terzo(this.getCd_terzo());
 		return fab;
 	}
 	public void setProgressivo_riga(Long progressivo_riga) {
@@ -160,5 +164,25 @@ public class Compenso extends FatturaPassivaBase {
 	}
 	public void setImNettoPercipiente(java.math.BigDecimal imNettoPercipiente) {
 		this.imNettoPercipiente = imNettoPercipiente;
+	}
+	public Date getDt_emissione_obbligazione_impegno() {
+		return dt_emissione_obbligazione_impegno;
+	}
+	public void setDt_emissione_obbligazione_impegno(
+			Date dt_emissione_obbligazione_impegno) {
+		this.dt_emissione_obbligazione_impegno = dt_emissione_obbligazione_impegno;
+	}
+	public Integer getEsercizio_obbligazione_impegno() {
+		return esercizio_obbligazione_impegno;
+	}
+	public void setEsercizio_obbligazione_impegno(
+			Integer esercizio_obbligazione_impegno) {
+		this.esercizio_obbligazione_impegno = esercizio_obbligazione_impegno;
+	}
+	public Long getPg_obbligazione_impegno() {
+		return pg_obbligazione_impegno;
+	}
+	public void setPg_obbligazione_impegno(Long pg_obbligazione_impegno) {
+		this.pg_obbligazione_impegno = pg_obbligazione_impegno;
 	}
 }

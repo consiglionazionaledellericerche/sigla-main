@@ -26,10 +26,14 @@ public class FatturaPassiva extends FatturaPassivaBase {
 	private java.math.BigDecimal cambio;
 	private java.math.BigDecimal im_imponibile;
 	private java.math.BigDecimal im_iva;
+	private java.math.BigDecimal fcIva;
 	private Integer esercizio_mandato;
 	private Long pg_mandato;
 	private Date dt_emissione_mandato;
 	private Date dt_pagamento_fondo_eco;
+	private Date dt_emissione_obbligazione_impegno;
+	private Integer esercizio_obbligazione_impegno;
+	private Long pg_obbligazione_impegno;
 	private String stato_pagamento_fondo_eco;
 	
 	public FatturaPassivaBase cloneFatturaPassivaBase() {
@@ -45,6 +49,7 @@ public class FatturaPassiva extends FatturaPassivaBase {
 		fab.setDt_fattura_fornitore(this.getDt_fattura_fornitore());
 		fab.setPartita_iva(this.getPartita_iva());
 		fab.setCodice_fiscale(this.getCodice_fiscale());
+		fab.setCd_terzo(this.getCd_terzo());
 		return fab;
 	}
 	public void setProgressivo_riga(Long progressivo_riga) {
@@ -173,4 +178,31 @@ public class FatturaPassiva extends FatturaPassivaBase {
 	public String getStato_pagamento_fondo_eco() {
 		return stato_pagamento_fondo_eco;
 	}
+	public Date getDt_emissione_obbligazione_impegno() {
+		return dt_emissione_obbligazione_impegno;
+	}
+	public void setDt_emissione_obbligazione_impegno(
+			Date dt_emissione_obbligazione_impegno) {
+		this.dt_emissione_obbligazione_impegno = dt_emissione_obbligazione_impegno;
+	}
+	public Long getPg_obbligazione_impegno() {
+		return pg_obbligazione_impegno;
+	}
+	public void setPg_obbligazione_impegno(Long pg_obbligazione_impegno) {
+		this.pg_obbligazione_impegno = pg_obbligazione_impegno;
+	}
+	public Integer getEsercizio_obbligazione_impegno() {
+		return esercizio_obbligazione_impegno;
+	}
+	public void setEsercizio_obbligazione_impegno(
+			Integer esercizio_obbligazione_impegno) {
+		this.esercizio_obbligazione_impegno = esercizio_obbligazione_impegno;
+	}
+	public java.math.BigDecimal getFcIva() {
+		return fcIva;
+	}
+	public void setFcIva(java.math.BigDecimal fcIva) {
+		this.fcIva = fcIva;
+	}
+
 }

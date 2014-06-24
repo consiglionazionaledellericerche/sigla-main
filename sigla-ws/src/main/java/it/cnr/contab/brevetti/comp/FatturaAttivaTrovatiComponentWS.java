@@ -2,16 +2,20 @@ package it.cnr.contab.brevetti.comp;
 
 import it.cnr.contab.brevetti.client.FatturaAttiva;
 import it.cnr.contab.brevetti.client.FatturaAttivaBase;
+import it.cnr.contab.brevetti.client.FatturaPassiva;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioHome;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.Reversale_rigaIBulk;
 import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.comp.FatturaNonTrovataException;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -125,6 +129,7 @@ private void caricaFattura(UserContext userContext, java.util.ArrayList listaRit
 		ritorno.setCd_cds_origine(fattura.getCd_cds_origine());
 		ritorno.setCd_uo_origine(fattura.getCd_uo_origine());
 		ritorno.setDt_emissione(fattura.getDt_emissione());
+		ritorno.setCd_terzo(fattura.getCd_terzo());
 
 		listaRitorno.add(ritorno);
 
@@ -152,12 +157,19 @@ private void caricaFattura(UserContext userContext, java.util.ArrayList listaRit
 			ritorno.setCambio(fattura.getCambio());
 			ritorno.setCd_divisa(fattura.getCd_divisa());
 			
+			ritorno.setProgressivo_riga(det.getProgressivo_riga());
 			ritorno.setCd_voce_iva(det.getCd_voce_iva());
 			ritorno.setDs_voce_iva(det.getVoce_iva().getDs_voce_iva());
 			ritorno.setDs_riga_fattura(det.getDs_riga_fattura());
-			ritorno.setIm_imponibile(det.getIm_imponibile());
-			ritorno.setIm_iva(det.getIm_iva());
+			impostaImportiRiga(det, ritorno);
 			ritorno.setPg_trovato(det.getPg_trovato());
+
+			if (det.getAccertamento_scadenzario() != null && det.getAccertamento_scadenzario().getAccertamento() != null){
+				AccertamentoBulk acc = det.getAccertamento_scadenzario().getAccertamento();
+				ritorno.setPg_accertamento(acc.getPg_accertamento());
+				ritorno.setEsercizio_accertamento(acc.getEsercizio());
+				ritorno.setDt_emissione_accertamento(acc.getDt_registrazione());
+			}
 
 			List revs = det.getReversaliRighe();
 			Reversale_rigaIBulk revr=null;
@@ -172,6 +184,24 @@ private void caricaFattura(UserContext userContext, java.util.ArrayList listaRit
 		
 	}
 }
+
+private void impostaImportiRiga(Fattura_attiva_rigaBulk det, FatturaAttiva ritorno) {
+	if (det.getVoce_iva() != null){
+		ritorno.setDs_voce_iva(det.getVoce_iva().getDs_voce_iva());
+		if ("Y".equals(det.getVoce_iva().getFl_non_soggetto())){
+			ritorno.setIm_imponibile(BigDecimal.ZERO);
+			ritorno.setFcIva(det.getIm_imponibile());
+		} else {
+			ritorno.setIm_imponibile(det.getIm_imponibile());
+			ritorno.setFcIva(BigDecimal.ZERO);
+		}
+	} else {
+		ritorno.setIm_imponibile(det.getIm_imponibile());
+		ritorno.setFcIva(BigDecimal.ZERO);
+	}
+	ritorno.setIm_iva(det.getIm_iva());
+}
+
 private SOAPFault faultChiaveFatturaNonCompleta() throws SOAPException{
 	return generaFault("001","Identificativo Fattura non valido e/o incompleto");
 }

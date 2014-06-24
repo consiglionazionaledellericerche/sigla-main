@@ -9,12 +9,15 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.comp.FatturaNonTrovataException;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -196,6 +199,7 @@ private void caricaFattura(UserContext userContext, java.util.ArrayList listaRit
 		ritorno.setPartita_iva(fattura.getPartita_iva());
 		ritorno.setCodice_fiscale(fattura.getCodice_fiscale());
 		ritorno.setTipoFatturaCompenso(FatturaPassivaBase.TIPO_FATTURA);
+		ritorno.setCd_terzo(fattura.getCd_terzo());
 
 		listaRitorno.add(ritorno);
 	} else {
@@ -203,7 +207,7 @@ private void caricaFattura(UserContext userContext, java.util.ArrayList listaRit
 		for (Iterator<Fattura_passiva_rigaIBulk> j = dett.iterator(); j.hasNext(); ) {
 			Fattura_passiva_rigaIBulk det = (Fattura_passiva_rigaIBulk) j.next();
 			FatturaPassiva ritorno=new FatturaPassiva();
-	
+			
 			ritorno.setCd_cds(fattura.getCd_cds());
 			ritorno.setCd_unita_organizzativa(fattura.getCd_unita_organizzativa());
 			ritorno.setEsercizio(fattura.getEsercizio());
@@ -223,18 +227,22 @@ private void caricaFattura(UserContext userContext, java.util.ArrayList listaRit
 			ritorno.setRagione_sociale(fattura.getRagione_sociale());
 			ritorno.setCambio(fattura.getCambio());
 			ritorno.setCd_divisa(fattura.getCd_divisa());
-	
+			
+			ritorno.setProgressivo_riga(det.getProgressivo_riga());
 			ritorno.setCd_voce_iva(det.getCd_voce_iva());
-			if (det.getCd_voce_iva() != null){
-				ritorno.setDs_voce_iva(det.getVoce_iva().getDs_voce_iva());
-			}
+			impostaImportiRiga(det, ritorno);
 			ritorno.setDs_riga_fattura(det.getDs_riga_fattura());
-			ritorno.setIm_imponibile(det.getIm_imponibile());
-			ritorno.setIm_iva(det.getIm_iva());
 			ritorno.setPg_trovato(det.getPg_trovato());
 			ritorno.setDt_pagamento_fondo_eco(fattura.getDt_pagamento_fondo_eco());
 			ritorno.setStato_pagamento_fondo_eco(fattura.getStato_pagamento_fondo_eco());
 			
+			if (det.getObbligazione_scadenziario() != null && det.getObbligazione_scadenziario().getObbligazione() != null){
+				ObbligazioneBulk obbl = det.getObbligazione_scadenziario().getObbligazione();
+				ritorno.setPg_obbligazione_impegno(obbl.getPg_obbligazione());
+				ritorno.setEsercizio_obbligazione_impegno(obbl.getEsercizio());
+				ritorno.setDt_emissione_obbligazione_impegno(obbl.getDt_registrazione());
+			}
+		
 			List mans = det.getMandatiRighe();
 			Mandato_rigaIBulk manr=null;
 			if (mans!=null && !mans.isEmpty()) {
@@ -243,12 +251,30 @@ private void caricaFattura(UserContext userContext, java.util.ArrayList listaRit
 				ritorno.setPg_mandato(manr.getPg_mandato());
 				ritorno.setDt_emissione_mandato(manr.getMandato().getDt_emissione());
 			}
-	
+		
 			listaRitorno.add(ritorno);
 			
 		}
 	}
 }
+
+private void impostaImportiRiga(Fattura_passiva_rigaIBulk det, FatturaPassiva ritorno) {
+	if (det.getVoce_iva() != null){
+		ritorno.setDs_voce_iva(det.getVoce_iva().getDs_voce_iva());
+		if ("Y".equals(det.getVoce_iva().getFl_non_soggetto())){
+			ritorno.setIm_imponibile(BigDecimal.ZERO);
+			ritorno.setFcIva(det.getIm_imponibile());
+		} else {
+			ritorno.setIm_imponibile(det.getIm_imponibile());
+			ritorno.setFcIva(BigDecimal.ZERO);
+		}
+	} else {
+		ritorno.setIm_imponibile(det.getIm_imponibile());
+		ritorno.setFcIva(BigDecimal.ZERO);
+	}
+	ritorno.setIm_iva(det.getIm_iva());
+}
+
 private void caricaCompenso(UserContext userContext, java.util.ArrayList listaRitorno, CompensoBulk compenso, Boolean base) throws Exception {
 	// serve per diminuire traffico di rete con oggetti più grandi
 	// e informazioni che non sono necessarie (richiesto dai colleghi di brevetti)
@@ -266,6 +292,7 @@ private void caricaCompenso(UserContext userContext, java.util.ArrayList listaRi
 		ritorno.setPartita_iva(compenso.getPartita_iva());
 		ritorno.setCodice_fiscale(compenso.getCodice_fiscale());
 		ritorno.setTipoFatturaCompenso(FatturaPassivaBase.TIPO_COMPENSO);
+		ritorno.setCd_terzo(compenso.getCd_terzo());
 		listaRitorno.add(ritorno);
 	} else {
 		Compenso ritorno=new Compenso();
@@ -297,6 +324,13 @@ private void caricaCompenso(UserContext userContext, java.util.ArrayList listaRi
 		ritorno.setPg_trovato(compenso.getPg_trovato());
 		ritorno.setDt_pagamento_fondo_eco(compenso.getDt_pagamento_fondo_eco());
 		ritorno.setStato_pagamento_fondo_eco(compenso.getStato_pagamento_fondo_eco());
+
+		if (compenso.getObbligazioneScadenzario() != null && compenso.getObbligazioneScadenzario().getObbligazione() != null){
+			ObbligazioneBulk obbl = compenso.getObbligazioneScadenzario().getObbligazione();
+			ritorno.setPg_obbligazione_impegno(obbl.getPg_obbligazione());
+			ritorno.setEsercizio_obbligazione_impegno(obbl.getEsercizio());
+			ritorno.setDt_emissione_obbligazione_impegno(obbl.getDt_registrazione());
+		}
 
 		List mans = compenso.getDocContAssociati();
 		

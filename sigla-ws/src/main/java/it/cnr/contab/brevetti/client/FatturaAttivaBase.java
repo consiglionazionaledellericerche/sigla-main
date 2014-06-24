@@ -22,6 +22,7 @@ public class FatturaAttivaBase  implements Serializable {
 	private String cd_cds_origine;
 	private String cd_uo_origine;
 	private Date dt_emissione;
+	private Integer cd_terzo;
 
 	public String getCd_cds() {
 		return cd_cds;
@@ -70,5 +71,11 @@ public class FatturaAttivaBase  implements Serializable {
 	}
 	public void setDt_emissione(Date dt_emissione) {
 		this.dt_emissione = dt_emissione;
+	}
+	public Integer getCd_terzo() {
+		return cd_terzo;
+	}
+	public void setCd_terzo(Integer cd_terzo) {
+		this.cd_terzo = cd_terzo;
 	}
 }

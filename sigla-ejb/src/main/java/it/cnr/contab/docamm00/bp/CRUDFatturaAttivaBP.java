@@ -1050,7 +1050,7 @@ public boolean isROBank(UserContext context, Fattura_attivaBulk fattura) throws 
 		FatturaPassivaComponentSession h;
 		try {
 			h = (FatturaPassivaComponentSession)createComponentSession("CNRDOCAMM00_EJB_FatturaPassivaComponentSession", FatturaPassivaComponentSession.class) ;
-			Fattura_attiva_rigaIBulk riga = (Fattura_attiva_rigaIBulk)getDettaglio().getModel();
+			Fattura_attiva_rigaBulk riga = (Fattura_attiva_rigaBulk)getDettaglio().getModel();
 			TrovatoBulk trovato = h.ricercaDatiTrovato(context.getUserContext(), riga.getPg_trovato());
 			riga.setTrovato(trovato);
 		} catch (java.rmi.RemoteException e) {

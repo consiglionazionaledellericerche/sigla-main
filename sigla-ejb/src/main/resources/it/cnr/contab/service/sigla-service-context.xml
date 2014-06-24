@@ -15,6 +15,21 @@
    			resource-ref="false">
    	</jee:jndi-lookup>
    	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:META-INF/spring/*.properties</value>
+				<value>classpath*:*props/axis2.properties</value>
+			</list>
+		</property>
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+	</bean>
+
+	<bean id="trovatoProperties" class="it.cnr.contab.docamm00.client.TrovatoProperties">
+		<property name="trovatoTargetEndpoint" value="${TrovatoTargetEndpoint}" />
+		<property name="trovatoSiglaWSClientPassword" value="${TrovatoSiglaWSClientPassword}" />
+	</bean>
+
 	<bean id="httpClient" class="org.apache.commons.httpclient.HttpClient">
 		<constructor-arg>
 			<bean class="org.apache.commons.httpclient.MultiThreadedHttpConnectionManager"></bean>

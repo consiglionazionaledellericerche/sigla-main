@@ -19,6 +19,7 @@ public class FatturaPassivaBase  implements Serializable {
 	private java.lang.String ds_fattura_passiva;
 	private String cd_cds_origine;
 	private String cd_uo_origine;
+	private Integer cd_terzo;
 	private String nr_fattura_fornitore;
 	private Date dt_fattura_fornitore;
 	private String partita_iva;
@@ -96,5 +97,11 @@ public class FatturaPassivaBase  implements Serializable {
 	}
 	public void setTipoFatturaCompenso(String tipoFatturaCompenso) {
 		this.tipoFatturaCompenso = tipoFatturaCompenso;
+	}
+	public Integer getCd_terzo() {
+		return cd_terzo;
+	}
+	public void setCd_terzo(Integer cd_terzo) {
+		this.cd_terzo = cd_terzo;
 	}
 }

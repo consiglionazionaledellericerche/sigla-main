@@ -27,9 +27,13 @@ public class FatturaAttiva extends FatturaAttivaBase {
 	private java.math.BigDecimal cambio;
 	private java.math.BigDecimal im_imponibile;
 	private java.math.BigDecimal im_iva;
+	private java.math.BigDecimal fcIva;
 	private Integer esercizio_reversale;
 	private Long pg_reversale;
 	private Date dt_emissione_reversale;
+	private Date dt_emissione_accertamento;
+	private Integer esercizio_accertamento;
+	private Long pg_accertamento;
 
 	public FatturaAttivaBase cloneFatturaAttivaBase() {
 		FatturaAttivaBase fab = new FatturaAttivaBase();
@@ -161,5 +165,29 @@ public class FatturaAttiva extends FatturaAttivaBase {
 	}
 	public Long getPg_trovato() {
 		return pg_trovato;
+	}
+	public Date getDt_emissione_accertamento() {
+		return dt_emissione_accertamento;
+	}
+	public void setDt_emissione_accertamento(Date dt_emissione_accertamento) {
+		this.dt_emissione_accertamento = dt_emissione_accertamento;
+	}
+	public Integer getEsercizio_accertamento() {
+		return esercizio_accertamento;
+	}
+	public void setEsercizio_accertamento(Integer esercizio_accertamento) {
+		this.esercizio_accertamento = esercizio_accertamento;
+	}
+	public Long getPg_accertamento() {
+		return pg_accertamento;
+	}
+	public void setPg_accertamento(Long pg_accertamento) {
+		this.pg_accertamento = pg_accertamento;
+	}
+	public java.math.BigDecimal getFcIva() {
+		return fcIva;
+	}
+	public void setFcIva(java.math.BigDecimal fcIva) {
+		this.fcIva = fcIva;
 	}
 }
