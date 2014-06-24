@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fattura_attiva_provvisoria" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="110"/>
+	<property name="ireport.y" value="96"/>
 	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
 	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="TNRC8" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
@@ -28,19 +28,20 @@
 		<defaultValueExpression><![CDATA[2014]]></defaultValueExpression>
 	</parameter>
 	<parameter name="pg_fattura" class="java.lang.Long" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Long(3628)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Long(3699)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="cd_uo_origine" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["009.000"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["075.000"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select distinct ter.denominazione_sede as ds_cd_terzo, ter2.denominazione_sede as ds_cd_uo_origine, uo.*, fa.*, frg.*,
-vi.cd_voce_iva, vi.ds_voce_iva, rmp.ds_modalita_pag as ds_modalita_pag_uo_cds, rmp.ti_pagamento
+vi.cd_voce_iva, vi.ds_voce_iva, rmp.ds_modalita_pag as ds_modalita_pag_uo_cds, rmp.ti_pagamento,
+AC.ESERCIZIO_CONTRATTO, AC.PG_CONTRATTO, CO.CD_CIG_fattura_attiva, CO.CD_CUP
 from fattura_attiva fa, terzo ter, terzo ter2, unita_organizzativa uo, fattura_attiva_riga frg, voce_iva vi,
-rif_modalita_pagamento rmp
+rif_modalita_pagamento rmp, accertamento ac, contratto co
 where fa.esercizio = $P{esercizio}
-and fa.cd_uo_origine = $P{cd_uo_origine}
-and fa.pg_fattura_attiva = $P{pg_fattura}
+and fa.cd_uo_origine =  $P{cd_uo_origine}
+and fa.pg_fattura_attiva =  $P{pg_fattura}
 and ter.cd_terzo = fa.cd_terzo
 AND ter2.cd_terzo = fa.cd_terzo_uo_cds
 AND uo.cd_unita_organizzativa = fa.cd_uo_origine
@@ -49,7 +50,14 @@ AND frg.cd_unita_organizzativa = fa.cd_unita_organizzativa
 AND frg.esercizio = fa.esercizio
 AND frg.pg_fattura_attiva = fa.pg_fattura_attiva
 AND vi.cd_voce_iva = frg.cd_voce_iva
-and fa.cd_modalita_pag_uo_cds = rmp.cd_modalita_pag]]>
+and fa.cd_modalita_pag_uo_cds = rmp.cd_modalita_pag
+and ac.cd_cds = frg.cd_cds_accertamento
+and ac.esercizio = frg.esercizio_accertamento
+and AC.PG_ACCERTAMENTO = FRG.PG_ACCERTAMENTO
+and AC.ESERCIZIO_ORIGINALE = FRG.ESERCIZIO_ORI_ACCERTAMENTO
+and AC.ESERCIZIO_CONTRATTO= CO.ESERCIZIO
+and AC.PG_CONTRATTO = CO.PG_CONTRATTO
+and CO.stato = 'D']]>
 	</queryString>
 	<field name="DS_CD_TERZO" class="java.lang.String"/>
 	<field name="DS_CD_UO_ORIGINE" class="java.lang.String"/>
@@ -166,10 +174,14 @@ and fa.cd_modalita_pag_uo_cds = rmp.cd_modalita_pag]]>
 	<field name="DS_VOCE_IVA" class="java.lang.String"/>
 	<field name="DS_MODALITA_PAG_UO_CDS" class="java.lang.String"/>
 	<field name="TI_PAGAMENTO" class="java.lang.String"/>
+	<field name="ESERCIZIO_CONTRATTO" class="java.math.BigDecimal"/>
+	<field name="PG_CONTRATTO" class="java.math.BigDecimal"/>
+	<field name="CD_CIG_FATTURA_ATTIVA" class="java.lang.String"/>
+	<field name="CD_CUP" class="java.lang.String"/>
 	<group name="Numero_Fattura">
 		<groupExpression><![CDATA[$F{PG_FATTURA_ATTIVA}]]></groupExpression>
 		<groupHeader>
-			<band height="171">
+			<band height="194">
 				<staticText>
 					<reportElement style="TNRG10" x="3" y="4" width="44" height="14"/>
 					<textElement/>
@@ -198,17 +210,17 @@ and fa.cd_modalita_pag_uo_cds = rmp.cd_modalita_pag]]>
 					<reportElement x="0" y="1" width="1" height="57"/>
 				</line>
 				<staticText>
-					<reportElement style="TNRG10" x="3" y="66" width="83" height="14"/>
+					<reportElement style="TNRG10" x="3" y="88" width="83" height="14"/>
 					<textElement/>
-					<text><![CDATA[Numero Fattura:]]></text>
+					<text><![CDATA[Numero:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TNRG10" x="3" y="82" width="83" height="14"/>
+					<reportElement style="TNRG10" x="3" y="104" width="83" height="14"/>
 					<textElement/>
-					<text><![CDATA[Data Fattura:]]></text>
+					<text><![CDATA[Data:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TNRG10" x="286" y="66" width="98" height="14"/>
+					<reportElement style="TNRG10" x="286" y="68" width="98" height="14"/>
 					<textElement/>
 					<text><![CDATA[Riferimento Ordine:]]></text>
 				</staticText>
@@ -216,31 +228,31 @@ and fa.cd_modalita_pag_uo_cds = rmp.cd_modalita_pag]]>
 					<reportElement x="1" y="62" width="554" height="1"/>
 				</line>
 				<line>
-					<reportElement x="1" y="135" width="554" height="1"/>
+					<reportElement x="1" y="158" width="554" height="1"/>
 				</line>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="110" y="66" width="156" height="14" isRemoveLineWhenBlank="true"/>
+					<reportElement style="TNR10" x="110" y="88" width="156" height="14" isRemoveLineWhenBlank="true"/>
 					<textElement/>
 					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{PROTOCOLLO_IVA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="110" y="82" width="156" height="14" isRemoveLineWhenBlank="true"/>
+					<reportElement style="TNR10" x="110" y="104" width="156" height="14" isRemoveLineWhenBlank="true"/>
 					<textElement/>
 					<textFieldExpression class="java.lang.String"><![CDATA[new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{DT_EMISSIONE})]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="388" y="66" width="166" height="28" isRemoveLineWhenBlank="true"/>
+					<reportElement style="TNR10" x="388" y="68" width="166" height="28" isRemoveLineWhenBlank="true"/>
 					<textElement/>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{RIFERIMENTO_ORDINE}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement x="0" y="63" width="1" height="72"/>
+					<reportElement x="0" y="63" width="1" height="95"/>
 				</line>
 				<line>
-					<reportElement x="555" y="63" width="1" height="72"/>
+					<reportElement x="555" y="63" width="1" height="95"/>
 				</line>
 				<staticText>
-					<reportElement style="TNRGC12" x="3" y="156" width="150" height="15"/>
+					<reportElement style="TNRGC12" x="3" y="175" width="150" height="15"/>
 					<textElement/>
 					<text><![CDATA[Dettagli Fattura]]></text>
 				</staticText>
@@ -250,37 +262,37 @@ and fa.cd_modalita_pag_uo_cds = rmp.cd_modalita_pag]]>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{DS_MODALITA_PAG_UO_CDS}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement style="TNRG10" x="3" y="101" width="127" height="14"/>
+					<reportElement style="TNRG10" x="3" y="124" width="127" height="14"/>
 					<textElement/>
 					<text><![CDATA[Numero Protocollo generale:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TNRG10" x="3" y="117" width="127" height="14"/>
+					<reportElement style="TNRG10" x="3" y="140" width="127" height="14"/>
 					<textElement/>
 					<text><![CDATA[Data Protocollo generale:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TNRG10" x="286" y="101" width="127" height="14"/>
+					<reportElement style="TNRG10" x="286" y="124" width="127" height="14"/>
 					<textElement/>
 					<text><![CDATA[Data avvenuta consegna:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TNR10" x="286" y="117" width="127" height="14"/>
+					<reportElement style="TNR10" x="286" y="140" width="127" height="14"/>
 					<textElement/>
 					<text><![CDATA[(Per fatturazione elettronica)]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="143" y="101" width="123" height="14" isRemoveLineWhenBlank="true"/>
+					<reportElement style="TNR10" x="143" y="124" width="123" height="14" isRemoveLineWhenBlank="true"/>
 					<textElement/>
 					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{PG_FATTURA_ATTIVA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="425" y="101" width="129" height="14" isRemoveLineWhenBlank="true"/>
+					<reportElement style="TNR10" x="425" y="124" width="129" height="14" isRemoveLineWhenBlank="true"/>
 					<textElement/>
 					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DT_CONSEGNA_SDI}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="143" y="117" width="123" height="14" isRemoveLineWhenBlank="true"/>
+					<reportElement style="TNR10" x="143" y="140" width="123" height="14" isRemoveLineWhenBlank="true"/>
 					<textElement/>
 					<textFieldExpression class="java.lang.String"><![CDATA[new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{DT_REGISTRAZIONE})]]></textFieldExpression>
 				</textField>
@@ -289,6 +301,18 @@ and fa.cd_modalita_pag_uo_cds = rmp.cd_modalita_pag]]>
 					<textElement/>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_UO_ORIGINE}+ " - " +$F{DS_CD_UO_ORIGINE}]]></textFieldExpression>
 				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="TNRG10" x="110" y="68" width="156" height="14" isRemoveLineWhenBlank="true"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[($F{TI_FATTURA}.equals("F")?"Fattura":
+    ($F{TI_FATTURA}.equals("C")?"Nota di credito":
+        ($F{TI_FATTURA}.equals("D")?"Nota di debito":"")))]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="TNRG10" x="3" y="68" width="100" height="14"/>
+					<textElement/>
+					<text><![CDATA[Tipo documento:]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -365,11 +389,14 @@ and fa.cd_modalita_pag_uo_cds = rmp.cd_modalita_pag]]>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[CONSIGLIO NAZIONALE DELLE RICERCHE]]></text>
 			</staticText>
-			<staticText>
-				<reportElement style="TNRGC12" x="0" y="46" width="555" height="15" forecolor="#FF0000"/>
+			<textField>
+				<reportElement style="TNRGC12" x="0" y="44" width="555" height="15" forecolor="#FF0000"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[Fattura non utilizzabile ai fini fiscali]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{TI_FATTURA}.equals("F")?"Fattura ":
+    ($F{TI_FATTURA}.equals("C")?"Nota di credito ":
+        ($F{TI_FATTURA}.equals("D")?"Nota di debito ":"")))+
+    "non utilizzabile ai fini fiscali"]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -379,7 +406,7 @@ and fa.cd_modalita_pag_uo_cds = rmp.cd_modalita_pag]]>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="114" splitType="Stretch">
+		<band height="116" splitType="Stretch">
 			<staticText>
 				<reportElement style="TNRG10" x="3" y="7" width="75" height="38"/>
 				<textElement/>
@@ -442,6 +469,36 @@ and fa.cd_modalita_pag_uo_cds = rmp.cd_modalita_pag]]>
 			<line>
 				<reportElement x="0" y="4" width="1" height="109"/>
 			</line>
+			<staticText>
+				<reportElement style="TNRG10" x="266" y="63" width="104" height="14"/>
+				<textElement/>
+				<text><![CDATA[Riferimento Contratto:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="TNR10" x="378" y="63" width="157" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ESERCIZIO_CONTRATTO}+ "/" +$F{PG_CONTRATTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="TNRG10" x="266" y="79" width="104" height="14"/>
+				<textElement/>
+				<text><![CDATA[CIG:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TNRG10" x="266" y="95" width="104" height="14"/>
+				<textElement/>
+				<text><![CDATA[CUP:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="TNR10" x="378" y="79" width="157" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_CIG_FATTURA_ATTIVA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TNR10" x="378" y="95" width="157" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_CUP}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
