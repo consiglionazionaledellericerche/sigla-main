@@ -11,8 +11,8 @@ function apriListaMessaggi(url) {
 	var winWidth= (screen.width*50)/100;
 	var winHeight= (screen.height*50)/100;
     var win = new Window({className:"alphacube", width:winWidth, height:winHeight, title: "Messaggi",url: url, destroyOnClose:true, showEffect:Effect.BlindDown, hideEffect: Effect.SwitchOff, draggable:true, wiredDrag: true, onClose: function() { 
-    	event.getContent().contentDocument.messaggiForm.comando.value = 'doCloseForm';
-  		event.getContent().contentDocument.messaggiForm.submit();
+    	event.getContent().contentDocument.mainForm.comando.value = 'doCloseForm';
+  		event.getContent().contentDocument.mainForm.submit();
 	}});
     win.showCenter(true);    
 	setMessage("img/spacer.gif",null);

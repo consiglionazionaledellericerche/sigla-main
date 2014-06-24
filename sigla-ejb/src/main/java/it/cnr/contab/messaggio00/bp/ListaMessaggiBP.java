@@ -171,11 +171,4 @@ public class ListaMessaggiBP extends
 			return true;
 		return super.isOrderableBy(s);
 	}
-
-	@Override
-	public String getResource(String name) {
-		if (name.equalsIgnoreCase("mainFormName"))
-			return "messaggiForm";
-		return super.getResource(name);
-	}
 }
