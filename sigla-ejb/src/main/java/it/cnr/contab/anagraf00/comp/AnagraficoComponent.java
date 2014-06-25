@@ -267,6 +267,9 @@ private void valorizzaDatiIpa(UserContext userContext, OggettoBulk bulk)
 }
 private IpaServFattBulk recuperoDatiIpa(UserContext userContext, OggettoBulk bulk) throws ComponentException {
 	try {
+		if (((AnagraficoBulk)bulk).getCodice_fiscale() == null){
+			return null;
+		}
 		IpaServFattHome ipaHome = (IpaServFattHome)getHome(userContext,IpaServFattBulk.class);
 		SQLBuilder sql = ipaHome.createSQLBuilder();
 		sql.addClause("AND", "cf", SQLBuilder.EQUALS, ((AnagraficoBulk)bulk).getCodice_fiscale());
