@@ -171,4 +171,7 @@ public class CNRUserContext implements it.cnr.jada.UserContext {
 		return attributes;
 	}
 
+	public String toString() {
+		return "USER: " + getUser();
+	}
 }
