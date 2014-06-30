@@ -114,7 +114,12 @@
 		label="im_associato_doc_contabile"
 		inputType="TEXT"
 		/>
-		
+	<fieldProperty
+		name="cd_cig"
+		property="cd_cig"
+		label="cig"
+		inputType="TEXT"
+		/>	
 	<columnFieldProperty
 		name="esercizio"
 		/>
@@ -147,7 +152,12 @@
 		property="obbligazione.cd_terzo"
 		/>
 		
-
+	<columnFieldProperty
+		name="cd_cig"
+		label="Cig"
+		property="obbligazione.contratto.cig.cdCig"
+		/>
+		
 	<columnSet
 		name="obbligazione">
 	<columnFieldProperty

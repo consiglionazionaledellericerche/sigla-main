@@ -873,9 +873,24 @@
 		property="fl_liquidazione_differita"
 		inputType="CHECKBOX"
 		readonlyProperty="ROFl_liquidazione_differita"
-		label="Liquidazione Differita" 
-		/>		
-		
+		label="Liquidazione Differita" />		
+	<fieldProperty
+		name="data_protocollo"
+		property="data_protocollo"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnSearch="true"
+		label="Data protocollo" />
+	<fieldProperty
+		name="progr_univoco"
+		property="progr_univoco"
+		inputType="ROTEXT"
+		maxLength="10"
+		inputSize="10"
+		enabledOnSearch="true" />		
+			
 	<findFieldProperty name="esercizio"/>
 	<findFieldProperty name="esercizio_fattura_fornitore"/>
 	<findFieldProperty name="cd_cds"/>
@@ -1128,7 +1143,11 @@
 	<formFieldProperty
 		name="fl_liquidazione_differita" 
 		command="doOnLiquidazioneDifferitaChange"/>	
-	
+	<formFieldProperty
+		name="data_protocollo" />
+	<formFieldProperty
+		name="progr_univoco" />
+					
 	<columnFieldProperty 
 		name="esercizio"/>
 	<columnFieldProperty

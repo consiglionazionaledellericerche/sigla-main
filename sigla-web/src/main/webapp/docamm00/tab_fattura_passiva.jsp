@@ -41,7 +41,10 @@
 		<td>
 			<% bp.getController().writeFormInput(out,null,"dt_registrazione",false,null,"");%>
 		</td>
-       	<% bp.getController().writeFormField(out,"numero_protocollo"); %>
+	</tr>      
+    <tr>  
+			<% bp.getController().writeFormField(out,"data_protocollo"); %>
+       		<% bp.getController().writeFormField(out,"numero_protocollo"); %>
       </tr>      
       <tr>      	
       	<% bp.getController().writeFormField(out,"protocollo_iva");%>

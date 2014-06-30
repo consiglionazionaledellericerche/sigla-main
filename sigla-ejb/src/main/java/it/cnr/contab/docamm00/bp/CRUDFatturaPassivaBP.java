@@ -1095,4 +1095,26 @@ public boolean isDetailDoubleable() {
 			throw e;
 		}
 	}
+private java.sql.Timestamp getDataInizioObbligoRegistroUnico(it.cnr.jada.action.ActionContext context) throws BusinessProcessException {
+	try{
+	return Utility.createConfigurazioneCnrComponentSession().
+		getDt01(context.getUserContext(), new Integer(0), null,"REGISTRO_UNICO_FATPAS", "DATA_INIZIO");
+	} catch(Exception e) {
+		throw handleException(e);
+	}
+}
+@Override
+public void validate(ActionContext actioncontext)
+		throws ValidationException {
+	
+	Fattura_passivaBulk fp = (Fattura_passivaBulk)getModel();
+	try {
+		fp.setDataInizioObbligoRegistroUnico(getDataInizioObbligoRegistroUnico(actioncontext));
+	} catch (BusinessProcessException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	fp.validate();
+	super.validate(actioncontext);
+}
 }

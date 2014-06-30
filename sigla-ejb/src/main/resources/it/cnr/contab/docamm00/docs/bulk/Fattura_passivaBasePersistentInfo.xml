@@ -412,6 +412,16 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="DATA_PROTOCOLLO"
+			propertyName="data_protocollo"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"/>	
+		<columnMapping
+			columnName="PROGR_UNIVOCO"
+			propertyName="progr_univoco"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />		
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -551,4 +561,8 @@
 		name="fl_liquidazione_differita" />		
 	<persistentProperty
 		name="fl_merce_intra_ue" />		
+	<persistentProperty
+		name="data_protocollo" />
+	<persistentProperty
+		name="progr_univoco" />	
 </SQLPersistentInfo>

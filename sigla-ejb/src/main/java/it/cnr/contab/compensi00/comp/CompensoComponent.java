@@ -137,6 +137,8 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
+import javax.ejb.EJBException;
+
 /**
  * Insert the type's description here. Creation date: (21/02/2002 16.13.52)
  * 
@@ -4716,8 +4718,13 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			throws ComponentException {
 		// Controllo Testata Compenso
 		try {
+	
+			compenso.setDataInizioObbligoRegistroUnico(Utility.createConfigurazioneCnrComponentSession().
+				getDt01(userContext, new Integer(0), null,"REGISTRO_UNICO_FATPAS", "DATA_INIZIO"));
 			compenso.validaTestata();
-		} catch (it.cnr.jada.action.BusinessProcessException e) {
+		} catch (RemoteException e) {
+			throw handleException(e);
+		}catch (it.cnr.jada.action.BusinessProcessException e) {
 			throw handleException(e);
 		} catch (java.text.ParseException ex) {
 			throw handleException(ex);

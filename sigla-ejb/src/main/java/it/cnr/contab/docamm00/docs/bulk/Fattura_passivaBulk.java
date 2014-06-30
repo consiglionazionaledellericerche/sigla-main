@@ -199,6 +199,7 @@ public abstract class Fattura_passivaBulk
 	private java.lang.String riportataInScrivania = NON_RIPORTATO;
 	private Integer esercizioInScrivania;
 	private boolean isIvaRecuperabile=true;
+	private java.sql.Timestamp dataInizioObbligoRegistroUnico;
 public Fattura_passivaBulk() {
 	super();
 }
@@ -1812,7 +1813,8 @@ public boolean isStampataSuRegistroIVA() {
 	return	STATO_IVA_B.equalsIgnoreCase(getStatoIVA()) ||
 			STATO_IVA_C.equalsIgnoreCase(getStatoIVA()) ||
 			//A seguito dell'errore segnalato 569 (dovuto alla richiesta 423)
-			(getAutofattura() != null && getAutofattura().isStampataSuRegistroIVA());
+			(getAutofattura() != null && getAutofattura().isStampataSuRegistroIVA())||
+			(getProgr_univoco()!=null);
 }
 /**
  * Insert the method's description here.
@@ -2555,7 +2557,14 @@ public void validate() throws ValidationException {
 
 	validateDate();
 	validaDateCompetenza();
-	
+	// campi obbligatori dal 01/07/2014
+	if (getDt_registrazione().after(dataInizioObbligoRegistroUnico)){ 
+		if(getData_protocollo()== null)
+			throw new ValidationException("Inserire la data di protocollo di entrata.");
+		if(getNumero_protocollo()== null)
+			throw new ValidationException("Inserire il numero di protocollo di entrata!");
+	}	
+
 	if (getLettera_pagamento_estero() != null)
 		getLettera_pagamento_estero().validate();
 }
@@ -2688,5 +2697,12 @@ public void validateDate() throws ValidationException {
 	}
 	public void setDocumentoModificabile(boolean isDocumentoModificabile) {
 		this.isDocumentoModificabile = isDocumentoModificabile;
+	}
+	public java.sql.Timestamp getDataInizioObbligoRegistroUnico() {
+		return dataInizioObbligoRegistroUnico;
+	}
+	public void setDataInizioObbligoRegistroUnico(
+			java.sql.Timestamp dataInizioObbligoRegistroUnico) {
+		this.dataInizioObbligoRegistroUnico = dataInizioObbligoRegistroUnico;
 	}
 }

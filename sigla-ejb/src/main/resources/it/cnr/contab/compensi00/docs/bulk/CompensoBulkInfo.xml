@@ -250,6 +250,47 @@
 		enabledOnSearch = "false"
 		enabledOnFreeSearch = "true"
 		label="Generata fattura" />
+	<fieldProperty
+		name="data_protocollo"
+		property="data_protocollo"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"
+		inputType="TEXT"
+		nullable="true"
+		readonlyProperty="RODatiFattura"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Data protocollo" />
+	<fieldProperty
+		name="numero_protocollo"
+		property="numero_protocollo"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="true"
+		readonlyProperty="RODatiFattura"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Nr. protocollo" />		
+	<fieldProperty
+		name="dt_scadenza"
+		property="dt_scadenza"
+		maxLength="10"
+		inputSize="10"
+		formatName="date_short"
+		inputType="TEXT"
+		nullable="true"
+		readonlyProperty="RODatiFattura"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		enabledOnSearch = "true"
+		enabledOnFreeSearch = "true"
+		label="Data scadenza" />
 /****************** TERZO ********************/
 	<fieldProperty
 		name="find_terzo"
@@ -994,6 +1035,11 @@
 		property="obbligazioneScadenzario.ds_scadenza"
 		inputType="ROTEXT"
 		label="Descrizione scadenza" />
+	<fieldProperty
+		name="cig"
+		property="obbligazioneScadenzario.obbligazione.contratto.cig.cdCig"
+		inputType="ROTEXT"
+		label="Cig" />	
 /*********************************************/
 /******** SEARCH TOOL AGGIUNTIVI *************/
 /*********** DATI LIQUIDAZIONE ***************/
@@ -1487,6 +1533,7 @@
 	<formFieldProperty name="scadenza_dt_scadenza" />
 	<formFieldProperty name="scadenza_im_scadenza" />
 	<formFieldProperty name="scadenza_ds_scadenza" />
+	<formFieldProperty name="cig" />
 	<formFieldProperty name="ti_associato_manrev" />
 	<formFieldProperty name="ti_associato_manrevForSearch" />
 	<formFieldProperty name="cd_regione_irap" />
@@ -1528,6 +1575,9 @@
 	<formFieldProperty name="contoN" />
 	<formFieldProperty name="pg_conguaglio" />
 	<formFieldProperty name="pg_minicarriera" />
+	<formFieldProperty name="dt_scadenza" />
+	<formFieldProperty name="data_protocollo" />
+	<formFieldProperty name="numero_protocollo" />
 	<formFieldProperty name="nr_fattura_fornitore" />
 	<formFieldProperty name="esercizio_fattura_fornitore" />
 	<formFieldProperty name="dt_fattura_fornitore" />
@@ -1671,6 +1721,10 @@
 		label="Unita organizzativa missione" />
 	<findFieldProperty name="fl_senza_calcoli" />
 	<findFieldProperty name="fl_recupero_rate" />			
+	<findFieldProperty name="dt_scadenza" />
+	<findFieldProperty name="data_protocollo" />
+	<findFieldProperty name="numero_protocollo" />
+	
 	<findFieldProperty name="nr_fattura_fornitore" />
 	<findFieldProperty name="esercizio_fattura_fornitore" />
 	<findFieldProperty name="dt_fattura_fornitore" />

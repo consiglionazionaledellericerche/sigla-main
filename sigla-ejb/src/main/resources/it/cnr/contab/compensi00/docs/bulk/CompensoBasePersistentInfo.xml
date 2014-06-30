@@ -759,7 +759,22 @@
 			sqlTypeName="DECIMAL"
 			columnSize="15"
 			columnScale="2"
-			nullable="true" />			
+			nullable="true" />
+		<columnMapping
+			columnName="NUMERO_PROTOCOLLO"
+			propertyName="numero_protocollo"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />	
+		<columnMapping
+			columnName="DATA_PROTOCOLLO"
+			propertyName="data_protocollo"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />						
+		<columnMapping
+			columnName="DT_SCADENZA"
+			propertyName="dt_scadenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />						
 			
 	</defaultColumnMap>
 	<persistentProperty
@@ -1017,7 +1032,13 @@
 	<persistentProperty
 		name="im_tot_reddito_complessivo" />				
 	<persistentProperty
-		name="pg_trovato" />		
+		name="pg_trovato" />	
+	<persistentProperty
+		name="data_protocollo" />	
+	<persistentProperty
+		name="numero_protocollo" />	
+	<persistentProperty
+		name="dt_scadenza" />						
 	<persistentProperty
 		name="pg_trovato" />		
 </SQLPersistentInfo>

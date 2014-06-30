@@ -198,6 +198,10 @@ public class Fattura_passivaBase extends Fattura_passivaKey implements Keyed {
 	// FL_MERCE_INTRA_UE CHAR(1) NOT NULL
 	private java.lang.Boolean fl_merce_intra_ue;
 	
+	private java.lang.Long progr_univoco;
+	
+	private java.sql.Timestamp data_protocollo;
+	
 public Fattura_passivaBase() {
 	super();
 }
@@ -959,5 +963,17 @@ public java.lang.Boolean getFl_merce_intra_ue() {
 }
 public void setFl_merce_intra_ue(java.lang.Boolean flMerceIntraUe) {
 	fl_merce_intra_ue = flMerceIntraUe;
+}
+public java.lang.Long getProgr_univoco() {
+	return progr_univoco;
+}
+public void setProgr_univoco(java.lang.Long progr_univoco) {
+	this.progr_univoco = progr_univoco;
+}
+public java.sql.Timestamp getData_protocollo() {
+	return data_protocollo;
+}
+public void setData_protocollo(java.sql.Timestamp data_protocollo) {
+	this.data_protocollo = data_protocollo;
 }
 }

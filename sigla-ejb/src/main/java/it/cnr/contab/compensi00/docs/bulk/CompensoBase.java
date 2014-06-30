@@ -373,7 +373,13 @@ public class CompensoBase extends CompensoKey implements Keyed {
 	private java.math.BigDecimal im_tot_reddito_complessivo;		
 	
 		// PG_TROVATO DECIMAL(10,0)
-		private java.lang.Long pg_trovato;
+	private java.lang.Long pg_trovato;
+	
+	private java.sql.Timestamp dt_scadenza;
+	
+	private java.sql.Timestamp data_protocollo;
+	
+	private java.lang.String numero_protocollo;		
 
 public CompensoBase() {
 	super();
@@ -1769,5 +1775,23 @@ public void setTi_istituz_commerc(java.lang.String ti_istituz_commerc) {
 	public void setIm_tot_reddito_complessivo(
 			java.math.BigDecimal im_tot_reddito_complessivo) {
 		this.im_tot_reddito_complessivo = im_tot_reddito_complessivo;
+	}
+	public java.sql.Timestamp getDt_scadenza() {
+		return dt_scadenza;
+	}
+	public void setDt_scadenza(java.sql.Timestamp dt_scadenza) {
+		this.dt_scadenza = dt_scadenza;
+	}
+	public java.sql.Timestamp getData_protocollo() {
+		return data_protocollo;
+	}
+	public void setData_protocollo(java.sql.Timestamp data_protocollo) {
+		this.data_protocollo = data_protocollo;
+	}
+	public java.lang.String getNumero_protocollo() {
+		return numero_protocollo;
+	}
+	public void setNumero_protocollo(java.lang.String numero_protocollo) {
+		this.numero_protocollo = numero_protocollo;
 	}
 }

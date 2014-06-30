@@ -152,6 +152,7 @@
 
 </div>
 
+ 
 <fieldset>
 <legend ACCESSKEY=G TABINDEX=1 style="font-weight:bold; font-family:sans-serif; font-size:12px; color:blue">Dati Fattura</legend>
 <div class="Panel" style="width:100%">
@@ -171,7 +172,14 @@
 		<td><% bp.getController().writeFormLabel(out,"fl_liquidazione_differita"); %></td>
 		<td><% bp.getController().writeFormInput(out,null,"fl_liquidazione_differita", bp.isRODatiFatturaPerChiusura(compenso), null, "onClick=\"submitForm('doOnFlLiquidazioneDifferitaChange()')\""); %></td>
 	<%} %>
-  </tr>
+	<tr>
+		<td><% bp.getController().writeFormLabel(out,"dt_scadenza"); %> </td> 
+		<td><% bp.getController().writeFormInput(out,null,"dt_scadenza", bp.isRODatiFatturaPerChiusura(compenso), null, null); %></td>
+		<td><% bp.getController().writeFormLabel(out,"data_protocollo"); %></td>
+		<td><% bp.getController().writeFormInput(out,null,"data_protocollo", bp.isRODatiFatturaPerChiusura(compenso), null, null); %></td>	
+		<td><% bp.getController().writeFormLabel(out,"numero_protocollo"); %></td>
+		<td><%bp.getController().writeFormInput(out,null,"numero_protocollo", bp.isRODatiFatturaPerChiusura(compenso), null, null); %></td>
+    </tr>
 </table>
 </div>
 </fieldset>

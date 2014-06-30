@@ -196,7 +196,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	private boolean visualizzaPignorato = false;
 	private Tipo_prestazione_compensoBulk tipoPrestazioneCompenso;
 	private java.util.Collection tipiPrestazioneCompenso;
-
+	private java.sql.Timestamp dataInizioObbligoRegistroUnico;
+	
 	public CompensoBulk() {
 		super();
 	}
@@ -2829,15 +2830,25 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		boolean tuttiNotNull = getEsercizio_fattura_fornitore() != null
 				&& getNr_fattura_fornitore() != null
 				&& getDt_fattura_fornitore() != null;
-
 		if (tuttiNull && Boolean.TRUE.equals(getFl_generata_fattura()))
 			throw new it.cnr.jada.comp.ApplicationException(
 					"Inserire gli estremi identificativi della fattura fornitore");
-	if (tuttiNotNull && Boolean.FALSE.equals(getFl_generata_fattura()))
-		throw new it.cnr.jada.comp.ApplicationException("Indicare generare fattura o eliminare gli estremi identificativi della fattura");
+		if (tuttiNotNull && Boolean.FALSE.equals(getFl_generata_fattura()))
+			throw new it.cnr.jada.comp.ApplicationException("Indicare generare fattura o eliminare gli estremi identificativi della fattura");
 		if (!(tuttiNull || tuttiNotNull))
 			throw new it.cnr.jada.comp.ApplicationException(
-					"Completare gli estremi identificativi della fattura fornitore");
+					"Completare gli estremi identificativi della fattura fornitore.");
+		
+		
+		if (getDt_registrazione().after(dataInizioObbligoRegistroUnico)&& Boolean.TRUE.equals(getFl_generata_fattura())){ 
+			if(getDt_scadenza()== null)
+				throw new ApplicationException("Inserire la data di scadenza.");
+			if(getData_protocollo()== null)
+					throw new ApplicationException("Inserire la data di protocollo di entrata.");
+			if(getNumero_protocollo()== null)
+					throw new ApplicationException("Inserire il numero di protocollo di entrata!");
+				
+			}	
 
 		if (getDt_fattura_fornitore() != null
 				&& getDt_fattura_fornitore().compareTo(getDt_registrazione()) > 0)
@@ -3372,4 +3383,13 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 			return false;
 		return getObbligazioneScadenzario().getObbligazione().getElemento_voce().isVocePerTrovati();
 	}
+	public java.sql.Timestamp getDataInizioObbligoRegistroUnico() {
+		return dataInizioObbligoRegistroUnico;
+	}
+
+	public void setDataInizioObbligoRegistroUnico(
+			java.sql.Timestamp dataInizioObbligoRegistroUnico) {
+		this.dataInizioObbligoRegistroUnico = dataInizioObbligoRegistroUnico;
+	}
+
 }
