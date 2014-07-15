@@ -1,6 +1,7 @@
 package it.cnr.contab.anagraf00.core.bulk;
 
 import it.cnr.contab.anagraf00.tabrif.bulk.*;
+import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
@@ -245,6 +246,21 @@ public SQLBuilder selectRif_termini_pagamento(TerzoBulk terzo) throws Persistenc
 	sql.addTableToHeader("TERMINI_PAGAMENTO");
 	sql.addSQLJoin("TERMINI_PAGAMENTO.CD_TERMINI_PAG","RIF_TERMINI_PAGAMENTO.CD_TERMINI_PAG");
 	sql.addSQLClause("AND","TERMINI_PAGAMENTO.CD_TERZO",sql.EQUALS,terzo.getCd_terzo());
+	return sql;
+}
+
+public SQLBuilder selectTerzoPerCompensi(Integer codiceTerzo, CompoundFindClause clauses) throws PersistencyException{
+
+	SQLBuilder sql = createSQLBuilder();
+	sql.addSQLClause("AND","CD_TERZO",sql.EQUALS,codiceTerzo);
+	SQLBuilder sql2 = getHomeCache().getHome(V_terzo_per_compensoBulk.class).createSQLBuilder();
+	sql2.addClause("AND","cd_terzo",sql.EQUALS,codiceTerzo);
+	sql2.addSQLJoin("TERZO.CD_TERZO","V_TERZO_PER_COMPENSO.CD_TERZO");
+
+	sql.addSQLExistsClause("AND",sql2);
+	
+	sql.addClause(clauses);
+
 	return sql;
 }
 
