@@ -1632,8 +1632,8 @@ public Forward doBringBackSearchBene_servizio(ActionContext context,
 			Fattura_passivaBulk fatturaPassiva = fattura_passiva_riga.getFattura_passiva();
 			if (fatturaPassiva.ISTITUZIONALE.equalsIgnoreCase(fatturaPassiva.getTi_istituz_commerc())) {
 				voceIvaB = caricaVoceIVADefault(context);
-				if (voceIvaB == null)
-					((it.cnr.jada.util.action.CRUDBP)context.getBusinessProcess()).setErrorMessage("Attenzione: non è stata caricata una voce IVA di default per le fatture istituzionali!");
+				//if (voceIvaB == null)
+					//((it.cnr.jada.util.action.CRUDBP)context.getBusinessProcess()).setErrorMessage("Attenzione: non è stata caricata una voce IVA di default per le fatture istituzionali!");
 			}
 			else
 				voceIvaB = beneTrovato.getVoce_iva();
