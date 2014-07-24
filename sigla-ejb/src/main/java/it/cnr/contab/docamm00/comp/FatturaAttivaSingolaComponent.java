@@ -5531,6 +5531,7 @@ public void validaRiga(UserContext aUC, Fattura_attiva_rigaBulk fatturaRiga)
 	try {
 		VoceIvaComponentSession h = (VoceIvaComponentSession)EJBCommonServices.createEJB("CNRDOCAMM00_EJB_VoceIvaComponentSession",VoceIvaComponentSession.class);
 		Voce_ivaBulk def = h.caricaVoceIvaDefault(aUC);
+		if(def!=null && def.getCd_voce_iva()!=null)
 		if(fatturaRiga.getVoce_iva().getCd_voce_iva().compareTo(def.getCd_voce_iva())==0)
 			throw new it.cnr.jada.comp.ApplicationException("Codice iva non valido");
 	

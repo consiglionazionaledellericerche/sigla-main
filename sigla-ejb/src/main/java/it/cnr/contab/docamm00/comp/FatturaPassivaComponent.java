@@ -5915,6 +5915,7 @@ public void validaRiga (UserContext aUC,Fattura_passiva_rigaBulk riga) throws Co
 		if (riga instanceof Fattura_passiva_rigaIBulk && riga.getFattura_passiva().isFatturaDiBeni() && riga.getFattura_passiva().getFl_intra_ue()){
 			 h = (VoceIvaComponentSession)EJBCommonServices.createEJB("CNRDOCAMM00_EJB_VoceIvaComponentSession",VoceIvaComponentSession.class);
 			def = h.caricaVoceIvaDefault(aUC);
+			if(def!=null && def.getCd_voce_iva()!=null)
 			if(riga.getVoce_iva().getCd_voce_iva().compareTo(def.getCd_voce_iva())==0)
 				throw new it.cnr.jada.comp.ApplicationException("Codice iva non valido");
 		}
