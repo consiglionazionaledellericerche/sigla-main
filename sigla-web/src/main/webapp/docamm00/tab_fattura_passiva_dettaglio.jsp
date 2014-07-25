@@ -56,7 +56,7 @@
 		</td>
    		<% bp.getDettaglio().writeFormField(out,"percentuale_voce_iva");%>
    		<td>
-			<% bp.getDettaglio().writeFormInput(out, null, "voce_iva", roOnAutoGen&&fatturaPassiva.isIvaRecuperabile(), null, "");%>
+			<% bp.getDettaglio().writeFormInput(out, null, "voce_iva", false, null, "");%>
 		</td>
 		
       </tr>
