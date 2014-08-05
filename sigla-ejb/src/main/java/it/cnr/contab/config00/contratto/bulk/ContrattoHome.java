@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import it.cnr.contab.utenze00.bulk.*;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.blob.bulk.*;
@@ -205,8 +206,15 @@ public class ContrattoHome extends BulkHome {
 		sql.addSQLClause("AND","STATO_CONTRATTO",SQLBuilder.EQUALS,contratto.getStato());
 		sql.addSQLClause("AND","PG_CONTRATTO",sql.EQUALS,contratto.getPg_contratto());
 		return sql;
+	} 
+	public SQLBuilder findCompensi(it.cnr.jada.UserContext userContext, ContrattoBulk contratto) throws IntrospectionException, PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(CompensoBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.addSQLClause("AND","ESERCIZIO_CONTRATTO",sql.EQUALS,contratto.getEsercizio());
+		sql.addSQLClause("AND","STATO_CONTRATTO",SQLBuilder.EQUALS,contratto.getStato());
+		sql.addSQLClause("AND","PG_CONTRATTO",sql.EQUALS,contratto.getPg_contratto());
+		return sql;
 	}
-
 	/**
 	 * Recupera il totale degli accertamenti legati al contratto
 	 *

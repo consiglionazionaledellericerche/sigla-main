@@ -11,6 +11,7 @@ import it.cnr.cmisdl.model.paging.ListNodePage;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
@@ -461,6 +462,15 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 						obbligazione.setContratto(contrattoClone);
 						obbligazione.setCrudStatus(OggettoBulk.TO_BE_UPDATED);
 						super.modificaConBulk(userContext,obbligazione);				
+					}					
+					Broker brokerCompensi = home.createBroker(home.findCompensi(userContext,contratto));
+					while(brokerCompensi.next()){
+						CompensoBulk compenso = (CompensoBulk)brokerCompensi.fetch(CompensoBulk.class);
+						compenso.setContratto(contrattoClone);
+						compenso.setCrudStatus(OggettoBulk.TO_BE_UPDATED);
+						updateBulk(userContext, compenso);
+						// non può essere utilizzato
+						//super.modificaConBulk(userContext,obbligazione);			
 					}					
 					
 					/* Elimino il contratto definitivo */

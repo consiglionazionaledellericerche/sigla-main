@@ -120,6 +120,7 @@ public abstract class Fattura_passivaBulk
 	public final static String FATTURA_DI_BENI = Bene_servizioBulk.BENE;
 		
 	public final static Dictionary TIPO;
+	
 	public final static Dictionary STATO;
 	public final static Dictionary STATO_COGE;
 	public final static Dictionary STATO_COAN;
@@ -135,7 +136,7 @@ public abstract class Fattura_passivaBulk
 		TIPO.put(COMMERCIALE,"Commerciale");
 		TIPO.put(ISTITUZIONALE,"Istituzionale");
 		TIPO.put(PROMISCUA,"Promiscua");
-
+		
 		STATO = new it.cnr.jada.util.OrderedHashtable();
 		STATO.put(STATO_INIZIALE,"Iniziale");
 		STATO.put(STATO_CONTABILIZZATO,"Contabilizzato");
@@ -1226,6 +1227,16 @@ public Dictionary getTi_bene_servizioKeys() {
 	 */
 
 	public Dictionary getTi_istituz_commercKeys() {
+		OrderedHashtable d = (OrderedHashtable)getTi_istituz_commercKeysForSearch();
+		if (d == null) return null;
+        	OrderedHashtable clone = (OrderedHashtable)d.clone();
+        	if (getStato_cofi() == STATO_INIZIALE) 
+        		clone.remove(PROMISCUA);
+		return clone;
+			
+	}
+	
+	public Dictionary getTi_istituz_commercKeysForSearch() {
 		return TIPO;
 	}
 /**

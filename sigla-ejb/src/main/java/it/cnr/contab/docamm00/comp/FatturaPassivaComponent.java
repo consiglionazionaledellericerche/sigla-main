@@ -25,6 +25,7 @@ import it.cnr.contab.docamm00.docs.bulk.AutofatturaHome;
 import it.cnr.contab.docamm00.docs.bulk.CarichiInventarioTable;
 import it.cnr.contab.docamm00.docs.bulk.Consuntivo_rigaVBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_passivoBulk;
+import it.cnr.contab.docamm00.docs.bulk.ElaboraNumUnicoFatturaPBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaHome;
@@ -6845,6 +6846,27 @@ private Elemento_voceBulk recuperoVoce(UserContext aUC, Obbligazione_scadenzario
 	} catch (PersistencyException e) {
 		throw handleException(e);
 	}		
+}
+public void inserisciProgUnivoco(UserContext context,ElaboraNumUnicoFatturaPBulk lancio) throws ComponentException, RemoteException {
+	Timestamp dataFine=lancio.getDataRegistrazioneA();
+	LoggableStatement cs = null;
+	try {
+		try	{
+			cs = new LoggableStatement(getConnection(context),
+				"{ call " +
+				it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
+				"CNRCTB100.insProgrUnivocoFatturaPassiva(?, ?)}",false,this.getClass());
+			cs.setInt(1, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context).intValue());
+			cs.setDate(2, new Date(lancio.getDataRegistrazioneA().getTime()));
+			cs.executeQuery();
+		} catch (Throwable e) {
+			throw handleException(e);
+		} finally {
+			if (cs != null) cs.close();
+}
+	} catch (SQLException ex) {
+		throw handleException(ex);
+	}	  	
 }
 }
 

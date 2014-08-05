@@ -662,7 +662,7 @@
 		label="Tipo"
 		nullable="true"
 		enabledOnSearch="true"
-		keysProperty="ti_istituz_commercKeys" />
+		keysProperty="ti_istituz_commercKeysForSearch" />
 	<fieldProperty
 		name="pg_fattura_passiva"
 		property="pg_fattura_passiva"

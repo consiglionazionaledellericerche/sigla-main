@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import it.cnr.contab.compensi00.comp.CompensoComponent;
 import it.cnr.contab.docamm00.comp.FatturaAttivaSingolaComponent;
 import it.cnr.contab.docamm00.comp.FatturaPassivaComponent;
+import it.cnr.contab.docamm00.docs.bulk.ElaboraNumUnicoFatturaPBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.jada.UserContext;
@@ -1095,6 +1096,24 @@ public java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk> rice
 	} catch(Error e) {
 		throw uncaughtError(param0,componentObj,e);
 	}
+}
+public void inserisciProgUnivoco(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.ElaboraNumUnicoFatturaPBulk param1) throws ComponentException,RemoteException, PersistencyException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		((FatturaPassivaComponent)componentObj).inserisciProgUnivoco(param0,param1);
+		component_invocation_succes(param0,componentObj);
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+	
 }
 }
 

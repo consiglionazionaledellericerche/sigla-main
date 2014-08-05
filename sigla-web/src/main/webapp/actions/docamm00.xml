@@ -279,4 +279,15 @@
 	<init-param name="componentSessionName" value="CNRDOCAMM00_EJB_ElaboraFileIntraComponentSession" />
 	<init-param name="defaultAction" value="ElaboraFilePoliAction" />
   </businessProcess>
+   <action 
+      path="/ElaboraNumUnicoFatturaPAction" actionClass="it.cnr.contab.docamm00.actions.ElaboraNumUnicoFatturaPAction">
+  </action>
+   <businessProcess
+      name="ElaboraNumUnicoFatturaPBP" className="it.cnr.contab.docamm00.bp.ElaboraNumUnicoFatturaPBP">
+    	<forward name="default" path="/docamm00/elabora_num_univoco.jsp"/>
+    	<init-param name="printbp" value="OfflineReportPrintBP"/>
+    	<init-param name="bulkClassName" value="it.cnr.contab.docamm00.docs.bulk.ElaboraNumUnicoFatturaPBulk"/>
+	<init-param name="componentSessionName" value="CNRDOCAMM00_EJB_FatturaPassivaComponentSession" />
+	<init-param name="defaultAction" value="ElaboraNumUnicoFatturaPAction" />
+  </businessProcess>
 </action-mappings>

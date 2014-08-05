@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 
+import it.cnr.contab.docamm00.docs.bulk.ElaboraNumUnicoFatturaPBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
@@ -1069,6 +1070,24 @@ public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long t
 			throw new java.rmi.RemoteException("Uncaugth exception",ex);
 		}
 	}
+}
+public void inserisciProgUnivoco(UserContext userContext,
+		ElaboraNumUnicoFatturaPBulk lancio) throws ComponentException,
+		RemoteException, PersistencyException {
+	try {
+		invoke("inserisciProgUnivoco",new Object[] {userContext,lancio});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+	
 }
 }
 
