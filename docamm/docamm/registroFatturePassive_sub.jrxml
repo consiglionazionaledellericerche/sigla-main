@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="registroFatturePassive_sub" pageWidth="280" pageHeight="20" orientation="Landscape" columnWidth="280" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="2.1398375295825014"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRG12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Esercizio" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Integer("2014")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="progr" class="java.math.BigDecimal"/>
+	<queryString>
+		<![CDATA[select * from V_RegistroUnicoFatPassive
+where
+    ESERCIZIO = $P{Esercizio} and
+    progr_univoco=$P{progr}]]>
+	</queryString>
+	<field name="PROGR_UNIVOCO" class="java.math.BigDecimal"/>
+	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
+	<field name="DATA_PROTOCOLLO" class="java.sql.Timestamp"/>
+	<field name="NUMERO_PROTOCOLLO" class="java.lang.String"/>
+	<field name="NR_FATTURA_FORNITORE" class="java.lang.String"/>
+	<field name="DT_FATTURA_FORNITORE" class="java.sql.Timestamp"/>
+	<field name="RAGIONE_SOCIALE" class="java.lang.String"/>
+	<field name="COGNOME" class="java.lang.String"/>
+	<field name="NOME" class="java.lang.String"/>
+	<field name="CODICE_FISCALE" class="java.lang.String"/>
+	<field name="PARTITA_IVA" class="java.lang.String"/>
+	<field name="DESCRIZIONE" class="java.lang.String"/>
+	<field name="IMPORTO_FATTURA" class="java.math.BigDecimal"/>
+	<field name="DT_SCADENZA" class="java.sql.Timestamp"/>
+	<field name="STATO" class="java.lang.String"/>
+	<field name="ESERCIZIO_FIN" class="java.math.BigDecimal"/>
+	<field name="CDS_FIN" class="java.lang.String"/>
+	<field name="PROGR_FIN" class="java.math.BigDecimal"/>
+	<field name="PROGR_RIGA_FIN" class="java.math.BigDecimal"/>
+	<field name="ESERCIZIO_ORI_FIN" class="java.math.BigDecimal"/>
+	<field name="CIG" class="java.lang.String"/>
+	<field name="CUP" class="java.lang.String"/>
+	<field name="IMPORTO_CUP" class="java.math.BigDecimal"/>
+	<field name="IVA" class="java.lang.String"/>
+	<field name="TIPO" class="java.lang.String"/>
+	<group name="impegno_cup">
+		<groupExpression><![CDATA[$F{ESERCIZIO_FIN}+$F{CDS_FIN}+$F{PROGR_FIN}+$F{ESERCIZIO_ORI_FIN}+$F{CUP}]]></groupExpression>
+		<groupHeader>
+			<band height="20" splitType="Stretch">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField" style="TNR8" x="102" y="4" width="60" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{CIG}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+					<reportElement key="textField" style="TNR8" x="0" y="4" width="99" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{ESERCIZIO_FIN}.toString()+"/"+$F{ESERCIZIO_ORI_FIN}.toString()+"/"+$F{CDS_FIN}+"/"+$F{PROGR_FIN}.toString()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField" style="TNR8" x="165" y="4" width="105" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{CUP}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement key="line-18" positionType="Float" stretchType="RelativeToTallestObject" x="100" y="0" width="1" height="20"/>
+				</line>
+				<line>
+					<reportElement key="line-18" positionType="Float" stretchType="RelativeToTallestObject" x="163" y="0" width="1" height="20"/>
+				</line>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
