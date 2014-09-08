@@ -38,9 +38,9 @@ public class DocumentiCollegatiDocAmmService extends CMISService {
 			throw new ApplicationException("Non esistono documenti collegati alla fattura.  Anno:"+ esercizio+ " cds:" +cds +" uo:"+cdUo+" numero:"+pgFattura);
 		}
 		String folder = (String) node.getPropertyValue("cmis:objectId"); 
-		StringBuffer query = new StringBuffer("select cmis:objectId from sigla_fatture_attachment:stampa_fattura_prima_protocollo ");
-		//				query.append(" join sigla_contabili_aspect:document contabili on doc.cmis:objectId = contabili.cmis:objectId");
-		query.append(" where IN_FOLDER('").append(folder).append("')");
+		StringBuffer query = new StringBuffer("select doc.cmis:objectId from cmis:document doc ");
+		query.append(" join sigla_fatture_attachment:stampa_fattura_prima_protocollo fatture on doc.cmis:objectId = fatture.cmis:objectId");
+		query.append(" where IN_FOLDER(doc, '").append(folder).append("')");
 		//				query.append(" and contabili.sigla_contabili_aspect:cds = '").append(cds).append("'");
 		//				query.append(" and contabili.sigla_contabili_aspect:num_mandato = ").append(pgMandato);
 		//				query.append(" order by doc.cmis:creationDate DESC");
