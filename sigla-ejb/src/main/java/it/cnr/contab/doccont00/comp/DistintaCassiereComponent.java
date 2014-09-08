@@ -3862,7 +3862,8 @@ public class DistintaCassiereComponent extends
 					if (!infover.getCausale().contains(doc.getCdCup()))
 						infover.setCausale(infover.getCausale()+"-"+doc.getCdCup());
 				}else
-					infover.setCausale("CUP "+doc.getCdCup());
+					if(doc.getCdCup()!=null)
+						infover.setCausale("CUP "+doc.getCdCup());
 			}
 			// Fine classificazioni		
 			bollo=new it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Bollo();
@@ -3979,7 +3980,9 @@ public class DistintaCassiereComponent extends
 				else if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO)==0 && docContabile.getCdIso()!=null ){
 					//18/06/2014 BNL non gestisce sepa 
 					//infoben.setTipoPagamento("SEPA CREDIT TRANSFER");
-					infoben.setTipoPagamento("BONIFICO BANCARIO E POSTALE"); 
+					infoben.setTipoPagamento("BONIFICO BANCARIO E POSTALE");
+					//08/09/2014 resi obbligatori come da mail ricevuta da ANGELINI/MESSERE
+					obb_dati_beneficiario=true;
 					obb_iban =true;
 				}			
 				// Classificazioni
@@ -4047,8 +4050,8 @@ public class DistintaCassiereComponent extends
 							if(infoben.getCausale()!=null ){
 								if (!infoben.getCausale().contains(doc.getCdCup()))
 										infoben.setCausale(infoben.getCausale()+"-"+doc.getCdCup());
-							}else
-								infoben.setCausale("CUP "+doc.getCdCup());
+							}else 
+								 infoben.setCausale("CUP "+doc.getCdCup());
 						}
 						else
 								clas.setImporto(doc.getImportoCge());
@@ -4068,7 +4071,7 @@ public class DistintaCassiereComponent extends
 				bollo.setCausaleEsenzioneBollo(docContabile.getCausaleBollo());
 				infoben.setBollo(bollo);
 				benef.setAnagraficaBeneficiario(docContabile.getDenominazioneSede());
-				benef.setStatoBeneficiario(docContabile.getCdIso());
+				//benef.setStatoBeneficiario(docContabile.getCdIso());
 				if(obb_dati_beneficiario){
 					benef.setIndirizzoBeneficiario(docContabile.getViaSede());
 					benef.setCapBeneficiario(docContabile.getCapComuneSede());
