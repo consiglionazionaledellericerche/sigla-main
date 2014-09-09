@@ -64,8 +64,9 @@ public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,In
 		clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()));
 		clauses.addClause("AND", "cd_cds_origine", SQLBuilder.EQUALS, unita_organizzativa.getUnita_padre().getCd_unita_organizzativa());
 		clauses.addClause("AND", "cd_uo_origine", SQLBuilder.EQUALS, unita_organizzativa.getCd_unita_organizzativa());
-		clauses.addClause("AND", "protocollo_iva", SQLBuilder.ISNULL, null);
-		clauses.addClause("AND", "protocollo_iva_generale", SQLBuilder.ISNULL, null);
+//		clauses.addClause("AND", "protocollo_iva", SQLBuilder.ISNULL, null);
+//		clauses.addClause("AND", "protocollo_iva_generale", SQLBuilder.ISNULL, null);
+//		clauses.addClause("AND", "dt_emissione", SQLBuilder.ISNULL, null);
 		clauses.addClause("AND", "codiceUnivocoUfficioIpa", SQLBuilder.ISNOTNULL, null);
 		if (filtro.isDaFirmare()){
 			clauses.addClause("AND", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_ALLA_FIRMA);
@@ -75,7 +76,6 @@ public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,In
 		if (filtro.getCodiceUnivocoUfficioIpa() != null){
 			clauses.addClause("AND", "codiceUnivocoUfficioIpa", SQLBuilder.EQUALS, filtro.getCodiceUnivocoUfficioIpa());
 		}
-		clauses.addClause("AND", "dt_emissione", SQLBuilder.ISNULL, null);
 		clauses.addClause("AND", "stato_cofi", SQLBuilder.NOT_EQUALS, it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk.STATO_ANNULLATO);
 
 		filtro.setSQLClauses(clauses);
