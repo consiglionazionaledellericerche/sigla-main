@@ -1908,7 +1908,7 @@ public Forward doOnCausaleChange(ActionContext context) {
 	         if(compenso.getStato_liquidazione()!=null && compenso.getStato_liquidazione().equals(compenso.LIQ)){
 	        	if(compenso.getCausale()!=null){ 
 	        		compenso.setCausale(null);
-	        		throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+	        		throw new it.cnr.jada.comp.ApplicationException("Causale non valida, per lo stato della Liquidazione");
 	        	}
 	         }else if(compenso.getStato_liquidazione()!=null && compenso.getStato_liquidazione().equals(compenso.NOLIQ)){
 	        	
@@ -1917,7 +1917,7 @@ public Forward doOnCausaleChange(ActionContext context) {
 	        			compenso.setCausale(oldCausale);
 	        		else
 	        			compenso.setCausale(null);
-	        		throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+	        		throw new it.cnr.jada.comp.ApplicationException("Causale non valida, per lo stato della Liquidazione");
 	        	}
 	         }else if(compenso.getStato_liquidazione()!=null && compenso.getStato_liquidazione().equals(compenso.SOSP)){
 	        	if (compenso.getCausale()!= null && (!compenso.getCausale().equals(compenso.ATTLIQ) &&!compenso.getCausale().equals(compenso.CONT))){
@@ -1925,7 +1925,7 @@ public Forward doOnCausaleChange(ActionContext context) {
 	        			compenso.setCausale(oldCausale);
 	        		else
 	        			compenso.setCausale(null);
-        		  throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+        		  throw new it.cnr.jada.comp.ApplicationException("Causale non valida, per lo stato della Liquidazione");
 	        	}
 	        }
 	 	       
