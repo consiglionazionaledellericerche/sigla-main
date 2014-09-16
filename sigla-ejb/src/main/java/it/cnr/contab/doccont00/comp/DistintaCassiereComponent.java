@@ -45,6 +45,7 @@ import it.cnr.contab.doccont00.intcass.bulk.V_ext_cassiere00Bulk;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.blobs.bulk.Bframe_blobBulk;
@@ -3874,16 +3875,16 @@ public class DistintaCassiereComponent extends
 			versante.setAnagraficaVersante(docContabile.getDenominazioneSede());
 			infover.setVersante(versante);
 			// gestito inserimento cup nella CAUSALE 
-			if (infover.getCausale() !=null && (infover.getCausale()+docContabile.getDsDocumento()).length() >105)
-				infover.setCausale(infover.getCausale()+" "+docContabile.getDsDocumento().substring(0, 104));
+			if (infover.getCausale() !=null && (infover.getCausale()+docContabile.getDsDocumento()).length() >99)
+				infover.setCausale(infover.getCausale()+" "+docContabile.getDsDocumento().substring(0, 98));
 			else if(infover.getCausale()!=null)
 				infover.setCausale(infover.getCausale()+" "+docContabile.getDsDocumento());
 			else
-				if (docContabile.getDsDocumento().length() >105)
-					infover.setCausale(docContabile.getDsDocumento().substring(0,104));
+				if (docContabile.getDsDocumento().length() >99)
+					infover.setCausale(docContabile.getDsDocumento().substring(0,98));
 				else 
 					infover.setCausale(docContabile.getDsDocumento());
-
+			infover.setCausale(RemoveAccent.convert(infover.getCausale()).replace('"',' ' ));
 			// SOSPESO			
 			if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_REGOLAM_SOSPESO)==0){
 				it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeSosp=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class,"SOSPESO");
@@ -4074,6 +4075,8 @@ public class DistintaCassiereComponent extends
 				//benef.setStatoBeneficiario(docContabile.getCdIso());
 				if(obb_dati_beneficiario){
 					benef.setIndirizzoBeneficiario(docContabile.getViaSede());
+					if(docContabile.getCapComuneSede()==null)
+						throw new ApplicationException("Impossibile generare il flusso, Cap benificiario non valorizzato per il terzo "+docContabile.getCdTerzo());
 					benef.setCapBeneficiario(docContabile.getCapComuneSede());
 					benef.setLocalitaBeneficiario(docContabile.getDsComune());
 					benef.setProvinciaBeneficiario(docContabile.getCdProvincia());
@@ -4096,15 +4099,16 @@ public class DistintaCassiereComponent extends
 					sepa.setIdentificativoEndToEnd(docContabile.getEsercizio().toString()+"-"+docContabile.getCdUoOrigine()+"-"+docContabile.getPgDocumento().toString());
 					infoben.setSepaCreditTransfer(sepa); */
 				}
-				if (infoben.getCausale() !=null && (infoben.getCausale()+docContabile.getDsDocumento()).length() >105)
-					infoben.setCausale(infoben.getCausale()+" "+docContabile.getDsDocumento().substring(0, 104));
+				if (infoben.getCausale() !=null && (infoben.getCausale()+docContabile.getDsDocumento()).length() >99)
+					infoben.setCausale(infoben.getCausale()+" "+docContabile.getDsDocumento().substring(0, 98));
 				else if(infoben.getCausale()!=null)
 					infoben.setCausale(infoben.getCausale()+" "+docContabile.getDsDocumento());
 				else
-					if (docContabile.getDsDocumento().length() >105)
-						infoben.setCausale(docContabile.getDsDocumento().substring(0,104));
+					if (docContabile.getDsDocumento().length() >99)
+						infoben.setCausale(docContabile.getDsDocumento().substring(0,98));
 					else 
 						infoben.setCausale(docContabile.getDsDocumento());
+				infoben.setCausale(RemoveAccent.convert(infoben.getCausale()).replace('"',' ' ));
 				// SOSPESO			
 				if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_REGOLAM_SOSPESO)==0){
 					it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeSosp=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class,"SOSPESO");
