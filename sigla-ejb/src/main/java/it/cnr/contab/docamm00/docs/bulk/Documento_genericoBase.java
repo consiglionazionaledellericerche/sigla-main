@@ -65,6 +65,10 @@ public class Documento_genericoBase extends Documento_genericoKey implements Key
 
 	// TI_ISTITUZ_COMMERC CHAR(1) NOT NULL
 	private java.lang.String ti_istituz_commerc;
+	
+	private java.lang.String stato_liquidazione;
+	
+	private java.lang.String causale;
 
 public Documento_genericoBase() {
 	super();
@@ -311,5 +315,17 @@ public void setTi_associato_manrev(java.lang.String ti_associato_manrev) {
  */
 public void setTi_istituz_commerc(java.lang.String ti_istituz_commerc) {
 	this.ti_istituz_commerc = ti_istituz_commerc;
+}
+public java.lang.String getStato_liquidazione() {
+	return stato_liquidazione;
+}
+public void setStato_liquidazione(java.lang.String stato_liquidazione) {
+	this.stato_liquidazione = stato_liquidazione;
+}
+public java.lang.String getCausale() {
+	return causale;
+}
+public void setCausale(java.lang.String causale) {
+	this.causale = causale;
 }
 }

@@ -890,7 +890,22 @@
 		maxLength="10"
 		inputSize="10"
 		enabledOnSearch="true" />		
-			
+	<fieldProperty
+		name="stato_liquidazione"
+		property="stato_liquidazione"
+		inputType="SELECT"
+		label="Stato liquidazione"
+		nullable="true"
+		enabledOnSearch="true"
+		keysProperty="stato_liquidazioneKeys" />
+	<fieldProperty
+		name="causale"
+		property="causale"
+		inputType="SELECT"
+		label="causale"
+		nullable="true"
+		enabledOnSearch="true"
+		keysProperty="causaleKeys" />				
 	<findFieldProperty name="esercizio"/>
 	<findFieldProperty name="esercizio_fattura_fornitore"/>
 	<findFieldProperty name="cd_cds"/>
@@ -934,7 +949,8 @@
 	<findFieldProperty name="fl_fattura_compenso" />
 	<findFieldProperty name="fl_congelata" />
 	<findFieldProperty name="fl_liquidazione_differita"/>
-
+	<findFieldProperty name="stato_liquidazione"/>
+	<findFieldProperty name="causale"/>
 	<formFieldProperty
 		name="ti_bene_servizio" />
 	<formFieldProperty
@@ -1147,7 +1163,10 @@
 		name="data_protocollo" />
 	<formFieldProperty
 		name="progr_univoco" />
-					
+	<formFieldProperty 
+		name="stato_liquidazione"/>		
+	<formFieldProperty 
+		name="causale"/>					
 	<columnFieldProperty 
 		name="esercizio"/>
 	<columnFieldProperty
@@ -1190,6 +1209,10 @@
 		name="stato_cofi" />
 	<columnFieldProperty
 		name="ti_associato_manrev" />
+	<columnFieldProperty 
+		name="stato_liquidazione"/>			
+	<columnFieldProperty 
+		name="causale"/>	
 
 	<form
 		name="documentoSearchtool" >

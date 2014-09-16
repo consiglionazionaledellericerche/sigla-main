@@ -590,6 +590,12 @@ public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 					return optionBP;
 				}				
 			}
+			if(terzo.getAnagrafico()!=null && terzo.getAnagrafico().isStrutturaCNR() && terzo.getCodiceUnivocoPcc()==null){
+				bp.setMessage("Attenzione, l'anagrafica è censita nell'indice delle "+
+						"pubbliche amministrazioni, richiedere tramite helpdesk l'inserimento del codice Pcc relativo al terzo che si sta tentando di modificare/creare." +
+							"Salvataggio eseguito in modo corretto.");					
+			}
+				
 			return super.doSalva(context);
 		} catch (Throwable e) {
 			return super.handleException(context, e);

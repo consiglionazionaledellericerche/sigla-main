@@ -775,7 +775,16 @@
 			propertyName="dt_scadenza"
 			sqlTypeName="TIMESTAMP"
 			columnSize="7" />						
-			
+		<columnMapping
+			columnName="STATO_LIQUIDAZIONE"
+			propertyName="stato_liquidazione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"/>
+		<columnMapping
+			columnName="CAUSALE"
+			propertyName="causale"
+			sqlTypeName="VARCHAR"
+			columnSize="10"/>			
 	</defaultColumnMap>
 	<persistentProperty
 		name="cognome" />
@@ -1038,7 +1047,11 @@
 	<persistentProperty
 		name="numero_protocollo" />	
 	<persistentProperty
-		name="dt_scadenza" />						
+		name="dt_scadenza" />	
+	<persistentProperty
+		name="stato_liquidazione" />
+	<persistentProperty
+		name="causale" />								
 	<persistentProperty
 		name="pg_trovato" />		
 </SQLPersistentInfo>

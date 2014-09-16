@@ -123,6 +123,9 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	public final static String TIPO_PRESTAZIONE_COLLABORAZIONE_IND = "I";
 	public final static Dictionary TIPI_PRESTAZIONE;
     */
+	
+	public final static Dictionary STATO_LIQUIDAZIONE;
+	public final static Dictionary CAUSALE;
 	static {
 		STATO_FONDO_ECO = new it.cnr.jada.util.OrderedHashtable();
 		STATO_FONDO_ECO.put(LIBERO_FONDO_ECO, "Non usare fondo economale");
@@ -155,6 +158,14 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		TIPI_PRESTAZIONE.put(TIPO_PRESTAZIONE_COLLABORAZIONE_IND,
 				"Incarico di collaborazione individuale");
         */
+		STATO_LIQUIDAZIONE = new it.cnr.jada.util.OrderedHashtable();
+		STATO_LIQUIDAZIONE.put(LIQ, "Liquidabile");
+		STATO_LIQUIDAZIONE.put(NOLIQ, "Non Liquidabile");
+		STATO_LIQUIDAZIONE.put(SOSP, "Liquidazione sospesa");
+		
+		CAUSALE= new it.cnr.jada.util.OrderedHashtable();
+		CAUSALE.put(ATTLIQ,"In attesa di liquidazione");
+		CAUSALE.put(CONT,"Contenzioso");
 	}
 
 	// Stato compenso - mi serve per gestire i bottoni di Esegui Calcolo,
@@ -1361,7 +1372,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		if (((it.cnr.contab.compensi00.bp.CRUDCompensoBP) bp).isSpesaBP()) {
 			setStato_pagamento_fondo_eco(ASSEGNATO_FONDO_ECO);
 			setStato_cofi(STATO_CONTABILIZZATO);
-
+			setStato_liquidazione(LIQ);
 			it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo = it.cnr.contab.utenze00.bulk.CNRUserInfo
 					.getUnita_organizzativa(context);
 			if (it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC
@@ -2848,8 +2859,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 			if(getNumero_protocollo()== null)
 					throw new ApplicationException("Inserire il numero di protocollo di entrata!");
 				
-			}	
-
+		}
 		if (getDt_fattura_fornitore() != null
 				&& getDt_fattura_fornitore().compareTo(getDt_registrazione()) > 0)
 			throw new it.cnr.jada.comp.ApplicationException(
@@ -2924,6 +2934,16 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 			javax.ejb.EJBException, java.text.ParseException {
 		// Validazione Date
 		validaDate();
+		if (getMissione()!=null && getMissione().getDataInizioObbligoRegistroUnico()!=null){
+			setDataInizioObbligoRegistroUnico(getMissione().getDataInizioObbligoRegistroUnico());
+		}
+		if (dataInizioObbligoRegistroUnico!=null && (getDt_registrazione().after(dataInizioObbligoRegistroUnico)))
+		{
+			if(getStato_liquidazione()==null)
+				throw new ApplicationException("Inserire lo stato della liquidazione!");
+			if(getStato_liquidazione()!=null && getStato_liquidazione().compareTo(this.LIQ)!=0 && getCausale()==null)
+				throw new ApplicationException("Inserire la causale.");
+		}
 
 		// Validazione Descrizione
 		if (getDs_compenso() == null)
@@ -3391,5 +3411,10 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 			java.sql.Timestamp dataInizioObbligoRegistroUnico) {
 		this.dataInizioObbligoRegistroUnico = dataInizioObbligoRegistroUnico;
 	}
-
+	public Dictionary getStato_liquidazioneKeys() {
+		return STATO_LIQUIDAZIONE;
+	}
+	public Dictionary getCausaleKeys(){
+		return CAUSALE;
+	}
 }

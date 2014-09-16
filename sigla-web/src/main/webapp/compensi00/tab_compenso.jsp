@@ -23,7 +23,7 @@
   </tr>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"dt_da_competenza_cogeForSearch"); %></td>
-	<td><% bp.getController().writeFormInput(out,"dt_da_competenza_cogeForSearch"); %>
+	<td colspan=3><% bp.getController().writeFormInput(out,"dt_da_competenza_cogeForSearch"); %>
 		<% bp.getController().writeFormLabel(out,"dt_a_competenza_cogeForSearch"); %>
 		<% bp.getController().writeFormInput(out,"dt_a_competenza_cogeForSearch"); %></td>
   </tr>
@@ -32,17 +32,17 @@
 	<td><% bp.getController().writeFormLabel(out,"dt_registrazione"); %></td>
 	<td colspan=3><% bp.getController().writeFormInput(out,"dt_registrazione"); %></td>
   </tr>
-  <tr>
+  <tr> 
 	<td><% bp.getController().writeFormLabel(out,"dt_da_competenza_coge"); %></td>
-	<td><% bp.getController().writeFormInput(out,"dt_da_competenza_coge"); %>
+	<td colspan=3><% bp.getController().writeFormInput(out,"dt_da_competenza_coge"); %>
 		<% bp.getController().writeFormLabel(out,"dt_a_competenza_coge"); %>
 		<% bp.getController().writeFormInput(out,"dt_a_competenza_coge"); %></td>
   </tr>
   <% } %>
 
-  <tr>
+  <tr> 
 	<td><% bp.getController().writeFormLabel(out,"ds_compenso"); %></td>
-	<td><% bp.getController().writeFormInput(out,"ds_compenso"); %></td>
+	<td colspan="3"><% bp.getController().writeFormInput(out,"ds_compenso"); %></td>   
   </tr>
 
   <% if (bp.isSearching()) { 
@@ -54,6 +54,14 @@
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"stato_cofiForSearch"); %></td>
 	<td><% bp.getController().writeFormInput(out,null,"stato_cofiForSearch", isInSpesaMode, null, ""); %></td>
+   	<td>
+   		<% bp.getController().writeFormLabel(out,"stato_liquidazione");%>
+   		<% bp.getController().writeFormInput(out,null,"stato_liquidazione",isInSpesaMode,null,"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"");%>
+   	</td>
+   	<td> 
+   		<% bp.getController().writeFormLabel(out,"causale");%>
+   		<% bp.getController().writeFormInput(out,null,"causale",false,null,"onChange=\"submitForm('doOnCausaleChange')\"");%>
+   	</td>
   </tr>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"ti_associato_manrevForSearch"); %></td>
@@ -71,7 +79,15 @@
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"stato_cofi"); %></td>
 	<td><% bp.getController().writeFormInput(out,"stato_cofi"); %></td>
-  </tr>
+   	<td>
+   		<% bp.getController().writeFormLabel(out,"stato_liquidazione");%>
+   		<% bp.getController().writeFormInput(out,null,"stato_liquidazione",bp.isRODatiFatturaPerChiusura(compenso),null,"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"");%>
+   	</td>
+   	<td> 
+   		<% bp.getController().writeFormLabel(out,"causale");%>
+   		<% bp.getController().writeFormInput(out,null,"causale",bp.isRODatiFatturaPerChiusura(compenso),null,"onChange=\"submitForm('doOnCausaleChange')\"");%>
+   	</td>
+    </tr>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"ti_associato_manrev"); %></td>
 	<td><% bp.getController().writeFormInput(out,"ti_associato_manrev"); %></td>
@@ -180,6 +196,7 @@
 		<td><% bp.getController().writeFormLabel(out,"numero_protocollo"); %></td>
 		<td><%bp.getController().writeFormInput(out,null,"numero_protocollo", bp.isRODatiFatturaPerChiusura(compenso), null, null); %></td>
     </tr>
+   
 </table>
 </div>
 </fieldset>

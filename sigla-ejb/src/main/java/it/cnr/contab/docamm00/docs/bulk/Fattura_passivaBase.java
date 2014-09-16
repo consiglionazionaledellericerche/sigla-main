@@ -202,6 +202,10 @@ public class Fattura_passivaBase extends Fattura_passivaKey implements Keyed {
 	
 	private java.sql.Timestamp data_protocollo;
 	
+	private java.lang.String stato_liquidazione;
+	
+	private java.lang.String causale;
+	
 public Fattura_passivaBase() {
 	super();
 }
@@ -975,5 +979,17 @@ public java.sql.Timestamp getData_protocollo() {
 }
 public void setData_protocollo(java.sql.Timestamp data_protocollo) {
 	this.data_protocollo = data_protocollo;
+}
+public java.lang.String getStato_liquidazione() {
+	return stato_liquidazione;
+}
+public void setStato_liquidazione(java.lang.String stato_liquidazione) {
+	this.stato_liquidazione = stato_liquidazione;
+}
+public java.lang.String getCausale() {
+	return causale;
+}
+public void setCausale(java.lang.String causale) {
+	this.causale = causale;
 }
 }

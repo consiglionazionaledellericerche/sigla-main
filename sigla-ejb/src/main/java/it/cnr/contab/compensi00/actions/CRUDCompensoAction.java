@@ -1879,4 +1879,60 @@ public Forward doOnImNettoDaTrattenereChange(ActionContext context) {
 		return handleException(context, e);
 	}
 }
+public Forward doOnStatoLiquidazioneChange(ActionContext context) {
+	 try {
+		 CRUDCompensoBP bp = (CRUDCompensoBP) getBusinessProcess(context);
+		 CompensoBulk compenso = (CompensoBulk)bp.getModel();
+		 fillModel(context);
+		 if(compenso.getStato_liquidazione()!=null && compenso.getStato_liquidazione().equals(compenso.LIQ)){
+	       	if(compenso.getCausale()!=null){ 
+	       		compenso.setCausale(null);
+	       	}
+	     }else if(compenso.getStato_liquidazione()!=null && compenso.getStato_liquidazione().equals(compenso.SOSP)){
+	        	compenso.setCausale(compenso.ATTLIQ);
+	     } else if(compenso.getStato_liquidazione()!=null && compenso.getStato_liquidazione().equals(compenso.NOLIQ)){
+	        	compenso.setCausale(compenso.CONT);
+	     }
+	     bp.setModel(context, compenso);
+	   } catch (Throwable t) {
+	        return handleException(context, t);
+	  }
+return context.findDefaultForward();
+}
+public Forward doOnCausaleChange(ActionContext context) {
+	try {
+		 CRUDCompensoBP bp = (CRUDCompensoBP) getBusinessProcess(context);
+		 CompensoBulk compenso = (CompensoBulk)bp.getModel();
+		    String oldCausale=compenso.getCausale();
+	        fillModel(context);
+	         if(compenso.getStato_liquidazione()!=null && compenso.getStato_liquidazione().equals(compenso.LIQ)){
+	        	if(compenso.getCausale()!=null){ 
+	        		compenso.setCausale(null);
+	        		throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+	        	}
+	         }else if(compenso.getStato_liquidazione()!=null && compenso.getStato_liquidazione().equals(compenso.NOLIQ)){
+	        	
+	        	if (compenso.getCausale()!= null && !compenso.getCausale().equals(compenso.CONT)){
+	        		if(oldCausale!=null)
+	        			compenso.setCausale(oldCausale);
+	        		else
+	        			compenso.setCausale(null);
+	        		throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+	        	}
+	         }else if(compenso.getStato_liquidazione()!=null && compenso.getStato_liquidazione().equals(compenso.SOSP)){
+	        	if (compenso.getCausale()!= null && (!compenso.getCausale().equals(compenso.ATTLIQ) &&!compenso.getCausale().equals(compenso.CONT))){
+	        		if(oldCausale!=null )
+	        			compenso.setCausale(oldCausale);
+	        		else
+	        			compenso.setCausale(null);
+        		  throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+	        	}
+	        }
+	 	       
+	        bp.setModel(context, compenso);
+	  } catch (Throwable t) {
+	      return handleException(context, t);
+	  }
+	 return context.findDefaultForward();
+}
 }

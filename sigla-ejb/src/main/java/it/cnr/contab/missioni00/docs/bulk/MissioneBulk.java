@@ -24,6 +24,7 @@ import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.*;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.*;
 import it.cnr.jada.util.action.CRUDBP;
 
@@ -150,6 +151,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	// Stati documento riportato
 	public final static Dictionary STATI_RIPORTO;
 	
+	public final static Dictionary STATO_LIQUIDAZIONE;
 	static
 	{
 		ti_istituz_commKeys = new OrderedHashtable();
@@ -174,8 +176,15 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		STATI_RIPORTO = new it.cnr.jada.util.OrderedHashtable();
 		STATI_RIPORTO.put(NON_RIPORTATO,"Non riportata");
 		STATI_RIPORTO.put(PARZIALMENTE_RIPORTATO,"Parzialmente riportata");
-		STATI_RIPORTO.put(COMPLETAMENTE_RIPORTATO,"Completamente riportata");		
+		STATI_RIPORTO.put(COMPLETAMENTE_RIPORTATO,"Completamente riportata");
+		
+		STATO_LIQUIDAZIONE = new it.cnr.jada.util.OrderedHashtable();
+		STATO_LIQUIDAZIONE.put(LIQ, "Liquidabile");
+		STATO_LIQUIDAZIONE.put(NOLIQ, "Non Liquidabile");
+		STATO_LIQUIDAZIONE.put(SOSP, "Liquidazione sospesa");
+		
 	}
+	private java.sql.Timestamp dataInizioObbligoRegistroUnico;
 public MissioneBulk() {
 	super();
 }
@@ -1627,7 +1636,7 @@ public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context)
 	setFl_associato_compenso(new Boolean(false));	
 	setTi_associato_manrev(STATO_INIZIALE_MANREV);
 	setStato_pagamento_fondo_eco(NO_FONDO_ECO);
-
+    setStato_liquidazione(SOSP);
 	//	La data di registrazione la inizializzo sulla Component
 	
 	return this;
@@ -1651,7 +1660,7 @@ public OggettoBulk initializeForSearch(CRUDBP bp, ActionContext context)
 	{
 		setStato_cofi(STATO_CONTABILIZZATO_COFI);
 		setStato_pagamento_fondo_eco(FONDO_ECO);
-
+		setStato_liquidazione(LIQ);
 		if (it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC.equalsIgnoreCase(unita_organizzativa.getCd_tipo_unita()))
 			setCd_unita_organizzativa(null);
 	}
@@ -3338,6 +3347,12 @@ public void validaTabTestata() throws it.cnr.jada.action.MessageToUser
 	
 	if(getDs_missione() == null)
 		throw new it.cnr.jada.action.MessageToUser( "Inserire una descrizione !" );
+	if (getDt_registrazione().after(dataInizioObbligoRegistroUnico))
+	{
+		if(getStato_liquidazione()==null)
+			throw new it.cnr.jada.action.MessageToUser("Inserire lo stato della liquidazione!");
+		
+	}	
 //	if(!isMissioneDefinitiva() && getCd_tipo_missione() == null)
 //		throw new it.cnr.jada.action.MessageToUser( "Selezionare l' ambito della missione" );
 } 
@@ -3371,7 +3386,6 @@ public void validate() throws ValidationException
    	   (getIm_rimborso()==null || getIm_rimborso().compareTo(new BigDecimal(0))==0)
 	   )
 		throw new ValidationException("Impossibile proseguire con il salvataggio! La missione ha importo nullo.");
-		
 	// 	Il tipo trattamento e' necessario per generare il compenso se ho della
 	//	Diaria all'estero
 	if((getTipo_trattamento() == null || getTipo_trattamento().getCd_trattamento() == null) &&
@@ -3485,5 +3499,15 @@ public String getDsUnitaOrganizzativa(){
 	if (getUnitaOrganizzativa() == null)
 		return null;
 	return getUnitaOrganizzativa().getDs_unita_organizzativa();
+}
+public Dictionary getStato_liquidazioneKeys() {
+	return STATO_LIQUIDAZIONE;
+}
+public java.sql.Timestamp getDataInizioObbligoRegistroUnico() {
+	return dataInizioObbligoRegistroUnico;
+}
+public void setDataInizioObbligoRegistroUnico(
+		java.sql.Timestamp dataInizioObbligoRegistroUnico) {
+	this.dataInizioObbligoRegistroUnico = dataInizioObbligoRegistroUnico;
 }
 }

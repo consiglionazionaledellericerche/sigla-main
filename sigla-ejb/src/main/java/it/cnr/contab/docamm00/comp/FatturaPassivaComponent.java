@@ -4122,7 +4122,8 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,Oggetto
 	fattura.setStato_coan(fattura.NON_CONTABILIZZATO_IN_COAN);
 	fattura.setStato_pagamento_fondo_eco(fattura.NO_FONDO_ECO);
 	fattura.setTi_associato_manrev(fattura.NON_ASSOCIATO_A_MANDATO);
-
+	fattura.setStato_liquidazione(fattura.SOSP);
+	fattura.setCausale(fattura.ATTLIQ);
 	fattura.setIm_totale_fattura(new java.math.BigDecimal(0));
 	fattura.setIm_importo_totale_fattura_fornitore_euro(new java.math.BigDecimal(0));
 	fattura.setFl_fattura_compenso(Boolean.FALSE);
@@ -5906,10 +5907,11 @@ public void validaRiga (UserContext aUC,Fattura_passiva_rigaBulk riga) throws Co
         throw new it.cnr.jada.comp.ApplicationException(
             "Attenzione! Non è stato inserito il Brevetto/Trovato mentre la voce di bilancio utilizzata per la contabilizzazione del dettaglio collegato ne prevede l'indicazione obbligatoria");
     boolean isBeneSconto = isBeneServizioPerSconto(aUC, riga);
-	if (riga.getPrezzo_unitario().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) < 0 && !isBeneSconto)
-		throw new it.cnr.jada.comp.ApplicationException("L'importo del prezzo unitario specificato NON è valido.");
-	if (riga.getIm_iva() == null || riga.getIm_iva().doubleValue() < 0 && !isBeneSconto)
-		throw new it.cnr.jada.comp.ApplicationException("L'importo IVA specificato NON è valido.");
+    //28/08/2014 Rospuc - Gestione importo righe negativo 
+//	if (riga.getPrezzo_unitario().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) < 0 && !isBeneSconto)
+//		throw new it.cnr.jada.comp.ApplicationException("L'importo del prezzo unitario specificato NON è valido.");
+//	if (riga.getIm_iva() == null || riga.getIm_iva().doubleValue() < 0 && !isBeneSconto)
+//		throw new it.cnr.jada.comp.ApplicationException("L'importo IVA specificato NON è valido.");
 	try {
 	VoceIvaComponentSession h=null;
 	Voce_ivaBulk def=null; 

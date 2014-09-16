@@ -50,6 +50,10 @@ public class TerzoBase extends TerzoKey implements Keyed {
 
 	// VIA_SEDE VARCHAR(100) NOT NULL
 	private java.lang.String via_sede;
+	
+	private java.lang.String codiceUnivocoPcc;
+	
+	private java.lang.String denominazionePcc;
 
 public TerzoBase() {
 	super();
@@ -242,5 +246,17 @@ public java.lang.String getCodiceUnivocoUfficioIpa() {
 }
 public void setCodiceUnivocoUfficioIpa(java.lang.String codiceUnivocoUfficioIpa) {
 	this.codiceUnivocoUfficioIpa = codiceUnivocoUfficioIpa;
+}
+public java.lang.String getCodiceUnivocoPcc() {
+	return codiceUnivocoPcc;
+}
+public void setCodiceUnivocoPcc(java.lang.String codiceUnivocoPcc) {
+	this.codiceUnivocoPcc = codiceUnivocoPcc;
+}
+public java.lang.String getDenominazionePcc() {
+	return denominazionePcc;
+}
+public void setDenominazionePcc(java.lang.String denominazionePcc) {
+	this.denominazionePcc = denominazionePcc;
 }
 }

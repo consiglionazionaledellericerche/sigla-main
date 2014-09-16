@@ -120,6 +120,16 @@
 			sqlTypeName="VARCHAR"
 			columnSize="100"
 			nullable="false" />
+		<columnMapping
+			columnName="CODICE_UNIVOCO_PCC"
+			propertyName="codiceUnivocoPcc"
+			sqlTypeName="VARCHAR"
+			columnSize="6" />
+		<columnMapping
+			columnName="DENOMINAZIONE_PCC"
+			propertyName="denominazionePcc"
+			sqlTypeName="VARCHAR"
+			columnSize="150" />			
 	</defaultColumnMap>
 	<persistentProperty
 		name="numero_civico_sede" />
@@ -163,4 +173,8 @@
 		name="utuv" />
 	<persistentProperty
 		name="via_sede" />
+	<persistentProperty
+		name="codiceUnivocoPcc" />
+	<persistentProperty
+		name="denominazionePcc" />		
 </SQLPersistentInfo>

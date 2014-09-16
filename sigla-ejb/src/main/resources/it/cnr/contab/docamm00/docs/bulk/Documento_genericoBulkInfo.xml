@@ -463,7 +463,22 @@
 		enabledOnSearch="true"
 		nullable="true"
 		label="Valuta"/>
-
+	<fieldProperty
+		name="stato_liquidazione"
+		property="stato_liquidazione"
+		inputType="SELECT"
+		label="Stato liquidazione"
+		nullable="true"
+		enabledOnSearch="true"
+		keysProperty="stato_liquidazioneKeys" />
+	<fieldProperty
+		name="causale"
+		property="causale"
+		inputType="SELECT"
+		label="causale"
+		nullable="true"
+		enabledOnSearch="true"
+		keysProperty="causaleKeys" />		
 	
 	<formFieldProperty
 		name="esercizio_lettera" />
@@ -489,8 +504,7 @@
 		name="ti_entrata_spesa" />
 	<formFieldProperty
 		name="sospeso" />
-
-		
+                           	
 	<formFieldProperty 
 		name="ti_istituz_commerc"/>
 	<formFieldProperty 
@@ -558,7 +572,11 @@
 		name="stato_pagamento_fondo_ecoForSearch" />
 	<formFieldProperty 
 		name="valutaForSearch"/>
-
+	<formFieldProperty 
+    	name="stato_liquidazione"/>		
+	<formFieldProperty 
+		name="causale"/>	
+				
 	<columnFieldProperty
 		name="cd_tipo_documento_amm" />
 	<columnFieldProperty
@@ -581,7 +599,11 @@
 		name="ti_associato_manrev"/>
 	<columnFieldProperty
 		name="im_totale" />		
-
+	<columnFieldProperty 
+    	name="stato_liquidazione"/>		
+	<columnFieldProperty 
+		name="causale"/>		
+			
 	<columnSet name="filtro_ricerca_documenti">	
 		<columnFieldProperty
 			name="pg_documento_generico" />
@@ -623,6 +645,8 @@
 	<findFieldProperty name="ti_entrata_spesa" />
 	<findFieldProperty name="sospeso" />
 	<findFieldProperty name="valutaForSearch"/>
-	<findFieldProperty name="cd_cds" />
+	<findFieldProperty name="cd_cds" /> 
+	<findFieldProperty name="stato_liquidazione"/>		
+	<findFieldProperty name="causale"/>	
 	
 </bulkInfo>

@@ -339,6 +339,11 @@
 			columnSize="15"
 			columnScale="2"
 			nullable="false" />			
+		<columnMapping
+			columnName="STATO_LIQUIDAZIONE"
+			propertyName="stato_liquidazione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"/>	
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -454,4 +459,6 @@
 		name="cd_tipo_rapporto" />
 	<persistentProperty
 		name="im_rimborso" />		
+	<persistentProperty
+		name="stato_liquidazione" />	
 </SQLPersistentInfo>

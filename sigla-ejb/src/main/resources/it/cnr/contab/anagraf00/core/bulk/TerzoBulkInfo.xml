@@ -138,6 +138,20 @@
 		label="Codice Univoco Ufficio IPA"
 		inputType="TEXT" />
 	<fieldProperty
+		name="codiceUnivocoPcc"
+		property="codiceUnivocoPcc"
+		readonlyPropertyOnEdit="notGestoreIstat"
+		label="Codice Pcc"
+		inputType="TEXT" />	
+	<fieldProperty
+		name="denominazionePcc"
+		property="denominazionePcc"
+		readonlyPropertyOnEdit="notGestoreIstat"
+		label="Denominazione Pcc"
+		cols="60"
+		rows="2"
+		inputType="TEXTAREA" />		
+	<fieldProperty
 		name="numero_civico_sede"
 		property="numero_civico_sede"
 		readonlyPropertyOnEdit="dipendente"
@@ -316,6 +330,12 @@
 		name="codiceUnivocoUfficioIpa"
 		/>
 	<formFieldProperty
+		name="codiceUnivocoPcc"
+		/>	
+	<formFieldProperty
+		name="denominazionePcc"
+		/>		
+	<formFieldProperty
 		name="numero_civico_sede"
 		/>
 	<formFieldProperty
@@ -407,11 +427,10 @@
 			enabledOnFreeSearch="true" />
 		<findFieldProperty
 			name="cd_precedente"
-			enabledOnFreeSearch="true"
-			/>
+			enabledOnFreeSearch="true"/>
 		<findFieldProperty
 			name="codiceUnivocoUfficioIpa"
-			enabledOnFreeSearch="true" />
+			enabledOnFreeSearch="true" />				
 	</freeSearchSet>
 	
 	<freeSearchSet
@@ -427,6 +446,12 @@
 		<findFieldProperty
 			name="dt_fine_validita"
 			enabledOnFreeSearch="true" />
+		<findFieldProperty
+			name="codiceUnivocoUfficioIpa"
+			enabledOnFreeSearch="true" />
+		<findFieldProperty
+			name="codiceUnivocoPcc"
+			enabledOnFreeSearch="true" />	
 	</freeSearchSet>
 
 	<freeSearchSet
@@ -468,8 +493,7 @@
 		name="cd_anag"
 		label="Anagrafica" />
 	<columnFieldProperty
-		name="denominazione_sede"
-		headerStyle="width:100%" />
+		name="denominazione_sede"/>
 	<columnFieldProperty
 		name="codice_fiscale_anagrafico"/>
 	<columnFieldProperty
@@ -486,6 +510,10 @@
 	<columnFieldProperty
 		name="codiceUnivocoUfficioIpa"
 		label="Codice IPA" />
+	<columnFieldProperty
+		name="codiceUnivocoPcc" />
+	<columnFieldProperty
+		name="denominazionePcc" />	
 
 	<columnSet
 		name="columnSet01" >
@@ -496,8 +524,7 @@
 			name="cd_anag"
 			label="Anagrafica" />
 		<columnFieldProperty
-			name="denominazione_sede"
-			headerStyle="width:100%" />
+			name="denominazione_sede"/>
 		<columnFieldProperty
 			name="codice_fiscale_anagrafico"/>
 		<columnFieldProperty
@@ -505,8 +532,6 @@
 		<columnFieldProperty
 			name="dt_fine_rapporto"
 			label="Fine rapp." />
-		<columnFieldProperty
-			name="descrizioneAnagrafica" />
 		<columnFieldProperty
 			name="descrizioneAnagrafica" />
 		<columnFieldProperty

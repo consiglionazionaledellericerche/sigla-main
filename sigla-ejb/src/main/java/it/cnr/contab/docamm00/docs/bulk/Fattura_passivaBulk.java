@@ -129,6 +129,9 @@ public abstract class Fattura_passivaBulk
 	public final static Dictionary SEZIONALI_FLAG_KEYS;
 	public final static Dictionary FATTURA_BENI_SERVIZI;
 	public final static Dictionary STATI_RIPORTO;
+		
+	public final static Dictionary STATO_LIQUIDAZIONE;
+	public final static Dictionary CAUSALE;
 	private Boolean ha_beniColl;
 	private Boolean eseguito=new Boolean(false);
 	static{
@@ -181,6 +184,16 @@ public abstract class Fattura_passivaBulk
 		FATTURA_BENI_SERVIZI = new it.cnr.jada.util.OrderedHashtable();
 		FATTURA_BENI_SERVIZI.put(FATTURA_DI_BENI,"Fattura di beni");
 		FATTURA_BENI_SERVIZI.put(FATTURA_DI_SERVIZI,"Fattura di servizi");
+		
+		STATO_LIQUIDAZIONE = new it.cnr.jada.util.OrderedHashtable();
+		STATO_LIQUIDAZIONE.put(LIQ, "Liquidabile");
+		STATO_LIQUIDAZIONE.put(NOLIQ, "Non Liquidabile");
+		STATO_LIQUIDAZIONE.put(SOSP, "Liquidazione sospesa");
+		
+		CAUSALE= new it.cnr.jada.util.OrderedHashtable();
+		CAUSALE.put(ATTLIQ,"In attesa di liquidazione");
+		CAUSALE.put(CONT,"Contenzioso");
+		CAUSALE.put(ATTNC,"In attesa di nota credito");
 	}
 	
 	private java.math.BigDecimal importoTotalePerObbligazione = new java.math.BigDecimal(0);
@@ -2569,11 +2582,15 @@ public void validate() throws ValidationException {
 	validateDate();
 	validaDateCompetenza();
 	// campi obbligatori dal 01/07/2014
-	if (getDt_registrazione().after(dataInizioObbligoRegistroUnico)){ 
+	if (getDt_registrazione().after(dataInizioObbligoRegistroUnico)){
 		if(getData_protocollo()== null)
 			throw new ValidationException("Inserire la data di protocollo di entrata.");
 		if(getNumero_protocollo()== null)
 			throw new ValidationException("Inserire il numero di protocollo di entrata!");
+		if(getStato_liquidazione()==null)
+			throw new ValidationException("Inserire lo stato della liquidazione!");
+		if(getStato_liquidazione()!=null && getStato_liquidazione().compareTo(this.LIQ)!=0 && getCausale()==null)
+			throw new ValidationException("Inserire la causale.");
 	}	
 
 	if (getLettera_pagamento_estero() != null)
@@ -2626,6 +2643,8 @@ public void validateDate() throws ValidationException {
 				!dataEmissioneFattura.equals(dataScadenzaFattura))
 				throw new ValidationException("La data di scadenza non può essere precedente alla data di emissione del documento del fornitore!");
 		}
+		if(getData_protocollo()!= null && getData_protocollo().before(getDt_fattura_fornitore()))
+			throw new ValidationException("La data di protocollo non può essere precedente alla data di emissione del documento del fornitore!");
 	}
 }
 	/**
@@ -2715,5 +2734,12 @@ public void validateDate() throws ValidationException {
 	public void setDataInizioObbligoRegistroUnico(
 			java.sql.Timestamp dataInizioObbligoRegistroUnico) {
 		this.dataInizioObbligoRegistroUnico = dataInizioObbligoRegistroUnico;
+	}
+	
+	public Dictionary getStato_liquidazioneKeys() {
+		return STATO_LIQUIDAZIONE;
+	}
+	public Dictionary getCausaleKeys(){
+		return CAUSALE;
 	}
 }

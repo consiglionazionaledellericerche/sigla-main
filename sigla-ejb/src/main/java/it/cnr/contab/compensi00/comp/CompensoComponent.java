@@ -1359,7 +1359,9 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
 		Long tmp = compenso.getPgCompensoPerClone();
 		Long current = compenso.getPg_compenso();
-
+		if(compenso.getStato_liquidazione()!=null && !compenso.getStato_liquidazione().equals(compenso.LIQ))
+			throw new it.cnr.jada.comp.ApplicationException(
+					"Lo stato della liquidazione non è compatibile");
 		validaCompensoPerContabilizzazione(userContext, compenso);
 		contabilizzaCompensoCofi(userContext, compenso);
 
@@ -2478,6 +2480,8 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			// Inizializzazione e controlli della data di registrazione
 			compenso.setDt_registrazione(getDataPerInizializzazioni(
 					userContext, bulk));
+			compenso.setStato_liquidazione(compenso.SOSP);
+			compenso.setCausale(compenso.ATTLIQ);
 			// r.p. 20/10/2008 commentato perchè non vengono valorizzate in
 			// automatico data inizio e fine competenze
 			// compenso.setDt_a_competenza_coge(compenso.getDt_registrazione());

@@ -166,6 +166,8 @@ public class MissioneBase extends MissioneKey implements Keyed {
 	// IM_RIMBORSO DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal im_rimborso;
 
+	private java.lang.String stato_liquidazione;
+	
 public MissioneBase() {
 	super();
 }
@@ -789,5 +791,11 @@ public java.math.BigDecimal getIm_rimborso() {
 }
 public void setIm_rimborso(java.math.BigDecimal im_rimborso) {
 	this.im_rimborso = im_rimborso;
+}
+public java.lang.String getStato_liquidazione() {
+	return stato_liquidazione;
+}
+public void setStato_liquidazione(java.lang.String stato_liquidazione) {
+	this.stato_liquidazione = stato_liquidazione;
 }
 }

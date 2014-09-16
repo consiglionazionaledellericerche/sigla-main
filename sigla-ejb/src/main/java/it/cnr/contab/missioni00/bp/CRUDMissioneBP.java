@@ -24,6 +24,7 @@ import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
 import it.cnr.contab.missioni00.tabrif.bulk.*;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
 import it.cnr.contab.docamm00.ejb.*;
 import it.cnr.jada.UserContext;
@@ -1202,7 +1203,7 @@ protected void init(Config config, ActionContext context) throws BusinessProcess
 public it.cnr.jada.bulk.OggettoBulk initializeModelForEdit(ActionContext context,it.cnr.jada.bulk.OggettoBulk bulk) throws BusinessProcessException 
 {
 	MissioneBulk missione = (MissioneBulk)super.initializeModelForEdit(context,bulk);	
-	
+	missione.setDataInizioObbligoRegistroUnico(getDataInizioObbligoRegistroUnico(context));
 	return initializePerRiporta(context, missione);
 }
 /**
@@ -1224,7 +1225,7 @@ public it.cnr.jada.bulk.OggettoBulk initializeModelForFreeSearch(ActionContext c
 public it.cnr.jada.bulk.OggettoBulk initializeModelForInsert(ActionContext context,it.cnr.jada.bulk.OggettoBulk bulk) throws BusinessProcessException 
 {
 	MissioneBulk missione = (MissioneBulk)super.initializeModelForInsert(context,bulk);	
-	
+	missione.setDataInizioObbligoRegistroUnico(getDataInizioObbligoRegistroUnico(context));
 	return initializePerRiporta(context, missione);
 }
 /**
@@ -2431,6 +2432,14 @@ public boolean isRimborsoValidoPerDurataTappeEstere(ActionContext context) throw
 	}
 	catch(Throwable e) 
 	{
+		throw handleException(e);
+	}
+}
+private java.sql.Timestamp getDataInizioObbligoRegistroUnico(it.cnr.jada.action.ActionContext context) throws BusinessProcessException {
+	try{
+	return Utility.createConfigurazioneCnrComponentSession().
+		getDt01(context.getUserContext(), new Integer(0), null,"REGISTRO_UNICO_FATPAS", "DATA_INIZIO");
+	} catch(Exception e) {
 		throw handleException(e);
 	}
 }

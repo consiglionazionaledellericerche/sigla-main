@@ -5,6 +5,7 @@ import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.compensi00.bp.CRUDCompensoBP;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaIBP;
@@ -4716,5 +4717,67 @@ public Forward doBlankSearchFind_trovato(ActionContext context, TrovatoBulk trov
 		riga.setPg_trovato(null);
 	}
 	return context.findDefaultForward();
+}
+public Forward doOnStatoLiquidazioneChange(ActionContext context) {
+	 try {
+		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
+	 	Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
+	    String oldCausale=fattura.getCausale();
+        fillModel(context);
+		 if(fattura.getStato_liquidazione()!=null && fattura.getStato_liquidazione().equals(fattura.LIQ)){
+	       	if(fattura.getCausale()!=null){ 
+	       		fattura.setCausale(null);
+}
+	     }else if(fattura.getStato_liquidazione()!=null && fattura.getStato_liquidazione().equals(fattura.SOSP)){
+	    	 fattura.setCausale(fattura.ATTLIQ);
+	     } else if(fattura.getStato_liquidazione()!=null && fattura.getStato_liquidazione().equals(fattura.NOLIQ)){
+	    	 if (fattura.getCausale()!= null && fattura.getCausale().equals(fattura.ATTLIQ)){
+	        		if(oldCausale!=null && !oldCausale.equals(fattura.ATTLIQ))
+	        			fattura.setCausale(oldCausale);
+	        		else
+	        			fattura.setCausale(null);
+	        		throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+	        	}
+	     }
+	     bp.setModel(context, fattura);
+	   } catch (Throwable t) {
+	        return handleException(context, t);
+	  }
+return context.findDefaultForward();
+}
+public Forward doOnCausaleChange(ActionContext context) {
+	try {
+		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
+	 	Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
+	    String oldCausale=fattura.getCausale();
+        fillModel(context);
+	         if(fattura.getStato_liquidazione()!=null && fattura.getStato_liquidazione().equals(fattura.LIQ)){
+	        	if(fattura.getCausale()!=null){ 
+	        		fattura.setCausale(null);
+	        		throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+	        	}
+	         }else if(fattura.getStato_liquidazione()!=null && fattura.getStato_liquidazione().equals(fattura.NOLIQ)){
+		        	if (fattura.getCausale()!= null && fattura.getCausale().equals(fattura.ATTLIQ)){
+		        		if(oldCausale!=null && !oldCausale.equals(fattura.ATTLIQ))
+		        			fattura.setCausale(oldCausale);
+		        		else
+		        			fattura.setCausale(null);
+		        		throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+		        	}
+	         }else if(fattura.getStato_liquidazione()!=null && fattura.getStato_liquidazione().equals(fattura.SOSP)){
+	        	if (fattura.getCausale()!= null && !fattura.getCausale().equals(fattura.ATTLIQ)){
+	        		if(oldCausale!=null )
+	        			fattura.setCausale(oldCausale);
+	        		else
+	        			fattura.setCausale(null);
+       		  throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+	        	}
+	        }
+	 	       
+	        bp.setModel(context, fattura);
+	  } catch (Throwable t) {
+	      return handleException(context, t);
+	  }
+	 return context.findDefaultForward();
 }
 }

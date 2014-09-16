@@ -422,6 +422,16 @@
 			propertyName="progr_univoco"
 			sqlTypeName="DECIMAL"
 			columnSize="10" />		
+		<columnMapping
+			columnName="STATO_LIQUIDAZIONE"
+			propertyName="stato_liquidazione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"/>
+		<columnMapping
+			columnName="CAUSALE"
+			propertyName="causale"
+			sqlTypeName="VARCHAR"
+			columnSize="10"/>	
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -565,4 +575,8 @@
 		name="data_protocollo" />
 	<persistentProperty
 		name="progr_univoco" />	
+	<persistentProperty
+		name="stato_liquidazione" />
+	<persistentProperty
+		name="causale" />		
 </SQLPersistentInfo>

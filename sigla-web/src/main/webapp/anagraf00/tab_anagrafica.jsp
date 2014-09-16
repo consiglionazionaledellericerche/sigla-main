@@ -140,7 +140,7 @@
 	<%if (anagrafico.isStrutturaCNR() || anagrafico.isPersonaGiuridica() || anagrafico.isDittaIndividuale()) { %>
 		<tr>
 		<%if (anagrafico.isStrutturaCNR()) { %>
-			<td><b>Nome</b></td>
+			<td><%bp.getController().writeFormLabel(out,"nome");%></td>
 		<%} else { %>
 			<td>
 			<%bp.getController().writeFormLabel(out,"ragione_sociale");%>

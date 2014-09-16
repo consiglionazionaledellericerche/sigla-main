@@ -1953,7 +1953,15 @@ public Forward doOnTipoDocumentoChange(ActionContext context) {
         //else
             //component= (DocumentoGenericoComponentSession) ((CRUDDocumentoGenericoPassivoBP) bp).createComponentSession();
 
-           
+        if (documentoGenerico.getCd_tipo_doc_amm() !=null && documentoGenerico.getCd_tipo_doc_amm().compareTo(documentoGenerico.GENERICO_S)!=0){
+        	documentoGenerico.setStato_liquidazione(null);
+        	documentoGenerico.setCausale(null);
+        }else if (documentoGenerico.getCd_tipo_doc_amm() !=null && documentoGenerico.getCd_tipo_doc_amm().compareTo(documentoGenerico.GENERICO_S)==0){
+        	if(documentoGenerico.getStato_liquidazione()==null){
+        		documentoGenerico.setStato_liquidazione(documentoGenerico.SOSP);
+        		documentoGenerico.setCausale(documentoGenerico.ATTLIQ);
+        	}
+        }
         if (documentoGenerico.getTipo_documento() != null && documentoGenerico.getTipo_documento().getFl_solo_partita_giro().booleanValue()) {
 
 	        if (!documentoGenerico.isDefaultValuta()) {
@@ -3735,5 +3743,71 @@ private void resyncAccertamento(ActionContext context, Accertamento_scadenzarioB
     		return handleException(context, t);
     	}
     	return context.findDefaultForward();
-    }
+    } 
+   public Forward doOnStatoLiquidazioneChange(ActionContext context) {
+		 try { 
+			 CRUDDocumentoGenericoPassivoBP bp=null; 
+	  		if (getBusinessProcess(context)instanceof CRUDDocumentoGenericoPassivoBP)
+				 bp = (CRUDDocumentoGenericoPassivoBP)getBusinessProcess(context);
+	  		if (bp!=null){ 
+				Documento_genericoBulk documento = (Documento_genericoBulk)bp.getModel();
+				//if (documento.getTipo_documento().getCd_tipo_documento_amm().compareTo(documento.GENERICO_S)==0)
+	  		 String oldCausale=documento.getCausale();
+	  		 fillModel(context);
+			 if(documento.getStato_liquidazione()!=null && documento.getStato_liquidazione().equals(documento.LIQ)){
+		       	if(documento.getCausale()!=null){ 
+		       		documento.setCausale(null);
+		       	} 
+		     }else if(documento.getStato_liquidazione()!=null && documento.getStato_liquidazione().equals(documento.SOSP)){
+		    	 documento.setCausale(documento.ATTLIQ);
+		     } else if(documento.getStato_liquidazione()!=null && documento.getStato_liquidazione().equals(documento.NOLIQ)){
+		    	 documento.setCausale(documento.CONT);
+		     }
+		     bp.setModel(context, documento);
+	  		}
+		   } catch (Throwable t) {
+		        return handleException(context, t);
+		  }
+	return context.findDefaultForward();
+   }
+	public Forward doOnCausaleChange(ActionContext context) {
+		try {
+			  CRUDDocumentoGenericoPassivoBP bp=null; 
+		  		if (getBusinessProcess(context)instanceof CRUDDocumentoGenericoPassivoBP)
+					 bp = (CRUDDocumentoGenericoPassivoBP)getBusinessProcess(context);
+		  		if (bp!=null){
+					Documento_genericoBulk documento = (Documento_genericoBulk)bp.getModel();
+		  		 String oldCausale=documento.getCausale();
+		  		 fillModel(context);
+		         if(documento.getStato_liquidazione()!=null && documento.getStato_liquidazione().equals(documento.LIQ)){
+		        	if(documento.getCausale()!=null){ 
+		        		documento.setCausale(null);
+		        		throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+		        	}
+		         }else if(documento.getStato_liquidazione()!=null && documento.getStato_liquidazione().equals(documento.NOLIQ)){
+		        	
+		        	if (documento.getCausale()!= null && !documento.getCausale().equals(documento.CONT)){
+		        		if(oldCausale!=null)
+		        			documento.setCausale(oldCausale);
+		        		else
+		        			documento.setCausale(null);
+		        		throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+		        	}
+		         }else if(documento.getStato_liquidazione()!=null && documento.getStato_liquidazione().equals(documento.SOSP)){
+		        	if (documento.getCausale()!= null && (!documento.getCausale().equals(documento.ATTLIQ)&&!documento.getCausale().equals(documento.CONT))){
+		        		if(oldCausale!=null )
+		        			documento.setCausale(oldCausale);
+		        		else
+		        			documento.setCausale(null);
+	        		  throw new ApplicationException("Causale non valida, per lo stato della Liquidazione");
+		        	}
+		        }
+		 	       
+		        bp.setModel(context, documento);
+		  	}
+		  } catch (Throwable t) {
+		      return handleException(context, t);
+		  }
+		 return context.findDefaultForward();
+	}
 }

@@ -12,6 +12,7 @@ import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.jada.bulk.*;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
@@ -90,6 +91,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	
 	private java.lang.String riportataInScrivania = NON_RIPORTATO;
 	private Integer esercizioInScrivania;
+	private java.sql.Timestamp dataInizioObbligoRegistroUnico;
 
 	/*
 	 * Le variabili isDetailDoubled e isDocumentoModificabile servono per gestire il caso in cui l'utente
@@ -101,6 +103,9 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	private boolean isDocumentoModificabile = true; //serve per sapere se il documento è modificabile o meno
 
 	private Lettera_pagam_esteroBulk lettera_pagamento_estero = null;
+	public final static Dictionary STATO_LIQUIDAZIONE;
+	public final static Dictionary CAUSALE;
+	
 	
     static {
 		TIPO = new it.cnr.jada.util.OrderedHashtable();
@@ -147,7 +152,17 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 		STATO_FONDO_ECO.put(NO_FONDO_ECO,"Non usare fondo economale");
 		STATO_FONDO_ECO.put(FONDO_ECO,"Usa fondo economale");
 		STATO_FONDO_ECO.put(REGISTRATO_IN_FONDO_ECO,"Registrato in fondo economale");
+		
+		STATO_LIQUIDAZIONE = new it.cnr.jada.util.OrderedHashtable();
+		STATO_LIQUIDAZIONE.put(LIQ, "Liquidabile");
+		STATO_LIQUIDAZIONE.put(NOLIQ, "Non Liquidabile");
+		STATO_LIQUIDAZIONE.put(SOSP, "Liquidazione sospesa");
+		
+		CAUSALE= new it.cnr.jada.util.OrderedHashtable();
+		CAUSALE.put(ATTLIQ,"In attesa di liquidazione");
+		CAUSALE.put(CONT,"Contenzioso");
     }
+    
 	private java.sql.Timestamp dt_termine_creazione_docamm = null;
 	private CarichiInventarioTable carichiInventarioHash = null;
 	private AssociazioniInventarioTable associazioniInventarioHash = null;
@@ -895,8 +910,15 @@ public OggettoBulk initializeForInsert(CRUDBP bp,it.cnr.jada.action.ActionContex
 	setStato_coan("N");
 	setStato_pagamento_fondo_eco("N");
 	setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
-	
-	
+	if (bp instanceof CRUDDocumentoGenericoPassivoBP ){
+		if(this.getCd_tipo_documento_amm()!=null && this.getCd_tipo_documento_amm().compareTo(GENERICO_S)==0){
+			setStato_liquidazione(SOSP);
+			setCausale(ATTLIQ);
+		}else{
+			setStato_liquidazione(null);
+			setCausale(null);
+		}
+	}
 	return super.initializeForInsert(bp,context);
 }
 public OggettoBulk initializeForSearch(CRUDBP bp,it.cnr.jada.action.ActionContext context) {
@@ -912,7 +934,7 @@ public OggettoBulk initializeForSearch(CRUDBP bp,it.cnr.jada.action.ActionContex
 		setTipo_documento(new Tipo_documento_ammBulk());
 		setCd_tipo_documento_amm(this.GENERICO_S);
 		setStato_pagamento_fondo_eco(FONDO_ECO);
-
+		setStato_liquidazione(LIQ);
 		it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo = it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context);
 		setCd_cds(uo.getCd_unita_padre());
 		setCd_cds_origine(uo.getCd_unita_padre());
@@ -1678,9 +1700,17 @@ public void validate() throws ValidationException {
 
 		if (getTipo_documento()==null)
 			throw new ValidationException("Selezionare un tipo di documento");
+		if(getTipo_documento().getCd_tipo_documento_amm().compareTo(GENERICO_S)==0)
+			if (dataInizioObbligoRegistroUnico!=null && getData_registrazione().after(dataInizioObbligoRegistroUnico))
+			{
+				if(getStato_liquidazione()==null)
+					throw new ValidationException("Inserire lo stato della liquidazione!");
+				if(getStato_liquidazione()!=null && getStato_liquidazione().compareTo(this.LIQ)!=0 && getCausale()==null)
+					throw new ValidationException("Inserire la causale.");
+			}
 
 		if (getLettera_pagamento_estero() != null)
-		getLettera_pagamento_estero().validate();
+			getLettera_pagamento_estero().validate();
 			
 		if (getStato_cofi()==null)
 			setStato_cofi(STATO_INIZIALE);
@@ -1854,6 +1884,18 @@ public void addToAssociazioniInventarioHash(
 			}
 			return null;
 		}
-		
+		public Dictionary getStato_liquidazioneKeys() {
+			return STATO_LIQUIDAZIONE;
+		}
+		public Dictionary getCausaleKeys(){
+			return CAUSALE;
+		}
+		public java.sql.Timestamp getDataInizioObbligoRegistroUnico() {
+			return dataInizioObbligoRegistroUnico;
+		}
+		public void setDataInizioObbligoRegistroUnico(
+				java.sql.Timestamp dataInizioObbligoRegistroUnico) {
+			this.dataInizioObbligoRegistroUnico = dataInizioObbligoRegistroUnico;
+		}	
 		
 }

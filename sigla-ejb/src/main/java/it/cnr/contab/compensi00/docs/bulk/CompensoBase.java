@@ -380,7 +380,11 @@ public class CompensoBase extends CompensoKey implements Keyed {
 	private java.sql.Timestamp data_protocollo;
 	
 	private java.lang.String numero_protocollo;		
-
+	
+	private java.lang.String stato_liquidazione;
+	
+	private java.lang.String causale;
+	
 public CompensoBase() {
 	super();
 }
@@ -1793,5 +1797,17 @@ public void setTi_istituz_commerc(java.lang.String ti_istituz_commerc) {
 	}
 	public void setNumero_protocollo(java.lang.String numero_protocollo) {
 		this.numero_protocollo = numero_protocollo;
+	}
+	public java.lang.String getStato_liquidazione() {
+		return stato_liquidazione;
+	}
+	public void setStato_liquidazione(java.lang.String stato_liquidazione) {
+		this.stato_liquidazione = stato_liquidazione;
+	}
+	public java.lang.String getCausale() {
+		return causale;
+	}
+	public void setCausale(java.lang.String causale) {
+		this.causale = causale;
 	}
 }

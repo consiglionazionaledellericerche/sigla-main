@@ -237,7 +237,7 @@ public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 		setStato_cofi(STATO_CONTABILIZZATO);
 		setStato_pagamento_fondo_eco(FONDO_ECO);
 		setFl_congelata(Boolean.FALSE);
-
+		setStato_liquidazione(LIQ);
 		it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo = it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context);
 		if (it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC.equalsIgnoreCase(uo.getCd_tipo_unita())){
 			setCd_unita_organizzativa(null);

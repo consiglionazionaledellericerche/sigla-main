@@ -1429,6 +1429,22 @@
 		enabledOnSearch="true"
 		nullable="true"		
 		/>
+	<fieldProperty
+		name="stato_liquidazione"
+		property="stato_liquidazione"
+		inputType="SELECT"
+		label="Stato liquidazione"
+		nullable="true"
+		enabledOnSearch="true"
+		keysProperty="stato_liquidazioneKeys" />
+	<fieldProperty
+		name="causale"
+		property="causale"
+		inputType="SELECT"
+		label="causale"
+		nullable="true"
+		enabledOnSearch="true"
+		keysProperty="causaleKeys" />		
 
 	<formFieldProperty name="cd_cds" />
 	<formFieldProperty name="cd_unita_organizzativa" />
@@ -1612,7 +1628,8 @@
    	<formFieldProperty name="esercizio_contr"/>			
 	<formFieldProperty name="pg_contratto"/>
 	<formFieldProperty name="oggetto_contratto" />
-	
+	<formFieldProperty name="stato_liquidazione"/>		
+	<formFieldProperty name="causale"/>			
                        	
 	<columnFieldProperty name="cd_cds" />
 	<columnFieldProperty name="cd_unita_organizzativa" />
@@ -1641,6 +1658,8 @@
 	<columnFieldProperty name="cd_altra_ass_inps" />		
 	<columnFieldProperty name="dt_cancellazione" />
 	<columnFieldProperty name="im_totale_compenso" />
+	<columnFieldProperty name="stato_liquidazione"/>		
+	<columnFieldProperty name="causale"/>			
 	<columnSet name="INCARICHI">
 		<columnFieldProperty name="esercizio" />
 		<columnFieldProperty name="pg_compenso" />
@@ -1744,4 +1763,6 @@
 	<findFieldProperty name="cd_terzo_pignorato"/>	
 	<findFieldProperty name="esercizio_contr"/>			
 	<findFieldProperty name="pg_contratto"/>
+	<findFieldProperty name="stato_liquidazione"/>
+	<findFieldProperty name="causale"/>
 </bulkInfo>

@@ -1,5 +1,6 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
+import java.util.Dictionary;
 import java.util.Vector;
 import java.util.Collection;
 
@@ -11,6 +12,7 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
 
 /**
@@ -100,7 +102,8 @@ public void copyFrom(
 	setStato_coan(NON_CONTABILIZZATO_IN_COAN);
 	setStato_pagamento_fondo_eco(NO_FONDO_ECO);
 	setTi_associato_manrev(NON_ASSOCIATO_A_MANDATO);
-	
+	setStato_liquidazione(NOLIQ);
+	setCausale(NCRED);
 	setCd_cds(fattura_passiva.getCd_cds());
 	setEsercizio(esercizioScrivania);
 	setCd_unita_organizzativa(fattura_passiva.getCd_unita_organizzativa());
@@ -518,5 +521,15 @@ public void setTermini_pagamento_uo(it.cnr.contab.anagraf00.tabrif.bulk.Rif_term
  */
 public void setTermini_uo(java.util.Collection newTermini_uo) {
 	termini_uo = newTermini_uo;
+}
+
+public Dictionary getCausaleKeys(){
+	OrderedHashtable d = (OrderedHashtable)super.getCausaleKeys();
+	if (d == null) return null;
+
+	OrderedHashtable clone = (OrderedHashtable)d.clone();
+	clone.remove(ATTNC);
+	clone.put(NCRED,"Nota Credito");
+	return clone;
 }
 }

@@ -3208,6 +3208,13 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext, Oggett
 		if (annoSolare != esercizioInScrivania)
 			date = new java.sql.Timestamp(new java.text.SimpleDateFormat("dd/MM/yyyy").parse("31/12/" + esercizioInScrivania).getTime());
 		documento.setData_registrazione(date);
+		 try{ 
+			 documento.setDataInizioObbligoRegistroUnico(Utility.createConfigurazioneCnrComponentSession().
+					getDt01(userContext, new Integer(0), null,"REGISTRO_UNICO_FATPAS", "DATA_INIZIO"));
+		    	
+		    } catch ( Exception e )	{
+				throw handleException(documento, e);
+			}
 		setDt_termine_creazione_docamm(userContext, documento);
     } catch (java.text.ParseException e) {
         throw handleException(bulk, e);
@@ -3303,7 +3310,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext aUC, OggettoBulk bulk)
 	if (generico.getEsercizio().intValue() >
 		it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC).intValue())
 		throw new it.cnr.jada.comp.ApplicationException("Il documento deve appartenere o all'esercizio di scrivania o ad esercizi precedenti per essere aperto in modifica!");
-
+	
 	generico = (Documento_genericoBulk)super.inizializzaBulkPerModifica(aUC, generico);
 
     try {
@@ -3348,7 +3355,13 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext aUC, OggettoBulk bulk)
         //	<code>Ti_entrate_spese</code>, altrimenti la dt_termine_creazione_docamm NON viene impostata e,
         //	in fase di salvataggio, genera un errore di NullPointerException.
         setDt_termine_creazione_docamm(aUC, generico);
-
+        try{
+   		 generico.setDataInizioObbligoRegistroUnico(Utility.createConfigurazioneCnrComponentSession().
+   				getDt01(aUC, new Integer(0), null,"REGISTRO_UNICO_FATPAS", "DATA_INIZIO"));
+   	    	
+   	    } catch ( Exception e )	{
+   			throw handleException(generico, e);
+   		}
 		if (!generico.getCd_uo_origine().equals(generico.getCd_unita_organizzativa()))
             generico.setFlagEnte(true);
         
@@ -4890,6 +4903,7 @@ public void validaDocumento(UserContext aUC, Documento_genericoBulk documentoGen
     if (documentoGenerico.getDocumento_generico_dettColl().isEmpty())
         throw new it.cnr.jada.comp.ApplicationException(
             "Attenzione non possono esistere documenti senza almeno un dettaglio");
+   
 
     //controlla le date di competenza COGE
     try {
