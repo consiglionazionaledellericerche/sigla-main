@@ -61,6 +61,7 @@ public class ContrattoHome extends BulkHome {
 		PersistentHome dettHome = getHomeCache().getHome(Ass_contratto_uoBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,testata.getEsercizio());
+		sql.addSQLClause("AND","STATO_CONTRATTO",sql.EQUALS,testata.getStato()); 
 		sql.addSQLClause("AND","PG_CONTRATTO",sql.EQUALS,testata.getPg_contratto());
 		sql.addOrderBy("CD_UNITA_ORGANIZZATIVA");
 		return dettHome.fetchAll(sql);

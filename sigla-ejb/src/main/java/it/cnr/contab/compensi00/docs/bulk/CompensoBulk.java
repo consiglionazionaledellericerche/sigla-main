@@ -2858,8 +2858,12 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 					throw new ApplicationException("Inserire la data di protocollo di entrata.");
 			if(getNumero_protocollo()== null)
 					throw new ApplicationException("Inserire il numero di protocollo di entrata!");
-				
+			if(getData_protocollo()!= null && getData_protocollo().before(getDt_fattura_fornitore()))
+				throw new it.cnr.jada.comp.ApplicationException("La data di protocollo non può essere precedente alla data di emissione del documento del fornitore!");		
 		}
+		if(getData_protocollo()!=null && getData_protocollo().after(getDt_registrazione()))
+			throw new it.cnr.jada.comp.ApplicationException(
+					"La data protocollo di entrata non può essere superiore alla data registrazione del compenso");
 		if (getDt_fattura_fornitore() != null
 				&& getDt_fattura_fornitore().compareTo(getDt_registrazione()) > 0)
 			throw new it.cnr.jada.comp.ApplicationException(

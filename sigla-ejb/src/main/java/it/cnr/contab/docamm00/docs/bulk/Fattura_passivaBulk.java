@@ -2645,6 +2645,9 @@ public void validateDate() throws ValidationException {
 		}
 		if(getData_protocollo()!= null && getData_protocollo().before(getDt_fattura_fornitore()))
 			throw new ValidationException("La data di protocollo non può essere precedente alla data di emissione del documento del fornitore!");
+		if(getData_protocollo()!=null && getData_protocollo().after(getDt_registrazione()))
+			throw new ValidationException(
+					"La data protocollo di entrata non può essere superiore alla data registrazione");
 	}
 }
 	/**
