@@ -3176,11 +3176,8 @@ private void impostaDatiEnteNelDocumento(
 		if (!documento.isGenericoAttivo()){
 			if (documento.getCd_uo_origine().equals(documento.getUo_CNR())){
 				documento.setFlagEnte(true);
-				documento.setPassivo_ente(true);
 			}
-			else
-				documento.setPassivo_ente(false);
-			
+			documento.setPassivo_ente(true);
 			documento.setStato_pagamento_fondo_eco(documento.NO_FONDO_ECO);
 		}
     }
@@ -3365,11 +3362,10 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext aUC, OggettoBulk bulk)
 		if (!generico.getCd_uo_origine().equals(generico.getCd_unita_organizzativa()))
             generico.setFlagEnte(true);
         
-        if (generico.isGenericoAttivo())
+        if (!generico.isGenericoAttivo())
         	generico.setPassivo_ente(generico.isFlagEnte());
         else
-        	generico.setPassivo_ente(false);
-
+        	generico.setPassivo_ente(true);
         //try {
             //if (!generico.isGenericoAttivo()) {
                 //it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome uoHome= (it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome) getHome(aUC, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk.class);

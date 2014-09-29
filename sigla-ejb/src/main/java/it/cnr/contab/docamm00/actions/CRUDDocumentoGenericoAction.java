@@ -1813,10 +1813,10 @@ public Forward doOnFlagEnteChange(ActionContext context) {
 	    	//return context.findDefaultForward();
 		}
         if (documentoGenerico.isFlagEnte()
-            && (documentoGenerico.isGenericoAttivo()
-                && (documentoGenerico.getAccertamentiHash() == null || documentoGenerico.getAccertamentiHash().isEmpty())
-                || !documentoGenerico.isGenericoAttivo()
-                && (documentoGenerico.getObbligazioniHash() == null || documentoGenerico.getObbligazioniHash().isEmpty()))) {
+            && ((documentoGenerico.isGenericoAttivo()
+                && (documentoGenerico.getAccertamentiHash() == null || documentoGenerico.getAccertamentiHash().isEmpty()))
+                || (!documentoGenerico.isGenericoAttivo()
+                && (documentoGenerico.getObbligazioniHash() == null || documentoGenerico.getObbligazioniHash().isEmpty())))) {
             documentoGenerico= component.setEnte(context.getUserContext(), documentoGenerico);
             documentoGenerico.setPassivo_ente(true);
         } else {

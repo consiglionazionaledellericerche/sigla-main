@@ -222,7 +222,9 @@ public Collection findDocPassiviCollegati(  V_doc_passivo_obbligazioneBulk docPa
 	sql.addClause(  "AND", "esercizio_obbligazione", sql.EQUALS, docPassivo.getEsercizio_obbligazione());
 	sql.addClause(  "AND", "esercizio_ori_obbligazione", sql.EQUALS, docPassivo.getEsercizio_ori_obbligazione());
 	sql.addClause(  "AND", "pg_obbligazione", sql.EQUALS, docPassivo.getPg_obbligazione());
-	sql.addClause(  "AND", "pg_obbligazione_scadenzario", sql.EQUALS, docPassivo.getPg_obbligazione_scadenzario());	
+	sql.addClause(  "AND", "pg_obbligazione_scadenzario", sql.EQUALS, docPassivo.getPg_obbligazione_scadenzario());
+	// rp 29/09/2014 nel caso di documenti generici passivi ente  'NON liquidabili" venivano recuperati come collegati essendo su impegni a consumo 
+	sql.addClause("AND","cd_tipo_documento_amm",sql.NOT_EQUALS,Documento_genericoBulk.GENERICO_S);
 	sql.addSQLClause( "AND", "fl_selezione", sql.EQUALS, "N");			
 	return home.fetchAll( sql);
 			
