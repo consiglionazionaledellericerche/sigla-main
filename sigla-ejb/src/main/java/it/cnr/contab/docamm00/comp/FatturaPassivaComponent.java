@@ -2762,8 +2762,8 @@ public OggettoBulk creaConBulk(
 		if (fattura_passiva instanceof Fattura_passiva_IBulk ||fattura_passiva instanceof Nota_di_creditoBulk ) {
 			if (fattura_passiva.existARowToBeInventoried()) {
 				verificaEsistenzaEdAperturaInventario(userContext, fattura_passiva);
-				if (hasFatturaPassivaARowNotInventoried(userContext, fattura_passiva))
-					throw new it.cnr.jada.comp.ApplicationException("Attenzione: è necessario inventariare tutti i dettagli.");
+				if (hasFatturaPassivaARowNotInventoried(userContext, fattura_passiva) && (fattura_passiva.getStato_liquidazione()==null || fattura_passiva.getStato_liquidazione().compareTo(Fattura_passiva_IBulk.LIQ)==0))
+						throw new it.cnr.jada.comp.ApplicationException("Attenzione: è necessario inventariare tutti i dettagli.");
 			}
 		}
 		validaFattura(userContext, fattura_passiva);
@@ -4587,7 +4587,8 @@ public OggettoBulk modificaConBulk(
 	Fattura_passivaBulk fatturaPassiva = (Fattura_passivaBulk)bulk;
 	try {
 		if (fatturaPassiva instanceof Fattura_passiva_IBulk) {
-			if (fatturaPassiva.existARowToBeInventoried()) {
+			//if (fatturaPassiva.existARowToBeInventoried()) {
+			if (fatturaPassiva.existARowToBeInventoried() && (fatturaPassiva.getStato_liquidazione()==null || fatturaPassiva.getStato_liquidazione().compareTo(Fattura_passiva_IBulk.LIQ)==0)) {
 				if (hasFatturaPassivaARowNotInventoried(aUC, fatturaPassiva))
 					throw new it.cnr.jada.comp.ApplicationException("Attenzione: è necessario inventariare tutti i dettagli.");
 				else{
@@ -5767,7 +5768,9 @@ public void validaFattura(UserContext aUC,Fattura_passivaBulk fatturaPassiva) th
 	}
 
 	controllaQuadraturaConti(aUC, fatturaPassiva);
-	controllaContabilizzazioneDiTutteLeRighe(aUC, fatturaPassiva);
+	//if ((fatturaPassiva.getStato_liquidazione()==null || fatturaPassiva.getStato_liquidazione().compareTo(Fattura_passiva_IBulk.LIQ)==0)) 
+		controllaContabilizzazioneDiTutteLeRighe(aUC, fatturaPassiva);
+	 
 	controllaQuadraturaIntrastat(aUC, fatturaPassiva);
 	controllaQuadraturaObbligazioni(aUC, fatturaPassiva);
 	
