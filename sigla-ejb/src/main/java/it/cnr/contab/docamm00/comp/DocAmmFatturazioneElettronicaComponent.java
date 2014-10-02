@@ -383,7 +383,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 				datiAnagraficiClienteType.setAnagrafica(impostaAnagrafica(factory, cliente));
 
-				if (cliente.getAnagrafico().getCodice_fiscale() == null)
+				if (fattura.getCodice_fiscale() == null)
 					throw new ApplicationException("Impossibile Procedere! Manca il Codice Fiscale per il codice Anagrafica: "+cliente.getCd_anag()+" del terzo: "+ cliente.getCd_terzo()); 
 
 				datiAnagraficiClienteType.setCodiceFiscale(fattura.getCodice_fiscale());
