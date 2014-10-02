@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="indicatore_pagamenti" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="media">
+		<parameter name="esercizio" class="java.lang.Integer" isForPrompting="false">
+			<defaultValueExpression><![CDATA[$P{esercizio}]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select  ROUND(AVG(M.DT_TRASMISSIONE- (f.dt_scadenza)),0) media, to_date('01'||to_char(M.dt_EMISSIONE,'mmyyyy'),'ddmmyyyy') mese
+from contratto c,
+     obbligazione o,
+     obbligazione_scadenzario os ,
+     fattura_passiva f,
+     fattura_passiva_riga fr,
+     mandato_riga mr,
+     mandato m
+where C.ESERCIZIO (+) = O.ESERCIZIO_CONTRATTO
+and C.STATO(+) = O.STATO_CONTRATTO
+and C.PG_CONTRATTO(+) = O.PG_CONTRATTO
+and (c.cd_tipo_contratto not in( 'AL', 'CONL', 'CSPP','QUOTE', 'COND', 'COMPR', 'PART', 'LOC_P', 'COST', 'INCEN', 'CSPE','LOC') or
+O.ESERCIZIO_CONTRATTO is null)
+------join obb- obb_scadenzario
+and O.ESERCIZIO = OS.ESERCIZIO
+and O.ESERCIZIO_ORIGINALE = OS.ESERCIZIO_ORIGINALE
+and O.CD_CDS = OS.CD_CDS
+and O.PG_OBBLIGAZIONE = OS.PG_OBBLIGAZIONE
+------join obb_scadenzario - fattura_riga
+and OS.ESERCIZIO = FR.ESERCIZIO_OBBLIGAZIONE
+and OS.ESERCIZIO_ORIGINALE = FR.ESERCIZIO_ORI_OBBLIGAZIONE
+and OS.CD_CDS = FR.CD_CDS_OBBLIGAZIONE
+and OS.PG_OBBLIGAZIONE = FR.PG_OBBLIGAZIONE
+and OS.PG_OBBLIGAZIONE_SCADENZARIO = FR.PG_OBBLIGAZIONE_SCADENZARIO
+------join fattura_riga - fattura
+and FR.ESERCIZIO = F.ESERCIZIO
+and FR.CD_CDS = F.CD_CDS
+and FR.CD_UNITA_ORGANIZZATIVA = F.CD_UNITA_ORGANIZZATIVA
+and FR.PG_FATTURA_PASSIVA = F.PG_FATTURA_PASSIVA
+------join obb_scadenzario - mndato_riga
+and os.ESERCIZIO = MR.ESERCIZIO_OBBLIGAZIONE
+and os.CD_CDS = MR.CD_CDS
+and OS.ESERCIZIO_ORIGINALE = MR.ESERCIZIO_ORI_OBBLIGAZIONE
+and OS.PG_OBBLIGAZIONE = MR.PG_OBBLIGAZIONE
+and OS.PG_OBBLIGAZIONE_SCADENZARIO = MR.PG_OBBLIGAZIONE_SCADENZARIO
+-----join  mandato_riga - mandato
+and MR.CD_CDS = M.CD_CDS
+and MR.ESERCIZIO = M.ESERCIZIO
+and MR.PG_MANDATO = M.PG_MANDATO
+and M.ESERCIZIO = $P{esercizio}
+and M.STATO !='A'
+and M.TI_MANDATO = 'P'
+and m.dt_emissione < sysdate -30
+group by
+to_date('01'||to_char(M.DT_EMISSIONE,'mmyyyy'),'ddmmyyyy')
+order  by
+to_date('01'||to_char(M.DT_EMISSIONE,'mmyyyy'),'ddmmyyyy') ASC]]>
+		</queryString>
+		<field name="MEDIA" class="java.math.BigDecimal"/>
+		<field name="MESE" class="java.sql.Timestamp"/>
+	</subDataset>
+	<parameter name="esercizio" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select 1 from dual]]>
+	</queryString>
+	<field name="1" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<summary>
+		<band height="287" splitType="Stretch">
+			<timeSeriesChart>
+				<chart isShowLegend="false">
+					<reportElement x="0" y="20" width="802" height="265"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<timeSeriesDataset timePeriod="Milisecond">
+					<dataset>
+						<datasetRun subDataset="media">
+							<datasetParameter name="esercizio">
+								<datasetParameterExpression><![CDATA[$P{esercizio}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+					</dataset>
+					<timeSeries>
+						<seriesExpression><![CDATA[""]]></seriesExpression>
+						<timePeriodExpression><![CDATA[$F{MESE}]]></timePeriodExpression>
+						<valueExpression><![CDATA[$F{MEDIA}]]></valueExpression>
+					</timeSeries>
+				</timeSeriesDataset>
+				<timeSeriesPlot isShowShapes="false">
+					<plot orientation="Horizontal"/>
+					<timeAxisFormat>
+						<axisFormat verticalTickLabels="false">
+							<labelFont/>
+							<tickLabelFont/>
+						</axisFormat>
+					</timeAxisFormat>
+					<valueAxisLabelExpression><![CDATA["gg"]]></valueAxisLabelExpression>
+					<valueAxisFormat>
+						<axisFormat verticalTickLabels="true">
+							<labelFont/>
+							<tickLabelFont/>
+						</axisFormat>
+					</valueAxisFormat>
+					<domainAxisMinValueExpression><![CDATA[new SimpleDateFormat("yyyy/MM/dd").parse($P{esercizio}.toString()+"/01/01")]]></domainAxisMinValueExpression>
+					<domainAxisMaxValueExpression><![CDATA[new SimpleDateFormat("yyyy/MM/dd").parse(($P{esercizio}+1).toString()+"/01/01")]]></domainAxisMaxValueExpression>
+					<rangeAxisMinValueExpression><![CDATA[0]]></rangeAxisMinValueExpression>
+					<rangeAxisMaxValueExpression><![CDATA[100]]></rangeAxisMaxValueExpression>
+				</timeSeriesPlot>
+			</timeSeriesChart>
+			<textField>
+				<reportElement x="282" y="0" width="292" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Trend Indicatore pagamenti "+$P{esercizio}.toString()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="43" y="192" width="750" height="1" forecolor="#3300FF"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>
