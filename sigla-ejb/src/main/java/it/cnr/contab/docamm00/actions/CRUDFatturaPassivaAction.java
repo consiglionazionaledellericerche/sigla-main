@@ -1893,7 +1893,8 @@ public Forward doCambiaDataEmissioneFattura(ActionContext context) {
 					//return doSelezionaValuta(context);
 				//}
 			//}
-
+			if (fattura instanceof Nota_di_creditoBulk && fattura.getDt_scadenza()==null)
+				fattura.setDt_scadenza(fattura.getDt_fattura_fornitore());
 			creaEsercizioPerFatturaFornitore(context, fattura);
 			
 			return context.findDefaultForward();
