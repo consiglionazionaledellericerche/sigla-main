@@ -110,7 +110,7 @@ $F{FRAZIONE_PIGNORATO}+" "+($F{CAP_PIGNORATO}==null?"":$F{CAP_PIGNORATO}))+" - "
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{NAZIONE_PIGNORATO}]]></textFieldExpression>
 				</textField>
 				<image onErrorType="Icon">
-					<reportElement key="image-1" x="107" y="0" width="477" height="40"/>
+					<reportElement key="image-1" x="107" y="0" width="405" height="40"/>
 					<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
 				</image>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
@@ -129,7 +129,7 @@ $F{FRAZIONE_PIGNORATO}+" "+($F{CAP_PIGNORATO}==null?"":$F{CAP_PIGNORATO}))+" - "
 		<groupFooter>
 			<band height="73" splitType="Stretch">
 				<subreport isUsingCache="true">
-					<reportElement key="subreport-1" stretchType="RelativeToBandHeight" x="2" y="27" width="567" height="18"/>
+					<reportElement key="subreport-1" stretchType="RelativeToBandHeight" x="2" y="27" width="543" height="18"/>
 					<subreportParameter name="DIR_IMAGE">
 						<subreportParameterExpression><![CDATA[$P{DIR_IMAGE}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -295,22 +295,7 @@ $F{RS_CREDITORE})]]></textFieldExpression>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band splitType="Stretch">
-			<subreport isUsingCache="true">
-				<reportElement key="subreport-2" x="11" y="-18" width="84" height="14"/>
-				<subreportParameter name="DIR_IMAGE">
-					<subreportParameterExpression><![CDATA[$P{DIR_IMAGE}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="esercizio">
-					<subreportParameterExpression><![CDATA[$P{esercizio}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="SUBREPORT_DIR">
-					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "certificazione_data.jasper"]]></subreportExpression>
-			</subreport>
-		</band>
+		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
 		<band splitType="Stretch"/>

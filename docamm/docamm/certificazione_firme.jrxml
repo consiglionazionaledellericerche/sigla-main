@@ -5,13 +5,19 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<style name="TNR8" fontName="Times New Roman" fontSize="8" isBold="false" pdfFontName="Times-Roman"/>
 	<style name="TNR10" fontName="Times New Roman" pdfFontName="Times-Roman"/>
 	<parameter name="esercizio" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Integer(2006)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT * FROM FIRME WHERE
@@ -34,7 +40,7 @@ esercizio = $P{esercizio}]]>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="69" splitType="Stretch">
+		<band height="57" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement key="textField" style="TNR8" x="343" y="2" width="215" height="17" forecolor="#000000" backcolor="#FFFFFF"/>
 				<box>
@@ -74,6 +80,20 @@ esercizio = $P{esercizio}]]>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{FIRMA3}]]></textFieldExpression>
 			</textField>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-2" x="0" y="40" width="84" height="14"/>
+				<subreportParameter name="DIR_IMAGE">
+					<subreportParameterExpression><![CDATA[$P{DIR_IMAGE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="esercizio">
+					<subreportParameterExpression><![CDATA[$P{esercizio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "certificazione_data.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<columnFooter>

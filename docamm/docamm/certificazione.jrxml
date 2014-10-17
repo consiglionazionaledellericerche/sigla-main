@@ -5,8 +5,8 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
 	<style name="TNR10B" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Bold"/>
@@ -44,7 +44,7 @@
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band splitType="Stretch"/>
+		<band height="14" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band splitType="Stretch"/>
@@ -98,20 +98,6 @@
 				<textElement textAlignment="Left"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
 			</textField>
-			<subreport isUsingCache="true">
-				<reportElement key="subreport-2" x="1" y="3" width="84" height="14"/>
-				<subreportParameter name="DIR_IMAGE">
-					<subreportParameterExpression><![CDATA[$P{DIR_IMAGE}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="esercizio">
-					<subreportParameterExpression><![CDATA[$P{esercizio}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="SUBREPORT_DIR">
-					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "certificazione_data.jasper"]]></subreportExpression>
-			</subreport>
 		</band>
 	</pageFooter>
 	<summary>
