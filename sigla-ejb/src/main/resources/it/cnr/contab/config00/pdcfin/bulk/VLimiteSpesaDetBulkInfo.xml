@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo
-	shortDescription="Consutazione limiti spesa"
-	longDescription="Consutazione limiti spesa"
+	shortDescription="Consultazione limiti spesa"
+	longDescription="Consultazione limiti spesa"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns="https://contab.cnr.it/schema/SIGLA"
 	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">

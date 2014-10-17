@@ -1538,7 +1538,11 @@ public void validaCreaModificaConBulk(
 
 		if (anagrafico.getCodice_fiscale() == null)
 			throw new ApplicationException("Il codice fiscale è obbligatorio");
-
+		// Verifica lunghezza codice fiscale Italiani - persone fisiche
+		if(NazioneBulk.ITALIA.equals(anagrafico.getTi_italiano_estero()))
+			if(anagrafico.getCodice_fiscale().replace(" ","").length()!=16)
+				throw  new it.cnr.jada.comp.ApplicationException(
+					"La lunghezza del codice fiscale non è valida!"); 
 		// Carichi Familiari verifica
 		validaCarichiFamiliari(userContext, anagrafico);
 	}
