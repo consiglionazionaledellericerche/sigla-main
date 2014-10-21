@@ -1133,4 +1133,90 @@ public boolean isAbilitatoAllTrattamenti(UserContext userContext)throws it.cnr.j
 	
 return (false);
 }
+public boolean isAbilitatoAutorizzareDiaria(UserContext userContext)throws it.cnr.jada.comp.ComponentException{
+	try {
+	SQLBuilder sql = null; 
+	SQLBroker broker = null;
+	
+	UtenteBulk utente = (UtenteBulk)(getHome(userContext, UtenteBulk.class).findByPrimaryKey(new UtenteBulk(CNRUserContext.getUser(userContext))));
+	
+	if (utente.isSupervisore() && utente.getCd_ruolo_supervisore()!=null) {
+		RuoloBulk ruolo = (RuoloBulk)(getHome(userContext, RuoloBulk.class).findByPrimaryKey(new RuoloBulk(utente.getCd_ruolo_supervisore())));
+		if (ruolo!=null && ruolo.getTipo()!= null){
+			SQLBuilder sql2 = getHome(userContext, Tipo_ruoloBulk.class).createSQLBuilder();
+			sql2.addSQLClause("AND","TIPO_RUOLO.TIPO",SQLBuilder.EQUALS,ruolo.getTipo());
+
+			sql2.addTableToHeader("ASS_TIPO_RUOLO_PRIVILEGIO");
+			sql2.addSQLJoin("TIPO_RUOLO.TIPO", "ASS_TIPO_RUOLO_PRIVILEGIO.TIPO");
+			sql2.addSQLClause("AND","ASS_TIPO_RUOLO_PRIVILEGIO.CD_PRIVILEGIO",SQLBuilder.EQUALS,PrivilegioBulk.ABILITA_AUTORIZZA_DIARIA);				
+		
+			if (sql2.executeExistsQuery(getConnection(userContext)))
+				return true;
+		}
+		{
+			sql = getHome(userContext, Utente_unita_ruoloBulk.class).createSQLBuilder();
+			sql.addSQLClause("AND","UTENTE_UNITA_RUOLO.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(userContext));
+			sql.addSQLClause("AND","UTENTE_UNITA_RUOLO.CD_UTENTE",SQLBuilder.EQUALS,CNRUserContext.getUser(userContext));
+			broker =  getHome( userContext, Utente_unita_ruoloBulk.class ).createBroker( sql );
+			Utente_unita_ruoloBulk utente_unita_ruolo;
+			while ( broker.next() )
+			{
+				utente_unita_ruolo = (Utente_unita_ruoloBulk) broker.fetch(Utente_unita_ruoloBulk.class );
+				RuoloBulk ruoloAltro = (RuoloBulk)(getHome(userContext, RuoloBulk.class).findByPrimaryKey(new RuoloBulk(utente_unita_ruolo.getCd_ruolo())));
+				if (ruoloAltro!=null && ruoloAltro.getTipo()!= null){
+					SQLBuilder sql2 = getHome(userContext, Tipo_ruoloBulk.class).createSQLBuilder();
+					sql2.addSQLClause("AND","TIPO_RUOLO.TIPO",SQLBuilder.EQUALS,ruoloAltro.getTipo());
+		
+					sql2.addTableToHeader("ASS_TIPO_RUOLO_PRIVILEGIO");
+					sql2.addSQLJoin("TIPO_RUOLO.TIPO", "ASS_TIPO_RUOLO_PRIVILEGIO.TIPO");
+					sql2.addSQLClause("AND","ASS_TIPO_RUOLO_PRIVILEGIO.CD_PRIVILEGIO",SQLBuilder.EQUALS,PrivilegioBulk.ABILITA_AUTORIZZA_DIARIA);				
+							
+					if (sql2.executeExistsQuery(getConnection(userContext))){
+						
+						broker.close();	 
+						return true;
+					}
+				}		     		     
+			}
+			broker.close();		
+		}
+	}
+	else {
+		sql = getHome(userContext, Utente_unita_ruoloBulk.class).createSQLBuilder();
+		sql.addSQLClause("AND","UTENTE_UNITA_RUOLO.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(userContext));
+		sql.addSQLClause("AND","UTENTE_UNITA_RUOLO.CD_UTENTE",SQLBuilder.EQUALS,CNRUserContext.getUser(userContext));
+		broker =  getHome( userContext, Utente_unita_ruoloBulk.class ).createBroker( sql );
+		Utente_unita_ruoloBulk utente_unita_ruolo;
+		while ( broker.next() )
+		{
+			utente_unita_ruolo = (Utente_unita_ruoloBulk) broker.fetch(Utente_unita_ruoloBulk.class );
+			RuoloBulk ruolo = (RuoloBulk)(getHome(userContext, RuoloBulk.class).findByPrimaryKey(new RuoloBulk(utente_unita_ruolo.getCd_ruolo())));
+			if (ruolo!=null && ruolo.getTipo()!= null){
+				SQLBuilder sql2 = getHome(userContext, Tipo_ruoloBulk.class).createSQLBuilder();
+				sql2.addSQLClause("AND","TIPO_RUOLO.TIPO",SQLBuilder.EQUALS,ruolo.getTipo());
+	
+				sql2.addTableToHeader("ASS_TIPO_RUOLO_PRIVILEGIO");
+				sql2.addSQLJoin("TIPO_RUOLO.TIPO", "ASS_TIPO_RUOLO_PRIVILEGIO.TIPO");
+				sql2.addSQLClause("AND","ASS_TIPO_RUOLO_PRIVILEGIO.CD_PRIVILEGIO",SQLBuilder.EQUALS,PrivilegioBulk.ABILITA_AUTORIZZA_DIARIA);				
+						
+				if (sql2.executeExistsQuery(getConnection(userContext))){
+					
+					broker.close();	 
+					return true;
+				}
+			}		     		     
+		}
+		broker.close();		
+	}
+} catch (PersistencyException e) {
+	throw new ComponentException(e);
+}
+  catch(java.sql.SQLException e) {
+		throw handleException(e);
+	}	
+
+	
+return (false);
+}
+
 }

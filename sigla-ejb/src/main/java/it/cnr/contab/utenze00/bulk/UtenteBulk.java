@@ -273,4 +273,7 @@ public static boolean isAbilitatoModificaDescVariazioni(it.cnr.jada.UserContext 
 public static boolean isAbilitatoAllTrattamenti(it.cnr.jada.UserContext param0) throws ComponentException, RemoteException,it.cnr.jada.persistency.IntrospectionException{
 	return getRuoloComponentSession().isAbilitatoAllTrattamenti(param0);
 }
+public static boolean isAbilitatoAutorizzareDiaria(it.cnr.jada.UserContext param0) throws ComponentException, RemoteException{
+	return getRuoloComponentSession().isAbilitatoAutorizzareDiaria(param0);
+}
 }

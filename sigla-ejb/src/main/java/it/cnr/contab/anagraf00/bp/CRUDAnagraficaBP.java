@@ -1242,11 +1242,21 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 	public void setAbilitatoSospensioneCori(boolean abilitatoSospensioneCori) {
 		this.abilitatoSospensioneCori = abilitatoSospensioneCori;
 	}	
+
+    private boolean abilitatoAutorizzareDiaria;
+	
+	public boolean isAbilitatoAutorizzareDiaria() {
+		return abilitatoAutorizzareDiaria;
+	}
+	public void setAbilitatoAutorizzareDiaria(boolean abilitatoAutorizzareDiaria) {
+		this.abilitatoAutorizzareDiaria = abilitatoAutorizzareDiaria;
+	}
 	
 protected void initialize(ActionContext context) throws BusinessProcessException {
 	try {
 		setAbilitatoECF(UtenteBulk.isAbilitatoECF(context.getUserContext()));
 		setAbilitatoSospensioneCori(UtenteBulk.isAbilitatoSospensioneCori(context.getUserContext()));
+		setAbilitatoAutorizzareDiaria(UtenteBulk.isAbilitatoAutorizzareDiaria(context.getUserContext()));
 	} catch (ComponentException e1) {
 		throw handleException(e1);
 	} catch (RemoteException e1) {

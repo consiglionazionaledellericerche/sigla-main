@@ -76,23 +76,40 @@
 			</td>	
 		</tr>	
 		<%if (anagrafico.isFl_cervellone().booleanValue()) { %>	
-		</table>
-		<table>		
-		<tr>
-			<td><% bp.getController().writeFormLabel(out,"dt_inizio_res_italia");%></td>
-			<td><% bp.getController().writeFormInput(out,null,"dt_inizio_res_italia",false,null,"");%></td>
-			<td><% bp.getController().writeFormLabel(out,"dt_fine_res_italia");%></td>
-			<td><% bp.getController().writeFormInput(out,null,"dt_fine_res_italia",false,null,"");%></td>
-		</tr>
-		<tr>	
-			<td><% bp.getController().writeFormLabel(out,"anno_inizio_res_fis");%></td>
-			<td><% bp.getController().writeFormInput(out,"anno_inizio_res_fis");%></td>
-			<td><% bp.getController().writeFormLabel(out,"anno_fine_agevolazioni");%></td>
-			<td><% bp.getController().writeFormInput(out,"anno_fine_agevolazioni");%></td>
-		</tr>
+			</table>
+			<table>		
+			<tr>
+				<td><% bp.getController().writeFormLabel(out,"dt_inizio_res_italia");%></td>
+				<td><% bp.getController().writeFormInput(out,null,"dt_inizio_res_italia",false,null,"");%></td>
+				<td><% bp.getController().writeFormLabel(out,"dt_fine_res_italia");%></td>
+				<td><% bp.getController().writeFormInput(out,null,"dt_fine_res_italia",false,null,"");%></td>
+			</tr>
+			<tr>	
+				<td><% bp.getController().writeFormLabel(out,"anno_inizio_res_fis");%></td>
+				<td><% bp.getController().writeFormInput(out,"anno_inizio_res_fis");%></td>
+				<td><% bp.getController().writeFormLabel(out,"anno_fine_agevolazioni");%></td>
+				<td><% bp.getController().writeFormInput(out,"anno_fine_agevolazioni");%></td>
+			</tr>
+		<%} %>	
+		<%if (bp.isAbilitatoAutorizzareDiaria()) { %>	
+			<tr>	
+				<td colspan="2">		
+					<% bp.getController().writeFormInput(out,"default","fl_abilita_diaria_miss_est",false,"FormInput","onclick=\"submitForm('doCambiaFl_abilita_diaria_miss_est')\"");%>
+					<% bp.getController().writeFormLabel(out,"fl_abilita_diaria_miss_est");%>
+				</td>	
+			</tr>	
+			<%if (anagrafico.isFl_abilita_diaria_miss_est().booleanValue()) { %>	
+				</table>
+				<table>		
+				<tr>
+					<td><% bp.getController().writeFormLabel(out,"dt_inizio_diaria_miss_est");%></td>
+					<td><% bp.getController().writeFormInput(out,null,"dt_inizio_diaria_miss_est",false,null,"");%></td>
+					<td><% bp.getController().writeFormLabel(out,"dt_fine_diaria_miss_est");%></td>
+					<td><% bp.getController().writeFormInput(out,null,"dt_fine_diaria_miss_est",false,null,"");%></td>
+				</tr>
+			<%} %>
 		<%} %>	
 <%} %>
-
 		<tr>
 			<td colspan="2"><% bp.getController().writeFormLabel(out,"pg_tipologia_istat");%>
 							<% bp.getController().writeFormInput(out,"pg_tipologia_istat");%>

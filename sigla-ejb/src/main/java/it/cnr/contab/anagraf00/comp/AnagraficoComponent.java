@@ -545,6 +545,8 @@ public TerzoBulk getDefaultTerzo(UserContext userContext,AnagraficoBulk anagrafi
 		anagrafico_esercizio.setToBeCreated();		
 		anagrafico.setAnagrafico_esercizio(anagrafico_esercizio);
 		anagrafico.setFl_sospensione_irpef(Boolean.FALSE);
+		
+		anagrafico.setFl_abilita_diaria_miss_est(Boolean.FALSE);
 
 		return anagrafico;	
 	}

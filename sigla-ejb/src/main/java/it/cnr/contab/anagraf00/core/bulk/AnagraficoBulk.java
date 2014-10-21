@@ -874,6 +874,9 @@ public void setTi_entita_persona_struttura(int newTi_entita_persona_struttura) {
 			throw new ValidationException("La Data di nascita non può essere antecedente alla data odierna");
 		if (getFl_cervellone() == true && getDt_inizio_res_italia()==null)
 			throw new ValidationException("Inserire la Data di Inizio residenza/domicilio in italia");
+		if (getFl_abilita_diaria_miss_est() == true && (getDt_inizio_diaria_miss_est()==null || getDt_fine_diaria_miss_est()==null))
+			throw new ValidationException("Inserire la Data di inizio e fine autorizzazione ad avere la diaria per particolari missioni estere");
+		
 	}
 	
 	public void setTipologia_istat(it.cnr.contab.anagraf00.tabrif.bulk.Tipologie_istatBulk newTipologia_istat) {

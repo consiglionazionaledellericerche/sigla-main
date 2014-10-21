@@ -4247,7 +4247,14 @@ public boolean isDiariaEditable(UserContext context, Missione_tappaBulk tappa) t
 	}
 	if (tappa.getFl_comune_estero().booleanValue())
 	{
-		if (!(tappa.getDt_inizio_tappa().compareTo(data_fine_diaria_miss_estero)>0))
+		if ((!(tappa.getDt_inizio_tappa().compareTo(data_fine_diaria_miss_estero)>0))||
+			  (tappa.getMissione().getTerzo().getAnagrafico().getFl_abilita_diaria_miss_est().booleanValue() 
+				&& 
+				!(tappa.getMissione().getDt_inizio_missione().compareTo(tappa.getMissione().getTerzo().getAnagrafico().getDt_inizio_diaria_miss_est())<0)
+				&& 
+				!(tappa.getMissione().getDt_fine_missione().compareTo(tappa.getMissione().getTerzo().getAnagrafico().getDt_fine_diaria_miss_est())>0)
+			  )
+			)
 		{
 			return true;
 		}

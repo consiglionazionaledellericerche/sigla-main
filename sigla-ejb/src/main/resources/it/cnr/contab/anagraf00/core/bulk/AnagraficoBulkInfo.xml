@@ -616,6 +616,27 @@
 		label="Data di avvio della Fatturazione Elettronica"
 		inputType="TEXT"
 		formatName="date_short" />
+	<fieldProperty
+		name="fl_abilita_diaria_miss_est"
+		property="fl_abilita_diaria_miss_est"
+		label="Autorizzato alla diaria per particolari missioni estere"
+		inputType="CHECKBOX" 
+		nullable="false"/>
+	<fieldProperty
+		name="dt_inizio_diaria_miss_est"
+		property="dt_inizio_diaria_miss_est"
+		label="Data Inizio autorizzazione"
+		inputType="TEXT"
+		inputSize="8"		
+		formatName="date_short" />
+	<fieldProperty
+		name="dt_fine_diaria_miss_est"
+		property="dt_fine_diaria_miss_est"
+		label="Data Fine autorizzazione"
+		inputType="TEXT"
+		inputSize="8"
+		formatName="date_short" />
+		
 	<columnFieldProperty
 		name="cd_anag"
 		label="Codice anagrafico"
@@ -669,6 +690,10 @@
 		name="dataAvvioFattElettr"
 		label="Data avvio Fatturazione Elettronica"
 		/>
+	<columnFieldProperty
+		name="fl_abilita_diaria_miss_est"
+		label="Abilitato Diaria missioni estere"
+		/>		
  <!--   <columnFieldProperty
 		name="pg_tipologia_istat"
 		label="Tipologia Istat"/>
@@ -916,7 +941,17 @@
 	<formFieldProperty
 		name="dataAvvioFattElettr"
 		/>
+	<formFieldProperty
+		name="fl_abilita_diaria_miss_est" />	
 		
+	<formFieldProperty
+		name="dt_inizio_diaria_miss_est" 
+		command="doCambiaDateDiariaMissEst"/>
+				
+	<formFieldProperty
+		name="dt_fine_diaria_miss_est" 
+		command="doCambiaDateDiariaMissEst"/>			
+				
 	<findFieldProperty
 		name="cd_anag"
 		label="Codice anagrafico"
@@ -973,4 +1008,6 @@
 		name="codiceAmministrazioneIpa"	/>
 	<findFieldProperty
 		name="dataAvvioFattElettr"	/>
+	<findFieldProperty
+		name="fl_abilita_diaria_miss_est" />		
 </bulkInfo>

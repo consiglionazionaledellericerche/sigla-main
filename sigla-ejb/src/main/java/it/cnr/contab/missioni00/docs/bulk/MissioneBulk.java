@@ -736,6 +736,7 @@ public void generaTappeNonConfigurate(java.sql.Timestamp data_fine_diaria_miss_e
 				Missione_tappaBulk newTappa = new Missione_tappaBulk();
 				newTappa = (Missione_tappaBulk)tappaDaClonare.clone();
 				newTappa.setDt_inizio_tappa((java.sql.Timestamp)gg.clone());
+				/*
 				if (newTappa.getFl_comune_estero().booleanValue())
 				{
 					//java.sql.Timestamp data_fine_diaria_miss_estero;
@@ -748,6 +749,7 @@ public void generaTappeNonConfigurate(java.sql.Timestamp data_fine_diaria_miss_e
 							newTappa.setFl_no_diaria(new Boolean(true));
 						}
 				}	
+				*/
 				newTappa.setCrudStatus(OggettoBulk.TO_BE_CREATED);
 				getTappeMissioneColl().add(newTappa);
 				ordinaTappePerDataInizioTappa();				
@@ -3448,7 +3450,16 @@ public boolean isTappeEstereCoerenti()
 			rimborso = tappa.getFl_rimborso();
 		if (tappa.isEstera() && tappa.getFl_rimborso().compareTo(rimborso)!=0)
 			return false;
-	}		
+	}
+	Boolean diaria=null;
+	for ( Iterator i = getTappeMissioneColl().iterator(); i.hasNext(); )	
+	{
+		tappa = (Missione_tappaBulk) i.next();
+		if(tappa.isEstera() && diaria == null)
+			diaria = tappa.getFl_no_diaria();
+		if (tappa.isEstera() && tappa.getFl_no_diaria().compareTo(diaria)!=0)
+			return false;
+	}
 	return true;
 }
 public boolean isRimborsoValidoPerDurataTappeEstere()

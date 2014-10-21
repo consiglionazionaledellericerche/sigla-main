@@ -169,6 +169,15 @@ public class AnagraficoBase extends AnagraficoKey implements Keyed {
 	// DATA_AVVIO_FATT_ELETTR TIMESTAMP
 	private java.sql.Timestamp dataAvvioFattElettr;
 	
+	// FL_ABILITA_DIARIA_MISS_EST CHAR(1) NOT NULL
+	private java.lang.Boolean fl_abilita_diaria_miss_est;
+	
+	// DT_INIZIO_DIARIA_MISS_EST TIMESTAMP
+	private java.sql.Timestamp dt_inizio_diaria_miss_est;
+
+	// DT_FINE_DIARIA_MISS_EST TIMESTAMP
+	private java.sql.Timestamp dt_fine_diaria_miss_est;
+	
 public AnagraficoBase() {
 	super();
 }
@@ -752,5 +761,28 @@ public java.sql.Timestamp getDataAvvioFattElettr() {
 }
 public void setDataAvvioFattElettr(java.sql.Timestamp dataAvvioFattElettr) {
 	this.dataAvvioFattElettr = dataAvvioFattElettr;
+}
+public java.lang.Boolean isFl_abilita_diaria_miss_est() {
+	if (fl_abilita_diaria_miss_est!=null)
+	   return fl_abilita_diaria_miss_est;
+	return false;
+}
+public void setFl_abilita_diaria_miss_est(java.lang.Boolean fl_abilita_diaria_miss_est) {
+	this.fl_abilita_diaria_miss_est = fl_abilita_diaria_miss_est;
+}
+public java.lang.Boolean getFl_abilita_diaria_miss_est() {
+	return fl_abilita_diaria_miss_est;
+}
+public java.sql.Timestamp getDt_inizio_diaria_miss_est() {
+	return dt_inizio_diaria_miss_est;
+}
+public void setDt_inizio_diaria_miss_est(java.sql.Timestamp dt_inizio_diaria_miss_est) {
+	this.dt_inizio_diaria_miss_est = dt_inizio_diaria_miss_est;
+}
+public java.sql.Timestamp getDt_fine_diaria_miss_est() {
+	return dt_fine_diaria_miss_est;
+}
+public void setDt_fine_diaria_miss_est(java.sql.Timestamp dt_fine_diaria_miss_est) {
+	this.dt_fine_diaria_miss_est = dt_fine_diaria_miss_est;
 }
 }

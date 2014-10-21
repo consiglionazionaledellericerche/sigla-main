@@ -1334,6 +1334,7 @@ public Forward doCambiaDataTappa(ActionContext context)
 		CRUDMissioneBP bp = (CRUDMissioneBP)getBusinessProcess(context);
 		bp.setDiariaSiNo(context);
 		bp.isDiariaEditable(context.getUserContext());
+		bp.isRimborsoEditable(context.getUserContext());
 		return context.findDefaultForward();
 	}		
 	catch(Throwable e) 
@@ -3128,7 +3129,8 @@ public Forward doSetNazioneDivisaCambioItalia(ActionContext context)
 		}
 		
 		bp.setDiariaSiNo(context);
-		bp.isDiariaEditable(context.getUserContext());	
+		bp.isDiariaEditable(context.getUserContext());
+		bp.isRimborsoEditable(context.getUserContext());
 		bp.setNazioneDivisaCambioItalia(context);
 
 		return context.findDefaultForward();
@@ -3309,4 +3311,33 @@ public Forward doVisualizzaCompenso(ActionContext context)
 		return handleException(context,e);
 	}	
 }
+public Forward doOnFlDiariaChange(ActionContext context) 
+{
+	try
+	{
+		CRUDMissioneBP bp = (CRUDMissioneBP)getBusinessProcess(context);			
+		Missione_tappaBulk missione_tappa = (Missione_tappaBulk) bp.getTappaController().getModel();
+		fillModel(context);
+
+		if(missione_tappa.getComune().equals(Missione_tappaBulk.COMUNE_ESTERO))
+		{
+			missione_tappa.setFl_rimborso(new Boolean(false));
+			if (missione_tappa.getFl_no_diaria())
+			{		
+				missione_tappa.setFl_no_diaria(new Boolean(true));		
+			}
+			else
+			{		
+				missione_tappa.setFl_no_diaria(new Boolean(false));		
+			}	
+		}
+		
+		return context.findDefaultForward();
+	} 
+	catch(Throwable e) 
+	{
+		return handleException(context,e);
+	}
+}
+
 }

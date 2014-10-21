@@ -828,7 +828,7 @@ public boolean isRimborsoVisible(UserContext context) throws BusinessProcessExce
 	if (tappa != null && tappa.getFl_comune_estero()!= null) 
 	{
 		//solo se è estera è visibile 
-		if (tappa.getFl_comune_estero().booleanValue())
+		if (tappa.getFl_comune_estero().booleanValue() && tappa.getFl_no_diaria().booleanValue())
 				return true;
 	    return false;	
 	}

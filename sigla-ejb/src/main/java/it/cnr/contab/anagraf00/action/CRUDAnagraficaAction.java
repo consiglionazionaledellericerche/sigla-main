@@ -903,4 +903,61 @@ public Forward doOnDt_fin_validitaChange(ActionContext context)  {
 		return handleException(context, e);
 	}
 }
+public Forward doCambiaFl_abilita_diaria_miss_est(ActionContext context) {
+	try {
+		super.fillModel(context);
+		it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk anagraficoBulk =
+			((it.cnr.contab.anagraf00.bp.CRUDAnagraficaBP)context.getBusinessProcess()).getAnagrafico();
+		if (anagraficoBulk.isFl_abilita_diaria_miss_est())
+		{
+			anagraficoBulk.setFl_abilita_diaria_miss_est(Boolean.TRUE);
+		}    
+		else
+		{	
+			anagraficoBulk.setFl_abilita_diaria_miss_est(Boolean.FALSE);
+			anagraficoBulk.setDt_inizio_diaria_miss_est(null);
+			anagraficoBulk.setDt_fine_diaria_miss_est(null);
+
+		}
+		return context.findDefaultForward();
+	} catch(FillException e) {
+		return handleException(context,e);
+	}
+}
+
+public Forward doCambiaDateDiariaMissEst(ActionContext context) {
+
+	try{	
+		CRUDAnagraficaBP bp = (CRUDAnagraficaBP)getBusinessProcess(context);
+		AnagraficoBulk anagrafico = (AnagraficoBulk)bp.getModel();
+		java.sql.Timestamp oldDtIniDiaria = anagrafico.getDt_inizio_diaria_miss_est();
+		java.sql.Timestamp oldDtFinDiaria = anagrafico.getDt_fine_diaria_miss_est();
+		
+		try {
+			fillModel(context);
+			if (anagrafico.getDt_inizio_diaria_miss_est() != null && 
+					anagrafico.getDt_fine_diaria_miss_est() != null	&&
+					anagrafico.getDt_inizio_diaria_miss_est().after(anagrafico.getDt_fine_diaria_miss_est()))
+			{
+				anagrafico.setDt_inizio_diaria_miss_est(oldDtIniDiaria);
+				anagrafico.setDt_fine_diaria_miss_est(oldDtFinDiaria);
+				throw new MessageToUser("La Data di Inizio autorizzazione non può essere successiva alla data di Fine autorizzazione.", bp.ERROR_MESSAGE);
+			}			
+			if (bp.isSearching())
+				return context.findDefaultForward();
+
+		} catch(it.cnr.jada.bulk.FillException e) {
+			anagrafico.setDt_inizio_diaria_miss_est(oldDtIniDiaria);
+			anagrafico.setDt_fine_diaria_miss_est(oldDtFinDiaria);
+			throw e;
+		}
+	
+		return context.findDefaultForward();
+	
+	} catch(Throwable e) {
+		return handleException(context, e);
+	}
+	
+	}
+
 }
