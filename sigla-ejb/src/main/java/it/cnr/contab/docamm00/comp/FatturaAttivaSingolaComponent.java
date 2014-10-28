@@ -3798,15 +3798,15 @@ public OggettoBulk inizializzaBulkPerModifica(
 
 		//fattura.setModalita_uo(findModalita_uo(aUC,fattura));
 		
-		//ricavo per ogni riga il tariffario...	
-		if (fattura.getTi_causale_emissione().equals(fattura.TARIFFARIO)){
-			Fattura_attiva_rigaBulk riga=null;
-			for (java.util.Iterator i = fattura.getFattura_attiva_dettColl().iterator();i.hasNext();){	
-				riga=(Fattura_attiva_rigaBulk)i.next();
+		Fattura_attiva_rigaBulk riga=null;
+		for (java.util.Iterator i = fattura.getFattura_attiva_dettColl().iterator();i.hasNext();){	
+			riga=(Fattura_attiva_rigaBulk)i.next();
+			//ricavo per ogni riga il tariffario...	
+			if (fattura.getTi_causale_emissione().equals(fattura.TARIFFARIO)){
 				riga.setTariffario(findTariffario(aUC,riga));
-				impostaCollegamentoCapitoloPerTrovato(aUC, riga);
-                riga.setTrovato(ricercaDatiTrovato(aUC, riga.getPg_trovato()));
 			}
+			impostaCollegamentoCapitoloPerTrovato(aUC, riga);
+			riga.setTrovato(ricercaDatiTrovato(aUC, riga.getPg_trovato()));
 		}
 		
 		getHomeCache(aUC).fetchAll(aUC);
