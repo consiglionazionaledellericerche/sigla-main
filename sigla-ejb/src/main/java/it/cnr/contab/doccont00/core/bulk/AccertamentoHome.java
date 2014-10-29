@@ -1,5 +1,6 @@
 package it.cnr.contab.doccont00.core.bulk;
 
+import iaik.asn1.NULL;
 import it.cnr.contab.doccont00.ejb.NumTempDocContComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.*;
 
@@ -711,7 +712,13 @@ public SQLBuilder selectCapitoloByClause(AccertamentoBulk bulk, V_voce_f_partita
     if (bulk instanceof AccertamentoResiduoBulk)
     	sql.addSQLClause( "AND", "fl_solo_competenza", sql.EQUALS, "N");
 	sql.addClause( clause );
+	sql.openParenthesis( "AND");		
+	sql.openParenthesis( "AND");
 	sql.addSQLClause( "AND", "cd_unita_organizzativa", sql.EQUALS, bulk.getCd_uo_origine());
+	sql.addSQLClause( "OR", "cd_unita_organizzativa", sql.ISNULL,null);
+	sql.closeParenthesis();
+	sql.closeParenthesis();
+	
 	sql.addSQLClause( "AND", "esercizio", sql.EQUALS, bulk.getEsercizio());
 	sql.addSQLClause( "AND", "ti_appartenenza", sql.EQUALS, Elemento_voceHome.APPARTENENZA_CNR);
 	sql.addSQLClause( "AND", "ti_gestione", sql.EQUALS, Elemento_voceHome.GESTIONE_ENTRATE);

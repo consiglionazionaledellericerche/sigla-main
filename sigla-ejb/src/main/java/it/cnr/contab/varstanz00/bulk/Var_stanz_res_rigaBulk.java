@@ -231,9 +231,26 @@ public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
 	}
 	public void validate(OggettoBulk oggettoBulk) throws ValidationException {		
 		if (getVar_stanz_res().getTipologia().equalsIgnoreCase(Var_stanz_resBulk.TIPOLOGIA_ECO)){
-			if(getIm_variazione() != null && getIm_variazione().compareTo(Utility.ZERO) > 0)
+			if(getIm_variazione() != null && getIm_variazione().compareTo(Utility.ZERO) > 0) 
 			  throw new ValidationException("L'importo delle righe di variazione deve essere negativo per le Economie.");
 		}
+		if(this.getElemento_voce()!=null && this.getElemento_voce().getFl_azzera_residui()!=null && this.getElemento_voce().getFl_azzera_residui() && this.getIm_variazione().compareTo(BigDecimal.ZERO)>0)
+			throw new ValidationException ("Attenzione non può essere predisposta una variazione positiva sulla voce "+this.getElemento_voce().getCd_elemento_voce());
+		 
+		for (java.util.Iterator i = var_stanz_res.getRigaVariazione().iterator();i.hasNext();) {
+			Var_stanz_res_rigaBulk riga = (Var_stanz_res_rigaBulk)i.next();
+			if (!riga.equals(this) &&
+					this.getEsercizio()!= null && riga.getEsercizio().compareTo(this.getEsercizio())==0 &&
+					this.getEsercizio_res()!= null && riga.getEsercizio_res().compareTo(this.getEsercizio_res())==0 &&
+					this.getLinea_di_attivita()!= null && riga.getLinea_di_attivita()!= null &&
+					this.getCd_cdr()!= null &&  riga.getCd_cdr()!= null &&
+					riga.getCd_cdr().compareTo(this.getCd_cdr())==0 &&
+					this.getCd_linea_attivita()!= null && riga.getCd_linea_attivita()!=null && 
+					riga.getCd_linea_attivita().compareTo(this.getCd_linea_attivita())==0 &&
+					this.getCd_elemento_voce()!= null && riga.getCd_elemento_voce()!=null && 
+					riga.getCd_elemento_voce().compareTo(this.getCd_elemento_voce())==0)
+				throw new ValidationException ("Attenzione: combinazione Esercizio/Esercizio residuo/CdR/G.A.E./Voce già inserita!");
+			}
 		super.validate();
 	}
 

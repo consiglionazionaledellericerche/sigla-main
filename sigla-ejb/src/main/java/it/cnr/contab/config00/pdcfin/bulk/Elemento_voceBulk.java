@@ -197,7 +197,7 @@ public void validate() throws ValidationException
 		throw new ValidationException( "Il campo ESERCIZIO deve essere di quattro cifre. " );
 	if ( getDs_elemento_voce() == null  )
 		throw new ValidationException( "Il campo DESCRIZIONE è obbligatorio." );
-	if ( !isNullOrEmpty( getCd_proprio_elemento() ) )
+	/*if ( !isNullOrEmpty( getCd_proprio_elemento() ) )
 	{
 		long cdLong;
 		try
@@ -210,7 +210,7 @@ public void validate() throws ValidationException
 		}
 		if ( cdLong < 0 )
 			throw new ValidationException( "Il campo CODICE deve essere maggiore di 0. " );			
-	}		
+	}*/		
 		
 }
 

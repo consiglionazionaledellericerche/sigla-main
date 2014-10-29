@@ -39,8 +39,8 @@ public class CRUDVar_stanz_resRigaBP extends SimpleCRUDBP {
 	private CdrBulk centro_di_responsabilita;
 	private SimpleDetailCRUDController rigaVariazione = new SimpleDetailCRUDController( "rigaVariazione", Var_stanz_res_rigaBulk.class, "rigaVariazione", this){
 		protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
-			super.validate(actioncontext,oggettobulk);
 			validaRiga(actioncontext,(Var_stanz_res_rigaBulk)oggettobulk);
+			super.validate(actioncontext,oggettobulk);
 		};
 	};
 	/**
@@ -52,20 +52,12 @@ public class CRUDVar_stanz_resRigaBP extends SimpleCRUDBP {
 
 	protected void validaRiga(ActionContext actioncontext,
 			Var_stanz_res_rigaBulk oggettobulk) throws ValidationException {
-		for (java.util.Iterator i = var_stanz_res.getRigaVariazione().iterator();i.hasNext();) {
-			Var_stanz_res_rigaBulk riga = (Var_stanz_res_rigaBulk)i.next();
-			if (!riga.equals(oggettobulk) &&
-					oggettobulk.getEsercizio()!= null && riga.getEsercizio().compareTo(oggettobulk.getEsercizio())==0 &&
-					oggettobulk.getEsercizio_res()!= null && riga.getEsercizio_res().compareTo(oggettobulk.getEsercizio_res())==0 &&
-					oggettobulk.getLinea_di_attivita()!= null && riga.getLinea_di_attivita()!= null &&
-					oggettobulk.getCd_cdr()!= null &&  riga.getCd_cdr()!= null &&
-					riga.getCd_cdr().compareTo(oggettobulk.getCd_cdr())==0 &&
-					oggettobulk.getCd_linea_attivita()!= null && riga.getCd_linea_attivita()!=null && 
-					riga.getCd_linea_attivita().compareTo(oggettobulk.getCd_linea_attivita())==0 &&
-					oggettobulk.getCd_elemento_voce()!= null && riga.getCd_elemento_voce()!=null && 
-					riga.getCd_elemento_voce().compareTo(oggettobulk.getCd_elemento_voce())==0)
-				throw new ValidationException ("Attenzione: combinazione Esercizio/Esercizio residuo/CdR/G.A.E./Voce già inserita!");
-			}
+		try { 
+			valorizzaVoceLunga(actioncontext,oggettobulk);	
+			valorizzaDisponibilita_stanz_res(actioncontext,oggettobulk);
+		} catch (Exception e) { 
+			throw new ValidationException(e.getMessage());
+		}
 	}
 
 	/**

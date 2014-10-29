@@ -1600,10 +1600,12 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
 		sql.addClause( clause );
 	}
 	if (bulk instanceof ObbligazioneResBulk || bulk instanceof ObbligazioneRes_impropriaBulk||bulk instanceof ImpegnoPGiroResiduoBulk)
-		 sql.addClause("AND", "fl_solo_competenza", SQLBuilder.EQUALS, new Boolean( false) );
+		 sql.addClause("AND", "fl_solo_competenza", SQLBuilder.EQUALS, new Boolean( false) );		 
 	else
 		sql.addClause("AND", "fl_solo_residuo", SQLBuilder.EQUALS, new Boolean( false) );
-	return sql;
+	if (bulk instanceof ObbligazioneRes_impropriaBulk)
+		sql.addClause("AND", "fl_azzera_residui", SQLBuilder.EQUALS, new Boolean( false) );
+	return sql; 
 		
 }
 public String recupero_cdr_speciale_stipendi() throws IntrospectionException, PersistencyException {

@@ -119,6 +119,8 @@
 	<tr>
 	  <td><% bp.getController().writeFormLabel( out, "fl_solo_residuo"); %></td>	
 	  <td><% bp.getController().writeFormInput( out, "fl_solo_residuo"); %></td>
+	  <td><% bp.getController().writeFormLabel( out, "fl_azzera_residui"); %></td>	
+	  <td><% bp.getController().writeFormInput( out, "fl_azzera_residui"); %></td>
 	  <td><% bp.getController().writeFormLabel( out, "fl_solo_competenza"); %></td>	
 	  <td><% bp.getController().writeFormInput( out, "fl_solo_competenza"); %></td>
 	</tr>

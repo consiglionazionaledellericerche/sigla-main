@@ -81,6 +81,7 @@ import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
@@ -1050,8 +1051,19 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			var_stanz_res_riga.setVar_stanz_res(var_stanz_res);			
 			var_stanz_res_riga.setVoce_f(new Voce_fBulk(saldo.getCd_voce(),saldo.getEsercizio(),saldo.getTi_appartenenza(),saldo.getTi_gestione()));
 			var_stanz_res_riga.setLinea_di_attivita(new WorkpackageBulk(saldo.getCd_centro_responsabilita(),saldo.getCd_linea_attivita()));
-			var_stanz_res_riga.setElemento_voce(new Elemento_voceBulk(saldo.getCd_elemento_voce(),saldo.getEsercizio(),saldo.getTi_appartenenza(),saldo.getTi_gestione()));
+			var_stanz_res_riga.setElemento_voce((Elemento_voceBulk)getHome(usercontext, Elemento_voceBulk.class).findByPrimaryKey(new Elemento_voceBulk(saldo.getCd_elemento_voce(),saldo.getEsercizio(),saldo.getTi_appartenenza(),saldo.getTi_gestione())));
 			var_stanz_res_riga.setIm_variazione(saldo.getImp_da_assegnare());
+			Var_stanz_resHome testataHome = (Var_stanz_resHome)getHome(usercontext, Var_stanz_resBulk.class);
+			try {
+				var_stanz_res.setRigaVariazione(new it.cnr.jada.bulk.BulkList(testataHome.findVariazioniRiga(var_stanz_res)));
+			} catch (IntrospectionException e1) {
+				throw new ComponentException(e1);
+			}
+			try {
+				var_stanz_res_riga.validate(var_stanz_res_riga);
+			} catch (ValidationException e) {
+				throw new ApplicationException(e.getMessage()); 
+			}
 			var_stanz_res_riga.setToBeCreated();
 			super.creaConBulk(usercontext,var_stanz_res_riga);
 		} catch (PersistencyException e) {

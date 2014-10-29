@@ -34,7 +34,7 @@
 		label="Codice completo"
 		inputType="ROTEXT"
 		maxLength="30"
-		inputSize="6"
+		inputSize="30"
 		enabledOnSearch="true"
 		/>
 	<fieldProperty
@@ -52,7 +52,7 @@
 		label="Codice proprio"
 		inputType="TEXT"
 		maxLength="30"
-		inputSize="6"
+		inputSize="20"
 		enabledOnSearch="true"
 		/>
 
@@ -335,6 +335,15 @@
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false" />		
 	<fieldProperty
+		name="fl_azzera_residui"
+		property="fl_azzera_residui"
+		label="Azzera residuo"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />			
+	<fieldProperty
 		name="fl_trovato"
 		property="fl_trovato"
 		keysProperty="indicazioneTrovatoKeys"
@@ -420,7 +429,9 @@
 	<columnFieldProperty
 		name="fl_solo_competenza" />		
 	<columnFieldProperty
-		name="fl_solo_residuo"/>			
+		name="fl_solo_residuo"/>
+	<columnFieldProperty
+		name="fl_azzera_residui"/>			
 	<columnFieldProperty
 		name="fl_trovato" />					
 
@@ -554,7 +565,9 @@
 		name="fl_solo_competenza" />		
 	<formFieldProperty
 		name="fl_solo_residuo"/>		
-   <formFieldProperty
+	<formFieldProperty
+		name="fl_azzera_residui"/>		
+	<formFieldProperty
 		name="fl_trovato" />
 
 	<findFieldProperty
@@ -601,6 +614,8 @@
 		name="fl_solo_competenza" />		
 	<findFieldProperty
 		name="fl_solo_residuo"/>		
+	<findFieldProperty
+		name="fl_azzera_residui"/>			
 	<findFieldProperty
 		name="fl_trovato" />
 

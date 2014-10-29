@@ -3126,7 +3126,12 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 			aggiornaCapitoloSaldoObbligazione( aUC, obbligazione, MODIFICA );
 			aggiornaStatoCOAN_COGEDocAmm( aUC, obbligazione );
 		}	
-			
+		// Se utente non è supervisore e la voce va azzerata non è possibile aumentare l'importo dell'impegno residuo
+		if (obbligazione.isObbligazioneResiduo()) 
+			if(verificaVoceResidua(aUC, obbligazione))		
+				if(obbligazione.getIm_iniziale_obbligazione().compareTo(obbligazione.getIm_obbligazione()) <0)
+					throw  new ApplicationException( "Aggiornamento non consentito! L'impegno residuo non può essere aumentato" );
+	     
 		obbligazione.setIm_iniziale_obbligazione( obbligazione.getIm_obbligazione());
 		obbligazione.setCd_iniziale_elemento_voce( obbligazione.getCd_elemento_voce());	
 
@@ -3146,7 +3151,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 							aUC, 
 							((CNRUserContext)aUC).getEsercizio(), 
 							obbligazione.getCd_cds());
-
+   
 		validaCreaModificaOrigineFonti(aUC, obbligazione);
 		return obbligazione;
 	}
@@ -5566,6 +5571,17 @@ private void validaCampi(UserContext uc, ObbligazioneBulk obbligazione) throws C
 		} catch (PersistencyException e) {
 			handleException(e);
 		}	
+		return false;
+	}
+	private Boolean verificaVoceResidua(UserContext usercontext, ObbligazioneBulk obbligazione)throws ComponentException {
+		try{
+		UtenteBulk utente = (UtenteBulk)(getHome(usercontext, UtenteBulk.class).findByPrimaryKey(new UtenteBulk(CNRUserContext.getUser(usercontext))));
+		 // if (!utente.isSupervisore()) 
+			if(obbligazione!=null && obbligazione.getElemento_voce()!=null && obbligazione.getElemento_voce().getFl_azzera_residui())
+					return true;
+		} catch (PersistencyException e) {
+			handleException(e);
+		}
 		return false;
 	}
 }
