@@ -42,6 +42,7 @@ public class Parametri_cdsBase extends Parametri_cdsKey implements Keyed {
 	// IM_SOGLIA_CONSUMO_RESIDUO NUMBER(15,2) NULL
 	private BigDecimal im_soglia_consumo_residuo;
 
+	private String cd_dipartimento;
 	public Parametri_cdsBase() {
 		super();
 	}
@@ -268,5 +269,11 @@ public class Parametri_cdsBase extends Parametri_cdsKey implements Keyed {
 	}
 	public void setFl_kit_firma_digitale(Boolean fl_kit_firma_digitale) {
 		this.fl_kit_firma_digitale = fl_kit_firma_digitale;
+	}
+	public String getCd_dipartimento() {
+		return cd_dipartimento;
+	}
+	public void setCd_dipartimento(String cd_dipartimento) {
+		this.cd_dipartimento = cd_dipartimento;
 	}
 }
