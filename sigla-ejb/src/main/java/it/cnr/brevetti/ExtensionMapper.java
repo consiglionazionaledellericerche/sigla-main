@@ -32,9 +32,29 @@
               
                   if (
                   "http://brevetti.cnr.it".equals(namespaceURI) &&
+                  "findTrovatoValido".equals(typeName)){
+                   
+                            return  it.cnr.brevetti.FindTrovatoValido.Factory.parse(reader);
+                        
+
+                  }
+
+              
+                  if (
+                  "http://brevetti.cnr.it".equals(namespaceURI) &&
                   "findTrovato".equals(typeName)){
                    
                             return  it.cnr.brevetti.FindTrovato.Factory.parse(reader);
+                        
+
+                  }
+
+              
+                  if (
+                  "http://brevetti.cnr.it".equals(namespaceURI) &&
+                  "findTrovatoValidoResponse".equals(typeName)){
+                   
+                            return  it.cnr.brevetti.FindTrovatoValidoResponse.Factory.parse(reader);
                         
 
                   }

@@ -19,15 +19,15 @@
         /**
           * Auto generated method signature
           * 
-                    * @param findTrovato0
+                    * @param findTrovatoValido0
                 
              * @throws it.cnr.brevetti.ExceptionException : 
          */
 
          
-                     public it.cnr.brevetti.FindTrovatoResponseE findTrovato(
+                     public it.cnr.brevetti.FindTrovatoValidoResponseE findTrovatoValido(
 
-                        it.cnr.brevetti.FindTrovatoE findTrovato0)
+                        it.cnr.brevetti.FindTrovatoValidoE findTrovatoValido0)
                         throws java.rmi.RemoteException
              
           ,it.cnr.brevetti.ExceptionException;
@@ -36,12 +36,45 @@
          /**
             * Auto generated method signature for Asynchronous Invocations
             * 
-                * @param findTrovato0
+                * @param findTrovatoValido0
+            
+          */
+        public void startfindTrovatoValido(
+
+            it.cnr.brevetti.FindTrovatoValidoE findTrovatoValido0,
+
+            final it.cnr.brevetti.TrovatiWebServiceBeanServiceCallbackHandler callback)
+
+            throws java.rmi.RemoteException;
+
+     
+
+        /**
+          * Auto generated method signature
+          * 
+                    * @param findTrovato2
+                
+             * @throws it.cnr.brevetti.ExceptionException : 
+         */
+
+         
+                     public it.cnr.brevetti.FindTrovatoResponseE findTrovato(
+
+                        it.cnr.brevetti.FindTrovatoE findTrovato2)
+                        throws java.rmi.RemoteException
+             
+          ,it.cnr.brevetti.ExceptionException;
+
+        
+         /**
+            * Auto generated method signature for Asynchronous Invocations
+            * 
+                * @param findTrovato2
             
           */
         public void startfindTrovato(
 
-            it.cnr.brevetti.FindTrovatoE findTrovato0,
+            it.cnr.brevetti.FindTrovatoE findTrovato2,
 
             final it.cnr.brevetti.TrovatiWebServiceBeanServiceCallbackHandler callback)
 

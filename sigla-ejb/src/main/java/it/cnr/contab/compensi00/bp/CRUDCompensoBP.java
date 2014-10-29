@@ -1577,16 +1577,19 @@ public boolean isSospensioneIrpefOkPerContabil(UserContext userContext, Compenso
 
 public void ricercaDatiTrovato(ActionContext context)  throws Exception {
 	FatturaPassivaComponentSession h;
+	CompensoBulk riga = (CompensoBulk)getModel();
 	try {
 		h = (FatturaPassivaComponentSession)createComponentSession("CNRDOCAMM00_EJB_FatturaPassivaComponentSession", FatturaPassivaComponentSession.class) ;
-		CompensoBulk riga = (CompensoBulk)getModel();
-		TrovatoBulk trovato = h.ricercaDatiTrovato(context.getUserContext(), riga.getPg_trovato());
+		TrovatoBulk trovato = h.ricercaDatiTrovatoValido(context.getUserContext(), riga.getPg_trovato());
 		riga.setTrovato(trovato);
 	} catch (java.rmi.RemoteException e) {
+		riga.setTrovato(new TrovatoBulk());
 		handleException(e);
 	} catch (BusinessProcessException e) {
+		riga.setTrovato(new TrovatoBulk());
 		handleException(e);
 	} catch (Exception e) {
+		riga.setTrovato(new TrovatoBulk());
 		throw e;
 	}
 }

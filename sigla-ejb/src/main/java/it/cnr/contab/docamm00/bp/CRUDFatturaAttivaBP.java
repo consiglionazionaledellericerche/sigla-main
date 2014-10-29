@@ -1,15 +1,12 @@
 package it.cnr.contab.docamm00.bp;
 
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
-import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
-import it.cnr.contab.docamm00.client.RicercaTrovato;
 import it.cnr.contab.docamm00.docs.bulk.Consuntivo_rigaVBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Voidable;
@@ -22,10 +19,7 @@ import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
-import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
-import it.cnr.contab.doccont00.service.ContabiliService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.UserContext;
@@ -42,7 +36,6 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
-import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.Iterator;
 
@@ -1048,16 +1041,19 @@ public boolean isROBank(UserContext context, Fattura_attivaBulk fattura) throws 
 
 	public void ricercaDatiTrovato(ActionContext context)  throws Exception {
 		FatturaPassivaComponentSession h;
+		Fattura_attiva_rigaBulk riga = (Fattura_attiva_rigaBulk)getDettaglio().getModel();
 		try {
 			h = (FatturaPassivaComponentSession)createComponentSession("CNRDOCAMM00_EJB_FatturaPassivaComponentSession", FatturaPassivaComponentSession.class) ;
-			Fattura_attiva_rigaBulk riga = (Fattura_attiva_rigaBulk)getDettaglio().getModel();
-			TrovatoBulk trovato = h.ricercaDatiTrovato(context.getUserContext(), riga.getPg_trovato());
+			TrovatoBulk trovato = h.ricercaDatiTrovatoValido(context.getUserContext(), riga.getPg_trovato());
 			riga.setTrovato(trovato);
 		} catch (java.rmi.RemoteException e) {
+			riga.setTrovato(new TrovatoBulk());
 			handleException(e);
 		} catch (BusinessProcessException e) {
+			riga.setTrovato(new TrovatoBulk());
 			handleException(e);
 		} catch (Exception e) {
+			riga.setTrovato(new TrovatoBulk());
 			throw e;
 		}
 	}

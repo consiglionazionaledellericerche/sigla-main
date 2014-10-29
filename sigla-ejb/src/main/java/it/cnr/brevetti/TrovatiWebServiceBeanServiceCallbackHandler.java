@@ -45,6 +45,22 @@
 
         
            /**
+            * auto generated Axis2 call back method for findTrovatoValido method
+            * override this method for handling normal response from findTrovatoValido operation
+            */
+           public void receiveResultfindTrovatoValido(
+                    it.cnr.brevetti.FindTrovatoValidoResponseE result
+                        ) {
+           }
+
+          /**
+           * auto generated Axis2 Error handler
+           * override this method for handling error response from findTrovatoValido operation
+           */
+            public void receiveErrorfindTrovatoValido(java.lang.Exception e) {
+            }
+                
+           /**
             * auto generated Axis2 call back method for findTrovato method
             * override this method for handling normal response from findTrovato operation
             */

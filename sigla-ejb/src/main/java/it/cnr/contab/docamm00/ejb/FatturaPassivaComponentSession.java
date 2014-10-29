@@ -71,5 +71,6 @@ it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk ricercaFatturaTrovato(it.cn
 it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk ricercaFatturaByKey(it.cnr.jada.UserContext userContext,Long esercizio,String cd_cds,String cd_unita_organizzativa,Long pg_fattura)throws ComponentException,java.rmi.RemoteException,PersistencyException;
 java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk> ricercaFattureTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException;
 TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException;
+TrovatoBulk ricercaDatiTrovatoValido(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException;
 void inserisciProgUnivoco(it.cnr.jada.UserContext userContext,it.cnr.contab.docamm00.docs.bulk.ElaboraNumUnicoFatturaPBulk lancio)throws ComponentException,java.rmi.RemoteException,PersistencyException;
 }

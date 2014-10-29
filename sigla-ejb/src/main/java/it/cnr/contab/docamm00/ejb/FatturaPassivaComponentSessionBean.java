@@ -1079,6 +1079,25 @@ public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long t
 	}
 }
 
+public TrovatoBulk ricercaDatiTrovatoValido(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
+	pre_component_invocation(userContext,componentObj);
+	try {
+		TrovatoBulk trovatoBulk =((FatturaPassivaComponent)componentObj).ricercaDatiTrovatoValido(userContext,trovato);
+		component_invocation_succes(userContext,componentObj);
+		return trovatoBulk;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(userContext,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(userContext,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(userContext,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(userContext,componentObj,e);
+	}
+}
+
 public java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk> ricercaFattureTrovato(it.cnr.jada.UserContext param0,Long param1) throws it.cnr.jada.comp.ComponentException,RemoteException, it.cnr.jada.persistency.PersistencyException {
 	pre_component_invocation(param0,componentObj);
 	try {

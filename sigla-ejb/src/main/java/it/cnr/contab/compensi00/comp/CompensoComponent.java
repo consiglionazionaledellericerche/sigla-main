@@ -137,8 +137,6 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import javax.ejb.EJBException;
-
 /**
  * Insert the type's description here. Creation date: (21/02/2002 16.13.52)
  * 

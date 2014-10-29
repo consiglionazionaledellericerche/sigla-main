@@ -3,18 +3,18 @@ package it.cnr.contab.docamm00.client;
 import it.cnr.brevetti.FindTrovato;
 import it.cnr.brevetti.FindTrovatoE;
 import it.cnr.brevetti.FindTrovatoResponseE;
+import it.cnr.brevetti.FindTrovatoValido;
+import it.cnr.brevetti.FindTrovatoValidoE;
+import it.cnr.brevetti.FindTrovatoValidoResponseE;
 import it.cnr.brevetti.TrovatiWebServiceBeanServiceStub;
 import it.cnr.brevetti.TrovatoBean;
 import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.comp.ApplicationException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.util.Properties;
 
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ConfigurationContextFactory;
@@ -52,38 +52,63 @@ public class RicercaTrovato {
 		return ConfigurationContextFactory.createConfigurationContextFromFileSystem(getAxis2Home(), getAxis2TrovatoConf());
 	}
 
-	public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato) throws Exception {
+	public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato, Boolean soloValidi) throws Exception {
 		TrovatoBulk trovatoBulk = new TrovatoBulk();
 		ConfigurationContext ctx = axis2ConfContext();
 		if (trovato == null){
 			throw new ApplicationException("Identificativo del trovato non indicato.");
 		} else {
-			trovatoBulk = cerca(ctx, trovato);
+			trovatoBulk = cerca(ctx, trovato, soloValidi);
 		}
 		return trovatoBulk; 
 	}
 
-	private TrovatoBulk cerca(ConfigurationContext ctx, Long pgTrovato) throws Exception {
+	public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato) throws Exception {
+		return ricercaDatiTrovato(userContext, trovato, false); 
+	}
+
+	private TrovatoBulk cerca(ConfigurationContext ctx, Long pgTrovato, Boolean soloValidi) throws Exception {
         TrovatiWebServiceBeanServiceStub stub = new TrovatiWebServiceBeanServiceStub(ctx,getTargetEndpoint()+"/brevetti/ws/TrovatiWebServiceBean");
 
         TrovatoBulk trovatoBulk = new TrovatoBulk();
-        FindTrovatoE trovatoE = new FindTrovatoE();
-        FindTrovato trovato = new FindTrovato();
-        trovato.setNsrif(pgTrovato.intValue());
-        trovatoE.setFindTrovato(trovato);
         
-		FindTrovatoResponseE respE = stub.findTrovato(trovatoE);
+        if (soloValidi){
+            FindTrovatoValidoE trovatoE = new FindTrovatoValidoE();
+            FindTrovatoValido trovato = new FindTrovatoValido();
+            trovato.setNsrif(pgTrovato.intValue());
+            trovatoE.setFindTrovatoValido(trovato);
+            
+    		FindTrovatoValidoResponseE respE = stub.findTrovatoValido(trovatoE);
 
-		BulkList<TrovatoBulk> listaTrovati = new BulkList<TrovatoBulk>();
-		if (respE.getFindTrovatoResponse().getResult()!=null) {
-			TrovatoBean trovatoBean = respE.getFindTrovatoResponse().getResult();
-			trovatoBulk.setPg_trovato(new Long(trovatoBean.getNsrif()));
-			trovatoBulk.setInventore(trovatoBean.getInventore());
-			trovatoBulk.setTitolo(trovatoBean.getTitolo());
-		} else {
-			throw new ApplicationException("Identificativo del trovato indicato non esiste.");
-		}
+    		if (respE.getFindTrovatoValidoResponse().getResult()!=null) {
+    			TrovatoBean trovatoBean = respE.getFindTrovatoValidoResponse().getResult();
+    			valorizzaTrovato(trovatoBulk, trovatoBean);
+    		} else {
+    			throw new ApplicationException("Identificativo del trovato indicato non esiste.");
+    		}
+        } else {
+            FindTrovatoE trovatoE = new FindTrovatoE();
+            FindTrovato trovato = new FindTrovato();
+            trovato.setNsrif(pgTrovato.intValue());
+            trovatoE.setFindTrovato(trovato);
+            
+    		FindTrovatoResponseE respE = stub.findTrovato(trovatoE);
+
+    		if (respE.getFindTrovatoResponse().getResult()!=null) {
+    			TrovatoBean trovatoBean = respE.getFindTrovatoResponse().getResult();
+    			valorizzaTrovato(trovatoBulk, trovatoBean);
+    		} else {
+    			throw new ApplicationException("Identificativo del trovato indicato non esiste.");
+    		}
+        }
 	    return trovatoBulk;
+	}
+
+	private void valorizzaTrovato(TrovatoBulk trovatoBulk,
+			TrovatoBean trovatoBean) {
+		trovatoBulk.setPg_trovato(new Long(trovatoBean.getNsrif()));
+		trovatoBulk.setInventore(trovatoBean.getInventore());
+		trovatoBulk.setTitolo(trovatoBean.getTitolo());
 	}
 
 	public synchronized void loadProperties() throws FileNotFoundException, IOException {

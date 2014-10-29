@@ -6814,6 +6814,26 @@ public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long t
 	return new TrovatoBulk();
 }
 
+
+public TrovatoBulk ricercaDatiTrovatoValido(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
+	if (trovato != null){
+		RicercaTrovato ricercaTrovato;
+		try {
+			ricercaTrovato = new RicercaTrovato();
+			return ricercaTrovato.ricercaDatiTrovato(userContext, trovato, true);
+		} catch (FileNotFoundException e) {
+			throw new ApplicationException("File in configurazione non trovato "+e.getMessage());
+		} catch (IOException e) {
+			throw new ApplicationException("Eccezione di IO "+ e.getMessage());
+		} catch (ComponentException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new ApplicationException("Eccezione generica "+e.getMessage());
+		}
+	}
+	return new TrovatoBulk();
+}
+
 private boolean isObbligatoriaIndicazioneTrovato(Elemento_voceBulk voce) throws ComponentException {
 	if (voce == null)
 		return false;

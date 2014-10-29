@@ -1071,6 +1071,21 @@ public TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long t
 		}
 	}
 }
+public TrovatoBulk ricercaDatiTrovatoValido(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException {
+	try {
+		return (TrovatoBulk)invoke("ricercaDatiTrovatoValido",new Object[] {userContext,trovato});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
 public void inserisciProgUnivoco(UserContext userContext,
 		ElaboraNumUnicoFatturaPBulk lancio) throws ComponentException,
 		RemoteException, PersistencyException {

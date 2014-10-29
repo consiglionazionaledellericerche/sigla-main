@@ -1082,16 +1082,19 @@ public boolean isDetailDoubleable() {
 
 	public void ricercaDatiTrovato(ActionContext context)  throws Exception {
 		FatturaPassivaComponentSession h;
+		Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk)getDettaglio().getModel();
 		try {
 			h = (FatturaPassivaComponentSession)createComponentSession();
-			Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk)getDettaglio().getModel();
-			TrovatoBulk trovato = h.ricercaDatiTrovato(context.getUserContext(), riga.getPg_trovato());
+			TrovatoBulk trovato = h.ricercaDatiTrovatoValido(context.getUserContext(), riga.getPg_trovato());
 			riga.setTrovato(trovato);
 		} catch (java.rmi.RemoteException e) {
+			riga.setTrovato(new TrovatoBulk());
 			handleException(e);
 		} catch (BusinessProcessException e) {
+			riga.setTrovato(new TrovatoBulk());
 			handleException(e);
 		} catch (Exception e) {
+			riga.setTrovato(new TrovatoBulk());
 			throw e;
 		}
 	}
