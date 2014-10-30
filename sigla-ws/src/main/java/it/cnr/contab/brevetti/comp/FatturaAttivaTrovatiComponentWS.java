@@ -134,54 +134,56 @@ private void caricaFattura(UserContext userContext, java.util.ArrayList listaRit
 		listaRitorno.add(ritorno);
 
 	} else {
-		BulkList<Fattura_attiva_rigaIBulk> dett = fattura.getFattura_attiva_dettColl();
+		BulkList<Fattura_attiva_rigaBulk> dett = fattura.getFattura_attiva_dettColl();
 		
-		for (Iterator<Fattura_attiva_rigaIBulk> j = dett.iterator(); j.hasNext(); ) {
-			Fattura_attiva_rigaIBulk det = (Fattura_attiva_rigaIBulk) j.next();
-			FatturaAttiva ritorno=new FatturaAttiva();
+		for (Iterator<Fattura_attiva_rigaBulk> j = dett.iterator(); j.hasNext(); ) {
+			Fattura_attiva_rigaBulk det = (Fattura_attiva_rigaBulk) j.next();
+//			if (det.getPg_trovato() != null){
+				FatturaAttiva ritorno=new FatturaAttiva();
+				ritorno.setCd_cds(fattura.getCd_cds());
+				ritorno.setCd_unita_organizzativa(fattura.getCd_unita_organizzativa());
+				ritorno.setEsercizio(fattura.getEsercizio());
+				ritorno.setPg_fattura_attiva(fattura.getPg_fattura_attiva());
+				ritorno.setDs_fattura_attiva(fattura.getDs_fattura_attiva());
+				ritorno.setCd_cds_origine(fattura.getCd_cds_origine());
+				ritorno.setCd_uo_origine(fattura.getCd_uo_origine());
+				ritorno.setTi_fattura(fattura.getTi_fattura());
+				ritorno.setDs_fattura_attiva(fattura.getDs_fattura_attiva());
+				ritorno.setDt_registrazione(fattura.getDt_registrazione());
+				ritorno.setCd_terzo(fattura.getCd_terzo());
+				ritorno.setCognome(fattura.getCognome());
+				ritorno.setNome(fattura.getNome());
+				ritorno.setRagione_sociale(fattura.getRagione_sociale());
+				ritorno.setCambio(fattura.getCambio());
+				ritorno.setCd_divisa(fattura.getCd_divisa());
+				
+				ritorno.setProgressivo_riga(det.getProgressivo_riga());
+				ritorno.setCd_voce_iva(det.getCd_voce_iva());
+				ritorno.setDs_voce_iva(det.getVoce_iva().getDs_voce_iva());
+				ritorno.setDs_riga_fattura(det.getDs_riga_fattura());
+				impostaImportiRiga(det, ritorno);
+				ritorno.setPg_trovato(det.getPg_trovato());
 
-			ritorno.setCd_cds(fattura.getCd_cds());
-			ritorno.setCd_unita_organizzativa(fattura.getCd_unita_organizzativa());
-			ritorno.setEsercizio(fattura.getEsercizio());
-			ritorno.setPg_fattura_attiva(fattura.getPg_fattura_attiva());
-			ritorno.setDs_fattura_attiva(fattura.getDs_fattura_attiva());
-			ritorno.setCd_cds_origine(fattura.getCd_cds_origine());
-			ritorno.setCd_uo_origine(fattura.getCd_uo_origine());
-			ritorno.setTi_fattura(fattura.getTi_fattura());
-			ritorno.setDs_fattura_attiva(fattura.getDs_fattura_attiva());
-			ritorno.setDt_registrazione(fattura.getDt_registrazione());
-			ritorno.setCd_terzo(fattura.getCd_terzo());
-			ritorno.setCognome(fattura.getCognome());
-			ritorno.setNome(fattura.getNome());
-			ritorno.setRagione_sociale(fattura.getRagione_sociale());
-			ritorno.setCambio(fattura.getCambio());
-			ritorno.setCd_divisa(fattura.getCd_divisa());
-			
-			ritorno.setProgressivo_riga(det.getProgressivo_riga());
-			ritorno.setCd_voce_iva(det.getCd_voce_iva());
-			ritorno.setDs_voce_iva(det.getVoce_iva().getDs_voce_iva());
-			ritorno.setDs_riga_fattura(det.getDs_riga_fattura());
-			impostaImportiRiga(det, ritorno);
-			ritorno.setPg_trovato(det.getPg_trovato());
-
-			if (det.getAccertamento_scadenzario() != null && det.getAccertamento_scadenzario().getAccertamento() != null){
-				AccertamentoBulk acc = det.getAccertamento_scadenzario().getAccertamento();
-				ritorno.setPg_accertamento(acc.getPg_accertamento());
-				ritorno.setEsercizio_accertamento(acc.getEsercizio());
-				ritorno.setDt_emissione_accertamento(acc.getDt_registrazione());
-			}
-
-			List revs = det.getReversaliRighe();
-			Reversale_rigaIBulk revr=null;
-			if (revs!=null && !revs.isEmpty()) {
-				revr=(Reversale_rigaIBulk) revs.get(0);
-				ritorno.setEsercizio_reversale(revr.getEsercizio());
-				ritorno.setPg_reversale(revr.getPg_reversale());
-				ritorno.setDt_emissione_reversale(revr.getReversale().getDt_emissione());
-			}
-			listaRitorno.add(ritorno);
+				if (det.getAccertamento_scadenzario() != null && det.getAccertamento_scadenzario().getAccertamento() != null){
+					AccertamentoBulk acc = det.getAccertamento_scadenzario().getAccertamento();
+					ritorno.setPg_accertamento(acc.getPg_accertamento());
+					ritorno.setEsercizio_accertamento(acc.getEsercizio());
+					ritorno.setDt_emissione_accertamento(acc.getDt_registrazione());
+				}
+				if (det instanceof Fattura_attiva_rigaIBulk){
+					Fattura_attiva_rigaIBulk fatturaAttivaRiga = (Fattura_attiva_rigaIBulk)det; 
+					List revs = fatturaAttivaRiga.getReversaliRighe();
+					Reversale_rigaIBulk revr=null;
+					if (revs!=null && !revs.isEmpty()) {
+						revr=(Reversale_rigaIBulk) revs.get(0);
+						ritorno.setEsercizio_reversale(revr.getEsercizio());
+						ritorno.setPg_reversale(revr.getPg_reversale());
+						ritorno.setDt_emissione_reversale(revr.getReversale().getDt_emissione());
+					}
+				} 
+				listaRitorno.add(ritorno);
+//			}
 		}
-		
 	}
 }
 
