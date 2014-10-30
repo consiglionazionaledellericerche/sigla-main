@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fattura_attiva_provvisoria" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="0"/>
 	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
 	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="TNRC8" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
@@ -28,10 +28,10 @@
 		<defaultValueExpression><![CDATA[2014]]></defaultValueExpression>
 	</parameter>
 	<parameter name="pg_fattura" class="java.lang.Long" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Long(3699)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Long(19897)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="cd_uo_origine" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["075.000"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["046.000"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select distinct ter.denominazione_sede as ds_cd_terzo, ter2.denominazione_sede as ds_cd_uo_origine, uo.*, fa.*, frg.*,
@@ -55,9 +55,9 @@ and ac.cd_cds = frg.cd_cds_accertamento
 and ac.esercizio = frg.esercizio_accertamento
 and AC.PG_ACCERTAMENTO = FRG.PG_ACCERTAMENTO
 and AC.ESERCIZIO_ORIGINALE = FRG.ESERCIZIO_ORI_ACCERTAMENTO
-and AC.ESERCIZIO_CONTRATTO= CO.ESERCIZIO
-and AC.PG_CONTRATTO = CO.PG_CONTRATTO
-and CO.stato = 'D']]>
+and AC.ESERCIZIO_CONTRATTO = CO.ESERCIZIO(+)
+and AC.PG_CONTRATTO = CO.PG_CONTRATTO(+)
+and AC.STATO_CONTRATTO = CO.STATO(+)]]>
 	</queryString>
 	<field name="DS_CD_TERZO" class="java.lang.String"/>
 	<field name="DS_CD_UO_ORIGINE" class="java.lang.String"/>
@@ -198,16 +198,16 @@ and CO.stato = 'D']]>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_TERZO} + " - " +$F{DS_CD_TERZO}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement x="1" y="58" width="554" height="1"/>
+					<reportElement x="1" y="59" width="554" height="1"/>
 				</line>
 				<line>
 					<reportElement x="1" y="0" width="554" height="1"/>
 				</line>
 				<line>
-					<reportElement x="555" y="1" width="1" height="57"/>
+					<reportElement x="555" y="1" width="1" height="58"/>
 				</line>
 				<line>
-					<reportElement x="0" y="1" width="1" height="57"/>
+					<reportElement x="0" y="1" width="1" height="58"/>
 				</line>
 				<staticText>
 					<reportElement style="TNRG10" x="3" y="88" width="83" height="14"/>
@@ -406,99 +406,109 @@ and CO.stato = 'D']]>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="116" splitType="Stretch">
+		<band height="52" splitType="Stretch">
 			<staticText>
 				<reportElement style="TNRG10" x="3" y="7" width="75" height="38"/>
 				<textElement/>
 				<text><![CDATA[Descrizione della prestazione:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TNR10" x="86" y="7" width="468" height="38" isRemoveLineWhenBlank="true"/>
+				<reportElement style="TNR10" x="86" y="7" width="468" height="38" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{DS_FATTURA_ATTIVA}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement style="TNRG10" x="3" y="47" width="44" height="14"/>
-				<textElement/>
-				<text><![CDATA[IVA:]]></text>
-			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TNR10" x="69" y="47" width="485" height="14" isRemoveLineWhenBlank="true"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_VOCE_IVA} + " - " +$F{DS_VOCE_IVA}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="1" y="3" width="554" height="1"/>
 			</line>
 			<line>
-				<reportElement x="1" y="113" width="554" height="1"/>
+				<reportElement stretchType="RelativeToBandHeight" x="555" y="4" width="1" height="48"/>
 			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="4" width="1" height="48"/>
+			</line>
+		</band>
+		<band height="65">
 			<staticText>
-				<reportElement style="TNRG10" x="3" y="63" width="44" height="14"/>
+				<reportElement style="TNRG10" x="3" y="3" width="44" height="14"/>
+				<textElement/>
+				<text><![CDATA[IVA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TNRG10" x="3" y="19" width="44" height="14"/>
 				<textElement/>
 				<text><![CDATA[Quantità:]]></text>
 			</staticText>
+			<staticText>
+				<reportElement style="TNRG10" x="3" y="35" width="75" height="14"/>
+				<textElement/>
+				<text><![CDATA[Prezzo unitario:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TNRG10" x="3" y="51" width="75" height="14"/>
+				<textElement/>
+				<text><![CDATA[Importo]]></text>
+			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TNR10" x="70" y="63" width="124" height="14" isRemoveLineWhenBlank="true"/>
+				<reportElement style="TNR10" x="69" y="1" width="485" height="14" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_VOCE_IVA} + " - " +$F{DS_VOCE_IVA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="TNR10" x="70" y="17" width="124" height="14" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{QUANTITA}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-				<reportElement style="TNR10" x="78" y="79" width="116" height="14" isRemoveLineWhenBlank="true"/>
+				<reportElement style="TNR10" x="78" y="33" width="116" height="14" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{PREZZO_UNITARIO}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement style="TNRG10" x="3" y="79" width="75" height="14"/>
-				<textElement/>
-				<text><![CDATA[Prezzo unitario:]]></text>
-			</staticText>
 			<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-				<reportElement style="TNR10" x="78" y="95" width="116" height="14" isRemoveLineWhenBlank="true"/>
+				<reportElement style="TNR10" x="78" y="49" width="116" height="14" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_IMPONIBILE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="TNRG10" x="3" y="95" width="75" height="14"/>
-				<textElement/>
-				<text><![CDATA[Importo]]></text>
-			</staticText>
-			<line>
-				<reportElement x="555" y="4" width="1" height="109"/>
-			</line>
-			<line>
-				<reportElement x="0" y="4" width="1" height="109"/>
-			</line>
-			<staticText>
-				<reportElement style="TNRG10" x="266" y="63" width="104" height="14"/>
+				<reportElement style="TNRG10" x="266" y="17" width="104" height="14"/>
 				<textElement/>
 				<text><![CDATA[Riferimento Contratto:]]></text>
 			</staticText>
-			<textField>
-				<reportElement style="TNR10" x="378" y="63" width="157" height="14"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="TNR10" x="378" y="17" width="157" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[new Boolean($F{ESERCIZIO_CONTRATTO}!=null)]]></printWhenExpression>
+				</reportElement>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{ESERCIZIO_CONTRATTO}+ "/" +$F{PG_CONTRATTO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="TNRG10" x="266" y="79" width="104" height="14"/>
+				<reportElement style="TNRG10" x="266" y="33" width="104" height="14"/>
 				<textElement/>
 				<text><![CDATA[CIG:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="TNRG10" x="266" y="95" width="104" height="14"/>
+				<reportElement style="TNRG10" x="266" y="49" width="104" height="14"/>
 				<textElement/>
 				<text><![CDATA[CUP:]]></text>
 			</staticText>
-			<textField>
-				<reportElement style="TNR10" x="378" y="79" width="157" height="14"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="TNR10" x="378" y="33" width="157" height="14" isRemoveLineWhenBlank="true"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_CIG_FATTURA_ATTIVA}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement style="TNR10" x="378" y="95" width="157" height="14"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="TNR10" x="378" y="49" width="157" height="14" isRemoveLineWhenBlank="true"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_CUP}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="1" y="64" width="554" height="1"/>
+			</line>
+			<line>
+				<reportElement x="555" y="0" width="1" height="64"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="64"/>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>
