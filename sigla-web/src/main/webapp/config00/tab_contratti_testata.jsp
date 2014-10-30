@@ -194,7 +194,7 @@
         <td><% bp.getController().writeFormLabel(out,"dt_fine_validita");%></td>
         <td><% bp.getController().writeFormInput(out,"default","dt_fine_validita", bp.isPublishHidden(),"FormInput",null);%></td>        
         <td><% bp.getController().writeFormLabel(out,"dt_proroga");%></td>
-        <td><% bp.getController().writeFormInput(out,"default","dt_proroga", bp.isPublishHidden(),"FormInput",null);%></td>	          
+        <td><% bp.getController().writeFormInput(out,null,"dt_proroga",false,null,"");%></td>        	          
       </tr>
 	  <tr>         
          <td><% bp.getController().writeFormLabel(out,"contratto_padre");%></td>
