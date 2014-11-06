@@ -558,7 +558,7 @@ public OggettoBulk initializeModelForSearch(ActionContext actioncontext, Oggetto
 	return super.initializeModelForSearch(actioncontext, oggettobulk);
 }
 
-public void SelezionaF24(ActionContext context) {
+public void SelezionaF24(ActionContext context,boolean negativi) {
 	try {
 		List gruppi=getGruppi().getDetails();
 		Gruppo_crBulk gruppo_cr=null;
@@ -571,10 +571,15 @@ public void SelezionaF24(ActionContext context) {
 				it.cnr.jada.persistency.sql.HomeCache homeCache = new it.cnr.jada.persistency.sql.HomeCache(conn);
 				gruppo_cr = new Gruppo_crBulk();
 				gruppo_cr.setEsercizio(liquid.getEsercizio());
-				gruppo_cr.setCd_gruppo_cr(liquid.getCd_gruppo_cr());
+				gruppo_cr.setCd_gruppo_cr(liquid.getCd_gruppo_cr());  
 				gruppo_cr = (Gruppo_crBulk)homeCache.getHome(Gruppo_crBulk.class).findByPrimaryKey(gruppo_cr);
-				if (gruppo_cr.getFl_f24online().booleanValue())
-					getGruppi().getSelection().setSelected(i);
+				if (gruppo_cr.getFl_f24online().booleanValue()){
+					if (negativi)
+						getGruppi().getSelection().setSelected(i);
+					else
+						if(liquid.getIm_liquidato().compareTo(BigDecimal.ZERO)>=0)
+							getGruppi().getSelection().setSelected(i);
+				}
 			}
 			 finally {
    				   if (conn!=null)
@@ -874,7 +879,7 @@ public void EstrazioneTot(ActionContext context) throws ComponentException, Remo
 		throw new ApplicationException("Errore nella scrittura del file!");		
 	}		 
 }
-public void SelezionaF24Prev(ActionContext context) {
+public void SelezionaF24Prev(ActionContext context,boolean negativi) {
 	try {
 		List gruppi=getGruppi().getDetails();
 		Gruppo_crBulk gruppo_cr=null;
@@ -890,8 +895,12 @@ public void SelezionaF24Prev(ActionContext context) {
 				gruppo_cr.setCd_gruppo_cr(liquid.getCd_gruppo_cr());
 				gruppo_cr = (Gruppo_crBulk)homeCache.getHome(Gruppo_crBulk.class).findByPrimaryKey(gruppo_cr);
 				if (gruppo_cr.getFl_f24online_previd().booleanValue())
-					getGruppi().getSelection().setSelected(i);
-			}
+					if (negativi)
+						getGruppi().getSelection().setSelected(i);
+					else
+						if(liquid.getIm_liquidato().compareTo(BigDecimal.ZERO)>=0)
+							getGruppi().getSelection().setSelected(i);
+			  }
 			 finally {
    				   if (conn!=null)
    					  try{conn.close();}catch( java.sql.SQLException e ){};

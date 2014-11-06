@@ -231,31 +231,50 @@ public Forward doConfermaF24(ActionContext context,int option) {
 }		
 
 public Forward doSelezionaF24(ActionContext context) {
-
 	try {
 	fillModel(context);
-
-	CRUDLiquidazioneCORIBP bp = (CRUDLiquidazioneCORIBP)context.getBusinessProcess();
-
-	bp.SelezionaF24(context);
-	    return context.findDefaultForward();
-	} catch (FillException e) {
-	return handleException(context, e);
-}
-	}	
-public Forward doSelezionaF24Prev(ActionContext context) {
-
-	try {
+	return openConfirm(context,"Si vuole selezionare anche i gruppi negativi?",OptionBP.CONFIRM_YES_NO,"doConfirmSelezionaF24");
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}	
+public Forward doConfirmSelezionaF24(ActionContext context,int option) {
+	try
+	{
 		fillModel(context);
-	
 		CRUDLiquidazioneCORIBP bp = (CRUDLiquidazioneCORIBP)context.getBusinessProcess();
-	
-		bp.SelezionaF24Prev(context);
-	    return context.findDefaultForward();
-	} catch (FillException e) {
-	return handleException(context, e);
+		if (option == OptionBP.YES_BUTTON) 
+			bp.SelezionaF24(context,true);
+		else
+			bp.SelezionaF24(context,false);
+	return context.findDefaultForward();
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
 }
-	}	
+	
+public Forward doSelezionaF24Prev(ActionContext context) {
+try {
+		fillModel(context);
+		return openConfirm(context,"Si vuole selezionare anche i gruppi negativi?",OptionBP.CONFIRM_YES_NO,"doConfirmSelezionaF24Prev");
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}	
+public Forward doConfirmSelezionaF24Prev(ActionContext context,int option) {
+try
+	{
+		fillModel(context);
+		CRUDLiquidazioneCORIBP bp = (CRUDLiquidazioneCORIBP)context.getBusinessProcess();
+		if (option == OptionBP.YES_BUTTON) 
+			bp.SelezionaF24Prev(context,true);
+		else
+			bp.SelezionaF24Prev(context,false);
+	return context.findDefaultForward();
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}
 public Forward doF24EPTot(ActionContext context) {
 	try {
 		CRUDBP bp = getBusinessProcess(context);
