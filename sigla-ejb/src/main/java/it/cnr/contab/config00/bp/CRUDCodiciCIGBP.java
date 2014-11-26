@@ -6,8 +6,12 @@
  */
 package it.cnr.contab.config00.bp;
 
+
+import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.util.ICancellatoLogicamente;
+import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 
 /**
@@ -35,5 +39,14 @@ public class CRUDCodiciCIGBP extends SimpleCRUDBP {
 				setStatus(VIEW);
 			}			
 		}
+	}
+	@Override
+	public void validate(ActionContext actioncontext)
+			throws ValidationException {
+		CigBulk bulk=(CigBulk)this.getModel();
+		if ( bulk.getCdCig()==null) 
+			throw new ValidationException("E' necessario inserire il Codice");
+		if ( bulk.getCdCig().length()!=10) 
+			throw new ValidationException("La lunghezza del Codice non è valida");
 	}
 }

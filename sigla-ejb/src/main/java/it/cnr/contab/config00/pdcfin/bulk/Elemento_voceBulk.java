@@ -120,6 +120,7 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	setFl_solo_competenza(new Boolean(false));
 	setFl_solo_residuo(new Boolean(false));
 	setFl_trovato( INDICAZIONE_TROVATO_NESSUNA );
+	setFl_azzera_residui(new Boolean(false)); 
 	return this;
 }
 /**
