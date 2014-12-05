@@ -456,7 +456,7 @@ public class CRUDTerzoBP extends SimpleCRUDBP {
 
 		if (terzo != null
 				&& (terzo.isDipendente() || terzo.isAnagraficoScaduto() || terzo
-						.isTerzo_speciale()))
+						.isTerzo_speciale())||(terzo.getAnagrafico()!=null &&terzo.getAnagrafico().isPersonaFisica()))
 			return false;
 		if (getStatus() == SEARCH)
 			return false;
