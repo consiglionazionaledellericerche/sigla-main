@@ -4100,7 +4100,7 @@ public class DistintaCassiereComponent extends
 					infoben.setSepaCreditTransfer(sepa); */
 				}
 				if (infoben.getCausale() !=null && (infoben.getCausale()+docContabile.getDsDocumento()).length() >99)
-					infoben.setCausale(infoben.getCausale()+" "+docContabile.getDsDocumento().substring(0, 98));
+					infoben.setCausale((infoben.getCausale()+" "+docContabile.getDsDocumento()).substring(0, 98));
 				else if(infoben.getCausale()!=null)
 					infoben.setCausale(infoben.getCausale()+" "+docContabile.getDsDocumento());
 				else
