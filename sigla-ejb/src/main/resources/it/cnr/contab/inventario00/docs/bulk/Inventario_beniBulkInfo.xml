@@ -433,6 +433,17 @@
 		readonlyProperty="ROtarga"	
 		enabledOnEdit = "true"
 		enabledOnSearch="true" />	
+	<fieldProperty
+		name="seriale"
+		property="seriale"
+		inputType="TEXT"
+		label="Seriale" 
+		inputSize="25"
+		maxLength="25"
+		enabledOnInsert = "true"
+		readonlyProperty="ROseriale"	
+		enabledOnEdit = "true"
+		enabledOnSearch="true" />		
 /****** 	PROPERTY RELATIVE AL TRASFERIMENTO  ***********/
 	<fieldProperty
 		name="find_nuovo_bene_padre"
@@ -601,7 +612,8 @@
 		name="cd_barre" />
 	<formFieldProperty
 		name="targa" />	
-		
+	<formFieldProperty
+		name="seriale" />	
 	<columnFieldProperty
 		name="etichetta" 
 		style="width:130px" />
@@ -628,11 +640,13 @@
 		style="width:300px"/>	
 	<columnFieldProperty
 		name="cd_ubicazione"   
-		style="width:50px"/>		
+		style="width:40px"/>		
 	<columnFieldProperty
 		name="collocazione"   
-		style="width:50px"/>
-
+		style="width:40px"/>
+	<columnFieldProperty
+		name="seriale"   
+		style="width:20px"/>
 	<findFieldProperty
 		name="etichetta" />
 	<findFieldProperty
@@ -659,6 +673,8 @@
 		name="cd_barre" />
 	<findFieldProperty
 		name="targa" />
+	<findFieldProperty
+		name="seriale" />	
 	<findFieldProperty
 		name="fl_totalmente_scaricato" />	
 	<freeSearchSet name="freeSearchWithoutProgressivoSet">

@@ -91,6 +91,13 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_GESTIONE_SERIALE"
+			propertyName="fl_gestione_seriale"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -120,4 +127,6 @@
 		name="utuv" />
 	<persistentProperty
 		name="fl_gestione_targa" />	
+	<persistentProperty
+		name="fl_gestione_seriale" />	
 </SQLPersistentInfo>

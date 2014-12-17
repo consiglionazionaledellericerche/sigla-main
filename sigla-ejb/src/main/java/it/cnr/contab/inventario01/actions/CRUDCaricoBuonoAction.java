@@ -285,6 +285,9 @@ public Forward doBringBackSearchFind_categoria_bene(ActionContext context, Buono
 			if (dettaglio.getBene().getCategoria_Bene()!=null &&  dettaglio.getBene().getCategoria_Bene().getCd_categoria_gruppo()!=null &&
 					!dettaglio.getBene().getCategoria_Bene().getFl_gestione_targa() && dettaglio.getBene().getTarga()!=null)
 				dettaglio.getBene().setTarga(null);
+			if (dettaglio.getBene().getCategoria_Bene()!=null &&  dettaglio.getBene().getCategoria_Bene().getCd_categoria_gruppo()!=null &&
+					!dettaglio.getBene().getCategoria_Bene().getFl_gestione_seriale() && dettaglio.getBene().getSeriale()!=null)
+				dettaglio.getBene().setSeriale(null); 
 			
 		}
 		return context.findDefaultForward();

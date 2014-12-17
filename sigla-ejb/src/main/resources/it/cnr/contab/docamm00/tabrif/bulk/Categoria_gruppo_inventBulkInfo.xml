@@ -154,7 +154,11 @@
 		property="fl_gestione_targa"
 		inputType="CHECKBOX"
 		label="Gestione Targa" />
-		
+	<fieldProperty
+		name="fl_gestione_seriale"
+		property="fl_gestione_seriale"
+		inputType="CHECKBOX"
+		label="Gestione Seriale" />	
 	<formFieldProperty
 		name="livello" />
 	<formFieldProperty
@@ -170,7 +174,9 @@
 	<formFieldProperty
 		name="fl_gestione_inventario" />
 	<formFieldProperty
-		name="fl_gestione_targa" />
+		name="fl_gestione_targa" />	
+	<formFieldProperty
+		name="fl_gestione_seriale" />
 	<formFieldProperty
 		name="fl_ammortamento" />
 	<formFieldProperty
@@ -213,7 +219,9 @@
 	<findFieldProperty
 		name="fl_gestione_inventario" />
 	<findFieldProperty
-		name="fl_gestione_targa" />
+		name="fl_gestione_seriale" />
+	<findFieldProperty
+		name="fl_gestione_targa" />	
 	<findFieldProperty
 		name="fl_ammortamento" />
 	<findFieldProperty

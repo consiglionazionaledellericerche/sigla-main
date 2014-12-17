@@ -51,9 +51,12 @@ function escludi(index){
 			<tr>
 				<%if (cgi.getFl_gestione_inventario()!=null && cgi.getFl_gestione_inventario().booleanValue()){%>
 					<td><% bp.getController().writeFormInput( out, null,"fl_ammortamento",false,null,"");%>
-						<% bp.getController().writeFormLabel( out, "fl_ammortamento"); %></td>	   
+						<% bp.getController().writeFormLabel( out, "fl_ammortamento"); %></td>	    
 					<td><% bp.getController().writeFormInput( out, null,"fl_gestione_targa",false,null,"");%>
-						<% bp.getController().writeFormLabel( out, "fl_gestione_targa"); %></td>	   
+						<% bp.getController().writeFormLabel( out, "fl_gestione_targa"); %></td> 
+					<td><% bp.getController().writeFormInput( out, null,"fl_gestione_seriale",false,null,"");%>
+						<% bp.getController().writeFormLabel( out, "fl_gestione_seriale"); %></td>	   
+							   
 				<%}%>
 			</tr>
 			<tr>

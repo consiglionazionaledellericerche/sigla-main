@@ -6053,7 +6053,12 @@ private Buono_carico_scaricoBulk esplodiDettagli (UserContext aUC, Buono_carico_
 					newDettaglio.getBene().getCategoria_Bene().getCd_categoria_gruppo()!=null &&
 					!newDettaglio.getBene().getCategoria_Bene().getFl_gestione_targa() && newDettaglio.getBene().getTarga()!=null)
 					newDettaglio.getBene().setTarga(null);
-				
+
+				if (newDettaglio.getBene().getCategoria_Bene()!=null &&  
+						newDettaglio.getBene().getCategoria_Bene().getCd_categoria_gruppo()!=null && 
+						!newDettaglio.getBene().getCategoria_Bene().getFl_gestione_seriale() && newDettaglio.getBene().getSeriale()!=null)
+						newDettaglio.getBene().setSeriale(null);
+					 
 				if (!newDettaglio.isAccessorioContestuale()){
 					newDettaglioColl.add(newDettaglio);
 				}
@@ -6400,6 +6405,9 @@ private void validaBuonoCarico (UserContext aUC,Buono_carico_scaricoBulk buonoCa
 			if (bene.getCategoria_Bene()!=null &&  bene.getCategoria_Bene().getCd_categoria_gruppo()!=null &&
 					bene.getCategoria_Bene().getFl_gestione_targa() && bene.getTarga()==null)
 					throw new it.cnr.jada.comp.ApplicationException("Attenzione: è obbligatorio indicare la targa per la Categoria del Bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":""));
+			if (bene.getCategoria_Bene()!=null &&  bene.getCategoria_Bene().getCd_categoria_gruppo()!=null &&
+					bene.getCategoria_Bene().getFl_gestione_seriale() && bene.getSeriale()==null)
+					throw new it.cnr.jada.comp.ApplicationException("Attenzione: è obbligatorio indicare il seriale per la Categoria del Bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":""));
 
 			// CONTROLLA CHE SIA STATA SPECIFICATA UNA DESCRIZIONE PER IL BENE
 			if (bene.getDs_bene()==null)

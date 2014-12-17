@@ -854,6 +854,10 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 				!bene.getCategoria_Bene().getFl_gestione_targa() && bene.getTarga()!=null)
 			bene.setTarga(null);
 		
+		if (bene.getCategoria_Bene()!=null &&  bene.getCategoria_Bene().getCd_categoria_gruppo()!=null &&
+			!bene.getCategoria_Bene().getFl_gestione_seriale() && bene.getSeriale()!=null)
+			bene.setSeriale(null);
+		
 		
 		validaUtilizzatori(aUC, bene);
 		/* Cancella le relazioni esistenti tra il bene e gli utilizzatori ù
@@ -1367,6 +1371,9 @@ private void validaBene (UserContext aUC, Inventario_beniBulk bene)
 		if (!bene.isBeneAccessorio() && bene.getCategoria_Bene()!=null &&  bene.getCategoria_Bene().getCd_categoria_gruppo()!=null &&
 				bene.getCategoria_Bene().getFl_gestione_targa() && bene.getTarga()==null)
 				throw new it.cnr.jada.comp.ApplicationException("Attenzione: è obbligatorio indicare la targa per questa Categoria");
+//		if (!bene.isBeneAccessorio() && bene.getCategoria_Bene()!=null &&  bene.getCategoria_Bene().getCd_categoria_gruppo()!=null &&
+//				bene.getCategoria_Bene().getFl_gestione_seriale() && bene.getSeriale()==null)
+//			throw new it.cnr.jada.comp.ApplicationException("Attenzione: è obbligatorio indicare il seriale per questa Categoria");
 		// CONTROLLA CHE SIA STATA SPECIFICATA UNA DESCRIZIONE PER IL BENE
 		if (bene.getDs_bene()==null)
 			throw new it.cnr.jada.comp.ApplicationException("Attenzione: indicare la Descrizione del Bene ");					
