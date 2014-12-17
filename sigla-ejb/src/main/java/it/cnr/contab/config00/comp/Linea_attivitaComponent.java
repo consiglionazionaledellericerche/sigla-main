@@ -1007,5 +1007,26 @@ public void Inserimento_BLOB(UserContext userContext,it.cnr.jada.bulk.OggettoBul
 		  file.delete();
 	}	
   }
+public java.util.List findListaGAEFEWS(UserContext userContext,String cdr,Integer modulo)throws ComponentException{
+	try {		
+		WorkpackageHome home = (WorkpackageHome)getHome(userContext,WorkpackageBulk.class,"V_LINEA_ATTIVITA_VALIDA");
+		SQLBuilder sql = home.createSQLBuilder();
+		if(cdr!=null){
+			sql.addTableToHeader("V_PDG_CDR_GESTIBILI");
+			
+			sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO","V_PDG_CDR_GESTIBILI.ESERCIZIO");
+			sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA","V_PDG_CDR_GESTIBILI.CD_CENTRO_RESPONSABILITA");
+			
+			sql.addSQLClause("AND","V_PDG_CDR_GESTIBILI.CD_CDR_ROOT",sql.EQUALS,cdr);
+			sql.addSQLClause("AND","V_PDG_CDR_GESTIBILI.ESERCIZIO",sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+		}else{
+			sql.addSQLClause("AND", "V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext)); 
+		}
+		sql.addSQLClause("AND", "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO",sql.EQUALS,modulo);
+		return home.fetchAll(sql);
+	}catch(it.cnr.jada.persistency.PersistencyException ex){
+		throw handleException(ex);
+	}
+}
 
 }

@@ -25,6 +25,7 @@ import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -6540,6 +6541,11 @@ public OggettoBulk completaOggetto(UserContext aUC,OggettoBulk oggetto) throws P
 	if(oggetto instanceof Modalita_trasportoBulk){
 		Modalita_trasportoBulk obj=(Modalita_trasportoBulk)oggetto;
 		obj= ((Modalita_trasportoBulk)getHome(aUC, Modalita_trasportoBulk.class).findByPrimaryKey(obj));
+		return obj;
+	}
+	if(oggetto instanceof NaturaBulk){
+		NaturaBulk obj=(NaturaBulk)oggetto;
+		obj= ((NaturaBulk)getHome(aUC, NaturaBulk.class).findByPrimaryKey(obj));
 		return obj;
 	}
 	return null;
