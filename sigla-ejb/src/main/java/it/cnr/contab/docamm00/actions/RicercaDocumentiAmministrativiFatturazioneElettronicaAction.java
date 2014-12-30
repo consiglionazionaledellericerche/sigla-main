@@ -5,14 +5,13 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.bp.DocumentiAmministrativiFatturazioneElettronicaBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.IGenericSearchDocAmmBP;
-import it.cnr.contab.docamm00.bp.CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
-import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.jada.action.Action;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.BusinessProcessException;
@@ -23,7 +22,6 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.Introspector;
-import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 
 /**
@@ -90,7 +88,7 @@ public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,In
 
 			IDocumentoAmministrativoBP docAmmBP = getBusinessProcessForDocAmm(context, (IDocumentoAmministrativoBulk)instance);
 			SelezionatoreListaBP nbp = (SelezionatoreListaBP)context.createBusinessProcess("SelezionatoreDocAmmFatturazioneElettronica", new Object[] { "Tn" });
-			nbp.setMultiSelection(true);
+			nbp.setMultiSelection(false);
 //			nbp.setOrderBy(context, "pg_fattura_attiva", 0);
 //			nbp.setSelectionListener(
 //					context,
@@ -121,7 +119,7 @@ public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,In
 		return handleException(context,e);
 	}
 }
-
+	
 
 /**
  * Gestisce la selezione dopo una richiesta di ricerca.

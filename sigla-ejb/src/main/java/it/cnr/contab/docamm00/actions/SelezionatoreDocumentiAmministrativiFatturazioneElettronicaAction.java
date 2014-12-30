@@ -30,7 +30,7 @@ public Forward doSignOTP(ActionContext context) {
 	try {
 		BulkBP firmaOTPBP = (BulkBP) context.createBusinessProcess("FirmaOTPBP");
 		firmaOTPBP.setModel(context, new FirmaOTPBulk());
-		context.addHookForward("firmaOTP",this,"doBackFirmaOTP");			
+		context.addHookForward("firmaOTP",this,"doBackFirmaOTP");
 		return context.addBusinessProcess(firmaOTPBP);
 	} catch(Exception e) {
 		return handleException(context,e);
@@ -41,6 +41,12 @@ public Forward doMultipleSelectionFirma(ActionContext actioncontext)
 		throws BusinessProcessException
 	{
 		return doBringBackFirma(actioncontext);
+	}
+
+public Forward basicDoBringBack(ActionContext actioncontext)
+		throws BusinessProcessException
+	{
+		return null;
 	}
 
 public Forward doBringBackFirma(ActionContext actioncontext)
