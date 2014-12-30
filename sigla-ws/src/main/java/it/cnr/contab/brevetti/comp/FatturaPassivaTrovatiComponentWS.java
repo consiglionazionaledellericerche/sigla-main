@@ -6,6 +6,7 @@ import it.cnr.contab.brevetti.client.FatturaPassivaBase;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
@@ -17,7 +18,6 @@ import it.cnr.jada.comp.FatturaNonTrovataException;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -203,9 +203,9 @@ private void caricaFattura(UserContext userContext, java.util.ArrayList listaRit
 
 		listaRitorno.add(ritorno);
 	} else {
-		BulkList<Fattura_passiva_rigaIBulk> dett = fattura.getFattura_passiva_dettColl();
-		for (Iterator<Fattura_passiva_rigaIBulk> j = dett.iterator(); j.hasNext(); ) {
-			Fattura_passiva_rigaIBulk det = (Fattura_passiva_rigaIBulk) j.next();
+		BulkList<Fattura_passiva_rigaBulk> dett = fattura.getFattura_passiva_dettColl();
+		for (Iterator<Fattura_passiva_rigaBulk> j = dett.iterator(); j.hasNext(); ) {
+			Fattura_passiva_rigaBulk det = (Fattura_passiva_rigaBulk) j.next();
 			FatturaPassiva ritorno=new FatturaPassiva();
 			
 			ritorno.setCd_cds(fattura.getCd_cds());
@@ -243,13 +243,16 @@ private void caricaFattura(UserContext userContext, java.util.ArrayList listaRit
 				ritorno.setDt_emissione_obbligazione_impegno(obbl.getDt_registrazione());
 			}
 		
-			List mans = det.getMandatiRighe();
-			Mandato_rigaIBulk manr=null;
-			if (mans!=null && !mans.isEmpty()) {
-				manr=(Mandato_rigaIBulk) mans.get(0);
-				ritorno.setEsercizio_mandato(manr.getEsercizio());
-				ritorno.setPg_mandato(manr.getPg_mandato());
-				ritorno.setDt_emissione_mandato(manr.getMandato().getDt_emissione());
+			if (det instanceof Fattura_passiva_rigaIBulk){
+				Fattura_passiva_rigaIBulk fatturaPassivaRiga = (Fattura_passiva_rigaIBulk)det; 
+				List mans = fatturaPassivaRiga.getMandatiRighe();
+				Mandato_rigaIBulk manr=null;
+				if (mans!=null && !mans.isEmpty()) {
+					manr=(Mandato_rigaIBulk) mans.get(0);
+					ritorno.setEsercizio_mandato(manr.getEsercizio());
+					ritorno.setPg_mandato(manr.getPg_mandato());
+					ritorno.setDt_emissione_mandato(manr.getMandato().getDt_emissione());
+				}
 			}
 		
 			listaRitorno.add(ritorno);
@@ -258,7 +261,7 @@ private void caricaFattura(UserContext userContext, java.util.ArrayList listaRit
 	}
 }
 
-private void impostaImportiRiga(Fattura_passiva_rigaIBulk det, FatturaPassiva ritorno) {
+private void impostaImportiRiga(Fattura_passiva_rigaBulk det, FatturaPassiva ritorno) {
 	if (det.getVoce_iva() != null){
 		ritorno.setDs_voce_iva(det.getVoce_iva().getDs_voce_iva());
 		if ("Y".equals(det.getVoce_iva().getFl_non_soggetto())){
