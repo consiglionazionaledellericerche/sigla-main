@@ -726,7 +726,14 @@ public java.util.List findListaVociWS(UserContext userContext,String uo,String t
 			 	sql = (SQLBuilder)super.select( userContext,null,new V_voce_f_partita_giroBulk());
 			 	sql.addTableToHeader("ELEMENTO_VOCE");
 				sql.addSQLClause("AND","V_VOCE_F_PARTITA_GIRO.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
-				sql.addSQLClause( "AND", "V_VOCE_F_PARTITA_GIRO.cd_unita_organizzativa", sql.EQUALS, u_org.getCd_unita_organizzativa());
+				sql.openParenthesis( "AND");		
+				sql.openParenthesis( "AND");
+				sql.addSQLClause( "AND", "V_VOCE_F_PARTITA_GIRO.cd_unita_organizzativa", sql.EQUALS,u_org.getCd_unita_organizzativa());
+				sql.addSQLClause( "OR", "V_VOCE_F_PARTITA_GIRO.cd_unita_organizzativa", sql.ISNULL,null);
+				sql.closeParenthesis();
+				sql.closeParenthesis();
+				
+				sql.addSQLClause( "AND", "V_VOCE_F_PARTITA_GIRO.FL_SOLO_RESIDUO", sql.EQUALS,  "N");
 				sql.addSQLClause( "AND", "V_VOCE_F_PARTITA_GIRO.ti_appartenenza", sql.EQUALS, Elemento_voceHome.APPARTENENZA_CNR);
 				sql.addSQLClause( "AND", "V_VOCE_F_PARTITA_GIRO.ti_gestione", sql.EQUALS, Elemento_voceHome.GESTIONE_ENTRATE);
 				sql.addSQLClause( "AND", "V_VOCE_F_PARTITA_GIRO.ti_voce", sql.EQUALS, Elemento_voceHome.TIPO_ARTICOLO);

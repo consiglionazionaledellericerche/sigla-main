@@ -1,6 +1,5 @@
 package it.cnr.contab.doccont00.core.bulk;
 
-import iaik.asn1.NULL;
 import it.cnr.contab.doccont00.ejb.NumTempDocContComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.*;
 
