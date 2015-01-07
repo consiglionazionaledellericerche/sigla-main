@@ -252,7 +252,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 				<text><![CDATA[Importo Impegno]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-10" style="TNR10" x="585" y="99" width="80" height="25"/>
+				<reportElement key="staticText-10" style="TNR10" x="585" y="99" width="93" height="25"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -263,7 +263,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 				<text><![CDATA[Voce di Bilancio]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-11" style="TNR10" x="672" y="104" width="50" height="14"/>
+				<reportElement key="staticText-11" style="TNR10" x="678" y="104" width="47" height="14"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -274,7 +274,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 				<text><![CDATA[Stato]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-12" style="TNR10" x="724" y="104" width="58" height="14"/>
+				<reportElement key="staticText-12" style="TNR10" x="740" y="104" width="42" height="14"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -361,7 +361,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{CREDITORE}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR10" x="585" y="3" width="80" height="13"/>
+				<reportElement key="textField" style="TNR10" x="585" y="3" width="93" height="13"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -394,7 +394,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IMPORTO}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-5" style="TNR10" x="721" y="2" width="61" height="13"/>
+				<reportElement key="textField-5" style="TNR10" x="740" y="2" width="42" height="13"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -431,7 +431,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 				<text><![CDATA[C]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField" style="TNR10" x="672" y="2" width="50" height="14"/>
+				<reportElement key="textField" style="TNR10" x="678" y="2" width="47" height="14"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
