@@ -242,7 +242,7 @@ public boolean isROAbiCab() {
  */
 public boolean isROBanca() {
 	
-	if (isPerCessione() || isOrigineStipendi())
+	if (isPerCessione() || isOrigineStipendi()|| getPg_banca()!=null)
 		return true;
 	if (getFl_cancellato()==null)
 		return false;
