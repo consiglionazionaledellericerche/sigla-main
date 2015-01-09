@@ -81,11 +81,11 @@
 	<td><% bp.getController().writeFormInput(out,"stato_cofi"); %></td>
    	<td>
    		<% bp.getController().writeFormLabel(out,"stato_liquidazione");%>
-   		<% bp.getController().writeFormInput(out,null,"stato_liquidazione",bp.isRODatiFatturaPerChiusura(compenso),null,"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"");%>
+   		<% bp.getController().writeFormInput(out,null,"stato_liquidazione",false,null,"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"");%>
    	</td>
    	<td> 
    		<% bp.getController().writeFormLabel(out,"causale");%>
-   		<% bp.getController().writeFormInput(out,null,"causale",bp.isRODatiFatturaPerChiusura(compenso),null,"onChange=\"submitForm('doOnCausaleChange')\"");%>
+   		<% bp.getController().writeFormInput(out,null,"causale",false,null,"onChange=\"submitForm('doOnCausaleChange')\"");%>
    	</td>
     </tr>
   <tr>
