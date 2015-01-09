@@ -3339,5 +3339,15 @@ public Forward doOnFlDiariaChange(ActionContext context)
 		return handleException(context,e);
 	}
 }
-
+public Forward doSelezionaStatoLiquidazione(ActionContext context){
+	try 
+	{
+		fillModel(context);		
+		return context.findDefaultForward();
+	}
+	catch(Throwable e)
+	{
+		return handleException(context,e);
+	} 
+ }
 }

@@ -1571,6 +1571,25 @@ public boolean isInputReadonly()
 	return 	super.isInputReadonly() || !missione.isEditable();
 }
 /**
+ * Il metodo è stato sovrascritto per consentire all'utente di modificare lo stato della liquidazione
+ * quando il documento non risulta essere modificabile
+ *  
+ */
+public void writeFormInput(javax.servlet.jsp.JspWriter jspwriter,String s,String s1,boolean flag,String s2,String s3) throws java.io.IOException {
+	MissioneBulk missione=null;
+	if(getModel()!=null)
+		missione = (MissioneBulk)getModel();
+	if (missione!=null &&
+		missione.isRiportataInScrivania()&&
+		!missione.isPagata()&&
+		isInputReadonly()&& 
+		s1.equals("stato_liquidazione")){ 
+		getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag, s2, "onChange=\"submitForm('doSelezionaStatoLiquidazione')\"", getInputPrefix(), getStatus(), getFieldValidationMap());
+	}
+	else
+		super.writeFormInput(jspwriter,s,s1,flag,s2,s3);
+}
+/**
  * Metodo richiesto dall' interfaccia IDocumentoAmministrativoBP.
  */
 public boolean isManualModify() 
@@ -1683,7 +1702,10 @@ public boolean isSaveButtonEnabled()
 		return super.isSaveButtonEnabled();
 		
 	return	super.isSaveButtonEnabled() &&
-			(missione.isEditable() || carryingThrough)&&
+			(missione.isEditable() || carryingThrough
+			// Consentire salvataggio 		
+			 ||(!missione.isEditable()&&missione.getCrudStatus()!=5))
+			 &&
 			!isEditingTappa() && 
 			!getSpesaController().isEditingSpesa();
 }

@@ -1120,4 +1120,31 @@ public void validate(ActionContext actioncontext)
 	fp.validate();
 	super.validate(actioncontext);
 }
+/**
+ * Il metodo è stato sovrascritto per consentire all'utente di modificare lo stato della liquidazione
+ * quando il documento non risulta essere modificabile
+ *  
+ */
+public void writeFormInput(javax.servlet.jsp.JspWriter jspwriter,String s,String s1,boolean flag,String s2,String s3) throws java.io.IOException {
+	Fattura_passivaBulk fp=null;
+	if(getModel()!=null)
+		fp = (Fattura_passivaBulk)getModel();
+	if (fp!=null &&
+		fp.isRiportataInScrivania()&&
+		!fp.isPagata()&&
+		isInputReadonly()&& 
+		s1.equals("stato_liquidazione")){ 
+			getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag, s2, "onChange=\"submitForm('doOnStatoLiquidazioneChange')\"", getInputPrefix(), getStatus(), getFieldValidationMap());
+	}
+	else if (fp!=null &&
+			fp.isRiportataInScrivania()&&
+			!fp.isPagata()&& 
+			isInputReadonly()&& 
+			s1.equals("causale")){ 
+				getBulkInfo().writeFormInput(jspwriter, getModel(), s, s1, flag, s2, "onChange=\"submitForm('doOnCausaleChange')\"", getInputPrefix(), getStatus(), getFieldValidationMap());
+		}
+	else
+		super.writeFormInput(jspwriter,s,s1,flag,s2,s3);
+}
+ 
 }
