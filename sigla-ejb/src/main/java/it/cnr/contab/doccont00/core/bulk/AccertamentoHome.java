@@ -1037,9 +1037,9 @@ public java.util.List findCdr( List capitoliList, AccertamentoBulk accertamento 
 	Voce_fBulk capitolo = (Voce_fBulk) capitoliList.iterator().next();
 
 	PersistentHome cdrHome = getHomeCache().getHome(CdrBulk.class);
-
+ 
 	SQLBuilder sql = cdrHome.createSQLBuilder();
-	sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, capitolo.getCd_unita_organizzativa());
+	sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, accertamento.getCd_uo_origine());//capitolo.getCd_unita_organizzativa());
 
 	return cdrHome.fetchAll(sql);
 }
