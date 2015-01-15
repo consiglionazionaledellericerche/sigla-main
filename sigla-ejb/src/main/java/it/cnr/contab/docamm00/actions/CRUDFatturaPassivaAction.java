@@ -339,7 +339,8 @@ protected Forward basicDoBringBackOpenObbligazioniWindow(
 		if (!fp.getFornitore().equalsByPrimaryKey(creditore) &&
 			!AnagraficoBulk.DIVERSI.equalsIgnoreCase(creditore.getAnagrafico().getTi_entita()))
 			throw new it.cnr.jada.comp.ApplicationException("La scadenza selezionata deve appartenere ad un'obbligazione che ha come creditore il fornitore della fattura!");
-
+/* 	Rospuc 15/01/2015 Controllo SOSPESO  compatibilità dell'obbligazione con il titolo capitolo selezionato 
+   	SOSPESO PER ESERCIZIO 2015
 		if (fp instanceof Fattura_passiva_IBulk) {
 			java.util.List dettagliDaContabilizzare = (java.util.List)fp.getObbligazioniHash().get(newObblig);
 			if (dettagliDaContabilizzare != null && !dettagliDaContabilizzare.isEmpty()) {
@@ -352,6 +353,7 @@ protected Forward basicDoBringBackOpenObbligazioniWindow(
 					throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non è compatibile con il titolo capitolo \"" + titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
 			}
 		}
+		*/
 		Obbligazione_scadenzarioBulk obbligazione = (Obbligazione_scadenzarioBulk)bp.getObbligazioniController().getModel();
 		if (obbligazione != null) {
 			resyncObbligazione(context, obbligazione, newObblig);
@@ -481,13 +483,14 @@ private void basicDoContabilizza(
 				}
 			}
 		}
-
+		/*	Rospuc 15/01/2015 Controllo SOSPESO  compatibilità dell'obbligazione con il titolo capitolo selezionato 
+		    SOSPESO PER ESERCIZIO 2015
 		//Controllo la compatibilità dell'obbligazione con il titolo capitolo selezionato
 		if (titoloCapitoloValido != null &&
 			!(titoloCapitoloObbligazione.getCd_elemento_voce().startsWith(titoloCapitoloValido.getCd_elemento_voce()) ||
 			titoloCapitoloValido.getCd_elemento_voce().startsWith(titoloCapitoloObbligazione.getCd_elemento_voce())))
 			throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non è compatibile con il titolo capitolo \"" + titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
-
+		 */
 		try {
 			FatturaPassivaComponentSession h = (FatturaPassivaComponentSession)bp.createComponentSession();
 			Fattura_passivaBulk fattura = h.contabilizzaDettagliSelezionati(
@@ -815,10 +818,12 @@ private Forward basicDoRicercaObbligazione(
 			filtro.setFl_importo(Boolean.FALSE);
 		else {
 			Fattura_passiva_rigaBulk firstRow = (Fattura_passiva_rigaBulk)models.get(0);
-			if (firstRow.getBene_servizio().getFl_gestione_inventario().booleanValue()) {
-				Elemento_voceBulk ev = getElementoVoce(context, firstRow.getBene_servizio().getCategoria_gruppo());
-				filtro.setElemento_voce(ev);
-			}
+		//	Rospuc 15/01/2015 Controllo SOSPESO  compatibilità dell'obbligazione con il titolo capitolo selezionato 
+	    //SOSPESO PER ESERCIZIO 2015
+//			if (firstRow.getBene_servizio().getFl_gestione_inventario().booleanValue()) {
+//				Elemento_voceBulk ev = getElementoVoce(context, firstRow.getBene_servizio().getCategoria_gruppo());
+//				filtro.setElemento_voce(ev);
+//			}
 		}
 
 		BulkBP robp = (BulkBP)context.getUserInfo().createBusinessProcess(context,"RicercaObbligazioniBP", new Object[] { "MRSWTh" });
