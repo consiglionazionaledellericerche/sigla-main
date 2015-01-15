@@ -182,7 +182,14 @@
 			sqlTypeName="CHAR"
 			columnSize="1"
 			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_AGEVOLAZIONI_RIENTRO_LAV"
+			propertyName="fl_agevolazioni_rientro_lav"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />					
 	</defaultColumnMap>
 	<persistentProperty
 		name="fl_detrazioni_dipendente" />
@@ -238,4 +245,6 @@
 		name="fl_pignorato_obbl" />
 	<persistentProperty
 		name="fl_tipo_prestazione_obbl" />
+<persistentProperty
+		name="fl_agevolazioni_rientro_lav" />		
 </SQLPersistentInfo>

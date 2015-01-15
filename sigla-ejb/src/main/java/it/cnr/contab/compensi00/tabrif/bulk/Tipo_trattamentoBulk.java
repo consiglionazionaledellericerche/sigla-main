@@ -92,6 +92,7 @@ private void resetFlags() {
 	this.setFl_detrazioni_altre(Boolean.FALSE);
 	this.setFl_incarico(Boolean.FALSE);
 	this.setFl_tipo_prestazione_obbl(Boolean.FALSE);
+	this.setFl_agevolazioni_rientro_lav(Boolean.FALSE);	
 }
 /**
  * Insert the method's description here.

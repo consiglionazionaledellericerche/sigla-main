@@ -25,6 +25,7 @@ public class Filtro_trattamentoBulk extends it.cnr.jada.bulk.OggettoBulk {
     private java.lang.String tipoRappImpiego;
     private java.lang.Boolean flVisibileATutti;
     private java.lang.Boolean flTipoPrestazioneObbl;
+	private java.lang.Boolean flAgevolazioniRientroLav;    
 
 /**
  * Filtro_trattamentiBulk constructor comment.
@@ -249,5 +250,10 @@ public void setTipoAnagrafico(java.lang.String newTipoAnagrafico) {
 	public void setFlTipoPrestazioneObbl(java.lang.Boolean flTipoPrestazioneObbl) {
 		this.flTipoPrestazioneObbl = flTipoPrestazioneObbl;
 	}
-	
+	public java.lang.Boolean getFlAgevolazioniRientroLav() {
+		return flAgevolazioniRientroLav;
+	}
+	public void setFlAgevolazioniRientroLav(java.lang.Boolean flAgevolazioniRientroLav) {
+		this.flAgevolazioniRientroLav = flAgevolazioniRientroLav;
+	}	
 }

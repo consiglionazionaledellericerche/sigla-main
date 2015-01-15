@@ -99,6 +99,8 @@
 	<td align="left"><% bp.getController().writeFormLabel(out,"fl_tassazione_separata");%></td>
 	<td><% bp.getController().writeFormInput(out,"fl_incarico");%></td>
 	<td align="left"><% bp.getController().writeFormLabel(out,"fl_incarico");%></td>
+	<td><% bp.getController().writeFormInput(out,"fl_agevolazioni_rientro_lav");%></td>
+	<td align="left"><% bp.getController().writeFormLabel(out,"fl_agevolazioni_rientro_lav");%></td>
   </tr>
   <tr>	
 	<td><% bp.getController().writeFormInput(out,"fl_visibile_a_tutti");%></td>

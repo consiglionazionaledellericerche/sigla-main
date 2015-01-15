@@ -71,6 +71,10 @@ public class Tipo_trattamentoBase extends Tipo_trattamentoKey implements Keyed {
 	
 	// FL_PIGNORATO_OBBL CHAR(1) NOT NULL
 	private java.lang.Boolean fl_tipo_prestazione_obbl;	
+	
+	// FL_AGEVOLAZIONI_RIENTRO_LAV CHAR(1) NOT NULL
+	private java.lang.Boolean fl_agevolazioni_rientro_lav;
+	
 public Tipo_trattamentoBase() {
 	super();
 }
@@ -289,5 +293,11 @@ public void setFl_tipo_prestazione_obbl(
 		java.lang.Boolean fl_tipo_prestazione_obbl) {
 	this.fl_tipo_prestazione_obbl = fl_tipo_prestazione_obbl;
 }
-
+public java.lang.Boolean getFl_agevolazioni_rientro_lav() {
+	return fl_agevolazioni_rientro_lav;
+}
+public void setFl_agevolazioni_rientro_lav(
+		java.lang.Boolean fl_agevolazioni_rientro_lav) {
+	this.fl_agevolazioni_rientro_lav = fl_agevolazioni_rientro_lav;
+}
 }
