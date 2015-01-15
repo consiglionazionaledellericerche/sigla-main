@@ -198,7 +198,10 @@ public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
 	 * @see it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBase#getCd_elemento_voce()
 	 */
 	public String getCd_elemento_voce() {
-		return getElemento_voce().getCd_elemento_voce();
+		if(this.getElemento_voce()!=null)
+			return getElemento_voce().getCd_elemento_voce();
+		else
+			return null;
 	}
 
 
