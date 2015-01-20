@@ -5576,7 +5576,7 @@ private void validaCampi(UserContext uc, ObbligazioneBulk obbligazione) throws C
 	private Boolean verificaVoceResidua(UserContext usercontext, ObbligazioneBulk obbligazione)throws ComponentException {
 		try{
 		UtenteBulk utente = (UtenteBulk)(getHome(usercontext, UtenteBulk.class).findByPrimaryKey(new UtenteBulk(CNRUserContext.getUser(usercontext))));
-		 // if (!utente.isSupervisore()) 
+		  if (!utente.isSupervisore()) 
 			if(obbligazione!=null && obbligazione.getElemento_voce()!=null && obbligazione.getElemento_voce().getFl_azzera_residui())
 					return true;
 		} catch (PersistencyException e) {
