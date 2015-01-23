@@ -66,7 +66,25 @@ public SQLBuilder selectCapitoloByClause(AccertamentoBulk acc, V_voce_f_partita_
 		/* simona 14.5.2002 
 		CdsBulk cds = findCdsSAC();
 		sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, cds.getCd_unita_organizzativa() );		*/
-		sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, bulk.getCd_uo_origine() );		
+		if (acc instanceof AccertamentoPGiroResiduoBulk){
+			sql.openParenthesis( "AND");		
+			sql.openParenthesis( "AND");
+			sql.addSQLClause( "AND", "cd_unita_organizzativa", sql.EQUALS, bulk.getCd_uo_origine());
+			sql.addSQLClause( "OR", "cd_unita_organizzativa", sql.ISNULL,null);
+			sql.closeParenthesis();
+			sql.closeParenthesis();		
+		}else{
+			sql.openParenthesis( "AND");		
+			sql.openParenthesis( "AND");
+			sql.addSQLClause( "AND", "cd_unita_organizzativa", sql.EQUALS, bulk.getCd_uo_origine());
+			sql.addSQLClause( "AND", "fl_azzera_residui",  sql.EQUALS, "N");
+			sql.closeParenthesis();
+			sql.openParenthesis( "OR");
+			sql.addSQLClause( "OR", "cd_unita_organizzativa", sql.ISNULL,null);
+			sql.addSQLClause( "AND", "fl_azzera_residui",  sql.EQUALS, "Y");
+			sql.closeParenthesis();
+			sql.closeParenthesis();		
+		}
 	}	
 	else // == ACCERT_PGIRO
 	{
