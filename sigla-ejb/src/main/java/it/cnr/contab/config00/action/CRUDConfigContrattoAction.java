@@ -6,13 +6,9 @@
  */
 package it.cnr.contab.config00.action;
 
-import org.apache.commons.httpclient.methods.GetMethod;
-
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
 import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoMasterBP;
 import it.cnr.contab.config00.bulk.CigBulk;
-import it.cnr.contab.config00.consultazioni.bulk.V_cons_commesse_contrattiBulk;
 import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
@@ -30,9 +26,10 @@ import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDAction;
 import it.cnr.jada.util.action.SimpleCRUDBP;
+
+import org.apache.chemistry.opencmis.client.api.Folder;
 /**
  * @author mspasiano
  *
@@ -167,17 +164,17 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 					if(contratto.isDs_organo_ann_non_definitoVisible() && contratto.getDs_organo_ann_non_definito() == null)
 					  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(contratto.getClass()).getFieldProperty("ds_organo_ann_non_definito").getLabel());
 				}
-				Node node = contrattoService.getFolderContratto((ContrattoBulk) bp.getModel());
+				Folder folder = contrattoService.getFolderContratto((ContrattoBulk) bp.getModel());
 				bp.delete(context);
 				if(bp.getModel() instanceof ContrattoBulk && ((ContrattoBulk)bp.getModel()).isDefinitivo()){
 					bp.edit(context,((ContrattoComponentSession)bp.createComponentSession()).cercaContrattoCessato(context.getUserContext(), bp.getModel()));
 				}else					
 				  bp.edit(context, bp.getModel());
-				if (node != null){
-					contrattoService.updateProperties((ContrattoBulk) bp.getModel(), node);
-					contrattoService.changeProgressivoNodeRef(node, (ContrattoBulk) bp.getModel());
-					contrattoService.addAspect(node, "P:sigla_contratti_aspect:stato_annullato");
-					contrattoService.removeConsumerToEveryone(node);
+				if (folder != null){
+					contrattoService.updateProperties((ContrattoBulk) bp.getModel(), folder);
+					contrattoService.changeProgressivoNodeRef(folder, (ContrattoBulk) bp.getModel());
+					contrattoService.addAspect(folder, "P:sigla_contratti_aspect:stato_annullato");
+					contrattoService.removeConsumerToEveryone(folder);
 					bp.setModel(context,bp.initializeModelForEdit(context, bp.getModel()));
 				}
 				

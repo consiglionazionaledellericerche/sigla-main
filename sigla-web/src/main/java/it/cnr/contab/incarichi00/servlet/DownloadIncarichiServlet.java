@@ -1,6 +1,5 @@
 package it.cnr.contab.incarichi00.servlet;
 
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.incarichi00.service.ContrattiService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.action.HttpActionContext;
@@ -14,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.chemistry.opencmis.client.api.Document;
+
 public class DownloadIncarichiServlet extends HttpServlet {
 	public DownloadIncarichiServlet() {
         super();
@@ -22,11 +23,10 @@ public class DownloadIncarichiServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpActionContext actionContext = new HttpActionContext(this, request, response);
 		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
-		Node node = contrattiService.getNodeByNodeRef(request.getParameter("cmisNodeRef"));
+		Document node = (Document) contrattiService.getNodeByNodeRef(request.getParameter("cmisNodeRef"));
 		InputStream is = contrattiService.getResource(node);
-		((HttpActionContext)actionContext).getResponse().setContentLength(node.getContentLength().intValue());		
-		((HttpActionContext)actionContext).getResponse().setContentType(node.getContentType());
-		((HttpActionContext)actionContext).getResponse().setContentLength(node.getContentLength().intValue());
+		((HttpActionContext)actionContext).getResponse().setContentLength(Long.valueOf(node.getContentStreamLength()).intValue());		
+		((HttpActionContext)actionContext).getResponse().setContentType(node.getContentStreamMimeType());
 		OutputStream os = ((HttpActionContext)actionContext).getResponse().getOutputStream();
 		((HttpActionContext)actionContext).getResponse().setDateHeader("Expires", 0);
 		byte[] buffer = new byte[((HttpActionContext)actionContext).getResponse().getBufferSize()];

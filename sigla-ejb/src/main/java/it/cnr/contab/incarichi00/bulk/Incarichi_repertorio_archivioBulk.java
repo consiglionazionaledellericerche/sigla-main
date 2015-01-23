@@ -4,7 +4,6 @@
  */
 package it.cnr.contab.incarichi00.bulk;
 
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.contab.incarichi00.bulk.cmis.CMISFileAssegniRicerca;
 import it.cnr.contab.incarichi00.bulk.cmis.CMISFileBorseStudio;
@@ -12,6 +11,8 @@ import it.cnr.contab.incarichi00.bulk.cmis.CMISFileIncarichi;
 import it.cnr.contab.util.Utility;
 
 import java.io.IOException;
+
+import org.apache.chemistry.opencmis.client.api.Document;
 
 public class Incarichi_repertorio_archivioBulk extends Incarichi_repertorio_archivioKey {
 	private Incarichi_repertorioBulk incarichi_repertorio;
@@ -94,7 +95,7 @@ public class Incarichi_repertorio_archivioBulk extends Incarichi_repertorio_arch
 		}
 		return cmisFile;
 	}
-	public CMISFile getCMISFile(Node node) {
+	public CMISFile getCMISFile(Document node) {
 		if (this.getIncarichi_repertorio()!=null && 
 			this.getIncarichi_repertorio().getIncarichi_procedura()!=null) {
 			if (this.getIncarichi_repertorio().getIncarichi_procedura().isProceduraForBorseStudio())

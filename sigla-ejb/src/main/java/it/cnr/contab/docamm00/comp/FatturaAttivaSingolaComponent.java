@@ -1,6 +1,5 @@
 package it.cnr.contab.docamm00.comp;
 
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaHome;
@@ -16,7 +15,7 @@ import it.cnr.contab.anagraf00.tabter.bulk.ProvinciaBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ProvinciaHome;
 import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.CMISService;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
@@ -137,6 +136,7 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.BusyResourceException;
@@ -184,6 +184,8 @@ import java.util.Vector;
 import javax.ejb.EJBException;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
 
 public class FatturaAttivaSingolaComponent
@@ -2586,7 +2588,7 @@ public void gestioneAllegatiPerFatturazioneElettronica(UserContext userContext,
 		archiviaFileCMIS(userContext, cmisService, fattura, file);
 	}
 }
-private void archiviaFileCMIS(UserContext userContext, CMISService cmisService, Fattura_attivaBulk fattura, File file) throws ComponentException{
+private void archiviaFileCMIS(UserContext userContext, SiglaCMISService cmisService, Fattura_attivaBulk fattura, File file) throws ComponentException{
 	List<CMISFile> cmisFileCreate = new ArrayList<CMISFile>();
 	List<CMISFile> cmisFileAnnullati = new ArrayList<CMISFile>();
 	try {
@@ -2601,13 +2603,13 @@ private void archiviaFileCMIS(UserContext userContext, CMISService cmisService, 
 //			}
 
 			try{
-				Node node = cmisService.restoreSimpleDocument(cmisFile, 
+				Document node = cmisService.restoreSimpleDocument(cmisFile, 
 						cmisFile.getInputStream(),
 						cmisFile.getContentType(),
 						cmisFile.getFileName(), 
 						path);
 				cmisService.addAspect(node, CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_PRIMA_PROTOCOLLO.value());
-				cmisFile.setNode(node);
+				cmisFile.setDocument(node);
 				cmisFileCreate.add(cmisFile);
 //				if (alternativePath!=null)
 //					try{
@@ -2646,14 +2648,14 @@ private void archiviaFileCMIS(UserContext userContext, CMISService cmisService, 
 	} catch (Exception e){
 		//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
 		for (CMISFile cmisFile : cmisFileCreate)
-			cmisService.deleteNode(cmisFile.getNode());
+			cmisService.deleteNode(cmisFile.getDocument());
 		for (CMISFile cmisFile : cmisFileAnnullati) {
 			String cmisFileName = cmisFile.getFileName();
 			String cmisFileEstensione = cmisFileName.substring(cmisFileName.lastIndexOf(".")+1);
 			String stringToDelete = cmisFileName.substring(cmisFileName.indexOf("-ANNULLATO"));
 			cmisFile.setFileName(cmisFileName.replace(stringToDelete, "."+cmisFileEstensione));
-			cmisService.updateProperties(cmisFile, cmisFile.getNode());
-			cmisService.removeAspect(cmisFile.getNode());
+			cmisService.updateProperties(cmisFile, cmisFile.getDocument());
+			cmisService.removeAspect(cmisFile.getDocument());
 		}
 		throw new ApplicationException(e.getMessage());
 	}

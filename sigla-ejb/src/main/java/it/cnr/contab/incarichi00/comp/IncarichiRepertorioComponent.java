@@ -1,6 +1,5 @@
 package it.cnr.contab.incarichi00.comp;
 
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
@@ -62,6 +61,8 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.chemistry.opencmis.client.api.CmisObject;
 
 public class IncarichiRepertorioComponent extends CRUDComponent {
 	public OggettoBulk inizializzaBulkPerInserimento(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
@@ -989,18 +990,18 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 		}
 	}
 	public void salvaDefinitivoCMIS(UserContext userContext, Incarichi_repertorioBulk incarico_repertorio) throws ComponentException{
-		List<Node> nodeAddAspect = new ArrayList<Node>();
-		List<Node> nodeAddConsumer = new ArrayList<Node>();
+		List<CmisObject> nodeAddAspect = new ArrayList<CmisObject>();
+		List<CmisObject> nodeAddConsumer = new ArrayList<CmisObject>();
 		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
 		try{
-			Node nodeIncarico = contrattiService.getNodeByPath(incarico_repertorio.getCMISFolder().getCMISPath(contrattiService));
-			if (nodeIncarico!=null && !nodeIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+			CmisObject nodeIncarico = contrattiService.getNodeByPath(incarico_repertorio.getCMISFolder().getCMISPath(contrattiService));
+			if (nodeIncarico!=null && !contrattiService.hasAspect(nodeIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
 				contrattiService.addAspect(nodeIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 				contrattiService.addConsumerToEveryone(nodeIncarico);
 				nodeAddAspect.add(nodeIncarico);
 				nodeAddConsumer.add(nodeIncarico);
 	
-				Node nodeProcedura = contrattiService.getNodeByPath(incarico_repertorio.getIncarichi_procedura().getCMISFolder().getCMISPath(contrattiService));
+				CmisObject nodeProcedura = contrattiService.getNodeByPath(incarico_repertorio.getIncarichi_procedura().getCMISFolder().getCMISPath(contrattiService));
 				if (nodeProcedura!=null)
 					contrattiService.addConsumerToEveryone(nodeProcedura);
 			}
@@ -1013,9 +1014,9 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 			for (Iterator i = listArchiviFile.iterator(); i.hasNext();) {
 				Incarichi_archivioBulk allegato = (Incarichi_archivioBulk)i.next();
 				if (allegato.getCms_node_ref()!=null) {
-					Node nodeAllegato = contrattiService.getNodeByNodeRef(allegato.getCms_node_ref());
-					if (nodeAllegato!=null && !nodeAllegato.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value()) &&
-						!nodeAllegato.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+					CmisObject nodeAllegato = contrattiService.getNodeByNodeRef(allegato.getCms_node_ref());
+					if (nodeAllegato!=null && !contrattiService.hasAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value()) &&
+						!contrattiService.hasAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
 						contrattiService.addAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 						nodeAddAspect.add(nodeAllegato);
 					}
@@ -1025,20 +1026,20 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 		catch( Exception e )
 		{
 			//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
-			for (Node node : nodeAddAspect)
+			for (CmisObject node : nodeAddAspect)
 				contrattiService.removeAspect(node, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
-			for (Node node : nodeAddConsumer)
+			for (CmisObject node : nodeAddConsumer)
 				contrattiService.removeConsumerToEveryone(node);
 			throw new ApplicationException(e.getMessage());
 		}		
 	}
 	public void annullaDefinitivoCMIS(UserContext userContext, Incarichi_repertorioBulk incarico_repertorio) throws ComponentException{
-		List<Node> nodeRemoveAspect = new ArrayList<Node>();
-		List<Node> nodeRemoveConsumer = new ArrayList<Node>();
+		List<CmisObject> nodeRemoveAspect = new ArrayList<CmisObject>();
+		List<CmisObject> nodeRemoveConsumer = new ArrayList<CmisObject>();
 		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
 		try{
-			Node nodeIncarico = contrattiService.getNodeByPath(incarico_repertorio.getCMISFolder().getCMISPath(contrattiService));
-			if (nodeIncarico!=null && nodeIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+			CmisObject nodeIncarico = contrattiService.getNodeByPath(incarico_repertorio.getCMISFolder().getCMISPath(contrattiService));
+			if (nodeIncarico!=null && contrattiService.hasAspect(nodeIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
 				contrattiService.removeAspect(nodeIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 				contrattiService.removeConsumerToEveryone(nodeIncarico);
 				nodeRemoveAspect.add(nodeIncarico);
@@ -1053,8 +1054,8 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 			for (Iterator i = listArchiviFile.iterator(); i.hasNext();) {
 				Incarichi_archivioBulk allegato = (Incarichi_archivioBulk)i.next();
 				if (allegato.getCms_node_ref()!=null) {
-					Node nodeAllegato = contrattiService.getNodeByNodeRef(allegato.getCms_node_ref());
-					if (nodeAllegato!=null && nodeAllegato.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+					CmisObject nodeAllegato = contrattiService.getNodeByNodeRef(allegato.getCms_node_ref());
+					if (nodeAllegato!=null && contrattiService.hasAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
 						contrattiService.removeAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 						nodeRemoveAspect.add(nodeIncarico);
 					}
@@ -1064,9 +1065,9 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 		catch( Exception e )
 		{
 			//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
-			for (Node node : nodeRemoveAspect)
+			for (CmisObject node : nodeRemoveAspect)
 				contrattiService.addAspect(node, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
-			for (Node node : nodeRemoveConsumer)
+			for (CmisObject node : nodeRemoveConsumer)
 				contrattiService.addConsumerToEveryone(node);
 			throw new ApplicationException(e.getMessage());
 		}		

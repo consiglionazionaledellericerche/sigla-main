@@ -1,22 +1,22 @@
 package it.cnr.contab.cmis.bulk;
 
-import it.cnr.cmisdl.model.Node;
-
 import java.io.Serializable;
 
-public class CMISDocument implements Serializable{
-	private final Node node;
+import org.apache.chemistry.opencmis.client.api.Document;
 
-	public static CMISDocument construct(Node node){
-		return new CMISDocument(node);
+public class CMISDocument implements Serializable{
+	private final Document document;
+
+	public static CMISDocument construct(Document document){
+		return new CMISDocument(document);
 	}
 	
-	public CMISDocument(Node node) {
+	public CMISDocument(Document document) {
 		super();
-		this.node = node;
+		this.document = document;
 	}
 	
-	public Node getNode() {
-		return node;
+	public Document getDocument() {
+		return document;
 	}
 }

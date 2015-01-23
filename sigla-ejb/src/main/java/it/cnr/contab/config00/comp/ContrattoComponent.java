@@ -6,18 +6,14 @@
  */
 package it.cnr.contab.config00.comp;
 
-import it.cnr.cmisdl.model.Node;
-import it.cnr.cmisdl.model.paging.ListNodePage;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
-import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.RicercaContrattoBulk;
-import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoHome;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
@@ -27,14 +23,12 @@ import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
 import it.cnr.contab.config00.contratto.bulk.Stampa_elenco_contrattiBulk;
 import it.cnr.contab.config00.contratto.bulk.Tipo_atto_amministrativoBulk;
 import it.cnr.contab.config00.contratto.bulk.Tipo_contrattoBulk;
-import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.incarichi00.bulk.V_incarichi_elencoBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -59,17 +53,14 @@ import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.rmi.RemoteException;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.ejb.EJBException;
+
+import org.apache.chemistry.opencmis.client.api.Folder;
 /**
  * @author mspasiano
  *
@@ -1142,7 +1133,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(contratto.getClass()).getFieldProperty("dt_inizio_validita").getLabel()); 
 			if(contratto.getDt_fine_validita() == null)
 			  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(contratto.getClass()).getFieldProperty("dt_fine_validita").getLabel()); 
-			Node oldNode = contrattoService.getFolderContratto(contratto);
+			Folder oldNode = contrattoService.getFolderContratto(contratto);
 			if (oldNode == null || !contrattoService.isDocumentoContrattoPresent(contratto))
 				throw handleException(new ApplicationException("Bisogna allegare il file del Contratto!"));
 			if (contratto.getDt_stipula().after(dataStipulaParametri) ||
@@ -1185,7 +1176,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			ContrattoBulk contrattoDefinitivo = (ContrattoBulk)super.creaConBulk(userContext,contrattoClone);
 			if (oldNode != null){
 				contrattoService.changeProgressivoNodeRef(oldNode, contrattoDefinitivo);
-				Node node = contrattoService.getFolderContratto(contrattoDefinitivo);
+				Folder node = contrattoService.getFolderContratto(contrattoDefinitivo);
 				if (node != null){
 					contrattoService.addAspect(node, "P:sigla_contratti_aspect:stato_definitivo");
 					if (contrattoDefinitivo.isPassivo() || contrattoDefinitivo.isAttivo_e_Passivo())

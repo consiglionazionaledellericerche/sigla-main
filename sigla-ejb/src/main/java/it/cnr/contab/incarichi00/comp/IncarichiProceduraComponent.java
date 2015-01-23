@@ -1,13 +1,11 @@
 package it.cnr.contab.incarichi00.comp;
 
-import it.cnr.cmisdl.model.ACL;
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.CMISService;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
@@ -86,6 +84,11 @@ import javax.ejb.EJBException;
 
 import oracle.sql.BLOB;
 
+import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.client.api.Folder;
+import org.apache.chemistry.opencmis.commons.PropertyIds;
+import org.apache.chemistry.opencmis.commons.data.Ace;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisBaseException;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisRuntimeException;
@@ -856,7 +859,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		archiviaAllegatiCMIS(userContext, contrattiService, listArchiviFile);
 	}
 
-	private void archiviaAllegatiCMIS(UserContext userContext, CMISService cmisService, BulkList<Incarichi_archivioBulk> listArchiviFile) throws ComponentException{
+	private void archiviaAllegatiCMIS(UserContext userContext, SiglaCMISService cmisService, BulkList<Incarichi_archivioBulk> listArchiviFile) throws ComponentException{
 		List<CMISFile> cmisFileCreate = new ArrayList<CMISFile>();
 		List<CMISFile> cmisFileAnnullati = new ArrayList<CMISFile>();
 		try {
@@ -871,7 +874,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 						throw new ApplicationException("CMIS - Errore nella registrazione degli allegati (" + e.getMessage() + ")");
 					}
 				else 
-					cmisFile = allegato.getCMISFile(cmisService.getNodeByNodeRef(allegato.getCms_node_ref().toString()));
+					cmisFile = allegato.getCMISFile((Document) cmisService.getNodeByNodeRef(allegato.getCms_node_ref().toString()));
 	
 				if (cmisFile!=null) {
 					//E' previsto solo l'inserimento ma non l'aggiornamento
@@ -883,16 +886,16 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 						
 						if (allegato.getCms_node_ref()==null) {
 							try{
-								Node node = cmisService.restoreSimpleDocument(cmisFile, 
+								Document node = cmisService.restoreSimpleDocument(cmisFile, 
 															 			      	 cmisFile.getInputStream(),
 															 			      	 cmisFile.getContentType(),
 															 			      	 cmisFile.getFileName(), 
 															 			      	 path);
-								cmisFile.setNode(node);
+								cmisFile.setDocument(node);
 								cmisFileCreate.add(cmisFile);
 								if (alternativePath!=null)
 									try{
-										cmisService.copyNode(node, cmisService.getNodeByPath(alternativePath));
+										cmisService.copyNode(node, (Folder) cmisService.getNodeByPath(alternativePath));
 									} catch (CmisRuntimeException e) {
 									}
 		
@@ -908,8 +911,8 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 							}
 						} 
 						if (allegato.isAnnullato()) {
-							Node node = cmisFile.getNode();
-							if (node!=null && !node.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
+							Document node = cmisFile.getDocument();
+							if (node!=null && !node.getProperty(PropertyIds.SECONDARY_OBJECT_TYPE_IDS).getValues().contains(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
 								String cmisFileName = cmisFile.getFileName();
 								String cmisFileEstensione = cmisFileName.substring(cmisFileName.lastIndexOf(".")+1);
 								cmisFile.setFileName(cmisFileName.replace("."+cmisFileEstensione, "-ANNULLATO."+cmisFileEstensione));
@@ -919,7 +922,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 									try {
 										cmisService.updateProperties(cmisFile, node);
 										cmisService.addAspect(node, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
-										cmisFile.setNode(cmisService.getNodeByNodeRef(node.getId()));
+										cmisFile.setDocument((Document) cmisService.getNodeByNodeRef(node.getId()));
 										cmisFileAnnullati.add(cmisFile);
 										CMISAggiornato=Boolean.TRUE;
 									} catch (Exception e) {
@@ -930,7 +933,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 							}
 						}
 					} else {
-						cmisService.updateProperties(cmisFile, cmisFile.getNode());
+						cmisService.updateProperties(cmisFile, cmisFile.getDocument());
 					}
 				}
 				if (allegato!=null && allegato.getFile()!=null)
@@ -939,14 +942,14 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		} catch (Exception e){
 			//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
 			for (CMISFile cmisFile : cmisFileCreate)
-				cmisService.deleteNode(cmisFile.getNode());
+				cmisService.deleteNode(cmisFile.getDocument());
 			for (CMISFile cmisFile : cmisFileAnnullati) {
 				String cmisFileName = cmisFile.getFileName();
 				String cmisFileEstensione = cmisFileName.substring(cmisFileName.lastIndexOf(".")+1);
 				String stringToDelete = cmisFileName.substring(cmisFileName.indexOf("-ANNULLATO"));
 				cmisFile.setFileName(cmisFileName.replace(stringToDelete, "."+cmisFileEstensione));
-				cmisService.updateProperties(cmisFile, cmisFile.getNode());
-				cmisService.removeAspect(cmisFile.getNode(), CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
+				cmisService.updateProperties(cmisFile, cmisFile.getDocument());
+				cmisService.removeAspect(cmisFile.getDocument(), CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
 			}
 			throw new ApplicationException(e.getMessage());
 		}
@@ -1648,10 +1651,10 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		}
 	}
 	public void addConsumerToEveryone(UserContext userContext, Incarichi_proceduraBulk incarico_procedura) throws ComponentException{
-		List<Node> nodeAddConsumer = new ArrayList<Node>();
+		List<CmisObject> nodeAddConsumer = new ArrayList<CmisObject>();
 		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
 		try{
-			Node nodeProcedura = contrattiService.getNodeByPath(incarico_procedura.getCMISFolder().getCMISPath(contrattiService));
+			CmisObject nodeProcedura = contrattiService.getNodeByPath(incarico_procedura.getCMISFolder().getCMISPath(contrattiService));
 			if (nodeProcedura!=null) {
 				contrattiService.addConsumerToEveryone(nodeProcedura);
 				nodeAddConsumer.add(nodeProcedura);
@@ -1660,16 +1663,16 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		catch( Exception e )
 		{
 			//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
-			for (Node node : nodeAddConsumer)
+			for (CmisObject node : nodeAddConsumer)
 				contrattiService.removeConsumerToEveryone(node);
 			throw new ApplicationException(e.getMessage());
 		}		
 	}
 	public void removeConsumerToEveryone(UserContext userContext, Incarichi_proceduraBulk incarico_procedura) throws ComponentException{
-		List<Node> nodeRemoveConsumer = new ArrayList<Node>();
+		List<CmisObject> nodeRemoveConsumer = new ArrayList<CmisObject>();
 		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
 		try{
-			Node nodeProcedura = contrattiService.getNodeByPath(incarico_procedura.getCMISFolder().getCMISPath(contrattiService));
+			CmisObject nodeProcedura = contrattiService.getNodeByPath(incarico_procedura.getCMISFolder().getCMISPath(contrattiService));
 			if (nodeProcedura!=null){
 				contrattiService.removeConsumerToEveryone(nodeProcedura);
 				nodeRemoveConsumer.add(nodeProcedura);
@@ -1678,17 +1681,17 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		catch( Exception e )
 		{
 			//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
-			for (Node node : nodeRemoveConsumer)
+			for (CmisObject node : nodeRemoveConsumer)
 				contrattiService.addConsumerToEveryone(node);
 			throw new ApplicationException(e.getMessage());
 		}		
 	}
 	public void salvaDefinitivoCMIS(UserContext userContext, Incarichi_proceduraBulk incarico_procedura) throws ComponentException{
-		List<Node> nodeAddAspect = new ArrayList<Node>();
+		List<CmisObject> nodeAddAspect = new ArrayList<CmisObject>();
 		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
 		try{
-			Node nodeProcedura = contrattiService.getNodeByPath(incarico_procedura.getCMISFolder().getCMISPath(contrattiService));
-			if (nodeProcedura!=null && !nodeProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+			CmisObject nodeProcedura = contrattiService.getNodeByPath(incarico_procedura.getCMISFolder().getCMISPath(contrattiService));
+			if (nodeProcedura!=null && !contrattiService.hasAspect(nodeProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
 				contrattiService.addAspect(nodeProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 				nodeAddAspect.add(nodeProcedura);
 			}
@@ -1699,9 +1702,9 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 			for (Iterator i = listArchiviFile.iterator(); i.hasNext();) {
 				Incarichi_archivioBulk allegato = (Incarichi_archivioBulk)i.next();
 				if (allegato.getCms_node_ref()!=null) {
-					Node nodeAllegato = contrattiService.getNodeByNodeRef(allegato.getCms_node_ref());
-					if (nodeAllegato!=null && !nodeAllegato.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value()) &&
-						!nodeAllegato.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())){
+					CmisObject nodeAllegato = contrattiService.getNodeByNodeRef(allegato.getCms_node_ref());
+					if (nodeAllegato!=null && !contrattiService.hasAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value()) &&
+						!contrattiService.hasAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())){
 						contrattiService.addAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 						nodeAddAspect.add(nodeAllegato);
 					}
@@ -1711,19 +1714,19 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		catch( Exception e )
 		{
 			//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
-			for (Node node : nodeAddAspect)
+			for (CmisObject node : nodeAddAspect)
 				contrattiService.removeAspect(node, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 			throw new ApplicationException(e.getMessage());
 		}		
 	}
 	public void annullaDefinitivoCMIS(UserContext userContext, Incarichi_proceduraBulk incarico_procedura) throws ComponentException{
-		List<Node> nodeRemoveAspect = new ArrayList<Node>();
-		List<Node> nodeRemoveConsumer = new ArrayList<Node>();
+		List<CmisObject> nodeRemoveAspect = new ArrayList<CmisObject>();
+		List<CmisObject> nodeRemoveConsumer = new ArrayList<CmisObject>();
 		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
 		try{
 			incarico_procedura = (Incarichi_proceduraBulk)inizializzaBulkPerModifica(userContext, incarico_procedura);
-			Node nodeProcedura = contrattiService.getNodeByPath(incarico_procedura.getCMISFolder().getCMISPath(contrattiService));
-			if (nodeProcedura!=null && nodeProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())){
+			CmisObject nodeProcedura = contrattiService.getNodeByPath(incarico_procedura.getCMISFolder().getCMISPath(contrattiService));
+			if (nodeProcedura!=null && contrattiService.hasAspect(nodeProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())){
 				contrattiService.removeAspect(nodeProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 				nodeRemoveAspect.add(nodeProcedura);
 				if (incarico_procedura.isProceduraProvvisoria()){
@@ -1737,8 +1740,8 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 			for (Iterator i = listArchiviFile.iterator(); i.hasNext();) {
 				Incarichi_archivioBulk allegato = (Incarichi_archivioBulk)i.next();
 				if (allegato.getCms_node_ref()!=null) {
-					Node nodeAllegato = contrattiService.getNodeByNodeRef(allegato.getCms_node_ref());
-					if (nodeAllegato!=null && nodeAllegato.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())){
+					CmisObject nodeAllegato = contrattiService.getNodeByNodeRef(allegato.getCms_node_ref());
+					if (nodeAllegato!=null && contrattiService.hasAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())){
 						contrattiService.removeAspect(nodeAllegato, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 						nodeRemoveAspect.add(nodeAllegato);
 					}
@@ -1748,9 +1751,9 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		catch( Exception e )
 		{
 			//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
-			for (Node node : nodeRemoveAspect)
+			for (CmisObject node : nodeRemoveAspect)
 				contrattiService.addAspect(node, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
-			for (Node node : nodeRemoveConsumer)
+			for (CmisObject node : nodeRemoveConsumer)
 				contrattiService.addConsumerToEveryone(node);
 			throw new ApplicationException(e.getMessage());
 		}		
@@ -1874,20 +1877,19 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 
 			//Controlli su Cartella INCARICHI
 			CMISFolderContrattiModel cmisFolderIncarico = incarico.getCMISFolder();
-			Node nodeFolderIncarico = contrattiService.getNodeByPath(cmisFolderIncarico.getCMISPath(contrattiService));
+			CmisObject nodeFolderIncarico = contrattiService.getNodeByPath(cmisFolderIncarico.getCMISPath(contrattiService));
 			if (!cmisFolderIncarico.isEqualsTo(nodeFolderIncarico, listError)) {
 				contrattiService.updateProperties(cmisFolderIncarico, nodeFolderIncarico);
 				listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - Disallineamento dati ");
 			}
-
-			ACL aclFolderIncarico = contrattiService.getACL(nodeFolderIncarico, "GROUP_EVERYONE", "cmis:read");
+			Ace aclFolderIncarico = contrattiService.getACL(nodeFolderIncarico, "GROUP_EVERYONE", "cmis:read");
 			if (isIncaricoDefinitivo) {
 				existIncaricoDefinitivo = true;
 				if (aclFolderIncarico==null){
 					listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - addConsumerToEveryone");
 					contrattiService.addConsumerToEveryone(nodeFolderIncarico);
 				}
-				if (!nodeFolderIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+				if (!contrattiService.hasAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
 					listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - addAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
 					contrattiService.addAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 				}
@@ -1896,19 +1898,19 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 					listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeConsumerToEveryone");
 					contrattiService.removeConsumerToEveryone(nodeFolderIncarico);
 				}
-				if (nodeFolderIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+				if (contrattiService.hasAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
 					listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
 					contrattiService.removeAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 				}
 			}
 
 			if (isIncaricoDefinitivo && incarico.getFl_pubblica_contratto().equals(Boolean.TRUE)) {
-				if (!nodeFolderIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value())) {
+				if (!contrattiService.hasAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value())) {
 					listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - addAspect SIGLA_CONTRATTI_PUBBLICATO");
 					contrattiService.addAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value());
 				}
 			} else {
-				if (nodeFolderIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value())) {
+				if (contrattiService.hasAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value())) {
 					listError.add("AGGIORNAMENTO EFFETTUATO: Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeAspect SIGLA_CONTRATTI_PUBBLICATO");
 					contrattiService.removeAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value());
 				}
@@ -1921,7 +1923,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 					listError.add("ERRORE GRAVE: Allegato Incarico alla procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - Manca Archiviazione");
 				else {
 					//Controlli su Allegati INCARICHI
-					Node nodeArchivioIncarico = contrattiService.getNodeByNodeRef(archivio.getCms_node_ref());
+					Document nodeArchivioIncarico = (Document) contrattiService.getNodeByNodeRef(archivio.getCms_node_ref());
 					CMISFile cmisFile = (CMISFile)archivio.getCMISFile(nodeArchivioIncarico);
 					boolean makeUpdateProperties = false;
 					if (cmisFile.getContentType().equals("application/octet-stream")) {
@@ -1948,18 +1950,18 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 						}
 					}
 
-					if (nodeArchivioIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())){
+					if (contrattiService.hasAspect(nodeArchivioIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())){
 						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
 						contrattiService.removeAspect(nodeFolderIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 					}
 
 					if (archivio.isAnnullato()) {
-						if (!nodeArchivioIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
+						if (!contrattiService.hasAspect(nodeArchivioIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
 							listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - addAspect SIGLA_CONTRATTI_STATO_ANNULLATO");
 							contrattiService.addAspect(nodeArchivioIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
 						}
 					} else {
-						if (nodeArchivioIncarico.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
+						if (contrattiService.hasAspect(nodeArchivioIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
 							listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Incarico "+incarico.getEsercizio().toString()+"/"+incarico.getPg_repertorio().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_ANNULLATO");
 							contrattiService.removeAspect(nodeArchivioIncarico, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
 						}
@@ -1970,7 +1972,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		
 		//Controlli su Cartella PROCEDURA
 		CMISFolderProcedura cmisFolderProcedura = procedura.getCMISFolder();
-		Node nodeFolderProcedura = contrattiService.getNodeByPath(cmisFolderProcedura.getCMISPath(contrattiService));
+		CmisObject nodeFolderProcedura = contrattiService.getNodeByPath(cmisFolderProcedura.getCMISPath(contrattiService));
 		if (!cmisFolderProcedura.isEqualsTo(nodeFolderProcedura, listError)) {
 			contrattiService.updateProperties(cmisFolderProcedura, nodeFolderProcedura);
 			listError.add("AGGIORNAMENTO EFFETTUATO: Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - Disallineamento dati ");
@@ -1978,13 +1980,13 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 
 		boolean isProceduraDefinitiva = procedura.isProceduraDefinitiva() || procedura.isProceduraChiusa(); 
 		
-		ACL aclFolderProcedura = contrattiService.getACL(nodeFolderProcedura, "GROUP_EVERYONE", "cmis:read");
+		Ace aclFolderProcedura = contrattiService.getACL(nodeFolderProcedura, "GROUP_EVERYONE", "cmis:read");
 		if (isProceduraDefinitiva || existIncaricoDefinitivo) {
 			if (aclFolderProcedura==null) {
 				listError.add("AGGIORNAMENTO EFFETTUATO: Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addConsumerToEveryone");
 				contrattiService.addConsumerToEveryone(nodeFolderProcedura);
 			}
-			if (procedura.isProceduraDefinitiva() && !nodeFolderProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+			if (procedura.isProceduraDefinitiva() && !contrattiService.hasAspect(nodeFolderProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
 				listError.add("AGGIORNAMENTO EFFETTUATO: Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
 				contrattiService.addAspect(nodeFolderProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 			}
@@ -1993,7 +1995,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 				listError.add("AGGIORNAMENTO EFFETTUATO: Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeConsumerToEveryone");
 				contrattiService.removeConsumerToEveryone(nodeFolderProcedura);
 			}
-			if (nodeFolderProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+			if (contrattiService.hasAspect(nodeFolderProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
 				listError.add("AGGIORNAMENTO EFFETTUATO: Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
 				contrattiService.removeAspect(nodeFolderProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 			}
@@ -2006,7 +2008,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 				listError.add("ERRORE GRAVE: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+"/"+archivio.getProgressivo_riga()+" - Manca Archiviazione");
 			else {
 				//Controlli su Allegati PROCEDURA
-				Node nodeArchivioProcedura = contrattiService.getNodeByNodeRef(archivio.getCms_node_ref());
+				Document nodeArchivioProcedura = (Document) contrattiService.getNodeByNodeRef(archivio.getCms_node_ref());
 				CMISFileProcedura cmisFileProcedura = (CMISFileProcedura)archivio.getCMISFile(nodeArchivioProcedura);
 				boolean makeUpdateProperties = false;
 				if (cmisFileProcedura.getContentType().equals("application/octet-stream")) {
@@ -2021,13 +2023,13 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 					listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+"/"+archivio.getProgressivo_riga()+" - Disallineamento dati ");
 				}
 
-				ACL aclArchivioProcedura = contrattiService.getACL(nodeArchivioProcedura, "GROUP_EVERYONE", "cmis:read");
+				Ace aclArchivioProcedura = contrattiService.getACL(nodeArchivioProcedura, "GROUP_EVERYONE", "cmis:read");
 				if (archivio.isBando() && !procedura.isProceduraProvvisoria() && procedura.getDt_pubblicazione()!=null) {
 					if (aclArchivioProcedura==null) {
 						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addConsumerToEveryone");
 						contrattiService.addConsumerToEveryone(nodeArchivioProcedura);
 					}
-					if (!nodeArchivioProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value())) {
+					if (!contrattiService.hasAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value())) {
 						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addAspect SIGLA_CONTRATTI_PUBBLICATO");
 						contrattiService.addAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value());
 					}
@@ -2036,24 +2038,24 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeConsumerToEveryone");
 						contrattiService.removeConsumerToEveryone(nodeArchivioProcedura);
 					}
-					if (nodeArchivioProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value())) {
+					if (contrattiService.hasAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value())) {
 						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeAspect SIGLA_CONTRATTI_PUBBLICATO");
 						contrattiService.removeAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_PUBBLICATO.value());
 					}
 				}
 
-				if (nodeArchivioProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
+				if (contrattiService.hasAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value())) {
 					listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_DEFINITIVO");
 					contrattiService.removeAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 				}
 				
 				if (archivio.isAnnullato()) {
-					if (!nodeArchivioProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
+					if (!contrattiService.hasAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
 						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - addAspect SIGLA_CONTRATTI_STATO_ANNULLATO");
 						contrattiService.addAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
 					}
 				} else {
-					if (nodeArchivioProcedura.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
+					if (contrattiService.hasAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
 						listError.add("AGGIORNAMENTO EFFETTUATO: Allegato Procedura "+procedura.getEsercizio().toString()+"/"+procedura.getPg_procedura().toString()+" - removeAspect SIGLA_CONTRATTI_STATO_ANNULLATO");
 						contrattiService.removeAspect(nodeArchivioProcedura, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
 					}

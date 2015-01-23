@@ -1,17 +1,17 @@
 package it.cnr.contab.config00.contratto.bulk;
 
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.cmis.CMISTypeName;
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
-import it.cnr.contab.cmis.service.CMISService;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.OggettoBulk;
 
 import java.io.File;
-import java.math.BigInteger;
 import java.util.StringTokenizer;
+
+import org.apache.chemistry.opencmis.client.api.Document;
 public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTypeName{
 	private static final long serialVersionUID = 1L;
 	private ContrattoBulk contrattoBulk;
@@ -23,7 +23,7 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTy
 	private String type;
 	private String link;
 	
-	private BigInteger contentlength;
+	private long contentlength;
 	private String nodeId;
 	private String name;
 
@@ -49,13 +49,13 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTy
 		super();
 	}
 
-	public static AllegatoContrattoDocumentBulk construct(Node node){
+	public static AllegatoContrattoDocumentBulk construct(Document node){
 		return new AllegatoContrattoDocumentBulk(node);
 	}
 	
-	public AllegatoContrattoDocumentBulk(Node node) {
+	public AllegatoContrattoDocumentBulk(Document node) {
 		super();
-		contentlength = node.getContentLength();
+		contentlength = node.getContentStreamLength();
 		nodeId = node.getId();
 		name = node.getName();
 	}
@@ -79,8 +79,8 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTy
 		while (fileName.hasMoreTokens()){
 			newFileName = fileName.nextToken();   	
 		}
-		CMISService cmisService = SpringUtil.getBean("cmisService",
-				CMISService.class);		
+		SiglaCMISService cmisService = SpringUtil.getBean("cmisService",
+				SiglaCMISService.class);		
 
 		if (newFileName != null){
 			return cmisService.sanitizeFilename(newFileName);
@@ -166,7 +166,7 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements CMISTy
 	}
 	
 	public boolean isContentStreamPresent(){
-		return isNodePresent() && contentlength != null && contentlength.compareTo(BigInteger.ZERO) == 1;
+		return isNodePresent() && contentlength > 0;
 	}
 
 	@CMISProperty(name="cmis:name")

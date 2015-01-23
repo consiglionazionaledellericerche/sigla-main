@@ -1,55 +1,38 @@
 package it.cnr.contab.missioni00.docs.bulk;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Hashtable;
-import java.util.Locale;
-import java.util.UUID;
-
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.methods.ByteArrayRequestEntity;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.RequestEntity;
-
-import com.google.gson.Gson;
-
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
 import it.cnr.contab.anagraf00.core.bulk.RapportoBulk;
+import it.cnr.contab.cmis.acl.ACLType;
 import it.cnr.contab.cmis.acl.Permission;
-import it.cnr.contab.cmis.acl.Role;
 import it.cnr.contab.cmis.acl.SIGLAGroups;
 import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.CMISService;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaHome;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import it.cnr.contab.docamm00.ejb.NumerazioneTempDocAmmComponentSession;
 import it.cnr.contab.fondecon00.core.bulk.Fondo_spesaBulk;
-import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
-import it.cnr.contab.reports.bulk.Print_spoolerHome;
-import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
+import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.service.LDAPService;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
-import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.Broker;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.UUID;
 
 public class MissioneHome extends BulkHome implements
 		IDocumentoAmministrativoSpesaHome {
@@ -436,12 +419,8 @@ public class MissioneHome extends BulkHome implements
 						.getBean("cmisPathNonConcFormazReddito",
 								CMISPath.class);
 					
-					CMISService cmisService = SpringUtil.getBean("cmisService",
-							CMISService.class);
-					Role roleConsumer = SpringUtil.getBean("permission.consumer",
-							Role.class);
-					Role roleCoordinator = SpringUtil.getBean("permission.coordinator",
-							Role.class);
+					SiglaCMISService cmisService = SpringUtil.getBean("cmisService",
+							SiglaCMISService.class);
 					LDAPService ldapService = SpringUtil.getBean("ldapService",
 							LDAPService.class);
 					String[] uidMail = ldapService.getLdapUserFromMatricola(
@@ -451,8 +430,8 @@ public class MissioneHome extends BulkHome implements
 							PrintService.class).executeReport(userContext,
 							print);
 					cmisService.storePrintDocument(missione, report, cmisPath, 
-							Permission.construct(uidMail[0], roleConsumer),
-							Permission.construct(SIGLAGroups.GROUP_EMPPAY_GROUP.name(), roleCoordinator));
+							Permission.construct(uidMail[0], ACLType.Consumer),
+							Permission.construct(SIGLAGroups.GROUP_EMPPAY_GROUP.name(), ACLType.Coordinator));
 				} catch (Exception e) {
 					throw new PersistencyException(e);
 				}

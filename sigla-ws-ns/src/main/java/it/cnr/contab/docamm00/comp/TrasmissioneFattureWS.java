@@ -1,6 +1,5 @@
 package it.cnr.contab.docamm00.comp;
 
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
@@ -44,6 +43,8 @@ import javax.xml.soap.SOAPFault;
 import javax.xml.soap.SOAPMessage;
 import javax.xml.ws.soap.SOAPFaultException;
 
+import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
 import org.jboss.wsf.spi.annotation.WebContext;
 @Stateless
@@ -302,14 +303,14 @@ public class TrasmissioneFattureWS {
 				//E' previsto solo l'inserimento ma non l'aggiornamento
 				CMISPath path = cmisFile.getCMISParentPath(cmisService);
 				try{
-					Node node = cmisService.restoreSimpleDocument(cmisFile, 
+					Document node = cmisService.restoreSimpleDocument(cmisFile, 
 							cmisFile.getInputStream(),
 							cmisFile.getContentType(),
 							cmisFile.getFileName(), 
 							path);
 					if (aspect!=null)
 						cmisService.addAspect(node, aspect);
-					cmisFile.setNode(node);
+					cmisFile.setDocument(node);
 				} catch (Exception e) {
 					if (e.getCause() instanceof CmisConstraintException)
 						throw new ApplicationException("CMIS - File ["+cmisFile.getFileName()+"] già presente o non completo di tutte le proprietà obbligatorie. Inserimento non possibile!");
