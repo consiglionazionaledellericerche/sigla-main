@@ -1,12 +1,11 @@
 package it.cnr.contab.incarichi00.bulk.cmis;
 
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
 import it.cnr.contab.cmis.converter.Converter;
 import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.CMISService;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
 import it.cnr.contab.incarichi00.cmis.CMISContrattiProperty;
 import it.cnr.contab.service.SpringUtil;
@@ -15,6 +14,8 @@ import it.cnr.jada.bulk.OggettoBulk;
 
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import org.apache.chemistry.opencmis.client.api.CmisObject;
 
 @CMISType(name="F:sigla_contratti:procedura")
 public class CMISFolderProcedura extends OggettoBulk {
@@ -110,7 +111,7 @@ public class CMISFolderProcedura extends OggettoBulk {
 		return this.getIncaricoProcedura().getTipo_norma_perla().getComma_tipo_norma();
 	}
 
-	public CMISPath getCMISPrincipalPath(CMISService cmisService){
+	public CMISPath getCMISPrincipalPath(SiglaCMISService cmisService){
 		CMISPath cmisPath = SpringUtil.getBean("cmisPathContratti",CMISPath.class);
 		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, this.getIncaricoProcedura().getCd_unita_organizzativa(), this.getIncaricoProcedura().getUnita_organizzativa().getDs_unita_organizzativa(), this.getIncaricoProcedura().getUnita_organizzativa().getDs_unita_organizzativa());
 		if (this.getIncaricoProcedura().isProceduraForIncarichi())
@@ -122,7 +123,7 @@ public class CMISFolderProcedura extends OggettoBulk {
 		return cmisPath;
 	}
 
-	public CMISPath getCMISPath(CMISService cmisService){
+	public CMISPath getCMISPath(SiglaCMISService cmisService){
 		CMISPath cmisPath = this.getCMISPrincipalPath(cmisService);
 		if (cmisPath!=null) {
 			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, this.getEsercizio().toString(), "Esercizio "+this.getEsercizio().toString(), "Esercizio "+this.getEsercizio().toString());
@@ -132,7 +133,7 @@ public class CMISFolderProcedura extends OggettoBulk {
 		return cmisPath;
 	}
 	
-	public boolean isEqualsTo(Node node, List<String> listError){
+	public boolean isEqualsTo(CmisObject node, List<String> listError){
 		String initTesto = "Procedura "+this.getEsercizio().toString()+"/"+this.getPg_procedura().toString()+" - Disallineamento dato ";
 		boolean isEquals = true;
 		String valueDB=null, valueCMIS=null; 

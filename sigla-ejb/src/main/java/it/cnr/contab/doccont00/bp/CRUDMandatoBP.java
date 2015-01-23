@@ -1,39 +1,33 @@
 package it.cnr.contab.doccont00.bp;
 
-import it.cnr.cmisdl.model.Node;
-import it.cnr.cmisdl.model.paging.ListNodePage;
-import it.cnr.cmisdl.service.NodeService;
-import it.cnr.contab.cmis.service.CMISService;
-import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoCupBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoCupIBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoSiopeCupBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoSiopeCupIBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_siopeBulk;
+import it.cnr.contab.doccont00.core.bulk.V_doc_attivo_accertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.V_doc_passivo_obbligazioneBulk;
 import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.*;
-
-import javax.servlet.ServletException;
-
-import org.apache.pdfbox.exceptions.COSVisitorException;
-import org.apache.pdfbox.io.IOUtils;
-import org.apache.pdfbox.util.PDFMergerUtility;
-
-import it.cnr.contab.doccont00.core.bulk.*;
-import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
-import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.util.action.*;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Business Process che gestisce le attività di CRUD per l'entita' Mandato

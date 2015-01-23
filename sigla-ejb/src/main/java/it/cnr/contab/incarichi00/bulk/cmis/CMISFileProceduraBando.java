@@ -1,6 +1,5 @@
 package it.cnr.contab.incarichi00.bulk.cmis;
 
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.cmis.CMISTypeName;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
@@ -13,6 +12,8 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Document;
 
 public class CMISFileProceduraBando extends CMISFileProcedura implements CMISTypeName{
 	private static final long serialVersionUID = -1775673719677028944L;
@@ -26,7 +27,7 @@ public class CMISFileProceduraBando extends CMISFileProcedura implements CMISTyp
 		super(incaricoProceduraArchivio);
 	}
 
-	public CMISFileProceduraBando(Node node, Incarichi_procedura_archivioBulk incaricoProceduraArchivio) {
+	public CMISFileProceduraBando(Document node, Incarichi_procedura_archivioBulk incaricoProceduraArchivio) {
 		super(node, incaricoProceduraArchivio);
 	}
 
@@ -48,7 +49,7 @@ public class CMISFileProceduraBando extends CMISFileProcedura implements CMISTyp
 		return this.getIncaricoProceduraArchivio().getIncarichi_procedura().getDt_fine_pubblicazione();
 	}
 	
-	public boolean isEqualsTo(Node node, List<String> listError){
+	public boolean isEqualsTo(CmisObject node, List<String> listError){
 		String initTesto = "Procedura "+this.getEsercizioProcedura().toString()+"/"+this.getPgProcedura().toString()+" - Disallineamento dato ";
 		boolean isEquals = super.isEqualsTo(node, listError);
 		String valueDB=null, valueCMIS=null; 

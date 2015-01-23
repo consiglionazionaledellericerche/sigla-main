@@ -6,8 +6,6 @@
  */
 package it.cnr.contab.config00.bp;
 
-import it.cnr.cmisdl.model.Node;
-import it.cnr.cmisdl.model.paging.ListNodePage;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
@@ -41,6 +39,10 @@ import java.util.Iterator;
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 
+import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.client.api.Folder;
+import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
 
 /**
@@ -349,17 +351,17 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 			throw handleException(e);
 		}
 		try {
-			Node node = contrattoService.getFolderContratto((ContrattoBulk)getModel());
+			Folder folder = contrattoService.getFolderContratto((ContrattoBulk)getModel());
 			if (!contratto.isAllegatoContrattoPresent())
 				throw handleException(new ApplicationException("Bisogna allegare il file del Contratto!"));
 			contratto.setFl_pubblica_contratto(Boolean.TRUE);
 			contratto.setToBeUpdated();
 			ContrattoComponentSession comp = (ContrattoComponentSession)createComponentSession();
 			comp.modificaConBulk(context.getUserContext(), contratto);
-			if (node != null){
-				contrattoService.updateProperties(contratto, node);
-				contrattoService.addAspect(node, "P:sigla_contratti_aspect:stato_definitivo");
-				contrattoService.addConsumerToEveryone(node);
+			if (folder != null){
+				contrattoService.updateProperties(contratto, folder);
+				contrattoService.addAspect(folder, "P:sigla_contratti_aspect:stato_definitivo");
+				contrattoService.addConsumerToEveryone(folder);
 			}
 			edit(context,contratto);
 		}catch(it.cnr.jada.comp.ComponentException ex){
@@ -440,9 +442,9 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		} catch (ApplicationException e) {
 			throw handleException(e);
 		}
-		Node node = contrattoService.getFolderContratto((ContrattoBulk) getModel());
-		if (node != null)
-			contrattoService.updateProperties(getModel(), node);
+		Folder folder = contrattoService.getFolderContratto((ContrattoBulk) getModel());
+		if (folder != null)
+			contrattoService.updateProperties(getModel(), folder);
 	}
 	
 	@Override
@@ -460,16 +462,17 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	public OggettoBulk initializeModelForEdit(ActionContext actioncontext,
 			OggettoBulk oggettobulk) throws BusinessProcessException {
 		ContrattoBulk contratto = (ContrattoBulk)super.initializeModelForEdit(actioncontext, oggettobulk);
-		Node node = contrattoService.getFolderContratto(contratto);
-		if (node != null){
-			ListNodePage<Node> children = contrattoService.getChildren(node, null, null);
-			for (Node child : children) {
-				AllegatoContrattoDocumentBulk allegato = AllegatoContrattoDocumentBulk.construct(child);
-				allegato.setContentType(child.getContentType());
+		Folder folder = contrattoService.getFolderContratto(contratto);
+		if (folder != null){
+			ItemIterable<CmisObject> children = contrattoService.getChildren(folder);
+			for (CmisObject child : children) {
+				Document cmisContratto = (Document) child;
+				AllegatoContrattoDocumentBulk allegato = AllegatoContrattoDocumentBulk.construct(cmisContratto);
+				allegato.setContentType(cmisContratto.getContentStreamMimeType());
 				allegato.setNome((String) child.getPropertyValue("sigla_contratti_attachment:original_name"));
-				allegato.setDescrizione(child.getDescription());
-				allegato.setTitolo(child.getTitle());
-				allegato.setType(child.getTypeId());
+				allegato.setDescrizione(cmisContratto.getProperty(ContrattoService.PROPERTY_DESCRIPTION).getValueAsString());
+				allegato.setTitolo(cmisContratto.getProperty(ContrattoService.PROPERTY_TITLE).getValueAsString());
+				allegato.setType(child.getType().getId());
 				allegato.setLink((String) child.getPropertyValue("sigla_contratti_aspect_link:url"));
 				allegato.setCrudStatus(OggettoBulk.NORMAL);
 				contratto.addToArchivioAllegati(allegato);
@@ -481,7 +484,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	public String getNomeAllegato(){
 		AllegatoContrattoDocumentBulk allegato = (AllegatoContrattoDocumentBulk)getCrudArchivioAllegati().getModel();
 		if (allegato != null && allegato.isNodePresent()){
-			Node node = contrattoService.getNodeByNodeRef(allegato.getNodeId());			
+			CmisObject node = contrattoService.getNodeByNodeRef(allegato.getNodeId());			
 			return node.getName();
 		}
 		return null;
@@ -489,11 +492,10 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	
 	public void scaricaAllegato(ActionContext actioncontext) throws IOException, ServletException {
 		AllegatoContrattoDocumentBulk allegato = (AllegatoContrattoDocumentBulk)getCrudArchivioAllegati().getModel();
-		Node node = contrattoService.getNodeByNodeRef(allegato.getNodeId());
+		Document node = (Document) contrattoService.getNodeByNodeRef(allegato.getNodeId());
 		InputStream is = contrattoService.getResource(node);
-		((HttpActionContext)actioncontext).getResponse().setContentLength(node.getContentLength().intValue());
-		((HttpActionContext)actioncontext).getResponse().setContentType(node.getContentType());
-		((HttpActionContext)actioncontext).getResponse().setContentLength(node.getContentLength().intValue());
+		((HttpActionContext)actioncontext).getResponse().setContentLength(Long.valueOf(node.getContentStreamLength()).intValue());
+		((HttpActionContext)actioncontext).getResponse().setContentType(node.getContentStreamMimeType());
 		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
 		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
 		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
@@ -521,7 +523,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		for (AllegatoContrattoDocumentBulk allegato : contratto.getArchivioAllegati()) {
 			if (allegato.isToBeCreated()){
 				try {
-					Node node;
+					CmisObject node;
 					if (allegato.getFile() != null){
 						node = contrattoService.storeSimpleDocument(allegato, 
 								new FileInputStream(allegato.getFile()),
@@ -534,7 +536,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 								allegato.getDocumentName(), contrattoService.getCMISPath(allegato), null, true);
 					}
 					if (contratto.isDefinitivo() && !allegato.getType().equals(AllegatoContrattoDocumentBulk.GENERICO))
-						contrattoService.costruisciAlberaturaAlternativa(allegato, node);
+						contrattoService.costruisciAlberaturaAlternativa(allegato, (Document) node);
 					
 					allegato.setCrudStatus(OggettoBulk.NORMAL);
 					allegato.setNodeId(node.getId());

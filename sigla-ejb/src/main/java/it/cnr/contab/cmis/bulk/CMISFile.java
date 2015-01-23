@@ -1,12 +1,11 @@
 package it.cnr.contab.cmis.bulk;
 
 
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
 import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.CMISService;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.jada.bulk.OggettoBulk;
 
 import java.io.ByteArrayInputStream;
@@ -17,6 +16,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.activation.MimetypesFileTypeMap;
+
+import org.apache.chemistry.opencmis.client.api.Document;
 
 @CMISType(name="cmis:document")
 public class CMISFile extends OggettoBulk {
@@ -30,7 +31,7 @@ public class CMISFile extends OggettoBulk {
     private String title;
     private String author;
     
-	private Node node=null;
+	private Document document=null;
 
     public CMISFile() {
 		super();
@@ -47,7 +48,7 @@ public class CMISFile extends OggettoBulk {
     	this.bytes = bytes;
         this.contentType = contentType;
         this.fileName = originalName;
-        this.node = null;
+        this.document = null;
     }
 
     public CMISFile(InputStream inputStream, String contentType, String originalName) {
@@ -66,16 +67,16 @@ public class CMISFile extends OggettoBulk {
     	this.bytes = baos.toByteArray();
         this.contentType = contentType;
         this.fileName = originalName;
-        this.node = null;
+        this.document = null;
     }
 
-    public CMISFile(Node node) {
-		this.node = node;
-        this.contentType = node.getContentType();
-        this.fileName = node.getName();
-        this.author = node.getAuthor();
-        this.description = node.getDescription();
-        this.title = node.getTitle();
+    public CMISFile(Document document) {
+		this.document = document;
+        this.contentType = document.getContentStreamMimeType();
+        this.fileName = document.getName();
+        this.author = document.getProperty(SiglaCMISService.PROPERTY_AUTHOR).getValuesAsString();
+        this.description = document.getProperty(SiglaCMISService.PROPERTY_DESCRIPTION).getValuesAsString();
+        this.title = document.getProperty(SiglaCMISService.PROPERTY_TITLE).getValuesAsString();
 	}
 	
     public CMISFile(File file, String contentType, String originalName) throws IOException{
@@ -86,12 +87,12 @@ public class CMISFile extends OggettoBulk {
 		this(new FileInputStream(file), new MimetypesFileTypeMap().getContentType(file), originalName);
     }
 
-    public Node getNode() {
-		return node;
+    public Document getDocument() {
+		return document;
 	}
 	
-	public void setNode(Node node) {
-		this.node = node;
+	public void setDocument(Document document) {
+		this.document = document;
 	}
 
 	/**
@@ -158,11 +159,11 @@ public class CMISFile extends OggettoBulk {
 		return null;
 	}
 
-	public CMISPath getCMISParentPath(CMISService cmisService){
+	public CMISPath getCMISParentPath(SiglaCMISService cmisService){
 		return null;
 	}
 
-	public CMISPath getCMISAlternativeParentPath(CMISService cmisService){
+	public CMISPath getCMISAlternativeParentPath(SiglaCMISService cmisService){
 		return null;
 	}
 }

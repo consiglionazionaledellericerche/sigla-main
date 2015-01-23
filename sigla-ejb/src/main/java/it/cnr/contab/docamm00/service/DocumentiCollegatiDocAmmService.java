@@ -1,8 +1,6 @@
 package it.cnr.contab.docamm00.service;
 
-import it.cnr.cmisdl.model.Node;
-import it.cnr.cmisdl.model.paging.ListNodePage;
-import it.cnr.contab.cmis.service.CMISService;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_doc_ammVBulk;
 import it.cnr.jada.DetailedException;
@@ -15,17 +13,16 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Folder;
+import org.apache.chemistry.opencmis.client.api.ItemIterable;
+import org.apache.chemistry.opencmis.client.api.QueryResult;
+import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
-import org.apache.commons.httpclient.Credentials;
-import org.apache.commons.httpclient.HttpClient;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.util.PDFMergerUtility;
 
-import com.google.gson.Gson;
-
-public class DocumentiCollegatiDocAmmService extends CMISService {
-	private HttpClient httpClient;
-	private Gson gson;
+public class DocumentiCollegatiDocAmmService extends SiglaCMISService {
 	
 	public List<String> getNodeRefContabile(Fattura_attivaBulk fattura)throws DetailedException{
 		return getNodeRefContabile(fattura.getEsercizio(), fattura.getCd_cds(), fattura.getCd_uo(), fattura.getPg_fattura_attiva(), Filtro_ricerca_doc_ammVBulk.DOC_ATT_GRUOP);
@@ -33,31 +30,30 @@ public class DocumentiCollegatiDocAmmService extends CMISService {
 
 	public List<String> getNodeRefContabile(Integer esercizio, String cds, String cdUo, Long pgFattura, String tipoDocumento)throws DetailedException{
 		List<String> ids = new ArrayList<String>();
-		Node node = recuperoFolderFattura(esercizio, cds, cdUo, pgFattura);
+		Folder node = recuperoFolderFattura(esercizio, cds, cdUo, pgFattura);
 		if (node == null){
 			throw new ApplicationException("Non esistono documenti collegati alla fattura.  Anno:"+ esercizio+ " cds:" +cds +" uo:"+cdUo+" numero:"+pgFattura);
 		}
-		String folder = (String) node.getPropertyValue("cmis:objectId"); 
+		String folder = (String) node.getPropertyValue(PropertyIds.OBJECT_ID); 
 		StringBuffer query = new StringBuffer("select doc.cmis:objectId from cmis:document doc ");
 		query.append(" join sigla_fatture_attachment:stampa_fattura_prima_protocollo fatture on doc.cmis:objectId = fatture.cmis:objectId");
 		query.append(" where IN_FOLDER(doc, '").append(folder).append("')");
 		//				query.append(" and contabili.sigla_contabili_aspect:cds = '").append(cds).append("'");
 		//				query.append(" and contabili.sigla_contabili_aspect:num_mandato = ").append(pgMandato);
 		//				query.append(" order by doc.cmis:creationDate DESC");
-		ListNodePage<Node> results = search(query, Boolean.FALSE);
-
-		if (results.isEmpty())
+		ItemIterable<QueryResult> results = search(query);
+		if (results.getTotalNumItems() == 0)
 			return null;
 		else {
-			for (Node nodeFile : results) {
-				String file = (String) nodeFile.getPropertyValue("cmis:objectId"); 
+			for (QueryResult nodeFile : results) {
+				String file = nodeFile.getPropertyValueById(PropertyIds.OBJECT_ID);
 				ids.add(file);
 			}
 		}
 		return ids;
 	}
 	
-	public Node recuperoFolderFattura(Integer esercizio, String cds, String cdUo, Long pgFattura)throws DetailedException{
+	public Folder recuperoFolderFattura(Integer esercizio, String cds, String cdUo, Long pgFattura)throws DetailedException{
 		int posizionePunto = cdUo.indexOf(".");
 		StringBuffer query = new StringBuffer("select fat.cmis:objectId from sigla_fatture:fatture_attive fat join strorg:uo uo on fat.cmis:objectId = uo.cmis:objectId ");
 		query.append(" join strorg:cds cds on fat.cmis:objectId = cds.cmis:objectId ");
@@ -68,15 +64,18 @@ public class DocumentiCollegatiDocAmmService extends CMISService {
 		query.append(" and cds.strorgcds:codice = '").append(cds).append("'");
 		//		query.append(" and contabili.sigla_contabili_aspect:num_mandato = ").append(pgMandato);
 		//		query.append(" order by doc.cmis:creationDate DESC");
-		ListNodePage<Node> resultsFolder = search(query, Boolean.FALSE);
-		if (resultsFolder.isEmpty())
+		ItemIterable<QueryResult> resultsFolder = search(query);
+		if (resultsFolder.getTotalNumItems() == 0)
 			return null;
-		else if (resultsFolder.size() > 1){
+		else if (resultsFolder.getTotalNumItems() > 1){
 			throw new ApplicationException("Errore di sistema, esistono sul documentale piu' fatture.  Anno:"+ esercizio+ " cds:" +cds +" uo:"+cdUo+
 					" numero:"+pgFattura);
 		} else {
-			return resultsFolder.get(0);
+			for (QueryResult queryResult : resultsFolder) {
+				return (Folder) getNodeByNodeRef((String) queryResult.getPropertyValueById(PropertyIds.OBJECT_ID));
+			}
 		}
+		return null;
 	}
 	
 	public InputStream getStreamContabile(Integer esercizio, String cds, String cdUo, Long pgFattura, String tipoDocumento) throws Exception{
@@ -109,25 +108,5 @@ public class DocumentiCollegatiDocAmmService extends CMISService {
 	
 	public InputStream getStreamContabile(Fattura_attivaBulk fattura) throws Exception{
 		return getStreamContabile(fattura.getEsercizio(), fattura.getCd_cds(), fattura.getCd_uo(), fattura.getPg_fattura_attiva(), Filtro_ricerca_doc_ammVBulk.DOC_ATT_GRUOP);
-	}
-
-	public Credentials getCredentials(){
-		return systemCredentials;
-	}
-
-	public HttpClient getHttpClient() {
-		return httpClient;
-	}
-
-	public void setHttpClient(HttpClient httpClient) {
-		this.httpClient = httpClient;
-	}
-
-	public Gson getGson() {
-		return gson;
-	}
-
-	public void setGson(Gson gson) {
-		this.gson = gson;
 	}
 }

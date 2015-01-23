@@ -139,30 +139,43 @@
 			<type>ejb</type>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>it.cnr.cmisdl</groupId>
-			<artifactId>cmisdl-web-scripts</artifactId>
-			<version>${cmisdl.version}</version>
-			<scope>compile</scope>
-			<exclusions>
-				<exclusion>
-					<artifactId>xercesImpl</artifactId>
-					<groupId>xerces</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>xml-apis</artifactId>
-					<groupId>xml-apis</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>servlet-api</artifactId>
-					<groupId>javax.servlet</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jaxws-rt</artifactId>
-					<groupId>com.sun.xml.ws</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+	    <dependency>
+	      <groupId>org.apache.chemistry.opencmis</groupId>
+	      <artifactId>chemistry-opencmis-client-impl</artifactId>
+	      <version>${opencmis.version}</version>
+	      <exclusions>
+	        <exclusion>
+	          <artifactId>stax-ex</artifactId>
+	          <groupId>org.jvnet.staxex</groupId>
+	        </exclusion>
+	        <exclusion>
+	          <artifactId>activation</artifactId>
+	          <groupId>javax.activation</groupId>
+	        </exclusion>
+	        <exclusion>
+	          <artifactId>jaxws-rt</artifactId>
+	          <groupId>com.sun.xml.ws</groupId>
+	        </exclusion>
+	        <exclusion>
+	          <artifactId>commons-logging</artifactId>
+	          <groupId>commons-logging</groupId>
+	        </exclusion>
+	        <exclusion>
+	          <artifactId>commons-codec</artifactId>
+	          <groupId>commons-codec</groupId>
+	        </exclusion>
+	      </exclusions>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.slf4j</groupId>
+	      <artifactId>slf4j-log4j12</artifactId>
+	      <version>${slf4j.version}</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.slf4j</groupId>
+	      <artifactId>slf4j-api</artifactId>
+	      <version>${slf4j.version}</version>
+	    </dependency>
 		<dependency>
 			<groupId>com.lowagie</groupId>
 			<artifactId>itext</artifactId>
@@ -335,6 +348,14 @@
 					<artifactId>geronimo-jms_1.1_spec</artifactId>
 					<groupId>org.apache.geronimo.specs</groupId>
 				</exclusion>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>slf4j-log4j12</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -351,6 +372,12 @@
 			<groupId>org.apache.rampart</groupId>
 			<artifactId>rampart-core</artifactId>
 			<version>1.5.1</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
@@ -382,10 +409,27 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.9</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>1.4</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>		
  		<dependency>
       		<groupId>org.apache.pdfbox</groupId>
       		<artifactId>pdfbox</artifactId>
       		<version>1.7.1</version>
     	</dependency>	
+		<dependency>
+		  <groupId>org.json</groupId>
+		  <artifactId>json</artifactId>
+		  <version>20140107</version>
+		</dependency>    	
+		<dependency>
+		  <groupId>commons-io</groupId>
+		  <artifactId>commons-io</artifactId>
+		  <version>2.4</version>
+		</dependency>    	
 </dependencies>
 </project>

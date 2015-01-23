@@ -3,7 +3,7 @@
  * Date 03/04/2008
  */
 package it.cnr.contab.incarichi00.bulk;
-import it.cnr.cmisdl.model.Node;
+
 import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.persistency.Persister;
@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.StringTokenizer;
+
+import org.apache.chemistry.opencmis.client.api.Document;
 public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 	public static final java.util.Dictionary tipo_archivioKeys = new it.cnr.jada.util.OrderedHashtable();
 	public static final java.util.Dictionary statoKeys = new it.cnr.jada.util.OrderedHashtable();
@@ -170,7 +172,7 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 	public CMISFile getCMISFile() throws IOException{
 		return null;
 	}
-	public CMISFile getCMISFile(Node node){
+	public CMISFile getCMISFile(Document node){
 		return null;
 	}
 	public String getDownloadUrl() {

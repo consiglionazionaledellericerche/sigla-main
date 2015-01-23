@@ -1,6 +1,5 @@
 package it.cnr.contab.config00.bp;
 
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.jada.action.ActionContext;
@@ -11,6 +10,8 @@ import it.cnr.jada.util.jsp.Button;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.chemistry.opencmis.client.api.Folder;
 
 public class CRUDConfigAnagContrattoMasterBP extends CRUDConfigAnagContrattoBP {
 	private static final long serialVersionUID = 1L;
@@ -87,7 +88,7 @@ public class CRUDConfigAnagContrattoMasterBP extends CRUDConfigAnagContrattoBP {
 	public void unpublishContratto(ActionContext context) throws it.cnr.jada.action.BusinessProcessException{
 		ContrattoBulk contratto = (ContrattoBulk) getModel();
 		try {
-			Node node = contrattoService.getFolderContratto((ContrattoBulk)getModel());
+			Folder node = contrattoService.getFolderContratto((ContrattoBulk)getModel());
 			contratto.setFl_pubblica_contratto(Boolean.FALSE);
 			contratto.setToBeUpdated();
 			ContrattoComponentSession comp = (ContrattoComponentSession)createComponentSession();

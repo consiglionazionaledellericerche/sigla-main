@@ -1,6 +1,5 @@
 package it.cnr.contab.incarichi00.bp;
 
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
@@ -58,9 +57,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
 
-import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 
+import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -2244,11 +2243,10 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
     
 	public void scaricaFile(ActionContext actioncontext, String cmsNodeRef) throws IOException, ServletException {
 		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
-		Node node = contrattiService.getNodeByNodeRef(cmsNodeRef);
+		Document node = (Document) contrattiService.getNodeByNodeRef(cmsNodeRef);
 		InputStream is = contrattiService.getResource(node);
-		((HttpActionContext)actioncontext).getResponse().setContentLength(node.getContentLength().intValue());		
-		((HttpActionContext)actioncontext).getResponse().setContentType(node.getContentType());
-		((HttpActionContext)actioncontext).getResponse().setContentLength(node.getContentLength().intValue());
+		((HttpActionContext)actioncontext).getResponse().setContentLength(Long.valueOf(node.getContentStreamLength()).intValue());		
+		((HttpActionContext)actioncontext).getResponse().setContentType(node.getContentStreamMimeType());
 		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
 		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
 		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];

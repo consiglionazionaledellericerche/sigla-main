@@ -35,7 +35,7 @@
 			<bean class="org.apache.commons.httpclient.MultiThreadedHttpConnectionManager"></bean>
 		</constructor-arg>
 	</bean>
-
+	<bean id="gson" class="com.google.gson.Gson"/>	
     <bean id="printService" class="it.cnr.contab.reports.service.PrintService">
     	<property name="offlineReportComponent" ref="offlineReportComponent"/>
     	<property name="gson" ref="gson"/>

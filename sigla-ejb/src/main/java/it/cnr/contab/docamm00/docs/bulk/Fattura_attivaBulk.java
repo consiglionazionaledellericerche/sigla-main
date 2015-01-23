@@ -5,16 +5,12 @@ package it.cnr.contab.docamm00.docs.bulk;
  * Creation date: (9/5/2001 5:02:18 PM)
  * @author: Ardire Alfonso
  */
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
-import it.cnr.contab.cmis.bulk.CMISFile;
-import it.cnr.contab.docamm00.cmis.CMISFileFatturaAttiva;
-import it.cnr.contab.docamm00.cmis.CMISFolderFatturaAttiva;
 import it.cnr.contab.docamm00.intrastat.bulk.Fattura_attiva_intraBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
@@ -40,7 +36,6 @@ import it.cnr.jada.util.StrServ;
 import it.cnr.jada.util.action.CRUDBP;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;

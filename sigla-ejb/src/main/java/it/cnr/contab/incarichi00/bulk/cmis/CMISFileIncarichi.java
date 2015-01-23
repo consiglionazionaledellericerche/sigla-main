@@ -1,12 +1,11 @@
 package it.cnr.contab.incarichi00.bulk.cmis;
 
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.cmis.CMISTypeName;
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.CMISService;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_rappBulk;
@@ -18,6 +17,8 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
+
+import org.apache.chemistry.opencmis.client.api.Document;
 
 public class CMISFileIncarichi extends CMISFile implements CMISTypeName{
 	private static final long serialVersionUID = -1775673719677028944L;
@@ -63,7 +64,7 @@ public class CMISFileIncarichi extends CMISFile implements CMISTypeName{
     	initCMISField(incaricoRepertorioVar.getEsercizio(), incaricoRepertorioVar.getPg_repertorio(), originalName);
     }
 
-    public CMISFileIncarichi(Node node, Incarichi_repertorio_archivioBulk incaricoRepertorioArchivio) {
+    public CMISFileIncarichi(Document node, Incarichi_repertorio_archivioBulk incaricoRepertorioArchivio) {
 		super(node);
     	setIncaricoArchivio(incaricoRepertorioArchivio);
     	if (node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_ATTACHMENT_ORIGINAL_NAME.value())!=null)
@@ -72,7 +73,7 @@ public class CMISFileIncarichi extends CMISFile implements CMISTypeName{
     		this.setOriginalName(incaricoRepertorioArchivio.getNome_file());
 	}
 
-    public CMISFileIncarichi(Node node, Incarichi_repertorio_rappBulk incaricoRepertorioRapp) {
+    public CMISFileIncarichi(Document node, Incarichi_repertorio_rappBulk incaricoRepertorioRapp) {
 		super(node);
 		setIncaricoArchivio(incaricoRepertorioRapp);
     	if (node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_ATTACHMENT_ORIGINAL_NAME.value())!=null)
@@ -81,7 +82,7 @@ public class CMISFileIncarichi extends CMISFile implements CMISTypeName{
     		this.setOriginalName(incaricoRepertorioRapp.getNome_file());
 	}
 
-    public CMISFileIncarichi(Node node, Incarichi_repertorio_varBulk incaricoRepertorioVar) {
+    public CMISFileIncarichi(Document node, Incarichi_repertorio_varBulk incaricoRepertorioVar) {
 		super(node);
 		setIncaricoArchivio(incaricoRepertorioVar);
     	if (node.getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_ATTACHMENT_ORIGINAL_NAME.value())!=null)
@@ -120,8 +121,8 @@ public class CMISFileIncarichi extends CMISFile implements CMISTypeName{
     			return ((Incarichi_repertorio_rappBulk)getIncaricoArchivio()).getEsercizio();
     		else if (getIncaricoArchivio() instanceof Incarichi_repertorio_varBulk)
     			return ((Incarichi_repertorio_varBulk)getIncaricoArchivio()).getEsercizio();
-    	if (getNode()!=null)
-    		return ((BigInteger) getNode().getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_INCARICHI_ESERCIZIO.value())).intValue();
+    	if (getDocument()!=null)
+    		return ((BigInteger) getDocument().getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_INCARICHI_ESERCIZIO.value())).intValue();
     	return null;
     }
 
@@ -134,8 +135,8 @@ public class CMISFileIncarichi extends CMISFile implements CMISTypeName{
     			return ((Incarichi_repertorio_rappBulk)getIncaricoArchivio()).getPg_repertorio();
     		else if (getIncaricoArchivio() instanceof Incarichi_repertorio_varBulk)
     			return ((Incarichi_repertorio_varBulk)getIncaricoArchivio()).getPg_repertorio();
-    	if (getNode()!=null)
-    		return ((BigInteger) getNode().getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_INCARICHI_PROGRESSIVO.value())).longValue();
+    	if (getDocument()!=null)
+    		return ((BigInteger) getDocument().getPropertyValue(CMISContrattiProperty.SIGLA_CONTRATTI_INCARICHI_PROGRESSIVO.value())).longValue();
     	return null;
     }
 
@@ -187,7 +188,7 @@ public class CMISFileIncarichi extends CMISFile implements CMISTypeName{
     	return "cmis:document";
 	}
 
-	public CMISPath getCMISParentPath(CMISService cmisService){
+	public CMISPath getCMISParentPath(SiglaCMISService cmisService){
     	if (getIncaricoArchivio()!=null) {
     		if (getIncaricoArchivio() instanceof Incarichi_repertorio_archivioBulk &&
        			((Incarichi_repertorio_archivioBulk)getIncaricoArchivio()).getIncarichi_repertorio()!=null)
@@ -202,7 +203,7 @@ public class CMISFileIncarichi extends CMISFile implements CMISTypeName{
 		return null;
 	}
 	
-	public CMISPath getCMISAlternativeParentPath(CMISService cmisService){
+	public CMISPath getCMISAlternativeParentPath(SiglaCMISService cmisService){
 		CMISPath cmisPath = null;
     	if (getIncaricoArchivio()!=null) {
     		if (getIncaricoArchivio() instanceof Incarichi_repertorio_archivioBulk &&
@@ -231,7 +232,7 @@ public class CMISFileIncarichi extends CMISFile implements CMISTypeName{
 		this.originalName = originalName;
 	}
 
-	public boolean isEqualsTo(Node node, List<String> listError){
+	public boolean isEqualsTo(Document node, List<String> listError){
 		String initTesto = "Procedura "+this.getEsercizioProcedura().toString()+"/"+this.getPgProcedura().toString()+" - " +
 						   "Incarico "+this.getEsercizioIncarico().toString()+"/"+this.getPgIncarico().toString()+" - Disallineamento dato ";
 		boolean isEquals = true;
@@ -273,7 +274,7 @@ public class CMISFileIncarichi extends CMISFile implements CMISTypeName{
 		}
 
 		valueDB=String.valueOf(this.getTypeName());
-		valueCMIS=String.valueOf(node.getTypeId());
+		valueCMIS=String.valueOf(node.getType().getId());
 		if (!valueCMIS.equals(valueDB)) {
 			listError.add(initTesto+" - Type documento - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;

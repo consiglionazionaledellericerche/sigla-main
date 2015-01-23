@@ -1,6 +1,5 @@
 package it.cnr.contab.incarichi00.bp;
 
-import it.cnr.cmisdl.model.Calendar;
 import it.cnr.contab.config00.bp.ResponseXMLBP;
 import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
@@ -23,7 +22,6 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 

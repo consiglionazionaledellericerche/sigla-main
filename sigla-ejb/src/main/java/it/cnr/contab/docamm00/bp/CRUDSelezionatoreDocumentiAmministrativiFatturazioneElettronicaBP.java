@@ -1,10 +1,10 @@
 package it.cnr.contab.docamm00.bp;
 
 
-import it.cnr.cmisdl.model.Node;
-import it.cnr.cmisdl.model.SessionCredential;
+import it.cnr.contab.cmis.MimeTypes;
 import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.cmis.CMISFileFatturaAttiva;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.StringReader;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -43,13 +44,12 @@ import java.util.List;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 
+import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.client.bindings.spi.http.Response;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
-import org.apache.commons.httpclient.HttpClient;
+import org.apache.chemistry.opencmis.commons.impl.UrlBuilder;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.httpclient.util.URIUtil;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -166,14 +166,15 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 	    				//E' previsto solo l'inserimento ma non l'aggiornamento
 	    				CMISPath path = cmisFile.getCMISParentPath(cmisService);
 	    				try{
-	    					Node node = cmisService.restoreSimpleDocument(cmisFile,
+	    					Document node = cmisService.restoreSimpleDocument(
+	    							cmisFile,
 	    							cmisFile.getInputStream(),
 	    							cmisFile.getContentType(),
 	    							cmisFile.getFileName(), 
 	    							path);
 	    					cmisService.addAspect(node, CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_ANTE_FIRMA.value());
 	    					cmisService.makeVersionable(node);
-	    					cmisFile.setNode(node);
+	    					cmisFile.setDocument(node);
 	    					cmisFileCreate.add(cmisFile);
 	    				} catch (Exception e) {
 	    					if (e.getCause() instanceof CmisConstraintException)
@@ -183,26 +184,20 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 	    				componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fattura, Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI, null);
 	    				String webScriptURL = documentiCollegatiDocAmmService.getRepositoyURL().concat("/sigla/firma/fatture");
 	    	    		String json = "{" +
-	    	    				"\"nodeRefSource\" : \"" + cmisFile.getNode().getVersionSeriesId() + "\"," +
+	    	    				"\"nodeRefSource\" : \"" + cmisFile.getDocument().getProperty(SiglaCMISService.ALFCMIS_NODEREF).getValueAsString() + "\"," +
 	    	    				"\"username\" : \"" + firmaOTPBulk.getUserName() + "\"," +
 	    	    				"\"password\" : \"" + firmaOTPBulk.getPassword() + "\"," +
 	    	    				"\"otp\" : \"" + firmaOTPBulk.getOtp() + "\""
 	    	    				+ "}";
-	    	    		PostMethod method = null;
 	    	    		try {		
-	    	    			method = new PostMethod(URIUtil.encodePath(webScriptURL));
-	    	    			method.setRequestEntity(new StringRequestEntity(json, "application/json", "UTF-8"));
-	    	    			HttpClient client = documentiCollegatiDocAmmService.getHttpClient();
-	    	    			client.getState().setCredentials(AuthScope.ANY, 
-	    	    					((SessionCredential)documentiCollegatiDocAmmService.getCredentials()).getUsernamePasswordCredentials());
-	    	    			client.getParams().setAuthenticationPreemptive(true);
-	    	    			client.executeMethod(method);
-	    	    			int status = method.getStatusCode();
+	    	    			UrlBuilder url = new UrlBuilder(URIUtil.encodePath(webScriptURL));
+	    	    			Response response = documentiCollegatiDocAmmService.invokePOST(url, MimeTypes.JSON, json.getBytes("UTF-8"));
+	    	    			int status = response.getResponseCode();
 	    	    			if (status == HttpStatus.SC_NOT_FOUND
 	    	    					|| status == HttpStatus.SC_INTERNAL_SERVER_ERROR
 	    	    					|| status == HttpStatus.SC_UNAUTHORIZED
 	    	    					|| status == HttpStatus.SC_BAD_REQUEST) {
-	    	    				JSONTokener tokenizer = new JSONTokener(new InputStreamReader(method.getResponseBodyAsStream()));
+	    	    				JSONTokener tokenizer = new JSONTokener(new StringReader(response.getErrorContent()));
 	    	    			    JSONObject jsonObject = new JSONObject(tokenizer);
 	    	    			    String jsonMessage = jsonObject.getString("message");
 	    	    				throw new ApplicationException(FirmaOTPBulk.errorMessage(jsonMessage));
@@ -214,9 +209,6 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 	    	    			throw new BusinessProcessException(e);
 	    	    		} catch (Exception e) {
 	    	    			throw new BusinessProcessException(e);
-	    	    		} finally {
-	    	    			if (method != null)
-	    	    				method.releaseConnection();
 	    	    		}
 	    			}
 	    		} catch (Exception e){
@@ -228,8 +220,8 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 	    				String cmisFileEstensione = cmisFileName.substring(cmisFileName.lastIndexOf(".")+1);
 	    				String stringToDelete = cmisFileName.substring(cmisFileName.indexOf("-ANNULLATO"));
 	    				cmisFile.setFileName(cmisFileName.replace(stringToDelete, "."+cmisFileEstensione));
-	    				cmisService.updateProperties(cmisFile, cmisFile.getNode());
-	    				cmisService.removeAspect(cmisFile.getNode());
+	    				cmisService.updateProperties(cmisFile, cmisFile.getDocument());
+	    				cmisService.removeAspect(cmisFile.getDocument());
 	    			}
 	    			rollbackUserTransaction();
 	    			extracted(e);

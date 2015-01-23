@@ -4,7 +4,7 @@ import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
 import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.CMISService;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.Utility;
@@ -200,14 +200,14 @@ public class CMISFolderFatturaAttiva extends OggettoBulk {
 		return this.getFattura_attivaBulk().getModalita_pagamento_uo().getCd_modalita_pag();
 	}
 
-	public CMISPath getCMISPrincipalPath(CMISService cmisService){
+	public CMISPath getCMISPrincipalPath(SiglaCMISService cmisService){
 		CMISPath cmisPath = SpringUtil.getBean("cmisPathFatture",CMISPath.class);
 		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, this.getFattura_attivaBulk().getCd_uo_origine(), getFattura_attivaBulk().getCd_uo_origine(), getFattura_attivaBulk().getCd_uo_origine());
 		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, "Fatture Attive", "Fatture Attive", "Fatture Attive");
 		return cmisPath;
 	}
 
-	public CMISPath getCMISPath(CMISService cmisService){
+	public CMISPath getCMISPath(SiglaCMISService cmisService){
 		CMISPath cmisPath = this.getCMISPrincipalPath(cmisService);
 		if (cmisPath!=null) {
 			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, this.getEsercizioFattura().toString(), "Esercizio "+this.getEsercizioFattura().toString(), "Esercizio "+this.getEsercizioFattura().toString());

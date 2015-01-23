@@ -1,18 +1,18 @@
 package it.cnr.contab.docamm00.cmis;
 
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.cmis.CMISTypeName;
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.CMISService;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -35,17 +35,17 @@ public class CMISFileFatturaAttiva extends CMISFile implements CMISTypeName{
     	impostaDatiBaseFattura(file.getName(), fattura);
 	}
 	
-    public CMISFileFatturaAttiva(Node node) {
+    public CMISFileFatturaAttiva(Document node) {
 		super(node);
     }
 	
-	public CMISPath getCMISParentPath(CMISService cmisService){
+	public CMISPath getCMISParentPath(SiglaCMISService cmisService){
     	if (getFattura_attivaBulk()!=null )
     		return getCMISFolder(this.getFattura_attivaBulk()).getCMISPath(cmisService);
 		return null;
 	}
 
-	public CMISPath getCMISAlternativeParentPath(CMISService cmisService){
+	public CMISPath getCMISAlternativeParentPath(SiglaCMISService cmisService){
 		CMISPath cmisPath = getCMISFolder(this.getFattura_attivaBulk()).getCMISPrincipalPath(cmisService);
 		if (cmisPath != null)
 			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, (String)Fattura_attivaBulk.getTipoFatturaKeys().get(this.getFattura_attivaBulk().getTi_fattura()), (String)Fattura_attivaBulk.getTipoFatturaKeys().get(this.getFattura_attivaBulk().getTi_fattura()), (String)Incarichi_archivioBulk.getTipo_archivioKeys().get(this.getFattura_attivaBulk().getTi_fattura()));

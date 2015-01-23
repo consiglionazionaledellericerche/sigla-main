@@ -1,6 +1,5 @@
 package it.cnr.contab.incarichi00.bulk.cmis;
 
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
@@ -12,6 +11,8 @@ import it.cnr.contab.incarichi00.cmis.CMISContrattiProperty;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -43,15 +44,15 @@ public class CMISFileBorseStudio extends CMISFileIncarichi {
 		super(file, originalName, incaricoRepertorioVar);
 	}
 
-	public CMISFileBorseStudio(Node node, Incarichi_repertorio_archivioBulk incaricoRepertorioArchivio) {
+	public CMISFileBorseStudio(Document node, Incarichi_repertorio_archivioBulk incaricoRepertorioArchivio) {
 		super(node, incaricoRepertorioArchivio);
 	}
 
-	public CMISFileBorseStudio(Node node, Incarichi_repertorio_rappBulk incaricoRepertorioRapp) {
+	public CMISFileBorseStudio(Document node, Incarichi_repertorio_rappBulk incaricoRepertorioRapp) {
 		super(node, incaricoRepertorioRapp);
 	}
 
-	public CMISFileBorseStudio(Node node, Incarichi_repertorio_varBulk incaricoRepertorioVar) {
+	public CMISFileBorseStudio(Document node, Incarichi_repertorio_varBulk incaricoRepertorioVar) {
 		super(node, incaricoRepertorioVar);
 	}
 
@@ -72,7 +73,7 @@ public class CMISFileBorseStudio extends CMISFileIncarichi {
 		this.setDescription((String)Incarichi_archivioBulk.getTipo_archivioKeys().get(getIncaricoArchivio().getTipo_archivio()).toString()+
 					" - Borsa di Studio nr."+esercizio+"/"+progressivo);
 	}
-	public boolean isEqualsTo(Node node){
+	public boolean isEqualsTo(CmisObject node){
 		String initTesto = "Procedura "+this.getEsercizioProcedura().toString()+"/"+this.getPgProcedura().toString()+" - " +
 						   "Incarico "+this.getEsercizioIncarico().toString()+"/"+this.getPgIncarico().toString()+" - Disallineamento dato ";
 		boolean isEquals = true;
@@ -114,7 +115,7 @@ public class CMISFileBorseStudio extends CMISFileIncarichi {
 		}
 
 		valueDB=String.valueOf(this.getTypeName());
-		valueCMIS=String.valueOf(node.getTypeId());
+		valueCMIS=String.valueOf(node.getType().getId());
 		if (!valueCMIS.equals(valueDB)) {
 			logger.debug(initTesto+" - Type documento - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;

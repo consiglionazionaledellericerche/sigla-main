@@ -4,13 +4,14 @@
  */
 package it.cnr.contab.incarichi00.bulk;
 
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.contab.incarichi00.bulk.cmis.CMISFileProcedura;
 import it.cnr.contab.incarichi00.bulk.cmis.CMISFileProceduraBando;
 import it.cnr.contab.util.Utility;
 
 import java.io.IOException;
+
+import org.apache.chemistry.opencmis.client.api.Document;
 
 public class Incarichi_procedura_archivioBulk extends Incarichi_procedura_archivioKey{
 	private Incarichi_proceduraBulk incarichi_procedura;
@@ -72,7 +73,7 @@ public class Incarichi_procedura_archivioBulk extends Incarichi_procedura_archiv
 		}
 		return cmisFile;
 	}
-	public CMISFile getCMISFile(Node node) {
+	public CMISFile getCMISFile(Document node) {
 		if (this.isBando())
 			return new CMISFileProceduraBando(node, this);
 		else
