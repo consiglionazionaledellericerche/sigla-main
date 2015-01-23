@@ -36,7 +36,7 @@
 
 <script language="JavaScript">
 function doScaricaFile() {	
-	doPrint('<%=(allegato==null?null:allegato.getDownloadUrl())%>');
+	doPrint('<%=(incaricoAllegato==null?null:incaricoAllegato.getDownloadUrl())%>');
 }
 </script>
 

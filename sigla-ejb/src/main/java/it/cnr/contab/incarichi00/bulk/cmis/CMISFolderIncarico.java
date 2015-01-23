@@ -1,17 +1,17 @@
 package it.cnr.contab.incarichi00.bulk.cmis;
 
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
 import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.CMISService;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.cmis.CMISContrattiProperty;
 import it.cnr.contab.util.Utility;
+
+import java.util.List;
+
+import org.apache.chemistry.opencmis.client.api.CmisObject;
 
 @CMISType(name="F:sigla_contratti:incarichi")
 public class CMISFolderIncarico extends CMISFolderContrattiModel {
@@ -32,7 +32,7 @@ public class CMISFolderIncarico extends CMISFolderContrattiModel {
 		return super.getPg_repertorio();
 	}
 	
-	public CMISPath getCMISPath(CMISService cmisService){
+	public CMISPath getCMISPath(SiglaCMISService cmisService){
 		CMISPath cmisPath = this.getCMISParentPath(cmisService);
 		if (cmisPath!=null) {
 			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, "Incarico "+this.getEsercizio().toString()+Utility.lpad(this.getPg_repertorio().toString(),10,'0'), "Incarico "+this.getEsercizio().toString()+"/"+this.getPg_repertorio().toString(), "Incarico "+this.getEsercizio().toString()+"/"+this.getPg_repertorio().toString(), this);
@@ -41,7 +41,7 @@ public class CMISFolderIncarico extends CMISFolderContrattiModel {
 		return cmisPath;
 	}
 	
-	public boolean isEqualsTo(Node node, List<String> listError){
+	public boolean isEqualsTo(CmisObject node, List<String> listError){
 		boolean isEquals = super.isEqualsTo(node, listError);
 		String initTesto = "Procedura "+this.getEsercizio_procedura().toString()+"/"+this.getPg_procedura().toString()+" - "+
 						   "Incarico "+this.getEsercizio().toString()+"/"+this.getPg_repertorio().toString()+" - Disallineamento dato ";

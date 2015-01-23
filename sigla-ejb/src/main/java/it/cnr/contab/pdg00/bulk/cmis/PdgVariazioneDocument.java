@@ -1,25 +1,27 @@
 package it.cnr.contab.pdg00.bulk.cmis;
 
-import it.cnr.cmisdl.model.Node;
 import it.cnr.contab.cmis.CMISAspect;
 import it.cnr.contab.cmis.CMISProperty;
 
 import java.io.Serializable;
 import java.math.BigInteger;
 
-public class PdgVariazioneDocument implements Serializable{
-	private final Node node;
+import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.commons.PropertyIds;
 
-	public static PdgVariazioneDocument construct(Node node){
+public class PdgVariazioneDocument implements Serializable{
+	private final Document node;
+
+	public static PdgVariazioneDocument construct(Document node){
 		return new PdgVariazioneDocument(node);
 	}
 	
-	public PdgVariazioneDocument(Node node) {
+	public PdgVariazioneDocument(Document node) {
 		super();
 		this.node = node;
 	}
 	
-	public Node getNode() {
+	public Document getDocument() {
 		return node;
 	}
 
@@ -32,6 +34,6 @@ public class PdgVariazioneDocument implements Serializable{
 	}
 	
 	public Boolean isSignedDocument(){
-		return node.hasAspect(CMISAspect.CNR_SIGNEDDOCUMENT.value());
+		return node.getProperty(PropertyIds.SECONDARY_OBJECT_TYPE_IDS).getValues().contains(CMISAspect.CNR_SIGNEDDOCUMENT.value());
 	}
 }

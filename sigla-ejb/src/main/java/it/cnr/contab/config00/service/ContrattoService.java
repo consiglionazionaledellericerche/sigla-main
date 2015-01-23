@@ -3,57 +3,63 @@ package it.cnr.contab.config00.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.cnr.cmisdl.model.Node;
-import it.cnr.cmisdl.model.paging.ListNodePage;
+import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.client.api.Folder;
+import org.apache.chemistry.opencmis.client.api.ItemIterable;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import it.cnr.contab.cmis.service.CMISPath;
-import it.cnr.contab.cmis.service.CMISService;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.bulk.OggettoBulk;
 
-public class ContrattoService extends CMISService {
+public class ContrattoService extends SiglaCMISService {
+	private transient static final Log logger = LogFactory.getLog(ContrattoService.class);
 
-	public Node getFolderContratto(ContrattoBulk contratto){
+	public Folder getFolderContratto(ContrattoBulk contratto){
 		StringBuffer query = new StringBuffer("select appalti.cmis:objectId from sigla_contratti:appalti as appalti");
 		query.append(" join sigla_contratti_aspect:appalti as aspect on appalti.cmis:objectId = aspect.cmis:objectId");
 		query.append(" where ").append("aspect.sigla_contratti_aspect_appalti:esercizio").append(" = ").append(contratto.getEsercizio());
 		query.append(" and ").append("aspect.sigla_contratti_aspect_appalti:stato").append(" = '").append(contratto.getStato()).append("'");
 		query.append(" and ").append("aspect.sigla_contratti_aspect_appalti:progressivo").append(" = ").append(contratto.getPg_contratto());
-		ListNodePage<Node> listNodePage = super.search(query, Boolean.TRUE);
+		List<CmisObject> listNodePage = super.searchAndFetchNode(query);
 		if (!listNodePage.isEmpty())
-			return listNodePage.get(0);
+			return (Folder) listNodePage.get(0);
 		return null;
 	}
 	
-	public ListNodePage<Node> findContrattiDefinitivi(){
+	public List<CmisObject> findContrattiDefinitivi(){
 		StringBuffer query = new StringBuffer("select appalti.cmis:objectId from sigla_contratti:appalti as appalti");
 		query.append(" join sigla_contratti_aspect:appalti as aspect on appalti.cmis:objectId = aspect.cmis:objectId");
 		query.append(" where ").append("aspect.sigla_contratti_aspect_appalti:stato = 'D'");
-		return super.search(query, Boolean.TRUE);
+		return super.searchAndFetchNode(query);
 	}
 	
 	public void findContrattiDefinitiviWithoutFile(){
-		ListNodePage<Node> nodes = findContrattiDefinitivi();
-		for (Node node : nodes) {
+		List<CmisObject> nodes = findContrattiDefinitivi();
+		for (CmisObject cmisObject : nodes) {
 			boolean exist = false;
-			ListNodePage<Node> childs = getChildren(node, null, null);
-			for (Node child : childs) {
-				if (child.getTypeId().equals(AllegatoContrattoDocumentBulk.CONTRATTO))
+			ItemIterable<CmisObject> childs = getChildren((Folder) cmisObject);
+			for (CmisObject child : childs) {
+				if (child.getType().getId().equals(AllegatoContrattoDocumentBulk.CONTRATTO))
 					exist = true;
 			}
 			if (!exist)
-				System.out.println(
-						(String)node.getPropertyValue("strorguo:codice")+" "+
-						node.getPropertyValue("sigla_contratti_aspect_appalti:progressivo"));
+				logger.error(
+						(String)cmisObject.getPropertyValue("strorguo:codice")+" "+
+								cmisObject.getPropertyValue("sigla_contratti_aspect_appalti:progressivo"));
 		}
 	}
 	
 	
-	public ListNodePage<Node> findNodeAllegatiContratto(ContrattoBulk contratto){
-		Node node = getFolderContratto(contratto);
+	public ItemIterable<CmisObject> findNodeAllegatiContratto(ContrattoBulk contratto){
+		Folder node = getFolderContratto(contratto);
 		if (node != null)
-			return super.getChildren(node, null, null);
+			return super.getChildren(node);
 		return null;
 	}
 	
@@ -68,15 +74,16 @@ public class ContrattoService extends CMISService {
 	
 	public List<AllegatoContrattoDocumentBulk> findAllegatiContratto(ContrattoBulk contratto){
 		List<AllegatoContrattoDocumentBulk> result = new ArrayList<AllegatoContrattoDocumentBulk>();
-		ListNodePage<Node> children = findNodeAllegatiContratto(contratto);
+		ItemIterable<CmisObject> children = findNodeAllegatiContratto(contratto);
 		if (children != null){
-			for (Node child : children) {
-				AllegatoContrattoDocumentBulk allegato = AllegatoContrattoDocumentBulk.construct(child);
-				allegato.setContentType(child.getContentType());
-				allegato.setNome((String) child.getPropertyValue("sigla_contratti_attachment:original_name"));
-				allegato.setDescrizione(child.getDescription());
-				allegato.setTitolo(child.getTitle());
-				allegato.setType(child.getTypeId());
+			for (CmisObject child : children) {
+				Document cmisContratto = (Document) child;
+				AllegatoContrattoDocumentBulk allegato = AllegatoContrattoDocumentBulk.construct(cmisContratto);
+				allegato.setContentType(cmisContratto.getContentStreamMimeType());
+				allegato.setNome((String) cmisContratto.getPropertyValue("sigla_contratti_attachment:original_name"));
+				allegato.setDescrizione(cmisContratto.getProperty(PROPERTY_DESCRIPTION).getValueAsString());
+				allegato.setTitolo(cmisContratto.getProperty(PROPERTY_TITLE).getValueAsString());
+				allegato.setType(cmisContratto.getType().getId());
 				allegato.setLink((String) child.getPropertyValue("sigla_contratti_aspect_link:url"));
 				allegato.setCrudStatus(OggettoBulk.NORMAL);
 				result.add(allegato);
@@ -118,21 +125,22 @@ public class ContrattoService extends CMISService {
 	}	
 	
 	public void costruisciAlberaturaAlternativa(
-			AllegatoContrattoDocumentBulk allegato, Node node) {
-		copyNode(node, getNodeByPath(getCMISPathAlternativo(allegato)));
+			AllegatoContrattoDocumentBulk allegato, Document source) {
+		copyNode(source, (Folder) getNodeByPath(getCMISPathAlternativo(allegato)));
 	}	
 	
-	public void changeProgressivoNodeRef(Node oldNode, ContrattoBulk contratto) {
+	public void changeProgressivoNodeRef(Folder oldNode, ContrattoBulk contratto) {
 		updateProperties(contratto, oldNode);
-		ListNodePage<Node> children = getChildren(oldNode, null, null);
-		for (Node child : children) {
-			AllegatoContrattoDocumentBulk allegato = AllegatoContrattoDocumentBulk.construct(child);
+		ItemIterable<CmisObject> children = getChildren(oldNode);
+		for (CmisObject child : children) {
+			Document cmisContratto = (Document) child;
+			AllegatoContrattoDocumentBulk allegato = AllegatoContrattoDocumentBulk.construct(cmisContratto);
 			allegato.setNome((String) child.getPropertyValue("sigla_contratti_attachment:original_name"));
-			allegato.setType(child.getTypeId());
+			allegato.setType(child.getType().getId());
 			allegato.setContrattoBulk(contratto);
 			updateProperties(allegato, child);
 			if (contratto.isDefinitivo() && !allegato.getType().equals(AllegatoContrattoDocumentBulk.GENERICO))
-				costruisciAlberaturaAlternativa(allegato, child);
+				costruisciAlberaturaAlternativa(allegato, cmisContratto);
 		}		
 	}	
 }

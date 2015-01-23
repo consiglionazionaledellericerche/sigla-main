@@ -1,11 +1,10 @@
 package it.cnr.contab.pdg00.bp;
 
-import it.cnr.cmisdl.model.Node;
-import it.cnr.cmisdl.model.SessionCredential;
-import it.cnr.cmisdl.model.paging.ListNodePage;
 import it.cnr.contab.cmis.CMISAspect;
 import it.cnr.contab.cmis.CMISRelationship;
+import it.cnr.contab.cmis.MimeTypes;
 import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.bulk.ServizioPecBulk;
@@ -54,18 +53,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.StringReader;
 import java.rmi.RemoteException;
 import java.util.List;
 
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 
-import org.apache.commons.httpclient.HttpClient;
+import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.client.bindings.spi.http.Response;
+import org.apache.chemistry.opencmis.commons.impl.UrlBuilder;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
@@ -175,7 +175,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		if (bulk != null) {
 			String nomeFileAllegato="";
 			if (!isTestSession())
-				nomeFileAllegato = bulk.getPdgVariazioneDocument().getNode().getName();
+				nomeFileAllegato = bulk.getPdgVariazioneDocument().getDocument().getName();
 			else
 				nomeFileAllegato = nomeFileTest;
 
@@ -199,15 +199,15 @@ public class FirmaDigitalePdgVariazioniBP extends
 													+ nomeFileAllegato+"x"
 													+ "?methodName=scaricaFileGenerico&it.cnr.jada.action.BusinessProcess="
 													+ getPath()) + "')");
-			Node nodeSignedFile = getNodeFileFirmato(bulk
+			Document nodeSignedFile = getNodeFileFirmato(bulk
 					.getPdgVariazioneDocument()
-					.getNode());
+					.getDocument());
 			String signedFileName = null;
 			if (!isTestSession()) {
 				if (nodeSignedFile!=null)
 					signedFileName=getNodeFileFirmato(bulk
 						.getPdgVariazioneDocument()
-						.getNode()).getName();
+						.getDocument()).getName();
 			} else {
 				signedFileName = nomeFileTestFirmato;
 				if (signedFileName!=null)
@@ -255,7 +255,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		if (!isTestSession())
 			return getFocusedElement() != null
 				&& !isUploadFile()
-				&& !bulk.getPdgVariazioneDocument().getNode().hasAspect(
+				&& !pdgVariazioniService.hasAspect(bulk.getPdgVariazioneDocument().getDocument(),
 						CMISAspect.CNR_SIGNEDDOCUMENT.value());
 		else
 			return getFocusedElement() != null;
@@ -265,7 +265,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		ArchiviaStampaPdgVariazioneBulk bulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
 		if (!isTestSession())
 			return getFocusedElement() != null
-				&& !bulk.getPdgVariazioneDocument().getNode().hasAspect(
+				&& !pdgVariazioniService.hasAspect(bulk.getPdgVariazioneDocument().getDocument(),
 						CMISAspect.CNR_SIGNEDDOCUMENT.value());
 		else
 			return getFocusedElement() != null;
@@ -274,7 +274,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 	public boolean isPrintSignedButtonEnabled() {
 		ArchiviaStampaPdgVariazioneBulk bulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
 		if (!isTestSession())
-			return getFocusedElement() != null && bulk.getPdgVariazioneDocument().getNode().hasAspect(
+			return getFocusedElement() != null && pdgVariazioniService.hasAspect(bulk.getPdgVariazioneDocument().getDocument(),
 				CMISAspect.CNR_SIGNEDDOCUMENT.value());
 		else
 			return getFocusedElement() != null;
@@ -284,7 +284,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		ArchiviaStampaPdgVariazioneBulk bulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
 		if (!isTestSession())
 			return getFocusedElement() != null
-				&& !bulk.getPdgVariazioneDocument().getNode().hasAspect(
+				&& !pdgVariazioniService.hasAspect(bulk.getPdgVariazioneDocument().getDocument(),
 						CMISAspect.CNR_SIGNEDDOCUMENT.value());
 		else
 			return getFocusedElement() != null;
@@ -356,13 +356,13 @@ public class FirmaDigitalePdgVariazioniBP extends
 		if (!isTestSession()) {
 			is = pdgVariazioniService
 					.getResource(archiviaStampaPdgVariazioneBulk
-							.getPdgVariazioneDocument().getNode());
+							.getPdgVariazioneDocument().getDocument());
 			((HttpActionContext) actioncontext).getResponse().setContentType(
 					archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
-							.getNode().getContentType());
+							.getDocument().getContentStreamMimeType());
 			((HttpActionContext) actioncontext).getResponse().setContentLength(
-					archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
-							.getNode().getContentLength().intValue());
+					Long.valueOf(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
+							.getDocument().getContentStreamLength()).intValue());
 		} else {
 			is = new BufferedInputStream(new FileInputStream(nomeFilePathTest));
 		}
@@ -382,11 +382,11 @@ public class FirmaDigitalePdgVariazioniBP extends
 		if (!isTestSession()) {
 			is = pdgVariazioniService
 					.getResource(archiviaStampaPdgVariazioneBulk
-							.getPdgVariazioneDocument().getNode());
+							.getPdgVariazioneDocument().getDocument());
 			((HttpActionContext) actioncontext).getResponse().setContentType("text/octet-stream");
 			((HttpActionContext) actioncontext).getResponse().setContentLength(
-					archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
-							.getNode().getContentLength().intValue());
+					Long.valueOf(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
+							.getDocument().getContentStreamLength()).intValue());
 		} else {
 			is = new BufferedInputStream(new FileInputStream(nomeFilePathTest));
 		}
@@ -407,16 +407,16 @@ public class FirmaDigitalePdgVariazioniBP extends
 		if (!isTestSession()) {
 			is = pdgVariazioniService
 					.getResource(archiviaStampaPdgVariazioneBulk
-							.getPdgVariazioneDocument().getNode());
+							.getPdgVariazioneDocument().getDocument());
 			((HttpActionContext) actioncontext).getResponse().setContentType(
 					archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
-							.getNode().getContentType());
+							.getDocument().getContentStreamMimeType());
 			((HttpActionContext) actioncontext).getResponse().setContentLength(
-					archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
-							.getNode().getContentLength().intValue());
+					Long.valueOf(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
+							.getDocument().getContentStreamLength()).intValue());
 			fout = new File(filePath.getParent()+File.separator+
 					archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
-							.getNode().getName());
+							.getDocument().getName());
 		} else {
 			is = new BufferedInputStream(new FileInputStream(nomeFilePathTest));
 			fout = new File(filePath.getParent()+File.separator+nomeFileTest);
@@ -434,12 +434,12 @@ public class FirmaDigitalePdgVariazioniBP extends
 		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
 		InputStream is = null;
 		if (!isTestSession()) {
-			Node firmato=getNodeFileFirmato(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNode());
+			Document firmato=getNodeFileFirmato(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getDocument());
 			is = pdgVariazioniService.getResource(firmato);
 			((HttpActionContext) actioncontext).getResponse().setContentType(
-					firmato.getContentType());
+					firmato.getContentStreamMimeType());
 			((HttpActionContext) actioncontext).getResponse().setContentLength(
-					firmato.getContentLength().intValue());
+					Long.valueOf(firmato.getContentStreamLength()).intValue());
 		} else {
 			is = new BufferedInputStream(new FileInputStream(nomeFileTestFirmato));
 		}
@@ -452,16 +452,16 @@ public class FirmaDigitalePdgVariazioniBP extends
 		os.flush();
 	}
 
-	public Node getNodeFileFirmato(Node nodePdf) {
+	public Document getNodeFileFirmato(Document nodePdf) {
 
 		if (isTestSession())
 			return null;
 
-		ListNodePage<Node> firmati = pdgVariazioniService
+		List<CmisObject> firmati = pdgVariazioniService
 				.getRelationshipFromTarget(nodePdf.getId(),
 						CMISRelationship.CNR_SIGNEDDOCUMENT);
 		if (firmati.size()==1)
-			return firmati.get(0);
+			return (Document) firmati.get(0);
 		else
 			return null;
 		
@@ -480,7 +480,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 				setSignFile(true);
 			}else{
 				pdgVariazioniService.addAspect(archiviaStampaPdgVariazioneBulk
-						.getPdgVariazioneDocument().getNode(),
+						.getPdgVariazioneDocument().getDocument(),
 						CMISAspect.CNR_SIGNEDDOCUMENT.value());
 							//rp 21/01/2014 inserisco data firma sulla variazione
 				createComponentSession().aggiornaDataFirma(context.getUserContext(),archiviaStampaPdgVariazioneBulk
@@ -522,7 +522,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
 		if (archiviaStampaPdgVariazioneBulk != null)
 			if (!isTestSession())
-				return archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNode().getName().replace(" ", "_");
+				return archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getDocument().getName().replace(" ", "_");
 			else
 				return nomeFileTest;
 		else
@@ -548,7 +548,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 			if (!isTestSession()) {
 				is = pdgVariazioniService
 				.getResource(archiviaStampaPdgVariazioneBulk
-						.getPdgVariazioneDocument().getNode());
+						.getPdgVariazioneDocument().getDocument());
 			} else {
 				is = new BufferedInputStream(new FileInputStream(nomeFilePathTest));
 			}
@@ -759,8 +759,8 @@ public class FirmaDigitalePdgVariazioniBP extends
 		Verifica.verificaBustaFirmata(file);
 
 		AllegatoPdGVariazioneSignedDocument allegato=null;
-		Node node = null;
-		Node pdgVariazioneDocumentNode = null;
+		Document node = null;
+		Document pdgVariazioneDocumentNode = null;
 		if (!isTestSession()) {
 			allegato = new AllegatoPdGVariazioneSignedDocument();
 			allegato.setFile(file);
@@ -774,13 +774,13 @@ public class FirmaDigitalePdgVariazioniBP extends
 					new FileInputStream(allegato.getFile()), allegato
 							.getContentType(), allegato.getNome(), cmisPath);
 			pdgVariazioneDocumentNode = archiviaStampaPdgVariazioneBulk
-					.getPdgVariazioneDocument().getNode();
+					.getPdgVariazioneDocument().getDocument();
 			pdgVariazioniService.createRelationship(pdgVariazioneDocumentNode
 					.getId(), node.getId(),
 					CMISRelationship.VARPIANOGEST_ALLEGATIVARBILANCIO);
 
 			pdgVariazioniService.addAspect(archiviaStampaPdgVariazioneBulk
-					.getPdgVariazioneDocument().getNode(),
+					.getPdgVariazioneDocument().getDocument(),
 					CMISAspect.CNR_SIGNEDDOCUMENT.value());
 		} else {
 			nomeFileTestFirmato = signFileRicevuto;
@@ -796,7 +796,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		} catch (Exception ex) {
 			if (!isTestSession()) {
 				pdgVariazioniService.removeAspect(archiviaStampaPdgVariazioneBulk
-						.getPdgVariazioneDocument().getNode(),
+						.getPdgVariazioneDocument().getDocument(),
 						CMISAspect.CNR_SIGNEDDOCUMENT.value());
 				pdgVariazioniService.deleteNode(node);
 			}
@@ -815,39 +815,34 @@ public class FirmaDigitalePdgVariazioniBP extends
 		setFocusedElement(context, null);
 		refresh(context);
 	}
+	
 	public void firmaOTP(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Exception {
 		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
-		Node pdgVariazioneDocumentNode = archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getNode();
-		String webScriptURL = pdgVariazioniService.getRepositoyURL().concat("/sigla/firma/variazioni");
+		Document pdgVariazioneDocumentNode = archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getDocument();
+		String webScriptURL = pdgVariazioniService.getRepositoyURL().concat("service/sigla/firma/variazioni");
 		String json = "{" +
-				"\"nodeRefSource\" : \"" + pdgVariazioneDocumentNode.getId() + "\"," +
+				"\"nodeRefSource\" : \"" + pdgVariazioneDocumentNode.getProperty(SiglaCMISService.ALFCMIS_NODEREF).getValueAsString() + "\"," +
 				"\"username\" : \"" + firmaOTPBulk.getUserName() + "\"," +
 				"\"password\" : \"" + firmaOTPBulk.getPassword() + "\"," +
 				"\"otp\" : \"" + firmaOTPBulk.getOtp() + "\""
 				+ "}";
-		PostMethod method = null;
-		Node node = null;
+		Document node = null;
 		try {		
-			method = new PostMethod(URIUtil.encodePath(webScriptURL));
-			method.setRequestEntity(new StringRequestEntity(json, "application/json", "UTF-8"));
-			HttpClient client = pdgVariazioniService.getHttpClient();
-			client.getState().setCredentials(AuthScope.ANY, 
-					((SessionCredential)pdgVariazioniService.getCredentials()).getUsernamePasswordCredentials());
-			client.getParams().setAuthenticationPreemptive(true);
-			client.executeMethod(method);
-			int status = method.getStatusCode();
+			UrlBuilder url = new UrlBuilder(URIUtil.encodePath(webScriptURL));
+			Response response = pdgVariazioniService.invokePOST(url, MimeTypes.JSON, json.getBytes("UTF-8"));
+			int status = response.getResponseCode();
 			if (status == HttpStatus.SC_NOT_FOUND
 					|| status == HttpStatus.SC_INTERNAL_SERVER_ERROR
 					|| status == HttpStatus.SC_UNAUTHORIZED
 					|| status == HttpStatus.SC_BAD_REQUEST) {
-				JSONTokener tokenizer = new JSONTokener(new InputStreamReader(method.getResponseBodyAsStream()));
+				JSONTokener tokenizer = new JSONTokener(new StringReader(response.getErrorContent()));
 			    JSONObject jsonObject = new JSONObject(tokenizer);
 			    String jsonMessage = jsonObject.getString("message");
 				throw new ApplicationException(FirmaOTPBulk.errorMessage(jsonMessage));
 			} else {
-				JSONTokener tokenizer = new JSONTokener(new InputStreamReader(method.getResponseBodyAsStream()));
+				JSONTokener tokenizer = new JSONTokener(new InputStreamReader(response.getStream()));
 			    JSONObject jsonObject = new JSONObject(tokenizer);
-			    node = pdgVariazioniService.getNodeByNodeRef(jsonObject.getString("nodeRef"));
+			    node = (Document) pdgVariazioniService.getNodeByNodeRef(jsonObject.getString("nodeRef"));
 			}
 		} catch (HttpException e) {
 			throw new BusinessProcessException(e);
@@ -855,10 +850,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 			throw new BusinessProcessException(e);
 		} catch (Exception e) {
 			throw new BusinessProcessException(e);
-		} finally {
-			if (method != null)
-				method.releaseConnection();
-		}
+		} 
 	
 		try {
 			File fileNew = File.createTempFile("docFirmatoVariazioni", "p7m");
@@ -872,7 +864,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		} catch (Exception ex) {
 			if (!isTestSession()) {
 				pdgVariazioniService.removeAspect(archiviaStampaPdgVariazioneBulk
-						.getPdgVariazioneDocument().getNode(),
+						.getPdgVariazioneDocument().getDocument(),
 						CMISAspect.CNR_SIGNEDDOCUMENT.value());
 				pdgVariazioniService.deleteNode(node);
 			}
@@ -915,8 +907,8 @@ public class FirmaDigitalePdgVariazioniBP extends
 		Verifica.verificaBustaFirmata(fileNew);
 		
 		AllegatoPdGVariazioneSignedDocument allegato = null;
-		Node node = null;
-		Node pdgVariazioneDocumentNode = null;
+		Document node = null;
+		Document pdgVariazioneDocumentNode = null;
 		if (!isTestSession()) {
 			allegato = new AllegatoPdGVariazioneSignedDocument();
 			allegato.setFile(fileNew);
@@ -930,13 +922,13 @@ public class FirmaDigitalePdgVariazioniBP extends
 					new FileInputStream(allegato.getFile()), allegato
 							.getContentType(), allegato.getNome(), cmisPath);
 			pdgVariazioneDocumentNode = archiviaStampaPdgVariazioneBulk
-					.getPdgVariazioneDocument().getNode();
+					.getPdgVariazioneDocument().getDocument();
 			pdgVariazioniService.createRelationship(pdgVariazioneDocumentNode
 					.getId(), node.getId(),
 					CMISRelationship.VARPIANOGEST_ALLEGATIVARBILANCIO);
 			
 			pdgVariazioniService.addAspect(archiviaStampaPdgVariazioneBulk
-					.getPdgVariazioneDocument().getNode(),
+					.getPdgVariazioneDocument().getDocument(),
 					CMISAspect.CNR_SIGNEDDOCUMENT.value());
 		} else {
 			nomeFileTestFirmato = fileNew.getPath();
@@ -951,7 +943,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		} catch (Exception ex) {
 			if (!isTestSession()) {
 				pdgVariazioniService.removeAspect(archiviaStampaPdgVariazioneBulk
-						.getPdgVariazioneDocument().getNode(),
+						.getPdgVariazioneDocument().getDocument(),
 						CMISAspect.CNR_SIGNEDDOCUMENT.value());
 				pdgVariazioniService.deleteNode(node);
 			}

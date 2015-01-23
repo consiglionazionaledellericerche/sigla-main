@@ -57,12 +57,11 @@
 			<type>ejb</type>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>it.cnr.cmisdl</groupId>
-			<artifactId>cmisdl-web-scripts</artifactId>
-			<version>${cmisdl.version}</version>
-			<scope>compile</scope>
-		</dependency>
+	    <dependency>
+	      <groupId>org.apache.chemistry.opencmis</groupId>
+	      <artifactId>chemistry-opencmis-client-impl</artifactId>
+	      <version>${opencmis.version}</version>
+	    </dependency>
 		<dependency>
 			<groupId>it.cnr.jada-libs</groupId>
 			<artifactId>Base64</artifactId>
@@ -297,5 +296,17 @@
       		<artifactId>pdfbox</artifactId>
       		<version>1.7.1</version>
     	</dependency>	    	
+		<dependency>
+		  <groupId>org.json</groupId>
+		  <artifactId>json</artifactId>
+		  <version>20140107</version>
+		  <scope>provided</scope>
+		</dependency>    	
+		<dependency>
+		  <groupId>commons-io</groupId>
+		  <artifactId>commons-io</artifactId>
+		  <version>2.4</version>
+		  <scope>provided</scope>
+		</dependency>		
 	</dependencies>
 </project>

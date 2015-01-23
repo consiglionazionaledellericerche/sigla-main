@@ -1,7 +1,6 @@
 package it.cnr.contab.util.servlet;
 
-import it.cnr.cmisdl.model.Node;
-import it.cnr.contab.cmis.service.CMISService;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.HttpActionContext;
@@ -16,15 +15,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-
 import javax.xml.bind.DatatypeConverter;
 
-import org.apache.commons.httpclient.Credentials;
+import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.log4j.Logger;
-
-
 
 /**
  * Servlet implementation class GenericDownload
@@ -45,15 +40,14 @@ public class GenericDownloadServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		CMISService cmisService = SpringUtil.getBean("cmisService", CMISService.class);
+		SiglaCMISService cmisService = SpringUtil.getBean("cmisService", SiglaCMISService.class);
 		if (request.getParameter("nodeRef")!= null){
 
-			Credentials customCredentials = getCredentials(request.getHeader(AUTHORIZATION));
-			Node node = cmisService.getNodeByNodeRef(request.getParameter("nodeRef"), customCredentials);
+			UsernamePasswordCredentials customCredentials = getCredentials(request.getHeader(AUTHORIZATION));
+			Document node = (Document)cmisService.getNodeByNodeRef(request.getParameter("nodeRef"), customCredentials);
 			InputStream is = cmisService.getResource(node);
-			response.setContentLength(node.getContentLength().intValue());
-			response.setContentType(node.getContentType());
-			response.setContentLength(node.getContentLength().intValue());
+			response.setContentLength(Long.valueOf(node.getContentStreamLength()).intValue());
+			response.setContentType(node.getContentStreamMimeType());
 			OutputStream os = response.getOutputStream();
 			response.setDateHeader("Expires", 0);
 			byte[] buffer = new byte[response.getBufferSize()];
@@ -83,7 +77,7 @@ public class GenericDownloadServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-	private Credentials getCredentials(String authorization){
+	private UsernamePasswordCredentials getCredentials(String authorization){
 
 		if (authorization != null) {
 			String[] values = authorization.split(" ");

@@ -1,5 +1,8 @@
 package it.cnr.contab.doccont00.service;
 
+import it.cnr.contab.cmis.service.SiglaCMISService;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -7,16 +10,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.chemistry.opencmis.client.api.ItemIterable;
+import org.apache.chemistry.opencmis.client.api.QueryResult;
+import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.util.PDFMergerUtility;
 
-import it.cnr.cmisdl.model.Node;
-import it.cnr.cmisdl.model.paging.ListNodePage;
-import it.cnr.contab.cmis.service.CMISService;
-import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
-
-public class ContabiliService extends CMISService {
+public class ContabiliService extends SiglaCMISService {
 	
 	public List<String> getNodeRefContabile(MandatoBulk mandato){
 		return getNodeRefContabile(mandato.getEsercizio(), mandato.getCd_cds(), mandato.getPg_mandato());
@@ -30,12 +31,12 @@ public class ContabiliService extends CMISService {
 		query.append(" and contabili.sigla_contabili_aspect:cds = '").append(cds).append("'");
 		query.append(" and contabili.sigla_contabili_aspect:num_mandato = ").append(pgMandato);
 		query.append(" order by doc.cmis:creationDate DESC");
-		ListNodePage<Node> results = search(query, Boolean.FALSE);
-		if (results.isEmpty())
+		ItemIterable<QueryResult> results = search(query);
+		if (results.getTotalNumItems() == 0)
 			return null;
 		else {
-			for (Node node : results) {
-				ids.add((String) node.getPropertyValue("cmis:objectId"));
+			for (QueryResult node : results) {
+				ids.add((String) node.getPropertyValueById(PropertyIds.OBJECT_ID));
 			}
 			return ids;
 		}
