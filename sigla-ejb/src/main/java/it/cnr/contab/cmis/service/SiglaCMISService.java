@@ -421,12 +421,14 @@ public class SiglaCMISService {
 		return results;
 	}
 
-	public void addAspect(CmisObject cmisObject, String... aspectName){
-		Map<String, Object> metadataProperties = new HashMap<String, Object>();
-		metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, aspectName);
-		cmisObject.updateProperties(metadataProperties);
-	}
-
+    public void addAspect(CmisObject cmisObject, String... aspectName){
+        Map<String, Object> metadataProperties = new HashMap<String, Object>();
+        List<String> aspects = cmisObject.getPropertyValue(PropertyIds.SECONDARY_OBJECT_TYPE_IDS);
+        aspects.addAll(Arrays.asList(aspectName));
+        metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, aspects);
+        cmisObject.updateProperties(metadataProperties);
+    }
+    
 	public void removeAspect(CmisObject cmisObject, String... aspectName){
 		List<Object> aspects = cmisObject.getProperty(PropertyIds.SECONDARY_OBJECT_TYPE_IDS).getValues();
 		aspects.removeAll(Arrays.asList(aspectName));
