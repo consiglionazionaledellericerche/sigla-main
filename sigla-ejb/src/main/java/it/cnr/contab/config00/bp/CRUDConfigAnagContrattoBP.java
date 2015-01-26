@@ -44,6 +44,7 @@ import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExistsException;
 
 /**
  * @author mspasiano
@@ -542,7 +543,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 					allegato.setNodeId(node.getId());
 				} catch (FileNotFoundException e) {
 					throw handleException(e);
-				}catch (CmisConstraintException e) {
+				}catch (CmisContentAlreadyExistsException e) {
 					throw new ApplicationException("CMIS - File ["+allegato.getNome()+"] gia' presente. Inserimento non possibile!");
 				}
 			}else if (allegato.isToBeUpdated()) {
