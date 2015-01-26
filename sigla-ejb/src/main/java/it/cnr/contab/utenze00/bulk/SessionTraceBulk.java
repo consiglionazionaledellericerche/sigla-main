@@ -15,7 +15,7 @@ import it.cnr.jada.bulk.annotation.*;
 					@FieldPropertyAnnotation(name="utuv",type=TypeProperty.FormFieldProperty)}),
 				@FormAnnotation(name="searchtool",value={@FieldPropertyAnnotation(name="idSessione",type=TypeProperty.FormFieldProperty)})},
 			columnSet=@ColumnSetAnnotation(value={
-					@FieldPropertyAnnotation(name="cdUtente", type=TypeProperty.ColumnFieldProperty),
+					@FieldPropertyAnnotation(name="utuv", type=TypeProperty.ColumnFieldProperty),
 					@FieldPropertyAnnotation(name="cdCds", type=TypeProperty.ColumnFieldProperty),
 					@FieldPropertyAnnotation(name="idSessione", type=TypeProperty.ColumnFieldProperty),
 					@FieldPropertyAnnotation(name="dacr", type=TypeProperty.ColumnFieldProperty),
@@ -23,7 +23,7 @@ import it.cnr.jada.bulk.annotation.*;
 			freeSearchSet=@FreeSearchSetAnnotation(value={
 					@FieldPropertyAnnotation(name="idSessione", type=TypeProperty.FindFieldProperty),
 					@FieldPropertyAnnotation(name="serverUrl", type=TypeProperty.FindFieldProperty),
-					@FieldPropertyAnnotation(name="cdUtente", type=TypeProperty.FindFieldProperty),
+					@FieldPropertyAnnotation(name="utuv", type=TypeProperty.FindFieldProperty),
 					@FieldPropertyAnnotation(name="dacr", type=TypeProperty.FindFieldProperty),
 					@FieldPropertyAnnotation(name="duva", type=TypeProperty.FindFieldProperty)})		
 		)
@@ -67,7 +67,7 @@ public class SessionTraceBulk extends SessionTraceBase {
 	public java.lang.String getCd_utente() {
 		UtenteBulk utente = this.getUtente();
 		if (utente == null)
-			return null;
+			return super.getUtuv();
 		return getUtente().getCd_utente();
 	}
 	/**
