@@ -230,8 +230,8 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 				AllegatoPdGVariazioneDocumentBulk allegato = AllegatoPdGVariazioneDocumentBulk.construct(document);
 				allegato.setContentType(document.getContentStreamMimeType());
 				allegato.setNome(node.getName());
-				allegato.setDescrizione(document.getProperty(SiglaCMISService.PROPERTY_DESCRIPTION).getValueAsString());
-				allegato.setTitolo(document.getProperty(SiglaCMISService.PROPERTY_TITLE).getValueAsString());
+				allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
+				allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
 				allegato.setCrudStatus(OggettoBulk.NORMAL);
 				archiviaStampaPdgVariazioneBulk.addToArchivioAllegati(allegato);
 			}
