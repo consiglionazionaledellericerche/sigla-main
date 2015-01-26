@@ -343,8 +343,13 @@ public class SiglaCMISService {
 			for (Property<?> property : cmisBulkInfo.getAspectProperty(siglaSession, oggettoBulk)) {
 				metadataProperties.put(property.getId(), property.getValue());
 			}			
-			metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, cmisBulkInfo.getAspect(siglaSession, oggettoBulk));			
-			siglaSession.getObject(node).updateProperties(metadataProperties, true);
+			metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, cmisBulkInfo.getAspect(siglaSession, oggettoBulk));
+			if (node.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
+				node = ((Document)node).getObjectOfLatestVersion(false);
+			}
+			node = siglaSession.getObject(node);
+			node.refresh();
+			node.updateProperties(metadataProperties, true);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
