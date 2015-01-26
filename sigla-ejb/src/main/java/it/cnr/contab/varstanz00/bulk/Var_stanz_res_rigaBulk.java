@@ -237,7 +237,7 @@ public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
 			if(getIm_variazione() != null && getIm_variazione().compareTo(Utility.ZERO) > 0) 
 			  throw new ValidationException("L'importo delle righe di variazione deve essere negativo per le Economie.");
 		}
-		if(this.getElemento_voce()!=null && this.getElemento_voce().getFl_azzera_residui()!=null && this.getElemento_voce().getFl_azzera_residui() && this.getIm_variazione().compareTo(BigDecimal.ZERO)>0)
+		if(this.getElemento_voce()!=null && this.getElemento_voce().getFl_azzera_residui()!=null && this.getElemento_voce().getFl_azzera_residui() &&  this.getIm_variazione()!=0 && this.getIm_variazione().compareTo(BigDecimal.ZERO)>0)
 			throw new ValidationException ("Attenzione non può essere predisposta una variazione positiva sulla voce "+this.getElemento_voce().getCd_elemento_voce());
 		 
 		for (java.util.Iterator i = var_stanz_res.getRigaVariazione().iterator();i.hasNext();) {
