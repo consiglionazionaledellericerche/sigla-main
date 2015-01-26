@@ -239,6 +239,9 @@ public class SiglaCMISService {
 		}catch(CmisContentAlreadyExistsException _ex){
 			if (oggettoBulk!=null){
 				Folder folder = (Folder) getNodeByPath(cmisPath.getPath()+(cmisPath.getPath().equals("/")?"":"/")+sanitizeFilename(folderName).toLowerCase());
+		        List<String> aspects = folder.getPropertyValue(PropertyIds.SECONDARY_OBJECT_TYPE_IDS);
+		        aspects.addAll(aspectsToAdd);
+		        metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, aspects);
 				folder.updateProperties(metadataProperties, true);
 				return CMISPath.construct(folder.getPath());
 			}
