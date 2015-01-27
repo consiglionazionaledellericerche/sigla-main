@@ -6,6 +6,7 @@
  */
 package it.cnr.contab.config00.action;
 
+import it.cnr.contab.cmis.acl.ACLType;
 import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
 import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoMasterBP;
 import it.cnr.contab.config00.bulk.CigBulk;
@@ -20,7 +21,9 @@ import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.jada.action.*;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Forward;
 import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.comp.ApplicationException;
@@ -174,7 +177,9 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 					contrattoService.updateProperties((ContrattoBulk) bp.getModel(), folder);
 					contrattoService.changeProgressivoNodeRef(folder, (ContrattoBulk) bp.getModel());
 					contrattoService.addAspect(folder, "P:sigla_contratti_aspect:stato_annullato");
-					contrattoService.removeConsumerToEveryone(folder);
+					if (contrattoService.getACL(folder, "GROUP_EVERYONE", ACLType.Consumer.name()) != null) {
+						contrattoService.removeConsumerToEveryone(folder);						
+					}
 					bp.setModel(context,bp.initializeModelForEdit(context, bp.getModel()));
 				}
 				
