@@ -54,7 +54,7 @@
 		readonlyProperty="ROElemento_voce"
 		inputType="TEXT"
 		maxLength="20"
-		inputSize="10"
+		inputSize="20"
 		enabledOnSearch="true"
 		nullable="false"
 		/>
@@ -64,7 +64,7 @@
 		label="Voce del piano"
 		inputType="ROTEXT"
 		maxLength="20"
-		inputSize="10"
+		inputSize="20"
 		/>		
 	<fieldProperty
 		name="ds_elemento_voce"
