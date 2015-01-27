@@ -7,6 +7,7 @@ import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -19,18 +20,31 @@ import it.cnr.jada.bulk.OggettoBulk;
 
 public class ContrattoService extends SiglaCMISService {
 	private transient static final Log logger = LogFactory.getLog(ContrattoService.class);
-
+	
 	public Folder getFolderContratto(ContrattoBulk contratto){
-		StringBuffer query = new StringBuffer("select appalti.cmis:objectId from sigla_contratti:appalti as appalti");
-		query.append(" join sigla_contratti_aspect:appalti as aspect on appalti.cmis:objectId = aspect.cmis:objectId");
-		query.append(" where ").append("aspect.sigla_contratti_aspect_appalti:esercizio").append(" = ").append(contratto.getEsercizio());
-		query.append(" and ").append("aspect.sigla_contratti_aspect_appalti:stato").append(" = '").append(contratto.getStato()).append("'");
-		query.append(" and ").append("aspect.sigla_contratti_aspect_appalti:progressivo").append(" = ").append(contratto.getPg_contratto());
-		List<CmisObject> listNodePage = super.searchAndFetchNode(query);
-		if (!listNodePage.isEmpty())
-			return (Folder) listNodePage.get(0);
-		return null;
+		try {
+			return (Folder) getNodeByPath(getCMISPathFolderContratto(contratto));			
+		} catch(CmisObjectNotFoundException _ex){
+			StringBuffer query = new StringBuffer("select appalti.cmis:objectId from sigla_contratti:appalti as appalti");
+			query.append(" join sigla_contratti_aspect:appalti as aspect on appalti.cmis:objectId = aspect.cmis:objectId");
+			query.append(" where ").append("aspect.sigla_contratti_aspect_appalti:esercizio").append(" = ").append(contratto.getEsercizio());
+			query.append(" and ").append("aspect.sigla_contratti_aspect_appalti:stato").append(" = '").append(contratto.getStato()).append("'");
+			query.append(" and ").append("aspect.sigla_contratti_aspect_appalti:progressivo").append(" = ").append(contratto.getPg_contratto());
+			List<CmisObject> listNodePage = super.searchAndFetchNode(query);
+			if (!listNodePage.isEmpty())
+				return (Folder) listNodePage.get(0);
+			return null;
+		}
 	}
+	
+	public CMISPath getCMISPathFolderContratto(ContrattoBulk contrattoBulk) {
+		CMISPath cmisPath = SpringUtil.getBean("cmisPathContratti",CMISPath.class);
+		cmisPath = cmisPath.appendToPath(contrattoBulk.getUnita_organizzativa().getCd_unita_organizzativa());
+		cmisPath = cmisPath.appendToPath("Contratti");
+		cmisPath = cmisPath.appendToPath(String.valueOf(contrattoBulk.getEsercizio()));
+		cmisPath = cmisPath.appendToPath(contrattoBulk.getCMISFolderName());
+		return cmisPath;		
+	}	
 	
 	public List<CmisObject> findContrattiDefinitivi(){
 		StringBuffer query = new StringBuffer("select appalti.cmis:objectId from sigla_contratti:appalti as appalti");
