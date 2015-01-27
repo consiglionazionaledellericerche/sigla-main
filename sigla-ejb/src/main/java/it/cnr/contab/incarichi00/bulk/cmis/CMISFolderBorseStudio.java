@@ -1,9 +1,5 @@
 package it.cnr.contab.incarichi00.bulk.cmis;
 
-import java.util.List;
-
-import org.apache.chemistry.opencmis.client.api.CmisObject;
-
 import it.cnr.contab.cmis.annotation.CMISPolicy;
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
@@ -12,6 +8,10 @@ import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.cmis.CMISContrattiProperty;
 import it.cnr.contab.util.Utility;
+
+import java.util.List;
+
+import org.apache.chemistry.opencmis.client.api.CmisObject;
 
 @CMISType(name="F:sigla_contratti:borse_studio")
 public class CMISFolderBorseStudio extends CMISFolderContrattiModel {
@@ -31,6 +31,16 @@ public class CMISFolderBorseStudio extends CMISFolderContrattiModel {
 		return super.getPg_repertorio();
 	}
 
+	@CMISPolicy(name="P:sigla_contratti_aspect:incarichi", property=@CMISProperty(name="sigla_contratti_aspect_incarichi:esercizio"))
+    public Integer getEsercizioIncarico() {
+		return super.getEsercizio();
+    }
+
+	@CMISPolicy(name="P:sigla_contratti_aspect:incarichi", property=@CMISProperty(name="sigla_contratti_aspect_incarichi:progressivo", converterBeanName="cmis.converter.longToIntegerConverter"))
+    public Long getPgIncarico() {
+		return super.getPg_repertorio();
+    }
+	
 	public CMISPath getCMISPath(SiglaCMISService cmisService){
 		CMISPath cmisPath = this.getCMISParentPath(cmisService);
 		if (cmisPath!=null) {

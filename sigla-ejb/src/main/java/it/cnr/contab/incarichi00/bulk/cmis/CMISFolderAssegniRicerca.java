@@ -30,6 +30,16 @@ public class CMISFolderAssegniRicerca extends CMISFolderContrattiModel {
 	public Long getPg_repertorio() {
 		return super.getPg_repertorio();
 	}
+	
+	@CMISPolicy(name="P:sigla_contratti_aspect:incarichi", property=@CMISProperty(name="sigla_contratti_aspect_incarichi:esercizio"))
+    public Integer getEsercizioIncarico() {
+		return super.getEsercizio();
+    }
+
+	@CMISPolicy(name="P:sigla_contratti_aspect:incarichi", property=@CMISProperty(name="sigla_contratti_aspect_incarichi:progressivo", converterBeanName="cmis.converter.longToIntegerConverter"))
+    public Long getPgIncarico() {
+		return super.getPg_repertorio();
+    }
 
 	public CMISPath getCMISPath(SiglaCMISService cmisService){
 		CMISPath cmisPath = this.getCMISParentPath(cmisService);
