@@ -214,7 +214,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 		try {
 			if (archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument() == null)
 				archiviaStampaPdgVariazioneBulk.setPdgVariazioneDocument(
-						pdgVariazioniService.getPdgVariazioneDocument(archiviaStampaPdgVariazioneBulk.getPdg_variazioneForPrint()));
+						pdgVariazioniService.getPdgVariazioneDocument(archiviaStampaPdgVariazioneBulk));
 			if (archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().isSignedDocument())
 				archiviaStampaPdgVariazioneBulk.setTiSigned(ArchiviaStampaPdgVariazioneBulk.VIEW_SIGNED);
 			else
