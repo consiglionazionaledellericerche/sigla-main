@@ -8,6 +8,7 @@ import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisRuntimeException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -140,7 +141,11 @@ public class ContrattoService extends SiglaCMISService {
 	
 	public void costruisciAlberaturaAlternativa(
 			AllegatoContrattoDocumentBulk allegato, Document source) {
-		copyNode(source, (Folder) getNodeByPath(getCMISPathAlternativo(allegato)));
+		try {
+			copyNode(source, (Folder) getNodeByPath(getCMISPathAlternativo(allegato)));			
+		} catch (CmisRuntimeException _ex) {
+			logger.error("Errore in costruisciAlberaturaAlternativa per il nodo " + source.getId(), _ex);
+		}
 	}	
 	
 	public void changeProgressivoNodeRef(Folder oldNode, ContrattoBulk contratto) {
