@@ -341,7 +341,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 				    Report report = SpringUtil.getBean("printService",PrintService.class).executeReport(userContext,print);
 					ArchiviaStampaPdgVariazioneBulk stampapdg=new ArchiviaStampaPdgVariazioneBulk();
 					stampapdg.setPdg_variazioneForPrint(pdg);
-					stampapdg.setPdgVariazioneDocument(pdgVariazioniService.getPdgVariazioneDocument(stampapdg.getPdg_variazioneForPrint()));
+					stampapdg.setPdgVariazioneDocument(pdgVariazioniService.getPdgVariazioneDocument(stampapdg));
 					cmisService.updateContent(stampapdg.getPdgVariazioneDocument().getDocument().getId(), report.getInputStream(), report.getContentType());
 					cmisService.updateProperties(stampapdg, stampapdg.getPdgVariazioneDocument().getDocument());
 			} catch (IOException e) {
