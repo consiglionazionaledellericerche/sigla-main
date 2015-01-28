@@ -14,10 +14,13 @@ import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.opencmis.client.api.QueryResult;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.util.PDFMergerUtility;
 
 public class ContabiliService extends SiglaCMISService {
+	private transient static final Log logger = LogFactory.getLog(ContabiliService.class);
 	
 	public List<String> getNodeRefContabile(MandatoBulk mandato){
 		return getNodeRefContabile(mandato.getEsercizio(), mandato.getCd_cds(), mandato.getPg_mandato());
@@ -31,14 +34,19 @@ public class ContabiliService extends SiglaCMISService {
 		query.append(" and contabili.sigla_contabili_aspect:cds = '").append(cds).append("'");
 		query.append(" and contabili.sigla_contabili_aspect:num_mandato = ").append(pgMandato);
 		query.append(" order by doc.cmis:creationDate DESC");
-		ItemIterable<QueryResult> results = search(query);
-		if (results.getTotalNumItems() == 0)
+		try {
+			ItemIterable<QueryResult> results = search(query);
+			if (results.getTotalNumItems() == 0)
+				return null;
+			else {
+				for (QueryResult node : results) {
+					ids.add((String) node.getPropertyValueById(PropertyIds.OBJECT_ID));
+				}
+				return ids;
+			}			
+		} catch (CmisObjectNotFoundException _ex) {
+			logger.error("CmisObjectNotFoundException dopo la query: " + query , _ex);
 			return null;
-		else {
-			for (QueryResult node : results) {
-				ids.add((String) node.getPropertyValueById(PropertyIds.OBJECT_ID));
-			}
-			return ids;
 		}
 	}
 	public InputStream getStreamContabile(Integer esercizio, String cds, Long pgMandato) throws Exception{
