@@ -123,8 +123,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 			if (!isTestSession()) {
 				try {
 					bulk.setPdgVariazioneDocument(pdgVariazioniService
-							.getPdgVariazioneDocument(bulk
-									.getPdg_variazioneForPrint()));
+							.getPdgVariazioneDocument(bulk));
 				} catch (DetailedException e) {
 					throw handleException(e);
 				}
