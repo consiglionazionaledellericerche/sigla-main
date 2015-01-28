@@ -4,7 +4,6 @@ import it.cnr.contab.cmis.CMISProperty;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
-import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.cmis.PdgVariazioneDocument;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.Utility;
