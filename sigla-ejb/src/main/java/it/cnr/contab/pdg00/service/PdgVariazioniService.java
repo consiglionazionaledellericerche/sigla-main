@@ -46,7 +46,7 @@ public class PdgVariazioniService extends SiglaCMISService {
 
 	private CMISPath getCMISPath(ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk){
 		CMISPath cmisPath = SpringUtil.getBean("cmisPathVariazioniAlPianoDiGestione",CMISPath.class);		
-		cmisPath = cmisPath.appendToPath("Esercizio :" + archiviaStampaPdgVariazioneBulk.getEsercizio().toString()); 
+		cmisPath = cmisPath.appendToPath(archiviaStampaPdgVariazioneBulk.getEsercizio().toString()); 
 		cmisPath = cmisPath.appendToPath(archiviaStampaPdgVariazioneBulk.getCd_cds()+" - "+archiviaStampaPdgVariazioneBulk.getDs_cds());
 		cmisPath = cmisPath.appendToPath(
 				"CdR "+archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita()+
