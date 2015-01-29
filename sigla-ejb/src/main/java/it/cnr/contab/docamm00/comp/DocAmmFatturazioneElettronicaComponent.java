@@ -1,6 +1,5 @@
 package it.cnr.contab.docamm00.comp;
 
-import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
@@ -9,11 +8,8 @@ import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
-import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attiva_rigaBulk;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
@@ -327,7 +323,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 			ObjectFactory factory = new ObjectFactory();
 			FatturaElettronicaType fatturaType = factory.createFatturaElettronicaType();
-			fatturaType.setVersione("1.0");
+			fatturaType.setVersione("1.1");
 			FatturaElettronicaHeaderType fatturaHeaderType = factory.createFatturaElettronicaHeaderType();
 			TerzoBulk terzoCnr = ((TerzoHome)getHome( userContext, TerzoBulk.class)).findTerzoEnte();
 			TerzoBulk cliente = fattura.getCliente();
@@ -349,7 +345,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				contattiTrasmittenteType.setTelefono(telefonoReferente);
 				datiTrasmissione.setContattiTrasmittente(contattiTrasmittenteType);
 
-				datiTrasmissione.setFormatoTrasmissione(FormatoTrasmissioneType.SDI_10);
+				datiTrasmissione.setFormatoTrasmissione(FormatoTrasmissioneType.SDI_11);
 
 				fatturaHeaderType.setDatiTrasmissione(datiTrasmissione);
 
@@ -409,7 +405,25 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				datiGeneraliDocumento.setNumero(fattura.recuperoIdFatturaAsString());
 				datiGeneraliDocumento.setImportoTotaleDocumento(fattura.getIm_totale_fattura().setScale(2));
 				if (fattura.getDs_fattura_attiva() != null){
-					datiGeneraliDocumento.setCausale(fattura.getDs_fattura_attiva().length() > 200 ? fattura.getDs_fattura_attiva().substring(0,200):fattura.getDs_fattura_attiva());
+					List<String> listaCausali = new ArrayList<String>();
+					String descrizione = fattura.getDs_fattura_attiva();
+					int lunghezzaStringaCausale = 200;
+					int numeroCaratteriFinali = 0;
+					for (int i = 0; i <= descrizione.length()/lunghezzaStringaCausale; i++) {
+						int numeroCaratteri = i*lunghezzaStringaCausale;
+						int numeroCaratteriOccorrenti = (numeroCaratteri + lunghezzaStringaCausale );
+						if (numeroCaratteriOccorrenti > descrizione.length()){
+							numeroCaratteriFinali = numeroCaratteri + (descrizione.length() - numeroCaratteri); 
+						} else {
+							numeroCaratteriFinali = numeroCaratteri + lunghezzaStringaCausale;
+						}
+						if (numeroCaratteri < numeroCaratteriFinali){
+							String causale = descrizione.substring(numeroCaratteri,numeroCaratteriFinali);
+							listaCausali.add(causale);
+						}
+					}
+					
+					datiGeneraliDocumento.setCausale( listaCausali );
 				}
 				datiGenerali.setDatiGeneraliDocumento(datiGeneraliDocumento);
 				
@@ -428,7 +442,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 					Fattura_attiva_rigaBulk riga= (Fattura_attiva_rigaBulk) i.next();
 					DettaglioLineeType rigaFattura = factory.createDettaglioLineeType();
 					rigaFattura.setNumeroLinea(riga.getProgressivo_riga().intValue());
-					rigaFattura.setDescrizione(riga.getDs_riga_fattura().length() > 100 ? riga.getDs_riga_fattura().substring(0,100):riga.getDs_riga_fattura() );
+					rigaFattura.setDescrizione(riga.getDs_riga_fattura());
 					rigaFattura.setQuantita(riga.getQuantita().setScale(2));
 					if (riga.getTariffario()!=null && riga.getTariffario().getCd_tariffario()!=null) {
 						if (riga.getTariffario().getUnita_misura()==null)
@@ -477,11 +491,10 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 					RiepilogoPerAliquotaIVA riepilogo= (RiepilogoPerAliquotaIVA) i.next();
 					DatiRiepilogoType datiRiepilogo = factory.createDatiRiepilogoType();
 					datiRiepilogo.setAliquotaIVA(riepilogo.getAliquota());
-					datiRiepilogo.setEsigibilitaIVA(fattura.getFl_liquidazione_differita() ? EsigibilitaIVAType.D :  EsigibilitaIVAType.I);
+					datiRiepilogo.setEsigibilitaIVA(fattura.getFl_liquidazione_differita()? EsigibilitaIVAType.D :  EsigibilitaIVAType.I);
 					datiRiepilogo.setImponibileImporto(riepilogo.getImponibile().setScale(2));
 					datiRiepilogo.setImposta(riepilogo.getImposta().setScale(2));
-					datiRiepilogo.setNatura(impostaDatiNatura(riepilogo.getNaturaIvaNonImponibile()));
-					datiRiepilogo.setRiferimentoNormativo(riepilogo.getRiferimentoNormativaNonImponibile());
+					impostaDatiNonImponibile(fattura, riepilogo, datiRiepilogo);
 					listaRiepilogoType.add(datiRiepilogo);
 				}
 				datiBeniServizi.setDatiRiepilogo(listaRiepilogoType);
@@ -517,6 +530,20 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 			return factory.createFatturaElettronica(fatturaType);
 		} catch(Exception e) {
 			throw handleException(e);
+		}
+	}
+
+	private void impostaDatiNonImponibile(Fattura_attivaBulk fattura, RiepilogoPerAliquotaIVA riepilogo, DatiRiepilogoType datiRiepilogo) throws ApplicationException{
+		if (datiRiepilogo.getAliquotaIVA().compareTo(BigDecimal.ZERO) == 0){
+			String msg = "Impossibile Procedere! Per la Fattura: "+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva()+" esiste almeno una riga con aliquota a 0 senza l'indicazione";
+			if (riepilogo.getNaturaIvaNonImponibile() == null || riepilogo.getNaturaIvaNonImponibile().equals("")){
+				throw new ApplicationException(msg+" della Natura per invio SDI"); 
+			}
+			datiRiepilogo.setNatura(impostaDatiNatura(riepilogo.getNaturaIvaNonImponibile()));
+			if (riepilogo.getRiferimentoNormativaNonImponibile() == null || riepilogo.getRiferimentoNormativaNonImponibile().equals("")){
+				throw new ApplicationException(msg+" del riferimento normativo per invio SDI"); 
+			}
+			datiRiepilogo.setRiferimentoNormativo(riepilogo.getRiferimentoNormativaNonImponibile());
 		}
 	}
 
