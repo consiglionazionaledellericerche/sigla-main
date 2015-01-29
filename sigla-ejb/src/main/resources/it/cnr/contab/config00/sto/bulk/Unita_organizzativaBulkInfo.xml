@@ -256,6 +256,11 @@
 		enabledOnEdit="true"
 		enabledOnSearch="true"
 		/>
+	<fieldProperty
+		name="cd_tipo_unita"
+		property="cd_tipo_unita"
+		label="Tipo Unita"
+		/>
 
 	<form
 		name="searchtool" >
@@ -294,6 +299,11 @@
 		name="esercizio_inizio"
 		/>
 	<columnFieldProperty
+		name="cd_cds"
+		property="cd_cds"
+		/>
+	
+	<columnFieldProperty
 		name="cd_unita_organizzativa"
 		/>
 	<columnFieldProperty
@@ -319,6 +329,15 @@
 	<columnFieldProperty
 		name="esercizio_fine"
 		/>
+
+	<columnSet name="restService" >
+		<columnFieldProperty name="cd_unita_organizzativa"/>
+		<columnFieldProperty name="ds_unita_organizzativa"/>
+		<columnFieldProperty name="cd_tipo_unita"/>
+		<columnFieldProperty name="cd_responsabile"/>
+		<columnFieldProperty name="cd_unita_padre"/>
+		<columnFieldProperty name="fl_uo_cds"/>
+	</columnSet>
 
 	<columnSet
 		name="scrivania">

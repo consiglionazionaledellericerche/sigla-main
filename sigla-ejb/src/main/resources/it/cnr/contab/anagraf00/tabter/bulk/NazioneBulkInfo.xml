@@ -244,6 +244,13 @@
 		name="ds_divisa_per_missione"
 		label="Divisa per missione" />
 
+	<columnSet name="restService" >
+		<columnFieldProperty name="pg_nazione"/>
+		<columnFieldProperty name="ds_nazione"/>
+		<columnFieldProperty name="cd_area_estera"/>
+		<columnFieldProperty name="ti_nazione"/>
+	</columnSet>
+
 	<findFieldProperty name="pg_nazione" />
 	<findFieldProperty name="ds_nazione" />
 	<findFieldProperty name="ti_nazione" />

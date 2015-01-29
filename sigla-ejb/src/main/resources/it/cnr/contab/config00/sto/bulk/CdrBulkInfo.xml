@@ -17,6 +17,7 @@
 		maxLength="30"
 		inputSize="6"
 		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		/>
 	<fieldProperty
 		name="ds_unita_padre"
@@ -216,6 +217,13 @@
 		<columnFieldProperty
 			name="ds_cdr"
 			/>
+	</columnSet>
+
+	<columnSet name="restService" >
+		<columnFieldProperty name="cd_centro_responsabilita"/>
+		<columnFieldProperty name="ds_cdr"/>
+		<columnFieldProperty name="cd_unita_organizzativa"/>
+		<columnFieldProperty name="cd_responsabile"/>
 	</columnSet>
 
 	<form
