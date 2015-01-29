@@ -427,6 +427,11 @@
 	<columnFieldProperty
 		name="cd_cofog"/>
 	
+	<columnSet	name="restService">
+		<columnFieldProperty name="cd_linea_attivita"/>
+		<columnFieldProperty name="ds_linea_attivita"/>
+	</columnSet>
+
 	<columnSet name="columnSetPerAccertamento">
 		<columnFieldProperty name="cd_centro_responsabilita" label="CDR" />	
 		<columnFieldProperty name="cd_progetto" label="Mod. Attivita'" />		

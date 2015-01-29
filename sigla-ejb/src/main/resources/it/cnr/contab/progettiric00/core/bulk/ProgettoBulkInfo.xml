@@ -517,6 +517,10 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		layout="HORIZONTAL" />
+	<fieldProperty
+		name="pg_progetto"
+		property="pg_progetto"
+		label="Pg Progetto"/>
 
 	<form
 		name="searchtool" >
@@ -662,6 +666,9 @@
 	<columnFieldProperty
 		name="cd_responsabile_terzo" />
 	<columnFieldProperty
+		name="cd_responsabile_denominazione"
+		property="responsabile.denominazione_sede" />
+	<columnFieldProperty
 		name="dt_inizio" />
 	<columnFieldProperty
 		name="dt_fine" />
@@ -673,6 +680,19 @@
 		name="durata_progetto" />
 	<columnFieldProperty
 		name="note" />
+	
+	<columnSet	name="restService">
+		<columnFieldProperty name="cd_progetto"/>
+		<columnFieldProperty name="pg_progetto"/>
+		<columnFieldProperty name="tipo_fase" />
+		<columnFieldProperty name="dt_proroga" />
+		<columnFieldProperty name="ds_progetto" />
+		<columnFieldProperty name="cd_responsabile_terzo" />
+		<columnFieldProperty name="cd_responsabile_denominazione" />
+		<columnFieldProperty name="dt_inizio" />
+		<columnFieldProperty name="dt_fine" />
+		<columnFieldProperty name="stato" />
+	</columnSet>
 
 	<columnSet
 		name="filtro_ricerca_moduli">
