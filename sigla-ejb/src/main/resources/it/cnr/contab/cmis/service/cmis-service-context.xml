@@ -7,17 +7,6 @@
 		within your classpath, provided they fall under the META-INF/spring directory.
 		The located property files are parsed and their values can then be used within
 		application context files in the form of ${propertyKey}. -->
-	<bean
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
-				<value>classpath*:META-INF/spring/*.properties</value>
-				<value>classpath*:*/extension/repository.properties</value>
-			</list>
-		</property>
-		<property name="ignoreUnresolvablePlaceholders" value="true" />
-	</bean>
-	
 	
     <bean id="cmis.converter.defaultConverter" class="it.cnr.contab.cmis.converter.DefaultConverter"/>
     <bean id="cmis.converter.timestampToCalendarConverter" class="it.cnr.contab.cmis.converter.TimestampToCalendarConverter"/>
