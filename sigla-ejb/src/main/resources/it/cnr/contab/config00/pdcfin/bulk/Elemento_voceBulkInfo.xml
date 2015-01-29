@@ -436,6 +436,18 @@
 		name="fl_trovato" />					
 
 <columnSet
+	name="restService">
+		
+	<columnFieldProperty
+		name="cd_elemento_voce"
+		label = "Codice"
+		/>
+	<columnFieldProperty
+		name="ds_elemento_voce"
+		/>
+</columnSet>	
+
+<columnSet
 	name="impegnoPGiro">
 		
 	<columnFieldProperty
