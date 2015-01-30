@@ -18,29 +18,32 @@
 		<defaultValueExpression><![CDATA["999"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aEs" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer("2014")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer("2015")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aPg_da" class="java.lang.Long" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Long("834")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Long("45")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aPg_a" class="java.lang.Long" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Long("834")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Long("45")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aDt_da" class="java.util.Date" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy/MM/dd").parse("2014/01/01")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy/MM/dd").parse("2015/01/27")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aDt_a" class="java.util.Date" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy/MM/dd").parse("2014/03/31")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy/MM/dd").parse("2015/01/27")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aCd_terzo" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="aCd_cds_orig" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT * FROM REVERSALE REV
-WHERE (
-($P{aCd_cds}=CNRCTB020.GETCDCDSENTE(rev.esercizio) and rev.cd_cds =$P{aCd_cds})
-  or REV.CD_CDS_origine         = $P{aCd_cds})
-  AND REV.ESERCIZIO      = $P{aEs}
+WHERE
+ REV.CD_CDS          = decode($P{aCd_cds_orig},'%',decode($P{aCd_cds},CNRCTB020.GETCDCDSENTE(rev.esercizio), $P{aCd_cds},rev.cd_cds),$P{aCd_cds}) and
+REV.CD_CDS_origine=    (decode($P{aCd_cds_orig},'%',decode($P{aCd_cds},CNRCTB020.GETCDCDSENTE(rev.esercizio), rev.cd_cds,$P{aCd_cds}),$P{aCd_cds_orig}))
+  and  REV.ESERCIZIO      = $P{aEs}
   AND REV.PG_REVERSALE   between $P{aPg_da} and $P{aPg_a}
   AND REV.DT_EMISSIONE   between $P{aDt_da} and $P{aDt_a}
   AND EXISTS (SELECT 1 FROM REVERSALE_RIGA RRIGA
@@ -76,19 +79,19 @@ ORDER BY ESERCIZIO,CD_CDS,PG_REVERSALE]]>
 	<field name="STATO_COGE" class="java.lang.String"/>
 	<field name="DT_RITRASMISSIONE" class="java.sql.Timestamp"/>
 	<group name="PG_REVERSALE" isStartNewPage="true" isResetPageNumber="true">
-		<groupExpression><![CDATA[$F{PG_REVERSALE}]]></groupExpression>
+		<groupExpression><![CDATA[$F{CD_CDS}+$F{PG_REVERSALE}]]></groupExpression>
 		<groupHeader>
 			<band height="16" splitType="Stretch">
-				<subreport isUsingCache="true">
+				<subreport isUsingCache="false">
 					<reportElement key="subreport-1" positionType="Float" stretchType="RelativeToBandHeight" x="1" y="0" width="572" height="16" isRemoveLineWhenBlank="true"/>
 					<subreportParameter name="DIR_IMAGE">
 						<subreportParameterExpression><![CDATA[$P{DIR_IMAGE}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="pg_reversale">
-						<subreportParameterExpression><![CDATA[$F{PG_REVERSALE}]]></subreportParameterExpression>
-					</subreportParameter>
 					<subreportParameter name="aCd_cds">
 						<subreportParameterExpression><![CDATA[$F{CD_CDS}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="pg_reversale">
+						<subreportParameterExpression><![CDATA[$F{PG_REVERSALE}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="aEs">
 						<subreportParameterExpression><![CDATA[$P{aEs}]]></subreportParameterExpression>
