@@ -57,6 +57,13 @@
 	<fieldProperty
 		name="cdTerzoCRParameter"
 		property="cdTerzoCRParameter" />
+	<fieldProperty
+		name="cd_cds_orig"
+		property="cd_cds_orig" 
+		inputType="TEXT"
+		label="CdS origine"
+		caseSensitiveSearch="false"
+		enabledOnFreeSearch="false" />
 		
 	<formFieldProperty
 		name="esercizio"
@@ -64,6 +71,9 @@
 	<formFieldProperty
 		name="cd_cds"
 		inputType="ROTEXT" />
+	<formFieldProperty
+		name="cd_cds_orig"
+		inputType="ROTEXT" />	
 	<formFieldProperty name="pgInizio" />
 	<formFieldProperty name="pgFine" />
 	<formFieldProperty name="dataInizio" />
@@ -99,7 +109,7 @@
 		<formFieldProperty name="dataInizio" />
 		<formFieldProperty name="dataFine" />
 		<formFieldProperty name="cdTerzo" />
-		<formFieldProperty name="findTerzo" />
+		<formFieldProperty name="findTerzo" />	
 	</form>
 
 	<printForm
@@ -144,7 +154,7 @@
 			parameterPosition="1"
 			parameterType="STRING"
 			paramNameJR="aCd_cds"
-			paramTypeJR="java.lang.String" />		
+			paramTypeJR="java.lang.String" />	
 		<printFieldProperty 
 			name="esercizio"
 			parameterPosition="2"
@@ -181,5 +191,11 @@
 			parameterType="STRING"
 			paramNameJR="aCd_terzo"
 			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cd_cds_orig"
+			parameterPosition="8"
+			parameterType="STRING"
+			paramNameJR="aCd_cds_orig"
+			paramTypeJR="java.lang.String" />				
 	</printForm>
 </bulkInfo>
