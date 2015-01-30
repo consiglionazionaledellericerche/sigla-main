@@ -42,7 +42,7 @@
 		<![CDATA[SELECT * FROM REVERSALE REV
 WHERE
  REV.CD_CDS          = decode($P{aCd_cds_orig},'%',decode($P{aCd_cds},CNRCTB020.GETCDCDSENTE(rev.esercizio), $P{aCd_cds},rev.cd_cds),$P{aCd_cds}) and
-REV.CD_CDS_origine=    (decode($P{aCd_cds_orig},'%',decode($P{aCd_cds},CNRCTB020.GETCDCDSENTE(rev.esercizio), rev.cd_cds,$P{aCd_cds}),$P{aCd_cds_orig}))
+REV.CD_CDS_origine=    (decode($P{aCd_cds_orig},'%',decode($P{aCd_cds},CNRCTB020.GETCDCDSENTE(rev.esercizio),rev.cd_cds_origine,$P{aCd_cds}),$P{aCd_cds_orig}))
   and  REV.ESERCIZIO      = $P{aEs}
   AND REV.PG_REVERSALE   between $P{aPg_da} and $P{aPg_a}
   AND REV.DT_EMISSIONE   between $P{aDt_da} and $P{aDt_a}
