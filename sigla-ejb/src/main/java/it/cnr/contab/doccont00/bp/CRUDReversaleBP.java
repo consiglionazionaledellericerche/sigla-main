@@ -293,10 +293,10 @@ protected void initializePrintBP(AbstractPrintBP bp)
 
 	param = new Print_spooler_paramBulk();
 	param.setNomeParam("aCd_cds");
-	param.setValoreParam(reversale.getCd_cds_origine());
+	param.setValoreParam(reversale.getCd_cds());
 	param.setParamType("java.lang.String");
 	printbp.addToPrintSpoolerParam(param);
-	
+			
 	param = new Print_spooler_paramBulk();
 	param.setNomeParam("aEs");
 	param.setValoreParam(reversale.getEsercizio().toString());
@@ -330,6 +330,12 @@ protected void initializePrintBP(AbstractPrintBP bp)
 	param = new Print_spooler_paramBulk();
 	param.setNomeParam("aCd_terzo");
 	param.setValoreParam("%");
+	param.setParamType("java.lang.String");
+	printbp.addToPrintSpoolerParam(param);
+	
+	param = new Print_spooler_paramBulk();
+	param.setNomeParam("aCd_cds_orig");
+	param.setValoreParam(reversale.getCd_cds_origine());
 	param.setParamType("java.lang.String");
 	printbp.addToPrintSpoolerParam(param);
 }
