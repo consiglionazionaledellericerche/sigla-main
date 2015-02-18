@@ -362,8 +362,8 @@ public class SiglaCMISService {
 				BigInteger.ZERO,
 				contentType,
 				inputStream);
-		document.setContentStream(contentStream, true);
-		return document;
+		document.setContentStream(contentStream, true, true);
+		return document.getObjectOfLatestVersion(false);	
 	}
 
 	public void createRelationship(String sourceNodeRef, String sourceNodeTarget, CMISRelationship relationship){
