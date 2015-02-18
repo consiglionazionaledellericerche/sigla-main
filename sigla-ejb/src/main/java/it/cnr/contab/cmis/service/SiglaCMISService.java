@@ -330,7 +330,7 @@ public class SiglaCMISService {
 		} catch (CmisObjectNotFoundException e){
 			return storeSimpleDocument(oggettoBulk, inputStream, contentType, name, cmisPath, objectTypeName, makeVersionable, permissions);
 		}
-		updateContent(node.getObjectOfLatestVersion(false).getId(), inputStream, contentType);
+		node = updateContent(node.getObjectOfLatestVersion(false).getId(), inputStream, contentType);
 		return node;
 	}
 
@@ -355,7 +355,7 @@ public class SiglaCMISService {
 		}
 	}
 
-	public void updateContent(String nodeRef, InputStream inputStream, String contentType){
+	public Document updateContent(String nodeRef, InputStream inputStream, String contentType){
 		Document document = (Document) getNodeByNodeRef(nodeRef);
 		ContentStream contentStream = new ContentStreamImpl(
 				document.getName(),
@@ -363,6 +363,7 @@ public class SiglaCMISService {
 				contentType,
 				inputStream);
 		document.setContentStream(contentStream, true);
+		return document;
 	}
 
 	public void createRelationship(String sourceNodeRef, String sourceNodeTarget, CMISRelationship relationship){
