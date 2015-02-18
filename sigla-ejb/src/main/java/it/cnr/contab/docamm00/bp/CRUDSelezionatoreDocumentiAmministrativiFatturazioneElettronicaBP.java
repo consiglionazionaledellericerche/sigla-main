@@ -182,7 +182,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 	    					throw new ApplicationException("CMIS - Errore nella registrazione del file XML sul Documentale (" + e.getMessage() + ")");
 	    				}
 	    				componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fattura, Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI, null);
-	    				String webScriptURL = documentiCollegatiDocAmmService.getRepositoyURL().concat("/sigla/firma/fatture");
+	    				String webScriptURL = documentiCollegatiDocAmmService.getRepositoyURL().concat("service/sigla/firma/fatture");
 	    	    		String json = "{" +
 	    	    				"\"nodeRefSource\" : \"" + cmisFile.getDocument().getProperty(SiglaCMISService.ALFCMIS_NODEREF).getValueAsString() + "\"," +
 	    	    				"\"username\" : \"" + firmaOTPBulk.getUserName() + "\"," +
