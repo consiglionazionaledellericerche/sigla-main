@@ -330,7 +330,7 @@ public class SiglaCMISService {
 		} catch (CmisObjectNotFoundException e){
 			return storeSimpleDocument(oggettoBulk, inputStream, contentType, name, cmisPath, objectTypeName, makeVersionable, permissions);
 		}
-		updateContent(node.getId(), inputStream, contentType);
+		updateContent(node.getObjectOfLatestVersion(false).getId(), inputStream, contentType);
 		return node;
 	}
 
