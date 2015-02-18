@@ -588,8 +588,10 @@
 	<columnSet
 		name="righeDaScarico">	
 		<columnFieldProperty
-			name="codiceCompleto"
+			name="nr_inventario"
 			style="width:80px" />	
+		<columnFieldProperty
+			name="progressivo" />		
 		<columnFieldProperty
 			name="ds_bene"
 			style="width:300px" />
