@@ -430,6 +430,8 @@
 	<columnSet	name="restService">
 		<columnFieldProperty name="cd_linea_attivita"/>
 		<columnFieldProperty name="ds_linea_attivita"/>
+		<columnFieldProperty name="cd_centro_responsabilita"/>	
+		<columnFieldProperty name="pg_progetto"/>	
 	</columnSet>
 
 	<columnSet name="columnSetPerAccertamento">
