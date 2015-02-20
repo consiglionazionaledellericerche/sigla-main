@@ -7,6 +7,7 @@
 	<artifactId>sigla</artifactId>
 	<packaging>pom</packaging>
 	<modules>
+		<module>sigla-ws-client</module>
 		<module>sigla-ejb</module>
 		<module>sigla-web</module>
 		<module>sigla-ws</module>

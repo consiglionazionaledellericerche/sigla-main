@@ -491,7 +491,11 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 					RiepilogoPerAliquotaIVA riepilogo= (RiepilogoPerAliquotaIVA) i.next();
 					DatiRiepilogoType datiRiepilogo = factory.createDatiRiepilogoType();
 					datiRiepilogo.setAliquotaIVA(riepilogo.getAliquota());
-					datiRiepilogo.setEsigibilitaIVA(fattura.getFl_liquidazione_differita()? EsigibilitaIVAType.D :  EsigibilitaIVAType.I);
+					if (fattura.getFl_liquidazione_differita()){
+						datiRiepilogo.setEsigibilitaIVA(fattura.getEsercizio() > 2014 ? EsigibilitaIVAType.S :  EsigibilitaIVAType.D);
+					} else {
+						datiRiepilogo.setEsigibilitaIVA(EsigibilitaIVAType.I);
+					}
 					datiRiepilogo.setImponibileImporto(riepilogo.getImponibile().setScale(2));
 					datiRiepilogo.setImposta(riepilogo.getImposta().setScale(2));
 					impostaDatiNonImponibile(fattura, riepilogo, datiRiepilogo);
