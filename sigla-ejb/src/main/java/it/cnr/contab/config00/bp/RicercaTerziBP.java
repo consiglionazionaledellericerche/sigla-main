@@ -30,6 +30,7 @@ import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.anagraf00.util.TerzoNonPresenteSIPException;
 import it.cnr.contab.config00.util.Constants;
+import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.BulkList;
@@ -81,7 +82,11 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 		super(s);
 	}
 	private Element generaErrore(Document xmldoc){
-		Element e = xmldoc.createElement("cercaterzi:errore");
+		Element e =null;
+		if (this.getServizio().equalsIgnoreCase("rendicontazione"))
+			e= xmldoc.createElement("errore");
+		else
+			e=xmldoc.createElement("cercaterzi:errore");
 		e.setAttribute("codice",codiceErrore.toString());
 		Node n = xmldoc.createTextNode(Constants.erroriSIP.get(codiceErrore));
 		e.appendChild(n);
@@ -89,10 +94,10 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 	}
 	private Element generaNumeroTerzi(Document xmldoc){
 		Element e =null;
-		if (this.getServizio().compareTo("rendicontazione")!=0)
-			 e = xmldoc.createElement("cercaterzi:numris");
+		if (this.getServizio().equalsIgnoreCase("rendicontazione"))
+			 e = xmldoc.createElement("numris"); 
 			else
-			 e = xmldoc.createElement("numris");
+			 e = xmldoc.createElement("cercaterzi:numris");
 		Node n = xmldoc.createTextNode(new Integer(getTerzi().size()).toString());
     	e.appendChild(n);
     	return e;	
@@ -162,7 +167,12 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 		    	DOMImplementation impl = builder.getDOMImplementation();
 		    	Document xmldoc =null;
 		    	Element root =null;
-		    	if (this.getServizio().compareTo("rendicontazione")!=0){
+		    	
+		    	if (this.getServizio().equalsIgnoreCase("cerca")){
+		    		xmldoc=impl.createDocument("http://gestioneistituti.cnr.it/cercaterzi", "cercaterzi:root", null);
+		    		root = xmldoc.getDocumentElement();
+		    	}
+		    	else if (this.getServizio().equalsIgnoreCase("cercacompleta")){
 		    		xmldoc=impl.createDocument("http://gestioneistituti.cnr.it/cercaterzi", "cercaterzi:root", null);
 		    		root = xmldoc.getDocumentElement();
 		    	}
@@ -177,7 +187,7 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 		    		root.appendChild(generaNumeroTerzi(xmldoc));
 		    		int num = 0;
 		    		if (getTerzi() != null && !getTerzi().isEmpty()){
-		    			if (this.getServizio().compareTo("rendicontazione")!=0){
+		    			if (this.getServizio().equalsIgnoreCase("cerca")){
 		    				
 				    		for (Iterator i = getTerzi().iterator();i.hasNext()&&num<getNumMax().intValue();){
 				    			V_terzo_anagrafico_sipBulk terzo = (V_terzo_anagrafico_sipBulk)i.next();
@@ -188,7 +198,7 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 				    			}
 				    			num++;
 				    		}
-		    			}else if  (this.getServizio().compareTo("rendicontazione")==0)
+		    			}else if  (this.getServizio().equalsIgnoreCase("rendicontazione"))
 		    			{
 		    				for (Iterator i = getTerzi().iterator();i.hasNext()&&num<getNumMax().intValue();){
 		    					V_terzo_sipBulk terzo = (V_terzo_sipBulk)i.next();
@@ -200,16 +210,35 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 		    					num++;
 		    				}
 		    			}
-		    		}
+		    		else if  (this.getServizio().equalsIgnoreCase("cercacompleta"))
+	    			{
+		    			for (Iterator i = getTerzi().iterator();i.hasNext()&&num<getNumMax().intValue();){
+			    			V_terzo_anagrafico_sipBulk terzo = (V_terzo_anagrafico_sipBulk)i.next();
+				    			if (tipoterzo.equalsIgnoreCase("fisica")){
+				    				 root.appendChild(generaDettaglioTerziFisicaCompleta(xmldoc,terzo.getCd_terzo(),terzo.getCognome(),terzo.getNome(),terzo.getCodice_fiscale_pariva(),
+				    						terzo.getVia_fiscale(),terzo.getNum_civico_fiscale(),terzo.getCap_comune_fiscale(),terzo.getPg_nazione_fiscale(),terzo.getPg_comune_fiscale(),
+				    						terzo.getDt_nascita(),terzo.getPg_comune_nascita(),terzo.getSesso(),terzo.getComune_fiscale(),terzo.getComune_nascita(),terzo.getDs_nazione()));
+				    			}else if (tipoterzo.equalsIgnoreCase("giuridica")){
+				    				root.appendChild(generaDettaglioTerziGiuridicaCompleta(xmldoc,terzo.getCd_terzo(),terzo.getDenominazione_sede(),terzo.getCodice_fiscale_pariva(),
+				    						terzo.getVia_fiscale(),terzo.getNum_civico_fiscale(),terzo.getCap_comune_fiscale(),terzo.getPg_nazione_fiscale(),terzo.getPg_comune_fiscale(),terzo.getComune_fiscale(),terzo.getDs_nazione()));
+				    			}
+			    			num++;
+			    		}
+	    			}
 		    	}
+		    }
 				DOMSource domSource = new DOMSource(xmldoc);
 		    	StreamResult streamResult = new StreamResult(pagecontext.getOut());
 		    	TransformerFactory tf = TransformerFactory.newInstance();
 		    	Transformer serializer = tf.newTransformer();
 		    	serializer.setOutputProperty(OutputKeys.ENCODING,"ISO-8859-1");
-		    	if (this.getServizio()!=null && this.getServizio().compareTo("rendicontazione")!=0){
+		    	if (this.getServizio()!=null && this.getServizio().equalsIgnoreCase("cerca")){
 		    	   serializer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,"https://contab.cnr.it/SIGLA/schema/cercaterzi.dtd");
 		    	   serializer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC,"cercaterzi");
+		    	}
+		    	else if (this.getServizio()!=null && this.getServizio().equalsIgnoreCase("cercacompleta")){
+			    	   serializer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,"https://contab.cnr.it/SIGLA/schema/cercaterzicompleta.dtd");
+			    	   serializer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC,"cercaterzicompleta");
 		    	}
 		    	serializer.setOutputProperty(OutputKeys.INDENT,"yes");
 		    	serializer.setOutputProperty(OutputKeys.STANDALONE,"no");
@@ -220,6 +249,8 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 		}
     }
 	
+	
+
 	private Node generaDettaglioTerzoNoDip(Document xmldoc, Integer codice,
 			String ti_entita, String cognome, String nome,
 			String denominazione, String codicefiscale,
@@ -804,5 +835,157 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 
 	public void setDip(String dip) {
 		this.dip = dip;
+	}
+	private Node generaDettaglioTerziGiuridicaCompleta(Document xmldoc,
+			Integer codice, String denominazione,
+			String partitaiva, String via_fiscale,
+			String num_civico_fiscale, String cap_comune_fiscale,
+			Integer pg_nazione_fiscale, Integer pg_comune_fiscale,
+			String comune_fiscale,String ds_nazione) {
+
+		Element elementTerzo = xmldoc.createElement("cercaterzi:terzo");
+		
+		Element element = xmldoc.createElement("cercaterzi:codice");
+		Node node = xmldoc.createTextNode(codice.toString());
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+		
+	 	element= xmldoc.createElement("cercaterzi:denominazione");
+		node = xmldoc.createTextNode(denominazione==null?"":denominazione);
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+     	
+		element= xmldoc.createElement("cercaterzi:partitaiva");
+		node = xmldoc.createTextNode(partitaiva==null?"":partitaiva);
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+ 
+		element = xmldoc.createElement("cercaterzi:via_fiscale");
+		node = xmldoc.createTextNode(via_fiscale==null?"":via_fiscale);
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+		
+		element = xmldoc.createElement("cercaterzi:num_civico_fiscale");
+		node = xmldoc.createTextNode(num_civico_fiscale==null?"":num_civico_fiscale);
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+		
+		element = xmldoc.createElement("cercaterzi:cap_comune_fiscale");
+		node = xmldoc.createTextNode(cap_comune_fiscale==null?"":cap_comune_fiscale);
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+		
+		element = xmldoc.createElement("cercaterzi:pg_nazione_fiscale");
+		node = xmldoc.createTextNode(pg_nazione_fiscale==null?"":pg_nazione_fiscale.toString());
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+		
+		element = xmldoc.createElement("cercaterzi:pg_comune_fiscale");
+		node = xmldoc.createTextNode(pg_comune_fiscale==null?"":pg_comune_fiscale.toString());
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+		
+		element = xmldoc.createElement("cercaterzi:comune_fiscale");
+		node = xmldoc.createTextNode(comune_fiscale==null?"":comune_fiscale);
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+
+		element = xmldoc.createElement("cercaterzi:ds_nazione");
+		node = xmldoc.createTextNode(ds_nazione==null?"":ds_nazione);
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+		
+		return elementTerzo;
+	}
+
+	private Node generaDettaglioTerziFisicaCompleta(Document xmldoc,
+			Integer codice, String cognome2, String nome2,
+			String codice_fiscale_pariva, String via_fiscale,
+			String num_civico_fiscale, String cap_comune_fiscale,
+			Integer pg_nazione_fiscale, Integer pg_comune_fiscale,
+			Timestamp dt_nascita, Integer pg_comune_nascita, String sesso2,
+			String comune_fiscale,String comune_nascita,String ds_nazione) {
+		
+		Element elementTerzo = xmldoc.createElement("cercaterzi:terzo");
+		
+		Element element = xmldoc.createElement("cercaterzi:codice");
+		Node node = xmldoc.createTextNode(codice.toString());
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+		
+		element = xmldoc.createElement("cercaterzi:cognome");
+		node = xmldoc.createTextNode(cognome2==null?"":cognome2);
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+
+		element = xmldoc.createElement("cercaterzi:nome");
+		node = xmldoc.createTextNode(nome2==null?"":nome2);
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+		
+        element = xmldoc.createElement("cercaterzi:codicefiscale");
+		node = xmldoc.createTextNode(codice_fiscale_pariva==null?"":codice_fiscale_pariva);
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+		
+		element = xmldoc.createElement("cercaterzi:via_fiscale");
+		node = xmldoc.createTextNode(via_fiscale==null?"":via_fiscale);
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+		
+		element = xmldoc.createElement("cercaterzi:num_civico_fiscale");
+		node = xmldoc.createTextNode(num_civico_fiscale==null?"":num_civico_fiscale);
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+		
+		element = xmldoc.createElement("cercaterzi:cap_comune_fiscale");
+		node = xmldoc.createTextNode(cap_comune_fiscale==null?"":cap_comune_fiscale);
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+		
+		element = xmldoc.createElement("cercaterzi:pg_nazione_fiscale");
+		node = xmldoc.createTextNode(pg_nazione_fiscale==null?"":pg_nazione_fiscale.toString());
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+		
+		element = xmldoc.createElement("cercaterzi:pg_comune_fiscale");
+		node = xmldoc.createTextNode(pg_comune_fiscale==null?"":pg_comune_fiscale.toString());
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+		
+		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
+		element = xmldoc.createElement("cercaterzi:dt_nascita");
+		node = xmldoc.createTextNode(dt_nascita==null?"":formatter.format(dt_nascita));
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+		
+		element = xmldoc.createElement("cercaterzi:pg_comune_nascita");
+		node = xmldoc.createTextNode(pg_comune_nascita==null?"":pg_comune_nascita.toString());
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+		
+		element = xmldoc.createElement("cercaterzi:sesso");
+		node = xmldoc.createTextNode(sesso2==null?"":sesso2);
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+		
+
+		element = xmldoc.createElement("cercaterzi:comune_fiscale");
+		node = xmldoc.createTextNode(comune_fiscale==null?"":comune_fiscale);
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+		
+		element = xmldoc.createElement("cercaterzi:comune_nascita");
+		node = xmldoc.createTextNode(comune_nascita==null?"":comune_nascita);
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+
+
+		element = xmldoc.createElement("cercaterzi:ds_nazione");
+		node = xmldoc.createTextNode(ds_nazione==null?"":ds_nazione);
+		element.appendChild(node);
+		elementTerzo.appendChild(element);
+		
+		return elementTerzo;
 	}
 }
