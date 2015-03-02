@@ -653,7 +653,7 @@ private void aggiornaObbligazioni(
 			notaDiCredito.setObbligazioni_scadenzarioHash(newObbligazioniHash);
 			for (java.util.Enumeration e = ((ObbligazioniTable)newObbligazioniHash.clone()).keys(); e.hasMoreElements();) {
 				Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk)e.nextElement();
-				scadenza.setIm_associato_doc_amm(calcolaTotalePer((java.util.List)newObbligazioniHash.get(scadenza)));
+				scadenza.setIm_associato_doc_amm(calcolaTotalePer((java.util.List)newObbligazioniHash.get(scadenza),notaDiCredito.quadraturaInDeroga()));
 				updateImportoAssociatoDocAmm(userContext, scadenza);
 			}
 		}
@@ -1046,7 +1046,7 @@ private java.math.BigDecimal calcolaTotaleAccertamentoPerFA(
 
 	AccertamentiTable accertamentiHash = fatturaAttiva.getFattura_attiva_accertamentiHash();
 	Vector dettagli = (Vector)accertamentiHash.get(scadenza);
-	java.math.BigDecimal impTotaleDettagli = calcolaTotalePer(dettagli);
+	java.math.BigDecimal impTotaleDettagli = calcolaTotalePer(dettagli,fatturaAttiva.quadraturaInDeroga());
 	java.math.BigDecimal impTotaleStornati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	java.math.BigDecimal impTotaleAddebitati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	java.util.HashMap dettagliDaStornare = caricaStorniPer(userContext, dettagli);
@@ -1058,6 +1058,8 @@ private java.math.BigDecimal calcolaTotaleAccertamentoPerFA(
 			Fattura_attiva_rigaIBulk key = (Fattura_attiva_rigaIBulk)dett.next();
 			for (Iterator i = ((Vector)dettagliDaStornare.get(key)).iterator(); i.hasNext();) {
 				Nota_di_credito_attiva_rigaBulk riga = (Nota_di_credito_attiva_rigaBulk)i.next();
+				if (!quadraturaInDeroga && riga.getFattura_attiva().quadraturaInDeroga())
+					quadraturaInDeroga = true;
 				AccertamentiTable hash = riga.getFattura_attiva().getFattura_attiva_accertamentiHash();
 				if (hash == null)
 					rebuildAccertamenti(userContext, riga.getFattura_attiva());
@@ -1083,7 +1085,7 @@ private java.math.BigDecimal calcolaTotaleAccertamentoPerFA(
 		}
 		if (dettagliStornati != null)
 			impTotaleStornati = impTotaleStornati.add(
-									calcolaTotalePer(dettagliStornati));
+									calcolaTotalePer(dettagliStornati,quadraturaInDeroga));
 	}
 	if (dettagliDaAddebitare != null) {
 		Vector dettagliAddebitati = null;
@@ -1114,7 +1116,7 @@ private java.math.BigDecimal calcolaTotaleAccertamentoPerFA(
 			}
 		}
 		if (dettagliAddebitati != null)
-			impTotaleAddebitati = impTotaleAddebitati.add(calcolaTotalePer(dettagliAddebitati));
+			impTotaleAddebitati = impTotaleAddebitati.add(calcolaTotalePer(dettagliAddebitati,quadraturaInDeroga));
 	}
 	return impTotaleDettagli.add(impTotaleAddebitati).subtract(impTotaleStornati);
 }
@@ -1127,8 +1129,8 @@ private java.math.BigDecimal calcolaTotaleAccertamentoPerNdC(
 	AccertamentiTable accertamentiHash = notaDiCredito.getFattura_attiva_accertamentiHash();
 	Vector dettagli = (Vector)accertamentiHash.get(scadenza);
 	java.math.BigDecimal impTotaleDettagli = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
-	java.math.BigDecimal impTotaleStornati = calcolaTotalePer(dettagli).add(calcolaTotalePer(caricaStorniExceptFor(userContext, scadenza, notaDiCredito)));
-	java.math.BigDecimal impTotaleAddebitati = calcolaTotalePer(caricaAddebitiExceptFor(userContext, scadenza, null));
+	java.math.BigDecimal impTotaleStornati = calcolaTotalePer(dettagli,notaDiCredito.quadraturaInDeroga()).add(calcolaTotalePer(caricaStorniExceptFor(userContext, scadenza, notaDiCredito),notaDiCredito.quadraturaInDeroga()));
+	java.math.BigDecimal impTotaleAddebitati = calcolaTotalePer(caricaAddebitiExceptFor(userContext, scadenza, null),notaDiCredito.quadraturaInDeroga());
 	Vector fattureContenute = new Vector();
 	for (Iterator i = dettagli.iterator(); i.hasNext();) {
 		Nota_di_credito_attiva_rigaBulk riga = (Nota_di_credito_attiva_rigaBulk)i.next();
@@ -1150,7 +1152,7 @@ private java.math.BigDecimal calcolaTotaleAccertamentoPerNdC(
 
 		Vector dettagliContabilizzati = (Vector)fatturaAttivaI.getFattura_attiva_accertamentiHash().get(scadenza);
 		if (dettagliContabilizzati != null)
-			impTotaleDettagli = impTotaleDettagli.add(calcolaTotalePer(dettagliContabilizzati));
+			impTotaleDettagli = impTotaleDettagli.add(calcolaTotalePer(dettagliContabilizzati,notaDiCredito.quadraturaInDeroga()));
 	}
 
 	return impTotaleDettagli.add(impTotaleAddebitati).subtract(impTotaleStornati);
@@ -1164,8 +1166,8 @@ private java.math.BigDecimal calcolaTotaleAccertamentoPerNdD(
 	AccertamentiTable accertamentiHash = notaDiDebito.getFattura_attiva_accertamentiHash();
 	Vector dettagli = (Vector)accertamentiHash.get(scadenza);
 	java.math.BigDecimal impTotaleDettagli = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
-	java.math.BigDecimal impTotaleStornati = calcolaTotalePer(caricaStorniExceptFor(userContext, scadenza, null));
-	java.math.BigDecimal impTotaleAddebitati = calcolaTotalePer(dettagli).add(calcolaTotalePer(caricaAddebitiExceptFor(userContext, scadenza, notaDiDebito)));
+	java.math.BigDecimal impTotaleStornati = calcolaTotalePer(caricaStorniExceptFor(userContext, scadenza, null),notaDiDebito.quadraturaInDeroga());
+	java.math.BigDecimal impTotaleAddebitati = calcolaTotalePer(dettagli,notaDiDebito.quadraturaInDeroga()).add(calcolaTotalePer(caricaAddebitiExceptFor(userContext, scadenza, notaDiDebito),notaDiDebito.quadraturaInDeroga()));
 	Vector fattureContenute = new Vector();
 	for (Iterator i = dettagli.iterator(); i.hasNext();) {
 		Nota_di_debito_attiva_rigaBulk riga = (Nota_di_debito_attiva_rigaBulk)i.next();
@@ -1187,12 +1189,13 @@ private java.math.BigDecimal calcolaTotaleAccertamentoPerNdD(
 
 		Vector dettagliContabilizzati = (Vector)fatturaAttivaI.getFattura_attiva_accertamentiHash().get(scadenza);
 		if (dettagliContabilizzati != null)
-			impTotaleDettagli = impTotaleDettagli.add(calcolaTotalePer(dettagliContabilizzati));
+			impTotaleDettagli = impTotaleDettagli.add(calcolaTotalePer(dettagliContabilizzati,notaDiDebito.quadraturaInDeroga()));
 	}
 
 	return impTotaleDettagli.add(impTotaleAddebitati).subtract(impTotaleStornati);
 }
-private java.math.BigDecimal calcolaTotalePer(java.util.List selectedModels)
+private java.math.BigDecimal calcolaTotalePer(java.util.List selectedModels,
+		boolean escludiIVA)
 	throws it.cnr.jada.comp.ApplicationException {
 
 	java.math.BigDecimal importo = new java.math.BigDecimal(0);
@@ -1200,10 +1203,12 @@ private java.math.BigDecimal calcolaTotalePer(java.util.List selectedModels)
 	if (selectedModels != null) {
 		for (java.util.Iterator i = selectedModels.iterator(); i.hasNext();) {
 			Fattura_attiva_rigaBulk rigaSelected = (Fattura_attiva_rigaBulk)i.next();
-			importo = importo.add(rigaSelected.getIm_imponibile().add(rigaSelected.getIm_iva()));
+			if (escludiIVA)
+				importo = importo.add(rigaSelected.getIm_imponibile());
+			else
+				importo = importo.add(rigaSelected.getIm_imponibile().add(rigaSelected.getIm_iva()));
 		}
 	}
-
 	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	return importo;
 }
@@ -1214,7 +1219,7 @@ private java.math.BigDecimal calcolaTotaleScadenzaObbligazionePer(
 	throws it.cnr.jada.comp.ComponentException {
 
 	Vector dettagli = (Vector)notaDiCredito.getObbligazioniHash().get(scadenza);
-	return calcolaTotalePer(dettagli);
+	return calcolaTotalePer(dettagli,notaDiCredito.quadraturaInDeroga());
 }
 //^^@@
 /** 
@@ -2212,7 +2217,7 @@ public Fattura_attivaBulk contabilizzaDettagliSelezionati(
 				rigaSelected.setToBeUpdated();
 				fatturaAttiva.addToFattura_attiva_accertamentiHash(accertamentoSelezionato, rigaSelected);
 			}
-			fatturaAttiva.addToFattura_attiva_ass_totaliMap(accertamentoSelezionato, calcolaTotalePer((Vector)fatturaAttiva.getFattura_attiva_accertamentiHash().get(accertamentoSelezionato)));
+			fatturaAttiva.addToFattura_attiva_ass_totaliMap(accertamentoSelezionato, calcolaTotalePer((Vector)fatturaAttiva.getFattura_attiva_accertamentiHash().get(accertamentoSelezionato),false));
 
 			if (fatturaAttiva.getStato_cofi() != fatturaAttiva.STATO_PAGATO)
 				fatturaAttiva.setStato_cofi((fatturaAttiva.getFattura_attiva_accertamentiHash().isEmpty()) ?
@@ -3683,6 +3688,7 @@ public OggettoBulk inizializzaBulkPerInserimento(
 			throw new it.cnr.jada.comp.ApplicationException("Non è possibile inserire documenti attivi in esercizi non corrispondenti all'anno solare!");
 		fattura.setDt_registrazione(date);
 		setDt_termine_creazione_docamm(aUC, fattura);
+		fattura.setAttivoSplitPayment(isAttivoSplitPayment(aUC,date));
 	} catch (it.cnr.jada.persistency.PersistencyException e) {
 		throw handleException(bulk, e);
 	}
@@ -3836,8 +3842,8 @@ public OggettoBulk inizializzaBulkPerModifica(
 		  *	Aggiunta proprietà <code>esercizioInScrivania</code>, che verrà utilizzata
 		  *	per la gestione di isRiportataInScrivania(), in alcuni casi.
 		 */
-		 fattura.setEsercizioInScrivania(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC));
-		 
+		fattura.setEsercizioInScrivania(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC));
+		fattura.setAttivoSplitPayment(isAttivoSplitPayment(aUC,fattura.getDt_registrazione()));
 		calcoloConsuntivi(aUC, fattura);
 		rebuildAccertamenti(aUC, fattura);
 		if (fattura instanceof Nota_di_credito_attivaBulk)
@@ -4636,11 +4642,11 @@ private void rebuildAccertamenti(UserContext aUC, Fattura_attivaBulk fatturaAtti
 					java.math.BigDecimal impStorni = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 					java.math.BigDecimal impAddebiti = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 					if (storniHashMap != null) {
-						impStorni = calcolaTotalePer((Vector)storniHashMap.get(riga));
+						impStorni = calcolaTotalePer((Vector)storniHashMap.get(riga),false);
 						rigaFP.setIm_totale_storni(impStorni);
 					}
 					if (addebitiHashMap != null) {
-						impAddebiti = calcolaTotalePer((Vector)addebitiHashMap.get(riga));
+						impAddebiti = calcolaTotalePer((Vector)addebitiHashMap.get(riga),false);
 						rigaFP.setIm_totale_addebiti(impAddebiti);
 					}
 					rigaFP.setSaldo(riga.getIm_imponibile().add(riga.getIm_iva()).subtract(impStorni).add(impAddebiti));
@@ -4652,7 +4658,7 @@ private void rebuildAccertamenti(UserContext aUC, Fattura_attivaBulk fatturaAtti
 				Accertamento_scadenzarioBulk scadenza = (Accertamento_scadenzarioBulk)e.nextElement();
 				fatturaAttiva.addToFattura_attiva_ass_totaliMap(
 											scadenza,
-											calcolaTotalePer((Vector)fatturaAttiva.getFattura_attiva_accertamentiHash().get(scadenza)));
+											calcolaTotalePer((Vector)fatturaAttiva.getFattura_attiva_accertamentiHash().get(scadenza),fatturaAttiva.quadraturaInDeroga()));
 			}
 		}
 	}
@@ -4687,7 +4693,7 @@ private void rebuildObbligazioni(
 	if (notaDiCredito.getObbligazioni_scadenzarioHash() != null) {
 		for (java.util.Enumeration e = notaDiCredito.getObbligazioni_scadenzarioHash().keys(); e.hasMoreElements();) {
 			Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk)e.nextElement();
-			notaDiCredito.addToFattura_attiva_ass_totaliMap(scadenza, calcolaTotalePer((Vector)notaDiCredito.getObbligazioni_scadenzarioHash().get(scadenza)));
+			notaDiCredito.addToFattura_attiva_ass_totaliMap(scadenza, calcolaTotalePer((Vector)notaDiCredito.getObbligazioni_scadenzarioHash().get(scadenza),notaDiCredito.quadraturaInDeroga()));
 		}
 	}
 
@@ -7402,6 +7408,22 @@ public Fattura_attiva_IBulk aggiornaDatiFatturaSDI(UserContext userContext, Fatt
 	if (stornaFattura)
 		generaNotaCreditoAutomatica(userContext, fatturaAttiva, fatturaAttiva.getEsercizio());
 	return fatturaAttiva;
+}
+public Boolean isAttivoSplitPayment(UserContext aUC, Date dataFattura) throws ComponentException {					   
+	Date dataInizio;
+	try {
+		dataInizio = Utility.createConfigurazioneCnrComponentSession().getDt01(aUC, new Integer(0), null, Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_ATTIVA);
+	} catch (ComponentException e) {
+    	throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+	} catch (RemoteException e) {
+    	throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+	} catch (EJBException e) {
+    	throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+	}
+	if (dataFattura == null || dataInizio == null || dataFattura.before(dataInizio)){
+		return false;
+	}
+	return true;
 }
 
 public Fattura_attivaBulk aggiornaFatturaInvioSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, String codiceInvioSdi, XMLGregorianCalendar dataConsegnaSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException {

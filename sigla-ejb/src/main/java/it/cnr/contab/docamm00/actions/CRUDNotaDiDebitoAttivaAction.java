@@ -121,7 +121,7 @@ private Forward basicDoAddebitaDettagli(
 										new String[] { Nota_di_debito_attivaBulk.STATO_PARZIALE, Nota_di_debito_attivaBulk.STATO_PAGATO });
 
 		if (dettagliDaAddebitare != null && !dettagliDaAddebitare.isEmpty()) {
-			it.cnr.jada.util.RemoteIterator ri = ((FatturaAttivaSingolaComponentSession)bp.createComponentSession()).findAccertamentiFor(context.getUserContext(), notaDiDebito, calcolaTotaleSelezionati(dettagliDaAddebitare));
+			it.cnr.jada.util.RemoteIterator ri = ((FatturaAttivaSingolaComponentSession)bp.createComponentSession()).findAccertamentiFor(context.getUserContext(), notaDiDebito, calcolaTotaleSelezionati(dettagliDaAddebitare,notaDiDebito.quadraturaInDeroga()));
 			ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, ri);
 			if (ri != null && ri.hasMoreElements()) {
 				it.cnr.jada.util.action.SelezionatoreListaBP slbp = select(context, ri, it.cnr.jada.bulk.BulkInfo.getBulkInfo(Fattura_attiva_rigaIBulk.class), "default", "doSelezionaDettagli");

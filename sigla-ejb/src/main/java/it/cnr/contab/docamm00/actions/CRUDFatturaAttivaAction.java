@@ -70,6 +70,7 @@ import java.sql.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 import javax.ejb.EJBException;
 
@@ -614,7 +615,7 @@ private Forward basicDoRicercaAccertamento(
             new Filtro_ricerca_accertamentiVBulk();
         filtro.setData_scadenziario(fatturaAttiva.getDt_scadenza());
         filtro.setCliente(fatturaAttiva.getCliente());
-        filtro.setIm_importo(calcolaTotaleSelezionati(models));
+        filtro.setIm_importo(calcolaTotaleSelezionati(models,fatturaAttiva.quadraturaInDeroga()));
         filtro.setCd_unita_organizzativa(fatturaAttiva.getCd_unita_organizzativa());
         filtro.setCd_uo_origine(fatturaAttiva.getCd_uo_origine());
         filtro.setHasDocumentoCompetenzaCOGEInAnnoPrecedente(fatturaAttiva.hasCompetenzaCOGEInAnnoPrecedente());
@@ -648,7 +649,8 @@ private Forward basicDoRicercaAccertamento(
  * @return 
  * @throws ApplicationException	
  */
-protected java.math.BigDecimal calcolaTotaleSelezionati(java.util.List selectedModels)
+protected java.math.BigDecimal calcolaTotaleSelezionati(java.util.List selectedModels,
+		boolean escludiIVA)
 	throws it.cnr.jada.comp.ApplicationException {
 
 	java.math.BigDecimal importo = new java.math.BigDecimal(0);
@@ -656,17 +658,26 @@ protected java.math.BigDecimal calcolaTotaleSelezionati(java.util.List selectedM
 	if (selectedModels != null) {
 		for (java.util.Iterator i = selectedModels.iterator(); i.hasNext();) {
 			Fattura_attiva_rigaBulk rigaSelected = (Fattura_attiva_rigaBulk)i.next();
-			java.math.BigDecimal imTotale = rigaSelected.getIm_imponibile().add(rigaSelected.getIm_iva());
+			java.math.BigDecimal imTotale =(escludiIVA) ?
+						rigaSelected.getIm_imponibile() :
+						rigaSelected.getIm_imponibile().add(rigaSelected.getIm_iva());
+			
 			java.math.BigDecimal imStornati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP );
 			java.math.BigDecimal imAddebitati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP );
 			if (rigaSelected instanceof Fattura_attiva_rigaIBulk) {
-				imStornati = imStornati.add(((Fattura_attiva_rigaIBulk)rigaSelected).getIm_totale_storni());
-				imAddebitati = imAddebitati.add(((Fattura_attiva_rigaIBulk)rigaSelected).getIm_totale_addebiti());
+					Fattura_attiva_rigaIBulk dettaglioFatturaAttiva = (Fattura_attiva_rigaIBulk)rigaSelected;
+					java.math.BigDecimal impStorniDiRiga = (escludiIVA) ?
+																calcolaTotaleSelezionati((Vector)dettaglioFatturaAttiva.getFattura_attivaI().getStorniHashMap().get(dettaglioFatturaAttiva), true) :
+																	dettaglioFatturaAttiva.getIm_totale_storni();
+					imStornati = imStornati.add(impStorniDiRiga);
+					java.math.BigDecimal impAddebitiDiRiga = (escludiIVA) ?
+																calcolaTotaleSelezionati((Vector)dettaglioFatturaAttiva.getFattura_attivaI().getAddebitiHashMap().get(dettaglioFatturaAttiva), true) :
+																	dettaglioFatturaAttiva.getIm_totale_addebiti();
+					imAddebitati = imAddebitati.add(impAddebitiDiRiga);
+				}
+				importo = importo.add(imTotale.add(imAddebitati).subtract(imStornati));
 			}
-			importo = importo.add(imTotale.add(imAddebitati).subtract(imStornati));
-		}
 	}
-
 	importo = importo.setScale(2, java.math.BigDecimal.ROUND_HALF_UP );
 	return importo;
 }
@@ -1390,15 +1401,17 @@ public Forward doBringBackSearchCliente(
             //richiamo il metodo della component completaterzo
             fattura_attiva =
                 fpcs.completaTerzo(context.getUserContext(), fattura_attiva, fornitoreTrovato);
-
+            if (!(fattura_attiva.getFl_extra_ue()||fattura_attiva.getFl_intra_ue()||fattura_attiva.getFl_san_marino())){
             //imposto il flag liquidazione differita
-	        if (fattura_attiva.getCliente().getAnagrafico() != null &&
+            	if (fattura_attiva.getCliente().getAnagrafico() != null &&
 		            (fattura_attiva.getCliente().getAnagrafico().getFl_fatturazione_differita()!= null &&
                 	 fattura_attiva.getCliente().getAnagrafico().getFl_fatturazione_differita().booleanValue()) &&
- 		         (fattura_attiva.getFl_liquidazione_differita() != null &&
-				  !fattura_attiva.getFl_liquidazione_differita().booleanValue()))
+                	(fattura_attiva.getFl_liquidazione_differita() != null && !fattura_attiva.getFl_liquidazione_differita().booleanValue()))
             			fattura_attiva.setFl_liquidazione_differita(Boolean.TRUE);
-
+            	if (fattura_attiva.getCliente().getAnagrafico() != null &&
+		            (fattura_attiva.getCliente().getAnagrafico().isEntePubblico() && !fattura_attiva.getFl_liquidazione_differita().booleanValue()))
+	        	openMessage(context, "Verificare che l'ente pubblico non sia soggetto a split payment ed eventualmente aggiornare l'anagrafica.");
+            }
             crudFattura.setModel(context,fattura_attiva);
             crudFattura.resyncChildren(context);
                         
@@ -1506,7 +1519,7 @@ public Forward doCalcolaTotalePerAccertamento(ActionContext context, Accertament
 		//calcolo il totale per l'accertamento
 		if (fatt.getFattura_attiva_accertamentiHash() != null && scadenza != null)
 			try {
-				fatt.setImportoTotalePerAccertamento(calcolaTotaleSelezionati((java.util.List)fatt.getFattura_attiva_accertamentiHash().get(scadenza)));
+				fatt.setImportoTotalePerAccertamento(calcolaTotaleSelezionati((java.util.List)fatt.getFattura_attiva_accertamentiHash().get(scadenza),fatt.quadraturaInDeroga()));
 			} catch (it.cnr.jada.comp.ApplicationException e) {
 				fatt.setImportoTotalePerAccertamento(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP ));
 			}

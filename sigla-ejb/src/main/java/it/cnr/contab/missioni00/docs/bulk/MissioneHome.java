@@ -278,6 +278,8 @@ public class MissioneHome extends BulkHome implements
 				.getCd_unita_organizzativa());
 		sql.addSQLClause("AND", "PG_ANTICIPO", sql.EQUALS, anticipo
 				.getPg_anticipo());
+		sql.addSQLClause("AND", "STATO_COFI", sql.NOT_EQUALS,MissioneBulk.STATO_ANNULLATO);
+		
 
 		MissioneBulk missione = null;
 		Broker broker = createBroker(sql);

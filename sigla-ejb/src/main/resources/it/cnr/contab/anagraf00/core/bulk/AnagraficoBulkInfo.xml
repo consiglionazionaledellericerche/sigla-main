@@ -247,7 +247,7 @@
 		name="fl_fatturazione_differita"
 		property="fl_fatturazione_differita"
 		readonlyPropertyOnEdit="dipendente"
-		label="Ente a fatturazione differita art.6 DPR633/72" 
+		label="Ente a fatturazione differita/Split Payment" 
 		inputType="CHECKBOX" />
 	<fieldProperty
 		name="fl_occasionale"

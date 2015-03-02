@@ -550,7 +550,7 @@ public Forward doCalcolaTotalePerObbligazione(ActionContext context, Obbligazion
 		Nota_di_credito_attivaBulk ndC = (Nota_di_credito_attivaBulk)bp.getModel();
 		if (ndC.getObbligazioniHash() != null && scadenza != null)
 			try {
-				ndC.setImportoTotalePerObbligazioni(calcolaTotaleSelezionati((java.util.List)ndC.getObbligazioniHash().get(scadenza)));
+				ndC.setImportoTotalePerObbligazioni(calcolaTotaleSelezionati((java.util.List)ndC.getObbligazioniHash().get(scadenza),ndC.quadraturaInDeroga()));
 			} catch (it.cnr.jada.comp.ApplicationException e) {
 				ndC.setImportoTotalePerObbligazioni(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 			}
@@ -1571,7 +1571,7 @@ private Forward basicDoRicercaObbligazione(
 			Filtro_ricerca_obbligazioniVBulk filtro = new Filtro_ricerca_obbligazioniVBulk();
 			filtro.setData_scadenziario(nc_attiva.getDt_scadenza());
 			filtro.setFornitore(nc_attiva.getCliente());
-			filtro.setIm_importo(calcolaTotaleSelezionati(models));
+			filtro.setIm_importo(calcolaTotaleSelezionati(models,nc_attiva.quadraturaInDeroga()));
 			filtro.setCd_unita_organizzativa(nc_attiva.getCd_uo_origine());
 			filtro.setHasDocumentoCompetenzaCOGEInAnnoPrecedente(nc_attiva.hasCompetenzaCOGEInAnnoPrecedente());
 	        filtro.setHasDocumentoCompetenzaCOGESoloInAnnoCorrente(

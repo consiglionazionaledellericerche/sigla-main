@@ -395,7 +395,7 @@
 		property="fl_liquidazione_differita"
 		inputType="CHECKBOX"
 		readonlyProperty="ROFl_liquidazione_differita"
-		label="Liquidazione Differita" />
+		label="Liquidazione Differita/Split Payment" />
 	<fieldProperty
 		name="fl_san_marino"
 		property="fl_san_marino"
