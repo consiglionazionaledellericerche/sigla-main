@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="240"/>
+	<property name="ireport.y" value="155"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -28,7 +28,7 @@
 		<![CDATA[select vp_fattura_attiva_n.* ,VP_FATTURA_ATTIVA_N.CD_CDS||VP_FATTURA_ATTIVA_N.CD_UNITA_ORGANIZZATIVA||
 to_char(VP_FATTURA_ATTIVA_N.ESERCIZIO)||
 to_char(VP_FATTURA_ATTIVA_N.PG_FATTURA_ATTIVA)||ti_stampa
-chiave,fl_pagamento_anticipato from vp_fattura_attiva_n,fattura_attiva f
+chiave,fl_pagamento_anticipato,decode(Cnr.dt01-f.dt_emissione,abs(Cnr.dt01-f.dt_emissione),'N',fl_liquidazione_differita) split from vp_fattura_attiva_n,fattura_attiva f,configurazione_cnr cnr
 where
 f.esercizio = vp_fattura_attiva_n.esercizio and
 f.CD_CDS = vp_fattura_attiva_n.CD_CDS and
@@ -39,6 +39,10 @@ f.codice_univoco_ufficio_ipa is null and
 id_report =$P{id_report} and
 ti_stampa='R') or
 (id_report =$P{id_report} and $P{Ti_stampa}!='R'))
+  and Cnr.ESERCIZIO = 0
+  and Cnr.cd_chiave_primaria = 'SPLIT_PAYMENT'
+  AND Cnr.cd_chiave_secondaria = 'ATTIVA'
+  AND Cnr.cd_unita_funzionale = '*'
 order by VP_FATTURA_ATTIVA_N.CD_CDS,VP_FATTURA_ATTIVA_N.CD_UNITA_ORGANIZZATIVA,
 VP_FATTURA_ATTIVA_N.ESERCIZIO,ti_stampa,VP_FATTURA_ATTIVA_N.PG_FATTURA_ATTIVA,ti_record,PROGRESSIVO_RIGA]]>
 	</queryString>
@@ -109,6 +113,7 @@ VP_FATTURA_ATTIVA_N.ESERCIZIO,ti_stampa,VP_FATTURA_ATTIVA_N.PG_FATTURA_ATTIVA,ti
 	<field name="TI_ITALIANO_ESTERO" class="java.lang.String"/>
 	<field name="CHIAVE" class="java.lang.String"/>
 	<field name="FL_PAGAMENTO_ANTICIPATO" class="java.lang.String"/>
+	<field name="SPLIT" class="java.lang.String"/>
 	<variable name="TOT_FATTURA" class="java.math.BigDecimal" resetType="Group" resetGroup="CHIAVE" calculation="Sum">
 		<variableExpression><![CDATA[$F{IM_IMPONIBILE_V_IVA}.add($F{IM_TOTALE_V_IVA})]]></variableExpression>
 	</variable>
@@ -1302,7 +1307,7 @@ VP_FATTURA_ATTIVA_N.ESERCIZIO,ti_stampa,VP_FATTURA_ATTIVA_N.PG_FATTURA_ATTIVA,ti
 					<text><![CDATA[IMPON.+NON IMPON.+ESENTE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-63" style="TNR10BOLD" x="244" y="36" width="181" height="12" printWhenGroupChanges="CHIAVE"/>
+					<reportElement key="staticText-63" style="TNR10BOLD" x="357" y="36" width="68" height="12" printWhenGroupChanges="CHIAVE"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1374,6 +1379,17 @@ VP_FATTURA_ATTIVA_N.ESERCIZIO,ti_stampa,VP_FATTURA_ATTIVA_N.PG_FATTURA_ATTIVA,ti
 				<line>
 					<reportElement key="line-197" positionType="Float" mode="Opaque" x="3" y="1" width="525" height="1"/>
 				</line>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+					<reportElement key="textField-79" style="TNR10BOLD" positionType="Float" x="247" y="36" width="109" height="12"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[($F{SPLIT}.equals("Y"))?"Scissione dei pagamenti":""]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupFooter>
 	</group>

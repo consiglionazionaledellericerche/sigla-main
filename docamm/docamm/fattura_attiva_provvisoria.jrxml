@@ -25,20 +25,20 @@
 	<style name="TNRGC16" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
 	<style name="TNRGC10" forecolor="#FFFFFF" fontName="Times New Roman" pdfFontName="Times-BoldItalic"/>
 	<parameter name="esercizio" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[2014]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[2015]]></defaultValueExpression>
 	</parameter>
 	<parameter name="pg_fattura" class="java.lang.Long" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Long(19897)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Long(2195)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="cd_uo_origine" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["046.000"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["035.000"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select distinct ter.denominazione_sede as ds_cd_terzo, ter2.denominazione_sede as ds_cd_uo_origine, uo.*, fa.*, frg.*,
 vi.cd_voce_iva, vi.ds_voce_iva, rmp.ds_modalita_pag as ds_modalita_pag_uo_cds, rmp.ti_pagamento,
-AC.ESERCIZIO_CONTRATTO, AC.PG_CONTRATTO, CO.CD_CIG_fattura_attiva, CO.CD_CUP
+AC.ESERCIZIO_CONTRATTO, AC.PG_CONTRATTO, CO.CD_CIG_fattura_attiva, CO.CD_CUP,decode(Cnr.dt01-fa.dt_registrazione,abs(Cnr.dt01-fa.dt_registrazione),'N',fl_liquidazione_differita) split
 from fattura_attiva fa, terzo ter, terzo ter2, unita_organizzativa uo, fattura_attiva_riga frg, voce_iva vi,
-rif_modalita_pagamento rmp, accertamento ac, contratto co
+rif_modalita_pagamento rmp, accertamento ac, contratto co,configurazione_cnr cnr
 where fa.esercizio = $P{esercizio}
 and fa.cd_uo_origine =  $P{cd_uo_origine}
 and fa.pg_fattura_attiva =  $P{pg_fattura}
@@ -57,7 +57,11 @@ and AC.PG_ACCERTAMENTO = FRG.PG_ACCERTAMENTO
 and AC.ESERCIZIO_ORIGINALE = FRG.ESERCIZIO_ORI_ACCERTAMENTO
 and AC.ESERCIZIO_CONTRATTO = CO.ESERCIZIO(+)
 and AC.PG_CONTRATTO = CO.PG_CONTRATTO(+)
-and AC.STATO_CONTRATTO = CO.STATO(+)]]>
+and AC.STATO_CONTRATTO = CO.STATO(+)
+ and Cnr.ESERCIZIO = 0
+  and Cnr.cd_chiave_primaria = 'SPLIT_PAYMENT'
+  AND Cnr.cd_chiave_secondaria = 'ATTIVA'
+  AND Cnr.cd_unita_funzionale = '*']]>
 	</queryString>
 	<field name="DS_CD_TERZO" class="java.lang.String"/>
 	<field name="DS_CD_UO_ORIGINE" class="java.lang.String"/>
@@ -178,6 +182,7 @@ and AC.STATO_CONTRATTO = CO.STATO(+)]]>
 	<field name="PG_CONTRATTO" class="java.math.BigDecimal"/>
 	<field name="CD_CIG_FATTURA_ATTIVA" class="java.lang.String"/>
 	<field name="CD_CUP" class="java.lang.String"/>
+	<field name="SPLIT" class="java.lang.String"/>
 	<group name="Numero_Fattura">
 		<groupExpression><![CDATA[$F{PG_FATTURA_ATTIVA}]]></groupExpression>
 		<groupHeader>
@@ -376,6 +381,17 @@ and AC.STATO_CONTRATTO = CO.STATO(+)]]>
 				<line>
 					<reportElement x="0" y="90" width="1" height="20"/>
 				</line>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+					<reportElement key="textField-79" style="TNRG11" positionType="Float" x="200" y="59" width="131" height="14"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[($F{SPLIT}.equals("Y"))?"Scissione dei pagamenti":""]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupFooter>
 	</group>
