@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="124"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -494,7 +494,7 @@ dog]]></text>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Top"/>
 					<text><![CDATA[Esig. diff./
-Split Paymet]]></text>
+Split Payment]]></text>
 				</staticText>
 				<line>
 					<reportElement key="line-81" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="737" y="9" width="1" height="30" isRemoveLineWhenBlank="true"/>
