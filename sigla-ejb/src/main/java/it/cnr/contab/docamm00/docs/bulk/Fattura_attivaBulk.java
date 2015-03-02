@@ -282,7 +282,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	private java.util.Collection condizione_consegnaColl = null;
 	private java.util.Collection modalita_erogazioneColl = null;
 	private java.util.Collection modalita_incassoColl = null;
-	
+	private boolean isAttivoSplitPayment=false;
+
 public Fattura_attivaBulk() {
 	super();
 }
@@ -2081,5 +2082,14 @@ public String constructCMISNomeFile() {
 
 public String recuperoIdFatturaAsString(){
 	return StrServ.replace(getCd_unita_organizzativa(), ".", "")+getEsercizio()+StrServ.lpad(getPg_fattura_attiva().toString(), 5);
+}
+public boolean quadraturaInDeroga() {
+	return isAttivoSplitPayment &&	(getFl_liquidazione_differita() != null && getFl_liquidazione_differita().booleanValue());
+}
+public boolean isAttivoSplitPayment() {
+	return isAttivoSplitPayment;
+}
+public void setAttivoSplitPayment(boolean isAttivoSplitPayment) {
+	this.isAttivoSplitPayment = isAttivoSplitPayment;
 }
 }

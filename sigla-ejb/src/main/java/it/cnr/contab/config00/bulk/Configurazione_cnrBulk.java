@@ -66,7 +66,7 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	
 	public final static String PK_LIMITE_UTILIZZO_CONTANTI = "LIMITE_UTILIZZO_CONTANTI";
 	public final static String SK_LIMITE1 = "LIMITE1";
-
+	public final static String PK_SPLIT_PAYMENT = "SPLIT_PAYMENT";
 	public final static String PK_CONTO_CORRENTE_BANCA_ITALIA = "CONTO_CORRENTE_BANCA_ITALIA";
 	public final static String SK_CODICE = "CODICE";
 	

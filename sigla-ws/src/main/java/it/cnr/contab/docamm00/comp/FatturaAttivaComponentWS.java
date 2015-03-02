@@ -1101,9 +1101,12 @@ public class FatturaAttivaComponentWS {
 		                 
 		                 if(testata.getCliente().isAnagraficoScaduto()||testata.getCliente().getTi_terzo().compareTo(TerzoBulk.CREDITORE)==0||testata.getCliente().getAnagrafico().getTi_entita().compareTo(AnagraficoBulk.DIVERSI)==0)
 		                	fat=ValorizzaErrore(fat,Costanti.ERRORE_FA_125.toString());
+		                 
+		                 testata.setFl_liquidazione_differita(testata.getCliente().getAnagrafico().getFl_fatturazione_differita());
 	                   	 if((testata.getFl_liquidazione_differita().booleanValue()&& testata.getFl_liquidazione_differita().compareTo(testata.getCliente().getAnagrafico().getFl_fatturazione_differita())!=0))
 	           	    		fat=ValorizzaErrore(fat,Costanti.ERRORE_FA_124.toString());  
 			            }
+			            
 			            if(testata.getCd_terzo_uo_cds().compareTo(fat.getCd_terzo_uo_cds())!=0)
 		                	fat=ValorizzaErrore(fat,Costanti.ERRORE_FA_133.toString());
 	                       	
@@ -1362,6 +1365,9 @@ public class FatturaAttivaComponentWS {
 		    	                    acc.setDt_registrazione((DateUtils.truncate(new Timestamp(fatr.getDt_scadenza().getTime()))));
 		    	                    acc.setDs_accertamento(fatr.getDs_accertamento());
 		    	                    //??? importo riga?????	
+		    	                    if((((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).isAttivoSplitPayment(userContext,testata.getDt_registrazione())) &&testata.getFl_liquidazione_differita())
+		    	                    	acc.setIm_accertamento(riga.getIm_imponibile());
+		    	                    else
 	    	                    		acc.setIm_accertamento(riga.getIm_totale_divisa());	
 		 	    	                acc.setCd_terzo(testata.getCd_terzo());    	
 		 	    	                acc.setEsercizio_competenza(testata.getEsercizio());
@@ -1375,7 +1381,7 @@ public class FatturaAttivaComponentWS {
 		 	    	                acc_scadenza.setDs_scadenza( acc.getDs_accertamento() );
 		 	    	                acc.addToAccertamento_scadenzarioColl(acc_scadenza);
 		 	    	                acc_scadenza.setIm_scadenza(acc.getIm_accertamento());
-		 	    	                acc_scadenza.setIm_associato_doc_amm(riga.getIm_totale_divisa());
+		 	    	                acc_scadenza.setIm_associato_doc_amm(acc.getIm_accertamento());
 		 	    	                acc_scadenza.setIm_associato_doc_contabile(new BigDecimal(0));
 		 	    	         
 		    	                    if(fatr.getEsercizio_contratto()!=null && fatr.getStato_contratto()!=null && fatr.getPg_contratto()!=null){
@@ -1404,8 +1410,15 @@ public class FatturaAttivaComponentWS {
 	                                    	acc_scad_voce.setUtcr(testata.getUtcr());
 	                                    	acc_scad_voce.setToBeCreated();
 	                                    	acc_scad_voce.setAccertamento_scadenzario(acc_scadenza);
-	                                    	acc_scad_voce.setIm_voce(fatrs.getIm_voce());	
-		        	                    
+	                                    	 if((((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).isAttivoSplitPayment(userContext,testata.getDt_registrazione())) &&testata.getFl_liquidazione_differita()){
+	                                    		 if(listOfScad.size()!=1){
+	                                    			 fat=ValorizzaErrore(fat,Costanti.ERRORE_FA_101.toString(),"Righe Scadenza inserite non valide");
+	                                    		 }
+	                                    			 else
+	                                    				 acc_scad_voce.setIm_voce(acc.getIm_accertamento());
+	                                    	 }
+	                                    	 else
+	                                    		 acc_scad_voce.setIm_voce(fatrs.getIm_voce());
 			        	                   CdrBulk cdr_db= new CdrBulk();
 			        	            	   cdr_db=(((CdrBulk)(((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).completaOggetto(userContext,new CdrBulk(fatrs.getCdr())))));
 			        	            	   if (cdr_db==null){

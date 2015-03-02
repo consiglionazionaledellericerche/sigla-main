@@ -81,6 +81,7 @@ public void copyFrom(
 
 	//setFl_cliente_occasionale(fattura_attiva.getFl_cliente_occasionale());
 	setFl_liquidazione_differita(fattura_attiva.getFl_liquidazione_differita());
+	setAttivoSplitPayment(fattura_attiva.isAttivoSplitPayment());
 	//setProtocollo_iva(fattura_attiva.getProtocollo_iva());
 	//setProtocollo_iva_generale(fattura_attiva.getProtocollo_iva_generale());
 	
