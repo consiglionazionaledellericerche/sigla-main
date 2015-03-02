@@ -90,7 +90,7 @@
 		<td>
       		<% bp.getController().writeFormLabel(out,"fl_liquidazione_differita");%>
       	</td><td>
-      		<% bp.getController().writeFormInput(out,null,"fl_liquidazione_differita",roOnAutoGen,null,"onClick=\"submitForm('doOnLiquidazioneDifferitaChange')\"");%>
+      		<% bp.getController().writeFormInput(out,null,"fl_liquidazione_differita",roOnAutoGen||(fatturaAttiva.getFl_liquidazione_differita()!=null && fatturaAttiva.getFl_liquidazione_differita()),null,"onClick=\"submitForm('doOnLiquidazioneDifferitaChange')\"");%>
       	</td>
 		<td>
       		<% bp.getController().writeFormLabel(out,"protocollo_iva");%>

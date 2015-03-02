@@ -9,6 +9,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -1624,6 +1625,25 @@ public Fattura_attiva_IBulk aggiornaDatiFatturaSDI(UserContext userContext, Fatt
 		throw uncaughtRuntimeException(userContext,componentObj,e);
 	} catch(Error e) {
 		throw uncaughtError(userContext,componentObj,e);
+	}
+}
+
+public boolean isAttivoSplitPayment(UserContext param0, Timestamp param1) throws it.cnr.jada.comp.ComponentException, it.cnr.jada.persistency.PersistencyException, javax.ejb.EJBException{
+	pre_component_invocation(param0,componentObj);
+	try {
+		boolean result = (((FatturaAttivaSingolaComponent) componentObj).isAttivoSplitPayment(param0,param1));
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
 	}
 }
 }

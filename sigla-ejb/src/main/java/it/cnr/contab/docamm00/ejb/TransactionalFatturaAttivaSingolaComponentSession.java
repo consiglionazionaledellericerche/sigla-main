@@ -8,6 +8,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -1634,6 +1635,25 @@ public List findListaCondizioneConsegnaWS(UserContext userContext, String query,
 					statoInvioSdi,
 					dataConsegnaSdi,
 					stornaFattura});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+	public boolean isAttivoSplitPayment(UserContext param0,
+			Timestamp param1) throws PersistencyException,
+			ComponentException, RemoteException {
+		try {
+			return ((Boolean)invoke("isAttivoSplitPayment",new Object[] {
+				param0,
+				param1})).booleanValue();
 		} catch(java.rmi.RemoteException e) {
 			throw e;
 		} catch(java.lang.reflect.InvocationTargetException e) {
