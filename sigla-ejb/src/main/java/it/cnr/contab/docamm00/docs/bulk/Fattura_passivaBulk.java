@@ -1243,7 +1243,7 @@ public Dictionary getTi_bene_servizioKeys() {
 		OrderedHashtable d = (OrderedHashtable)getTi_istituz_commercKeysForSearch();
 		if (d == null) return null;
         	OrderedHashtable clone = (OrderedHashtable)d.clone();
-        	if (getStato_cofi() == STATO_INIZIALE) 
+        	if (getStato_cofi().compareTo(STATO_INIZIALE) ==0) 
         		clone.remove(PROMISCUA);
 		return clone;
 			
