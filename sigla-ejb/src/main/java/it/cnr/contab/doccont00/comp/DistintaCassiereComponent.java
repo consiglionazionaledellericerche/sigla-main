@@ -3813,11 +3813,11 @@ public class DistintaCassiereComponent extends
 			xgc.setMinute(DatatypeConstants.FIELD_UNDEFINED);
 			xgc.setHour(DatatypeConstants.FIELD_UNDEFINED);
 			rev.setDataReversale(xgc);
-			rev.setImportoReversale(docContabile.getImDocumento());
+			rev.setImportoReversale(docContabile.getImDocumento().setScale(2, BigDecimal.ROUND_HALF_UP));
 			rev.setContoEvidenza(docContabile.getNumeroConto());
 			
 			infover.setProgressivoVersante(1);// Dovrebbe essere sempre 1 ?
-			infover.setImportoVersante(docContabile.getImDocumento());
+			infover.setImportoVersante(docContabile.getImDocumento().setScale(2, BigDecimal.ROUND_HALF_UP));
 			// tipologia non gestita da committare
 			//if(bulk.getPg_documento_cont_padre()!=bulk.getPg_documento_cont())
 				//infover.setTipoRiscossione("COMPENSAZIONE");
@@ -3856,7 +3856,7 @@ public class DistintaCassiereComponent extends
 				if(doc.getCdSiope()!=null){
 					clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Classificazione();
 					clas.setCodiceCge(doc.getCdSiope());
-					clas.setImporto(doc.getImportoCge());
+					clas.setImporto(doc.getImportoCge().setScale(2, BigDecimal.ROUND_HALF_UP));
 					infover.getClassificazione().add(clas);
 				}
 				if(infover.getCausale()!=null ){
@@ -3915,7 +3915,7 @@ public class DistintaCassiereComponent extends
 						}catch (NumberFormatException e) {
 							throw new ApplicationException("Formato del codice del sospeso non compatibile.");
 						}	
-						sosp.setImportoProvvisorio(doc.getImAssociato());
+						sosp.setImportoProvvisorio(doc.getImAssociato().setScale(2, BigDecimal.ROUND_HALF_UP));
 						infover.getSospeso().add(sosp);
 					}
 				}
@@ -3968,10 +3968,10 @@ public class DistintaCassiereComponent extends
 				xgc.setMinute(DatatypeConstants.FIELD_UNDEFINED);
 				xgc.setHour(DatatypeConstants.FIELD_UNDEFINED);
 				man.setDataMandato(xgc);
-				man.setImportoMandato(docContabile.getImDocumento());
+				man.setImportoMandato(docContabile.getImDocumento().setScale(2, BigDecimal.ROUND_HALF_UP));
 				man.setContoEvidenza(bancauo.getNumero_conto());
 				infoben.setProgressivoBeneficiario(1);// Dovrebbe essere sempre 1 ?
-				infoben.setImportoBeneficiario(docContabile.getImDocumento());
+				infoben.setImportoBeneficiario(docContabile.getImDocumento().setScale(2, BigDecimal.ROUND_HALF_UP));
 				if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_REGOLAM_SOSPESO)==0)
 					infoben.setTipoPagamento("REGOLARIZZAZIONE");
 				else if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO)==0 && docContabile.getModalitaPagamento()!=null && docContabile.getModalitaPagamento().compareTo("ASC")==0 ){
@@ -4018,7 +4018,7 @@ public class DistintaCassiereComponent extends
 						if(oldDoc!=null && oldDoc.getCdSiope().compareTo(doc.getCdSiope())!=0 && doc.getCdCup()==null && totAssSiope.compareTo(totAssCup)!=0 && totAssCup.compareTo(BigDecimal.ZERO)!=0){
 							clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
 							clas.setCodiceCgu(oldDoc.getCdSiope());
-							clas.setImporto(totAssSiope.subtract(totAssCup));
+							clas.setImporto((totAssSiope.subtract(totAssCup)).setScale(2, BigDecimal.ROUND_HALF_UP));
 							totAssCup=BigDecimal.ZERO; 
 							totAssSiope=BigDecimal.ZERO; 
 							infoben.getClassificazione().add(clas);
@@ -4042,7 +4042,7 @@ public class DistintaCassiereComponent extends
 									salta=false;
 							}		
 						if(doc.getCdCup()!=null){
-							clas.setImporto(doc.getImportoCup());
+							clas.setImporto(doc.getImportoCup().setScale(2, BigDecimal.ROUND_HALF_UP));
 							clas.setCodiceCup(doc.getCdCup());
 							if(totAssSiope==BigDecimal.ZERO)
 								totAssSiope=doc.getImportoCge();
@@ -4055,7 +4055,7 @@ public class DistintaCassiereComponent extends
 								 infoben.setCausale("CUP "+doc.getCdCup());
 						}
 						else
-								clas.setImporto(doc.getImportoCge());
+								clas.setImporto(doc.getImportoCge().setScale(2, BigDecimal.ROUND_HALF_UP));
 						oldDoc=doc;
 						if (!salta)
 							infoben.getClassificazione().add(clas);
@@ -4065,7 +4065,7 @@ public class DistintaCassiereComponent extends
 			    if(totAssCup.compareTo(BigDecimal.ZERO)!=0 && totAssCup.compareTo(totAssSiope)!=0){
 					clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
 					clas.setCodiceCgu(oldDoc.getCdSiope());
-					clas.setImporto(totAssSiope.subtract(totAssCup));
+					clas.setImporto((totAssSiope.subtract(totAssCup)).setScale(2, BigDecimal.ROUND_HALF_UP));
 					infoben.getClassificazione().add(clas);
 				}
 				bollo.setAssoggettamentoBollo(docContabile.getAssoggettamentoBollo());
@@ -4139,7 +4139,7 @@ public class DistintaCassiereComponent extends
 							}catch (NumberFormatException e) {
 								throw new ApplicationException("Formato del codice del sospeso non compatibile.");
 							}
-							sosp.setImportoProvvisorio(doc.getImAssociato());
+							sosp.setImportoProvvisorio(doc.getImAssociato().setScale(2, BigDecimal.ROUND_HALF_UP));
 							infoben.getSospeso().add(sosp);
 						}
 					}
@@ -4156,7 +4156,7 @@ public class DistintaCassiereComponent extends
 					for (Iterator iRev=list_rev.iterator();iRev.hasNext();){
 						riten=new it.cnr.contab.doccont00.intcass.xmlbnl.Ritenute();
 						V_mandato_reversaleBulk rev=(V_mandato_reversaleBulk) iRev.next();
-						riten.setImportoRitenute(rev.getIm_documento_cont());
+						riten.setImportoRitenute(rev.getIm_documento_cont().setScale(2, BigDecimal.ROUND_HALF_UP));
 						riten.setNumeroReversale(rev.getPg_documento_cont().intValue());
 						riten.setProgressivoVersante(1);// ???
 						infoben.getRitenute().add(riten);
