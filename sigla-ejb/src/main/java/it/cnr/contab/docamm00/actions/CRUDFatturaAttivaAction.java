@@ -1401,16 +1401,18 @@ public Forward doBringBackSearchCliente(
             //richiamo il metodo della component completaterzo
             fattura_attiva =
                 fpcs.completaTerzo(context.getUserContext(), fattura_attiva, fornitoreTrovato);
-            if (!(fattura_attiva.getFl_extra_ue()||fattura_attiva.getFl_intra_ue()||fattura_attiva.getFl_san_marino())){
-            //imposto il flag liquidazione differita
-            	if (fattura_attiva.getCliente().getAnagrafico() != null &&
-		            (fattura_attiva.getCliente().getAnagrafico().getFl_fatturazione_differita()!= null &&
-                	 fattura_attiva.getCliente().getAnagrafico().getFl_fatturazione_differita().booleanValue()) &&
-                	(fattura_attiva.getFl_liquidazione_differita() != null && !fattura_attiva.getFl_liquidazione_differita().booleanValue()))
-            			fattura_attiva.setFl_liquidazione_differita(Boolean.TRUE);
-            	if (fattura_attiva.getCliente().getAnagrafico() != null &&
-		            (fattura_attiva.getCliente().getAnagrafico().isEntePubblico() && !fattura_attiva.getFl_liquidazione_differita().booleanValue()))
-	        	openMessage(context, "Verificare che l'ente pubblico non sia soggetto a split payment ed eventualmente aggiornare l'anagrafica.");
+            if(fattura_attiva.getFl_extra_ue()!=null && fattura_attiva.getFl_intra_ue()!=null && fattura_attiva.getFl_san_marino()!=null){
+	            if (!(fattura_attiva.getFl_extra_ue()||fattura_attiva.getFl_intra_ue()||fattura_attiva.getFl_san_marino())){
+	            //imposto il flag liquidazione differita
+	            	if (fattura_attiva.getCliente().getAnagrafico() != null &&
+			            (fattura_attiva.getCliente().getAnagrafico().getFl_fatturazione_differita()!= null &&
+	                	 fattura_attiva.getCliente().getAnagrafico().getFl_fatturazione_differita().booleanValue()) &&
+	                	(fattura_attiva.getFl_liquidazione_differita() != null && !fattura_attiva.getFl_liquidazione_differita().booleanValue()))
+	            			fattura_attiva.setFl_liquidazione_differita(Boolean.TRUE);
+	            	if (fattura_attiva.getCliente().getAnagrafico() != null &&
+			            (fattura_attiva.getCliente().getAnagrafico().isEntePubblico() && !fattura_attiva.getFl_liquidazione_differita().booleanValue()))
+		        	openMessage(context, "Verificare che l'ente pubblico non sia soggetto a split payment ed eventualmente aggiornare l'anagrafica.");
+	            }
             }
             crudFattura.setModel(context,fattura_attiva);
             crudFattura.resyncChildren(context);
