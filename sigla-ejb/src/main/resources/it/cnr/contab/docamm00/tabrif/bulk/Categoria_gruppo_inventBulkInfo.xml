@@ -3,49 +3,7 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
 		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
-	/**********************************************************
-	**	Search tool utilizzato per la ricerca elemento voce f **
-	**********************************************************/
-	<fieldProperty
-		name="voce_f"
-		property="voce_f"
-		inputType="SEARCHTOOL" 		
-		enabledOnSearch="false"
-		enabledOnEdit="false"
-		readonlyProperty="ROFindVoce_f"
-		label="Elemento Voce"/>	
-	<fieldProperty
-		name="cd_voce"
-		property="voce_f.cd_elemento_voce"
-		maxLength="50"
-		inputSize="6"
-		inputType="TEXT"
-		readonlyProperty="ROVoce_f"
-		label="Elemento Voce"
-		caseSensitiveSearch="false"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"
-		enabledOnEdit="false"
-		nullable="false"/>
-	<fieldProperty
-		name="ds_voce"
-		property="voce_f.ds_elemento_voce"
-		inputSize="15"
-		inputType="ROTEXT"
-		label="Elemento Voce"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="cd_voceForSearch"
-		property="voce_f.cd_elemento_voce"
-		maxLength="50"
-		inputSize="6"
-		inputType="TEXT"
-		label="Elemento Voce"
-		caseSensitiveSearch="false"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"
-		enabledOnEdit="false"
-		nullable="false"/>
+	
 	/**********************************************************/
 
 	/**********************************************************
@@ -181,12 +139,7 @@
 		name="fl_ammortamento" />
 	<formFieldProperty
 		name="ds_categoria_gruppo" />
-	<formFieldProperty
-		name="cd_voce" />
-	<formFieldProperty
-		name="ds_voce" />
-	<formFieldProperty
-		name="voce_f" />
+	
 	<formFieldProperty
 		name="find_nodo_padre" />
 	<formFieldProperty
@@ -226,9 +179,6 @@
 		name="fl_ammortamento" />
 	<findFieldProperty
 		name="ds_categoria_gruppo" />
-	<findFieldProperty
-		name="cd_voceForSearch" />
-
 	<columnSet name="categorie">		
 		<columnFieldProperty
 			name="cd_proprio" 
