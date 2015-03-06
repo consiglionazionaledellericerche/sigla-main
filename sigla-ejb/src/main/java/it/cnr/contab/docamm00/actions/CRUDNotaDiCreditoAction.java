@@ -1,7 +1,10 @@
 package it.cnr.contab.docamm00.actions;
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
 import it.cnr.contab.docamm00.comp.DocumentoAmministrativoComponentSession;
 import it.cnr.contab.docamm00.bp.TitoloDiCreditoDebitoBP;
@@ -28,6 +31,7 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
 import it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP;
 import it.cnr.contab.doccont00.bp.CRUDVirtualAccertamentoBP;
@@ -1643,8 +1647,9 @@ public Forward doStornaDettagli(ActionContext context) {
 		else {
 			Nota_di_creditoBulk ndc = (Nota_di_creditoBulk)bp.getModel();
 			controllaSelezionePerContabilizzazione(context, models.iterator(ndc.getFattura_passiva_dettColl()));
-			controllaSelezionePerTitoloCapitolo(context, models.iterator(ndc.getFattura_passiva_dettColl()));
-		
+			//controllaSelezionePerTitoloCapitolo(context, models.iterator(ndc.getFattura_passiva_dettColl()));
+			List titoloCapitoloValidolist = controllaSelezionePerTitoloCapitoloLista(context, models.iterator(ndc.getFattura_passiva_dettColl()));
+			
 			forward = basicDoStornaDettagli(context, models);
 			ndc = (Nota_di_creditoBulk)bp.getModel();
 			

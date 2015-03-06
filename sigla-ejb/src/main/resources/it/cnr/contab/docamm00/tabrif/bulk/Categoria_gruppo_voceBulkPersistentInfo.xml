@@ -9,21 +9,23 @@
 			propertyName="categoria_gruppo.cd_categoria_gruppo" />
 		<columnMapping
 			columnName="TI_APPARTENENZA"
-			propertyName="voce_f.ti_appartenenza" />
+			propertyName="elemento_voce.ti_appartenenza" />
 		<columnMapping
 			columnName="ESERCIZIO"
-			propertyName="voce_f.esercizio" />
+			propertyName="elemento_voce.esercizio" />
 		<columnMapping
 			columnName="TI_GESTIONE"
-			propertyName="voce_f.ti_gestione" />
+			propertyName="elemento_voce.ti_gestione" />
 		<columnMapping
 			columnName="CD_ELEMENTO_VOCE"
-			propertyName="voce_f.cd_elemento_voce" />
+			propertyName="elemento_voce.cd_elemento_voce" />
 	</defaultColumnMap>
 	
 	<persistentProperty
-		name="categoria_gruppo" />
+		name="categoria_gruppo"
+		partOfOid="true" />
 	<persistentProperty
-		name="voce_f" />
+		name="elemento_voce" 
+		partOfOid="true" />
 	
 </SQLPersistentInfo>

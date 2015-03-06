@@ -5,69 +5,84 @@
 		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
 		name="ti_appartenenza"
-		property="ti_appartenenza"
+		property="elemento_voce.ti_appartenenza"
 		maxLength="1"
 		inputSize="1"
 		inputType="TEXT"
 		label="ti_appartenenza" />
 	<fieldProperty
 		name="cd_categoria_gruppo"
-		property="cd_categoria_gruppo"
+		property="categoria_gruppo.cd_categoria_gruppo"
 		maxLength="10"
 		inputSize="10"
 		inputType="TEXT"
 		label="cd_categoria_gruppo" />
 	<fieldProperty
 		name="esercizio"
-		property="esercizio"
+		property="elemento_voce.esercizio"
 		inputType="TEXT"
 		label="esercizio" />
 	<fieldProperty
 		name="ti_gestione"
-		property="ti_gestione"
+		property="elemento_voce.ti_gestione"
 		maxLength="1"
 		inputSize="1"
 		inputType="TEXT"
 		label="ti_gestione" />
 	<fieldProperty
 		name="cd_elemento_voce"
-		property="cd_elemento_voce"
+		property="elemento_voce.cd_elemento_voce"
 		maxLength="50"
 		inputSize="50"
 		inputType="TEXT"
-		label="cd_elemento_voce" />
-
-	<formFieldProperty
-		name="ti_appartenenza" />
+		label="codice" />
+/**********************************************************
+	**	Search tool utilizzato per la ricerca elemento voce f **
+	**********************************************************/
+	<fieldProperty
+		name="elemento_voce"
+		property="elemento_voce"
+		inputType="SEARCHTOOL" 		
+		enabledOnSearch="false"
+		enabledOnEdit="true"
+		label="Elemento Voce"/>	
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="elemento_voce.ds_elemento_voce"
+		inputSize="30"
+		inputType="ROTEXT"
+		label="Elemento Voce"
+		caseSensitiveSearch="false" />	
+		
 	<formFieldProperty
 		name="cd_categoria_gruppo" />
 	<formFieldProperty
-		name="esercizio" />
-	<formFieldProperty
-		name="ti_gestione" />
-	<formFieldProperty
 		name="cd_elemento_voce" />
-
+	<formFieldProperty
+		name="ds_elemento_voce" />
+	<formFieldProperty
+		name="elemento_voce" />
+			
 	<columnFieldProperty
-		name="ti_appartenenza" />
+		name="cd_categoria_gruppo" />	
 	<columnFieldProperty
-		name="cd_categoria_gruppo" />
+		name="cd_elemento_voce" />	
 	<columnFieldProperty
-		name="esercizio" />
+		name="ds_elemento_voce" />
 	<columnFieldProperty
-		name="ti_gestione" />
-	<columnFieldProperty
-		name="cd_elemento_voce" />
-
-	<findFieldProperty
-		name="ti_appartenenza" />
+		name="elemento_voce" />
+		
 	<findFieldProperty
 		name="cd_categoria_gruppo" />
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
-		name="ti_gestione" />
-	<findFieldProperty
 		name="cd_elemento_voce" />
-
+		
+	<columnSet name="associazioneVoci">	
+		<columnFieldProperty
+			name="cd_elemento_voce" />
+		<columnFieldProperty
+			name="ds_elemento_voce" />
+	</columnSet>	
 </bulkInfo>
