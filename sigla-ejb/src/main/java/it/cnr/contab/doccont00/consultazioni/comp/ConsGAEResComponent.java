@@ -131,8 +131,8 @@ public class ConsGAEResComponent extends CRUDComponent {
 				else {
 					sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 //					bisogna ottimizzare la view
-//			 		sql.addSQLClause("AND", "CD_CDS", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(userContext));
-					sql.addSQLClause("AND", "CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, CNRUserContext.getCd_cdr(userContext));
+			 		sql.addSQLClause("AND", "CD_CDS", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(userContext));
+//					sql.addSQLClause("AND", "CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, CNRUserContext.getCd_cdr(userContext));
 					
 				}
 			}
