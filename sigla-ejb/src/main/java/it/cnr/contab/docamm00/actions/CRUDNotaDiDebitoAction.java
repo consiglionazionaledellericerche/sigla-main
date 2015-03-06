@@ -1,10 +1,10 @@
 package it.cnr.contab.docamm00.actions;
 
+import java.util.List;
+
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.comp.DocumentoAmministrativoComponentSession;
-
-import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
 import it.cnr.contab.docamm00.bp.TitoloDiCreditoDebitoBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.RisultatoEliminazioneBP;
@@ -21,10 +21,6 @@ import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
 import it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP;
 import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
-import it.cnr.contab.inventario00.bp.AssBeneFatturaBP;
-import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
-import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
-import it.cnr.contab.inventario01.ejb.NumerazioneTempBuonoComponentSession;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
@@ -248,8 +244,9 @@ public Forward doAddebitaDettagli(ActionContext context) {
 			bp.setErrorMessage("Per procedere, selezionare i dettagli da addebitare!");
 		else {
 			controllaSelezionePerContabilizzazione(context, models.iterator(((Nota_di_debitoBulk)bp.getModel()).getFattura_passiva_dettColl()));
-			controllaSelezionePerTitoloCapitolo(context, models.iterator(((Nota_di_debitoBulk)bp.getModel()).getFattura_passiva_dettColl()));
-		
+			//controllaSelezionePerTitoloCapitolo(context, models.iterator(((Nota_di_debitoBulk)bp.getModel()).getFattura_passiva_dettColl()));
+			List titoloCapitoloValidolist = controllaSelezionePerTitoloCapitoloLista(context, models.iterator(((Nota_di_debitoBulk)bp.getModel()).getFattura_passiva_dettColl()));
+
 			forward = basicDoAddebitaDettagli(context, models);
 
 			bp.getDettaglio().reset(context);

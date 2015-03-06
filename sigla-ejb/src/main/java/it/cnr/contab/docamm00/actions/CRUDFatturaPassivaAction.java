@@ -4,8 +4,6 @@ import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
-import it.cnr.contab.compensi00.bp.CRUDCompensoBP;
-import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaIBP;
@@ -36,6 +34,7 @@ import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.ejb.VoceIvaComponentSession;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
@@ -340,20 +339,25 @@ protected Forward basicDoBringBackOpenObbligazioniWindow(
 			!AnagraficoBulk.DIVERSI.equalsIgnoreCase(creditore.getAnagrafico().getTi_entita()))
 			throw new it.cnr.jada.comp.ApplicationException("La scadenza selezionata deve appartenere ad un'obbligazione che ha come creditore il fornitore della fattura!");
 /* 	Rospuc 15/01/2015 Controllo SOSPESO  compatibilità dell'obbligazione con il titolo capitolo selezionato 
-   	SOSPESO PER ESERCIZIO 2015
+   	SOSPESO PER ESERCIZIO 2015	*/
 		if (fp instanceof Fattura_passiva_IBulk) {
 			java.util.List dettagliDaContabilizzare = (java.util.List)fp.getObbligazioniHash().get(newObblig);
 			if (dettagliDaContabilizzare != null && !dettagliDaContabilizzare.isEmpty()) {
-				Elemento_voceBulk titoloCapitoloValido = controllaSelezionePerTitoloCapitolo(context, dettagliDaContabilizzare.iterator());
+				List titoloCapitoloValidolist = controllaSelezionePerTitoloCapitoloLista(context, dettagliDaContabilizzare.iterator());
 				Elemento_voceBulk titoloCapitoloObbligazione = newObblig.getObbligazione().getElemento_voce();
 				//Controllo la compatibilità dell'obbligazione con il titolo capitolo selezionato
-				if (titoloCapitoloValido != null &&
-					!(titoloCapitoloObbligazione.getCd_elemento_voce().startsWith(titoloCapitoloValido.getCd_elemento_voce()) ||
-					titoloCapitoloValido.getCd_elemento_voce().startsWith(titoloCapitoloObbligazione.getCd_elemento_voce())))
-					throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non è compatibile con il titolo capitolo \"" + titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
+				Boolean compatibile=new Boolean(false);
+				if (titoloCapitoloValidolist != null && titoloCapitoloValidolist.size()!=0)
+					for(Iterator i=titoloCapitoloValidolist.iterator();i.hasNext();){ 
+						Categoria_gruppo_voceBulk bulk=(Categoria_gruppo_voceBulk)i.next();
+						if(bulk.getCd_elemento_voce().compareTo(titoloCapitoloObbligazione.getCd_elemento_voce())==0)
+							compatibile=new Boolean(true);
+					}
+				   if (!compatibile)
+					throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non è compatibile con il titolo capitolo della categoria" );//+ titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
 			}
 		}
-		*/
+	
 		Obbligazione_scadenzarioBulk obbligazione = (Obbligazione_scadenzarioBulk)bp.getObbligazioniController().getModel();
 		if (obbligazione != null) {
 			resyncObbligazione(context, obbligazione, newObblig);
@@ -465,7 +469,7 @@ private void basicDoContabilizza(
 			if (dettagliContabilizzati != null && !dettagliContabilizzati.isEmpty())
 				dettagliDaContabilizzare.addAll(dettagliContabilizzati);
 		}
-		Elemento_voceBulk titoloCapitoloValido = controllaSelezionePerTitoloCapitolo(context, dettagliDaContabilizzare.iterator());
+		//Elemento_voceBulk titoloCapitoloValido = controllaSelezionePerTitoloCapitolo(context, dettagliDaContabilizzare.iterator());
 		Elemento_voceBulk titoloCapitoloObbligazione = obbligazione.getObbligazione().getElemento_voce();
 
 		// MI - controllo se l'obbligazione ha voce coerente con il tipo di bene
@@ -482,6 +486,31 @@ private void basicDoContabilizza(
 					}
 				}
 			}
+		}
+		try {
+		List titoloCapitoloValidolist;
+		if(dettagliDaContabilizzare!=null && !dettagliDaContabilizzare.isEmpty()){
+			titoloCapitoloValidolist = controllaSelezionePerTitoloCapitoloLista(context, dettagliDaContabilizzare.iterator());
+		
+		//Controllo la compatibilità dell'obbligazione con il titolo capitolo selezionato
+		Boolean compatibile=new Boolean(false);
+		if (titoloCapitoloValidolist != null && titoloCapitoloValidolist.size()!=0)
+			for(Iterator i=titoloCapitoloValidolist.iterator();i.hasNext();){ 
+				Categoria_gruppo_voceBulk bulk=(Categoria_gruppo_voceBulk)i.next();
+				if(bulk.getCd_elemento_voce().compareTo(titoloCapitoloObbligazione.getCd_elemento_voce())==0)
+					compatibile=new Boolean(true);
+			}
+		   if (!compatibile)
+			throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non è compatibile con il titolo capitolo della categoria" );//+ titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
+		}
+		} catch (PersistencyException e1) {
+			bp.handleException(e1);
+		} catch (IntrospectionException e1) {
+			bp.handleException(e1);
+		} catch (RemoteException e1) {
+			bp.handleException(e1);
+		} catch (BusinessProcessException e1) {
+			bp.handleException(e1);
 		}
 		/*	Rospuc 15/01/2015 Controllo SOSPESO  compatibilità dell'obbligazione con il titolo capitolo selezionato 
 		    SOSPESO PER ESERCIZIO 2015
@@ -1047,56 +1076,6 @@ protected void controllaSelezionePerContabilizzazione(ActionContext context, jav
 			}
 		}
 	}
-}
-/**
- * Controlla che i dettagli inventariabili selezionati per la contabilizzazione 
- * siano congruenti allo stesso titolo capitolo
- */
- 
-protected Elemento_voceBulk controllaSelezionePerTitoloCapitolo(ActionContext context, java.util.Iterator selectedModels)
-	throws it.cnr.jada.comp.ApplicationException {
-
-	if (selectedModels != null) {
-		java.util.Vector soggettiAInventario = new java.util.Vector();
-		java.util.Vector titoliCapitoli = new java.util.Vector();
-		int count = 0;
-		while(selectedModels.hasNext()) {
-			count += 1;
-			Fattura_passiva_rigaBulk rigaSelected = (Fattura_passiva_rigaBulk)selectedModels.next();
-			Bene_servizioBulk beneServizio = rigaSelected.getBene_servizio();
-			if (beneServizio == null)
-				throw new it.cnr.jada.comp.ApplicationException("Valorizzare il bene/servizio per il dettaglio " + ((rigaSelected.getDs_riga_fattura() == null) ? "" : "\"" + rigaSelected.getDs_riga_fattura() + "\"") + "! Operazione interrotta.");
-			if (beneServizio.getFl_gestione_inventario()!=null && beneServizio.getFl_gestione_inventario().booleanValue()) {
-				soggettiAInventario.add(rigaSelected);
-				if (beneServizio.getCategoria_gruppo() == null)
-					throw new it.cnr.jada.comp.ApplicationException("Il bene/servizio \"" + beneServizio.getDs_bene_servizio() + "\" non ha definito alcuna categoria di appartenenza! Operazione interrotta.");
-				it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk titoloCapitolo = getElementoVoce(context, beneServizio.getCategoria_gruppo());
-				if (titoloCapitolo == null)
-					throw new it.cnr.jada.comp.ApplicationException("Selezione non omogenea: il bene/servizio \"" + beneServizio.getDs_bene_servizio() + "\" non è stato attribuito ad alcuna categoria gruppo per l'inventario!");
-
-				if (titoliCapitoli.isEmpty())
-					titoliCapitoli.add(titoloCapitolo);
-				else
-					for (java.util.Iterator i = ((java.util.Vector)titoliCapitoli.clone()).iterator(); i.hasNext();) {
-						Elemento_voceBulk ev = (Elemento_voceBulk)i.next();
-						if (!(ev.getCd_elemento_voce().startsWith(titoloCapitolo.getCd_elemento_voce()) ||
-								titoloCapitolo.getCd_elemento_voce().startsWith(ev.getCd_elemento_voce())))
-							if (!it.cnr.jada.bulk.BulkCollections.containsByPrimaryKey(titoliCapitoli, titoloCapitolo))
-								titoliCapitoli.add(titoloCapitolo);
-					}
-			}
-		}
-		int size = soggettiAInventario.size();
-		if (size != 0) {
-			if (size != count)
-				throw new it.cnr.jada.comp.ApplicationException("Selezione non omogenea: selezionare solo dettagli non inventariabili o solo dettagli inventariabili");
-			else if (titoliCapitoli.size() != 1)
-				throw new it.cnr.jada.comp.ApplicationException("Selezione non omogenea: selezionare solo dettagli inventariabili con stesso titolo capitolo!");
-		}
-		if (!titoliCapitoli.isEmpty())
-			return (Elemento_voceBulk)titoliCapitoli.firstElement();
-	}
-	return null;
 }
 /**
  * In base alla data fattura fornitore di testata calcola e imposta l'esercizio
@@ -3789,8 +3768,11 @@ public Forward doRicercaObbligazione(ActionContext context) {
 				throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione è necessario impostare un fornitore!");
 
 			controllaSelezionePerContabilizzazione(context, models.iterator());
-			controllaSelezionePerTitoloCapitolo(context, models.iterator());
-			
+			try{
+			controllaSelezionePerTitoloCapitoloLista(context, models.iterator());
+			} catch(ApplicationException e) {
+				throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+			}		
 			forward = basicDoRicercaObbligazione(context, fatturaPassiva, models);
 		}
 		return forward;
@@ -4124,33 +4106,6 @@ protected java.util.List getDettagliInStato(
 		}
 	}
 	return coll;
-}
-/**
- * Ricerca l'elemento voce assocaita alla cetegoria inventario 'cgi'
- */
-private Elemento_voceBulk getElementoVoce(ActionContext context, Categoria_gruppo_inventBulk cgi)
-	throws it.cnr.jada.comp.ApplicationException {
-
-	if (cgi == null)
-		return null;
-		
-	try {
-		if (cgi.getVoce_f() == null ||
-			cgi.getVoce_f().getCd_elemento_voce() == null) {
-			CategoriaGruppoInventComponentSession h = (CategoriaGruppoInventComponentSession)
-							context.getBusinessProcess().createComponentSession(
-										"CNRDOCAMM00_EJB_CategoriaGruppoInventComponentSession",
-										CategoriaGruppoInventComponentSession.class);
-			cgi = (Categoria_gruppo_inventBulk)h.inizializzaBulkPerModifica(context.getUserContext(), cgi);
-		}
-		if (cgi.getVoce_f() == null ||
-			cgi.getVoce_f().getCd_elemento_voce() == null)
-			return null;
-			
-		return cgi.getVoce_f();
-	} catch (Throwable e) {
-		throw new it.cnr.jada.comp.ApplicationException("Errore nel caricamento del titolo/capitolo per il gruppo inventario \"" + cgi.getDs_categoria_gruppo() + "\"!");
-	}
 }
 /**
  * Restituisce l'importo che deve assumere la scadenza nel caso di modifica automatica
@@ -4786,4 +4741,57 @@ public Forward doOnCausaleChange(ActionContext context) {
 	  }
 	 return context.findDefaultForward();
 }
+protected java.util.List controllaSelezionePerTitoloCapitoloLista(ActionContext context, java.util.Iterator selectedModels)
+		throws ComponentException, PersistencyException, IntrospectionException, RemoteException, BusinessProcessException {
+	
+		if (selectedModels != null) {
+			java.util.Vector soggettiAInventario = new java.util.Vector();
+			java.util.List titoliCapitoli=null;
+			java.util.Vector categorieGruppo = new java.util.Vector();
+			int count = 0;
+			
+			while(selectedModels.hasNext()) {
+				count += 1;
+				Fattura_passiva_rigaBulk rigaSelected = (Fattura_passiva_rigaBulk)selectedModels.next();
+				Bene_servizioBulk beneServizio = rigaSelected.getBene_servizio();
+				if (beneServizio == null)
+					throw new it.cnr.jada.comp.ApplicationException("Valorizzare il bene/servizio per il dettaglio " + ((rigaSelected.getDs_riga_fattura() == null) ? "" : "\"" + rigaSelected.getDs_riga_fattura() + "\"") + "! Operazione interrotta.");
+				if (beneServizio.getFl_gestione_inventario()!=null && beneServizio.getFl_gestione_inventario().booleanValue()) {
+					soggettiAInventario.add(rigaSelected);
+					if (beneServizio.getCategoria_gruppo() == null)
+						throw new it.cnr.jada.comp.ApplicationException("Il bene/servizio \"" + beneServizio.getDs_bene_servizio() + "\" non ha definito alcuna categoria di appartenenza! Operazione interrotta.");
+					else
+						if (categorieGruppo.isEmpty())
+							categorieGruppo.add(beneServizio.getCategoria_gruppo());
+						else 
+							for (java.util.Iterator i = ((java.util.Vector)categorieGruppo.clone()).iterator(); i.hasNext();) {
+								Categoria_gruppo_inventBulk cat = (Categoria_gruppo_inventBulk)i.next();
+									if (!it.cnr.jada.bulk.BulkCollections.containsByPrimaryKey(categorieGruppo, beneServizio.getCategoria_gruppo()))
+										categorieGruppo.add(beneServizio.getCategoria_gruppo());
+							}
+				
+				CategoriaGruppoInventComponentSession h= (CategoriaGruppoInventComponentSession)
+							context.getBusinessProcess().createComponentSession(
+										"CNRDOCAMM00_EJB_CategoriaGruppoInventComponentSession",
+										CategoriaGruppoInventComponentSession.class);
+					titoliCapitoli = h.findAssVoceFList(context.getUserContext(), beneServizio.getCategoria_gruppo());
+					if (titoliCapitoli == null)
+						throw new it.cnr.jada.comp.ApplicationException("Selezione non omogenea: il bene/servizio \"" + beneServizio.getDs_bene_servizio() + "\" non è stato attribuito ad alcuna categoria gruppo per l'inventario!");
+				}	
+			}
+			
+			int size = soggettiAInventario.size();
+			if (size != 0) {
+				if (size != count)
+					throw new it.cnr.jada.comp.ApplicationException("Selezione non omogenea: selezionare solo dettagli non inventariabili o solo dettagli inventariabili");
+				else if (categorieGruppo.size() != 1)
+					throw new it.cnr.jada.comp.ApplicationException("Selezione non omogenea: selezionare solo dettagli inventariabili con stesso titolo capitolo!");
+			}
+			if (titoliCapitoli !=null && !titoliCapitoli.isEmpty())
+				return titoliCapitoli;
+			
+		}
+	return null;
+	}
 }
+
