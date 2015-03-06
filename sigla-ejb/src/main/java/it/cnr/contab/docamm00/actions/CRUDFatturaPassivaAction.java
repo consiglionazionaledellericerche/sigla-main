@@ -346,14 +346,16 @@ protected Forward basicDoBringBackOpenObbligazioniWindow(
 				List titoloCapitoloValidolist = controllaSelezionePerTitoloCapitoloLista(context, dettagliDaContabilizzare.iterator());
 				Elemento_voceBulk titoloCapitoloObbligazione = newObblig.getObbligazione().getElemento_voce();
 				//Controllo la compatibilità dell'obbligazione con il titolo capitolo selezionato
-				Boolean compatibile=new Boolean(false);
+				Boolean compatibile=null;
 				if (titoloCapitoloValidolist != null && titoloCapitoloValidolist.size()!=0)
-					for(Iterator i=titoloCapitoloValidolist.iterator();i.hasNext();){ 
+					for(Iterator i=titoloCapitoloValidolist.iterator();(i.hasNext()&&(compatibile==null||!compatibile));){ 
 						Categoria_gruppo_voceBulk bulk=(Categoria_gruppo_voceBulk)i.next();
 						if(bulk.getCd_elemento_voce().compareTo(titoloCapitoloObbligazione.getCd_elemento_voce())==0)
 							compatibile=new Boolean(true);
+						else
+							compatibile=new Boolean(false);
 					}
-				   if (!compatibile)
+				   if (compatibile!= null && !compatibile)
 					throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non è compatibile con il titolo capitolo della categoria" );//+ titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
 			}
 		}
@@ -491,16 +493,18 @@ private void basicDoContabilizza(
 		List titoloCapitoloValidolist;
 		if(dettagliDaContabilizzare!=null && !dettagliDaContabilizzare.isEmpty()){
 			titoloCapitoloValidolist = controllaSelezionePerTitoloCapitoloLista(context, dettagliDaContabilizzare.iterator());
-		
+			
 		//Controllo la compatibilità dell'obbligazione con il titolo capitolo selezionato
-		Boolean compatibile=new Boolean(false);
+		Boolean compatibile=null;
 		if (titoloCapitoloValidolist != null && titoloCapitoloValidolist.size()!=0)
-			for(Iterator i=titoloCapitoloValidolist.iterator();i.hasNext();){ 
+			for(Iterator i=titoloCapitoloValidolist.iterator();(i.hasNext()&&(compatibile==null||!compatibile));){ 
 				Categoria_gruppo_voceBulk bulk=(Categoria_gruppo_voceBulk)i.next();
 				if(bulk.getCd_elemento_voce().compareTo(titoloCapitoloObbligazione.getCd_elemento_voce())==0)
 					compatibile=new Boolean(true);
+				else
+					compatibile=new Boolean(false);
 			}
-		   if (!compatibile)
+		   if (compatibile!=null && !compatibile)
 			throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non è compatibile con il titolo capitolo della categoria" );//+ titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
 		}
 		} catch (PersistencyException e1) {
@@ -4788,8 +4792,7 @@ protected java.util.List controllaSelezionePerTitoloCapitoloLista(ActionContext 
 					throw new it.cnr.jada.comp.ApplicationException("Selezione non omogenea: selezionare solo dettagli inventariabili con stesso titolo capitolo!");
 			}
 			if (titoliCapitoli !=null && !titoliCapitoli.isEmpty())
-				return titoliCapitoli;
-			
+				return titoliCapitoli;		
 		}
 	return null;
 	}
