@@ -247,8 +247,10 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	{
 		if (!isAbilitatoModificaDescVariazioni() && ((Pdg_variazioneBulk)getModel()).isApprovata())
 			return false;
+		else if (super.isSaveButtonEnabled() && isUoEnte() && isAbilitatoModificaDescVariazioni())
+			return true;
 		else
-		return super.isSaveButtonEnabled() && (isCdrScrivania() || isUoEnte())&&!(((Pdg_variazioneBulk)getModel()).getStatoDocumentale()!=null);
+			return super.isSaveButtonEnabled() && (isCdrScrivania() || isUoEnte()) &&!(((Pdg_variazioneBulk)getModel()).getStatoDocumentale()!=null);
 	}	
 	public boolean isDeleteButtonEnabled()
 	{
