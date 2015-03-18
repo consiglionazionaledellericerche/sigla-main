@@ -1051,8 +1051,8 @@ public java.util.List findListaTerziSIP(UserContext userContext,String query,Str
 					}
 				}
 				sql.closeParenthesis();
-				sql.addOrderBy("COGNOME");
-				sql.addOrderBy("NOME");
+				sql.addOrderBy("UPPER(COGNOME)");
+				sql.addOrderBy("UPPER(NOME)");
 			}else if (tipoterzo.equalsIgnoreCase("giuridica")){
 				sql.openParenthesis("AND");
 				sql.addSQLClause("AND","TI_ENTITA",SQLBuilder.EQUALS,AnagraficoBulk.GIURIDICA);
@@ -1097,7 +1097,7 @@ public java.util.List findListaTerziSIP(UserContext userContext,String query,Str
 					}
 				}
 				sql.closeParenthesis();
-				sql.addOrderBy("DENOMINAZIONE_SEDE");
+				sql.addOrderBy("UPPER(DENOMINAZIONE_SEDE)");
 			}
 		}
 		return home.fetchAll(sql);
