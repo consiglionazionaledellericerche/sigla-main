@@ -167,15 +167,10 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 		    	DOMImplementation impl = builder.getDOMImplementation();
 		    	Document xmldoc =null;
 		    	Element root =null;
-		    	
-		    	if (this.getServizio().equalsIgnoreCase("cerca")){
-		    		xmldoc=impl.createDocument("http://gestioneistituti.cnr.it/cercaterzi", "cercaterzi:root", null);
-		    		root = xmldoc.getDocumentElement();
-		    	}
-		    	else if (this.getServizio().equalsIgnoreCase("cercacompleta")){
-		    		xmldoc=impl.createDocument("http://gestioneistituti.cnr.it/cercaterzi", "cercaterzi:root", null);
-		    		root = xmldoc.getDocumentElement();
-		    	}
+		    	if (this.getServizio().compareTo("rendicontazione")!=0){
+			    		xmldoc=impl.createDocument("http://gestioneistituti.cnr.it/cercaterzi", "cercaterzi:root", null);
+			    		root = xmldoc.getDocumentElement();
+			    }
 		    	else{
 		    		xmldoc = impl.createDocument(null, "root", null);
 		    		root = xmldoc.getDocumentElement();
@@ -232,14 +227,15 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 		    	TransformerFactory tf = TransformerFactory.newInstance();
 		    	Transformer serializer = tf.newTransformer();
 		    	serializer.setOutputProperty(OutputKeys.ENCODING,"ISO-8859-1");
-		    	if (this.getServizio()!=null && this.getServizio().equalsIgnoreCase("cerca")){
-		    	   serializer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,"https://contab.cnr.it/SIGLA/schema/cercaterzi.dtd");
-		    	   serializer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC,"cercaterzi");
-		    	}
-		    	else if (this.getServizio()!=null && this.getServizio().equalsIgnoreCase("cercacompleta")){
+		    	
+		    	if (this.getServizio()!=null && this.getServizio().equalsIgnoreCase("cercacompleta")){
 			    	   serializer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,"https://contab.cnr.it/SIGLA/schema/cercaterzicompleta.dtd");
 			    	   serializer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC,"cercaterzicompleta");
-		    	}
+		    	}else
+		    	if (this.getServizio()!=null && this.getServizio().compareTo("renidcontazione")!=0){
+			    	   serializer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,"https://contab.cnr.it/SIGLA/schema/cercaterzi.dtd");
+			    	   serializer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC,"cercaterzi");
+			    	}
 		    	serializer.setOutputProperty(OutputKeys.INDENT,"yes");
 		    	serializer.setOutputProperty(OutputKeys.STANDALONE,"no");
 		    	serializer.transform(domSource, streamResult); 
