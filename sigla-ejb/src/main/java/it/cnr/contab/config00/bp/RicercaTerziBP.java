@@ -182,18 +182,7 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 		    		root.appendChild(generaNumeroTerzi(xmldoc));
 		    		int num = 0;
 		    		if (getTerzi() != null && !getTerzi().isEmpty()){
-		    			if (this.getServizio().equalsIgnoreCase("cerca")){
-		    				
-				    		for (Iterator i = getTerzi().iterator();i.hasNext()&&num<getNumMax().intValue();){
-				    			V_terzo_anagrafico_sipBulk terzo = (V_terzo_anagrafico_sipBulk)i.next();
-				    			if (tipoterzo.equalsIgnoreCase("fisica")){
-				    				root.appendChild(generaDettaglioTerziFisica(xmldoc,terzo.getCd_terzo(),terzo.getCognome(),terzo.getNome(),terzo.getCodice_fiscale_pariva()));
-				    			}else if (tipoterzo.equalsIgnoreCase("giuridica")){
-				    				root.appendChild(generaDettaglioTerziGiuridica(xmldoc,terzo.getCd_terzo(),terzo.getDenominazione_sede(),terzo.getCodice_fiscale_pariva()));
-				    			}
-				    			num++;
-				    		}
-		    			}else if  (this.getServizio().equalsIgnoreCase("rendicontazione"))
+		    			if  (this.getServizio().equalsIgnoreCase("rendicontazione"))
 		    			{
 		    				for (Iterator i = getTerzi().iterator();i.hasNext()&&num<getNumMax().intValue();){
 		    					V_terzo_sipBulk terzo = (V_terzo_sipBulk)i.next();
@@ -205,23 +194,34 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 		    					num++;
 		    				}
 		    			}
-		    		else if  (this.getServizio().equalsIgnoreCase("cercacompleta"))
-	    			{
-		    			for (Iterator i = getTerzi().iterator();i.hasNext()&&num<getNumMax().intValue();){
-			    			V_terzo_anagrafico_sipBulk terzo = (V_terzo_anagrafico_sipBulk)i.next();
+		    			else if  (this.getServizio().equalsIgnoreCase("cercacompleta"))
+		    			{
+			    			for (Iterator i = getTerzi().iterator();i.hasNext()&&num<getNumMax().intValue();){
+				    			V_terzo_anagrafico_sipBulk terzo = (V_terzo_anagrafico_sipBulk)i.next();
+					    			if (tipoterzo.equalsIgnoreCase("fisica")){
+					    				 root.appendChild(generaDettaglioTerziFisicaCompleta(xmldoc,terzo.getCd_terzo(),terzo.getCognome(),terzo.getNome(),terzo.getCodice_fiscale_pariva(),
+					    						terzo.getVia_fiscale(),terzo.getNum_civico_fiscale(),terzo.getCap_comune_fiscale(),terzo.getPg_nazione_fiscale(),terzo.getPg_comune_fiscale(),
+					    						terzo.getDt_nascita(),terzo.getPg_comune_nascita(),terzo.getSesso(),terzo.getComune_fiscale(),terzo.getComune_nascita(),terzo.getDs_nazione()));
+					    			}else if (tipoterzo.equalsIgnoreCase("giuridica")){
+					    				root.appendChild(generaDettaglioTerziGiuridicaCompleta(xmldoc,terzo.getCd_terzo(),terzo.getDenominazione_sede(),terzo.getCodice_fiscale_pariva(),
+					    						terzo.getVia_fiscale(),terzo.getNum_civico_fiscale(),terzo.getCap_comune_fiscale(),terzo.getPg_nazione_fiscale(),terzo.getPg_comune_fiscale(),terzo.getComune_fiscale(),terzo.getDs_nazione()));
+					    			}
+				    			num++;
+				    		}
+		    			}
+		    			else{
+			    			for (Iterator i = getTerzi().iterator();i.hasNext()&&num<getNumMax().intValue();){
+				    			V_terzo_anagrafico_sipBulk terzo = (V_terzo_anagrafico_sipBulk)i.next();
 				    			if (tipoterzo.equalsIgnoreCase("fisica")){
-				    				 root.appendChild(generaDettaglioTerziFisicaCompleta(xmldoc,terzo.getCd_terzo(),terzo.getCognome(),terzo.getNome(),terzo.getCodice_fiscale_pariva(),
-				    						terzo.getVia_fiscale(),terzo.getNum_civico_fiscale(),terzo.getCap_comune_fiscale(),terzo.getPg_nazione_fiscale(),terzo.getPg_comune_fiscale(),
-				    						terzo.getDt_nascita(),terzo.getPg_comune_nascita(),terzo.getSesso(),terzo.getComune_fiscale(),terzo.getComune_nascita(),terzo.getDs_nazione()));
+				    				root.appendChild(generaDettaglioTerziFisica(xmldoc,terzo.getCd_terzo(),terzo.getCognome(),terzo.getNome(),terzo.getCodice_fiscale_pariva()));
 				    			}else if (tipoterzo.equalsIgnoreCase("giuridica")){
-				    				root.appendChild(generaDettaglioTerziGiuridicaCompleta(xmldoc,terzo.getCd_terzo(),terzo.getDenominazione_sede(),terzo.getCodice_fiscale_pariva(),
-				    						terzo.getVia_fiscale(),terzo.getNum_civico_fiscale(),terzo.getCap_comune_fiscale(),terzo.getPg_nazione_fiscale(),terzo.getPg_comune_fiscale(),terzo.getComune_fiscale(),terzo.getDs_nazione()));
+				    				root.appendChild(generaDettaglioTerziGiuridica(xmldoc,terzo.getCd_terzo(),terzo.getDenominazione_sede(),terzo.getCodice_fiscale_pariva()));
 				    			}
-			    			num++;
-			    		}
-	    			}
+				    			num++;
+				    		}
+		    			}
+		    		}
 		    	}
-		    }
 				DOMSource domSource = new DOMSource(xmldoc);
 		    	StreamResult streamResult = new StreamResult(pagecontext.getOut());
 		    	TransformerFactory tf = TransformerFactory.newInstance();
@@ -235,7 +235,7 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 		    	if (this.getServizio()!=null && this.getServizio().compareTo("renidcontazione")!=0){
 			    	   serializer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,"https://contab.cnr.it/SIGLA/schema/cercaterzi.dtd");
 			    	   serializer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC,"cercaterzi");
-			    	}
+			    }
 		    	serializer.setOutputProperty(OutputKeys.INDENT,"yes");
 		    	serializer.setOutputProperty(OutputKeys.STANDALONE,"no");
 		    	serializer.transform(domSource, streamResult); 
