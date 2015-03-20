@@ -209,6 +209,21 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 				    			num++;
 				    		}
 		    			}
+		    			else if  (this.getServizio().equalsIgnoreCase("inserimento"))
+		    			{
+			    			for (Iterator i = getTerzi().iterator();i.hasNext()&&num<getNumMax().intValue();){
+				    			V_terzo_anagrafico_sipBulk terzo = (V_terzo_anagrafico_sipBulk)i.next();
+					    			if (tipoterzo.equalsIgnoreCase("fisica")){
+					    				 root.appendChild(generaDettaglioTerziFisicaCompleta(xmldoc,terzo.getCd_terzo(),terzo.getCognome(),terzo.getNome(),terzo.getCodice_fiscale_pariva(),
+					    						terzo.getVia_fiscale(),terzo.getNum_civico_fiscale(),terzo.getCap_comune_fiscale(),terzo.getPg_nazione_fiscale(),terzo.getPg_comune_fiscale(),
+					    						terzo.getDt_nascita(),terzo.getPg_comune_nascita(),terzo.getSesso(),terzo.getComune_fiscale(),terzo.getComune_nascita(),terzo.getDs_nazione()));
+					    			}else if (tipoterzo.equalsIgnoreCase("giuridica")){
+					    				root.appendChild(generaDettaglioTerziGiuridicaCompleta(xmldoc,terzo.getCd_terzo(),terzo.getDenominazione_sede(),terzo.getCodice_fiscale_pariva(),
+					    						terzo.getVia_fiscale(),terzo.getNum_civico_fiscale(),terzo.getCap_comune_fiscale(),terzo.getPg_nazione_fiscale(),terzo.getPg_comune_fiscale(),terzo.getComune_fiscale(),terzo.getDs_nazione()));
+					    			}
+				    			num++;
+				    		}
+		    			}
 		    			else{
 			    			for (Iterator i = getTerzi().iterator();i.hasNext()&&num<getNumMax().intValue();){
 				    			V_terzo_anagrafico_sipBulk terzo = (V_terzo_anagrafico_sipBulk)i.next();
