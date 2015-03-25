@@ -510,8 +510,8 @@ private void validaUnitaOrganizzativa(UserContext userContext,TerzoBulk terzo) t
 			throw new ApplicationException("Attenzione: Unità Organizzativa non specificata");		
 		SQLBuilder sql = getHome(userContext, TerzoBulk.class).createSQLBuilder();
 		sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, terzo.getCd_unita_organizzativa());
-		if (sql.executeExistsQuery(getConnection(userContext)))
-			throw new ApplicationException("Attenzione: l'Unità Organizzativa selezionata è già stata utilizzata.");		
+		//if (sql.executeExistsQuery(getConnection(userContext)))
+			//throw new ApplicationException("Attenzione: l'Unità Organizzativa selezionata è già stata utilizzata.");		
 		
 	} catch(Throwable e) {
 		throw handleException(e);
