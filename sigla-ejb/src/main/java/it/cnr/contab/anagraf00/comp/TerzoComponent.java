@@ -84,11 +84,13 @@ public TerzoBulk cercaTerzoPerUnitaOrganizzativa(UserContext userContext,Unita_o
 		sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS,unita_organizzativa.getCd_unita_organizzativa());
 		sql.addSQLClause("AND", "(DT_CANC >= SYSDATE OR DT_CANC IS NULL)");
 		sql.addSQLClause("AND", "(DT_FINE_RAPPORTO >= SYSDATE OR DT_FINE_RAPPORTO IS NULL)");
+		
 		it.cnr.jada.persistency.Broker broker = getHome(userContext,TerzoBulk.class).createBroker(sql);
 		if (!broker.next()) return null;
-		TerzoBulk terzo = (TerzoBulk)broker.fetch(TerzoBulk.class);
-		if (broker.next()) 
-			throw new ApplicationException("Esistono più terzi associati a questa Unità Organizzativa");
+		TerzoBulk terzo = (TerzoBulk)broker.fetch(TerzoBulk.class); 
+		// eliminato controllo terzo unico per UO 
+		//if (broker.next()) 
+			//throw new ApplicationException("Esistono più terzi associati a questa Unità Organizzativa");
 		return terzo;
 	} catch(it.cnr.jada.persistency.PersistencyException ex) {
 		throw new ComponentException(ex);
