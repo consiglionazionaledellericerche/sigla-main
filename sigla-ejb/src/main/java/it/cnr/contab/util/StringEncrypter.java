@@ -23,6 +23,9 @@ public final class StringEncrypter  {
 
 	private static final String UNICODE_FORMAT = "UTF8";
 
+	public static void main(String[] args) throws EncryptionException {
+		System.out.println(encrypt("protocollo.adrba@pec.cnr.it", "adrba-h501e"));
+	}
 	private static KeySpec getKeySpec( String encryptionKey ) throws EncryptionException
 	{
 		String encryptionScheme = DESEDE_ENCRYPTION_SCHEME;
@@ -113,7 +116,7 @@ public final class StringEncrypter  {
 			byte[] cleartext = Base64.decode( encryptedString );
 			byte[] ciphertext = cipher.doFinal( cleartext );
 
-			return bytes2String( ciphertext );
+			return new String( ciphertext );
 		}
 		catch (NoSuchAlgorithmException e)
 		{
@@ -129,16 +132,6 @@ public final class StringEncrypter  {
 		}
 	}
 
-	private static String bytes2String( byte[] bytes )
-	{
-		StringBuffer stringBuffer = new StringBuffer();
-		for (int i = 0; i < bytes.length; i++)
-		{
-			stringBuffer.append( (char) bytes[i] );
-		}
-		return stringBuffer.toString();
-	}
-
 	@SuppressWarnings("serial")
 	public static class EncryptionException extends Exception
 	{
@@ -148,3 +141,4 @@ public final class StringEncrypter  {
 		}
 	}
 }
+
