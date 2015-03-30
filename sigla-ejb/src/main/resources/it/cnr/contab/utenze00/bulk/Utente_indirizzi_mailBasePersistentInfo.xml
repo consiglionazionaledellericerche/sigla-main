@@ -48,6 +48,14 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
 		<columnMapping
+			columnName="FL_FEP_NOTIFICA_RICEZIONE"
+			propertyName="flFepNotificaRicezione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+		
+		<columnMapping
 			columnName="UTUV"
 			propertyName="utuv"
 			sqlTypeName="VARCHAR"
@@ -90,6 +98,8 @@
 		name="flEsitoNegFattElettr" />		
 	<persistentProperty
 		name="flEsitoPosFattElettr" />		
+	<persistentProperty
+		name="flFepNotificaRicezione" />
 	<persistentProperty
 		name="utuv" />
 	<persistentProperty

@@ -17,6 +17,8 @@ public class Utente_indirizzi_mailBase extends Utente_indirizzi_mailKey implemen
 	private java.lang.Boolean flEsitoPosFattElettr;
 	//  FL_ESITO_NEG_FATT_ELETTR CHAR(1) NOT NULL
 	private java.lang.Boolean flEsitoNegFattElettr;
+	//  FL_FEP_NOTIFICA_RICEZIONE CHAR(1) NOT NULL
+	private java.lang.Boolean flFepNotificaRicezione;
  
 	public Utente_indirizzi_mailBase() {
 		super();
@@ -64,5 +66,10 @@ public class Utente_indirizzi_mailBase extends Utente_indirizzi_mailKey implemen
 	public void setFlEsitoNegFattElettr(java.lang.Boolean flEsitoNegFattElettr) {
 		this.flEsitoNegFattElettr = flEsitoNegFattElettr;
 	}
-	
+	public java.lang.Boolean getFlFepNotificaRicezione() {
+		return flFepNotificaRicezione;
+	}
+	public void setFlFepNotificaRicezione(java.lang.Boolean flFepNotificaRicezione) {
+		this.flFepNotificaRicezione = flFepNotificaRicezione;
+	}	
 }
