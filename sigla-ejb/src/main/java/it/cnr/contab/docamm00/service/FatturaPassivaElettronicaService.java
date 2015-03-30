@@ -6,6 +6,8 @@ import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneBulk;
 import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
 import it.cnr.contab.utenze00.bp.WSUserContext;
+import it.cnr.contab.util.StringEncrypter;
+import it.cnr.contab.util.StringEncrypter.EncryptionException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.mail.SimplePECMail;
@@ -122,11 +124,16 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	
 
 	@SuppressWarnings({ "unchecked", "serial" })
-	public void pecScanForRiceviFatture(String userName, String password) throws ComponentException {
+	public void pecScanForRiceviFatture(String userName, String password) throws ComponentException {	
 		logger.info("PEC SCAN for ricevi Fatture email: "+userName);
 		Properties props = System.getProperties();
 		props.putAll(pecMailConf);
 		try {
+			try {
+				password = StringEncrypter.decrypt(userName, password);
+			} catch (EncryptionException e) {
+				throw new AuthenticationFailedException("Cannot decrypt password");
+			}					
 			final Session session = Session.getDefaultInstance(props, null);
 			URLName urlName = new URLName(pecURLName);
 			final Store store = session.getStore(urlName);

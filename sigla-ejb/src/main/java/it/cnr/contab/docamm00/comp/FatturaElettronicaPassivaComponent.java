@@ -399,10 +399,10 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 					if (!indirizziPec.containsKey(unitaOrganizzativaPecBulk.getEmailPecProtocollo())) {
 						fatturaPassivaElettronicaService.pecScanForRiceviFatture(
 								unitaOrganizzativaPecBulk.getEmailPecProtocollo(), 
-								unitaOrganizzativaPecBulk.getCodPecProtocolloInChiaro());
+								unitaOrganizzativaPecBulk.getCodPecProtocollo());
 					}
 					indirizziPec.put(unitaOrganizzativaPecBulk.getEmailPecProtocollo(), 
-							unitaOrganizzativaPecBulk.getCodPecProtocolloInChiaro());
+							unitaOrganizzativaPecBulk.getCodPecProtocollo());
 				} catch (OutdatedResourceException e) {
 					continue;
 				} catch (BusyResourceException e) {
