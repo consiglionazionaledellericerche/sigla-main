@@ -55,7 +55,14 @@
 		inputType="CHECKBOX"
 		nullable="false"
 		label="Comunica avvenuta approvazione Variazioni Competenza" />
-
+	
+	<fieldProperty
+		name="flFepNotificaRicezione"
+		property="flFepNotificaRicezione"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Comunica ricezione Fattura Elettronica Passiva" />
+	
 	<formFieldProperty
 		name="cd_utente" />
 	<formFieldProperty
@@ -72,7 +79,9 @@
 		name="fl_err_appr_var_bil_cnr_comp" />
 	<formFieldProperty
 		name="fl_com_app_var_stanz_comp" />
-		
+	<formFieldProperty
+		name="flFepNotificaRicezione" />
+			
 	<columnFieldProperty
 		name="indirizzo_mail" />
 	<columnFieldProperty
@@ -99,7 +108,11 @@
 		name="flEsitoNegFattElettr"
 		label="Comunica esiti negativi"
 		headerLabel="Fatturazione Elettronica" />
-
+	<columnFieldProperty
+		name="flFepNotificaRicezione"
+		label="Comunica ricezione"
+		headerLabel="Fatturazione Elettronica" />
+	
 	<findFieldProperty
 		name="cd_utente" />
 	<findFieldProperty
@@ -116,4 +129,7 @@
 		name="fl_err_appr_var_bil_cnr_comp" />
 	<findFieldProperty
 		name="fl_com_app_var_stanz_comp" />
+	<findFieldProperty
+		name="flFepNotificaRicezione" />
+		
 </bulkInfo>

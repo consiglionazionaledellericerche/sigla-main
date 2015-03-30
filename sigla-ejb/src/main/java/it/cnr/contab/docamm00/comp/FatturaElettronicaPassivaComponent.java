@@ -34,6 +34,8 @@ import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
+import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.BusyResourceException;
@@ -46,6 +48,7 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.SendMail;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -57,6 +60,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.mail.PasswordAuthentication;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -128,11 +133,35 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
         	List<TerzoBulk> terzoUOS = terzoHome.fetchAll(sql);
         	if (terzoUOS != null && !terzoUOS.isEmpty()) {
         		documentoEleTrasmissioneBulk.setUnitaOrganizzativa(terzoUOS.get(0).getUnita_organizzativa());
-        		documentoEleTrasmissioneBulk.setCommittente(terzoUOS.get(0));
+        		documentoEleTrasmissioneBulk.setCommittente(terzoUOS.get(0));       		
         	} else {
         		TerzoBulk terzoEnte = terzoHome.findTerzoEnte();
         		documentoEleTrasmissioneBulk.setUnitaOrganizzativa(terzoEnte.getUnita_organizzativa());
         		documentoEleTrasmissioneBulk.setCommittente(terzoEnte);
+        	}
+    		/**
+    		 * Invio mail di notifica Ricezione
+    		 */
+        	try {
+        		String subject= "[SIGLA] Notifica ricezione fattura passiva con Identificativo SdI:" + documentoEleTrasmissioneBulk.getIdentificativoSdi();
+        		String text = "E' pervenuta la fattura dal trasmittente: <b>" +documentoEleTrasmissioneBulk.getIdCodice() + "</b><br>"+
+        				"Prestatore: " + documentoEleTrasmissioneBulk.getDenominzionePrestatore() +"<br>" +
+        				"Il documento è presente nell'area temporanea di SIGLA.";
+        		String addressTO = null;
+        		Utente_indirizzi_mailHome utente_indirizzi_mailHome = (Utente_indirizzi_mailHome)getHome(usercontext,Utente_indirizzi_mailBulk.class);
+    			for (java.util.Iterator<Utente_indirizzi_mailBulk> i = utente_indirizzi_mailHome.findUtenteNotificaRicezioneFatturaElettronica(
+    					documentoEleTrasmissioneBulk.getUnitaOrganizzativa()).iterator();i.hasNext();){
+    				Utente_indirizzi_mailBulk utente_indirizzi = (Utente_indirizzi_mailBulk)i.next();
+    				if (addressTO == null)
+    				  addressTO = new String();
+    				else
+    				  addressTO = addressTO + ",";    
+    				addressTO = addressTO+utente_indirizzi.getIndirizzo_mail();			
+    			}
+    			if (addressTO != null){
+					SendMail.sendMail(subject, text, InternetAddress.parse(addressTO));
+    			}        	        		
+        	}catch (Exception _ex) {
         	}
         	if (documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale() != null || 
         			documentoEleTrasmissioneBulk.getPrestatoreCodice() != null) {
