@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="http://www.fatturapa.gov.it/sdi/fatturapa/v1.1" targetNamespace="http://www.fatturapa.gov.it/sdi/fatturapa/v1.1" version="1.1">
-  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd" />
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd" />
   <xs:element name="FatturaElettronica" type="FatturaElettronicaType">
     <xs:annotation>
       <xs:documentation>

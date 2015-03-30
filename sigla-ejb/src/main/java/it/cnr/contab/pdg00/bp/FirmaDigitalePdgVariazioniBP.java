@@ -198,31 +198,36 @@ public class FirmaDigitalePdgVariazioniBP extends
 													+ nomeFileAllegato+"x"
 													+ "?methodName=scaricaFileGenerico&it.cnr.jada.action.BusinessProcess="
 													+ getPath()) + "')");
-			Document nodeSignedFile = getNodeFileFirmato(bulk
-					.getPdgVariazioneDocument()
-					.getDocument());
-			String signedFileName = null;
-			if (!isTestSession()) {
-				if (nodeSignedFile!=null)
-					signedFileName=getNodeFileFirmato(bulk
+			Document nodeSignedFile = null;
+			try {
+				nodeSignedFile = getNodeFileFirmato(bulk
 						.getPdgVariazioneDocument()
-						.getDocument()).getName();
-			} else {
-				signedFileName = nomeFileTestFirmato;
+						.getDocument());
+				String signedFileName = null;
+				if (!isTestSession()) {
+					if (nodeSignedFile!=null)
+						signedFileName=getNodeFileFirmato(bulk
+							.getPdgVariazioneDocument()
+							.getDocument()).getName();
+				} else {
+					signedFileName = nomeFileTestFirmato;
+					if (signedFileName!=null)
+						signedFileName= signedFileName.replace("\\", "/");
+				}
 				if (signedFileName!=null)
-					signedFileName= signedFileName.replace("\\", "/");
+					toolbar[6]
+						.setHref("doPrint('"
+								+ JSPUtils
+										.buildAbsoluteUrl(
+												pageContext,
+												null,
+												"genericdownload/"
+														+ signedFileName
+														+ "?methodName=scaricaFileFirmato&it.cnr.jada.action.BusinessProcess="
+														+ getPath()) + "')");
+			} catch (ApplicationException e) {
+				throw new ServletException(e);
 			}
-			if (signedFileName!=null)
-				toolbar[6]
-					.setHref("doPrint('"
-							+ JSPUtils
-									.buildAbsoluteUrl(
-											pageContext,
-											null,
-											"genericdownload/"
-													+ signedFileName
-													+ "?methodName=scaricaFileFirmato&it.cnr.jada.action.BusinessProcess="
-													+ getPath()) + "')");
 		}
 		else {
 			toolbar[1].setHref(null);
@@ -451,7 +456,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		os.flush();
 	}
 
-	public Document getNodeFileFirmato(Document nodePdf) {
+	public Document getNodeFileFirmato(Document nodePdf) throws ApplicationException {
 
 		if (isTestSession())
 			return null;
@@ -963,7 +968,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 	}
 	
 	private CMISPath getCMISPath(
-			ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk) {
+			ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk) throws ApplicationException {
 		CMISPath cmisPath = SpringUtil.getBean(
 				"cmisPathVariazioniAlPianoDiGestione", CMISPath.class);
 		cmisPath = pdgVariazioniService.createFolderIfNotPresent(cmisPath,

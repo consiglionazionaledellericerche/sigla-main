@@ -3,6 +3,7 @@ package it.cnr.contab.incarichi00.servlet;
 import it.cnr.contab.incarichi00.service.ContrattiService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.comp.ApplicationException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,7 +24,12 @@ public class DownloadIncarichiServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpActionContext actionContext = new HttpActionContext(this, request, response);
 		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
-		Document node = (Document) contrattiService.getNodeByNodeRef(request.getParameter("cmisNodeRef"));
+		Document node;
+		try {
+			node = (Document) contrattiService.getNodeByNodeRef(request.getParameter("cmisNodeRef"));
+		} catch (ApplicationException e) {
+			throw new ServletException(e);
+		}
 		InputStream is = contrattiService.getResource(node);
 		((HttpActionContext)actionContext).getResponse().setContentLength(Long.valueOf(node.getContentStreamLength()).intValue());		
 		((HttpActionContext)actionContext).getResponse().setContentType(node.getContentStreamMimeType());

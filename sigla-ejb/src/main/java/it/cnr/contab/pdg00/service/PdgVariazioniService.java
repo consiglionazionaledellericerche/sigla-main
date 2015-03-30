@@ -58,7 +58,7 @@ public class PdgVariazioniService extends SiglaCMISService {
 		return cmisPath;
 	}
 	
-	public List<Integer> findVariazioniSigned(Integer esercizio, String cds, String uo, Long variazionePdg){
+	public List<Integer> findVariazioniSigned(Integer esercizio, String cds, String uo, Long variazionePdg) throws ApplicationException{
 		StringBuffer query = new StringBuffer("select var.cmis:objectId, ");
 		query.append("var.").append(CMISProperty.VARPIANOGEST_NUMEROVARIAZIONE.value());
 		query.append(" from varpianogest:document var");
@@ -83,11 +83,11 @@ public class PdgVariazioniService extends SiglaCMISService {
 		
 	}	
 
-	public List<Integer> findVariazioniPresenti(Integer esercizio, String tiSigned, String cds, String uo){
+	public List<Integer> findVariazioniPresenti(Integer esercizio, String tiSigned, String cds, String uo) throws ApplicationException{
 		return findVariazioniPresenti(esercizio, tiSigned, cds, uo, null);
 	}
 	
-	public List<Integer> findVariazioniPresenti(Integer esercizio, String tiSigned, String cds, String uo, Long variazionePdg){
+	public List<Integer> findVariazioniPresenti(Integer esercizio, String tiSigned, String cds, String uo, Long variazionePdg) throws ApplicationException{
 		StringBuffer query = new StringBuffer("select var.cmis:objectId, ");
 		query.append("var.").append(CMISProperty.VARPIANOGEST_NUMEROVARIAZIONE.value());
 		query.append(" from varpianogest:document var");

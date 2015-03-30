@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBase"
+	keyClassName="it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataKey"
+	homeClassName="it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataHome">
+	<defaultColumnMap
+		tableName="DOCUMENTO_ELE_TESTATA">
+		<columnMapping
+			columnName="TIPO_DOCUMENTO"
+			propertyName="tipoDocumento"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="DIVISA"
+			propertyName="divisa"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_DOCUMENTO"
+			propertyName="dataDocumento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NUMERO_DOCUMENTO"
+			propertyName="numeroDocumento"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="BOLLO_VIRTUALE"
+			propertyName="bolloVirtuale"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_BOLLO"
+			propertyName="importoBollo"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_BOLLO"
+			propertyName="tipoBollo"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_DOCUMENTO"
+			propertyName="importoDocumento"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ARROTONDAMENTO"
+			propertyName="arrotondamento"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="CAUSALE"
+			propertyName="causale"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ART73"
+			propertyName="art73"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VETTORE_PAESE"
+			propertyName="vettorePaese"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="VETTORE_CODICE"
+			propertyName="vettoreCodice"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="VETTORE_CODICEFISCALE"
+			propertyName="vettoreCodicefiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="VETTORE_DENOMINAZIONE"
+			propertyName="vettoreDenominazione"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="VETTORE_NOME"
+			propertyName="vettoreNome"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="VETTORE_COGNOME"
+			propertyName="vettoreCognome"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="VETTORE_TITOLO"
+			propertyName="vettoreTitolo"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="VETTORE_CODEORI"
+			propertyName="vettoreCodeori"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="VETTORE_NUMEROLICENZA"
+			propertyName="vettoreNumerolicenza"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="MEZZO_TRASPORTO"
+			propertyName="mezzoTrasporto"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="CAUSALE_TRASPORTO"
+			propertyName="causaleTrasporto"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="NUMERO_COLLI"
+			propertyName="numeroColli"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="DESCRIZIONE_TRASPORTO"
+			propertyName="descrizioneTrasporto"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="UNITA_MISURAPESO"
+			propertyName="unitaMisurapeso"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PESO_LORDO"
+			propertyName="pesoLordo"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="PESO_NETTO"
+			propertyName="pesoNetto"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DATAORA_RITIRO"
+			propertyName="dataoraRitiro"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DATAINIZIO_TRASPORTO"
+			propertyName="datainizioTrasporto"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_RESA"
+			propertyName="tipoResa"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="RESA_INDIRIZZO"
+			propertyName="resaIndirizzo"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="RESA_NUMEROCIVICO"
+			propertyName="resaNumerocivico"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="RESA_CAP"
+			propertyName="resaCap"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="RESA_COMUNE"
+			propertyName="resaComune"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="RESA_PROVINCIA"
+			propertyName="resaProvincia"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="RESA_NAZIONE"
+			propertyName="resaNazione"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="DATAORA_CONSEGNA"
+			propertyName="dataoraConsegna"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NUMERO_FATTURAPRINCIPALE"
+			propertyName="numeroFatturaprincipale"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_FATTURAPRINCIPALE"
+			propertyName="dataFatturaprincipale"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_IMMATRICOLAZIONEVEICOLO"
+			propertyName="dataImmatricolazioneveicolo"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="TOTALE_PERCORSOVEICOLO"
+			propertyName="totalePercorsoveicolo"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="BENEFICIARIO_PAGAMENTO"
+			propertyName="beneficiarioPagamento"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="BENEFICIARIO_MOD_PAG"
+			propertyName="beneficiarioModPag"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="DATATERMINI_PAGAMENTO"
+			propertyName="dataterminiPagamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="GIORNITERMINI_PAGAMENTO"
+			propertyName="giorniterminiPagamento"
+			sqlTypeName="DECIMAL"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="DATASCADENZA_PAGAMENTO"
+			propertyName="datascadenzaPagamento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_PAGAMENTO"
+			propertyName="importoPagamento"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="CODUFFICIOPOSTALE"
+			propertyName="codufficiopostale"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="COGNOME_QUIETANZANTE"
+			propertyName="cognomeQuietanzante"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="NOME_QUIETANZANTE"
+			propertyName="nomeQuietanzante"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="ISTITUTO_FINANZIARIO"
+			propertyName="istitutoFinanziario"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="IBAN"
+			propertyName="iban"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="ABI"
+			propertyName="abi"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="CAB"
+			propertyName="cab"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="BIC"
+			propertyName="bic"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PAGAMENTO_CD_TERZO"
+			propertyName="pagamentoCdTerzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="PAGAMENTO_CD_MODALITA_PAG"
+			propertyName="pagamentoCdModalitaPag"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="SCONTO_PAGAMENTO_ANT"
+			propertyName="scontoPagamentoAnt"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DATALIMITE_PAGAMENTO_ANT"
+			propertyName="datalimitePagamentoAnt"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="PENALITA_PAG_RITARDATI"
+			propertyName="penalitaPagRitardati"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_RICORRENZAPENALE"
+			propertyName="dataRicorrenzapenale"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_PAGAMENTO"
+			propertyName="codicePagamento"
+			sqlTypeName="VARCHAR"
+			columnSize="60"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_DOCUMENTO"
+			propertyName="statoDocumento"
+			sqlTypeName="VARCHAR"
+			columnSize="60"
+			nullable="true" />
+		<columnMapping
+			columnName="MOTIVO_RIFIUTO"
+			propertyName="motivoRifiuto"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="ANOMALIE"
+			propertyName="anomalie"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipoDocumento" />
+	<persistentProperty
+		name="divisa" />
+	<persistentProperty
+		name="dataDocumento" />
+	<persistentProperty
+		name="numeroDocumento" />
+	<persistentProperty
+		name="bolloVirtuale" />
+	<persistentProperty
+		name="importoBollo" />
+	<persistentProperty
+		name="tipoBollo" />
+	<persistentProperty
+		name="importoDocumento" />
+	<persistentProperty
+		name="arrotondamento" />
+	<persistentProperty
+		name="causale" />
+	<persistentProperty
+		name="art73" />
+	<persistentProperty
+		name="vettorePaese" />
+	<persistentProperty
+		name="vettoreCodice" />
+	<persistentProperty
+		name="vettoreCodicefiscale" />
+	<persistentProperty
+		name="vettoreDenominazione" />
+	<persistentProperty
+		name="vettoreNome" />
+	<persistentProperty
+		name="vettoreCognome" />
+	<persistentProperty
+		name="vettoreTitolo" />
+	<persistentProperty
+		name="vettoreCodeori" />
+	<persistentProperty
+		name="vettoreNumerolicenza" />
+	<persistentProperty
+		name="mezzoTrasporto" />
+	<persistentProperty
+		name="causaleTrasporto" />
+	<persistentProperty
+		name="numeroColli" />
+	<persistentProperty
+		name="descrizioneTrasporto" />
+	<persistentProperty
+		name="unitaMisurapeso" />
+	<persistentProperty
+		name="pesoLordo" />
+	<persistentProperty
+		name="pesoNetto" />
+	<persistentProperty
+		name="dataoraRitiro" />
+	<persistentProperty
+		name="datainizioTrasporto" />
+	<persistentProperty
+		name="tipoResa" />
+	<persistentProperty
+		name="resaIndirizzo" />
+	<persistentProperty
+		name="resaNumerocivico" />
+	<persistentProperty
+		name="resaCap" />
+	<persistentProperty
+		name="resaComune" />
+	<persistentProperty
+		name="resaProvincia" />
+	<persistentProperty
+		name="resaNazione" />
+	<persistentProperty
+		name="dataoraConsegna" />
+	<persistentProperty
+		name="numeroFatturaprincipale" />
+	<persistentProperty
+		name="dataFatturaprincipale" />
+	<persistentProperty
+		name="dataImmatricolazioneveicolo" />
+	<persistentProperty
+		name="totalePercorsoveicolo" />
+	<persistentProperty
+		name="beneficiarioPagamento" />
+	<persistentProperty
+		name="beneficiarioModPag" />
+	<persistentProperty
+		name="dataterminiPagamento" />
+	<persistentProperty
+		name="giorniterminiPagamento" />
+	<persistentProperty
+		name="datascadenzaPagamento" />
+	<persistentProperty
+		name="importoPagamento" />
+	<persistentProperty
+		name="codufficiopostale" />
+	<persistentProperty
+		name="cognomeQuietanzante" />
+	<persistentProperty
+		name="nomeQuietanzante" />
+	<persistentProperty
+		name="istitutoFinanziario" />
+	<persistentProperty
+		name="iban" />
+	<persistentProperty
+		name="abi" />
+	<persistentProperty
+		name="cab" />
+	<persistentProperty
+		name="bic" />
+	<persistentProperty
+		name="pagamentoCdTerzo" />
+	<persistentProperty
+		name="pagamentoCdModalitaPag" />
+	<persistentProperty
+		name="scontoPagamentoAnt" />
+	<persistentProperty
+		name="datalimitePagamentoAnt" />
+	<persistentProperty
+		name="penalitaPagRitardati" />
+	<persistentProperty
+		name="dataRicorrenzapenale" />
+	<persistentProperty
+		name="codicePagamento" />
+	<persistentProperty
+		name="statoDocumento" />
+	<persistentProperty
+		name="motivoRifiuto" />
+	<persistentProperty
+		name="anomalie" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

@@ -15,7 +15,12 @@
 <script language="JavaScript" src="scripts/util.js"></script>
 <% CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)BusinessProcess.getBusinessProcess(request); %>
 <title> <%=(bp.getModel() instanceof Nota_di_creditoBulk) ?"Nota di Credito":(bp.getModel() instanceof Nota_di_debitoBulk)?"Nota di Debito":"Fattura Passiva"%></title>
-
+<script language="JavaScript">
+function doScaricaFatturaHtml() {
+	window.open('genericdownload/fattura.html?methodName=scaricaFatturaHtml&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>', 
+			'Fattura', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600').focus() ;
+}
+</script>
 </head>
 <body class="Form">
 <%	bp.openFormWindow(pageContext);
@@ -123,6 +128,9 @@
 						{ "tabLetteraPagamentoEstero","Documento 1210","/docamm00/tab_lettera_pagam_estero.jsp" },
 						{ "tabFatturaPassivaIntrastat","Intrastat","/docamm00/tab_fattura_passiva_intrastat.jsp" }
 					};
+	}
+	if (((Fattura_passivaBulk)bp.getModel()).getDocumentoEleTestata() != null) {
+		pages[pages.length-1] = new String[] { "tabEleAllegati","Allegati","/docamm00/tab_fatt_ele_allegati.jsp" };		
 	}
 	JSPUtils.tabbed(
 					pageContext,

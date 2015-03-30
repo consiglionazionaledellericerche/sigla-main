@@ -59,6 +59,11 @@ import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.VoceIvaComponentSession;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataHome;
+import it.cnr.contab.docamm00.fatturapa.bulk.StatoDocumentoEleEnum;
+import it.cnr.contab.docamm00.fatturapa.bulk.TipoIntegrazioneSDI;
 import it.cnr.contab.docamm00.intrastat.bulk.Condizione_consegnaBulk;
 import it.cnr.contab.docamm00.intrastat.bulk.Condizione_consegnaHome;
 import it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraBulk;
@@ -124,6 +129,7 @@ import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scarico_dettHome;
 import it.cnr.contab.inventario01.bulk.Inventario_beni_apgBulk;
 import it.cnr.contab.inventario01.bulk.Inventario_beni_apgHome;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
@@ -2811,7 +2817,27 @@ public OggettoBulk creaConBulk(
 	}
 	
 	fattura_passiva = (Fattura_passivaBulk)super.creaConBulk(userContext, fattura_passiva);
-
+	if (fattura_passiva.getDocumentoEleTestata() != null) {
+		fattura_passiva.getDocumentoEleTestata().setStatoDocumento(StatoDocumentoEleEnum.REGISTRATO.name());
+		fattura_passiva.getDocumentoEleTestata().setToBeUpdated();
+		TipoIntegrazioneSDI tipoIntegrazioneSDI = TipoIntegrazioneSDI.PEC;
+		try {
+			Configurazione_cnrBulk configurazione_cnrBulk = (Configurazione_cnrBulk)getHome(userContext,Configurazione_cnrBulk.class).
+					findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(
+							Configurazione_cnrBulk.PK_INTEGRAZIONE_SDI, Configurazione_cnrBulk.SK_INTEGRAZIONE_SDI,
+							"*", CNRUserContext.getEsercizio(userContext)));
+			if (configurazione_cnrBulk != null)
+				tipoIntegrazioneSDI = TipoIntegrazioneSDI.valueOf(configurazione_cnrBulk.getVal01());
+			((DocumentoEleTestataHome)getHome(userContext, DocumentoEleTestataBulk.class)).
+				notificaEsito(userContext, tipoIntegrazioneSDI, fattura_passiva.getDocumentoEleTestata());
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		} catch (IOException e) {
+			throw handleException(e);
+		}
+		super.modificaConBulk(userContext, fattura_passiva.getDocumentoEleTestata());
+	}
+	
 	aggiornaCarichiInventario(userContext, fattura_passiva);
 
 	// Le operazioni che rendono persistenti le modifiche fatte sull'Inventario,
@@ -4162,7 +4188,21 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,Oggetto
 		(coll != null && !coll.isEmpty()) ?
 			(it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk)coll.iterator().next():
 			null);
+	fattura = caricaAllegatiBulk(userContext, fattura);
+
 	return fattura;
+}
+public Fattura_passivaBulk caricaAllegatiBulk (UserContext userContext, Fattura_passivaBulk fattura) throws ComponentException {
+	if (fattura.getDocumentoEleTestata() != null) {
+		try {
+			fattura.setDocEleAllegatiColl(new BulkList<DocumentoEleAllegatiBulk>(
+					getHome(userContext, DocumentoEleAllegatiBulk.class).find(
+							new DocumentoEleAllegatiBulk(fattura.getDocumentoEleTestata()))));
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}	
+	}
+	return fattura;	
 }
 //^^@@
 /** 
@@ -4266,7 +4306,7 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 			impostaCollegamentoCapitoloPerTrovato(aUC, riga);
 			riga.setTrovato(ricercaDatiTrovato(aUC, riga.getPg_trovato()));
 		}
-
+		fattura_passiva = caricaAllegatiBulk(aUC, fattura_passiva);
 	} catch (it.cnr.jada.persistency.PersistencyException e) {
 		throw handleException(fattura_passiva, e);
 	} catch (RemoteException e) {

@@ -11,6 +11,7 @@ import it.cnr.contab.incarichi00.cmis.CMISContrattiProperty;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -111,7 +112,7 @@ public class CMISFolderProcedura extends OggettoBulk {
 		return this.getIncaricoProcedura().getTipo_norma_perla().getComma_tipo_norma();
 	}
 
-	public CMISPath getCMISPrincipalPath(SiglaCMISService cmisService){
+	public CMISPath getCMISPrincipalPath(SiglaCMISService cmisService) throws ApplicationException{
 		CMISPath cmisPath = SpringUtil.getBean("cmisPathContratti",CMISPath.class);
 		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, this.getIncaricoProcedura().getCd_unita_organizzativa(), this.getIncaricoProcedura().getUnita_organizzativa().getDs_unita_organizzativa(), this.getIncaricoProcedura().getUnita_organizzativa().getDs_unita_organizzativa());
 		if (this.getIncaricoProcedura().isProceduraForIncarichi())
@@ -123,7 +124,7 @@ public class CMISFolderProcedura extends OggettoBulk {
 		return cmisPath;
 	}
 
-	public CMISPath getCMISPath(SiglaCMISService cmisService){
+	public CMISPath getCMISPath(SiglaCMISService cmisService) throws ApplicationException{
 		CMISPath cmisPath = this.getCMISPrincipalPath(cmisService);
 		if (cmisPath!=null) {
 			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, this.getEsercizio().toString(), "Esercizio "+this.getEsercizio().toString(), "Esercizio "+this.getEsercizio().toString());

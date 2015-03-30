@@ -2,6 +2,7 @@ package it.cnr.contab.doccont00.service;
 
 import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.jada.comp.ApplicationException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -22,11 +23,11 @@ import org.apache.pdfbox.util.PDFMergerUtility;
 public class ContabiliService extends SiglaCMISService {
 	private transient static final Log logger = LogFactory.getLog(ContabiliService.class);
 	
-	public List<String> getNodeRefContabile(MandatoBulk mandato){
+	public List<String> getNodeRefContabile(MandatoBulk mandato) throws ApplicationException{
 		return getNodeRefContabile(mandato.getEsercizio(), mandato.getCd_cds(), mandato.getPg_mandato());
 	}
 
-	public List<String> getNodeRefContabile(Integer esercizio, String cds, Long pgMandato){
+	public List<String> getNodeRefContabile(Integer esercizio, String cds, Long pgMandato) throws ApplicationException{
 		List<String> ids = new ArrayList<String>();
 		StringBuffer query = new StringBuffer("select doc.cmis:objectId from cmis:document doc ");
 		query.append(" join sigla_contabili_aspect:document contabili on doc.cmis:objectId = contabili.cmis:objectId");

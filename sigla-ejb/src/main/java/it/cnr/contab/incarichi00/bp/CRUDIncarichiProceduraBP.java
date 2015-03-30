@@ -2241,7 +2241,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
         return stringbuffer.toString();
     }
     
-	public void scaricaFile(ActionContext actioncontext, String cmsNodeRef) throws IOException, ServletException {
+	public void scaricaFile(ActionContext actioncontext, String cmsNodeRef) throws IOException, ServletException, ApplicationException {
 		ContrattiService contrattiService = SpringUtil.getBean("contrattiService", ContrattiService.class);
 		Document node = (Document) contrattiService.getNodeByNodeRef(cmsNodeRef);
 		InputStream is = contrattiService.getResource(node);

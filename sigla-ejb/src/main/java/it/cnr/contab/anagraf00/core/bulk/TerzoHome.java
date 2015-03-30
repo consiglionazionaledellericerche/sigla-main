@@ -263,6 +263,11 @@ public SQLBuilder selectTerzoPerCompensi(Integer codiceTerzo, CompoundFindClause
 
 	return sql;
 }
+public java.util.List<TerzoBulk> findTerzi(AnagraficoBulk anagrafico) throws IntrospectionException, PersistencyException {
+	SQLBuilder sql = createSQLBuilder();
+	sql.addSQLClause("AND", "CD_ANAG", SQLBuilder.EQUALS, anagrafico.getCd_anag());
+	return fetchAll(sql);
+}
 
 @Override
 public SQLBuilder selectByClause(CompoundFindClause compoundfindclause)

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+	<bean id="baseMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="contextPaths">
+      		<list>
+        		<value>it.gov.fatturapa.sdi.ws.ricezione.v1_0.types</value>      		    
+      		    <value>it.gov.fatturapa.sdi.ws.trasmissione.v1_0.types</value>
+        		<value>it.gov.fatturapa.sdi.fatturapa.v1</value>
+        		<value>it.gov.fatturapa.sdi.messaggi.v1</value>
+       		</list>
+    	</property>
+		<property name="schemas">
+			<list>
+				<value>/xsd/TrasmissioneTypes_v1.1.xsd</value>
+				<value>/xsd/MessaggiTypes_v1.1.xsd</value>
+				<value>/xsd/RicezioneTypes_v1.0.xsd</value>
+			</list>
+		</property>
+	</bean>
+    
+	<bean id="messageFactory" class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory">
+	     <property name="messageFactory">
+	         <bean class="com.sun.xml.messaging.saaj.soap.ver1_1.SOAPMessageFactory1_1Impl"/>
+	     </property>
+	</bean>
+    
+    <bean id="sdiPddClientTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">
+        <constructor-arg ref="messageFactory" />
+        <property name="marshaller" ref="baseMarshaller"></property>
+        <property name="unmarshaller" ref="baseMarshaller"></property>
+        <property name="messageSender">
+             <bean class="org.springframework.ws.transport.http.CommonsHttpMessageSender">
+            <property name="credentials">
+                <bean class="org.apache.commons.httpclient.UsernamePasswordCredentials">
+                    <constructor-arg value="${it.cnr.contab.pdd.servizio.applicativo.credenziali.user}"/>
+                    <constructor-arg value="${it.cnr.contab.pdd.servizio.applicativo.credenziali.password}"/>
+                </bean>
+            </property>
+        </bean>
+        </property>
+        <property name="defaultUri" value="${it.cnr.contab.pdd.uri.porta.delegata}"/>
+     </bean>
+  
+    <bean id="fatturazioneElettronicaClient" class="it.cnr.contab.pdd.ws.client.impl.FatturazioneElettronicaClientImpl">
+        <property name="webServiceTemplate"  ref="sdiPddClientTemplate"/>
+		<constructor-arg>
+			<map>
+				<entry key="it.cnr.contab.pdd.servizio.applicativo.credenziali.user"
+					value="${it.cnr.contab.pdd.servizio.applicativo.credenziali.user}" />
+			    <entry key="it.cnr.contab.pdd.servizio.applicativo.credenziali.password"
+					value="${it.cnr.contab.pdd.servizio.applicativo.credenziali.password}" />							    
+				<entry key="it.cnr.contab.pdd.servizio.notifica.esito.PD"
+					value="${it.cnr.contab.pdd.servizio.notifica.esito.PD}" />
+				<entry key="it.cnr.contab.pdd.servizio.notifica.esito.soapAction"
+					value="${it.cnr.contab.pdd.servizio.notifica.esito.soapAction}" />
+			</map>
+		</constructor-arg>        
+    </bean>    
+</beans>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBase"
+	keyClassName="it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoKey"
+	homeClassName="it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoHome">
+	<defaultColumnMap
+		tableName="DOCUMENTO_ELE_ACQUISTO">
+		<columnMapping
+			columnName="TIPO_RIFACQUISTO"
+			propertyName="tipoRifacquisto"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="NUMERO_LINEA"
+			propertyName="numeroLinea"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />												
+		<columnMapping
+			columnName="ACQUISTO_DOCUMENTO"
+			propertyName="acquistoDocumento"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="ACQUISTO_DATA"
+			propertyName="acquistoData"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="ACQUISTO_NUMITEM"
+			propertyName="acquistoNumitem"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="ACQUISTO_COMMESSA"
+			propertyName="acquistoCommessa"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="ACQUISTO_CUP"
+			propertyName="acquistoCup"
+			sqlTypeName="VARCHAR"
+			columnSize="15"
+			nullable="true" />
+		<columnMapping
+			columnName="ACQUISTO_CIG"
+			propertyName="acquistoCig"
+			sqlTypeName="VARCHAR"
+			columnSize="15"
+			nullable="true" />
+		<columnMapping
+			columnName="ANOMALIE"
+			propertyName="anomalie"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipoRifacquisto" />
+	<persistentProperty
+		name="numeroLinea" />	
+	<persistentProperty
+		name="acquistoDocumento" />
+	<persistentProperty
+		name="acquistoData" />
+	<persistentProperty
+		name="acquistoNumitem" />
+	<persistentProperty
+		name="acquistoCommessa" />
+	<persistentProperty
+		name="acquistoCup" />
+	<persistentProperty
+		name="acquistoCig" />
+	<persistentProperty
+		name="anomalie" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

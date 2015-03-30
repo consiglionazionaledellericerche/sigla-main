@@ -1,0 +1,395 @@
+/*
+ * Created by BulkGenerator 2.0 [07/12/2009]
+ * Date 25/02/2015
+ */
+package it.cnr.contab.docamm00.fatturapa.bulk;
+
+import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
+import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_creditoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_debitoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaBulk;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.util.OrderedHashtable;
+import it.gov.fatturapa.sdi.fatturapa.v1.ModalitaPagamentoType;
+import it.gov.fatturapa.sdi.fatturapa.v1.TipoDocumentoType;
+public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
+	public static final String STATO_DOCUMENTO_TUTTI = "TUTTI";
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("unchecked")
+	public static final java.util.Dictionary<String, String> tiStatoDocumentoKeys = new OrderedHashtable();	
+	public static final java.util.Dictionary<String, String> tiStatoDocumentoSelectKeys = new OrderedHashtable();	
+	public static final java.util.Dictionary<String, String> tiTipoDocumentoKeys = new OrderedHashtable();
+	public static final java.util.Dictionary<String, String> tiModalitaPagamentoKeys = new OrderedHashtable();
+
+	static {
+		tiStatoDocumentoKeys.put(StatoDocumentoEleEnum.AGGIORNATO.name(),StatoDocumentoEleEnum.AGGIORNATO.name());
+		tiStatoDocumentoKeys.put(StatoDocumentoEleEnum.COMPLETO.name(),StatoDocumentoEleEnum.COMPLETO.name());
+		tiStatoDocumentoKeys.put(StatoDocumentoEleEnum.REGISTRATO.name(),StatoDocumentoEleEnum.REGISTRATO.name());
+		tiStatoDocumentoKeys.put(StatoDocumentoEleEnum.RIFIUTATO.name(),StatoDocumentoEleEnum.RIFIUTATO.name());
+		tiStatoDocumentoKeys.put(STATO_DOCUMENTO_TUTTI,STATO_DOCUMENTO_TUTTI);
+
+		tiStatoDocumentoSelectKeys.put(StatoDocumentoEleEnum.AGGIORNATO.name(),StatoDocumentoEleEnum.AGGIORNATO.name());
+		tiStatoDocumentoSelectKeys.put(StatoDocumentoEleEnum.COMPLETO.name(),StatoDocumentoEleEnum.COMPLETO.name());
+		tiStatoDocumentoSelectKeys.put(StatoDocumentoEleEnum.REGISTRATO.name(),StatoDocumentoEleEnum.REGISTRATO.name());
+		tiStatoDocumentoSelectKeys.put(StatoDocumentoEleEnum.RIFIUTATO.name(),StatoDocumentoEleEnum.RIFIUTATO.name());
+		
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_01.value(),"Fattura");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_02.value(),"Acconto / anticipo su fattura");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_03.value(),"Acconto / anticipo su parcella");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_04.value(),"Nota di credito");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_05.value(),"Nota di debito");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_06.value(),"Parcella");
+		
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_01.value(),"contanti");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_02.value(),"assegno");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_03.value(),"assegno circolare");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_04.value(),"contanti presso Tesoreria");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_05.value(),"bonifico");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_06.value(),"vaglia cambiario");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_07.value(),"bollettino bancario");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_08.value(),"carta di pagamento");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_09.value(),"RID");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_10.value(),"RID utenze");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_11.value(),"RID veloce");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_12.value(),"RIBA");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_13.value(),"MAV");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_14.value(),"quietanza erario");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_15.value(),"giroconto su conti di contabilit� speciale");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_16.value(),"domiciliazione bancaria");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_17.value(),"domiciliazione postale");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_18.value(),"bollettino di c/c postale");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_19.value(),"SEPA Direct Debit");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_20.value(),"SEPA Direct Debit CORE");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_21.value(),"SEPA Direct Debit B2B");		
+	}
+	/**
+	 * [DOCUMENTO_ELE_TRASMISSIONE Documento elettronico di trasmissione]
+	 **/
+	private DocumentoEleTrasmissioneBulk documentoEleTrasmissione =  new DocumentoEleTrasmissioneBulk();
+	/**
+	 * [MODALITA_PAGAMENTO Descrive le modalità di pagamento previste per un dato terzo.]
+	 **/
+	private Modalita_pagamentoBulk modalitaPagamento =  new Modalita_pagamentoBulk();
+	
+	private BulkList<DocumentoEleLineaBulk> docEleLineaColl = new BulkList<DocumentoEleLineaBulk>();
+	private BulkList<DocumentoEleIvaBulk> docEleIVAColl = new BulkList<DocumentoEleIvaBulk>();
+	private BulkList<DocumentoEleAllegatiBulk> docEleAllegatiColl = new BulkList<DocumentoEleAllegatiBulk>();
+	private BulkList<DocumentoEleTributiBulk> docEleTributiColl = new BulkList<DocumentoEleTributiBulk>();
+	private BulkList<DocumentoEleScontoMaggBulk> docEleScontoMaggColl = new BulkList<DocumentoEleScontoMaggBulk>();
+	private BulkList<DocumentoEleAcquistoBulk> docEleAcquistoColl = new BulkList<DocumentoEleAcquistoBulk>();
+	private BulkList<DocumentoEleDdtBulk> docEleDdtColl = new BulkList<DocumentoEleDdtBulk>();
+
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Table name: DOCUMENTO_ELE_TESTATA
+	 **/
+	public DocumentoEleTestataBulk() {
+		super();
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Table name: DOCUMENTO_ELE_TESTATA
+	 **/
+	public DocumentoEleTestataBulk(java.lang.String idPaese, java.lang.String idCodice, java.lang.Long identificativoSdi, java.lang.Long progressivo) {
+		super(idPaese, idCodice, identificativoSdi, progressivo);
+		setDocumentoEleTrasmissione( new DocumentoEleTrasmissioneBulk(idPaese,idCodice,identificativoSdi) );
+	}
+	
+	
+	public void setDocEleLineaColl(BulkList<DocumentoEleLineaBulk> docEleLineaColl) {
+		this.docEleLineaColl = docEleLineaColl;
+	}
+	public void setDocEleIVAColl(BulkList<DocumentoEleIvaBulk> docEleIVAColl) {
+		this.docEleIVAColl = docEleIVAColl;
+	}
+	public void setDocEleAllegatiColl(
+			BulkList<DocumentoEleAllegatiBulk> docEleAllegatiColl) {
+		this.docEleAllegatiColl = docEleAllegatiColl;
+	}
+	public void setDocEleTributiColl(
+			BulkList<DocumentoEleTributiBulk> docEleTributiColl) {
+		this.docEleTributiColl = docEleTributiColl;
+	}
+	public void setDocEleScontoMaggColl(
+			BulkList<DocumentoEleScontoMaggBulk> docEleScontoMaggColl) {
+		this.docEleScontoMaggColl = docEleScontoMaggColl;
+	}
+	public void setDocEleAcquistoColl(
+			BulkList<DocumentoEleAcquistoBulk> docEleAcquistoColl) {
+		this.docEleAcquistoColl = docEleAcquistoColl;
+	}
+	public void setDocEleDdtColl(BulkList<DocumentoEleDdtBulk> docEleDdtColl) {
+		this.docEleDdtColl = docEleDdtColl;
+	}
+	@Override
+	public BulkCollection[] getBulkLists() {
+		// Metti solo le liste di oggetti che devono essere resi persistenti
+		return new it.cnr.jada.bulk.BulkCollection[] { 
+				docEleLineaColl,docEleIVAColl,docEleAllegatiColl,
+				docEleTributiColl,docEleScontoMaggColl,docEleAcquistoColl,docEleDdtColl
+		};
+	}
+	
+	public int addToDocEleLineaColl( DocumentoEleLineaBulk doc ) {
+		docEleLineaColl.add(doc);
+		doc.setDocumentoEleTestata(this);		
+		return docEleLineaColl.size()-1;
+	}
+
+	public int addToDocEleIVAColl( DocumentoEleIvaBulk doc ) {
+		docEleIVAColl.add(doc);
+		doc.setDocumentoEleTestata(this);		
+		return docEleIVAColl.size()-1;
+	}
+
+	public int addToDocEleAllegatiColl( DocumentoEleAllegatiBulk doc ) {
+		docEleAllegatiColl.add(doc);
+		doc.setDocumentoEleTestata(this);		
+		return docEleAllegatiColl.size()-1;
+	}
+
+	public int addToDocEleTributiColl( DocumentoEleTributiBulk doc ) {
+		docEleTributiColl.add(doc);
+		doc.setDocumentoEleTestata(this);		
+		return docEleTributiColl.size()-1;
+	}
+	
+	public int addToDocEleScontoMaggColl( DocumentoEleScontoMaggBulk doc ) {
+		docEleScontoMaggColl.add(doc);
+		doc.setDocumentoEleTestata(this);		
+		return docEleScontoMaggColl.size()-1;
+	}
+
+	public int addToDocEleAcquistoColl( DocumentoEleAcquistoBulk doc ) {
+		docEleAcquistoColl.add(doc);
+		doc.setDocumentoEleTestata(this);		
+		return docEleAcquistoColl.size()-1;
+	}
+	public int addToDocEleDdtColl( DocumentoEleDdtBulk doc ) {
+		docEleDdtColl.add(doc);
+		doc.setDocumentoEleTestata(this);		
+		return docEleDdtColl.size()-1;
+	}
+
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Restituisce il valore di: [Documento elettronico di trasmissione]
+	 **/
+	public DocumentoEleTrasmissioneBulk getDocumentoEleTrasmissione() {
+		return documentoEleTrasmissione;
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [Documento elettronico di trasmissione]
+	 **/
+	public void setDocumentoEleTrasmissione(DocumentoEleTrasmissioneBulk documentoEleTrasmissione)  {
+		this.documentoEleTrasmissione=documentoEleTrasmissione;
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Restituisce il valore di: [Descrive le modalità di pagamento previste per un dato terzo.]
+	 **/
+	public Modalita_pagamentoBulk getModalitaPagamento() {
+		return modalitaPagamento;
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [Descrive le modalità di pagamento previste per un dato terzo.]
+	 **/
+	public void setModalitaPagamento(Modalita_pagamentoBulk modalitaPagamento)  {
+		this.modalitaPagamento=modalitaPagamento;
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Restituisce il valore di: [idPaese]
+	 **/
+	public java.lang.String getIdPaese() {
+		DocumentoEleTrasmissioneBulk documentoEleTrasmissione = this.getDocumentoEleTrasmissione();
+		if (documentoEleTrasmissione == null)
+			return null;
+		return getDocumentoEleTrasmissione().getIdPaese();
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [idPaese]
+	 **/
+	public void setIdPaese(java.lang.String idPaese)  {
+		this.getDocumentoEleTrasmissione().setIdPaese(idPaese);
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Restituisce il valore di: [idCodice]
+	 **/
+	public java.lang.String getIdCodice() {
+		DocumentoEleTrasmissioneBulk documentoEleTrasmissione = this.getDocumentoEleTrasmissione();
+		if (documentoEleTrasmissione == null)
+			return null;
+		return getDocumentoEleTrasmissione().getIdCodice();
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [idCodice]
+	 **/
+	public void setIdCodice(java.lang.String idCodice)  {
+		this.getDocumentoEleTrasmissione().setIdCodice(idCodice);
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Restituisce il valore di: [identificativoSdi]
+	 **/
+	public java.lang.Long getIdentificativoSdi() {
+		DocumentoEleTrasmissioneBulk documentoEleTrasmissione = this.getDocumentoEleTrasmissione();
+		if (documentoEleTrasmissione == null)
+			return null;
+		return getDocumentoEleTrasmissione().getIdentificativoSdi();
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [identificativoSdi]
+	 **/
+	public void setIdentificativoSdi(java.lang.Long identificativoSdi)  {
+		this.getDocumentoEleTrasmissione().setIdentificativoSdi(identificativoSdi);
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Restituisce il valore di: [pagamentoCdTerzo]
+	 **/
+	public java.lang.Integer getPagamentoCdTerzo() {
+		Modalita_pagamentoBulk modalitaPagamento = this.getModalitaPagamento();
+		if (modalitaPagamento == null)
+			return null;
+		return getModalitaPagamento().getCd_terzo();
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [pagamentoCdTerzo]
+	 **/
+	public void setPagamentoCdTerzo(java.lang.Integer pagamentoCdTerzo)  {
+		this.getModalitaPagamento().setCd_terzo(pagamentoCdTerzo);
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Restituisce il valore di: [pagamentoCdModalitaPag]
+	 **/
+	public java.lang.String getPagamentoCdModalitaPag() {
+		Modalita_pagamentoBulk modalitaPagamento = this.getModalitaPagamento();
+		if (modalitaPagamento == null)
+			return null;
+		return getModalitaPagamento().getCd_modalita_pag();
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [pagamentoCdModalitaPag]
+	 **/
+	public void setPagamentoCdModalitaPag(java.lang.String pagamentoCdModalitaPag)  {
+		this.getModalitaPagamento().setCd_modalita_pag(pagamentoCdModalitaPag);
+	}
+	public BulkList<DocumentoEleLineaBulk> getDocEleLineaColl() {
+		return docEleLineaColl;
+	}
+	public BulkList<DocumentoEleIvaBulk> getDocEleIVAColl() {
+		return docEleIVAColl;
+	}
+	public BulkList<DocumentoEleAllegatiBulk> getDocEleAllegatiColl() {
+		return docEleAllegatiColl;
+	}
+	public BulkList<DocumentoEleTributiBulk> getDocEleTributiColl() {
+		return docEleTributiColl;
+	}
+	public BulkList<DocumentoEleScontoMaggBulk> getDocEleScontoMaggColl() {
+		return docEleScontoMaggColl;
+	}
+	public BulkList<DocumentoEleAcquistoBulk> getDocEleAcquistoColl() {
+		return docEleAcquistoColl;
+	}
+	public BulkList<DocumentoEleDdtBulk> getDocEleDdtColl() {
+		return docEleDdtColl;
+	}
+	
+	public StatoDocumentoEleEnum getStatoDocumentoEle() {
+		try {
+			return StatoDocumentoEleEnum.valueOf(getStatoDocumento());			
+		} catch (IllegalArgumentException _ex) {
+			return null;
+		}
+	}
+	
+	public boolean isCompilabile() {
+		return getStatoDocumentoEle().equals(StatoDocumentoEleEnum.COMPLETO);
+	}
+
+	public boolean isRegistrata() {
+		return getStatoDocumentoEle().equals(StatoDocumentoEleEnum.REGISTRATO);
+	}
+	
+	public boolean isRifiutata() {
+		return getStatoDocumentoEle().equals(StatoDocumentoEleEnum.RIFIUTATO);
+	}	
+	public boolean isRifiutabile() {
+		return getStatoDocumentoEle().equals(StatoDocumentoEleEnum.AGGIORNATO) || 
+				getStatoDocumentoEle().equals(StatoDocumentoEleEnum.COMPLETO);
+	}
+	public boolean isEditabile() {
+		return getStatoDocumentoEle().equals(StatoDocumentoEleEnum.AGGIORNATO) || 
+				getStatoDocumentoEle().equals(StatoDocumentoEleEnum.COMPLETO);
+	}	
+
+	public Fattura_passiva_rigaBulk getInstanceRiga() {
+		if (getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO))
+			return new Nota_di_credito_rigaBulk();
+		else if (getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_DEBITO))
+			return new Nota_di_debito_rigaBulk();
+		return new Fattura_passiva_rigaIBulk();
+	}
+
+	public Fattura_passivaBulk getInstanceFattura() {
+		if (getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO))
+			return new Nota_di_creditoBulk();
+		else if (getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_DEBITO))
+			return new Nota_di_debitoBulk();
+		return new Fattura_passiva_IBulk();
+	}
+	
+	public String getBusinessProcessFattura() {
+		if (getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO))
+			return "CRUDNotaDiCreditoBP";
+		else if (getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_DEBITO))
+			return "CRUDNotaDiDebitoBP";
+		return "CRUDFatturaPassivaBP";
+	}
+	
+	public String getTipoDocumentoSIGLA() {
+		if (getTipoDocumento().equalsIgnoreCase(TipoDocumentoType.TD_04.value()))
+			return Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO;
+		else if (getTipoDocumento().equalsIgnoreCase(TipoDocumentoType.TD_05.value()))
+			return Fattura_passivaBulk.TIPO_NOTA_DI_DEBITO;
+		return Fattura_passivaBulk.TIPO_FATTURA_PASSIVA;
+	}
+	
+	public boolean isUoNonEnte() {
+		if (getDocumentoEleTrasmissione() != null && getDocumentoEleTrasmissione().getUnitaOrganizzativa() != null &&
+				!getDocumentoEleTrasmissione().getUnitaOrganizzativa().getCd_tipo_unita().equalsIgnoreCase(Tipo_unita_organizzativaHome.TIPO_UO_ENTE))
+			return false;
+		return true;
+	}
+	
+	public String getNomeFile(String prefix) {
+		if (getIdPaese() == null)
+			return "";
+		String nomeFile = getDocumentoEleTrasmissione().getNomeFile();
+		return nomeFile.substring(0, nomeFile.indexOf(".")).
+				concat("_").concat(prefix).concat("_").
+				concat(Utility.lpad(getPg_ver_rec(), 3, '0')).concat(".xml");
+	}	
+}

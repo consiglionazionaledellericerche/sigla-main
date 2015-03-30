@@ -703,6 +703,12 @@
 	<columnFieldProperty
 		name="find_tipologia_istat"
 		label="Tipologia Istat"/>  -->
+	<form name="searchtool">
+		<formFieldProperty
+			name="cd_anag"/> 
+		<formFieldProperty
+			name="ragione_sociale"/> 			    	    
+	</form>
 	
 	<formFieldProperty
 		name="aliquota_fiscale"

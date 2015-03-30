@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Documento elettronico di trasmissione ddt"
+	longDescription="Documento elettronico di trasmissione ddt">
+	<fieldProperty
+		name="findDocumentoEleTestata"
+		property="documentoEleTestata"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="DocumentoEleTestata" />
+	<fieldProperty
+		name="idPaese"
+		property="documentoEleTestata.idPaese"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Nazione Trasmittente" />
+	<fieldProperty
+		name="idCodice"
+		property="documentoEleTestata.idCodice"
+		inputType="TEXT"
+		inputSize="28"
+		maxLength="28"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Identificativo Fiscale Trasmittente" />
+	<fieldProperty
+		name="identificativoSdi"
+		property="documentoEleTestata.identificativoSdi"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Identificativo SDI" />
+	<fieldProperty
+		name="progressivo"
+		property="documentoEleTestata.progressivo"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Progressivo" />
+	<fieldProperty
+		name="progressivoDdt"
+		property="progressivoDdt"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Prog. DDT" />
+	<fieldProperty
+		name="ddtNumero"
+		property="ddtNumero"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="Numero DDT" />
+	<fieldProperty
+		name="ddtData"
+		property="ddtData"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data DDT" />
+	<fieldProperty
+		name="numeroLinea"
+		property="numeroLinea"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="Riferimento a Riga Documento" />
+	<fieldProperty
+		name="anomalie"
+		property="anomalie"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="2000"
+		enabledOnEdit="false"
+		label="Anomalie" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="idPaese" />
+		<formFieldProperty
+			name="idCodice" />
+		<formFieldProperty
+			name="identificativoSdi" />
+		<formFieldProperty
+			name="progressivo" />
+		<formFieldProperty
+			name="progressivoDdt" />
+	</form>
+	<formFieldProperty
+		name="ddtNumero" />
+	<formFieldProperty
+		name="ddtData" />
+	<formFieldProperty
+		name="numeroLinea" />
+	<formFieldProperty
+		name="anomalie" />
+	<findFieldProperty
+		name="idPaese" />
+	<findFieldProperty
+		name="idCodice" />
+	<findFieldProperty
+		name="identificativoSdi" />
+	<findFieldProperty
+		name="progressivo" />
+	<findFieldProperty
+		name="progressivoDdt" />
+	<findFieldProperty
+		name="ddtNumero" />
+	<findFieldProperty
+		name="ddtData" />
+	<findFieldProperty
+		name="numeroLinea" />
+	<findFieldProperty
+		name="anomalie" />
+	<columnFieldProperty
+		name="progressivoDdt" />
+	<columnFieldProperty
+		name="ddtNumero" />
+	<columnFieldProperty
+		name="ddtData" />
+	<columnFieldProperty
+		name="numeroLinea" />
+	<columnFieldProperty
+		name="anomalie" />
+</bulkInfo>

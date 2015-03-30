@@ -20,6 +20,7 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
@@ -859,7 +860,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 	}	
 	
 	@SuppressWarnings("rawtypes")
-	private List<ContrattoBulk> completaListaContrattiElenco(UserContext userContext, List list) {
+	private List<ContrattoBulk> completaListaContrattiElenco(UserContext userContext, List list) throws ApplicationException {
 		List<ContrattoBulk> result = new ArrayList<ContrattoBulk>();
 		ContrattoService contrattoService = SpringUtil.getBean("contrattoService",
 				ContrattoService.class);		

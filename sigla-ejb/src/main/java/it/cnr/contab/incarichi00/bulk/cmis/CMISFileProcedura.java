@@ -10,6 +10,7 @@ import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
 import it.cnr.contab.incarichi00.cmis.CMISContrattiAttachment;
 import it.cnr.contab.incarichi00.cmis.CMISContrattiProperty;
+import it.cnr.jada.comp.ApplicationException;
 
 import java.io.File;
 import java.io.IOException;
@@ -98,13 +99,13 @@ public class CMISFileProcedura extends CMISFile implements CMISTypeName{
     	return "cmis:document";
 	}
 
-	public CMISPath getCMISParentPath(SiglaCMISService cmisService){
+	public CMISPath getCMISParentPath(SiglaCMISService cmisService) throws ApplicationException{
     	if (getIncaricoProceduraArchivio()!=null && getIncaricoProceduraArchivio().getIncarichi_procedura()!=null)
     		return getIncaricoProceduraArchivio().getIncarichi_procedura().getCMISFolder().getCMISPath(cmisService);
 		return null;
 	}
 
-	public CMISPath getCMISAlternativeParentPath(SiglaCMISService cmisService){
+	public CMISPath getCMISAlternativeParentPath(SiglaCMISService cmisService) throws ApplicationException{
 		CMISPath cmisPath = this.getIncaricoProceduraArchivio().getIncarichi_procedura().getCMISFolder().getCMISPrincipalPath(cmisService);
 		if (cmisPath != null)
 			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, (String)Incarichi_archivioBulk.getTipo_archivioKeys().get(this.getIncaricoProceduraArchivio().getTipo_archivio()), (String)Incarichi_archivioBulk.getTipo_archivioKeys().get(this.getIncaricoProceduraArchivio().getTipo_archivio()), (String)Incarichi_archivioBulk.getTipo_archivioKeys().get(this.getIncaricoProceduraArchivio().getTipo_archivio()));

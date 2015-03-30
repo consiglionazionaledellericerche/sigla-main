@@ -2,6 +2,8 @@ package it.cnr.contab.docamm00.docs.bulk;
 
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraBulk;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
@@ -34,6 +36,7 @@ public abstract class Fattura_passivaBulk
 	protected BancaBulk banca;
 	protected Rif_modalita_pagamentoBulk modalita_pagamento;
 	protected Rif_termini_pagamentoBulk termini_pagamento;
+	protected DocumentoEleTestataBulk documentoEleTestata;
 
 	private BulkList fattura_passiva_dettColl = new BulkList();
 	private BulkList fattura_passiva_intrastatColl = new BulkList();
@@ -214,6 +217,8 @@ public abstract class Fattura_passivaBulk
 	private Integer esercizioInScrivania;
 	private boolean isIvaRecuperabile=true;
 	private java.sql.Timestamp dataInizioObbligoRegistroUnico;
+	private BulkList<DocumentoEleAllegatiBulk> docEleAllegatiColl = new BulkList<DocumentoEleAllegatiBulk>();
+	
 public Fattura_passivaBulk() {
 	super();
 }
@@ -570,7 +575,8 @@ public BulkCollection[] getBulkLists() {
 	 return new it.cnr.jada.bulk.BulkCollection[] { 
 			fattura_passiva_dettColl,
 			fattura_passiva_intrastatColl,
-			riferimenti_bancari
+			riferimenti_bancari, 
+			docEleAllegatiColl
 		};
 }
 /**
@@ -2738,6 +2744,92 @@ public void validateDate() throws ValidationException {
 			java.sql.Timestamp dataInizioObbligoRegistroUnico) {
 		this.dataInizioObbligoRegistroUnico = dataInizioObbligoRegistroUnico;
 	}
+	public DocumentoEleTestataBulk getDocumentoEleTestata() {
+		return documentoEleTestata;
+	}
+
+	public void setDocumentoEleTestata(
+			DocumentoEleTestataBulk documentoEleTestata) {
+		this.documentoEleTestata = documentoEleTestata;
+	}
+
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009] Restituisce il valore di:
+	 * [idPaese]
+	 **/
+	public java.lang.String getIdPaese() {
+		DocumentoEleTestataBulk documentoEleTestata = this
+				.getDocumentoEleTestata();
+		if (documentoEleTestata == null)
+			return null;
+		return getDocumentoEleTestata().getIdPaese();
+	}
+
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009] Setta il valore di: [idPaese]
+	 **/
+	public void setIdPaese(java.lang.String idPaese) {
+		this.getDocumentoEleTestata().setIdPaese(idPaese);
+	}
+
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009] Restituisce il valore di:
+	 * [idCodice]
+	 **/
+	public java.lang.String getIdCodice() {
+		DocumentoEleTestataBulk documentoEleTestata = this
+				.getDocumentoEleTestata();
+		if (documentoEleTestata == null)
+			return null;
+		return getDocumentoEleTestata().getIdCodice();
+	}
+
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009] Setta il valore di: [idCodice]
+	 **/
+	public void setIdCodice(java.lang.String idCodice) {
+		this.getDocumentoEleTestata().setIdCodice(idCodice);
+	}
+
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009] Restituisce il valore di:
+	 * [identificativoSdi]
+	 **/
+	public java.lang.Long getIdentificativoSdi() {
+		DocumentoEleTestataBulk documentoEleTestata = this
+				.getDocumentoEleTestata();
+		if (documentoEleTestata == null)
+			return null;
+		return getDocumentoEleTestata().getIdentificativoSdi();
+	}
+
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009] Setta il valore di:
+	 * [identificativoSdi]
+	 **/
+	public void setIdentificativoSdi(java.lang.Long identificativoSdi) {
+		this.getDocumentoEleTestata().setIdentificativoSdi(identificativoSdi);
+	}
+
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009] Restituisce il valore di:
+	 * [progressivo]
+	 **/
+	public java.lang.Long getProgressivo() {
+		DocumentoEleTestataBulk documentoEleTestata = this
+				.getDocumentoEleTestata();
+		if (documentoEleTestata == null)
+			return null;
+		return getDocumentoEleTestata().getProgressivo();
+	}
+
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009] Setta il valore di:
+	 * [progressivo]
+	 **/
+	public void setProgressivo(java.lang.Long progressivo) {
+		this.getDocumentoEleTestata().setProgressivo(progressivo);
+	}
 	
 	public Dictionary getStato_liquidazioneKeys() {
 		return STATO_LIQUIDAZIONE;
@@ -2745,4 +2837,17 @@ public void validateDate() throws ValidationException {
 	public Dictionary getCausaleKeys(){
 		return CAUSALE;
 	}
+	public void setDocEleAllegatiColl(
+			BulkList<DocumentoEleAllegatiBulk> docEleAllegatiColl) {
+		this.docEleAllegatiColl = docEleAllegatiColl;
+	}
+	
+	public BulkList<DocumentoEleAllegatiBulk> getDocEleAllegatiColl() {
+		return docEleAllegatiColl;
+	}	
+	public int addToDocEleAllegatiColl( DocumentoEleAllegatiBulk doc ) {
+		docEleAllegatiColl.add(doc);
+		doc.setDocumentoEleTestata(this.getDocumentoEleTestata());		
+		return docEleAllegatiColl.size()-1;
+	}	
 }

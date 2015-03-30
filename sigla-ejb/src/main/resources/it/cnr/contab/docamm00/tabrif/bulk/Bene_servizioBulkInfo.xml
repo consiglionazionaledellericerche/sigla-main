@@ -150,7 +150,13 @@
 		inputType="CHECKBOX"
 		label="autofattura"
 		enabledOnFreeSearch="true"
-		enabledOnSearch="true"/>		
+		enabledOnSearch="true"/>
+	<form name="searchtool">
+		<formFieldProperty
+			name="cd_bene_servizio" />
+		<formFieldProperty
+			name="ds_bene_servizio" />		    	    
+	</form>		
 	<formFieldProperty
 		name="cd_bene_servizio" />
 	<formFieldProperty

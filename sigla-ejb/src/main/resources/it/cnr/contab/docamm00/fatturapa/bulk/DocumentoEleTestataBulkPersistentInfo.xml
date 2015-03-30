@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk"
+	homeClassName="it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataHome">
+	<defaultColumnMap
+		tableName="DOCUMENTO_ELE_TESTATA">
+		<columnMapping
+			columnName="ID_PAESE"
+			propertyName="documentoEleTrasmissione.idPaese" />
+		<columnMapping
+			columnName="ID_CODICE"
+			propertyName="documentoEleTrasmissione.idCodice" />
+		<columnMapping
+			columnName="IDENTIFICATIVO_SDI"
+			propertyName="documentoEleTrasmissione.identificativoSdi" />
+		<columnMapping
+			columnName="PAGAMENTO_CD_TERZO"
+			propertyName="modalitaPagamento.terzo.cd_terzo" />
+		<columnMapping
+			columnName="PAGAMENTO_CD_MODALITA_PAG"
+			propertyName="modalitaPagamento.rif_modalita_pagamento.cd_modalita_pag" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="documentoEleTrasmissione"
+		partOfOid="true" />
+	<persistentProperty
+		name="modalitaPagamento" />
+</SQLPersistentInfo>
