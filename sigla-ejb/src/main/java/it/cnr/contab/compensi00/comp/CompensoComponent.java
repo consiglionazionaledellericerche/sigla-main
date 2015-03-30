@@ -11,6 +11,7 @@ import it.cnr.contab.anagraf00.core.bulk.RapportoBulk;
 import it.cnr.contab.anagraf00.core.bulk.RapportoHome;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
+import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Codici_rapporti_inpsBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Codici_rapporti_inpsHome;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
@@ -54,6 +55,7 @@ import it.cnr.contab.compensi00.tabrif.bulk.Tipologia_rischioBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipologia_rischioHome;
 import it.cnr.contab.compensi00.tabrif.bulk.V_tipo_trattamento_tipo_coriBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.V_tipo_trattamento_tipo_coriHome;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
@@ -67,6 +69,8 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.client.RicercaTrovato;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
@@ -105,6 +109,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashMap;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
@@ -1437,7 +1442,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 					"{call "
 							+ it.cnr.jada.util.ejb.EJBCommonServices
 									.getDefaultSchema()
-							+ "CNRCTB550.ELABORACOMPENSO(?,?,?,?,?,?,?,?,?,?,?,?)}",
+							+ "CNRCTB550.ELABORACOMPENSO(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}",
 					false, this.getClass());
 			try {
 				cs.setObject(1, compenso.getCd_cds());
@@ -1468,6 +1473,17 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 					cs.setNull(10, java.sql.Types.VARCHAR);
 					cs.setNull(11, java.sql.Types.NUMERIC);
 					cs.setNull(12, java.sql.Types.NUMERIC);
+				}
+				if (compenso.isElettronica()) {
+					cs.setObject(13, compenso.getFatturaPassiva().getDocumentoEleTestata().getIdPaese());
+					cs.setObject(14, compenso.getFatturaPassiva().getDocumentoEleTestata().getIdCodice());
+					cs.setObject(15, compenso.getFatturaPassiva().getDocumentoEleTestata().getIdentificativoSdi());
+					cs.setObject(16, compenso.getFatturaPassiva().getDocumentoEleTestata().getProgressivo());
+				} else {
+					cs.setNull(13, java.sql.Types.VARCHAR);
+					cs.setNull(14, java.sql.Types.VARCHAR);
+					cs.setNull(15, java.sql.Types.NUMERIC);
+					cs.setNull(16, java.sql.Types.NUMERIC);
 				}
 
 				cs.execute();
@@ -2123,7 +2139,20 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				} else
 					filtro.setFlAgevolazioniCervelli(new Boolean(false));
 			}
-
+			if (filtro.getCdTipoRapporto() != null && getTipoRapportoProf(userContext).getCd_tipo_rapporto() != null
+					&& filtro.getCdTipoRapporto().equals(getTipoRapportoProf(userContext).getCd_tipo_rapporto())) 
+			{
+					if (compenso.isGestione_doc_ele())
+					{
+						if(!compenso.getFl_generata_fattura())
+						{
+							//se non ho scelto senza calcoli non devo vedere nulla
+							if (!compenso.getFl_senza_calcoli())
+								filtro.setTipoAnagrafico("X");
+						}
+						
+					} 
+			}
 			return trattHome.findTipiTrattamento(filtro);
 
 		} catch (it.cnr.jada.persistency.PersistencyException ex) {
@@ -2484,6 +2513,8 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			// automatico data inizio e fine competenze
 			// compenso.setDt_a_competenza_coge(compenso.getDt_registrazione());
 			// compenso.setDt_da_competenza_coge(compenso.getDt_registrazione());
+			compenso = valorizzaInfoDocEle(userContext,compenso);
+			
 		} catch (it.cnr.jada.persistency.PersistencyException e) {
 			throw handleException(compenso, e);
 		} catch (java.text.ParseException e) {
@@ -2556,6 +2587,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
 		compenso.setStatoCompensoToContabilizzaCofi();
 		compenso.setRelationsDocContForSaldi(relazioniObbligazione);
+		compenso = valorizzaInfoDocEle(userContext,compenso);
 
 		// Faccio una copia del compenso appena caricato
 		if (userContext.isTransactional()) {
@@ -2568,7 +2600,6 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		// associati ad esso
 		if (compenso.isDaMissione())
 			compenso.setDocumentiContabiliCancellati(docContCancellati);
-
 
 		try {
 			compenso.setTrovato(ricercaDatiTrovato(userContext, compenso.getPg_trovato()));
@@ -3000,6 +3031,68 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
 		return compenso;
 	}
+	
+	public CompensoBulk inizializzaCompensoPerFattura(
+			UserContext userContext, CompensoBulk compenso,
+			Fattura_passiva_IBulk fp)
+			throws ComponentException {
+
+		compenso.setDt_registrazione(fp.getDt_registrazione());
+		compenso.setDt_da_competenza_coge(fp.getDt_da_competenza_coge());
+		compenso.setDt_a_competenza_coge(fp.getDt_a_competenza_coge());
+		
+		compenso.setStato_pagamento_fondo_eco(fp.getStato_pagamento_fondo_eco());
+		compenso.setStato_liquidazione(fp.getStato_liquidazione());
+		compenso.setCausale(fp.getCausale());
+		
+		compenso.setDs_compenso(fp.getDs_fattura_passiva());
+		
+		compenso.setEsercizio_fattura_fornitore(fp.getEsercizio_fattura_fornitore());
+		compenso.setDt_fattura_fornitore(fp.getDt_fattura_fornitore());
+		compenso.setNr_fattura_fornitore(fp.getNr_fattura_fornitore());
+	
+		compenso.setFl_generata_fattura(fp.getFl_fattura_compenso()); // sarà sempre Y
+		compenso.setData_protocollo(fp.getData_protocollo());
+		compenso.setNumero_protocollo(fp.getNumero_protocollo());
+		compenso.setDt_scadenza(fp.getDt_scadenza());
+
+		compenso.setFl_documento_ele(fp.isElettronica());
+		
+		// Settaggio Terzo
+		completaTerzo(userContext, compenso);
+		
+		compenso.impostaModalitaPagamento(fp.getModalita_pagamento());
+		compenso.impostaTerminiPagamento(fp.getTermini_pagamento());
+		compenso.setBanca(fp.getBanca());
+		compenso.impostaTipoRapporto(getTipoRapportoProf(userContext));
+		
+		
+		if (compenso.getTipoRapporto() == null)
+			throw new it.cnr.jada.comp.ApplicationException(
+					"Non esiste un tipo rapporto PROF valido per il periodo di competenza!");
+		
+		compenso.setTipoTrattamento(null);
+		compenso.setTipiTrattamento(findTipiTrattamento(userContext, compenso));
+        
+		compenso.setTi_istituz_commerc(fp.getTi_istituz_commerc());
+		compenso.setFl_escludi_qvaria_deduzione(Boolean.FALSE);
+
+		compenso.setFl_compenso_mcarriera_tassep(Boolean.FALSE);
+		compenso.setAliquota_irpef_tassep(new java.math.BigDecimal(0)
+					.setScale(6, java.math.BigDecimal.ROUND_HALF_EVEN));
+
+		// L'importo lordo e la quota esente CO/RI vengono impostati dal package
+		// prima della chiamata di questo metodo
+
+		compenso.impostaVoceIva(fp);
+		
+		compenso.setStatoCompensoToEseguiCalcolo();
+		compenso.setFatturaPassiva(fp);
+		compenso.setToBeCreated();
+		compenso.setUser(fp.getUser());
+
+		return compenso;
+	}
 
 	public CompensoBulk inserisciCompenso(UserContext userContext,
 			CompensoBulk compenso) throws it.cnr.jada.comp.ComponentException {
@@ -3292,7 +3385,21 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				} else
 					filtro.setFlAgevolazioniCervelli(new Boolean(false));
 			}
-
+			
+			if (filtro.getCdTipoRapporto() != null && getTipoRapportoProf(userContext).getCd_tipo_rapporto() != null
+					&& filtro.getCdTipoRapporto().equals(getTipoRapportoProf(userContext).getCd_tipo_rapporto())) 
+			{
+					if (compenso.isGestione_doc_ele())
+					{
+						if(!compenso.getFl_generata_fattura())
+						{
+							//se non ho scelto senza calcoli non devo vedere nulla
+							if (!compenso.getFl_senza_calcoli())
+								filtro.setTipoAnagrafico("X");
+						}
+						
+					} 
+			}
 			return home.isTipoTrattamentoValido(filtro);
 
 		} catch (java.sql.SQLException ex) {
@@ -3623,7 +3730,22 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				} else
 					filtro.setFlAgevolazioniCervelli(new Boolean(false));
 			}
-
+			
+			if (filtro.getCdTipoRapporto() != null && getTipoRapportoProf(userContext).getCd_tipo_rapporto() != null
+					&& filtro.getCdTipoRapporto().equals(getTipoRapportoProf(userContext).getCd_tipo_rapporto())) 
+			{
+					if (compenso.isGestione_doc_ele())
+					{
+						if(!compenso.getFl_generata_fattura())
+						{
+							//se non ho scelto senza calcoli non devo vedere nulla
+							if (!compenso.getFl_senza_calcoli())
+								filtro.setTipoAnagrafico("X");
+						}
+						
+					} 
+			}
+			
 			Tipo_trattamentoBulk tratt = trattHome
 					.findTipoTrattamentoValido(filtro);
 
@@ -3940,6 +4062,9 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			getHomeCache(userContext).fetchAll(userContext);
 
 			compenso.setPgCompensoPerClone(pgTmp);
+			
+			compenso = valorizzaInfoDocEle(userContext,compenso);
+
 			completaCompenso(userContext, compenso);
 
 			compenso.setAperturaDaMinicarriera(aperturaDaMinicarriera);
@@ -3950,7 +4075,11 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			// Per RIPORTO documenti
 			compenso.setAnnoSolare(bulk.getAnnoSolare());
 			compenso.setEsercizioScrivania(bulk.getEsercizioScrivania());
-
+			
+			// 
+			compenso.setVoceIvaFattura(bulk.getVoceIvaFattura());
+			compenso.setFatturaPassiva(bulk.getFatturaPassiva());
+			
 			return compenso;
 
 		} catch (it.cnr.jada.persistency.PersistencyException ex) {
@@ -4548,7 +4677,11 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				if (obj.getCd_cori().startsWith(compenso.CODICE_INAIL))
 					compenso.setVisualizzaTipologiaRischio(true);
 				if (obj.getCd_cori().startsWith(compenso.CODICE_IVA))
+				{
 					compenso.setVisualizzaVoceIva(true);
+					if (compenso.isGestione_doc_ele() && compenso.getFl_generata_fattura() && compenso.getVoceIvaFattura() != null)
+						compenso.setVoceIva(compenso.getVoceIvaFattura());
+				}
 			}
 
 		} catch (it.cnr.jada.persistency.PersistencyException ex) {
@@ -6937,4 +7070,66 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			bl.add(manr);
 		}
 	}
+	public Tipo_rapportoBulk getTipoRapportoProf(UserContext userContext)
+			throws ComponentException {
+		try {
+			Parametri_cnrBulk par = ((Parametri_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
+					.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",
+							Parametri_cnrComponentSession.class))
+					.getParametriCnr(userContext, CNRUserContext
+							.getEsercizio(userContext));
+			return par.getTipo_rapporto_prof();
+		} catch (Throwable e) {
+			throw handleException(e);
+		}
+	}
+	/*
+	public AnagraficoBulk getAnagraficoEnte(UserContext userContext)
+			throws ComponentException {
+		try {
+			AnagraficoBulk anag = ((AnagraficoComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
+					.createEJB("CNRANAGRAF00_EJB_AnagraficoComponentSession",
+							AnagraficoComponentSession.class))
+					.getAnagraficoEnte(userContext);
+			return anag;
+		} catch (Throwable e) {
+			throw handleException(e);
+		}
+	}
+	*/
+	private Timestamp getDataInizioFatturazioneElettronica(UserContext userContext) throws ComponentException {
+
+		try {
+
+			Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
+					.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
+			return sess.getDt01(userContext, it.cnr.contab.utenze00.bp.CNRUserContext
+					.getEsercizio(userContext), null,
+					Configurazione_cnrBulk.PK_FATTURAZIONE_ELETTRONICA, Configurazione_cnrBulk.SK_PASSIVA);
+
+		} catch (javax.ejb.EJBException ex) {
+			throw handleException(ex);
+		} catch (RemoteException ex) {
+			throw handleException(ex);
+		}
+
+	}
+public CompensoBulk valorizzaInfoDocEle(UserContext userContext, CompensoBulk comp)
+			throws ComponentException {
+		try {
+			comp.setDataInizioFatturaElettronica(getDataInizioFatturazioneElettronica(userContext));  
+//			if(comp.getDt_registrazione() != null && comp.getDataInizioFatturaElettronica() != null)
+//			{
+//				if ((comp.getDt_registrazione().compareTo(comp.getDataInizioFatturaElettronica())<0))
+//					comp.setGestione_doc_ele(false);
+//				else
+//					comp.setGestione_doc_ele(true);
+//			}
+//			else comp.setGestione_doc_ele(true);  //non dovrebbe mai verificarsi
+			return comp;
+		} catch (Throwable e) {
+			throw handleException(e);
+		}
+	}
+
 }

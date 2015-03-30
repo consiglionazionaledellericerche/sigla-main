@@ -1,5 +1,7 @@
 package it.cnr.contab.docamm00.bp;
 
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
@@ -20,6 +22,8 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
  * @author: Roberto Peli
  */
 public class CRUDFatturaPassivaIBP extends CRUDFatturaPassivaBP implements IDocumentoAmministrativoSpesaBP {
+	
+	public final static String SAVE_POINT_NAME = "FATTURAP_SP";
 
 	private final FatturaPassivaRigaCRUDController dettaglio = new FatturaPassivaRigaCRUDController(
 		"Dettaglio",Fattura_passiva_rigaIBulk.class,"fattura_passiva_dettColl", this){
@@ -89,12 +93,14 @@ protected it.cnr.jada.util.jsp.Button[] createFPInventarioToolbar() {
 }
 protected it.cnr.jada.util.jsp.Button[] createFPToolbar() {
 
-	it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[4];
+	it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[6];
 	int i = 0;
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.generaNdC");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.apriNdC");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.generaNdD");
 	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.apriNdD");
+	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.generaCompenso");
+	toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.apriCompenso");
 	return toolbar;
 }
 protected it.cnr.jada.util.jsp.Button[] createToolbar() {
@@ -334,4 +340,53 @@ public void writeToolbar(javax.servlet.jsp.JspWriter writer) throws java.io.IOEx
 	writeFPToolbar(writer);
 	writeFPInventarioToolbar(writer);
 }
+public boolean isCreaCompensoButtonEnabled() {
+
+	Fattura_passiva_IBulk fp = (Fattura_passiva_IBulk)getModel();
+	return 	/*isEditing()*/isInserting() && fp != null &&
+			/*fp.getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL &&*/
+			fp.isGestione_doc_ele() &&		
+			fp.isGenerataDaCompenso() &&
+			fp.getCompenso() == null && 
+			!fp.isAnnullato() &&
+			!fp.isCongelata() &&
+			!fp.isBollaDoganale() &&
+			!fp.isSpedizioniere() && 
+			!fp.isRiportata();
+				 
+}
+public boolean isCreaCompensoButtonHidden() {
+	
+	return isSearching() || isDeleting();
+}
+public boolean isApriCompensoButtonEnabled() {
+
+	Fattura_passiva_IBulk fp = (Fattura_passiva_IBulk)getModel();
+	return  !isInserting() && !isSearching() && fp != null &&
+			fp.getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL &&
+			fp.isGenerataDaCompenso() &&
+			fp.getCompenso() != null;
+}
+public boolean isApriCompensoButtonHidden() {
+	
+	return isSearching() || isDeleting();
+}
+public void validaFatturaPerCompenso(ActionContext context) throws BusinessProcessException {
+
+	try {
+
+		Fattura_passivaBulk fp = (Fattura_passivaBulk)getModel();
+		
+		FatturaPassivaComponentSession sess = (FatturaPassivaComponentSession)createComponentSession();
+		sess.validaFatturaPerCompenso(context.getUserContext(), fp);
+
+		setModel(context, fp);
+
+	}catch(it.cnr.jada.comp.ComponentException ex){
+		throw handleException(ex);
+	}catch(java.rmi.RemoteException ex){
+		throw handleException(ex);
+	}
+}
+
 }

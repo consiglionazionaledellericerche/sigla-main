@@ -76,4 +76,6 @@ TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato)
 TrovatoBulk ricercaDatiTrovatoValido(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException;
 void inserisciProgUnivoco(it.cnr.jada.UserContext userContext,it.cnr.contab.docamm00.docs.bulk.ElaboraNumUnicoFatturaPBulk lancio)throws ComponentException,java.rmi.RemoteException,PersistencyException;
 Fattura_passivaBulk caricaAllegatiBulk(UserContext userContext, Fattura_passivaBulk fattura) throws ComponentException,java.rmi.RemoteException;
+void validaFatturaPerCompenso(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk valorizzaInfoDocEle(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

@@ -64,6 +64,7 @@ public void copyFrom(
 	// Gennaro Borriello/Farinella (09/11/2004 16.12.05)
 	//	Aggiunta gestione dell'es di scrivania per il controllo sullo stato riportato/Anno di competenza
 	setEsercizioInScrivania(fattura_passiva.getEsercizioInScrivania());
+	setDataInizioFatturaElettronica(fattura_passiva.getDataInizioFatturaElettronica());
 	
 	try {
 		java.sql.Timestamp date = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();

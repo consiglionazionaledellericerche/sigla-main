@@ -70,4 +70,7 @@ void archiviaStampa(UserContext userContext, Date fromDate, Date untilDate, Comp
 CompensoBulk ricercaCompensoTrovato(it.cnr.jada.UserContext userContext,Long esercizio,String cd_cds,String cd_unita_organizzativa,Long pg_compenso)throws ComponentException,java.rmi.RemoteException,PersistencyException;
 CompensoBulk ricercaCompensoByKey(it.cnr.jada.UserContext userContext,Long esercizio,String cd_cds,String cd_unita_organizzativa,Long pg_compenso)throws ComponentException,java.rmi.RemoteException,PersistencyException;
 java.util.List<CompensoBulk> ricercaCompensiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException;
+it.cnr.contab.compensi00.docs.bulk.CompensoBulk inizializzaCompensoPerFattura(it.cnr.jada.UserContext param0,it.cnr.contab.compensi00.docs.bulk.CompensoBulk param1,it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+it.cnr.contab.compensi00.docs.bulk.CompensoBulk valorizzaInfoDocEle(it.cnr.jada.UserContext param0,it.cnr.contab.compensi00.docs.bulk.CompensoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+
 }

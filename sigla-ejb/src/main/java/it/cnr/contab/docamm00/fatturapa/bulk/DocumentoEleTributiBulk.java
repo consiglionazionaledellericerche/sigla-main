@@ -37,6 +37,10 @@ public class DocumentoEleTributiBulk extends DocumentoEleTributiBase {
 		tiTipoTributoKeys.put(TipoCassaType.TC_21.value(), "Ente nazionale previdenza e assistenza psicologi (ENPAP)");
 		tiTipoTributoKeys.put(TipoCassaType.TC_22.value(), "INPS");
 	}
+	
+	public final static String TIPO_RIGA_R = "RIT";
+	public final static String TIPO_RIGA_C = "CAS";
+	
 	/**
 	 * [DOCUMENTO_ELE_TESTATA Documento elettronico di trasmissione testata]
 	 **/

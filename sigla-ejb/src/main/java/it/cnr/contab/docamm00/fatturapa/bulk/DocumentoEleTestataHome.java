@@ -17,6 +17,9 @@ import it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService;
 import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.UserContext;
+import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
@@ -65,6 +68,12 @@ public class DocumentoEleTestataHome extends BulkHome {
 			throws InvocationTargetException, IllegalAccessException,
 			PersistencyException {
 		DocumentoEleTestataBulk testata = (DocumentoEleTestataBulk)oggettobulk;
+		
+		java.sql.Timestamp dataRic = testata.getDocumentoEleTrasmissione().getDataRicezione();
+		java.util.GregorianCalendar dataRicGregorian = (java.util.GregorianCalendar) java.util.GregorianCalendar
+				.getInstance();
+		dataRicGregorian.setTime(dataRic);
+				
 		if (s.equalsIgnoreCase("documentoEleTrasmissione.prestatore"))
 			return selectTerzoForCFIVA(testata, (TerzoBulk)oggettobulk1, compoundfindclause, 
 					testata.getDocumentoEleTrasmissione().getPrestatoreCodicefiscale(), 
@@ -74,8 +83,8 @@ public class DocumentoEleTestataHome extends BulkHome {
 					testata.getDocumentoEleTrasmissione().getPrestatoreCodicefiscale(), 
 					testata.getDocumentoEleTrasmissione().getPrestatoreCodice());
 		else if (s.equalsIgnoreCase("documentoEleTrasmissione.unitaCompetenza")){
-			SQLBuilder sql = bulkhome.selectByClause(compoundfindclause);
-			sql.addClause(FindClause.AND, "fl_uo_cds", SQLBuilder.EQUALS, Boolean.TRUE);
+			SQLBuilder sql = getHomeCache().getHome(Unita_organizzativaBulk.class, "V_UNITA_ORGANIZZATIVA_VALIDA").selectByClause(compoundfindclause);
+			sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, dataRicGregorian.get(java.util.GregorianCalendar.YEAR));
 			return sql;
 		}else
 			return bulkhome.selectByClause(compoundfindclause);
