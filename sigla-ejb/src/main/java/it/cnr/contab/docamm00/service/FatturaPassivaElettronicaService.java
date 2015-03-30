@@ -16,6 +16,7 @@ import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoCommittenteType;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -130,7 +131,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		props.putAll(pecMailConf);
 		try {
 			try {
-				password = StringEncrypter.decrypt(userName, password);
+				password = StringEncrypter.decrypt(userName, password).replaceAll("[^a-zA-Z0-9_-]", "");
 			} catch (EncryptionException e) {
 				throw new AuthenticationFailedException("Cannot decrypt password");
 			}					
