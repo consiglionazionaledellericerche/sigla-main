@@ -184,6 +184,8 @@
 	<td><% bp.getController().writeFormInput(out,null,"dt_fattura_fornitore", bp.isRODatiFatturaPerChiusura(compenso), null, null); %></td>		
 	<td><% bp.getController().writeFormLabel(out,"fl_generata_fattura"); %></td>
 	<td><% bp.getController().writeFormInput(out,null,"fl_generata_fattura", bp.isRODatiFatturaPerChiusura(compenso),null,"onClick=\"submitForm('doOnFlGenerataFatturaChange()')\"");%></td>
+	<td><% bp.getController().writeFormLabel(out,"fl_documento_ele"); %></td>
+	<td><% bp.getController().writeFormInput(out,"fl_documento_ele");%></td>
 	<% if(compenso!=null &&compenso.getTi_istituz_commerc()!=null && compenso.getTi_istituz_commerc().compareTo(compenso.TIPO_COMPENSO_COMMERCIALE)==0 && compenso.getStato_pagamento_fondo_eco().compareTo(compenso.LIBERO_FONDO_ECO)==0 && compenso.getFl_generata_fattura().booleanValue()) {%>		
 		<td><% bp.getController().writeFormLabel(out,"fl_liquidazione_differita"); %></td>
 		<td><% bp.getController().writeFormInput(out,null,"fl_liquidazione_differita", bp.isRODatiFatturaPerChiusura(compenso), null, "onClick=\"submitForm('doOnFlLiquidazioneDifferitaChange()')\""); %></td>

@@ -385,6 +385,8 @@ public class CompensoBase extends CompensoKey implements Keyed {
 	
 	private java.lang.String causale;
 	
+	private java.lang.Boolean fl_documento_ele;
+	
 public CompensoBase() {
 	super();
 }
@@ -1809,5 +1811,11 @@ public void setTi_istituz_commerc(java.lang.String ti_istituz_commerc) {
 	}
 	public void setCausale(java.lang.String causale) {
 		this.causale = causale;
+	}
+	public java.lang.Boolean getFl_documento_ele() {
+		return fl_documento_ele;
+	}
+	public void setFl_documento_ele(java.lang.Boolean fl_documento_ele) {
+		this.fl_documento_ele = fl_documento_ele;
 	}
 }

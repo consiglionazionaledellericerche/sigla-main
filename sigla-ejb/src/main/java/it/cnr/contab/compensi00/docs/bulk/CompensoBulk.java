@@ -17,6 +17,9 @@ import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipologia_rischioBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaBulk;
 import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
@@ -79,6 +82,11 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	private PrimaryKeyHashMap relationsDocContForSaldi = null;
 	private TrovatoBulk trovato = new TrovatoBulk(); // inizializzazione necessaria per i bulk non persistenti
 
+	private java.sql.Timestamp dataInizioFatturaElettronica;
+
+	private it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk voceIvaFattura;
+	private Fattura_passivaBulk fatturaPassiva;
+	
 	private int annoSolare;
 	private int esercizioScrivania;
 
@@ -1431,10 +1439,11 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * 
 	 * @return boolean
 	 */
+	
 	public boolean isAssociatoADocumento() {
 
 		return isDaMissione() || isDaMinicarriera() || isDaConguaglio()
-				|| isDaBonus();
+				|| isDaBonus() || (isDaFatturaPassiva() && getFatturaPassiva()==null);
 	}
 
 	public boolean isAssociatoAMandato() {
@@ -1474,6 +1483,10 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		return (getBonus() != null);
 	}
 
+	public boolean isDaFatturaPassiva()
+	{
+		return (isGestione_doc_ele() && (getFl_generata_fattura()!=null && getFl_generata_fattura()));
+	}
 	/**
 	 * isDeleting method comment.
 	 */
@@ -1568,7 +1581,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 */
 	public boolean isRODatiFattura() {
 
-		return isSenzaCalcoli() || isDaConguaglio() || isROPerChiusura();
+		return isSenzaCalcoli() || isDaConguaglio() || isROPerChiusura()||isGestione_doc_ele();
 	}
 
 	/**
@@ -1589,7 +1602,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 */
 	public boolean isRODtACompetenzaCoge() {
 
-		if (isAssociatoADocumento() || isROPerChiusura())
+		if (isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva()!=null)
 			return true;
 		return false;
 	}
@@ -1602,7 +1615,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 */
 	public boolean isRODtDaCompetenzaCoge() {
 
-		if (isAssociatoADocumento() || isROPerChiusura())
+		if (isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva()!=null)
 			return true;
 		return false;
 	}
@@ -1615,7 +1628,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 */
 	public boolean isRODtRegistrazione() {
 
-		if (isAssociatoADocumento() || isROPerChiusura())
+		if (isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva()!=null)
 			return true;
 		return false;
 	}
@@ -1659,7 +1672,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 */
 	public boolean isROFlagSenzaCalcoli() {
 
-		if (isAssociatoADocumento() || isROPerChiusura())
+		if (isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva()!=null)
 			return true;
 		return false;
 	}
@@ -1703,7 +1716,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 * @return boolean
 	 */
 	public boolean isROModalitaPagamento() {
-		return isROPerChiusura();
+		return isROPerChiusura() ||  isDaFatturaPassiva();
 	}
 
 	/**
@@ -1778,7 +1791,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	public boolean isROStato_pagamento_fondo_eco() {
 
 		return REGISTRATO_FONDO_ECO.equals(getStato_pagamento_fondo_eco())
-				|| isROPerChiusura();
+				|| isROPerChiusura()
+				|| isElettronica();
 	}
 
 	/**
@@ -1799,7 +1813,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 */
 	public boolean isROTerzo() {
 
-		return isAssociatoADocumento() || isROPerChiusura();
+		return isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva()!=null;
 	}
 
 	/**
@@ -1810,7 +1824,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 */
 	public boolean isROTi_istituz_commerc() {
 
-		if (isAssociatoADocumento() || isROPerChiusura())
+		if (isAssociatoADocumento() || isROPerChiusura() || getFatturaPassiva()!=null)
 			return true;
 		return false;
 	}
@@ -1847,12 +1861,12 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	 */
 	public boolean isROTipoTrattamento() {
 
-		return isROTerzo();
+		return isROTerzo() && getFatturaPassiva()==null;
 	}
 
 	public boolean isROTipoPrestazioneCompenso() {
 
-		return isROTerzo();
+		return isROTerzo() && getFatturaPassiva()==null;
 	}
 	/**
 	 * Insert the method's description here. Creation date: (25/02/2002
@@ -2067,6 +2081,9 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 		setNr_fattura_fornitore(null);
 		setFl_generata_fattura(Boolean.FALSE);
 		setFl_liquidazione_differita(Boolean.FALSE);
+		setData_protocollo(null);
+		setNumero_protocollo(null);
+		setDt_scadenza(null);
 	}
 
 	public void resetDatiLiquidazione() {
@@ -2109,13 +2126,13 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 
 		setFl_diaria(Boolean.FALSE);
 		setFl_senza_calcoli(Boolean.FALSE);
-		setFl_generata_fattura(Boolean.FALSE);
 		setFl_compenso_conguaglio(Boolean.FALSE);
 		setFl_compenso_stipendi(Boolean.FALSE);
 		setFl_compenso_minicarriera(Boolean.FALSE);
 		setFl_compenso_mcarriera_tassep(Boolean.FALSE);
 		setFl_generata_fattura(Boolean.FALSE);
 		setFl_liquidazione_differita(Boolean.FALSE);
+		setFl_documento_ele(Boolean.FALSE);
 	}
 
 	private void resetImporti() {
@@ -2851,7 +2868,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 					"Completare gli estremi identificativi della fattura fornitore.");
 		
 		
-		if (getDt_registrazione().after(dataInizioObbligoRegistroUnico)&& Boolean.TRUE.equals(getFl_generata_fattura())){ 
+		if (getDt_registrazione().after(dataInizioObbligoRegistroUnico)&& Boolean.TRUE.equals(getFl_generata_fattura() && Boolean.FALSE.equals(isGestione_doc_ele()))){ 
 			if(getDt_scadenza()== null)
 				throw new ApplicationException("Inserire la data di scadenza.");
 			if(getData_protocollo()== null)
@@ -2861,6 +2878,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 			if(getData_protocollo()!= null && getData_protocollo().before(getDt_fattura_fornitore()))
 				throw new it.cnr.jada.comp.ApplicationException("La data di protocollo non può essere precedente alla data di emissione del documento del fornitore!");		
 		}
+		
 		if(getData_protocollo()!=null && getData_protocollo().after(getDt_registrazione()))
 			throw new it.cnr.jada.comp.ApplicationException(
 					"La data protocollo di entrata non può essere superiore alla data registrazione del compenso");
@@ -3420,5 +3438,76 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi,
 	}
 	public Dictionary getCausaleKeys(){
 		return CAUSALE;
+	}
+	public java.sql.Timestamp getDataInizioFatturaElettronica() {
+		return dataInizioFatturaElettronica;
+	}
+	public void setDataInizioFatturaElettronica(
+			java.sql.Timestamp dataInizioFatturaElettronica) {
+		this.dataInizioFatturaElettronica = dataInizioFatturaElettronica;
+	}
+
+	public boolean isGestione_doc_ele() {
+		if(this.getDt_registrazione() != null && this.getDataInizioFatturaElettronica() != null)
+		{
+			if ((this.getDt_registrazione().compareTo(this.getDataInizioFatturaElettronica())<0))
+				return false;
+			else
+				return true;
+		}
+		return true;  //non dovrebbe mai verificarsi
+	}
+
+	public it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk getVoceIvaFattura() {
+		return voceIvaFattura;
+	}
+
+	public void setVoceIvaFattura(
+			it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk voceIvaFattura) {
+		this.voceIvaFattura = voceIvaFattura;
+	}
+
+	public Fattura_passivaBulk getFatturaPassiva() {
+		return fatturaPassiva;
+	}
+
+	public void setFatturaPassiva(Fattura_passivaBulk fatturaPassiva) {
+		this.fatturaPassiva = fatturaPassiva;
+	}
+	
+	public boolean isElettronica() {
+        if (getFl_documento_ele()!= null && getFl_documento_ele())
+		      return	true;
+        return false;
+	}
+	public void impostaVoceIva(Fattura_passiva_IBulk fp) {
+		
+		for (java.util.Iterator i = fp.getFattura_passiva_dettColl()
+				.iterator(); i.hasNext();) {
+			Fattura_passiva_rigaIBulk riga = (Fattura_passiva_rigaIBulk) i
+					.next();
+			
+			if (riga.getVoce_iva() != null && 
+				riga.getVoce_iva().getPercentuale().compareTo(new BigDecimal(0))!=0)
+			{
+				setVoceIva(riga.getVoce_iva());
+				setVoceIvaFattura(riga.getVoce_iva());
+			}
+		}	
+			
+		if (getVoceIva()==null)
+		{
+			for (java.util.Iterator i = fp.getFattura_passiva_dettColl()
+					.iterator(); i.hasNext();) {
+				Fattura_passiva_rigaIBulk riga = (Fattura_passiva_rigaIBulk) i
+						.next();
+				
+				if (riga.getVoce_iva() != null)
+				{
+					setVoceIva(riga.getVoce_iva());
+					setVoceIvaFattura(riga.getVoce_iva());
+				}
+			}
+		}
 	}
 }

@@ -709,11 +709,9 @@
 		property="fl_fattura_compenso"
 		inputType="CHECKBOX"
 		nullable="false"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
+		readonlyProperty="ROFl_fattura_compenso"
 		enabledOnFreeSearch="true"
-		label="Generata da compenso" />
+		label="Associata a compenso" />
 	<fieldProperty
 		name="fl_congelata"
 		property="fl_congelata"
@@ -889,12 +887,17 @@
 		inputType="ROTEXT"
 		maxLength="10"
 		inputSize="10"
-		enabledOnSearch="true" />		
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnFreeSearch="true"
+        label="Progressivo univoco" />			
 	<fieldProperty
 		name="stato_liquidazione"
 		property="stato_liquidazione"
 		inputType="SELECT"
 		label="Stato liquidazione"
+		readonlyProperty="ROStato_liquidazione"
 		nullable="true"
 		enabledOnSearch="true"
 		keysProperty="stato_liquidazioneKeys" />
@@ -903,9 +906,37 @@
 		property="causale"
 		inputType="SELECT"
 		label="causale"
+		readonlyProperty="ROStato_liquidazione"
 		nullable="true"
 		enabledOnSearch="true"
-		keysProperty="causaleKeys" />				
+		keysProperty="causaleKeys" />	
+	<fieldProperty
+		name="cds_compenso"
+		property="cds_compenso"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="CDS Compenso"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="uo_compenso"
+		property="uo_compenso"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="UO Compenso"
+		caseSensitiveSearch="false" />	
+	<fieldProperty
+		name="esercizio_compenso"
+		property="esercizio_compenso"
+		inputType="TEXT"
+		label="Esercizio compenso" />
+	<fieldProperty
+		name="pg_compenso"
+		property="pg_compenso"
+		inputType="TEXT"
+		label="N. Compenso" />			
+							
 	<findFieldProperty name="esercizio"/>
 	<findFieldProperty name="esercizio_fattura_fornitore"/>
 	<findFieldProperty name="cd_cds"/>
@@ -951,6 +982,11 @@
 	<findFieldProperty name="fl_liquidazione_differita"/>
 	<findFieldProperty name="stato_liquidazione"/>
 	<findFieldProperty name="causale"/>
+	<findFieldProperty name="cds_compenso" />
+	<findFieldProperty name="uo_compenso" />
+	<findFieldProperty name="esercizio_compenso" />
+	<findFieldProperty name="pg_compenso" />
+		
 	<formFieldProperty
 		name="ti_bene_servizio" />
 	<formFieldProperty
@@ -976,7 +1012,8 @@
 	<formFieldProperty 
 		name="esercizio_fattura_fornitore"/>
 	<formFieldProperty
-		name="fl_fattura_compenso" />
+		name="fl_fattura_compenso" 
+		command="doOnFlFatturaCompensoChange" />
 	<formFieldProperty
 		name="riportata" />
 		
@@ -1166,7 +1203,16 @@
 	<formFieldProperty 
 		name="stato_liquidazione"/>		
 	<formFieldProperty 
-		name="causale"/>					
+		name="causale"/>
+	<formFieldProperty
+		name="cds_compenso" />
+	<formFieldProperty
+		name="uo_compenso" />
+	<formFieldProperty
+		name="esercizio_compenso" />
+	<formFieldProperty
+		name="pg_compenso" />
+		
 	<columnFieldProperty 
 		name="esercizio"/>
 	<columnFieldProperty
@@ -1177,6 +1223,8 @@
 		name="protocollo_iva" />
 	<columnFieldProperty
 		name="protocollo_iva_generale" />
+	<columnFieldProperty
+		name="progr_univoco" />		
 	<columnFieldProperty
 		name="ds_fattura_passiva" />
 	<columnFieldProperty

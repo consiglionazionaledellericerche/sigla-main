@@ -107,6 +107,7 @@ public CRUDCompensoBP(String function) {
 private void aggiornaStatoBP() {
 
 	CompensoBulk compenso = (CompensoBulk)getModel();
+
 	if (!isViewing())
 	{
 		if (Boolean.TRUE.equals(compenso.getFl_compenso_stipendi()))
@@ -874,7 +875,8 @@ public boolean isDeleteButtonEnabled()
 					!compenso.isStatoCompensoEseguiCalcolo() &&
 					!isInputReadonly() &&
 					!isSearching() &&
-					!isInserting();
+					!isInserting() &&
+					!compenso.isDaFatturaPassiva();
 
 	//	Chiusura : se carico un compenso con esercizio precedente a quello solare :
 	//	- esercizio scrivania != anno solare e obbligazione riportata --> disabilito
@@ -1601,4 +1603,20 @@ private void setGestionePrestazioneCompensoEnabled(Boolean isGestionePrestazione
 	this.isGestionePrestazioneCompensoEnabled = isGestionePrestazioneCompensoEnabled;
 }
 */
+public void valorizzaInfoDocEle(ActionContext context, CompensoBulk compenso) throws BusinessProcessException {
+
+	try {
+
+		CompensoComponentSession comp = (CompensoComponentSession)createComponentSession();
+		compenso = comp.valorizzaInfoDocEle(context.getUserContext(), compenso);
+
+		setModel(context, compenso);
+
+	}catch(it.cnr.jada.comp.ComponentException ex){
+		throw handleException(ex);
+	}catch(java.rmi.RemoteException ex){
+		throw handleException(ex);
+	}
+}
+
 }

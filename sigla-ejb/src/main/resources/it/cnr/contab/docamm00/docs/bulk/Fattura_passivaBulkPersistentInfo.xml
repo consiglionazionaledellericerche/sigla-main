@@ -63,6 +63,20 @@
 			propertyName="ti_bene_servizio"
 			converterClassName="it.cnr.contab.util.AsteriskToNullConverter"
 			nullable="true" />
+			
+		<columnMapping
+			columnName="CDS_COMPENSO"
+			propertyName="compenso.cd_cds" />
+		<columnMapping
+			columnName="ESERCIZIO_COMPENSO"
+			propertyName="compenso.esercizio" />
+		<columnMapping
+			columnName="UO_COMPENSO"
+			propertyName="compenso.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="PG_COMPENSO"
+			propertyName="compenso.pg_compenso" />
+
 		
 		<columnMapping
 			columnName="ID_PAESE"
@@ -95,6 +109,9 @@
 		name="termini_pagamento" />
 	<persistentProperty
 		name="lettera_pagamento_estero" />
+	<persistentProperty
+		name="compenso" />
+			
 	<persistentProperty
 		name="documentoEleTestata" />
 				

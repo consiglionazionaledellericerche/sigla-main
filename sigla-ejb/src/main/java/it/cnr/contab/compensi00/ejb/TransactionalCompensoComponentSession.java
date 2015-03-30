@@ -1172,5 +1172,45 @@ public class TransactionalCompensoComponentSession extends
 			}
 		}
 	}
-	
+	public it.cnr.contab.compensi00.docs.bulk.CompensoBulk inizializzaCompensoPerFattura(
+			it.cnr.jada.UserContext param0,
+			it.cnr.contab.compensi00.docs.bulk.CompensoBulk param1,
+			it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk param2) 
+			throws RemoteException,
+			it.cnr.jada.comp.ComponentException {
+		try {
+			return (it.cnr.contab.compensi00.docs.bulk.CompensoBulk) invoke(
+					"inizializzaCompensoPerFattura", new Object[] {
+							param0, param1, param2 });
+		} catch (java.rmi.RemoteException e) {
+			throw e;
+		} catch (java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch (it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch (Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception", ex);
+			}
+		}
+	}
+	public it.cnr.contab.compensi00.docs.bulk.CompensoBulk valorizzaInfoDocEle(
+			it.cnr.jada.UserContext param0,
+			it.cnr.contab.compensi00.docs.bulk.CompensoBulk param1)
+			throws RemoteException, it.cnr.jada.comp.ComponentException {
+		try {
+			return (it.cnr.contab.compensi00.docs.bulk.CompensoBulk) invoke(
+					"valorizzaInfoDocEle", new Object[] { param0, param1 });
+		} catch (java.rmi.RemoteException e) {
+			throw e;
+		} catch (java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch (it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch (Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception", ex);
+			}
+		}
+	}
 }

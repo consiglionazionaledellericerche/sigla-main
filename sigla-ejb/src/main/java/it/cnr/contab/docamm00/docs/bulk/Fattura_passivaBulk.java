@@ -1,5 +1,8 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+
+import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
@@ -217,6 +220,10 @@ public abstract class Fattura_passivaBulk
 	private Integer esercizioInScrivania;
 	private boolean isIvaRecuperabile=true;
 	private java.sql.Timestamp dataInizioObbligoRegistroUnico;
+	private java.sql.Timestamp dataInizioFatturaElettronica;
+	
+	private CompensoBulk compenso = null;
+	
 	private BulkList<DocumentoEleAllegatiBulk> docEleAllegatiColl = new BulkList<DocumentoEleAllegatiBulk>();
 	
 public Fattura_passivaBulk() {
@@ -748,6 +755,19 @@ public java.util.Vector getDettagliNonContabilizzati() {
 		}
 	}
 	return dettagliNonContabilizzati;
+}
+
+public java.util.Vector getDettagliContabilizzati() {
+
+	Vector dettagliContabilizzati = new Vector();
+	if (getFattura_passiva_dettColl() != null) {
+		for (Iterator i = getFattura_passiva_dettColl().iterator(); i.hasNext();) {
+			Fattura_passiva_rigaBulk dettaglio = (Fattura_passiva_rigaBulk)i.next();
+			if (dettaglio.STATO_CONTABILIZZATO.equals(dettaglio.getStato_cofi()))
+				dettagliContabilizzati.add(dettaglio);
+		}
+	}
+	return dettagliContabilizzati;
 }
 /**
  * Insert the method's description here.
@@ -1317,6 +1337,11 @@ public boolean hasDettagliNonContabilizzati() {
 
 	return !getDettagliNonContabilizzati().isEmpty();
 }
+
+public boolean hasDettagliContabilizzati() {
+
+	return !getDettagliContabilizzati().isEmpty();
+}
 /**
  * Insert the method's description here.
  * Creation date: (2/15/2002 2:28:51 PM)
@@ -1444,7 +1469,8 @@ public boolean isAbledToModifyTipoFattura() {
 				(fattura_passiva_dettColl != null &&
 				fattura_passiva_dettColl.isEmpty() &&
 				fattura_passiva_intrastatColl != null &&
-				fattura_passiva_intrastatColl.isEmpty()));
+				fattura_passiva_intrastatColl.isEmpty()) ||
+				isElettronica() && getPg_fattura_passiva()==null);
 }
 /**
  * Insert the method's description here.
@@ -1541,6 +1567,14 @@ public boolean isEstera() {
 	//if (getFl_extra_ue() == null) return false;
 	//return getFl_extra_ue().booleanValue();
 }
+
+public boolean isSanMarinoSenzaIVA() {
+
+	if ((getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue()))
+		return true;
+		
+	return false;
+}
 /**
  * Insert the method's description here.
  * Creation date: (2/15/2002 2:28:51 PM)
@@ -1591,7 +1625,8 @@ public boolean isPagata() {
 
 	return STATO_PAGATO.equalsIgnoreCase(getStato_cofi()) || 
 			REGISTRATO_IN_FONDO_ECO.equalsIgnoreCase(getStato_pagamento_fondo_eco()) ||
-			isGenerataDaCompenso();
+			//&& isGenerataDaCompenso()
+			(!isGestione_doc_ele() && isGenerataDaCompenso() && getPg_fattura_passiva()!=null);
 }
 /**
  * Insert the method's description here.
@@ -1645,8 +1680,14 @@ public boolean isROCambio() {
  */
 public boolean isRODateCompetenzaCOGE() {
 
-	return getFattura_passiva_dettColl() != null &&
-			!getFattura_passiva_dettColl().isEmpty();
+	if ((isElettronica() && getPg_fattura_passiva()!=null)
+		||
+		(!isElettronica() && getFattura_passiva_dettColl() != null &&
+					!getFattura_passiva_dettColl().isEmpty())
+		)
+		 return true;
+	
+	return false;
 }
 /**
  * Insert the method's description here.
@@ -1673,7 +1714,7 @@ public boolean isROFl_bolla_doganale() {
  */
  
 public boolean isROFl_extra_ue() {
-	return isAbledToModifyFlagsTipoFattura() || isPromiscua();
+	return isAbledToModifyFlagsTipoFattura() || isPromiscua()|| isElettronica();
 }
 /**
  * Restituisce <code>true</code> se il sezionale è di tipo Istituzionale
@@ -1682,7 +1723,7 @@ public boolean isROFl_extra_ue() {
  */
  
 public boolean isROFl_intra_ue() {
-	return isAbledToModifyFlagsTipoFattura() || isPromiscua();
+	return isAbledToModifyFlagsTipoFattura() || isPromiscua() || isElettronica();
 }
 /**
  * Restituisce <code>true</code> se il sezionale è di tipo Istituzionale
@@ -1691,7 +1732,7 @@ public boolean isROFl_intra_ue() {
  */
  
 public boolean isROFl_san_marino_senza_iva() {
-	return isAbledToModifyFlagsTipoFattura() || isPromiscua();
+	return isAbledToModifyFlagsTipoFattura() || isPromiscua() || isElettronica();
 }
 /**
  * Restituisce <code>true</code> se il sezionale è di tipo Istituzionale
@@ -1844,7 +1885,8 @@ public boolean isStampataSuRegistroIVA() {
 			STATO_IVA_C.equalsIgnoreCase(getStatoIVA()) ||
 			//A seguito dell'errore segnalato 569 (dovuto alla richiesta 423)
 			(getAutofattura() != null && getAutofattura().isStampataSuRegistroIVA())||
-			(getProgr_univoco()!=null);
+			(getProgr_univoco()!=null); // lasciato controllo già esistente invece del successivo
+			//isElettronica() && getPg_fattura_passiva() != null;  
 }
 /**
  * Insert the method's description here.
@@ -2588,11 +2630,13 @@ public void validate() throws ValidationException {
 	validateDate();
 	validaDateCompetenza();
 	// campi obbligatori dal 01/07/2014
-	if (getDt_registrazione().after(dataInizioObbligoRegistroUnico)){
+	if (getDt_registrazione().after(dataInizioObbligoRegistroUnico) && getDt_fattura_fornitore().before(dataInizioFatturaElettronica)){
 		if(getData_protocollo()== null)
 			throw new ValidationException("Inserire la data di protocollo di entrata.");
 		if(getNumero_protocollo()== null)
 			throw new ValidationException("Inserire il numero di protocollo di entrata!");
+	}
+	if (getDt_registrazione().after(dataInizioObbligoRegistroUnico)){		
 		if(getStato_liquidazione()==null)
 			throw new ValidationException("Inserire lo stato della liquidazione!");
 		if(getStato_liquidazione()!=null && getStato_liquidazione().compareTo(this.LIQ)!=0 && getCausale()==null)
@@ -2850,4 +2894,85 @@ public void validateDate() throws ValidationException {
 		doc.setDocumentoEleTestata(this.getDocumentoEleTestata());		
 		return docEleAllegatiColl.size()-1;
 	}	
+	
+	public CompensoBulk getCompenso() {
+		return compenso;
+	}
+	public java.lang.String getCds_compenso() {
+		it.cnr.contab.compensi00.docs.bulk.CompensoBulk compenso = this.getCompenso();
+		if (compenso == null)
+			return null;
+		return compenso.getCd_cds();
+	}
+	public java.lang.String getUo_compenso() {
+		it.cnr.contab.compensi00.docs.bulk.CompensoBulk compenso = this.getCompenso();
+		if (compenso == null)
+			return null;
+		return compenso.getCd_unita_organizzativa();
+	}
+	public java.lang.Integer getEsercizio_compenso() {
+		it.cnr.contab.compensi00.docs.bulk.CompensoBulk compenso = this.getCompenso();
+		if (compenso == null)
+			return null;
+		return compenso.getEsercizio();
+	}
+	public java.lang.Long getPg_compenso() {
+		it.cnr.contab.compensi00.docs.bulk.CompensoBulk compenso = this.getCompenso();
+		if (compenso == null)
+			return null;
+		return compenso.getPg_compenso();
+	}
+
+	public void setCompenso(CompensoBulk newCompenso) {
+		compenso = newCompenso;
+	}
+	public void setCds_compenso(java.lang.String cd_cds_compenso) {
+		this.getCompenso().setCd_cds(cd_cds_compenso);
+	}
+	public void setUo_compenso(java.lang.String cd_uo_compenso) {
+		this.getCompenso().setCd_unita_organizzativa(cd_uo_compenso);
+	}
+	public void setEsercizio_compenso(java.lang.Integer esercizio_compenso) {
+		this.getCompenso().setEsercizio(esercizio_compenso);
+	}
+	public void setPg_compenso(java.lang.Long pg_compenso) {
+		this.getCompenso().setPg_compenso(pg_compenso);
+	}
+	public java.sql.Timestamp getDataInizioFatturaElettronica() {
+		return dataInizioFatturaElettronica;
+	}
+	public void setDataInizioFatturaElettronica(
+			java.sql.Timestamp dataInizioFatturaElettronica) {
+		this.dataInizioFatturaElettronica = dataInizioFatturaElettronica;
+	}
+	public boolean isGestione_doc_ele() {
+		if(this.getDt_registrazione() != null && this.getDataInizioFatturaElettronica() != null)
+		{
+			if ((this.getDt_registrazione().compareTo(this.getDataInizioFatturaElettronica())<0))
+				return false;
+			else
+				return true;
+		}
+		return true;  //non dovrebbe mai verificarsi
+	}
+
+	public boolean isElettronica() {
+
+		if(getDocumentoEleTestata() != null || getIdentificativoSdi() != null)
+			return true;
+		return	false;
+	}
+	public boolean isROFl_fattura_compenso() {
+		if(isStampataSuRegistroIVA() ||
+		   isAnnullato() ||
+		   !isGestione_doc_ele() || 
+		   isElettronica()||
+		   getCompenso()!=null) 
+			  return true;
+
+		return false;
+	}
+	public boolean isROStato_liquidazione() {
+		return (isGenerataDaCompenso() && getCompenso()!=null);
+	}
 }

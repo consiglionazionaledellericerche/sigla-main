@@ -485,6 +485,7 @@ public Forward doBringBackSearchFind_voce_iva(ActionContext context, CompensoBul
  public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,InstantiationException,javax.ejb.RemoveException {
 
 	CRUDCompensoBP bp = (CRUDCompensoBP)context.getBusinessProcess();
+
 	if (bp instanceof IDocumentoAmministrativoSpesaBP && ((IDocumentoAmministrativoSpesaBP)bp).isSpesaBP())
 		return basicDoCerca(context);
 	return super.doCerca(context);
@@ -1083,14 +1084,15 @@ public Forward doOnDtRegistrazioneChange(ActionContext context) {
 		CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);
 		java.sql.Timestamp oldDataReg = ((CompensoBulk)bp.getModel()).getDt_registrazione();
 		fillModel(context);
+		CompensoBulk compenso = (CompensoBulk)bp.getModel();
 
 		if (bp.isSearching())
 			return context.findDefaultForward();
 
 		try{
-			((CompensoBulk)bp.getModel()).validaDate();
+			compenso.validaDate();
 		} catch(it.cnr.jada.comp.ApplicationException e) {
-			((CompensoBulk)bp.getModel()).setDt_registrazione(oldDataReg);
+			compenso.setDt_registrazione(oldDataReg);
 			throw e;
 		}
 
@@ -1113,7 +1115,10 @@ public Forward doOnDtRegistrazioneChange(ActionContext context) {
 			return option;
 		}
 
-		((CompensoBulk)bp.getModel()).setStatoCompensoToEseguiCalcolo();
+		compenso.setStatoCompensoToEseguiCalcolo();
+		bp.valorizzaInfoDocEle(context, compenso);
+		compenso.resetDatiFattura();
+		doAzzeraTipoTrattamento(context, compenso);
 		bp.findTipiTrattamento(context);
 		bp.ripristinaSelezioneTipoTrattamento(context);
 
