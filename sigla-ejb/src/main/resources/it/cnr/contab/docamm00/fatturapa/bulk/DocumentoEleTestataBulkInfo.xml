@@ -1,0 +1,1126 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Documento elettronico di trasmissione testata"
+	longDescription="Documento elettronico di trasmissione testata">
+	<fieldProperty
+		name="idPaese"
+		property="idPaese"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Nazione Trasmittente" />
+	<fieldProperty
+		name="idCodice"
+		property="idCodice"
+		inputType="TEXT"
+		inputSize="28"
+		maxLength="28"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Identificativo Fiscale Trasmittente" />
+	<fieldProperty
+		name="identificativoSdi"
+		property="documentoEleTrasmissione.identificativoSdi"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Identificativo SDI" />
+	<fieldProperty
+		name="progressivo"
+		property="progressivo"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Progressivo" />
+	<fieldProperty
+		name="tipoDocumento"
+		property="tipoDocumento"
+		inputType="SELECT"
+		keysProperty="tiTipoDocumentoKeys"
+		inputSize="10"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="Tipo documento" />
+	<fieldProperty
+		name="divisa"
+		property="divisa"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		label="Divisa" />
+	<fieldProperty
+		name="dataDocumento"
+		property="dataDocumento"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="Data documento" />
+	<fieldProperty
+		name="numeroDocumento"
+		property="numeroDocumento"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="Numero Documento" />
+	<fieldProperty
+		name="bolloVirtuale"
+		property="bolloVirtuale"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		label="Bollo Virtuale (S/N)" />
+	<fieldProperty
+		name="importoBollo"
+		property="importoBollo"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Importo bollo" />
+	<fieldProperty
+		name="tipoBollo"
+		property="tipoBollo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="null" />
+	<fieldProperty
+		name="importoDocumento"
+		property="importoDocumento"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Totale Documento" />
+	<fieldProperty
+		name="arrotondamento"
+		property="arrotondamento"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Arrotondamento" />
+	<fieldProperty
+		name="causale"
+		property="causale"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="2000"
+		enabledOnEdit="false"
+		label="Causale documento" />
+	<fieldProperty
+		name="art73"
+		property="art73"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		label="Art. 73 (SI/NO)" />
+	<fieldProperty
+		name="vettorePaese"
+		property="vettorePaese"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Nazione Vettore" />
+	<fieldProperty
+		name="vettoreCodice"
+		property="vettoreCodice"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Identificativo Fiscale Vettore" />
+	<fieldProperty
+		name="vettoreCodicefiscale"
+		property="vettoreCodicefiscale"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Codice Fiscale Vettore" />
+	<fieldProperty
+		name="vettoreDenominazione"
+		property="vettoreDenominazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="3"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Denominazione Vettore" />
+	<fieldProperty
+		name="vettoreNome"
+		property="vettoreNome"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Nome Vettore" />
+	<fieldProperty
+		name="vettoreCognome"
+		property="vettoreCognome"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Cognome Vettore" />
+	<fieldProperty
+		name="vettoreTitolo"
+		property="vettoreTitolo"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Titolo Onorifico Vettore" />
+	<fieldProperty
+		name="vettoreCodeori"
+		property="vettoreCodeori"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Codice EORI Vettore" />
+	<fieldProperty
+		name="vettoreNumerolicenza"
+		property="vettoreNumerolicenza"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Numero licenza di guida" />
+	<fieldProperty
+		name="mezzoTrasporto"
+		property="mezzoTrasporto"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Mezzo di Trasporto" />
+	<fieldProperty
+		name="causaleTrasporto"
+		property="causaleTrasporto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="3"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Causale Trasporto" />
+	<fieldProperty
+		name="numeroColli"
+		property="numeroColli"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="Numero colli" />
+	<fieldProperty
+		name="descrizioneTrasporto"
+		property="descrizioneTrasporto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="3"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Descrizione Trasporto" />
+	<fieldProperty
+		name="unitaMisurapeso"
+		property="unitaMisurapeso"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Unità di misura" />
+	<fieldProperty
+		name="pesoLordo"
+		property="pesoLordo"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Peso Lordo" />
+	<fieldProperty
+		name="pesoNetto"
+		property="pesoNetto"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Peso Netto" />
+	<fieldProperty
+		name="dataoraRitiro"
+		property="dataoraRitiro"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data/ora Ritiro" />
+	<fieldProperty
+		name="datainizioTrasporto"
+		property="datainizioTrasporto"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Inizio Trasporto" />
+	<fieldProperty
+		name="tipoResa"
+		property="tipoResa"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Tipo Resa" />
+	<fieldProperty
+		name="resaIndirizzo"
+		property="resaIndirizzo"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Indirizzo Resa" />
+	<fieldProperty
+		name="resaNumerocivico"
+		property="resaNumerocivico"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Numero Civico Resa" />
+	<fieldProperty
+		name="resaCap"
+		property="resaCap"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="CAP Resa" />
+	<fieldProperty
+		name="resaComune"
+		property="resaComune"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Comune Resa" />
+	<fieldProperty
+		name="resaProvincia"
+		property="resaProvincia"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Provincia Resa" />
+	<fieldProperty
+		name="resaNazione"
+		property="resaNazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Nazione Resa" />
+	<fieldProperty
+		name="dataoraConsegna"
+		property="dataoraConsegna"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data/Ora Consegna Merce" />
+	<fieldProperty
+		name="numeroFatturaprincipale"
+		property="numeroFatturaprincipale"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Num. Fatt. Principale (operaz. accessorie)" />
+	<fieldProperty
+		name="dataFatturaprincipale"
+		property="dataFatturaprincipale"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Fatt. Principale (operazioni accessorie)" />
+	<fieldProperty
+		name="dataImmatricolazioneveicolo"
+		property="dataImmatricolazioneveicolo"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Immatricolazione veicolo di trasporto" />
+	<fieldProperty
+		name="totalePercorsoveicolo"
+		property="totalePercorsoveicolo"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Totale km percorsi" />
+	<fieldProperty
+		name="beneficiarioPagamento"
+		property="beneficiarioPagamento"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Terzo Delegato pagamento" />
+	<fieldProperty
+		name="beneficiarioModPag"
+		property="beneficiarioModPag"
+		inputType="SELECT"
+		keysProperty="tiModalitaPagamentoKeys"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="Modalità di Pagamento" />
+	<fieldProperty
+		name="dataterminiPagamento"
+		property="dataterminiPagamento"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data decorrenza Termini di pagamento" />
+	<fieldProperty
+		name="giorniterminiPagamento"
+		property="giorniterminiPagamento"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		label="Giorni termini di pagamento" />
+	<fieldProperty
+		name="datascadenzaPagamento"
+		property="datascadenzaPagamento"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Scadenza Pagamento" />
+	<fieldProperty
+		name="importoPagamento"
+		property="importoPagamento"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Importo Pagamento" />
+	<fieldProperty
+		name="codufficiopostale"
+		property="codufficiopostale"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Codice Ufficio Postale" />
+	<fieldProperty
+		name="cognomeQuietanzante"
+		property="cognomeQuietanzante"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Cognome Quietanzante" />
+	<fieldProperty
+		name="nomeQuietanzante"
+		property="nomeQuietanzante"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Nome Quietanzante" />
+	<fieldProperty
+		name="istitutoFinanziario"
+		property="istitutoFinanziario"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Banca" />
+	<fieldProperty
+		name="iban"
+		property="iban"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="IBAN" />
+	<fieldProperty
+		name="abi"
+		property="abi"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="ABI" />
+	<fieldProperty
+		name="cab"
+		property="cab"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="CAB" />
+	<fieldProperty
+		name="bic"
+		property="bic"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="BIC" />
+	<fieldProperty
+		name="pagamentoCdTerzo"
+		property="pagamentoCdTerzo"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		label="null" />
+	<fieldProperty
+		name="pagamentoCdModalitaPag"
+		property="pagamentoCdModalitaPag"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Modalità di Pagamento Sigla" />
+	<fieldProperty
+		name="modalitaPagamento"
+		property="modalitaPagamento"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		CRUDBusinessProcessName="CRUDTerzoBP"
+		labelStyle="color:blue"
+		enabledOnEdit="true"
+		label="Modalità di Pagamento" />	
+	<fieldProperty
+		name="scontoPagamentoAnt"
+		property="scontoPagamentoAnt"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Imp. sconto Pagamento Anticipato" />
+	<fieldProperty
+		name="datalimitePagamentoAnt"
+		property="datalimitePagamentoAnt"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data limite Pagamento Anticipato" />
+	<fieldProperty
+		name="penalitaPagRitardati"
+		property="penalitaPagRitardati"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Imp. penalità Pagamenti ritardati" />
+	<fieldProperty
+		name="dataRicorrenzapenale"
+		property="dataRicorrenzapenale"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data decorrenza Penale" />
+	<fieldProperty
+		name="codicePagamento"
+		property="codicePagamento"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="60"
+		enabledOnEdit="false"
+		label="Codice riconciliazione incassi" />
+	<fieldProperty
+		name="statoDocumento"
+		property="statoDocumento"
+		inputType="SELECT"
+		keysProperty="tiStatoDocumentoSelectKeys"
+		inputSize="22"
+		maxLength="60"
+		nullable="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Stato Documento" />
+	<fieldProperty
+		name="statoDocumentoVisual"
+		property="statoDocumento"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="60"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Stato Documento" />
+			
+	<fieldProperty
+		name="motivoRifiuto"
+		property="motivoRifiuto"
+		inputType="TEXTAREA"
+		labelStyle="color:blue"
+		cols="60"		
+		rows="5"
+		maxLength="2000"
+		enabledOnEdit="false"
+		label="Motivo Rifiuto Documento" />
+	<fieldProperty
+		name="anomalie"
+		property="anomalie"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="2000"
+		enabledOnEdit="false"
+		label="Anomalie" />
+	<fieldProperty
+		name="unitaCompetenza"
+		property="documentoEleTrasmissione.unitaCompetenza"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		labelStyle="color:blue"
+		enabledOnEdit="true"
+		label="Unità di competenza" />	
+	<fieldProperty
+		name="unitaOrganizzativa"
+		property="documentoEleTrasmissione.unitaOrganizzativa"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		labelStyle="color:blue"
+		enabledOnEdit="true"
+		label="Unità Organizzativa" />		
+	<fieldProperty
+		name="prestatore"
+		property="documentoEleTrasmissione.prestatore"
+		inputType="SEARCHTOOL"
+		labelStyle="color:blue"
+		formName="searchtool"
+		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
+		enabledOnEdit="true"
+		label="Terzo" />
+	<fieldProperty
+		name="prestatoreAnag"
+		property="documentoEleTrasmissione.prestatoreAnag"
+		inputType="SEARCHTOOL"
+		labelStyle="color:blue"
+		formName="searchtool"
+		enabledOnEdit="true"
+		label="Anagrafica" />
+	<fieldProperty
+		name="intermediario"
+		property="documentoEleTrasmissione.intermediario"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
+		labelStyle="color:blue"
+		enabledOnEdit="true"
+		label="Terzo" />
+	<fieldProperty
+		name="intermediarioAnag"
+		property="documentoEleTrasmissione.intermediarioAnag"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		labelStyle="color:blue"
+		enabledOnEdit="true"
+		label="Anagrafica" />
+	<fieldProperty
+		name="ti_stato_documento"
+		property="statoDocumento"
+		inputType="RADIOGROUP"
+		layout="HORIZONTAL"
+		keysProperty="tiStatoDocumentoKeys"
+		label="Visualizza fatture in stato" />		
+	<fieldProperty
+		name="flCompletato"
+		property="documentoEleTrasmissione.flCompletato"
+		labelStyle="color:blue"
+		label="Completato"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1" />
+						
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="idPaese" />
+		<formFieldProperty
+			name="idCodice" />
+		<formFieldProperty
+			name="identificativoSdi" />
+		<formFieldProperty
+			name="progressivo" />
+	</form>
+	<form name="testata">
+		<formFieldProperty
+			name="tipoDocumento" />
+		<formFieldProperty
+			name="divisa" />
+		<formFieldProperty
+			name="dataDocumento" />
+		<formFieldProperty
+			name="numeroDocumento" />
+		<formFieldProperty
+			name="modalitaPagamento" />				
+		<formFieldProperty
+			name="bolloVirtuale" />
+		<formFieldProperty
+			name="importoBollo" />
+		<formFieldProperty
+			name="importoDocumento" />
+		<formFieldProperty
+			name="arrotondamento" />
+		<formFieldProperty
+			name="causale" />
+		<formFieldProperty
+			name="art73" />
+		<formFieldProperty
+			name="beneficiarioPagamento" />
+		<formFieldProperty
+			name="beneficiarioModPag" />
+		<formFieldProperty
+			name="dataterminiPagamento" />
+		<formFieldProperty
+			name="giorniterminiPagamento" />
+		<formFieldProperty
+			name="datascadenzaPagamento" />
+		<formFieldProperty
+			name="importoPagamento" />
+		<formFieldProperty
+			name="codufficiopostale" />
+		<formFieldProperty
+			name="cognomeQuietanzante" />
+		<formFieldProperty
+			name="nomeQuietanzante" />
+		<formFieldProperty
+			name="istitutoFinanziario" />
+		<formFieldProperty
+			name="iban" />
+		<formFieldProperty
+			name="abi" />
+		<formFieldProperty
+			name="cab" />				
+		<formFieldProperty
+			name="vettorePaese" />
+		<formFieldProperty
+			name="vettoreCodice" />
+		<formFieldProperty
+			name="vettoreCodicefiscale" />
+		<formFieldProperty
+			name="vettoreDenominazione" />
+		<formFieldProperty
+			name="vettoreNome" />
+		<formFieldProperty
+			name="vettoreCognome" />
+		<formFieldProperty
+			name="vettoreTitolo" />
+		<formFieldProperty
+			name="vettoreCodeori" />
+		<formFieldProperty
+			name="vettoreNumerolicenza" />
+		<formFieldProperty
+			name="mezzoTrasporto" />
+		<formFieldProperty
+			name="causaleTrasporto" />
+		<formFieldProperty
+			name="numeroColli" />
+		<formFieldProperty
+			name="descrizioneTrasporto" />
+		<formFieldProperty
+			name="unitaMisurapeso" />
+		<formFieldProperty
+			name="pesoLordo" />
+		<formFieldProperty
+			name="pesoNetto" />
+		<formFieldProperty
+			name="dataoraRitiro" />
+		<formFieldProperty
+			name="datainizioTrasporto" />
+		<formFieldProperty
+			name="tipoResa" />
+		<formFieldProperty
+			name="resaIndirizzo" />
+		<formFieldProperty
+			name="resaNumerocivico" />
+		<formFieldProperty
+			name="resaCap" />
+		<formFieldProperty
+			name="resaComune" />
+		<formFieldProperty
+			name="resaProvincia" />
+		<formFieldProperty
+			name="resaNazione" />
+		<formFieldProperty
+			name="dataoraConsegna" />
+		<formFieldProperty
+			name="numeroFatturaprincipale" />
+		<formFieldProperty
+			name="dataFatturaprincipale" />
+		<formFieldProperty
+			name="dataImmatricolazioneveicolo" />
+		<formFieldProperty
+			name="totalePercorsoveicolo" />
+		<formFieldProperty
+			name="bic" />
+		<formFieldProperty
+			name="scontoPagamentoAnt" />
+		<formFieldProperty
+			name="datalimitePagamentoAnt" />
+		<formFieldProperty
+			name="penalitaPagRitardati" />
+		<formFieldProperty
+			name="dataRicorrenzapenale" />
+		<formFieldProperty
+			name="codicePagamento" />
+		<formFieldProperty
+			name="anomalie" />		
+	</form>
+	<formFieldProperty
+		name="ti_stato_documento" />	
+	<formFieldProperty
+		name="idPaese" />
+	<formFieldProperty
+		name="idCodice" />
+	<formFieldProperty
+		name="identificativoSdi" />
+	<formFieldProperty
+		name="progressivo" />
+	<formFieldProperty
+		name="tipoDocumento" />
+	<formFieldProperty
+		name="divisa" />
+	<formFieldProperty
+		name="dataDocumento" />
+	<formFieldProperty
+		name="numeroDocumento" />
+	<formFieldProperty
+		name="bolloVirtuale" />
+	<formFieldProperty
+		name="importoBollo" />
+	<formFieldProperty
+		name="tipoBollo" />
+	<formFieldProperty
+		name="importoDocumento" />
+	<formFieldProperty
+		name="arrotondamento" />
+	<formFieldProperty
+		name="causale" />
+	<formFieldProperty
+		name="art73" />
+	<formFieldProperty
+		name="vettorePaese" />
+	<formFieldProperty
+		name="vettoreCodice" />
+	<formFieldProperty
+		name="vettoreCodicefiscale" />
+	<formFieldProperty
+		name="vettoreDenominazione" />
+	<formFieldProperty
+		name="vettoreNome" />
+	<formFieldProperty
+		name="vettoreCognome" />
+	<formFieldProperty
+		name="vettoreTitolo" />
+	<formFieldProperty
+		name="vettoreCodeori" />
+	<formFieldProperty
+		name="vettoreNumerolicenza" />
+	<formFieldProperty
+		name="mezzoTrasporto" />
+	<formFieldProperty
+		name="causaleTrasporto" />
+	<formFieldProperty
+		name="numeroColli" />
+	<formFieldProperty
+		name="descrizioneTrasporto" />
+	<formFieldProperty
+		name="unitaMisurapeso" />
+	<formFieldProperty
+		name="pesoLordo" />
+	<formFieldProperty
+		name="pesoNetto" />
+	<formFieldProperty
+		name="dataoraRitiro" />
+	<formFieldProperty
+		name="datainizioTrasporto" />
+	<formFieldProperty
+		name="tipoResa" />
+	<formFieldProperty
+		name="resaIndirizzo" />
+	<formFieldProperty
+		name="resaNumerocivico" />
+	<formFieldProperty
+		name="resaCap" />
+	<formFieldProperty
+		name="resaComune" />
+	<formFieldProperty
+		name="resaProvincia" />
+	<formFieldProperty
+		name="resaNazione" />
+	<formFieldProperty
+		name="dataoraConsegna" />
+	<formFieldProperty
+		name="numeroFatturaprincipale" />
+	<formFieldProperty
+		name="dataFatturaprincipale" />
+	<formFieldProperty
+		name="dataImmatricolazioneveicolo" />
+	<formFieldProperty
+		name="totalePercorsoveicolo" />
+	<formFieldProperty
+		name="beneficiarioPagamento" />
+	<formFieldProperty
+		name="beneficiarioModPag" />
+	<formFieldProperty
+		name="dataterminiPagamento" />
+	<formFieldProperty
+		name="giorniterminiPagamento" />
+	<formFieldProperty
+		name="datascadenzaPagamento" />
+	<formFieldProperty
+		name="importoPagamento" />
+	<formFieldProperty
+		name="codufficiopostale" />
+	<formFieldProperty
+		name="cognomeQuietanzante" />
+	<formFieldProperty
+		name="nomeQuietanzante" />
+	<formFieldProperty
+		name="istitutoFinanziario" />
+	<formFieldProperty
+		name="iban" />
+	<formFieldProperty
+		name="abi" />
+	<formFieldProperty
+		name="cab" />
+	<formFieldProperty
+		name="bic" />
+	<formFieldProperty
+		name="scontoPagamentoAnt" />
+	<formFieldProperty
+		name="datalimitePagamentoAnt" />
+	<formFieldProperty
+		name="penalitaPagRitardati" />
+	<formFieldProperty
+		name="dataRicorrenzapenale" />
+	<formFieldProperty
+		name="codicePagamento" />
+	<formFieldProperty
+		name="statoDocumento" />
+	<formFieldProperty
+		name="statoDocumentoVisual" />
+	<formFieldProperty
+		name="motivoRifiuto" />
+	<formFieldProperty
+		name="anomalie" />
+	<formFieldProperty
+		name="unitaCompetenza"/>	
+	<formFieldProperty
+		name="unitaOrganizzativa"/>		
+	<formFieldProperty
+		name="prestatore"/>
+	<formFieldProperty
+		name="prestatoreAnag"/>
+	<formFieldProperty
+		name="intermediario"/>
+	<formFieldProperty
+		name="intermediarioAnag"/>
+	<formFieldProperty
+		name="flCompletato"/>
+	<findFieldProperty
+		name="idPaese" />
+	<findFieldProperty
+		name="idCodice" />
+	<findFieldProperty
+		name="identificativoSdi" />
+	<findFieldProperty
+		name="progressivo" />
+	<findFieldProperty
+		name="tipoDocumento" />
+	<findFieldProperty
+		name="divisa" />
+	<findFieldProperty
+		name="dataDocumento" />
+	<findFieldProperty
+		name="numeroDocumento" />
+	<findFieldProperty
+		name="bolloVirtuale" />
+	<findFieldProperty
+		name="importoBollo" />
+	<findFieldProperty
+		name="tipoBollo" />
+	<findFieldProperty
+		name="importoDocumento" />
+	<findFieldProperty
+		name="arrotondamento" />
+	<findFieldProperty
+		name="causale" />
+	<findFieldProperty
+		name="art73" />
+	<findFieldProperty
+		name="vettorePaese" />
+	<findFieldProperty
+		name="vettoreCodice" />
+	<findFieldProperty
+		name="vettoreCodicefiscale" />
+	<findFieldProperty
+		name="vettoreDenominazione" />
+	<findFieldProperty
+		name="vettoreNome" />
+	<findFieldProperty
+		name="vettoreCognome" />
+	<findFieldProperty
+		name="vettoreTitolo" />
+	<findFieldProperty
+		name="vettoreCodeori" />
+	<findFieldProperty
+		name="vettoreNumerolicenza" />
+	<findFieldProperty
+		name="mezzoTrasporto" />
+	<findFieldProperty
+		name="causaleTrasporto" />
+	<findFieldProperty
+		name="numeroColli" />
+	<findFieldProperty
+		name="descrizioneTrasporto" />
+	<findFieldProperty
+		name="unitaMisurapeso" />
+	<findFieldProperty
+		name="pesoLordo" />
+	<findFieldProperty
+		name="pesoNetto" />
+	<findFieldProperty
+		name="dataoraRitiro" />
+	<findFieldProperty
+		name="datainizioTrasporto" />
+	<findFieldProperty
+		name="tipoResa" />
+	<findFieldProperty
+		name="resaIndirizzo" />
+	<findFieldProperty
+		name="resaNumerocivico" />
+	<findFieldProperty
+		name="resaCap" />
+	<findFieldProperty
+		name="resaComune" />
+	<findFieldProperty
+		name="resaProvincia" />
+	<findFieldProperty
+		name="resaNazione" />
+	<findFieldProperty
+		name="dataoraConsegna" />
+	<findFieldProperty
+		name="numeroFatturaprincipale" />
+	<findFieldProperty
+		name="dataFatturaprincipale" />
+	<findFieldProperty
+		name="dataImmatricolazioneveicolo" />
+	<findFieldProperty
+		name="totalePercorsoveicolo" />
+	<findFieldProperty
+		name="beneficiarioPagamento" />
+	<findFieldProperty
+		name="beneficiarioModPag" />
+	<findFieldProperty
+		name="dataterminiPagamento" />
+	<findFieldProperty
+		name="giorniterminiPagamento" />
+	<findFieldProperty
+		name="datascadenzaPagamento" />
+	<findFieldProperty
+		name="importoPagamento" />
+	<findFieldProperty
+		name="codufficiopostale" />
+	<findFieldProperty
+		name="cognomeQuietanzante" />
+	<findFieldProperty
+		name="nomeQuietanzante" />
+	<findFieldProperty
+		name="istitutoFinanziario" />
+	<findFieldProperty
+		name="iban" />
+	<findFieldProperty
+		name="abi" />
+	<findFieldProperty
+		name="cab" />
+	<findFieldProperty
+		name="bic" />
+	<findFieldProperty
+		name="pagamentoCdTerzo" />
+	<findFieldProperty
+		name="pagamentoCdModalitaPag" />
+	<findFieldProperty
+		name="scontoPagamentoAnt" />
+	<findFieldProperty
+		name="datalimitePagamentoAnt" />
+	<findFieldProperty
+		name="penalitaPagRitardati" />
+	<findFieldProperty
+		name="dataRicorrenzapenale" />
+	<findFieldProperty
+		name="codicePagamento" />
+	<findFieldProperty
+		name="statoDocumento" />
+	<findFieldProperty
+		name="motivoRifiuto" />
+	<findFieldProperty
+		name="anomalie" />
+	
+	
+	
+	<columnFieldProperty
+		name="idCodice" />
+	<columnFieldProperty
+		name="denominzionePrestatore" 
+		property="documentoEleTrasmissione.denominzionePrestatore"
+		label="Denominazione Prestatore"/>
+	<columnFieldProperty
+		name="identificativoSdi" />	
+	<columnFieldProperty
+		name="progressivo" />
+	<columnFieldProperty
+		name="codiceTerzo"
+		property="documentoEleTrasmissione.prestatore.cd_terzo"
+		label="Codice terzo" />
+	<columnFieldProperty
+		name="cdUnitaOrganizzativa"
+		property="documentoEleTrasmissione.cdUnitaOrganizzativa" 
+		label="UO destinataria"/>
+	<columnFieldProperty
+		name="cdUnitaCompetenza"
+		property="documentoEleTrasmissione.cdUnitaCompetenza" 
+		label="UO di competenza"/>	
+	<columnFieldProperty
+		name="tipoDocumento" />
+	<columnFieldProperty
+		name="dataDocumento" />
+	<columnFieldProperty
+		name="numeroDocumento" />
+	<columnFieldProperty
+		name="importoDocumento" />
+	<columnFieldProperty
+		name="dataRicezioneSDI"
+		property="documentoEleTrasmissione.dataRicezione"
+		label="Data ricezione da SDI"/>
+	<columnFieldProperty
+		name="statoDocumento" />
+</bulkInfo>

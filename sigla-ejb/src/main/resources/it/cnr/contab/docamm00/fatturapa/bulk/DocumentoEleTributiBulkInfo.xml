@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Documento elettronico di trasmissione tributi"
+	longDescription="Documento elettronico di trasmissione tributi">
+	<fieldProperty
+		name="idPaese"
+		property="documentoEleTestata.idPaese"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Nazione Trasmittente" />
+	<fieldProperty
+		name="idCodice"
+		property="documentoEleTestata.idCodice"
+		inputType="TEXT"
+		inputSize="28"
+		maxLength="28"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Identificativo Fiscale Trasmittente" />
+	<fieldProperty
+		name="identificativoSdi"
+		property="documentoEleTestata.identificativoSdi"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Identificativo SDI" />
+	<fieldProperty
+		name="progressivo"
+		property="documentoEleTestata.progressivo"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Progressivo" />
+	<fieldProperty
+		name="progressivoTributo"
+		property="progressivoTributo"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Prog. Riga" />
+	<fieldProperty
+		name="tipoRiga"
+		property="tipoRiga"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		label="Tipo Riga Tributo" />
+	<fieldProperty
+		name="tipoTributo"
+		property="tipoTributo"
+		inputType="SELECT"
+		keysProperty="tiTipoTributoKeys"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="Tipo Tributo" />
+	<fieldProperty
+		name="importo"
+		property="importo"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Importo" />
+	<fieldProperty
+		name="aliquota"
+		property="aliquota"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Aliquota" />
+	<fieldProperty
+		name="imponibileCassa"
+		property="imponibileCassa"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Imponibile Cassa" />
+	<fieldProperty
+		name="causalePagamento"
+		property="causalePagamento"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="Causale Pagamento" />
+	<fieldProperty
+		name="ritenutaCassa"
+		property="ritenutaCassa"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		label="Ritenuta Cassa (SI/NO)" />
+	<fieldProperty
+		name="aliquotaIva"
+		property="aliquotaIva"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Aliquota IVA" />
+	<fieldProperty
+		name="natura"
+		property="natura"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		label="Natura" />
+	<fieldProperty
+		name="riferimentoAmministrazione"
+		property="riferimentoAmministrazione"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="Riferimento Amministrazione" />
+	<fieldProperty
+		name="anomalie"
+		property="anomalie"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="2000"
+		enabledOnEdit="false"
+		label="Anomalie" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="idPaese" />
+		<formFieldProperty
+			name="idCodice" />
+		<formFieldProperty
+			name="identificativoSdi" />
+		<formFieldProperty
+			name="progressivo" />
+		<formFieldProperty
+			name="progressivoTributo" />
+	</form>
+	<formFieldProperty
+		name="tipoRiga" />
+	<formFieldProperty
+		name="tipoTributo" />
+	<formFieldProperty
+		name="importo" />
+	<formFieldProperty
+		name="aliquota" />
+	<formFieldProperty
+		name="imponibileCassa" />
+	<formFieldProperty
+		name="causalePagamento" />
+	<formFieldProperty
+		name="ritenutaCassa" />
+	<formFieldProperty
+		name="aliquotaIva" />
+	<formFieldProperty
+		name="natura" />
+	<formFieldProperty
+		name="riferimentoAmministrazione" />
+	<formFieldProperty
+		name="anomalie" />
+	<findFieldProperty
+		name="idPaese" />
+	<findFieldProperty
+		name="idCodice" />
+	<findFieldProperty
+		name="identificativoSdi" />
+	<findFieldProperty
+		name="progressivo" />
+	<findFieldProperty
+		name="progressivoTributo" />
+	<findFieldProperty
+		name="tipoRiga" />
+	<findFieldProperty
+		name="tipoTributo" />
+	<findFieldProperty
+		name="importo" />
+	<findFieldProperty
+		name="aliquota" />
+	<findFieldProperty
+		name="imponibileCassa" />
+	<findFieldProperty
+		name="causalePagamento" />
+	<findFieldProperty
+		name="ritenutaCassa" />
+	<findFieldProperty
+		name="aliquotaIva" />
+	<findFieldProperty
+		name="natura" />
+	<findFieldProperty
+		name="riferimentoAmministrazione" />
+	<findFieldProperty
+		name="anomalie" />
+	
+	<columnFieldProperty
+		name="progressivoTributo" />
+	<columnFieldProperty
+		name="tipoRiga" />
+	<columnFieldProperty
+		name="tipoTributo" />
+	<columnFieldProperty
+		name="importo" />
+	<columnFieldProperty
+		name="aliquota" />
+	<columnFieldProperty
+		name="imponibileCassa" />
+	<columnFieldProperty
+		name="causalePagamento" />
+	<columnFieldProperty
+		name="ritenutaCassa" />
+	<columnFieldProperty
+		name="aliquotaIva" />
+	<columnFieldProperty
+		name="natura" />
+	<columnFieldProperty
+		name="riferimentoAmministrazione" />
+	<columnFieldProperty
+		name="anomalie" />
+</bulkInfo>

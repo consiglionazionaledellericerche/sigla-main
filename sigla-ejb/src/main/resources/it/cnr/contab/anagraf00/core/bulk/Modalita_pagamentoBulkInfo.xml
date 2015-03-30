@@ -67,6 +67,14 @@
 		inputType="TEXT"
 		label="Codice e Descrizione" />		
 
+	<form name="searchtool">
+		<formFieldProperty
+			name="cd_modalita_pag"
+			enabledOnSearch="true"/>
+		<formFieldProperty
+			name="ds_modalita_pag"
+			enabledOnSearch="true"/>		    	    
+	</form>
 	<columnFieldProperty
 		name="cd_modalita_pag"
 		/>
@@ -114,7 +122,10 @@
 	<findFieldProperty
 		name="cd_modalita_pag"
 		/>
-	
+	<findFieldProperty
+		name="ds_modalita_pag"
+		/>
+		
 
 
 </bulkInfo>

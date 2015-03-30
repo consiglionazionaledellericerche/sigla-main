@@ -12,6 +12,7 @@ import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.cmis.CMISContrattiProperty;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.comp.ApplicationException;
 
 @CMISType(name="F:sigla_contratti:assegni_ricerca")
 public class CMISFolderAssegniRicerca extends CMISFolderContrattiModel {
@@ -41,7 +42,7 @@ public class CMISFolderAssegniRicerca extends CMISFolderContrattiModel {
 		return super.getPg_repertorio();
     }
 
-	public CMISPath getCMISPath(SiglaCMISService cmisService){
+	public CMISPath getCMISPath(SiglaCMISService cmisService) throws ApplicationException{
 		CMISPath cmisPath = this.getCMISParentPath(cmisService);
 		if (cmisPath!=null) {
 			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, "Assegno di Ricerca "+this.getEsercizio().toString()+Utility.lpad(this.getPg_repertorio().toString(),10,'0'), "Assegno di Ricerca "+this.getEsercizio().toString()+"/"+this.getPg_repertorio().toString(), "Assegno di Ricerca "+this.getEsercizio().toString()+"/"+this.getPg_repertorio().toString(), this);

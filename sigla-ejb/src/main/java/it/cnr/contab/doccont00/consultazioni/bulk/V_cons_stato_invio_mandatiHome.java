@@ -9,6 +9,7 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
@@ -49,12 +50,16 @@ public class V_cons_stato_invio_mandatiHome extends BulkHome {
 	public Persistent completeBulkRowByRow(UserContext userContext,
 			Persistent persistent) throws PersistencyException {
 		V_cons_stato_invio_mandatiBulk cons = (V_cons_stato_invio_mandatiBulk)persistent;
-		List<String> nodeRefs = contabiliService.getNodeRefContabile(cons.getEsercizio().intValue(), cons.getCd_cds(), cons.getPg_mandato());
-		if (nodeRefs != null && !nodeRefs.isEmpty())
-			cons.setContabile("<button class='Button' style='width:60px;' onclick='cancelBubble(event); if (disableDblClick()) "+
-				"doVisualizzaSingolaContabile("+cons.getEsercizio()+",\""+cons.getCd_cds()+"\","+cons.getPg_mandato()+"); return false' "+
-				"onMouseOver='mouseOver(this)' onMouseOut='mouseOut(this)' onMouseDown='mouseDown(this)' onMouseUp='mouseUp(this)' "+
-				"title='Visualizza Contabile'><img align='middle' class='Button' src='img/application-pdf.png'></button>");
-		return super.completeBulkRowByRow(userContext, persistent);
+		List<String> nodeRefs;
+		try {
+			nodeRefs = contabiliService.getNodeRefContabile(cons.getEsercizio().intValue(), cons.getCd_cds(), cons.getPg_mandato());
+			if (nodeRefs != null && !nodeRefs.isEmpty())
+				cons.setContabile("<button class='Button' style='width:60px;' onclick='cancelBubble(event); if (disableDblClick()) "+
+					"doVisualizzaSingolaContabile("+cons.getEsercizio()+",\""+cons.getCd_cds()+"\","+cons.getPg_mandato()+"); return false' "+
+					"onMouseOver='mouseOver(this)' onMouseOut='mouseOut(this)' onMouseDown='mouseDown(this)' onMouseUp='mouseUp(this)' "+
+					"title='Visualizza Contabile'><img align='middle' class='Button' src='img/application-pdf.png'></button>");
+		} catch (ApplicationException e) {			
+		}
+		return super.completeBulkRowByRow(userContext, persistent);		
 	}
 }

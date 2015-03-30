@@ -3,6 +3,7 @@ package it.cnr.contab.anagraf00.core.bulk;
 import java.sql.SQLException;
 
 
+
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk;
@@ -685,5 +686,23 @@ public boolean findRapportoDipendenteFor(AnagraficoBulk anagrafico) throws Intro
 		sql.addClause("AND", "cd_anag", SQLBuilder.EQUALS, anagrafico.getCd_anag());
 		sql.addClause("AND", "ti_legame", SQLBuilder.EQUALS, Anagrafico_terzoBulk.LEGAME_STUDIO_ASSOCIATO);
 		return anagraficoTerzoHome.fetchAll(sql);
+	}
+	
+	/**
+	 * Recupera tutte le anagrafiche dato il codice fiscale 
+	 *
+	 * @param codice fiscale.
+	 *
+	 * @return java.util.Collection Collezione di oggetti <code>AnagraficoBulk</code>
+	 */
+
+	@SuppressWarnings("unchecked")
+	public java.util.List<AnagraficoBulk> findByCodiceFiscaleOrPartitaIVA(String codiceFiscale, String partitaIVA) throws IntrospectionException, PersistencyException {
+		SQLBuilder sql = createSQLBuilder();
+		if (codiceFiscale != null)
+			sql.addClause("AND", "codice_fiscale", SQLBuilder.EQUALS, codiceFiscale);
+		if (partitaIVA != null)
+			sql.addClause("OR", "partita_iva", SQLBuilder.EQUALS, partitaIVA);
+		return fetchAll(sql);
 	}
 }

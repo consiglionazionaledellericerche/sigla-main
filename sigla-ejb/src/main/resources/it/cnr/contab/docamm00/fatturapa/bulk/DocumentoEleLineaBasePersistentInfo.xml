@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleLineaBase"
+	keyClassName="it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleLineaKey"
+	homeClassName="it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleLineaHome">
+	<defaultColumnMap
+		tableName="DOCUMENTO_ELE_LINEA">
+		<columnMapping
+			columnName="CD_BENE_SERVIZIO"
+			propertyName="cdBeneServizio"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />	    
+	    <columnMapping
+			columnName="TIPO_CESSIONE"
+			propertyName="tipoCessione"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ARTICOLO_TIPO"
+			propertyName="articoloTipo"
+			sqlTypeName="VARCHAR"
+			columnSize="35"
+			nullable="true" />
+		<columnMapping
+			columnName="ARTICOLO_VALORE"
+			propertyName="articoloValore"
+			sqlTypeName="VARCHAR"
+			columnSize="35"
+			nullable="true" />
+		<columnMapping
+			columnName="LINEA_DESCRIZIONE"
+			propertyName="lineaDescrizione"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="true" />
+		<columnMapping
+			columnName="LINEA_QUANTITA"
+			propertyName="lineaQuantita"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="LINEA_UNITAMISURA"
+			propertyName="lineaUnitamisura"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="INIZIO_DATACOMPETENZA"
+			propertyName="inizioDatacompetenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="FINE_DATACOMPETENZA"
+			propertyName="fineDatacompetenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="LINEA_PREZZOUNITARIO"
+			propertyName="lineaPrezzounitario"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_SCONTOMAG"
+			propertyName="tipoScontomag"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="PERCENTUALE_SCONTOMAG"
+			propertyName="percentualeScontomag"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_SCONTOMAG"
+			propertyName="importoScontomag"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="LINEA_PREZZOTOTALE"
+			propertyName="lineaPrezzototale"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="LINEA_ALIQUOTAIVA"
+			propertyName="lineaAliquotaiva"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="LINEA_RITENUTA"
+			propertyName="lineaRitenuta"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="LINEA_NATURA"
+			propertyName="lineaNatura"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="LINEA_RIFERIMENTOAMM"
+			propertyName="lineaRiferimentoamm"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_DATO"
+			propertyName="tipoDato"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="RIFERIMENTO_TESTO"
+			propertyName="riferimentoTesto"
+			sqlTypeName="VARCHAR"
+			columnSize="60"
+			nullable="true" />
+		<columnMapping
+			columnName="RIFERIMENTO_NUMERO"
+			propertyName="riferimentoNumero"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="RIFERIMENTODATA"
+			propertyName="riferimentodata"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="ANOMALIE"
+			propertyName="anomalie"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdBeneServizio" />		
+	<persistentProperty
+		name="tipoCessione" />
+	<persistentProperty
+		name="articoloTipo" />
+	<persistentProperty
+		name="articoloValore" />
+	<persistentProperty
+		name="lineaDescrizione" />
+	<persistentProperty
+		name="lineaQuantita" />
+	<persistentProperty
+		name="lineaUnitamisura" />
+	<persistentProperty
+		name="inizioDatacompetenza" />
+	<persistentProperty
+		name="fineDatacompetenza" />
+	<persistentProperty
+		name="lineaPrezzounitario" />
+	<persistentProperty
+		name="tipoScontomag" />
+	<persistentProperty
+		name="percentualeScontomag" />
+	<persistentProperty
+		name="importoScontomag" />
+	<persistentProperty
+		name="lineaPrezzototale" />
+	<persistentProperty
+		name="lineaAliquotaiva" />
+	<persistentProperty
+		name="lineaRitenuta" />
+	<persistentProperty
+		name="lineaNatura" />
+	<persistentProperty
+		name="lineaRiferimentoamm" />
+	<persistentProperty
+		name="tipoDato" />
+	<persistentProperty
+		name="riferimentoTesto" />
+	<persistentProperty
+		name="riferimentoNumero" />
+	<persistentProperty
+		name="riferimentodata" />
+	<persistentProperty
+		name="anomalie" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

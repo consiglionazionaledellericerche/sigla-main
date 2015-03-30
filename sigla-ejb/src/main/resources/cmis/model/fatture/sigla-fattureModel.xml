@@ -94,6 +94,17 @@
 				<aspect>sigla_commons_aspect:utente_applicativo_sigla</aspect>
 			</mandatory-aspects>
 		</type>
+		<type name="sigla_fatture:fatture_passive">
+			<title>Fatture Passive</title>
+			<description>Fatture Passive</description>
+			<parent>sigla_fatture:main</parent>
+			<properties>
+				<property name="sigla_fatture:identificativoSdI">
+					<title>Identificativo SdI</title>
+					<type>d:long</type>
+				</property>
+			</properties>
+		</type>
 		<type name="sigla_fatture:fatture_attive">
 			<title>Fatture Attive</title>
 			<description>Fatture Attive</description>

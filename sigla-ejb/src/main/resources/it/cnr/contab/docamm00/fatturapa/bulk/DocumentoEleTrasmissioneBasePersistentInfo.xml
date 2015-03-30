@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneBase"
+	keyClassName="it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneKey"
+	homeClassName="it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneHome">
+	<defaultColumnMap
+		tableName="DOCUMENTO_ELE_TRASMISSIONE">
+		<columnMapping
+			columnName="PROGRESSIVO_INVIO"
+			propertyName="progressivoInvio"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"/>	   		
+		<columnMapping
+			columnName="FORMATO_TRASMISSIONE"
+			propertyName="formatoTrasmissione"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false" />
+		<columnMapping
+			columnName="CODICE_DESTINATARIO"
+			propertyName="codiceDestinatario"
+			sqlTypeName="VARCHAR"
+			columnSize="6"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cdUnitaOrganizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"/>				
+		<columnMapping
+			columnName="CD_UNITA_COMPETENZA"
+			propertyName="cdUnitaCompetenza"
+			sqlTypeName="VARCHAR"
+			columnSize="30"/>						
+		<columnMapping
+			columnName="TRASMITTENTE_TELEFONO"
+			propertyName="trasmittenteTelefono"
+			sqlTypeName="VARCHAR"
+			columnSize="12"
+			nullable="true" />
+		<columnMapping
+			columnName="TRASMITTENTE_EMAIL"
+			propertyName="trasmittenteEmail"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PRESTATORE_PAESE"
+			propertyName="prestatorePaese"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PRESTATORE_CODICE"
+			propertyName="prestatoreCodice"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PRESTATORE_CODICEFISCALE"
+			propertyName="prestatoreCodicefiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PRESTATORE_DENOMINAZIONE"
+			propertyName="prestatoreDenominazione"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PRESTATORE_NOME"
+			propertyName="prestatoreNome"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PRESTATORE_COGNOME"
+			propertyName="prestatoreCognome"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PRESTATORE_TITOLO"
+			propertyName="prestatoreTitolo"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PRESTATORE_CODEORI"
+			propertyName="prestatoreCodeori"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="ALBOPROFESSIONALE"
+			propertyName="alboprofessionale"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="NUMEROALBO"
+			propertyName="numeroalbo"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PROVINCIAALBO"
+			propertyName="provinciaalbo"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		
+		<columnMapping
+			columnName="DATAISCRIZIONEALBO"
+			propertyName="dataiscrizionealbo"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="REGIMEFISCALE"
+			propertyName="regimefiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PRESTATORE_INDIRIZZO"
+			propertyName="prestatoreIndirizzo"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PRESTATORE_NUMEROCIVICO"
+			propertyName="prestatoreNumerocivico"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PRESTATORE_CAP"
+			propertyName="prestatoreCap"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PRESTATORE_COMUNE"
+			propertyName="prestatoreComune"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PRESTATORE_PROVINCIA"
+			propertyName="prestatoreProvincia"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PRESTATORE_NAZIONE"
+			propertyName="prestatoreNazione"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PRESTATORE_CD_TERZO"
+			propertyName="prestatoreCdTerzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="PRESTATORE_CD_ANAG"
+			propertyName="prestatoreCdAnag"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />				
+		<columnMapping
+			columnName="STABILEORG_INDIRIZZO"
+			propertyName="stabileorgIndirizzo"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="STABILEORG_NUMEROCIVICO"
+			propertyName="stabileorgNumerocivico"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="STABILEORG_CAP"
+			propertyName="stabileorgCap"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="STABILEORG_COMUNE"
+			propertyName="stabileorgComune"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="STABILEORG_PROVINCIA"
+			propertyName="stabileorgProvincia"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="STABILEORG_NAZIONE"
+			propertyName="stabileorgNazione"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="REA_UFFICIO"
+			propertyName="reaUfficio"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="REA_NUMEROREA"
+			propertyName="reaNumerorea"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="REA_CAPITALESOCIALE"
+			propertyName="reaCapitalesociale"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="REA_SOCIOUNICO"
+			propertyName="reaSociounico"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="REA_STATOLIQUIDAZIONE"
+			propertyName="reaStatoliquidazione"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PRESTATORE_TELEFONO"
+			propertyName="prestatoreTelefono"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PRESTATORE_FAX"
+			propertyName="prestatoreFax"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="PRESTATORE_EMAIL"
+			propertyName="prestatoreEmail"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="RIFERIMENTO_AMMINISTRAZIONE"
+			propertyName="riferimentoAmministrazione"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="RAPPRESENTANTE_PAESE"
+			propertyName="rappresentantePaese"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="RAPPRESENTANTE_CODICE"
+			propertyName="rappresentanteCodice"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="RAPPRESENTANTE_CODICEFISCALE"
+			propertyName="rappresentanteCodicefiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="RAPPRESENTANTE_DENOMINAZIONE"
+			propertyName="rappresentanteDenominazione"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="RAPPRESENTANTE_NOME"
+			propertyName="rappresentanteNome"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="RAPPRESENTANTE_COGNOME"
+			propertyName="rappresentanteCognome"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="RAPPRESENTANTE_TITOLO"
+			propertyName="rappresentanteTitolo"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="RAPPRESENTANTE_CODEORI"
+			propertyName="rappresentanteCodeori"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="RAPPRESENTANTE_CD_TERZO"
+			propertyName="rappresentanteCdTerzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="RAPPRESENTANTE_CD_ANAG"
+			propertyName="rappresentanteCdAnag"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />				
+		<columnMapping
+			columnName="COMMITTENTE_PAESE"
+			propertyName="committentePaese"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="COMMITTENTE_CODICE"
+			propertyName="committenteCodice"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="COMMITTENTE_CODICEFISCALE"
+			propertyName="committenteCodicefiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="COMMITTENTE_DENOMINAZIONE"
+			propertyName="committenteDenominazione"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="COMMITTENTE_NOME"
+			propertyName="committenteNome"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="COMMITTENTE_COGNOME"
+			propertyName="committenteCognome"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="COMMITTENTE_TITOLO"
+			propertyName="committenteTitolo"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="COMMITTENTE_CODEORI"
+			propertyName="committenteCodeori"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="COMMITTENTE_INDIRIZZO"
+			propertyName="committenteIndirizzo"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="COMMITTENTE_NUMEROCIVICO"
+			propertyName="committenteNumerocivico"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="COMMITTENTE_CAP"
+			propertyName="committenteCap"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="COMMITTENTE_COMUNE"
+			propertyName="committenteComune"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="COMMITTENTE_PROVINCIA"
+			propertyName="committenteProvincia"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="COMMITTENTE_NAZIONE"
+			propertyName="committenteNazione"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="COMMITTENTE_CD_TERZO"
+			propertyName="committenteCdTerzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="INTERMEDIARIO_PAESE"
+			propertyName="intermediarioPaese"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="INTERMEDIARIO_CODICE"
+			propertyName="intermediarioCodice"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="INTERMEDIARIO_CODICEFISCALE"
+			propertyName="intermediarioCodicefiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="INTERMEDIARIO_DENOMINAZIONE"
+			propertyName="intermediarioDenominazione"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="INTERMEDIARIO_NOME"
+			propertyName="intermediarioNome"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="INTERMEDIARIO_COGNOME"
+			propertyName="intermediarioCognome"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="INTERMEDIARIO_TITOLO"
+			propertyName="intermediarioTitolo"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="INTERMEDIARIO_CODEORI"
+			propertyName="intermediarioCodeori"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="INTERMEDIARIO_CD_TERZO"
+			propertyName="intermediarioCdTerzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="INTERMEDIARIO_CD_ANAG"
+			propertyName="intermediarioCdAnag"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />		
+		<columnMapping
+			columnName="SOGGETTO_EMITTENTE"
+			propertyName="soggettoEmittente"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_UNIVOCO_SDI"
+			propertyName="codiceUnivocoSdi"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_RICEZIONE"
+			propertyName="dataRicezione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="ANOMALIE_RICEZIONE"
+			propertyName="anomalieRicezione"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="FL_COMPLETATO"
+			propertyName="flCompletato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />		
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="CMIS_NODE_REF"
+			propertyName="cmisNodeRef"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />				
+		<columnMapping
+			columnName="NOME_FILE"
+			propertyName="nomeFile"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />						
+	</defaultColumnMap>
+	
+	<persistentProperty
+		name="progressivoInvio" />	
+	<persistentProperty
+		name="formatoTrasmissione" />
+	<persistentProperty
+		name="codiceDestinatario" />
+	<persistentProperty
+		name="cdUnitaOrganizzativa" />			
+	<persistentProperty
+		name="cdUnitaCompetenza" />
+	<persistentProperty
+		name="trasmittenteTelefono" />
+	<persistentProperty
+		name="trasmittenteEmail" />
+	<persistentProperty
+		name="prestatorePaese" />
+	<persistentProperty
+		name="prestatoreCodice" />
+	<persistentProperty
+		name="prestatoreCodicefiscale" />
+	<persistentProperty
+		name="prestatoreDenominazione" />
+	<persistentProperty
+		name="prestatoreNome" />
+	<persistentProperty
+		name="prestatoreCognome" />
+	<persistentProperty
+		name="prestatoreTitolo" />
+	<persistentProperty
+		name="prestatoreCodeori" />
+	<persistentProperty
+		name="alboprofessionale" />
+	<persistentProperty
+		name="provinciaalbo" />
+	<persistentProperty
+		name="dataiscrizionealbo" />
+	<persistentProperty
+		name="numeroalbo" />			
+	<persistentProperty
+		name="regimefiscale" />
+	<persistentProperty
+		name="prestatoreIndirizzo" />
+	<persistentProperty
+		name="prestatoreNumerocivico" />
+	<persistentProperty
+		name="prestatoreCap" />
+	<persistentProperty
+		name="prestatoreComune" />
+	<persistentProperty
+		name="prestatoreProvincia" />
+	<persistentProperty
+		name="prestatoreNazione" />
+	<persistentProperty
+		name="prestatoreCdTerzo" />
+	<persistentProperty
+		name="prestatoreCdAnag" />		
+	<persistentProperty
+		name="stabileorgIndirizzo" />
+	<persistentProperty
+		name="stabileorgNumerocivico" />
+	<persistentProperty
+		name="stabileorgCap" />
+	<persistentProperty
+		name="stabileorgComune" />
+	<persistentProperty
+		name="stabileorgProvincia" />
+	<persistentProperty
+		name="stabileorgNazione" />
+	<persistentProperty
+		name="reaUfficio" />
+	<persistentProperty
+		name="reaNumerorea" />
+	<persistentProperty
+		name="reaCapitalesociale" />
+	<persistentProperty
+		name="reaSociounico" />
+	<persistentProperty
+		name="reaStatoliquidazione" />
+	<persistentProperty
+		name="prestatoreTelefono" />
+	<persistentProperty
+		name="prestatoreFax" />
+	<persistentProperty
+		name="prestatoreEmail" />
+	<persistentProperty
+		name="riferimentoAmministrazione" />
+	<persistentProperty
+		name="rappresentantePaese" />
+	<persistentProperty
+		name="rappresentanteCodice" />
+	<persistentProperty
+		name="rappresentanteCodicefiscale" />
+	<persistentProperty
+		name="rappresentanteDenominazione" />
+	<persistentProperty
+		name="rappresentanteNome" />
+	<persistentProperty
+		name="rappresentanteCognome" />
+	<persistentProperty
+		name="rappresentanteTitolo" />
+	<persistentProperty
+		name="rappresentanteCodeori" />
+	<persistentProperty
+		name="rappresentanteCdTerzo" />
+	<persistentProperty
+		name="rappresentanteCdAnag" />		
+	<persistentProperty
+		name="committentePaese" />
+	<persistentProperty
+		name="committenteCodice" />
+	<persistentProperty
+		name="committenteCodicefiscale" />
+	<persistentProperty
+		name="committenteDenominazione" />
+	<persistentProperty
+		name="committenteNome" />
+	<persistentProperty
+		name="committenteCognome" />
+	<persistentProperty
+		name="committenteTitolo" />
+	<persistentProperty
+		name="committenteCodeori" />
+	<persistentProperty
+		name="committenteIndirizzo" />
+	<persistentProperty
+		name="committenteNumerocivico" />
+	<persistentProperty
+		name="committenteCap" />
+	<persistentProperty
+		name="committenteComune" />
+	<persistentProperty
+		name="committenteProvincia" />
+	<persistentProperty
+		name="committenteNazione" />
+	<persistentProperty
+		name="committenteCdTerzo" />
+	<persistentProperty
+		name="intermediarioPaese" />
+	<persistentProperty
+		name="intermediarioCodice" />
+	<persistentProperty
+		name="intermediarioCodicefiscale" />
+	<persistentProperty
+		name="intermediarioDenominazione" />
+	<persistentProperty
+		name="intermediarioNome" />
+	<persistentProperty
+		name="intermediarioCognome" />
+	<persistentProperty
+		name="intermediarioTitolo" />
+	<persistentProperty
+		name="intermediarioCodeori" />
+	<persistentProperty
+		name="intermediarioCdTerzo" />
+	<persistentProperty
+		name="intermediarioCdAnag" />	
+	<persistentProperty
+		name="soggettoEmittente" />
+	<persistentProperty
+		name="codiceUnivocoSdi" />
+	<persistentProperty
+		name="dataRicezione" />
+	<persistentProperty
+		name="anomalieRicezione" />
+	<persistentProperty
+		name="flCompletato" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="cmisNodeRef" />		
+	<persistentProperty
+		name="nomeFile" />			
+</SQLPersistentInfo>

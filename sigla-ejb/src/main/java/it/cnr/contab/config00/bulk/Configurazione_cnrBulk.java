@@ -70,6 +70,8 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String PK_CONTO_CORRENTE_BANCA_ITALIA = "CONTO_CORRENTE_BANCA_ITALIA";
 	public final static String SK_CODICE = "CODICE";
 	
+	public final static String PK_INTEGRAZIONE_SDI = "INTEGRAZIONE_SDI";
+	public final static String SK_INTEGRAZIONE_SDI = "MODALITA";
 	
 	public Configurazione_cnrBulk() {
 	super();

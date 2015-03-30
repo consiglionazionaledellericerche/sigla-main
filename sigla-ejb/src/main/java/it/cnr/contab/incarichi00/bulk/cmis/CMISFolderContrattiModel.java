@@ -8,6 +8,7 @@ import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.cmis.CMISContrattiProperty;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 
 import java.math.BigDecimal;
 import java.util.GregorianCalendar;
@@ -96,7 +97,7 @@ public class CMISFolderContrattiModel extends OggettoBulk {
 		return this.getIncaricoRepertorio().getPg_repertorio();
 	}
 
-	public CMISPath getCMISParentPath(SiglaCMISService cmisService){
+	public CMISPath getCMISParentPath(SiglaCMISService cmisService) throws ApplicationException{
 		if (this.getIncaricoRepertorio()==null || 
 			this.getIncaricoRepertorio().getIncarichi_procedura() == null)
 			return null;
@@ -104,7 +105,7 @@ public class CMISFolderContrattiModel extends OggettoBulk {
 		return cmisPath;
 	}
 
-	public CMISPath getCMISPath(SiglaCMISService cmisService){
+	public CMISPath getCMISPath(SiglaCMISService cmisService) throws ApplicationException{
 		return null;
 	}
 

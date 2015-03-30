@@ -7,6 +7,7 @@ import it.cnr.contab.cmis.annotation.CMISType;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -159,11 +160,11 @@ public class CMISFile extends OggettoBulk {
 		return null;
 	}
 
-	public CMISPath getCMISParentPath(SiglaCMISService cmisService){
+	public CMISPath getCMISParentPath(SiglaCMISService cmisService) throws ApplicationException{
 		return null;
 	}
 
-	public CMISPath getCMISAlternativeParentPath(SiglaCMISService cmisService){
+	public CMISPath getCMISAlternativeParentPath(SiglaCMISService cmisService) throws ApplicationException{
 		return null;
 	}
 }

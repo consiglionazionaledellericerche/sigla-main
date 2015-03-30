@@ -13,9 +13,9 @@ import it.cnr.jada.persistency.sql.*;
 
 public class Modalita_pagamentoBulk extends Modalita_pagamentoBase {
 
-	protected TerzoBulk terzo;
+	protected TerzoBulk terzo = new TerzoBulk();
 	protected TerzoBulk terzo_delegato;
-	protected Rif_modalita_pagamentoBulk rif_modalita_pagamento;
+	protected Rif_modalita_pagamentoBulk rif_modalita_pagamento = new Rif_modalita_pagamentoBulk();
 
 	public Modalita_pagamentoBulk() {
 		super();

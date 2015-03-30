@@ -12,8 +12,7 @@
   </action>
   <action 
       path="/CRUDDocumentoGenericoAction" actionClass="it.cnr.contab.docamm00.actions.CRUDDocumentoGenericoAction">      
-  </action>
-
+  </action> 
   <action 
       path="/ListaDocumentiAmministrativiAction" actionClass="it.cnr.contab.docamm00.actions.ListaDocumentiAmministrativiAction">
   </action>
@@ -45,6 +44,17 @@
   <action 
       path="/RisultatoEliminazioneAction" actionClass="it.cnr.contab.docamm00.actions.RisultatoEliminazioneAction">
   </action>
+  <action 
+      path="/CRUDFatturaPassivaElettronicaAction" actionClass="it.cnr.contab.docamm00.actions.CRUDFatturaPassivaElettronicaAction">
+  </action>
+  <action path="/SelezionaFatturaPassivaElettronicaAction"
+   		actionClass="it.cnr.contab.docamm00.actions.CRUDFatturaPassivaElettronicaAction$SelezionatoreFatturaPassivaElettronicaAction">
+  </action>
+  <action path="/CaricaFatturaPassivaElettronicaAction"
+   		actionClass="it.cnr.contab.docamm00.actions.CaricaFatturaPassivaElettronicaAction"
+      needExistingSession="false">
+  </action>
+  
   <businessProcess
       name="CRUDBeneServizioBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
     <forward name="default" path="/docamm00/beneservizio.jsp"/>
@@ -137,6 +147,22 @@
     <init-param name="componentSessionName" value="CNRDOCAMM00_EJB_FatturaPassivaComponentSession"/>
     <init-param name="defaultAction" value="CRUDFatturaPassivaAction"/>
   </businessProcess>
+
+  <businessProcess
+      name="CRUDFatturaPassivaElettronicaBP" className="it.cnr.contab.docamm00.bp.CRUDFatturaPassivaElettronicaBP">
+    <forward name="default" path="/docamm00/fattura_passiva_elettronica.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk"/>
+    <init-param name="componentSessionName" value="CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession"/>
+    <init-param name="defaultAction" value="CRUDFatturaPassivaElettronicaAction"/>
+  </businessProcess>
+
+  <businessProcess
+      name="CaricaFatturaElettronicaBP" className="it.cnr.contab.docamm00.bp.CaricaFatturaElettronicaBP">
+    <forward name="default" path="/docamm00/carica_fattura_elettronica.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.docamm00.fatturapa.bulk.FileSdIConMetadatiTypeBulk"/>
+    <init-param name="defaultAction" value="CaricaFatturaPassivaElettronicaAction"/>
+  </businessProcess>
+
 
   <businessProcess
       name="CRUDNotaDiCreditoBP" className="it.cnr.contab.docamm00.bp.CRUDNotaDiCreditoBP">

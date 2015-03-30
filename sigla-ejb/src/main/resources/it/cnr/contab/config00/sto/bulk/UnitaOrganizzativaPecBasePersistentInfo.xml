@@ -24,6 +24,19 @@
 			columnSize="100"
 			nullable="true" />
 		<columnMapping
+			columnName="EMAIL_PEC_PROTOCOLLO"
+			propertyName="emailPecProtocollo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="COD_PEC_PROTOCOLLO"
+			propertyName="codPecProtocollo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		
+		<columnMapping
 			columnName="UTUV"
 			propertyName="utuv"
 			sqlTypeName="VARCHAR"
@@ -60,6 +73,10 @@
 		name="emailPec" />
 	<persistentProperty
 		name="emailPecDirettore" />
+	<persistentProperty
+		name="emailPecProtocollo" />
+	<persistentProperty
+		name="codPecProtocollo" />	
 	<persistentProperty
 		name="utuv" />
 	<persistentProperty

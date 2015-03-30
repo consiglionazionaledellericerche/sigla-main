@@ -46,6 +46,7 @@
 		maxLength="300"
 		inputSize="300"
 		inputType="TEXTAREA"
+		enabledOnSearch="true"
 		label="Descrizione"
 		nullable="false"
 	 	caseSensitiveSearch="false" />

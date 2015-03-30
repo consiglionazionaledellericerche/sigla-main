@@ -7,6 +7,7 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
 import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.action.ConsultazioniBP;
 import it.cnr.jada.util.jsp.Button;
 
@@ -89,7 +90,7 @@ public class ConsStatoInvioMandatiBP extends ConsultazioniBP {
 		return contabiliEnabled;
 	}
 	
-	public void setContabiliEnabled(ActionContext actioncontext) throws BusinessProcessException {
+	public void setContabiliEnabled(ActionContext actioncontext) throws BusinessProcessException, ApplicationException {
 		contabiliEnabled =  false;
 		for (it.cnr.jada.util.action.SelectionIterator i = getSelection().iterator();i.hasNext();){
 			V_cons_stato_invio_mandatiBulk cons = (V_cons_stato_invio_mandatiBulk) getElementAt(actioncontext,i.nextIndex());
