@@ -431,7 +431,28 @@
 			columnName="CAUSALE"
 			propertyName="causale"
 			sqlTypeName="VARCHAR"
-			columnSize="10"/>	
+			columnSize="10"/>
+		<columnMapping
+			columnName="CDS_COMPENSO"
+			propertyName="cds_compenso"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="PG_COMPENSO"
+			propertyName="pg_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="UO_COMPENSO"
+			propertyName="uo_compenso"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="ESERCIZIO_COMPENSO"
+			propertyName="esercizio_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		
 		<columnMapping
 			columnName="ID_PAESE"
 			propertyName="idPaese"
@@ -599,7 +620,16 @@
 	<persistentProperty
 		name="stato_liquidazione" />
 	<persistentProperty
-		name="causale" />
+		name="causale" />	
+	<persistentProperty
+		name="cds_compenso" />
+	<persistentProperty
+		name="pg_compenso" />
+	<persistentProperty
+		name="uo_compenso" />
+	<persistentProperty
+		name="esercizio_compenso" />
+	
 	<persistentProperty
 		name="idPaese" />
 	<persistentProperty

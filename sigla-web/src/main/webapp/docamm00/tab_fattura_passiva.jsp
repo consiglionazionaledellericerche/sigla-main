@@ -40,6 +40,7 @@
 		</td>
 		<td>
 			<% bp.getController().writeFormInput(out,null,"dt_registrazione",false,null,"");%>
+			<% bp.getController().writeFormField(out,"progr_univoco"); %>
 		</td>
 	</tr>      
     <tr>  

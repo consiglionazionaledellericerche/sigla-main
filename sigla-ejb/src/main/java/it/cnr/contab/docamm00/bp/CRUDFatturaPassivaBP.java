@@ -13,7 +13,6 @@ import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Voidable;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
@@ -34,16 +33,12 @@ import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
-import it.cnr.jada.util.jsp.Button;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
@@ -605,17 +600,16 @@ public abstract class CRUDFatturaPassivaBP extends SimpleCRUDBP implements
 	}
 
 	public boolean isDeleteButtonEnabled() {
-
-		Fattura_passivaBulk fp = (Fattura_passivaBulk) getModel();
-		return super.isDeleteButtonEnabled() && !isModelVoided()
-				&& !fp.isCongelata() && !fp.isGenerataDaCompenso()
-				&& ((isAnnoDiCompetenza() && !fp.isRiportata()) ||
-				// Gennaro Borriello - (02/11/2004 16.48.21)
-				// Fix sul controllo dello "Stato Riportato": controlla che il
-				// documento sia stato riportato DA UN ES. PRECEDENTE a quello
-				// di scrivania.
-				(!isAnnoDiCompetenza() && fp.COMPLETAMENTE_RIPORTATO
-						.equalsIgnoreCase(fp.getRiportataInScrivania())));
+		Fattura_passivaBulk fp = (Fattura_passivaBulk)getModel();
+		return super.isDeleteButtonEnabled() &&
+				!isModelVoided() && 
+				!fp.isCongelata() &&
+				!fp.isElettronica() &&
+				!fp.isGenerataDaCompenso() &&
+				((isAnnoDiCompetenza() && !fp.isRiportata()) ||
+					// Gennaro Borriello - (02/11/2004 16.48.21)
+					// Fix sul controllo dello "Stato Riportato": controlla che il documento sia stato riportato DA UN ES. PRECEDENTE a quello di scrivania.
+					(!isAnnoDiCompetenza() && fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania())));
 	}
 
 	/**
@@ -627,23 +621,14 @@ public abstract class CRUDFatturaPassivaBP extends SimpleCRUDBP implements
 	public boolean isDeleting() {
 		return isDeleting;
 	}
-
-	/*
-	 * Gennaro Borriello - (03/11/2004 19.04.48) Fix sul controllo dello
-	 * "Stato Riportato": controlla che il documento sia stato riportato DA UN
-	 * ES. PRECEDENTE a quello di scrivania.
-	 */
 	public boolean isInputReadonly() {
-
-		Fattura_passivaBulk fp = (Fattura_passivaBulk) getModel();
-
-		return super.isInputReadonly()
-				|| isDeleting()
-				|| isModelVoided()
-				|| (!isAnnoDiCompetenza() && isEditing())
-				|| (fp != null && ((fp.isPagata()
-						|| ((isAnnoDiCompetenza() && fp.isRiportata())) || fp
-							.isCongelata()) && !isSearching()));
+		Fattura_passivaBulk fp = (Fattura_passivaBulk)getModel();
+		
+		return super.isInputReadonly() || isDeleting() || isModelVoided() || (!isAnnoDiCompetenza() && isEditing()) ||
+				     (fp != null && ((fp.isPagata() || 
+					 ((isAnnoDiCompetenza() && fp.isRiportata())) ||
+					 fp.isCongelata()) && !isSearching())) ||
+					 fp.getCompenso() != null /*&& !isInserting()*/;
 	}
 
 	public boolean isInputReadonlyDoc1210() {
@@ -755,19 +740,15 @@ public abstract class CRUDFatturaPassivaBP extends SimpleCRUDBP implements
 	}
 
 	public boolean isSaveButtonEnabled() {
-
-		Fattura_passivaBulk fp = (Fattura_passivaBulk) getModel();
-		return super.isSaveButtonEnabled()
-				&& !isModelVoided()
-				&& !fp.isGenerataDaCompenso()
-				&&
-				/*
-				 * RP per consentire salvataggio delle associazioni con
-				 * l'inventario tutti i dati risultano comunque non aggiornabili
-				 * !fp.isPagata() &&
-				 */
-				!fp.isCongelata()
-				&&
+	Fattura_passivaBulk fp = (Fattura_passivaBulk)getModel();
+	return super.isSaveButtonEnabled() && 
+			!isModelVoided() &&
+			//commentato per consentire modifiche fatt elettr
+			//!fp.isGenerataDaCompenso() &&
+			/* RP per consentire salvataggio delle associazioni con l'inventario
+			 * tutti i dati risultano comunque non aggiornabili
+			 !fp.isPagata() && */
+			!fp.isCongelata() &&
 				// Gennaro Borriello - (02/11/2004 16.48.21)
 				// Fix sul controllo dello "Stato Riportato":
 				((!fp.isRiportata() && isAnnoDiCompetenza())
@@ -1422,20 +1403,48 @@ public abstract class CRUDFatturaPassivaBP extends SimpleCRUDBP implements
 		}
 	}
 
-	@Override
-	public void validate(ActionContext actioncontext)
-			throws ValidationException {
-
-		Fattura_passivaBulk fp = (Fattura_passivaBulk) getModel();
-		try {
-			fp.setDataInizioObbligoRegistroUnico(getDataInizioObbligoRegistroUnico(actioncontext));
-		} catch (BusinessProcessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		fp.validate();
-		super.validate(actioncontext);
+/* spostata nel component perchè chiamata nell'inizializza
+private java.sql.Timestamp getDataInizioFatturazioneElettronica(it.cnr.jada.action.ActionContext context) throws BusinessProcessException {
+	try{
+	return  Utility.createConfigurazioneCnrComponentSession().getDt01(context.getUserContext(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()), null, Configurazione_cnrBulk.PK_FATTURAZIONE_ELETTRONICA, Configurazione_cnrBulk.SK_PASSIVA);
+	} catch(Exception e) {
+		throw handleException(e);
 	}
+}
+*/
+@Override
+public void validate(ActionContext actioncontext)
+		throws ValidationException {
+
+	
+	Fattura_passivaBulk fp = (Fattura_passivaBulk)getModel();
+	try {
+		fp.setDataInizioObbligoRegistroUnico(getDataInizioObbligoRegistroUnico(actioncontext));
+		//fp.setDataInizioFatturaElettronica(getDataInizioFatturazioneElettronica(actioncontext));
+	} catch (BusinessProcessException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	fp.validate();
+	super.validate(actioncontext);
+}
+
+public void valorizzaInfoDocEle(ActionContext context, Fattura_passivaBulk fp) throws BusinessProcessException {
+
+	try {
+
+		FatturaPassivaComponentSession comp = (FatturaPassivaComponentSession)createComponentSession();
+		fp = comp.valorizzaInfoDocEle(context.getUserContext(), fp);
+
+		setModel(context, fp);
+
+	}catch(it.cnr.jada.comp.ComponentException ex){
+		throw handleException(ex);
+	}catch(java.rmi.RemoteException ex){
+		throw handleException(ex);
+	}
+}
+
 
 	/**
 	 * Il metodo è stato sovrascritto per consentire all'utente di modificare lo

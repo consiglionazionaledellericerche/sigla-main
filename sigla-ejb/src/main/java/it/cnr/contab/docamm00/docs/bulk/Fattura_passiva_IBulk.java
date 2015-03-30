@@ -1,7 +1,9 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
+import it.cnr.contab.client.docamm.Terzo;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaIBP;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.CRUDBP;
 
 /**
@@ -323,6 +325,7 @@ public boolean isROStato_pagamento_fondo_eco() {
 			hasStorni() || 
 			hasAddebiti() ||
 			isEstera() ||
+			isElettronica() ||
 			(getFl_san_marino_con_iva() != null && getFl_san_marino_con_iva().booleanValue()) ||
 			(getFl_san_marino_senza_iva() != null && getFl_san_marino_senza_iva().booleanValue());// ||
 		//(getFl_spedizioniere() != null && getFl_spedizioniere().booleanValue()) ||
@@ -404,4 +407,6 @@ public void setPg_fattura_passiva_fat_clgs(java.lang.Long pg_fattura_passiva_fat
 public void setStorniHashMap(java.util.HashMap newStorniHashMap) {
 	storniHashMap = newStorniHashMap;
 }
+
 }
+

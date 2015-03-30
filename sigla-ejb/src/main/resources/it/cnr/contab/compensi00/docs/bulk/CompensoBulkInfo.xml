@@ -100,6 +100,7 @@
 		property="fl_accantona_add_terr"
 		inputType="CHECKBOX"		
 		enabledOnInsert = "false"
+		enabledOnEdit = "false"
 		enabledOnSearch = "false"
 		enabledOnFreeSearch = "true"
 		label="Rateizzazione addizionali irpef"/>
@@ -291,6 +292,16 @@
 		enabledOnSearch = "true"
 		enabledOnFreeSearch = "true"
 		label="Data scadenza" />
+	<fieldProperty
+		name="fl_documento_ele"
+		property="fl_documento_ele"
+		inputType="CHECKBOX"
+		nullable="true"
+		enabledOnInsert = "false"
+		enabledOnEdit = "false"
+		enabledOnSearch = "false"
+		enabledOnFreeSearch = "true"
+		label="Documento elettronico" />		
 /****************** TERZO ********************/
 	<fieldProperty
 		name="find_terzo"
@@ -1598,6 +1609,7 @@
 	<formFieldProperty name="esercizio_fattura_fornitore" />
 	<formFieldProperty name="dt_fattura_fornitore" />
 	<formFieldProperty name="fl_generata_fattura" />
+	<formFieldProperty name="fl_documento_ele" />	
 	<formFieldProperty name="pgDocContPrincipale" />
 	<formFieldProperty name="dsDocContPrincipale" />
 	<formFieldProperty name="fl_diaria" />
@@ -1748,6 +1760,7 @@
 	<findFieldProperty name="esercizio_fattura_fornitore" />
 	<findFieldProperty name="dt_fattura_fornitore" />
 	<findFieldProperty name="fl_generata_fattura" />
+	<findFieldProperty name="fl_documento_ele" />
 	<findFieldProperty name="fl_diaria" />
 	<findFieldProperty name="fl_compenso_stipendi" />
 	<findFieldProperty name="fl_compenso_conguaglio" />

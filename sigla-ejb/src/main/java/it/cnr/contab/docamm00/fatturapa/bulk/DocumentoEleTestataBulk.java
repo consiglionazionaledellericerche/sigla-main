@@ -3,8 +3,10 @@
  * Date 25/02/2015
  */
 package it.cnr.contab.docamm00.fatturapa.bulk;
-
+import java.util.Iterator;
+import java.util.List;
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
+import it.cnr.contab.compensi00.docs.bulk.Minicarriera_rataBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
@@ -19,6 +21,7 @@ import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.util.OrderedHashtable;
 import it.gov.fatturapa.sdi.fatturapa.v1.ModalitaPagamentoType;
+import it.gov.fatturapa.sdi.fatturapa.v1.TipoCassaType;
 import it.gov.fatturapa.sdi.fatturapa.v1.TipoDocumentoType;
 public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
 	public static final String STATO_DOCUMENTO_TUTTI = "TUTTI";
@@ -65,7 +68,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
 		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_12.value(),"RIBA");
 		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_13.value(),"MAV");
 		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_14.value(),"quietanza erario");
-		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_15.value(),"giroconto su conti di contabilit� speciale");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_15.value(),"giroconto su conti di contabilità  speciale");
 		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_16.value(),"domiciliazione bancaria");
 		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_17.value(),"domiciliazione postale");
 		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_18.value(),"bollettino di c/c postale");
@@ -78,7 +81,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
 	 **/
 	private DocumentoEleTrasmissioneBulk documentoEleTrasmissione =  new DocumentoEleTrasmissioneBulk();
 	/**
-	 * [MODALITA_PAGAMENTO Descrive le modalità di pagamento previste per un dato terzo.]
+	 * [MODALITA_PAGAMENTO Descrive le modalitÃ  di pagamento previste per un dato terzo.]
 	 **/
 	private Modalita_pagamentoBulk modalitaPagamento =  new Modalita_pagamentoBulk();
 	
@@ -198,14 +201,14 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Descrive le modalità di pagamento previste per un dato terzo.]
+	 * Restituisce il valore di: [Descrive le modalitÃ  di pagamento previste per un dato terzo.]
 	 **/
 	public Modalita_pagamentoBulk getModalitaPagamento() {
 		return modalitaPagamento;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Descrive le modalità di pagamento previste per un dato terzo.]
+	 * Setta il valore di: [Descrive le modalitÃ  di pagamento previste per un dato terzo.]
 	 **/
 	public void setModalitaPagamento(Modalita_pagamentoBulk modalitaPagamento)  {
 		this.modalitaPagamento=modalitaPagamento;
@@ -392,4 +395,89 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
 				concat("_").concat(prefix).concat("_").
 				concat(Utility.lpad(getPg_ver_rec(), 3, '0')).concat(".xml");
 	}	
+	
+	public java.math.BigDecimal calcolaImLordoPercipiente(DocumentoEleTestataBulk eleTestata) {
+
+		java.math.BigDecimal imponiCassa = new java.math.BigDecimal(0);
+		java.math.BigDecimal imponiCassaINPS = new java.math.BigDecimal(0);
+		
+		if(eleTestata.getDocEleTributiColl()!=null)
+		{	
+		
+			for (Iterator i = eleTestata.getDocEleTributiColl().iterator(); i.hasNext();)
+			{	
+				DocumentoEleTributiBulk tributi = ((DocumentoEleTributiBulk)i.next());
+				if (tributi.getTipoRiga()!=null && tributi.getTipoRiga().equals(DocumentoEleTributiBulk.TIPO_RIGA_C))
+				{	
+					imponiCassa = Utility.nvl(tributi.getImponibileCassa());
+					   if (	tributi.getTipoTributo()!=null && tributi.getTipoTributo().equalsIgnoreCase(TipoCassaType.TC_22.value()))
+						
+						   imponiCassaINPS = Utility.nvl(tributi.getImponibileCassa());
+				}
+				
+			}
+			if (imponiCassaINPS.compareTo(new java.math.BigDecimal(0)) != 0)
+				return imponiCassaINPS;
+			if (imponiCassa.compareTo(new java.math.BigDecimal(0)) != 0)
+				return imponiCassa;
+		}
+		
+		java.math.BigDecimal impoIva = new java.math.BigDecimal(0);
+		
+		if(eleTestata.getDocEleIVAColl()!=null)
+		{	
+		
+			for (Iterator i = eleTestata.getDocEleIVAColl().iterator(); i.hasNext();)
+			{	
+				DocumentoEleIvaBulk iva = ((DocumentoEleIvaBulk)i.next());
+				impoIva = Utility.nvl(iva.getImponibileImporto());
+			}
+				
+			if (impoIva.compareTo(new java.math.BigDecimal(0)) != 0)
+				return impoIva; 
+
+		}
+		
+		return new java.math.BigDecimal(0);
+	}
+	
+	public java.math.BigDecimal calcolaImQuotaEsenteNonImpo(DocumentoEleTestataBulk eleTestata) {
+
+		java.math.BigDecimal quotaEsenteNonImpo = new java.math.BigDecimal(0);
+		
+		if(eleTestata.getDocEleIVAColl()!=null)
+		{	
+		
+			for (Iterator i = eleTestata.getDocEleIVAColl().iterator(); i.hasNext();)
+			{	
+				DocumentoEleIvaBulk iva = ((DocumentoEleIvaBulk)i.next());
+				if(iva.getNatura()!= null && 
+				   (iva.getNatura().compareToIgnoreCase("N1")==0
+				    ||
+				    iva.getNatura().compareToIgnoreCase("N3")==0
+				    )
+				  )
+					quotaEsenteNonImpo = quotaEsenteNonImpo.add(Utility.nvl(iva.getImponibileImporto()));
+			}
+		}
+		return quotaEsenteNonImpo;
+	}
+	public java.math.BigDecimal calcolaImQuotaEsente(DocumentoEleTestataBulk eleTestata) {
+
+		java.math.BigDecimal quotaEsente = new java.math.BigDecimal(0);
+		
+		if(eleTestata.getDocEleIVAColl()!=null)
+		{	
+		
+			for (Iterator i = eleTestata.getDocEleIVAColl().iterator(); i.hasNext();)
+			{	
+				DocumentoEleIvaBulk iva = ((DocumentoEleIvaBulk)i.next());
+				if(iva.getNatura()!= null && 
+				   iva.getNatura().compareToIgnoreCase("N1")!=0 &&
+				   iva.getNatura().compareToIgnoreCase("N3")!=0)
+					quotaEsente = quotaEsente.add(Utility.nvl(iva.getImponibileImporto()));
+			}
+		}
+		return quotaEsente;
+	}
 }

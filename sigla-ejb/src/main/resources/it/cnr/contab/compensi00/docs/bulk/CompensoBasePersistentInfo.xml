@@ -784,7 +784,15 @@
 			columnName="CAUSALE"
 			propertyName="causale"
 			sqlTypeName="VARCHAR"
-			columnSize="10"/>			
+			columnSize="10"/>	
+		<columnMapping
+			columnName="FL_DOCUMENTO_ELE"
+			propertyName="fl_documento_ele"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+					
 	</defaultColumnMap>
 	<persistentProperty
 		name="cognome" />
@@ -1053,5 +1061,7 @@
 	<persistentProperty
 		name="causale" />								
 	<persistentProperty
-		name="pg_trovato" />		
+		name="pg_trovato" />
+	<persistentProperty
+		name="fl_documento_ele" />		
 </SQLPersistentInfo>
