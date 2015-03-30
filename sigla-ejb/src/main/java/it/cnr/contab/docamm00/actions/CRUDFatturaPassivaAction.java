@@ -3295,13 +3295,15 @@ public Forward doOnIstituzionaleCommercialeChange(ActionContext context) {
 		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
 		Fattura_passivaBulk fattura = (Fattura_passivaBulk)bp.getModel();
 		//se c'è almeno un dettaglio non faccio più modificare la modalità di pagamento
+		//commentato perchè per le fatture elettroniche hanno già i dettagli caricati
+		/*
 		if(fattura.getFattura_passiva_dettColl().size()>0)
 		{
 			if (old_modalita!=null)
 			   fattura.setModalita_pagamento(old_modalita);
 			throw new it.cnr.jada.comp.ApplicationException("Esiste almeno un dettaglio e quindi la Modalità di pagamento deve essere cambiata sul dettaglio stesso.");			
 		}
-				
+		*/		
 		if (fattura.getModalita_pagamento() != null) {
 			FatturaPassivaComponentSession fpcs = (FatturaPassivaComponentSession)bp.createComponentSession();
 			java.util.Collection coll = fpcs.findListabanche(context.getUserContext(), fattura);
