@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
+import javax.mail.AuthenticationFailedException;
 import javax.mail.BodyPart;
 import javax.mail.Folder;
 import javax.mail.Message;
@@ -142,8 +143,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		    	terms.add(new FromStringTerm(pecSDIFromStringTerm));
 		    	terms.add(new SubjectTerm(pecSDISubjectRiceviFattureTerm));
 		    	Message messages[] = inbox.search(new AndTerm(terms.toArray(new SearchTerm[terms.size()])));
-		    	if (logger.isDebugEnabled())
-		    		logger.debug("Recuperati " + messages.length +" messaggi dalla casella PEC:" + userName);
+		    	logger.info("Recuperati " + messages.length +" messaggi dalla casella PEC:" + userName);
 			    for (int i = 0; i < messages.length; i++) {
 			    	try {
 			    		Message message = messages[i];
@@ -187,6 +187,8 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		    }
 		    inbox.close(true);
 			store.close();
+		} catch (AuthenticationFailedException e) {
+			logger.error("Error while scan PEC email:" +userName + " - password:"+password);
 		} catch (NoSuchProviderException e) {
 			logger.error("Error while scan PEC email:" +userName, e);
 		} catch (MessagingException e) {
