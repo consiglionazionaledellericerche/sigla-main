@@ -9,6 +9,7 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -200,14 +201,14 @@ public class CMISFolderFatturaAttiva extends OggettoBulk {
 		return this.getFattura_attivaBulk().getModalita_pagamento_uo().getCd_modalita_pag();
 	}
 
-	public CMISPath getCMISPrincipalPath(SiglaCMISService cmisService){
+	public CMISPath getCMISPrincipalPath(SiglaCMISService cmisService) throws ApplicationException{
 		CMISPath cmisPath = SpringUtil.getBean("cmisPathFatture",CMISPath.class);
 		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, this.getFattura_attivaBulk().getCd_uo_origine(), getFattura_attivaBulk().getCd_uo_origine(), getFattura_attivaBulk().getCd_uo_origine());
 		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, "Fatture Attive", "Fatture Attive", "Fatture Attive");
 		return cmisPath;
 	}
 
-	public CMISPath getCMISPath(SiglaCMISService cmisService){
+	public CMISPath getCMISPath(SiglaCMISService cmisService) throws ApplicationException{
 		CMISPath cmisPath = this.getCMISPrincipalPath(cmisService);
 		if (cmisPath!=null) {
 			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, this.getEsercizioFattura().toString(), "Esercizio "+this.getEsercizioFattura().toString(), "Esercizio "+this.getEsercizioFattura().toString());

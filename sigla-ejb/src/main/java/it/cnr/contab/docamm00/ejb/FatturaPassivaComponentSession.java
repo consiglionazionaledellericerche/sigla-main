@@ -1,6 +1,7 @@
 package it.cnr.contab.docamm00.ejb;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.jada.UserContext;
@@ -9,6 +10,7 @@ import it.cnr.jada.persistency.PersistencyException;
 
 import java.sql.Timestamp;
 import java.util.List;
+
 import javax.ejb.Remote;
 @Remote
 public interface FatturaPassivaComponentSession extends it.cnr.contab.docamm00.comp.DocumentoAmministrativoComponentSession, it.cnr.jada.ejb.CRUDComponentSession {
@@ -73,4 +75,5 @@ java.util.List<it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk> ricercaFatt
 TrovatoBulk ricercaDatiTrovato(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException;
 TrovatoBulk ricercaDatiTrovatoValido(it.cnr.jada.UserContext userContext,Long trovato)throws ComponentException,java.rmi.RemoteException,PersistencyException;
 void inserisciProgUnivoco(it.cnr.jada.UserContext userContext,it.cnr.contab.docamm00.docs.bulk.ElaboraNumUnicoFatturaPBulk lancio)throws ComponentException,java.rmi.RemoteException,PersistencyException;
+Fattura_passivaBulk caricaAllegatiBulk(UserContext userContext, Fattura_passivaBulk fattura) throws ComponentException,java.rmi.RemoteException;
 }

@@ -443,9 +443,14 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		} catch (ApplicationException e) {
 			throw handleException(e);
 		}
-		Folder folder = contrattoService.getFolderContratto((ContrattoBulk) getModel());
-		if (folder != null)
-			contrattoService.updateProperties(getModel(), folder);
+		Folder folder;
+		try {
+			folder = contrattoService.getFolderContratto((ContrattoBulk) getModel());
+			if (folder != null)
+				contrattoService.updateProperties(getModel(), folder);
+		} catch (ApplicationException e) {
+			throw handleException(e);
+		}
 	}
 	
 	@Override
@@ -463,7 +468,12 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	public OggettoBulk initializeModelForEdit(ActionContext actioncontext,
 			OggettoBulk oggettobulk) throws BusinessProcessException {
 		ContrattoBulk contratto = (ContrattoBulk)super.initializeModelForEdit(actioncontext, oggettobulk);
-		Folder folder = contrattoService.getFolderContratto(contratto);
+		Folder folder;
+		try {
+			folder = contrattoService.getFolderContratto(contratto);
+		} catch (ApplicationException e) {
+			throw handleException(e);
+		}
 		if (folder != null){
 			ItemIterable<CmisObject> children = contrattoService.getChildren(folder);
 			for (CmisObject child : children) {
@@ -482,7 +492,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		return contratto;
 	}
 
-	public String getNomeAllegato(){
+	public String getNomeAllegato() throws ApplicationException{
 		AllegatoContrattoDocumentBulk allegato = (AllegatoContrattoDocumentBulk)getCrudArchivioAllegati().getModel();
 		if (allegato != null && allegato.isNodePresent()){
 			CmisObject node = contrattoService.getNodeByNodeRef(allegato.getNodeId());			
@@ -491,7 +501,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		return null;
 	}
 	
-	public void scaricaAllegato(ActionContext actioncontext) throws IOException, ServletException {
+	public void scaricaAllegato(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
 		AllegatoContrattoDocumentBulk allegato = (AllegatoContrattoDocumentBulk)getCrudArchivioAllegati().getModel();
 		Document node = (Document) contrattoService.getNodeByNodeRef(allegato.getNodeId());
 		InputStream is = contrattoService.getResource(node);

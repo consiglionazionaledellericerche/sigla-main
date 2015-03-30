@@ -12,6 +12,7 @@ import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_rappBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_varBulk;
 import it.cnr.contab.incarichi00.cmis.CMISContrattiAttachment;
 import it.cnr.contab.incarichi00.cmis.CMISContrattiProperty;
+import it.cnr.jada.comp.ApplicationException;
 
 import java.io.File;
 import java.io.IOException;
@@ -188,7 +189,7 @@ public class CMISFileIncarichi extends CMISFile implements CMISTypeName{
     	return "cmis:document";
 	}
 
-	public CMISPath getCMISParentPath(SiglaCMISService cmisService){
+	public CMISPath getCMISParentPath(SiglaCMISService cmisService) throws ApplicationException{
     	if (getIncaricoArchivio()!=null) {
     		if (getIncaricoArchivio() instanceof Incarichi_repertorio_archivioBulk &&
        			((Incarichi_repertorio_archivioBulk)getIncaricoArchivio()).getIncarichi_repertorio()!=null)
@@ -203,7 +204,7 @@ public class CMISFileIncarichi extends CMISFile implements CMISTypeName{
 		return null;
 	}
 	
-	public CMISPath getCMISAlternativeParentPath(SiglaCMISService cmisService){
+	public CMISPath getCMISAlternativeParentPath(SiglaCMISService cmisService) throws ApplicationException{
 		CMISPath cmisPath = null;
     	if (getIncaricoArchivio()!=null) {
     		if (getIncaricoArchivio() instanceof Incarichi_repertorio_archivioBulk &&

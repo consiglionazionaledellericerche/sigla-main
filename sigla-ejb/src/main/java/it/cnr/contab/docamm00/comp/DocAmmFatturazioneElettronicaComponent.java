@@ -423,7 +423,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 						}
 					}
 					
-					datiGeneraliDocumento.setCausale( listaCausali );
+					datiGeneraliDocumento.getCausale().addAll(listaCausali);
 				}
 				datiGenerali.setDatiGeneraliDocumento(datiGeneraliDocumento);
 				
@@ -464,7 +464,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 					preparaDatiContratto(userContext, mappaContratti, riga);
 					impostaDatiPerRiepilogoDatiIva(listaRiepilogo, riga);
 				}
-				datiBeniServizi.setDettaglioLinee(listaDettagli);
+				datiBeniServizi.getDettaglioLinee().addAll(listaDettagli);
 
 				impostaDatiContratto(factory, datiGenerali, mappaContratti);
 				impostaDatiDocumentiCollegati(factory, datiGenerali, mappaDocumentiCollegati, dettagliNoteSenzaContratto);
@@ -501,7 +501,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 					impostaDatiNonImponibile(fattura, riepilogo, datiRiepilogo);
 					listaRiepilogoType.add(datiRiepilogo);
 				}
-				datiBeniServizi.setDatiRiepilogo(listaRiepilogoType);
+				datiBeniServizi.getDatiRiepilogo().addAll(listaRiepilogoType);
 
 				fatturaBodyType.setDatiBeniServizi(datiBeniServizi);
 
@@ -519,16 +519,16 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 					dettaglioPagamento.setCodicePagamento(fattura.recuperoIdFatturaAsString());
 					listaDettagliPagamento.add(dettaglioPagamento);
 				}
-				datiPagamento.setDettaglioPagamento(listaDettagliPagamento);
+				datiPagamento.getDettaglioPagamento().addAll(listaDettagliPagamento);
 
 				List<DatiPagamentoType> listaDatiPagamento = new ArrayList<DatiPagamentoType>();
 				listaDatiPagamento.add(datiPagamento);
-				fatturaBodyType.setDatiPagamento(listaDatiPagamento);
+				fatturaBodyType.getDatiPagamento().addAll(listaDatiPagamento);
 
 
 				List<FatturaElettronicaBodyType> listaFattureBody = new ArrayList<FatturaElettronicaBodyType>();
 				listaFattureBody.add(fatturaBodyType);
-				fatturaType.setFatturaElettronicaBody(listaFattureBody);
+				fatturaType.getFatturaElettronicaBody().addAll(listaFattureBody);
 			}
 			
 			return factory.createFatturaElettronica(fatturaType);
@@ -560,7 +560,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				List<Integer> listaLinee = mappaContratti.get(contratto);
 		        DatiDocumentiCorrelatiType datiContratto = factory.createDatiDocumentiCorrelatiType();
 				if (mappaContratti.size() > 1){
-					datiContratto.setRiferimentoNumeroLinea(listaLinee);
+					datiContratto.getRiferimentoNumeroLinea().addAll(listaLinee);
 				}
 
 		        datiContratto.setIdDocumento(contratto.getEsercizio() + "/" + contratto.getPg_contratto().toString());
@@ -569,7 +569,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		        listaDatiContratto.add(datiContratto);
 			}
 		    
-		    datiGenerali.setDatiContratto(listaDatiContratto);
+		    datiGenerali.getDatiContratto().addAll(listaDatiContratto);
 		}
 	}
 
@@ -595,7 +595,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 					List<Integer> listaLinee = mappaContratti.get(contratto);
 			        DatiDocumentiCorrelatiType datiDocumentiCollegati = factory.createDatiDocumentiCorrelatiType();
 					if (mappaContratti.size() > 1){
-						datiDocumentiCollegati.setRiferimentoNumeroLinea(listaLinee);
+						datiDocumentiCollegati.getRiferimentoNumeroLinea().addAll(listaLinee);
 					}
 
 			        datiDocumentiCollegati.setIdDocumento(fattura.recuperoIdFatturaAsString());
@@ -609,7 +609,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				List<Integer> listaLinee = dettagliNoteSenzaContratto.get(fatturaSenzaContratto);
 		        DatiDocumentiCorrelatiType datiDocumentiCollegati = factory.createDatiDocumentiCorrelatiType();
 				if (dettagliNoteSenzaContratto.size() > 1){
-					datiDocumentiCollegati.setRiferimentoNumeroLinea(listaLinee);
+					datiDocumentiCollegati.getRiferimentoNumeroLinea().addAll(listaLinee);
 				}
 
 		        datiDocumentiCollegati.setIdDocumento(fatturaSenzaContratto.recuperoIdFatturaAsString());
@@ -617,7 +617,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		        listaDatiDocumentiCollegati.add(datiDocumentiCollegati);
 			}
 		    
-		    datiGenerali.setDatiFattureCollegate(listaDatiDocumentiCollegati);
+		    datiGenerali.getDatiFattureCollegate().addAll(listaDatiDocumentiCollegati);
 		}
 	}
 

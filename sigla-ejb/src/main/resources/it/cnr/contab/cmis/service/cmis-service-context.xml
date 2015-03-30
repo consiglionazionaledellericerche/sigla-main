@@ -52,6 +52,9 @@
  	<bean id="cmisPathFatture" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
      	<property name="path" value="/Comunicazioni dal CNR"/>
     </bean>    
+    <bean id="cmisPathFatturePassive" class="it.cnr.contab.cmis.service.CMISPath" scope="prototype">
+        <property name="path" value="/Comunicazioni al CNR/Fatture passive"/>
+    </bean>    
 
     <bean id="pdgVariazioniService" class="it.cnr.contab.pdg00.service.PdgVariazioniService" parent="cmisService"/>
     <bean id="contrattiService" class="it.cnr.contab.incarichi00.service.ContrattiService" parent="cmisService"/>

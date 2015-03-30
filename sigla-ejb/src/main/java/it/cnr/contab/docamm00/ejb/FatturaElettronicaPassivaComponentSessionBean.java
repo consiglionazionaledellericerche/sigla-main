@@ -1,0 +1,127 @@
+package it.cnr.contab.docamm00.ejb;
+import java.math.BigInteger;
+
+import it.cnr.contab.docamm00.comp.FatturaElettronicaPassivaComponent;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.TipoIntegrazioneSDI;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.CRUDComponent;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.comp.NoRollbackException;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.EJBException;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+@Stateless(name="CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession")
+public class FatturaElettronicaPassivaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements FatturaElettronicaPassivaComponentSession {
+@PostConstruct
+	public void ejbCreate() throws javax.ejb.CreateException {
+		componentObj = new it.cnr.contab.docamm00.comp.FatturaElettronicaPassivaComponent();
+	}
+	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {
+		return new FatturaElettronicaPassivaComponentSessionBean();
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public OggettoBulk creaDocumento(UserContext usercontext,
+			OggettoBulk oggettobulk) throws ComponentException, EJBException {
+		return super.creaConBulk(usercontext, oggettobulk);
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public void completaDocumento(UserContext usercontext, DocumentoEleTrasmissioneBulk documentoEleTrasmissioneBulk) throws ComponentException, EJBException{
+        pre_component_invocation(usercontext, componentObj);
+        try{
+            ((FatturaElettronicaPassivaComponent)componentObj).completaDocumento(usercontext, documentoEleTrasmissioneBulk);
+            component_invocation_succes(usercontext, componentObj);
+        }catch(NoRollbackException norollbackexception){
+            component_invocation_succes(usercontext, componentObj);
+            throw norollbackexception;
+        }catch(ComponentException componentexception){
+            component_invocation_failure(usercontext, componentObj);
+            throw componentexception;
+        }catch(RuntimeException runtimeexception){
+            throw uncaughtRuntimeException(usercontext, componentObj, runtimeexception);
+        }catch(Error error){
+            throw uncaughtError(usercontext, componentObj, error);
+        }
+    }
+
+	public Fattura_passivaBulk cercaFatturaPassiva(UserContext usercontext, DocumentoEleTestataBulk oggettobulk) throws ComponentException, EJBException{
+        pre_component_invocation(usercontext, componentObj);
+        try{
+        	Fattura_passivaBulk oggettobulk1 = ((FatturaElettronicaPassivaComponent)componentObj).cercaFatturaPassiva(usercontext, oggettobulk);
+            component_invocation_succes(usercontext, componentObj);
+            return oggettobulk1;
+        }catch(NoRollbackException norollbackexception){
+            component_invocation_succes(usercontext, componentObj);
+            throw norollbackexception;
+        }catch(ComponentException componentexception){
+            component_invocation_failure(usercontext, componentObj);
+            throw componentexception;
+        }catch(RuntimeException runtimeexception){
+            throw uncaughtRuntimeException(usercontext, componentObj, runtimeexception);
+        }catch(Error error){
+            throw uncaughtError(usercontext, componentObj, error);
+        }
+    }	
+	public Fattura_passivaBulk cercaFatturaPassivaForNota(UserContext usercontext, DocumentoEleTestataBulk oggettobulk) throws ComponentException, EJBException{
+        pre_component_invocation(usercontext, componentObj);
+        try{
+        	Fattura_passivaBulk oggettobulk1 = ((FatturaElettronicaPassivaComponent)componentObj).cercaFatturaPassivaForNota(usercontext, oggettobulk);
+            component_invocation_succes(usercontext, componentObj);
+            return oggettobulk1;
+        }catch(NoRollbackException norollbackexception){
+            component_invocation_succes(usercontext, componentObj);
+            throw norollbackexception;
+        }catch(ComponentException componentexception){
+            component_invocation_failure(usercontext, componentObj);
+            throw componentexception;
+        }catch(RuntimeException runtimeexception){
+            throw uncaughtRuntimeException(usercontext, componentObj, runtimeexception);
+        }catch(Error error){
+            throw uncaughtError(usercontext, componentObj, error);
+        }
+    }
+	public void scanPECProtocollo(UserContext usercontext) throws ComponentException, EJBException{
+        pre_component_invocation(usercontext, componentObj);
+        try{
+        	((FatturaElettronicaPassivaComponent)componentObj).scanPECProtocollo(usercontext);
+            component_invocation_succes(usercontext, componentObj);
+        }catch(NoRollbackException norollbackexception){
+            component_invocation_succes(usercontext, componentObj);
+            throw norollbackexception;
+        }catch(ComponentException componentexception){
+            component_invocation_failure(usercontext, componentObj);
+            throw componentexception;
+        }catch(RuntimeException runtimeexception){
+            throw uncaughtRuntimeException(usercontext, componentObj, runtimeexception);
+        }catch(Error error){
+            throw uncaughtError(usercontext, componentObj, error);
+        }
+    }		
+
+	public void notificaEsito(UserContext usercontext, TipoIntegrazioneSDI tipoIntegrazioneSDI, DocumentoEleTestataBulk documentoEleTestataBulk) throws ComponentException, EJBException{
+        pre_component_invocation(usercontext, componentObj);
+        try{
+        	((FatturaElettronicaPassivaComponent)componentObj).notificaEsito(usercontext, tipoIntegrazioneSDI, documentoEleTestataBulk);
+            component_invocation_succes(usercontext, componentObj);
+        }catch(NoRollbackException norollbackexception){
+            component_invocation_succes(usercontext, componentObj);
+            throw norollbackexception;
+        }catch(ComponentException componentexception){
+            component_invocation_failure(usercontext, componentObj);
+            throw componentexception;
+        }catch(RuntimeException runtimeexception){
+            throw uncaughtRuntimeException(usercontext, componentObj, runtimeexception);
+        }catch(Error error){
+            throw uncaughtError(usercontext, componentObj, error);
+        }
+    }		
+	
+}

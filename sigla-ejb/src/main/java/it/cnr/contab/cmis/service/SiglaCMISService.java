@@ -6,6 +6,7 @@ import it.cnr.contab.cmis.acl.ACLType;
 import it.cnr.contab.cmis.acl.Permission;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -75,7 +76,30 @@ public class SiglaCMISService {
 	
 	protected Session siglaSession;
 	protected BindingSession siglaBindingSession;
+
 	
+	public Session getSiglaSession() throws ApplicationException {
+		if (siglaSession == null) {
+			try {
+				initializeSession();
+			} catch(Exception _ex) {
+				throw new ApplicationException("Il Sitema documentale non è al momento raggiungibile! Contattare il supporto informatico.");
+			}
+		}
+		return siglaSession;
+	}
+
+	public BindingSession getSiglaBindingSession() throws ApplicationException {
+		if (siglaBindingSession == null) {
+			try {
+				initializeSession();
+			} catch(Exception _ex) {
+				throw new ApplicationException("Il Sitema documentale non è al momento raggiungibile! Contattare il supporto informatico.");
+			}
+		}
+		return siglaBindingSession;
+	}
+
 	public void setCmisBulkInfo(CMISBulkInfo<?> cmisBulkInfo) {
 		this.cmisBulkInfo = cmisBulkInfo;
 	}
@@ -88,12 +112,19 @@ public class SiglaCMISService {
 		this.serverParameters = serverParameters;
 	}
 
-	public void init(){
-		siglaSession = createSession();
+	private void initializeSession() {
 		OperationContext operationContext = OperationContextUtils.createMaximumOperationContext();
 		operationContext.setMaxItemsPerPage(Integer.MAX_VALUE);
+		siglaSession = createSession();
 		siglaSession.setDefaultContext(operationContext);
-		siglaBindingSession = createBindingSession();
+		siglaBindingSession = createBindingSession();					
+	}
+	public void init(){
+		try {
+			initializeSession();			
+		} catch (Exception _ex) {
+			logger.error("Cannot connect to cmis server!", _ex);
+		}
 	}
 
     private Session createSession(){
@@ -107,6 +138,7 @@ public class SiglaCMISService {
         sessionParameters.put(SessionParameter.USER, userName);
         sessionParameters.put(SessionParameter.PASSWORD, password);
 
+        sessionParameters.put(SessionParameter.CONNECT_TIMEOUT, "5000");
         sessionParameters.put(SessionParameter.REPOSITORY_ID, sessionFactory.getRepositories(sessionParameters).get(0).getId());
         sessionParameters.put(SessionParameter.LOCALE_ISO3166_COUNTRY, Locale.ITALY.getCountry());
         sessionParameters.put(SessionParameter.LOCALE_ISO639_LANGUAGE, Locale.ITALY.getLanguage());
@@ -122,6 +154,7 @@ public class SiglaCMISService {
         }
         Map<String, String> sessionParameters = new HashMap<String, String>();
         sessionParameters.putAll(serverParameters);
+        sessionParameters.put(SessionParameter.CONNECT_TIMEOUT, "5000");
         sessionParameters.put(SessionParameter.USER, serverParameters.get("user.admin.username"));
         sessionParameters.put(SessionParameter.PASSWORD, serverParameters.get("user.admin.password"));
         if (!sessionParameters.containsKey(SessionParameter.AUTHENTICATION_PROVIDER_CLASS)) {
@@ -183,31 +216,31 @@ public class SiglaCMISService {
 		return baseURL;
 	}
 	
-	public CmisObject getNodeByPath(CMISPath cmisPath){
+	public CmisObject getNodeByPath(CMISPath cmisPath) throws ApplicationException{
 		return getNodeByPath(cmisPath.getPath());
 	}
 
-	public CmisObject getNodeByPath(String path){
-		return siglaSession.getObjectByPath(path);
+	public CmisObject getNodeByPath(String path) throws ApplicationException{
+		return getSiglaSession().getObjectByPath(path);
 	}
 	
-	public CmisObject getNodeByNodeRef(String nodeRef){
-		return siglaSession.getObject(nodeRef);
+	public CmisObject getNodeByNodeRef(String nodeRef) throws ApplicationException{
+		return getSiglaSession().getObject(nodeRef);
 	}
 
 	public CmisObject getNodeByNodeRef(String nodeRef, UsernamePasswordCredentials usernamePasswordCredentials){
 		return createSession(usernamePasswordCredentials.getUserName(), usernamePasswordCredentials.getPassword()).getObject(nodeRef);
 	}
 	
-	public CMISPath createFolderIfNotPresent(CMISPath cmisPath, String folderName, String title, String description){
+	public CMISPath createFolderIfNotPresent(CMISPath cmisPath, String folderName, String title, String description) throws ApplicationException{
 		return createFolderIfNotPresent(cmisPath, folderName, title, description, null);
 	}
 
-	public CMISPath createFolderIfNotPresent(CMISPath cmisPath, String folderName, String title, String description, OggettoBulk oggettoBulk){
+	public CMISPath createFolderIfNotPresent(CMISPath cmisPath, String folderName, String title, String description, OggettoBulk oggettoBulk) throws ApplicationException{
 		return createFolderIfNotPresent(cmisPath, folderName, title, description, oggettoBulk, null);
 	}
 
-	public CMISPath createFolderIfNotPresent(CMISPath cmisPath, String folderName, String title, String description, OggettoBulk oggettoBulk, String objectTypeName){
+	public CMISPath createFolderIfNotPresent(CMISPath cmisPath, String folderName, String title, String description, OggettoBulk oggettoBulk, String objectTypeName) throws ApplicationException{
 		CmisObject cmisObject = getNodeByPath(cmisPath);
 		Map<String, Object> metadataProperties = new HashMap<String, Object>();
 		List<String> aspectsToAdd = new ArrayList<String>();
@@ -221,20 +254,20 @@ public class SiglaCMISService {
 				metadataProperties.put(PROPERTY_DESCRIPTION, description);
 
 			if (oggettoBulk != null) {
-				if (cmisBulkInfo.getType(siglaSession, oggettoBulk)!=null || objectTypeName!=null)
-					metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, cmisBulkInfo.getType(siglaSession, oggettoBulk).getId());
-				for (Property<?> property : cmisBulkInfo.getProperty(siglaSession, oggettoBulk)) {
+				if (cmisBulkInfo.getType(getSiglaSession(), oggettoBulk)!=null || objectTypeName!=null)
+					metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, cmisBulkInfo.getType(getSiglaSession(), oggettoBulk).getId());
+				for (Property<?> property : cmisBulkInfo.getProperty(getSiglaSession(), oggettoBulk)) {
 					metadataProperties.put(property.getId(), property.getValue());
 				}
-				aspectsToAdd.addAll(cmisBulkInfo.getAspect(siglaSession, oggettoBulk));
-				for (Property<?> property : cmisBulkInfo.getAspectProperty(siglaSession, oggettoBulk)) {
+				aspectsToAdd.addAll(cmisBulkInfo.getAspect(getSiglaSession(), oggettoBulk));
+				for (Property<?> property : cmisBulkInfo.getAspectProperty(getSiglaSession(), oggettoBulk)) {
 					metadataProperties.put(property.getId(), property.getValue());
 				}
 			} else {
 				metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, BaseTypeId.CMIS_FOLDER.value());				
 			}
 			metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, aspectsToAdd);
-			Folder folder = (Folder) getNodeByNodeRef(siglaSession.createFolder(metadataProperties, cmisObject).getId());
+			Folder folder = (Folder) getNodeByNodeRef(getSiglaSession().createFolder(metadataProperties, cmisObject).getId());
 			return CMISPath.construct(folder.getPath());
 		}catch(CmisContentAlreadyExistsException _ex){
 			if (oggettoBulk!=null){
@@ -252,11 +285,11 @@ public class SiglaCMISService {
 	}
 	
 
-	public void deleteNode(CmisObject cmisObject){
+	public void deleteNode(CmisObject cmisObject) throws ApplicationException{
 		if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_FOLDER))
 			((Folder)cmisObject).deleteTree(true, UnfileObject.DELETE, false);
 		else	
-			siglaSession.delete(cmisObject);
+			getSiglaSession().delete(cmisObject);
 	}
 	
 	public InputStream getResource(CmisObject cmisObject){
@@ -272,12 +305,24 @@ public class SiglaCMISService {
 	}
 	
 	public Document storeSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name, 
-			CMISPath cmisPath, Permission... permissions){
+			CMISPath cmisPath, Permission... permissions) throws ApplicationException{
 		return storeSimpleDocument(oggettoBulk, inputStream, contentType, name, cmisPath, null, false, permissions);
 	}
 	
+	public Document storeSimpleDocument(InputStream inputStream, String contentType, CMISPath cmisPath, Map<String, Object> metadataProperties) throws ApplicationException {
+		CmisObject parentNode = getNodeByPath(cmisPath);
+		ContentStream contentStream = new ContentStreamImpl(
+				String.valueOf(metadataProperties.get(PropertyIds.NAME)),
+				BigInteger.ZERO,
+				contentType,
+				inputStream);			
+		Document node = (Document) getNodeByNodeRef(
+				getSiglaSession().createDocument(metadataProperties, parentNode, contentStream, VersioningState.MAJOR).getId());
+		return node;		
+	}
+	
 	public Document storeSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name, 
-				CMISPath cmisPath, String objectTypeName, boolean makeVersionable, Permission... permissions){
+				CMISPath cmisPath, String objectTypeName, boolean makeVersionable, Permission... permissions) throws ApplicationException{
 		CmisObject parentNode = getNodeByPath(cmisPath);
 		Map<String, Object> metadataProperties = new HashMap<String, Object>();		
 		try {
@@ -288,21 +333,21 @@ public class SiglaCMISService {
 					BigInteger.ZERO,
 					contentType,
 					inputStream);			
-			if (cmisBulkInfo.getType(siglaSession, oggettoBulk)!=null || objectTypeName!=null)
-				metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, cmisBulkInfo.getType(siglaSession, oggettoBulk).getId());			
-			for (Property<?> property : cmisBulkInfo.getProperty(siglaSession, oggettoBulk)) {
+			if (cmisBulkInfo.getType(getSiglaSession(), oggettoBulk)!=null || objectTypeName!=null)
+				metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, cmisBulkInfo.getType(getSiglaSession(), oggettoBulk).getId());			
+			for (Property<?> property : cmisBulkInfo.getProperty(getSiglaSession(), oggettoBulk)) {
 				metadataProperties.put(property.getId(), property.getValue());
 			}
-			for (Property<?> property : cmisBulkInfo.getAspectProperty(siglaSession, oggettoBulk)) {
+			for (Property<?> property : cmisBulkInfo.getAspectProperty(getSiglaSession(), oggettoBulk)) {
 				metadataProperties.put(property.getId(), property.getValue());
 			}			
-			metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, cmisBulkInfo.getAspect(siglaSession, oggettoBulk));
+			metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, cmisBulkInfo.getAspect(getSiglaSession(), oggettoBulk));
 			Document node = (Document) getNodeByNodeRef(
-					siglaSession.createDocument(metadataProperties, parentNode, contentStream, VersioningState.MAJOR).getId());
+					getSiglaSession().createDocument(metadataProperties, parentNode, contentStream, VersioningState.MAJOR).getId());
 			if (permissions.length > 0 ){
-				setInheritedPermission(siglaBindingSession, node.getProperty(ALFCMIS_NODEREF).getValueAsString(), Boolean.FALSE);
+				setInheritedPermission(getSiglaBindingSession(), node.getProperty(ALFCMIS_NODEREF).getValueAsString(), Boolean.FALSE);
 				if (permissions != null && permissions.length > 0) {
-					addAcl(siglaBindingSession, node.getProperty(ALFCMIS_NODEREF).getValueAsString(), Permission.convert(permissions));
+					addAcl(getSiglaBindingSession(), node.getProperty(ALFCMIS_NODEREF).getValueAsString(), Permission.convert(permissions));
 				}
 			}
 			if (makeVersionable)
@@ -316,12 +361,12 @@ public class SiglaCMISService {
 	}
 	
 	public Document restoreSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name, 
-			CMISPath cmisPath, Permission... permissions){
+			CMISPath cmisPath, Permission... permissions) throws ApplicationException{
 		return restoreSimpleDocument(oggettoBulk, inputStream, contentType, name, cmisPath, null, false, permissions);
 	}
 
 	public Document restoreSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name, 
-			CMISPath cmisPath, String objectTypeName, boolean makeVersionable, Permission... permissions){
+			CMISPath cmisPath, String objectTypeName, boolean makeVersionable, Permission... permissions) throws ApplicationException{
 		Document node = null;
 		try {
 			node = (Document) getNodeByPath(cmisPath.getPath()+
@@ -337,16 +382,16 @@ public class SiglaCMISService {
 	public void updateProperties(OggettoBulk oggettoBulk, CmisObject node){
 		try {
 			Map<String, Object> metadataProperties = new HashMap<String, Object>();
-			for (Property<?> property : cmisBulkInfo.getProperty(siglaSession, oggettoBulk)) {
+			for (Property<?> property : cmisBulkInfo.getProperty(getSiglaSession(), oggettoBulk)) {
 				metadataProperties.put(property.getId(), property.getValue());
 			}
-			for (Property<?> property : cmisBulkInfo.getAspectProperty(siglaSession, oggettoBulk)) {
+			for (Property<?> property : cmisBulkInfo.getAspectProperty(getSiglaSession(), oggettoBulk)) {
 				metadataProperties.put(property.getId(), property.getValue());
 			}			
-			metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, cmisBulkInfo.getAspect(siglaSession, oggettoBulk));
+			metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, cmisBulkInfo.getAspect(getSiglaSession(), oggettoBulk));
 			if (node.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
 				node = ((Document)node).getObjectOfLatestVersion(false);
-				node = siglaSession.getObject(node);
+				node = getSiglaSession().getObject(node);
 				node.refresh();
 			}
 			node.updateProperties(metadataProperties, true);
@@ -355,7 +400,7 @@ public class SiglaCMISService {
 		}
 	}
 
-	public Document updateContent(String nodeRef, InputStream inputStream, String contentType){
+	public Document updateContent(String nodeRef, InputStream inputStream, String contentType)throws ApplicationException{
 		Document document = (Document) getNodeByNodeRef(nodeRef);
 		ContentStream contentStream = new ContentStreamImpl(
 				document.getName(),
@@ -366,35 +411,35 @@ public class SiglaCMISService {
 		return document.getObjectOfLatestVersion(false);	
 	}
 
-	public void createRelationship(String sourceNodeRef, String sourceNodeTarget, CMISRelationship relationship){
+	public void createRelationship(String sourceNodeRef, String sourceNodeTarget, CMISRelationship relationship) throws ApplicationException{
 		Map<String, String> properties = new HashMap<String, String>();
 		properties.put(PropertyIds.OBJECT_TYPE_ID, relationship.value());
 		properties.put(PropertyIds.SOURCE_ID, sourceNodeRef);
 		properties.put(PropertyIds.TARGET_ID, sourceNodeTarget);
-		siglaSession.createRelationship(properties);
+		getSiglaSession().createRelationship(properties);
 	}
 	
-	public List<CmisObject> getRelationship(String sourceNodeRef, CMISRelationship relationship, boolean fromTarget){
+	public List<CmisObject> getRelationship(String sourceNodeRef, CMISRelationship relationship, boolean fromTarget) throws ApplicationException{
 		List<CmisObject> result = new ArrayList<CmisObject>();
-		ItemIterable<Relationship> relationships = siglaSession.getRelationships(new ObjectIdImpl(sourceNodeRef), true, 
-				fromTarget ? RelationshipDirection.TARGET : RelationshipDirection.SOURCE, null, siglaSession.getDefaultContext());
+		ItemIterable<Relationship> relationships = getSiglaSession().getRelationships(new ObjectIdImpl(sourceNodeRef), true, 
+				fromTarget ? RelationshipDirection.TARGET : RelationshipDirection.SOURCE, null, getSiglaSession().getDefaultContext());
 		if (relationships.getTotalNumItems() > 0){
 			for (Relationship rel : relationships) {
-				result.add(siglaSession.getObject(fromTarget?rel.getSource():rel.getTarget()));
+				result.add(getSiglaSession().getObject(fromTarget?rel.getSource():rel.getTarget()));
 			}
 		}		
 		return result;
 	}
 	
-	public List<CmisObject> getRelationship(String sourceNodeRef, CMISRelationship relationship){
+	public List<CmisObject> getRelationship(String sourceNodeRef, CMISRelationship relationship) throws ApplicationException{
 		return getRelationship(sourceNodeRef, relationship, false);
 	}
 	
-	public List<CmisObject> getRelationshipFromTarget(String sourceNodeRef, CMISRelationship relationship){
+	public List<CmisObject> getRelationshipFromTarget(String sourceNodeRef, CMISRelationship relationship) throws ApplicationException{
 		return getRelationship(sourceNodeRef, relationship, true);	
 	}
 	
-	public void makeVersionable(CmisObject node){
+	public void makeVersionable(CmisObject node) throws ApplicationException{
 		addAutoVersion((Document) node, false);
 	}
 	
@@ -402,27 +447,27 @@ public class SiglaCMISService {
 		return folder.getChildren();
 	}
 	
-	public void addConsumerToEveryone(CmisObject cmisObject){
-		addAcl(siglaBindingSession, cmisObject.getProperty(ALFCMIS_NODEREF).getValueAsString(), Collections.singletonMap("GROUP_EVERYONE", ACLType.Consumer));
+	public void addConsumerToEveryone(CmisObject cmisObject) throws ApplicationException{
+		addAcl(getSiglaBindingSession(), cmisObject.getProperty(ALFCMIS_NODEREF).getValueAsString(), Collections.singletonMap("GROUP_EVERYONE", ACLType.Consumer));
 	}
 
-	public void removeConsumerToEveryone(CmisObject cmisObject){
-		removeAcl(siglaBindingSession, cmisObject.getProperty(ALFCMIS_NODEREF).getValueAsString(), Collections.singletonMap("GROUP_EVERYONE", ACLType.Consumer));
+	public void removeConsumerToEveryone(CmisObject cmisObject) throws ApplicationException{
+		removeAcl(getSiglaBindingSession(), cmisObject.getProperty(ALFCMIS_NODEREF).getValueAsString(), Collections.singletonMap("GROUP_EVERYONE", ACLType.Consumer));
 	}
 
 	public void copyNode(Document source, Folder target){
 		source.addToFolder(target, true);
 	}
 	
-	public ItemIterable<QueryResult> search(StringBuffer query){
-		return search(query, siglaSession.getDefaultContext());
+	public ItemIterable<QueryResult> search(StringBuffer query) throws ApplicationException{
+		return search(query, getSiglaSession().getDefaultContext());
 	}
 
-	public ItemIterable<QueryResult> search(StringBuffer query, OperationContext operationContext){
-		return siglaSession.query(query.toString(), false, operationContext);
+	public ItemIterable<QueryResult> search(StringBuffer query, OperationContext operationContext) throws ApplicationException{
+		return getSiglaSession().query(query.toString(), false, operationContext);
 	}
 	
-	public List<CmisObject> searchAndFetchNode(StringBuffer query){
+	public List<CmisObject> searchAndFetchNode(StringBuffer query) throws ApplicationException{
 		List<CmisObject> results = new ArrayList<CmisObject>();
 		for (QueryResult queryResult : search(query)) {
 			results.add(getNodeByNodeRef((String) queryResult.getPropertyValueById(PropertyIds.OBJECT_ID)));
@@ -448,24 +493,24 @@ public class SiglaCMISService {
 		return cmisObject.getProperty(PropertyIds.SECONDARY_OBJECT_TYPE_IDS).getValues().contains(aspectName);
 	}
 	
-	public void setInheritedPermission(CMISPath cmisPath, Boolean inheritedPermission){
-		setInheritedPermission(siglaBindingSession, getNodeByPath(cmisPath).getProperty(ALFCMIS_NODEREF).getValueAsString(), inheritedPermission);
+	public void setInheritedPermission(CMISPath cmisPath, Boolean inheritedPermission) throws ApplicationException{
+		setInheritedPermission(getSiglaBindingSession(), getNodeByPath(cmisPath).getProperty(ALFCMIS_NODEREF).getValueAsString(), inheritedPermission);
 	}
 		
-	public Response invokeGET(UrlBuilder url) {
+	public Response invokeGET(UrlBuilder url) throws ApplicationException {
 		return CmisBindingsHelper.getHttpInvoker(
-				siglaBindingSession).invokeGET(url, siglaBindingSession);		
+				getSiglaBindingSession()).invokeGET(url, getSiglaBindingSession());		
 	}
 
-	public Response invokePOST(UrlBuilder url, MimeTypes mimeType, final byte[] content) {
+	public Response invokePOST(UrlBuilder url, MimeTypes mimeType, final byte[] content) throws ApplicationException {
 		if (logger.isDebugEnabled())
 			logger.debug("Invoke URL:" + url);
-		return CmisBindingsHelper.getHttpInvoker(siglaBindingSession).invokePOST(url, mimeType.mimetype(),
+		return CmisBindingsHelper.getHttpInvoker(getSiglaBindingSession()).invokePOST(url, mimeType.mimetype(),
 				new Output() {
 					public void write(OutputStream out) throws Exception {
             			out.write(content);
             		}
-        		}, siglaBindingSession);
+        		}, getSiglaBindingSession());
 	}
 
 	private void setInheritedPermission(BindingSession cmisSession,
@@ -546,12 +591,12 @@ public class SiglaCMISService {
 	}
 
 	public void addAutoVersion(Document doc,
-			final boolean autoVersionOnUpdateProps) {
+			final boolean autoVersionOnUpdateProps) throws ApplicationException {
 		String link = baseURL.concat(
 				"service/api/metadata/node/");
 		link = link.concat(doc.getProperty(ALFCMIS_NODEREF).getValueAsString().replace(":/", ""));
 		UrlBuilder url = new UrlBuilder(link);
-		Response resp = CmisBindingsHelper.getHttpInvoker(siglaBindingSession).invokePOST(url,
+		Response resp = CmisBindingsHelper.getHttpInvoker(getSiglaBindingSession()).invokePOST(url,
 				MimeTypes.JSON.mimetype(), new Output() {
 					public void write(OutputStream out) throws Exception {
 						JSONObject jsonObject = new JSONObject();
@@ -562,7 +607,7 @@ public class SiglaCMISService {
 						jsonObject.put("properties", jsonObjectProp);
 						out.write(jsonObject.toString().getBytes());
 					}
-				}, siglaBindingSession);
+				}, getSiglaBindingSession());
 		int status = resp.getResponseCode();
 		if (status == HttpStatus.SC_NOT_FOUND
 				|| status == HttpStatus.SC_BAD_REQUEST

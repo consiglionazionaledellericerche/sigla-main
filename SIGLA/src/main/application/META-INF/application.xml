@@ -11,8 +11,8 @@
     <ejb>sigla-ws-ns.jar</ejb>
   </module>
   <module>
-    <ejb>sigla-ws-client.jar</ejb>
-  </module>
+    <ejb>sigla-sdi.jar</ejb>
+  </module>  
   <module>
     <web>
       <web-uri>sigla-web.war</web-uri>

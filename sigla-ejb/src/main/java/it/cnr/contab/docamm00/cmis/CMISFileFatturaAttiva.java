@@ -8,6 +8,7 @@ import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
+import it.cnr.jada.comp.ApplicationException;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,13 +40,13 @@ public class CMISFileFatturaAttiva extends CMISFile implements CMISTypeName{
 		super(node);
     }
 	
-	public CMISPath getCMISParentPath(SiglaCMISService cmisService){
+	public CMISPath getCMISParentPath(SiglaCMISService cmisService) throws ApplicationException{
     	if (getFattura_attivaBulk()!=null )
     		return getCMISFolder(this.getFattura_attivaBulk()).getCMISPath(cmisService);
 		return null;
 	}
 
-	public CMISPath getCMISAlternativeParentPath(SiglaCMISService cmisService){
+	public CMISPath getCMISAlternativeParentPath(SiglaCMISService cmisService) throws ApplicationException{
 		CMISPath cmisPath = getCMISFolder(this.getFattura_attivaBulk()).getCMISPrincipalPath(cmisService);
 		if (cmisPath != null)
 			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, (String)Fattura_attivaBulk.getTipoFatturaKeys().get(this.getFattura_attivaBulk().getTi_fattura()), (String)Fattura_attivaBulk.getTipoFatturaKeys().get(this.getFattura_attivaBulk().getTi_fattura()), (String)Incarichi_archivioBulk.getTipo_archivioKeys().get(this.getFattura_attivaBulk().getTi_fattura()));

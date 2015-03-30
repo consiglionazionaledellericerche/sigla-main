@@ -18,11 +18,12 @@ import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 
 public class ContrattoService extends SiglaCMISService {
 	private transient static final Log logger = LogFactory.getLog(ContrattoService.class);
 	
-	public Folder getFolderContratto(ContrattoBulk contratto){
+	public Folder getFolderContratto(ContrattoBulk contratto) throws ApplicationException{
 		try {
 			return (Folder) getNodeByPath(getCMISPathFolderContratto(contratto));			
 		} catch(CmisObjectNotFoundException _ex){
@@ -47,14 +48,14 @@ public class ContrattoService extends SiglaCMISService {
 		return cmisPath;		
 	}	
 	
-	public List<CmisObject> findContrattiDefinitivi(){
+	public List<CmisObject> findContrattiDefinitivi() throws ApplicationException{
 		StringBuffer query = new StringBuffer("select appalti.cmis:objectId from sigla_contratti:appalti as appalti");
 		query.append(" join sigla_contratti_aspect:appalti as aspect on appalti.cmis:objectId = aspect.cmis:objectId");
 		query.append(" where ").append("aspect.sigla_contratti_aspect_appalti:stato = 'D'");
 		return super.searchAndFetchNode(query);
 	}
 	
-	public void findContrattiDefinitiviWithoutFile(){
+	public void findContrattiDefinitiviWithoutFile() throws ApplicationException{
 		List<CmisObject> nodes = findContrattiDefinitivi();
 		for (CmisObject cmisObject : nodes) {
 			boolean exist = false;
@@ -71,14 +72,14 @@ public class ContrattoService extends SiglaCMISService {
 	}
 	
 	
-	public ItemIterable<CmisObject> findNodeAllegatiContratto(ContrattoBulk contratto){
+	public ItemIterable<CmisObject> findNodeAllegatiContratto(ContrattoBulk contratto) throws ApplicationException{
 		Folder node = getFolderContratto(contratto);
 		if (node != null)
 			return super.getChildren(node);
 		return null;
 	}
 	
-	public boolean isDocumentoContrattoPresent(ContrattoBulk contratto){
+	public boolean isDocumentoContrattoPresent(ContrattoBulk contratto) throws ApplicationException{
 		List<AllegatoContrattoDocumentBulk> result = findAllegatiContratto(contratto);
 		for (AllegatoContrattoDocumentBulk allegatoContrattoDocumentBulk : result) {
 			if (allegatoContrattoDocumentBulk.getType().equalsIgnoreCase(AllegatoContrattoDocumentBulk.CONTRATTO))
@@ -87,7 +88,7 @@ public class ContrattoService extends SiglaCMISService {
 		return false;
 	}
 	
-	public List<AllegatoContrattoDocumentBulk> findAllegatiContratto(ContrattoBulk contratto){
+	public List<AllegatoContrattoDocumentBulk> findAllegatiContratto(ContrattoBulk contratto) throws ApplicationException{
 		List<AllegatoContrattoDocumentBulk> result = new ArrayList<AllegatoContrattoDocumentBulk>();
 		ItemIterable<CmisObject> children = findNodeAllegatiContratto(contratto);
 		if (children != null){
@@ -107,7 +108,7 @@ public class ContrattoService extends SiglaCMISService {
 		return result;
 	}
 	
-	public CMISPath getCMISPathAlternativo(AllegatoContrattoDocumentBulk allegato){
+	public CMISPath getCMISPathAlternativo(AllegatoContrattoDocumentBulk allegato) throws ApplicationException{
 		CMISPath cmisPath = SpringUtil.getBean("cmisPathContratti",CMISPath.class);
 		cmisPath = createFolderIfNotPresent(cmisPath, allegato.getContrattoBulk().getUnita_organizzativa().getCd_unita_organizzativa(), 
 				allegato.getContrattoBulk().getUnita_organizzativa().getDs_unita_organizzativa(), 
@@ -124,7 +125,7 @@ public class ContrattoService extends SiglaCMISService {
 		return cmisPath;
 	}
 	
-	public CMISPath getCMISPath(AllegatoContrattoDocumentBulk allegato){
+	public CMISPath getCMISPath(AllegatoContrattoDocumentBulk allegato) throws ApplicationException{
 		CMISPath cmisPath = SpringUtil.getBean("cmisPathContratti",CMISPath.class);
 		cmisPath = createFolderIfNotPresent(cmisPath, allegato.getContrattoBulk().getUnita_organizzativa().getCd_unita_organizzativa(), 
 				allegato.getContrattoBulk().getUnita_organizzativa().getDs_unita_organizzativa(), 
@@ -140,7 +141,7 @@ public class ContrattoService extends SiglaCMISService {
 	}	
 	
 	public void costruisciAlberaturaAlternativa(
-			AllegatoContrattoDocumentBulk allegato, Document source) {
+			AllegatoContrattoDocumentBulk allegato, Document source) throws ApplicationException {
 		try {
 			copyNode(source, (Folder) getNodeByPath(getCMISPathAlternativo(allegato)));			
 		} catch (CmisRuntimeException _ex) {
@@ -148,7 +149,7 @@ public class ContrattoService extends SiglaCMISService {
 		}
 	}	
 	
-	public void changeProgressivoNodeRef(Folder oldNode, ContrattoBulk contratto) {
+	public void changeProgressivoNodeRef(Folder oldNode, ContrattoBulk contratto) throws ApplicationException {
 		updateProperties(contratto, oldNode);
 		ItemIterable<CmisObject> children = getChildren(oldNode);
 		for (CmisObject child : children) {

@@ -60,7 +60,8 @@ public class GenericDownloadServlet extends HttpServlet {
 		}else{
 			HttpActionContext actionContext = new HttpActionContext(this, request, response);
 			try {
-				Introspector.invoke(BusinessProcess.getBusinessProcess(request), request.getParameter("methodName"), actionContext);
+				if (request.getParameter("methodName") != null)
+					Introspector.invoke(BusinessProcess.getBusinessProcess(request), request.getParameter("methodName"), actionContext);
 			} catch (NoSuchMethodException e) {
 				throw new ServletException(e);
 			} catch (IllegalAccessException e) {

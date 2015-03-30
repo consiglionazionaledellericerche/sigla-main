@@ -276,7 +276,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 		
 	}
 
-	private CMISPath getCMISPath(ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk){
+	private CMISPath getCMISPath(ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk) throws ApplicationException{
 		CMISPath cmisPath = SpringUtil.getBean("cmisPathVariazioniAlPianoDiGestione",CMISPath.class);
 		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, archiviaStampaPdgVariazioneBulk.getEsercizio().toString(), 
 				"Esercizio :"+archiviaStampaPdgVariazioneBulk.getEsercizio().toString(), 
@@ -295,10 +295,14 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 	@Override
 	public void update(ActionContext actioncontext)
 			throws BusinessProcessException {
-		archiviaAllegati(actioncontext, null);
+		try {
+			archiviaAllegati(actioncontext, null);
+		} catch (ApplicationException e) {
+			handleException(e);
+		}
 	}
 
-	private void archiviaAllegati(ActionContext actioncontext, Document pdgVariazioneDocumentNode) throws BusinessProcessException{
+	private void archiviaAllegati(ActionContext actioncontext, Document pdgVariazioneDocumentNode) throws BusinessProcessException, ApplicationException{
 		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk)getModel();
 		if (pdgVariazioneDocumentNode == null)
 			pdgVariazioneDocumentNode = archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getDocument();
@@ -342,9 +346,13 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 	public void delete(ActionContext actioncontext)
 			throws BusinessProcessException {
 		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk)getModel();
-		pdgVariazioniService.deleteNode(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getDocument());
-		for (AllegatoPdGVariazioneDocumentBulk allegato : archiviaStampaPdgVariazioneBulk.getArchivioAllegati()) {
-			pdgVariazioniService.deleteNode(allegato.getDocument());
+		try {
+			pdgVariazioniService.deleteNode(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getDocument());
+			for (AllegatoPdGVariazioneDocumentBulk allegato : archiviaStampaPdgVariazioneBulk.getArchivioAllegati()) {
+				pdgVariazioniService.deleteNode(allegato.getDocument());
+			}
+		} catch (ApplicationException e) {
+			handleException(e);
 		}
 	}
 

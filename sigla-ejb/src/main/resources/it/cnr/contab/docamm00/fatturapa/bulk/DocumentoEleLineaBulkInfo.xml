@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Documento elettronico di trasmissione dettaglio"
+	longDescription="Documento elettronico di trasmissione dettaglio">
+	<fieldProperty
+		name="idPaese"
+		property="documentoEleTestata.idPaese"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Nazione Trasmittente" />
+	<fieldProperty
+		name="idCodice"
+		property="documentoEleTestata.idCodice"
+		inputType="TEXT"
+		inputSize="28"
+		maxLength="28"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Identificativo Fiscale Trasmittente" />
+	<fieldProperty
+		name="identificativoSdi"
+		property="documentoEleTestata.identificativoSdi"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Identificativo SDI" />
+	<fieldProperty
+		name="progressivo"
+		property="documentoEleTestata.progressivo"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Progressivo" />
+	<fieldProperty
+		name="numeroLinea"
+		property="numeroLinea"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Numero Riga" />
+	<fieldProperty
+		name="tipoCessione"
+		property="tipoCessione"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		label="Tipo Cessione" />
+	<fieldProperty
+		name="articoloTipo"
+		property="articoloTipo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="35"
+		enabledOnEdit="false"
+		label="Tipo Articolo" />
+	<fieldProperty
+		name="articoloValore"
+		property="articoloValore"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="35"
+		enabledOnEdit="false"
+		label="Codice Articolo" />
+	<fieldProperty
+		name="lineaDescrizione"
+		property="lineaDescrizione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1000"
+		enabledOnEdit="false"
+		label="Descrizione Riga" />
+	<fieldProperty
+		name="lineaQuantita"
+		property="lineaQuantita"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Quantità" />
+	<fieldProperty
+		name="lineaUnitamisura"
+		property="lineaUnitamisura"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Unità  di Misura" />
+	<fieldProperty
+		name="inizioDatacompetenza"
+		property="inizioDatacompetenza"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Inizio Competenza" />
+	<fieldProperty
+		name="fineDatacompetenza"
+		property="fineDatacompetenza"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Fine Competenza" />
+	<fieldProperty
+		name="lineaPrezzounitario"
+		property="lineaPrezzounitario"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Prezzo unitario" />
+	<fieldProperty
+		name="tipoScontomag"
+		property="tipoScontomag"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		label="Sconto/Maggiorazione" />
+	<fieldProperty
+		name="percentualeScontomag"
+		property="percentualeScontomag"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Percentuale" />
+	<fieldProperty
+		name="importoScontomag"
+		property="importoScontomag"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Importo Sconto/Maggiorazione" />
+	<fieldProperty
+		name="lineaPrezzototale"
+		property="lineaPrezzototale"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Totale Riga" />
+	<fieldProperty
+		name="lineaAliquotaiva"
+		property="lineaAliquotaiva"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Aliquota IVA" />
+	<fieldProperty
+		name="lineaRitenuta"
+		property="lineaRitenuta"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		label="Ritenuta (SI/NO)" />
+	<fieldProperty
+		name="lineaNatura"
+		property="lineaNatura"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="256"
+		enabledOnEdit="false"
+		label="Natura IVA" />
+	<fieldProperty
+		name="lineaRiferimentoamm"
+		property="lineaRiferimentoamm"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="Riferimento Amministrazione" />
+	<fieldProperty
+		name="tipoDato"
+		property="tipoDato"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Tipo Informazione Generica" />
+	<fieldProperty
+		name="riferimentoTesto"
+		property="riferimentoTesto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="60"
+		enabledOnEdit="false"
+		label="Descrizione Informazione Generica" />
+	<fieldProperty
+		name="riferimentoNumero"
+		property="riferimentoNumero"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="Numero Informazione Generica" />
+	<fieldProperty
+		name="riferimentodata"
+		property="riferimentodata"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Informazione Generica" />
+	<fieldProperty
+		name="beneServizio"
+		property="beneServizio"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		labelStyle="color:blue"
+		enabledOnEdit="true"
+		label="Bene Servizio" />				
+	<fieldProperty
+		name="anomalie"
+		property="anomalie"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="2000"
+		enabledOnEdit="false"
+		label="Anomalie" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="idPaese" />
+		<formFieldProperty
+			name="idCodice" />
+		<formFieldProperty
+			name="identificativoSdi" />
+		<formFieldProperty
+			name="progressivo" />
+		<formFieldProperty
+			name="numeroLinea" />
+	</form>
+	<formFieldProperty
+		name="numeroLinea" />
+	<formFieldProperty
+		name="tipoCessione" />
+	<formFieldProperty
+		name="articoloTipo" />
+	<formFieldProperty
+		name="articoloValore" />
+	<formFieldProperty
+		name="beneServizio" />	
+	<formFieldProperty
+		name="lineaDescrizione" />
+	<formFieldProperty
+		name="lineaQuantita" />
+	<formFieldProperty
+		name="lineaUnitamisura" />
+	<formFieldProperty
+		name="inizioDatacompetenza" />
+	<formFieldProperty
+		name="fineDatacompetenza" />
+	<formFieldProperty
+		name="lineaPrezzounitario" />
+	<formFieldProperty
+		name="tipoScontomag" />
+	<formFieldProperty
+		name="percentualeScontomag" />
+	<formFieldProperty
+		name="importoScontomag" />
+	<formFieldProperty
+		name="lineaPrezzototale" />
+	<formFieldProperty
+		name="lineaAliquotaiva" />
+	<formFieldProperty
+		name="lineaRitenuta" />
+	<formFieldProperty
+		name="lineaNatura" />
+	<formFieldProperty
+		name="lineaRiferimentoamm" />
+	<formFieldProperty
+		name="tipoDato" />
+	<formFieldProperty
+		name="riferimentoTesto" />
+	<formFieldProperty
+		name="riferimentoNumero" />
+	<formFieldProperty
+		name="riferimentodata" />
+	<formFieldProperty
+		name="anomalie" />
+	<findFieldProperty
+		name="idPaese" />
+	<findFieldProperty
+		name="idCodice" />
+	<findFieldProperty
+		name="identificativoSdi" />
+	<findFieldProperty
+		name="progressivo" />
+	<findFieldProperty
+		name="numeroLinea" />
+	<findFieldProperty
+		name="tipoCessione" />
+	<findFieldProperty
+		name="articoloTipo" />
+	<findFieldProperty
+		name="articoloValore" />
+	<findFieldProperty
+		name="lineaDescrizione" />
+	<findFieldProperty
+		name="lineaQuantita" />
+	<findFieldProperty
+		name="lineaUnitamisura" />
+	<findFieldProperty
+		name="inizioDatacompetenza" />
+	<findFieldProperty
+		name="fineDatacompetenza" />
+	<findFieldProperty
+		name="lineaPrezzounitario" />
+	<findFieldProperty
+		name="tipoScontomag" />
+	<findFieldProperty
+		name="percentualeScontomag" />
+	<findFieldProperty
+		name="importoScontomag" />
+	<findFieldProperty
+		name="lineaPrezzototale" />
+	<findFieldProperty
+		name="lineaAliquotaiva" />
+	<findFieldProperty
+		name="lineaRitenuta" />
+	<findFieldProperty
+		name="lineaNatura" />
+	<findFieldProperty
+		name="lineaRiferimentoamm" />
+	<findFieldProperty
+		name="tipoDato" />
+	<findFieldProperty
+		name="riferimentoTesto" />
+	<findFieldProperty
+		name="riferimentoNumero" />
+	<findFieldProperty
+		name="riferimentodata" />
+	<findFieldProperty
+		name="anomalie" />
+	<columnFieldProperty
+		name="numeroLinea" />
+	<columnFieldProperty
+		name="lineaDescrizione" />
+	<columnFieldProperty
+		name="lineaQuantita" />
+	<columnFieldProperty
+		name="lineaUnitamisura" />
+	<columnFieldProperty
+		name="inizioDatacompetenza" />
+	<columnFieldProperty
+		name="fineDatacompetenza" />
+</bulkInfo>

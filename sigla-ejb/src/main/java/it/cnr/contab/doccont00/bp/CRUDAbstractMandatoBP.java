@@ -14,6 +14,7 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.AbstractPrintBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
@@ -301,7 +302,7 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 			ContabiliService.class);	
 }
 
-public boolean isContabileButtonHidden(){
+public boolean isContabileButtonHidden() throws ApplicationException{
 	Boolean hidden = Boolean.TRUE;
 	if (getStatus() == SEARCH)
 		return hidden;

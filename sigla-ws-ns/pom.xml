@@ -54,58 +54,6 @@
 	            </plugin>
 			</plugins>
 		</pluginManagement>
-		<plugins>
-	    	<plugin>
-        		<groupId>org.codehaus.mojo</groupId>
-		        <artifactId>jaxws-maven-plugin</artifactId>
-		        <version>1.12</version>
-		        <executions>
-        			<execution>
-            			<goals>
-              				<goal>wsimport</goal>
-            			</goals>
-		          	</execution>
-        		</executions>
-        		<configuration>
-					<args>
-			            <arg>-B-XautoNameResolution</arg>
-	        		</args>
-           			<wsdlUrls>
-            			<wsdlUrl>${project.basedir}/src/main/resources/wsdl/SdIRiceviFile_v1.0.wsdl</wsdlUrl>
-            			<wsdlUrl>${project.basedir}/src/main/resources/wsdl/TrasmissioneFatture_v1.1.wsdl</wsdlUrl>
-					</wsdlUrls>
-          			<packageName>it.gov.fatturapa</packageName>
-				</configuration>
-		    </plugin>
-			<!-- Conversion of XML Schema into Java source code using JAXB-XJC -->
-			<plugin>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
-				<version>0.7.4</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<schemaDirectory>${project.basedir}/src/main/resources/xsd</schemaDirectory>
-					<extension>true</extension>
-					<args>
-						<arg>-Xcollection-setter-injector</arg>
-					</args>
-					<strict>true</strict>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>net.java.dev.vcc.thirdparty</groupId>
-						<artifactId>collection-setter-injector</artifactId>
-						<version>0.5.0-1</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-    	</plugins>
 	</build>
 	<dependencies>
 		<dependency>
@@ -204,11 +152,22 @@
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
-	    <dependency>
-	    	<groupId>junit</groupId>
-	      	<artifactId>junit</artifactId>
-	      	<version>3.8.1</version>
-	      	<scope>test</scope>
-	    </dependency>
+		<dependency>
+			<groupId>log4j</groupId> 
+			<artifactId>log4j</artifactId> 
+			<version>1.2.17</version> 
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId> 
+			<artifactId>junit</artifactId> 
+			<version>4.10</version> 
+			<scope>test</scope> 
+	  	</dependency>	
+		<dependency>
+		  <groupId>commons-io</groupId>
+		  <artifactId>commons-io</artifactId>
+		  <version>2.2</version>
+		  <scope>provided</scope>
+		</dependency>			  	
 	</dependencies>
 </project>
