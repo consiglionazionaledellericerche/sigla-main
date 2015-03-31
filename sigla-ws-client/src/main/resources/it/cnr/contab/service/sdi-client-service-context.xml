@@ -23,9 +23,11 @@
 	</bean>
     
 	<bean id="messageFactory" class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory">
-	     <property name="messageFactory">
-	         <bean class="com.sun.xml.messaging.saaj.soap.ver1_1.SOAPMessageFactory1_1Impl"/>
+		<!-- 
+	    <property name="messageFactory">
+	         <bean class="com.sun.xml.messaging.saaj.soap.ver1_1.SOAPMessageFactory1_"/>
 	     </property>
+	      -->
 	</bean>
     
     <bean id="sdiPddClientTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">

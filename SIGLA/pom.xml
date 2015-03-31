@@ -170,6 +170,10 @@
 	          <artifactId>commons-codec</artifactId>
 	          <groupId>commons-codec</groupId>
 	        </exclusion>
+	        <exclusion>
+	        	<artifactId>saaj-impl</artifactId>
+	        	<groupId>com.sun.xml.messaging.saaj</groupId>
+	        </exclusion>
 	      </exclusions>
 	    </dependency>
 	    <dependency>
