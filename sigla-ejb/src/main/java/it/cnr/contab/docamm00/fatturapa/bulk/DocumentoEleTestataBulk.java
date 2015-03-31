@@ -322,7 +322,9 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
 	
 	public StatoDocumentoEleEnum getStatoDocumentoEle() {
 		try {
-			return StatoDocumentoEleEnum.valueOf(getStatoDocumento());			
+			if (getStatoDocumento() != null)
+				return StatoDocumentoEleEnum.valueOf(getStatoDocumento());
+			return null;
 		} catch (IllegalArgumentException _ex) {
 			return null;
 		}

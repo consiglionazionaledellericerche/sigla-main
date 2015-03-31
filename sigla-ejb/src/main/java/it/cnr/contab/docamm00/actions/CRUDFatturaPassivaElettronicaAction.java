@@ -9,6 +9,7 @@ import it.cnr.contab.docamm00.bp.CRUDNotaDiCreditoBP;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
+import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
@@ -243,6 +244,14 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 				CRUDFatturaPassivaBP nbp = (CRUDFatturaPassivaBP)context.createBusinessProcess("CRUDFatturaPassivaBP",
 								new Object[] {"M"}
 							);
+				String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().
+						validaBPPerUtente(context.getUserContext(),((CNRUserInfo)context.getUserInfo()).getUtente(),
+								((CNRUserInfo)context.getUserInfo()).getUtente().isUtenteComune() ? 
+										((CNRUserInfo)context.getUserInfo()).getUnita_organizzativa().getCd_unita_organizzativa() : 
+											"*","CRUDFatturaPassivaBP");
+				if (mode == null) 
+					throw new it.cnr.jada.action.MessageToUser("Accesso non consentito alla mappa di creazione delle fatture. Impossibile continuare.");
+				
 				context.addHookForward("default",this,"doBringBackCompilaFattura");
 				nbp = (CRUDFatturaPassivaBP) context.addBusinessProcess(nbp);
 				if (bulk.getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO)) {
