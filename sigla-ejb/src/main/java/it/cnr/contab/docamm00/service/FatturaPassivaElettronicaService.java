@@ -220,7 +220,8 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		fatturazioneElettronicaClient.getMarshaller().marshal(notificaEsitoCommittenteType, new StreamResult(outputStream));
 		email.attach(new ByteArrayDataSource(outputStream.toByteArray()), bulk.getNomeFile("EC"), "", EmailAttachment.ATTACHMENT);
 		// send the email
-		email.send();		
+		email.send();
+		logger.info("Inviata notifica di esito per IdentificativoSdi:"+bulk.getIdentificativoSdi());
 	}
 	private List<BodyPart> estraiBodyPart(Object content) throws MessagingException, IOException {
 		List<BodyPart> results = new ArrayList<BodyPart>();
