@@ -16,7 +16,7 @@
 			propertyName="numeroLinea"
 			sqlTypeName="DECIMAL"
 			columnSize="22"
-			nullable="false" />												
+			nullable="true" />												
 		<columnMapping
 			columnName="ACQUISTO_DOCUMENTO"
 			propertyName="acquistoDocumento"
