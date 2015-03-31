@@ -10,6 +10,8 @@ import it.cnr.contab.util.StringEncrypter;
 import it.cnr.contab.util.StringEncrypter.EncryptionException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.mail.SimplePECMail;
 import it.gov.fatturapa.sdi.messaggi.v1.MetadatiInvioFileType;
 import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoCommittenteType;
@@ -168,13 +170,12 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			    	    	JAXBElement<MetadatiInvioFileType> metadatiInvioFileType = (JAXBElement<MetadatiInvioFileType>) 
 			    	    			fatturazioneElettronicaClient.getUnmarshaller().
 			    	    			unmarshal(new StreamSource(bodyPartMetadati.getInputStream()));
-			    	    	String nomeFile = metadatiInvioFileType.getValue().getNomeFile();
-			    	    	String idPaese = nomeFile.substring(0, 2);
-			    	    	String idCodice = nomeFile.substring(2, nomeFile.indexOf("_"));
-			    	    	DocumentoEleTrasmissioneBulk bulk = new DocumentoEleTrasmissioneBulk(
-			    	    			idPaese, idCodice, metadatiInvioFileType.getValue().getIdentificativoSdI().longValue()
-			    	    			);				    	    	
-			    	    	if (fatturaElettronicaPassivaComponentSession.findByPrimaryKey(userContext, bulk) == null) {
+			    	    	DocumentoEleTrasmissioneBulk bulk = new DocumentoEleTrasmissioneBulk();
+			    	    	bulk.setIdentificativoSdi(metadatiInvioFileType.getValue().getIdentificativoSdI().longValue());
+			    	    	RemoteIterator iterator = fatturaElettronicaPassivaComponentSession.cerca(userContext, null, bulk);
+			    	    	int elements = iterator.countElements();
+			    	    	EJBCommonServices.closeRemoteIterator(iterator);
+			    	    	if (elements == 0) {
 				    	    	ricezioneFattureService.riceviFatturaSIGLA(
 				    	    			metadatiInvioFileType.getValue().getIdentificativoSdI(), 
 				    	    			bodyPartP7M.getFileName(), 
@@ -186,10 +187,10 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			    	    	}
 			    		} else {
 			    			logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
-			    					" è stato precessato ma gli allegati presnti non sono conformi.");
+			    					" è stato precessato ma gli allegati presenti non sono conformi.");
 			    		}
 					} catch (Exception e) {
-						logger.error("PEC scan erro while importing file.", e);
+						logger.error("PEC scan error while importing file.", e);
 					}
 				}
 		    }

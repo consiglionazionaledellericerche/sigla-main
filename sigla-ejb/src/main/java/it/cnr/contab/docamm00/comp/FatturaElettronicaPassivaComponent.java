@@ -102,18 +102,20 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 	protected Query select(UserContext userContext,
 			CompoundFindClause clauses, OggettoBulk bulk)
 			throws ComponentException, PersistencyException {
-		Unita_organizzativaBulk uoScrivania = ((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext))));
-		boolean isUoEnte = uoScrivania.getCd_tipo_unita().compareTo(Tipo_unita_organizzativaHome.TIPO_UO_ENTE)==0;
 		SQLBuilder sql = (SQLBuilder) super.select( userContext, clauses, bulk );
-		if (!isUoEnte) {
-			sql.addTableToHeader("DOCUMENTO_ELE_TRASMISSIONE");
-			sql.addSQLJoin("DOCUMENTO_ELE_TESTATA.ID_PAESE", "DOCUMENTO_ELE_TRASMISSIONE.ID_PAESE");
-			sql.addSQLJoin("DOCUMENTO_ELE_TESTATA.ID_CODICE", "DOCUMENTO_ELE_TRASMISSIONE.ID_CODICE");
-			sql.addSQLJoin("DOCUMENTO_ELE_TESTATA.IDENTIFICATIVO_SDI", "DOCUMENTO_ELE_TRASMISSIONE.IDENTIFICATIVO_SDI");
-			sql.openParenthesis(FindClause.AND);
-			sql.addSQLClause(FindClause.AND, "DOCUMENTO_ELE_TRASMISSIONE.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uoScrivania.getCd_unita_organizzativa());
-			sql.addSQLClause(FindClause.OR, "DOCUMENTO_ELE_TRASMISSIONE.CD_UNITA_COMPETENZA", SQLBuilder.EQUALS, uoScrivania.getCd_unita_organizzativa());
-			sql.closeParenthesis();			
+		if (CNRUserContext.getCd_unita_organizzativa(userContext) != null) {
+			Unita_organizzativaBulk uoScrivania = ((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext))));
+			boolean isUoEnte = uoScrivania.getCd_tipo_unita().compareTo(Tipo_unita_organizzativaHome.TIPO_UO_ENTE)==0;
+			if (!isUoEnte) {
+				sql.addTableToHeader("DOCUMENTO_ELE_TRASMISSIONE");
+				sql.addSQLJoin("DOCUMENTO_ELE_TESTATA.ID_PAESE", "DOCUMENTO_ELE_TRASMISSIONE.ID_PAESE");
+				sql.addSQLJoin("DOCUMENTO_ELE_TESTATA.ID_CODICE", "DOCUMENTO_ELE_TRASMISSIONE.ID_CODICE");
+				sql.addSQLJoin("DOCUMENTO_ELE_TESTATA.IDENTIFICATIVO_SDI", "DOCUMENTO_ELE_TRASMISSIONE.IDENTIFICATIVO_SDI");
+				sql.openParenthesis(FindClause.AND);
+				sql.addSQLClause(FindClause.AND, "DOCUMENTO_ELE_TRASMISSIONE.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uoScrivania.getCd_unita_organizzativa());
+				sql.addSQLClause(FindClause.OR, "DOCUMENTO_ELE_TRASMISSIONE.CD_UNITA_COMPETENZA", SQLBuilder.EQUALS, uoScrivania.getCd_unita_organizzativa());
+				sql.closeParenthesis();			
+			}			
 		}
 		return sql;
 	}

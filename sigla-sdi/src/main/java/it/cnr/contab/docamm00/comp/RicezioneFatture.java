@@ -454,7 +454,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 							}
 						}
 						docEleLinea.setLineaDescrizione(dettaglioLinea.getDescrizione());
-						docEleLinea.setLineaQuantita(dettaglioLinea.getQuantita());
+						docEleLinea.setLineaQuantita(truncImporto(dettaglioLinea.getQuantita()));
 						docEleLinea.setLineaUnitamisura(dettaglioLinea.getUnitaMisura());
 						docEleLinea.setInizioDatacompetenza(convert(dettaglioLinea.getDataInizioPeriodo()));
 						docEleLinea.setFineDatacompetenza(convert(dettaglioLinea.getDataFinePeriodo()));
