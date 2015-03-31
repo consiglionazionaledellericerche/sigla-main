@@ -2630,12 +2630,13 @@ public void validate() throws ValidationException {
 	validateDate();
 	validaDateCompetenza();
 	// campi obbligatori dal 01/07/2014
-	if (getDt_registrazione().after(dataInizioObbligoRegistroUnico) && getDt_fattura_fornitore().before(dataInizioFatturaElettronica)){
-		if(getData_protocollo()== null)
-			throw new ValidationException("Inserire la data di protocollo di entrata.");
-		if(getNumero_protocollo()== null)
-			throw new ValidationException("Inserire il numero di protocollo di entrata!");
-	}
+	// controllo eliminato per nuova gestione del protocollo unico 
+	//  if (getDt_registrazione().after(dataInizioObbligoRegistroUnico) && getDt_fattura_fornitore().before(dataInizioFatturaElettronica)){
+	//	if(getData_protocollo()== null)
+	//		throw new ValidationException("Inserire la data di protocollo di entrata.");
+	//	if(getNumero_protocollo()== null)
+	//		throw new ValidationException("Inserire il numero di protocollo di entrata!");
+	//}
 	if (getDt_registrazione().after(dataInizioObbligoRegistroUnico)){		
 		if(getStato_liquidazione()==null)
 			throw new ValidationException("Inserire lo stato della liquidazione!");
