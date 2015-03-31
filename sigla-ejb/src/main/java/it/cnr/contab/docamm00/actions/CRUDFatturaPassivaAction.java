@@ -4890,12 +4890,15 @@ public Forward doCreaCompenso(ActionContext context) {
 			
 			compenso.setV_terzo(v_terzo);
 			
-			quotaEsente = fp.getDocumentoEleTestata().calcolaImQuotaEsente(fp.getDocumentoEleTestata());
-			quotaEsenteNonImpo = fp.getDocumentoEleTestata().calcolaImQuotaEsenteNonImpo(fp.getDocumentoEleTestata());
-			
-			compenso.setIm_lordo_percipiente(fp.getDocumentoEleTestata().calcolaImLordoPercipiente(fp.getDocumentoEleTestata()).add(quotaEsente).add(quotaEsenteNonImpo));
-			compenso.setQuota_esente(quotaEsenteNonImpo);
-			compenso.setQuota_esente_no_iva(quotaEsente.add(quotaEsenteNonImpo));
+			if(fp.getDocumentoEleTestata()!=null && fp.isElettronica())
+			{	
+				quotaEsente = fp.getDocumentoEleTestata().calcolaImQuotaEsente(fp.getDocumentoEleTestata());
+				quotaEsenteNonImpo = fp.getDocumentoEleTestata().calcolaImQuotaEsenteNonImpo(fp.getDocumentoEleTestata());
+				
+				compenso.setIm_lordo_percipiente(fp.getDocumentoEleTestata().calcolaImLordoPercipiente(fp.getDocumentoEleTestata()).add(quotaEsente).add(quotaEsenteNonImpo));
+				compenso.setQuota_esente(quotaEsenteNonImpo);
+				compenso.setQuota_esente_no_iva(quotaEsente.add(quotaEsenteNonImpo));
+			}
 			
 			it.cnr.contab.compensi00.ejb.CompensoComponentSession component = (it.cnr.contab.compensi00.ejb.CompensoComponentSession)bp.createComponentSession("CNRCOMPENSI00_EJB_CompensoComponentSession",it.cnr.contab.compensi00.ejb.CompensoComponentSession.class );
 			compenso = component.inizializzaCompensoPerFattura(
