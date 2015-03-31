@@ -546,11 +546,11 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 										"application/" + allegato.getFormatoAttachment(), cmisPath, fileProperties);
 						docAllegato.setCmisNodeRef(document.getId());												
 					} catch(Exception  _ex) {
-						anomalie.add("Errore nel salvataggio dell'allegato dul documentale! Identificativo:"+identificativoSdI + " " + _ex.getMessage());
-						LOGGER.error("Errore nel salvataggio dell'allegato dul documentale! Identificativo:"+identificativoSdI, _ex);
+						anomalie.add("Errore nel salvataggio dell'allegato sul documentale! Identificativo:"+identificativoSdI + " " + _ex.getMessage());
+						LOGGER.error("Errore nel salvataggio dell'allegato sul documentale! Identificativo:"+identificativoSdI, _ex);
 						java.io.StringWriter sw = new java.io.StringWriter();
 						_ex.printStackTrace(new java.io.PrintWriter(sw));
-						SendMail.sendErrorMail("Errore nel salvataggio dell'allegato dul documentale!Identificativo:"+identificativoSdI, sw.toString());
+						SendMail.sendErrorMail("Errore nel salvataggio dell'allegato sul documentale!Identificativo:"+identificativoSdI, sw.toString());
 					}
 					if (!anomalie.isEmpty())
 						docAllegato.setAnomalie(StringUtils.join(anomalie.toArray()," - "));
@@ -707,22 +707,32 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 	private List<DocumentoEleAcquistoBulk> caricaAcquisti(DatiDocumentiCorrelatiType datiOrdineAcquisto, 
 			String tipo, IdFiscaleType idTrasmittente, DatiTrasmissioneType datiTrasmissione, Long progressivo, Long indentificativoSdi){
 		List<DocumentoEleAcquistoBulk> results = new ArrayList<DocumentoEleAcquistoBulk>();
+		if (datiOrdineAcquisto.getRiferimentoNumeroLinea() == null || datiOrdineAcquisto.getRiferimentoNumeroLinea().isEmpty()){
+			results.add(caricaAcquisto(datiOrdineAcquisto, tipo, idTrasmittente, datiTrasmissione, progressivo, 
+					indentificativoSdi, null));
+		}
 		for (Integer numeroLinea : datiOrdineAcquisto.getRiferimentoNumeroLinea()) {
-			DocumentoEleAcquistoBulk docAcquisto = new DocumentoEleAcquistoBulk(idTrasmittente.getIdPaese(), 
-					idTrasmittente.getIdCodice(),indentificativoSdi, progressivo, (long)0);
-			docAcquisto.setTipoRifacquisto(tipo);
-			docAcquisto.setNumeroLinea(numeroLinea.longValue());
-			docAcquisto.setAcquistoDocumento(datiOrdineAcquisto.getIdDocumento());
-			docAcquisto.setAcquistoData(convert(datiOrdineAcquisto.getData()));
-			docAcquisto.setAcquistoNumitem(datiOrdineAcquisto.getNumItem());
-			docAcquisto.setAcquistoCommessa(datiOrdineAcquisto.getCodiceCommessaConvenzione());
-			docAcquisto.setAcquistoCup(datiOrdineAcquisto.getCodiceCUP());
-			docAcquisto.setAcquistoCig(datiOrdineAcquisto.getCodiceCIG());
-			results.add(docAcquisto);
+			results.add(caricaAcquisto(datiOrdineAcquisto, tipo, idTrasmittente, datiTrasmissione, progressivo, 
+					indentificativoSdi, numeroLinea.longValue()));
 		}
 		return results;
 	}
-		
+	private DocumentoEleAcquistoBulk caricaAcquisto(DatiDocumentiCorrelatiType datiOrdineAcquisto, 
+			String tipo, IdFiscaleType idTrasmittente, DatiTrasmissioneType datiTrasmissione, Long progressivo, Long indentificativoSdi, Long numeroLinea){
+		DocumentoEleAcquistoBulk docAcquisto = new DocumentoEleAcquistoBulk(idTrasmittente.getIdPaese(), 
+				idTrasmittente.getIdCodice(),indentificativoSdi, progressivo, (long)0);
+		docAcquisto.setTipoRifacquisto(tipo);
+		if (numeroLinea != null)
+			docAcquisto.setNumeroLinea(numeroLinea.longValue());
+		docAcquisto.setAcquistoDocumento(datiOrdineAcquisto.getIdDocumento());
+		docAcquisto.setAcquistoData(convert(datiOrdineAcquisto.getData()));
+		docAcquisto.setAcquistoNumitem(datiOrdineAcquisto.getNumItem());
+		docAcquisto.setAcquistoCommessa(datiOrdineAcquisto.getCodiceCommessaConvenzione());
+		docAcquisto.setAcquistoCup(datiOrdineAcquisto.getCodiceCUP());
+		docAcquisto.setAcquistoCig(datiOrdineAcquisto.getCodiceCIG());
+		return docAcquisto;
+	}
+	
 	private BigDecimal truncImporto(BigDecimal importo) {
 		if (importo == null)
 			return null;
