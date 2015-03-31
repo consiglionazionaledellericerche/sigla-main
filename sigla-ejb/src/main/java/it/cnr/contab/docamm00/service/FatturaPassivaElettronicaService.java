@@ -189,7 +189,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			    					" è stato precessato ma gli allegati presnti non sono conformi.");
 			    		}
 					} catch (Exception e) {
-						throw new ComponentException(e);
+						logger.error("PEC scan erro while importing file.", e);
 					}
 				}
 		    }
