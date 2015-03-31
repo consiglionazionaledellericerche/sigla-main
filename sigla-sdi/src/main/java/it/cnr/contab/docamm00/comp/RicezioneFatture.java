@@ -299,8 +299,10 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			if (cedentePrestatore.getIscrizioneREA() != null) {
 				docTrasmissione.setReaCapitalesociale(cedentePrestatore.getIscrizioneREA().getCapitaleSociale());
 				docTrasmissione.setReaNumerorea(cedentePrestatore.getIscrizioneREA().getNumeroREA());
-				docTrasmissione.setReaSociounico(cedentePrestatore.getIscrizioneREA().getSocioUnico().name());
-				docTrasmissione.setReaStatoliquidazione(cedentePrestatore.getIscrizioneREA().getStatoLiquidazione().name());
+				if (cedentePrestatore.getIscrizioneREA().getSocioUnico() != null)
+					docTrasmissione.setReaSociounico(cedentePrestatore.getIscrizioneREA().getSocioUnico().name());
+				if (cedentePrestatore.getIscrizioneREA().getStatoLiquidazione() != null)
+					docTrasmissione.setReaStatoliquidazione(cedentePrestatore.getIscrizioneREA().getStatoLiquidazione().name());
 				docTrasmissione.setReaUfficio(cedentePrestatore.getIscrizioneREA().getUfficio());
 			}
 		}
