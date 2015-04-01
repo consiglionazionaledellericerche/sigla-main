@@ -103,17 +103,24 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 	public RispostaRiceviFattureType riceviFatture(FileSdIConMetadatiType parametersIn) {
 		RispostaRiceviFattureType risposta = new RispostaRiceviFattureType();
 		try {
-			ByteArrayOutputStream bStream = estraiFirma(parametersIn.getFile().getInputStream());
 			byte[] bytesMetadata = IOUtils.toByteArray(parametersIn.getMetadati().getInputStream());
 			if (Base64.isArrayByteBase64(bytesMetadata))
 				bytesMetadata = Base64.decodeBase64(bytesMetadata);
+
+			boolean isp7m = parametersIn.getFile().getContentType().contains("p7m");
+			ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+			if (isp7m)
+				bStream = estraiFirma(parametersIn.getFile().getInputStream());
+			else
+				IOUtils.copy(parametersIn.getFile().getInputStream(), bStream);
 			
 			CMISPath cmisPath = saveFattura(
+					isp7m,
 					parametersIn.getNomeFile(), 
 					parametersIn.getFile().getInputStream(), 
 					parametersIn.getFile().getContentType(),
 
-					parametersIn.getNomeFile().substring(0, parametersIn.getNomeFile().lastIndexOf(".")), 
+					isp7m?parametersIn.getNomeFile().substring(0, parametersIn.getNomeFile().lastIndexOf(".")):parametersIn.getNomeFile(), 
 					new ByteArrayInputStream(bStream.toByteArray()), 
 					"application/xml",
 					
@@ -151,7 +158,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		return bStream;
 	}
 		
-	private CMISPath saveFattura(String name, InputStream stream, String contentTypeFile,
+	private CMISPath saveFattura(boolean isp7m, String name, InputStream stream, String contentTypeFile,
 			String nameMinusP7m, InputStream streamMinusP7m, String contentTypeFileMinusP7m,			
 			String nomeFileMedatati, InputStream streamMetadati,  String contentTypeMetadata, 
 			BigInteger identificativoSdI) throws ApplicationException {
@@ -183,15 +190,15 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla"));
 		metadataProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
 		cmisService.storeSimpleDocument(streamMetadati, contentTypeMetadata, cmisPath, metadataProperties);
-		
-		Map<String, Object> fileProperties = new HashMap<String, Object>();
-		fileProperties.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
-		fileProperties.put(PropertyIds.NAME, name);
-		fileProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
-				Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", "P:sigla_fatture_attachment:fattura_elettronica_xml_post_firma", CMISAspect.CNR_SIGNEDDOCUMENT.value()));
-		fileProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
-		cmisService.storeSimpleDocument(stream, contentTypeFile, cmisPath, fileProperties);
-	
+		if (isp7m) {
+			Map<String, Object> fileProperties = new HashMap<String, Object>();
+			fileProperties.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
+			fileProperties.put(PropertyIds.NAME, name);
+			fileProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
+					Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", "P:sigla_fatture_attachment:fattura_elettronica_xml_post_firma", CMISAspect.CNR_SIGNEDDOCUMENT.value()));
+			fileProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
+			cmisService.storeSimpleDocument(stream, contentTypeFile, cmisPath, fileProperties);			
+		}
 		return cmisPath;
 	}
 	
@@ -816,5 +823,5 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				throw new ApplicationException("Fattura già presente!");
 			throw _ex;
 		}
-	}	
+	}
 }
