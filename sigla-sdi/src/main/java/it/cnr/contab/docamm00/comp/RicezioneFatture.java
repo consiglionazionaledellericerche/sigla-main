@@ -519,7 +519,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 						if (datiRiepilogo.getNatura() != null)
 							docEleIVA.setNatura(datiRiepilogo.getNatura().value());
 						docEleIVA.setSpeseAccessorie(datiRiepilogo.getSpeseAccessorie());
-						docEleIVA.setArrotondamento(datiRiepilogo.getArrotondamento());
+						docEleIVA.setArrotondamento(truncImporto(datiRiepilogo.getArrotondamento()));
 						docEleIVA.setImponibileImporto(truncImporto(datiRiepilogo.getImponibileImporto()));
 						docEleIVA.setImposta(datiRiepilogo.getImposta());
 						if (datiRiepilogo.getEsigibilitaIVA() != null)
