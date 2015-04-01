@@ -161,11 +161,12 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		String year = String.valueOf(now.get(Calendar.YEAR)), 
 				month = String.valueOf(now.get(Calendar.MONTH) + 1),
 				day = String.valueOf(now.get(Calendar.DAY_OF_MONTH)),
-				folderName = name.substring(0, name.indexOf("."));
+				folderName = identificativoSdI + " - " + name.substring(0, name.indexOf("."));
 		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, year, year, year);
 		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, month, month, month);		
 		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, day, day, day);
-		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, folderName, null, null, new CMISFolderFatturaPassiva(null, identificativoSdI));
+		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, folderName, null, null, 
+				new CMISFolderFatturaPassiva(null, identificativoSdI));
 		
 		Map<String, Object> metadataPropertiesMinusP7M = new HashMap<String, Object>();
 		metadataPropertiesMinusP7M.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
@@ -354,11 +355,11 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 					if (fatturaElettronicaBody.getDatiGenerali().getDatiGeneraliDocumento().getDatiBollo() != null) {
 						DatiBolloType datiBollo = fatturaElettronicaBody.getDatiGenerali().getDatiGeneraliDocumento().getDatiBollo();
 						docTestata.setBolloVirtuale(datiBollo.getBolloVirtuale().value());
-						docTestata.setImportoBollo(truncImporto(datiBollo.getImportoBollo()));
+						docTestata.setImportoBollo(truncBigDecimal(datiBollo.getImportoBollo()));
 					}
-					docTestata.setImportoDocumento(truncImporto(fatturaElettronicaBody.getDatiGenerali().
+					docTestata.setImportoDocumento(truncBigDecimal(fatturaElettronicaBody.getDatiGenerali().
 							getDatiGeneraliDocumento().getImportoTotaleDocumento()));
-					docTestata.setArrotondamento(truncImporto(fatturaElettronicaBody.getDatiGenerali().
+					docTestata.setArrotondamento(truncBigDecimal(fatturaElettronicaBody.getDatiGenerali().
 							getDatiGeneraliDocumento().getArrotondamento()));
 					docTestata.setCausale(StringUtils.join(fatturaElettronicaBody.getDatiGenerali().
 							getDatiGeneraliDocumento().getCausale().toArray(),","));
@@ -388,8 +389,8 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 					docTestata.setNumeroColli(datiTrasporto.getNumeroColli());
 					docTestata.setDescrizioneTrasporto(datiTrasporto.getDescrizione());
 					docTestata.setUnitaMisurapeso(datiTrasporto.getUnitaMisuraPeso());
-					docTestata.setPesoLordo(datiTrasporto.getPesoLordo());
-					docTestata.setPesoNetto(datiTrasporto.getPesoNetto());
+					docTestata.setPesoLordo(truncBigDecimal(datiTrasporto.getPesoLordo()));
+					docTestata.setPesoNetto(truncBigDecimal(datiTrasporto.getPesoNetto()));
 					docTestata.setDataoraRitiro(convert(datiTrasporto.getDataOraRitiro()));
 					docTestata.setDatainizioTrasporto(convert(datiTrasporto.getDataInizioTrasporto()));
 					docTestata.setTipoResa(datiTrasporto.getTipoResa());
@@ -429,7 +430,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 								docTestata.setDataterminiPagamento(convert(dettaglioPagamento.getDataRiferimentoTerminiPagamento()));
 								docTestata.setGiorniterminiPagamento(dettaglioPagamento.getGiorniTerminiPagamento());
 								docTestata.setDatascadenzaPagamento(convert(dettaglioPagamento.getDataScadenzaPagamento()));
-								docTestata.setImportoPagamento(truncImporto(dettaglioPagamento.getImportoPagamento()));
+								docTestata.setImportoPagamento(truncBigDecimal(dettaglioPagamento.getImportoPagamento()));
 								docTestata.setCodufficiopostale(dettaglioPagamento.getCodUfficioPostale());
 								docTestata.setCognomeQuietanzante(dettaglioPagamento.getCognomeQuietanzante());
 								docTestata.setNomeQuietanzante(dettaglioPagamento.getNomeQuietanzante());
@@ -438,9 +439,9 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 								docTestata.setAbi(dettaglioPagamento.getABI());
 								docTestata.setCab(dettaglioPagamento.getCAB());
 								docTestata.setBic(dettaglioPagamento.getBIC());
-								docTestata.setScontoPagamentoAnt(truncImporto(dettaglioPagamento.getScontoPagamentoAnticipato()));
+								docTestata.setScontoPagamentoAnt(truncBigDecimal(dettaglioPagamento.getScontoPagamentoAnticipato()));
 								docTestata.setDatalimitePagamentoAnt(convert(dettaglioPagamento.getDataLimitePagamentoAnticipato()));
-								docTestata.setPenalitaPagRitardati(dettaglioPagamento.getPenalitaPagamentiRitardati());
+								docTestata.setPenalitaPagRitardati(truncBigDecimal(dettaglioPagamento.getPenalitaPagamentiRitardati()));
 								docTestata.setDataRicorrenzapenale(convert(dettaglioPagamento.getDataDecorrenzaPenale()));
 							}
 						}						
@@ -467,26 +468,26 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 							}
 						}
 						docEleLinea.setLineaDescrizione(dettaglioLinea.getDescrizione());
-						docEleLinea.setLineaQuantita(truncImporto(dettaglioLinea.getQuantita()));
+						docEleLinea.setLineaQuantita(truncBigDecimal(dettaglioLinea.getQuantita()));
 						docEleLinea.setLineaUnitamisura(dettaglioLinea.getUnitaMisura());
 						docEleLinea.setInizioDatacompetenza(convert(dettaglioLinea.getDataInizioPeriodo()));
 						docEleLinea.setFineDatacompetenza(convert(dettaglioLinea.getDataFinePeriodo()));
-						docEleLinea.setLineaPrezzounitario(truncImporto(dettaglioLinea.getPrezzoUnitario()));
+						docEleLinea.setLineaPrezzounitario(truncBigDecimal(dettaglioLinea.getPrezzoUnitario()));
 						if (dettaglioLinea.getScontoMaggiorazione() != null && !dettaglioLinea.getScontoMaggiorazione().isEmpty()) {
 							if (dettaglioLinea.getScontoMaggiorazione().size() == 1) {
 								docEleLinea.setTipoScontomag(dettaglioLinea.getScontoMaggiorazione().get(0).getTipo().value());
-								docEleLinea.setPercentualeScontomag(dettaglioLinea.getScontoMaggiorazione().get(0).getPercentuale());
-								docEleLinea.setImportoScontomag(truncImporto(dettaglioLinea.getScontoMaggiorazione().get(0).getImporto()));								
+								docEleLinea.setPercentualeScontomag(truncBigDecimal(dettaglioLinea.getScontoMaggiorazione().get(0).getPercentuale()));
+								docEleLinea.setImportoScontomag(truncBigDecimal(dettaglioLinea.getScontoMaggiorazione().get(0).getImporto()));								
 							} else {
 								BigDecimal scontoMaggiorazioneImporto = BigDecimal.ZERO;
 								for (ScontoMaggiorazioneType scontoMaggiorazione : dettaglioLinea.getScontoMaggiorazione()) {
 									scontoMaggiorazioneImporto = scontoMaggiorazioneImporto.add(scontoMaggiorazione.getImporto());
 								}
-								docEleLinea.setImportoScontomag(truncImporto(scontoMaggiorazioneImporto));								
+								docEleLinea.setImportoScontomag(truncBigDecimal(scontoMaggiorazioneImporto));								
 							}
 						}
-						docEleLinea.setLineaPrezzototale(truncImporto(dettaglioLinea.getPrezzoTotale()));
-						docEleLinea.setLineaAliquotaiva(dettaglioLinea.getAliquotaIVA());
+						docEleLinea.setLineaPrezzototale(truncBigDecimal(dettaglioLinea.getPrezzoTotale()));
+						docEleLinea.setLineaAliquotaiva(truncBigDecimal(dettaglioLinea.getAliquotaIVA()));
 						if (dettaglioLinea.getRitenuta() != null)
 							docEleLinea.setLineaRitenuta(dettaglioLinea.getRitenuta().value());
 						if (dettaglioLinea.getNatura() != null)
@@ -518,9 +519,9 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 						docEleIVA.setAliquotaIva(datiRiepilogo.getAliquotaIVA());
 						if (datiRiepilogo.getNatura() != null)
 							docEleIVA.setNatura(datiRiepilogo.getNatura().value());
-						docEleIVA.setSpeseAccessorie(datiRiepilogo.getSpeseAccessorie());
-						docEleIVA.setArrotondamento(truncImporto(datiRiepilogo.getArrotondamento()));
-						docEleIVA.setImponibileImporto(truncImporto(datiRiepilogo.getImponibileImporto()));
+						docEleIVA.setSpeseAccessorie(truncBigDecimal(datiRiepilogo.getSpeseAccessorie()));
+						docEleIVA.setArrotondamento(truncBigDecimal(datiRiepilogo.getArrotondamento()));
+						docEleIVA.setImponibileImporto(truncBigDecimal(datiRiepilogo.getImponibileImporto()));
 						docEleIVA.setImposta(datiRiepilogo.getImposta());
 						if (datiRiepilogo.getEsigibilitaIVA() != null)
 							docEleIVA.setEsigibilitaIva(datiRiepilogo.getEsigibilitaIVA().value());
@@ -551,11 +552,15 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 						fileProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
 								Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla"));
 						fileProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
+						byte[] bytes = allegato.getAttachment();
+						try {
+							if (Base64.isArrayByteBase64(bytes))
+								bytes = Base64.decodeBase64(bytes);					
+						} catch(ArrayIndexOutOfBoundsException _ex) {			
+						}
 						Document document = SpringUtil.getBean("cmisService", SiglaCMISService.class).
 								storeSimpleDocument(
-										new ByteArrayInputStream(Base64.isArrayByteBase64(allegato.getAttachment())?
-												Base64.decodeBase64(allegato.getAttachment()):
-													allegato.getAttachment()), 
+										new ByteArrayInputStream(bytes), 
 										"application/" + allegato.getFormatoAttachment(), cmisPath, fileProperties);
 						docAllegato.setCmisNodeRef(document.getId());												
 					} catch(Exception  _ex) {
@@ -585,8 +590,8 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 					docTributo.setTipoRiga("RIT");
 					if (datiGeneraliDocumento.getDatiRitenuta().getTipoRitenuta() != null)
 						docTributo.setTipoTributo(datiGeneraliDocumento.getDatiRitenuta().getTipoRitenuta().value());
-					docTributo.setImporto(truncImporto(datiGeneraliDocumento.getDatiRitenuta().getImportoRitenuta()));
-					docTributo.setAliquota(datiGeneraliDocumento.getDatiRitenuta().getAliquotaRitenuta());
+					docTributo.setImporto(truncBigDecimal(datiGeneraliDocumento.getDatiRitenuta().getImportoRitenuta()));
+					docTributo.setAliquota(truncBigDecimal(datiGeneraliDocumento.getDatiRitenuta().getAliquotaRitenuta()));
 					if (datiGeneraliDocumento.getDatiRitenuta().getCausalePagamento() != null)
 						docTributo.setCausalePagamento(datiGeneraliDocumento.getDatiRitenuta().getCausalePagamento().value());
 					if (!anomalie.isEmpty())
@@ -604,10 +609,10 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 						docTributo.setTipoRiga("CAS");
 						if (datiCassaPrevidenziale.getTipoCassa() != null)
 							docTributo.setTipoTributo(datiCassaPrevidenziale.getTipoCassa().value());
-						docTributo.setImporto(truncImporto(datiCassaPrevidenziale.getImportoContributoCassa()));
-						docTributo.setAliquota(datiCassaPrevidenziale.getAlCassa());
-						docTributo.setImponibileCassa(truncImporto(datiCassaPrevidenziale.getImponibileCassa()));
-						docTributo.setAliquotaIva(datiCassaPrevidenziale.getAliquotaIVA());
+						docTributo.setImporto(truncBigDecimal(datiCassaPrevidenziale.getImportoContributoCassa()));
+						docTributo.setAliquota(truncBigDecimal(datiCassaPrevidenziale.getAlCassa()));
+						docTributo.setImponibileCassa(truncBigDecimal(datiCassaPrevidenziale.getImponibileCassa()));
+						docTributo.setAliquotaIva(truncBigDecimal(datiCassaPrevidenziale.getAliquotaIVA()));
 						if (datiCassaPrevidenziale.getRitenuta() != null)
 							docTributo.setRitenutaCassa(datiCassaPrevidenziale.getRitenuta().value());
 						if (datiCassaPrevidenziale.getNatura() != null)
@@ -635,8 +640,8 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 								idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)i, (long)indexSconto);
 						if (scontoMaggiorazione.getTipo() != null)
 							docSconto.setTipoScontomagg(scontoMaggiorazione.getTipo().value());
-						docSconto.setPercentualeScontomagg(scontoMaggiorazione.getPercentuale());
-						docSconto.setImportoScontomagg(truncImporto(scontoMaggiorazione.getImporto()));
+						docSconto.setPercentualeScontomagg(truncBigDecimal(scontoMaggiorazione.getPercentuale()));
+						docSconto.setImportoScontomagg(truncBigDecimal(scontoMaggiorazione.getImporto()));
 						if (!anomalie.isEmpty())
 							docSconto.setAnomalie(StringUtils.join(anomalie.toArray()," - "));
 						docSconto.setToBeCreated();
@@ -746,10 +751,12 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		return docAcquisto;
 	}
 	
-	private BigDecimal truncImporto(BigDecimal importo) {
-		if (importo == null)
+	private BigDecimal truncBigDecimal(BigDecimal bigDecimal) {
+		if (bigDecimal == null)
 			return null;
-		return importo.setScale(2, RoundingMode.DOWN);
+		if (bigDecimal.scale() > 2)
+			return bigDecimal.setScale(2, RoundingMode.DOWN);
+		return bigDecimal;
 	}
 	
 	private java.sql.Timestamp convert(XMLGregorianCalendar calendar) {
