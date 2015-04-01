@@ -354,7 +354,7 @@ public class CRUDFatturaPassivaElettronicaBP extends SimpleCRUDBP implements Fat
 	    	Calendar date = Calendar.getInstance();
 	    	date.setTimeInMillis(documentoEleTestata.getDataDocumento().getTime());
 	    	date.add(Calendar.MONTH, 1);
-	    	fatturaPassivaBulk.setDt_scadenza(new java.sql.Timestamp(date.getTime().getTime()));
+	    	//TODO eliminata su richiesta di Patrizia fatturaPassivaBulk.setDt_scadenza(new java.sql.Timestamp(date.getTime().getTime()));
 	    	fatturaPassivaBulk.setDt_da_competenza_coge(calcolaDataMinimaCompetenza(documentoEleTestata));
 	    	fatturaPassivaBulk.setDt_a_competenza_coge(calcolaDataMassimaCompetenza(documentoEleTestata));
 	    	
