@@ -4062,7 +4062,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			CompensoBulk compenso = (CompensoBulk) home.findByPrimaryKey(bulk);
 			getHomeCache(userContext).fetchAll(userContext);
 
-			if (compenso !=null && compenso.getIm_totale_compenso()!=null &&  bulk.getFatturaPassiva()!= null && bulk.getFatturaPassiva().getIm_totale_fattura()!=null &&
+			if (compenso !=null && compenso.getIm_totale_compenso()!=null && bulk.getFatturaPassiva() != null && bulk.getFatturaPassiva().getIm_totale_fattura()!=null &&
 					compenso.getIm_totale_compenso().compareTo(bulk.getFatturaPassiva().getIm_totale_fattura())!=0)
 					throw new it.cnr.jada.comp.ApplicationException("Importo totale del compenso calcolato: " + compenso.getIm_totale_compenso() + " diverso da quello della fattura: "+ bulk.getFatturaPassiva().getIm_totale_fattura());
 			
