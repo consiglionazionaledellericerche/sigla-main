@@ -18,7 +18,6 @@ import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoCommittenteType;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -125,8 +124,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		}
 	}
 	
-
-	@SuppressWarnings({ "unchecked", "serial" })
+	@SuppressWarnings("unchecked")
 	public void pecScanForRiceviFatture(String userName, String password) throws ComponentException {	
 		logger.info("PEC SCAN for ricevi Fatture email: "+userName);
 		Properties props = System.getProperties();
@@ -158,18 +156,29 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			    	try {
 			    		Message message = messages[i];
 			    		List<BodyPart> bodyParts = estraiBodyPart(message.getContent());
-			    		BodyPart bodyPartP7M = null, bodyPartMetadati = null;
+			    		if (bodyParts.isEmpty()) {
+			    			logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
+			    					" non ha file allegati.");
+			    			continue;
+			    		}
+			    		if (bodyParts.size() > 2) {
+			    			logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
+			    					" ha più di due file allegati.");
+			    			continue;
+			    		}
+			    		BodyPart bodyPartFattura = null, bodyPartMetadati = null;
 			    		for (BodyPart bodyPart : bodyParts) {
-			    			if (bodyPart.getFileName().endsWith("p7m")){
-			    				bodyPartP7M = bodyPart;
-			    			} else {
+			    			if (isBodyPartMetadati(bodyPart)){
 			    				bodyPartMetadati = bodyPart;
+			    			} else {
+			    				bodyPartFattura = bodyPart;
 			    			}
 						}
-			    		if (bodyPartP7M != null && bodyPartMetadati != null) {
+			    		if (bodyPartFattura != null && bodyPartMetadati != null) {
 			    	    	JAXBElement<MetadatiInvioFileType> metadatiInvioFileType = (JAXBElement<MetadatiInvioFileType>) 
 			    	    			fatturazioneElettronicaClient.getUnmarshaller().
 			    	    			unmarshal(new StreamSource(bodyPartMetadati.getInputStream()));
+			    	    	
 			    	    	DocumentoEleTrasmissioneBulk bulk = new DocumentoEleTrasmissioneBulk();
 			    	    	bulk.setIdentificativoSdi(metadatiInvioFileType.getValue().getIdentificativoSdI().longValue());
 			    	    	RemoteIterator iterator = fatturaElettronicaPassivaComponentSession.cerca(userContext, null, bulk);
@@ -178,12 +187,12 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			    	    	if (elements == 0) {
 				    	    	ricezioneFattureService.riceviFatturaSIGLA(
 				    	    			metadatiInvioFileType.getValue().getIdentificativoSdI(), 
-				    	    			bodyPartP7M.getFileName(), 
+				    	    			bodyPartFattura.getFileName(), 
 										new DataHandler(new ByteArrayDataSource(
-												IOUtils.toByteArray(bodyPartP7M.getInputStream()),bodyPartP7M.getContentType())), 
+												IOUtils.toByteArray(bodyPartFattura.getInputStream()),bodyPartFattura.getContentType())), 
 										bodyPartMetadati.getFileName(), 
 										new DataHandler(new ByteArrayDataSource(
-												IOUtils.toByteArray(bodyPartMetadati.getInputStream()), bodyPartMetadati.getContentType())));				    	    		
+												IOUtils.toByteArray(bodyPartMetadati.getInputStream()), bodyPartMetadati.getContentType())));				    	    					    	    			
 			    	    	}
 			    		} else {
 			    			logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
@@ -203,6 +212,20 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		} catch (MessagingException e) {
 			logger.error("Error while scan PEC email:" +userName, e);
 		}				
+	}
+
+	@SuppressWarnings("unchecked")
+	private boolean isBodyPartMetadati(BodyPart bodyPart) {
+    	try {
+			JAXBElement<MetadatiInvioFileType> metadatiInvioFileType = (JAXBElement<MetadatiInvioFileType>) 
+					fatturazioneElettronicaClient.getUnmarshaller().
+					unmarshal(new StreamSource(bodyPart.getInputStream()));
+			if (logger.isDebugEnabled())
+				logger.debug("metadatiInvioFileType :" + metadatiInvioFileType.getValue().getIdentificativoSdI());
+		} catch (Exception e) {
+			return false;
+		}
+    	return true;
 	}
 	
 	public void notificaEsito(String userName, String password, DocumentoEleTestataBulk bulk, JAXBElement<NotificaEsitoCommittenteType> notificaEsitoCommittenteType) throws EmailException, XmlMappingException, IOException {
