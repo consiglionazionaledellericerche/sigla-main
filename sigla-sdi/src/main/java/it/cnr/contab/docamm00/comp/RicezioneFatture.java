@@ -21,7 +21,6 @@ import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.firma.Verifica;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.gov.fatturapa.EsitoRicezioneType;
@@ -52,6 +51,7 @@ import it.gov.fatturapa.sdi.fatturapa.v1.TerzoIntermediarioSoggettoEmittenteType
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -87,6 +87,9 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.bouncycastle.cms.CMSException;
+import org.bouncycastle.cms.CMSProcessable;
+import org.bouncycastle.cms.CMSSignedData;
 import org.jboss.wsf.spi.annotation.WebContext;
 @Stateless
 @WebService(endpointInterface="it.gov.fatturapa.RicezioneFatture", 
@@ -100,11 +103,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 	public RispostaRiceviFattureType riceviFatture(FileSdIConMetadatiType parametersIn) {
 		RispostaRiceviFattureType risposta = new RispostaRiceviFattureType();
 		try {
-			ByteArrayOutputStream bStream = new ByteArrayOutputStream();
-			byte[] bytesFile = IOUtils.toByteArray(parametersIn.getFile().getInputStream());
-//			if (Base64.isArrayByteBase64(bytesFile))
-//				bytesFile = Base64.decodeBase64(bytesFile);			
-			Verifica.verificaBustaFirmata(new ByteArrayInputStream(bytesFile), bStream);
+			ByteArrayOutputStream bStream = estraiFirma(parametersIn.getFile().getInputStream());
 			byte[] bytesMetadata = IOUtils.toByteArray(parametersIn.getMetadati().getInputStream());
 			if (Base64.isArrayByteBase64(bytesMetadata))
 				bytesMetadata = Base64.decodeBase64(bytesMetadata);
@@ -138,6 +137,20 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		return risposta;
 	}
 
+	private ByteArrayOutputStream estraiFirma(InputStream is) throws CMSException, IOException {
+		byte[] bytes = IOUtils.toByteArray(is);
+		try {
+			if (Base64.isArrayByteBase64(bytes))
+				bytes = Base64.decodeBase64(bytes);					
+		} catch(ArrayIndexOutOfBoundsException _ex) {			
+		}
+		CMSSignedData sdp = new CMSSignedData(bytes);                                  
+		CMSProcessable cmsp = sdp.getSignedContent(); 
+		ByteArrayOutputStream bStream = new ByteArrayOutputStream();                          
+		cmsp.write(bStream);
+		return bStream;
+	}
+		
 	private CMISPath saveFattura(String name, InputStream stream, String contentTypeFile,
 			String nameMinusP7m, InputStream streamMinusP7m, String contentTypeFileMinusP7m,			
 			String nomeFileMedatati, InputStream streamMetadati,  String contentTypeMetadata, 
