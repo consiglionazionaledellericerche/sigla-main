@@ -331,12 +331,15 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	 *
 	 * @param context	L'ActionContext della richiesta
 	 * @throws BusinessProcessException	
+	 * @throws ValidationException 
 	 */
-	public void salvaDefinitivo(ActionContext context) throws it.cnr.jada.action.BusinessProcessException{
+	public void salvaDefinitivo(ActionContext context) throws it.cnr.jada.action.BusinessProcessException, ValidationException{
 		try {
 
 			PdGVariazioniComponentSession comp = (PdGVariazioniComponentSession)createComponentSession();
-			Pdg_variazioneBulk pdg = comp.salvaDefinitivo(context.getUserContext(), (Pdg_variazioneBulk)getModel());
+			Pdg_variazioneBulk pdg=(Pdg_variazioneBulk)getModel();
+			pdg.validate();
+			pdg = comp.salvaDefinitivo(context.getUserContext(), (Pdg_variazioneBulk)getModel());
 			edit(context,pdg);
 		}catch(it.cnr.jada.comp.ComponentException ex){
 			throw handleException(ex);
