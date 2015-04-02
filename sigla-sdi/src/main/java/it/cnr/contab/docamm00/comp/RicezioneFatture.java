@@ -21,6 +21,7 @@ import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.firma.Verifica;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.gov.fatturapa.EsitoRicezioneType;
@@ -103,6 +104,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 	public RispostaRiceviFattureType riceviFatture(FileSdIConMetadatiType parametersIn) {
 		RispostaRiceviFattureType risposta = new RispostaRiceviFattureType();
 		try {
+			JAXBContext jc = JAXBContext.newInstance("it.gov.fatturapa.sdi.fatturapa.v1");
 			byte[] bytesMetadata = IOUtils.toByteArray(parametersIn.getMetadati().getInputStream());
 			if (Base64.isArrayByteBase64(bytesMetadata))
 				bytesMetadata = Base64.decodeBase64(bytesMetadata);
@@ -110,7 +112,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			boolean isp7m = parametersIn.getFile().getContentType().contains("p7m");
 			ByteArrayOutputStream bStream = new ByteArrayOutputStream();
 			if (isp7m)
-				bStream = estraiFirma(parametersIn.getFile().getInputStream());
+				bStream = estraiFirma(parametersIn.getFile().getInputStream(), jc);
 			else
 				IOUtils.copy(parametersIn.getFile().getInputStream(), bStream);
 			
@@ -129,7 +131,6 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 					parametersIn.getMetadati().getContentType(),
 					parametersIn.getIdentificativoSdI());
 			
-			JAXBContext jc = JAXBContext.newInstance("it.gov.fatturapa.sdi.fatturapa.v1");
 			JAXBElement<FatturaElettronicaType> fatturaElettronicaType = (JAXBElement<FatturaElettronicaType>) 
 					jc.createUnmarshaller().unmarshal(new ByteArrayInputStream(bStream.toByteArray()));
 			elaboraFattura(fatturaElettronicaType.getValue(), parametersIn.getIdentificativoSdI(), parametersIn.getNomeFile(), cmisPath);		
@@ -144,18 +145,24 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		return risposta;
 	}
 
-	private ByteArrayOutputStream estraiFirma(InputStream is) throws CMSException, IOException {
-		byte[] bytes = IOUtils.toByteArray(is);
-		try {
-			if (Base64.isArrayByteBase64(bytes))
-				bytes = Base64.decodeBase64(bytes);					
-		} catch(ArrayIndexOutOfBoundsException _ex) {			
-		}
-		CMSSignedData sdp = new CMSSignedData(bytes);                                  
-		CMSProcessable cmsp = sdp.getSignedContent(); 
+	private ByteArrayOutputStream estraiFirma(InputStream is, JAXBContext jc) throws CMSException, IOException {
 		ByteArrayOutputStream bStream = new ByteArrayOutputStream();                          
-		cmsp.write(bStream);
-		return bStream;
+		try {			
+			Verifica.verificaBustaFirmata(is, bStream);
+			jc.createUnmarshaller().unmarshal(new ByteArrayInputStream(bStream.toByteArray()));
+			return bStream;
+		} catch(Exception _ex) {
+			byte[] bytes = IOUtils.toByteArray(is);
+			try {
+				if (Base64.isArrayByteBase64(bytes))
+					bytes = Base64.decodeBase64(bytes);					
+			} catch(ArrayIndexOutOfBoundsException e) {			
+			}
+			CMSSignedData sdp = new CMSSignedData(bytes);                                  
+			CMSProcessable cmsp = sdp.getSignedContent();
+			cmsp.write(bStream);
+			return bStream;			
+		}
 	}
 		
 	private CMISPath saveFattura(boolean isp7m, String name, InputStream stream, String contentTypeFile,

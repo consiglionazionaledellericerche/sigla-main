@@ -189,7 +189,7 @@ public class DocumentoEleTestataHome extends BulkHome {
             			createNotificaEsitoCommittente(notificaEsitoCommittenteType);
             	ByteArrayOutputStream outputStreamNotificaEsito = new ByteArrayOutputStream();
             	client.getMarshaller().marshal(notificaEsitoCommittente, new StreamResult(outputStreamNotificaEsito));
-            	PasswordAuthentication authentication = getAuthenticatorFromCUU(userContext, documentoEleTestataBulk);
+            	PasswordAuthentication authentication = new PasswordAuthentication("sisca@pec.cnr.it", "sistinfpec2010");// getAuthenticatorFromCUU(userContext, documentoEleTestataBulk);
             	fatturaService.notificaEsito(authentication.getUserName(), authentication.getPassword(), 
             			documentoEleTestataBulk, notificaEsitoCommittente);
             	storeEsitoDocument(documentoEleTestataBulk, new ByteArrayInputStream(outputStreamNotificaEsito.toByteArray()), 
