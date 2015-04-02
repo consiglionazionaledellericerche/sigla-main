@@ -141,6 +141,12 @@
 			<version>${project.version}</version>
 			<type>ejb</type>
 			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>it.cnr</groupId>
@@ -148,6 +154,12 @@
 			<version>${project.version}</version>
 			<type>ejb</type>
 			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	    <dependency>
 	      <groupId>org.apache.chemistry.opencmis</groupId>
@@ -180,6 +192,12 @@
 	      <groupId>org.slf4j</groupId>
 	      <artifactId>slf4j-log4j12</artifactId>
 	      <version>${slf4j.version}</version>
+	      <exclusions>
+	      	<exclusion>
+	      		<artifactId>log4j</artifactId>
+	      		<groupId>log4j</groupId>
+	      	</exclusion>
+	      </exclusions>
 	    </dependency>
 	    <dependency>
 	      <groupId>org.slf4j</groupId>
@@ -274,6 +292,10 @@
 				<exclusion>
 					<artifactId>commons-logging</artifactId>
 					<groupId>commons-logging</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -422,6 +444,10 @@
 				<exclusion>
 					<artifactId>commons-logging</artifactId>
 					<groupId>commons-logging</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
 				</exclusion>
 			</exclusions>
 		</dependency>
