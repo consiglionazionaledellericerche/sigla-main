@@ -380,7 +380,9 @@ public class CRUDFatturaPassivaElettronicaBP extends SimpleCRUDBP implements Fat
 			FatturaPassivaRigaCRUDController dettaglioController = nbp.getDettaglio();			
 			for (DocumentoEleLineaBulk documentoEleLinea : documentoEleTestata.getDocEleLineaColl()) {
 				Fattura_passiva_rigaBulk rigaFattura = documentoEleTestata.getInstanceRiga();			
-				dettaglioController.add(context, rigaFattura);
+				int i = dettaglioController.addDetail(rigaFattura);
+				dettaglioController.setDirty(true);
+				dettaglioController.setModelIndex(context, i);
 				rigaFattura.setBene_servizio(documentoEleLinea.getBeneServizio());
 				rigaFattura.setDs_riga_fattura(documentoEleLinea.getLineaDescrizione());
 				rigaFattura.setVoce_iva(recuperaCodiceIVA(documentoEleTestata, documentoEleLinea));
