@@ -146,19 +146,19 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 	}
 
 	private ByteArrayOutputStream estraiFirma(InputStream is, JAXBContext jc) throws CMSException, IOException {
-		ByteArrayOutputStream bStream = new ByteArrayOutputStream();                          
+		ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+		byte[] inputBytes = IOUtils.toByteArray(is);
 		try {			
-			Verifica.verificaBustaFirmata(is, bStream);
+			Verifica.verificaBustaFirmata(new ByteArrayInputStream(inputBytes), bStream);
 			jc.createUnmarshaller().unmarshal(new ByteArrayInputStream(bStream.toByteArray()));
 			return bStream;
 		} catch(Exception _ex) {
-			byte[] bytes = IOUtils.toByteArray(is);
 			try {
-				if (Base64.isArrayByteBase64(bytes))
-					bytes = Base64.decodeBase64(bytes);					
+				if (Base64.isArrayByteBase64(inputBytes))
+					inputBytes = Base64.decodeBase64(inputBytes);					
 			} catch(ArrayIndexOutOfBoundsException e) {			
 			}
-			CMSSignedData sdp = new CMSSignedData(bytes);                                  
+			CMSSignedData sdp = new CMSSignedData(inputBytes);
 			CMSProcessable cmsp = sdp.getSignedContent();
 			cmsp.write(bStream);
 			return bStream;			
@@ -181,30 +181,41 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, day, day, day);
 		cmisPath = cmisService.createFolderIfNotPresent(cmisPath, folderName, null, null, 
 				new CMISFolderFatturaPassiva(null, identificativoSdI));
+		try {
+			Map<String, Object> metadataPropertiesMinusP7M = new HashMap<String, Object>();
+			metadataPropertiesMinusP7M.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
+			metadataPropertiesMinusP7M.put(PropertyIds.NAME, nameMinusP7m);
+			metadataPropertiesMinusP7M.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
+					Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", "P:sigla_fatture_attachment:trasmissione_fattura"));
+			metadataPropertiesMinusP7M.put("sigla_commons_aspect:utente_applicativo", "SDI");
+			cmisService.storeSimpleDocument(streamMinusP7m, contentTypeFileMinusP7m, cmisPath, metadataPropertiesMinusP7M);			
+		} catch(CmisContentAlreadyExistsException _ex){
+			LOGGER.warn("PEC File "+nameMinusP7m+" alredy store!");
+		}
+		try {
+			Map<String, Object> metadataProperties = new HashMap<String, Object>();
+			metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
+			metadataProperties.put(PropertyIds.NAME, nomeFileMedatati);
+			metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
+					Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla"));
+			metadataProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
+			cmisService.storeSimpleDocument(streamMetadati, contentTypeMetadata, cmisPath, metadataProperties);
+		} catch(CmisContentAlreadyExistsException _ex){
+			LOGGER.warn("PEC File "+nomeFileMedatati+" alredy store!");
+		}
 		
-		Map<String, Object> metadataPropertiesMinusP7M = new HashMap<String, Object>();
-		metadataPropertiesMinusP7M.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
-		metadataPropertiesMinusP7M.put(PropertyIds.NAME, nameMinusP7m);
-		metadataPropertiesMinusP7M.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
-				Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", "P:sigla_fatture_attachment:trasmissione_fattura"));
-		metadataPropertiesMinusP7M.put("sigla_commons_aspect:utente_applicativo", "SDI");
-		cmisService.storeSimpleDocument(streamMinusP7m, contentTypeFileMinusP7m, cmisPath, metadataPropertiesMinusP7M);
-		
-		Map<String, Object> metadataProperties = new HashMap<String, Object>();
-		metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
-		metadataProperties.put(PropertyIds.NAME, nomeFileMedatati);
-		metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
-				Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla"));
-		metadataProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
-		cmisService.storeSimpleDocument(streamMetadati, contentTypeMetadata, cmisPath, metadataProperties);
 		if (isp7m) {
-			Map<String, Object> fileProperties = new HashMap<String, Object>();
-			fileProperties.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
-			fileProperties.put(PropertyIds.NAME, name);
-			fileProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
-					Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", "P:sigla_fatture_attachment:fattura_elettronica_xml_post_firma", CMISAspect.CNR_SIGNEDDOCUMENT.value()));
-			fileProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
-			cmisService.storeSimpleDocument(stream, contentTypeFile, cmisPath, fileProperties);			
+			try {
+				Map<String, Object> fileProperties = new HashMap<String, Object>();
+				fileProperties.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
+				fileProperties.put(PropertyIds.NAME, name);
+				fileProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
+						Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", "P:sigla_fatture_attachment:fattura_elettronica_xml_post_firma", CMISAspect.CNR_SIGNEDDOCUMENT.value()));
+				fileProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
+				cmisService.storeSimpleDocument(stream, contentTypeFile, cmisPath, fileProperties);
+			} catch(CmisContentAlreadyExistsException _ex){
+				LOGGER.warn("PEC File "+name+" alredy store!");
+			}				
 		}
 		return cmisPath;
 	}
