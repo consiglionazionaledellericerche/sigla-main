@@ -138,7 +138,7 @@ public class SiglaCMISService {
         sessionParameters.put(SessionParameter.USER, userName);
         sessionParameters.put(SessionParameter.PASSWORD, password);
 
-        sessionParameters.put(SessionParameter.CONNECT_TIMEOUT, "5000");
+        sessionParameters.put(SessionParameter.CONNECT_TIMEOUT, "10000");
         sessionParameters.put(SessionParameter.REPOSITORY_ID, sessionFactory.getRepositories(sessionParameters).get(0).getId());
         sessionParameters.put(SessionParameter.LOCALE_ISO3166_COUNTRY, Locale.ITALY.getCountry());
         sessionParameters.put(SessionParameter.LOCALE_ISO639_LANGUAGE, Locale.ITALY.getLanguage());
@@ -154,7 +154,7 @@ public class SiglaCMISService {
         }
         Map<String, String> sessionParameters = new HashMap<String, String>();
         sessionParameters.putAll(serverParameters);
-        sessionParameters.put(SessionParameter.CONNECT_TIMEOUT, "5000");
+        sessionParameters.put(SessionParameter.CONNECT_TIMEOUT, "10000");
         sessionParameters.put(SessionParameter.USER, serverParameters.get("user.admin.username"));
         sessionParameters.put(SessionParameter.PASSWORD, serverParameters.get("user.admin.password"));
         if (!sessionParameters.containsKey(SessionParameter.AUTHENTICATION_PROVIDER_CLASS)) {
