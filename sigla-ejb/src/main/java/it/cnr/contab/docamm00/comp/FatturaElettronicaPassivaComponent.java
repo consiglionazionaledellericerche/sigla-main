@@ -25,6 +25,7 @@ import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleScontoMaggBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataHome;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneHome;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTributiBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.StatoDocumentoEleEnum;
 import it.cnr.contab.docamm00.fatturapa.bulk.TipoAcquistoEnum;
@@ -384,11 +385,24 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	public void scanPECProtocollo(UserContext usercontext) throws ComponentException {
+	public void scanPECProtocollo(UserContext usercontext, UnitaOrganizzativaPecBulk unitaOrganizzativaPecBulk) throws ComponentException {
 		FatturaPassivaElettronicaService fatturaPassivaElettronicaService = SpringUtil.getBean(
 				"fatturaPassivaElettronicaService", FatturaPassivaElettronicaService.class);
+		try {
+			lockBulk(usercontext, unitaOrganizzativaPecBulk);
+				fatturaPassivaElettronicaService.pecScanForRiceviFatture(
+						unitaOrganizzativaPecBulk.getEmailPecProtocollo(), 
+						unitaOrganizzativaPecBulk.getCodPecProtocollo());
+		} catch (OutdatedResourceException e) {
+		} catch (BusyResourceException e) {
+		} catch (PersistencyException e) {
+			handleException(e);
+		}	
+	}	
+	@SuppressWarnings("unchecked")
+	public List<UnitaOrganizzativaPecBulk> scanPECProtocollo(UserContext usercontext) throws ComponentException {
 		UnitaOrganizzativaPecHome home = (UnitaOrganizzativaPecHome) getHome(usercontext, UnitaOrganizzativaPecBulk.class);
+		List<UnitaOrganizzativaPecBulk> results = new ArrayList<UnitaOrganizzativaPecBulk>();
 		Map<String, String> indirizziPec = new HashMap<String, String>();
     	try {    		
     		SQLBuilder sql = home.createSQLBuilder();
@@ -396,21 +410,13 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     		sql.addClause(FindClause.AND, "codPecProtocollo", SQLBuilder.ISNOTNULL, null);    		
     		List<UnitaOrganizzativaPecBulk> pecs = home.fetchAll(sql);
     		for (UnitaOrganizzativaPecBulk unitaOrganizzativaPecBulk : pecs) {
-				try {
-					lockBulk(usercontext, unitaOrganizzativaPecBulk);
-					if (!indirizziPec.containsKey(unitaOrganizzativaPecBulk.getEmailPecProtocollo())) {
-						fatturaPassivaElettronicaService.pecScanForRiceviFatture(
-								unitaOrganizzativaPecBulk.getEmailPecProtocollo(), 
-								unitaOrganizzativaPecBulk.getCodPecProtocollo());
-					}
-					indirizziPec.put(unitaOrganizzativaPecBulk.getEmailPecProtocollo(), 
-							unitaOrganizzativaPecBulk.getCodPecProtocollo());
-				} catch (OutdatedResourceException e) {
-					continue;
-				} catch (BusyResourceException e) {
-					continue;
+				if (!indirizziPec.containsKey(unitaOrganizzativaPecBulk.getEmailPecProtocollo())) {
+					results.add(unitaOrganizzativaPecBulk);
 				}
+				indirizziPec.put(unitaOrganizzativaPecBulk.getEmailPecProtocollo(), 
+						unitaOrganizzativaPecBulk.getCodPecProtocollo());
 			}
+    		return results;
     	} catch (PersistencyException e) {
 			throw handleException(e);
 		}
@@ -423,5 +429,16 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		} catch (IOException e) {
 			handleException(e);
 		}		
+	}
+
+	public boolean existsIdentificativo(UserContext usercontext, Long identificativoSdI) throws ComponentException {
+		DocumentoEleTrasmissioneHome home = (DocumentoEleTrasmissioneHome) getHome(usercontext, DocumentoEleTrasmissioneBulk.class);
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause(FindClause.AND, "identificativoSdi", SQLBuilder.EQUALS, identificativoSdI);
+		try {
+			return !home.fetchAll(sql).isEmpty();
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
 	}
 }
