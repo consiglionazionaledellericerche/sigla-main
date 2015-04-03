@@ -1,4 +1,5 @@
 package it.cnr.contab.docamm00.ejb;
+import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneBulk;
@@ -8,6 +9,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 
 import java.rmi.RemoteException;
+import java.util.List;
 
 import javax.ejb.Remote;
 @Remote
@@ -21,9 +23,13 @@ public interface FatturaElettronicaPassivaComponentSession extends it.cnr.jada.e
 			throws ComponentException, RemoteException;
 	public abstract Fattura_passivaBulk cercaFatturaPassivaForNota(UserContext userContext, DocumentoEleTestataBulk bulk)
 			throws ComponentException, RemoteException;
-	public abstract void scanPECProtocollo(UserContext userContext)
+	public abstract List<UnitaOrganizzativaPecBulk> scanPECProtocollo(UserContext userContext)
 			throws ComponentException, RemoteException;
 	public abstract void notificaEsito(UserContext usercontext, TipoIntegrazioneSDI tipoIntegrazioneSDI, DocumentoEleTestataBulk documentoEleTestataBulk)
+			throws ComponentException, RemoteException;
+	public abstract boolean existsIdentificativo(UserContext usercontext, java.lang.Long identificativoSdI)
+			throws ComponentException, RemoteException;
+	public void scanPECProtocollo(UserContext usercontext, UnitaOrganizzativaPecBulk unitaOrganizzativaPecBulk) 
 			throws ComponentException, RemoteException;
 
 }

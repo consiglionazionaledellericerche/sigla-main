@@ -1,17 +1,15 @@
 package it.cnr.contab.docamm00.service;
 
+import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.ejb.RicezioneFatturePA;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneBulk;
 import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
 import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.contab.util.StringEncrypter;
 import it.cnr.contab.util.StringEncrypter.EncryptionException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.util.RemoteIterator;
-import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.mail.SimplePECMail;
 import it.gov.fatturapa.sdi.messaggi.v1.MetadatiInvioFileType;
 import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoCommittenteType;
@@ -19,6 +17,7 @@ import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoCommittenteType;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -50,6 +49,7 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.apache.axiom.attachments.ByteArrayDataSource;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.mail.EmailAttachment;
@@ -67,7 +67,8 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	private Boolean pecScanDisable;
 	private Properties pecMailConf;
 	private String pecHostName, pecURLName, pecSDIAddress, 
-		pecSDIFromStringTerm, pecSDISubjectRiceviFattureTerm, pecScanFolderName;
+		pecSDIFromStringTerm, pecSDISubjectRiceviFattureTerm; 
+	private List<String> pecScanFolderName;
 	
 	public void setFatturaElettronicaPassivaComponentSession(
 			FatturaElettronicaPassivaComponentSession fatturaElettronicaPassivaComponentSession) {
@@ -108,7 +109,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	}
 	
 	public void setPecScanFolderName(String pecScanFolderName) {
-		this.pecScanFolderName = pecScanFolderName;
+		this.pecScanFolderName =  Arrays.asList(StringUtils.split(pecScanFolderName, ","));
 	}
 	public void execute() {
 		try{
@@ -116,7 +117,11 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 				logger.info("PEC scan is disabled");
 			} else {
 				logger.info("PEC SCAN for ricevi Fatture started at: "+new Date());
-				fatturaElettronicaPassivaComponentSession.scanPECProtocollo(userContext);
+				for (UnitaOrganizzativaPecBulk unitaOrganizzativaPecBulk : fatturaElettronicaPassivaComponentSession.scanPECProtocollo(userContext)) {
+					pecScanForRiceviFatture(
+							unitaOrganizzativaPecBulk.getEmailPecProtocollo(), 
+							unitaOrganizzativaPecBulk.getCodPecProtocollo());
+				}
 				logger.info("PEC SCAN for ricevi Fatture finished at: "+new Date());				
 			}
 		}catch(Throwable _ex){
@@ -139,71 +144,70 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			URLName urlName = new URLName(pecURLName);
 			final Store store = session.getStore(urlName);
 			store.connect(userName, password);
-			Folder inbox = store.getFolder(pecScanFolderName);	
-		    inbox.open(Folder.READ_WRITE);
-		    if (inbox.exists()) {
-		    	List<SearchTerm> terms = new ArrayList<SearchTerm>();
-		    	Calendar cal = Calendar.getInstance();
-		    	cal.setTime(new Date());
-		    	cal.add(Calendar.DATE, -1);
-		    	Date dateBeforeOneDays = cal.getTime();			    	
-		    	terms.add(new ReceivedDateTerm(ComparisonTerm.GE, dateBeforeOneDays));
-		    	terms.add(new FromStringTerm(pecSDIFromStringTerm));
-		    	terms.add(new SubjectTerm(pecSDISubjectRiceviFattureTerm));
-		    	Message messages[] = inbox.search(new AndTerm(terms.toArray(new SearchTerm[terms.size()])));
-		    	logger.info("Recuperati " + messages.length +" messaggi dalla casella PEC:" + userName);
-			    for (int i = 0; i < messages.length; i++) {
-			    	try {
-			    		Message message = messages[i];
-			    		List<BodyPart> bodyParts = estraiBodyPart(message.getContent());
-			    		if (bodyParts.isEmpty()) {
-			    			logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
-			    					" non ha file allegati.");
-			    			continue;
-			    		}
-			    		if (bodyParts.size() > 2) {
-			    			logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
-			    					" ha più di due file allegati.");
-			    			continue;
-			    		}
-			    		BodyPart bodyPartFattura = null, bodyPartMetadati = null;
-			    		for (BodyPart bodyPart : bodyParts) {
-			    			if (isBodyPartMetadati(bodyPart)){
-			    				bodyPartMetadati = bodyPart;
-			    			} else {
-			    				bodyPartFattura = bodyPart;
-			    			}
+			List<Folder> folders = new ArrayList<Folder>();
+			for (String folderName : pecScanFolderName) {
+				folders.add(store.getFolder(folderName));
+			}
+			for (Folder folder : folders) {
+			    if (folder.exists()) {
+					folder.open(Folder.READ_WRITE);
+			    	List<SearchTerm> terms = new ArrayList<SearchTerm>();
+			    	Calendar cal = Calendar.getInstance();
+			    	cal.setTime(new Date());
+			    	cal.add(Calendar.DATE, -1);		    	 
+			    	Date dateBeforeOneDays = cal.getTime();			    	
+			    	terms.add(new ReceivedDateTerm(ComparisonTerm.GE, dateBeforeOneDays));
+			    	terms.add(new FromStringTerm(pecSDIFromStringTerm));
+			    	terms.add(new SubjectTerm(pecSDISubjectRiceviFattureTerm));
+			    	Message messages[] = folder.search(new AndTerm(terms.toArray(new SearchTerm[terms.size()])));
+			    	logger.info("Recuperati " + messages.length +" messaggi dalla casella PEC:" + userName + " nella folder:" + folder.getFullName());
+				    for (int i = 0; i < messages.length; i++) {
+				    	try {
+				    		Message message = messages[i];
+				    		List<BodyPart> bodyParts = estraiBodyPart(message.getContent());
+				    		if (bodyParts.isEmpty()) {
+				    			logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
+				    					" non ha file allegati.");
+				    			continue;
+				    		}
+				    		if (bodyParts.size() > 2) {
+				    			logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
+				    					" ha più di due file allegati.");
+				    			continue;
+				    		}
+				    		BodyPart bodyPartFattura = null, bodyPartMetadati = null;
+				    		for (BodyPart bodyPart : bodyParts) {
+				    			if (isBodyPartMetadati(bodyPart)){
+				    				bodyPartMetadati = bodyPart;
+				    			} else {
+				    				bodyPartFattura = bodyPart;
+				    			}
+							}
+				    		if (bodyPartFattura != null && bodyPartMetadati != null) {
+				    	    	JAXBElement<MetadatiInvioFileType> metadatiInvioFileType = (JAXBElement<MetadatiInvioFileType>) 
+				    	    			fatturazioneElettronicaClient.getUnmarshaller().
+				    	    			unmarshal(new StreamSource(bodyPartMetadati.getInputStream()));				    	    	
+				    	    	if (!fatturaElettronicaPassivaComponentSession.existsIdentificativo(userContext, metadatiInvioFileType.getValue().getIdentificativoSdI().longValue())) {
+					    	    	ricezioneFattureService.riceviFatturaSIGLA(
+					    	    			metadatiInvioFileType.getValue().getIdentificativoSdI(), 
+					    	    			bodyPartFattura.getFileName(), 
+											new DataHandler(new ByteArrayDataSource(
+													IOUtils.toByteArray(bodyPartFattura.getInputStream()),bodyPartFattura.getContentType())), 
+											bodyPartMetadati.getFileName(), 
+											new DataHandler(new ByteArrayDataSource(
+													IOUtils.toByteArray(bodyPartMetadati.getInputStream()), bodyPartMetadati.getContentType())));				    	    					    	    			
+				    	    	}
+				    		} else {
+				    			logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
+				    					" è stato precessato ma gli allegati presenti non sono conformi.");
+				    		}
+						} catch (Exception e) {
+							logger.error("PEC scan error while importing file.", e);
 						}
-			    		if (bodyPartFattura != null && bodyPartMetadati != null) {
-			    	    	JAXBElement<MetadatiInvioFileType> metadatiInvioFileType = (JAXBElement<MetadatiInvioFileType>) 
-			    	    			fatturazioneElettronicaClient.getUnmarshaller().
-			    	    			unmarshal(new StreamSource(bodyPartMetadati.getInputStream()));
-			    	    	
-			    	    	DocumentoEleTrasmissioneBulk bulk = new DocumentoEleTrasmissioneBulk();
-			    	    	bulk.setIdentificativoSdi(metadatiInvioFileType.getValue().getIdentificativoSdI().longValue());
-			    	    	RemoteIterator iterator = fatturaElettronicaPassivaComponentSession.cerca(userContext, null, bulk);
-			    	    	int elements = iterator.countElements();
-			    	    	EJBCommonServices.closeRemoteIterator(iterator);
-			    	    	if (elements == 0) {
-				    	    	ricezioneFattureService.riceviFatturaSIGLA(
-				    	    			metadatiInvioFileType.getValue().getIdentificativoSdI(), 
-				    	    			bodyPartFattura.getFileName(), 
-										new DataHandler(new ByteArrayDataSource(
-												IOUtils.toByteArray(bodyPartFattura.getInputStream()),bodyPartFattura.getContentType())), 
-										bodyPartMetadati.getFileName(), 
-										new DataHandler(new ByteArrayDataSource(
-												IOUtils.toByteArray(bodyPartMetadati.getInputStream()), bodyPartMetadati.getContentType())));				    	    					    	    			
-			    	    	}
-			    		} else {
-			    			logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
-			    					" è stato precessato ma gli allegati presenti non sono conformi.");
-			    		}
-					} catch (Exception e) {
-						logger.error("PEC scan error while importing file.", e);
 					}
-				}
-		    }
-		    inbox.close(true);
+				    folder.close(true);				
+			    }
+			}
 			store.close();
 		} catch (AuthenticationFailedException e) {
 			logger.error("Error while scan PEC email:" +userName + " - password:"+password);
