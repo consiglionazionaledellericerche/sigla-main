@@ -56,9 +56,20 @@
 		caseSensitiveSearch="false"
 		nullable="false"
 		label="File con Metadati" />
-			
+	<fieldProperty
+		name="fileFattureRicevute"
+		property="fileFattureRicevute"
+		inputType="FILE"
+		inputSize="40"
+		maxLength="400"
+		caseSensitiveSearch="false"
+		nullable="false"
+		label="File fatture ricevute" />
+					
 	<formFieldProperty
 		name="file" />
 	<formFieldProperty
 		name="metadati" />
+	<formFieldProperty
+		name="fileFattureRicevute" />		
 </bulkInfo>
