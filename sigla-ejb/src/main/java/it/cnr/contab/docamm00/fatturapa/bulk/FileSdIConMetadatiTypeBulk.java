@@ -13,7 +13,8 @@ public class FileSdIConMetadatiTypeBulk extends OggettoBulk {
 	private File file;
 	private String nomeFileMetadati;
 	private File metadati;
-
+	private File fileFattureRicevute;
+	
 	public FileSdIConMetadatiTypeBulk() {
 		super();
 	}
@@ -57,4 +58,12 @@ public class FileSdIConMetadatiTypeBulk extends OggettoBulk {
 	public void setMetadati(File metadati) {
 		this.metadati = metadati;
 	}
+
+	public File getFileFattureRicevute() {
+		return fileFattureRicevute;
+	}
+
+	public void setFileFattureRicevute(File fileFattureRicevute) {
+		this.fileFattureRicevute = fileFattureRicevute;
+	}	
 }

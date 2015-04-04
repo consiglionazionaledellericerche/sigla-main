@@ -1,11 +1,14 @@
 package it.cnr.contab.docamm00.actions;
 
+
 import it.cnr.contab.docamm00.bp.CaricaFatturaElettronicaBP;
+import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.ejb.RicezioneFatturePA;
 import it.cnr.contab.docamm00.fatturapa.bulk.FileSdIConMetadatiTypeBulk;
 import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.FillException;
@@ -14,23 +17,25 @@ import it.cnr.jada.util.action.FormAction;
 import it.cnr.jada.util.upload.UploadedFile;
 import it.gov.fatturapa.sdi.messaggi.v1.MetadatiInvioFileType;
 import it.gov.fatturapa.sdi.messaggi.v1.NotificaDecorrenzaTerminiType;
+import it.gov.fatturapa.sdi.monitoraggio.v1.FattureRicevuteType;
+import it.gov.fatturapa.sdi.monitoraggio.v1.MonitoraggioFlussiType;
 import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.FileSdIConMetadatiType;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.activation.DataHandler;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBElement;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.axiom.attachments.ByteArrayDataSource;
 import org.apache.commons.io.IOUtils;
+import org.springframework.oxm.XmlMappingException;
 
 public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 	private static final long serialVersionUID = 1L;
@@ -108,4 +113,45 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 		}
 		return actioncontext.findDefaultForward();
 	};
+	@SuppressWarnings("unchecked")
+	public Forward doControllaFatture(ActionContext actioncontext) throws java.rmi.RemoteException {
+		CaricaFatturaElettronicaBP caricaPassivaElettronicaBP = (CaricaFatturaElettronicaBP) actioncontext.getBusinessProcess();
+    	FatturazioneElettronicaClient client = SpringUtil.getBean("fatturazioneElettronicaClient", 
+    			FatturazioneElettronicaClient.class);
+		UploadedFile fileFattureRicevute = ((it.cnr.jada.action.HttpActionContext)actioncontext).getMultipartParameter("main.fileFattureRicevute");
+		if (fileFattureRicevute.getFile() == null){
+			caricaPassivaElettronicaBP.setMessage("Valorizzare il file!");
+			return actioncontext.findDefaultForward();
+		}	
+
+		try {
+    		FatturaElettronicaPassivaComponentSession fatturaElettronicaPassivaComponentSession = 
+    				(FatturaElettronicaPassivaComponentSession) caricaPassivaElettronicaBP.createComponentSession("CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession");
+    		List<FattureRicevuteType.Flusso> results = new ArrayList<FattureRicevuteType.Flusso>();
+			JAXBElement<MonitoraggioFlussiType> fattureRicevuteType = ((JAXBElement<MonitoraggioFlussiType>) 
+					client.getUnmarshaller().unmarshal(new StreamSource(fileFattureRicevute.getFile())));
+			for (FattureRicevuteType.Flusso flusso : fattureRicevuteType.getValue().getFattureRicevute().getFlusso()) {
+				if (!flusso.getStato().equalsIgnoreCase("SF00")) {
+					if (!fatturaElettronicaPassivaComponentSession.existsIdentificativo(actioncontext.getUserContext(), Long.valueOf(flusso.getIdSdI()))) {
+						results.add(flusso);
+					}					
+				}
+			}
+			if (results.isEmpty()){
+				caricaPassivaElettronicaBP.setMessage("Non ci sono anomalie.");
+			} else {
+				caricaPassivaElettronicaBP.setAnomalie(results);
+				caricaPassivaElettronicaBP.setMessage("Non sono presenti "+ results.size() + " fatture, controllare il dettaglio!");				
+			}
+		} catch (XmlMappingException e) {
+			return handleException(actioncontext, e);
+		} catch (IOException e) {
+			return handleException(actioncontext, e);
+		} catch (BusinessProcessException e) {
+			return handleException(actioncontext, e);
+		} catch (ComponentException e) {
+			return handleException(actioncontext, e);
+		}
+		return actioncontext.findDefaultForward();
+	}	
 }
