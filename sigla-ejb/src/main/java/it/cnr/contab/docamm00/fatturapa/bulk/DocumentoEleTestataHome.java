@@ -82,6 +82,22 @@ public class DocumentoEleTestataHome extends BulkHome {
 			return selectAnagraficoForCFIVA(testata, (AnagraficoBulk)oggettobulk1, compoundfindclause, 
 					testata.getDocumentoEleTrasmissione().getPrestatoreCodicefiscale(), 
 					testata.getDocumentoEleTrasmissione().getPrestatoreCodice());
+		if (s.equalsIgnoreCase("documentoEleTrasmissione.intermediario"))
+			return selectTerzoForCFIVA(testata, (TerzoBulk)oggettobulk1, compoundfindclause, 
+					testata.getDocumentoEleTrasmissione().getIntermediarioCodicefiscale(), 
+					testata.getDocumentoEleTrasmissione().getIntermediarioCodice());
+		else if (s.equalsIgnoreCase("documentoEleTrasmissione.intermediarioAnag"))
+			return selectAnagraficoForCFIVA(testata, (AnagraficoBulk)oggettobulk1, compoundfindclause, 
+					testata.getDocumentoEleTrasmissione().getIntermediarioCodicefiscale(), 
+					testata.getDocumentoEleTrasmissione().getIntermediarioCodice());
+		if (s.equalsIgnoreCase("documentoEleTrasmissione.rappresentante"))
+			return selectTerzoForCFIVA(testata, (TerzoBulk)oggettobulk1, compoundfindclause, 
+					testata.getDocumentoEleTrasmissione().getRappresentanteCodicefiscale(), 
+					testata.getDocumentoEleTrasmissione().getRappresentanteCodice());
+		else if (s.equalsIgnoreCase("documentoEleTrasmissione.rappresentanteAnag"))
+			return selectAnagraficoForCFIVA(testata, (AnagraficoBulk)oggettobulk1, compoundfindclause, 
+					testata.getDocumentoEleTrasmissione().getRappresentanteCodicefiscale(), 
+					testata.getDocumentoEleTrasmissione().getRappresentanteCodice());
 		else if (s.equalsIgnoreCase("documentoEleTrasmissione.unitaCompetenza")){
 			SQLBuilder sql = getHomeCache().getHome(Unita_organizzativaBulk.class, "V_UNITA_ORGANIZZATIVA_VALIDA").selectByClause(compoundfindclause);
 			sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, dataRicGregorian.get(java.util.GregorianCalendar.YEAR));

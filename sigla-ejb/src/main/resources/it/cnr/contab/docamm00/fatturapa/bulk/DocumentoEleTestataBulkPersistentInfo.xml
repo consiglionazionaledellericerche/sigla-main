@@ -20,6 +20,41 @@
 			columnName="PAGAMENTO_CD_MODALITA_PAG"
 			propertyName="modalitaPagamento.rif_modalita_pagamento.cd_modalita_pag" />
 	</defaultColumnMap>
+	<columnMap 
+		name="V_DOCUMENTO_ELE"
+		tableName="V_DOCUMENTO_ELE"
+		extends="default">		
+		<columnMapping
+			columnName="PRESTATORE_DENOMINAZIONE"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"			 
+			propertyName="documentoEleTrasmissione.denominzionePrestatore"/>
+		<columnMapping
+			columnName="CODICE_DESTINATARIO"
+			sqlTypeName="VARCHAR"
+			columnSize="6"			
+			propertyName="documentoEleTrasmissione.codiceDestinatario" />		
+		<columnMapping
+			columnName="PRESTATORE_CD_TERZO"
+			sqlTypeName="DECIMAL"
+			columnSize="8"			
+			propertyName="documentoEleTrasmissione.prestatore.cd_terzo" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			propertyName="documentoEleTrasmissione.cdUnitaOrganizzativa"/>
+		<columnMapping
+			columnName="CD_UNITA_COMPETENZA"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			propertyName="documentoEleTrasmissione.cdUnitaCompetenza" />	
+		<columnMapping
+			columnName="DATA_RICEZIONE"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"			
+			propertyName="documentoEleTrasmissione.dataRicezione"/>	    		
+	</columnMap>	
 	<persistentProperty
 		name="documentoEleTrasmissione"
 		partOfOid="true" />

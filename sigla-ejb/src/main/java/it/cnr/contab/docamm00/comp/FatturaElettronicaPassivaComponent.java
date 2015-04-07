@@ -50,6 +50,7 @@ import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.SendMail;
+import it.gov.fatturapa.sdi.fatturapa.v1.SoggettoEmittenteType;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -103,18 +104,20 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 	protected Query select(UserContext userContext,
 			CompoundFindClause clauses, OggettoBulk bulk)
 			throws ComponentException, PersistencyException {
-		SQLBuilder sql = (SQLBuilder) super.select( userContext, clauses, bulk );
-		if (CNRUserContext.getCd_unita_organizzativa(userContext) != null) {
+        if(clauses == null){
+            if(bulk != null)
+            	clauses = bulk.buildFindClauses(null);
+        }else{
+        	clauses = CompoundFindClause.and(clauses, bulk.buildFindClauses(Boolean.FALSE));
+        }
+        SQLBuilder sql = getHome(userContext, bulk, "V_DOCUMENTO_ELE").selectByClause(userContext, clauses);
+        if (CNRUserContext.getCd_unita_organizzativa(userContext) != null) {
 			Unita_organizzativaBulk uoScrivania = ((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext))));
 			boolean isUoEnte = uoScrivania.getCd_tipo_unita().compareTo(Tipo_unita_organizzativaHome.TIPO_UO_ENTE)==0;
 			if (!isUoEnte) {
-				sql.addTableToHeader("DOCUMENTO_ELE_TRASMISSIONE");
-				sql.addSQLJoin("DOCUMENTO_ELE_TESTATA.ID_PAESE", "DOCUMENTO_ELE_TRASMISSIONE.ID_PAESE");
-				sql.addSQLJoin("DOCUMENTO_ELE_TESTATA.ID_CODICE", "DOCUMENTO_ELE_TRASMISSIONE.ID_CODICE");
-				sql.addSQLJoin("DOCUMENTO_ELE_TESTATA.IDENTIFICATIVO_SDI", "DOCUMENTO_ELE_TRASMISSIONE.IDENTIFICATIVO_SDI");
 				sql.openParenthesis(FindClause.AND);
-				sql.addSQLClause(FindClause.AND, "DOCUMENTO_ELE_TRASMISSIONE.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uoScrivania.getCd_unita_organizzativa());
-				sql.addSQLClause(FindClause.OR, "DOCUMENTO_ELE_TRASMISSIONE.CD_UNITA_COMPETENZA", SQLBuilder.EQUALS, uoScrivania.getCd_unita_organizzativa());
+				sql.addSQLClause(FindClause.AND, "V_DOCUMENTO_ELE.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uoScrivania.getCd_unita_organizzativa());
+				sql.addSQLClause(FindClause.OR, "V_DOCUMENTO_ELE.CD_UNITA_COMPETENZA", SQLBuilder.EQUALS, uoScrivania.getCd_unita_organizzativa());
 				sql.closeParenthesis();			
 			}			
 		}
@@ -289,13 +292,17 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     	if ((documentoEleTrasmissioneBulk.getRappresentante() == null || documentoEleTrasmissioneBulk.getRappresentante().getCrudStatus() == OggettoBulk.UNDEFINED ||
     			documentoEleTrasmissioneBulk.getRappresentanteAnag() == null || documentoEleTrasmissioneBulk.getRappresentanteAnag().getCrudStatus() == OggettoBulk.UNDEFINED) && 
     			(documentoEleTrasmissioneBulk.getRappresentanteCodicefiscale() != null || 
-        			documentoEleTrasmissioneBulk.getRappresentanteCodice() != null))
-    		return false;
+        			documentoEleTrasmissioneBulk.getRappresentanteCodice() != null)) {
+    		if (documentoEleTrasmissioneBulk.getSoggettoEmittente() != null)
+    			return false;    		
+    	}
     	if ((documentoEleTrasmissioneBulk.getIntermediario() == null || documentoEleTrasmissioneBulk.getIntermediario().getCrudStatus() == OggettoBulk.UNDEFINED || 
     			documentoEleTrasmissioneBulk.getIntermediarioAnag() == null || documentoEleTrasmissioneBulk.getIntermediarioAnag().getCrudStatus() == OggettoBulk.UNDEFINED) && 
     			(documentoEleTrasmissioneBulk.getIntermediarioCodicefiscale() != null || 
-        			documentoEleTrasmissioneBulk.getIntermediarioCodice() != null))
-    		return false;
+        			documentoEleTrasmissioneBulk.getIntermediarioCodice() != null)) {
+    		if (documentoEleTrasmissioneBulk.getSoggettoEmittente() != null)
+    			return false;
+    	}
     	if (documentoEleTrasmissioneBulk.getUnitaCompetenza() != null && ((documentoEleTrasmissioneBulk.getFlCompletato() != null && !documentoEleTrasmissioneBulk.getFlCompletato()) || 
     			documentoEleTrasmissioneBulk.getFlCompletato() == null))
     		return false;
@@ -321,7 +328,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     	}
     	return super.modificaConBulk(usercontext, oggettobulk);    	
     }      
-
+    
     public SQLBuilder selectVoceIvaByClause(UserContext usercontext, DocumentoEleIvaBulk documentoEleIvaBulk, 
 			Voce_ivaBulk voce_ivaBulk, CompoundFindClause compoundfindclause) throws ComponentException, PersistencyException{
 		Voce_ivaHome voceIvaHome = (Voce_ivaHome) getHome(usercontext, Voce_ivaBulk.class);
@@ -339,7 +346,15 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     	sqlRifModPag.addClause(FindClause.AND, "tipoPagamentoSdi", SQLBuilder.EQUALS, docTestata.getBeneficiarioModPag());
     	List<Rif_modalita_pagamentoBulk> rifModPags = rifModPagHome.fetchAll(sqlRifModPag);
     	SQLBuilder sql = (SQLBuilder) super.select( usercontext, compoundfindclause, modalita_pagamentoBulk );
-    	sql.addSQLClause(FindClause.AND, "CD_TERZO", SQLBuilder.EQUALS, docTestata.getDocumentoEleTrasmissione().getPrestatoreCdTerzo());
+    	if (docTestata.getDocumentoEleTrasmissione().getSoggettoEmittente() != null && 
+    			docTestata.getDocumentoEleTrasmissione().getSoggettoEmittente().equals(SoggettoEmittenteType.TZ.value())) {
+    		if (docTestata.getDocumentoEleTrasmissione().getIntermediarioCdTerzo() != null)
+    			sql.addSQLClause(FindClause.AND, "CD_TERZO", SQLBuilder.EQUALS, docTestata.getDocumentoEleTrasmissione().getIntermediarioCdTerzo());
+    		if (docTestata.getDocumentoEleTrasmissione().getRappresentanteCdTerzo() != null)
+    			sql.addSQLClause(FindClause.AND, "CD_TERZO", SQLBuilder.EQUALS, docTestata.getDocumentoEleTrasmissione().getRappresentanteCdTerzo());    		
+    	} else {
+        	sql.addSQLClause(FindClause.AND, "CD_TERZO", SQLBuilder.EQUALS, docTestata.getDocumentoEleTrasmissione().getPrestatoreCdTerzo());    		
+    	}
     	sql.openParenthesis(FindClause.AND);
     	for (Rif_modalita_pagamentoBulk rif_modalita_pagamentoBulk : rifModPags) {
         	sql.addSQLClause(FindClause.OR, "CD_MODALITA_PAG", SQLBuilder.EQUALS, rif_modalita_pagamentoBulk.getCd_modalita_pag());			

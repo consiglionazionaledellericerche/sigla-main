@@ -59,6 +59,7 @@
 		inputType="TEXT"
 		inputSize="6"
 		maxLength="6"
+		enabledOnSearch="true"
 		enabledOnEdit="false"
 		label="CUU Destinatario (UO)" />
 	<fieldProperty
@@ -697,10 +698,9 @@
 	<fieldProperty
 		name="soggettoEmittente"
 		property="soggettoEmittente"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="256"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
 		enabledOnEdit="false"
 		label="Soggetto Emittente" />
 	<fieldProperty
