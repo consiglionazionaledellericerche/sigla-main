@@ -13,7 +13,10 @@
 	CRUDFatturaPassivaElettronicaBP bp = (CRUDFatturaPassivaElettronicaBP)BusinessProcess.getBusinessProcess(request);
 %>
 <table class="Panel">
-	<tr><% bp.writeFormFieldTrasmissione(out,"dataRicezione");%></tr>
+	<tr>
+		<% bp.writeFormFieldTrasmissione(out,"dataRicezione");%>
+		<% bp.writeFormFieldTrasmissione(out,"soggettoEmittente");%>	
+	</tr>
 </table>	
 <fieldset>
 <legend class="GroupLabel">Dati del cedente / prestatore</legend>
