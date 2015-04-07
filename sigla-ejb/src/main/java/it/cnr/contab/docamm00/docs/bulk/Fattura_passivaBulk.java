@@ -1783,7 +1783,8 @@ public boolean isROFornitoreSearchTool() {
 			(fattura_passiva_intrastatColl != null && 
 			!fattura_passiva_intrastatColl.isEmpty()) ||
 			(fattura_passiva_dettColl != null && 
-			!fattura_passiva_dettColl.isEmpty()) ||
+			!fattura_passiva_dettColl.isEmpty()) &&
+			!(isElettronica() && getPg_fattura_passiva()==null)	||
 			isStampataSuRegistroIVA();
 }
 /**
