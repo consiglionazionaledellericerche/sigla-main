@@ -386,6 +386,9 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 				break;
 			}
 		}
+    	if (numeroFatturaFornitore == null || dataFatturaFornitore == null) {
+			throw new ApplicationException("Fattura collegata alla nota non trovata! Informazioni mancanti!");    		
+    	}
     	SQLBuilder sqlFatturaPassiva = fatturaPassivaHome.createSQLBuilder();
     	sqlFatturaPassiva.addClause(FindClause.AND, "fornitore", SQLBuilder.EQUALS, oggettobulk.getDocumentoEleTrasmissione().getPrestatore());
     	sqlFatturaPassiva.addClause(FindClause.AND, "nr_fattura_fornitore", SQLBuilder.EQUALS, numeroFatturaFornitore);
