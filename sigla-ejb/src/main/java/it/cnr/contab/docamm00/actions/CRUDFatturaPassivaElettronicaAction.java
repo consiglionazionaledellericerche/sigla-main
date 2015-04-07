@@ -1,6 +1,7 @@
 package it.cnr.contab.docamm00.actions;
 
 import it.cnr.contab.anagraf00.bp.CRUDTerzoBP;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
@@ -26,6 +27,7 @@ import it.cnr.jada.util.action.FormField;
 import it.cnr.jada.util.action.SelezionatoreListaAction;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.gov.fatturapa.sdi.fatturapa.v1.SoggettoEmittenteType;
 
 import java.rmi.RemoteException;
 import java.util.Iterator;
@@ -147,13 +149,31 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 	}	
 	public Forward doCRUDModalitaPagamento(ActionContext context) throws FillException, BusinessProcessException {
 		CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
-		DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();	
+		DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
+		
+		AnagraficoBulk anagrafico = null;
+		TerzoBulk terzo = null;
+    	if (bulk.getDocumentoEleTrasmissione().getSoggettoEmittente() != null && 
+    			bulk.getDocumentoEleTrasmissione().getSoggettoEmittente().equals(SoggettoEmittenteType.TZ.value())) {
+    		if (bulk.getDocumentoEleTrasmissione().getIntermediario() != null){
+    			anagrafico = bulk.getDocumentoEleTrasmissione().getIntermediarioAnag();
+    			terzo = bulk.getDocumentoEleTrasmissione().getIntermediario();
+    		}
+    		if (bulk.getDocumentoEleTrasmissione().getRappresentante() != null) {
+    			anagrafico = bulk.getDocumentoEleTrasmissione().getRappresentanteAnag();
+    			terzo = bulk.getDocumentoEleTrasmissione().getRappresentante();
+    		}
+    	} else {
+    		anagrafico = bulk.getDocumentoEleTrasmissione().getPrestatoreAnag();
+    		terzo = bulk.getDocumentoEleTrasmissione().getPrestatore();
+    	}
+				
 		FormField formfield = getFormField(context, "main.modalitaPagamento");
 		try {
 			CRUDTerzoBP nbp = (CRUDTerzoBP)context.createBusinessProcess("CRUDTerzoBP",
-							new Object[] {"M", bulk.getDocumentoEleTrasmissione().getPrestatoreAnag()}
+							new Object[] {"M", anagrafico}
 						);
-			nbp.basicEdit(context, bulk.getDocumentoEleTrasmissione().getPrestatore(), true);
+			nbp.basicEdit(context, terzo, true);
 			nbp.setTab("tab", "tabModalitaPagamento");
 			context.addHookForward("bringback", this, "doBringBackCRUD");
 			HookForward hookforward = (HookForward)context.findForward("bringback");
