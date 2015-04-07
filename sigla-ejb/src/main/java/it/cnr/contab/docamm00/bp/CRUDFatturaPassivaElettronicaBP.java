@@ -34,6 +34,7 @@ import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
+import it.gov.fatturapa.sdi.fatturapa.v1.SoggettoEmittenteType;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -368,8 +369,19 @@ public class CRUDFatturaPassivaElettronicaBP extends SimpleCRUDBP implements Fat
 	    	fatturaPassivaBulk.setIm_importo_totale_fattura_fornitore_euro(documentoEleTestata.getImportoDocumento());
 	    	action.doCalcolaTotaleFatturaFornitoreInEur(context);
 	    	
-	    	action.doBringBackSearchFornitore(context, fatturaPassivaBulk, 
-	    			documentoEleTestata.getDocumentoEleTrasmissione().getPrestatore());//TODO Da verificare
+	    	if (documentoEleTestata.getDocumentoEleTrasmissione().getSoggettoEmittente() != null && 
+	    			documentoEleTestata.getDocumentoEleTrasmissione().getSoggettoEmittente().equals(SoggettoEmittenteType.TZ.value())) {
+	    		if (documentoEleTestata.getDocumentoEleTrasmissione().getIntermediario() != null)
+			    	action.doBringBackSearchFornitore(context, fatturaPassivaBulk, 
+			    			documentoEleTestata.getDocumentoEleTrasmissione().getIntermediario());
+	    		if (documentoEleTestata.getDocumentoEleTrasmissione().getRappresentante() != null)
+			    	action.doBringBackSearchFornitore(context, fatturaPassivaBulk, 
+			    			documentoEleTestata.getDocumentoEleTrasmissione().getRappresentante());	    			
+	    			
+	    	} else {
+		    	action.doBringBackSearchFornitore(context, fatturaPassivaBulk, 
+		    			documentoEleTestata.getDocumentoEleTrasmissione().getPrestatore());
+	    	}
 	    	fatturaPassivaBulk = (Fattura_passivaBulk) nbp.getModel();
 	    	if (documentoEleTestata.getModalitaPagamento() != null)
 	    		fatturaPassivaBulk.setModalita_pagamento(documentoEleTestata.getModalitaPagamento().getRif_modalita_pagamento());

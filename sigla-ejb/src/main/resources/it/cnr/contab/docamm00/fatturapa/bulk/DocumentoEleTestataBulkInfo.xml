@@ -514,6 +514,7 @@
 		CRUDBusinessProcessName="CRUDTerzoBP"
 		labelStyle="color:blue"
 		enabledOnEdit="true"
+		readonlyPropertyOnEdit="valorizzatoTerzo"
 		label="Modalità di Pagamento" />	
 	<fieldProperty
 		name="scontoPagamentoAnt"
@@ -599,6 +600,7 @@
 		inputType="SEARCHTOOL"
 		formName="searchtool"
 		labelStyle="color:blue"
+		enabledOnSearch="true"
 		enabledOnEdit="true"
 		label="Unità di competenza" />	
 	<fieldProperty
@@ -607,6 +609,7 @@
 		inputType="SEARCHTOOL"
 		formName="searchtool"
 		labelStyle="color:blue"
+		enabledOnSearch="true"
 		enabledOnEdit="true"
 		label="Unità Organizzativa" />		
 	<fieldProperty
@@ -616,6 +619,7 @@
 		labelStyle="color:blue"
 		formName="searchtool"
 		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
+		enabledOnSearch="true"
 		enabledOnEdit="true"
 		label="Terzo" />
 	<fieldProperty
@@ -658,7 +662,16 @@
 		inputType="CHECKBOX"
 		maxLength="1"
 		inputSize="1" />
-						
+	<fieldProperty
+		name="codiceDestinatario"		
+		property="documentoEleTrasmissione.codiceDestinatario" 
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="CUU Destinatario (UO)" />
+								
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -946,6 +959,9 @@
 		name="intermediarioAnag"/>
 	<formFieldProperty
 		name="flCompletato"/>
+	<formFieldProperty
+		name="codiceDestinatario"/>
+		
 	<findFieldProperty
 		name="idPaese" />
 	<findFieldProperty
@@ -1084,8 +1100,20 @@
 		name="motivoRifiuto" />
 	<findFieldProperty
 		name="anomalie" />
-	
-	
+	<findFieldProperty
+		name="codiceTerzo"
+		property="documentoEleTrasmissione.prestatore.cd_terzo"
+		label="Codice terzo" />
+	<findFieldProperty
+		name="cdUnitaOrganizzativa"
+		property="documentoEleTrasmissione.cdUnitaOrganizzativa" 
+		label="UO destinataria"/>
+	<findFieldProperty
+		name="cdUnitaCompetenza"
+		property="documentoEleTrasmissione.cdUnitaCompetenza" 
+		label="UO di competenza"/>	
+	<findFieldProperty
+		name="codiceDestinatario"/>	
 	
 	<columnFieldProperty
 		name="idCodice" />

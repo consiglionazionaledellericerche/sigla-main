@@ -500,15 +500,19 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 						docEleLinea.setLineaPrezzounitario(truncBigDecimal(dettaglioLinea.getPrezzoUnitario()));
 						if (dettaglioLinea.getScontoMaggiorazione() != null && !dettaglioLinea.getScontoMaggiorazione().isEmpty()) {
 							if (dettaglioLinea.getScontoMaggiorazione().size() == 1) {
-								docEleLinea.setTipoScontomag(dettaglioLinea.getScontoMaggiorazione().get(0).getTipo().value());
+								if (dettaglioLinea.getScontoMaggiorazione().get(0).getTipo() != null)
+									docEleLinea.setTipoScontomag(dettaglioLinea.getScontoMaggiorazione().get(0).getTipo().value());
 								docEleLinea.setPercentualeScontomag(truncBigDecimal(dettaglioLinea.getScontoMaggiorazione().get(0).getPercentuale()));
 								docEleLinea.setImportoScontomag(truncBigDecimal(dettaglioLinea.getScontoMaggiorazione().get(0).getImporto()));								
 							} else {
 								BigDecimal scontoMaggiorazioneImporto = BigDecimal.ZERO;
 								for (ScontoMaggiorazioneType scontoMaggiorazione : dettaglioLinea.getScontoMaggiorazione()) {
-									scontoMaggiorazioneImporto = scontoMaggiorazioneImporto.add(scontoMaggiorazione.getImporto());
+									if (scontoMaggiorazione.getTipo() != null)
+										docEleLinea.setTipoScontomag(scontoMaggiorazione.getTipo().value());
+									if (scontoMaggiorazione.getImporto() != null)
+										scontoMaggiorazioneImporto = scontoMaggiorazioneImporto.add(scontoMaggiorazione.getImporto());
 								}
-								docEleLinea.setImportoScontomag(truncBigDecimal(scontoMaggiorazioneImporto));								
+								docEleLinea.setImportoScontomag(truncBigDecimal(scontoMaggiorazioneImporto));
 							}
 						}
 						docEleLinea.setLineaPrezzototale(truncBigDecimal(dettaglioLinea.getPrezzoTotale()));
@@ -731,6 +735,8 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 							docDDT.setNumeroLinea(numeroLinea);
 							docDDT.setDdtNumero(datiDDTT.getNumeroDDT());
 							docDDT.setDdtData(convert(datiDDTT.getDataDDT()));
+							docDDT.setToBeCreated();
+							docTestata.addToDocEleDdtColl(docDDT);
 						}					
 					}
 				}
