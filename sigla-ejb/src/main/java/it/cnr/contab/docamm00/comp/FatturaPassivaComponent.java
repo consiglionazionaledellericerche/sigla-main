@@ -160,6 +160,7 @@ import it.cnr.jada.persistency.sql.SQLBroker;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.gov.fatturapa.sdi.fatturapa.v1.SoggettoEmittenteType;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -7084,15 +7085,84 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 	if (fatturaPassiva.getDocumentoEleTestata() == null)
 		throw new it.cnr.jada.comp.ApplicationException("Attenzione: non è possibile recuperare il documento elettronico!");
 	
-	if ((fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getCodice_fiscale()!= null &&
-		fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()!= null &&
-		fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getCodice_fiscale().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale())!=0)
-		&&
-		(fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getPartita_iva()!= null &&
-		fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()!= null &&
-		fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getPartita_iva().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva())!=0))
-		throw new it.cnr.jada.comp.ApplicationException("Almeno uno tra Codice Fiscale e Partita IVA del fornitore deve coincidere con quello inserito nel documento elettronico. CF: " + fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getCodice_fiscale() + " PI: " + fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getPartita_iva() + "!");		
-		
+	if (fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getSoggettoEmittente() == null || 
+			  !fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getSoggettoEmittente().equals(SoggettoEmittenteType.TZ.value())) 
+		// il fornitore è il prestatore
+	{
+		if (((fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()!= null &&
+			  fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getCodice_fiscale()!= null &&
+			  fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getCodice_fiscale().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale())!=0
+			 )
+			 || 
+			 fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()== null
+			 ||
+			 fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getCodice_fiscale() ==null
+			)
+		   &&
+		   ((fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()!= null &&
+			 fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getPartita_iva()!= null &&
+			 fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getPartita_iva().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva())!=0
+			 )
+			 || 
+			 fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()== null
+			 ||
+			 fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getPartita_iva() == null
+			)
+		  )
+			throw new it.cnr.jada.comp.ApplicationException("Almeno uno tra Codice Fiscale e Partita IVA del fornitore deve coincidere con quello inserito per il prestatore nel documento elettronico. CF: " + fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getCodice_fiscale() + " PI: " + fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getPartita_iva() + "!");		
+	}
+	
+	if (fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getSoggettoEmittente() != null && 
+			fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getSoggettoEmittente().equals(SoggettoEmittenteType.TZ.value())) 
+		// il fornitore è l'intermediario o il rappresentante
+	{
+		if (((fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()!= null &&
+			  fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodicefiscale()!= null &&
+			  fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodicefiscale().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale())!=0
+			 )
+			 || 
+			 fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()== null
+			 ||
+			 fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodicefiscale() ==null
+			)
+		   &&
+		   ((fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()!= null &&
+			 fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodice()!= null &&
+			 fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodice().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva())!=0
+			 )
+			 || 
+			 fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()== null
+			 ||
+			 fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodice() == null
+			)
+			
+			&&
+			
+			((fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()!= null &&
+			  fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodicefiscale()!= null &&
+			  fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodicefiscale().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale())!=0
+			 )
+			 || 
+			 fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()== null
+			 ||
+			 fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodicefiscale() ==null
+			)
+		   &&
+		   ((fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()!= null &&
+			 fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodice()!= null &&
+			 fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodice().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva())!=0
+			 )
+			 || 
+			 fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()== null
+			 ||
+			 fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodice() == null
+			)
+			
+		  )
+			throw new it.cnr.jada.comp.ApplicationException("Almeno uno tra Codice Fiscale e Partita IVA del fornitore deve coincidere con quelli inseriti per il Rappresentante fiscale/Intermediario nel documento elettronico.");		
+
+	}
+	
     if (fatturaPassiva.getDocumentoEleTestata().getNumeroDocumento().compareTo(fatturaPassiva.getNr_fattura_fornitore())!=0)
     	throw new it.cnr.jada.comp.ApplicationException("Numero Fattura fornitore diverso da quello inserito nel documento elettronico: " + fatturaPassiva.getDocumentoEleTestata().getNumeroDocumento() + "!");
 	
@@ -7101,7 +7171,7 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 	
 	if (fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()== null ||
 		fatturaPassiva.getIm_totale_fattura() == null ||
-		fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().compareTo(fatturaPassiva.getIm_totale_fattura())!= 0)
+		(fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()).compareTo(fatturaPassiva.getIm_totale_fattura())!= 0)
 		throw new it.cnr.jada.comp.ApplicationException("Totale Fattura: "+  fatturaPassiva.getIm_totale_fattura() + " diverso da quello inserito nel documento elettronico: " + fatturaPassiva.getDocumentoEleTestata().getImportoDocumento() + "!");
 	
 	Hashtable<String, BigDecimal> mapNatura = new Hashtable<String, BigDecimal>(), mapIva = new Hashtable<String, BigDecimal>();
