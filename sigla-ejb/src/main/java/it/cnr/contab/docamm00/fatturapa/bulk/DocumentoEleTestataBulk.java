@@ -19,6 +19,7 @@ import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.OrderedHashtable;
 import it.gov.fatturapa.sdi.fatturapa.v1.ModalitaPagamentoType;
 import it.gov.fatturapa.sdi.fatturapa.v1.TipoCassaType;
@@ -328,6 +329,13 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
 		} catch (IllegalArgumentException _ex) {
 			return null;
 		}
+	}
+	public boolean isValorizzatoTerzo() {
+		if (getDocumentoEleTrasmissione() != null && 
+				getDocumentoEleTrasmissione().getPrestatore() != null &&
+				getDocumentoEleTrasmissione().getPrestatore().getCrudStatus() == OggettoBulk.NORMAL)
+			return false;
+		return true;
 	}
 	
 	public boolean isCompilabile() {
