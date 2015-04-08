@@ -220,9 +220,15 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 	}
 	public Forward doCompilaFattura(ActionContext context) throws FillException, BusinessProcessException {
 		try {
-			String message = "La compilazione della Fattura e il suo successivo salvataggio, ";
-			message += "comporta l'accettazione del documento elettronico.<br>Si desidera procedere?";
-			openConfirm( context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfirmCompilaFattura");
+			CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
+			DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
+			if (bulk.getImportoDocumento() == null) {
+				fatturaPassivaElettronicaBP.setMessage("Il totale del documento non è valorizzato, il documento deve essere rifiutato!");
+			} else {
+				String message = "La compilazione della Fattura e il suo successivo salvataggio, ";
+				message += "comporta l'accettazione del documento elettronico.<br>Si desidera procedere?";
+				openConfirm( context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfirmCompilaFattura");				
+			}
 			return context.findDefaultForward();			
 		} catch (Exception e) {
 			return handleException(context,e);

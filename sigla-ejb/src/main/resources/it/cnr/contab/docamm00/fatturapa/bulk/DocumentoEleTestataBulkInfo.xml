@@ -602,7 +602,7 @@
 		labelStyle="color:blue"
 		enabledOnSearch="true"
 		enabledOnEdit="true"
-		label="Unità di competenza" />	
+		label="UO di competenza" />	
 	<fieldProperty
 		name="unitaOrganizzativa"
 		property="documentoEleTrasmissione.unitaOrganizzativa"
@@ -611,7 +611,15 @@
 		labelStyle="color:blue"
 		enabledOnSearch="true"
 		enabledOnEdit="true"
-		label="Unità Organizzativa" />		
+		label="UO di destinazione" />		
+	<fieldProperty
+		name="unitaDestinazione"
+		property="documentoEleTrasmissione.unitaOrganizzativa"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="false"
+		enabledOnEdit="false"
+		label="UO di destinazione" />	
 	<fieldProperty
 		name="prestatore"
 		property="documentoEleTrasmissione.prestatore"
@@ -949,6 +957,8 @@
 		name="unitaCompetenza"/>	
 	<formFieldProperty
 		name="unitaOrganizzativa"/>		
+	<formFieldProperty
+		name="unitaDestinazione"/>		
 	<formFieldProperty
 		name="prestatore"/>
 	<formFieldProperty
