@@ -365,10 +365,10 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		docTrasmissione.setTrasmittenteTelefono(docTrasmissione.getTrasmittenteTelefono());		
 		docTrasmissione.setToBeCreated();
 
-		for (int i = 0; i < fatturaElettronicaType.getFatturaElettronicaBody().size(); i++) {
-			FatturaElettronicaBodyType fatturaElettronicaBody = fatturaElettronicaType.getFatturaElettronicaBody().get(i);
+		for (int progressivoTestata = 0; progressivoTestata < fatturaElettronicaType.getFatturaElettronicaBody().size(); progressivoTestata++) {
+			FatturaElettronicaBodyType fatturaElettronicaBody = fatturaElettronicaType.getFatturaElettronicaBody().get(progressivoTestata);
 			DocumentoEleTestataBulk docTestata = new DocumentoEleTestataBulk(
-					idTrasmittente.getIdPaese(), idTrasmittente.getIdCodice(),identificativoSdI.longValue(), (long)i);	
+					idTrasmittente.getIdPaese(), idTrasmittente.getIdCodice(),identificativoSdI.longValue(), (long)progressivoTestata);	
 			if (fatturaElettronicaBody.getDatiGenerali() != null) {
 				if (fatturaElettronicaBody.getDatiGenerali().getDatiGeneraliDocumento() != null) {
 					docTestata.setTipoDocumento(
@@ -477,10 +477,11 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			docTestata.setToBeCreated();
 			docTrasmissione.addToDocEleTestataColl(docTestata);
 			if (fatturaElettronicaBody.getDatiBeniServizi() != null) {
-				if (fatturaElettronicaBody.getDatiBeniServizi().getDettaglioLinee() != null) {
+				if (fatturaElettronicaBody.getDatiBeniServizi().getDettaglioLinee() != null) {										
 					for (DettaglioLineeType dettaglioLinea : fatturaElettronicaBody.getDatiBeniServizi().getDettaglioLinee()) {
 						DocumentoEleLineaBulk docEleLinea = new DocumentoEleLineaBulk(idTrasmittente.getIdPaese(), 
-								idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)i, dettaglioLinea.getNumeroLinea());
+								idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)progressivoTestata, 
+								dettaglioLinea.getNumeroLinea());
 						if (dettaglioLinea.getTipoCessionePrestazione() != null)
 							docEleLinea.setTipoCessione(dettaglioLinea.getTipoCessionePrestazione().value());
 						List<String> anomalie = new ArrayList<String>();
@@ -544,7 +545,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 					int indexIva = 0;
 					for (DatiRiepilogoType datiRiepilogo : fatturaElettronicaBody.getDatiBeniServizi().getDatiRiepilogo()) {
 						DocumentoEleIvaBulk docEleIVA = new DocumentoEleIvaBulk(idTrasmittente.getIdPaese(), 
-								idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)i, (long)++indexIva);
+								idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)progressivoTestata, (long)++indexIva);
 						docEleIVA.setAliquotaIva(datiRiepilogo.getAliquotaIVA());
 						if (datiRiepilogo.getNatura() != null)
 							docEleIVA.setNatura(datiRiepilogo.getNatura().value());
@@ -570,7 +571,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				for (AllegatiType allegato : fatturaElettronicaBody.getAllegati()) {
 					List<String> anomalie = new ArrayList<String>();
 					DocumentoEleAllegatiBulk docAllegato = new DocumentoEleAllegatiBulk(idTrasmittente.getIdPaese(), 
-							idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)i, allegato.getNomeAttachment());
+							idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)progressivoTestata, allegato.getNomeAttachment());
 					docAllegato.setAlgoritmoCompressione(allegato.getAlgoritmoCompressione());
 					docAllegato.setFormatoAttachment(allegato.getFormatoAttachment());
 					docAllegato.setDescrizioneAttachment(allegato.getDescrizioneAttachment());
@@ -615,7 +616,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				if (datiGeneraliDocumento.getDatiRitenuta() != null) {
 					List<String> anomalie = new ArrayList<String>();
 					DocumentoEleTributiBulk docTributo = new DocumentoEleTributiBulk(idTrasmittente.getIdPaese(), 
-							idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)i, (long)indexTributo);
+							idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)progressivoTestata, (long)indexTributo);
 					docTributo.setTipoRiga("RIT");
 					if (datiGeneraliDocumento.getDatiRitenuta().getTipoRitenuta() != null)
 						docTributo.setTipoTributo(datiGeneraliDocumento.getDatiRitenuta().getTipoRitenuta().value());
@@ -634,7 +635,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 						List<String> anomalie = new ArrayList<String>();
 						indexTributo++;
 						DocumentoEleTributiBulk docTributo = new DocumentoEleTributiBulk(idTrasmittente.getIdPaese(), 
-								idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)i, (long)indexTributo);							
+								idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)progressivoTestata, (long)indexTributo);							
 						docTributo.setTipoRiga("CAS");
 						if (datiCassaPrevidenziale.getTipoCassa() != null)
 							docTributo.setTipoTributo(datiCassaPrevidenziale.getTipoCassa().value());
@@ -666,7 +667,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 						indexSconto++;
 						List<String> anomalie = new ArrayList<String>();
 						DocumentoEleScontoMaggBulk docSconto = new DocumentoEleScontoMaggBulk(idTrasmittente.getIdPaese(), 
-								idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)i, (long)indexSconto);
+								idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)progressivoTestata, (long)indexSconto);
 						if (scontoMaggiorazione.getTipo() != null)
 							docSconto.setTipoScontomagg(scontoMaggiorazione.getTipo().value());
 						docSconto.setPercentualeScontomagg(truncBigDecimal(scontoMaggiorazione.getPercentuale()));
@@ -686,31 +687,31 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				if (fatturaElettronicaBody.getDatiGenerali().getDatiOrdineAcquisto() != null &&
 						!fatturaElettronicaBody.getDatiGenerali().getDatiOrdineAcquisto().isEmpty()){
 					for (DatiDocumentiCorrelatiType datiOrdineAcquisto : fatturaElettronicaBody.getDatiGenerali().getDatiOrdineAcquisto()) {
-						acquisti.addAll(caricaAcquisti(datiOrdineAcquisto, TipoAcquistoEnum.Ordine.name(), idTrasmittente, datiTrasmissione, (long)i, identificativoSdI.longValue()));
+						acquisti.addAll(caricaAcquisti(datiOrdineAcquisto, TipoAcquistoEnum.Ordine.name(), idTrasmittente, datiTrasmissione, (long)progressivoTestata, identificativoSdI.longValue()));
 					}
 				}
 				if (fatturaElettronicaBody.getDatiGenerali().getDatiContratto() != null &&
 						!fatturaElettronicaBody.getDatiGenerali().getDatiContratto().isEmpty()){
 					for (DatiDocumentiCorrelatiType datiOrdineAcquisto : fatturaElettronicaBody.getDatiGenerali().getDatiContratto()) {
-						acquisti.addAll(caricaAcquisti(datiOrdineAcquisto, TipoAcquistoEnum.Contratto.name(), idTrasmittente, datiTrasmissione, (long)i, identificativoSdI.longValue()));
+						acquisti.addAll(caricaAcquisti(datiOrdineAcquisto, TipoAcquistoEnum.Contratto.name(), idTrasmittente, datiTrasmissione, (long)progressivoTestata, identificativoSdI.longValue()));
 					}
 				}
 				if (fatturaElettronicaBody.getDatiGenerali().getDatiConvenzione() != null &&
 						!fatturaElettronicaBody.getDatiGenerali().getDatiConvenzione().isEmpty()){
 					for (DatiDocumentiCorrelatiType datiOrdineAcquisto : fatturaElettronicaBody.getDatiGenerali().getDatiConvenzione()) {
-						acquisti.addAll(caricaAcquisti(datiOrdineAcquisto, TipoAcquistoEnum.Convenzione.name(), idTrasmittente, datiTrasmissione, (long)i, identificativoSdI.longValue()));
+						acquisti.addAll(caricaAcquisti(datiOrdineAcquisto, TipoAcquistoEnum.Convenzione.name(), idTrasmittente, datiTrasmissione, (long)progressivoTestata, identificativoSdI.longValue()));
 					}
 				}
 				if (fatturaElettronicaBody.getDatiGenerali().getDatiRicezione() != null &&
 						!fatturaElettronicaBody.getDatiGenerali().getDatiRicezione().isEmpty()){
 					for (DatiDocumentiCorrelatiType datiOrdineAcquisto : fatturaElettronicaBody.getDatiGenerali().getDatiRicezione()) {
-						acquisti.addAll(caricaAcquisti(datiOrdineAcquisto, TipoAcquistoEnum.Ricezione.name(), idTrasmittente, datiTrasmissione, (long)i, identificativoSdI.longValue()));
+						acquisti.addAll(caricaAcquisti(datiOrdineAcquisto, TipoAcquistoEnum.Ricezione.name(), idTrasmittente, datiTrasmissione, (long)progressivoTestata, identificativoSdI.longValue()));
 					}
 				}
 				if (fatturaElettronicaBody.getDatiGenerali().getDatiFattureCollegate() != null &&
 						!fatturaElettronicaBody.getDatiGenerali().getDatiFattureCollegate().isEmpty()){
 					for (DatiDocumentiCorrelatiType datiOrdineAcquisto : fatturaElettronicaBody.getDatiGenerali().getDatiFattureCollegate()) {
-						acquisti.addAll(caricaAcquisti(datiOrdineAcquisto, TipoAcquistoEnum.Fatture_Collegate.name(), idTrasmittente, datiTrasmissione, (long)i, identificativoSdI.longValue()));
+						acquisti.addAll(caricaAcquisti(datiOrdineAcquisto, TipoAcquistoEnum.Fatture_Collegate.name(), idTrasmittente, datiTrasmissione, (long)progressivoTestata, identificativoSdI.longValue()));
 					}
 				}
 				int progressivoAcquisto = 0;
@@ -731,7 +732,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 						for (Integer numeroLinea : datiDDTT.getRiferimentoNumeroLinea()) {
 							progressivoDdt++;
 							DocumentoEleDdtBulk docDDT = new DocumentoEleDdtBulk(idTrasmittente.getIdPaese(), 
-									idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)i, (long)progressivoDdt);
+									idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)progressivoTestata, (long)progressivoDdt);
 							docDDT.setNumeroLinea(numeroLinea);
 							docDDT.setDdtNumero(datiDDTT.getNumeroDDT());
 							docDDT.setDdtData(convert(datiDDTT.getDataDDT()));
@@ -740,7 +741,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 						}
 						if (datiDDTT.getRiferimentoNumeroLinea().isEmpty()) {
 							DocumentoEleDdtBulk docDDT = new DocumentoEleDdtBulk(idTrasmittente.getIdPaese(), 
-									idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)i, (long)progressivoDdt);
+									idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)progressivoTestata, (long)progressivoDdt);
 							docDDT.setDdtNumero(datiDDTT.getNumeroDDT());
 							docDDT.setDdtData(convert(datiDDTT.getDataDDT()));
 							docDDT.setToBeCreated();
@@ -749,7 +750,19 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 					}
 				}
 			}
-		} //END FOR LOOP Fattura Elettronica Body
+			/**
+			 * Gestione del caso in cui arriva una fattura con dettaglio linea senza il numero linea progressivo
+			 * ma sempre uguale
+			 */
+			List<Integer> numeroLinee = new ArrayList<Integer>();
+			for (int i = 0; i < docTestata.getDocEleLineaColl().size(); i++) {
+				DocumentoEleLineaBulk documentoEleLinea = docTestata.getDocEleLineaColl().get(i); 
+				if (numeroLinee.contains(documentoEleLinea.getNumeroLinea())) {
+					documentoEleLinea.setNumeroLinea(i + 1);
+				}
+				numeroLinee.add(documentoEleLinea.getNumeroLinea());				
+			}
+		} //END FOR LOOP Fattura Elettronica Body		
 		try {
 			docTrasmissione = (DocumentoEleTrasmissioneBulk) component.creaDocumento(userContext, docTrasmissione);
 			component.completaDocumento(userContext, docTrasmissione);
