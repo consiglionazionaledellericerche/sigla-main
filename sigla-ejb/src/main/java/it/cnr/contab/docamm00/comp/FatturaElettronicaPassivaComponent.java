@@ -12,7 +12,6 @@ import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
 import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteHome;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaHome;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
@@ -54,15 +53,12 @@ import it.gov.fatturapa.sdi.fatturapa.v1.SoggettoEmittenteType;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.mail.PasswordAuthentication;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 import org.apache.commons.lang.StringUtils;
@@ -289,20 +285,6 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     			(documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale() != null || 
         			documentoEleTrasmissioneBulk.getPrestatoreCodice() != null))
     		return false;
-    	if ((documentoEleTrasmissioneBulk.getRappresentante() == null || documentoEleTrasmissioneBulk.getRappresentante().getCrudStatus() == OggettoBulk.UNDEFINED ||
-    			documentoEleTrasmissioneBulk.getRappresentanteAnag() == null || documentoEleTrasmissioneBulk.getRappresentanteAnag().getCrudStatus() == OggettoBulk.UNDEFINED) && 
-    			(documentoEleTrasmissioneBulk.getRappresentanteCodicefiscale() != null || 
-        			documentoEleTrasmissioneBulk.getRappresentanteCodice() != null)) {
-    		if (documentoEleTrasmissioneBulk.getSoggettoEmittente() != null)
-    			return false;    		
-    	}
-    	if ((documentoEleTrasmissioneBulk.getIntermediario() == null || documentoEleTrasmissioneBulk.getIntermediario().getCrudStatus() == OggettoBulk.UNDEFINED || 
-    			documentoEleTrasmissioneBulk.getIntermediarioAnag() == null || documentoEleTrasmissioneBulk.getIntermediarioAnag().getCrudStatus() == OggettoBulk.UNDEFINED) && 
-    			(documentoEleTrasmissioneBulk.getIntermediarioCodicefiscale() != null || 
-        			documentoEleTrasmissioneBulk.getIntermediarioCodice() != null)) {
-    		if (documentoEleTrasmissioneBulk.getSoggettoEmittente() != null)
-    			return false;
-    	}
     	if (documentoEleTrasmissioneBulk.getUnitaCompetenza() != null && ((documentoEleTrasmissioneBulk.getFlCompletato() != null && !documentoEleTrasmissioneBulk.getFlCompletato()) || 
     			documentoEleTrasmissioneBulk.getFlCompletato() == null))
     		return false;
