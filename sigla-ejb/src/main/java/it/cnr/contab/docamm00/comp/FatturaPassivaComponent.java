@@ -7084,7 +7084,8 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 
 	if (fatturaPassiva.getDocumentoEleTestata() == null)
 		throw new it.cnr.jada.comp.ApplicationException("Attenzione: non è possibile recuperare il documento elettronico!");
-	
+
+	/*
 	if (fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getSoggettoEmittente() == null || 
 			  !fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getSoggettoEmittente().equals(SoggettoEmittenteType.TZ.value())) 
 		// il fornitore è il prestatore
@@ -7111,12 +7112,35 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 		  )
 			throw new it.cnr.jada.comp.ApplicationException("Almeno uno tra Codice Fiscale e Partita IVA del fornitore deve coincidere con quello inserito per il prestatore nel documento elettronico. CF: " + fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getCodice_fiscale() + " PI: " + fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getPartita_iva() + "!");		
 	}
-	
-	if (fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getSoggettoEmittente() != null && 
-			fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getSoggettoEmittente().equals(SoggettoEmittenteType.TZ.value())) 
+	*/
+	//if (fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getSoggettoEmittente() != null && 
+		//	fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getSoggettoEmittente().equals(SoggettoEmittenteType.TZ.value())) 
 		// il fornitore è l'intermediario o il rappresentante
-	{
-		if (((fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()!= null &&
+	//{
+		if (
+			((fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()!= null &&
+			  fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getCodice_fiscale()!= null &&
+			  fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getCodice_fiscale().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale())!=0
+			 )
+			 || 
+			 fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()== null
+			 ||
+			 fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getCodice_fiscale() ==null
+			)
+			&&
+			((fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()!= null &&
+			 fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getPartita_iva()!= null &&
+			 fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getPartita_iva().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva())!=0
+			 )
+			 || 
+			 fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()== null
+			 ||
+			 fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getPartita_iva() == null
+			)
+				
+			&&	
+				
+			((fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()!= null &&
 			  fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodicefiscale()!= null &&
 			  fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodicefiscale().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale())!=0
 			 )
@@ -7159,10 +7183,10 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 			)
 			
 		  )
-			throw new it.cnr.jada.comp.ApplicationException("Almeno uno tra Codice Fiscale e Partita IVA del fornitore deve coincidere con quelli inseriti per il Rappresentante fiscale/Intermediario nel documento elettronico.");		
+			throw new it.cnr.jada.comp.ApplicationException("Almeno uno tra Codice Fiscale e Partita IVA del fornitore deve coincidere con quelli inseriti per il Prestatore/Rappresentante fiscale/Intermediario nel documento elettronico.");		
 
-	}
-	
+	//}
+
     if (fatturaPassiva.getDocumentoEleTestata().getNumeroDocumento().compareTo(fatturaPassiva.getNr_fattura_fornitore())!=0)
     	throw new it.cnr.jada.comp.ApplicationException("Numero Fattura fornitore diverso da quello inserito nel documento elettronico: " + fatturaPassiva.getDocumentoEleTestata().getNumeroDocumento() + "!");
 	
