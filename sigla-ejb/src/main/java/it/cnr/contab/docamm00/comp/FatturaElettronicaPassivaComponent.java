@@ -285,7 +285,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     			(documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale() != null || 
         			documentoEleTrasmissioneBulk.getPrestatoreCodice() != null))
     		return false;
-    	if (documentoEleTrasmissioneBulk.getUnitaCompetenza() != null && ((documentoEleTrasmissioneBulk.getFlCompletato() != null && !documentoEleTrasmissioneBulk.getFlCompletato()) || 
+    	if (documentoEleTrasmissioneBulk.getCdUnitaCompetenza() != null && ((documentoEleTrasmissioneBulk.getFlCompletato() != null && !documentoEleTrasmissioneBulk.getFlCompletato()) || 
     			documentoEleTrasmissioneBulk.getFlCompletato() == null))
     		return false;
     	return isCompletato;
