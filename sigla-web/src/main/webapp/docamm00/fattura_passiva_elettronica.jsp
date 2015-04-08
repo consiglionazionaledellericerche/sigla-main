@@ -41,8 +41,10 @@ function doScaricaEsito() {
 		<tr><% bp.getController().writeFormField(out,"identificativoSdi");%></tr>
 		<tr><% bp.getController().writeFormField(out,"dataDocumento");%></tr>
 		<tr><% bp.getController().writeFormField(out,"codiceDestinatario");%></tr>
-		<% 	if (userInfo.getUnita_organizzativa().getCd_tipo_unita().equalsIgnoreCase("ENTE")) {%>
-		<tr><% bp.getController().writeFormField(out,"unitaOrganizzativa");%></tr>
+		<% if (userInfo.getUnita_organizzativa().getCd_tipo_unita().equalsIgnoreCase("ENTE")) {%>
+			<tr><% bp.getController().writeFormField(out,"unitaOrganizzativa");%></tr>
+		<% } else {%>
+			<tr><% bp.getController().writeFormField(out,"unitaDestinazione");%></tr>			
 		<% } %>	 
 		<tr>
 			<% bp.getController().writeFormField(out,"unitaCompetenza");%>
