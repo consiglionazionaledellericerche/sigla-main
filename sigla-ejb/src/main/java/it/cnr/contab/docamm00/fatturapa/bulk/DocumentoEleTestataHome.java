@@ -69,20 +69,10 @@ public class DocumentoEleTestataHome extends BulkHome {
 			throws InvocationTargetException, IllegalAccessException,
 			PersistencyException {
 		DocumentoEleTestataBulk testata = (DocumentoEleTestataBulk)oggettobulk;
-<<<<<<< .working
-		
 		java.sql.Timestamp dataRic = testata.getDocumentoEleTrasmissione().getDataRicezione();
 		java.util.GregorianCalendar dataRicGregorian = (java.util.GregorianCalendar) java.util.GregorianCalendar
 				.getInstance();
-		dataRicGregorian.setTime(dataRic);
-				
-=======
-		java.sql.Timestamp dataRic = testata.getDocumentoEleTrasmissione().getDataRicezione();
-		java.util.GregorianCalendar dataRicGregorian = (java.util.GregorianCalendar) java.util.GregorianCalendar
-				.getInstance();
-		dataRicGregorian.setTime(dataRic== null ? new Date() : dataRic);
-		
->>>>>>> .merge-right.r1858
+		dataRicGregorian.setTime(dataRic== null ? new Date() : dataRic);		
 		if (s.equalsIgnoreCase("documentoEleTrasmissione.prestatore"))
 			return selectTerzoForCFIVA(testata, (TerzoBulk)oggettobulk1, compoundfindclause, 
 					testata.getDocumentoEleTrasmissione().getPrestatoreCodicefiscale(), 
@@ -108,13 +98,8 @@ public class DocumentoEleTestataHome extends BulkHome {
 					testata.getDocumentoEleTrasmissione().getRappresentanteCodicefiscale(), 
 					testata.getDocumentoEleTrasmissione().getRappresentanteCodice());
 		else if (s.equalsIgnoreCase("documentoEleTrasmissione.unitaCompetenza")){
-<<<<<<< .working
-			SQLBuilder sql = getHomeCache().getHome(Unita_organizzativaBulk.class, "V_UNITA_ORGANIZZATIVA_VALIDA").selectByClause(compoundfindclause);
-			sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, dataRicGregorian.get(java.util.GregorianCalendar.YEAR));
-=======
 			SQLBuilder sql = getHomeCache().getHome(Unita_organizzativaBulk.class, "V_UNITA_ORGANIZZATIVA_VALIDA").selectByClause(compoundfindclause);
 			sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, dataRicGregorian.get(java.util.GregorianCalendar.YEAR));
->>>>>>> .merge-right.r1858
 			return sql;
 		}else
 			return bulkhome.selectByClause(compoundfindclause);
