@@ -155,13 +155,15 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 		TerzoBulk terzo = null;
     	if (bulk.getDocumentoEleTrasmissione().getSoggettoEmittente() != null && 
     			bulk.getDocumentoEleTrasmissione().getSoggettoEmittente().equals(SoggettoEmittenteType.TZ.value())) {
-    		if (bulk.getDocumentoEleTrasmissione().getIntermediario() != null){
+    		if (bulk.getDocumentoEleTrasmissione().getIntermediarioCdTerzo() != null){
     			anagrafico = bulk.getDocumentoEleTrasmissione().getIntermediarioAnag();
     			terzo = bulk.getDocumentoEleTrasmissione().getIntermediario();
-    		}
-    		if (bulk.getDocumentoEleTrasmissione().getRappresentante() != null) {
+    		} else if (bulk.getDocumentoEleTrasmissione().getRappresentanteCdTerzo() != null) {
     			anagrafico = bulk.getDocumentoEleTrasmissione().getRappresentanteAnag();
     			terzo = bulk.getDocumentoEleTrasmissione().getRappresentante();
+    		} else {
+        		anagrafico = bulk.getDocumentoEleTrasmissione().getPrestatoreAnag();
+        		terzo = bulk.getDocumentoEleTrasmissione().getPrestatore();    			
     		}
     	} else {
     		anagrafico = bulk.getDocumentoEleTrasmissione().getPrestatoreAnag();
