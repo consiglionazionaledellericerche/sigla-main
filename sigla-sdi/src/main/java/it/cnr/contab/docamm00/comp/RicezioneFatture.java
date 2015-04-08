@@ -729,6 +729,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 						!fatturaElettronicaBody.getDatiGenerali().getDatiDDT().isEmpty() ) {
 					int progressivoDdt = 0;
 					for (DatiDDTType datiDDTT : fatturaElettronicaBody.getDatiGenerali().getDatiDDT()) {						
+						progressivoDdt++;
 						for (Integer numeroLinea : datiDDTT.getRiferimentoNumeroLinea()) {
 							progressivoDdt++;
 							DocumentoEleDdtBulk docDDT = new DocumentoEleDdtBulk(idTrasmittente.getIdPaese(), 
@@ -759,8 +760,9 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				DocumentoEleLineaBulk documentoEleLinea = docTestata.getDocEleLineaColl().get(i); 
 				if (numeroLinee.contains(documentoEleLinea.getNumeroLinea())) {
 					documentoEleLinea.setNumeroLinea(i + 1);
+					documentoEleLinea.setAnomalie("Documento da rifiutare, il numero delle linee non è progressivo.");					
 				}
-				numeroLinee.add(documentoEleLinea.getNumeroLinea());				
+				numeroLinee.add(documentoEleLinea.getNumeroLinea());									
 			}
 		} //END FOR LOOP Fattura Elettronica Body		
 		try {
