@@ -727,9 +727,9 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				if (fatturaElettronicaBody.getDatiGenerali().getDatiDDT() != null && 
 						!fatturaElettronicaBody.getDatiGenerali().getDatiDDT().isEmpty() ) {
 					int progressivoDdt = 0;
-					for (DatiDDTType datiDDTT : fatturaElettronicaBody.getDatiGenerali().getDatiDDT()) {
-						progressivoDdt++;
+					for (DatiDDTType datiDDTT : fatturaElettronicaBody.getDatiGenerali().getDatiDDT()) {						
 						for (Integer numeroLinea : datiDDTT.getRiferimentoNumeroLinea()) {
+							progressivoDdt++;
 							DocumentoEleDdtBulk docDDT = new DocumentoEleDdtBulk(idTrasmittente.getIdPaese(), 
 									idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)i, (long)progressivoDdt);
 							docDDT.setNumeroLinea(numeroLinea);
@@ -737,7 +737,15 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 							docDDT.setDdtData(convert(datiDDTT.getDataDDT()));
 							docDDT.setToBeCreated();
 							docTestata.addToDocEleDdtColl(docDDT);
-						}					
+						}
+						if (datiDDTT.getRiferimentoNumeroLinea().isEmpty()) {
+							DocumentoEleDdtBulk docDDT = new DocumentoEleDdtBulk(idTrasmittente.getIdPaese(), 
+									idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)i, (long)progressivoDdt);
+							docDDT.setDdtNumero(datiDDTT.getNumeroDDT());
+							docDDT.setDdtData(convert(datiDDTT.getDataDDT()));
+							docDDT.setToBeCreated();
+							docTestata.addToDocEleDdtColl(docDDT);							
+						}
 					}
 				}
 			}
