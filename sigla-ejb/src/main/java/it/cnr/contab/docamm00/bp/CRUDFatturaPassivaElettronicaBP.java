@@ -385,11 +385,11 @@ public class CRUDFatturaPassivaElettronicaBP extends SimpleCRUDBP implements Fat
 		    			documentoEleTestata.getDocumentoEleTrasmissione().getPrestatore());
 	    	}
 	    	fatturaPassivaBulk = (Fattura_passivaBulk) nbp.getModel();
-	    	if (documentoEleTestata.getModalitaPagamento() != null)
+	    	if (documentoEleTestata.getModalitaPagamento() != null) {
 	    		fatturaPassivaBulk.setModalita_pagamento(documentoEleTestata.getModalitaPagamento().getRif_modalita_pagamento());
-			action.doOnModalitaPagamentoChange(context);
+	    		action.doOnModalitaPagamentoChange(context);	    		
+	    	}
 			fatturaPassivaBulk = (Fattura_passivaBulk) nbp.getModel();
-			
 			
 			FatturaPassivaRigaCRUDController dettaglioController = nbp.getDettaglio();			
 			for (DocumentoEleLineaBulk documentoEleLinea : documentoEleTestata.getDocEleLineaColl()) {
