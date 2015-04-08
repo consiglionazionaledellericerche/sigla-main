@@ -371,13 +371,15 @@ public class CRUDFatturaPassivaElettronicaBP extends SimpleCRUDBP implements Fat
 	    	
 	    	if (documentoEleTestata.getDocumentoEleTrasmissione().getSoggettoEmittente() != null && 
 	    			documentoEleTestata.getDocumentoEleTrasmissione().getSoggettoEmittente().equals(SoggettoEmittenteType.TZ.value())) {
-	    		if (documentoEleTestata.getDocumentoEleTrasmissione().getIntermediario() != null)
+	    		if (documentoEleTestata.getDocumentoEleTrasmissione().getIntermediarioCdTerzo() != null)
 			    	action.doBringBackSearchFornitore(context, fatturaPassivaBulk, 
 			    			documentoEleTestata.getDocumentoEleTrasmissione().getIntermediario());
-	    		if (documentoEleTestata.getDocumentoEleTrasmissione().getRappresentante() != null)
+	    		else if (documentoEleTestata.getDocumentoEleTrasmissione().getRappresentanteCdTerzo() != null)
 			    	action.doBringBackSearchFornitore(context, fatturaPassivaBulk, 
 			    			documentoEleTestata.getDocumentoEleTrasmissione().getRappresentante());	    			
-	    			
+	    		else
+			    	action.doBringBackSearchFornitore(context, fatturaPassivaBulk, 
+			    			documentoEleTestata.getDocumentoEleTrasmissione().getPrestatore());	    			
 	    	} else {
 		    	action.doBringBackSearchFornitore(context, fatturaPassivaBulk, 
 		    			documentoEleTestata.getDocumentoEleTrasmissione().getPrestatore());
