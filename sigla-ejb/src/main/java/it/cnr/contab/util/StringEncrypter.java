@@ -23,9 +23,6 @@ public final class StringEncrypter  {
 
 	private static final String UNICODE_FORMAT = "UTF8";
 
-	public static void main(String[] args) throws EncryptionException {
-		System.out.println(encrypt("protocollo.adrba@pec.cnr.it", "adrba-h501e"));
-	}
 	private static KeySpec getKeySpec( String encryptionKey ) throws EncryptionException
 	{
 		String encryptionScheme = DESEDE_ENCRYPTION_SCHEME;
@@ -75,8 +72,8 @@ public final class StringEncrypter  {
 
 		try
 		{
-			SecretKeyFactory keyFactory = SecretKeyFactory.getInstance( DESEDE_ENCRYPTION_SCHEME );
-			Cipher cipher = Cipher.getInstance( DESEDE_ENCRYPTION_SCHEME );
+			SecretKeyFactory keyFactory = ConfigCrypto.getInstance().getKeyFactory();
+			Cipher cipher = ConfigCrypto.getInstance().getCipher();
 
 			SecretKey key = keyFactory.generateSecret( keySpec );
 			cipher.init( Cipher.ENCRYPT_MODE, key );
@@ -84,14 +81,6 @@ public final class StringEncrypter  {
 			byte[] ciphertext = cipher.doFinal( cleartext );
 
 			return Base64.encode(ciphertext);
-		}
-		catch (NoSuchAlgorithmException e)
-		{
-			throw new EncryptionException( e );
-		}
-		catch (NoSuchPaddingException e)
-		{
-			throw new EncryptionException( e );
 		}
 		catch (Exception e)
 		{
@@ -108,28 +97,30 @@ public final class StringEncrypter  {
 
 		try
 		{
-			SecretKeyFactory keyFactory = SecretKeyFactory.getInstance( DESEDE_ENCRYPTION_SCHEME );
-			Cipher cipher = Cipher.getInstance( DESEDE_ENCRYPTION_SCHEME );
+			SecretKeyFactory keyFactory = ConfigCrypto.getInstance().getKeyFactory();
+			Cipher cipher = ConfigCrypto.getInstance().getCipher();
 
 			SecretKey key = keyFactory.generateSecret( keySpec );
 			cipher.init( Cipher.DECRYPT_MODE, key );
 			byte[] cleartext = Base64.decode( encryptedString );
 			byte[] ciphertext = cipher.doFinal( cleartext );
 
-			return new String( ciphertext );
-		}
-		catch (NoSuchAlgorithmException e)
-		{
-			throw new EncryptionException( e );
-		}
-		catch (NoSuchPaddingException e)
-		{
-			throw new EncryptionException( e );
+			return bytes2String( ciphertext );
 		}
 		catch (Exception e)
 		{
 			throw new EncryptionException( e );
 		}
+	}
+
+	private static String bytes2String( byte[] bytes )
+	{
+		StringBuffer stringBuffer = new StringBuffer();
+		for (int i = 0; i < bytes.length; i++)
+		{
+			stringBuffer.append( (char) bytes[i] );
+		}
+		return stringBuffer.toString();
 	}
 
 	@SuppressWarnings("serial")
@@ -141,4 +132,3 @@ public final class StringEncrypter  {
 		}
 	}
 }
-

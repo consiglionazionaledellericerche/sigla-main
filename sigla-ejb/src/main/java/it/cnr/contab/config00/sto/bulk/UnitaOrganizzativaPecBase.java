@@ -65,7 +65,7 @@ public class UnitaOrganizzativaPecBase extends UnitaOrganizzativaPecKey implemen
 	}	
 	public java.lang.String getCodPecProtocolloInChiaro() {
 		try {
-			return StringEncrypter.decrypt(emailPecProtocollo, codPecProtocollo).replaceAll("[^a-zA-Z0-9_-]", "");
+			return StringEncrypter.decrypt(emailPecProtocollo, codPecProtocollo);
 		} catch (EncryptionException e) {
 			return codPecProtocollo;
 		}

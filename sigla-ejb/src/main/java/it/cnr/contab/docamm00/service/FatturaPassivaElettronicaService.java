@@ -1,8 +1,10 @@
 package it.cnr.contab.docamm00.service;
 
 import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
+import it.cnr.contab.docamm00.ejb.DocAmmFatturazioneElettronicaComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.ejb.RicezioneFatturePA;
+import it.cnr.contab.docamm00.ejb.TrasmissioneFatturePA;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
 import it.cnr.contab.utenze00.bp.WSUserContext;
@@ -10,11 +12,18 @@ import it.cnr.contab.util.StringEncrypter;
 import it.cnr.contab.util.StringEncrypter.EncryptionException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.mail.SimplePECMail;
 import it.gov.fatturapa.sdi.messaggi.v1.MetadatiInvioFileType;
+import it.gov.fatturapa.sdi.messaggi.v1.NotificaDecorrenzaTerminiType;
 import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoCommittenteType;
+import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoType;
+import it.gov.fatturapa.sdi.messaggi.v1.NotificaMancataConsegnaType;
+import it.gov.fatturapa.sdi.messaggi.v1.NotificaScartoType;
+import it.gov.fatturapa.sdi.messaggi.v1.RicevutaConsegnaType;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,7 +51,6 @@ import javax.mail.search.ComparisonTerm;
 import javax.mail.search.FromStringTerm;
 import javax.mail.search.ReceivedDateTerm;
 import javax.mail.search.SearchTerm;
-import javax.mail.search.SubjectTerm;
 import javax.xml.bind.JAXBElement;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
@@ -61,22 +69,61 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	private transient final static Logger logger = LoggerFactory.getLogger(FatturaPassivaElettronicaService.class);
 	
 	private FatturaElettronicaPassivaComponentSession fatturaElettronicaPassivaComponentSession;
+	private DocAmmFatturazioneElettronicaComponentSession docAmmFatturazioneElettronicaComponentSession;
 	private RicezioneFatturePA ricezioneFattureService;
+	private TrasmissioneFatturePA trasmissioneFattureService;
 	private FatturazioneElettronicaClient fatturazioneElettronicaClient;
 	private UserContext userContext;
 	private Boolean pecScanDisable;
 	private Properties pecMailConf;
 	private String pecHostName, pecURLName, pecSDIAddress, 
-		pecSDIFromStringTerm, pecSDISubjectRiceviFattureTerm; 
+		pecSDIFromStringTerm, pecSDISubjectRiceviFattureTerm, pecSDISubjectFatturaAttivaRicevutaConsegnaTerm, pecSDISubjectFatturaAttivaNotificaScartoTerm, pecSDISubjectFatturaAttivaMancataConsegnaTerm,
+		pecSDISubjectFatturaAttivaEsitoTerm, pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm, pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm;
 	private List<String> pecScanFolderName;
 	
+	public void setPecSDISubjectFatturaAttivaRicevutaConsegnaTerm(
+			String pecSDISubjectFatturaAttivaRicevutaConsegnaTerm) {
+		this.pecSDISubjectFatturaAttivaRicevutaConsegnaTerm = pecSDISubjectFatturaAttivaRicevutaConsegnaTerm;
+	}
+	public void setPecSDISubjectFatturaAttivaNotificaScartoTerm(
+			String pecSDISubjectFatturaAttivaNotificaScartoTerm) {
+		this.pecSDISubjectFatturaAttivaNotificaScartoTerm = pecSDISubjectFatturaAttivaNotificaScartoTerm;
+	}
+	public void setPecSDISubjectFatturaAttivaMancataConsegnaTerm(
+			String pecSDISubjectFatturaAttivaMancataConsegnaTerm) {
+		this.pecSDISubjectFatturaAttivaMancataConsegnaTerm = pecSDISubjectFatturaAttivaMancataConsegnaTerm;
+	}
+	public void setPecSDISubjectFatturaAttivaEsitoTerm(
+			String pecSDISubjectFatturaAttivaEsitoTerm) {
+		this.pecSDISubjectFatturaAttivaEsitoTerm = pecSDISubjectFatturaAttivaEsitoTerm;
+	}
+	public void setPecSDISubjectFatturaAttivaDecorrenzaTerminiTerm(
+			String pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm) {
+		this.pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm = pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm;
+	}
+	public void setPecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm(
+			String pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm) {
+		this.pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm = pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm;
+	}
+
 	public void setFatturaElettronicaPassivaComponentSession(
 			FatturaElettronicaPassivaComponentSession fatturaElettronicaPassivaComponentSession) {
 		this.fatturaElettronicaPassivaComponentSession = fatturaElettronicaPassivaComponentSession;
 	}
+
+	public void setDocAmmFatturazioneElettronicaComponentSession(
+			DocAmmFatturazioneElettronicaComponentSession docAmmFatturazioneElettronicaComponentSession) {
+		this.docAmmFatturazioneElettronicaComponentSession = docAmmFatturazioneElettronicaComponentSession;
+	}
+
 	public void setRicezioneFattureService(
 			RicezioneFatturePA ricezioneFattureService) {
 		this.ricezioneFattureService = ricezioneFattureService;
+	}
+	
+	public void setTrasmissioneFattureService(
+			TrasmissioneFatturePA trasmissioneFattureService) {
+		this.trasmissioneFattureService = trasmissioneFattureService;
 	}
 	
 	public void setFatturazioneElettronicaClient(
@@ -118,7 +165,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			} else {
 				logger.info("PEC SCAN for ricevi Fatture started at: "+new Date());
 				for (UnitaOrganizzativaPecBulk unitaOrganizzativaPecBulk : fatturaElettronicaPassivaComponentSession.scanPECProtocollo(userContext)) {
-					pecScanForRiceviFatture(
+					pecScan(
 							unitaOrganizzativaPecBulk.getEmailPecProtocollo(), 
 							unitaOrganizzativaPecBulk.getCodPecProtocollo());
 				}
@@ -129,17 +176,61 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		}
 	}
 	
+	private void riceviFattura(Message message, String userName) throws ComponentException {
+		try {
+			List<BodyPart> bodyParts = estraiBodyPart(message.getContent());
+			if (bodyParts.isEmpty()) {
+				logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
+						" non ha file allegati.");
+				return;
+			}
+			if (bodyParts.size() > 2) {
+				logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
+						" ha più di due file allegati.");
+				return;
+			}
+			BodyPart bodyPartFattura = null, bodyPartMetadati = null;
+			for (BodyPart bodyPart : bodyParts) {
+				if (isBodyPartMetadati(bodyPart)){
+					bodyPartMetadati = bodyPart;
+				} else {
+					bodyPartFattura = bodyPart;
+				}
+			}
+			if (bodyPartFattura != null && bodyPartMetadati != null) {
+			  	JAXBElement<MetadatiInvioFileType> metadatiInvioFileType = (JAXBElement<MetadatiInvioFileType>) 
+			  			fatturazioneElettronicaClient.getUnmarshaller().
+			  			unmarshal(new StreamSource(bodyPartMetadati.getInputStream()));				    	    	
+			  	if (!fatturaElettronicaPassivaComponentSession.existsIdentificativo(userContext, metadatiInvioFileType.getValue().getIdentificativoSdI().longValue())) {
+			    	ricezioneFattureService.riceviFatturaSIGLA(
+			    			metadatiInvioFileType.getValue().getIdentificativoSdI(), 
+			    			bodyPartFattura.getFileName(), 
+						new DataHandler(new ByteArrayDataSource(
+								IOUtils.toByteArray(bodyPartFattura.getInputStream()),bodyPartFattura.getContentType())), 
+						bodyPartMetadati.getFileName(), 
+						new DataHandler(new ByteArrayDataSource(
+								IOUtils.toByteArray(bodyPartMetadati.getInputStream()), bodyPartMetadati.getContentType())));				    	    					    	    			
+			  	}
+			} else {
+				logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
+						" è stato precessato ma gli allegati presenti non sono conformi.");
+			}
+		} catch (Exception e) {
+			logger.error("PEC scan error while importing file.", e);
+		}
+	}
+
 	@SuppressWarnings("unchecked")
-	public void pecScanForRiceviFatture(String userName, String password) throws ComponentException {	
-		logger.info("PEC SCAN for ricevi Fatture email: "+userName);
+	public void pecScan(String userName, String password) throws ComponentException {
+		logger.info("PEC SCAN for ricevi Fatture email: "+userName + "pwd :" +password);
 		Properties props = System.getProperties();
 		props.putAll(pecMailConf);
 		try {
 			try {
-				password = StringEncrypter.decrypt(userName, password).replaceAll("[^a-zA-Z0-9_-]", "");
-			} catch (EncryptionException e) {
-				throw new AuthenticationFailedException("Cannot decrypt password");
-			}					
+				password = StringEncrypter.decrypt(userName, password);
+			} catch (EncryptionException e1) {
+				new AuthenticationFailedException("Cannot decrypt password");
+			}
 			final Session session = Session.getDefaultInstance(props, null);
 			URLName urlName = new URLName(pecURLName);
 			final Store store = session.getStore(urlName);
@@ -158,49 +249,33 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			    	Date dateBeforeOneDays = cal.getTime();			    	
 			    	terms.add(new ReceivedDateTerm(ComparisonTerm.GE, dateBeforeOneDays));
 			    	terms.add(new FromStringTerm(pecSDIFromStringTerm));
-			    	terms.add(new SubjectTerm(pecSDISubjectRiceviFattureTerm));
 			    	Message messages[] = folder.search(new AndTerm(terms.toArray(new SearchTerm[terms.size()])));
 			    	logger.info("Recuperati " + messages.length +" messaggi dalla casella PEC:" + userName + " nella folder:" + folder.getFullName());
 				    for (int i = 0; i < messages.length; i++) {
 				    	try {
 				    		Message message = messages[i];
-				    		List<BodyPart> bodyParts = estraiBodyPart(message.getContent());
-				    		if (bodyParts.isEmpty()) {
-				    			logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
-				    					" non ha file allegati.");
-				    			continue;
-				    		}
-				    		if (bodyParts.size() > 2) {
-				    			logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
-				    					" ha più di due file allegati.");
-				    			continue;
-				    		}
-				    		BodyPart bodyPartFattura = null, bodyPartMetadati = null;
-				    		for (BodyPart bodyPart : bodyParts) {
-				    			if (isBodyPartMetadati(bodyPart)){
-				    				bodyPartMetadati = bodyPart;
-				    			} else {
-				    				bodyPartFattura = bodyPart;
-				    			}
-							}
-				    		if (bodyPartFattura != null && bodyPartMetadati != null) {
-				    	    	JAXBElement<MetadatiInvioFileType> metadatiInvioFileType = (JAXBElement<MetadatiInvioFileType>) 
-				    	    			fatturazioneElettronicaClient.getUnmarshaller().
-				    	    			unmarshal(new StreamSource(bodyPartMetadati.getInputStream()));				    	    	
-				    	    	if (!fatturaElettronicaPassivaComponentSession.existsIdentificativo(userContext, metadatiInvioFileType.getValue().getIdentificativoSdI().longValue())) {
-					    	    	ricezioneFattureService.riceviFatturaSIGLA(
-					    	    			metadatiInvioFileType.getValue().getIdentificativoSdI(), 
-					    	    			bodyPartFattura.getFileName(), 
-											new DataHandler(new ByteArrayDataSource(
-													IOUtils.toByteArray(bodyPartFattura.getInputStream()),bodyPartFattura.getContentType())), 
-											bodyPartMetadati.getFileName(), 
-											new DataHandler(new ByteArrayDataSource(
-													IOUtils.toByteArray(bodyPartMetadati.getInputStream()), bodyPartMetadati.getContentType())));				    	    					    	    			
-				    	    	}
-				    		} else {
-				    			logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
-				    					" è stato precessato ma gli allegati presenti non sono conformi.");
-				    		}
+		    				if (message.getSubject() != null){
+		    					if (message.getSubject().contains(pecSDISubjectRiceviFattureTerm)){
+		    						riceviFattura(message, userName);
+		    					} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaRicevutaConsegnaTerm)){
+		    						notificaFatturaAttivaRicevutaConsegna(message);
+		    					} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaEsitoTerm)){
+		    						notificaFatturaAttivaEsito(message);
+		    					} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaNotificaScartoTerm)){
+		    						notificaFatturaAttivaScarto(message);
+		    					} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaMancataConsegnaTerm)){
+		    						notificaFatturaAttivaMancataConsegna(message);
+		    					} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm)){
+		    						notificaFatturaAttivaDecorrenzaTermini(message);
+		    					} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm)){
+//TODO Da realizzare
+		    						logger.warn("Fatture Elettroniche: Attive: Casistica ancora non gestita. Attestazione Trasmissione Fattura");
+		    						SendMail.sendErrorMail("Fatture Elettroniche: Casistica ancora non gestita. Attestazione Trasmissione Fattura. Mail:"+userName, message.getDescription());
+		    					} else {
+		    						logger.warn("Fatture Elettroniche: Attive: Oggetto dell'e-mail non gestito." + message.getSubject());
+		    						SendMail.sendErrorMail("Fatture Elettroniche: Oggetto dell'e-mail non gestito. Mail:"+userName, message.getDescription());
+		    					}
+		    				}
 						} catch (Exception e) {
 							logger.error("PEC scan error while importing file.", e);
 						}
@@ -232,6 +307,105 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
     	return true;
 	}
 	
+	private void notificaFatturaAttivaDecorrenzaTermini(Message message) throws ComponentException {
+		logger.info("Fatture Elettroniche: Inizio Notifica Decorrenza Termini.");
+		try {
+			BodyPart bodyPartXml = estraiBodyPartXmlNotificaFatturaAttiva(message);
+			if (bodyPartXml != null){
+				logger.info("Fatture Elettroniche: Decorrenza Termini. Estratto Body Part.");
+				JAXBElement<NotificaDecorrenzaTerminiType> file = (JAXBElement<NotificaDecorrenzaTerminiType>)fatturazioneElettronicaClient.getUnmarshaller().unmarshal(new StreamSource(bodyPartXml.getInputStream()));
+				NotificaDecorrenzaTerminiType notifica = (NotificaDecorrenzaTerminiType) file.getValue();
+				if (bodyPartXml.getFileName().startsWith(docAmmFatturazioneElettronicaComponentSession.recuperoInizioNomeFile(userContext))){
+					trasmissioneFattureService.notificaFatturaAttivaDecorrenzaTermini(userContext, bodyPartXml.getFileName(), createDataHandler(bodyPartXml), notifica);
+				} else {
+					logger.warn("Fatture Elettroniche: Passive: Decorrenza termini ancora non gestita." + message.getSubject());
+					SendMail.sendErrorMail("Fatture Elettroniche: Passive: Decorrenza termini ancora non gestita.", message.getDescription());
+//					ricezioneFattureService.notificaDecorrenzaTermini(bodyPartXml.getFileName(), createDataHandler(bodyPartXml), notifica);
+				}
+			}
+		} catch (Exception e) {
+			throw new ComponentException(e);
+		}
+	}
+	private DataHandler createDataHandler(BodyPart bodyPartXml)
+			throws IOException, MessagingException {
+		return new DataHandler(new ByteArrayDataSource(IOUtils.toByteArray(bodyPartXml.getInputStream()),bodyPartXml.getContentType()));
+	}
+	
+	private void notificaFatturaAttivaEsito(Message message) throws ComponentException {
+		logger.info("Fatture Elettroniche: Attive: Inizio Notifica Esito.");
+		try {
+			BodyPart bodyPartXml = estraiBodyPartXmlNotificaFatturaAttiva(message);
+			if (bodyPartXml != null){
+				JAXBElement<NotificaEsitoType> file = (JAXBElement<NotificaEsitoType>)fatturazioneElettronicaClient.getUnmarshaller().unmarshal(new StreamSource(bodyPartXml.getInputStream()));
+				NotificaEsitoType notifica = (NotificaEsitoType) file.getValue();
+				trasmissioneFattureService.notificaFatturaAttivaEsito(userContext, bodyPartXml.getFileName(), createDataHandler(bodyPartXml), notifica);
+			}
+		} catch (Exception e) {
+			throw new ComponentException(e);
+		}
+	}
+	
+	private void notificaFatturaAttivaScarto(Message message) throws ComponentException {
+		logger.info("Fatture Elettroniche: Attive: Inizio Notifica Scarto.");
+		try {
+			BodyPart bodyPartXml = estraiBodyPartXmlNotificaFatturaAttiva(message);
+			if (bodyPartXml != null){
+				logger.info("Fatture Elettroniche: Attive: Estratto Body Part.");
+				JAXBElement<NotificaScartoType> file = (JAXBElement<NotificaScartoType>)fatturazioneElettronicaClient.getUnmarshaller().unmarshal(new StreamSource(bodyPartXml.getInputStream()));
+				NotificaScartoType notifica = (NotificaScartoType) file.getValue();
+				trasmissioneFattureService.notificaFatturaAttivaScarto(userContext, bodyPartXml.getFileName(), createDataHandler(bodyPartXml), notifica);
+			}
+		} catch (Exception e) {
+			throw new ComponentException(e);
+		}
+	}
+	private void notificaFatturaAttivaRicevutaConsegna(Message message) throws ComponentException {
+		logger.info("Fatture Elettroniche: Attive: Inizio Ricevuta Consegna.");
+		try {
+			BodyPart bodyPartXml = estraiBodyPartXmlNotificaFatturaAttiva(message);
+			if (bodyPartXml != null){
+				logger.info("Fatture Elettroniche: Attive: Estratto Body Part.");
+				JAXBElement<RicevutaConsegnaType> file = (JAXBElement<RicevutaConsegnaType>)fatturazioneElettronicaClient.getUnmarshaller().unmarshal(new StreamSource(bodyPartXml.getInputStream()));
+				RicevutaConsegnaType ricevuta = (RicevutaConsegnaType) file.getValue();
+				
+				trasmissioneFattureService.notificaFatturaAttivaRicevutaConsegna(userContext, bodyPartXml.getFileName(), createDataHandler(bodyPartXml), ricevuta);
+			}
+		} catch (Exception e) {
+			throw new ComponentException(e);
+		}
+	}
+	
+	private void notificaFatturaAttivaMancataConsegna(Message message) throws ComponentException {
+		logger.info("Fatture Elettroniche: Attive: Inizio Mancata Consegna.");
+		try {
+			BodyPart bodyPartXml = estraiBodyPartXmlNotificaFatturaAttiva(message);
+			if (bodyPartXml != null){
+				logger.info("Fatture Elettroniche: Attive: Estratto Body Part.");
+				JAXBElement<NotificaMancataConsegnaType> file = (JAXBElement<NotificaMancataConsegnaType>)fatturazioneElettronicaClient.getUnmarshaller().unmarshal(new StreamSource(bodyPartXml.getInputStream()));
+				NotificaMancataConsegnaType notifica = (NotificaMancataConsegnaType) file.getValue();
+				trasmissioneFattureService.notificaFatturaAttivaMancataConsegna(userContext, bodyPartXml.getFileName(), createDataHandler(bodyPartXml), notifica);
+			}
+		} catch (Exception e) {
+			throw new ComponentException(e);
+		}
+	}
+	
+	private BodyPart estraiBodyPartXmlNotificaFatturaAttiva(Message message) throws ComponentException{
+		try{
+			List<BodyPart> bodyParts = estraiBodyPart(message.getContent());
+			BodyPart bodyPartXml = null;
+			for (BodyPart bodyPart : bodyParts) {
+				if (bodyPart.getFileName().endsWith("xml")){
+					return bodyPart;
+				}
+			}
+			return null;
+		} catch (Exception e) {
+			throw new ComponentException(e);
+		}
+	}
+
 	public void notificaEsito(String userName, String password, DocumentoEleTestataBulk bulk, JAXBElement<NotificaEsitoCommittenteType> notificaEsitoCommittenteType) throws EmailException, XmlMappingException, IOException {
 		// Create the email message
 		SimplePECMail email = new SimplePECMail(userName, password);
@@ -251,6 +425,20 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		email.send();
 		logger.info("Inviata notifica di esito per IdentificativoSdi:"+bulk.getIdentificativoSdi());
 	}
+
+	public void inviaFatturaElettronica(String userName, String password, File fatturaAttivaSigned, String idFattura) throws EmailException, XmlMappingException, IOException {
+		// Create the email message
+		SimplePECMail email = new SimplePECMail(userName, password);
+		email.setHostName(pecHostName);
+		email.addTo(pecSDIAddress, "SdI - Sistema Di Interscambio");
+		email.setFrom(userName, userName);
+		email.setSubject(idFattura);
+		email.setMsg("Invio la Fattura Elettronica.");
+		email.attach(fatturaAttivaSigned);
+		// send the email
+		email.send();		
+	}
+	
 	private List<BodyPart> estraiBodyPart(Object content) throws MessagingException, IOException {
 		List<BodyPart> results = new ArrayList<BodyPart>();
 		estraiParte(content, results);

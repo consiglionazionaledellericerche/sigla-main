@@ -132,6 +132,9 @@ public class Fattura_attivaBase extends Fattura_attivaKey implements Keyed {
 	// DT_CONSEGNA_SDI TIMESTAMP 
 	private java.sql.Timestamp dtConsegnaSdi;
 
+	// NOME_FILE_INVIO_SDI CHAR(100) NOT NULL
+	private java.lang.String nomeFileInvioSdi;
+
 	// RAGIONE_SOCIALE VARCHAR(100)
 	private java.lang.String ragione_sociale;
 
@@ -757,5 +760,11 @@ public java.sql.Timestamp getDtConsegnaSdi() {
 }
 public void setDtConsegnaSdi(java.sql.Timestamp dtConsegnaSdi) {
 	this.dtConsegnaSdi = dtConsegnaSdi;
+}
+public java.lang.String getNomeFileInvioSdi() {
+	return nomeFileInvioSdi;
+}
+public void setNomeFileInvioSdi(java.lang.String nomeFileInvioSdi) {
+	this.nomeFileInvioSdi = nomeFileInvioSdi;
 }
 }

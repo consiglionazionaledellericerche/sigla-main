@@ -1,8 +1,10 @@
 package it.cnr.contab.docamm00.ejb;
 
+import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
 import it.cnr.contab.docamm00.comp.DocAmmFatturazioneElettronicaComponent;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
 import it.gov.fatturapa.sdi.fatturapa.v1.FatturaElettronicaType;
 
 import java.rmi.RemoteException;
@@ -25,6 +27,24 @@ public class DocAmmFatturazioneElettronicaComponentSessionBean extends it.cnr.ja
 		return new DocAmmFatturazioneElettronicaComponentSessionBean();
 	}
 	
+	public UnitaOrganizzativaPecBulk getAuthenticatorFromUo(UserContext userContext, String uo) throws it.cnr.jada.comp.ComponentException {
+		pre_component_invocation(userContext,componentObj);
+		try {
+			UnitaOrganizzativaPecBulk result = ((DocAmmFatturazioneElettronicaComponent)componentObj).getAuthenticatorFromUo(userContext, uo);
+			component_invocation_succes(userContext,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+	}
 	public JAXBElement<FatturaElettronicaType> creaFatturaElettronicaType(UserContext userContext, Fattura_attivaBulk fattura)  throws it.cnr.jada.comp.ComponentException{
 		pre_component_invocation(userContext,componentObj);
 		try {
@@ -48,6 +68,25 @@ public class DocAmmFatturazioneElettronicaComponentSessionBean extends it.cnr.ja
 		pre_component_invocation(userContext,componentObj);
 		try {
 			String result = ((DocAmmFatturazioneElettronicaComponent)componentObj).recuperoNomeFileXml(userContext, fattura);
+			component_invocation_succes(userContext,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+	}
+
+	public String recuperoInizioNomeFile(UserContext userContext) throws RemoteException,ComponentException {
+		pre_component_invocation(userContext,componentObj);
+		try {
+			String result = ((DocAmmFatturazioneElettronicaComponent)componentObj).recuperoInizioNomeFile(userContext);
 			component_invocation_succes(userContext,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
