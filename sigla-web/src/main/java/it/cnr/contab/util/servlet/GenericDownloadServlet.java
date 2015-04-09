@@ -19,14 +19,15 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Servlet implementation class GenericDownload
  */
 public class GenericDownloadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Loggerger LOGGER = Logger.getLogger(GenericDownloadServlet.class);
+	private transient final static Logger LOGGER = LoggerFactory.getLogger(GenericDownloadServlet.class);
 	private static final String AUTHORIZATION = "Authorization";
        
     /**
