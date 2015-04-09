@@ -268,8 +268,9 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 			CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
 			DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
 			CRUDFatturaPassivaAction action = new CRUDFatturaPassivaAction();
+			CRUDFatturaPassivaBP nbp = null;
 			try {
-				CRUDFatturaPassivaBP nbp = (CRUDFatturaPassivaBP)context.createBusinessProcess("CRUDFatturaPassivaBP",
+				nbp = (CRUDFatturaPassivaBP)context.createBusinessProcess("CRUDFatturaPassivaBP",
 								new Object[] {"M"}
 							);
 				String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().
@@ -287,13 +288,15 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 						cercaFatturaPassivaForNota(context.getUserContext(), bulk);
 					nbp.edit(context, fatturaPassivaBulk);
 					CRUDNotaDiCreditoBP notaBp = (CRUDNotaDiCreditoBP)action.doGeneraNotaDiCredito(context);
-					notaBp.setModel(context, fatturaPassivaElettronicaBP.completaFatturaPassiva(context, (Fattura_passivaBulk) notaBp.getModel(), notaBp));
+					notaBp.setModel(context, fatturaPassivaElettronicaBP.completaFatturaPassiva(context, (Fattura_passivaBulk) notaBp.getModel(), notaBp, fatturaPassivaBulk));
 				} else {
 					Fattura_passivaBulk fatturaPassivaBulk = (Fattura_passivaBulk) nbp.getModel();
-					nbp.setModel(context, fatturaPassivaElettronicaBP.completaFatturaPassiva(context, fatturaPassivaBulk, nbp));					
+					nbp.setModel(context, fatturaPassivaElettronicaBP.completaFatturaPassiva(context, fatturaPassivaBulk, nbp, null));					
 				}
 				return nbp;
 			} catch(Throwable e) {
+				if (nbp != null)
+					context.closeBusinessProcess(nbp);
 				return handleException(context,e);
 			}		
 		}
