@@ -7,6 +7,8 @@ import it.cnr.contab.docamm00.actions.CRUDFatturaPassivaAction;
 import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
@@ -33,6 +35,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
 import it.gov.fatturapa.sdi.fatturapa.v1.SoggettoEmittenteType;
 
@@ -339,7 +342,7 @@ public class CRUDFatturaPassivaElettronicaBP extends SimpleCRUDBP implements Fat
 		
 	}
 
-	public OggettoBulk completaFatturaPassiva(ActionContext context, Fattura_passivaBulk fatturaPassivaBulk, CRUDFatturaPassivaBP nbp) throws BusinessProcessException {
+	public OggettoBulk completaFatturaPassiva(ActionContext context, Fattura_passivaBulk fatturaPassivaBulk, CRUDFatturaPassivaBP nbp, Fattura_passivaBulk fatturaPassivaDiRiferimento) throws BusinessProcessException {
     	try {    		
 			CRUDFatturaPassivaAction action = new CRUDFatturaPassivaAction();
 			DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) getModel();
@@ -390,24 +393,25 @@ public class CRUDFatturaPassivaElettronicaBP extends SimpleCRUDBP implements Fat
 	    		action.doOnModalitaPagamentoChange(context);	    		
 	    	}
 			fatturaPassivaBulk = (Fattura_passivaBulk) nbp.getModel();
-			
-			FatturaPassivaRigaCRUDController dettaglioController = nbp.getDettaglio();			
-			for (DocumentoEleLineaBulk documentoEleLinea : documentoEleTestata.getDocEleLineaColl()) {
-				Fattura_passiva_rigaBulk rigaFattura = documentoEleTestata.getInstanceRiga();			
-				int i = dettaglioController.addDetail(rigaFattura);
-				dettaglioController.setDirty(true);
-				dettaglioController.setModelIndex(context, i);
-				rigaFattura.setBene_servizio(documentoEleLinea.getBeneServizio());
-				rigaFattura.setDs_riga_fattura(documentoEleLinea.getLineaDescrizione());
-				rigaFattura.setVoce_iva(recuperaCodiceIVA(documentoEleTestata, documentoEleLinea));
-				rigaFattura.setQuantita(documentoEleLinea.getLineaQuantita());
-				action.doOnQuantitaChange(context);
-				rigaFattura.setPrezzo_unitario(documentoEleLinea.getLineaPrezzounitario());
-				action.doCalcolaTotaliDiRiga(context);
-				if (documentoEleTestata.getModalitaPagamento() != null)
-					rigaFattura.setModalita_pagamento(documentoEleTestata.getModalitaPagamento().getRif_modalita_pagamento());
-				rigaFattura.setDt_da_competenza_coge(documentoEleLinea.getInizioDatacompetenza());
-				rigaFattura.setDt_a_competenza_coge(documentoEleLinea.getFineDatacompetenza());				
+			if (fatturaPassivaDiRiferimento == null) {
+				FatturaPassivaRigaCRUDController dettaglioController = nbp.getDettaglio();			
+				for (DocumentoEleLineaBulk documentoEleLinea : documentoEleTestata.getDocEleLineaColl()) {
+					Fattura_passiva_rigaBulk rigaFattura = documentoEleTestata.getInstanceRiga();			
+					int i = dettaglioController.addDetail(rigaFattura);
+					dettaglioController.setDirty(true);
+					dettaglioController.setModelIndex(context, i);
+					rigaFattura.setBene_servizio(documentoEleLinea.getBeneServizio());
+					rigaFattura.setDs_riga_fattura(documentoEleLinea.getLineaDescrizione());
+					rigaFattura.setVoce_iva(recuperaCodiceIVA(documentoEleTestata, documentoEleLinea));
+					rigaFattura.setQuantita(documentoEleLinea.getLineaQuantita());
+					action.doOnQuantitaChange(context);
+					rigaFattura.setPrezzo_unitario(documentoEleLinea.getLineaPrezzounitario());
+					action.doCalcolaTotaliDiRiga(context);
+					if (documentoEleTestata.getModalitaPagamento() != null)
+						rigaFattura.setModalita_pagamento(documentoEleTestata.getModalitaPagamento().getRif_modalita_pagamento());
+					rigaFattura.setDt_da_competenza_coge(documentoEleLinea.getInizioDatacompetenza()==null?EJBCommonServices.getServerDate():documentoEleLinea.getInizioDatacompetenza());
+					rigaFattura.setDt_a_competenza_coge(documentoEleLinea.getFineDatacompetenza()==null?EJBCommonServices.getServerDate():documentoEleLinea.getFineDatacompetenza());	
+				}				
 			}
 			return fatturaPassivaBulk;
 		} catch (RemoteException e) {
@@ -432,7 +436,7 @@ public class CRUDFatturaPassivaElettronicaBP extends SimpleCRUDBP implements Fat
 
 	private Timestamp calcolaDataMinimaCompetenza(
 			DocumentoEleTestataBulk documentoEleTestata) {
-		java.sql.Timestamp inizioDatacompetenza = null;
+		java.sql.Timestamp inizioDatacompetenza = EJBCommonServices.getServerDate();
 		for (DocumentoEleLineaBulk documentoEleLinea : documentoEleTestata.getDocEleLineaColl()) {
 			if (inizioDatacompetenza == null)
 				inizioDatacompetenza = documentoEleLinea.getInizioDatacompetenza();
@@ -443,7 +447,7 @@ public class CRUDFatturaPassivaElettronicaBP extends SimpleCRUDBP implements Fat
 	}
 	private Timestamp calcolaDataMassimaCompetenza(
 			DocumentoEleTestataBulk documentoEleTestata) {
-		java.sql.Timestamp fineDatacompetenza = null;
+		java.sql.Timestamp fineDatacompetenza = EJBCommonServices.getServerDate();
 		for (DocumentoEleLineaBulk documentoEleLinea : documentoEleTestata.getDocEleLineaColl()) {
 			if (fineDatacompetenza == null)
 				fineDatacompetenza = documentoEleLinea.getFineDatacompetenza();
