@@ -390,7 +390,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 				"fatturaPassivaElettronicaService", FatturaPassivaElettronicaService.class);
 		try {
 			lockBulk(usercontext, unitaOrganizzativaPecBulk);
-				fatturaPassivaElettronicaService.pecScanForRiceviFatture(
+				fatturaPassivaElettronicaService.pecScan(
 						unitaOrganizzativaPecBulk.getEmailPecProtocollo(), 
 						unitaOrganizzativaPecBulk.getCodPecProtocollo());
 		} catch (OutdatedResourceException e) {
