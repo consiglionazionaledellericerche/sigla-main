@@ -277,7 +277,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 								((CNRUserInfo)context.getUserInfo()).getUtente().isUtenteComune() ? 
 										((CNRUserInfo)context.getUserInfo()).getUnita_organizzativa().getCd_unita_organizzativa() : 
 											"*","CRUDFatturaPassivaBP");
-				if (mode == null) 
+				if (mode == null || mode.equals("V")) 
 					throw new it.cnr.jada.action.MessageToUser("Accesso non consentito alla mappa di creazione delle fatture. Impossibile continuare.");
 				
 				context.addHookForward("default",this,"doBringBackCompilaFattura");
