@@ -32,8 +32,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.DeleteMethod;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @version 	1.0
@@ -41,7 +41,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class UtilServlet extends HttpServlet {
 	private static final String MANIFEST_PATH = "/META-INF/MANIFEST.MF";
-	private static final Log logger = LogFactory.getLog(UtilServlet.class);
+	private static final Logger logger = LoggerFactory.getLogger(UtilServlet.class);
 	/**
 	* @see javax.servlet.http.HttpServlet#void (javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	*/

@@ -26,7 +26,7 @@ import org.apache.log4j.Logger;
  */
 public class GenericDownloadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOGGER = Logger.getLogger(GenericDownloadServlet.class);
+	private static final Loggerger LOGGER = Logger.getLogger(GenericDownloadServlet.class);
 	private static final String AUTHORIZATION = "Authorization";
        
     /**
