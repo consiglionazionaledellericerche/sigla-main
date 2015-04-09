@@ -30,8 +30,14 @@
 	<jee:jndi-lookup id="ricezioneFattureService"
    			jndi-name="SIGLA/RicezioneFatture/local"
    			resource-ref="false"/>   	
+	<jee:jndi-lookup id="trasmissioneFattureService"
+   			jndi-name="SIGLA/TrasmissioneFatture/local"
+   			resource-ref="false"/>   	
 	<jee:jndi-lookup id="fatturaElettronicaPassivaComponentSession"
    			jndi-name="SIGLA/CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession/remote"
+   			resource-ref="false"/>	
+	<jee:jndi-lookup id="docAmmFatturazioneElettronicaComponentSession"
+   			jndi-name="SIGLA/CNRDOCAMM00_EJB_DocAmmFatturazioneElettronicaComponentSession/remote"
    			resource-ref="false"/>	
 	<bean id="trovatoProperties" class="it.cnr.contab.docamm00.client.TrovatoProperties">
 		<property name="trovatoTargetEndpoint" value="${TrovatoTargetEndpoint}" />
@@ -57,7 +63,9 @@
     
 	<bean id="fatturaPassivaElettronicaService" class="it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService">
 		<property name="fatturaElettronicaPassivaComponentSession" ref="fatturaElettronicaPassivaComponentSession"/>
+		<property name="docAmmFatturazioneElettronicaComponentSession" ref="docAmmFatturazioneElettronicaComponentSession"/>
 		<property name="ricezioneFattureService" ref="ricezioneFattureService"/>
+		<property name="trasmissioneFattureService" ref="trasmissioneFattureService"/>
 		<property name="fatturazioneElettronicaClient" ref="fatturazioneElettronicaClient"/>
 		<property name="pecScanDisable" value="${pec.scan.disable}"/>
 		<property name="pecHostName" value="${pec.host.name}"/>
@@ -68,6 +76,13 @@
 		<property name="pecSDISubjectRiceviFattureTerm" value="${pec.sdi.subject.ricevi.fatture.term}"/>
 		<property name="pecScanFolderName" value="${pec.scan.folder.name}"/>
 										
+		<property name="pecSDISubjectFatturaAttivaRicevutaConsegnaTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.ricevutaConsegna.term}"/>
+		<property name="pecSDISubjectFatturaAttivaNotificaScartoTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.scarto.term}"/>
+		<property name="pecSDISubjectFatturaAttivaMancataConsegnaTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.mancataConsegna.term}"/>
+		<property name="pecSDISubjectFatturaAttivaEsitoTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.esito.term}"/>
+		<property name="pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.decorrenzaTermini.term}"/>
+		<property name="pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.attestazioneTrasmissioneFattura.term}"/>
+
 		<property name="pecMailConf">
 		    <props>
 		      <prop key="mail.imap.host">${pec.mail.imap.host}</prop>
