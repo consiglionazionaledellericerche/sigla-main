@@ -344,6 +344,11 @@
 			propertyName="dtConsegnaSdi"
 			sqlTypeName="TIMESTAMP"
 			columnSize="7" />
+		<columnMapping
+			columnName="NOME_FILE_INVIO_SDI"
+			propertyName="nomeFileInvioSdi"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -461,6 +466,8 @@
 		name="statoInvioSdi" />			
 	<persistentProperty
 		name="noteInvioSdi" />			
+	<persistentProperty
+		name="nomeFileInvioSdi" />			
 	<persistentProperty
 		name="ncAnnulloSdi" />
 </SQLPersistentInfo>

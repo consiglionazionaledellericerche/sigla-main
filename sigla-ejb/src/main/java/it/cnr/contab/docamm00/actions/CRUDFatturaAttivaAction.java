@@ -3240,6 +3240,8 @@ public Forward doConfirmGeneraNotaDiCreditoAutomatica(ActionContext context,int 
 		return handleException(context, e);
 	} catch (RemoteException e) {
 		return handleException(context, e);
+	} catch (PersistencyException e) {
+		return handleException(context, e);
 	}
 }
 }

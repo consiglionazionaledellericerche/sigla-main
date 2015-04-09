@@ -5,6 +5,7 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
@@ -254,7 +255,7 @@ public boolean isBeni_collButtonHidden() {
 	
 	return isSearching() || isDeleting();
 }
-public Nota_di_credito_attivaBulk generaNotaCreditoAutomatica(it.cnr.jada.action.ActionContext context, Fattura_attiva_IBulk fa, Integer esercizio) throws ComponentException, RemoteException {
+public Nota_di_credito_attivaBulk generaNotaCreditoAutomatica(it.cnr.jada.action.ActionContext context, Fattura_attiva_IBulk fa, Integer esercizio) throws ComponentException, PersistencyException, RemoteException {
 	FatturaAttivaSingolaComponentSession h = ((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class));
 	try {
 		rollbackUserTransaction();

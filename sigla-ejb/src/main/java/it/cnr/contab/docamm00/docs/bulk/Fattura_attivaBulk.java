@@ -264,6 +264,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	private Integer esercizioInScrivania;
 
 	private String collegamentoDocumentale;
+	private Boolean caricaDatiPerFatturazioneElettronica = true;
 
 	/*
 	 * Le variabili isDetailDoubled e isDocumentoModificabile servono per gestire il caso in cui l'utente
@@ -2091,5 +2092,15 @@ public boolean isAttivoSplitPayment() {
 }
 public void setAttivoSplitPayment(boolean isAttivoSplitPayment) {
 	this.isAttivoSplitPayment = isAttivoSplitPayment;
+}
+public void setCaricaDatiPerFatturazioneElettronica(
+		Boolean caricaDatiPerFatturazioneElettronica) {
+	this.caricaDatiPerFatturazioneElettronica = caricaDatiPerFatturazioneElettronica;
+}
+public Boolean isPossibleFatturazioneElettronica() {
+	if (caricaDatiPerFatturazioneElettronica){
+		return true;
+	}
+	return false;
 }
 }
