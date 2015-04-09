@@ -11,14 +11,14 @@ import it.cnr.contab.incarichi00.cmis.CMISContrattiProperty;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
 
 public class CMISFileAssegniRicerca extends CMISFileIncarichi {
 	private static final long serialVersionUID = -1775673719677028944L;
-	private transient static final Log logger = LogFactory.getLog(CMISFileBorseStudio.class);
+	private transient static final Logger logger = LoggerFactory.getLogger(CMISFileBorseStudio.class);
 
 	public CMISFileAssegniRicerca(Incarichi_repertorio_archivioBulk incaricoRepertorioArchivio) throws IOException{
 		super(incaricoRepertorioArchivio);

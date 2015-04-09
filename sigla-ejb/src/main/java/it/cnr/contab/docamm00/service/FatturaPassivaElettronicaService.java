@@ -50,15 +50,15 @@ import javax.xml.transform.stream.StreamSource;
 import org.apache.axiom.attachments.ByteArrayDataSource;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.oxm.XmlMappingException;
 
 public class FatturaPassivaElettronicaService implements InitializingBean{
-	private transient final static Log logger = LogFactory.getLog(FatturaPassivaElettronicaService.class);
+	private transient final static Logger logger = LoggerFactory.getLogger(FatturaPassivaElettronicaService.class);
 	
 	private FatturaElettronicaPassivaComponentSession fatturaElettronicaPassivaComponentSession;
 	private RicezioneFatturePA ricezioneFattureService;

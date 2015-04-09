@@ -9,8 +9,8 @@ import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisRuntimeException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
@@ -21,7 +21,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 
 public class ContrattoService extends SiglaCMISService {
-	private transient static final Log logger = LogFactory.getLog(ContrattoService.class);
+	private transient static final Logger logger = LoggerFactory.getLogger(ContrattoService.class);
 	
 	public Folder getFolderContratto(ContrattoBulk contratto) throws ApplicationException{
 		try {

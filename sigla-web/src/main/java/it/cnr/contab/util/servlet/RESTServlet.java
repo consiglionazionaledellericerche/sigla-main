@@ -51,7 +51,7 @@ public class RESTServlet extends HttpServlet{
     private File actionDirFile;    
     private ActionMappings mappings;
     private String COMMAND_POST = "doRestResponse", COMMAND_GET = "doRestInfo";
-	private static final Logger logger = Logger.getLogger(RESTServlet.class);
+	private static final Loggerger logger = Logger.getLogger(RESTServlet.class);
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)

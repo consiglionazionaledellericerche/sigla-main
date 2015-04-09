@@ -58,13 +58,13 @@ import org.apache.chemistry.opencmis.commons.impl.UrlBuilder;
 import org.apache.chemistry.opencmis.commons.impl.dataobjects.ContentStreamImpl;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class SiglaCMISService {
-	private transient static final Log logger = LogFactory.getLog(SiglaCMISService.class);
+	private transient static final Logger logger = LoggerFactory.getLogger(SiglaCMISService.class);
 	public static final String ASPECT_TITLED = "P:cm:titled", 
 			PROPERTY_TITLE = "cm:title", 
 			PROPERTY_DESCRIPTION = "cm:description", 
