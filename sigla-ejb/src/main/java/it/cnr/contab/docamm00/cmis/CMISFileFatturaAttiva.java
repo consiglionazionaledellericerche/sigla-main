@@ -12,6 +12,7 @@ import it.cnr.jada.comp.ApplicationException;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.slf4j.Logger;
@@ -26,6 +27,11 @@ public class CMISFileFatturaAttiva extends CMISFile implements CMISTypeName{
 	private String originalName;
 	private String typeName = "D:sigla_fatture_attachment:document";
 
+	public CMISFileFatturaAttiva(InputStream inputStream, String contentType, String name, Fattura_attivaBulk fattura) throws IOException{
+    	super(inputStream, contentType, name);
+		impostaDatiBaseFattura(name, fattura);
+    }
+	
 	public CMISFileFatturaAttiva(File file, Fattura_attivaBulk fattura, String prefissoNomeFile) throws IOException{
     	super(file, null, prefissoNomeFile + fattura.constructCMISNomeFile());
 		impostaDatiBaseFattura(file.getName(), fattura);

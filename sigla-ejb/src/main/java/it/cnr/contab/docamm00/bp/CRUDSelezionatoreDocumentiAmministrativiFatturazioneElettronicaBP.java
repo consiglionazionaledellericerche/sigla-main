@@ -1,10 +1,12 @@
 package it.cnr.contab.docamm00.bp;
 
 
+import it.cnr.contab.cmis.CMISAspect;
 import it.cnr.contab.cmis.MimeTypes;
 import it.cnr.contab.cmis.bulk.CMISFile;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
+import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
 import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.cmis.CMISFileFatturaAttiva;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
@@ -12,6 +14,7 @@ import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_doc_ammVBulk;
 import it.cnr.contab.docamm00.ejb.DocAmmFatturazioneElettronicaComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
+import it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
@@ -41,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.mail.PasswordAuthentication;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 
@@ -51,10 +55,14 @@ import org.apache.chemistry.opencmis.commons.impl.UrlBuilder;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.util.URIUtil;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP extends SelezionatoreListaBP {
+	private transient final static Log logger = LogFactory.getLog(CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP.class);
 	private static final long serialVersionUID = 1L;
 	private DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService;
 	private boolean utenteNonAbilitatoFirma;
@@ -142,6 +150,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 		List<OggettoBulk> lista = getSelectedElements(context);
 		DocumentiCollegatiDocAmmService cmisService = SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class);
 		DocAmmFatturazioneElettronicaComponentSession component = createComponentSession();
+		
 //		FatturaAttivaSingolaComponentSession componentFatturaAttiva = Utility.createFatturaAttivaSingolaComponentSession();
 		FatturaAttivaSingolaComponentSession componentFatturaAttiva = (FatturaAttivaSingolaComponentSession) createComponentSession(
 				"CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",
@@ -151,10 +160,20 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 	    	OggettoBulk docAmm = i.next();
 	    	if (docAmm instanceof Fattura_attivaBulk) {
 	    		Fattura_attivaBulk fattura = (Fattura_attivaBulk) docAmm;
-	    		
+				logger.info("Processo la fattura");
+
+		    	UnitaOrganizzativaPecBulk unitaOrganizzativaPecBulk = component.getAuthenticatorFromUo(userContext, fattura.getCd_uo_origine());
+		    	
+		    	if (unitaOrganizzativaPecBulk == null || unitaOrganizzativaPecBulk.getEmailPecProtocollo() == null || unitaOrganizzativaPecBulk.getCodPecProtocollo() == null){
+					throw new ApplicationException("Impossibile procedere. Non è stato possibile recuperare l'email della PEC dell'istituto per l'invio della fattura elettronica!");
+		    	}
+				PasswordAuthentication authentication = new PasswordAuthentication(unitaOrganizzativaPecBulk.getEmailPecProtocollo(), unitaOrganizzativaPecBulk.getCodPecProtocolloInChiaro());
+				logger.info("Recuperata Autenticazione PEC");
 				File file = creaFileXml(userContext, fattura);
 
+				logger.info("Creato file XML");
 	    		fattura = protocollazione(userContext, fattura);
+				logger.info("Creato protocollazione");
 
 	    		List<CMISFile> cmisFileCreate = new ArrayList<CMISFile>();
 	    		List<CMISFile> cmisFileAnnullati = new ArrayList<CMISFile>();
@@ -172,6 +191,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 	    							cmisFile.getContentType(),
 	    							cmisFile.getFileName(), 
 	    							path);
+	    					logger.info("Salvato file XML sul Documentale");
 	    					cmisService.addAspect(node, CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_ANTE_FIRMA.value());
 	    					cmisService.makeVersionable(node);
 	    					cmisFile.setDocument(node);
@@ -181,6 +201,9 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 	    						throw new ApplicationException("CMIS - File ["+cmisFile.getFileName()+"] già presente o non completo di tutte le proprietà obbligatorie. Inserimento non possibile!");
 	    					throw new ApplicationException("CMIS - Errore nella registrazione del file XML sul Documentale (" + e.getMessage() + ")");
 	    				}
+	    				String nomeFile = file.getName();
+	    				String nomeFileP7m = nomeFile+".p7m";
+	    				fattura.setNomeFileInvioSdi(nomeFileP7m);
 	    				componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fattura, Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI, null);
 	    				String webScriptURL = documentiCollegatiDocAmmService.getRepositoyURL().concat("service/sigla/firma/fatture");
 	    	    		String json = "{" +
@@ -191,17 +214,44 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 	    	    				+ "}";
 	    	    		try {		
 	    	    			UrlBuilder url = new UrlBuilder(URIUtil.encodePath(webScriptURL));
+	    					logger.info("Prima di firma file XML");
 	    	    			Response response = documentiCollegatiDocAmmService.invokePOST(url, MimeTypes.JSON, json.getBytes("UTF-8"));
 	    	    			int status = response.getResponseCode();
 	    	    			if (status == HttpStatus.SC_NOT_FOUND
 	    	    					|| status == HttpStatus.SC_INTERNAL_SERVER_ERROR
 	    	    					|| status == HttpStatus.SC_UNAUTHORIZED
 	    	    					|| status == HttpStatus.SC_BAD_REQUEST) {
+		    					logger.info("Firma Errore");
 	    	    				JSONTokener tokenizer = new JSONTokener(new StringReader(response.getErrorContent()));
 	    	    			    JSONObject jsonObject = new JSONObject(tokenizer);
 	    	    			    String jsonMessage = jsonObject.getString("message");
 	    	    				throw new ApplicationException(FirmaOTPBulk.errorMessage(jsonMessage));
-	    	    			} 
+	    	    			} else {
+		    					logger.info("Firma OK");
+	    	    				JSONTokener tokenizer = new JSONTokener(new InputStreamReader(response.getStream()));
+	    	    			    JSONObject jsonObject = new JSONObject(tokenizer);
+	    	    			    Document nodeSigned = (Document) documentiCollegatiDocAmmService.getNodeByNodeRef(jsonObject.getString("nodeRef"));
+		    					logger.info("Recuperato noderef file firmato dal documentale");
+	    	    			    InputStream streamSigned = documentiCollegatiDocAmmService.getResource(nodeSigned);
+		    					logger.info("Recuperato file firmato dal documentale");
+	    	    				try {
+	    	    					File fileSigned = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/", nomeFileP7m);
+	    	    					OutputStream outputStream = new FileOutputStream(fileSigned);
+	    	    					IOUtils.copy(streamSigned, outputStream);
+	    	    					outputStream.close();
+			    					logger.info("Salvato file firmato temporaneo");
+			    					if (fattura.getNcAnnulloSdi() == null || fattura.getNcAnnulloSdi().equals("N")){
+				    					FatturaPassivaElettronicaService fatturaService = SpringUtil.getBean("fatturaPassivaElettronicaService", FatturaPassivaElettronicaService.class);
+		    	    			    	fatturaService.inviaFatturaElettronica(authentication.getUserName(), authentication.getPassword(), fileSigned, cmisFile.getDescription());
+				    					logger.info("File firmato inviato");
+			    					}
+	    	    				} catch (Exception ex) {
+			    					logger.error("Errore nell'invio del file "+ ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
+	    	    					documentiCollegatiDocAmmService.removeAspect(cmisFile.getDocument(),  CMISAspect.CNR_SIGNEDDOCUMENT.value());
+    	    						documentiCollegatiDocAmmService.deleteNode(nodeSigned);
+	    	    					throw new ApplicationException("Errore nell'invio della mail PEC per la fatturazione elettronica. Ripetere l'operazione di firma!");
+	    	    				}
+	    	    			}
 		    			commitUserTransaction();
 	    	    		} catch (HttpException e) {
 	    	    			throw new BusinessProcessException(e);
@@ -232,7 +282,6 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 		setFocusedElement(context, null);
 		refresh(context);	
 	}
-
 
 	public Fattura_attivaBulk protocollazione(UserContext userContext,
 			Fattura_attivaBulk fattura) throws BusinessProcessException,
