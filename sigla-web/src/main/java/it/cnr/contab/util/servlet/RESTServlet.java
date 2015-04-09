@@ -40,7 +40,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
@@ -51,7 +52,7 @@ public class RESTServlet extends HttpServlet{
     private File actionDirFile;    
     private ActionMappings mappings;
     private String COMMAND_POST = "doRestResponse", COMMAND_GET = "doRestInfo";
-	private static final Loggerger logger = Logger.getLogger(RESTServlet.class);
+    private transient final static Logger logger = LoggerFactory.getLogger(RESTServlet.class);
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
