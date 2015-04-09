@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  */
 public class UtilServlet extends HttpServlet {
 	private static final String MANIFEST_PATH = "/META-INF/MANIFEST.MF";
-	private static final Logger logger = LoggerFactory.getLogger(UtilServlet.class);
+	private transient final static Logger logger = LoggerFactory.getLogger(UtilServlet.class);
 	/**
 	* @see javax.servlet.http.HttpServlet#void (javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	*/
@@ -160,7 +160,7 @@ public class UtilServlet extends HttpServlet {
 
 				version = attributes.getValue("Implementation-Version");
 			} catch (IOException e) {
-				logger.warn(e);
+				logger.warn("IOException", e);
 			}
 		}
 		String APPLICATION_TITLE = "SIGLA - Sistema Informativo per la Gestione delle Linee di Attività";

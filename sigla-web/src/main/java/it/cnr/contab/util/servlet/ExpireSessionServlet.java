@@ -5,7 +5,6 @@ import it.cnr.contab.utenze00.bulk.SessionTraceBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
-import it.cnr.jada.util.Log;
 import it.cnr.jada.util.ejb.HttpEJBCleaner;
 import it.cnr.jada.util.jsp.JSPUtils;
 
@@ -25,11 +24,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ExpireSessionServlet extends HttpServlet implements Serializable,HttpSessionListener {
 	@SuppressWarnings("unchecked")
 	public  final static Hashtable<String,HttpSession> sessionObjects = new Hashtable();
-	private static final Logger log = Log.getInstance(ExpireSessionServlet.class);
+	private transient final static Logger log = LoggerFactory.getLogger(ExpireSessionServlet.class);
 	
 	public ExpireSessionServlet() {
 		super();
