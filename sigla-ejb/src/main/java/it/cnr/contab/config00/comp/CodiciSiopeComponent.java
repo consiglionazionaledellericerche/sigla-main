@@ -10,11 +10,11 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CodiciSiopeComponent extends CRUDComponent {
-	private transient static final Log logger = LogFactory.getLog(CodiciSiopeComponent.class);
+	private transient static final Logger logger = LoggerFactory.getLogger(CodiciSiopeComponent.class);
 
 	@Override
 	public OggettoBulk inizializzaBulkPerInserimento(UserContext usercontext,

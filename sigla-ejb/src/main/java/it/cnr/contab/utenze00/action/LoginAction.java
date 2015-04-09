@@ -3,28 +3,27 @@ package it.cnr.contab.utenze00.action;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
-import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.EJBException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_enteComponentSession;
 import it.cnr.contab.utente00.nav.comp.GestioneLoginComponent;
-import it.cnr.contab.utente00.nav.comp.PasswordScadutaException;
 import it.cnr.contab.utente00.nav.comp.UtenteLdapNuovoException;
 import it.cnr.contab.utente00.nav.comp.UtenteMultiploException;
 import it.cnr.contab.utente00.nav.ejb.*;
 import it.cnr.contab.utenze00.bp.*;
 import it.cnr.contab.utenze00.bulk.*;
-import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.ejb.CRUDComponentSession;
-import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.util.Log;
 import it.cnr.jada.util.jsp.JSPUtils;
 /**
  * Insert the type's description here.
@@ -32,7 +31,7 @@ import it.cnr.jada.util.jsp.JSPUtils;
  * @author: Simonetta Costa
  */
 public class LoginAction extends it.cnr.jada.util.action.BulkAction {
-	private static final Log log = Log.getInstance(LoginAction.class);
+	private static final Logger log = LoggerFactory.getLogger(LoginAction.class);
 	public static final java.text.Format FORMATO_TIMESTAMP = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	
 	/**

@@ -24,11 +24,11 @@ import org.apache.chemistry.opencmis.client.api.ObjectType;
 import org.apache.chemistry.opencmis.client.api.Property;
 import org.apache.chemistry.opencmis.client.api.Session;
 import org.apache.chemistry.opencmis.commons.definitions.PropertyDefinition;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CMISBulkInfo<T extends Serializable> {
-	private transient static final Log logger = LogFactory.getLog(CMISBulkInfo.class);
+	private transient static final Logger logger = LoggerFactory.getLogger(CMISBulkInfo.class);
 	private Map<Class<?>, ObjectType> cacheObjType = new Hashtable<Class<?>, ObjectType>();
 	private Map<Class<?>, Set<String>> cacheObjAspect = new Hashtable<Class<?>, Set<String>>();
 	private Map<Class<?>, Set<PropertyDefinitionBulk<T>>> cacheObjPropertyDef = new Hashtable<Class<?>, Set<PropertyDefinitionBulk<T>>>();

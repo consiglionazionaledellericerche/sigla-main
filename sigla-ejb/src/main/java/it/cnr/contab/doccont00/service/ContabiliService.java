@@ -15,13 +15,13 @@ import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.opencmis.client.api.QueryResult;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.util.PDFMergerUtility;
 
 public class ContabiliService extends SiglaCMISService {
-	private transient static final Log logger = LogFactory.getLog(ContabiliService.class);
+	private transient static final Logger logger = LoggerFactory.getLogger(ContabiliService.class);
 	
 	public List<String> getNodeRefContabile(MandatoBulk mandato) throws ApplicationException{
 		return getNodeRefContabile(mandato.getEsercizio(), mandato.getCd_cds(), mandato.getPg_mandato());
