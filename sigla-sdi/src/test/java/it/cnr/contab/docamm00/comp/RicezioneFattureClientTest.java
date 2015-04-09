@@ -15,11 +15,11 @@ import javax.xml.namespace.QName;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
-import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RicezioneFattureClientTest {
-	private static final Logger LOGGER = Logger.getLogger(RicezioneFattureClientTest.class);
+	private transient final static Logger LOGGER = LoggerFactory.getLogger(RicezioneFattureClientTest.class);
 	//@Test
 	public void testFatturaSingolaConUnaLineaDiFattura() throws IOException {
 		BigInteger identificativoSdI = BigInteger.ONE;

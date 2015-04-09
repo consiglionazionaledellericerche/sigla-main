@@ -35,11 +35,11 @@ import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction{
-	private transient static final Log logger = LogFactory.getLog(IncarichiProceduraAction.class);
+	private transient static final Logger logger = LoggerFactory.getLogger(IncarichiProceduraAction.class);
 	public IncarichiProceduraAction() {
 		super();
 	}

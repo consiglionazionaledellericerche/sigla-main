@@ -10,14 +10,14 @@ import java.io.IOException;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
 
 public class CMISFileProceduraBando extends CMISFileProcedura implements CMISTypeName{
 	private static final long serialVersionUID = -1775673719677028944L;
-	private transient static final Log logger = LogFactory.getLog(CMISFileProceduraBando.class);
+	private transient static final Logger logger = LoggerFactory.getLogger(CMISFileProceduraBando.class);
 
 	public CMISFileProceduraBando(File file, String originalName, Incarichi_procedura_archivioBulk incaricoProceduraArchivio) throws IOException {
 		super(file, originalName, incaricoProceduraArchivio);

@@ -60,11 +60,11 @@ import java.util.TreeMap;
 import javax.servlet.ServletException;
 
 import org.apache.chemistry.opencmis.client.api.Document;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUDBP {
-	private transient static final Log logger = LogFactory.getLog(CRUDIncarichiProceduraBP.class);
+	private transient static final Logger logger = LoggerFactory.getLogger(CRUDIncarichiProceduraBP.class);
 	private final SimpleDetailCRUDController ripartizionePerAnno = new SimpleDetailCRUDController("ProceduraAnno",Incarichi_procedura_annoBulk.class,"incarichi_procedura_annoColl",this){
 		protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
 			Incarichi_procedura_annoBulk proceduraAnno = (Incarichi_procedura_annoBulk)oggettobulk;
