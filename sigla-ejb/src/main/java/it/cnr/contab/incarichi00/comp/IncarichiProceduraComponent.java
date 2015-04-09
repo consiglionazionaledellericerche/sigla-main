@@ -92,11 +92,11 @@ import org.apache.chemistry.opencmis.commons.data.Ace;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisBaseException;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisRuntimeException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class IncarichiProceduraComponent extends CRUDComponent {
-	private transient static final Log logger = LogFactory.getLog(IncarichiProceduraComponent.class);
+	private transient static final Logger logger = LoggerFactory.getLogger(IncarichiProceduraComponent.class);
 	private final static int INSERIMENTO = 1;
 	private final static int MODIFICA    = 2;
 	private final static int CANCELLAZIONE = 3;	

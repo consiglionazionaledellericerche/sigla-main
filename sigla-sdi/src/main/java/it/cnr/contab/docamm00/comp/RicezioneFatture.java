@@ -87,18 +87,19 @@ import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExists
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.bouncycastle.cms.CMSException;
 import org.bouncycastle.cms.CMSProcessable;
 import org.bouncycastle.cms.CMSSignedData;
 import org.jboss.wsf.spi.annotation.WebContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 @Stateless
 @WebService(endpointInterface="it.gov.fatturapa.RicezioneFatture", 
 			name="RicezioneFatture",targetNamespace="http://www.fatturapa.gov.it/sdi/ws/ricezione/v1.0")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @WebContext(contextRoot="/fatturesdi")
 public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.cnr.contab.docamm00.ejb.RicezioneFatturePA {
-	private static final Logger LOGGER = Logger.getLogger(RicezioneFatture.class);
+	private transient final static Logger LOGGER = LoggerFactory.getLogger(RicezioneFatture.class);
 	
 	@SuppressWarnings("unchecked")	
 	public RispostaRiceviFattureType riceviFatture(FileSdIConMetadatiType parametersIn) {

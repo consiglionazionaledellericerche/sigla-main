@@ -29,7 +29,7 @@ import javax.servlet.http.HttpSessionListener;
 public class ExpireSessionServlet extends HttpServlet implements Serializable,HttpSessionListener {
 	@SuppressWarnings("unchecked")
 	public  final static Hashtable<String,HttpSession> sessionObjects = new Hashtable();
-	private static final Log log = Log.getInstance(ExpireSessionServlet.class);
+	private static final Logger log = Log.getInstance(ExpireSessionServlet.class);
 	
 	public ExpireSessionServlet() {
 		super();
