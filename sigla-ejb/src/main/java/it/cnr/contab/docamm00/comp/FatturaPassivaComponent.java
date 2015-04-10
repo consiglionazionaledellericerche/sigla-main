@@ -7186,17 +7186,32 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 			throw new it.cnr.jada.comp.ApplicationException("Almeno uno tra Codice Fiscale e Partita IVA del fornitore deve coincidere con quelli inseriti per il Prestatore/Rappresentante fiscale/Intermediario nel documento elettronico.");		
 
 	//}
-
+	
     if (fatturaPassiva.getDocumentoEleTestata().getNumeroDocumento().compareTo(fatturaPassiva.getNr_fattura_fornitore())!=0)
     	throw new it.cnr.jada.comp.ApplicationException("Numero Fattura fornitore diverso da quello inserito nel documento elettronico: " + fatturaPassiva.getDocumentoEleTestata().getNumeroDocumento() + "!");
 	
     if (fatturaPassiva.getDocumentoEleTestata().getDataDocumento().compareTo(fatturaPassiva.getDt_fattura_fornitore())!=0)
     	throw new it.cnr.jada.comp.ApplicationException("Data Fattura fornitore diversa da quella inserita nel documento elettronico: " + fatturaPassiva.getDocumentoEleTestata().getDataDocumento() + "!");
 	
-	if (fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()== null ||
-		fatturaPassiva.getIm_totale_fattura() == null ||
-		(fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()).compareTo(fatturaPassiva.getIm_totale_fattura())!= 0)
-		throw new it.cnr.jada.comp.ApplicationException("Totale Fattura: "+  fatturaPassiva.getIm_totale_fattura() + " diverso da quello inserito nel documento elettronico: " + fatturaPassiva.getDocumentoEleTestata().getImportoDocumento() + "!");
+	if (fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()== null)
+		   throw new it.cnr.jada.comp.ApplicationException("Totale Documento elettronico non valorizzato!");
+	
+	if (fatturaPassiva.getIm_totale_fattura()== null)
+		   throw new it.cnr.jada.comp.ApplicationException("Totale Fattura non valorizzato!");
+
+	if (fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()!= null &&
+			fatturaPassiva.getIm_totale_fattura() != null &&
+			(fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()).compareTo(fatturaPassiva.getIm_totale_fattura())!= 0)
+	{   //se non è previsto arrotondamento restituisco l'errore	
+		if (fatturaPassiva.getDocumentoEleTestata().getArrotondamento()== null)
+			throw new it.cnr.jada.comp.ApplicationException("Totale Fattura: "+  fatturaPassiva.getIm_totale_fattura() + " diverso da quello inserito nel documento elettronico: " + fatturaPassiva.getDocumentoEleTestata().getImportoDocumento() + "!");
+		//controllo se c'è quadratura a meno di arrotondamento
+		else
+			if (fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()!= null &&
+			fatturaPassiva.getIm_totale_fattura() != null &&
+			(((fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().subtract(fatturaPassiva.getIm_totale_fattura())).abs()).compareTo((fatturaPassiva.getDocumentoEleTestata().getArrotondamento()).abs())) != 0)
+				throw new it.cnr.jada.comp.ApplicationException("Totale Fattura: "+  fatturaPassiva.getIm_totale_fattura() + " non coerente con quello inserito nel documento elettronico: " + fatturaPassiva.getDocumentoEleTestata().getImportoDocumento() + " anche considerando l'arrotondamento: " + fatturaPassiva.getDocumentoEleTestata().getArrotondamento() + "!");
+	}
 	
 	Hashtable<String, BigDecimal> mapNatura = new Hashtable<String, BigDecimal>(), mapIva = new Hashtable<String, BigDecimal>();
 	for(Iterator i=fatturaPassiva.getFattura_passiva_dettColl().iterator();i.hasNext();)
@@ -7237,18 +7252,40 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 	      else
 	    	  currentMap.put(key, rigaEle.getImposta());
 	}
-	
+
+	Hashtable<String, BigDecimal> mapNaturaEleArr = new Hashtable<String, BigDecimal>(), mapIvaEleArr = new Hashtable<String, BigDecimal>();
+	for(Iterator i=fatturaPassiva.getDocumentoEleTestata().getDocEleIVAColl().iterator();i.hasNext();)
+    {
+	      DocumentoEleIvaBulk rigaEle=(DocumentoEleIvaBulk)i.next();
+	      String key = null;
+	      Hashtable<String, BigDecimal> currentMap = null;
+	      if (rigaEle.getNatura()!=null) {
+	    	  key = rigaEle.getNatura();
+	    	  currentMap = mapNaturaEleArr;
+	      } else {
+	    	  key = rigaEle.getAliquotaIva().toString();
+	    	  currentMap = mapIvaEleArr;
+	      }
+
+	      if (currentMap.get(key)!=null)
+	    	  currentMap.put(key, currentMap.get(key).add(Utility.nvl(rigaEle.getArrotondamento())));
+	      else
+	    	  currentMap.put(key, Utility.nvl(rigaEle.getArrotondamento()));
+	}
+
 	StringBuffer codiciNaturaSqu = new StringBuffer();
 	for(Iterator i=mapNatura.keySet().iterator();i.hasNext();) {
 		String key = (String)i.next();
 		BigDecimal value = mapNatura.get(key);
 		BigDecimal valueEle = mapNaturaEle.get(key);
-		if ((value!=null && valueEle!=null && value.compareTo(valueEle)!=0) ||
+		BigDecimal valueEleArr = mapNaturaEleArr.get(key);
+		if ((valueEleArr.compareTo(new BigDecimal(0))==0 && value!=null && valueEle!=null && value.compareTo(valueEle)!=0) ||
+			(valueEleArr.compareTo(new BigDecimal(0))!=0 && value!=null && valueEle!=null && ((value.subtract(valueEle)).abs()).compareTo(valueEleArr.abs())!=0) ||	
 			(value==null && valueEle!=null) || (value!=null && valueEle==null))
 			codiciNaturaSqu.append((codiciNaturaSqu.length()>0?",":"")+key);
 		mapNaturaEle.remove(key);
 	}
-
+	
 	for(Iterator i=mapNaturaEle.keySet().iterator();i.hasNext();)
 		codiciNaturaSqu.append((codiciNaturaSqu.length()>0?",":"")+(String)i.next());
 
@@ -7257,7 +7294,9 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 		String key = (String)i.next();
 		BigDecimal value = mapIva.get(key);
 		BigDecimal valueEle = mapIvaEle.get(key);
-		if ((value!=null && valueEle!=null && value.compareTo(valueEle)!=0) ||
+		BigDecimal valueEleArr = mapIvaEleArr.get(key);
+		if ((valueEleArr.compareTo(new BigDecimal(0))==0 && value!=null && valueEle!=null && value.compareTo(valueEle)!=0) ||
+			(valueEleArr.compareTo(new BigDecimal(0))!=0 && value!=null && valueEle!=null && ((value.subtract(valueEle)).abs()).compareTo(valueEleArr.abs())!=0) ||		
 			(value==null && valueEle!=null) || (value!=null && valueEle==null))
 			codiciIvaSqu.append((codiciIvaSqu.length()>0?",":"")+key);
 		mapIvaEle.remove(key);
