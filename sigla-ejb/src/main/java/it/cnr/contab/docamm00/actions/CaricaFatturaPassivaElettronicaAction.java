@@ -1,12 +1,15 @@
 package it.cnr.contab.docamm00.actions;
 
 
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.docamm00.bp.CaricaFatturaElettronicaBP;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.ejb.RicezioneFatturePA;
 import it.cnr.contab.docamm00.fatturapa.bulk.FileSdIConMetadatiTypeBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.TipoIntegrazioneSDI;
 import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
@@ -154,4 +157,46 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 		}
 		return actioncontext.findDefaultForward();
 	}	
+	@SuppressWarnings("unchecked")
+	public Forward doAllineaNotifiche(ActionContext actioncontext) throws java.rmi.RemoteException {
+		TipoIntegrazioneSDI tipoIntegrazioneSDI = TipoIntegrazioneSDI.PEC;
+		
+		CaricaFatturaElettronicaBP caricaPassivaElettronicaBP = (CaricaFatturaElettronicaBP) actioncontext.getBusinessProcess();
+    	FatturazioneElettronicaClient client = SpringUtil.getBean("fatturazioneElettronicaClient", 
+    			FatturazioneElettronicaClient.class);
+		UploadedFile fileFattureRicevute = ((it.cnr.jada.action.HttpActionContext)actioncontext).getMultipartParameter("main.fileFattureRicevute");
+		if (fileFattureRicevute.getFile() == null){
+			caricaPassivaElettronicaBP.setMessage("Valorizzare il file!");
+			return actioncontext.findDefaultForward();
+		}	
+		try {
+			String integrazioneSDI = Utility.createConfigurazioneCnrComponentSession().
+					getVal01(actioncontext.getUserContext(), null, null, 
+							Configurazione_cnrBulk.PK_INTEGRAZIONE_SDI, Configurazione_cnrBulk.SK_INTEGRAZIONE_SDI);
+				if (integrazioneSDI != null)
+					tipoIntegrazioneSDI = TipoIntegrazioneSDI.valueOf(integrazioneSDI); 
+
+			FatturaElettronicaPassivaComponentSession fatturaElettronicaPassivaComponentSession = 
+    				(FatturaElettronicaPassivaComponentSession) caricaPassivaElettronicaBP.createComponentSession("CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession");
+			JAXBElement<MonitoraggioFlussiType> fattureRicevuteType = ((JAXBElement<MonitoraggioFlussiType>) 
+					client.getUnmarshaller().unmarshal(new StreamSource(fileFattureRicevute.getFile())));
+			for (FattureRicevuteType.Flusso flusso : fattureRicevuteType.getValue().getFattureRicevute().getFlusso()) {
+				if (!flusso.getStato().equalsIgnoreCase("SF00")) {
+					fatturaElettronicaPassivaComponentSession.allineaEsitoCommitente(actioncontext.getUserContext(), 
+							Long.valueOf(flusso.getIdSdI()), flusso.getStato(), tipoIntegrazioneSDI);
+				}
+			}
+			caricaPassivaElettronicaBP.setMessage("Notifiche allineate correttamente.");
+		} catch (XmlMappingException e) {
+			return handleException(actioncontext, e);
+		} catch (IOException e) {
+			return handleException(actioncontext, e);
+		} catch (BusinessProcessException e) {
+			return handleException(actioncontext, e);
+		} catch (ComponentException e) {
+			return handleException(actioncontext, e);
+		}
+		return actioncontext.findDefaultForward();
+	}	
+	
 }

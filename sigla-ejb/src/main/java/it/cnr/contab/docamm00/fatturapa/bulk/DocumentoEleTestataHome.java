@@ -56,6 +56,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.apache.axis2.builder.unknowncontent.InputStreamDataSource;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExistsException;
 public class DocumentoEleTestataHome extends BulkHome {
 	private static final long serialVersionUID = 1L;
 	public DocumentoEleTestataHome(Connection conn) {
@@ -183,10 +184,13 @@ public class DocumentoEleTestataHome extends BulkHome {
 		metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
 				Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", aspect));
 		metadataProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
-		cmisService.storeSimpleDocument(byteArrayInputStream, "text/xml", 
-				CMISPath.construct(((Folder)cmisService.getNodeByNodeRef(
-						documentoEleTestata.getDocumentoEleTrasmissione().getCmisNodeRef())).getPath()), 
-				metadataProperties);
+		try {
+			cmisService.storeSimpleDocument(byteArrayInputStream, "text/xml", 
+					CMISPath.construct(((Folder)cmisService.getNodeByNodeRef(
+							documentoEleTestata.getDocumentoEleTrasmissione().getCmisNodeRef())).getPath()), 
+					metadataProperties);
+		} catch(CmisContentAlreadyExistsException _ex) {
+		}
 	}
 
 	public void notificaEsito(UserContext userContext, TipoIntegrazioneSDI tipoIntegrazioneSDI, DocumentoEleTestataBulk documentoEleTestataBulk) throws ApplicationException, IOException {
