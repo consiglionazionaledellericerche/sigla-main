@@ -27,6 +27,8 @@ public interface FatturaElettronicaPassivaComponentSession extends it.cnr.jada.e
 			throws ComponentException, RemoteException;
 	public abstract void notificaEsito(UserContext usercontext, TipoIntegrazioneSDI tipoIntegrazioneSDI, DocumentoEleTestataBulk documentoEleTestataBulk)
 			throws ComponentException, RemoteException;
+	public abstract void allineaEsitoCommitente(UserContext usercontext, Long identificativoSdI, String statoSDI, TipoIntegrazioneSDI tipoIntegrazioneSDI)
+			throws ComponentException, RemoteException;
 	public abstract boolean existsIdentificativo(UserContext usercontext, java.lang.Long identificativoSdI)
 			throws ComponentException, RemoteException;
 	public void scanPECProtocollo(UserContext usercontext, UnitaOrganizzativaPecBulk unitaOrganizzativaPecBulk) 

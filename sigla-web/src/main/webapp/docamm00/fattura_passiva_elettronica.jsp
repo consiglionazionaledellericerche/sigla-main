@@ -19,7 +19,7 @@
 	CRUDFatturaPassivaElettronicaBP bp = (CRUDFatturaPassivaElettronicaBP)BusinessProcess.getBusinessProcess(request); 
 	CNRUserInfo userInfo = (CNRUserInfo)HttpActionContext.getUserInfo(request);
 	DocumentoEleTestataBulk model = (DocumentoEleTestataBulk)bp.getModel();
-	String nomeFile = model != null?model.getNomeFile("NE"):"";
+	String nomeFile = model != null?model.getNomeFile("EC"):"";
 %>
 <title>FATTURA ELETTRONICA</title>
 <script language="JavaScript">

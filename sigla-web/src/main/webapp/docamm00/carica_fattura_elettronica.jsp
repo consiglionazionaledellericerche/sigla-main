@@ -27,6 +27,8 @@
 		<tr>
 			<td><%JSPUtils.button(out, "img/import24.gif", "Carica Fattura", "if (disableDblClick()) javascript:submitForm('doCaricaFattura')");%></td>
 			<td><%JSPUtils.button(out, "img/export24.gif", "Controlla Fatture Ricevute", "if (disableDblClick()) javascript:submitForm('doControllaFatture')");%></td>
+			<td><%JSPUtils.button(out, "img/export24.gif", "Allinea Notifiche di Esito", "if (disableDblClick()) javascript:submitForm('doAllineaNotifiche')");%></td>
+
 		</tr>				
 	</table>
 </div>
