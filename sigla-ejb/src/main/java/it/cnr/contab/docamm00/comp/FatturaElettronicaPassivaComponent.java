@@ -62,10 +62,13 @@ import java.util.Map;
 import javax.mail.internet.InternetAddress;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDComponent 
 	implements Cloneable,Serializable {
 	private static final long serialVersionUID = 1L;
+	private transient final static Logger logger = LoggerFactory.getLogger(FatturaPassivaElettronicaService.class);
 
 	public  FatturaElettronicaPassivaComponent(){
     }
@@ -441,4 +444,26 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 			throw handleException(e);
 		}
 	}
+
+	@SuppressWarnings("unchecked")
+	public void allineaEsitoCommitente(UserContext usercontext, Long identificativoSdI, String statoSDI, TipoIntegrazioneSDI tipoIntegrazioneSDI) throws ComponentException {
+		DocumentoEleTestataHome home = (DocumentoEleTestataHome) getHome(usercontext, DocumentoEleTestataBulk.class);
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause(FindClause.AND, "identificativoSdi", SQLBuilder.EQUALS, identificativoSdI);
+		try {
+			List<DocumentoEleTestataBulk> results = home.fetchAll(sql);
+			getHomeCache(usercontext).fetchAll(usercontext);
+			if (!results.isEmpty() && results.size() == 1) {
+				DocumentoEleTestataBulk documentoEleTestata = results.get(0);
+				if (!documentoEleTestata.getStatoDocumentoEle().equals(StatoDocumentoEleEnum.fromStatoSDI(statoSDI)) &&
+						(documentoEleTestata.isRegistrata() || documentoEleTestata.isRifiutata())){					
+					notificaEsito(usercontext, tipoIntegrazioneSDI, documentoEleTestata);
+					logger.info("Inviata notifica per identificativo:" + identificativoSdI + 
+							" STATO SIGLA:"+ documentoEleTestata.getStatoDocumentoEle() + " - STATO SDI:" + StatoDocumentoEleEnum.fromStatoSDI(statoSDI));
+				}
+			}			
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+	}	
 }
