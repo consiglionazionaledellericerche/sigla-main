@@ -126,6 +126,24 @@ public class FatturaElettronicaPassivaComponentSessionBean extends it.cnr.jada.e
             throw uncaughtError(usercontext, componentObj, error);
         }
     }		
+	public void allineaEsitoCommitente(UserContext usercontext, Long identificativoSdI, String statoSDI, TipoIntegrazioneSDI tipoIntegrazioneSDI) throws ComponentException, EJBException{
+        pre_component_invocation(usercontext, componentObj);
+        try{
+        	((FatturaElettronicaPassivaComponent)componentObj).allineaEsitoCommitente(usercontext, identificativoSdI, statoSDI, tipoIntegrazioneSDI);
+            component_invocation_succes(usercontext, componentObj);
+        }catch(NoRollbackException norollbackexception){
+            component_invocation_succes(usercontext, componentObj);
+            throw norollbackexception;
+        }catch(ComponentException componentexception){
+            component_invocation_failure(usercontext, componentObj);
+            throw componentexception;
+        }catch(RuntimeException runtimeexception){
+            throw uncaughtRuntimeException(usercontext, componentObj, runtimeexception);
+        }catch(Error error){
+            throw uncaughtError(usercontext, componentObj, error);
+        }
+    }		
+
 	public boolean existsIdentificativo(UserContext usercontext, java.lang.Long identificativoSdI) throws ComponentException, EJBException{
         pre_component_invocation(usercontext, componentObj);
         try{
