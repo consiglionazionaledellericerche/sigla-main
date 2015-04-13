@@ -155,7 +155,8 @@ public class DocumentoEleTestataHome extends BulkHome {
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
 		}	    	
-    	return null;
+		return new PasswordAuthentication("protocollo-ammcen@pec.cnr.it", 
+				"magnolia");	
 	}
 	public NotificaEsitoCommittenteType createNotificaEsitoCommittente(DocumentoEleTestataBulk documentoEleTestataBulk) {
     	it.gov.fatturapa.sdi.messaggi.v1.ObjectFactory objMessaggi = new it.gov.fatturapa.sdi.messaggi.v1.ObjectFactory();        	
