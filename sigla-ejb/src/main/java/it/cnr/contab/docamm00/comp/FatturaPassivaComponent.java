@@ -3340,7 +3340,10 @@ public TerzoBulk findCessionario(UserContext userContext, Fattura_passivaBulk fa
 			return null;
 		
 		Modalita_pagamentoHome mph = (Modalita_pagamentoHome)getHome(userContext, Modalita_pagamentoBulk.class);
-		Modalita_pagamentoBulk mp = (Modalita_pagamentoBulk)mph.find(new Modalita_pagamentoBulk(fattura.getModalita_pagamento().getCd_modalita_pag(), fattura.getCd_terzo())).get(0);
+		List<Modalita_pagamentoBulk> mps = mph.find(new Modalita_pagamentoBulk(fattura.getModalita_pagamento().getCd_modalita_pag(), fattura.getCd_terzo()));
+		if (mps.isEmpty())
+			throw new ApplicationException("Modalità di pagamento non trovata per il Terzo:" +fattura.getCd_terzo());
+		Modalita_pagamentoBulk mp = mps.get(0);
 		if (mp == null || fattura.getBanca()==null || fattura.getBanca().getCd_terzo_delegato() == null) return null;
 		TerzoHome th = (TerzoHome)getHome(userContext, TerzoBulk.class);
 		return (TerzoBulk)th.findByPrimaryKey(new TerzoBulk(fattura.getBanca().getCd_terzo_delegato() ));
