@@ -6,6 +6,11 @@
 	<version>2.0.0-SNAPSHOT</version>
 	<artifactId>sigla</artifactId>
 	<packaging>pom</packaging>
+	<parent>
+    	<artifactId>archetype</artifactId>
+    	<groupId>it.cnr.si</groupId>
+    	<version>0.2</version>
+  	</parent>	
 	<modules>
 		<module>sigla-ws-client</module>
 		<module>sigla-ejb</module>
@@ -16,7 +21,6 @@
 		<module>SIGLA</module>
 	</modules>
 	<properties>
-		<nexus.url>http://bandt.si.cnr.it:8280/nexus</nexus.url>
 		<java.version>1.5</java.version>
 		<opencmis.version>0.10.0</opencmis.version>
 		<spring.version>3.0.3.RELEASE</spring.version>
@@ -25,53 +29,6 @@
 		<sigla.build.number>${maven.build.timestamp}</sigla.build.number>		
 		<slf4j.version>1.4.3</slf4j.version>
 	</properties>
-	<repositories>
-		<repository>
-			<id>cnr</id>
-			<name>cnr public</name>
-			<url>${nexus.url}/content/groups/public</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>cnr-snapshots</id>
-			<name>cnr public snapshots</name>
-			<url>${nexus.url}/content/groups/public-snapshots</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>cnr</id>
-			<name>cnr public</name>
-			<url>${nexus.url}/content/groups/public</url>
-		</pluginRepository>
-	</pluginRepositories>
-	<distributionManagement>
-		<!-- Publish the versioned releases here -->
-		<repository>
-			<id>buildandtest</id>
-			<name>nexus bandt.si.cnr.it</name>
-			<url>${nexus.url}/content/repositories/releases</url>
-		</repository>
-
-		<!-- Publish the versioned releases here -->
-		<snapshotRepository>
-			<id>buildandtest</id>
-			<name>nexus bandt.si.cnr.it</name>
-			<url>${nexus.url}/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
 	<build>
 		<pluginManagement>
 			<plugins>
