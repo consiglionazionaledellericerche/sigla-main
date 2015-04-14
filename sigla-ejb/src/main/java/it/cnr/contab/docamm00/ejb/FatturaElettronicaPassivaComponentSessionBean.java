@@ -1,6 +1,4 @@
 package it.cnr.contab.docamm00.ejb;
-import java.math.BigInteger;
-import java.util.List;
 
 import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
 import it.cnr.contab.docamm00.comp.FatturaElettronicaPassivaComponent;
@@ -10,9 +8,11 @@ import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.TipoIntegrazioneSDI;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.NoRollbackException;
+import it.cnr.jada.persistency.PersistencyException;
+
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
@@ -162,6 +162,63 @@ public class FatturaElettronicaPassivaComponentSessionBean extends it.cnr.jada.e
             throw uncaughtError(usercontext, componentObj, error);
         }
     }
+	
+	public List<DocumentoEleTrasmissioneBulk> recuperoTrasmissione(UserContext usercontext, Long identificativoSdI) throws ComponentException, EJBException{
+        pre_component_invocation(usercontext, componentObj);
+        try{
+        	List<DocumentoEleTrasmissioneBulk> docs = ((FatturaElettronicaPassivaComponent)componentObj).recuperoTrasmissione(usercontext, identificativoSdI);
+            component_invocation_succes(usercontext, componentObj);
+            return docs;
+        }catch(NoRollbackException norollbackexception){
+            component_invocation_succes(usercontext, componentObj);
+            throw norollbackexception;
+        }catch(ComponentException componentexception){
+            component_invocation_failure(usercontext, componentObj);
+            throw componentexception;
+        }catch(RuntimeException runtimeexception){
+            throw uncaughtRuntimeException(usercontext, componentObj, runtimeexception);
+        }catch(Error error){
+            throw uncaughtError(usercontext, componentObj, error);
+        }
+	}
+
+	public List<DocumentoEleTestataBulk> recuperoDocumento(UserContext usercontext, Long identificativoSdI) 
+			throws ComponentException, EJBException{
+        pre_component_invocation(usercontext, componentObj);
+        try{
+        	List<DocumentoEleTestataBulk> docs = ((FatturaElettronicaPassivaComponent)componentObj).recuperoDocumento(usercontext, identificativoSdI);
+            component_invocation_succes(usercontext, componentObj);
+            return docs;
+        }catch(NoRollbackException norollbackexception){
+            component_invocation_succes(usercontext, componentObj);
+            throw norollbackexception;
+        }catch(ComponentException componentexception){
+            component_invocation_failure(usercontext, componentObj);
+            throw componentexception;
+        }catch(RuntimeException runtimeexception){
+            throw uncaughtRuntimeException(usercontext, componentObj, runtimeexception);
+        }catch(Error error){
+            throw uncaughtError(usercontext, componentObj, error);
+        }
+	}
+	public void aggiornaDecorrenzaTerminiSDI(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc) throws PersistencyException, ComponentException,java.rmi.RemoteException {
+        pre_component_invocation(userContext, componentObj);
+        try{
+        	((FatturaElettronicaPassivaComponent)componentObj).aggiornaDecorrenzaTerminiSDI(userContext, listaDoc);
+            component_invocation_succes(userContext, componentObj);
+        }catch(NoRollbackException norollbackexception){
+            component_invocation_succes(userContext, componentObj);
+            throw norollbackexception;
+        }catch(ComponentException componentexception){
+            component_invocation_failure(userContext, componentObj);
+            throw componentexception;
+        }catch(RuntimeException runtimeexception){
+            throw uncaughtRuntimeException(userContext, componentObj, runtimeexception);
+        }catch(Error error){
+            throw uncaughtError(userContext, componentObj, error);
+        }
+	}
+
 	public void scanPECProtocollo(UserContext usercontext, UnitaOrganizzativaPecBulk unitaOrganizzativaPecBulk) throws ComponentException, EJBException{
         pre_component_invocation(usercontext, componentObj);
         try{

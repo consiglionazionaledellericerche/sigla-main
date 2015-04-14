@@ -64,6 +64,11 @@ function doScaricaEsito() {
 				</td>
 			<% } %>	    
 		</tr>
+			<% 	if (!bp.isSearching() && model != null && model.isRicevutaDecorrenzaTermini()) {%>
+				<td>
+					<%bp.getController().writeFormInput(out,null,"ricevutaDecorrenza",true,"GroupLabel","style=\"background: #F5F5DC;background-color:transparent;border-style : none; width:300; cursor:default; font-size : 16px;\"");%>
+				</td>
+			<% } %> 
 		<% 	if (!bp.isSearching() && model != null && 
 				model.getStatoDocumento().equals(StatoDocumentoEleEnum.RIFIUTATO.name())) {%>
 		<tr>
