@@ -193,6 +193,9 @@ public class DocumentoEleTestataBase extends DocumentoEleTestataKey implements K
  
 //    STATO_DOCUMENTO VARCHAR(60)
 	private java.lang.String statoDocumento;
+	
+//  FL_DECORRENZA_TERMINI VARCHAR(1)
+	private java.lang.String flDecorrenzaTermini;
  
 //    MOTIVO_RIFIUTO VARCHAR(2000)
 	private java.lang.String motivoRifiuto;
@@ -1119,5 +1122,11 @@ public class DocumentoEleTestataBase extends DocumentoEleTestataKey implements K
 	 **/
 	public void setAnomalie(java.lang.String anomalie)  {
 		this.anomalie=anomalie;
+	}
+	public java.lang.String getFlDecorrenzaTermini() {
+		return flDecorrenzaTermini;
+	}
+	public void setFlDecorrenzaTermini(java.lang.String flDecorrenzaTermini) {
+		this.flDecorrenzaTermini = flDecorrenzaTermini;
 	}
 }

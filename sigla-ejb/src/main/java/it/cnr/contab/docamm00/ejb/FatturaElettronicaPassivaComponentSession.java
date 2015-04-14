@@ -7,10 +7,12 @@ import it.cnr.contab.docamm00.fatturapa.bulk.TipoIntegrazioneSDI;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 
 import java.rmi.RemoteException;
 import java.util.List;
 
+import javax.ejb.EJBException;
 import javax.ejb.Remote;
 @Remote
 public interface FatturaElettronicaPassivaComponentSession extends it.cnr.jada.ejb.CRUDComponentSession {
@@ -33,5 +35,11 @@ public interface FatturaElettronicaPassivaComponentSession extends it.cnr.jada.e
 			throws ComponentException, RemoteException;
 	public void scanPECProtocollo(UserContext usercontext, UnitaOrganizzativaPecBulk unitaOrganizzativaPecBulk) 
 			throws ComponentException, RemoteException;
+	public List<DocumentoEleTestataBulk> recuperoDocumento(UserContext usercontext, Long identificativoSdI) 
+			throws ComponentException, RemoteException;
+	public List<DocumentoEleTrasmissioneBulk> recuperoTrasmissione(UserContext usercontext, Long identificativoSdI) 
+			throws ComponentException, EJBException;
+	public void aggiornaDecorrenzaTerminiSDI(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc) 
+			throws PersistencyException, ComponentException,java.rmi.RemoteException;
 
 }

@@ -25,6 +25,7 @@ import it.gov.fatturapa.sdi.messaggi.v1.RicevutaConsegnaType;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -46,6 +47,7 @@ import javax.mail.URLName;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.MimeUtility;
 import javax.mail.search.AndTerm;
 import javax.mail.search.ComparisonTerm;
 import javax.mail.search.FromStringTerm;
@@ -315,12 +317,11 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 				logger.info("Fatture Elettroniche: Decorrenza Termini. Estratto Body Part.");
 				JAXBElement<NotificaDecorrenzaTerminiType> file = (JAXBElement<NotificaDecorrenzaTerminiType>)fatturazioneElettronicaClient.getUnmarshaller().unmarshal(new StreamSource(bodyPartXml.getInputStream()));
 				NotificaDecorrenzaTerminiType notifica = (NotificaDecorrenzaTerminiType) file.getValue();
-				if (bodyPartXml.getFileName().startsWith(docAmmFatturazioneElettronicaComponentSession.recuperoInizioNomeFile(userContext))){
-					trasmissioneFattureService.notificaFatturaAttivaDecorrenzaTermini(userContext, bodyPartXml.getFileName(), createDataHandler(bodyPartXml), notifica);
+				String fileName = extractFileName(bodyPartXml);
+				if (fileName.startsWith(docAmmFatturazioneElettronicaComponentSession.recuperoInizioNomeFile(userContext))){
+					trasmissioneFattureService.notificaFatturaAttivaDecorrenzaTermini(userContext, fileName, createDataHandler(bodyPartXml), notifica);
 				} else {
-					logger.warn("Fatture Elettroniche: Passive: Decorrenza termini ancora non gestita." + message.getSubject());
-					SendMail.sendErrorMail("Fatture Elettroniche: Passive: Decorrenza termini ancora non gestita.", message.getDescription());
-//					ricezioneFattureService.notificaDecorrenzaTermini(bodyPartXml.getFileName(), createDataHandler(bodyPartXml), notifica);
+					ricezioneFattureService.notificaDecorrenzaTermini(fileName, createDataHandler(bodyPartXml), notifica);
 				}
 			}
 		} catch (Exception e) {
@@ -396,7 +397,9 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			List<BodyPart> bodyParts = estraiBodyPart(message.getContent());
 			BodyPart bodyPartXml = null;
 			for (BodyPart bodyPart : bodyParts) {
-				if (bodyPart.getFileName().endsWith("xml")){
+				String fileName = extractFileName(bodyPart);
+				
+				if (fileName.toLowerCase().endsWith("xml")){
 					return bodyPart;
 				}
 			}
@@ -404,6 +407,15 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		} catch (Exception e) {
 			throw new ComponentException(e);
 		}
+	}
+
+	private String extractFileName(BodyPart bodyPart) throws MessagingException,
+			UnsupportedEncodingException {
+		String fileName = bodyPart.getFileName();
+		if (fileName != null && fileName.startsWith("=?") && fileName.endsWith("?=")){
+			fileName = MimeUtility.decodeText(fileName); 
+		}
+		return fileName;
 	}
 
 	public void notificaEsito(String userName, String password, DocumentoEleTestataBulk bulk, JAXBElement<NotificaEsitoCommittenteType> notificaEsitoCommittenteType) throws EmailException, XmlMappingException, IOException {

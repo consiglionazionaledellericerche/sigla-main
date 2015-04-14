@@ -555,6 +555,14 @@
 		enabledOnEdit="false"
 		label="Codice riconciliazione incassi" />
 	<fieldProperty
+		name="flDecorrenzaTermini"
+		property="flDecorrenzaTermini"
+		maxLength="2"
+		inputSize="2"
+		inputType="ROTEXT"
+		keysProperty="decorrenzaTerminiKeys"
+		label="Decorrenza Termini" />
+	<fieldProperty
 		name="statoDocumento"
 		property="statoDocumento"
 		inputType="SELECT"
@@ -574,7 +582,14 @@
 		enabledOnEdit="false"
 		enabledOnSearch="true"
 		label="Stato Documento" />
-			
+	<fieldProperty
+		name="ricevutaDecorrenza"
+		property="ricevutaDecorrenza"
+		inputType="ROTEXT"
+		maxLength="100"
+		enabledOnEdit="false"
+		enabledOnSearch="false" />
+
 	<fieldProperty
 		name="motivoRifiuto"
 		property="motivoRifiuto"
@@ -950,6 +965,8 @@
 	<formFieldProperty
 		name="statoDocumentoVisual" />
 	<formFieldProperty
+		name="ricevutaDecorrenza" />
+	<formFieldProperty
 		name="motivoRifiuto" />
 	<formFieldProperty
 		name="anomalie" />
@@ -1161,4 +1178,6 @@
 		label="Data ricezione da SDI"/>
 	<columnFieldProperty
 		name="statoDocumento" />
+	<columnFieldProperty
+		name="flDecorrenzaTermini" />
 </bulkInfo>

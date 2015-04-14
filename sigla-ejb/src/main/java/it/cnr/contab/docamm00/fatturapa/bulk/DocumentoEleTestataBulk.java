@@ -3,10 +3,7 @@
  * Date 25/02/2015
  */
 package it.cnr.contab.docamm00.fatturapa.bulk;
-import java.util.Iterator;
-import java.util.List;
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
-import it.cnr.contab.compensi00.docs.bulk.Minicarriera_rataBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
@@ -24,6 +21,9 @@ import it.cnr.jada.util.OrderedHashtable;
 import it.gov.fatturapa.sdi.fatturapa.v1.ModalitaPagamentoType;
 import it.gov.fatturapa.sdi.fatturapa.v1.TipoCassaType;
 import it.gov.fatturapa.sdi.fatturapa.v1.TipoDocumentoType;
+
+import java.util.Dictionary;
+import java.util.Iterator;
 public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
 	public static final String STATO_DOCUMENTO_TUTTI = "TUTTI";
 	/**
@@ -31,12 +31,18 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
 	 */
 	private static final long serialVersionUID = 1L;
 	@SuppressWarnings("unchecked")
+	public static final java.util.Dictionary<String, String> tiDecorrenzaTerminiKeys = new OrderedHashtable();	
 	public static final java.util.Dictionary<String, String> tiStatoDocumentoKeys = new OrderedHashtable();	
 	public static final java.util.Dictionary<String, String> tiStatoDocumentoSelectKeys = new OrderedHashtable();	
 	public static final java.util.Dictionary<String, String> tiTipoDocumentoKeys = new OrderedHashtable();
 	public static final java.util.Dictionary<String, String> tiModalitaPagamentoKeys = new OrderedHashtable();
+	private static final String RICEVUTA_DECORRENZA = "RICEVUTA DECORRENZA TERMINI";
+	private String ricevutaDecorrenza;
 
 	static {
+		tiDecorrenzaTerminiKeys.put("S","Sì");
+		tiDecorrenzaTerminiKeys.put("N","No");
+
 		tiStatoDocumentoKeys.put(StatoDocumentoEleEnum.AGGIORNATO.name(),StatoDocumentoEleEnum.AGGIORNATO.name());
 		tiStatoDocumentoKeys.put(StatoDocumentoEleEnum.COMPLETO.name(),StatoDocumentoEleEnum.COMPLETO.name());
 		tiStatoDocumentoKeys.put(StatoDocumentoEleEnum.REGISTRATO.name(),StatoDocumentoEleEnum.REGISTRATO.name());
@@ -111,6 +117,10 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
 	}
 	
 	
+	public Dictionary getDecorrenzaTerminiKeys() {
+		return tiDecorrenzaTerminiKeys;
+	}
+
 	public void setDocEleLineaColl(BulkList<DocumentoEleLineaBulk> docEleLineaColl) {
 		this.docEleLineaColl = docEleLineaColl;
 	}
@@ -489,5 +499,17 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
 			}
 		}
 		return quotaEsente;
+	}
+	public Boolean isRicevutaDecorrenzaTermini(){
+		if (getFlDecorrenzaTermini() != null && getFlDecorrenzaTermini().equals("S")){
+			return true;
+		}
+		return false;
+	}
+	public String getRicevutaDecorrenza() {
+		return RICEVUTA_DECORRENZA;
+	}
+	public void setRicevutaDecorrenza(String ricevutaDecorrenza) {
+//		this.ricevutaDecorrenza = ricevutaDecorrenza;
 	}
 }
