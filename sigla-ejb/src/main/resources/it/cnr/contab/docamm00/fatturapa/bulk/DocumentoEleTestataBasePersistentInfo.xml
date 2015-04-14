@@ -392,6 +392,12 @@
 			columnSize="60"
 			nullable="true" />
 		<columnMapping
+			columnName="FL_DECORRENZA_TERMINI"
+			propertyName="flDecorrenzaTermini"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
 			columnName="MOTIVO_RIFIUTO"
 			propertyName="motivoRifiuto"
 			sqlTypeName="VARCHAR"
@@ -560,6 +566,8 @@
 		name="codicePagamento" />
 	<persistentProperty
 		name="statoDocumento" />
+	<persistentProperty
+		name="flDecorrenzaTermini" />
 	<persistentProperty
 		name="motivoRifiuto" />
 	<persistentProperty

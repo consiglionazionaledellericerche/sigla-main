@@ -504,21 +504,6 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 				fatturaBodyType.setDatiGenerali(datiGenerali);
 
-//				List<DatiRiepilogoType> listaRiepilogoType = new ArrayList<DatiRiepilogoType>();
-//				for (Iterator<Consuntivo_rigaVBulk> i= fattura.getFattura_attiva_consuntivoColl().iterator(); i.hasNext();) {
-//					Consuntivo_rigaVBulk riepilogo= (Consuntivo_rigaVBulk) i.next();
-//					DatiRiepilogoType datiRiepilogo = factory.createDatiRiepilogoType();
-//					datiRiepilogo.setAliquotaIVA(riepilogo.getVoce_iva().getPercentuale());
-//					datiRiepilogo.setEsigibilitaIVA(fattura.getFl_liquidazione_differita().equals("Y") ? EsigibilitaIVAType.D :  EsigibilitaIVAType.I);
-//					datiRiepilogo.setImponibileImporto(riepilogo.getTotale_imponibile());
-//					datiRiepilogo.setImposta(riepilogo.getTotale_iva());
-//					datiRiepilogo.setNatura(impostaDatiNatura(riepilogo.getVoce_iva().getNaturaOperNonImpSdi()));
-//					datiRiepilogo.setRiferimentoNormativo(riepilogo.getVoce_iva().getRifNormOperNonImpSdi());
-//					listaRiepilogoType.add(datiRiepilogo);
-//				}
-//				datiBeniServizi.setDatiRiepilogo(listaRiepilogoType);
-
-
 				List<DatiRiepilogoType> listaRiepilogoType = new ArrayList<DatiRiepilogoType>();
 				for (Iterator<RiepilogoPerAliquotaIVA> i= listaRiepilogo.iterator(); i.hasNext();) {
 					RiepilogoPerAliquotaIVA riepilogo= (RiepilogoPerAliquotaIVA) i.next();
