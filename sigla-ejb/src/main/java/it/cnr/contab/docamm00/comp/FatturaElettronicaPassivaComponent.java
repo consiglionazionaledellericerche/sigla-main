@@ -273,7 +273,6 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
         				documentoEleIvaBulk.setAnomalie(StringUtils.join(anomalieIVA.toArray()," - "));
             		documentoEleIvaBulk.setToBeUpdated();        			
 				}
-            	cambiaStatoCompletato(usercontext, docTestata);
 			}
         	documentoEleTrasmissioneBulk.setToBeUpdated();
         	modificaConBulk(usercontext, documentoEleTrasmissioneBulk);
