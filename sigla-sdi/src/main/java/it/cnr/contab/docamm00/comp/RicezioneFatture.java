@@ -3,6 +3,7 @@ package it.cnr.contab.docamm00.comp;
 import it.cnr.contab.cmis.CMISAspect;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
+import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.cmis.CMISFolderFatturaPassiva;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
@@ -49,6 +50,7 @@ import it.gov.fatturapa.sdi.fatturapa.v1.IdFiscaleType;
 import it.gov.fatturapa.sdi.fatturapa.v1.RappresentanteFiscaleType;
 import it.gov.fatturapa.sdi.fatturapa.v1.ScontoMaggiorazioneType;
 import it.gov.fatturapa.sdi.fatturapa.v1.TerzoIntermediarioSoggettoEmittenteType;
+import it.gov.fatturapa.sdi.messaggi.v1.NotificaDecorrenzaTerminiType;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -166,6 +168,21 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		}
 	}
 		
+	private void saveNotifica(DataHandler data, String nomeFile, String nodeRef, CMISDocAmmAspect aspect) throws ComponentException {
+		SiglaCMISService cmisService = SpringUtil.getBean("cmisService", SiglaCMISService.class);
+		Map<String, Object> metadataProperties = new HashMap<String, Object>();
+		metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
+		metadataProperties.put(PropertyIds.NAME, nomeFile);
+		metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
+				Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", aspect.value()));
+		metadataProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
+		try{
+			cmisService.storeSimpleDocument(data.getInputStream(), data.getContentType(), nodeRef, metadataProperties);
+		} catch(IOException e){
+			throw new ComponentException(e);
+		}
+	}
+
 	private CMISPath saveFattura(boolean isp7m, String name, InputStream stream, String contentTypeFile,
 			String nameMinusP7m, InputStream streamMinusP7m, String contentTypeFileMinusP7m,			
 			String nomeFileMedatati, InputStream streamMetadati,  String contentTypeMetadata, 
@@ -475,6 +492,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				}
 			}
 			docTestata.setStatoDocumento(StatoDocumentoEleEnum.INIZIALE.name());
+			docTestata.setFlDecorrenzaTermini("N");
 			docTestata.setToBeCreated();
 			docTrasmissione.addToDocEleTestataColl(docTestata);
 			if (fatturaElettronicaBody.getDatiBeniServizi() != null) {
@@ -870,6 +888,48 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			if (_ex.getFault().getAttribute("cause").equalsIgnoreCase(CmisContentAlreadyExistsException.class.getName()))
 				throw new ApplicationException("Fattura già presente!");
 			throw _ex;
+		}
+	}
+	
+	public void notificaDecorrenzaTermini(String nomeFile, DataHandler data, NotificaDecorrenzaTerminiType notifica) throws ComponentException {
+		FatturaElettronicaPassivaComponentSession component = (FatturaElettronicaPassivaComponentSession) EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession");
+    	UserContext userContext = new WSUserContext("SDI",null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
+		try {
+			LOGGER.info("Fatture Elettroniche: Passive: Decorrenza Termini. MessageId:"+notifica.getMessageId());
+			Long identificativoSdi = notifica.getIdentificativoSdI().longValue();
+			List<DocumentoEleTestataBulk> docs = component.recuperoDocumento(userContext, identificativoSdi);
+			if (docs != null && !docs.isEmpty()){
+				Boolean docsDaAggiornare = false;
+				for (DocumentoEleTestataBulk doc : docs) {
+					if (!StringUtils.isEmpty(doc.getFlDecorrenzaTermini()) && doc.getFlDecorrenzaTermini().equals("S")){
+						LOGGER.info("Fatture Elettroniche: Passive: Decorrenza termini. Fattura già elaborata ");
+					} else {
+						docsDaAggiornare = true;
+						List<DocumentoEleTrasmissioneBulk> trasms = component.recuperoTrasmissione(userContext, identificativoSdi);
+						for (DocumentoEleTrasmissioneBulk trasm : trasms) {
+							saveNotifica(data, nomeFile, trasm.getCmisNodeRef(), CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_DECORRENZA_TERMINI);
+							break;
+						}
+						break;
+					}
+				}
+				if (docsDaAggiornare){
+					try{
+						component.aggiornaDecorrenzaTerminiSDI(userContext, docs);
+						LOGGER.info("Fatture Elettroniche: Passive: aggiornamento decorrenza termini documento con id SDI "+identificativoSdi);
+					} catch (Exception ex) {
+						LOGGER.error("Fatture Elettroniche: Passive: MessageId:"+notifica.getMessageId()+". Errore nell'elaborazione della decorrenza termini del documento con id SDI "+identificativoSdi + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
+						java.io.StringWriter sw = new java.io.StringWriter();
+						ex.printStackTrace(new java.io.PrintWriter(sw));
+						SendMail.sendErrorMail("Fatture Elettroniche: Passive: Decorrenza Termini. Id SDI "+identificativoSdi, sw.toString());
+					}
+				}
+			} else {
+				LOGGER.warn("Fatture Elettroniche: Passive: Per l'identificativo SDI indicato nel file dell'e-mail non corrisponde nessun documento." + identificativoSdi);
+				SendMail.sendErrorMail("Fatture Elettroniche: Passive: Per l'identificativo SDI del file inviato indicato nel file dell'e-mail non corrisponde nessuna fattura", "Decorrenza Termini. Id SDI "+identificativoSdi);
+			}
+		} catch (Exception e) {
+			throw new ComponentException(e);
 		}
 	}
 }

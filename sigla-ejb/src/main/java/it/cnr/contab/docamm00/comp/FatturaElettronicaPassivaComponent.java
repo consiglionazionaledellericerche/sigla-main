@@ -12,9 +12,11 @@ import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
 import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaHome;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleDdtBulk;
@@ -435,13 +437,36 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 	}
 
 	public boolean existsIdentificativo(UserContext usercontext, Long identificativoSdI) throws ComponentException {
+		return !recuperoTrasmissione(usercontext, identificativoSdI).isEmpty();
+	}
+
+	public List<DocumentoEleTrasmissioneBulk> recuperoTrasmissione(UserContext usercontext, Long identificativoSdI) throws ComponentException {
 		DocumentoEleTrasmissioneHome home = (DocumentoEleTrasmissioneHome) getHome(usercontext, DocumentoEleTrasmissioneBulk.class);
 		SQLBuilder sql = home.createSQLBuilder();
 		sql.addClause(FindClause.AND, "identificativoSdi", SQLBuilder.EQUALS, identificativoSdI);
 		try {
-			return !home.fetchAll(sql).isEmpty();
+			return home.fetchAll(sql);
 		} catch (PersistencyException e) {
 			throw handleException(e);
+		}
+	}
+
+	public List<DocumentoEleTestataBulk> recuperoDocumento(UserContext usercontext, Long identificativoSdI) throws ComponentException {
+		DocumentoEleTestataHome home = (DocumentoEleTestataHome) getHome(usercontext, DocumentoEleTestataBulk.class);
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause(FindClause.AND, "identificativoSdi", SQLBuilder.EQUALS, identificativoSdI);
+		try {
+			return home.fetchAll(sql);
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+	}
+
+	public void aggiornaDecorrenzaTerminiSDI(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc) throws PersistencyException, ComponentException,java.rmi.RemoteException {
+		for (DocumentoEleTestataBulk doc : listaDoc) {
+			doc.setFlDecorrenzaTermini("S");
+			doc.setToBeUpdated();
+			updateBulk(userContext, doc);
 		}
 	}
 

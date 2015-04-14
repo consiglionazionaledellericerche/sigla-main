@@ -311,6 +311,17 @@ public class SiglaCMISService {
 	
 	public Document storeSimpleDocument(InputStream inputStream, String contentType, CMISPath cmisPath, Map<String, Object> metadataProperties) throws ApplicationException {
 		CmisObject parentNode = getNodeByPath(cmisPath);
+		return storeSimpleDocument(inputStream, contentType, metadataProperties, parentNode);		
+	}
+	
+	public Document storeSimpleDocument(InputStream inputStream, String contentType, String nodeRef, Map<String, Object> metadataProperties) throws ApplicationException {
+		CmisObject parentNode = getNodeByNodeRef(nodeRef);
+		return storeSimpleDocument(inputStream, contentType, metadataProperties, parentNode);		
+	}
+
+	public Document storeSimpleDocument(InputStream inputStream,
+			String contentType, Map<String, Object> metadataProperties,
+			CmisObject parentNode) throws ApplicationException {
 		ContentStream contentStream = new ContentStreamImpl(
 				String.valueOf(metadataProperties.get(PropertyIds.NAME)),
 				BigInteger.ZERO,
@@ -318,7 +329,7 @@ public class SiglaCMISService {
 				inputStream);			
 		Document node = (Document) getNodeByNodeRef(
 				getSiglaSession().createDocument(metadataProperties, parentNode, contentStream, VersioningState.MAJOR).getId());
-		return node;		
+		return node;
 	}
 	
 	public Document storeSimpleDocument(OggettoBulk oggettoBulk, InputStream inputStream, String contentType, String name, 
