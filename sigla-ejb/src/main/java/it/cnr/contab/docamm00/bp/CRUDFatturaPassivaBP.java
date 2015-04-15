@@ -9,17 +9,22 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_creditoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_debitoBulk;
 import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Voidable;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
 import it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
 import it.cnr.contab.service.SpringUtil;
@@ -39,6 +44,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.Iterator;
+import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
@@ -1526,5 +1532,50 @@ public void valorizzaInfoDocEle(ActionContext context, Fattura_passivaBulk fp) t
 				}
 			}
 		}
-	}	
+	}
+	
+	public String[][] getTabs() {
+		TreeMap<Integer, String[]> pages = new TreeMap<Integer, String[]>();
+		int i=0;
+
+		pages.put(i++, new String[]{ "tabFatturaPassiva","Testata","/docamm00/tab_fattura_passiva.jsp" });
+		pages.put(i++, new String[]{ "tabFornitore","Fornitore","/docamm00/tab_fornitore.jsp" });		
+		pages.put(i++, new String[]{ "tabFatturaPassivaDettaglio","Dettaglio","/docamm00/tab_fattura_passiva_dettaglio.jsp" }); 
+		pages.put(i++, new String[]{ "tabFatturaPassivaConsuntivo","Consuntivo","/docamm00/tab_fattura_passiva_consuntivo.jsp" });
+
+		if (this.getModel() instanceof Nota_di_creditoBulk) {
+			Nota_di_creditoBulk ndc = (Nota_di_creditoBulk)this.getModel();
+			java.util.Hashtable obbligazioni = ndc.getFattura_passiva_obbligazioniHash();
+			java.util.Hashtable accertamenti = ndc.getAccertamentiHash();
+			boolean hasObbligazioni = !(obbligazioni == null || obbligazioni.isEmpty());
+			boolean hasAccertamenti = !(accertamenti == null || accertamenti.isEmpty());
+			if (hasObbligazioni || !hasAccertamenti)
+				pages.put(i++, new String[]{ "tabFatturaPassivaObbligazioni","Storni","/docamm00/tab_fattura_passiva_obbligazioni.jsp" });
+			if (hasAccertamenti || !hasObbligazioni)
+				pages.put(i++, new String[]{ "tabFatturaPassivaAccertamenti","Accertamenti","/docamm00/tab_fattura_passiva_accertamenti.jsp" });
+		} else if (this.getModel() instanceof Nota_di_debitoBulk) {
+			pages.put(i++, new String[]{ "tabFatturaPassivaObbligazioni","Impegni","/docamm00/tab_fattura_passiva_obbligazioni.jsp" });
+		} else if (this.getModel() instanceof Fattura_passiva_IBulk) { 
+			pages.put(i++, new String[]{ "tabFatturaPassivaObbligazioni","Impegni","/docamm00/tab_fattura_passiva_obbligazioni.jsp" });
+			pages.put(i++, new String[]{ "tabLetteraPagamentoEstero","Documento 1210","/docamm00/tab_lettera_pagam_estero.jsp" });
+
+			Fattura_passiva_IBulk fatturaPassiva=(Fattura_passiva_IBulk)this.getModel();
+			if (!(fatturaPassiva.isCommerciale() && fatturaPassiva.getTi_bene_servizio() != null && 
+					Bene_servizioBulk.BENE.equalsIgnoreCase(fatturaPassiva.getTi_bene_servizio()) && 
+					fatturaPassiva.getFl_intra_ue() && fatturaPassiva.getFl_merce_extra_ue()!=null && fatturaPassiva.getFl_merce_extra_ue())) {
+    			pages.put(i++, new String[]{ "tabFatturaPassivaIntrastat","Intrastat","/docamm00/tab_fattura_passiva_intrastat.jsp" });
+    		}
+		} else {
+			pages.put(i++, new String[]{ "tabFatturaPassivaObbligazioni","Impegni","/docamm00/tab_fattura_passiva_obbligazioni.jsp" });
+			pages.put(i++, new String[]{ "tabLetteraPagamentoEstero","Documento 1210","/docamm00/tab_lettera_pagam_estero.jsp" });
+			pages.put(i++, new String[]{ "tabFatturaPassivaIntrastat","Intrastat","/docamm00/tab_fattura_passiva_intrastat.jsp" });
+		}
+		if (((Fattura_passivaBulk)this.getModel()).getDocumentoEleTestata() != null)
+			pages.put(i++, new String[]{ "tabEleAllegati","Allegati","/docamm00/tab_fatt_ele_allegati.jsp" });		
+
+		String[][] tabs = new String[i][3];
+		for (int j = 0; j < i; j++)
+			tabs[j]=new String[]{pages.get(j)[0],pages.get(j)[1],pages.get(j)[2]};
+		return tabs;
+	}
 }
