@@ -597,7 +597,7 @@
 		labelStyle="color:blue"
 		cols="60"		
 		rows="5"
-		maxLength="2000"
+		maxLength="250"
 		enabledOnEdit="false"
 		label="Motivo Rifiuto Documento" />
 	<fieldProperty
