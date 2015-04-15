@@ -271,7 +271,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 			CRUDFatturaPassivaBP nbp = null;
 			try {
 				nbp = (CRUDFatturaPassivaBP)context.createBusinessProcess("CRUDFatturaPassivaBP",
-								new Object[] {"Tr"}
+								new Object[] {"MTr"}
 							);
 				String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().
 						validaBPPerUtente(context.getUserContext(),((CNRUserInfo)context.getUserInfo()).getUtente(),
