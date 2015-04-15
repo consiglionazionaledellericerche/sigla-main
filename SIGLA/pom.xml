@@ -554,4 +554,9 @@
                <version>1.3.0</version>
        </dependency>
 </dependencies>
+
+  <scm>
+    <connection>scm:svn:svn+ssh://scm.cedrc.cnr.it/data/svnroot/svn-sigla-main/tags/sigla-2.0.0/sigla-ear</connection>
+    <developerConnection>scm:svn:svn+ssh://scm.cedrc.cnr.it/data/svnroot/svn-sigla-main/tags/sigla-2.0.0/sigla-ear</developerConnection>
+  </scm>
 </project>
