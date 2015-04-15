@@ -158,6 +158,7 @@ import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.SQLBroker;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.gov.fatturapa.sdi.fatturapa.v1.SoggettoEmittenteType;
@@ -7192,8 +7193,8 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 	
     if (fatturaPassiva.getDocumentoEleTestata().getNumeroDocumento().compareTo(fatturaPassiva.getNr_fattura_fornitore())!=0)
     	throw new it.cnr.jada.comp.ApplicationException("Numero Fattura fornitore diverso da quello inserito nel documento elettronico: " + fatturaPassiva.getDocumentoEleTestata().getNumeroDocumento() + "!");
-	
-    if (fatturaPassiva.getDocumentoEleTestata().getDataDocumento().compareTo(fatturaPassiva.getDt_fattura_fornitore())!=0)
+
+    if (DateUtils.truncate(fatturaPassiva.getDocumentoEleTestata().getDataDocumento()).compareTo(DateUtils.truncate(fatturaPassiva.getDt_fattura_fornitore()))!=0)
     	throw new it.cnr.jada.comp.ApplicationException("Data Fattura fornitore diversa da quella inserita nel documento elettronico: " + fatturaPassiva.getDocumentoEleTestata().getDataDocumento() + "!");
 	
 	if (fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()== null)
