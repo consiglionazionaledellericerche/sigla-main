@@ -87,7 +87,7 @@
 		<dependency>
 			<groupId>it.cnr.commons</groupId>
 			<artifactId>firmadigitale</artifactId>
-			<version>0.2</version>
+			<version>0.3</version>
 		</dependency>		
 		<dependency>
 			<groupId>it.cnr</groupId>
