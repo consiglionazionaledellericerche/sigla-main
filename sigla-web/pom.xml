@@ -122,4 +122,9 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+
+  <scm>
+    <connection>scm:svn:svn+ssh://scm.cedrc.cnr.it/data/svnroot/svn-sigla-main/tags/sigla-2.0.0/sigla-web</connection>
+    <developerConnection>scm:svn:svn+ssh://scm.cedrc.cnr.it/data/svnroot/svn-sigla-main/tags/sigla-2.0.0/sigla-web</developerConnection>
+  </scm>
 </project>
