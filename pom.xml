@@ -58,9 +58,8 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
   <scm>
-    <connection>scm:svn:svn+ssh://svnselezioni.si.cnr.it/DATA/svnroot/svn-documentale/tags/sigla-2.0.0</connection>
-    <developerConnection>scm:svn:svn+ssh://svnselezioni.si.cnr.it/DATA/svnroot/svn-documentale/tags/sigla-2.0.0</developerConnection>
+    <connection>scm:svn:svn+ssh://scm.cedrc.cnr.it/data/svnroot/svn-sigla-main/trunk</connection>
+    <developerConnection>scm:svn:svn+ssh://scm.cedrc.cnr.it/data/svnroot/svn-sigla-main/trunk</developerConnection>
   </scm>
 </project>
