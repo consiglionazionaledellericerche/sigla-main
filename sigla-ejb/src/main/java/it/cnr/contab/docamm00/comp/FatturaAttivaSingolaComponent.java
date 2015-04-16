@@ -175,6 +175,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -2571,7 +2572,6 @@ private void completaDatiPerFatturazioneElettronica(UserContext userContext,
 			impostaDatiPerFatturazioneElettronica(userContext, fattura, fattura.getCliente());
 			if (fattura.isDocumentoFatturazioneElettronica()){
 		        fattura.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_ALLA_FIRMA);
-		        controlloModalitaPagamentoFatturazioneElettronica(fattura);
 			}
 		}
 	}
@@ -4301,8 +4301,6 @@ public OggettoBulk modificaConBulk(
 		throw handleException(bulk, e);
 	}
 
-	controlloModalitaPagamentoFatturazioneElettronica(fattura);
-
 // Salvo temporaneamente l'hash map dei saldi
     PrimaryKeyHashMap aTempDiffSaldi=new PrimaryKeyHashMap();
     if (fattura.getDefferredSaldi() != null)
@@ -4414,48 +4412,7 @@ public OggettoBulk modificaConBulk(
 
 	return fattura;
 }
-private void controlloModalitaPagamentoFatturazioneElettronica(
-		Fattura_attivaBulk fattura) throws ApplicationException {
-	if (fattura.isDocumentoFatturazioneElettronica()){
-		if (fattura.getModalita_pagamento_uo() == null || fattura.getModalita_pagamento_uo().getTi_pagamento() == null || !fattura.getModalita_pagamento_uo().isModalitaBancaItalia()){
-            throw new it.cnr.jada.comp.ApplicationException("Non è possibile effettuare il salvataggio! Per i documenti relativi alle pubbliche amministrazioni è necessario selezionare la Mod. Pagamento Banca d'Italia.");
-		}
-//		try {
-//		if (fatturaAttiva.getModalita_pagamento_uo() == null || fatturaAttiva.getModalita_pagamento_uo().getTi_pagamento() == null || !fatturaAttiva.getModalita_pagamento_uo().isModalitaBancaItalia()){
-//			List<Rif_modalita_pagamentoBulk> listaModPag = (List<Rif_modalita_pagamentoBulk>)findModalita_uo(aUC,fatturaAttiva);
-//			if (listaModPag != null && !listaModPag.isEmpty()){
-//				for (Iterator i = listaModPag.iterator(); i.hasNext(); ) {
-//					Rif_modalita_pagamentoBulk modalitaPagamento = (Rif_modalita_pagamentoBulk)i.next();
-//					if (modalitaPagamento.isModalitaBancaItalia()){
-//						fatturaAttiva.setModalita_pagamento_uo(modalitaPagamento);
-//						java.util.List coll = findListabancheuo(aUC, fatturaAttiva);
-//						if (coll==null || coll.isEmpty())
-//							fatturaAttiva.setBanca_uo(null);
-//						else if (coll.size() == 1)
-//							fatturaAttiva.setBanca_uo((BancaBulk) new java.util.Vector(coll).firstElement());
-//						else {
-//							if (!Rif_modalita_pagamentoBulk.BANCARIO.equals(fatturaAttiva.getModalita_pagamento_uo().getTi_pagamento()))
-//								fatturaAttiva.setBanca_uo((BancaBulk) new java.util.Vector(coll).firstElement());
-//							else{
-//								fatturaAttiva = setContoEnteIn(aUC, fatturaAttiva, coll);
-//								//							        		bp.setContoEnte(true);
-//							}
-//						}
-//					} else {
-//						fatturaAttiva.setBanca_uo(null);
-//					}
-//				}
-//			}
-//		}
-//	} catch (PersistencyException e) {
-//		// TODO Auto-generated catch block
-//		throw new ComponentException(e);
-//	} catch (IntrospectionException e) {
-//		// TODO Auto-generated catch block
-//		throw new ComponentException(e);
-//	}
-	}
-}
+
 private Fattura_attiva_rigaBulk caricaRigaDB(UserContext userContext,Fattura_attiva_rigaBulk fatturaAttivaRiga) throws ComponentException, PersistencyException{
 	Fattura_attiva_rigaIHome home = (Fattura_attiva_rigaIHome)getTempHome(userContext, Fattura_attiva_rigaIBulk.class);
 	it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
@@ -7301,6 +7258,7 @@ public java.util.List findListaProvinciaWS(UserContext userContext,String query,
 		throw handleException(ex);
 	}
 }
+@Deprecated
 public Nota_di_credito_attivaBulk generaNotaCreditoAutomatica(UserContext userContext, Fattura_attiva_IBulk fa, Integer esercizio) throws ComponentException, RemoteException, PersistencyException {
 	return generaNotaCreditoAutomatica(userContext, fa, esercizio, true);
 }
@@ -7471,7 +7429,6 @@ public Fattura_attivaBulk aggiornaFatturaScartoSDI(UserContext userContext, Fatt
 	fattura.setNoteInvioSdi(noteSdi);
 	fattura.setToBeUpdated();
 	updateBulk(userContext, fattura);
-//	Fattura_attiva_IBulk fatturaAttiva = ricercaFatturaSDI(userContext, fattura.getCodiceInvioSdi());
 	if (fattura instanceof Fattura_attiva_IBulk){
 		Fattura_attiva_IBulk fatturaAttiva = (Fattura_attiva_IBulk)fattura;
 		generaNotaCreditoAutomatica(userContext, fatturaAttiva, fatturaAttiva.getEsercizio(), false);
@@ -7480,11 +7437,13 @@ public Fattura_attivaBulk aggiornaFatturaScartoSDI(UserContext userContext, Fatt
 }
 
 
+@Deprecated
 public Fattura_attiva_IBulk aggiornaDatiFatturaSDI(UserContext userContext, String codiceInvioSdi, String statoInvioSdi, String noteInvioSdi, XMLGregorianCalendar dataConsegnaSdi, boolean stornaFattura) throws PersistencyException, ComponentException,java.rmi.RemoteException {
 	Fattura_attiva_IBulk fatturaAttiva = ricercaFatturaSDI(userContext, codiceInvioSdi);
 	return aggiornaDatiFatturaSDI(userContext, fatturaAttiva, statoInvioSdi, noteInvioSdi, dataConsegnaSdi, stornaFattura);
 }
 
+@Deprecated
 public Fattura_attiva_IBulk aggiornaDatiFatturaSDI(UserContext userContext, Fattura_attiva_IBulk fatturaAttiva, String statoInvioSdi, String noteInvioSdi, XMLGregorianCalendar dataConsegnaSdi, boolean stornaFattura) throws PersistencyException, ComponentException,java.rmi.RemoteException {
 	fatturaAttiva.setStatoInvioSdi(statoInvioSdi);
 	fatturaAttiva.setNoteInvioSdi(noteInvioSdi==null||noteInvioSdi.length()<=500?noteInvioSdi:noteInvioSdi.substring(0,499));
@@ -7513,12 +7472,23 @@ public Boolean isAttivoSplitPayment(UserContext aUC, Date dataFattura) throws Co
 	return true;
 }
 
-public Fattura_attivaBulk aggiornaFatturaInvioSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, String codiceInvioSdi, XMLGregorianCalendar dataConsegnaSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException {
-	fatturaAttiva.setStatoInvioSdi(codiceInvioSdi);
-	fatturaAttiva.setDtConsegnaSdi(dataConsegnaSdi!=null?new Timestamp(dataConsegnaSdi.toGregorianCalendar().getTime().getTime()):null);
+
+public Fattura_attivaBulk aggiornaFatturaInvioSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva) throws PersistencyException, ComponentException,java.rmi.RemoteException {
+	if (fatturaAttiva.isNotaCreditoDaNonInviareASdi()){
+		fatturaAttiva.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_FIRMATA_NC);
+	} else {
+		fatturaAttiva.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_INVIATA_SDI);
+	}
 	fatturaAttiva.setToBeUpdated();
 	updateBulk(userContext, fatturaAttiva);
+	return fatturaAttiva;
+}
 
+public Fattura_attivaBulk aggiornaFatturaConsegnaSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, Date dataConsegnaSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException {
+	fatturaAttiva.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI);
+//	fatturaAttiva.setDtConsegnaSdi(dataConsegnaSdi!=null?new Timestamp(dataConsegnaSdi.getTime()):null);
+	fatturaAttiva.setToBeUpdated();
+	updateBulk(userContext, fatturaAttiva);
 	return fatturaAttiva;
 }
 
@@ -7556,7 +7526,6 @@ private java.util.List recuperoFattureElettroniche(UserContext userContext, Unit
 	sql.addSQLClause("AND","CODICE_UNIVOCO_UFFICIO_IPA",sql.ISNOTNULL,null);
 	sql.addSQLClause("AND","CD_UO_ORIGINE",sql.EQUALS,unita_organizzativaBulk.getCd_unita_organizzativa());
 	sql.addSQLClause("AND","STATO_INVIO_SDI",sql.EQUALS,statoInvioSdi);
-//	sql.addSQLClause("AND","STATO_COFI",sql.NOT_EQUALS,Fattura_attivaBulk.STATO_ANNULLATO);
 	
 	return home.fetchAll(sql);
 }
@@ -7584,4 +7553,14 @@ public Fattura_attivaBulk recuperoFatturaElettronicaDaNomeFile(UserContext userC
 		throw new ComponentException("Esistono più fatture aventi lo stesso nome file di invio a SDI! " + nomeFileInvioSdi);
 	}
 }
+
+public Fattura_attivaBulk aggiornaFatturaTrasmissioneNonRecapitataSDI(UserContext userContext, Fattura_attivaBulk fattura, String codiceInvioSdi, String noteSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException {
+	fattura.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_NON_RECAPITABILE);
+	fattura.setCodiceInvioSdi(codiceInvioSdi);
+	fattura.setNoteInvioSdi(noteSdi);
+	fattura.setToBeUpdated();
+	updateBulk(userContext, fattura);
+	return fattura;
+}
+
 }

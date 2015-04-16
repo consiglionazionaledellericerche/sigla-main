@@ -9,6 +9,7 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 
 public class FatturaElettronicaAttivaComponent extends it.cnr.jada.comp.CRUDComponent 
 	implements Cloneable,Serializable {
@@ -36,10 +37,18 @@ public class FatturaElettronicaAttivaComponent extends it.cnr.jada.comp.CRUDComp
 		return recuperoComponentFatturaAttiva().aggiornaFatturaDecorrenzaTerminiSDI(userContext, fattura, noteSdi);
 	}
 	
+	public Fattura_attivaBulk aggiornaFatturaTrasmissioneNonRecapitataSDI(UserContext userContext, Fattura_attivaBulk fattura, String codiceSdi, String noteInvioSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException{
+		return recuperoComponentFatturaAttiva().aggiornaFatturaTrasmissioneNonRecapitataSDI(userContext, fattura, codiceSdi, noteInvioSdi);
+	}
+	
 	public Fattura_attivaBulk aggiornaFatturaEsitoAccettatoSDI(UserContext userContext, Fattura_attivaBulk fattura) throws PersistencyException, ComponentException,java.rmi.RemoteException{
 		return recuperoComponentFatturaAttiva().aggiornaFatturaEsitoAccettatoSDI(userContext, fattura);
 	}
 
+	public Fattura_attivaBulk aggiornaFatturaConsegnaSDI(UserContext userContext, Fattura_attivaBulk fattura, Date dataConsegna) throws PersistencyException, ComponentException,java.rmi.RemoteException{
+		return recuperoComponentFatturaAttiva().aggiornaFatturaConsegnaSDI(userContext, fattura, dataConsegna);
+	}
+	
 	private FatturaAttivaSingolaComponentSession recuperoComponentFatturaAttiva() {
 		FatturaAttivaSingolaComponentSession componentFatturaAttiva = (FatturaAttivaSingolaComponentSession) EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession");
 		return componentFatturaAttiva;

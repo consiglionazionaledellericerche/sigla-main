@@ -203,8 +203,6 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 	    				}
 	    				String nomeFile = file.getName();
 	    				String nomeFileP7m = nomeFile+".p7m";
-	    				fattura.setNomeFileInvioSdi(nomeFileP7m);
-	    				componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fattura, Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI, null);
 	    				String webScriptURL = documentiCollegatiDocAmmService.getRepositoyURL().concat("service/sigla/firma/fatture");
 	    	    		String json = "{" +
 	    	    				"\"nodeRefSource\" : \"" + cmisFile.getDocument().getProperty(SiglaCMISService.ALFCMIS_NODEREF).getValueAsString() + "\"," +
@@ -240,11 +238,13 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 	    	    					IOUtils.copy(streamSigned, outputStream);
 	    	    					outputStream.close();
 			    					logger.info("Salvato file firmato temporaneo");
-			    					if (fattura.getNcAnnulloSdi() == null || fattura.getNcAnnulloSdi().equals("N")){
+			    					if (!fattura.isNotaCreditoDaNonInviareASdi()){
 				    					FatturaPassivaElettronicaService fatturaService = SpringUtil.getBean("fatturaPassivaElettronicaService", FatturaPassivaElettronicaService.class);
-		    	    			    	fatturaService.inviaFatturaElettronica(authentication.getUserName(), authentication.getPassword(), fileSigned, cmisFile.getDescription());
+		    	    			    	fatturaService.inviaFatturaElettronica(authentication.getUserName(), authentication.getPassword(), fileSigned, nomeFileP7m);
+		    		    				fattura.setNomeFileInvioSdi(nomeFileP7m);
 				    					logger.info("File firmato inviato");
 			    					}
+	    		    				componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fattura);
 	    	    				} catch (Exception ex) {
 			    					logger.error("Errore nell'invio del file "+ ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
 	    	    					documentiCollegatiDocAmmService.removeAspect(cmisFile.getDocument(),  CMISAspect.CNR_SIGNEDDOCUMENT.value());
