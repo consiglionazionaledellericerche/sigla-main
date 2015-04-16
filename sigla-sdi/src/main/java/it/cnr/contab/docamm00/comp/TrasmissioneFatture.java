@@ -29,6 +29,7 @@ import it.gov.fatturapa.sdi.messaggi.v1.RicevutaConsegnaType;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 
 import javax.activation.DataHandler;
 import javax.ejb.Stateless;
@@ -214,6 +215,67 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 		}
 	}
 	
+	public void notificaFatturaAttivaAvvenutaTrasmissioneNonRecapitata(UserContext userContext, String nomeFile, DataHandler data, AttestazioneTrasmissioneFatturaType notifica) throws ComponentException {
+		FatturaElettronicaAttivaComponentSession component = recuperoComponentFatturaElettronicaAttiva();
+		try {
+			logger.info("Fatture Elettroniche: Attive: Trasmissione non recapitata. MessageId:"+notifica.getMessageId());
+			String codiceSDI = String.valueOf(notifica.getIdentificativoSdI());
+			Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, codiceSDI);
+			if (fattura != null && fattura.getCodiceInvioSdi() != null && fattura.getCodiceInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_NON_RECAPITABILE)){
+				logger.info("Fatture Elettroniche: Attive: Fattura già elaborata "+codiceSDI);
+			} else {
+				String nomeFileP7m = notifica.getNomeFile();
+				fattura = recuperoFatturaDaNomeFile(userContext, nomeFileP7m);
+				if (fattura != null){
+					salvaFileSuDocumentale(data, nomeFile, fattura, CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_TRASMISSIONE_FATTURA);
+					try{
+						component.aggiornaFatturaTrasmissioneNonRecapitataSDI(userContext, fattura, codiceSDI, notifica.getNote());
+						logger.info("Fatture Elettroniche: Attive: aggiornamento Fattura con trasmissione non recapitata con nome file "+nomeFileP7m);
+					} catch (Exception ex) {
+						logger.error("Fatture Elettroniche: Attive: MessageId:"+notifica.getMessageId()+". Errore nell'elaborazione della mancata consegna della fattura con nome file "+nomeFileP7m + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
+						java.io.StringWriter sw = new java.io.StringWriter();
+						ex.printStackTrace(new java.io.PrintWriter(sw));
+						SendMail.sendErrorMail("Fatture Elettroniche: Attive: Trasmissione non recapitata. Nome file "+nomeFileP7m, sw.toString());
+					}
+				} else {
+					logger.warn("Fatture Elettroniche: Attive: Per il nome del file inviato indicato nel file dell'e-mail non corrisponde nessuna fattura. Trasmissione non recapitata. Nome File " + nomeFileP7m);
+					SendMail.sendErrorMail("Fatture Elettroniche: Attive: Per il nome del file inviato indicato nel file dell'e-mail non corrisponde nessuna fattura", "Trasmissione non recapitata. Nome File "+nomeFileP7m);
+				}
+			}
+		} catch (Exception e) {
+			throw new ComponentException(e);
+		}
+	}
+	
+	
+	public void notificaFatturaAttivaConsegnaPec(UserContext userContext, String nomeFile, Date dataConsegna) throws ComponentException {
+		FatturaElettronicaAttivaComponentSession component = recuperoComponentFatturaElettronicaAttiva();
+		try {
+			logger.info("Fatture Elettroniche: Attive: Pec: Notifica Consegna Nome File: "+nomeFile);
+			Fattura_attivaBulk fattura = recuperoFatturaDaNomeFile(userContext, nomeFile);
+			if (fattura != null){
+				if (fattura.getStatoInvioSdi() != null && fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI)){
+					logger.info("Fatture Elettroniche: Attive: PEC. Fattura già elaborata. "+nomeFile);
+				} else {
+					try{
+						component.aggiornaFatturaConsegnaSDI(userContext, fattura, dataConsegna);
+						logger.info("Fatture Elettroniche: Attive: PEC. Aggiornamento Fattura consegnata a SDI "+nomeFile);
+					} catch (Exception ex) {
+						logger.error("Fatture Elettroniche: Attive: PEC. Errore nell'aggiornamento della consegna a SDI. Nome File: "+nomeFile+ ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
+						java.io.StringWriter sw = new java.io.StringWriter();
+						ex.printStackTrace(new java.io.PrintWriter(sw));
+						SendMail.sendErrorMail("Fatture Elettroniche: Attive: PEC. Nome file "+nomeFile, sw.toString());
+					}
+				}
+			} else {
+				logger.warn("Fatture Elettroniche: Attive: PEC. Per il nome del file indicato nell'e-mail di Consegna della PEC non corrisponde nessuna fattura." + nomeFile);
+				SendMail.sendErrorMail("Fatture Elettroniche: Attive: PEC. Per il nome del file indicato nell'e-mail di Consegna della PEC non corrisponde nessuna fattura", "Consegna PEC. Nome File: "+nomeFile);
+			}
+		} catch (Exception e) {
+			throw new ComponentException(e);
+		}
+	}
+
 	public void notificaFatturaAttivaScarto(UserContext userContext, String nomeFile, DataHandler data, NotificaScartoType notifica) throws ComponentException {
 		FatturaElettronicaAttivaComponentSession component = recuperoComponentFatturaElettronicaAttiva();
 		try {
@@ -268,11 +330,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 							ex.printStackTrace(new java.io.PrintWriter(sw));
 							SendMail.sendErrorMail("Fatture Elettroniche: Attive: Decorrenza Termini. Id SDI "+identificativoSdi, sw.toString());
 						}
-//					} else {
-//						logger.warn("Fatture Elettroniche: Attive: Stato fattura " + fattura.getStatoInvioSdi() + " non previsto per la decorrenza dei termini per la fattura " + identificativoSdi);
 					}
-//				} else {
-//					logger.warn("Fatture Elettroniche: Attive: Stato fattura vuoto non previsto per la decorrenza dei termini per la fattura " + identificativoSdi);
 				}
 			} else {
 				logger.warn("Fatture Elettroniche: Attive: Per il nome dell'identificativo SDI indicato nel file dell'e-mail non corrisponde nessuna fattura." + identificativoSdi);

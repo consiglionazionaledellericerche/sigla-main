@@ -71,6 +71,7 @@
 		<property name="pecHostName" value="${pec.host.name}"/>
 
 		<property name="pecURLName" value="${pec.url.name}"/>
+		<property name="pecHostAddress" value="${pec.host.address}"/>
 		<property name="pecSDIAddress" value="${pec.sdi.address}"/>
 		<property name="pecSDIFromStringTerm" value="${pec.sdi.from.string.term}"/>
 		<property name="pecSDISubjectRiceviFattureTerm" value="${pec.sdi.subject.ricevi.fatture.term}"/>
@@ -82,6 +83,9 @@
 		<property name="pecSDISubjectFatturaAttivaEsitoTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.esito.term}"/>
 		<property name="pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.decorrenzaTermini.term}"/>
 		<property name="pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.attestazioneTrasmissioneFattura.term}"/>
+		<property name="pecSDISubjectFatturaAttivaInvioTerm" value="${pec.sdi.subject.fatturaAttiva.invio.term}"/>
+		<property name="pecSDISubjectFatturaAttivaNotificaPecTerm" value="${pec.sdi.subject.fatturaAttiva.notificaPec.term}"/>
+		<property name="pecSDISubjectFatturaPassivaNotificaScartoEsitoTerm" value="${pec.sdi.subject.fatturaPassiva.notifica.scartoEsito.term}"/>
 
 		<property name="pecMailConf">
 		    <props>

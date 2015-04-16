@@ -2103,4 +2103,10 @@ public Boolean isPossibleFatturazioneElettronica() {
 	}
 	return false;
 }
+public Boolean isNotaCreditoDaNonInviareASdi(){
+	if (getNcAnnulloSdi() == null || getNcAnnulloSdi().equals("N")){
+		return false;
+	}
+	return true;
+}
 }
