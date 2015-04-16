@@ -8,6 +8,7 @@ import it.cnr.jada.comp.NoRollbackException;
 import it.cnr.jada.persistency.PersistencyException;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -62,6 +63,27 @@ public class FatturaElettronicaAttivaComponentSessionBean extends it.cnr.jada.ej
             throw uncaughtError(userContext, componentObj, error);
         }
 	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public Fattura_attivaBulk aggiornaFatturaConsegnaSDI(UserContext userContext, Fattura_attivaBulk fattura, Date dataConsegna) throws PersistencyException, ComponentException,java.rmi.RemoteException{
+        pre_component_invocation(userContext, componentObj);
+        try{
+        	Fattura_attivaBulk result = ((FatturaElettronicaAttivaComponent)componentObj).aggiornaFatturaConsegnaSDI(userContext, fattura, dataConsegna);
+            component_invocation_succes(userContext, componentObj);
+            return result;
+        }catch(NoRollbackException norollbackexception){
+            component_invocation_succes(userContext, componentObj);
+            throw norollbackexception;
+        }catch(ComponentException componentexception){
+            component_invocation_failure(userContext, componentObj);
+            throw componentexception;
+        }catch(RuntimeException runtimeexception){
+            throw uncaughtRuntimeException(userContext, componentObj, runtimeexception);
+        }catch(Error error){
+            throw uncaughtError(userContext, componentObj, error);
+        }
+	}
+	
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public Fattura_attivaBulk aggiornaFatturaScartoSDI(UserContext userContext, Fattura_attivaBulk fattura, String codiceInvioSdi, String noteSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException{
@@ -128,6 +150,26 @@ public class FatturaElettronicaAttivaComponentSessionBean extends it.cnr.jada.ej
         pre_component_invocation(userContext, componentObj);
         try{
         	Fattura_attivaBulk result = ((FatturaElettronicaAttivaComponent)componentObj).aggiornaFatturaEsitoAccettatoSDI(userContext, fattura);
+            component_invocation_succes(userContext, componentObj);
+            return result;
+        }catch(NoRollbackException norollbackexception){
+            component_invocation_succes(userContext, componentObj);
+            throw norollbackexception;
+        }catch(ComponentException componentexception){
+            component_invocation_failure(userContext, componentObj);
+            throw componentexception;
+        }catch(RuntimeException runtimeexception){
+            throw uncaughtRuntimeException(userContext, componentObj, runtimeexception);
+        }catch(Error error){
+            throw uncaughtError(userContext, componentObj, error);
+        }
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public Fattura_attivaBulk aggiornaFatturaTrasmissioneNonRecapitataSDI(UserContext userContext, Fattura_attivaBulk fattura, String codiceSdi, String noteInvioSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException{
+        pre_component_invocation(userContext, componentObj);
+        try{
+        	Fattura_attivaBulk result = ((FatturaElettronicaAttivaComponent)componentObj).aggiornaFatturaTrasmissioneNonRecapitataSDI(userContext, fattura, codiceSdi, noteInvioSdi);
             component_invocation_succes(userContext, componentObj);
             return result;
         }catch(NoRollbackException norollbackexception){
