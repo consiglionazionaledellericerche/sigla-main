@@ -51,6 +51,7 @@ import it.gov.fatturapa.sdi.fatturapa.v1.RappresentanteFiscaleType;
 import it.gov.fatturapa.sdi.fatturapa.v1.ScontoMaggiorazioneType;
 import it.gov.fatturapa.sdi.fatturapa.v1.TerzoIntermediarioSoggettoEmittenteType;
 import it.gov.fatturapa.sdi.messaggi.v1.NotificaDecorrenzaTerminiType;
+import it.gov.fatturapa.sdi.messaggi.v1.ScartoEsitoCommittenteType;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -890,7 +891,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			throw _ex;
 		}
 	}
-	
+
 	public void notificaDecorrenzaTermini(String nomeFile, DataHandler data, NotificaDecorrenzaTerminiType notifica) throws ComponentException {
 		FatturaElettronicaPassivaComponentSession component = (FatturaElettronicaPassivaComponentSession) EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession");
     	UserContext userContext = new WSUserContext("SDI",null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
@@ -928,6 +929,22 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				LOGGER.warn("Fatture Elettroniche: Passive: Per l'identificativo SDI indicato nel file dell'e-mail non corrisponde nessun documento." + identificativoSdi);
 				SendMail.sendErrorMail("Fatture Elettroniche: Passive: Per l'identificativo SDI del file inviato indicato nel file dell'e-mail non corrisponde nessuna fattura", "Decorrenza Termini. Id SDI "+identificativoSdi);
 			}
+		} catch (Exception e) {
+			throw new ComponentException(e);
+		}
+	}
+	
+	public void notificaScartoEsito(String nomeFile, DataHandler data) throws ComponentException{
+		ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+		try {
+			IOUtils.copy(data.getInputStream(), bStream);
+			JAXBContext jc = JAXBContext.newInstance("it.gov.fatturapa.sdi.messaggi.v1");
+			JAXBElement<ScartoEsitoCommittenteType> fileScartoEsito = (JAXBElement<ScartoEsitoCommittenteType>) 
+					jc.createUnmarshaller().unmarshal(new ByteArrayInputStream(bStream.toByteArray()));
+			ScartoEsitoCommittenteType scartoEsito = fileScartoEsito.getValue();
+			Long identificativoSdi = scartoEsito.getIdentificativoSdI().longValue();
+			LOGGER.warn("Fatture Elettroniche: Passive: E' stato ricevuto uno scarto dell'esito per l'Id SDI." + identificativoSdi);
+			SendMail.sendErrorMail("Fatture Elettroniche: Passive: E' stato ricevuto uno scarto dell'esito per l'Id SDI."+ identificativoSdi, "Fattura Passiva: Scarto Esito. Id SDI "+identificativoSdi);
 		} catch (Exception e) {
 			throw new ComponentException(e);
 		}
