@@ -133,7 +133,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 	public Forward doBringBackCRUDModalitaPagamento(ActionContext context, DocumentoEleTestataBulk bulk, TerzoBulk terzo) {
 		if (terzo != null) {			
 			if (!terzo.equalsByPrimaryKey(bulk.getDocumentoEleTrasmissione().getPrestatore()))
-				throw new MessageToUser("Il Terzo selezionato non è valido!");
+				throw new MessageToUser("Il Terzo selezionato non ï¿½ valido!");
 			Modalita_pagamentoBulk modalitaPagamento = null;
 			for (Iterator<Modalita_pagamentoBulk> iterator = terzo.getModalita_pagamento().iterator(); iterator.hasNext();) {
 				Modalita_pagamentoBulk modPag = iterator.next();
@@ -142,7 +142,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 					modalitaPagamento = modPag;
 			}
 			if (modalitaPagamento == null )
-				throw new MessageToUser("La Modalità di pagamento non è valida!");
+				throw new MessageToUser("La Modalitï¿½ di pagamento non ï¿½ valida!");
 			bulk.setModalitaPagamento(modalitaPagamento);		
 		}
 		return context.findDefaultForward();
@@ -198,7 +198,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 					fatturaPassivaElettronicaBP.setModel(context, bulk);
 					fatturaPassivaElettronicaBP.rifiutaFattura(context);					
 				} else {
-					fatturaPassivaElettronicaBP.setMessage("Il Motivo del rifiuto è obbligatorio!");
+					fatturaPassivaElettronicaBP.setMessage("Il Motivo del rifiuto ï¿½ obbligatorio!");
 				}				
 			}			
 		} catch (Exception e) {
@@ -223,7 +223,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 			CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
 			DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
 			if (bulk.getImportoDocumento() == null) {
-				fatturaPassivaElettronicaBP.setMessage("Il totale del documento non è valorizzato, il documento deve essere rifiutato!");
+				fatturaPassivaElettronicaBP.setMessage("Il totale del documento non ï¿½ valorizzato, il documento deve essere rifiutato!");
 			} else {
 				String message = "La compilazione della Fattura e il suo successivo salvataggio, ";
 				message += "comporta l'accettazione del documento elettronico.<br>Si desidera procedere?";
@@ -271,7 +271,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 			CRUDFatturaPassivaBP nbp = null;
 			try {
 				nbp = (CRUDFatturaPassivaBP)context.createBusinessProcess("CRUDFatturaPassivaBP",
-								new Object[] {"MTr"}
+								new Object[] {"MWTh"}
 							);
 				String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().
 						validaBPPerUtente(context.getUserContext(),((CNRUserInfo)context.getUserInfo()).getUtente(),
