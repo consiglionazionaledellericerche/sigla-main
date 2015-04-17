@@ -27,6 +27,7 @@
 		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
 		<sigla.build.number>${maven.build.timestamp}</sigla.build.number>		
 		<slf4j.version>1.4.3</slf4j.version>
+		<maven.javadoc.skip>true</maven.javadoc.skip>
 	</properties>
 	<build>
 		<pluginManagement>
