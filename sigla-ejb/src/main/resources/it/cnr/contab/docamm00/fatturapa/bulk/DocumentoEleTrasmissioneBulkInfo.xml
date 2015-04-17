@@ -726,7 +726,7 @@
 		rows="3"
 		maxLength="2000"
 		enabledOnEdit="false"
-		label="Anomalie Ricezione" />
+		label="Segnalazioni da verificare" />
 		
 	<form
 		name="searchtool">

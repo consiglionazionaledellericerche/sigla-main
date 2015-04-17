@@ -209,10 +209,16 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 	
 	public Forward doRifiutaFattura(ActionContext context) throws FillException, BusinessProcessException {
 		try {
-			String message = "Inserire il motivo di rifiuto della fattura:";
-			message += "<textarea name=\"main.motivoRifiuto\" class=\"FormInput\" "+
-					"cols=\"60\" rows=\"5\" onfocus=\"focused(this)\" onclick=\"cancelBubble(event)\"></textarea>";
-			openConfirm( context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfirmRifiutaFattura");
+			CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
+			DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
+			if (bulk.getFlDecorrenzaTermini().equalsIgnoreCase("S")) {
+				fatturaPassivaElettronicaBP.setMessage("Ricevuta decorrenza termini - non è possibile effettuare il Rifiuto, Registrare il documento e richiedere nota credito!");
+			} else {
+				String message = "Inserire il motivo di rifiuto della fattura:";
+				message += "<textarea name=\"main.motivoRifiuto\" class=\"FormInput\" "+
+						"cols=\"60\" rows=\"5\" onfocus=\"focused(this)\" onclick=\"cancelBubble(event)\"></textarea>";
+				openConfirm( context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfirmRifiutaFattura");				
+			}
 			return context.findDefaultForward();			
 		} catch (Exception e) {
 			return handleException(context,e);
@@ -223,7 +229,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 			CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
 			DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
 			if (bulk.getImportoDocumento() == null) {
-				fatturaPassivaElettronicaBP.setMessage("Il totale del documento non ï¿½ valorizzato, il documento deve essere rifiutato!");
+				fatturaPassivaElettronicaBP.setMessage("Il totale del documento non è valorizzato, il documento deve essere rifiutato!");
 			} else {
 				String message = "La compilazione della Fattura e il suo successivo salvataggio, ";
 				message += "comporta l'accettazione del documento elettronico.<br>Si desidera procedere?";

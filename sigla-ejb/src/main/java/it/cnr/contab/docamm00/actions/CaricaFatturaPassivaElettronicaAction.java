@@ -184,14 +184,18 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
     				(FatturaElettronicaPassivaComponentSession) EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession");
 			JAXBElement<MonitoraggioFlussiType> fattureRicevuteType = ((JAXBElement<MonitoraggioFlussiType>) 
 					client.getUnmarshaller().unmarshal(new StreamSource(fileFattureRicevute.getFile())));
+			List<Long> identificativi = new ArrayList<Long>();
 			for (FattureRicevuteType.Flusso flusso : fattureRicevuteType.getValue().getFattureRicevute().getFlusso()) {
 				if (!flusso.getStato().equalsIgnoreCase("SF00")) {
 					logger.info("Inizio controllo identificativo:" + flusso.getIdSdI());
+					identificativi.add(Long.valueOf(flusso.getIdSdI()));
 					fatturaElettronicaPassivaComponentSession.allineaEsitoCommitente(actioncontext.getUserContext(), 
 							Long.valueOf(flusso.getIdSdI()), flusso.getStato(), tipoIntegrazioneSDI);
 					logger.info("Fine controllo identificativo:" + flusso.getIdSdI());					
 				}
 			}
+			fatturaElettronicaPassivaComponentSession.allineaEsitoCommitente(actioncontext.getUserContext(), 
+					identificativi, tipoIntegrazioneSDI);
 			caricaPassivaElettronicaBP.setMessage("Notifiche allineate correttamente.");
 		} catch (XmlMappingException e) {
 			return handleException(actioncontext, e);
