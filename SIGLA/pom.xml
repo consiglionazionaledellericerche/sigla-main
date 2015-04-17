@@ -209,14 +209,6 @@
 			<version>2.1.7</version>
 			<exclusions>
 				<exclusion>
-					<artifactId>bcmail-jdk14</artifactId>
-					<groupId>org.bouncycastle</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>bcmail-jdk14</artifactId>
-					<groupId>bouncycastle</groupId>
-				</exclusion>
-				<exclusion>
 					<artifactId>bcprov-jdk14</artifactId>
 					<groupId>org.bouncycastle</groupId>
 				</exclusion>
