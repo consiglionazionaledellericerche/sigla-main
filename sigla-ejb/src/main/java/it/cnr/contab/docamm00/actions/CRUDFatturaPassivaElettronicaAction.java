@@ -142,7 +142,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 					modalitaPagamento = modPag;
 			}
 			if (modalitaPagamento == null )
-				throw new MessageToUser("La Modalitï¿½ di pagamento non ï¿½ valida!");
+				throw new MessageToUser("La Modalità di pagamento non è valida!");
 			bulk.setModalitaPagamento(modalitaPagamento);		
 		}
 		return context.findDefaultForward();
