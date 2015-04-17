@@ -98,7 +98,7 @@
 		rows="5"
 		maxLength="2000"
 		enabledOnEdit="false"
-		label="Anomalie" />
+		label="Segnalazioni da verificare" />
 	<fieldProperty
 		name="attivaFile"
 		property="cmisNodeRef"
