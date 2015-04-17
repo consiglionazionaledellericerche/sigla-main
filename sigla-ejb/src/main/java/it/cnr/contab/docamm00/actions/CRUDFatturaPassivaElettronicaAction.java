@@ -198,7 +198,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 					fatturaPassivaElettronicaBP.setModel(context, bulk);
 					fatturaPassivaElettronicaBP.rifiutaFattura(context);					
 				} else {
-					fatturaPassivaElettronicaBP.setMessage("Il Motivo del rifiuto ï¿½ obbligatorio!");
+					fatturaPassivaElettronicaBP.setMessage("Il Motivo del rifiuto è obbligatorio!");
 				}				
 			}			
 		} catch (Exception e) {
