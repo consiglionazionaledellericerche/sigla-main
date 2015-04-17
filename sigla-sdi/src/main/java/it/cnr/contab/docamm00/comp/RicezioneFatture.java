@@ -139,7 +139,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 					jc.createUnmarshaller().unmarshal(new ByteArrayInputStream(bStream.toByteArray()));
 			elaboraFattura(fatturaElettronicaType.getValue(), parametersIn.getIdentificativoSdI(), parametersIn.getNomeFile(), cmisPath);		
 			risposta.setEsito(EsitoRicezioneType.ER_01);
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			LOGGER.error("Errore nel WS della ricezione delle fatture!", e);
 			java.io.StringWriter sw = new java.io.StringWriter();
 			e.printStackTrace(new java.io.PrintWriter(sw));
