@@ -153,7 +153,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
         		String subject= "[SIGLA] Notifica ricezione fattura passiva con Identificativo SdI:" + documentoEleTrasmissioneBulk.getIdentificativoSdi();
         		String text = "E' pervenuta la fattura dal trasmittente: <b>" +documentoEleTrasmissioneBulk.getIdCodice() + "</b><br>"+
         				"Prestatore: " + documentoEleTrasmissioneBulk.getDenominzionePrestatore() +"<br>" +
-        				"Il documento è presente nell'area temporanea di SIGLA.";
+        				"Il documento ï¿½ presente nell'area temporanea di SIGLA.";
         		String addressTO = null;
         		Utente_indirizzi_mailHome utente_indirizzi_mailHome = (Utente_indirizzi_mailHome)getHome(usercontext,Utente_indirizzi_mailBulk.class);
     			for (java.util.Iterator<Utente_indirizzi_mailBulk> i = utente_indirizzi_mailHome.findUtenteNotificaRicezioneFatturaElettronica(
@@ -183,7 +183,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
         					documentoEleTrasmissioneBulk.setPrestatore(terzi.get(0));
         				}
         			} else {
-        				anomalieTrasmissione.add("Esistono più di una riga in anagrafica per il CF:" + 
+        				anomalieTrasmissione.add("Esistono piï¿½ di una riga in anagrafica per il CF:" + 
         						documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale() +" o la partita IVA: " + 
         						documentoEleTrasmissioneBulk.getPrestatoreCodice());
         			}
@@ -203,7 +203,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
         					documentoEleTrasmissioneBulk.setRappresentante(terzi.get(0));
         				}
         			} else {
-        				anomalieTrasmissione.add("Esistono più di una riga in anagrafica per il CF:" + 
+        				anomalieTrasmissione.add("Esistono piï¿½ di una riga in anagrafica per il CF:" + 
         						documentoEleTrasmissioneBulk.getRappresentanteCodicefiscale() +" o la partita IVA: " + 
         						documentoEleTrasmissioneBulk.getRappresentanteCodice());
         			}
@@ -223,7 +223,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
         					documentoEleTrasmissioneBulk.setIntermediario(terzi.get(0));
         				}
         			} else {
-        				anomalieTrasmissione.add("Esistono più di una riga in anagrafica per il CF:" + 
+        				anomalieTrasmissione.add("Esistono piï¿½ di una riga in anagrafica per il CF:" + 
         						documentoEleTrasmissioneBulk.getIntermediarioCodicefiscale() +" o la partita IVA: " + 
         						documentoEleTrasmissioneBulk.getIntermediarioCodice());
         			}
@@ -250,7 +250,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
                 		}
 					}
                 	if (!trovataModPag) {                		
-                		anomalieTestata.add("Modalità di pagamento non trovata");
+                		anomalieTestata.add("Modalitï¿½ di pagamento non trovata");
                 	}
         		}
     			if (!anomalieTestata.isEmpty())
@@ -490,4 +490,29 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 			throw handleException(e);
 		}
 	}	
+
+	@SuppressWarnings("unchecked")
+	public void allineaEsitoCommitente(UserContext usercontext, List<Long> identificativi, TipoIntegrazioneSDI tipoIntegrazioneSDI) throws ComponentException {
+		DocumentoEleTestataHome home = (DocumentoEleTestataHome) getHome(usercontext, DocumentoEleTestataBulk.class);
+		SQLBuilder sql = home.createSQLBuilder();
+		for (Long identificativoSdI : identificativi) {
+			sql.addClause(FindClause.AND, "identificativoSdi", SQLBuilder.NOT_EQUALS, identificativoSdI);			
+		}
+		sql.openParenthesis(FindClause.AND);
+		sql.addClause(FindClause.OR, "statoDocumento", SQLBuilder.EQUALS, StatoDocumentoEleEnum.RIFIUTATO.name());					
+		sql.addClause(FindClause.OR, "statoDocumento", SQLBuilder.EQUALS, StatoDocumentoEleEnum.REGISTRATO.name());							
+		sql.closeParenthesis();		
+		try {
+			List<DocumentoEleTestataBulk> results = home.fetchAll(sql);
+			getHomeCache(usercontext).fetchAll(usercontext);
+			for (DocumentoEleTestataBulk documentoEleTestata : results) {
+				notificaEsito(usercontext, tipoIntegrazioneSDI, documentoEleTestata);
+				logger.info("Inviata notifica per identificativo:" + documentoEleTestata.getIdentificativoSdi() + 
+						" STATO SIGLA:"+ documentoEleTestata.getStatoDocumentoEle() + " - STATO SDI NON PRESENTE");				
+			}
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+	}	
+
 }
