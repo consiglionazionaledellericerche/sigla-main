@@ -40,7 +40,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
 	private String ricevutaDecorrenza;
 
 	static {
-		tiDecorrenzaTerminiKeys.put("S","Sì");
+		tiDecorrenzaTerminiKeys.put("S","Si");
 		tiDecorrenzaTerminiKeys.put("N","No");
 
 		tiStatoDocumentoKeys.put(StatoDocumentoEleEnum.AGGIORNATO.name(),StatoDocumentoEleEnum.AGGIORNATO.name());
