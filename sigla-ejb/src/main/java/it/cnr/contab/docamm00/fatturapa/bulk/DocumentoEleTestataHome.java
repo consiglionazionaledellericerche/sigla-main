@@ -210,12 +210,12 @@ public class DocumentoEleTestataHome extends BulkHome {
             	ByteArrayOutputStream outputStreamNotificaEsito = new ByteArrayOutputStream();
             	client.getMarshaller().marshal(notificaEsitoCommittente, new StreamResult(outputStreamNotificaEsito));
             	PasswordAuthentication authentication = getAuthenticatorFromCUU(userContext, documentoEleTestataBulk);
-            	fatturaService.notificaEsito(authentication.getUserName(), authentication.getPassword(), 
-            			documentoEleTestataBulk, notificaEsitoCommittente);
             	storeEsitoDocument(documentoEleTestataBulk, new ByteArrayInputStream(outputStreamNotificaEsito.toByteArray()), 
             			documentoEleTestataBulk.getStatoDocumentoEle().equals(StatoDocumentoEleEnum.RIFIUTATO)?
             					CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO.value():
             						CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO.value());
+            	fatturaService.notificaEsito(authentication.getUserName(), authentication.getPassword(), 
+            			documentoEleTestataBulk, notificaEsitoCommittente);
     		} catch(Exception _ex) {
     			throw new ApplicationException(_ex.getMessage());
     		}
