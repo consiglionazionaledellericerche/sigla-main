@@ -148,15 +148,15 @@ public class DocumentoEleTestataHome extends BulkHome {
 	    			uoPec = unita_organizzativa.getCd_unita_padre();
 				UnitaOrganizzativaPecBulk unitaOrganizzativaPecBulk = (UnitaOrganizzativaPecBulk)getHomeCache().getHome(UnitaOrganizzativaPecBulk.class).
 						findByPrimaryKey(new UnitaOrganizzativaPecBulk(uoPec));
-	    		if (unitaOrganizzativaPecBulk != null)
+	    		if (unitaOrganizzativaPecBulk != null && unitaOrganizzativaPecBulk.getEmailPecProtocollo() != null)
 	    			return new PasswordAuthentication(unitaOrganizzativaPecBulk.getEmailPecProtocollo(), 
 							unitaOrganizzativaPecBulk.getCodPecProtocolloInChiaro());	
 	    	}
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
-		}	    	
-		return new PasswordAuthentication("protocollo-ammcen@pec.cnr.it", 
-				"magnolia");	
+		}
+		throw new ApplicationException("Confiurazione PEC non trovata per il CUU " + 
+				documentoEleTestataBulk.getDocumentoEleTrasmissione().getCodiceDestinatario() + ", contattare il servizio di HelpDesk!");
 	}
 	public NotificaEsitoCommittenteType createNotificaEsitoCommittente(DocumentoEleTestataBulk documentoEleTestataBulk) {
     	it.gov.fatturapa.sdi.messaggi.v1.ObjectFactory objMessaggi = new it.gov.fatturapa.sdi.messaggi.v1.ObjectFactory();        	
@@ -210,14 +210,19 @@ public class DocumentoEleTestataHome extends BulkHome {
             	ByteArrayOutputStream outputStreamNotificaEsito = new ByteArrayOutputStream();
             	client.getMarshaller().marshal(notificaEsitoCommittente, new StreamResult(outputStreamNotificaEsito));
             	PasswordAuthentication authentication = getAuthenticatorFromCUU(userContext, documentoEleTestataBulk);
+            	if (authentication == null) {
+            		throw new ApplicationException("Errore applicativo durante la Notifica di Esito Committente, contattare il servizio di HelpDesk!");
+            	}
             	storeEsitoDocument(documentoEleTestataBulk, new ByteArrayInputStream(outputStreamNotificaEsito.toByteArray()), 
             			documentoEleTestataBulk.getStatoDocumentoEle().equals(StatoDocumentoEleEnum.RIFIUTATO)?
             					CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO.value():
             						CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO.value());
             	fatturaService.notificaEsito(authentication.getUserName(), authentication.getPassword(), 
             			documentoEleTestataBulk, notificaEsitoCommittente);
+    		} catch(ApplicationException _ex) {
+        		throw _ex;
     		} catch(Exception _ex) {
-    			throw new ApplicationException(_ex.getMessage());
+    			throw new ApplicationException("Errore applicativo durante la Notifica di Esito Committente, contattare il servizio di HelpDesk!", _ex);
     		}
     	} else if (!tipoIntegrazioneSDI.equals(TipoIntegrazioneSDI.PEC)) {
         	ObjectFactory obj = new ObjectFactory();
