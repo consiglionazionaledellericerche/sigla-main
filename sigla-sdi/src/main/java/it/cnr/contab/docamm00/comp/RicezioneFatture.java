@@ -857,7 +857,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		
 	}
 	
-	private SOAPFault generaFault(String stringFault, Exception _ex) {
+	private SOAPFault generaFault(String stringFault, Throwable _ex) {
 		try{
 			MessageFactory factory = MessageFactory.newInstance();
 			SOAPMessage message = factory.createMessage(); 
