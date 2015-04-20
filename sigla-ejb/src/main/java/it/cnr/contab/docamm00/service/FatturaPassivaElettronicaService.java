@@ -580,7 +580,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		email.setHostName(pecHostName);
 		email.addTo(pecSDIAddress, "SdI - Sistema Di Interscambio");
 		email.setFrom(userName, userName);
-		email.setSubject(" Notifica di esito " + bulk.getIdentificativoSdi());
+		email.setSubject("Notifica di esito " + bulk.getIdentificativoSdi());
 		email.setMsg("Il file trasmesso con identificativo SdI:" + bulk.getIdentificativoSdi() + 
 				(bulk.isRifiutata() ? " è stato Rifiutato (EC02) poichè " + bulk.getMotivoRifiuto() :" è stato Accettato (EC01)") +
 				", in allegato la notifica di esito.");
