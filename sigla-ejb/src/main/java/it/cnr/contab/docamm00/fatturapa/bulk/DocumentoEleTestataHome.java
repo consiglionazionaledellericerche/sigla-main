@@ -222,7 +222,7 @@ public class DocumentoEleTestataHome extends BulkHome {
     		} catch(ApplicationException _ex) {
         		throw _ex;
     		} catch(Exception _ex) {
-    			throw new ApplicationException("Errore applicativo durante la Notifica di Esito Committente, contattare il servizio di HelpDesk!", _ex);
+    			throw new ApplicationException("Errore applicativo durante la Notifica di Esito Committente, contattare il servizio di HelpDesk!" + _ex.getMessage(), _ex);
     		}
     	} else if (!tipoIntegrazioneSDI.equals(TipoIntegrazioneSDI.PEC)) {
         	ObjectFactory obj = new ObjectFactory();
