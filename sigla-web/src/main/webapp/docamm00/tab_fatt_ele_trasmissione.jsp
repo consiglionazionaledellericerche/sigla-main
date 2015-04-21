@@ -14,7 +14,7 @@
 %>
 <table class="Panel">
 	<tr>
-		<% bp.writeFormFieldTrasmissione(out,"dataRicezione");%>
+		<% bp.writeFormField(out,"dataRicezioneSDI");%>
 		<% bp.writeFormFieldTrasmissione(out,"soggettoEmittente");%>	
 	</tr>
 </table>	
