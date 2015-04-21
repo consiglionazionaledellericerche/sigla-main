@@ -716,6 +716,7 @@
 		property="dataRicezione"
 		inputType="TEXT"
 		formatName="date_short"
+		enabledOnSearch="true"
 		enabledOnEdit="false"
 		label="Data Ricezione" />
 	<fieldProperty
