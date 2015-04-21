@@ -13,7 +13,7 @@
 <html>
 <head>
 <% JSPUtils.printBaseUrl(pageContext); %>
-<title>Consultazioni</title>
+<title>Risultato ricerca</title>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
 </head>
