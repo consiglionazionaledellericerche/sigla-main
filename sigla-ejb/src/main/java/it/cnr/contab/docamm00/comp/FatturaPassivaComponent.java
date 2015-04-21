@@ -5970,7 +5970,7 @@ public void validaRiga (UserContext aUC,Fattura_passiva_rigaBulk riga) throws Co
 		throw new it.cnr.jada.comp.ApplicationException("Inserire un bene per la riga.");
 	if (riga.getVoce_iva() == null || riga.getVoce_iva().getCrudStatus() == OggettoBulk.UNDEFINED)
 		throw new it.cnr.jada.comp.ApplicationException("Inserire una voce IVA per la riga.");
-	if (riga.getQuantita() == null || riga.getQuantita().intValue() <= 0)
+	if (riga.getQuantita() == null || riga.getQuantita().compareTo(BigDecimal.ZERO) != 1)
 		throw new it.cnr.jada.comp.ApplicationException("La quantit� specificata NON � valida.");
 	if (riga.getPrezzo_unitario() == null)
 		throw new it.cnr.jada.comp.ApplicationException("Il prezzo unitario specificato NON � valido.");
@@ -7282,7 +7282,7 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 		String key = (String)i.next();
 		BigDecimal value = mapNatura.get(key);
 		BigDecimal valueEle = mapNaturaEle.get(key);
-		BigDecimal valueEleArr = mapNaturaEleArr.get(key);
+		BigDecimal valueEleArr = Utility.nvl(mapNaturaEleArr.get(key));
 		if ((valueEleArr.compareTo(new BigDecimal(0))==0 && value!=null && valueEle!=null && value.compareTo(valueEle)!=0) ||
 			(valueEleArr.compareTo(new BigDecimal(0))!=0 && value!=null && valueEle!=null && ((value.subtract(valueEle)).abs()).compareTo(valueEleArr.abs())!=0) ||	
 			(value==null && valueEle!=null) || (value!=null && valueEle==null))
@@ -7298,7 +7298,7 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 		String key = (String)i.next();
 		BigDecimal value = mapIva.get(key);
 		BigDecimal valueEle = mapIvaEle.get(key);
-		BigDecimal valueEleArr = mapIvaEleArr.get(key);
+		BigDecimal valueEleArr = Utility.nvl(mapIvaEleArr.get(key));
 		if ((valueEleArr.compareTo(new BigDecimal(0))==0 && value!=null && valueEle!=null && value.compareTo(valueEle)!=0) ||
 			(valueEleArr.compareTo(new BigDecimal(0))!=0 && value!=null && valueEle!=null && ((value.subtract(valueEle)).abs()).compareTo(valueEleArr.abs())!=0) ||		
 			(value==null && valueEle!=null) || (value!=null && valueEle==null))

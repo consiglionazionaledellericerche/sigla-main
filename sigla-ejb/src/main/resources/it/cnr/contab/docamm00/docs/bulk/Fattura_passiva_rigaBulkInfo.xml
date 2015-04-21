@@ -186,7 +186,7 @@
 		property="prezzo_unitario"
 		inputType="TEXT"
 		nullable="false"
-		formatName="it.cnr.contab.util.GenericPrezzoUnitarioFormat"
+		formatName="it.cnr.contab.util.Importo6CifreFormat"
 		readonlyProperty="ROdetail"
 		label="Prezzo Unitario" />
 	<fieldProperty

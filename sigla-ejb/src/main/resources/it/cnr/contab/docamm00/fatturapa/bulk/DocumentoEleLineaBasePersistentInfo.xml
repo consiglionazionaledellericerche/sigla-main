@@ -65,7 +65,7 @@
 			propertyName="lineaPrezzounitario"
 			sqlTypeName="DECIMAL"
 			columnSize="17"
-			columnScale="2"
+			columnScale="6"
 			nullable="true" />
 		<columnMapping
 			columnName="TIPO_SCONTOMAG"
