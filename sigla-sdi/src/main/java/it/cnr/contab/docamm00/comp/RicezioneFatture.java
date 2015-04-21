@@ -518,7 +518,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 						docEleLinea.setLineaUnitamisura(dettaglioLinea.getUnitaMisura());
 						docEleLinea.setInizioDatacompetenza(convert(dettaglioLinea.getDataInizioPeriodo()));
 						docEleLinea.setFineDatacompetenza(convert(dettaglioLinea.getDataFinePeriodo()));
-						docEleLinea.setLineaPrezzounitario(truncBigDecimal(dettaglioLinea.getPrezzoUnitario()));
+						docEleLinea.setLineaPrezzounitario(truncBigDecimal(dettaglioLinea.getPrezzoUnitario(), 6));
 						if (dettaglioLinea.getScontoMaggiorazione() != null && !dettaglioLinea.getScontoMaggiorazione().isEmpty()) {
 							if (dettaglioLinea.getScontoMaggiorazione().size() == 1) {
 								if (dettaglioLinea.getScontoMaggiorazione().get(0).getTipo() != null)
@@ -826,13 +826,17 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 	}
 	
 	private BigDecimal truncBigDecimal(BigDecimal bigDecimal) {
-		if (bigDecimal == null)
-			return null;
-		if (bigDecimal.scale() > 2)
-			return bigDecimal.setScale(2, RoundingMode.DOWN);
-		return bigDecimal;
+		return truncBigDecimal(bigDecimal, 2);
 	}
 	
+	private BigDecimal truncBigDecimal(BigDecimal bigDecimal, int scale) {
+		if (bigDecimal == null)
+			return null;
+		if (bigDecimal.scale() > scale)
+			return bigDecimal.setScale(scale, RoundingMode.DOWN);
+		return bigDecimal;
+	}
+
 	private java.sql.Timestamp convert(XMLGregorianCalendar calendar) {
 		if (calendar == null)
 			return null;
