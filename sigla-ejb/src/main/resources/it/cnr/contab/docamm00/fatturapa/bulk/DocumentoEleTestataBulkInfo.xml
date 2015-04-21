@@ -694,7 +694,15 @@
 		enabledOnSearch="true"
 		enabledOnEdit="false"
 		label="CUU Destinatario (UO)" />
-								
+	<fieldProperty
+		name="dataRicezioneSDI"
+		property="documentoEleTrasmissione.dataRicezione"
+		inputType="TEXT"
+		formatName="date_short"
+		inputSize="8"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="Data Ricezione" />								
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -988,7 +996,8 @@
 		name="flCompletato"/>
 	<formFieldProperty
 		name="codiceDestinatario"/>
-		
+	<formFieldProperty
+		name="dataRicezioneSDI"/>
 	<findFieldProperty
 		name="idPaese" />
 	<findFieldProperty
@@ -1141,7 +1150,9 @@
 		label="UO di competenza"/>	
 	<findFieldProperty
 		name="codiceDestinatario"/>	
-	
+	<findFieldProperty
+		name="dataRicezioneSDI"/>	
+		
 	<columnFieldProperty
 		name="idCodice" />
 	<columnFieldProperty

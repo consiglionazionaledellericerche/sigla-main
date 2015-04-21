@@ -51,7 +51,8 @@
 			propertyName="documentoEleTrasmissione.cdUnitaCompetenza" />	
 		<columnMapping
 			columnName="DATA_RICEZIONE"
-			sqlTypeName="TIMESTAMP"
+			sqlTypeName="DATE"
+			converterClassName="it.cnr.contab.util.DateTruncConverter"
 			columnSize="7"			
 			propertyName="documentoEleTrasmissione.dataRicezione"/>	    		
 	</columnMap>	

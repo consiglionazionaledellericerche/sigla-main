@@ -1,13 +1,17 @@
 package it.cnr.contab.util;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.SQLConverter;
+import it.cnr.jada.util.DateUtils;
 
 /**
  * SQLConverter che effettua la conversione tra il tipo Java boolean e il tipo
  * SQL CHAR.
  */
-public class AsteriskToNullConverter implements SQLConverter<String>,
+public class DateTruncConverter implements SQLConverter<Date>,
 		java.io.Serializable {
 	/**
 	 * 
@@ -17,15 +21,15 @@ public class AsteriskToNullConverter implements SQLConverter<String>,
 	/**
 	 * CHARToBooleanConverter constructor comment.
 	 */
-	public AsteriskToNullConverter() {
+	public DateTruncConverter() {
 		super();
 	}
 
 	/**
 	 * getJavaType method comment.
 	 */
-	public Class<String> getTargetJavaType(int sqlType, boolean nullable) {
-		return String.class;
+	public Class<Date> getTargetJavaType(int sqlType, boolean nullable) {
+		return Date.class;
 	}
 
 	/**
@@ -34,9 +38,9 @@ public class AsteriskToNullConverter implements SQLConverter<String>,
 	public void javaToSql(LoggableStatement statement, java.lang.Object value,
 			int position, int sqlType) throws java.sql.SQLException {
 		if (value == null)
-			statement.setString(position, "*");
+			statement.setDate(position, null);
 		else
-			statement.setString(position, value.toString());
+			statement.setTimestamp(position, DateUtils.truncate((Timestamp)value));
 	}
 
 	/**
@@ -44,21 +48,18 @@ public class AsteriskToNullConverter implements SQLConverter<String>,
 	 */
 	public Object sqlToJava(java.sql.ResultSet resultSet, String columnName)
 			throws java.sql.SQLException {
-		String value = resultSet.getString(columnName);
-		if (value == null || value.equals("*"))
-			return null;
-		return value;
+		return resultSet.getDate(columnName);
 	}
 
 	public Object javaToSql(Object obj) {
-		return obj == null ? "*" : null;
+		return obj;
 	}
 
 	public Object sqlToJava(Object obj) {
-		return obj == null || obj.equals("*") ? null : obj;
+		return obj;
 	}
 
 	public String columnName(String columnName) {
-		return columnName;
+		return "TRUNC(" + columnName + ")";
 	}
 }
