@@ -833,6 +833,7 @@ private Fattura_attiva_rigaIBulk copyByRigaDocumento(ActionContext context, Fatt
 	nuovoDettaglio.setTi_associato_manrev(origine.getTi_associato_manrev());
 	nuovoDettaglio.setTariffario(origine.getTariffario());
 	nuovoDettaglio.setBene_servizio(origine.getBene_servizio());
+	nuovoDettaglio.setTrovato(origine.getTrovato());
 	nuovoDettaglio.setToBeCreated();
 	return nuovoDettaglio;
 }
