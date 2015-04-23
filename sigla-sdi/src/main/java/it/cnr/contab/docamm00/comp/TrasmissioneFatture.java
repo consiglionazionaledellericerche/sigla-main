@@ -27,6 +27,8 @@ import it.gov.fatturapa.sdi.messaggi.v1.NotificaMancataConsegnaType;
 import it.gov.fatturapa.sdi.messaggi.v1.NotificaScartoType;
 import it.gov.fatturapa.sdi.messaggi.v1.RicevutaConsegnaType;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -50,6 +52,7 @@ import javax.xml.ws.soap.SOAPFaultException;
 
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jboss.wsf.spi.annotation.WebContext;
@@ -63,50 +66,45 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 	private static final Logger logger = Logger.getLogger(TrasmissioneFatture.class);
 	
 	public void ricevutaConsegna(FileSdIType ricevuta) {
-		RicevutaConsegnaType ricevutaConsegna = (RicevutaConsegnaType)getJAXBElement(ricevuta).getValue();
 		UserContext userContext = createUserContext();
 		try{
-			notificaFatturaAttivaRicevutaConsegna(userContext, ricevuta.getNomeFile(), ricevuta.getFile(), ricevutaConsegna);
+			notificaFatturaAttivaRicevutaConsegna(userContext, ricevuta.getNomeFile(), ricevuta.getFile());
 		} catch (Exception e) {
 			throw new SOAPFaultException(generaFault("Errore generico in fase di aggiornamento fattura per Ricevuta Consegna"));
 		}
 	}
 
 	public void notificaMancataConsegna(FileSdIType mancataConsegna) {
-		NotificaMancataConsegnaType notifica = (NotificaMancataConsegnaType)getJAXBElement(mancataConsegna).getValue();
 		UserContext userContext = createUserContext();
 		try{
-			notificaFatturaAttivaMancataConsegna(userContext, mancataConsegna.getNomeFile(), mancataConsegna.getFile(), notifica);
+			notificaFatturaAttivaMancataConsegna(userContext, mancataConsegna.getNomeFile(), mancataConsegna.getFile());
 		} catch (Exception e) {
 			throw new SOAPFaultException(generaFault("Errore generico in fase di aggiornamento fattura per Mancata Consegna"));
 		}
 	}
 
 	public void notificaScarto(FileSdIType scarto) {
-		NotificaScartoType notificaScarto = (NotificaScartoType)getJAXBElement(scarto).getValue();
 		UserContext userContext = createUserContext();
 		try{
-			notificaFatturaAttivaScarto(userContext, scarto.getNomeFile(), scarto.getFile(), notificaScarto);
+			notificaFatturaAttivaScarto(userContext, scarto.getNomeFile(), scarto.getFile());
 		} catch (Exception e) {
 			throw new SOAPFaultException(generaFault("Errore generico in fase di aggiornamento fattura per Notifica Scarto"));
 		}
 	}
 
 	public void notificaEsito(FileSdIType esito) {
-		NotificaEsitoType notifica = (NotificaEsitoType)getJAXBElement(esito).getValue();
 		UserContext userContext = createUserContext();
 		try{
-			notificaFatturaAttivaEsito(userContext, esito.getNomeFile(), esito.getFile(), notifica);
+			notificaFatturaAttivaEsito(userContext, esito.getNomeFile(), esito.getFile());
 		} catch (Exception e) {
 			throw new SOAPFaultException(generaFault("Errore generico in fase di aggiornamento fattura per Notifica Esito"));
 		}
 	}
 
 	public void notificaDecorrenzaTermini(FileSdIType decorrenzaTermini) {
-		NotificaDecorrenzaTerminiType decorrenzaTerminiType = (NotificaDecorrenzaTerminiType)getJAXBElement(decorrenzaTermini).getValue();
 		UserContext userContext = createUserContext();
 		try{
-			notificaFatturaAttivaDecorrenzaTermini(userContext, decorrenzaTermini.getNomeFile(), decorrenzaTermini.getFile(), decorrenzaTerminiType);
+			notificaFatturaAttivaDecorrenzaTermini(userContext, decorrenzaTermini.getNomeFile(), decorrenzaTermini.getFile());
 		} catch (Exception e) {
 			throw new SOAPFaultException(generaFault("Errore generico in fase di aggiornamento fattura per Decorrenza Termini"));
 		}
@@ -114,21 +112,21 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 
 	public void attestazioneTrasmissioneFattura(
 			FileSdIType attestazioneTrasmissioneFattura) {
-		AttestazioneTrasmissioneFatturaType attestazione = (AttestazioneTrasmissioneFatturaType)getJAXBElement(attestazioneTrasmissioneFattura).getValue();
 		UserContext userContext = createUserContext();
 		try{
-//TODO
+			notificaFatturaAttivaAvvenutaTrasmissioneNonRecapitata(userContext, attestazioneTrasmissioneFattura.getNomeFile(), attestazioneTrasmissioneFattura.getFile());
 		} catch (Exception e) {
 			throw new SOAPFaultException(generaFault("Errore generico in fase di aggiornamento fattura per Attestazione Trasmissione Fattura"));
 		}
 	}
 
-	public void notificaFatturaAttivaRicevutaConsegna(UserContext userContext, String nomeFile, DataHandler data, RicevutaConsegnaType ricevuta) throws ComponentException {
-
+	public void notificaFatturaAttivaRicevutaConsegna(UserContext userContext, String nomeFile, DataHandler data) throws ComponentException {
 		FatturaElettronicaAttivaComponentSession component = recuperoComponentFatturaElettronicaAttiva();
 		try{
+			JAXBElement<RicevutaConsegnaType> file = (JAXBElement<RicevutaConsegnaType>)getJAXBElement(data);
+			RicevutaConsegnaType ricevuta = file.getValue();
 			logger.info("Fatture Elettroniche: Attive: Ricevuta Consegna. MessageId:"+ricevuta.getMessageId());
-			
+
 			Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, ricevuta.getIdentificativoSdI().toString());
 			if (fattura != null){
 				logger.info("Fatture Elettroniche: Attive: Fattura già elaborata "+ricevuta.getIdentificativoSdI().toString());
@@ -183,9 +181,11 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 		}
 	}
 
-	public void notificaFatturaAttivaMancataConsegna(UserContext userContext, String nomeFile, DataHandler data, NotificaMancataConsegnaType mancataConsegna) throws ComponentException {
+	public void notificaFatturaAttivaMancataConsegna(UserContext userContext, String nomeFile, DataHandler data) throws ComponentException {
 		FatturaElettronicaAttivaComponentSession component = recuperoComponentFatturaElettronicaAttiva();
 		try {
+			JAXBElement<NotificaMancataConsegnaType> file = (JAXBElement<NotificaMancataConsegnaType>)getJAXBElement(data);
+			NotificaMancataConsegnaType mancataConsegna = file.getValue();
 			logger.info("Fatture Elettroniche: Attive: Mancata Consegna. MessageId:"+mancataConsegna.getMessageId());
 			String codiceSDI = String.valueOf(mancataConsegna.getIdentificativoSdI());
 			Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, codiceSDI);
@@ -215,9 +215,11 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 		}
 	}
 	
-	public void notificaFatturaAttivaAvvenutaTrasmissioneNonRecapitata(UserContext userContext, String nomeFile, DataHandler data, AttestazioneTrasmissioneFatturaType notifica) throws ComponentException {
+	public void notificaFatturaAttivaAvvenutaTrasmissioneNonRecapitata(UserContext userContext, String nomeFile, DataHandler data) throws ComponentException {
 		FatturaElettronicaAttivaComponentSession component = recuperoComponentFatturaElettronicaAttiva();
 		try {
+			JAXBElement<AttestazioneTrasmissioneFatturaType> file = (JAXBElement<AttestazioneTrasmissioneFatturaType>)getJAXBElement(data);
+			AttestazioneTrasmissioneFatturaType notifica = file.getValue();
 			logger.info("Fatture Elettroniche: Attive: Trasmissione non recapitata. MessageId:"+notifica.getMessageId());
 			String codiceSDI = String.valueOf(notifica.getIdentificativoSdI());
 			Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, codiceSDI);
@@ -254,9 +256,11 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 			logger.info("Fatture Elettroniche: Attive: Pec: Notifica Consegna Nome File: "+nomeFile);
 			Fattura_attivaBulk fattura = recuperoFatturaDaNomeFile(userContext, nomeFile);
 			if (fattura != null){
-				if (fattura.getStatoInvioSdi() != null && fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI)){
+				if (fattura.getStatoInvioSdi() != null && 
+						(fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI))){
 					logger.info("Fatture Elettroniche: Attive: PEC. Fattura già elaborata. "+nomeFile);
-				} else {
+				} else if (fattura.getStatoInvioSdi() != null && 
+						(fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_INVIATA_SDI))){
 					try{
 						component.aggiornaFatturaConsegnaSDI(userContext, fattura, dataConsegna);
 						logger.info("Fatture Elettroniche: Attive: PEC. Aggiornamento Fattura consegnata a SDI "+nomeFile);
@@ -266,6 +270,8 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 						ex.printStackTrace(new java.io.PrintWriter(sw));
 						SendMail.sendErrorMail("Fatture Elettroniche: Attive: PEC. Nome file "+nomeFile, sw.toString());
 					}
+				} else {
+					logger.info("Fatture Elettroniche: Attive: PEC. Fattura con uno stato di lavorazione avanzato. "+nomeFile + ". Stato: "+fattura.getStatoInvioSdi());
 				}
 			} else {
 				logger.warn("Fatture Elettroniche: Attive: PEC. Per il nome del file indicato nell'e-mail di Consegna della PEC non corrisponde nessuna fattura." + nomeFile);
@@ -276,9 +282,11 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 		}
 	}
 
-	public void notificaFatturaAttivaScarto(UserContext userContext, String nomeFile, DataHandler data, NotificaScartoType notifica) throws ComponentException {
+	public void notificaFatturaAttivaScarto(UserContext userContext, String nomeFile, DataHandler data) throws ComponentException {
 		FatturaElettronicaAttivaComponentSession component = recuperoComponentFatturaElettronicaAttiva();
 		try {
+			JAXBElement<NotificaScartoType> file = (JAXBElement<NotificaScartoType>)getJAXBElement(data);
+			NotificaScartoType notifica = file.getValue();
 			logger.info("Fatture Elettroniche: Attive: Notifica Scarto. MessageId:"+notifica.getMessageId());
 			String codiceSDI = String.valueOf(notifica.getIdentificativoSdI());
 			Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, codiceSDI);
@@ -309,9 +317,11 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 		}
 	}
 
-	public void notificaFatturaAttivaDecorrenzaTermini(UserContext userContext, String nomeFile, DataHandler data, NotificaDecorrenzaTerminiType notifica) throws ComponentException {
+	public void notificaFatturaAttivaDecorrenzaTermini(UserContext userContext, String nomeFile, DataHandler data) throws ComponentException {
 		FatturaElettronicaAttivaComponentSession component = recuperoComponentFatturaElettronicaAttiva();
 		try {
+			JAXBElement<NotificaDecorrenzaTerminiType> file = (JAXBElement<NotificaDecorrenzaTerminiType>)getJAXBElement(data);
+			NotificaDecorrenzaTerminiType notifica = file.getValue();
 			logger.info("Fatture Elettroniche: Attive: Decorrenza Termini. MessageId:"+notifica.getMessageId());
 			String identificativoSdi = String.valueOf(notifica.getIdentificativoSdI());
 			Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, identificativoSdi);
@@ -341,9 +351,11 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 		}
 	}
 	
-	public void notificaFatturaAttivaEsito(UserContext userContext, String nomeFile, DataHandler data, NotificaEsitoType notifica) throws ComponentException {
+	public void notificaFatturaAttivaEsito(UserContext userContext, String nomeFile, DataHandler data) throws ComponentException {
 		FatturaElettronicaAttivaComponentSession component = recuperoComponentFatturaElettronicaAttiva();
 		try {
+			JAXBElement<NotificaEsitoType> file = (JAXBElement<NotificaEsitoType>)getJAXBElement(data);
+			NotificaEsitoType notifica = file.getValue();
 			logger.info("Fatture Elettroniche: Attive: Esito. MessageId:"+notifica.getMessageId());
 			String identificativoSdi = String.valueOf(notifica.getIdentificativoSdI());
 			Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, identificativoSdi);
@@ -451,6 +463,17 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 	private UserContext createUserContext(){
     	UserContext userContext = new WSUserContext("SDI",null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
     	return userContext;
+	}
+
+	private JAXBElement<?> getJAXBElement(DataHandler data) throws ComponentException {
+		ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+		try{
+			IOUtils.copy(data.getInputStream(), bStream);
+			JAXBContext jc = JAXBContext.newInstance("it.gov.fatturapa.sdi.messaggi.v1");
+			return (JAXBElement<?>)jc.createUnmarshaller().unmarshal(new ByteArrayInputStream(bStream.toByteArray()));
+		} catch (Exception e) {
+			throw new ComponentException(e);
+		}
 	}
 
 	private JAXBElement<?> getJAXBElement(FileSdIType fileSdiType) {
