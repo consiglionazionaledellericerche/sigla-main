@@ -310,9 +310,9 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		return toolbar;
 	}
 	/**
-	 * Restituisce il valore della proprietï¿½ 'salvaDefinitivoButtonEnabled'
+	 * Restituisce il valore della proprietà 'salvaDefinitivoButtonEnabled'
 	 *
-	 * @return Il valore della proprietï¿½ 'salvaDefinitivoButtonEnabled'
+	 * @return Il valore della proprietà 'salvaDefinitivoButtonEnabled'
 	 */
 	public boolean isSalvaDefinitivoButtonEnabled() {
 

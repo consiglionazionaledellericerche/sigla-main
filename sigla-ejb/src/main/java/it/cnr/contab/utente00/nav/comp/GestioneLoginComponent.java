@@ -70,7 +70,7 @@ public class GestioneLoginComponent
 	/** 
 	  *  normale
 	  *    PreCondition:
-	  *      Una richiesta viene fatto per la modifica della password. L'utente è chiesto di scrivere la password vecchia e due volte la password nuova.
+	  *      Una richiesta viene fatto per la modifica della password. L'utente ï¿½ chiesto di scrivere la password vecchia e due volte la password nuova.
 	  *      
 	  *      Dato un'oggetto UtenteBulk che contiene le informazione dell'utente e la password vecchia (criptata) che ha digitato l'utente, e la password nuova (criptata) che ha digitata l'utente,
 	  *    PostCondition:
@@ -139,15 +139,15 @@ public class GestioneLoginComponent
 	  *    PreCondition:
 	  *      Dato un'istanza di UTENTE specificata dall'parametro UtenteBulk un'istanza di ALBERO_MAIN specificata dall'attributo CD_NODO, e un numero di livelli specificato dal parametro num_livelli
 	  *    PostCondition:
-	  *      sarà restituito un'oggetto ALBERO_MAINBULK che contiene le informazioni per l'istanza ALBERO_MAIN che corrisponde al CD_NODO, più la gerarchia dell'albero di funzioni a cui l'utente ha accesso per numero di livelli NUM_LIVELLI e cominciando dal nodo CD_NODO
+	  *      sarï¿½ restituito un'oggetto ALBERO_MAINBULK che contiene le informazioni per l'istanza ALBERO_MAIN che corrisponde al CD_NODO, piï¿½ la gerarchia dell'albero di funzioni a cui l'utente ha accesso per numero di livelli NUM_LIVELLI e cominciando dal nodo CD_NODO
 	 */
 	//^^@@
 	public Albero_mainBulk generaAlberoPerUtente(UserContext userContext,UtenteBulk utente,String cd_unita_organizzativa,String cd_nodo,short num_livelli) throws it.cnr.jada.comp.ComponentException {
 		try {
 	        Integer esercizio = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext);
 	        if (cd_unita_organizzativa == null) {
-		        // Se l'utente non ha selezionato l'unità organizzativa la lista
-		        // dei nodi è indipendente anche dall'esercizio; 
+		        // Se l'utente non ha selezionato l'unitï¿½ organizzativa la lista
+		        // dei nodi ï¿½ indipendente anche dall'esercizio; 
 	        	cd_unita_organizzativa = "*";
 	        	esercizio = new Integer(0);
 	        }
@@ -210,12 +210,12 @@ public class GestioneLoginComponent
 	  *      Dato un'istanza di UTENTE amminstratore o superutente 
 	  *		specificata dal parametro UtenteBulk 
 	  *    PostCondition:
-	  *      sarà restituito un array di tutti gli esercizi disponibili
+	  *      sarï¿½ restituito un array di tutti gli esercizi disponibili
 	  *  normale
 	  *    PreCondition:
 	  *      Dato un'istanza di UTENTE specificata dal parametro UtenteBulk 
 	  *    PostCondition:
-	  *      sarà restituito un array degli esercizi su cui l'utente
+	  *      sarï¿½ restituito un array degli esercizi su cui l'utente
 	  * 	 possiede almeno un accesso su qualche unita organizzativa
 	  *		 (possiede direttamente o tramite i ruoli o l'utente template)
 	 */
@@ -270,7 +270,7 @@ public class GestioneLoginComponent
 	  *      Dato un'istanza di UTENTE COMUNE specificata dal parametro UtenteBulk
 	  * 	 e un esercizio
 	  *    PostCondition:
-	  *      sarà restituito un iteratore sulla collezione di unità organizzative
+	  *      sarï¿½ restituito un iteratore sulla collezione di unitï¿½ organizzative
 	  *		 per cui l'utente possiede almeno un accesso per l'esercizio specificato
 	  *		 (possiede direttamente o tramite i ruoli o l'utente template). Per ogni
 	  *		 unita organizzativa CDS presente nella collezione devono essere presenti
@@ -440,11 +440,11 @@ public class GestioneLoginComponent
 	  * 	 un esercizio, il codice di una unita organizzativa e il nome di un
 	  *		 BusinessProcess
 	  *    PostCondition:
-	  *      sarà restituita la modalità di visualizzazione per il BusinessProcess
-	  * 	 in base agli accessi posseduti dall'utente. La modalità di visualizzazione
-	  *		 è determinata dai nodi di ALBERO_MAIN disponibili all'utente
+	  *      sarï¿½ restituita la modalitï¿½ di visualizzazione per il BusinessProcess
+	  * 	 in base agli accessi posseduti dall'utente. La modalitï¿½ di visualizzazione
+	  *		 ï¿½ determinata dai nodi di ALBERO_MAIN disponibili all'utente
 	  *		 in base ai suoi accessi che posseggono il BusinessProcess specificato.
-	  * 	 In caso di più nodi disponibili viene restituita la modalità di 
+	  * 	 In caso di piï¿½ nodi disponibili viene restituita la modalitï¿½ di 
 	  *		 visualizzazione meno restrittiva
 	 */
 	//^^@@
@@ -499,6 +499,67 @@ public class GestioneLoginComponent
 			throw handleException(e);
 		}
 	}
+	/** 
+	  *  normale
+	  *    PreCondition:
+	  *      Dato un'istanza di UTENTE COMUNE specificata dal parametro UtenteBulk,
+	  * 	 un esercizio, il codice di una unita organizzativa e il nome di un
+	  *		 BusinessProcess
+	  *    PostCondition:
+	  *      sarï¿½ restituita la modalitï¿½ di visualizzazione per il BusinessProcess
+	  * 	 in base agli accessi posseduti dall'utente. La modalitï¿½ di visualizzazione
+	  *		 ï¿½ determinata dai nodi di ALBERO_MAIN disponibili all'utente
+	  *		 in base ai suoi accessi che posseggono il BusinessProcess specificato.
+	  * 	 In caso di piï¿½ nodi disponibili viene restituita la modalitï¿½ di 
+	  *		 visualizzazione meno restrittiva
+	 */
+	public boolean isBPEnableForUser(UserContext userContext, UtenteBulk utente, String cd_unita_organizzativa, String bp) throws it.cnr.jada.comp.ComponentException {
+		try {
+	        Integer esercizio = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext);	        
+		    SQLBuilder sql = new SQLBuilder();
+		    sql.setHeader("SELECT CD_ACCESSO, CD_UNITA_ORGANIZZATIVA");
+		    sql.addTableToHeader("V_ASS_BP_ACCESSO_UNITA_UTENTE");
+		    if (cd_unita_organizzativa != null)
+		    	sql.addSQLClause("AND","CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,cd_unita_organizzativa);
+			sql.addSQLClause("AND","BUSINESS_PROCESS",SQLBuilder.EQUALS,bp);
+			sql.addSQLClause("AND","CD_UTENTE",SQLBuilder.EQUALS,utente.getCd_utente());
+		    if (esercizio != null)
+		    	sql.addSQLClause("AND","ESERCIZIO",SQLBuilder.EQUALS,esercizio);			
+			LoggableStatement stm = sql.prepareStatement(getConnection(userContext));
+			try {
+				java.sql.ResultSet rs = stm.executeQuery();
+				String accesso = null, uo = null;
+				while(rs.next()) {
+                   accesso = rs.getString("CD_ACCESSO");
+                   uo = rs.getString("CD_UNITA_ORGANIZZATIVA");
+					if (utente.getFl_attiva_blocco() && accesso!=null){
+						PersistentHome ruoloBloccoHome = getHomeCache(userContext).getHome(Ruolo_bloccoBulk.class);
+						SQLBuilder sqlRuoloBlocco = ruoloBloccoHome.createSQLBuilder();
+						sqlRuoloBlocco.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS, esercizio);
+						sqlRuoloBlocco.addClause(FindClause.AND,"fl_attivo",SQLBuilder.EQUALS, Boolean.TRUE);
+						sqlRuoloBlocco.addTableToHeader("RUOLO_ACCESSO");
+						sqlRuoloBlocco.addSQLJoin("RUOLO_BLOCCO.CD_RUOLO", "RUOLO_ACCESSO.CD_RUOLO");
+						sqlRuoloBlocco.addSQLClause(FindClause.AND,"RUOLO_ACCESSO.CD_ACCESSO",SQLBuilder.EQUALS, accesso);
+						if (!ruoloBloccoHome.fetchAll(sqlRuoloBlocco).isEmpty())
+							return false;
+					}
+					try {
+						rs.close();
+					}catch( java.sql.SQLException e ){};
+			        Unita_organizzativa_enteHome home = (Unita_organizzativa_enteHome)getHome(userContext, Unita_organizzativa_enteBulk.class);
+			        Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk)home.fetchAll(home.createSQLBuilder()).get(0);
+					if (cd_unita_organizzativa == null && !uo.equals(uoEnte.getCd_unita_organizzativa()))
+						return false;					
+					return true;
+				}
+				return false;
+			} finally {
+				try{stm.close();}catch( java.sql.SQLException e ){};
+			}
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
+	}	
 	/** 
 	  *  normale
 	  *    PreCondition:
@@ -558,7 +619,7 @@ public class GestioneLoginComponent
 	  *    PreCondition:
 	  *      Dato un oggetto che contiene il CD_UTENTE e la password digitati dall'utente che richiede accesso all'applicazione
 	  *    PostCondition:
-	  *      Se l'utente esiste in base dati, se la password corrisponde a quella in base dati, sarà restituito l'oggetto UtenteBulk.
+	  *      Se l'utente esiste in base dati, se la password corrisponde a quella in base dati, sarï¿½ restituito l'oggetto UtenteBulk.
 	  *      Altrimenti si fa un Throw di un'eccezione.
 	 */
 	//^^@@
@@ -566,7 +627,7 @@ public class GestioneLoginComponent
 		try {
 			/* se faseValidazione==VALIDA_NUOVO_UTENTE_LDAP significa che proveniamo
 			 * da una situazione di UtenteLdapNuovo
-			 * cioè l'utente sta inserendo la vecchia utenza sigla e la nuova ldap
+			 * cioï¿½ l'utente sta inserendo la vecchia utenza sigla e la nuova ldap
 			 * e va aggiornato il record utente con il nuovo userid ldap
 			 * 
 			 * se faseValidazione==VALIDA_FASE_INIZIALE si presume che l'utente abbia
@@ -574,10 +635,10 @@ public class GestioneLoginComponent
 			 *
 			 * se faseValidazione==VALIDA_NUOVO_UTENTE_LDAP_ANNULLA si controlla
 			 * che l'utente possa ancora usare il login sigla e il controllo della
-			 * validità della password è stato fatto al primo passaggio
+			 * validitï¿½ della password ï¿½ stato fatto al primo passaggio
 			 *
 			 * se faseValidazione==VALIDA_FASE_INIZIALE_UTENTE_MULTIPLO significa
-			 * che è stato inserito l'utente di login ldap ed è stato scelto uno degli
+			 * che ï¿½ stato inserito l'utente di login ldap ed ï¿½ stato scelto uno degli
 			 * N utenti sigla collegati a qusto utente ldap */
 			if (utente.getCd_utente()==null)
 				return null;
@@ -585,7 +646,7 @@ public class GestioneLoginComponent
 			if (faseValidazione!=VALIDA_NUOVO_UTENTE_LDAP)
 				utente.setCd_utente_uid(utente.getCd_utente().toLowerCase());	
 			
-			// verifichiamo che tipo di autenticazione è ora attiva sui parametri ente
+			// verifichiamo che tipo di autenticazione ï¿½ ora attiva sui parametri ente
 		   	Parametri_enteHome enteHome = (Parametri_enteHome)getHome(userContext, Parametri_enteBulk.class);
 			SQLBuilder sqlEnte = enteHome.createSQLBuilder();
 			sqlEnte.addClause("AND","attivo",sqlEnte.EQUALS,new Boolean(true));
@@ -642,8 +703,8 @@ public class GestioneLoginComponent
 				else {
 					home = (UtenteHome)getHome(userContext,utente);
 					utenteReale = (UtenteBulk)home.findByPrimaryKey(utente,false);
-					// se è stato trovato l'utente con login digitato = cd_utente
-					// controlliamo se è obbligato ad autenticarsi con ldap
+					// se ï¿½ stato trovato l'utente con login digitato = cd_utente
+					// controlliamo se ï¿½ obbligato ad autenticarsi con ldap
 					if (utenteReale!=null) {
 						if (utenteReale.isAutenticazioneLdap()) {
 							// se siamo nel primo controllo di login controlliamo
@@ -665,7 +726,7 @@ public class GestioneLoginComponent
 							}
 						}
 						else {
-							// verifichiamo se è un utente nuovo creato in sigla (dt_ultima_var_password nulla)
+							// verifichiamo se ï¿½ un utente nuovo creato in sigla (dt_ultima_var_password nulla)
 							if (utenteReale.getDt_ultima_var_password()==null)
 								return utenteReale;
 						}
@@ -675,7 +736,7 @@ public class GestioneLoginComponent
 						java.util.Calendar calNow = java.util.Calendar.getInstance();
 						calNow.setTime(currDate);
 						
-						// verifichiamo se esiste ed è valido in ldap, in tal caso dobbiamo
+						// verifichiamo se esiste ed ï¿½ valido in ldap, in tal caso dobbiamo
 						// informare l'utente che non ha profilo/utenza in SIGLA
 						UtenteBulk utenteLdap = new UtenteBulk();
 						utenteLdap.setCd_utente_uid(utente.getCd_utente_uid()!=null?utente.getCd_utente_uid().toLowerCase():null);
@@ -714,7 +775,7 @@ public class GestioneLoginComponent
 				utenteReale.getDt_ultimo_accesso() != null && cal2.getTime().after(utenteReale.getDt_ultimo_accesso()))
 				throw new UtenteInDisusoException();
 			// questo controllo lo deve fare solo se non va autenticato su ldap,
-			// in quanto il controllo della data nulla non ha senso perchè viene
+			// in quanto il controllo della data nulla non ha senso perchï¿½ viene
 			// valorizzata sul server ldap stesso
 			if (utenteReale.getDt_ultima_var_password() == null)
 				if(!ente.isAutenticazioneLdap() || !utenteReale.isAutenticazioneLdap())
@@ -725,17 +786,17 @@ public class GestioneLoginComponent
 				/* ora sono possibili due situazioni, nella prima l'utente ha inserito
 				 * il nuovo login e la nuova password, nella seconda ha annullato l'inserimento
 				 * cosa possibile in determinati casi da verificare, in tal caso la validazione
-				 * è fatta solo sul db SIGLA e non su LDAP
+				 * ï¿½ fatta solo sul db SIGLA e non su LDAP
 				 */
 				if (faseValidazione==VALIDA_NUOVO_UTENTE_LDAP_ANNULLA) {
 					// verifichiamo che possa rimandare la validazione su LDAP
 					if (ente.getDt_ldap_migrazione()==null || currDate.after(ente.getDt_ldap_migrazione()))
 						return null;
 	
-					// la password SIGLA immessa è stata verificata al primo passaggio
+					// la password SIGLA immessa ï¿½ stata verificata al primo passaggio
 					
 					// nella fase transitoria al passaggio su ldap non verifichiamo la data
-					// ultima variazione e la password scaduta anche perchè andrebbe in errore
+					// ultima variazione e la password scaduta anche perchï¿½ andrebbe in errore
 					/*
 					java.sql.Timestamp dtUltimaVarPassword = utenteReale.getDt_ultima_var_password();
 					if (dtUltimaVarPassword==null)
@@ -759,7 +820,7 @@ public class GestioneLoginComponent
 					utenteReale.setCd_utente_uid(utente.getCd_utente_uid()!=null?utente.getCd_utente_uid().toLowerCase():null);
 					utenteReale.setLdap_password(utente.getLdap_password());
 					if (faseValidazione==VALIDA_NUOVO_UTENTE_LDAP)
-						// in tal caso l'utente si è già autenticato con vecchia autenticazione
+						// in tal caso l'utente si ï¿½ giï¿½ autenticato con vecchia autenticazione
 						// e dobbiamo eventualmente effettuare in automatico l'abilitazione a SIGLA in LDAP
 						utenteReale = validaUtenteLdap(userContext, utenteReale, ente, calNow, LdapLogin.ABILITA_UTENTE_IN_LDAP_TRUE);
 					else
@@ -817,7 +878,7 @@ public class GestioneLoginComponent
 		try {
 			boolean userValidated = false;
 	
-			// cerchiamo i server LDAP su cui effettuare l'autenticazione per ordine di priorità 
+			// cerchiamo i server LDAP su cui effettuare l'autenticazione per ordine di prioritï¿½ 
 	        Ldap_serverHome home = (Ldap_serverHome) getHomeCache(userContext).getHome(Ldap_serverBulk.class);
 	        it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
 	        sql.addClause("AND","fl_attivo",sql.EQUALS,new Boolean(true));
@@ -844,7 +905,7 @@ public class GestioneLoginComponent
 					if (!it.hasNext())
 						throw new ApplicationException(e.getMessage());
 				} catch (UtenteNonAbilitatoException e) {
-					// per ora se l'utente non è abilitato
+					// per ora se l'utente non ï¿½ abilitato
 					// facciamo il giro fino al master in modo
 					// che possa essere immediatamente abilitato
 					if (!it.hasNext())
@@ -879,13 +940,13 @@ public class GestioneLoginComponent
 	
 	public String[] getLdapUserFromMatricola(UserContext userContext, Integer matricola) throws it.cnr.jada.comp.ComponentException {
 		try {
-			// verifichiamo che tipo di autenticazione è ora attiva sui parametri ente
+			// verifichiamo che tipo di autenticazione ï¿½ ora attiva sui parametri ente
 		   	Parametri_enteHome enteHome = (Parametri_enteHome)getHome(userContext, Parametri_enteBulk.class);
 			SQLBuilder sqlEnte = enteHome.createSQLBuilder();
 			sqlEnte.addClause("AND","attivo",sqlEnte.EQUALS,new Boolean(true));
 			Parametri_enteBulk ente = (Parametri_enteBulk) getHome(userContext, Parametri_enteBulk.class).fetchAll(sqlEnte).get(0);
 	
-			// cerchiamo i server LDAP su cui effettuare l'autenticazione per ordine di priorità 
+			// cerchiamo i server LDAP su cui effettuare l'autenticazione per ordine di prioritï¿½ 
 	        Ldap_serverHome home = (Ldap_serverHome) getHomeCache(userContext).getHome(Ldap_serverBulk.class);
 	        it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
 	        sql.addClause("AND","fl_attivo",sql.EQUALS,new Boolean(true));
@@ -923,13 +984,13 @@ public class GestioneLoginComponent
 	
 	public boolean isUtenteAbilitatoLdap(UserContext userContext,String userID, boolean masterLdap) throws it.cnr.jada.comp.ComponentException {
 		try {
-			// verifichiamo che tipo di autenticazione è ora attiva sui parametri ente
+			// verifichiamo che tipo di autenticazione ï¿½ ora attiva sui parametri ente
 		   	Parametri_enteHome enteHome = (Parametri_enteHome)getHome(userContext, Parametri_enteBulk.class);
 			SQLBuilder sqlEnte = enteHome.createSQLBuilder();
 			sqlEnte.addClause("AND","attivo",sqlEnte.EQUALS,new Boolean(true));
 			Parametri_enteBulk ente = (Parametri_enteBulk) getHome(userContext, Parametri_enteBulk.class).fetchAll(sqlEnte).get(0);
 	
-			// cerchiamo i server LDAP su cui effettuare l'autenticazione per ordine di priorità 
+			// cerchiamo i server LDAP su cui effettuare l'autenticazione per ordine di prioritï¿½ 
 	        Ldap_serverHome home = (Ldap_serverHome) getHomeCache(userContext).getHome(Ldap_serverBulk.class);
 	        it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
 	        sql.addClause("AND","fl_attivo",sql.EQUALS,new Boolean(true));
@@ -983,13 +1044,13 @@ public class GestioneLoginComponent
 	 */
 	public void cambiaAbilitazioneUtente(UserContext userContext,String userID, boolean abilita) throws it.cnr.jada.comp.ComponentException {
 		try {
-			// verifichiamo che tipo di autenticazione è ora attiva sui parametri ente
+			// verifichiamo che tipo di autenticazione ï¿½ ora attiva sui parametri ente
 		   	Parametri_enteHome enteHome = (Parametri_enteHome)getHome(userContext, Parametri_enteBulk.class);
 			SQLBuilder sqlEnte = enteHome.createSQLBuilder();
 			sqlEnte.addClause("AND","attivo",sqlEnte.EQUALS,new Boolean(true));
 			Parametri_enteBulk ente = (Parametri_enteBulk) getHome(userContext, Parametri_enteBulk.class).fetchAll(sqlEnte).get(0);
 	
-			// cerchiamo i server LDAP su cui effettuare l'autenticazione per ordine di priorità 
+			// cerchiamo i server LDAP su cui effettuare l'autenticazione per ordine di prioritï¿½ 
 	        Ldap_serverHome home = (Ldap_serverHome) getHomeCache(userContext).getHome(Ldap_serverBulk.class);
 	        it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
 	        sql.addClause("AND","fl_attivo",sql.EQUALS,new Boolean(true));
@@ -1028,7 +1089,7 @@ public class GestioneLoginComponent
 	}
 	public ApplicationServerBulk validaServerAttivo(UserContext userContext,ApplicationServerBulk server) throws it.cnr.jada.comp.ComponentException {
 		try {
-			// se è presente una riga con hostname = '*' 
+			// se ï¿½ presente una riga con hostname = '*' 
 			// la regola vale per tutti i server
 			ApplicationServerBulk allservers = new ApplicationServerBulk();
 			allservers.setHostname("*");
@@ -1058,7 +1119,7 @@ public class GestioneLoginComponent
 	
 	public ApplicationServerBulk validaServerLogin(UserContext userContext,ApplicationServerBulk server) throws it.cnr.jada.comp.ComponentException {
 		try {
-			// se è presente una riga con hostname = '*' 
+			// se ï¿½ presente una riga con hostname = '*' 
 			// la regola vale per tutti i server
 			ApplicationServerBulk allservers = new ApplicationServerBulk();
 			allservers.setHostname("*");
