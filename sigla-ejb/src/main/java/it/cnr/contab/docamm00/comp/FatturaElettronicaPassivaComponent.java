@@ -153,7 +153,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
         		String subject= "[SIGLA] Notifica ricezione fattura passiva con Identificativo SdI:" + documentoEleTrasmissioneBulk.getIdentificativoSdi();
         		String text = "E' pervenuta la fattura dal trasmittente: <b>" +documentoEleTrasmissioneBulk.getIdCodice() + "</b><br>"+
         				"Prestatore: " + documentoEleTrasmissioneBulk.getDenominzionePrestatore() +"<br>" +
-        				"Il documento ï¿½ presente nell'area temporanea di SIGLA.";
+        				"Il documento è presente nell'area temporanea di SIGLA.";
         		String addressTO = null;
         		Utente_indirizzi_mailHome utente_indirizzi_mailHome = (Utente_indirizzi_mailHome)getHome(usercontext,Utente_indirizzi_mailBulk.class);
     			for (java.util.Iterator<Utente_indirizzi_mailBulk> i = utente_indirizzi_mailHome.findUtenteNotificaRicezioneFatturaElettronica(
@@ -183,7 +183,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
         					documentoEleTrasmissioneBulk.setPrestatore(terzi.get(0));
         				}
         			} else {
-        				anomalieTrasmissione.add("Esistono piï¿½ di una riga in anagrafica per il CF:" + 
+        				anomalieTrasmissione.add("Esistono più di una riga in anagrafica per il CF:" + 
         						documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale() +" o la partita IVA: " + 
         						documentoEleTrasmissioneBulk.getPrestatoreCodice());
         			}
@@ -203,7 +203,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
         					documentoEleTrasmissioneBulk.setRappresentante(terzi.get(0));
         				}
         			} else {
-        				anomalieTrasmissione.add("Esistono piï¿½ di una riga in anagrafica per il CF:" + 
+        				anomalieTrasmissione.add("Esistono più di una riga in anagrafica per il CF:" + 
         						documentoEleTrasmissioneBulk.getRappresentanteCodicefiscale() +" o la partita IVA: " + 
         						documentoEleTrasmissioneBulk.getRappresentanteCodice());
         			}
@@ -223,7 +223,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
         					documentoEleTrasmissioneBulk.setIntermediario(terzi.get(0));
         				}
         			} else {
-        				anomalieTrasmissione.add("Esistono piï¿½ di una riga in anagrafica per il CF:" + 
+        				anomalieTrasmissione.add("Esistono più di una riga in anagrafica per il CF:" + 
         						documentoEleTrasmissioneBulk.getIntermediarioCodicefiscale() +" o la partita IVA: " + 
         						documentoEleTrasmissioneBulk.getIntermediarioCodice());
         			}
@@ -250,7 +250,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
                 		}
 					}
                 	if (!trovataModPag) {                		
-                		anomalieTestata.add("Modalitï¿½ di pagamento non trovata");
+                		anomalieTestata.add("Modalità di pagamento non trovata");
                 	}
         		}
     			if (!anomalieTestata.isEmpty())
