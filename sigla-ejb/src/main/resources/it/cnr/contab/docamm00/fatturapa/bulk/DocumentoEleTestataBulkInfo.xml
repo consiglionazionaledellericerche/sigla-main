@@ -563,6 +563,14 @@
 		keysProperty="decorrenzaTerminiKeys"
 		label="Decorrenza Termini" />
 	<fieldProperty
+		name="statoNotificaEsito"
+		property="statoNotificaEsito"
+		maxLength="100"
+		inputSize="100"
+		inputType="SELECT"
+		keysProperty="statoNotificaEsitoKeys"
+		label="Stato Notifica Esito" />
+	<fieldProperty
 		name="statoDocumento"
 		property="statoDocumento"
 		inputType="SELECT"
@@ -573,6 +581,15 @@
 		enabledOnEdit="false"
 		enabledOnSearch="true"
 		label="Stato Documento" />
+	<fieldProperty
+		name="statoNotificaEsitoVisual"
+		property="statoNotificaEsitoVisual"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Stato Notifica Esito" />
 	<fieldProperty
 		name="statoDocumentoVisual"
 		property="statoDocumento"
@@ -973,6 +990,8 @@
 	<formFieldProperty
 		name="statoDocumentoVisual" />
 	<formFieldProperty
+		name="statoNotificaEsitoVisual" />
+	<formFieldProperty
 		name="ricevutaDecorrenza" />
 	<formFieldProperty
 		name="motivoRifiuto" />
@@ -1191,4 +1210,6 @@
 		name="statoDocumento" />
 	<columnFieldProperty
 		name="flDecorrenzaTermini" />
+	<columnFieldProperty
+		name="statoNotificaEsito" />
 </bulkInfo>

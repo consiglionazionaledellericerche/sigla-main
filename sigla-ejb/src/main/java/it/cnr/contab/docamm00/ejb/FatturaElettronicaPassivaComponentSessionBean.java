@@ -219,10 +219,50 @@ public class FatturaElettronicaPassivaComponentSessionBean extends it.cnr.jada.e
             throw uncaughtError(usercontext, componentObj, error);
         }
 	}
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void aggiornaDecorrenzaTerminiSDI(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc) throws PersistencyException, ComponentException,java.rmi.RemoteException {
         pre_component_invocation(userContext, componentObj);
         try{
         	((FatturaElettronicaPassivaComponent)componentObj).aggiornaDecorrenzaTerminiSDI(userContext, listaDoc);
+            component_invocation_succes(userContext, componentObj);
+        }catch(NoRollbackException norollbackexception){
+            component_invocation_succes(userContext, componentObj);
+            throw norollbackexception;
+        }catch(ComponentException componentexception){
+            component_invocation_failure(userContext, componentObj);
+            throw componentexception;
+        }catch(RuntimeException runtimeexception){
+            throw uncaughtRuntimeException(userContext, componentObj, runtimeexception);
+        }catch(Error error){
+            throw uncaughtError(userContext, componentObj, error);
+        }
+	}
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public void aggiornaConsegnaEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc) throws PersistencyException, ComponentException,java.rmi.RemoteException {
+        pre_component_invocation(userContext, componentObj);
+        try{
+        	((FatturaElettronicaPassivaComponent)componentObj).aggiornaConsegnaEsitoPec(userContext, listaDoc);
+            component_invocation_succes(userContext, componentObj);
+        }catch(NoRollbackException norollbackexception){
+            component_invocation_succes(userContext, componentObj);
+            throw norollbackexception;
+        }catch(ComponentException componentexception){
+            component_invocation_failure(userContext, componentObj);
+            throw componentexception;
+        }catch(RuntimeException runtimeexception){
+            throw uncaughtRuntimeException(userContext, componentObj, runtimeexception);
+        }catch(Error error){
+            throw uncaughtError(userContext, componentObj, error);
+        }
+	}
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public void aggiornaScartoEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc) throws PersistencyException, ComponentException,java.rmi.RemoteException {
+        pre_component_invocation(userContext, componentObj);
+        try{
+        	((FatturaElettronicaPassivaComponent)componentObj).aggiornaScartoEsitoPec(userContext, listaDoc);
             component_invocation_succes(userContext, componentObj);
         }catch(NoRollbackException norollbackexception){
             component_invocation_succes(userContext, componentObj);

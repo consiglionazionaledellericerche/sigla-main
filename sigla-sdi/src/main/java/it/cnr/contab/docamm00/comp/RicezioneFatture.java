@@ -5,6 +5,7 @@ import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.cmis.CMISFolderFatturaPassiva;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
@@ -51,6 +52,7 @@ import it.gov.fatturapa.sdi.fatturapa.v1.RappresentanteFiscaleType;
 import it.gov.fatturapa.sdi.fatturapa.v1.ScontoMaggiorazioneType;
 import it.gov.fatturapa.sdi.fatturapa.v1.TerzoIntermediarioSoggettoEmittenteType;
 import it.gov.fatturapa.sdi.messaggi.v1.NotificaDecorrenzaTerminiType;
+import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoType;
 import it.gov.fatturapa.sdi.messaggi.v1.ScartoEsitoCommittenteType;
 
 import java.io.ByteArrayInputStream;
@@ -63,6 +65,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -242,7 +245,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 	private void elaboraFattura(FatturaElettronicaType fatturaElettronicaType, BigInteger identificativoSdI, String nomeFile, CMISPath cmisPath) throws ApplicationException {
 		FatturaElettronicaPassivaComponentSession component = 
 				(FatturaElettronicaPassivaComponentSession) EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession");
-    	UserContext userContext = new WSUserContext("SDI",null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
+    	UserContext userContext = createUserContext();
 		
 		DatiTrasmissioneType datiTrasmissione = fatturaElettronicaType.getFatturaElettronicaHeader().getDatiTrasmissione();
 		IdFiscaleType idTrasmittente = datiTrasmissione.getIdTrasmittente();
@@ -896,10 +899,12 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		}
 	}
 
-	public void notificaDecorrenzaTermini(String nomeFile, DataHandler data, NotificaDecorrenzaTerminiType notifica) throws ComponentException {
+	public void notificaDecorrenzaTermini(String nomeFile, DataHandler data) throws ComponentException {
 		FatturaElettronicaPassivaComponentSession component = (FatturaElettronicaPassivaComponentSession) EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession");
-    	UserContext userContext = new WSUserContext("SDI",null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
+    	UserContext userContext = createUserContext();
 		try {
+			JAXBElement<NotificaDecorrenzaTerminiType> file = (JAXBElement<NotificaDecorrenzaTerminiType>)getJAXBElement(data);
+			NotificaDecorrenzaTerminiType notifica = file.getValue();
 			LOGGER.info("Fatture Elettroniche: Passive: Decorrenza Termini. MessageId:"+notifica.getMessageId());
 			Long identificativoSdi = notifica.getIdentificativoSdI().longValue();
 			List<DocumentoEleTestataBulk> docs = component.recuperoDocumento(userContext, identificativoSdi);
@@ -938,19 +943,100 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		}
 	}
 	
-	public void notificaScartoEsito(String nomeFile, DataHandler data) throws ComponentException{
+	private JAXBElement<?> getJAXBElement(DataHandler data) throws ComponentException {
 		ByteArrayOutputStream bStream = new ByteArrayOutputStream();
-		try {
+		try{
 			IOUtils.copy(data.getInputStream(), bStream);
 			JAXBContext jc = JAXBContext.newInstance("it.gov.fatturapa.sdi.messaggi.v1");
-			JAXBElement<ScartoEsitoCommittenteType> fileScartoEsito = (JAXBElement<ScartoEsitoCommittenteType>) 
-					jc.createUnmarshaller().unmarshal(new ByteArrayInputStream(bStream.toByteArray()));
-			ScartoEsitoCommittenteType scartoEsito = fileScartoEsito.getValue();
-			Long identificativoSdi = scartoEsito.getIdentificativoSdI().longValue();
-			LOGGER.warn("Fatture Elettroniche: Passive: E' stato ricevuto uno scarto dell'esito per l'Id SDI." + identificativoSdi);
-			SendMail.sendErrorMail("Fatture Elettroniche: Passive: E' stato ricevuto uno scarto dell'esito per l'Id SDI."+ identificativoSdi, "Fattura Passiva: Scarto Esito. Id SDI "+identificativoSdi);
+			return (JAXBElement<?>)jc.createUnmarshaller().unmarshal(new ByteArrayInputStream(bStream.toByteArray()));
 		} catch (Exception e) {
 			throw new ComponentException(e);
 		}
 	}
+
+	public void notificaScartoEsito(String nomeFile, DataHandler data) throws ComponentException{
+		FatturaElettronicaPassivaComponentSession component = (FatturaElettronicaPassivaComponentSession) EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession");
+    	UserContext userContext = createUserContext();
+		ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+		try {
+			LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito Nome File: "+nomeFile);
+			IOUtils.copy(data.getInputStream(), bStream);
+			JAXBContext jc = JAXBContext.newInstance("it.gov.fatturapa.sdi.messaggi.v1");
+			JAXBElement<ScartoEsitoCommittenteType> fileScartoEsito = (JAXBElement<ScartoEsitoCommittenteType>) jc.createUnmarshaller().unmarshal(new ByteArrayInputStream(bStream.toByteArray()));
+			ScartoEsitoCommittenteType scartoEsito = fileScartoEsito.getValue();
+			Long identificativoSdi = scartoEsito.getIdentificativoSdI().longValue();
+			LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito Id SDI: "+identificativoSdi);
+			List<DocumentoEleTestataBulk> docs = component.recuperoDocumento(userContext, identificativoSdi);
+			if (docs != null && !docs.isEmpty()){
+				Boolean docsDaAggiornare = false;
+				for (DocumentoEleTestataBulk doc : docs) {
+					if (!StringUtils.isEmpty(doc.getStatoNotificaEsito()) && doc.getStatoNotificaEsito().equals(DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_SCARTATO_SDI)){
+						LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Fattura già elaborata ");
+					} else {
+						docsDaAggiornare = true;
+					}
+					break;
+				}
+				if (docsDaAggiornare){
+					try{
+						component.aggiornaScartoEsitoPec(userContext, docs);
+						LOGGER.info("Fatture Elettroniche: Passive: Pec: aggiornamento scarto esito con id SDI "+identificativoSdi);
+						SendMail.sendErrorMail("Fatture Elettroniche: Passive: E' stato ricevuto uno scarto dell'esito per l'Id SDI."+ identificativoSdi, "Fattura Passiva: Scarto Esito. Id SDI "+identificativoSdi);
+					} catch (Exception ex) {
+						LOGGER.error("Fatture Elettroniche: Passive: Pec: Errore nell'elaborazione dello scarto esito con id SDI "+identificativoSdi + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
+						java.io.StringWriter sw = new java.io.StringWriter();
+						ex.printStackTrace(new java.io.PrintWriter(sw));
+						SendMail.sendErrorMail("Fatture Elettroniche: Passive: Pec: Scarto esito. Id SDI "+identificativoSdi, sw.toString());
+					}
+				}
+			} else {
+				LOGGER.warn("Fatture Elettroniche: Passive: Pec: Per l'identificativo SDI indicato nel file dell'e-mail non corrisponde nessun documento." + identificativoSdi);
+				SendMail.sendErrorMail("Fatture Elettroniche: Passive: Pec: Per l'identificativo SDI del file inviato indicato nel file dell'e-mail non corrisponde nessuna fattura", "Scarto Esito. Id SDI "+identificativoSdi);
+			}
+		} catch (Exception e) {
+			throw new ComponentException(e);
+		}
+	}
+	private UserContext createUserContext() {
+		UserContext userContext = new WSUserContext("SDI",null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
+		return userContext;
+	}
+
+	public void notificaFatturaPassivaConsegnaEsitoPec(String idSdI, Date dataConsegna) throws ComponentException {
+		FatturaElettronicaPassivaComponentSession component = (FatturaElettronicaPassivaComponentSession) EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession");
+    	UserContext userContext = createUserContext();
+		try {
+			LOGGER.info("Fatture Elettroniche: Passive: Pec: Consegna Esito Id SDI: "+idSdI);
+			Long identificativoSdi = new Long(idSdI);
+			List<DocumentoEleTestataBulk> docs = component.recuperoDocumento(userContext, identificativoSdi);
+			if (docs != null && !docs.isEmpty()){
+				Boolean docsDaAggiornare = false;
+				for (DocumentoEleTestataBulk doc : docs) {
+					if (!StringUtils.isEmpty(doc.getStatoNotificaEsito()) && doc.getStatoNotificaEsito().equals(DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_CONSEGNATO_SDI)){
+						LOGGER.info("Fatture Elettroniche: Passive: Pec: Consegna Esito. Fattura già elaborata ");
+					} else {
+						docsDaAggiornare = true;
+					}
+					break;
+				}
+				if (docsDaAggiornare){
+					try{
+						component.aggiornaConsegnaEsitoPec(userContext, docs);
+						LOGGER.info("Fatture Elettroniche: Passive: Pec: aggiornamento consegna esito con id SDI "+identificativoSdi);
+					} catch (Exception ex) {
+						LOGGER.error("Fatture Elettroniche: Passive: Pec: Errore nell'elaborazione della consegna esito con id SDI "+identificativoSdi + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
+						java.io.StringWriter sw = new java.io.StringWriter();
+						ex.printStackTrace(new java.io.PrintWriter(sw));
+						SendMail.sendErrorMail("Fatture Elettroniche: Passive: Pec: Consegna esito. Id SDI "+identificativoSdi, sw.toString());
+					}
+				}
+			} else {
+				LOGGER.warn("Fatture Elettroniche: Passive: Pec: Per l'identificativo SDI indicato nel file dell'e-mail non corrisponde nessun documento." + identificativoSdi);
+				SendMail.sendErrorMail("Fatture Elettroniche: Passive: Pec: Per l'identificativo SDI del file inviato indicato nel file dell'e-mail non corrisponde nessuna fattura", "Consegna Esito. Id SDI "+identificativoSdi);
+			}
+		} catch (Exception e) {
+			throw new ComponentException(e);
+		}
+	}
+
 }

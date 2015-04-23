@@ -43,5 +43,9 @@ public interface FatturaElettronicaPassivaComponentSession extends it.cnr.jada.e
 			throws ComponentException, EJBException;
 	public void aggiornaDecorrenzaTerminiSDI(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc) 
 			throws PersistencyException, ComponentException,java.rmi.RemoteException;
+	public void aggiornaConsegnaEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc) 
+			throws PersistencyException, ComponentException,java.rmi.RemoteException;
+	public void aggiornaScartoEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc) 
+			throws PersistencyException, ComponentException,java.rmi.RemoteException;
 
 }

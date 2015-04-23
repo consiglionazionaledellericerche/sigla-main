@@ -76,15 +76,16 @@
 		<property name="pecSDIFromStringTerm" value="${pec.sdi.from.string.term}"/>
 		<property name="pecSDISubjectRiceviFattureTerm" value="${pec.sdi.subject.ricevi.fatture.term}"/>
 		<property name="pecScanFolderName" value="${pec.scan.folder.name}"/>
+		<property name="pecScanReceiptFolderName" value="${pec.scan.receipt.folder.name}"/>
 										
 		<property name="pecSDISubjectFatturaAttivaRicevutaConsegnaTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.ricevutaConsegna.term}"/>
 		<property name="pecSDISubjectFatturaAttivaNotificaScartoTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.scarto.term}"/>
 		<property name="pecSDISubjectFatturaAttivaMancataConsegnaTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.mancataConsegna.term}"/>
-		<property name="pecSDISubjectFatturaAttivaEsitoTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.esito.term}"/>
+		<property name="pecSDISubjectNotificaEsitoTerm" value="${pec.sdi.subject.notifica.esito.term}"/>
 		<property name="pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.decorrenzaTermini.term}"/>
 		<property name="pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.attestazioneTrasmissioneFattura.term}"/>
 		<property name="pecSDISubjectFatturaAttivaInvioTerm" value="${pec.sdi.subject.fatturaAttiva.invio.term}"/>
-		<property name="pecSDISubjectFatturaAttivaNotificaPecTerm" value="${pec.sdi.subject.fatturaAttiva.notificaPec.term}"/>
+		<property name="pecSDISubjectNotificaPecTerm" value="${pec.sdi.subject.notificaPec.term}"/>
 		<property name="pecSDISubjectFatturaPassivaNotificaScartoEsitoTerm" value="${pec.sdi.subject.fatturaPassiva.notifica.scartoEsito.term}"/>
 
 		<property name="pecMailConf">
