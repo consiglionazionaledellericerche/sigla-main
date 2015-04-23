@@ -7223,14 +7223,15 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 	      Fattura_passiva_rigaBulk riga=(Fattura_passiva_rigaBulk)i.next();
 	      String key = null;
 	      Hashtable<String, BigDecimal> currentMap = null;
-	      if (riga.getVoce_iva().getNaturaOperNonImpSdi()!=null) {
-	    	  key = riga.getVoce_iva().getNaturaOperNonImpSdi();
-	    	  currentMap = mapNatura;
-	      } else {
-	    	  key = riga.getVoce_iva().getPercentuale().toString();
-	    	  currentMap = mapIva;
+	      if (riga.getVoce_iva()!=null ){
+		      if (riga.getVoce_iva().getNaturaOperNonImpSdi()!=null) {
+		    	  key = riga.getVoce_iva().getNaturaOperNonImpSdi();
+		    	  currentMap = mapNatura;
+		      } else {
+		    	  key = riga.getVoce_iva().getPercentuale().toString();
+		    	  currentMap = mapIva;
+		      }
 	      }
-	      
 	      if (currentMap.get(key)!=null)
 	    	  currentMap.put(key, currentMap.get(key).add(riga.getIm_iva()));
 	      else
