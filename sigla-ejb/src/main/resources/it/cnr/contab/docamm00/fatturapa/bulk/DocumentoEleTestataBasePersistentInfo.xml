@@ -396,7 +396,7 @@
 			propertyName="statoNotificaEsito"
 			sqlTypeName="VARCHAR"
 			columnSize="3"
-			nullable="false" />
+			nullable="true" />
 		<columnMapping
 			columnName="FL_DECORRENZA_TERMINI"
 			propertyName="flDecorrenzaTermini"
