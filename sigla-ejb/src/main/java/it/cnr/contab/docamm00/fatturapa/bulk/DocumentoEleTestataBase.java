@@ -197,6 +197,9 @@ public class DocumentoEleTestataBase extends DocumentoEleTestataKey implements K
 //  FL_DECORRENZA_TERMINI VARCHAR(1)
 	private java.lang.String flDecorrenzaTermini;
  
+//  STATO_NOTIFICA_ESITO VARCHAR(3)
+	private java.lang.String statoNotificaEsito;
+	 
 //    MOTIVO_RIFIUTO VARCHAR(2000)
 	private java.lang.String motivoRifiuto;
  
@@ -1128,5 +1131,11 @@ public class DocumentoEleTestataBase extends DocumentoEleTestataKey implements K
 	}
 	public void setFlDecorrenzaTermini(java.lang.String flDecorrenzaTermini) {
 		this.flDecorrenzaTermini = flDecorrenzaTermini;
+	}
+	public java.lang.String getStatoNotificaEsito() {
+		return statoNotificaEsito;
+	}
+	public void setStatoNotificaEsito(java.lang.String statoNotificaEsito) {
+		this.statoNotificaEsito = statoNotificaEsito;
 	}
 }

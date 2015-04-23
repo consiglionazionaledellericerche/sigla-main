@@ -392,6 +392,12 @@
 			columnSize="60"
 			nullable="true" />
 		<columnMapping
+			columnName="STATO_NOTIFICA_ESITO"
+			propertyName="statoNotificaEsito"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
 			columnName="FL_DECORRENZA_TERMINI"
 			propertyName="flDecorrenzaTermini"
 			sqlTypeName="VARCHAR"
@@ -566,6 +572,8 @@
 		name="codicePagamento" />
 	<persistentProperty
 		name="statoDocumento" />
+	<persistentProperty
+		name="statoNotificaEsito" />
 	<persistentProperty
 		name="flDecorrenzaTermini" />
 	<persistentProperty

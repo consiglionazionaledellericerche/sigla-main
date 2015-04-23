@@ -469,6 +469,22 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		}
 	}
 
+	public void aggiornaConsegnaEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc) throws PersistencyException, ComponentException,java.rmi.RemoteException {
+		for (DocumentoEleTestataBulk doc : listaDoc) {
+			doc.setStatoNotificaEsito(DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_CONSEGNATO_SDI);
+			doc.setToBeUpdated();
+			updateBulk(userContext, doc);
+		}
+	}
+
+	public void aggiornaScartoEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc) throws PersistencyException, ComponentException,java.rmi.RemoteException {
+		for (DocumentoEleTestataBulk doc : listaDoc) {
+			doc.setStatoNotificaEsito(DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_SCARTATO_SDI);
+			doc.setToBeUpdated();
+			updateBulk(userContext, doc);
+		}
+	}
+
 	@SuppressWarnings("unchecked")
 	public void allineaEsitoCommitente(UserContext usercontext, Long identificativoSdI, String statoSDI, TipoIntegrazioneSDI tipoIntegrazioneSDI) throws ComponentException {
 		DocumentoEleTestataHome home = (DocumentoEleTestataHome) getHome(usercontext, DocumentoEleTestataBulk.class);
