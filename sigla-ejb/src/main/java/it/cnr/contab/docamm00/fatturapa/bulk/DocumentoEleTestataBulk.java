@@ -31,6 +31,10 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
 	 */
 	private static final long serialVersionUID = 1L;
 	@SuppressWarnings("unchecked")
+	
+	public static final String STATO_CONSEGNA_ESITO_CONSEGNATO_SDI = "CON";
+	public static final String STATO_CONSEGNA_ESITO_SCARTATO_SDI = "SCA";
+	public static final java.util.Dictionary<String, String> statoNotificaEsitoKeys = new OrderedHashtable();	
 	public static final java.util.Dictionary<String, String> tiDecorrenzaTerminiKeys = new OrderedHashtable();	
 	public static final java.util.Dictionary<String, String> tiStatoDocumentoKeys = new OrderedHashtable();	
 	public static final java.util.Dictionary<String, String> tiStatoDocumentoSelectKeys = new OrderedHashtable();	
@@ -40,6 +44,9 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
 	private String ricevutaDecorrenza;
 
 	static {
+		statoNotificaEsitoKeys.put(STATO_CONSEGNA_ESITO_CONSEGNATO_SDI,"NOTIFICA CONSEGNATA A SDI");
+		statoNotificaEsitoKeys.put(STATO_CONSEGNA_ESITO_SCARTATO_SDI,"NOTIFICA RIFIUTATA DA SDI");
+
 		tiDecorrenzaTerminiKeys.put("S","Si");
 		tiDecorrenzaTerminiKeys.put("N","No");
 
@@ -116,7 +123,10 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
 		setDocumentoEleTrasmissione( new DocumentoEleTrasmissioneBulk(idPaese,idCodice,identificativoSdi) );
 	}
 	
-	
+	public Dictionary getStatoNotificaEsitoKeys() {
+		return statoNotificaEsitoKeys;
+	}
+
 	public Dictionary getDecorrenzaTerminiKeys() {
 		return tiDecorrenzaTerminiKeys;
 	}
@@ -511,5 +521,8 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
 	}
 	public void setRicevutaDecorrenza(String ricevutaDecorrenza) {
 //		this.ricevutaDecorrenza = ricevutaDecorrenza;
+	}
+	public String getStatoNotificaEsitoVisual() {
+		return statoNotificaEsitoKeys.get(getStatoNotificaEsito());
 	}
 }
