@@ -1138,6 +1138,7 @@ public abstract class CRUDFatturaPassivaBP extends SimpleCRUDBP implements
 		nuovoDettaglio.setTi_associato_manrev(origine.getTi_associato_manrev());
 		nuovoDettaglio.setBene_servizio(origine.getBene_servizio());
 		nuovoDettaglio.setInventariato(origine.isInventariato());
+		nuovoDettaglio.setTrovato(origine.getTrovato());
 		nuovoDettaglio.setToBeCreated();
 		return nuovoDettaglio;
 	}
