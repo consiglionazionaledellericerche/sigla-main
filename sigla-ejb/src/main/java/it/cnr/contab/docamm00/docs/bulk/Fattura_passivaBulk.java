@@ -506,7 +506,7 @@ public boolean existARowToBeInventoried() {
 	if (getFattura_passiva_dettColl() != null) {
 		Iterator dettagli = getFattura_passiva_dettColl().iterator();
 		while (dettagli.hasNext()) {
-			if (((Fattura_passiva_rigaBulk)dettagli.next()).getBene_servizio().getFl_gestione_inventario().booleanValue())
+			 if (((Fattura_passiva_rigaBulk)dettagli.next()).getBene_servizio()!=null && ((Fattura_passiva_rigaBulk)dettagli.next()).getBene_servizio().getFl_gestione_inventario().booleanValue())
 				return true;
 		}
 	}
