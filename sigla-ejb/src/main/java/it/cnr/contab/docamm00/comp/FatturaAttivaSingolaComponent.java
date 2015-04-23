@@ -7319,7 +7319,10 @@ private Nota_di_credito_attivaBulk generaNotaCreditoAutomatica(UserContext userC
 			BigDecimal totaleDaSottrarre = BigDecimal.ZERO;
 			for (Iterator<Fattura_attiva_rigaBulk> iterator2 = ((java.util.List)accertamentiHash.get(scadenza)).iterator(); iterator2.hasNext();) {
 				Fattura_attiva_rigaBulk rigaFattura = iterator2.next();
-				totaleDaSottrarre = totaleDaSottrarre.add(rigaFattura.getIm_totale_divisa());
+				if(notaDiCredito.quadraturaInDeroga())
+					totaleDaSottrarre = totaleDaSottrarre.add(rigaFattura.getIm_imponibile());
+				else
+					totaleDaSottrarre = totaleDaSottrarre.add(rigaFattura.getIm_totale_divisa());
 			}
 			if (totaleDaSottrarre.compareTo(BigDecimal.ZERO)!=0) {
 				try {
