@@ -133,7 +133,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 	public Forward doBringBackCRUDModalitaPagamento(ActionContext context, DocumentoEleTestataBulk bulk, TerzoBulk terzo) {
 		if (terzo != null) {			
 			if (!terzo.equalsByPrimaryKey(bulk.getDocumentoEleTrasmissione().getPrestatore()))
-				throw new MessageToUser("Il Terzo selezionato non ï¿½ valido!");
+				throw new MessageToUser("Il Terzo selezionato non è valido!");
 			Modalita_pagamentoBulk modalitaPagamento = null;
 			for (Iterator<Modalita_pagamentoBulk> iterator = terzo.getModalita_pagamento().iterator(); iterator.hasNext();) {
 				Modalita_pagamentoBulk modPag = iterator.next();
@@ -193,10 +193,9 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 		try {
 			if (option.getOption() == it.cnr.jada.util.action.OptionBP.YES_BUTTON) {
 				Object motivoRifiuto = ((HttpActionContext)context).getRequest().getParameter("main.motivoRifiuto");
-				if (motivoRifiuto != null) {
+				if (motivoRifiuto != null && String.valueOf(motivoRifiuto).length() > 0) {
 					bulk.setMotivoRifiuto(String.valueOf(motivoRifiuto));
-					fatturaPassivaElettronicaBP.setModel(context, bulk);
-					fatturaPassivaElettronicaBP.rifiutaFattura(context);					
+					fatturaPassivaElettronicaBP.rifiutaFattura(context, bulk);					
 				} else {
 					fatturaPassivaElettronicaBP.setMessage("Il Motivo del rifiuto è obbligatorio!");
 				}				

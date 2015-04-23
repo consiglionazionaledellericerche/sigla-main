@@ -436,11 +436,11 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				Ass_var_stanz_res_cdrHome ass_cdrHome = (Ass_var_stanz_res_cdrHome)getHome(userContext,Ass_var_stanz_res_cdrBulk.class);
 	
 				if (ass_cdrHome.findDettagliSpesa(ass_cdr).isEmpty()) { 
-						throw new ApplicationException("Associare almeno un dettaglio di variazione al Centro di Responsabilitï¿½ " + ass_cdr.getCd_centro_responsabilita());
+						throw new ApplicationException("Associare almeno un dettaglio di variazione al Centro di Responsabilitïà " + ass_cdr.getCd_centro_responsabilita());
 				}
 				if (ass_cdr.getSpesa_diff().compareTo(Utility.ZERO) != 0)
 					throw new ApplicationException("La Differenza di spesa ("+new it.cnr.contab.util.EuroFormat().format(ass_cdr.getSpesa_diff())+")"+
-												   "\n" + "per il Cdr "+ ass_cdr.getCd_centro_responsabilita()+ " ï¿½ diversa da zero. ");
+												   "\n" + "per il Cdr "+ ass_cdr.getCd_centro_responsabilita()+ " è diversa da zero. ");
 			}
 			aggiornaLimiteSpesa(userContext, var_stanz_res);
 		} catch (IntrospectionException e) {
@@ -856,11 +856,11 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		MessaggioBulk messaggio = inizializzaMessaggio(userContext, utente);
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		if (tipo == null){
-			messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - ï¿½ stata aperta una nuova Variazione allo Stanziamento residuo");
+			messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - è stata aperta una nuova Variazione allo Stanziamento residuo");
 		}else if (tipo.equals(Var_stanz_resBulk.STATO_APPROVATA)){
-			messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - ï¿½ stata approvata la Variazione allo Stanziamento residuo");
+			messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - è stata approvata la Variazione allo Stanziamento residuo");
 		}else if (tipo.equals(Var_stanz_resBulk.STATO_RESPINTA)){
-			messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - ï¿½ stata respinta la Variazione allo Stanziamento residuo");
+			messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - è stata respinta la Variazione allo Stanziamento residuo");
 		}
 		messaggio.setCorpo("Numero variazione:"+var_stanz_res.getPg_variazione());
 		messaggio.setCorpo(messaggio.getCorpo() + "\n" + "CdR proponente:"+var_stanz_res.getCentroDiResponsabilita().getCd_ds_cdr());	
@@ -871,7 +871,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 	private MessaggioBulk generaMessaggioCopertura(UserContext userContext, UtenteBulk utente, Var_stanz_resBulk var_stanz_res, Ass_var_stanz_res_cdrBulk ass_var) throws ComponentException, PersistencyException{
 		MessaggioBulk messaggio = inizializzaMessaggio(userContext, utente);
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - ï¿½ stata raggiunta la quota di Spesa assegnata alla Variazione");
+		messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - è stata raggiunta la quota di Spesa assegnata alla Variazione");
 		messaggio.setCorpo("Numero variazione:"+var_stanz_res.getPg_variazione());
 		messaggio.setCorpo(messaggio.getCorpo() + "\n" + "Il CdR :"+ass_var.getCentro_di_responsabilita().getCd_ds_cdr()+" ha coperto la quota assegnata.");
 		messaggio.setSoggetto(messaggio.getDs_messaggio());
@@ -1126,13 +1126,13 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				try {
 					SQLExceptionHandler sqlException = SQLExceptionHandler.getInstance();
 					PersistencyException eccezione = sqlException.handleSQLException(e, var_stanz_res);
-					String soggetto = "Si ï¿½ verificato un errore durante l'approvazione della variazione sul bilancio dell'ente "+var_stanz_res.getEs_var_bil()+"/"+var_stanz_res.getPg_var_bil();
+					String soggetto = "Si è verificato un errore durante l'approvazione della variazione sul bilancio dell'ente "+var_stanz_res.getEs_var_bil()+"/"+var_stanz_res.getPg_var_bil();
 					
-					String preText = "Si ï¿½ verificato il seguente errore durante l'approvazione della variazione sul bilancio dell'ente "+var_stanz_res.getEs_var_bil()+"/"+var_stanz_res.getPg_var_bil() + 
-					                 "<BR>" + "generata in automatico a seguito della Variazione allo stanziamento residuo nï¿½"+var_stanz_res.getPg_variazione()+
+					String preText = "Si è verificato il seguente errore durante l'approvazione della variazione sul bilancio dell'ente "+var_stanz_res.getEs_var_bil()+"/"+var_stanz_res.getPg_var_bil() + 
+					                 "<BR>" + "generata in automatico a seguito della Variazione allo stanziamento residuo num. "+var_stanz_res.getPg_variazione()+
 					                 " del "+  var_stanz_res.getEsercizio()+".<BR><BR>"+
 									 "<b>"+eccezione.getMessage()+"</b><BR><BR>"+
-					                 "La Variazione al bilancio dell'Ente rimarrï¿½ pertanto PROVVISORIA.<BR>";
+					                 "La Variazione al bilancio dell'Ente rimarrà pertanto PROVVISORIA.<BR>";
 					generaEMAIL(userContext, var_stanz_res, soggetto, preText, null,"ERR");
 					var_stanz_res.setErroreEsitaVariazioneBilancio(true);
 				}catch (IntrospectionException e1) {

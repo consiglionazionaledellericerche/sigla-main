@@ -317,14 +317,14 @@ public class CRUDFatturaPassivaElettronicaBP extends SimpleCRUDBP implements Fat
 		os.flush();
 	}
 
-	public void rifiutaFattura(ActionContext actioncontext) throws BusinessProcessException, ValidationException {
-    	DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) getModel();
+	public void rifiutaFattura(ActionContext actioncontext, DocumentoEleTestataBulk documentoEleTestata) throws BusinessProcessException, ValidationException {
 		StatoDocumentoEleEnum statoDocumentoEleEnum = documentoEleTestata.getStatoDocumentoEle();
     	try {
         	documentoEleTestata.setStatoDocumento(StatoDocumentoEleEnum.RIFIUTATO.name());
         	((FatturaElettronicaPassivaComponentSession)createComponentSession()).
         		notificaEsito(actioncontext.getUserContext(), tipoIntegrazioneSDI, documentoEleTestata);
         	documentoEleTestata.setToBeUpdated();
+        	setModel(actioncontext, documentoEleTestata);
         	save(actioncontext);
     	} catch (Exception e) {
     		documentoEleTestata.setStatoDocumento(statoDocumentoEleEnum.name());
