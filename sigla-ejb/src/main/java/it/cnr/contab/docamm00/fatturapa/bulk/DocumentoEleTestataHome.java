@@ -17,9 +17,6 @@ import it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService;
 import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.UserContext;
-import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
@@ -57,7 +54,11 @@ import org.apache.axis2.builder.unknowncontent.InputStreamDataSource;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExistsException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 public class DocumentoEleTestataHome extends BulkHome {
+	private transient final static Logger logger = LoggerFactory.getLogger(DocumentoEleTestataHome.class);
+
 	private static final long serialVersionUID = 1L;
 	public DocumentoEleTestataHome(Connection conn) {
 		super(DocumentoEleTestataBulk.class, conn);
@@ -195,6 +196,10 @@ public class DocumentoEleTestataHome extends BulkHome {
 	}
 
 	public void notificaEsito(UserContext userContext, TipoIntegrazioneSDI tipoIntegrazioneSDI, DocumentoEleTestataBulk documentoEleTestataBulk) throws ApplicationException, IOException {
+		if (documentoEleTestataBulk.isRicevutaDecorrenzaTermini()) {
+			logger.info("Notifica esito per identificativo SDI:"+documentoEleTestataBulk.getIdentificativoSdi()+" non inviata per avvenuta decorrenza termini!");
+			return;
+		}
     	FatturazioneElettronicaClient client = SpringUtil.getBean("fatturazioneElettronicaClient", 
     			FatturazioneElettronicaClient.class);
     	FatturaPassivaElettronicaService fatturaService = SpringUtil.getBean("fatturaPassivaElettronicaService", 
