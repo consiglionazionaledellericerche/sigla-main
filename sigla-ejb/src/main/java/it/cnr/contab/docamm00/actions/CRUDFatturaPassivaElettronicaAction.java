@@ -187,6 +187,18 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 		}
 	}	
 
+	public Forward doReinviaEsito(ActionContext context) throws FillException, BusinessProcessException {
+		CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
+		DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
+		try {
+			fatturaPassivaElettronicaBP.reinviaEsito(context, bulk);
+			fatturaPassivaElettronicaBP.setMessage("Esito inviato correttamente al Sitema di Interscambio");
+			return context.findDefaultForward();
+		} catch(Throwable e) {
+			return handleException(context,e);
+		}		    	
+    }
+
 	public Forward doConfirmRifiutaFattura(ActionContext context, it.cnr.jada.util.action.OptionBP option) throws BusinessProcessException {
 		CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
 		DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
