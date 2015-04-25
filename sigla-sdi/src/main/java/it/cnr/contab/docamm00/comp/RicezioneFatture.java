@@ -981,7 +981,6 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 					try{
 						component.aggiornaScartoEsitoPec(userContext, docs);
 						LOGGER.info("Fatture Elettroniche: Passive: Pec: aggiornamento scarto esito con id SDI "+identificativoSdi);
-						SendMail.sendErrorMail("Fatture Elettroniche: Passive: E' stato ricevuto uno scarto dell'esito per l'Id SDI."+ identificativoSdi, "Fattura Passiva: Scarto Esito. Id SDI "+identificativoSdi);
 					} catch (Exception ex) {
 						LOGGER.error("Fatture Elettroniche: Passive: Pec: Errore nell'elaborazione dello scarto esito con id SDI "+identificativoSdi + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
 						java.io.StringWriter sw = new java.io.StringWriter();
