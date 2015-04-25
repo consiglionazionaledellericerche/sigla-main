@@ -568,6 +568,7 @@
 		maxLength="100"
 		inputSize="100"
 		inputType="SELECT"
+		enabledOnSearch="true"
 		keysProperty="statoNotificaEsitoKeys"
 		label="Stato Notifica Esito" />
 	<fieldProperty
@@ -1171,7 +1172,9 @@
 		name="codiceDestinatario"/>	
 	<findFieldProperty
 		name="dataRicezioneSDI"/>	
-		
+	<findFieldProperty
+		name="statoNotificaEsito"/>	
+			
 	<columnFieldProperty
 		name="idCodice" />
 	<columnFieldProperty

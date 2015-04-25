@@ -7,8 +7,6 @@ import it.cnr.contab.docamm00.actions.CRUDFatturaPassivaAction;
 import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
@@ -132,6 +130,14 @@ public class CRUDFatturaPassivaElettronicaBP extends SimpleCRUDBP implements Fat
 				((DocumentoEleTestataBulk)getModel()).isRegistrata());
 	}
 
+	public boolean isReinviaEsitoButtonHidden() {
+		return !(getModel() != null && ((DocumentoEleTestataBulk)getModel()).getIdentificativoSdi() != null &&
+				tipoIntegrazioneSDI.equals(TipoIntegrazioneSDI.PEC) &&
+				((DocumentoEleTestataBulk)getModel()).getCrudStatus() == OggettoBulk.NORMAL &&
+				!((DocumentoEleTestataBulk)getModel()).isRicevutaDecorrenzaTermini() &&
+				((DocumentoEleTestataBulk)getModel()).getStatoNotificaEsito() != null &&
+				((DocumentoEleTestataBulk)getModel()).getStatoNotificaEsito().equalsIgnoreCase(DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_SCARTATO_SDI));		
+	}
 	@Override
 	protected Button[] createToolbar() {
 		Button[] buttons = super.createToolbar();
@@ -155,6 +161,9 @@ public class CRUDFatturaPassivaElettronicaBP extends SimpleCRUDBP implements Fat
 				.getHandler().getProperties(getClass()), "Toolbar.esito.rifiutato"));
 		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.esito.accettato"));
+		toolbar.get(toolbar.size() - 1).setSeparator(true);
+		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
+				.getHandler().getProperties(getClass()), "Toolbar.esito.reinvia"));
 		return toolbar.toArray(new Button[toolbar.size()]);
 	}
 	
@@ -317,6 +326,15 @@ public class CRUDFatturaPassivaElettronicaBP extends SimpleCRUDBP implements Fat
 		os.flush();
 	}
 
+	public void reinviaEsito(ActionContext actioncontext, DocumentoEleTestataBulk documentoEleTestata) throws BusinessProcessException, ValidationException {
+    	try {
+        	((FatturaElettronicaPassivaComponentSession)createComponentSession()).
+        		notificaEsito(actioncontext.getUserContext(), tipoIntegrazioneSDI, documentoEleTestata);
+    	} catch (Exception e) {
+    		throw handleException(e);
+		}		
+	}	
+	
 	public void rifiutaFattura(ActionContext actioncontext, DocumentoEleTestataBulk documentoEleTestata) throws BusinessProcessException, ValidationException {
 		StatoDocumentoEleEnum statoDocumentoEleEnum = documentoEleTestata.getStatoDocumentoEle();
     	try {
