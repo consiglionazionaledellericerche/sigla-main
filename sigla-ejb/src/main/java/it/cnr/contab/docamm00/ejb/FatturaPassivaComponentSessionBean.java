@@ -9,8 +9,10 @@ import it.cnr.contab.compensi00.comp.CompensoComponent;
 import it.cnr.contab.docamm00.comp.FatturaAttivaSingolaComponent;
 import it.cnr.contab.docamm00.comp.FatturaPassivaComponent;
 import it.cnr.contab.docamm00.docs.bulk.ElaboraNumUnicoFatturaPBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
+import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -1194,5 +1196,25 @@ public it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk valorizzaInfoDocEle(
 	}
 }
 
+public void aggiornaObblSuCancPerCompenso(UserContext param0,
+		Fattura_passivaBulk param1,java.util.Vector param2,
+		OptionRequestParameter param3) 
+		throws ComponentException, RemoteException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		((FatturaPassivaComponent)componentObj).aggiornaObblSuCancPerCompenso(param0,param1,param2,param3);
+		component_invocation_succes(param0,componentObj);
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
 }
 
+}
