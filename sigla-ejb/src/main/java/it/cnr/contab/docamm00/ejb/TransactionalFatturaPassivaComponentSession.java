@@ -5,11 +5,14 @@ import java.util.List;
 
 
 
+
+
 import it.cnr.contab.docamm00.docs.bulk.ElaboraNumUnicoFatturaPBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
+import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
@@ -1158,5 +1161,29 @@ public it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk valorizzaInfoDocEle(
 		}
 	}
 }
+
+public void aggiornaObblSuCancPerCompenso(UserContext param0,
+		Fattura_passivaBulk param1, java.util.Vector param2,
+		OptionRequestParameter param3)
+		throws ComponentException, RemoteException {
+	try {
+		invoke("aggiornaObblSuCancPerCompenso",new Object[] {
+			param0,
+			param1,
+			param2,
+			param3});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+
 }
 
