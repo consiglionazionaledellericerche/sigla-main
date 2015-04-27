@@ -696,11 +696,9 @@
 	<columnSet	name="restService">
 		<columnFieldProperty name="cd_progetto"/>
 		<columnFieldProperty name="pg_progetto"/>
-		<columnFieldProperty name="tipo_fase" />
 		<columnFieldProperty name="dt_proroga" />
 		<columnFieldProperty name="ds_progetto" />
 		<columnFieldProperty name="cd_responsabile_terzo" />
-		<columnFieldProperty name="cd_responsabile_denominazione" />
 		<columnFieldProperty name="codice_fiscale_responsabile" />
 		<columnFieldProperty name="dt_inizio" />
 		<columnFieldProperty name="dt_fine" />
