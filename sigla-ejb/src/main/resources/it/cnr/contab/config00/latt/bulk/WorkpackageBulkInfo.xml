@@ -287,6 +287,10 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnFreeSearch="true" />	
+	<fieldProperty
+		name="pg_progetto"
+		property="pg_progetto"
+		label="Pg Progetto"/>
 	<form
 		name="searchtool" >
 		<formFieldProperty
@@ -432,6 +436,8 @@
 		<columnFieldProperty name="ds_linea_attivita"/>
 		<columnFieldProperty name="cd_centro_responsabilita"/>	
 		<columnFieldProperty name="pg_progetto"/>	
+		<columnFieldProperty name="esercizio_inizio"/>	
+		<columnFieldProperty name="esercizio_fine"/>	
 	</columnSet>
 
 	<columnSet name="columnSetPerAccertamento">

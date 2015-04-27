@@ -11,6 +11,9 @@ public class VConsObbligazioniGaeBase extends VConsObbligazioniGaeKey implements
 //    CD_CDS_ORIGINE VARCHAR(30) NOT NULL
 	private java.lang.String cdCdsOrigine;
  
+//  DS_OBBLIGAZIONE VARCHAR(300) NOT NULL
+	private java.lang.String dsObbligazione;
+
 //    CD_UO_ORIGINE VARCHAR(30) NOT NULL
 	private java.lang.String cdUoOrigine;
  
@@ -26,23 +29,23 @@ public class VConsObbligazioniGaeBase extends VConsObbligazioniGaeKey implements
 //    FL_PGIRO CHAR(1) NOT NULL
 	private java.lang.Boolean flPgiro;
  
-//    IM_SCADENZA_COMP DECIMAL(22,0)
-	private java.lang.Long imScadenzaComp;
+//    IM_SCADENZA_COMP DECIMAL(22,2)
+	private java.math.BigDecimal imScadenzaComp;
  
-//    IM_SCADENZA_RES DECIMAL(22,0)
-	private java.lang.Long imScadenzaRes;
+//    IM_SCADENZA_RES DECIMAL(22,2)
+	private java.math.BigDecimal imScadenzaRes;
  
-//    IM_ASSOCIATO_DOC_AMM_COMP DECIMAL(22,0)
-	private java.lang.Long imAssociatoDocAmmComp;
+//    IM_ASSOCIATO_DOC_AMM_COMP DECIMAL(22,2)
+	private java.math.BigDecimal imAssociatoDocAmmComp;
  
-//    IM_ASSOCIATO_DOC_AMM_RES DECIMAL(22,0)
-	private java.lang.Long imAssociatoDocAmmRes;
+//    IM_ASSOCIATO_DOC_AMM_RES DECIMAL(22,2)
+	private java.math.BigDecimal imAssociatoDocAmmRes;
  
-//    IM_PAGATO_COMP DECIMAL(22,0)
-	private java.lang.Long imPagatoComp;
+//    IM_PAGATO_COMP DECIMAL(22,2)
+	private java.math.BigDecimal imPagatoComp;
  
-//    IM_PAGATO_RES DECIMAL(22,0)
-	private java.lang.Long imPagatoRes;
+//    IM_PAGATO_RES DECIMAL(22,2)
+	private java.math.BigDecimal imPagatoRes;
  
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -142,84 +145,84 @@ public class VConsObbligazioniGaeBase extends VConsObbligazioniGaeKey implements
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [imScadenzaComp]
 	 **/
-	public java.lang.Long getImScadenzaComp() {
+	public java.math.BigDecimal getImScadenzaComp() {
 		return imScadenzaComp;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [imScadenzaComp]
 	 **/
-	public void setImScadenzaComp(java.lang.Long imScadenzaComp)  {
+	public void setImScadenzaComp(java.math.BigDecimal imScadenzaComp)  {
 		this.imScadenzaComp=imScadenzaComp;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [imScadenzaRes]
 	 **/
-	public java.lang.Long getImScadenzaRes() {
+	public java.math.BigDecimal getImScadenzaRes() {
 		return imScadenzaRes;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [imScadenzaRes]
 	 **/
-	public void setImScadenzaRes(java.lang.Long imScadenzaRes)  {
+	public void setImScadenzaRes(java.math.BigDecimal imScadenzaRes)  {
 		this.imScadenzaRes=imScadenzaRes;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [imAssociatoDocAmmComp]
 	 **/
-	public java.lang.Long getImAssociatoDocAmmComp() {
+	public java.math.BigDecimal getImAssociatoDocAmmComp() {
 		return imAssociatoDocAmmComp;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [imAssociatoDocAmmComp]
 	 **/
-	public void setImAssociatoDocAmmComp(java.lang.Long imAssociatoDocAmmComp)  {
+	public void setImAssociatoDocAmmComp(java.math.BigDecimal imAssociatoDocAmmComp)  {
 		this.imAssociatoDocAmmComp=imAssociatoDocAmmComp;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [imAssociatoDocAmmRes]
 	 **/
-	public java.lang.Long getImAssociatoDocAmmRes() {
+	public java.math.BigDecimal getImAssociatoDocAmmRes() {
 		return imAssociatoDocAmmRes;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [imAssociatoDocAmmRes]
 	 **/
-	public void setImAssociatoDocAmmRes(java.lang.Long imAssociatoDocAmmRes)  {
+	public void setImAssociatoDocAmmRes(java.math.BigDecimal imAssociatoDocAmmRes)  {
 		this.imAssociatoDocAmmRes=imAssociatoDocAmmRes;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [imPagatoComp]
 	 **/
-	public java.lang.Long getImPagatoComp() {
+	public java.math.BigDecimal getImPagatoComp() {
 		return imPagatoComp;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [imPagatoComp]
 	 **/
-	public void setImPagatoComp(java.lang.Long imPagatoComp)  {
+	public void setImPagatoComp(java.math.BigDecimal imPagatoComp)  {
 		this.imPagatoComp=imPagatoComp;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [imPagatoRes]
 	 **/
-	public java.lang.Long getImPagatoRes() {
+	public java.math.BigDecimal getImPagatoRes() {
 		return imPagatoRes;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [imPagatoRes]
 	 **/
-	public void setImPagatoRes(java.lang.Long imPagatoRes)  {
+	public void setImPagatoRes(java.math.BigDecimal imPagatoRes)  {
 		this.imPagatoRes=imPagatoRes;
 	}
 	public java.lang.Boolean getFlPgiro() {
@@ -227,5 +230,11 @@ public class VConsObbligazioniGaeBase extends VConsObbligazioniGaeKey implements
 	}
 	public void setFlPgiro(java.lang.Boolean flPgiro) {
 		this.flPgiro = flPgiro;
+	}
+	public java.lang.String getDsObbligazione() {
+		return dsObbligazione;
+	}
+	public void setDsObbligazione(java.lang.String dsObbligazione) {
+		this.dsObbligazione = dsObbligazione;
 	}
 }

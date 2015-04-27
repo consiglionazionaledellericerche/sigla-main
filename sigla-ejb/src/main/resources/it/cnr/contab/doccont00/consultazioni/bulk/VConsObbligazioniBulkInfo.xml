@@ -62,6 +62,15 @@
 		nullable="false"
 		label="pgObbligazione" />
 	<fieldProperty
+		name="dsObbligazione"
+		property="dsObbligazione"
+		inputType="TEXT"
+		inputSize="300"
+		maxLength="300"
+		enabledOnEdit="false"
+		nullable="false"
+		label="dsObbligazione" />
+	<fieldProperty
 		name="cdUoOrigine"
 		property="cdUoOrigine"
 		inputType="TEXT"
@@ -176,6 +185,8 @@
 	<formFieldProperty
 		name="pgObbligazione" />
 	<formFieldProperty
+		name="dsObbligazione" />
+	<formFieldProperty
 		name="cdUoOrigine" />
 	<formFieldProperty
 		name="cdElementoVoce" />
@@ -210,6 +221,8 @@
 	<findFieldProperty
 		name="pgObbligazione" />
 	<findFieldProperty
+		name="dsObbligazione" />
+	<findFieldProperty
 		name="cdUoOrigine" />
 	<findFieldProperty
 		name="cdElementoVoce" />
@@ -243,6 +256,8 @@
 		name="cdCdsOrigine" />
 	<columnFieldProperty
 		name="pgObbligazione" />
+	<columnFieldProperty
+		name="dsObbligazione" />
 	<columnFieldProperty
 		name="cdUoOrigine" />
 	<columnFieldProperty
