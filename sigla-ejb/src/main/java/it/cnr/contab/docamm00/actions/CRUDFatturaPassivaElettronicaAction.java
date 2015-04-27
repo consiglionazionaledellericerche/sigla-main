@@ -300,11 +300,16 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 				
 				context.addHookForward("default",this,"doBringBackCompilaFattura");
 				nbp = (CRUDFatturaPassivaBP) context.addBusinessProcess(nbp);
-				if (bulk.getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO)) {
+				if (bulk.getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO) ||
+						bulk.getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_DEBITO)) {
 					Fattura_passivaBulk fatturaPassivaBulk = ((FatturaElettronicaPassivaComponentSession)fatturaPassivaElettronicaBP.createComponentSession()).
 						cercaFatturaPassivaForNota(context.getUserContext(), bulk);
 					nbp.edit(context, fatturaPassivaBulk);
-					CRUDNotaDiCreditoBP notaBp = (CRUDNotaDiCreditoBP)action.doGeneraNotaDiCredito(context);
+					CRUDFatturaPassivaBP notaBp = null;
+					if (bulk.getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO)) 
+						notaBp = (CRUDFatturaPassivaBP)action.doGeneraNotaDiCredito(context);
+					else if (bulk.getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_DEBITO))
+						notaBp = (CRUDFatturaPassivaBP)action.doGeneraNotaDiDebito(context);
 					notaBp.setModel(context, fatturaPassivaElettronicaBP.completaFatturaPassiva(context, (Fattura_passivaBulk) notaBp.getModel(), notaBp, fatturaPassivaBulk));
 				} else {
 					Fattura_passivaBulk fatturaPassivaBulk = (Fattura_passivaBulk) nbp.getModel();
