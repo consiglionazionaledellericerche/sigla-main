@@ -439,11 +439,17 @@
 	name="restService">
 		
 	<columnFieldProperty
+		name="esercizio"
+		/>
+	<columnFieldProperty
 		name="cd_elemento_voce"
 		label = "Codice"
 		/>
 	<columnFieldProperty
 		name="ds_elemento_voce"
+		/>
+	<columnFieldProperty
+		name="fl_solo_residuo"
 		/>
 </columnSet>	
 

@@ -18,6 +18,12 @@
 			columnSize="30"
 			nullable="false" />
 		<columnMapping
+			columnName="DS_OBBLIGAZIONE"
+			propertyName="dsObbligazione"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
 			columnName="CD_UO_ORIGINE"
 			propertyName="cdUoOrigine"
 			sqlTypeName="VARCHAR"
@@ -53,42 +59,50 @@
 			propertyName="imScadenzaComp"
 			sqlTypeName="DECIMAL"
 			columnSize="22"
+			columnScale="2"
 			nullable="true" />
 		<columnMapping
 			columnName="IM_SCADENZA_RES"
 			propertyName="imScadenzaRes"
 			sqlTypeName="DECIMAL"
 			columnSize="22"
+			columnScale="2"
 			nullable="true" />
 		<columnMapping
 			columnName="IM_ASSOCIATO_DOC_AMM_COMP"
 			propertyName="imAssociatoDocAmmComp"
 			sqlTypeName="DECIMAL"
 			columnSize="22"
+			columnScale="2"
 			nullable="true" />
 		<columnMapping
 			columnName="IM_ASSOCIATO_DOC_AMM_RES"
 			propertyName="imAssociatoDocAmmRes"
 			sqlTypeName="DECIMAL"
 			columnSize="22"
+			columnScale="2"
 			nullable="true" />
 		<columnMapping
 			columnName="IM_PAGATO_COMP"
 			propertyName="imPagatoComp"
 			sqlTypeName="DECIMAL"
 			columnSize="22"
+			columnScale="2"
 			nullable="true" />
 		<columnMapping
 			columnName="IM_PAGATO_RES"
 			propertyName="imPagatoRes"
 			sqlTypeName="DECIMAL"
 			columnSize="22"
+			columnScale="2"
 			nullable="true" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="cdUnitaOrganizzativa" />
 	<persistentProperty
 		name="cdCdsOrigine" />
+	<persistentProperty
+		name="dsObbligazione" />
 	<persistentProperty
 		name="cdUoOrigine" />
 	<persistentProperty
