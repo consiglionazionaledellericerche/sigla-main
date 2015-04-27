@@ -5,7 +5,6 @@ import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.docamm00.cmis.CMISDocAmmAspect;
 import it.cnr.contab.docamm00.cmis.CMISFolderFatturaPassiva;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
@@ -52,7 +51,6 @@ import it.gov.fatturapa.sdi.fatturapa.v1.RappresentanteFiscaleType;
 import it.gov.fatturapa.sdi.fatturapa.v1.ScontoMaggiorazioneType;
 import it.gov.fatturapa.sdi.fatturapa.v1.TerzoIntermediarioSoggettoEmittenteType;
 import it.gov.fatturapa.sdi.messaggi.v1.NotificaDecorrenzaTerminiType;
-import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoType;
 import it.gov.fatturapa.sdi.messaggi.v1.ScartoEsitoCommittenteType;
 
 import java.io.ByteArrayInputStream;
@@ -920,8 +918,8 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 							saveNotifica(data, nomeFile, trasm.getCmisNodeRef(), CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_DECORRENZA_TERMINI);
 							break;
 						}
-						break;
 					}
+					break;
 				}
 				if (docsDaAggiornare){
 					try{
@@ -974,6 +972,11 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 						LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Fattura già elaborata ");
 					} else {
 						docsDaAggiornare = true;
+						List<DocumentoEleTrasmissioneBulk> trasms = component.recuperoTrasmissione(userContext, identificativoSdi);
+						for (DocumentoEleTrasmissioneBulk trasm : trasms) {
+							saveNotifica(data, nomeFile, trasm.getCmisNodeRef(), CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_SCARTO);
+							break;
+						}
 					}
 					break;
 				}
