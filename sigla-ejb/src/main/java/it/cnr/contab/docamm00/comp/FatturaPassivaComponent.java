@@ -401,7 +401,7 @@ private String aggiornaAssociazioniInventarioTemporanee(
 }
 private void aggiornaAutofattura(UserContext userContext,Fattura_passivaBulk fattura_passiva) throws ComponentException {
 
-	if (fattura_passiva != null && !fattura_passiva.isStampataSuRegistroIVA()) {
+	if (fattura_passiva != null && !fattura_passiva.isStampataSuRegistroIVA() && fattura_passiva.getProgr_univoco()==null) {
 		if (fattura_passiva.getFl_autofattura() == null)
 			fattura_passiva.setFl_autofattura(Boolean.FALSE);
 		try {
@@ -3159,7 +3159,7 @@ private void eliminaFattura(UserContext aUC,Fattura_passivaBulk fatturaPassiva)
 		throw new it.cnr.jada.comp.ApplicationException("Attenzione: non è possibile cancellare una " + fatturaPassiva.getDescrizioneEntita() + " per cui esistono dettagli intrastat inviati!");
 	//ATTENZIONE: a seguito dell'errore segnalato 569 (dovuto alla richiesta 423) il controllo viene
 	//ora eseguito anche se la sola autofattura ï¿½ stampata sui registri IVA
-	if (fatturaPassiva.isStampataSuRegistroIVA())
+	if (fatturaPassiva.isStampataSuRegistroIVA() || fatturaPassiva.getProgr_univoco()!=null)
 	throw new it.cnr.jada.comp.ApplicationException("Attenzione: non è possibile cancellare una " + fatturaPassiva.getDescrizioneEntita() + " o la sua autofattura (se esiste) quando una di esse è già stampata sui registri IVA oppure è valorizzato il progressivo univoco!");
 
 	if (fatturaPassiva instanceof Fattura_passiva_IBulk) {
@@ -5701,7 +5701,7 @@ private void validaConConsuntivi(
 	if (original == null || fatturaPassiva == null)
 		return;
 
-	if (fatturaPassiva.isStampataSuRegistroIVA()) {
+	if (fatturaPassiva.isStampataSuRegistroIVA() || fatturaPassiva.getProgr_univoco()!=null) {
 		//ATTENZIONE: a seguito dell'errore segnalato 569 (dovuto alla richiesta 423) il controllo viene
 		//ora eseguito anche se la sola autofattura ï¿½ stampata sui registri IVA
 
@@ -6160,7 +6160,7 @@ private void validazioneComune(UserContext aUC,Fattura_passivaBulk fatturaPassiv
 		throw handleException(fatturaPassiva, e);
 	}
 	if (original != null) {
-		if (fatturaPassiva.isStampataSuRegistroIVA()) {
+		if (fatturaPassiva.isStampataSuRegistroIVA() || fatturaPassiva.getProgr_univoco()!=null) {
 		//ATTENZIONE: a seguito dell'errore segnalato 569 (dovuto alla richiesta 423) il controllo viene
 		//ora eseguito anche se la sola autofattura ï¿½ stampata sui registri IVA
 
@@ -6192,6 +6192,7 @@ private void validazioneComune(UserContext aUC,Fattura_passivaBulk fatturaPassiv
 		}
 
 		if (!fatturaPassiva.isStampataSuRegistroIVA() &&
+			fatturaPassiva.getProgr_univoco()==null &&	
 			fatturaPassiva.isPagata() &&
 			!original.getCd_terzo().equals(fatturaPassiva.getCd_terzo()))
 				throw new it.cnr.jada.comp.ApplicationException("Attenzione: non si possono modificare campi relativi al fornitore della " + fatturaPassiva.getDescrizioneEntita() + " quando essa o la sua autofattura (se esiste) è in stato IVA B o C");
@@ -6239,7 +6240,7 @@ private void validazioneComune(UserContext aUC,Fattura_passivaBulk fatturaPassiv
 		}
 		
 		//Modificato a seguito richiesta 423
-		if (originalRows != null && fatturaPassiva.isStampataSuRegistroIVA()) {
+		if (originalRows != null && (fatturaPassiva.isStampataSuRegistroIVA() || fatturaPassiva.getProgr_univoco()!=null)) {
 			//if (!(fatturaPassiva instanceof Fattura_passiva_IBulk) &&
 				//originalRows.size() != fatturaPassiva.getFattura_passiva_dettColl().size())
 				//throw new it.cnr.jada.comp.ApplicationException("Attenzione: non ï¿½ possibile aggiungere, eliminare o modificare i dettagli quando lo stato IVA della " + fatturaPassiva.getDescrizioneEntita() + " ï¿½ B o C.");
@@ -6599,7 +6600,7 @@ private void aggiornaDataEsigibilitaIVA(
 		String creaModifica)
 		throws ComponentException {
 	
-		if (creaModifica.compareTo("C")!=0 && (fatturaPassiva == null || fatturaPassiva.isStampataSuRegistroIVA()))
+		if (creaModifica.compareTo("C")!=0 && (fatturaPassiva == null || fatturaPassiva.isStampataSuRegistroIVA()|| fatturaPassiva.getProgr_univoco()!=null))
 		    return;
 		try {
 			for (Iterator i = fatturaPassiva.getFattura_passiva_dettColl().iterator(); i.hasNext();) {
@@ -7317,6 +7318,60 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 						(codiciNaturaSqu.length()>0?"i codici natura : "+ codiciNaturaSqu.toString():"")+"!");
 	
 }
+public void aggiornaObblSuCancPerCompenso(
+		UserContext userContext,
+		Fattura_passivaBulk fatturaPassiva,
+		java.util.Vector scadenzeDaCancellare,
+		OptionRequestParameter status)
+		throws ComponentException {
+		if (scadenzeDaCancellare != null) {
 
+			it.cnr.jada.bulk.PrimaryKeyHashtable obblTemporanee = new it.cnr.jada.bulk.PrimaryKeyHashtable();
+			for (Object oggettoBulk : scadenzeDaCancellare) {				
+				if (oggettoBulk instanceof Obbligazione_scadenzarioBulk) {
+					Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk)oggettoBulk;
+					if (scadenza.getObbligazione().isTemporaneo()) {
+						if (!obblTemporanee.containsKey(scadenza.getObbligazione())) {
+							Vector allInstances = new java.util.Vector();
+							allInstances.addElement(scadenza);
+							obblTemporanee.put(scadenza.getObbligazione(), allInstances);
+						} else {
+							((Vector)obblTemporanee.get(scadenza.getObbligazione())).add(scadenza);
+						}
+					} else if (!fatturaPassiva.isToBeCreated() && OggettoBulk.NORMAL == scadenza.getCrudStatus()) {
+						PrimaryKeyHashtable obbligs = getDocumentiContabiliNonTemporanei(userContext, fatturaPassiva.getObbligazioniHash().keys());
+						if (!obbligs.containsKey(scadenza.getObbligazione()))
+							aggiornaSaldi(
+								userContext, 
+								fatturaPassiva, 
+								scadenza.getObbligazione(),
+								status);
+						scadenza.setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+						updateImportoAssociatoDocAmm(userContext, scadenza);
+					}
+	            	/**
+	            	 * Devo aggiornare i Saldi per quelle scadenze modificate e riportate
+	            	 * ma poi scollegate dal documento 
+	            	 * Marco Spasiano 05/05/2006
+	            	 */
+	                aggiornaSaldi(userContext, fatturaPassiva, scadenza.getObbligazione(), status);
+				}
+			}
+			for (java.util.Enumeration e = obblTemporanee.keys(); e.hasMoreElements();) {
+				ObbligazioneBulk obblT = (ObbligazioneBulk)e.nextElement();
+
+				//Aggiorna i saldi per le obbligazioni temporanee
+				//DEVE ESSERE FATTO PRIMA DELL'AGGIORNAMENTO A DEFINITIVA
+				PrimaryKeyHashtable obbligs = getDocumentiContabiliTemporanei(userContext, fatturaPassiva.getObbligazioniHash().keys());
+				if (!obbligs.containsKey(obblT))
+					aggiornaSaldi(
+							userContext, 
+							fatturaPassiva, 
+							obblT,
+							status);
+			}
+		}
+
+}
 }
 
