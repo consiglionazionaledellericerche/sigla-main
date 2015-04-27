@@ -175,7 +175,6 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -7267,7 +7266,7 @@ private Nota_di_credito_attivaBulk generaNotaCreditoAutomatica(UserContext userC
 	fa = (Fattura_attiva_IBulk)inizializzaBulkPerModifica(userContext, fa);
 	
 	Nota_di_credito_attivaBulk notaDiCredito = new Nota_di_credito_attivaBulk(fa, esercizio);
-	notaDiCredito.setCaricaDatiPerFatturazioneElettronica(isNotaEsterna);
+	notaDiCredito.setCaricaDatiPerFatturazioneElettronica(!isNotaEsterna);
 	if (isNotaEsterna){
 		notaDiCredito.setCodiceUnivocoUfficioIpa(fa.getCodiceUnivocoUfficioIpa());
 	}
