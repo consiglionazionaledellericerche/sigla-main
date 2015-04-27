@@ -337,6 +337,7 @@
 		<columnFieldProperty name="cd_responsabile"/>
 		<columnFieldProperty name="cd_unita_padre"/>
 		<columnFieldProperty name="fl_uo_cds"/>
+		<columnFieldProperty name="esercizio_fine"/>
 	</columnSet>
 
 	<columnSet
