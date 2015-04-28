@@ -10,6 +10,7 @@ import it.cnr.jada.util.action.CRUDBP;
  */
 public class Fattura_attiva_IBulk extends Fattura_attivaBulk {
 
+	private Nota_di_credito_attivaBulk notaCreditoAutomaticaGenerata = null;
 	private java.util.HashMap storniHashMap = new java.util.HashMap();
 	private java.util.HashMap addebitiHashMap = new java.util.HashMap();
 /**
@@ -126,5 +127,12 @@ public void setAddebitiHashMap(java.util.HashMap newAddebitiHashMap) {
  */
 public void setStorniHashMap(java.util.HashMap newStorniHashMap) {
 	storniHashMap = newStorniHashMap;
+}
+public Nota_di_credito_attivaBulk getNotaCreditoAutomaticaGenerata() {
+	return notaCreditoAutomaticaGenerata;
+}
+public void setNotaCreditoAutomaticaGenerata(
+		Nota_di_credito_attivaBulk notaCreditoAutomaticaGenerata) {
+	this.notaCreditoAutomaticaGenerata = notaCreditoAutomaticaGenerata;
 }
 }
