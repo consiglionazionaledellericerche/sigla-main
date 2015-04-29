@@ -2246,6 +2246,25 @@ public Fattura_passivaBulk completaFornitore(it.cnr.jada.UserContext uc, Fattura
 			} catch (it.cnr.jada.persistency.IntrospectionException e) {
 				throw handleException(e);
 			}
+
+			//Aggiorno le righe
+			if (fattura_passiva.getFattura_passiva_dettColl() != null) {
+				Iterator dettagli = fattura_passiva.getFattura_passiva_dettColl().iterator();
+				while (dettagli.hasNext()) {
+					Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk)dettagli.next();
+					if (!riga.getFornitore().equalsByPrimaryKey(fattura_passiva.getFornitore())) {
+						riga.setFornitore(fattura_passiva.getFornitore());
+						riga.setTermini(fattura_passiva.getTermini());
+						riga.setModalita(fattura_passiva.getModalita());
+						riga.setTermini_pagamento(null);
+						riga.setModalita_pagamento(null);
+						riga.setBanca(null);
+						riga.setBanche(null);
+						riga.setCessionario(null);
+						riga.setToBeUpdated();
+					}
+				}
+			}
 		}
 	}catch (ValidationException e) {
           throw new ApplicationException(e.getMessage());
