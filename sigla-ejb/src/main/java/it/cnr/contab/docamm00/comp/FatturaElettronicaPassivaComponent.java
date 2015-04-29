@@ -479,13 +479,11 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 
 	public void aggiornaScartoEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc) throws PersistencyException, ComponentException,java.rmi.RemoteException {
 		for (DocumentoEleTestataBulk doc : listaDoc) {
-			if (doc.getStatoNotificaEsito() == null) {
 				doc.setStatoNotificaEsito(DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_SCARTATO_SDI);
 				doc.setToBeUpdated();
 				updateBulk(userContext, doc);
 				SendMail.sendErrorMail("Fatture Elettroniche: Passive: E' stato ricevuto uno scarto dell'esito per l'Id SDI."+ doc.getIdentificativoSdi(), 
 						"Fattura Passiva: Scarto Esito. Id SDI "+doc.getIdentificativoSdi());				
-			}
 		}
 	}
 
