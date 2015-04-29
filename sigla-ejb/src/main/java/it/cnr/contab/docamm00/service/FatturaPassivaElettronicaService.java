@@ -244,35 +244,49 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	}
 
 	private void notificaFatturaPassivaScartoEsito(Message message, String userName) throws ComponentException {
-		try {
-			List<BodyPart> bodyParts = estraiBodyPart(message.getContent());
-			if (bodyParts.isEmpty()) {
-				logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
-						" non ha file allegati.");
-				return;
-			}
-			if (bodyParts.size() > 2) {
-				logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
-						" ha più di due file allegati.");
-				return;
-			}
-			boolean trovatoFile = false;
-			for (BodyPart bodyPart : bodyParts) {
-				String fileName = extractFileName(bodyPart);
-				if (fileName.toLowerCase().endsWith("xml")){
-					ricezioneFattureService.notificaScartoEsito(fileName, createDataHandler(bodyPart));
-					trovatoFile = true;
-					break;
+		try{
+			String[] headerMessage = getMessageID(message);
+			if (headerMessage != null){
+				String messageID = Arrays.asList(headerMessage).toString();
+				String messageIDWithUser = userName + " "+messageID;
+				if (!listaMessageIdAlreadyScanned.contains(messageIDWithUser)){
+					logger.info(messageIDWithUser);
+					try {
+						List<BodyPart> bodyParts = estraiBodyPart(message.getContent());
+						if (bodyParts.isEmpty()) {
+							logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
+									" non ha file allegati.");
+							return;
+						}
+						if (bodyParts.size() > 2) {
+							logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
+									" ha più di due file allegati.");
+							return;
+						}
+						boolean trovatoFile = false;
+						for (BodyPart bodyPart : bodyParts) {
+							String fileName = extractFileName(bodyPart);
+							if (fileName.toLowerCase().endsWith("xml")){
+								ricezioneFattureService.notificaScartoEsito(fileName, createDataHandler(bodyPart));
+								trovatoFile = true;
+								break;
+							}
+						}
+						if (!trovatoFile){
+							logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName + " è stato precessato ma gli allegati presenti non sono conformi.");
+							SendMail.sendErrorMail("Fatture Elettroniche: Passive: Scarto Esito. Allegati non conformi. Mail:"+userName, message.getDescription());
+						}
+						listaMessageIdAlreadyScanned.add(messageIDWithUser);
+					} catch (Exception e) {
+						logger.error("PEC scan error while importing file.", e);
+					}
 				}
 			}
-			if (!trovatoFile){
-				logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName + " è stato precessato ma gli allegati presenti non sono conformi.");
-				SendMail.sendErrorMail("Fatture Elettroniche: Passive: Scarto Esito. Allegati non conformi. Mail:"+userName, message.getDescription());
-			}
-		} catch (Exception e) {
-			logger.error("PEC scan error while importing file.", e);
+		} catch (MessagingException e) {
+			logger.error("Errore durante il recupero dell'ID del messaggio.", e);
 		}
 	}
+
 
 	@SuppressWarnings("unchecked")
 	public void pecScan(String userName, String password) throws ComponentException {
@@ -289,8 +303,8 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			URLName urlName = new URLName(pecURLName);
 			final Store store = session.getStore(urlName);
 			store.connect(userName, password);
-			searchMailFromSdi(userName, store);
 			searchMailFromPec(userName, store);
+			searchMailFromSdi(userName, store);
 			store.close();
 		} catch (AuthenticationFailedException e) {
 			logger.error("Error while scan PEC email:" +userName + " - password:"+password);
@@ -380,21 +394,35 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	    for (int i = 0; i < messages.length; i++) {
 	    	try {
 	    		Message message = messages[i];
+	    		
 	    		if (message.getSubject().contains(getSubjectTermForFatturaAttivaPec())){
 		    		String nomeFile = message.getSubject().substring(getSubjectTermForFatturaAttivaPec().length() + 1 );
 		    		if (nomeFile != null){
 						trasmissioneFattureService.notificaFatturaAttivaConsegnaPec(userContext, nomeFile, message.getSentDate());
 		    		}
 	    		} else if (message.getSubject().contains(getSubjectTermForFatturaPassivaPec())){
-		    		String identificativoSdi = message.getSubject().substring(getSubjectTermForFatturaPassivaPec().length() + 1 );
-		    		if (identificativoSdi != null){
-						ricezioneFattureService.notificaFatturaPassivaConsegnaEsitoPec(identificativoSdi.trim(), message.getSentDate());
+		    		String[] headerMessage = getMessageID(message);
+		    		if (headerMessage != null){
+						String messageID = Arrays.asList(headerMessage).toString();
+						String messageIDWithUser = userName + " "+messageID;
+						if (!listaMessageIdAlreadyScanned.contains(messageIDWithUser)){
+							logger.info(messageIDWithUser);
+				    		String identificativoSdi = message.getSubject().substring(getSubjectTermForFatturaPassivaPec().length() + 1 );
+				    		if (identificativoSdi != null){
+								ricezioneFattureService.notificaFatturaPassivaConsegnaEsitoPec(identificativoSdi.trim(), message.getSentDate());
+								listaMessageIdAlreadyScanned.add(messageIDWithUser);
+				    		}
+			    		}
 		    		}
 	    		}
 			} catch (Exception e) {
 				logger.error("PEC scan error while updating send PEC. ", e);
 			}
 		}
+	}
+	private String[] getMessageID(Message message) throws MessagingException {
+		String [] headerMessage = message.getHeader("Message-ID");
+		return headerMessage;
 	}
 	public List<SearchTerm> createTermsForSearchPec() {
 		List<SearchTerm> terms = new ArrayList<SearchTerm>();
