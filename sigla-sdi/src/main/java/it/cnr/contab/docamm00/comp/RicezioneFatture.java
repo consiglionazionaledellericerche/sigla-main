@@ -182,6 +182,8 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			cmisService.storeSimpleDocument(data.getInputStream(), data.getContentType(), nodeRef, metadataProperties);
 		} catch(IOException e){
 			throw new ComponentException(e);
+		} catch(CmisContentAlreadyExistsException e){
+			LOGGER.warn("PEC File "+nomeFile+" alredy store!");
 		}
 	}
 
