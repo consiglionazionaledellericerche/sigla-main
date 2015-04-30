@@ -966,41 +966,47 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			ScartoEsitoCommittenteType scartoEsito = fileScartoEsito.getValue();
 			Long identificativoSdi = scartoEsito.getIdentificativoSdI().longValue();
 			LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito Id SDI: "+identificativoSdi);
-			List<DocumentoEleTestataBulk> docs = component.recuperoDocumento(userContext, identificativoSdi);
-			if (docs != null && !docs.isEmpty()){
-				Boolean docsDaAggiornare = false;
-				for (DocumentoEleTestataBulk doc : docs) {
-					if (!StringUtils.isEmpty(doc.getStatoNotificaEsito()) && doc.getStatoNotificaEsito().equals(DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_SCARTATO_SDI)){
-						LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Fattura già elaborata ");
-					} else {
-						docsDaAggiornare = true;
-						List<DocumentoEleTrasmissioneBulk> trasms = component.recuperoTrasmissione(userContext, identificativoSdi);
-						for (DocumentoEleTrasmissioneBulk trasm : trasms) {
-							saveNotifica(data, nomeFile, trasm.getCmisNodeRef(), CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_SCARTO);
-							break;
+			if (scartoEsito.getNote() != null && scartoEsito.getNote().startsWith("EN02: Notifica di esito già pervenuta as Sistema di Interscambio")){
+				LOGGER.info("Id SDI: "+identificativoSdi + ".  "+scartoEsito.getNote());
+			} else {
+				List<DocumentoEleTestataBulk> docs = component.recuperoDocumento(userContext, identificativoSdi);
+				if (docs != null && !docs.isEmpty()){
+					Boolean docsDaAggiornare = false;
+					for (DocumentoEleTestataBulk doc : docs) {
+						if (!StringUtils.isEmpty(doc.getStatoNotificaEsito()) && doc.getStatoNotificaEsito().equals(DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_SCARTATO_SDI)){
+							LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Fattura già elaborata ");
+						} else {
+							docsDaAggiornare = true;
+							List<DocumentoEleTrasmissioneBulk> trasms = component.recuperoTrasmissione(userContext, identificativoSdi);
+							for (DocumentoEleTrasmissioneBulk trasm : trasms) {
+								saveNotifica(data, nomeFile, trasm.getCmisNodeRef(), CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_SCARTO);
+								break;
+							}
+						}
+						break;
+					}
+					if (docsDaAggiornare){
+						try{
+							component.aggiornaScartoEsitoPec(userContext, docs);
+							LOGGER.info("Fatture Elettroniche: Passive: Pec: aggiornamento scarto esito con id SDI "+identificativoSdi);
+							SendMail.sendErrorMail("Fatture Elettroniche: Passive: E' stato ricevuto uno scarto dell'esito per l'Id SDI."+ identificativoSdi, "Fattura Passiva: Scarto Esito. Id SDI "+identificativoSdi);
+						} catch (Exception ex) {
+							LOGGER.error("Fatture Elettroniche: Passive: Pec: Errore nell'elaborazione dello scarto esito con id SDI "+identificativoSdi + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
+							java.io.StringWriter sw = new java.io.StringWriter();
+							ex.printStackTrace(new java.io.PrintWriter(sw));
+							SendMail.sendErrorMail("Fatture Elettroniche: Passive: Pec: Scarto esito. Id SDI "+identificativoSdi, sw.toString());
 						}
 					}
-					break;
+				} else {
+					LOGGER.warn("Fatture Elettroniche: Passive: Pec: Per l'identificativo SDI indicato nel file dell'e-mail non corrisponde nessun documento." + identificativoSdi);
+					SendMail.sendErrorMail("Fatture Elettroniche: Passive: Pec: Per l'identificativo SDI del file inviato indicato nel file dell'e-mail non corrisponde nessuna fattura", "Scarto Esito. Id SDI "+identificativoSdi);
 				}
-				if (docsDaAggiornare){
-					try{
-						component.aggiornaScartoEsitoPec(userContext, docs);
-						LOGGER.info("Fatture Elettroniche: Passive: Pec: aggiornamento scarto esito con id SDI "+identificativoSdi);
-					} catch (Exception ex) {
-						LOGGER.error("Fatture Elettroniche: Passive: Pec: Errore nell'elaborazione dello scarto esito con id SDI "+identificativoSdi + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
-						java.io.StringWriter sw = new java.io.StringWriter();
-						ex.printStackTrace(new java.io.PrintWriter(sw));
-						SendMail.sendErrorMail("Fatture Elettroniche: Passive: Pec: Scarto esito. Id SDI "+identificativoSdi, sw.toString());
-					}
-				}
-			} else {
-				LOGGER.warn("Fatture Elettroniche: Passive: Pec: Per l'identificativo SDI indicato nel file dell'e-mail non corrisponde nessun documento." + identificativoSdi);
-				SendMail.sendErrorMail("Fatture Elettroniche: Passive: Pec: Per l'identificativo SDI del file inviato indicato nel file dell'e-mail non corrisponde nessuna fattura", "Scarto Esito. Id SDI "+identificativoSdi);
 			}
 		} catch (Exception e) {
 			throw new ComponentException(e);
 		}
 	}
+
 	private UserContext createUserContext() {
 		UserContext userContext = new WSUserContext("SDI",null,new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null);
 		return userContext;
