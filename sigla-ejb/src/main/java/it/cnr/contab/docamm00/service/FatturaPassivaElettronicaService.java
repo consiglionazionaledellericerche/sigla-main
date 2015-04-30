@@ -249,6 +249,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			if (headerMessage != null){
 				String messageID = Arrays.asList(headerMessage).toString();
 				String messageIDWithUser = userName + " "+messageID;
+	    	logger.info("MessageIDWithUser " + messageIDWithUser);
 				if (!listaMessageIdAlreadyScanned.contains(messageIDWithUser)){
 					logger.info(messageIDWithUser);
 					try {
@@ -277,6 +278,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 							SendMail.sendErrorMail("Fatture Elettroniche: Passive: Scarto Esito. Allegati non conformi. Mail:"+userName, message.getDescription());
 						}
 						listaMessageIdAlreadyScanned.add(messageIDWithUser);
+			    	logger.info("Message Added");
 					} catch (Exception e) {
 						logger.error("PEC scan error while importing file.", e);
 					}
@@ -405,12 +407,14 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		    		if (headerMessage != null){
 						String messageID = Arrays.asList(headerMessage).toString();
 						String messageIDWithUser = userName + " "+messageID;
-						if (!listaMessageIdAlreadyScanned.contains(messageIDWithUser)){
+			    	logger.info("MessageIDWithUser " + messageIDWithUser);
+					if (!listaMessageIdAlreadyScanned.contains(messageIDWithUser)){
 							logger.info(messageIDWithUser);
 				    		String identificativoSdi = message.getSubject().substring(getSubjectTermForFatturaPassivaPec().length() + 1 );
 				    		if (identificativoSdi != null){
 								ricezioneFattureService.notificaFatturaPassivaConsegnaEsitoPec(identificativoSdi.trim(), message.getSentDate());
 								listaMessageIdAlreadyScanned.add(messageIDWithUser);
+					    	logger.info("Message Added");
 				    		}
 			    		}
 		    		}
