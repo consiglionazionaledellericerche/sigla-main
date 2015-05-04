@@ -6,7 +6,6 @@ import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaElettronicaBP;
-import it.cnr.contab.docamm00.bp.CRUDNotaDiCreditoBP;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
