@@ -7400,7 +7400,7 @@ public Fattura_attivaBulk ricercaFatturaDaCodiceSDI(UserContext userContext, Str
 
 public Fattura_attivaBulk aggiornaFatturaRifiutataDestinatarioSDI(UserContext userContext, Fattura_attivaBulk fattura, String noteSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException {
 	fattura.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_RIFIUTATA_DESTINATARIO);
-	fattura.setNoteInvioSdi(noteSdi);
+	fattura.setNoteInvioSdi(impostaNoteSdi(noteSdi));
 	fattura.setToBeUpdated();
 	updateBulk(userContext, fattura);
 	if (fattura instanceof Fattura_attiva_IBulk){
@@ -7413,7 +7413,7 @@ public Fattura_attivaBulk aggiornaFatturaRifiutataDestinatarioSDI(UserContext us
 
 public Fattura_attivaBulk aggiornaFatturaDecorrenzaTerminiSDI(UserContext userContext, Fattura_attivaBulk fattura, String noteSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException {
 	fattura.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_DECORRENZA_TERMINI);
-	fattura.setNoteInvioSdi(noteSdi);
+	fattura.setNoteInvioSdi(impostaNoteSdi(noteSdi));
 	fattura.setToBeUpdated();
 	updateBulk(userContext, fattura);
 	return fattura;
@@ -7429,7 +7429,7 @@ public Fattura_attivaBulk aggiornaFatturaEsitoAccettatoSDI(UserContext userConte
 public Fattura_attivaBulk aggiornaFatturaScartoSDI(UserContext userContext, Fattura_attivaBulk fattura, String codiceInvioSdi, String noteSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException {
 	fattura.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_SCARTATA_DA_SDI);
 	fattura.setCodiceInvioSdi(codiceInvioSdi);
-	fattura.setNoteInvioSdi(noteSdi);
+	fattura.setNoteInvioSdi(impostaNoteSdi(noteSdi));
 	fattura.setToBeUpdated();
 	updateBulk(userContext, fattura);
 	if (fattura instanceof Fattura_attiva_IBulk){
@@ -7450,7 +7450,7 @@ public Fattura_attiva_IBulk aggiornaDatiFatturaSDI(UserContext userContext, Stri
 @Deprecated
 public Fattura_attiva_IBulk aggiornaDatiFatturaSDI(UserContext userContext, Fattura_attiva_IBulk fatturaAttiva, String statoInvioSdi, String noteInvioSdi, XMLGregorianCalendar dataConsegnaSdi, boolean stornaFattura) throws PersistencyException, ComponentException,java.rmi.RemoteException {
 	fatturaAttiva.setStatoInvioSdi(statoInvioSdi);
-	fatturaAttiva.setNoteInvioSdi(noteInvioSdi==null||noteInvioSdi.length()<=500?noteInvioSdi:noteInvioSdi.substring(0,499));
+	fattura.setNoteInvioSdi(impostaNoteSdi(noteInvioSdi));
 	fatturaAttiva.setDtConsegnaSdi(dataConsegnaSdi!=null?new Timestamp(dataConsegnaSdi.toGregorianCalendar().getTime().getTime()):null);
 	fatturaAttiva.setToBeUpdated();
 	updateBulk(userContext, fatturaAttiva);
@@ -7499,7 +7499,7 @@ public Fattura_attivaBulk aggiornaFatturaConsegnaSDI(UserContext userContext, Fa
 public Fattura_attivaBulk aggiornaFatturaMancataConsegnaInvioSDI(UserContext userContext, Fattura_attivaBulk fattura, String codiceSdi, String noteInvioSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException {
 	fattura.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_MANCATA_CONSEGNA);
 	fattura.setCodiceInvioSdi(codiceSdi);
-	fattura.setNoteInvioSdi(noteInvioSdi);
+	fattura.setNoteInvioSdi(impostaNoteSdi(noteInvioSdi));
 	fattura.setToBeUpdated();
 	updateBulk(userContext, fattura);
 	if (fattura instanceof Fattura_attiva_IBulk){
@@ -7562,10 +7562,14 @@ public Fattura_attivaBulk recuperoFatturaElettronicaDaNomeFile(UserContext userC
 public Fattura_attivaBulk aggiornaFatturaTrasmissioneNonRecapitataSDI(UserContext userContext, Fattura_attivaBulk fattura, String codiceInvioSdi, String noteSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException {
 	fattura.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_NON_RECAPITABILE);
 	fattura.setCodiceInvioSdi(codiceInvioSdi);
-	fattura.setNoteInvioSdi(noteSdi);
+	fattura.setNoteInvioSdi(impostaNoteSdi(noteSdi));
 	fattura.setToBeUpdated();
 	updateBulk(userContext, fattura);
 	return fattura;
+}
+
+private String impostaNoteSdi(String noteSdi) {
+	return noteSdi==null||noteSdi.length()<=500?noteSdi:noteSdi.substring(0,499);
 }
 
 }
