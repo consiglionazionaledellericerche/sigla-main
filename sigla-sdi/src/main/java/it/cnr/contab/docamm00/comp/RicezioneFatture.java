@@ -966,7 +966,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			ScartoEsitoCommittenteType scartoEsito = fileScartoEsito.getValue();
 			Long identificativoSdi = scartoEsito.getIdentificativoSdI().longValue();
 			LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito Id SDI: "+identificativoSdi);
-			if (scartoEsito.getNote() != null && scartoEsito.getNote().startsWith("EN02: Notifica di esito già pervenuta as Sistema di Interscambio")){
+			if (scartoEsito.getNote() != null && scartoEsito.getNote().startsWith("EN02: Notifica di esito già pervenuta al Sistema di Interscambio")){
 				LOGGER.info("Id SDI: "+identificativoSdi + ".  "+scartoEsito.getNote());
 			} else {
 				List<DocumentoEleTestataBulk> docs = component.recuperoDocumento(userContext, identificativoSdi);
