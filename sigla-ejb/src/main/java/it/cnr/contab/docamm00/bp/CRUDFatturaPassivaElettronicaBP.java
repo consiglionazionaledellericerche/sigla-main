@@ -1,5 +1,6 @@
 package it.cnr.contab.docamm00.bp;
 
+import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -9,6 +10,7 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
+import it.cnr.contab.docamm00.fatturapa.bulk.AllegatoFatturaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleDdtBulk;
@@ -23,6 +25,7 @@ import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.HttpActionContext;
@@ -31,7 +34,6 @@ import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.DateUtils;
-import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
@@ -62,10 +64,11 @@ import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
+import org.apache.chemistry.opencmis.client.api.SecondaryType;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.commons.io.IOUtils;
 
-public class CRUDFatturaPassivaElettronicaBP extends SimpleCRUDBP implements FatturaPassivaElettronicaBP{
+public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatturaBulk, DocumentoEleTestataBulk> implements FatturaPassivaElettronicaBP{
 	private static final long serialVersionUID = 1L;
 	private SiglaCMISService cmisService;
 	private TipoIntegrazioneSDI tipoIntegrazioneSDI = TipoIntegrazioneSDI.PEC;
@@ -339,16 +342,15 @@ public class CRUDFatturaPassivaElettronicaBP extends SimpleCRUDBP implements Fat
     	try {
         	documentoEleTestata.setStatoDocumento(StatoDocumentoEleEnum.RIFIUTATO.name());
         	documentoEleTestata.setToBeUpdated();
-        	setModel(actioncontext, documentoEleTestata);
-        	save(actioncontext);
         	((FatturaElettronicaPassivaComponentSession)createComponentSession()).
     		notificaEsito(actioncontext.getUserContext(), tipoIntegrazioneSDI, documentoEleTestata);
     	} catch (Exception e) {
     		documentoEleTestata.setStatoDocumento(statoDocumentoEleEnum.name());
     		throw handleException(e);
 		}
+    	setModel(actioncontext, documentoEleTestata);    	
+    	save(actioncontext);    	
 	}
-
 
 	@Override
 	protected void basicEdit(ActionContext actioncontext, OggettoBulk oggettobulk, boolean flag) throws BusinessProcessException {
@@ -467,5 +469,48 @@ public class CRUDFatturaPassivaElettronicaBP extends SimpleCRUDBP implements Fat
 				return Boolean.TRUE;
 		}		
 		return Boolean.FALSE;
+	}
+
+	@Override
+	protected CMISPath getCMISPath(DocumentoEleTestataBulk documentoEleTestata) {
+		if (documentoEleTestata != null && documentoEleTestata.getDocumentoEleTrasmissione() != null && 
+				documentoEleTestata.getDocumentoEleTrasmissione().getCmisNodeRef() != null) {
+			try {
+				return CMISPath.construct(
+						((Folder)cmisService.getNodeByNodeRef(documentoEleTestata.getDocumentoEleTrasmissione().getCmisNodeRef())).getPath()
+				);
+			} catch (ApplicationException e) {
+				return null;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	protected Class<AllegatoFatturaBulk> getAllegatoClass() {
+		return AllegatoFatturaBulk.class;
 	}	
+	
+	@Override
+	protected boolean excludeChild(CmisObject cmisObject) {		
+		for (Object obj : crudDocEleAllegatiColl.getDetails()) {
+			DocumentoEleAllegatiBulk documentoEleAllegatiBulk = (DocumentoEleAllegatiBulk)obj;
+			if (documentoEleAllegatiBulk.getCmisNodeRef().equalsIgnoreCase(cmisObject.getId()))
+				return true;
+		}
+		if (cmisObject.getType().getId().equalsIgnoreCase("D:sigla_fatture_attachment:document"))
+			return true;
+		return super.excludeChild(cmisObject);
+	}
+	
+	@Override
+	protected void completeAllegato(AllegatoFatturaBulk allegato) {
+		for (SecondaryType secondaryType : allegato.getDocument().getSecondaryTypes()) {
+			if (AllegatoFatturaBulk.aspectNamesKeys.get(secondaryType.getId()) != null){
+				allegato.setAspectName(secondaryType.getId());
+				break;
+			}
+		}
+		super.completeAllegato(allegato);
+	}
 }

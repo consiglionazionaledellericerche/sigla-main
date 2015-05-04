@@ -346,13 +346,13 @@ public class SiglaCMISService {
 					inputStream);			
 			if (cmisBulkInfo.getType(getSiglaSession(), oggettoBulk)!=null || objectTypeName!=null)
 				metadataProperties.put(PropertyIds.OBJECT_TYPE_ID, cmisBulkInfo.getType(getSiglaSession(), oggettoBulk).getId());			
+			metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, cmisBulkInfo.getAspect(getSiglaSession(), oggettoBulk));
 			for (Property<?> property : cmisBulkInfo.getProperty(getSiglaSession(), oggettoBulk)) {
 				metadataProperties.put(property.getId(), property.getValue());
 			}
 			for (Property<?> property : cmisBulkInfo.getAspectProperty(getSiglaSession(), oggettoBulk)) {
 				metadataProperties.put(property.getId(), property.getValue());
 			}			
-			metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, cmisBulkInfo.getAspect(getSiglaSession(), oggettoBulk));
 			Document node = (Document) getNodeByNodeRef(
 					getSiglaSession().createDocument(metadataProperties, parentNode, contentStream, VersioningState.MAJOR).getId());
 			if (permissions.length > 0 ){
@@ -393,13 +393,13 @@ public class SiglaCMISService {
 	public void updateProperties(OggettoBulk oggettoBulk, CmisObject node){
 		try {
 			Map<String, Object> metadataProperties = new HashMap<String, Object>();
+			metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, cmisBulkInfo.getAspect(getSiglaSession(), oggettoBulk));
 			for (Property<?> property : cmisBulkInfo.getProperty(getSiglaSession(), oggettoBulk)) {
 				metadataProperties.put(property.getId(), property.getValue());
 			}
 			for (Property<?> property : cmisBulkInfo.getAspectProperty(getSiglaSession(), oggettoBulk)) {
 				metadataProperties.put(property.getId(), property.getValue());
 			}			
-			metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, cmisBulkInfo.getAspect(getSiglaSession(), oggettoBulk));
 			if (node.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
 				node = ((Document)node).getObjectOfLatestVersion(false);
 				node = getSiglaSession().getObject(node);
