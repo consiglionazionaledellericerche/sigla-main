@@ -14,6 +14,8 @@ import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_debitoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_rigaBulk;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -24,7 +26,7 @@ import it.gov.fatturapa.sdi.fatturapa.v1.TipoDocumentoType;
 
 import java.util.Dictionary;
 import java.util.Iterator;
-public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
+public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements AllegatoParentBulk{
 	public static final String STATO_DOCUMENTO_TUTTI = "TUTTI";
 	/**
 	 * 
@@ -106,6 +108,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
 	private BulkList<DocumentoEleScontoMaggBulk> docEleScontoMaggColl = new BulkList<DocumentoEleScontoMaggBulk>();
 	private BulkList<DocumentoEleAcquistoBulk> docEleAcquistoColl = new BulkList<DocumentoEleAcquistoBulk>();
 	private BulkList<DocumentoEleDdtBulk> docEleDdtColl = new BulkList<DocumentoEleDdtBulk>();
+	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -161,7 +164,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
 		// Metti solo le liste di oggetti che devono essere resi persistenti
 		return new it.cnr.jada.bulk.BulkCollection[] { 
 				docEleLineaColl,docEleIVAColl,docEleAllegatiColl,
-				docEleTributiColl,docEleScontoMaggColl,docEleAcquistoColl,docEleDdtColl
+				docEleTributiColl,docEleScontoMaggColl,docEleAcquistoColl,docEleDdtColl,archivioAllegati
 		};
 	}
 	
@@ -524,5 +527,20 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase {
 	}
 	public String getStatoNotificaEsitoVisual() {
 		return statoNotificaEsitoKeys.get(getStatoNotificaEsito());
+	}
+
+	public AllegatoGenericoBulk removeFromArchivioAllegati(int index) {
+		return getArchivioAllegati().remove(index);
+	}
+	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+		archivioAllegati.add(allegato);
+		return archivioAllegati.size()-1;		
+	}
+	public BulkList<AllegatoGenericoBulk> getArchivioAllegati() {
+		return archivioAllegati;
+	}
+	public void setArchivioAllegati(
+			BulkList<AllegatoGenericoBulk> archivioAllegati) {
+		this.archivioAllegati = archivioAllegati;
 	}
 }

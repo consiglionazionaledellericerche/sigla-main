@@ -76,5 +76,20 @@
 			<title>File XML di tipo Trasmissione Fattura preveniente da www.fatturapa.gov.it</title>
 			<description>File XML di tipo Trasmissione Fattura preveniente da www.fatturapa.gov.it</description>
 		</aspect>
+		<!--
+			ASPECT allegati alla fattura
+		-->
+		<aspect name="sigla_fatture_attachment:durc">
+			<title>Allegato al documento elettronico e alla fattura generata da esso</title>
+		</aspect>
+		<aspect name="sigla_fatture_attachment:tacciabilita">
+			<title>Allegato al documento elettronico e alla fattura generata da esso</title>
+		</aspect>
+		<aspect name="sigla_fatture_attachment:prestazione_resa">
+			<title>Allegato al documento elettronico e alla fattura generata da esso</title>
+		</aspect>
+		<aspect name="sigla_fatture_attachment:altro">
+			<title>Allegato al documento elettronico e alla fattura generata da esso</title>
+		</aspect>		
 	</aspects>
 </model>
