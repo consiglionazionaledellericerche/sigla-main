@@ -3,7 +3,6 @@ package it.cnr.contab.util00.bp;
 import it.cnr.contab.cmis.CMISAspect;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.cmis.service.SiglaCMISService;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
 import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
@@ -89,10 +88,8 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 		is.close();
 		os.flush();
 	}
-	
-	@Override
-	public OggettoBulk initializeModelForEdit(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
-		oggettobulk = super.initializeModelForEdit(actioncontext, oggettobulk);
+
+	public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
 		AllegatoParentBulk allegatoParentBulk = (AllegatoParentBulk)oggettobulk;
 		try {
 			Folder parent = (Folder) cmisService.getNodeByPath(getCMISPath((K) oggettobulk));
@@ -122,7 +119,13 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 		} catch (InvocationTargetException e) {
 			throw handleException(e);
 		}
-		return oggettobulk;
+		return oggettobulk;	
+	}
+	
+	@Override
+	public OggettoBulk initializeModelForEdit(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
+		oggettobulk = super.initializeModelForEdit(actioncontext, oggettobulk);
+		return initializeModelForEditAllegati(actioncontext, oggettobulk);
 	}
 	
 	protected void completeAllegato(T allegato) {
