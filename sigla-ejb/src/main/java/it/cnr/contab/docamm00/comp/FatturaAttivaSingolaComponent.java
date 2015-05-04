@@ -7450,7 +7450,7 @@ public Fattura_attiva_IBulk aggiornaDatiFatturaSDI(UserContext userContext, Stri
 @Deprecated
 public Fattura_attiva_IBulk aggiornaDatiFatturaSDI(UserContext userContext, Fattura_attiva_IBulk fatturaAttiva, String statoInvioSdi, String noteInvioSdi, XMLGregorianCalendar dataConsegnaSdi, boolean stornaFattura) throws PersistencyException, ComponentException,java.rmi.RemoteException {
 	fatturaAttiva.setStatoInvioSdi(statoInvioSdi);
-	fattura.setNoteInvioSdi(impostaNoteSdi(noteInvioSdi));
+	fatturaAttiva.setNoteInvioSdi(impostaNoteSdi(noteInvioSdi));
 	fatturaAttiva.setDtConsegnaSdi(dataConsegnaSdi!=null?new Timestamp(dataConsegnaSdi.toGregorianCalendar().getTime().getTime()):null);
 	fatturaAttiva.setToBeUpdated();
 	updateBulk(userContext, fatturaAttiva);
