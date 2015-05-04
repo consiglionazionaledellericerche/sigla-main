@@ -7304,9 +7304,10 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 		BigDecimal value = mapNatura.get(key);
 		BigDecimal valueEle = mapNaturaEle.get(key);
 		BigDecimal valueEleArr = Utility.nvl(mapNaturaEleArr.get(key));
-		if ((valueEleArr.compareTo(new BigDecimal(0))==0 && value!=null && valueEle!=null && value.compareTo(valueEle)!=0) ||
-			(valueEleArr.compareTo(new BigDecimal(0))!=0 && value!=null && valueEle!=null && ((value.subtract(valueEle)).abs()).compareTo(valueEleArr.abs())!=0) ||	
-			(value==null && valueEle!=null) || (value!=null && valueEle==null))
+		if (!(value!=null && valueEle!=null && value.compareTo(valueEle)==0))
+			if ((valueEleArr.compareTo(new BigDecimal(0))==0 && value!=null && valueEle!=null && value.compareTo(valueEle)!=0) ||
+				(valueEleArr.compareTo(new BigDecimal(0))!=0 && value!=null && valueEle!=null && ((value.subtract(valueEle)).abs()).compareTo(valueEleArr.abs())!=0) ||	
+				(value==null && valueEle!=null) || (value!=null && valueEle==null))
 			codiciNaturaSqu.append((codiciNaturaSqu.length()>0?",":"")+key);
 		mapNaturaEle.remove(key);
 	}
@@ -7320,9 +7321,10 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 		BigDecimal value = mapIva.get(key);
 		BigDecimal valueEle = mapIvaEle.get(key);
 		BigDecimal valueEleArr = Utility.nvl(mapIvaEleArr.get(key));
-		if ((valueEleArr.compareTo(new BigDecimal(0))==0 && value!=null && valueEle!=null && value.compareTo(valueEle)!=0) ||
-			(valueEleArr.compareTo(new BigDecimal(0))!=0 && value!=null && valueEle!=null && ((value.subtract(valueEle)).abs()).compareTo(valueEleArr.abs())!=0) ||		
-			(value==null && valueEle!=null) || (value!=null && valueEle==null))
+		if(!(value!=null && valueEle!=null && value.compareTo(valueEle)==0))
+			if ((valueEleArr.compareTo(new BigDecimal(0))==0 && value!=null && valueEle!=null && value.compareTo(valueEle)!=0) ||
+				(valueEleArr.compareTo(new BigDecimal(0))!=0 && value!=null && valueEle!=null && ((value.subtract(valueEle)).abs()).compareTo(valueEleArr.abs())!=0) ||		
+				(value==null && valueEle!=null) || (value!=null && valueEle==null))
 			codiciIvaSqu.append((codiciIvaSqu.length()>0?",":"")+key);
 		mapIvaEle.remove(key);
 	}
