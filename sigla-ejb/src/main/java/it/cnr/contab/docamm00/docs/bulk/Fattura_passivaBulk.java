@@ -1,7 +1,6 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-
 import it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
@@ -12,6 +11,8 @@ import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
+import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.*;
@@ -27,7 +28,8 @@ public abstract class Fattura_passivaBulk
 	extends Fattura_passivaBase 
 	implements	IDocumentoAmministrativoBulk, 
 				Voidable,
-				IDefferUpdateSaldi {
+				IDefferUpdateSaldi,
+				AllegatoParentBulk{
 
 	protected Tipo_sezionaleBulk tipo_sezionale;
 	protected DivisaBulk valuta;
@@ -225,6 +227,7 @@ public abstract class Fattura_passivaBulk
 	private CompensoBulk compenso = null;
 	
 	private BulkList<DocumentoEleAllegatiBulk> docEleAllegatiColl = new BulkList<DocumentoEleAllegatiBulk>();
+	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 	
 public Fattura_passivaBulk() {
 	super();
@@ -2992,4 +2995,20 @@ public void validateDate() throws ValidationException {
 	public boolean isROStato_liquidazione() {
 		return (isGenerataDaCompenso() && getCompenso()!=null);
 	}
+	
+	public AllegatoGenericoBulk removeFromArchivioAllegati(int index) {
+		return getArchivioAllegati().remove(index);
+	}
+	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+		archivioAllegati.add(allegato);
+		return archivioAllegati.size()-1;		
+	}
+	public BulkList<AllegatoGenericoBulk> getArchivioAllegati() {
+		return archivioAllegati;
+	}
+	public void setArchivioAllegati(
+			BulkList<AllegatoGenericoBulk> archivioAllegati) {
+		this.archivioAllegati = archivioAllegati;
+	}
+	
 }
