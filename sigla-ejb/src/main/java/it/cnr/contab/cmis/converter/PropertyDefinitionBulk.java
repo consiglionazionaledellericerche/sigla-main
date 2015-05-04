@@ -11,6 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import org.apache.chemistry.opencmis.client.api.Property;
 import org.apache.chemistry.opencmis.client.api.Session;
@@ -40,6 +41,7 @@ public class PropertyDefinitionBulk<T extends Serializable>{
 			value = (T) Introspector.getPropertyValue(oggettoBulk, field.getName());
 		if (method != null)
 			value = (T)Introspector.invoke(oggettoBulk, method);
-		return session.getObjectFactory().createProperty(propertyDefinition, value==null? Collections.EMPTY_LIST :Arrays.asList(value));
+		return session.getObjectFactory().createProperty(propertyDefinition, value==null? Collections.EMPTY_LIST : 
+			((value instanceof List<?>) ? (List<T>)value : Arrays.asList(value)));
 	}
 }
