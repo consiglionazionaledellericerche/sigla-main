@@ -419,6 +419,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 					rigaFattura.setDt_a_competenza_coge(documentoEleLinea.getFineDatacompetenza()==null?EJBCommonServices.getServerDate():documentoEleLinea.getFineDatacompetenza());	
 				}				
 			}
+			nbp.initializeModelForEditAllegati(context, fatturaPassivaBulk);
 			return fatturaPassivaBulk;
 		} catch (RemoteException e) {
 			throw handleException(e);
