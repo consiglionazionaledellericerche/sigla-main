@@ -92,6 +92,9 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 	public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
 		AllegatoParentBulk allegatoParentBulk = (AllegatoParentBulk)oggettobulk;
 		try {
+			CMISPath path = getCMISPath((K) oggettobulk);
+			if (path == null)
+				return oggettobulk;
 			Folder parent = (Folder) cmisService.getNodeByPath(getCMISPath((K) oggettobulk));
 			for (CmisObject cmisObject : parent.getChildren()) {
 				if (cmisService.hasAspect(cmisObject, CMISAspect.SYS_ARCHIVED.value()))
