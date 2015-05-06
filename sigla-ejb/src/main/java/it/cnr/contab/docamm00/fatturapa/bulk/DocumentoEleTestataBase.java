@@ -203,6 +203,9 @@ public class DocumentoEleTestataBase extends DocumentoEleTestataKey implements K
 //    MOTIVO_RIFIUTO VARCHAR(2000)
 	private java.lang.String motivoRifiuto;
  
+//  DATA_RICEVIMENTO_MAIL_RIFIUTO TIMESTAMP(7)
+	private java.sql.Timestamp dataRicevimentoMailRifiuto;
+
 //    ANOMALIE VARCHAR(2000)
 	private java.lang.String anomalie;
  
@@ -1137,5 +1140,12 @@ public class DocumentoEleTestataBase extends DocumentoEleTestataKey implements K
 	}
 	public void setStatoNotificaEsito(java.lang.String statoNotificaEsito) {
 		this.statoNotificaEsito = statoNotificaEsito;
+	}
+	public java.sql.Timestamp getDataRicevimentoMailRifiuto() {
+		return dataRicevimentoMailRifiuto;
+	}
+	public void setDataRicevimentoMailRifiuto(
+			java.sql.Timestamp dataRicevimentoMailRifiuto) {
+		this.dataRicevimentoMailRifiuto = dataRicevimentoMailRifiuto;
 	}
 }

@@ -57,6 +57,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -469,17 +471,19 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		}
 	}
 
-	public void aggiornaConsegnaEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc) throws PersistencyException, ComponentException,java.rmi.RemoteException {
+	public void aggiornaConsegnaEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc, Calendar dataRicevimentoMail) throws PersistencyException, ComponentException,java.rmi.RemoteException {
 		for (DocumentoEleTestataBulk doc : listaDoc) {
 			doc.setStatoNotificaEsito(DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_CONSEGNATO_SDI);
+			doc.setDataRicevimentoMailRifiuto(dataRicevimentoMail!=null?new Timestamp(dataRicevimentoMail.getTime().getTime()):doc.getDataRicevimentoMailRifiuto());
 			doc.setToBeUpdated();
 			updateBulk(userContext, doc);
 		}
 	}
 
-	public void aggiornaScartoEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc) throws PersistencyException, ComponentException,java.rmi.RemoteException {
+	public void aggiornaScartoEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc, Calendar dataRicevimentoMail) throws PersistencyException, ComponentException,java.rmi.RemoteException {
 		for (DocumentoEleTestataBulk doc : listaDoc) {
 				doc.setStatoNotificaEsito(DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_SCARTATO_SDI);
+			  doc.setDataRicevimentoMailRifiuto(dataRicevimentoMail!=null?new Timestamp(dataRicevimentoMail.getTime().getTime()):doc.getDataRicevimentoMailRifiuto());
 				doc.setToBeUpdated();
 				updateBulk(userContext, doc);
 				SendMail.sendErrorMail("Fatture Elettroniche: Passive: E' stato ricevuto uno scarto dell'esito per l'Id SDI."+ doc.getIdentificativoSdi(), 
