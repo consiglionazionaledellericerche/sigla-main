@@ -258,6 +258,9 @@ public class DocumentoEleTrasmissioneBase extends DocumentoEleTrasmissioneKey im
 //  NOME_FILE VARCHAR(100)
 	private java.lang.String nomeFile;
 	
+//  REPLY_TO VARCHAR(200)
+	private java.lang.String replyTo;
+
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: DOCUMENTO_ELE_TRASMISSIONE
@@ -1399,5 +1402,11 @@ public class DocumentoEleTrasmissioneBase extends DocumentoEleTrasmissioneKey im
 	
 	public String getDenominzionePrestatore() {
 		return prestatoreDenominazione != null ? prestatoreDenominazione : (prestatoreCognome + " " + prestatoreNome);		
+	}
+	public java.lang.String getReplyTo() {
+		return replyTo;
+	}
+	public void setReplyTo(java.lang.String replyTo) {
+		this.replyTo = replyTo;
 	}
 }

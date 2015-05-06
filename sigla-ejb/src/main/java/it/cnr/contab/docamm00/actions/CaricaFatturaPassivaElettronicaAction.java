@@ -70,7 +70,7 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 	    	JAXBElement<FileSdIConMetadatiType>  fileSdIConMetadati = (JAXBElement<FileSdIConMetadatiType>) client.getUnmarshaller().unmarshal(new StreamSource(request.getInputStream()));
 	    	SpringUtil.getBean("ricezioneFattureService", RicezioneFatturePA.class).
 			riceviFatturaSIGLA(fileSdIConMetadati.getValue().getIdentificativoSdI(), 
-					fileSdIConMetadati.getValue().getNomeFile(), 
+					fileSdIConMetadati.getValue().getNomeFile(), null, 
 					fileSdIConMetadati.getValue().getFile(), 
 					fileSdIConMetadati.getValue().getNomeFileMetadati(),
 					fileSdIConMetadati.getValue().getMetadati());	    	
@@ -99,7 +99,7 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 	    	String cuu = metadatiInvioFileType.getValue().getCodiceDestinatario();
 	    	//TODO
 	    	SpringUtil.getBean("ricezioneFattureService", RicezioneFatturePA.class).
-				riceviFatturaSIGLA(fileSdIConMetadatiTypeBulk.getIdentificativoSdI(), file.getName(), 
+				riceviFatturaSIGLA(fileSdIConMetadatiTypeBulk.getIdentificativoSdI(), file.getName(), null, 
 						new DataHandler(new ByteArrayDataSource(
 								IOUtils.toByteArray(new FileInputStream(file.getFile())),
 								file.getContentType())), 
