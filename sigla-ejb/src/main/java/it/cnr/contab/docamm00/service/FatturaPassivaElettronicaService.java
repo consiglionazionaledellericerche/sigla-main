@@ -654,23 +654,10 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		String replyTo = null; 
 		if (bulk.getDocumentoEleTrasmissione() != null){
 			replyTo = bulk.getDocumentoEleTrasmissione().getReplyTo();
-		if (fileName != null && fileName.startsWith("=?") && fileName.endsWith("?=")){
-			fileName = MimeUtility.decodeText(fileName); 
-		}
-		return fileName;
-	}
-
-	public void notificaEsito(String userName, String password, DocumentoEleTestataBulk bulk, JAXBElement<NotificaEsitoCommittenteType> notificaEsitoCommittenteType) throws EmailException, XmlMappingException, IOException {
-		// Create the email message
-		SimplePECMail email = new SimplePECMail(userName, password);
-		email.setHostName(pecHostName);
-		String replyTo = null; 
-		if (bulk.getDocumentoEleTrasmissione() != null){
-			replyTo = bulk.getDocumentoEleTrasmissione().getReplyTo();
 		}
 		email.addTo(replyTo == null ? pecSDIAddress : replyTo , "SdI - Sistema Di Interscambio");
 		email.setFrom(userName, userName);
-		email.setSubject("Notifica di esito " + bulk.getIdentificativoSdi());
+		email.setSubject(" Notifica di esito " + bulk.getIdentificativoSdi());
 		email.setMsg("Il file trasmesso con identificativo SdI:" + bulk.getIdentificativoSdi() + 
 				(bulk.isRifiutata() ? " è stato Rifiutato (EC02) poichè " + bulk.getMotivoRifiuto() :" è stato Accettato (EC01)") +
 				", in allegato la notifica di esito.");
