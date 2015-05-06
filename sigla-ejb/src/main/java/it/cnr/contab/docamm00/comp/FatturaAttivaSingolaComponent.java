@@ -6240,6 +6240,8 @@ public Long inserisciDatiPerStampaIva(
 				throw new FatturaNonTrovataException("Fattura non trovata!");
 		}
 		if (fatturaAttiva!=null||ncAttiva!=null){
+			if ((fatturaAttiva!=null && fatturaAttiva.getCodiceUnivocoUfficioIpa()!=null)||(ncAttiva!=null && ncAttiva.getCodiceUnivocoUfficioIpa()!=null))
+				throw new GenerazioneReportException("Generazione Stampa non riuscita, documento elettronico");
 			if ((fatturaAttiva!=null && fatturaAttiva.getProtocollo_iva()!=null)||(ncAttiva!=null && ncAttiva.getProtocollo_iva()!=null)){
 				V_stm_paramin_ft_attivaHome home = (V_stm_paramin_ft_attivaHome)getHome(userContext, V_stm_paramin_ft_attivaBulk.class);
 				V_stm_paramin_ft_attivaBulk vista = new V_stm_paramin_ft_attivaBulk();
