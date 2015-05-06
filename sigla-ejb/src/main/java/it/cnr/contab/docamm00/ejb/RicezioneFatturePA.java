@@ -9,7 +9,7 @@ import javax.activation.DataHandler;
 import javax.ejb.Local;
 @Local
 public interface RicezioneFatturePA {
-	public void riceviFatturaSIGLA(BigInteger identificativoSdI, String nomeFile, DataHandler file, String nomeFileMetadati,DataHandler metadati) throws ComponentException;
+	public void riceviFatturaSIGLA(BigInteger identificativoSdI, String nomeFile, String replyTo, DataHandler file, String nomeFileMetadati,DataHandler metadati) throws ComponentException;
 	public void notificaDecorrenzaTermini(BigInteger identificativoSdI, String nomeFile, DataHandler file);
 	public void notificaDecorrenzaTermini(String nomeFile, DataHandler data) throws ComponentException;
 	public void notificaScartoEsito(String nomeFile, DataHandler data, Date dataRicevimento) throws ComponentException;

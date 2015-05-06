@@ -545,6 +545,12 @@
 			sqlTypeName="VARCHAR"
 			columnSize="100"
 			nullable="true" />						
+		<columnMapping
+			columnName="REPLY_TO"
+			propertyName="replyTo"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />						
 	</defaultColumnMap>
 	
 	<persistentProperty
@@ -727,4 +733,6 @@
 		name="cmisNodeRef" />		
 	<persistentProperty
 		name="nomeFile" />			
+	<persistentProperty
+		name="replyTo" />			
 </SQLPersistentInfo>
