@@ -106,7 +106,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 	private transient final static Logger LOGGER = LoggerFactory.getLogger(RicezioneFatture.class);
 	
 	@SuppressWarnings("unchecked")	
-	public RispostaRiceviFattureType riceviFatture(FileSdIConMetadatiType parametersIn) {
+	private RispostaRiceviFattureType riceviFatture(FileSdIConMetadatiType parametersIn, String replyTo) {
 		RispostaRiceviFattureType risposta = new RispostaRiceviFattureType();
 		try {
 			JAXBContext jc = JAXBContext.newInstance("it.gov.fatturapa.sdi.fatturapa.v1");
@@ -138,7 +138,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			
 			JAXBElement<FatturaElettronicaType> fatturaElettronicaType = (JAXBElement<FatturaElettronicaType>) 
 					jc.createUnmarshaller().unmarshal(new ByteArrayInputStream(bStream.toByteArray()));
-			elaboraFattura(fatturaElettronicaType.getValue(), parametersIn.getIdentificativoSdI(), parametersIn.getNomeFile(), cmisPath);		
+			elaboraFattura(fatturaElettronicaType.getValue(), parametersIn.getIdentificativoSdI(), parametersIn.getNomeFile(), replyTo, cmisPath);		
 			risposta.setEsito(EsitoRicezioneType.ER_01);
 		} catch (Throwable e) {
 			LOGGER.error("Errore nel WS della ricezione delle fatture!", e);
@@ -148,6 +148,11 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			throw new SOAPFaultException(generaFault(e.getMessage(), e));
 		}
 		return risposta;
+	}
+
+	@SuppressWarnings("unchecked")	
+	public RispostaRiceviFattureType riceviFatture(FileSdIConMetadatiType parametersIn) {
+		return riceviFatture(parametersIn, null);
 	}
 
 	private ByteArrayOutputStream estraiFirma(InputStream is, JAXBContext jc) throws CMSException, IOException {
@@ -242,7 +247,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		return cmisPath;
 	}
 	
-	private void elaboraFattura(FatturaElettronicaType fatturaElettronicaType, BigInteger identificativoSdI, String nomeFile, CMISPath cmisPath) throws ApplicationException {
+	private void elaboraFattura(FatturaElettronicaType fatturaElettronicaType, BigInteger identificativoSdI, String nomeFile, String replyTo, CMISPath cmisPath) throws ApplicationException {
 		FatturaElettronicaPassivaComponentSession component = 
 				(FatturaElettronicaPassivaComponentSession) EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession");
     	UserContext userContext = createUserContext();
@@ -385,6 +390,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		}
 		docTrasmissione.setTrasmittenteEmail(docTrasmissione.getTrasmittenteEmail());
 		docTrasmissione.setTrasmittenteTelefono(docTrasmissione.getTrasmittenteTelefono());		
+		docTrasmissione.setReplyTo(replyTo);
 		docTrasmissione.setToBeCreated();
 
 		for (int progressivoTestata = 0; progressivoTestata < fatturaElettronicaType.getFatturaElettronicaBody().size(); progressivoTestata++) {
@@ -882,7 +888,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 	}
 
 	public void riceviFatturaSIGLA(BigInteger identificativoSdI,
-			String nomeFile, DataHandler file, String nomeFileMetadati,
+			String nomeFile, String replyTo, DataHandler file, String nomeFileMetadati,
 			DataHandler metadati) throws ComponentException {
 		FileSdIConMetadatiType parametersIn = new FileSdIConMetadatiType();
 		parametersIn.setIdentificativoSdI(identificativoSdI);
@@ -891,7 +897,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		parametersIn.setNomeFileMetadati(nomeFileMetadati);
 		parametersIn.setMetadati(metadati);
 		try {
-			riceviFatture(parametersIn);
+			riceviFatture(parametersIn, replyTo);
 		} catch(SOAPFaultException _ex) {
 			if (_ex.getFault().getAttribute("cause").equalsIgnoreCase(CmisContentAlreadyExistsException.class.getName()))
 				throw new ApplicationException("Fattura già presente!");

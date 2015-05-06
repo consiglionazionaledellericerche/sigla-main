@@ -33,6 +33,7 @@ import java.util.zip.ZipInputStream;
 
 import javax.activation.DataHandler;
 import javax.activation.MimetypesFileTypeMap;
+import javax.mail.Address;
 import javax.mail.AuthenticationFailedException;
 import javax.mail.BodyPart;
 import javax.mail.Folder;
@@ -225,10 +226,12 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			  	JAXBElement<MetadatiInvioFileType> metadatiInvioFileType = (JAXBElement<MetadatiInvioFileType>) 
 			  			fatturazioneElettronicaClient.getUnmarshaller().
 			  			unmarshal(new StreamSource(bodyPartMetadati.getInputStream()));				    	    	
+					String replyTo = getReplyTo(message);
 			  	if (!fatturaElettronicaPassivaComponentSession.existsIdentificativo(userContext, metadatiInvioFileType.getValue().getIdentificativoSdI().longValue())) {
 			    	ricezioneFattureService.riceviFatturaSIGLA(
 			    			metadatiInvioFileType.getValue().getIdentificativoSdI(), 
 			    			bodyPartFattura.getFileName(), 
+			    			replyTo,
 						new DataHandler(new ByteArrayDataSource(
 								IOUtils.toByteArray(bodyPartFattura.getInputStream()),bodyPartFattura.getContentType())), 
 						bodyPartMetadati.getFileName(), 
@@ -241,6 +244,19 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		} catch (Exception e) {
 			logger.error("PEC scan error while importing file.", e);
 		}
+	}
+
+	private String getReplyTo(Message message) throws MessagingException {
+		Address[] repliesAddress = message.getReplyTo();
+		String replyTo = null;
+		if (repliesAddress != null){
+			logger.info("Replies: "+repliesAddress.toString());
+			if (repliesAddress.length > 0){
+				replyTo = repliesAddress[0].toString();
+			}
+		}
+		logger.info("ReplyTo: "+replyTo);
+		return replyTo;
 	}
 
 	private void notificaFatturaPassivaScartoEsito(Message message, String userName) throws ComponentException {
@@ -635,7 +651,24 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		// Create the email message
 		SimplePECMail email = new SimplePECMail(userName, password);
 		email.setHostName(pecHostName);
-		email.addTo(pecSDIAddress, "SdI - Sistema Di Interscambio");
+		String replyTo = null; 
+		if (bulk.getDocumentoEleTrasmissione() != null){
+			replyTo = bulk.getDocumentoEleTrasmissione().getReplyT);
+		if (fileName != null && fileName.startsWith("=?") && fileName.endsWith("?=")){
+			fileName = MimeUtility.decodeText(fileName); 
+		}
+		return fileName;
+	}
+
+	public void notificaEsito(String userName, String password, DocumentoEleTestataBulk bulk, JAXBElement<NotificaEsitoCommittenteType> notificaEsitoCommittenteType) throws EmailException, XmlMappingException, IOException {
+		// Create the email message
+		SimplePECMail email = new SimplePECMail(userName, password);
+		email.setHostName(pecHostName);
+		String replyTo = null; 
+		if (bulk.getDocumentoEleTrasmissione() != null){
+			replyTo = bulk.getDocumentoEleTrasmissione().getReplyTo();
+		}
+		email.addTo(replyTo == null ? pecSDIAddress : replyTo , "SdI - Sistema Di Interscambio");
 		email.setFrom(userName, userName);
 		email.setSubject("Notifica di esito " + bulk.getIdentificativoSdi());
 		email.setMsg("Il file trasmesso con identificativo SdI:" + bulk.getIdentificativoSdi() + 
@@ -687,23 +720,3 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	}
 	private void forwardedEmail(Object obj, List<BodyPart> bodyParts) throws MessagingException, IOException {
 		if (obj instanceof MimeMultipart) {
-			MimeMultipart multipart = (MimeMultipart) obj;
-			for (int j = 0; j < multipart.getCount(); j++) {
-				BodyPart bodyPart = multipart.getBodyPart(j);
-				String disposition = bodyPart.getDisposition();
-				if (disposition != null && disposition.equals(Part.ATTACHMENT)) {
-					bodyParts.add(bodyPart);
-					if (logger.isDebugEnabled()) {
-						logger.debug("Content type:" + bodyPart.getContentType());
-						logger.debug("File name:" + bodyPart.getFileName());
-					}
-				}
-			}
-		}		
-	}
-	public void afterPropertiesSet() throws Exception {
-    	userContext = new WSUserContext("SDI",null, 
-    			new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),
-    			null,null,null);		
-	}
-}
