@@ -13,6 +13,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 import javax.ejb.EJBException;
+import java.util.Calendar;
 import javax.ejb.Remote;
 @Remote
 public interface FatturaElettronicaPassivaComponentSession extends it.cnr.jada.ejb.CRUDComponentSession {
@@ -43,9 +44,9 @@ public interface FatturaElettronicaPassivaComponentSession extends it.cnr.jada.e
 			throws ComponentException, EJBException;
 	public void aggiornaDecorrenzaTerminiSDI(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc) 
 			throws PersistencyException, ComponentException,java.rmi.RemoteException;
-	public void aggiornaConsegnaEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc) 
+	public void aggiornaConsegnaEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc, Calendar dataRicevimentoMail) 
 			throws PersistencyException, ComponentException,java.rmi.RemoteException;
-	public void aggiornaScartoEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc) 
+	public void aggiornaScartoEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc, Calendar dataRicevimentoMail) 
 			throws PersistencyException, ComponentException,java.rmi.RemoteException;
 
 }

@@ -12,6 +12,6 @@ public interface RicezioneFatturePA {
 	public void riceviFatturaSIGLA(BigInteger identificativoSdI, String nomeFile, DataHandler file, String nomeFileMetadati,DataHandler metadati) throws ComponentException;
 	public void notificaDecorrenzaTermini(BigInteger identificativoSdI, String nomeFile, DataHandler file);
 	public void notificaDecorrenzaTermini(String nomeFile, DataHandler data) throws ComponentException;
-	public void notificaScartoEsito(String nomeFile, DataHandler data) throws ComponentException;
-	public void notificaFatturaPassivaConsegnaEsitoPec(String idSdI, Date dataConsegna) throws ComponentException;
+	public void notificaScartoEsito(String nomeFile, DataHandler data, Date dataRicevimento) throws ComponentException;
+	public void notificaFatturaPassivaConsegnaEsitoPec(String idSdI, Date dataRicevimento) throws ComponentException;
 }
