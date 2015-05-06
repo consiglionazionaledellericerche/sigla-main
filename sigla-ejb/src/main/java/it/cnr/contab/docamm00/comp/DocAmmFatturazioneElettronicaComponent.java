@@ -475,7 +475,11 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 					Fattura_attiva_rigaBulk riga= (Fattura_attiva_rigaBulk) i.next();
 					DettaglioLineeType rigaFattura = factory.createDettaglioLineeType();
 					rigaFattura.setNumeroLinea(riga.getProgressivo_riga().intValue());
-					rigaFattura.setDescrizione(riga.getDs_riga_fattura());
+					if (riga.getDs_riga_fattura() != null){
+						rigaFattura.setDescrizione(riga.getDs_riga_fattura().replaceAll("\\u20AC", "E"));
+					} else {
+						rigaFattura.setDescrizione("Descrizione");
+					}
 					rigaFattura.setQuantita(riga.getQuantita().setScale(2));
 					if (riga.getTariffario()!=null && riga.getTariffario().getCd_tariffario()!=null) {
 						if (riga.getTariffario().getUnita_misura()==null)

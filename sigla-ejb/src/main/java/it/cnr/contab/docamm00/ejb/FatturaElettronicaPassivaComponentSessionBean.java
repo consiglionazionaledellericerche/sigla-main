@@ -12,6 +12,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.NoRollbackException;
 import it.cnr.jada.persistency.PersistencyException;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -240,10 +241,10 @@ public class FatturaElettronicaPassivaComponentSessionBean extends it.cnr.jada.e
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void aggiornaConsegnaEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc) throws PersistencyException, ComponentException,java.rmi.RemoteException {
+	public void aggiornaConsegnaEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc, Calendar dataRicevimentoMail) throws PersistencyException, ComponentException,java.rmi.RemoteException {
         pre_component_invocation(userContext, componentObj);
         try{
-        	((FatturaElettronicaPassivaComponent)componentObj).aggiornaConsegnaEsitoPec(userContext, listaDoc);
+        	((FatturaElettronicaPassivaComponent)componentObj).aggiornaConsegnaEsitoPec(userContext, listaDoc, dataRicevimentoMail);
             component_invocation_succes(userContext, componentObj);
         }catch(NoRollbackException norollbackexception){
             component_invocation_succes(userContext, componentObj);
@@ -259,10 +260,10 @@ public class FatturaElettronicaPassivaComponentSessionBean extends it.cnr.jada.e
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void aggiornaScartoEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc) throws PersistencyException, ComponentException,java.rmi.RemoteException {
+	public void aggiornaScartoEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc, Calendar dataRicevimentoMail) throws PersistencyException, ComponentException,java.rmi.RemoteException {
         pre_component_invocation(userContext, componentObj);
         try{
-        	((FatturaElettronicaPassivaComponent)componentObj).aggiornaScartoEsitoPec(userContext, listaDoc);
+        	((FatturaElettronicaPassivaComponent)componentObj).aggiornaScartoEsitoPec(userContext, listaDoc, dataRicevimentoMail);
             component_invocation_succes(userContext, componentObj);
         }catch(NoRollbackException norollbackexception){
             component_invocation_succes(userContext, componentObj);
