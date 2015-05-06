@@ -653,7 +653,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		email.setHostName(pecHostName);
 		String replyTo = null; 
 		if (bulk.getDocumentoEleTrasmissione() != null){
-			replyTo = bulk.getDocumentoEleTrasmissione().getReplyT);
+			replyTo = bulk.getDocumentoEleTrasmissione().getReplyTo();
 		if (fileName != null && fileName.startsWith("=?") && fileName.endsWith("?=")){
 			fileName = MimeUtility.decodeText(fileName); 
 		}
