@@ -268,7 +268,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 						for (BodyPart bodyPart : bodyParts) {
 							String fileName = extractFileName(bodyPart);
 							if (fileName.toLowerCase().endsWith("xml")){
-								ricezioneFattureService.notificaScartoEsito(fileName, createDataHandler(bodyPart));
+								ricezioneFattureService.notificaScartoEsito(fileName, createDataHandler(bodyPart), message.getReceivedDate());
 								trovatoFile = true;
 								break;
 							}
@@ -412,7 +412,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 							logger.info(messageIDWithUser);
 				    		String identificativoSdi = message.getSubject().substring(getSubjectTermForFatturaPassivaPec().length() + 1 );
 				    		if (identificativoSdi != null){
-								ricezioneFattureService.notificaFatturaPassivaConsegnaEsitoPec(identificativoSdi.trim(), message.getSentDate());
+								ricezioneFattureService.notificaFatturaPassivaConsegnaEsitoPec(identificativoSdi.trim(), message.getReceivedDate());
 								listaMessageIdAlreadyScanned.add(messageIDWithUser);
 					    	logger.info("Message Added");
 				    		}
