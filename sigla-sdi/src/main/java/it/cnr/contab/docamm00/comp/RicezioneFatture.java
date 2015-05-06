@@ -954,7 +954,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		}
 	}
 
-	public void notificaScartoEsito(String nomeFile, DataHandler data) throws ComponentException{
+	public void notificaScartoEsito(String nomeFile, DataHandler data, Date dataRicevimentoMail) throws ComponentException{
 		FatturaElettronicaPassivaComponentSession component = (FatturaElettronicaPassivaComponentSession) EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession");
     	UserContext userContext = createUserContext();
 		ByteArrayOutputStream bStream = new ByteArrayOutputStream();
@@ -976,18 +976,22 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 						if (!StringUtils.isEmpty(doc.getStatoNotificaEsito()) && doc.getStatoNotificaEsito().equals(DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_SCARTATO_SDI)){
 							LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Fattura già elaborata ");
 						} else {
-							docsDaAggiornare = true;
-							List<DocumentoEleTrasmissioneBulk> trasms = component.recuperoTrasmissione(userContext, identificativoSdi);
-							for (DocumentoEleTrasmissioneBulk trasm : trasms) {
-								saveNotifica(data, nomeFile, trasm.getCmisNodeRef(), CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_SCARTO);
-								break;
+							if (doc.getDataRicevimentoMailRifiuto() != null && doc.getDataRicevimentoMailRifiuto().compareTo(dataRicevimentoMail) > 0){
+								LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Messaggio già processato");
+							} else {
+								docsDaAggiornare = true;
+								List<DocumentoEleTrasmissioneBulk> trasms = component.recuperoTrasmissione(userContext, identificativoSdi);
+								for (DocumentoEleTrasmissioneBulk trasm : trasms) {
+									saveNotifica(data, nomeFile, trasm.getCmisNodeRef(), CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_SCARTO);
+									break;
+								}
 							}
 						}
 						break;
 					}
 					if (docsDaAggiornare){
 						try{
-							component.aggiornaScartoEsitoPec(userContext, docs);
+							component.aggiornaScartoEsitoPec(userContext, docs, getDate(dataRicevimentoMail));
 							LOGGER.info("Fatture Elettroniche: Passive: Pec: aggiornamento scarto esito con id SDI "+identificativoSdi);
 							SendMail.sendErrorMail("Fatture Elettroniche: Passive: E' stato ricevuto uno scarto dell'esito per l'Id SDI."+ identificativoSdi, "Fattura Passiva: Scarto Esito. Id SDI "+identificativoSdi);
 						} catch (Exception ex) {
@@ -1012,7 +1016,13 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 		return userContext;
 	}
 
-	public void notificaFatturaPassivaConsegnaEsitoPec(String idSdI, Date dataConsegna) throws ComponentException {
+	private Calendar getDate(Date data){
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(data.getTime());
+		return cal;
+	}
+	
+	public void notificaFatturaPassivaConsegnaEsitoPec(String idSdI, Date dataRicevimentoMail) throws ComponentException {
 		FatturaElettronicaPassivaComponentSession component = (FatturaElettronicaPassivaComponentSession) EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession");
     	UserContext userContext = createUserContext();
 		try {
@@ -1025,13 +1035,17 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 					if (!StringUtils.isEmpty(doc.getStatoNotificaEsito()) && doc.getStatoNotificaEsito().equals(DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_CONSEGNATO_SDI)){
 						LOGGER.info("Fatture Elettroniche: Passive: Pec: Consegna Esito. Fattura già elaborata ");
 					} else {
-						docsDaAggiornare = true;
+						if (doc.getDataRicevimentoMailRifiuto() != null && doc.getDataRicevimentoMailRifiuto().compareTo(dataRicevimentoMail) > 0){
+							LOGGER.info("Fatture Elettroniche: Passive: Pec: Consegna Esito. Messaggio già processato");
+						} else {
+							docsDaAggiornare = true;
+						}
 					}
 					break;
 				}
 				if (docsDaAggiornare){
 					try{
-						component.aggiornaConsegnaEsitoPec(userContext, docs);
+						component.aggiornaConsegnaEsitoPec(userContext, docs, getDate(dataRicevimentoMail));
 						LOGGER.info("Fatture Elettroniche: Passive: Pec: aggiornamento consegna esito con id SDI "+identificativoSdi);
 					} catch (Exception ex) {
 						LOGGER.error("Fatture Elettroniche: Passive: Pec: Errore nell'elaborazione della consegna esito con id SDI "+identificativoSdi + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
@@ -1048,5 +1062,4 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			throw new ComponentException(e);
 		}
 	}
-
 }

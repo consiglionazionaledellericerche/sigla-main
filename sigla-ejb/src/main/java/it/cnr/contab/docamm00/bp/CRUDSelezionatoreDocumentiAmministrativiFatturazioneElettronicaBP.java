@@ -49,6 +49,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 
 import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.bindings.spi.http.Response;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
 import org.apache.chemistry.opencmis.commons.impl.UrlBuilder;
@@ -97,6 +98,15 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 		String cds = ((HttpActionContext)actioncontext).getParameter("cds");
 		String cdUo = ((HttpActionContext)actioncontext).getParameter("cdUo");
 		Long pgFattura = Long.valueOf(((HttpActionContext)actioncontext).getParameter("pgFattura"));
+		Folder node = documentiCollegatiDocAmmService.recuperoFolderFattura(esercizio, cds, cdUo, pgFattura);
+		if (node == null){
+			FatturaAttivaSingolaComponentSession componentFatturaAttiva = (FatturaAttivaSingolaComponentSession) createComponentSession(
+					"CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",
+					FatturaAttivaSingolaComponentSession.class);
+			UserContext userContext = actioncontext.getUserContext();
+			Fattura_attivaBulk fattura = componentFatturaAttiva.ricercaFatturaByKey(userContext, esercizio.longValue(), cds, cdUo, pgFattura);			
+			componentFatturaAttiva.gestioneAllegatiPerFatturazioneElettronica(userContext, fattura);
+		}
 		InputStream is = documentiCollegatiDocAmmService.getStreamContabile(esercizio, cds, cdUo, pgFattura, Filtro_ricerca_doc_ammVBulk.DOC_ATT_GRUOP);
 		if (is != null){
 			((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
