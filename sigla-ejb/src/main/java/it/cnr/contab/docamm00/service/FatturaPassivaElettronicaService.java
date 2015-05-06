@@ -707,3 +707,23 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	}
 	private void forwardedEmail(Object obj, List<BodyPart> bodyParts) throws MessagingException, IOException {
 		if (obj instanceof MimeMultipart) {
+			MimeMultipart multipart = (MimeMultipart) obj;
+			for (int j = 0; j < multipart.getCount(); j++) {
+				BodyPart bodyPart = multipart.getBodyPart(j);
+				String disposition = bodyPart.getDisposition();
+				if (disposition != null && disposition.equals(Part.ATTACHMENT)) {
+					bodyParts.add(bodyPart);
+					if (logger.isDebugEnabled()) {
+						logger.debug("Content type:" + bodyPart.getContentType());
+						logger.debug("File name:" + bodyPart.getFileName());
+					}
+				}
+			}
+		}		
+	}
+	public void afterPropertiesSet() throws Exception {
+    	userContext = new WSUserContext("SDI",null, 
+    			new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),
+    			null,null,null);		
+	}
+}			
