@@ -43,10 +43,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.ejb.EJBException;
@@ -377,9 +379,6 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	    	Calendar date = Calendar.getInstance();
 	    	date.setTimeInMillis(documentoEleTestata.getDataDocumento().getTime());
 	    	date.add(Calendar.MONTH, 1);
-	    	//TODO eliminata su richiesta di Patrizia fatturaPassivaBulk.setDt_scadenza(new java.sql.Timestamp(date.getTime().getTime()));
-	    	fatturaPassivaBulk.setDt_da_competenza_coge(calcolaDataMinimaCompetenza(documentoEleTestata));
-	    	fatturaPassivaBulk.setDt_a_competenza_coge(calcolaDataMassimaCompetenza(documentoEleTestata));
 	    	
 	    	fatturaPassivaBulk.setDs_fattura_passiva(documentoEleTestata.getCausale());
 	    	fatturaPassivaBulk.setFl_intra_ue(Boolean.FALSE);
@@ -387,6 +386,17 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	    	fatturaPassivaBulk.setFl_san_marino_senza_iva(Boolean.FALSE);
 	    	fatturaPassivaBulk.setFl_fattura_compenso(existsTributi(documentoEleTestata));
 	    	    	
+	    	//TODO eliminata su richiesta di Patrizia fatturaPassivaBulk.setDt_scadenza(new java.sql.Timestamp(date.getTime().getTime())); 
+	    	GregorianCalendar gcDataMinima = new GregorianCalendar(), gcDataMassima = new GregorianCalendar();
+	    	gcDataMinima.setTime(calcolaDataMinimaCompetenza(documentoEleTestata));
+	    	gcDataMassima.setTime(calcolaDataMassimaCompetenza(documentoEleTestata));
+	    	
+    		if (!fatturaPassivaBulk.getFl_fattura_compenso() && gcDataMinima.get(Calendar.YEAR)<gcDataMassima.get(Calendar.YEAR))
+    			gcDataMinima.setTime(DateUtils.firstDateOfTheYear(gcDataMassima.get(Calendar.YEAR)));
+
+        	fatturaPassivaBulk.setDt_da_competenza_coge(new Timestamp(gcDataMinima.getTime().getTime()));
+	    	fatturaPassivaBulk.setDt_a_competenza_coge(new Timestamp(gcDataMassima.getTime().getTime()));
+	    	
 	    	fatturaPassivaBulk.setIm_totale_fattura(documentoEleTestata.getImportoDocumento());
 	    	fatturaPassivaBulk.setIm_importo_totale_fattura_fornitore_euro(documentoEleTestata.getImportoDocumento());
 	    	action.doCalcolaTotaleFatturaFornitoreInEur(context);
@@ -415,8 +425,23 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 					action.doCalcolaTotaliDiRiga(context);
 					if (documentoEleTestata.getModalitaPagamento() != null)
 						rigaFattura.setModalita_pagamento(documentoEleTestata.getModalitaPagamento().getRif_modalita_pagamento());
-					rigaFattura.setDt_da_competenza_coge(documentoEleLinea.getInizioDatacompetenza()==null?EJBCommonServices.getServerDate():documentoEleLinea.getInizioDatacompetenza());
-					rigaFattura.setDt_a_competenza_coge(documentoEleLinea.getFineDatacompetenza()==null?EJBCommonServices.getServerDate():documentoEleLinea.getFineDatacompetenza());	
+
+			    	//TODO eliminata su richiesta di Patrizia fatturaPassivaBulk.setDt_scadenza(new java.sql.Timestamp(date.getTime().getTime())); 
+			    	GregorianCalendar gcDataMinimaRiga = new GregorianCalendar(), gcDataMassimaRiga = new GregorianCalendar();
+			    	gcDataMinimaRiga.setTime(documentoEleLinea.getInizioDatacompetenza()==null?gcDataMinima.getTime():documentoEleLinea.getInizioDatacompetenza());
+			    	gcDataMassimaRiga.setTime(documentoEleLinea.getFineDatacompetenza()==null?gcDataMassima.getTime():documentoEleLinea.getFineDatacompetenza());
+			    	
+			    	if (fatturaPassivaBulk.getFl_fattura_compenso()) {
+						rigaFattura.setDt_da_competenza_coge(new Timestamp(gcDataMinimaRiga.getTime().getTime()));
+						rigaFattura.setDt_a_competenza_coge(new Timestamp(gcDataMassimaRiga.getTime().getTime()));	
+			    	} else {
+			    		if (gcDataMinimaRiga.get(Calendar.YEAR)<gcDataMinima.get(Calendar.YEAR))
+			    			gcDataMinimaRiga = gcDataMinima;
+			    		if (gcDataMassimaRiga.get(Calendar.YEAR)<gcDataMinima.get(Calendar.YEAR))
+			    			gcDataMassimaRiga = gcDataMinima;
+						rigaFattura.setDt_da_competenza_coge(new Timestamp(gcDataMinimaRiga.getTime().getTime()));
+						rigaFattura.setDt_a_competenza_coge(new Timestamp(gcDataMassimaRiga.getTime().getTime()));	
+			    	}
 				}				
 			}
 			nbp.initializeModelForEditAllegati(context, fatturaPassivaBulk);
@@ -454,13 +479,15 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	}
 	private Timestamp calcolaDataMassimaCompetenza(
 			DocumentoEleTestataBulk documentoEleTestata) {
-		java.sql.Timestamp fineDatacompetenza = EJBCommonServices.getServerDate();
+		java.sql.Timestamp fineDatacompetenza = null;
 		for (DocumentoEleLineaBulk documentoEleLinea : documentoEleTestata.getDocEleLineaColl()) {
 			if (fineDatacompetenza == null)
 				fineDatacompetenza = documentoEleLinea.getFineDatacompetenza();
 			else
-				fineDatacompetenza = DateUtils.min(fineDatacompetenza, documentoEleLinea.getFineDatacompetenza());
+				fineDatacompetenza = DateUtils.max(fineDatacompetenza, documentoEleLinea.getFineDatacompetenza());
 		}		
+		if (fineDatacompetenza == null)
+			fineDatacompetenza = EJBCommonServices.getServerDate();
 		return fineDatacompetenza;
 	}
 
