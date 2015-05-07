@@ -857,19 +857,31 @@ public void sdoppiaDettaglioInAutomatico(ActionContext context) throws Validatio
        				   "al saldo originario.");
         	return;
         }        	
-
+        BigDecimal importoIva=BigDecimal.ZERO;
+        if (dettaglioSelezionato != null) {
+        	// Calcolo iva rapportato al nuovo totale per cui si esegue lo sdoppiato
+			if (documento.quadraturaInDeroga())
+				importoIva = importoIva.add(dettaglioSelezionato.getIm_riga_sdoppia().subtract(dettaglioSelezionato.getIm_riga_sdoppia().multiply(new BigDecimal(100)).divide(new BigDecimal(100).add(dettaglioSelezionato.getVoce_iva().getPercentuale()),2,BigDecimal.ROUND_HALF_UP)));
+        }
+		
         Accertamento_scadenzarioBulk scadenzaVecchia = dettaglioSelezionato.getAccertamento_scadenzario();
 
 		BigDecimal newImportoRigaVecchia = dettaglioSelezionato.getIm_riga_sdoppia().add(dettaglioSelezionato.getIm_totale_divisa().subtract(dettaglioSelezionato.getSaldo())); 
 		BigDecimal newImportoRigaNuova = dettaglioSelezionato.getSaldo().subtract(dettaglioSelezionato.getIm_riga_sdoppia()); 
 
 		BigDecimal newPrezzoRigaVecchia = newImportoRigaVecchia.divide(dettaglioSelezionato.getQuantita().multiply(dettaglioSelezionato.getVoce_iva().getPercentuale().divide(new BigDecimal(100)).add(new java.math.BigDecimal(1))),2,BigDecimal.ROUND_HALF_UP);
-		BigDecimal newPrezzoRigaNuova = dettaglioSelezionato.getPrezzo_unitario().subtract(newPrezzoRigaVecchia); 
-
+		BigDecimal newPrezzoRigaNuova = dettaglioSelezionato.getPrezzo_unitario().subtract(newPrezzoRigaVecchia);
+		
 		if (dettaglioSelezionato.getAccertamento_scadenzario()!=null) {
-			scadenzaNuova=(Accertamento_scadenzarioBulk) h.sdoppiaScadenzaInAutomatico(context.getUserContext(),
-								                                                       scadenzaVecchia,
-																					   scadenzaVecchia.getIm_scadenza().subtract(dettaglioSelezionato.getSaldo()).add(dettaglioSelezionato.getIm_riga_sdoppia()));
+		// se importoIva è diverso da zero vuole dire che è in split_payment ed ho calcolato la quota parte dell'iva  da considerare per sdoppiare le scadenze dell'accertamento 
+	     	  if(importoIva.compareTo(BigDecimal.ZERO)!=0)
+        		  	scadenzaNuova=(Accertamento_scadenzarioBulk) h.sdoppiaScadenzaInAutomatico(context.getUserContext(),
+    								                                                       scadenzaVecchia,
+    								                                                       dettaglioSelezionato.getIm_riga_sdoppia().subtract(importoIva));
+        	  else
+					scadenzaNuova=(Accertamento_scadenzarioBulk) h.sdoppiaScadenzaInAutomatico(context.getUserContext(),
+                            scadenzaVecchia,
+                            scadenzaVecchia.getIm_scadenza().subtract(dettaglioSelezionato.getSaldo()).add(dettaglioSelezionato.getIm_riga_sdoppia()));
 
 			//ricarico l'accertamento e recupero i riferimenti alle scadenze
         	AccertamentoBulk accertamento = (AccertamentoBulk)h.inizializzaBulkPerModifica(context.getUserContext(),
