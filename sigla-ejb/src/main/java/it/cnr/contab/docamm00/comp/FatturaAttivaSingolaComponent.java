@@ -1050,15 +1050,13 @@ private java.math.BigDecimal calcolaTotaleAccertamentoPerFA(
 	java.math.BigDecimal impTotaleAddebitati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 	java.util.HashMap dettagliDaStornare = caricaStorniPer(userContext, dettagli);
 	java.util.HashMap dettagliDaAddebitare = caricaAddebitiPer(userContext, dettagli);
+	boolean quadraturaInDeroga = fatturaAttiva.quadraturaInDeroga();
 	if (dettagliDaStornare != null) {
 		Vector dettagliStornati = null;
-		boolean quadraturaInDeroga = false;
 		for (Iterator dett = dettagliDaStornare.keySet().iterator(); dett.hasNext();) {
 			Fattura_attiva_rigaIBulk key = (Fattura_attiva_rigaIBulk)dett.next();
 			for (Iterator i = ((Vector)dettagliDaStornare.get(key)).iterator(); i.hasNext();) {
 				Nota_di_credito_attiva_rigaBulk riga = (Nota_di_credito_attiva_rigaBulk)i.next();
-				if (!quadraturaInDeroga && riga.getFattura_attiva().quadraturaInDeroga())
-					quadraturaInDeroga = true;
 				AccertamentiTable hash = riga.getFattura_attiva().getFattura_attiva_accertamentiHash();
 				if (hash == null)
 					rebuildAccertamenti(userContext, riga.getFattura_attiva());
@@ -1088,7 +1086,7 @@ private java.math.BigDecimal calcolaTotaleAccertamentoPerFA(
 	}
 	if (dettagliDaAddebitare != null) {
 		Vector dettagliAddebitati = null;
-		boolean quadraturaInDeroga = false;
+		
 		for (Iterator dett = dettagliDaAddebitare.keySet().iterator(); dett.hasNext();) {
 			Fattura_attiva_rigaIBulk key = (Fattura_attiva_rigaIBulk)dett.next();
 			for (Iterator i = ((Vector)dettagliDaAddebitare.get(key)).iterator(); i.hasNext();) {
