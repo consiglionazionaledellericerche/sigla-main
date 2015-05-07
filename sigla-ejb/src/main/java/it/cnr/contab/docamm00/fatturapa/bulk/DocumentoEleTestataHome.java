@@ -26,6 +26,7 @@ import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.DateUtils;
 import it.gov.fatturapa.sdi.messaggi.v1.EsitoCommittenteType;
 import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoCommittenteType;
 import it.gov.fatturapa.sdi.messaggi.v1.RiferimentoFatturaType;
@@ -111,7 +112,13 @@ public class DocumentoEleTestataHome extends BulkHome {
 			AnagraficoBulk anagrafico, CompoundFindClause clauses, String codiceFiscale, String partitaIVA) throws PersistencyException {
 		AnagraficoHome anagraficoHome = (AnagraficoHome)getHomeCache().getHome(AnagraficoBulk.class);
     	SQLBuilder sql = anagraficoHome.selectByClause(clauses);
-        sql.openParenthesis(FindClause.AND);
+        
+    	sql.openParenthesis(FindClause.AND);
+    	sql.addClause(FindClause.OR, "dt_fine_rapporto", SQLBuilder.ISNULL, null);
+    	sql.addClause(FindClause.OR, "dt_fine_rapporto", SQLBuilder.GREATER, it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+		sql.closeParenthesis();
+
+		sql.openParenthesis(FindClause.AND);
 		if (codiceFiscale != null)
 			sql.addSQLClause(FindClause.AND, "codice_fiscale", SQLBuilder.EQUALS, codiceFiscale);
 		if (partitaIVA != null)
@@ -124,7 +131,13 @@ public class DocumentoEleTestataHome extends BulkHome {
     		TerzoBulk terzo, CompoundFindClause clauses, String codiceFiscale, String partitaIVA) throws PersistencyException {
     	TerzoHome terzoHome = (TerzoHome)getHomeCache().getHome(TerzoBulk.class);
     	SQLBuilder sql = terzoHome.selectByClause(clauses);
-        sql.openParenthesis(FindClause.AND);
+
+    	sql.openParenthesis(FindClause.AND);
+    	sql.addClause(FindClause.OR, "dt_fine_rapporto", SQLBuilder.ISNULL, null);
+    	sql.addClause(FindClause.OR, "dt_fine_rapporto", SQLBuilder.GREATER, it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+		sql.closeParenthesis();
+
+		sql.openParenthesis(FindClause.AND);
 		if (codiceFiscale != null)
 			sql.addSQLClause(FindClause.AND, "CODICE_FISCALE_ANAGRAFICO", SQLBuilder.EQUALS, codiceFiscale);
 		if (partitaIVA != null)
