@@ -74,11 +74,11 @@
       		</td>
       		<td>
       			<% bp.getController().writeFormLabel(out,"stato_liquidazione");%>
-      			<% bp.getController().writeFormInput(out,null,"stato_liquidazione",roOnAutoGen|| isInSpesaMode,null,"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"");%>
+      			<% bp.getController().writeFormInput(out,null,"stato_liquidazione", isInSpesaMode,null,"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"");%>
       		</td>
       		<td> 
       			<% bp.getController().writeFormLabel(out,"causale");%>
-      			<% bp.getController().writeFormInput(out,null,"causale",roOnAutoGen,null,"onChange=\"submitForm('doOnCausaleChange')\"");%>
+      			<% bp.getController().writeFormInput(out,null,"causale",isInSpesaMode,null,"onChange=\"submitForm('doOnCausaleChange')\"");%>
       		</td>
       	  </tr>	
 	      <%	if (bp instanceof CRUDFatturaPassivaIBP) { %>
@@ -104,11 +104,11 @@
       		</td>
       		<td colspan="2">
       			<% bp.getController().writeFormLabel(out,"stato_liquidazione");%>
-      			<% bp.getController().writeFormInput(out,null,"stato_liquidazione",roOnAutoGen,null,"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"");%>
+      			<% bp.getController().writeFormInput(out,null,"stato_liquidazione",false,null,"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"");%>
       		</td>
       		<td colspan="2">  
       			<% bp.getController().writeFormLabel(out,"causale");%>
-      			<% bp.getController().writeFormInput(out,null,"causale",roOnAutoGen,null,"onChange=\"submitForm('doOnCausaleChange')\"");%>
+      			<% bp.getController().writeFormInput(out,null,"causale",false,null,"onChange=\"submitForm('doOnCausaleChange')\"");%>
       		</td>
 	      </tr>
 	      <tr>      	
