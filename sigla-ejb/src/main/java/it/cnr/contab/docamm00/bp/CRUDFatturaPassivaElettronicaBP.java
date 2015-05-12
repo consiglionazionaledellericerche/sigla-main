@@ -68,6 +68,7 @@ import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.opencmis.client.api.SecondaryType;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
+import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 import org.apache.commons.io.IOUtils;
 
 public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatturaBulk, DocumentoEleTestataBulk> implements FatturaPassivaElettronicaBP{
@@ -508,6 +509,8 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 						((Folder)cmisService.getNodeByNodeRef(documentoEleTestata.getDocumentoEleTrasmissione().getCmisNodeRef())).getPath()
 				);
 			} catch (ApplicationException e) {
+				return null;
+			} catch (CmisObjectNotFoundException e) {
 				return null;
 			}
 		}
