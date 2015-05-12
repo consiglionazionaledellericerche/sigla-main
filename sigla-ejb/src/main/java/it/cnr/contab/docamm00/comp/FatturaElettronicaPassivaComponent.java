@@ -12,11 +12,9 @@ import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
 import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaHome;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleDdtBulk;
@@ -58,7 +56,6 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -310,14 +307,48 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     
     public OggettoBulk modificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
     	if (oggettobulk instanceof DocumentoEleTestataBulk){
-    		((DocumentoEleTestataBulk)oggettobulk).getDocumentoEleTrasmissione().setToBeUpdated();    		
+    		((DocumentoEleTestataBulk)oggettobulk).getDocumentoEleTrasmissione().setToBeUpdated();
+    		notificaUOCompetenza(usercontext, ((DocumentoEleTestataBulk)oggettobulk).getDocumentoEleTrasmissione());
     		super.modificaConBulk(usercontext, ((DocumentoEleTestataBulk)oggettobulk).getDocumentoEleTrasmissione());
     		cambiaStatoCompletato(usercontext, ((DocumentoEleTestataBulk)oggettobulk));
     	}
     	return super.modificaConBulk(usercontext, oggettobulk);    	
     }      
     
-    public SQLBuilder selectVoceIvaByClause(UserContext usercontext, DocumentoEleIvaBulk documentoEleIvaBulk, 
+    @SuppressWarnings("unchecked")
+	private void notificaUOCompetenza(UserContext usercontext, DocumentoEleTrasmissioneBulk trasmissione) throws ComponentException {
+		DocumentoEleTrasmissioneHome home = (DocumentoEleTrasmissioneHome) getHome(usercontext, DocumentoEleTrasmissioneBulk.class);
+    	try {
+    		DocumentoEleTrasmissioneBulk testataDB = (DocumentoEleTrasmissioneBulk) home.findByPrimaryKey(trasmissione);
+			if (testataDB.getUnitaCompetenza() == null && trasmissione.getUnitaCompetenza() != null) {
+				try {
+	        		String subject= "[SIGLA] Notifica assegnazione fattura passiva con Identificativo SdI:" + trasmissione.getIdentificativoSdi();
+	        		String text = "E' pervenuta la fattura dal trasmittente: <b>" +trasmissione.getIdCodice() + "</b><br>"+
+	        				"Prestatore: " + trasmissione.getDenominzionePrestatore() +"<br>" +
+	        				"Il documento è presente nell'area temporanea di SIGLA.";
+	        		String addressTO = null;
+	        		Utente_indirizzi_mailHome utente_indirizzi_mailHome = (Utente_indirizzi_mailHome)getHome(usercontext,Utente_indirizzi_mailBulk.class);
+	    			for (java.util.Iterator<Utente_indirizzi_mailBulk> i = utente_indirizzi_mailHome.findUtenteNotificaRicezioneFatturaElettronica(
+	    					trasmissione.getUnitaCompetenza()).iterator();i.hasNext();){
+	    				Utente_indirizzi_mailBulk utente_indirizzi = (Utente_indirizzi_mailBulk)i.next();
+	    				if (addressTO == null)
+	    				  addressTO = new String();
+	    				else
+	    				  addressTO = addressTO + ",";    
+	    				addressTO = addressTO+utente_indirizzi.getIndirizzo_mail();			
+	    			}
+	    			if (addressTO != null){
+						SendMail.sendMail(subject, text, InternetAddress.parse(addressTO));
+	    			}        	        		
+	        	}catch (Exception _ex) {
+	        	}				
+			}
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+	}
+
+	public SQLBuilder selectVoceIvaByClause(UserContext usercontext, DocumentoEleIvaBulk documentoEleIvaBulk, 
 			Voce_ivaBulk voce_ivaBulk, CompoundFindClause compoundfindclause) throws ComponentException, PersistencyException{
 		Voce_ivaHome voceIvaHome = (Voce_ivaHome) getHome(usercontext, Voce_ivaBulk.class);
 		SQLBuilder sqlVoceIva = voceIvaHome.selectByClause(compoundfindclause);
