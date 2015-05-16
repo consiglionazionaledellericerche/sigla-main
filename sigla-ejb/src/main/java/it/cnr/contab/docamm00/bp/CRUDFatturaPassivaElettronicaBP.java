@@ -335,6 +335,10 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
     	try {
         	((FatturaElettronicaPassivaComponentSession)createComponentSession()).
         		notificaEsito(actioncontext.getUserContext(), tipoIntegrazioneSDI, documentoEleTestata);
+        	documentoEleTestata.setStatoNotificaEsito(null);
+        	documentoEleTestata.setToBeUpdated();
+        	setModel(actioncontext, documentoEleTestata);    	
+        	save(actioncontext);    	
     	} catch (Exception e) {
     		throw handleException(e);
 		}		

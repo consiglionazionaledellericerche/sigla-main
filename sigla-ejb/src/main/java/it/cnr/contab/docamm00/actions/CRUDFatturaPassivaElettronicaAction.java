@@ -191,7 +191,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 		DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
 		try {
 			fatturaPassivaElettronicaBP.reinviaEsito(context, bulk);
-			fatturaPassivaElettronicaBP.setMessage("Esito inviato correttamente al Sitema di Interscambio");
+			fatturaPassivaElettronicaBP.setMessage("Esito inviato correttamente, in attesa di risposta dal Sitema di Interscambio.");
 			return context.findDefaultForward();
 		} catch(Throwable e) {
 			return handleException(context,e);
