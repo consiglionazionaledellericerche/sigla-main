@@ -30,9 +30,9 @@
             <xs:element type="xs:string" name="NumeroFattura" minOccurs="0"/>
             <xs:element type="xs:date" name="DataFattura" minOccurs="0"/>
             <xs:element type="xs:string" name="IdFiscaleTrasmittente"/>
-            <xs:element type="xs:long" name="IdFiscaleCedente"/>
-            <xs:element type="xs:long" name="IdFiscaleEmittente" minOccurs="0"/>
-            <xs:element type="xs:long" name="IdFiscaleCessionario" minOccurs="0"/>
+            <xs:element type="xs:string" name="IdFiscaleCedente"/>
+            <xs:element type="xs:string" name="IdFiscaleEmittente" minOccurs="0"/>
+            <xs:element type="xs:string" name="IdFiscaleCessionario" minOccurs="0"/>
           </xs:sequence>
         </xs:complexType>
       </xs:element>
