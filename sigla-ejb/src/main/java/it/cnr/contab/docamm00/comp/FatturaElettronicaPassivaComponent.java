@@ -320,7 +320,8 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		DocumentoEleTrasmissioneHome home = (DocumentoEleTrasmissioneHome) getHome(usercontext, DocumentoEleTrasmissioneBulk.class);
     	try {
     		DocumentoEleTrasmissioneBulk testataDB = (DocumentoEleTrasmissioneBulk) home.findByPrimaryKey(trasmissione);
-			if (testataDB.getUnitaCompetenza() == null && trasmissione.getUnitaCompetenza() != null) {
+			if (testataDB.getUnitaCompetenza() == null && trasmissione.getUnitaCompetenza() != null && 
+					trasmissione.getUnitaCompetenza().getCd_unita_organizzativa() != null) {
 				try {
 	        		String subject= "[SIGLA] Notifica assegnazione fattura passiva con Identificativo SdI:" + trasmissione.getIdentificativoSdi();
 	        		String text = "E' pervenuta la fattura dal trasmittente: <b>" +trasmissione.getIdCodice() + "</b><br>"+
