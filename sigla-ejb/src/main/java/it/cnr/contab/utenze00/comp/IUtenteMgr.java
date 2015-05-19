@@ -64,7 +64,7 @@ public interface IUtenteMgr
   *      Viene restituita l'istanza di UtenteBulk con impostati gli accessi gia' assegnati (Utente_unita_accessoBulk) e gli accessi (AccessoBulk) ancora dipsonibili per l'utente e l'unita' organizzativa specificata
  */
 //^^@@
-        public UtenteBulk cercaAccessi (UserContext userContext,UtenteBulk user,Unita_organizzativaBulk uo) throws ComponentException;
+        public UtenteBulk cercaAccessi (UserContext userContext,UtenteBulk user,Unita_organizzativaBulk uo, CompoundFindClause compoundfindclause) throws ComponentException;
 
 //^^@@
 /**

@@ -1,5 +1,6 @@
 package it.cnr.contab.utente00.ejb;
 import it.cnr.contab.utente00.comp.UtenteComponent;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.*;
@@ -12,10 +13,10 @@ public class UtenteComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSes
 public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws EJBException {
 	return new UtenteComponentSessionBean();
 }
-public it.cnr.contab.utenze00.bulk.UtenteBulk cercaAccessi(it.cnr.jada.UserContext param0,it.cnr.contab.utenze00.bulk.UtenteBulk param1,it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk param2) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+public it.cnr.contab.utenze00.bulk.UtenteBulk cercaAccessi(it.cnr.jada.UserContext param0,it.cnr.contab.utenze00.bulk.UtenteBulk param1,it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk param2, CompoundFindClause param3) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 	pre_component_invocation(param0,componentObj);
 	try {
-		it.cnr.contab.utenze00.bulk.UtenteBulk result = ((UtenteComponent)componentObj).cercaAccessi(param0,param1,param2);
+		it.cnr.contab.utenze00.bulk.UtenteBulk result = ((UtenteComponent)componentObj).cercaAccessi(param0,param1,param2,param3);
 		component_invocation_succes(param0,componentObj);
 		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
