@@ -355,7 +355,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
     		throw handleException(e);
 		}
     	setModel(actioncontext, documentoEleTestata);    	
-    	save(actioncontext);    	
+    	update(actioncontext);    	
 	}
 
 	@Override
