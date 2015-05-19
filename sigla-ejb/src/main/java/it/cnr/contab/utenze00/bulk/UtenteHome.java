@@ -66,10 +66,12 @@ public void initializePrimaryKeyForInsert(UserContext usercontext,OggettoBulk og
  * @return List lista di AccessoBulk
  */
 
-public java.util.List findAccessi_disponibili(UtenteTemplateBulk utente) throws IntrospectionException, PersistencyException 
+public java.util.List findAccessi_disponibili(UtenteTemplateBulk utente, CompoundFindClause compoundfindclause) throws IntrospectionException, PersistencyException 
 {
 	PersistentHome accessoHome = getHomeCache().getHome( AccessoBulk.class);
 	SQLBuilder sql = accessoHome.createSQLBuilder();
+	if (compoundfindclause != null)
+		sql.addClause(compoundfindclause);
 	if ( !utente.getGestore().getCd_cds_configuratore().equals("*"))
 		sql.addSQLClause("AND","TI_ACCESSO",sql.NOT_EQUALS,AccessoBulk.TIPO_RISERVATO_CNR);
 	sql.addSQLClause("AND","TI_ACCESSO",sql.NOT_EQUALS,AccessoBulk.TIPO_SUPERUTENTE);
