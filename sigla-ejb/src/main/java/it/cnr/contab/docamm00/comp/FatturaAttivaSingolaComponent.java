@@ -7384,12 +7384,12 @@ public Fattura_attivaBulk ricercaFatturaDaCodiceSDI(UserContext userContext, Str
 		nota.setCodiceInvioSdi(codiceInvioSdi);
 		List listaNota = (getHome(userContext, Nota_di_credito_attivaBulk.class).find(nota));
 		
-		if (listaNota == null || lista.isEmpty()){
+		if (listaNota == null || listaNota.isEmpty()){
 			return null;
-		} else if (lista.size() == 1 ){
-			return (Nota_di_credito_attivaBulk)lista.get(0);
+		} else if (listaNota.size() == 1 ){
+			return (Nota_di_credito_attivaBulk)listaNota.get(0);
 		} else {
-			throw new ComponentException("Sono state trovate più fatture con lo stesso codice invio SDI: "+codiceInvioSdi);
+			throw new ComponentException("Sono state trovate più note di credito con lo stesso codice invio SDI: "+codiceInvioSdi);
 		}
 	} else if (lista.size() == 1 ){
 		return (Fattura_attiva_IBulk)lista.get(0);
@@ -7550,7 +7550,7 @@ public Fattura_attivaBulk recuperoFatturaElettronicaDaNomeFile(UserContext userC
 		} else if (listaNota.size() == 1 ){
 			return (Nota_di_credito_attivaBulk)listaNota.get(0);
 		} else {
-			throw new ComponentException("Esistono più fatture aventi lo stesso nome file di invio a SDI! " + nomeFileInvioSdi);
+			throw new ComponentException("Esistono più note di credito aventi lo stesso nome file di invio a SDI! " + nomeFileInvioSdi);
 		}
 	} else if (lista.size() == 1 ){
 		return (Fattura_attiva_IBulk)lista.get(0);
