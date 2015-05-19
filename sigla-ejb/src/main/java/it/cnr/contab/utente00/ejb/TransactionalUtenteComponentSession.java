@@ -1,6 +1,7 @@
 package it.cnr.contab.utente00.ejb;
 import java.rmi.*;
 
+import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.ejb.*;
 
 public class TransactionalUtenteComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements UtenteComponentSession {
@@ -42,12 +43,13 @@ public it.cnr.jada.util.RemoteIterator cerca(it.cnr.jada.UserContext param0,it.c
 		}
 	}
 }
-public it.cnr.contab.utenze00.bulk.UtenteBulk cercaAccessi(it.cnr.jada.UserContext param0,it.cnr.contab.utenze00.bulk.UtenteBulk param1,it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
+public it.cnr.contab.utenze00.bulk.UtenteBulk cercaAccessi(it.cnr.jada.UserContext param0,it.cnr.contab.utenze00.bulk.UtenteBulk param1,it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk param2, CompoundFindClause param3) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (it.cnr.contab.utenze00.bulk.UtenteBulk)invoke("cercaAccessi",new Object[] {
 			param0,
 			param1,
-			param2 });
+			param2,
+			param3});
 	} catch(java.rmi.RemoteException e) {
 		throw e;
 	} catch(java.lang.reflect.InvocationTargetException e) {

@@ -86,7 +86,7 @@ public it.cnr.jada.util.RemoteIterator cerca(UserContext userContext,it.cnr.jada
  * @return l'utente ricercato con gli accessi impostati
  */
 
-public UtenteBulk cercaAccessi (UserContext userContext,UtenteBulk user, Unita_organizzativaBulk uo ) throws it.cnr.jada.comp.ComponentException
+public UtenteBulk cercaAccessi (UserContext userContext,UtenteBulk user, Unita_organizzativaBulk uo , CompoundFindClause compoundfindclause) throws it.cnr.jada.comp.ComponentException
 {
 	try
 	{
@@ -106,7 +106,7 @@ public UtenteBulk cercaAccessi (UserContext userContext,UtenteBulk user, Unita_o
 
 
 			// carica accessi disponibili
-			utente.setAccessi_disponibili( utenteHome.findAccessi_disponibili(utente));
+			utente.setAccessi_disponibili( utenteHome.findAccessi_disponibili(utente, compoundfindclause));
 			
 		}
 	}
