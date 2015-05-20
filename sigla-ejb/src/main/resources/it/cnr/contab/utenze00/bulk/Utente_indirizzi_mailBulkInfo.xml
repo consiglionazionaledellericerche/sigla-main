@@ -29,13 +29,13 @@
 		property="flEsitoNegFattElettr"
 		inputType="CHECKBOX"
 		nullable="false"
-		label="Comunicazione Via Mail dell'esito negativo della Fatturazione Elettronica" />
+		label="Comunicazione dell'esito negativo della Fatturazione Elettronica Attiva" />
 	<fieldProperty
 		name="flEsitoPosFattElettr"
 		property="flEsitoPosFattElettr"
 		inputType="CHECKBOX"
 		nullable="false"
-		label="Comunicazione Via Mail degli esiti positivi della Fatturazione Elettronica" />
+		label="Comunicazione degli esiti positivi della Fatturazione Elettronica Attiva" />
 	<fieldProperty
 		name="fl_com_app_var_stanz_res"
 		property="fl_com_app_var_stanz_res"
@@ -102,15 +102,15 @@
 		headerLabel="Variazioni Competenza" />
 	<columnFieldProperty
 		name="flEsitoPosFattElettr"
-		label="Comunica esiti positivi"
+		label="Comunica esiti positivi fattura attiva"
 		headerLabel="Fatturazione Elettronica" />
 	<columnFieldProperty
 		name="flEsitoNegFattElettr"
-		label="Comunica esiti negativi"
+		label="Comunica esiti negativi fattura attiva"
 		headerLabel="Fatturazione Elettronica" />
 	<columnFieldProperty
 		name="flFepNotificaRicezione"
-		label="Comunica ricezione"
+		label="Comunica ricezione fattura passiva"
 		headerLabel="Fatturazione Elettronica" />
 	
 	<findFieldProperty
