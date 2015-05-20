@@ -524,6 +524,28 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 	}
 
 	@SuppressWarnings("unchecked")
+	public void allineaEsitoCommitente(UserContext usercontext, TipoIntegrazioneSDI tipoIntegrazioneSDI) throws ComponentException {
+		DocumentoEleTestataHome home = (DocumentoEleTestataHome) getHome(usercontext, DocumentoEleTestataBulk.class);
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause(FindClause.AND, "statoNotificaEsito", SQLBuilder.EQUALS, DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_SCARTATO_SDI);		
+		sql.addClause(FindClause.AND, "flDecorrenzaTermini", SQLBuilder.EQUALS, "N");		
+		try {
+			List<DocumentoEleTestataBulk> results = home.fetchAll(sql);
+			getHomeCache(usercontext).fetchAll(usercontext);
+			if (!results.isEmpty() && results.size() == 1) {
+				DocumentoEleTestataBulk documentoEleTestata = results.get(0);
+				notificaEsito(usercontext, tipoIntegrazioneSDI, documentoEleTestata);
+	        	documentoEleTestata.setStatoNotificaEsito(null);
+	        	documentoEleTestata.setToBeUpdated();
+	        	modificaConBulk(usercontext, documentoEleTestata);
+				logger.info("Inviata notifica per identificativo:" + documentoEleTestata.getIdentificativoSdi());
+			}			
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+	}	
+	
+	@SuppressWarnings("unchecked")
 	public void allineaEsitoCommitente(UserContext usercontext, Long identificativoSdI, String statoSDI, TipoIntegrazioneSDI tipoIntegrazioneSDI) throws ComponentException {
 		DocumentoEleTestataHome home = (DocumentoEleTestataHome) getHome(usercontext, DocumentoEleTestataBulk.class);
 		SQLBuilder sql = home.createSQLBuilder();
