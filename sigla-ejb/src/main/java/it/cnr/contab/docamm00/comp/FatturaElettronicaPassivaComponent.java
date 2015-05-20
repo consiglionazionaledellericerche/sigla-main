@@ -528,14 +528,18 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		DocumentoEleTestataHome home = (DocumentoEleTestataHome) getHome(usercontext, DocumentoEleTestataBulk.class);
 		SQLBuilder sql = home.createSQLBuilder();
 		sql.addClause(FindClause.AND, "identificativoSdi", SQLBuilder.EQUALS, identificativoSdI);
+		sql.addClause(FindClause.AND, "statoNotificaEsito", SQLBuilder.EQUALS, DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_SCARTATO_SDI);		
 		try {
 			List<DocumentoEleTestataBulk> results = home.fetchAll(sql);
 			getHomeCache(usercontext).fetchAll(usercontext);
 			if (!results.isEmpty() && results.size() == 1) {
 				DocumentoEleTestataBulk documentoEleTestata = results.get(0);
 				if (!documentoEleTestata.getStatoDocumentoEle().equals(StatoDocumentoEleEnum.fromStatoSDI(statoSDI)) &&
-						(documentoEleTestata.isRegistrata() || documentoEleTestata.isRifiutata())){					
+						(documentoEleTestata.isRegistrata() || documentoEleTestata.isRifiutata())){	
 					notificaEsito(usercontext, tipoIntegrazioneSDI, documentoEleTestata);
+		        	documentoEleTestata.setStatoNotificaEsito(null);
+		        	documentoEleTestata.setToBeUpdated();
+		        	modificaConBulk(usercontext, documentoEleTestata);
 					logger.info("Inviata notifica per identificativo:" + identificativoSdI + 
 							" STATO SIGLA:"+ documentoEleTestata.getStatoDocumentoEle() + " - STATO SDI:" + StatoDocumentoEleEnum.fromStatoSDI(statoSDI));
 				}
@@ -556,11 +560,15 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		sql.addClause(FindClause.OR, "statoDocumento", SQLBuilder.EQUALS, StatoDocumentoEleEnum.RIFIUTATO.name());					
 		sql.addClause(FindClause.OR, "statoDocumento", SQLBuilder.EQUALS, StatoDocumentoEleEnum.REGISTRATO.name());							
 		sql.closeParenthesis();		
+		sql.addClause(FindClause.AND, "statoNotificaEsito", SQLBuilder.EQUALS, DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_SCARTATO_SDI);
 		try {
 			List<DocumentoEleTestataBulk> results = home.fetchAll(sql);
 			getHomeCache(usercontext).fetchAll(usercontext);
 			for (DocumentoEleTestataBulk documentoEleTestata : results) {
 				notificaEsito(usercontext, tipoIntegrazioneSDI, documentoEleTestata);
+	        	documentoEleTestata.setStatoNotificaEsito(null);
+	        	documentoEleTestata.setToBeUpdated();
+	        	modificaConBulk(usercontext, documentoEleTestata);
 				logger.info("Inviata notifica per identificativo:" + documentoEleTestata.getIdentificativoSdi() + 
 						" STATO SIGLA:"+ documentoEleTestata.getStatoDocumentoEle() + " - STATO SDI NON PRESENTE");				
 			}
