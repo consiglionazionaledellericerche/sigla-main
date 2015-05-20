@@ -6,6 +6,7 @@ import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.ejb.RicezioneFatturePA;
 import it.cnr.contab.docamm00.ejb.TrasmissioneFatturePA;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.TipoIntegrazioneSDI;
 import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
 import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.contab.util.StringEncrypter;
@@ -200,7 +201,20 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			logger.error("ScheduleExecutor error", _ex);
 		}
 	}
-	
+	public void allineaNotificheExecute() {
+		try{
+			if (pecScanDisable){
+				logger.info("PEC scan is disabled");
+			} else {
+				logger.info("Allinea notifiche started at: "+new Date());
+				fatturaElettronicaPassivaComponentSession.
+					allineaEsitoCommitente(userContext, TipoIntegrazioneSDI.PEC);
+				logger.info("Allinea notifiche finished at: "+new Date());				
+			}
+		}catch(Throwable _ex){
+			logger.error("ScheduleExecutor error", _ex);
+		}
+	}
 	private void riceviFattura(Message message, String userName) throws ComponentException {
 		try {
 			List<BodyPart> bodyParts = estraiBodyPart(message.getContent());
