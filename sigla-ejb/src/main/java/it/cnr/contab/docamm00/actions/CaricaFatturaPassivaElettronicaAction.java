@@ -194,11 +194,8 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 					logger.info("Fine controllo identificativo:" + flusso.getIdSdI());					
 				}
 			}
-			/**
-			 * Commentato utile per eventuali anomalie 
-			 */
-//			fatturaElettronicaPassivaComponentSession.allineaEsitoCommitente(actioncontext.getUserContext(), 
-//					identificativi, tipoIntegrazioneSDI);
+			fatturaElettronicaPassivaComponentSession.allineaEsitoCommitente(actioncontext.getUserContext(), 
+					identificativi, tipoIntegrazioneSDI);
 			caricaPassivaElettronicaBP.setMessage("Notifiche allineate correttamente.");
 		} catch (XmlMappingException e) {
 			return handleException(actioncontext, e);
