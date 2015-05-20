@@ -105,28 +105,39 @@
 	<!-- UpdaterOnScheduleJobDetail defines a bean that points to
        	UpdaterOnScheduleExecutor and says to call its execute()
        	method when the trigger is fired -->
-	<bean id="UpdaterOnScheduleJobDetail"
+	<bean id="PECCronTriggerBeanDetail"
 	  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 	  <property name="targetObject" ref="fatturaPassivaElettronicaService"/>
 	  <property name="targetMethod" value="execute"/>
 	  <property name="concurrent" value="false"/>
 	</bean>
-
+	<bean id="AllineaNotificheCronTriggerBeanDetail"
+	  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	  <property name="targetObject" ref="fatturaPassivaElettronicaService"/>
+	  <property name="targetMethod" value="allineaNotificheExecute"/>
+	  <property name="concurrent" value="false"/>
+	</bean>
+	
 	<!-- here's where we use the Cron like scheduling expression
 	      to define when the bean is run. -->
-	<bean id="UpdaterOnScheduleJob"
+	<bean id="PECCronTriggerBean"
 	  class="org.springframework.scheduling.quartz.CronTriggerBean">
-	  <property name="jobDetail" ref="UpdaterOnScheduleJobDetail" />
-	  <!-- run every morning at 3AM -->
+	  <property name="jobDetail" ref="PECCronTriggerBeanDetail" />
 	  <property name="cronExpression" value="${pec.cron.expression}"/>
 	</bean>
-
+	<bean id="AllineaNotificheCronTriggerBean"
+	  class="org.springframework.scheduling.quartz.CronTriggerBean">
+	  <property name="jobDetail" ref="AllineaNotificheCronTriggerBeanDetail" />
+	  <property name="cronExpression" value="${allinea.notifiche.cron.expression}"/>
+	</bean>
+	
 	<!-- the scheduler factory is what does the work to setup
        the triggers -->
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 	  <property name="triggers">
 	      <list>
-	          <ref bean="UpdaterOnScheduleJob" />
+	          <ref bean="PECCronTriggerBean" />
+	          <ref bean="AllineaNotificheCronTriggerBean" />
 	      </list>
 	  </property>
 	</bean>	    
