@@ -99,15 +99,15 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 		String cdUo = ((HttpActionContext)actioncontext).getParameter("cdUo");
 		Long pgFattura = Long.valueOf(((HttpActionContext)actioncontext).getParameter("pgFattura"));
 		Folder node = documentiCollegatiDocAmmService.recuperoFolderFattura(esercizio, cds, cdUo, pgFattura);
+		InputStream is = null;
 		if (node == null){
-			FatturaAttivaSingolaComponentSession componentFatturaAttiva = (FatturaAttivaSingolaComponentSession) createComponentSession(
-					"CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",
-					FatturaAttivaSingolaComponentSession.class);
-			UserContext userContext = actioncontext.getUserContext();
-			Fattura_attivaBulk fattura = componentFatturaAttiva.ricercaFatturaByKey(userContext, esercizio.longValue(), cds, cdUo, pgFattura);			
-			componentFatturaAttiva.gestioneAllegatiPerFatturazioneElettronica(userContext, fattura);
+			is = getStreamNewDocument(actioncontext, esercizio, cds, cdUo, pgFattura);
+		} else {
+			is = documentiCollegatiDocAmmService.getStreamContabile(esercizio, cds, cdUo, pgFattura, Filtro_ricerca_doc_ammVBulk.DOC_ATT_GRUOP);
+			if (is == null){
+				is = getStreamNewDocument(actioncontext, esercizio, cds, cdUo, pgFattura);
+			}
 		}
-		InputStream is = documentiCollegatiDocAmmService.getStreamContabile(esercizio, cds, cdUo, pgFattura, Filtro_ricerca_doc_ammVBulk.DOC_ATT_GRUOP);
 		if (is != null){
 			((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
 			OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
@@ -120,6 +120,22 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 			is.close();
 			os.flush();
 		}
+	}
+
+
+	private InputStream getStreamNewDocument(ActionContext actioncontext,
+			Integer esercizio, String cds, String cdUo, Long pgFattura)
+			throws BusinessProcessException, ComponentException,
+			RemoteException, PersistencyException {
+		InputStream is;
+		FatturaAttivaSingolaComponentSession componentFatturaAttiva = (FatturaAttivaSingolaComponentSession) createComponentSession(
+				"CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",
+				FatturaAttivaSingolaComponentSession.class);
+		UserContext userContext = actioncontext.getUserContext();
+		Fattura_attivaBulk fattura = componentFatturaAttiva.ricercaFatturaByKey(userContext, esercizio.longValue(), cds, cdUo, pgFattura);			
+		Document nodeDocument = componentFatturaAttiva.gestioneAllegatiPerFatturazioneElettronica(userContext, fattura);
+		is = documentiCollegatiDocAmmService.getResource(nodeDocument);
+		return is;
 	}
 	
 	public CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP() {
@@ -211,65 +227,70 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 	    						throw new ApplicationException("CMIS - File ["+cmisFile.getFileName()+"] già presente o non completo di tutte le proprietà obbligatorie. Inserimento non possibile!");
 	    					throw new ApplicationException("CMIS - Errore nella registrazione del file XML sul Documentale (" + e.getMessage() + ")");
 	    				}
-	    				String nomeFile = file.getName();
-	    				String nomeFileP7m = nomeFile+".p7m";
-	    				String webScriptURL = documentiCollegatiDocAmmService.getRepositoyURL().concat("service/sigla/firma/fatture");
-	    	    		String json = "{" +
-	    	    				"\"nodeRefSource\" : \"" + cmisFile.getDocument().getProperty(SiglaCMISService.ALFCMIS_NODEREF).getValueAsString() + "\"," +
-	    	    				"\"username\" : \"" + firmaOTPBulk.getUserName() + "\"," +
-	    	    				"\"password\" : \"" + firmaOTPBulk.getPassword() + "\"," +
-	    	    				"\"otp\" : \"" + firmaOTPBulk.getOtp() + "\""
-	    	    				+ "}";
-	    	    		try {		
-	    	    			UrlBuilder url = new UrlBuilder(URIUtil.encodePath(webScriptURL));
-	    					logger.info("Prima di firma file XML");
-	    	    			Response response = documentiCollegatiDocAmmService.invokePOST(url, MimeTypes.JSON, json.getBytes("UTF-8"));
-	    	    			int status = response.getResponseCode();
-	    	    			if (status == HttpStatus.SC_NOT_FOUND
-	    	    					|| status == HttpStatus.SC_INTERNAL_SERVER_ERROR
-	    	    					|| status == HttpStatus.SC_UNAUTHORIZED
-	    	    					|| status == HttpStatus.SC_BAD_REQUEST) {
-		    					logger.info("Firma Errore");
-	    	    				JSONTokener tokenizer = new JSONTokener(new StringReader(response.getErrorContent()));
-	    	    			    JSONObject jsonObject = new JSONObject(tokenizer);
-	    	    			    String jsonMessage = jsonObject.getString("message");
-	    	    				throw new ApplicationException(FirmaOTPBulk.errorMessage(jsonMessage));
-	    	    			} else {
-		    					logger.info("Firma OK");
-	    	    				JSONTokener tokenizer = new JSONTokener(new InputStreamReader(response.getStream()));
-	    	    			    JSONObject jsonObject = new JSONObject(tokenizer);
-	    	    			    Document nodeSigned = (Document) documentiCollegatiDocAmmService.getNodeByNodeRef(jsonObject.getString("nodeRef"));
-		    					logger.info("Recuperato noderef file firmato dal documentale");
-	    	    			    InputStream streamSigned = documentiCollegatiDocAmmService.getResource(nodeSigned);
-		    					logger.info("Recuperato file firmato dal documentale");
-	    	    				try {
-	    	    					File fileSigned = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/", nomeFileP7m);
-	    	    					OutputStream outputStream = new FileOutputStream(fileSigned);
-	    	    					IOUtils.copy(streamSigned, outputStream);
-	    	    					outputStream.close();
-			    					logger.info("Salvato file firmato temporaneo");
-			    					if (!fattura.isNotaCreditoDaNonInviareASdi()){
-				    					FatturaPassivaElettronicaService fatturaService = SpringUtil.getBean("fatturaPassivaElettronicaService", FatturaPassivaElettronicaService.class);
-		    	    			    	fatturaService.inviaFatturaElettronica(authentication.getUserName(), authentication.getPassword(), fileSigned, nomeFileP7m);
-		    		    				fattura.setNomeFileInvioSdi(nomeFileP7m);
-				    					logger.info("File firmato inviato");
-			    					}
-	    		    				componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fattura);
-	    	    				} catch (Exception ex) {
-			    					logger.error("Errore nell'invio del file "+ ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
-	    	    					documentiCollegatiDocAmmService.removeAspect(cmisFile.getDocument(),  CMISAspect.CNR_SIGNEDDOCUMENT.value());
-    	    						documentiCollegatiDocAmmService.deleteNode(nodeSigned);
-	    	    					throw new ApplicationException("Errore nell'invio della mail PEC per la fatturazione elettronica. Ripetere l'operazione di firma!");
-	    	    				}
-	    	    			}
-		    			commitUserTransaction();
-	    	    		} catch (HttpException e) {
-	    	    			throw new BusinessProcessException(e);
-	    	    		} catch (IOException e) {
-	    	    			throw new BusinessProcessException(e);
-	    	    		} catch (Exception e) {
-	    	    			throw new BusinessProcessException(e);
-	    	    		}
+	    				if (cmisFile.getDocument().getContentStreamLength() > 0){
+		    				String nomeFile = file.getName();
+		    				String nomeFileP7m = nomeFile+".p7m";
+		    				String webScriptURL = documentiCollegatiDocAmmService.getRepositoyURL().concat("service/sigla/firma/fatture");
+		    	    		String json = "{" +
+		    	    				"\"nodeRefSource\" : \"" + cmisFile.getDocument().getProperty(SiglaCMISService.ALFCMIS_NODEREF).getValueAsString() + "\"," +
+		    	    				"\"username\" : \"" + firmaOTPBulk.getUserName() + "\"," +
+		    	    				"\"password\" : \"" + firmaOTPBulk.getPassword() + "\"," +
+		    	    				"\"otp\" : \"" + firmaOTPBulk.getOtp() + "\""
+		    	    				+ "}";
+		    	    		try {		
+		    	    			UrlBuilder url = new UrlBuilder(URIUtil.encodePath(webScriptURL));
+		    					logger.info("Prima di firma file XML");
+		    	    			Response response = documentiCollegatiDocAmmService.invokePOST(url, MimeTypes.JSON, json.getBytes("UTF-8"));
+		    	    			int status = response.getResponseCode();
+		    	    			if (status == HttpStatus.SC_NOT_FOUND
+		    	    					|| status == HttpStatus.SC_INTERNAL_SERVER_ERROR
+		    	    					|| status == HttpStatus.SC_UNAUTHORIZED
+		    	    					|| status == HttpStatus.SC_BAD_REQUEST) {
+			    					logger.info("Firma Errore");
+		    	    				JSONTokener tokenizer = new JSONTokener(new StringReader(response.getErrorContent()));
+		    	    			    JSONObject jsonObject = new JSONObject(tokenizer);
+		    	    			    String jsonMessage = jsonObject.getString("message");
+		    	    				throw new ApplicationException(FirmaOTPBulk.errorMessage(jsonMessage));
+		    	    			} else {
+			    					logger.info("Firma OK");
+		    	    				JSONTokener tokenizer = new JSONTokener(new InputStreamReader(response.getStream()));
+		    	    			    JSONObject jsonObject = new JSONObject(tokenizer);
+		    	    			    Document nodeSigned = (Document) documentiCollegatiDocAmmService.getNodeByNodeRef(jsonObject.getString("nodeRef"));
+			    					logger.info("Recuperato noderef file firmato dal documentale");
+		    	    			    InputStream streamSigned = documentiCollegatiDocAmmService.getResource(nodeSigned);
+			    					logger.info("Recuperato file firmato dal documentale");
+		    	    				try {
+		    	    					File fileSigned = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/", nomeFileP7m);
+		    	    					OutputStream outputStream = new FileOutputStream(fileSigned);
+		    	    					IOUtils.copy(streamSigned, outputStream);
+		    	    					outputStream.close();
+				    					logger.info("Salvato file firmato temporaneo");
+				    					if (!fattura.isNotaCreditoDaNonInviareASdi()){
+					    					FatturaPassivaElettronicaService fatturaService = SpringUtil.getBean("fatturaPassivaElettronicaService", FatturaPassivaElettronicaService.class);
+			    	    			    	fatturaService.inviaFatturaElettronica(authentication.getUserName(), authentication.getPassword(), fileSigned, nomeFileP7m);
+			    		    				fattura.setNomeFileInvioSdi(nomeFileP7m);
+					    					logger.info("File firmato inviato");
+				    					}
+		    		    				componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fattura);
+		    	    				} catch (Exception ex) {
+				    					logger.error("Errore nell'invio del file "+ ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
+		    	    					documentiCollegatiDocAmmService.removeAspect(cmisFile.getDocument(),  CMISAspect.CNR_SIGNEDDOCUMENT.value());
+	    	    						documentiCollegatiDocAmmService.deleteNode(nodeSigned);
+		    	    					throw new ApplicationException("Errore nell'invio della mail PEC per la fatturazione elettronica. Ripetere l'operazione di firma!");
+		    	    				}
+		    	    			}
+		    	    			commitUserTransaction();
+		    	    		} catch (HttpException e) {
+		    	    			throw new BusinessProcessException(e);
+		    	    		} catch (IOException e) {
+		    	    			throw new BusinessProcessException(e);
+		    	    		} catch (Exception e) {
+		    	    			throw new BusinessProcessException(e);
+		    	    		}
+	    				} else {
+	    					logger.error("Errore. Il file XML salvato era vuoto.");
+	    					throw new ApplicationException("Errore durante il processo di firma elettronica. Ripetere l'operazione di firma!");
+	    				}
 	    			}
 	    		} catch (Exception e){
 	    			//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche

@@ -20,6 +20,8 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.apache.chemistry.opencmis.client.api.Document;
 @Stateless(name="CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession")
 public class FatturaAttivaSingolaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements FatturaAttivaSingolaComponentSession {
 @PostConstruct
@@ -1120,11 +1122,12 @@ public it.cnr.jada.bulk.OggettoBulk completaOggetto(it.cnr.jada.UserContext para
 	}
 }
 
-public void gestioneAllegatiPerFatturazioneElettronica(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException {
+public Document gestioneAllegatiPerFatturazioneElettronica(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException, it.cnr.jada.persistency.PersistencyException {
 	pre_component_invocation(param0,componentObj);
 	try {
-		((FatturaAttivaSingolaComponent)componentObj).gestioneAllegatiPerFatturazioneElettronica(param0,param1);
+		Document result = ((FatturaAttivaSingolaComponent)componentObj).gestioneAllegatiPerFatturazioneElettronica(param0,param1);
 		component_invocation_succes(param0,componentObj);
+		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
 		component_invocation_succes(param0,componentObj);
 		throw e;
