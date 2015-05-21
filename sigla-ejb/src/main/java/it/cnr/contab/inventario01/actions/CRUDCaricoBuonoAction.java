@@ -129,7 +129,9 @@ public Forward doCalcolaValoreTotaleBene(ActionContext context) {
 	Buono_carico_scarico_dettBulk riga = null;
 	if (bp.isBy_fattura()){
 		riga = (Buono_carico_scarico_dettBulk)bp.getRigheInventarioDaFattura().getModel();
-	} else {
+	} else if (bp.isBy_documento()){
+		riga = (Buono_carico_scarico_dettBulk)bp.getRigheInventarioDaDocumento().getModel();
+	} else{
 		riga = (Buono_carico_scarico_dettBulk)bp.getDettaglio().getModel();
 	}		
 	
