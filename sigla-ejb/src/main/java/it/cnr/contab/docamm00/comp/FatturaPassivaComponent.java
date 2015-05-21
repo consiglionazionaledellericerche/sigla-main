@@ -5202,7 +5202,10 @@ private void searchDuplicateInDB (UserContext aUC, Fattura_passivaBulk fatturaPa
 		//clause.setEsercizio(fatturaPassiva.getEsercizio());
 		clause.setEsercizio_fattura_fornitore(fatturaPassiva.getEsercizio_fattura_fornitore());
 		clause.setNr_fattura_fornitore(fatturaPassiva.getNr_fattura_fornitore());
-		clause.setFornitore(fatturaPassiva.getFornitore());
+		if (fatturaPassiva.getPartita_iva()!=null)
+			clause.setPartita_iva(fatturaPassiva.getPartita_iva());
+		else
+			clause.setFornitore(fatturaPassiva.getFornitore());
 		clause.setTi_fattura(fatturaPassiva.getTi_fattura());
 		java.util.List occurences = ((Fattura_passivaHome)getHome(aUC, fatturaPassiva)).findDuplicateFatturaFornitore(clause);
 		if (occurences != null && !occurences.isEmpty()) {
