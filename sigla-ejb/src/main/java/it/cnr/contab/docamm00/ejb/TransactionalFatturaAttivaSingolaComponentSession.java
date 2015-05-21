@@ -15,6 +15,8 @@ import java.util.List;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.apache.chemistry.opencmis.client.api.Document;
+
 public class TransactionalFatturaAttivaSingolaComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements FatturaAttivaSingolaComponentSession {
 public it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_attivaBulk addebitaDettagli(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Nota_di_debito_attivaBulk param1,java.util.List param2,java.util.Hashtable param3) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
@@ -1255,10 +1257,10 @@ public it.cnr.jada.bulk.OggettoBulk completaOggetto(it.cnr.jada.UserContext auc,
 	
 }
 
-public void gestioneAllegatiPerFatturazioneElettronica(it.cnr.jada.UserContext userContext, it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk testata)
+public Document gestioneAllegatiPerFatturazioneElettronica(it.cnr.jada.UserContext userContext, it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk testata)
 		throws ComponentException, RemoteException {
 	try {
-		invoke("gestioneAllegatiPerFatturazioneElettronica",new Object[] {
+		return (Document)invoke("gestioneAllegatiPerFatturazioneElettronica",new Object[] {
 				userContext,
 				testata
 				});

@@ -2583,15 +2583,17 @@ private void controlloCodiceIpaValorizzato(TerzoBulk terzo)
 	}
 }
 
-public void gestioneAllegatiPerFatturazioneElettronica(UserContext userContext,
+public Document gestioneAllegatiPerFatturazioneElettronica(UserContext userContext,
 		Fattura_attivaBulk fattura) throws ComponentException {
 	if (fattura.isDocumentoFatturazioneElettronica()){
 		DocumentiCollegatiDocAmmService cmisService = SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class);
 		File file = lanciaStampaFatturaElettronica(userContext, fattura);
-		archiviaFileCMIS(userContext, cmisService, fattura, file);
+		return archiviaFileCMIS(userContext, cmisService, fattura, file);
 	}
+	return null;
 }
-private void archiviaFileCMIS(UserContext userContext, SiglaCMISService cmisService, Fattura_attivaBulk fattura, File file) throws ComponentException{
+
+private Document archiviaFileCMIS(UserContext userContext, SiglaCMISService cmisService, Fattura_attivaBulk fattura, File file) throws ComponentException{
 	List<CMISFile> cmisFileCreate = new ArrayList<CMISFile>();
 	List<CMISFile> cmisFileAnnullati = new ArrayList<CMISFile>();
 	try {
@@ -2600,11 +2602,6 @@ private void archiviaFileCMIS(UserContext userContext, SiglaCMISService cmisServ
 		if (cmisFile!=null) {
 			//E' previsto solo l'inserimento ma non l'aggiornamento
 			CMISPath path = cmisFile.getCMISParentPath(cmisService);
-//			CMISPath alternativePath = null;
-//			if (fattura.getNomeFile()!=null){
-//				alternativePath = cmisFile.getCMISAlternativeParentPath(cmisService);
-//			}
-
 			try{
 				Document node = cmisService.restoreSimpleDocument(cmisFile, 
 						cmisFile.getInputStream(),
@@ -2614,40 +2611,14 @@ private void archiviaFileCMIS(UserContext userContext, SiglaCMISService cmisServ
 				cmisService.addAspect(node, CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_PRIMA_PROTOCOLLO.value());
 				cmisFile.setDocument(node);
 				cmisFileCreate.add(cmisFile);
-//				if (alternativePath!=null)
-//					try{
-//						cmisService.copyNode(node, cmisService.getNodeByPath(alternativePath));
-//					} catch (CmisRuntimeException e) {
-//					}
-
+				return node;
 			} catch (Exception e) {
 				if (e.getCause() instanceof CmisConstraintException)
 					throw new ApplicationException("CMIS - File ["+cmisFile.getFileName()+"] già presente o non completo di tutte le proprietà obbligatorie. Inserimento non possibile!");
 				throw new ApplicationException("CMIS - Errore nella registrazione degli allegati (" + e.getMessage() + ")");
 			}
-			//				if (allegato.isAnnullato()) {
-			//					Node node = cmisFile.getNode();
-			//					if (node!=null && !node.hasAspect(CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value())) {
-			//						String cmisFileName = cmisFile.getFileName();
-			//						String cmisFileEstensione = cmisFileName.substring(cmisFileName.lastIndexOf(".")+1);
-			//						cmisFile.setFileName(cmisFileName.replace("."+cmisFileEstensione, "-ANNULLATO."+cmisFileEstensione));
-			//						Boolean CMISAggiornato=Boolean.FALSE;
-			//						int numFile=0;
-			//						do {
-			//							try {
-			//								cmisService.updateProperties(cmisFile, node);
-			//								cmisService.addAspect(node, CMISContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
-			//								cmisFile.setNode(cmisService.getNodeByNodeRef(node.getId()));
-			//								cmisFileAnnullati.add(cmisFile);
-			//								CMISAggiornato=Boolean.TRUE;
-			//							} catch (Exception e) {
-			//								numFile++;
-			//								cmisFile.setFileName(cmisFileName.replace("."+cmisFileEstensione, "-ANNULLATO"+numFile+"."+cmisFileEstensione));
-			//							}
-			//						} while (!CMISAggiornato && numFile<=100);
-			//					}
-			//				}
 		}
+		return null;
 	} catch (Exception e){
 		//Codice per riallineare il documentale allo stato precedente rispetto alle modifiche
 		for (CMISFile cmisFile : cmisFileCreate)
