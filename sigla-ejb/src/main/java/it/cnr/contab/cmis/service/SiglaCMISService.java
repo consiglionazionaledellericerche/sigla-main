@@ -390,6 +390,19 @@ public class SiglaCMISService {
 		return node;
 	}
 
+	public void updateProperties(Map<String, Object> metadataProperties, CmisObject node){
+		try {
+			if (node.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
+				node = ((Document)node).getObjectOfLatestVersion(false);
+				node = getSiglaSession().getObject(node);
+				node.refresh();
+			}
+			node.updateProperties(metadataProperties, true);	
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}			
+	}	
+	
 	public void updateProperties(OggettoBulk oggettoBulk, CmisObject node){
 		try {
 			Map<String, Object> metadataProperties = new HashMap<String, Object>();
@@ -400,12 +413,7 @@ public class SiglaCMISService {
 			for (Property<?> property : cmisBulkInfo.getAspectProperty(getSiglaSession(), oggettoBulk)) {
 				metadataProperties.put(property.getId(), property.getValue());
 			}			
-			if (node.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
-				node = ((Document)node).getObjectOfLatestVersion(false);
-				node = getSiglaSession().getObject(node);
-				node.refresh();
-			}
-			node.updateProperties(metadataProperties, true);
+			updateProperties(metadataProperties, node);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -491,7 +499,7 @@ public class SiglaCMISService {
         List<String> aspects = cmisObject.getPropertyValue(PropertyIds.SECONDARY_OBJECT_TYPE_IDS);
         aspects.addAll(Arrays.asList(aspectName));
         metadataProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, aspects);
-        cmisObject.updateProperties(metadataProperties);
+        updateProperties(metadataProperties, cmisObject);
     }
     
 	public void removeAspect(CmisObject cmisObject, String... aspectName){
