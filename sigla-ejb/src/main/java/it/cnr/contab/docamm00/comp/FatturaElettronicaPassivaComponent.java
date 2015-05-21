@@ -532,14 +532,13 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		try {
 			List<DocumentoEleTestataBulk> results = home.fetchAll(sql);
 			getHomeCache(usercontext).fetchAll(usercontext);
-			if (!results.isEmpty() && results.size() == 1) {
-				DocumentoEleTestataBulk documentoEleTestata = results.get(0);
+			for (DocumentoEleTestataBulk documentoEleTestata : results) {
 				notificaEsito(usercontext, tipoIntegrazioneSDI, documentoEleTestata);
 	        	documentoEleTestata.setStatoNotificaEsito(null);
 	        	documentoEleTestata.setToBeUpdated();
 	        	modificaConBulk(usercontext, documentoEleTestata);
-				logger.info("Inviata notifica per identificativo:" + documentoEleTestata.getIdentificativoSdi());
-			}			
+				logger.info("Inviata notifica per identificativo:" + documentoEleTestata.getIdentificativoSdi());				
+			}
 		} catch (PersistencyException e) {
 			throw handleException(e);
 		}
