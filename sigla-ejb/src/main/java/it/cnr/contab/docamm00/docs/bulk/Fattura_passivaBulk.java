@@ -1721,7 +1721,7 @@ public boolean isRODt_registrazione() {
  */
  
 public boolean isROFl_bolla_doganale() {
-	return isAbledToModifyFlagsTipoFattura() || isPromiscua();
+	return (isAbledToModifyFlagsTipoFattura()&&!(isElettronica()) || isPromiscua()  ||(isElettronica() && getPg_fattura_passiva()!=null));
 }
 /**
  * Restituisce <code>true</code> se il sezionale è di tipo Istituzionale
@@ -1757,7 +1757,7 @@ public boolean isROFl_san_marino_senza_iva() {
  */
  
 public boolean isROFl_spedizioniere() {
-	return isAbledToModifyFlagsTipoFattura() || isPromiscua();
+	return (isAbledToModifyFlagsTipoFattura()&&!(isElettronica()) || isPromiscua()  ||(isElettronica() && getPg_fattura_passiva()!=null));
 }
 /**
  * Insert the method's description here.
