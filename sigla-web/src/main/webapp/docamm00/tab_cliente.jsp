@@ -133,17 +133,22 @@
   	<table>
 		      <tr>     	
 		      	<td>
+				<% bp.getController().writeFormField(out,"codiceInvioSdi");%>
+		      	</td>      	
+		      </tr>
+		      <tr>     	
+		      	<td>
+				<% bp.getController().writeFormField(out,"dtConsegnaSdi");%>
+		      	</td>      	
+		      </tr>
+		      <tr>     	
+		      	<td>
 				<% bp.getController().writeFormField(out,"noteInvioSdi");%>
 		      	</td>      	
 		      </tr>
 		      <tr>     	
 		      	<td>
 				<% bp.getController().writeFormField(out,"statoInvioSdi");%>
-		      	</td>      	
-		      </tr>
-		      <tr>     	
-		      	<td>
-				<% bp.getController().writeFormField(out,"dtConsegnaSdi");%>
 		      	</td>      	
 		      </tr>
      </table>
