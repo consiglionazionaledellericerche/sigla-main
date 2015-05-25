@@ -134,6 +134,8 @@ import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
+import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
@@ -158,6 +160,7 @@ import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.SQLBroker;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.File;
@@ -174,6 +177,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -182,14 +186,19 @@ import java.util.UUID;
 import java.util.Vector;
 
 import javax.ejb.EJBException;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisConstraintException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FatturaAttivaSingolaComponent
     extends it.cnr.jada.comp.CRUDComponent
     implements ICRUDMgr, IFatturaAttivaSingolaMgr, Cloneable, Serializable {
+ 	  private transient final static Logger logger = LoggerFactory.getLogger(FatturaAttivaSingolaComponent.class);
     public  FatturaAttivaSingolaComponent()
     {
 
@@ -7369,6 +7378,57 @@ public Fattura_attivaBulk ricercaFatturaDaCodiceSDI(UserContext userContext, Str
 	}
 }
 
+private void sendMailForNotificationOk(UserContext userContext, Fattura_attivaBulk fattura){
+	/**
+	 * Invio mail di notifica Ricezione
+	 */
+	try {
+		String subject= "";
+		String text = "";
+		String estremoFattura = fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva();
+		subject= "[SIGLA] Notifica esito positivo invio fattura attiva " + estremoFattura;
+		text = "La fattura attiva elettronica: <b>" +estremoFattura + "</b>"+
+				" è stata accettata dal cliente.";
+		Utente_indirizzi_mailHome utente_indirizzi_mailHome = (Utente_indirizzi_mailHome)getHome(userContext,Utente_indirizzi_mailBulk.class);
+		Collection utenti = utente_indirizzi_mailHome.findUtenteNotificaOkInvioFatturaElettronicaAttiva(fattura.getCd_uo_origine());
+		sendMailForNotificationFatturaElettronica(subject, text, utenti);        	        		
+	}catch (Exception e) {
+		logger.info("Errore durante l'invio della mail di notifica ok. Errore: "+e.getMessage() == null ? (e.getCause() == null ? "Errore Generico" : e.getCause().toString()) : e.getMessage());
+	}
+}
+
+private void sendMailForNotificationKo(UserContext userContext, Fattura_attivaBulk fattura){
+	try {
+		String subject= "";
+		String text = "";
+		String estremoFattura = fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva();
+		subject= "[SIGLA] Notifica errore invio fattura attiva " + estremoFattura;
+		text = "Errore durante l'invio della fattura attiva elettronica: <b>" +estremoFattura + "</b>"+
+				". Motivo: "+ fattura.getNoteInvioSdi();
+		Utente_indirizzi_mailHome utente_indirizzi_mailHome = (Utente_indirizzi_mailHome)getHome(userContext,Utente_indirizzi_mailBulk.class);
+		Collection utenti = utente_indirizzi_mailHome.findUtenteNotificaOkInvioFatturaElettronicaAttiva(fattura.getCd_uo_origine());
+		sendMailForNotificationFatturaElettronica(subject, text, utenti);        	        		
+	}catch (Exception e) {
+		logger.info("Errore durante l'invio della mail di notifica ko. Errore: "+e.getMessage() == null ? (e.getCause() == null ? "Errore Generico" : e.getCause().toString()) : e.getMessage());
+	}
+}
+
+private void sendMailForNotificationFatturaElettronica(String subject,
+		String text, Collection utenti) throws AddressException {
+	String addressTO = null;
+	for (java.util.Iterator<Utente_indirizzi_mailBulk> i = utenti.iterator();i.hasNext();){
+		Utente_indirizzi_mailBulk utente_indirizzi = (Utente_indirizzi_mailBulk)i.next();
+		if (addressTO == null)
+			addressTO = new String();
+		else
+			addressTO = addressTO + ",";    
+		addressTO = addressTO+utente_indirizzi.getIndirizzo_mail();			
+	}
+	if (addressTO != null){
+		SendMail.sendMail(subject, text, InternetAddress.parse(addressTO));
+	}
+}
+
 public Fattura_attivaBulk aggiornaFatturaRifiutataDestinatarioSDI(UserContext userContext, Fattura_attivaBulk fattura, String noteSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException {
 	fattura.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_RIFIUTATA_DESTINATARIO);
 	fattura.setNoteInvioSdi(impostaNoteSdi(noteSdi));
@@ -7378,6 +7438,7 @@ public Fattura_attivaBulk aggiornaFatturaRifiutataDestinatarioSDI(UserContext us
 		Fattura_attiva_IBulk fatturaAttiva = (Fattura_attiva_IBulk)fattura;
 		Nota_di_credito_attivaBulk nota = generaNotaCreditoAutomatica(userContext, fatturaAttiva, fatturaAttiva.getEsercizio(), false);
 		fatturaAttiva.setNotaCreditoAutomaticaGenerata(nota);
+		sendMailForNotificationKo(userContext, fatturaAttiva);
 	}
 	return fattura;
 }
@@ -7407,6 +7468,7 @@ public Fattura_attivaBulk aggiornaFatturaScartoSDI(UserContext userContext, Fatt
 		Fattura_attiva_IBulk fatturaAttiva = (Fattura_attiva_IBulk)fattura;
 		Nota_di_credito_attivaBulk nota = generaNotaCreditoAutomatica(userContext, fatturaAttiva, fatturaAttiva.getEsercizio(), false);
 		fatturaAttiva.setNotaCreditoAutomaticaGenerata(nota);
+		sendMailForNotificationKo(userContext, fatturaAttiva);
 	}
 	return fattura;
 }
@@ -7473,20 +7535,17 @@ public Fattura_attivaBulk aggiornaFatturaMancataConsegnaInvioSDI(UserContext use
 	fattura.setNoteInvioSdi(impostaNoteSdi(noteInvioSdi));
 	fattura.setToBeUpdated();
 	updateBulk(userContext, fattura);
-	if (fattura instanceof Fattura_attiva_IBulk){
-		Fattura_attiva_IBulk fatturaAttiva = (Fattura_attiva_IBulk)fattura;
-		Nota_di_credito_attivaBulk nota = generaNotaCreditoAutomatica(userContext, fatturaAttiva, fatturaAttiva.getEsercizio(), false);
-		fatturaAttiva.setNotaCreditoAutomaticaGenerata(nota);
-	}
 
 	return fattura;
 }
 public Fattura_attivaBulk aggiornaFatturaRicevutaConsegnaInvioSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, String codiceSdi, Calendar dataConsegnaSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException {
 	fatturaAttiva.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO);
 	fatturaAttiva.setCodiceInvioSdi(codiceSdi);
+	fatturaAttiva.setNoteInvioSdi(null);
 	fatturaAttiva.setDtConsegnaSdi(dataConsegnaSdi!=null?new Timestamp(dataConsegnaSdi.getTime().getTime()):null);
 	fatturaAttiva.setToBeUpdated();
 	updateBulk(userContext, fatturaAttiva);
+	sendMailForNotificationOk(userContext, fatturaAttiva);
 
 	return fatturaAttiva;
 }
@@ -7536,6 +7595,12 @@ public Fattura_attivaBulk aggiornaFatturaTrasmissioneNonRecapitataSDI(UserContex
 	fattura.setNoteInvioSdi(impostaNoteSdi(noteSdi));
 	fattura.setToBeUpdated();
 	updateBulk(userContext, fattura);
+	if (fattura instanceof Fattura_attiva_IBulk){
+		Fattura_attiva_IBulk fatturaAttiva = (Fattura_attiva_IBulk)fattura;
+		Nota_di_credito_attivaBulk nota = generaNotaCreditoAutomatica(userContext, fatturaAttiva, fatturaAttiva.getEsercizio(), false);
+		fatturaAttiva.setNotaCreditoAutomaticaGenerata(nota);
+		sendMailForNotificationKo(userContext, fatturaAttiva);
+	}
 	return fattura;
 }
 

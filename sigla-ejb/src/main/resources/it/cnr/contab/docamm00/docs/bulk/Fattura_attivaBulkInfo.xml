@@ -604,6 +604,13 @@
 		inputType="ROTEXT"
 		label="Codice IPA"/>	
 	<fieldProperty
+		name="codiceInvioSdi"
+		property="codiceInvioSdi"
+		maxLength="30"
+		inputSize="30"
+		label="Identificativo SDI"
+		inputType="ROTEXT"/>
+	<fieldProperty
 		name="statoInvioSdi"
 		property="statoInvioSdi"
 		keysProperty="statoInvioSdiKeys"
@@ -791,6 +798,7 @@
 	<findFieldProperty name="fl_congelata" />
 	<findFieldProperty name="ti_bene_servizioForSearch" />
 	<findFieldProperty name="statoInvioSdi" />
+	<findFieldProperty name="codiceInvioSdi" />
 	<findFieldProperty name="codiceUnivocoUfficioIpa" />
 	<findFieldProperty name="dtConsegnaSdi" />
 	
@@ -902,6 +910,8 @@
 		name="riportata" />
 	<formFieldProperty
 		name="codiceUnivocoUfficioIpa" />
+	<formFieldProperty
+		name="codiceInvioSdi" />
 	<formFieldProperty
 		name="dtConsegnaSdi" />
 	<formFieldProperty
@@ -1016,6 +1026,8 @@
 	<columnFieldProperty
 		name="codiceUnivocoUfficioIpa" />
 	<columnFieldProperty
+		name="codiceInvioSdi" />
+	<columnFieldProperty
 		name="dtConsegnaSdi" />
 	<columnFieldProperty
 		name="statoInvioSdi" />
@@ -1060,6 +1072,7 @@
 	<columnFieldProperty name="ti_associato_manrev" />
 	<columnFieldProperty name="stato_cofi" />
 	<columnFieldProperty name="codiceUnivocoUfficioIpa" />
+	<columnFieldProperty name="codiceInvioSdi" />
 	<columnFieldProperty name="dtConsegnaSdi" />
 	<columnFieldProperty name="statoInvioSdi" />
 	<columnFieldProperty name="ti_fattura" />
