@@ -129,25 +129,27 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 			logger.info("Fatture Elettroniche: Attive: Ricevuta Consegna. MessageId:"+ricevuta.getMessageId());
 
 			Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, ricevuta.getIdentificativoSdI().toString());
-			if (fattura != null){
+			if (fattura != null && (fattura.getStatoInvioSdi() == null || !fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_MANCATA_CONSEGNA))){
 				logger.info("Fatture Elettroniche: Attive: Fattura già elaborata "+ricevuta.getIdentificativoSdI().toString());
 			} else {
-				String nomeFileP7m = ricevuta.getNomeFile();
-				fattura = recuperoFatturaDaNomeFile(userContext, nomeFileP7m);
+				if (fattura == null){
+					String nomeFileP7m = ricevuta.getNomeFile();
+					fattura = recuperoFatturaDaNomeFile(userContext, nomeFileP7m);
+				}
 				if (fattura != null){
 					salvaFileSuDocumentale(data, nomeFile, fattura, CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_RICEVUTA_CONSEGNA);
 					try{
 						fattura = component.aggiornaFatturaRicevutaConsegnaInvioSDI(userContext, fattura, String.valueOf(ricevuta.getIdentificativoSdI()), ricevuta.getDataOraConsegna());
-						logger.info("Fatture Elettroniche: Attive: aggiornamento Fattura consegnata con nome file "+nomeFileP7m);
+						logger.info("Fatture Elettroniche: Attive: aggiornamento Fattura consegnata  "+fattura.recuperoIdFatturaAsString());
 					} catch (Exception ex) {
-						logger.error("Fatture Elettroniche: Attive: MessageId:"+ricevuta.getMessageId()+". Errore nell'elaborazione della Fattura consegnata con nome file "+nomeFileP7m + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
+						logger.error("Fatture Elettroniche: Attive: MessageId:"+ricevuta.getMessageId()+". Errore nell'elaborazione della Fattura consegnata "+fattura.recuperoIdFatturaAsString()+ ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
 						java.io.StringWriter sw = new java.io.StringWriter();
 						ex.printStackTrace(new java.io.PrintWriter(sw));
-						SendMail.sendErrorMail("Fatture Elettroniche: Attive: Ricevuta consegna. Nome file "+nomeFileP7m, sw.toString());
+						SendMail.sendErrorMail("Fatture Elettroniche: Attive: Ricevuta consegna.  "+fattura.recuperoIdFatturaAsString(), sw.toString());
 					}
 				} else {
-					logger.warn("Fatture Elettroniche: Attive: Per il nome del file inviato indicato nel file dell'e-mail non corrisponde nessuna fattura." + nomeFileP7m);
-					SendMail.sendErrorMail("Fatture Elettroniche: Attive: Per il nome del file inviato indicato nel file dell'e-mail non corrisponde nessuna fattura", "Ricevuta Consegna. Nome File "+nomeFileP7m);
+					logger.warn("Fatture Elettroniche: Attive: Per il nome del file inviato indicato nel file dell'e-mail non corrisponde nessuna fattura." + fattura.recuperoIdFatturaAsString());
+					SendMail.sendErrorMail("Fatture Elettroniche: Attive: Per il nome del file inviato indicato nel file dell'e-mail non corrisponde nessuna fattura", "Ricevuta Consegna. "+fattura.recuperoIdFatturaAsString());
 				}
 			}
 		} catch (Exception e) {
@@ -200,19 +202,6 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 					try{
 						fattura = component.aggiornaFatturaMancataConsegnaInvioSDI(userContext, fattura, codiceSDI, mancataConsegna.getDescrizione());
 						logger.info("Fatture Elettroniche: Attive: aggiornamento Fattura con mancata consegna con nome file "+nomeFileP7m);
-			        	if (fattura instanceof Fattura_attiva_IBulk){
-			        		Fattura_attiva_IBulk fatturaAttiva = (Fattura_attiva_IBulk)fattura;
-			        		if (fatturaAttiva.getNotaCreditoAutomaticaGenerata() != null){
-								try{
-									recuperoComponentFatturaAttiva().gestioneAllegatiPerFatturazioneElettronica(userContext, fatturaAttiva.getNotaCreditoAutomaticaGenerata());
-								} catch (Exception ex) {
-									logger.error("Fatture Elettroniche: Attive: MessageId:"+mancataConsegna.getMessageId()+". Errore nell'elaborazione della stampa della mancata consegna della fattura con nome file "+nomeFileP7m + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
-									java.io.StringWriter sw = new java.io.StringWriter();
-									ex.printStackTrace(new java.io.PrintWriter(sw));
-									SendMail.sendErrorMail("Fatture Elettroniche: Attive: Mancata Consegna. Nome file "+nomeFileP7m, sw.toString());
-								}
-			        		}
-			        	}
 					} catch (Exception ex) {
 						logger.error("Fatture Elettroniche: Attive: MessageId:"+mancataConsegna.getMessageId()+". Errore nell'elaborazione della mancata consegna della fattura con nome file "+nomeFileP7m + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
 						java.io.StringWriter sw = new java.io.StringWriter();
@@ -237,7 +226,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 			logger.info("Fatture Elettroniche: Attive: Trasmissione non recapitata. MessageId:"+notifica.getMessageId());
 			String codiceSDI = String.valueOf(notifica.getIdentificativoSdI());
 			Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, codiceSDI);
-			if (fattura != null && fattura.getCodiceInvioSdi() != null && fattura.getCodiceInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_NON_RECAPITABILE)){
+			if (fattura != null && fattura.getStatoInvioSdi() != null && fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_NON_RECAPITABILE)){
 				logger.info("Fatture Elettroniche: Attive: Fattura già elaborata "+codiceSDI);
 			} else {
 				String nomeFileP7m = notifica.getNomeFile();
@@ -247,6 +236,19 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 					try{
 						component.aggiornaFatturaTrasmissioneNonRecapitataSDI(userContext, fattura, codiceSDI, notifica.getNote());
 						logger.info("Fatture Elettroniche: Attive: aggiornamento Fattura con trasmissione non recapitata con nome file "+nomeFileP7m);
+						if (fattura instanceof Fattura_attiva_IBulk){
+							Fattura_attiva_IBulk fatturaAttiva = (Fattura_attiva_IBulk)fattura;
+							if (fatturaAttiva.getNotaCreditoAutomaticaGenerata() != null){
+								try{
+									recuperoComponentFatturaAttiva().gestioneAllegatiPerFatturazioneElettronica(userContext, fatturaAttiva.getNotaCreditoAutomaticaGenerata());
+								} catch (Exception ex) {
+									logger.error("Fatture Elettroniche: Attive: MessageId:"+notifica.getMessageId()+". Errore nell'elaborazione della stampa della mancata consegna della fattura con nome file "+nomeFileP7m + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
+									java.io.StringWriter sw = new java.io.StringWriter();
+									ex.printStackTrace(new java.io.PrintWriter(sw));
+									SendMail.sendErrorMail("Fatture Elettroniche: Attive: Mancata Consegna. Nome file "+nomeFileP7m, sw.toString());
+								}
+							}
+						}
 					} catch (Exception ex) {
 						logger.error("Fatture Elettroniche: Attive: MessageId:"+notifica.getMessageId()+". Errore nell'elaborazione della mancata consegna della fattura con nome file "+nomeFileP7m + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
 						java.io.StringWriter sw = new java.io.StringWriter();
