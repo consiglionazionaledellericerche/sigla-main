@@ -179,8 +179,12 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent 
 	implements IFatturaPassivaMgr, Cloneable,Serializable {
+	private transient final static Logger logger = LoggerFactory.getLogger(DocumentoEleTestataHome.class);
 
     public  FatturaPassivaComponent()
     {
@@ -2882,6 +2886,7 @@ public OggettoBulk creaConBulk(
 	controllaQuadraturaInventario(userContext,fattura_passiva);
 	if (messaggio != null)
 		return asMTU(fattura_passiva, messaggio);
+	logger.info("Creazione fattura passiva legata al documento elettronico:" + fattura_passiva.getDocumentoEleTestata());
 	if (fattura_passiva.getDocumentoEleTestata() != null) {
 		fattura_passiva.getDocumentoEleTestata().setStatoDocumento(StatoDocumentoEleEnum.REGISTRATO.name());
 		fattura_passiva.getDocumentoEleTestata().setToBeUpdated();
@@ -2893,6 +2898,7 @@ public OggettoBulk creaConBulk(
 							"*", CNRUserContext.getEsercizio(userContext)));
 			if (configurazione_cnrBulk != null)
 				tipoIntegrazioneSDI = TipoIntegrazioneSDI.valueOf(configurazione_cnrBulk.getVal01());
+			logger.info("Notifica di accettazione relativa al documento:" + fattura_passiva.getDocumentoEleTestata());			
 			((DocumentoEleTestataHome)getHome(userContext, DocumentoEleTestataBulk.class)).
 				notificaEsito(userContext, tipoIntegrazioneSDI, fattura_passiva.getDocumentoEleTestata());
 		} catch (PersistencyException e) {
@@ -2900,9 +2906,9 @@ public OggettoBulk creaConBulk(
 		} catch (IOException e) {
 			throw handleException(e);
 		}
+		logger.info("Aggiornamento dello stato REGISTRATO sul documento:" + fattura_passiva.getDocumentoEleTestata());			
 		super.modificaConBulk(userContext, fattura_passiva.getDocumentoEleTestata());
 	}
-		
 	return fattura_passiva;
 }
 private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_passiva_rigaBulk dettaglio)
