@@ -5208,6 +5208,7 @@ private void searchDuplicateInDB (UserContext aUC, Fattura_passivaBulk fatturaPa
 		//clause.setEsercizio(fatturaPassiva.getEsercizio());
 		clause.setEsercizio_fattura_fornitore(fatturaPassiva.getEsercizio_fattura_fornitore());
 		clause.setNr_fattura_fornitore(fatturaPassiva.getNr_fattura_fornitore());
+		clause.setDt_fattura_fornitore(fatturaPassiva.getDt_fattura_fornitore());
 		if (fatturaPassiva.getPartita_iva()!=null)
 			clause.setPartita_iva(fatturaPassiva.getPartita_iva());
 		else
