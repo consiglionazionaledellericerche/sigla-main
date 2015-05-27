@@ -123,7 +123,7 @@
 	<fieldProperty
 		name="lineaPrezzounitario"
 		property="lineaPrezzounitario"
-		formatName="it.cnr.contab.util.EuroFormat"
+		formatName="it.cnr.contab.util.Importo6CifreFormat"
 		inputType="TEXT"
 		inputSize="17"
 		maxLength="17"
