@@ -2800,8 +2800,6 @@ public OggettoBulk creaConBulk(
 	
 	assegnaProgressivo(userContext, fattura_passiva);
 	
-	assegnaProgressivoUnivoco(userContext, fattura_passiva);
-	
 	if(fattura_passiva.isElettronica())
 		validaFatturaElettronica(userContext, fattura_passiva);
 	
@@ -2909,6 +2907,7 @@ public OggettoBulk creaConBulk(
 		logger.info("Aggiornamento dello stato REGISTRATO sul documento:" + fattura_passiva.getDocumentoEleTestata());			
 		super.modificaConBulk(userContext, fattura_passiva.getDocumentoEleTestata());
 	}
+	assegnaProgressivoUnivoco(userContext, fattura_passiva);
 	return fattura_passiva;
 }
 private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_passiva_rigaBulk dettaglio)
