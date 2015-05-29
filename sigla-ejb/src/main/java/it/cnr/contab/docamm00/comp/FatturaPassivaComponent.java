@@ -2882,8 +2882,6 @@ public OggettoBulk creaConBulk(
 		throw handleException(bulk, e);
 	}
 	controllaQuadraturaInventario(userContext,fattura_passiva);
-	if (messaggio != null)
-		return asMTU(fattura_passiva, messaggio);
 	logger.info("Creazione fattura passiva legata al documento elettronico:" + fattura_passiva.getDocumentoEleTestata());
 	if (fattura_passiva.getDocumentoEleTestata() != null) {
 		fattura_passiva.getDocumentoEleTestata().setStatoDocumento(StatoDocumentoEleEnum.REGISTRATO.name());
@@ -2908,6 +2906,8 @@ public OggettoBulk creaConBulk(
 		super.modificaConBulk(userContext, fattura_passiva.getDocumentoEleTestata());
 	}
 	assegnaProgressivoUnivoco(userContext, fattura_passiva);
+	if (messaggio != null)
+		return asMTU(fattura_passiva, messaggio);
 	return fattura_passiva;
 }
 private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_passiva_rigaBulk dettaglio)
