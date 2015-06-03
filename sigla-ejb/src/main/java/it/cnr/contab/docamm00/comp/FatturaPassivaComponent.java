@@ -2905,7 +2905,12 @@ public OggettoBulk creaConBulk(
 		logger.info("Aggiornamento dello stato REGISTRATO sul documento:" + fattura_passiva.getDocumentoEleTestata());			
 		super.modificaConBulk(userContext, fattura_passiva.getDocumentoEleTestata());
 	}
-	assegnaProgressivoUnivoco(userContext, fattura_passiva);
+	try {
+		assegnaProgressivoUnivoco(userContext, fattura_passiva);
+		super.updateBulk(userContext, fattura_passiva, false);		
+	} catch(PersistencyException _ex) {
+		throw handleException(_ex);
+	}
 	if (messaggio != null)
 		return asMTU(fattura_passiva, messaggio);
 	return fattura_passiva;
