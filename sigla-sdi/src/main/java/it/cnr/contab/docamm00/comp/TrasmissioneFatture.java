@@ -385,14 +385,14 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 		try {
 			JAXBElement<NotificaEsitoType> file = (JAXBElement<NotificaEsitoType>)getJAXBElement(data);
 			NotificaEsitoType notifica = file.getValue();
-			logger.info("Fatture Elettroniche: Attive: Esito. MessageId:"+notifica.getMessageId());
 			String identificativoSdi = String.valueOf(notifica.getIdentificativoSdI());
+			logger.info("Fatture Elettroniche: Attive: Esito. MessageId:"+notifica.getMessageId() + ". Identificativo SDI: "+identificativoSdi);
 			Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, identificativoSdi);
 			if (fattura != null){
 				if (!StringUtils.isEmpty(fattura.getStatoInvioSdi())){
 					if (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_ACCETTATA_DESTINATARIO) || fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_RIFIUTATA_DESTINATARIO)){
 						logger.info("Fatture Elettroniche: Attive: Fattura già elaborata ");
-					} else if (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI)){
+					} else if (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO)){
 						if (esitoAccettato(notifica)){
 							salvaFileSuDocumentale(data, nomeFile, fattura, CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO);
 							try{
