@@ -439,7 +439,12 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				datiGeneraliDocumento.setImportoTotaleDocumento(fattura.getIm_totale_fattura().setScale(2));
 				if (fattura.getDs_fattura_attiva() != null){
 					List<String> listaCausali = new ArrayList<String>();
-					String descrizione = fattura.getDs_fattura_attiva();
+					String descrizione = "";
+					if (fattura.getRiferimento_ordine() != null){
+						descrizione = fattura.getDs_fattura_attiva() + "  Riferimento ordine:"+fattura.getRiferimento_ordine();
+					} else {
+						descrizione = fattura.getDs_fattura_attiva();
+					}
 					int lunghezzaStringaCausale = 200;
 					int numeroCaratteriFinali = 0;
 					for (int i = 0; i <= descrizione.length()/lunghezzaStringaCausale; i++) {
