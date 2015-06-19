@@ -4057,7 +4057,7 @@ public boolean hasFatturaPassivaARowNotInventoried(
 	if (dettagli != null) {
 		while (dettagli.hasNext()) {
 			Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk)dettagli.next();
-			if (riga.getBene_servizio().getFl_gestione_inventario().booleanValue() &&
+			if (riga.getBene_servizio() != null && riga.getBene_servizio().getFl_gestione_inventario().booleanValue() &&
 				!riga.isInventariato())
 				return true;
 		}
@@ -7266,10 +7266,12 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 		    	  currentMap = mapIva;
 		      }
 	      }
-	      if (currentMap.get(key)!=null)
-	    	  currentMap.put(key, currentMap.get(key).add(riga.getIm_iva()));
-	      else
-	    	  currentMap.put(key, riga.getIm_iva());
+	      if (key != null) {
+		      if (currentMap.get(key)!=null)
+		    	  currentMap.put(key, currentMap.get(key).add(riga.getIm_iva()));
+		      else
+		    	  currentMap.put(key, riga.getIm_iva());	    	  
+	      }
 	}
 
 	Hashtable<String, BigDecimal> mapNaturaEle = new Hashtable<String, BigDecimal>(), mapIvaEle = new Hashtable<String, BigDecimal>();
