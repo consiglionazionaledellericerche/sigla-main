@@ -880,11 +880,12 @@
 		inputSize="10"
 		formatName="date_short"
 		enabledOnSearch="true"
-		label="Data protocollo" />
+		label="Data protocollo/ricezione"
+		command="doCambiaDataScadenzaFatturaFornitore"/>
 	<fieldProperty
 		name="progr_univoco"
 		property="progr_univoco"
-		inputType="ROTEXT"
+		inputType="TEXT"
 		maxLength="10"
 		inputSize="10"
 		enabledOnEdit="false"
@@ -936,6 +937,28 @@
 		property="pg_compenso"
 		inputType="TEXT"
 		label="N. Compenso" />			
+	<fieldProperty
+		name="identificativoSdi"
+		property="identificativoSdi"
+		maxLength="22"
+		inputSize="22"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnFreeSearch="true"
+        label="Identificativo SDI"/>	
+	<fieldProperty
+		name="progressivo"
+		property="progressivo"
+		maxLength="22"
+		inputSize="22"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnFreeSearch="true"
+		label="progressivo SDI"/>		
 							
 	<findFieldProperty name="esercizio"/>
 	<findFieldProperty name="esercizio_fattura_fornitore"/>
@@ -986,7 +1009,9 @@
 	<findFieldProperty name="uo_compenso" />
 	<findFieldProperty name="esercizio_compenso" />
 	<findFieldProperty name="pg_compenso" />
-		
+	<findFieldProperty name="progr_univoco" />
+	<findFieldProperty name="identificativoSdi" />	
+	<findFieldProperty name="progressivo" />
 	<formFieldProperty
 		name="ti_bene_servizio" />
 	<formFieldProperty
@@ -1212,7 +1237,10 @@
 		name="esercizio_compenso" />
 	<formFieldProperty
 		name="pg_compenso" />
-		
+	<formFieldProperty name="progr_univoco" />
+	<formFieldProperty name="identificativoSdi" />	
+	<formFieldProperty name="progressivo" />
+			
 	<columnFieldProperty 
 		name="esercizio"/>
 	<columnFieldProperty
@@ -1261,7 +1289,9 @@
 		name="stato_liquidazione"/>			
 	<columnFieldProperty 
 		name="causale"/>	
-
+	<columnFieldProperty name="progr_univoco" />
+	<columnFieldProperty name="identificativoSdi" />	
+	<columnFieldProperty name="progressivo" />
 	<form
 		name="documentoSearchtool" >
 		<formFieldProperty

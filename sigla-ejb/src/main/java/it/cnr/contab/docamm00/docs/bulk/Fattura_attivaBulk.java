@@ -1801,10 +1801,11 @@ public void validaDateCompetenza()
 		else if (annoCompetenzaDa == annoPrecedente) {
 			if (annoCompetenzaA > annoPrecedente)	
 				throw new ValidationException("La data di \"competenza a\" deve appartenere all'esercizio dell'anno " + annoPrecedente + ".");
-			if (getDt_registrazione().after(getDt_termine_creazione_docamm())) {
-				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-				throw new ValidationException("Non è possibile inserire documenti con competenza nell'anno precedente con data di registrazione successiva al " + sdf.format(getDt_termine_creazione_docamm()) + "!");
-			}
+			if (this.getStato_cofi()!=null && this.getStato_cofi().equals(STATO_INIZIALE))
+				if (getDt_registrazione().after(getDt_termine_creazione_docamm())) {
+					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+					throw new ValidationException("Non è possibile inserire documenti con competenza nell'anno precedente con data di registrazione successiva al " + sdf.format(getDt_termine_creazione_docamm()) + "!");
+				}
 		} else
 			throw e;
 	}

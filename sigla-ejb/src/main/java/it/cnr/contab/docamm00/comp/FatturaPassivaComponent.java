@@ -63,11 +63,16 @@ import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
 import it.cnr.contab.docamm00.ejb.VoceIvaComponentSession;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleDdtBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleLineaBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleScontoMaggBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataHome;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleIvaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleIvaHome;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTributiBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.StatoDocumentoEleEnum;
 import it.cnr.contab.docamm00.fatturapa.bulk.TipoIntegrazioneSDI;
 import it.cnr.contab.docamm00.intrastat.bulk.Condizione_consegnaBulk;
@@ -4377,7 +4382,29 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 	}
 	
 	fattura_passiva = valorizzaInfoDocEle(aUC,fattura_passiva);
+	if(fattura_passiva.isElettronica()){
+		try{
+			DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) fattura_passiva.getDocumentoEleTestata();
 	
+			documentoEleTestata.setDocEleLineaColl(new BulkList<DocumentoEleLineaBulk>(
+					getHome(aUC, DocumentoEleLineaBulk.class).find(new DocumentoEleLineaBulk(documentoEleTestata))));
+			documentoEleTestata.setDocEleIVAColl(new BulkList<DocumentoEleIvaBulk>(
+					getHome(aUC, DocumentoEleIvaBulk.class).find(new DocumentoEleIvaBulk(documentoEleTestata))));
+			documentoEleTestata.setDocEleAllegatiColl(new BulkList<DocumentoEleAllegatiBulk>(
+					getHome(aUC, DocumentoEleAllegatiBulk.class).find(new DocumentoEleAllegatiBulk(documentoEleTestata))));
+			documentoEleTestata.setDocEleTributiColl(new BulkList<DocumentoEleTributiBulk>(
+					getHome(aUC, DocumentoEleTributiBulk.class).find(new DocumentoEleTributiBulk(documentoEleTestata))));
+			documentoEleTestata.setDocEleScontoMaggColl(new BulkList<DocumentoEleScontoMaggBulk>(
+					getHome(aUC, DocumentoEleScontoMaggBulk.class).find(new DocumentoEleScontoMaggBulk(documentoEleTestata))));
+			documentoEleTestata.setDocEleAcquistoColl(new BulkList<DocumentoEleAcquistoBulk>(
+					getHome(aUC, DocumentoEleAcquistoBulk.class).find(new DocumentoEleAcquistoBulk(documentoEleTestata))));
+			documentoEleTestata.setDocEleDdtColl(new BulkList<DocumentoEleDdtBulk>(
+					getHome(aUC, DocumentoEleDdtBulk.class).find(new DocumentoEleDdtBulk(documentoEleTestata))));
+			getHomeCache(aUC).fetchAll(aUC);	
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+	}	
 	return fattura_passiva;
 }
 private void impostaCollegamentoCapitoloPerTrovato(UserContext aUC,
@@ -4684,6 +4711,8 @@ public OggettoBulk modificaConBulk(
 
 			
 	Fattura_passivaBulk fatturaPassiva = (Fattura_passivaBulk)bulk;
+	if(fatturaPassiva.isElettronica()) 
+		validaFatturaElettronica(aUC, fatturaPassiva);
 	try {
 		if (fatturaPassiva instanceof Fattura_passiva_IBulk) {
 			//if (fatturaPassiva.existARowToBeInventoried()) {
@@ -7224,12 +7253,15 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 			throw new it.cnr.jada.comp.ApplicationException("Almeno uno tra Codice Fiscale e Partita IVA del fornitore deve coincidere con quelli inseriti per il Prestatore/Rappresentante fiscale/Intermediario nel documento elettronico.");		
 
 	//}
-	
+     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
     if (fatturaPassiva.getDocumentoEleTestata().getNumeroDocumento().compareTo(fatturaPassiva.getNr_fattura_fornitore())!=0)
     	throw new it.cnr.jada.comp.ApplicationException("Numero Fattura fornitore diverso da quello inserito nel documento elettronico: " + fatturaPassiva.getDocumentoEleTestata().getNumeroDocumento() + "!");
 
     if (DateUtils.truncate(fatturaPassiva.getDocumentoEleTestata().getDataDocumento()).compareTo(DateUtils.truncate(fatturaPassiva.getDt_fattura_fornitore()))!=0)
-    	throw new it.cnr.jada.comp.ApplicationException("Data Fattura fornitore diversa da quella inserita nel documento elettronico: " + fatturaPassiva.getDocumentoEleTestata().getDataDocumento() + "!");
+    	throw new it.cnr.jada.comp.ApplicationException("Data Fattura fornitore diversa da quella presente nel documento elettronico: " +  sdf.format(fatturaPassiva.getDocumentoEleTestata().getDataDocumento()) + "!");
+    
+    if (DateUtils.truncate(fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getDataRicezione()).compareTo(DateUtils.truncate(fatturaPassiva.getData_protocollo()))!=0)
+    	throw new it.cnr.jada.comp.ApplicationException("Data Ricezione diversa da quella presente nel documento elettronico: " + sdf.format(fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getDataRicezione()) + "!");
 	
 	if (fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()== null)
 		   throw new it.cnr.jada.comp.ApplicationException("Totale Documento elettronico non valorizzato!");
