@@ -46,7 +46,11 @@
     <tr>  
 			<% bp.getController().writeFormField(out,"data_protocollo"); %>
        		<% bp.getController().writeFormField(out,"numero_protocollo"); %>
-      </tr>      
+      </tr>  
+        <tr>  
+			<% bp.getController().writeFormField(out,"identificativoSdi"); %>
+       		<% bp.getController().writeFormField(out,"progressivo"); %>
+      </tr>     
       <tr>      	
       	<% bp.getController().writeFormField(out,"protocollo_iva");%>
        	<% bp.getController().writeFormField(out,"protocollo_iva_generale");%>
