@@ -695,7 +695,11 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		}
 		dettaglioPagamento.setModalitaPagamento(ModalitaPagamentoType.fromValue(fattura.getModalita_pagamento_uo().getTipoPagamentoSdi()));				
 		
-		dettaglioPagamento.setImportoPagamento(fattura.getIm_totale_fattura().setScale(2));
+		if (fattura.getFl_liquidazione_differita() && fattura.getEsercizio() > 2014) {
+			dettaglioPagamento.setImportoPagamento(fattura.getIm_totale_imponibile().setScale(2));
+		} else {
+			dettaglioPagamento.setImportoPagamento(fattura.getIm_totale_fattura().setScale(2));
+		}
 			
 		if (fattura.getBanca_uo() != null && fattura.getBanca_uo().getAbi() != null){
 		    dettaglioPagamento.setIstitutoFinanziario(fattura.getBanca_uo().getAbi_cab().getDs_abicab());
