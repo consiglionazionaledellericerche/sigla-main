@@ -104,7 +104,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	}
 	
 	public boolean isCompilaButtonEnabled() {
-		return getModel() != null && ((DocumentoEleTestataBulk)getModel()).getIdentificativoSdi() != null &&
+		return isEditable() && getModel() != null && ((DocumentoEleTestataBulk)getModel()).getIdentificativoSdi() != null &&
 				((DocumentoEleTestataBulk)getModel()).getCrudStatus() == OggettoBulk.NORMAL &&
 				((DocumentoEleTestataBulk)getModel()).isCompilabile() &&
 				((DocumentoEleTestataBulk)getModel()).getDocumentoEleTrasmissione().getUnitaOrganizzativa().equalsByPrimaryKey(uoScrivania);
@@ -117,7 +117,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	}
 	
 	public boolean isRifiutaButtonEnabled() {
-		return getModel() != null && ((DocumentoEleTestataBulk)getModel()).getIdentificativoSdi() != null &&
+		return isEditable() && getModel() != null && ((DocumentoEleTestataBulk)getModel()).getIdentificativoSdi() != null &&
 				((DocumentoEleTestataBulk)getModel()).isRifiutabile();
 	}
 
@@ -379,7 +379,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	    	fatturaPassivaBulk.setNr_fattura_fornitore(documentoEleTestata.getNumeroDocumento());
 	    	fatturaPassivaBulk.setDt_fattura_fornitore(documentoEleTestata.getDataDocumento());
 	    	fatturaPassivaBulk.setEsercizio_fattura_fornitore(CNRUserContext.getEsercizio(context.getUserContext()));//TODO
-	    	
+	    	fatturaPassivaBulk.setData_protocollo(documentoEleTestata.getDocumentoEleTrasmissione().getDataRicezione());
 	    	Calendar date = Calendar.getInstance();
 	    	date.setTimeInMillis(documentoEleTestata.getDataDocumento().getTime());
 	    	date.add(Calendar.MONTH, 1);

@@ -2863,7 +2863,7 @@ public void validateDate() throws ValidationException {
 		DocumentoEleTestataBulk documentoEleTestata = this
 				.getDocumentoEleTestata();
 		if (documentoEleTestata == null)
-			return null;
+			return 	 super.getIdentificativoSdi();
 		return getDocumentoEleTestata().getIdentificativoSdi();
 	}
 
@@ -2872,7 +2872,10 @@ public void validateDate() throws ValidationException {
 	 * [identificativoSdi]
 	 **/
 	public void setIdentificativoSdi(java.lang.Long identificativoSdi) {
-		this.getDocumentoEleTestata().setIdentificativoSdi(identificativoSdi);
+		if(this.getDocumentoEleTestata()!=null)
+			this.getDocumentoEleTestata().setIdentificativoSdi(identificativoSdi);
+		else
+			super.setIdentificativoSdi(identificativoSdi);
 	}
 
 	/**
@@ -2883,7 +2886,7 @@ public void validateDate() throws ValidationException {
 		DocumentoEleTestataBulk documentoEleTestata = this
 				.getDocumentoEleTestata();
 		if (documentoEleTestata == null)
-			return null;
+			return super.getProgressivo();
 		return getDocumentoEleTestata().getProgressivo();
 	}
 
@@ -2892,7 +2895,10 @@ public void validateDate() throws ValidationException {
 	 * [progressivo]
 	 **/
 	public void setProgressivo(java.lang.Long progressivo) {
-		this.getDocumentoEleTestata().setProgressivo(progressivo);
+		if(this.getDocumentoEleTestata()!=null)
+			this.getDocumentoEleTestata().setProgressivo(progressivo);
+		else 
+			super.setProgressivo(progressivo);
 	}
 	
 	public Dictionary getStato_liquidazioneKeys() {
