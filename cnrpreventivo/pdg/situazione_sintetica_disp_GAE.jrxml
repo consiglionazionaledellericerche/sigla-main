@@ -261,7 +261,7 @@ order by CDR,DENOMINAZIONE_SEDE,LDA]]>
 		<groupHeader>
 			<band height="22" splitType="Stretch">
 				<staticText>
-					<reportElement key="staticText-3" style="TNRG10" x="20" y="4" width="98" height="14"/>
+					<reportElement key="staticText-3" style="TNRG10" x="1" y="4" width="117" height="14"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -353,14 +353,14 @@ order by CDR,DENOMINAZIONE_SEDE,LDA]]>
 	<detail>
 		<band height="19" splitType="Prevent">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField" style="TNR10" x="20" y="4" width="98" height="12"/>
+				<reportElement key="textField" style="TNR10" x="1" y="4" width="117" height="12"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_ELEMENTO_VOCE}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
