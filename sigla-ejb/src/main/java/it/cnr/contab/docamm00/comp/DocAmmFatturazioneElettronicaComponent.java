@@ -437,32 +437,34 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				datiGeneraliDocumento.setData(convertDateToXmlGregorian(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()));
 				datiGeneraliDocumento.setNumero(fattura.recuperoIdFatturaAsString());
 				datiGeneraliDocumento.setImportoTotaleDocumento(fattura.getIm_totale_fattura().setScale(2));
+				String descrizione = "";
 				if (fattura.getDs_fattura_attiva() != null){
-					List<String> listaCausali = new ArrayList<String>();
-					String descrizione = "";
-					if (fattura.getRiferimento_ordine() != null){
-						descrizione = fattura.getDs_fattura_attiva() + "  Riferimento ordine:"+fattura.getRiferimento_ordine();
-					} else {
-						descrizione = fattura.getDs_fattura_attiva();
-					}
-					int lunghezzaStringaCausale = 200;
-					int numeroCaratteriFinali = 0;
-					for (int i = 0; i <= descrizione.length()/lunghezzaStringaCausale; i++) {
-						int numeroCaratteri = i*lunghezzaStringaCausale;
-						int numeroCaratteriOccorrenti = (numeroCaratteri + lunghezzaStringaCausale );
-						if (numeroCaratteriOccorrenti > descrizione.length()){
-							numeroCaratteriFinali = numeroCaratteri + (descrizione.length() - numeroCaratteri); 
-						} else {
-							numeroCaratteriFinali = numeroCaratteri + lunghezzaStringaCausale;
-						}
-						if (numeroCaratteri < numeroCaratteriFinali){
-							String causale = descrizione.substring(numeroCaratteri,numeroCaratteriFinali);
-							listaCausali.add(causale);
-						}
-					}
-					
-					datiGeneraliDocumento.getCausale().addAll(listaCausali);
+					descrizione = fattura.getDs_fattura_attiva();
 				}
+				List<String> listaCausali = new ArrayList<String>();
+				if (fattura.getRiferimento_ordine() != null){
+					if (!descrizione.equals("")){
+						descrizione += "  ";
+					} 
+					descrizione += "Riferimento ordine:"+fattura.getRiferimento_ordine();
+				}
+				int lunghezzaStringaCausale = 200;
+				int numeroCaratteriFinali = 0;
+				for (int i = 0; i <= descrizione.length()/lunghezzaStringaCausale; i++) {
+					int numeroCaratteri = i*lunghezzaStringaCausale;
+					int numeroCaratteriOccorrenti = (numeroCaratteri + lunghezzaStringaCausale );
+					if (numeroCaratteriOccorrenti > descrizione.length()){
+						numeroCaratteriFinali = numeroCaratteri + (descrizione.length() - numeroCaratteri); 
+					} else {
+						numeroCaratteriFinali = numeroCaratteri + lunghezzaStringaCausale;
+					}
+					if (numeroCaratteri < numeroCaratteriFinali){
+						String causale = descrizione.substring(numeroCaratteri,numeroCaratteriFinali);
+						listaCausali.add(causale);
+					}
+				}
+
+				datiGeneraliDocumento.getCausale().addAll(listaCausali);
 				datiGenerali.setDatiGeneraliDocumento(datiGeneraliDocumento);
 				
 				List dettaglio = (List)((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).findDettagli(userContext, fattura);
