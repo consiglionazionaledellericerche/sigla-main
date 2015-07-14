@@ -8,6 +8,7 @@ import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaElettronicaBP;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleIvaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.jada.action.ActionContext;
@@ -240,6 +241,14 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 			DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
 			if (bulk.getImportoDocumento() == null) {
 				fatturaPassivaElettronicaBP.setMessage("Il totale del documento non è valorizzato, il documento deve essere rifiutato!");
+			}
+			else if (!bulk.getDocEleIVAColl().isEmpty()){
+				for(Iterator i=bulk.getDocEleIVAColl().iterator();i.hasNext();)
+			    {
+			      DocumentoEleIvaBulk rigaEle=(DocumentoEleIvaBulk)i.next();
+			      if (rigaEle.getEsigibilitaIva()!=null && rigaEle.getEsigibilitaIva().compareTo("I")!=0)
+			    	  fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA non è valida, il documento deve essere rifiutato!");		
+				}
 			} else {
 				String message = "La compilazione della Fattura e il suo successivo salvataggio, ";
 				message += "comporta l'accettazione del documento elettronico.<br>Si desidera procedere?";
