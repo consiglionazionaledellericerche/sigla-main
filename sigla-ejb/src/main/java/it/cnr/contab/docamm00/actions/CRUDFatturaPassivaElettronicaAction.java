@@ -254,8 +254,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 			}
 			String message = "La compilazione della Fattura e il suo successivo salvataggio, ";
 			message += "comporta l'accettazione del documento elettronico.<br>Si desidera procedere?";
-			openConfirm( context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfirmCompilaFattura");				
-			return context.findDefaultForward();			
+			return openConfirm( context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfirmCompilaFattura");				
 		} catch (Exception e) {
 			return handleException(context,e);
 		}
