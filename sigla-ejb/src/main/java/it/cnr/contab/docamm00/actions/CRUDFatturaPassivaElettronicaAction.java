@@ -242,14 +242,14 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 			if (bulk.getImportoDocumento() == null) {
 				fatturaPassivaElettronicaBP.setMessage("Il totale del documento non è valorizzato, il documento deve essere rifiutato!");
 				return context.findDefaultForward();
-			}
-			else if (!bulk.getDocEleIVAColl().isEmpty()){
+			} else if (!bulk.getDocEleIVAColl().isEmpty()){
 				for(Iterator i=bulk.getDocEleIVAColl().iterator();i.hasNext();)
 			    {
 			      DocumentoEleIvaBulk rigaEle=(DocumentoEleIvaBulk)i.next();
-			      if (rigaEle.getEsigibilitaIva()!=null && rigaEle.getEsigibilitaIva().compareTo("I")!=0)
+			      if (rigaEle.getEsigibilitaIva()!=null && rigaEle.getEsigibilitaIva().compareTo("I")!=0) {
 			    	  fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA non deve essere di tipo 'Differita' o 'Split Payment', il documento deve essere rifiutato!");	
-				  return context.findDefaultForward();	
+			    	  return context.findDefaultForward();			    	  
+			      }
 				}
 			}
 			String message = "La compilazione della Fattura e il suo successivo salvataggio, ";
