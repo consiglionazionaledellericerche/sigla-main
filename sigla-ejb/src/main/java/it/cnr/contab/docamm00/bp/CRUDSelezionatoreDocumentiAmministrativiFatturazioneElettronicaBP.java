@@ -265,12 +265,12 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 		    	    					IOUtils.copy(streamSigned, outputStream);
 		    	    					outputStream.close();
 				    					logger.info("Salvato file firmato temporaneo");
+		    		    				fattura.setNomeFileInvioSdi(nomeFileP7m);
 		    		    				componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fattura);
 		    	    					logger.info("Fattura con progressivo univoco "+fattura.getEsercizio()+"/"+fattura.getProgrUnivocoAnno()+" aggiornata.");
 				    					if (!fattura.isNotaCreditoDaNonInviareASdi()){
 					    					FatturaPassivaElettronicaService fatturaService = SpringUtil.getBean("fatturaPassivaElettronicaService", FatturaPassivaElettronicaService.class);
 			    	    			    	fatturaService.inviaFatturaElettronica(authentication.getUserName(), authentication.getPassword(), fileSigned, nomeFileP7m);
-			    		    				fattura.setNomeFileInvioSdi(nomeFileP7m);
 					    					logger.info("File firmato inviato");
 				    					}
 		    	    				} catch (Exception ex) {
