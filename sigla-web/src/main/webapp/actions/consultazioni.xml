@@ -190,8 +190,7 @@
       needExistingSession="false">
   </action>
   <action 
-      path="/ConsCapitoloAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction"
-      needExistingSession="false">
+      path="/ConsCapitoloAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
   </action>
   <action 
       path="/ConsImpegnoAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
@@ -545,14 +544,6 @@
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
 	    <init-param name="defaultAction" value="ConsPDGPTitAction" />	    
         <init-param name="multiSelezione" value="Y" />
-  </businessProcess> 
-  
-  <businessProcess
-      name="V_cons_disp_elem_voceBP" className="it.cnr.contab.prevent00.consultazioni.bp.V_cons_disp_elem_voceBP">
-    <forward name="default" path="/consultazioni/form_lista.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.prevent00.consultazioni.bulk.V_cons_disp_elem_voceBulk" />
-		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
-	    <init-param name="defaultAction" value="V_cons_disp_elem_voceAction" />	
   </businessProcess> 
   
   <businessProcess
@@ -1240,15 +1231,14 @@
   </businessProcess> 
   
   <businessProcess
-      name="ConsUnitaOrganizzativaBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+      name="ConsUnitaOrganizzativaBP" className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
     <forward name="default" path="/consultazioni/form_lista.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk" />
-		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_Unita_organizzativaComponentSession" />
 	    <init-param name="defaultAction" value="ConsUnitaOrganizzativaAction" />
 		<init-param name="searchResultColumnSet" value="restService"/>
   </businessProcess>
   <businessProcess
-      name="ConsCdRBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+      name="ConsCdRBP" className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
     <forward name="default" path="/consultazioni/form_lista.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.config00.sto.bulk.CdrBulk" />
 		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_CDRComponentSession" />
@@ -1257,7 +1247,7 @@
   </businessProcess>
   
   <businessProcess
-      name="ConsProgettiBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+      name="ConsProgettiBP" className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
     <forward name="default" path="/consultazioni/form_lista.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.progettiric00.core.bulk.ProgettoGestBulk"/>
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
@@ -1266,7 +1256,7 @@
   </businessProcess>
   
   <businessProcess
-      name="ConsGAEBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+      name="ConsGAEBP" className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
     <forward name="default" path="/consultazioni/form_lista.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.config00.latt.bulk.WorkpackageBulk"/>
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
@@ -1274,7 +1264,7 @@
 	<init-param name="searchResultColumnSet" value="restService"/>
   </businessProcess>
   <businessProcess
-      name="ConsCdSBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+      name="ConsCdSBP" className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
     <forward name="default" path="/consultazioni/form_lista.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.config00.sto.bulk.CdsBulk" />
 		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_Unita_organizzativaComponentSession" />
@@ -1282,7 +1272,7 @@
 		<init-param name="searchResultColumnSet" value="restService"/>
   </businessProcess>
   <businessProcess
-      name="ConsNazioneBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+      name="ConsNazioneBP" className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
     <forward name="default" path="/consultazioni/form_lista.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk" />
 		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_NazioneComponentSession" />
@@ -1290,7 +1280,7 @@
 		<init-param name="searchResultColumnSet" value="restService"/>
   </businessProcess>
   <businessProcess
-      name="ConsCapitoloBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+      name="ConsCapitoloBP" className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
     <forward name="default" path="/consultazioni/form_lista.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk" />
 		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_Elemento_voceComponentSession" />
@@ -1298,14 +1288,14 @@
 		<init-param name="searchResultColumnSet" value="restService"/>
   </businessProcess>
   <businessProcess
-      name="ConsImpegnoBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+      name="ConsImpegnoBP" className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
     <forward name="default" path="/consultazioni/form_lista.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniBulk"/>
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
 	<init-param name="defaultAction" value="ConsImpegnoAction"/>
   </businessProcess>
   <businessProcess
-      name="ConsImpegnoGAEBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+      name="ConsImpegnoGAEBP" className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
     <forward name="default" path="/consultazioni/form_lista.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.doccont00.consultazioni.bulk.VConsObbligazioniGaeBulk"/>
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
