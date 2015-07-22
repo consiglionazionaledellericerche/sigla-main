@@ -3933,7 +3933,7 @@ public class DistintaCassiereComponent extends
 			PersistencyException {
 		try{
 			BancaBulk bancauo=recuperaIbanUo(userContext,bulk.getUo());
-			it.cnr.contab.doccont00.intcass.xmlbnl.Mandato man=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato();
+		 	it.cnr.contab.doccont00.intcass.xmlbnl.Mandato man=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato();
 			it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome home=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class);
 			SQLBuilder sql = home.createSQLBuilder();
 			sql.setDistinctClause(true);
@@ -3946,6 +3946,7 @@ public class DistintaCassiereComponent extends
 			GregorianCalendar gcdi = new GregorianCalendar();
 			
 			boolean obb_iban=false;
+			boolean obb_conto=false;
 			boolean obb_dati_beneficiario=false;
 			it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario infoben=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario();
 			it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
@@ -3956,7 +3957,7 @@ public class DistintaCassiereComponent extends
 			it.cnr.contab.doccont00.intcass.xmlbnl.Beneficiario benef =new it.cnr.contab.doccont00.intcass.xmlbnl.Beneficiario();
 			it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso sosp=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso();
 			it.cnr.contab.doccont00.intcass.xmlbnl.Ritenute riten=new it.cnr.contab.doccont00.intcass.xmlbnl.Ritenute();
-			
+			it.cnr.contab.doccont00.intcass.xmlbnl.InformazioniAggiuntive aggiuntive=new it.cnr.contab.doccont00.intcass.xmlbnl.InformazioniAggiuntive();
 			for (Iterator i = list.iterator(); i.hasNext();) {
 				docContabile = (it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk) i.next();
 				man.setNumeroMandato(docContabile.getPgDocumento().intValue());
@@ -3974,18 +3975,31 @@ public class DistintaCassiereComponent extends
 				infoben.setImportoBeneficiario(docContabile.getImDocumento().setScale(2, BigDecimal.ROUND_HALF_UP));
 				if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_REGOLAM_SOSPESO)==0)
 					infoben.setTipoPagamento("REGOLARIZZAZIONE");
-				else if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO)==0 && docContabile.getModalitaPagamento()!=null && docContabile.getModalitaPagamento().compareTo("ASC")==0 ){
+				else if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO)==0 && docContabile.getModalitaPagamento()!=null && 
+						(docContabile.getModalitaPagamento().compareTo("ASC")==0 ||docContabile.getModalitaPagamento().compareTo("ASCNT")==0)){
 					infoben.setTipoPagamento("ASSEGNO CIRCOLARE");
 					obb_dati_beneficiario=true;
 				}
-				else if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO)==0 && docContabile.getCdIso()!=null ){
+				else if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO)==0 && docContabile.getCdIso()!=null && docContabile.getCdIso().compareTo("IT")==0){
 					//18/06/2014 BNL non gestisce sepa 
 					//infoben.setTipoPagamento("SEPA CREDIT TRANSFER");
 					infoben.setTipoPagamento("BONIFICO BANCARIO E POSTALE");
 					//08/09/2014 resi obbligatori come da mail ricevuta da ANGELINI/MESSERE
 					obb_dati_beneficiario=true;
 					obb_iban =true;
-				}			
+				}
+				else if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO)==0 && docContabile.getCdIso()!=null && docContabile.getCdIso().compareTo("IT")!=0){
+						infoben.setTipoPagamento("SEPA CREDIT TRANSFER");
+						//11/07/2015 Verificare se per i mandati circuito sepa escluso quelli italiani funziona  
+						//obb_dati_beneficiario=true;
+						obb_iban =true;
+				}else if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO)==0 && docContabile.getModalitaPagamento()!=null && docContabile.getModalitaPagamento().compareTo("RD")==0 ){
+					infoben.setTipoPagamento("CASSA");
+				}else if(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO)==0 && docContabile.getModalitaPagamento()!=null && docContabile.getModalitaPagamento().compareTo("CCP")==0 ){
+					infoben.setTipoPagamento("ACCREDITO CONTO CORRENTE POSTALE");
+					obb_conto=true;
+				}
+							
 				// Classificazioni
 				it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeClass=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class,"CLASSIFICAZIONE");
 				SQLBuilder sqlClass = homeClass.createSQLBuilder();
@@ -4082,7 +4096,7 @@ public class DistintaCassiereComponent extends
 					benef.setProvinciaBeneficiario(docContabile.getCdProvincia());
 				}
 				infoben.setBeneficiario(benef);
-				if (obb_iban){
+				if (obb_iban && docContabile.getCdIso().compareTo("IT")==0){
 					piazzatura.setAbiBeneficiario(docContabile.getAbi());
 					piazzatura.setCabBeneficiario(docContabile.getCab());
 					piazzatura.setNumeroContoCorrenteBeneficiario(docContabile.getNumeroConto());
@@ -4098,6 +4112,20 @@ public class DistintaCassiereComponent extends
 						throw new ApplicationException("Formato del codice bic non valido.");
 					sepa.setIdentificativoEndToEnd(docContabile.getEsercizio().toString()+"-"+docContabile.getCdUoOrigine()+"-"+docContabile.getPgDocumento().toString());
 					infoben.setSepaCreditTransfer(sepa); */
+				}
+				if(obb_conto) {
+					aggiuntive.setRiferimentoDocumentoEsterno(docContabile.getNumeroConto().toString());
+					infoben.setInformazioniAggiuntive(aggiuntive);
+				}
+				if(obb_iban && docContabile.getCdIso().compareTo("IT")!=0){
+						//11/07/2015 BNL non gestisce sepa 
+						sepa.setIban(docContabile.getCodiceIban());
+						if(docContabile.getBic()!=null && docContabile.getCodiceIban()!=null && (docContabile.getBic().length()>=8 && docContabile.getBic().length()<=11  ))// && docContabile.getNumeroConto().substring(0, 2).compareTo("IT")!=0 ) 
+							sepa.setBic(docContabile.getBic());
+						else 
+							throw new ApplicationException("Formato del codice bic non valido.");
+						sepa.setIdentificativoEndToEnd(docContabile.getEsercizio().toString()+"-"+docContabile.getCdUoOrigine()+"-"+docContabile.getPgDocumento().toString());
+						infoben.setSepaCreditTransfer(sepa); 
 				}
 				if (infoben.getCausale() !=null && (infoben.getCausale()+docContabile.getDsDocumento()).length() >99)
 					infoben.setCausale((infoben.getCausale()+" "+docContabile.getDsDocumento()).substring(0, 98));
