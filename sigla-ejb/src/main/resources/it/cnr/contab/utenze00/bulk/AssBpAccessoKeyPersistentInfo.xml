@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.utenze00.bulk.AssBpAccessoKey">
+	<defaultColumnMap
+		tableName="ASS_BP_ACCESSO">
+		<columnMapping
+			columnName="CD_ACCESSO"
+			propertyName="cdAccesso"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="BUSINESS_PROCESS"
+			propertyName="businessProcess"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdAccesso"
+		partOfOid="true" />
+	<persistentProperty
+		name="businessProcess"
+		partOfOid="true" />
+</SQLPersistentInfo>

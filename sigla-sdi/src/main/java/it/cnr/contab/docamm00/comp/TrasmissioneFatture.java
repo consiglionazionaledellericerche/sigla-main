@@ -148,8 +148,8 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 						SendMail.sendErrorMail("Fatture Elettroniche: Attive: Ricevuta consegna.  "+fattura.recuperoIdFatturaAsString(), sw.toString());
 					}
 				} else {
-					logger.warn("Fatture Elettroniche: Attive: Per il nome del file inviato indicato nel file dell'e-mail non corrisponde nessuna fattura." + fattura.recuperoIdFatturaAsString());
-					SendMail.sendErrorMail("Fatture Elettroniche: Attive: Per il nome del file inviato indicato nel file dell'e-mail non corrisponde nessuna fattura", "Ricevuta Consegna. "+fattura.recuperoIdFatturaAsString());
+					logger.warn("Fatture Elettroniche: Attive: Per il nome del file inviato indicato nel file dell'e-mail non corrisponde nessuna fattura." + ricevuta.getNomeFile());
+					SendMail.sendErrorMail("Fatture Elettroniche: Attive: Per il nome del file inviato indicato nel file dell'e-mail non corrisponde nessuna fattura", "Ricevuta Consegna. "+ricevuta.getNomeFile());
 				}
 			}
 		} catch (Exception e) {
@@ -358,7 +358,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 				if (!StringUtils.isEmpty(fattura.getStatoInvioSdi())){
 					if (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_DECORRENZA_TERMINI)){
 						logger.info("Fatture Elettroniche: Attive: Fattura già elaborata ");
-					} else if (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI)){
+					} else if (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI) || fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO)){
 						salvaFileSuDocumentale(data, nomeFile, fattura, CMISDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_DECORRENZA_TERMINI);
 						try{
 							component.aggiornaFatturaDecorrenzaTerminiSDI(userContext, fattura, notifica.getDescrizione());
