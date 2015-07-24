@@ -37,6 +37,9 @@ import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
+import it.gov.fatturapa.sdi.fatturapa.v1.RegimeFiscaleType;
+import it.gov.fatturapa.sdi.fatturapa.v1.SoggettoEmittenteType;
+import it.gov.fatturapa.sdi.fatturapa.v1.TipoDocumentoType;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -499,8 +502,11 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 		for (DocumentoEleTributiBulk documentoEleTributi : documentoEleTestata.getDocEleTributiColl()) {
 			if (documentoEleTributi.getImporto() != null && BigDecimal.ZERO.compareTo(documentoEleTributi.getImporto()) != 0)
 				return Boolean.TRUE;
-		}		
-		return Boolean.FALSE;
+		}	
+		if (documentoEleTestata.getDocumentoEleTrasmissione().getRegimefiscale()!= null && documentoEleTestata.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_02.name()))
+			return Boolean.TRUE;
+			
+	return Boolean.FALSE;
 	}
 
 	@Override
