@@ -72,6 +72,7 @@ import javax.activation.DataHandler;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
+import javax.mail.Message;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -1012,6 +1013,49 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 					LOGGER.warn("Fatture Elettroniche: Passive: Pec: Per l'identificativo SDI indicato nel file dell'e-mail non corrisponde nessun documento." + identificativoSdi);
 					SendMail.sendErrorMail("Fatture Elettroniche: Passive: Pec: Per l'identificativo SDI del file inviato indicato nel file dell'e-mail non corrisponde nessuna fattura", "Scarto Esito. Id SDI "+identificativoSdi);
 				}
+			}
+		} catch (Exception e) {
+			throw new ComponentException(e);
+		}
+	}
+
+	public void notificaScartoMailNotificaNonRicevibile(Message message, String idSdi, Date dataRicevimentoMail) throws ComponentException{
+		FatturaElettronicaPassivaComponentSession component = (FatturaElettronicaPassivaComponentSession) EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession");
+    	UserContext userContext = createUserContext();
+		ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+		try {
+			LOGGER.info("Fatture Elettroniche: Passive: Notifica non ricevibile: ID Sdi: "+idSdi);
+			Long identificativoSdi = new Long(idSdi);
+			List<DocumentoEleTestataBulk> docs = component.recuperoDocumento(userContext, identificativoSdi);
+			if (docs != null && !docs.isEmpty()){
+				Boolean docsDaAggiornare = false;
+				for (DocumentoEleTestataBulk doc : docs) {
+					if (!StringUtils.isEmpty(doc.getStatoNotificaEsito()) && doc.getStatoNotificaEsito().equals(DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_SCARTATO_SDI)){
+						LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Fattura già elaborata ");
+					} else {
+						if (doc.getDataRicevimentoMailRifiuto() != null && doc.getDataRicevimentoMailRifiuto().compareTo(dataRicevimentoMail) > 0){
+							LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Messaggio già processato");
+						} else {
+							docsDaAggiornare = true;
+						}
+					}
+					break;
+				}
+				if (docsDaAggiornare){
+					try{
+						component.aggiornaScartoEsitoPec(userContext, docs, getDate(dataRicevimentoMail));
+						LOGGER.info("Fatture Elettroniche: Passive: Pec: Notifica non ricevibile: ID Sdi "+identificativoSdi);
+						SendMail.sendErrorMail("Fatture Elettroniche: Passive: E' stato una Notifica non ricevibile: ID Sdi."+ identificativoSdi, "Fattura Passiva: Notifica non ricevibile. Id SDI "+identificativoSdi);
+					} catch (Exception ex) {
+						LOGGER.error("Fatture Elettroniche: Passive: Pec: Errore nell'elaborazione della notifica non ricevibile con id SDI "+identificativoSdi + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
+						java.io.StringWriter sw = new java.io.StringWriter();
+						ex.printStackTrace(new java.io.PrintWriter(sw));
+						SendMail.sendErrorMail("Fatture Elettroniche: Passive: Pec: Notifica non ricevibile. Id SDI "+identificativoSdi, sw.toString());
+					}
+				}
+			} else {
+				LOGGER.warn("Fatture Elettroniche: Passive: Pec: Per l'identificativo SDI indicato nel file dell'e-mail non corrisponde nessun documento." + identificativoSdi);
+				SendMail.sendErrorMail("Fatture Elettroniche: Passive: Pec: Per l'identificativo SDI del file inviato indicato nel file dell'e-mail non corrisponde nessuna fattura", "Notifica non ricevibile. Id SDI "+identificativoSdi);
 			}
 		} catch (Exception e) {
 			throw new ComponentException(e);
