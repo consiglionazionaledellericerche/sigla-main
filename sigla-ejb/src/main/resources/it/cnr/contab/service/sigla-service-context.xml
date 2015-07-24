@@ -72,6 +72,7 @@
 
 		<property name="pecURLName" value="${pec.url.name}"/>
 		<property name="pecHostAddress" value="${pec.host.address}"/>
+		<property name="pecHostAddressReturn" value="${pec.host.address.return}"/>
 		<property name="pecSDIAddress" value="${pec.sdi.address}"/>
 		<property name="pecSDIFromStringTerm" value="${pec.sdi.from.string.term}"/>
 		<property name="pecSDISubjectRiceviFattureTerm" value="${pec.sdi.subject.ricevi.fatture.term}"/>
