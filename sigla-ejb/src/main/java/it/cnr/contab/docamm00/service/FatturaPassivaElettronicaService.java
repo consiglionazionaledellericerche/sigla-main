@@ -86,7 +86,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 
 	private String pecHostName, pecURLName, pecSDIAddress, pecSDISubjectFatturaAttivaInvioTerm, pecSDISubjectNotificaPecTerm, pecSDISubjectFatturaPassivaNotificaScartoEsitoTerm,
 		pecSDIFromStringTerm, pecSDISubjectRiceviFattureTerm, pecSDISubjectFatturaAttivaRicevutaConsegnaTerm, pecSDISubjectFatturaAttivaNotificaScartoTerm, pecSDISubjectFatturaAttivaMancataConsegnaTerm,
-		pecSDISubjectNotificaEsitoTerm, pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm, pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm;
+		pecSDISubjectNotificaEsitoTerm, pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm, pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm, pecHostAddressReturn;
 	private List<String> pecScanFolderName, pecScanReceiptFolderName, pecHostAddress;
 	
 	public void setPecSDISubjectFatturaAttivaRicevutaConsegnaTerm(
@@ -183,6 +183,10 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	}
 	public void setPecHostAddress(String pecHostAddress) {
 		this.pecHostAddress =  Arrays.asList(StringUtils.split(pecHostAddress, ","));
+	}
+	public void setPecHostAddressReturn(
+			String pecHostAddressReturn) {
+		this.pecHostAddressReturn = pecHostAddressReturn;
 	}
 	public void execute() {
 		try{
@@ -337,6 +341,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			store.connect(userName, password);
 			searchMailFromPec(userName, store);
 			searchMailFromSdi(userName, store);
+			searchMailFromReturn(userName, store);
 			store.close();
 		} catch (AuthenticationFailedException e) {
 			logger.error("Error while scan PEC email:" +userName + " - password:"+password);
@@ -357,7 +362,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 				folder.open(Folder.READ_WRITE);
 				processingMailFromHostPec(folder, userName);
 				folder.close(true);				
-		    }
+		    } 
 		}
 	}
 	private void searchMailFromSdi(String userName, final Store store)
@@ -371,6 +376,24 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 				folder.open(Folder.READ_WRITE);
 				processingMailFromSdi(folder, userName);
 				folder.close(true);				
+		    }
+		}
+	}
+
+	private void searchMailFromReturn(String userName, final Store store)
+			throws MessagingException {
+		List<Folder> folders = new ArrayList<Folder>();
+		for (String folderName : pecScanFolderName) {
+			folders.add(store.getFolder(folderName));
+		}
+		for (Folder folder : folders) {
+		    if (folder.exists()) {
+				folder.open(Folder.READ_WRITE);
+				processingMailFromReturn(folder, userName);
+				folder.close(true);				
+		    } else {
+		    	String a = userName;
+		    	String b = a;
 		    }
 		}
 	}
@@ -412,10 +435,57 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			}
 		}
 	}
+	
+	private void processingMailFromReturn(Folder folder, String userName) throws MessagingException{
+    	List<SearchTerm> terms = createTermsForSearchReturn();
+    	Message messages[] = folder.search(new AndTerm(terms.toArray(new SearchTerm[terms.size()])));
+    	logger.info("Recuperati " + messages.length +" messaggi di mail non recapitate dalla casella PEC:" + userName + " nella folder:" + folder.getFullName());
+	    for (int i = 0; i < messages.length; i++) {
+	    	try {
+	    		Message message = messages[i];
+				if (message.getSubject() != null){
+					try{
+						String[] headerMessage = getMessageID(message);
+						if (headerMessage != null){
+							String messageID = Arrays.asList(headerMessage).toString();
+							String messageIDWithUser = userName + " "+messageID;
+					    	logger.info("MessageIDWithUser " + messageIDWithUser);
+							if (!listaMessageIdAlreadyScanned.contains(messageIDWithUser)){
+								logger.info(messageIDWithUser);
+								try {
+									DataHandler data = message.getDataHandler();
+									estraiBodyPart(data.getContent(), false);
+									listaMessageIdAlreadyScanned.add(messageIDWithUser);
+						    	logger.info("Message Added");
+								} catch (Exception e) {
+									logger.error("PEC scan error while importing file.", e);
+								}
+							}
+						}
+					} catch (MessagingException e) {
+						logger.error("Errore durante il recupero dell'ID del messaggio.", e);
+					}
+					
+				}
+			} catch (Exception e) {
+				logger.error("PEC scan error while importing file.", e);
+				java.io.StringWriter sw = new java.io.StringWriter();
+				e.printStackTrace(new java.io.PrintWriter(sw));
+				SendMail.sendErrorMail("Errore. Fatture Elettroniche: Processing mail SDI ", sw.toString());
+			}
+		}
+	}
 	public List<SearchTerm> createTermsForSearchSdi() {
 		List<SearchTerm> terms = new ArrayList<SearchTerm>();
     	addConditionDate(terms);
     	terms.add(new FromStringTerm(pecSDIFromStringTerm));
+		return terms;
+	}
+	
+	public List<SearchTerm> createTermsForSearchReturn() {
+		List<SearchTerm> terms = new ArrayList<SearchTerm>();
+    	addConditionDate(terms);
+    	terms.add(new FromStringTerm(pecHostAddressReturn));
 		return terms;
 	}
 	
@@ -494,6 +564,13 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
     	cal.add(Calendar.DATE, -1);
     	Date dateBeforeOneDays = cal.getTime();			    	
     	terms.add(new ReceivedDateTerm(ComparisonTerm.GE, dateBeforeOneDays));
+	}
+	
+	public Date getSystemDate() {
+		Calendar cal = Calendar.getInstance();
+    	cal.setTime(new Date());
+    	Date data = cal.getTime();			    	
+    	return data;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -698,39 +775,61 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		email.send();		
 	}
 	
-	private List<BodyPart> estraiBodyPart(Object content) throws MessagingException, IOException {
+	private List<BodyPart> estraiBodyPart(Object content, Boolean perAllegati) throws MessagingException, IOException {
 		List<BodyPart> results = new ArrayList<BodyPart>();
-		estraiParte(content, results);
+		estraiParte(content, results, perAllegati);
 		return results;
 	}
 	
-	private void estraiParte(Object obj, List<BodyPart> bodyParts) throws MessagingException, IOException {
+	private List<BodyPart> estraiBodyPart(Object content) throws MessagingException, IOException {
+		return estraiBodyPart(content, true);
+	}
+	
+	private void estraiParte(Object obj, List<BodyPart> bodyParts, Boolean perAllegati) throws MessagingException, IOException {
 		if (obj instanceof MimeMultipart) {
 			MimeMultipart multipart = (MimeMultipart) obj;
 			for (int j = 0; j < multipart.getCount(); j++) {
 				BodyPart bodyPart = multipart.getBodyPart(j);
-				estraiParte(bodyPart.getContent(), bodyParts);
+				estraiParte(bodyPart.getContent(), bodyParts, perAllegati);
 			}
 		} else if (obj instanceof MimeBodyPart) {
 			MimeBodyPart multipart = (MimeBodyPart) obj;
-			estraiParte(multipart.getContent(), bodyParts);
+			estraiParte(multipart.getContent(), bodyParts, perAllegati);
 		} else if (obj instanceof MimeMessage) {
 			MimeMessage mimemessage = (MimeMessage) obj;
-			forwardedEmail(mimemessage.getContent(), bodyParts);
+			if (!perAllegati && mimemessage.getSubject() != null && mimemessage.getSubject().contains(pecSDISubjectNotificaEsitoTerm)){
+				int partenza = mimemessage.getSubject().indexOf(pecSDISubjectNotificaEsitoTerm);
+	    		String identificativoSdi = mimemessage.getSubject().substring(partenza + pecSDISubjectNotificaEsitoTerm.length() + 1 );
+	    		try {
+					ricezioneFattureService.notificaScartoMailNotificaNonRicevibile(mimemessage, identificativoSdi, getSystemDate());
+				} catch (ComponentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else {
+				forwardedEmail(mimemessage.getContent(), bodyParts, perAllegati);
+			}
 		}
 	}
-	private void forwardedEmail(Object obj, List<BodyPart> bodyParts) throws MessagingException, IOException {
+	private void forwardedEmail(Object obj, List<BodyPart> bodyParts, Boolean perAllegati) throws MessagingException, IOException {
 		if (obj instanceof MimeMultipart) {
 			MimeMultipart multipart = (MimeMultipart) obj;
 			for (int j = 0; j < multipart.getCount(); j++) {
 				BodyPart bodyPart = multipart.getBodyPart(j);
-				String disposition = bodyPart.getDisposition();
-				if (disposition != null && disposition.equals(Part.ATTACHMENT)) {
-					bodyParts.add(bodyPart);
-					if (logger.isDebugEnabled()) {
-						logger.debug("Content type:" + bodyPart.getContentType());
-						logger.debug("File name:" + bodyPart.getFileName());
+				if (perAllegati){
+					String disposition = bodyPart.getDisposition();
+					if (disposition != null && disposition.equals(Part.ATTACHMENT)) {
+						bodyParts.add(bodyPart);
+						if (logger.isDebugEnabled()) {
+							logger.debug("Content type:" + bodyPart.getContentType());
+							logger.debug("File name:" + bodyPart.getFileName());
+						}
 					}
+				} else {
+					if (bodyPart instanceof MimeBodyPart) {
+						MimeBodyPart body = (MimeBodyPart) bodyPart;
+						estraiParte(body.getContent(), bodyParts, perAllegati);
+					} 
 				}
 			}
 		}		
