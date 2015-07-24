@@ -3960,6 +3960,9 @@ public class DistintaCassiereComponent extends
 			it.cnr.contab.doccont00.intcass.xmlbnl.InformazioniAggiuntive aggiuntive=new it.cnr.contab.doccont00.intcass.xmlbnl.InformazioniAggiuntive();
 			for (Iterator i = list.iterator(); i.hasNext();) {
 				docContabile = (it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk) i.next();
+				obb_iban=false;
+				obb_conto=false;
+				obb_dati_beneficiario=false;
 				man.setNumeroMandato(docContabile.getPgDocumento().intValue());
 				gcdi.setTime(docContabile.getDtEmissione());
 				XMLGregorianCalendar xgc=DatatypeFactory.newInstance().newXMLGregorianCalendar(gcdi);
