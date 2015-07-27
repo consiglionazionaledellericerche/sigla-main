@@ -622,7 +622,10 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 				logger.info("Fatture Elettroniche: Decorrenza Termini. Estratto Body Part.");
 				String fileName = extractFileName(bodyPartXml);
 				if (fileName.startsWith(docAmmFatturazioneElettronicaComponentSession.recuperoInizioNomeFile(userContext))){
-					trasmissioneFattureService.notificaFatturaAttivaDecorrenzaTermini(userContext, fileName, createDataHandler(bodyPartXml));
+					if (!trasmissioneFattureService.notificaFatturaAttivaDecorrenzaTermini(userContext, fileName, createDataHandler(bodyPartXml))){
+						logger.info("Fatture Elettroniche: Decorrenza Termini. Incongruenza nel nome del file. Verifica se esistono fatture passive con l'ID.");
+						ricezioneFattureService.notificaDecorrenzaTermini(fileName, createDataHandler(bodyPartXml));
+					}
 				} else {
 					ricezioneFattureService.notificaDecorrenzaTermini(fileName, createDataHandler(bodyPartXml));
 				}
