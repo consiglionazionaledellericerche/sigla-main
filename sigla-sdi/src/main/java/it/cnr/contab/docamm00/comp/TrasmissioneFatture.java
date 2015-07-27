@@ -346,7 +346,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 		}
 	}
 
-	public void notificaFatturaAttivaDecorrenzaTermini(UserContext userContext, String nomeFile, DataHandler data) throws ComponentException {
+	public Boolean notificaFatturaAttivaDecorrenzaTermini(UserContext userContext, String nomeFile, DataHandler data) throws ComponentException {
 		FatturaElettronicaAttivaComponentSession component = recuperoComponentFatturaElettronicaAttiva();
 		try {
 			JAXBElement<NotificaDecorrenzaTerminiType> file = (JAXBElement<NotificaDecorrenzaTerminiType>)getJAXBElement(data);
@@ -372,9 +372,10 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 					}
 				}
 			} else {
-				logger.warn("Fatture Elettroniche: Attive: Per il nome dell'identificativo SDI indicato nel file dell'e-mail non corrisponde nessuna fattura." + identificativoSdi);
-				SendMail.sendErrorMail("Fatture Elettroniche: Attive: Per il nome del file inviato indicato nel file dell'e-mail non corrisponde nessuna fattura", "Decorrenza Termini. Id SDI "+identificativoSdi);
+				logger.info("Fatture Elettroniche: Attive: Decorrenza Termini Non trovata. Id SDI "+identificativoSdi);
+				return false;
 			}
+			return true;
 		} catch (Exception e) {
 			throw new ComponentException(e);
 		}
