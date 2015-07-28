@@ -599,17 +599,20 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			 */
 			if (fatturaElettronicaBody.getAllegati() != null && 
 					!fatturaElettronicaBody.getAllegati().isEmpty()) {
+				int progressivoAllegato = 0;
 				for (AllegatiType allegato : fatturaElettronicaBody.getAllegati()) {
+					progressivoAllegato++;
 					List<String> anomalie = new ArrayList<String>();
+					String nomeAllegato = progressivoAllegato + "-" + allegato.getNomeAttachment();
 					DocumentoEleAllegatiBulk docAllegato = new DocumentoEleAllegatiBulk(idTrasmittente.getIdPaese(), 
-							idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)progressivoTestata, allegato.getNomeAttachment());
+							idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long)progressivoTestata, nomeAllegato);
 					docAllegato.setAlgoritmoCompressione(allegato.getAlgoritmoCompressione());
 					docAllegato.setFormatoAttachment(allegato.getFormatoAttachment());
 					docAllegato.setDescrizioneAttachment(allegato.getDescrizioneAttachment());
 					try {
 						Map<String, Object> fileProperties = new HashMap<String, Object>();
 						fileProperties.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
-						fileProperties.put(PropertyIds.NAME, allegato.getNomeAttachment());
+						fileProperties.put(PropertyIds.NAME, nomeAllegato);
 						fileProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
 								Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla"));
 						fileProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
