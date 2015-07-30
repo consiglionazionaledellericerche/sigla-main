@@ -44,7 +44,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	public static final java.util.Dictionary<String, String> tiModalitaPagamentoKeys = new OrderedHashtable();
 	private static final String RICEVUTA_DECORRENZA = "RICEVUTA DECORRENZA TERMINI";
 	private String ricevutaDecorrenza;
-
+	
 	static {
 		statoNotificaEsitoKeys.put(STATO_CONSEGNA_ESITO_CONSEGNATO_SDI,"NOTIFICA CONSEGNATA A SDI");
 		statoNotificaEsitoKeys.put(STATO_CONSEGNA_ESITO_SCARTATO_SDI,"NOTIFICA RIFIUTATA DA SDI");
@@ -542,5 +542,11 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	public void setArchivioAllegati(
 			BulkList<AllegatoGenericoBulk> archivioAllegati) {
 		this.archivioAllegati = archivioAllegati;
+	}
+	public Boolean isIrregistrabile(){
+		if (getFlIrregistrabile() != null && getFlIrregistrabile().equals("S")){
+			return true;
+		}
+		return false;
 	}
 }

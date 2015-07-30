@@ -208,7 +208,9 @@ public class DocumentoEleTestataBase extends DocumentoEleTestataKey implements K
 
 //    ANOMALIE VARCHAR(2000)
 	private java.lang.String anomalie;
- 
+	
+	private java.lang.String flIrregistrabile;
+	
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: DOCUMENTO_ELE_TESTATA
@@ -328,7 +330,7 @@ public class DocumentoEleTestataBase extends DocumentoEleTestataKey implements K
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [importoDocumento]
 	 **/
-	public void setImportoDocumento(java.math.BigDecimal importoDocumento)  {
+	public void setImportoDocumento(java.math.BigDecimal importoDocumento)  {	
 		this.importoDocumento=importoDocumento;
 	}
 	/**
@@ -1147,5 +1149,11 @@ public class DocumentoEleTestataBase extends DocumentoEleTestataKey implements K
 	public void setDataRicevimentoMailRifiuto(
 			java.sql.Timestamp dataRicevimentoMailRifiuto) {
 		this.dataRicevimentoMailRifiuto = dataRicevimentoMailRifiuto;
+	}
+	public java.lang.String getFlIrregistrabile() {
+		return flIrregistrabile;
+	}
+	public void setFlIrregistrabile(java.lang.String flIrregistrabile) {
+		this.flIrregistrabile = flIrregistrabile;
 	}
 }
