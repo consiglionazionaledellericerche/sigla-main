@@ -111,7 +111,7 @@
 		inputType="TEXT"
 		inputSize="17"
 		maxLength="17"
-		enabledOnEdit="false"
+		enabledOnEdit = "false"
 		label="Totale Documento" />
 	<fieldProperty
 		name="arrotondamento"
@@ -720,7 +720,15 @@
 		inputSize="8"
 		enabledOnSearch="true"
 		enabledOnEdit="false"
-		label="Data Ricezione" />								
+		label="Data Ricezione" />		
+	<fieldProperty
+		name="flIrregistrabile"
+		property="flIrregistrabile"
+		maxLength="2"
+		inputSize="2"
+		inputType="ROTEXT"
+		keysProperty="decorrenzaTerminiKeys"
+		label="Non registrabile" />							
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -1018,6 +1026,9 @@
 		name="codiceDestinatario"/>
 	<formFieldProperty
 		name="dataRicezioneSDI"/>
+	<formFieldProperty
+		name="flIrregistrabile"/>	
+		
 	<findFieldProperty
 		name="idPaese" />
 	<findFieldProperty
@@ -1174,7 +1185,8 @@
 		name="dataRicezioneSDI"/>	
 	<findFieldProperty
 		name="statoNotificaEsito"/>	
-			
+	<findFieldProperty
+		name="flIrregistrabile"/>			
 	<columnFieldProperty
 		name="idCodice" />
 	<columnFieldProperty
@@ -1215,4 +1227,6 @@
 		name="flDecorrenzaTermini" />
 	<columnFieldProperty
 		name="statoNotificaEsito" />
+	<columnFieldProperty
+		name="flIrregistrabile"/>	
 </bulkInfo>
