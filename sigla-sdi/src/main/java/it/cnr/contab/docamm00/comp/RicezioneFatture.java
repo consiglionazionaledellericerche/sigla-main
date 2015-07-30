@@ -505,6 +505,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			}
 			docTestata.setStatoDocumento(StatoDocumentoEleEnum.INIZIALE.name());
 			docTestata.setFlDecorrenzaTermini("N");
+			docTestata.setFlIrregistrabile("N");
 			docTestata.setToBeCreated();
 			docTrasmissione.addToDocEleTestataColl(docTestata);
 			if (fatturaElettronicaBody.getDatiBeniServizi() != null) {
