@@ -451,6 +451,12 @@
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="false" />
+		<columnMapping
+			columnName="FL_IRREGISTRABILE"
+			propertyName="flIrregistrabile"
+			sqlTypeName="VARCHAR"
+			columnSize="1"
+			nullable="false" />	
 	</defaultColumnMap>
 	<persistentProperty
 		name="tipoDocumento" />
@@ -598,4 +604,6 @@
 		name="utuv" />
 	<persistentProperty
 		name="pg_ver_rec" />
+	<persistentProperty
+		name="flIrregistrabile" />		
 </SQLPersistentInfo>
