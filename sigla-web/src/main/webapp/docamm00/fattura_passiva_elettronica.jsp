@@ -37,7 +37,13 @@ function doScaricaEsito() {
 <%	bp.openFormWindow(pageContext); %>
 	<div class="Group">	
 	<table class="Panel">
-		<tr><% bp.getController().writeFormField(out,"idCodice");%></tr>
+		<tr><% bp.getController().writeFormField(out,"idCodice");%>
+		<% 	if (!bp.isSearching() && model != null && model.isIrregistrabile()) {%>
+				<td colspan="2">
+				  	<span style="font-weight:bold; font-family:sans-serif; font-size:16px; color:blue">NON REGISTRABILE</span>
+			  	</td>
+			<% } %> 
+		</tr>
 		<tr><% bp.getController().writeFormField(out,"identificativoSdi");%></tr>
 		<tr><% bp.getController().writeFormField(out,"dataDocumento");%></tr>
 		<tr><% bp.getController().writeFormField(out,"codiceDestinatario");%></tr>
