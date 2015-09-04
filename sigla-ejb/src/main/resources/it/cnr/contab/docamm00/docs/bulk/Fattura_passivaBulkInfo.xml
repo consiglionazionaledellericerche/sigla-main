@@ -1248,6 +1248,8 @@
 	<columnFieldProperty
 		name="numero_protocollo" />
 	<columnFieldProperty
+		name="data_protocollo" />	
+	<columnFieldProperty
 		name="protocollo_iva" />
 	<columnFieldProperty
 		name="protocollo_iva_generale" />

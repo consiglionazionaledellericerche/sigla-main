@@ -54,7 +54,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="Progressivo Riga Aqcuisto" />
+		label="Progressivo Riga Acquisto" />
 	<fieldProperty
 		name="numeroLinea"
 		property="numeroLinea"
