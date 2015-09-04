@@ -29,6 +29,7 @@ import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.gov.fatturapa.sdi.fatturapa.v1.SoggettoEmittenteType;
 
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Iterator;
 
@@ -332,4 +333,20 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 		}
 		return context.findDefaultForward();
 	}	
+public Forward doOnCambiaImportoDocumento(ActionContext context) throws ComponentException, RemoteException, BusinessProcessException{
+		CRUDFatturaPassivaElettronicaBP bp = (CRUDFatturaPassivaElettronicaBP)getBusinessProcess(context);
+		DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) bp.getModel();
+		DocumentoEleTestataBulk DocumentoEleTestataBulkDB =(DocumentoEleTestataBulk) bp.createComponentSession().findByPrimaryKey(context.getUserContext(),bp.getModel());
+		try{
+			fillModel(context);	
+			if(DocumentoEleTestataBulkDB.getImportoDocumento()!=null && DocumentoEleTestataBulkDB.getImportoDocumento().compareTo(BigDecimal.ZERO)!=0 && bulk.getImportoDocumento()!=null &&
+					DocumentoEleTestataBulkDB.getImportoDocumento().compareTo(bulk.getImportoDocumento())!=0){
+					throw new it.cnr.jada.comp.ApplicationException("Importo documento non modificabile se già indicato!");
+			}
+		}catch (Throwable e){
+				bulk.setImportoDocumento(DocumentoEleTestataBulkDB.getImportoDocumento());
+				return handleException(context,e);
+		}
+	return context.findDefaultForward();		
+	}
 }
