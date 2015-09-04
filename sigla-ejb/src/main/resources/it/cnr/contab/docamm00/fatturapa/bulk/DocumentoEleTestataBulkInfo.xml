@@ -76,6 +76,7 @@
 		inputType="TEXT"
 		inputSize="20"
 		maxLength="20"
+		enabledOnSearch="true"
 		enabledOnEdit="false"
 		label="Numero Documento" />
 	<fieldProperty
@@ -111,7 +112,8 @@
 		inputType="TEXT"
 		inputSize="17"
 		maxLength="17"
-		enabledOnEdit = "false"
+		enabledOnEdit = "true"
+		command="doOnCambiaImportoDocumento" 
 		label="Totale Documento" />
 	<fieldProperty
 		name="arrotondamento"
@@ -726,7 +728,9 @@
 		property="flIrregistrabile"
 		maxLength="2"
 		inputSize="2"
-		inputType="ROTEXT"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
 		keysProperty="decorrenzaTerminiKeys"
 		label="Non registrabile" />							
 	<form
@@ -1050,8 +1054,6 @@
 	<findFieldProperty
 		name="importoBollo" />
 	<findFieldProperty
-		name="tipoBollo" />
-	<findFieldProperty
 		name="importoDocumento" />
 	<findFieldProperty
 		name="arrotondamento" />
@@ -1147,8 +1149,6 @@
 		name="cab" />
 	<findFieldProperty
 		name="bic" />
-	<findFieldProperty
-		name="pagamentoCdTerzo" />
 	<findFieldProperty
 		name="pagamentoCdModalitaPag" />
 	<findFieldProperty
