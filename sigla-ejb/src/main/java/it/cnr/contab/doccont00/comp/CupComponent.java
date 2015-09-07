@@ -1,9 +1,12 @@
 package it.cnr.contab.doccont00.comp;
 
+import it.cnr.contab.config00.sto.bulk.EnteBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.*;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.*;
+import it.cnr.jada.persistency.PersistencyException;
 
 public class CupComponent extends it.cnr.jada.comp.CRUDComponent 
 {
@@ -58,5 +61,13 @@ public void eliminaConBulk(UserContext userContext,OggettoBulk bulk) throws Comp
 	}
 
 }
-
+public String recuperoCds(UserContext userContext) throws ComponentException, PersistencyException
+	{
+	EnteBulk ente = (EnteBulk) getHome(userContext, EnteBulk.class).findAll().get(0);
+	
+		 if (CNRUserContext.getCd_cds(userContext).compareTo(ente.getCd_unita_organizzativa())==0)
+			 return "%";
+		 else
+			 return CNRUserContext.getCd_cds(userContext);
+	}
 }
