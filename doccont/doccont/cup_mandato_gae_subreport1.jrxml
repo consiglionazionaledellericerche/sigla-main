@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cup_mandato_gae_subreport1" pageWidth="840" pageHeight="590" columnWidth="840" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="TNRGC14" fontName="Times New Roman" fontSize="10" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRC10" fontName="Times New Roman" fontSize="10" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" fontName="Times New Roman" fontSize="10" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNR8" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRG12" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRG8" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR9" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Bold"/>
+	<parameter name="cds" class="java.lang.String"/>
+	<parameter name="cup" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT  CD_CENTRO_RESPONSABILITA,CD_LINEA_ATTIVITA,DS_LINEA_ATTIVITA
+FROM LINEA_ATTIVITA
+WHERE
+(CD_CENTRO_RESPONSABILITA,CD_LINEA_ATTIVITA) IN
+(SELECT CD_CENTRO_RESPONSABILITA,CD_LINEA_ATTIVITA
+FROM OBBLIGAZIONE_SCAD_VOCE,prt_cup_mandato_gae
+WHERE
+prt_cup_mandato_gae.cd_CDS LIKE DECODE($P{cds},'*','%',$P{cds}) and
+prt_cup_mandato_gae.cd_Cup like DECODE($P{cup},'*','%',$P{cup}) and
+OBBLIGAZIONE_SCAD_VOCE.esercizio = prt_cup_mandato_gae.esercizio_obbligazione and
+OBBLIGAZIONE_SCAD_VOCE.cd_cds = prt_cup_mandato_gae.cd_cds and
+OBBLIGAZIONE_SCAD_VOCE.pg_obbligazione=prt_cup_mandato_gae.pg_obbligazione and
+OBBLIGAZIONE_SCAD_VOCE.pg_obbligazione_scadenzario=prt_cup_mandato_gae.pg_obbligazione_scadenzario and
+OBBLIGAZIONE_SCAD_VOCE.ESERCIZIO_ORIGINALE=esercizio_ori_obbligazione )
+order by  CD_CENTRO_RESPONSABILITA,CD_LINEA_ATTIVITA,DS_LINEA_ATTIVITA]]>
+	</queryString>
+	<field name="CD_CENTRO_RESPONSABILITA" class="java.lang.String"/>
+	<field name="CD_LINEA_ATTIVITA" class="java.lang.String"/>
+	<field name="DS_LINEA_ATTIVITA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<rectangle>
+				<reportElement key="rectangle-1" style="TNR10" x="0" y="0" width="822" height="20"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText-9" style="TNRG10" x="11" y="0" width="80" height="20"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Times-Bold"/>
+				</textElement>
+				<text><![CDATA[Cdr]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="" style="TNRG10" x="206" y="0" width="175" height="20"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Times-Bold"/>
+				</textElement>
+				<text><![CDATA[Descrizione]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-23" style="TNRG10" x="105" y="0" width="64" height="20"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Times-Bold"/>
+				</textElement>
+				<text><![CDATA[Gae]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-2" style="TNR10" x="91" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement key="line-2" style="TNR10" x="204" y="0" width="1" height="20"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="TNR10" x="11" y="0" width="80" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_CENTRO_RESPONSABILITA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="TNR10" x="105" y="0" width="97" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_LINEA_ATTIVITA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="TNR10" x="206" y="0" width="616" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DS_LINEA_ATTIVITA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
