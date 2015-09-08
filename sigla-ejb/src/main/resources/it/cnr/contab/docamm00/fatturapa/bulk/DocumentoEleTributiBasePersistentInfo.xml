@@ -42,7 +42,7 @@
 			columnName="CAUSALE_PAGAMENTO"
 			propertyName="causalePagamento"
 			sqlTypeName="VARCHAR"
-			columnSize="1"
+			columnSize="2"
 			nullable="true" />
 		<columnMapping
 			columnName="RITENUTA_CASSA"
