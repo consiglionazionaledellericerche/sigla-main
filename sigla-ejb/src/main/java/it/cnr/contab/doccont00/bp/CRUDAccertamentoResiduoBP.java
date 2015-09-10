@@ -1,14 +1,33 @@
 package it.cnr.contab.doccont00.bp;
 
+import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
-import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.ejb.AccertamentoResiduoComponentSession;
-import it.cnr.contab.doccont00.ejb.ObbligazioneResComponentSession;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.util.action.*;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Config;
+import it.cnr.jada.bulk.FieldProperty;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.action.FormController;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
+
+import java.rmi.RemoteException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TreeMap;
 /**
  * Business Process che gestisce le attività di CRUD per l'entita' Accertamento Residuo.
  */
@@ -19,7 +38,8 @@ public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 	boolean statusOriginarioSaveButtonEnabled = false;
 	boolean isEditableOriginario = false;
 	boolean isContrattoEsistente = false;
-
+	boolean isStatoModificabile = true;
+	Date dataVisibilitaStato;
 	/**
 	 * CRUDAccertamentoResiduoBP constructor comment.
 	 */
@@ -41,6 +61,7 @@ public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 		if (getStatus()!=VIEW && isEditable())
 			setScadenzaModificabile(true);
 		setStatusAndEditableMap();
+		isStatoModificabile = ((AccertamentoResiduoBulk)getModel()).getStato() == null;
 	}
 	/**
 	 * Metodo utilizzato per la conferma dei dati selezionati o immessi, relativi
@@ -76,7 +97,7 @@ public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 	public OggettoBulk initializeModelForEdit(ActionContext context,OggettoBulk bulk) throws BusinessProcessException {
 		try {
 			OggettoBulk oggettobulk = super.initializeModelForEdit(context, bulk);
-		
+			oggettobulk = initializeModelForEditAllegati(context, oggettobulk);
 			((AccertamentoBulk)oggettobulk).caricaAnniResidui(context);
 
 			return oggettobulk;
@@ -163,10 +184,17 @@ public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 	}	
 	public void setStatusAndEditableMap(){
 		if (getModel()!=null && ((AccertamentoBulk)getModel()).isAccertamentoResiduo()) {
-			if (getTab( "tab" )!=null && getTab( "tab" ).equalsIgnoreCase("tabScadenziario") && isScadenzaModificabile() && !((AccertamentoBulk)getModel()).isDocRiportato()) 
+			if (getTab( "tab" )!=null && getTab( "tab" ).equalsIgnoreCase("tabScadenziario") && isScadenzaModificabile() 
+					&& !((AccertamentoBulk)getModel()).isDocRiportato()) 
 				setStatusAndEditableMap(EDIT);
 			else
 				setStatusAndEditableMap(VIEW);
+			
+			if (getTab( "tab" )!=null && getTab( "tab" ).equalsIgnoreCase("tabAllegati") && !isROStato())
+				setStatusAndEditableMap(EDIT);
+			else
+				setStatusAndEditableMap(VIEW);
+
 		}
 	} 
 	/* (non-Javadoc)
@@ -221,6 +249,13 @@ public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 			return false;
 		return true;
 	}
+	public boolean isROStato() {
+		boolean roStato = isROImporto();
+		if (getModel()!=null && !isStatoModificabile)
+			roStato = true;		
+		return roStato;
+	}
+
 	public void cancellaAccertamentoModTemporanea(ActionContext context, Accertamento_modificaBulk obbMod) throws BusinessProcessException {
 		try {
 			if (obbMod!=null && obbMod.isTemporaneo())
@@ -309,5 +344,80 @@ public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 		if (as.getPg_doc_attivo()!=null)
 			return false;
 		return true;
+	}
+	
+	@Override
+	protected void initialize(ActionContext actioncontext)
+			throws BusinessProcessException {
+		super.initialize(actioncontext);
+		Configurazione_cnrComponentSession confCNR = (Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
+		try {
+			String mesegiorno = confCNR.getVal01(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext()), 
+					"DATA", "RIACCERTAMENTO_RESIDUI", "STATO");
+			if (mesegiorno != null)
+				dataVisibilitaStato = new SimpleDateFormat("dd/MM/yyyy").parse(mesegiorno + "/" + CNRUserContext.getEsercizio(actioncontext.getUserContext()));
+			
+		} catch (ComponentException e) {
+			throw new BusinessProcessException(e);
+		} catch (RemoteException e) {
+			throw new BusinessProcessException(e);
+		} catch (ParseException e) {
+			throw new BusinessProcessException(e);		
+		}		
+	}
+	
+	public boolean isStatoVisibile() {
+		if (dataVisibilitaStato == null)
+			return false;
+		return EJBCommonServices.getServerDate().after(dataVisibilitaStato);
+	}
+	@Override
+	protected CMISPath getCMISPath(AccertamentoBulk allegatoParentBulk) throws BusinessProcessException{
+		try {
+			CMISPath cmisPath = SpringUtil.getBean("cmisPathComunicazioniDalCNR", CMISPath.class);
+			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, allegatoParentBulk.getUnita_organizzativa().getCd_unita_organizzativa(), 
+					allegatoParentBulk.getUnita_organizzativa().getDs_unita_organizzativa(), 
+					allegatoParentBulk.getUnita_organizzativa().getDs_unita_organizzativa());
+			cmisPath = cmisService.createFolderIfNotPresent(cmisPath,"Riaccertamento dei residui","Riaccertamento dei residui","Riaccertamento dei residui");
+			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, String.valueOf(allegatoParentBulk.getEsercizio()),
+					String.valueOf(allegatoParentBulk.getEsercizio()),String.valueOf(allegatoParentBulk.getEsercizio()));
+			String folderName = allegatoParentBulk.getCd_uo_origine() + "-" + allegatoParentBulk.getEsercizio_originale() + allegatoParentBulk.getPg_accertamento();
+			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, folderName,
+					allegatoParentBulk.getDs_accertamento(), allegatoParentBulk.getDs_accertamento());			
+			return cmisPath;
+		} catch (ApplicationException e) {
+			throw new BusinessProcessException(e);
+		}
+	}
+	public String [][] getTabs() {
+		TreeMap<Integer, String[]> pages = new TreeMap<Integer, String[]>();
+		int i=0;
+		pages.put(i++, new String[]{ "tabAccertamento","Accertamento","/doccont00/tab_accertamento.jsp" });
+		pages.put(i++, new String[]{ "tabImputazioneFin","Imputazione Finanziaria","/doccont00/tab_imputazione_fin_accertamento.jsp" });
+		pages.put(i++, new String[]{ "tabScadenziario","Scadenziario","/doccont00/tab_scadenziario_accertamento.jsp" });
+		if (isStatoVisibile())
+			pages.put(i++, new String[]{ "tabAllegati","Allegati","/util00/tab_allegati.jsp" });
+
+		String[][] tabs = new String[i][3];
+		for (int j = 0; j < i; j++)
+			tabs[j]=new String[]{pages.get(j)[0],pages.get(j)[1],pages.get(j)[2]};
+		return tabs;
+	}
+	@Override
+	public void validate(ActionContext context) throws ValidationException {
+		super.validate(context);
+		if (getModel() != null) {
+			AccertamentoResiduoBulk doc = ((AccertamentoResiduoBulk)getModel());
+			if (doc.getStato() != null && (
+					doc.getStato().equals(AccertamentoResiduoBulk.Stato.DILAZIONATO.value()) || 
+					doc.getStato().equals(AccertamentoResiduoBulk.Stato.INCASSATO.value()) ||
+					doc.getStato().equals(AccertamentoResiduoBulk.Stato.DUBBIO.value()) ||
+					doc.getStato().equals(AccertamentoResiduoBulk.Stato.INESIGIBILE.value()) ||
+					doc.getStato().equals(AccertamentoResiduoBulk.Stato.PARZIALMENTE_INESIGIBILE.value())) &&
+					doc.getArchivioAllegati().isEmpty()){
+				throw new ValidationException("Inserire almeno un allegato!");
+				
+			}
+		}
 	}
 }
