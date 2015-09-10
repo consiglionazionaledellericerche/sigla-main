@@ -5,15 +5,19 @@ import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
 import it.cnr.contab.docamm00.bp.*;
 
 import java.math.*;
-
 import java.util.*;
+
 import it.cnr.contab.doccont00.ejb.AccertamentoComponentSession;
 import it.cnr.contab.doccont00.ejb.AccertamentoResiduoComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneResComponentSession;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
 import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
@@ -23,6 +27,7 @@ import it.cnr.jada.action.MessageToUser;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
@@ -44,7 +49,6 @@ public class CRUDAccertamentoBP extends CRUDVirtualAccertamentoBP {
 	// "editingScadenza" viene messo a True solo quando si modifica una scadenza (bottone "editing scadenza")
 	private boolean editingScadenza = false;
 	private boolean siope_attiva = false;
-
 public CRUDAccertamentoBP() {
 	super();
 	setTab("tab","tabAccertamento");			// Mette il fuoco sul primo TabAccertamento di Tab
@@ -892,6 +896,7 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 	super.initialize(actioncontext);
 	try {
 		setSiope_attiva(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope().booleanValue());
+		cmisService = SpringUtil.getBean("cmisService", SiglaCMISService.class);
 	}
     catch(Throwable throwable)
     {
