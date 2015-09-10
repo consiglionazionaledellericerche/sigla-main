@@ -27,8 +27,8 @@
 		<columnMapping
 			columnName="PROTOCOLLO_INVIO"
 			propertyName="protocollo_invio"
-			sqlTypeName="DECIMAL"
-			columnSize="10"
+			sqlTypeName="STRING"
+			columnSize="6"
 			nullable="false"
 			primary="true" />		
 		<columnMapping
