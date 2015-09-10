@@ -39,7 +39,7 @@ public class VIntrastatInviatoBase extends VIntrastatInviatoKey implements Keyed
 	public VIntrastatInviatoBase() {
 		super();
 	}
-	public VIntrastatInviatoBase(java.lang.String uo,java.lang.Integer esercizio,java.lang.Long progressivo,java.lang.Long protocollo_invio,java.lang.Long riga_invio) {
+	public VIntrastatInviatoBase(java.lang.String uo,java.lang.Integer esercizio,java.lang.Long progressivo,java.lang.String protocollo_invio,java.lang.Long riga_invio) {
 		super(uo,esercizio,progressivo,protocollo_invio,riga_invio);
 	}
 	/**
