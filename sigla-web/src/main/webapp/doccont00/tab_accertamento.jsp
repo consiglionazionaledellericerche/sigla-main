@@ -59,11 +59,16 @@
 <%  if( bp instanceof CRUDAccertamentoResiduoBP ) { %>
 	  		<% bp.getController().writeFormLabel( out, "pg_accertamento_ori_riporto"); %>
 	  		<% bp.getController().writeFormInput( out, "pg_accertamento_ori_riporto"); %>
+	  		
 <%  } %>
 
 		</td>
 	</tr>
-	
+	<%  if( bp instanceof CRUDAccertamentoResiduoBP  && ((CRUDAccertamentoResiduoBP)bp).isStatoVisibile()) { %>
+		<tr>
+			<% bp.getController().writeFormField( out, ((CRUDAccertamentoResiduoBP)bp).isROStato() ?"statoAccertamento_ro":"statoAccertamento"); %>
+		</tr>		  		
+	<%  } %>
 	<tr>
 	<td>	<% bp.getController().writeFormLabel( out, "ds_accertamento"); %></td>
 	<td colspan=2> <% bp.getController().writeFormInput( out, "ds_accertamento"); %></td>
