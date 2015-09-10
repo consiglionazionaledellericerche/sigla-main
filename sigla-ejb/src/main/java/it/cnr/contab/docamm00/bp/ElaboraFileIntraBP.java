@@ -369,11 +369,11 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
     			bw.append(Formatta(det.getPartitaIva(),"S",12," "));
     			bw.append(Formatta(new BigDecimal(det.getAmmontareEuro()).abs().toString(),"D",13,"0"));  
     			bw.append(Formatta(new BigDecimal(det.getAmmontareDivisa()).abs().toString(),"D",13,"0"));
-    			bw.append(Formatta(det.getNrFattura(),"S",15," "));
-    			bw.append(Formatta(det.getDtFattura(),"S",6," "));
+    			bw.append(Formatta(null,"S",15," "));//bw.append(Formatta(det.getNrFattura(),"S",15," "));
+    			bw.append(Formatta(null,"S",6," "));//bw.append(Formatta(det.getDtFattura(),"S",6," "));
     			bw.append(Formatta(det.getCdCpa(),"D",6,"0"));
-    			bw.append(Formatta(det.getCdModalitaErogazione(),"S",1," "));
-    			bw.append(Formatta(det.getCdModalitaIncasso(),"S",1," "));
+    			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaErogazione(),"S",1," "));
+    			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaIncasso(),"S",1," "));
     			bw.append(Formatta(det.getProvenienza(),"S",2," "));
     			
     			bw.append("\r\n");
@@ -627,11 +627,11 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
     			bw.append(Formatta(det.getNazFiscale(),"S",2," "));//nazione cliente
     			bw.append(Formatta(det.getPartitaIva(),"S",12," "));
     			bw.append(Formatta(new BigDecimal(det.getAmmontareEuro()).abs().toString(),"D",13,"0"));  
-    			bw.append(Formatta(det.getNrFattura(),"S",15," "));
-    			bw.append(Formatta(det.getDtFattura(),"S",6," "));
+    			bw.append(Formatta(null,"S",15," "));//bw.append(Formatta(det.getNrFattura(),"S",15," "));
+    			bw.append(Formatta(null,"S",6," "));//bw.append(Formatta(det.getDtFattura(),"S",6," "));
     			bw.append(Formatta(det.getCdCpa(),"D",6,"0"));
-    			bw.append(Formatta(det.getCdModalitaErogazione(),"S",1," "));
-    			bw.append(Formatta(det.getCdModalitaIncasso(),"S",1," "));
+    			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaErogazione(),"S",1," "));
+    			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaIncasso(),"S",1," "));
     			bw.append(Formatta(det.getDest(),"S",2," "));
     			
     			bw.append("\r\n");
@@ -676,7 +676,7 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
 	      bw.close();
 	      osw.close();
 	      os.close();	      
-	      dett.setNrProtocollo(prot);
+	      dett.setNrProtocollo(prot.toString());
 	      setFile("/tmp/"+f.getName());	  
      }else{
 	    	  bw.flush();
