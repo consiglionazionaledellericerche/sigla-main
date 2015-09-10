@@ -79,7 +79,7 @@ public class VIntrastatBase extends VIntrastatKey implements Keyed {
  
 	private java.lang.String nazFiscale;
 	
-	private java.lang.Integer nrProtocollo;
+	private java.lang.String nrProtocollo;
 	
 	private java.lang.Integer nrProgressivo;
 	
@@ -430,10 +430,10 @@ public class VIntrastatBase extends VIntrastatKey implements Keyed {
 	public void setDtFattura(java.lang.String dtFattura) {
 		this.dtFattura = dtFattura;
 	}
-	public java.lang.Integer getNrProtocollo() {
+	public java.lang.String getNrProtocollo() {
 		return nrProtocollo;
 	}
-	public void setNrProtocollo(java.lang.Integer nrProtocollo) {
+	public void setNrProtocollo(java.lang.String nrProtocollo) {
 		this.nrProtocollo = nrProtocollo;
 	}
 	public java.lang.Integer getNrProgressivo() {

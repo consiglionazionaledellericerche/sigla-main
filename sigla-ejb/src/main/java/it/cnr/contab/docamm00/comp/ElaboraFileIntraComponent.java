@@ -332,7 +332,7 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 			Fattura_attiva_intraHome home_att=(Fattura_attiva_intraHome)getHome(context, Fattura_attiva_intraBulk.class);
 			FatturaPassivaIntraSHome home_s=(FatturaPassivaIntraSHome)getHome(context, FatturaPassivaIntraSBulk.class);
 			FatturaAttivaIntraSHome home_att_s=(FatturaAttivaIntraSHome)getHome(context, FatturaAttivaIntraSBulk.class);
-			Integer prot=0;
+			String prot=null;
 			Integer conta=0;
 			
 			if(bulk.getNrProtocolloAcq()==null &&bulk.getNrProtocolloVen()==null)
