@@ -1,8 +1,12 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import java.math.*;
+
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
+import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
+
 import java.util.*;
 
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
@@ -17,7 +21,7 @@ import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.*;
 
-public class AccertamentoBulk extends AccertamentoBase implements IDocumentoContabileBulk {
+public class AccertamentoBulk extends AccertamentoBase implements IDocumentoContabileBulk, AllegatoParentBulk {
 	
 	private it.cnr.jada.util.OrderedHashtable anniResidui = new it.cnr.jada.util.OrderedHashtable();
 	private it.cnr.contab.anagraf00.core.bulk.TerzoBulk debitore = new it.cnr.contab.anagraf00.core.bulk.TerzoBulk();
@@ -57,6 +61,7 @@ public class AccertamentoBulk extends AccertamentoBase implements IDocumentoCont
 	public final static int INT_STATO_LATT_CONFERMATE		= 4;
 
 	private int internalStatus = INT_STATO_UNDEFINED;
+	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 
 public AccertamentoBulk() {
 	super();
@@ -156,7 +161,7 @@ public BulkCollection[] getBulkLists() {
 	// Metti solo le liste di oggetti che devono essere resi persistenti
 	
 	 return new it.cnr.jada.bulk.BulkCollection[] { 
-			accertamento_scadenzarioColl };
+			accertamento_scadenzarioColl, archivioAllegati };
 }
 /**
  * Insert the method's description here.
@@ -1177,4 +1182,20 @@ public void setCd_cds(java.lang.String cd_cds) {
 			setFl_netto_sospeso(Boolean.FALSE);
 		super.insertingUsing(persister, userContext);
 	}
+	
+	public AllegatoGenericoBulk removeFromArchivioAllegati(int index) {
+		return getArchivioAllegati().remove(index);
+	}
+	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+		archivioAllegati.add(allegato);
+		return archivioAllegati.size()-1;		
+	}
+	public BulkList<AllegatoGenericoBulk> getArchivioAllegati() {
+		return archivioAllegati;
+	}
+	public void setArchivioAllegati(
+			BulkList<AllegatoGenericoBulk> archivioAllegati) {
+		this.archivioAllegati = archivioAllegati;
+	}
+
 }

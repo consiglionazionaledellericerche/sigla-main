@@ -1,4 +1,14 @@
 <SQLPersistentInfo
 	persistentClassName="it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk"
 	homeClassName="it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoHome" >
+	<defaultColumnMap tableName="ACCERTAMENTO">
+		<columnMapping 
+		    columnName="STATO_RESIDUO" 
+		    propertyName="stato" 
+		    sqlTypeName="VARCHAR" 
+		    columnSize="3" 
+		    nullable="true"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="stato" />	    	
 </SQLPersistentInfo>
