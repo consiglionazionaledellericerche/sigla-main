@@ -1,15 +1,49 @@
 package it.cnr.contab.doccont00.core.bulk;
 
-import it.cnr.contab.utenze00.bp.CNRUserContext;
+import java.util.Dictionary;
+
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
 
+@SuppressWarnings("unchecked")
 public class AccertamentoResiduoBulk extends AccertamentoBulk {
+	private static final long serialVersionUID = 1L;
 	public final static int LUNGHEZZA_NUMERO_ACCERTAMENTO = 6;
 	private Accertamento_modificaBulk accertamento_modifica = new Accertamento_modificaBulk();	
 	private boolean saldiDaAggiornare = false;
+	private String stato;
+	@SuppressWarnings("rawtypes")
+	public final static Dictionary stato_AccertamentoResiduoKeys = new OrderedHashtable();;
+	public enum Stato {
+		INCASSATO("Incassato","INS"),
+		CERTO("Certo","CER"),
+		DILAZIONATO("Dilazionato","DIL"),
+		INCERTO("Incerto","INC"),
+		DUBBIO("Dubbio","DUB"),
+		INESIGIBILE("Inesigibile","INE"),
+		PARZIALMENTE_INESIGIBILE("Parzialmente Inesigibile","PIN");
+		private final String label, value;
+		private Stato(String label, String value) {
+			this.value = value;
+			this.label = label;
+		}
+		public String value() {
+			return value;
+		}
+		public String label() {
+			return label;
+		}		
+	}
+	static
+	{
+		for (Stato stato : Stato.values()) {
+			stato_AccertamentoResiduoKeys.put(stato.value, stato.label);			
+		}
+	}
+	
 	/**
 	 * AccertamentoResiduoBulk constructor comment.
 	 */
@@ -45,7 +79,6 @@ public class AccertamentoResiduoBulk extends AccertamentoBulk {
 	 * @see it.cnr.contab.doccont00.core.bulk.AccertamentoBulk#initializeForInsert(it.cnr.jada.util.action.CRUDBP, it.cnr.jada.action.ActionContext)
 	 */
 	public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context) {
-		// TODO Auto-generated method stub
 		super.initializeForInsert(bp, context);
 		setEsercizio_originale(null);
 		return this; 
@@ -84,4 +117,15 @@ public class AccertamentoResiduoBulk extends AccertamentoBulk {
 			throw new ValidationException( "Il campo IMPORTO è obbligatorio." );
 		super.validate();
 	}
+	
+	public String getStato() {
+		return stato;
+	}
+	public void setStato(String stato) {
+		this.stato = stato;
+	}
+	@SuppressWarnings("rawtypes")
+	public Dictionary getStato_AccertamentoResiduoKeys() {
+		return stato_AccertamentoResiduoKeys;
+	}	
 }

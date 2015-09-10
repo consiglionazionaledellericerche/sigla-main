@@ -35,7 +35,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 	private SiglaCMISService cmisService;
 	private SimpleDetailCRUDController crudArchivioAllegati = new CRUDArchivioAllegati(getAllegatoClass(), this);
 			
-	protected abstract CMISPath getCMISPath(K allegatoParentBulk);
+	protected abstract CMISPath getCMISPath(K allegatoParentBulk) throws BusinessProcessException;
 	protected abstract Class<T> getAllegatoClass();
 	
 	public AllegatiCRUDBP() {
