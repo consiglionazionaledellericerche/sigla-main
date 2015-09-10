@@ -63,7 +63,7 @@ public class FatturaAttivaIntraSBase extends FatturaAttivaIntraSKey implements K
 	private Boolean flInviato;
  
 //    NR_PROTOCOLLO DECIMAL(6,0)
-	private java.lang.Integer nrProtocollo;
+	private java.lang.String nrProtocollo;
  
 //    NR_PROGRESSIVO DECIMAL(5,0)
 	private java.lang.Integer nrProgressivo;
@@ -335,14 +335,14 @@ public class FatturaAttivaIntraSBase extends FatturaAttivaIntraSKey implements K
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [nrProtocollo]
 	 **/
-	public java.lang.Integer getNrProtocollo() {
+	public java.lang.String getNrProtocollo() {
 		return nrProtocollo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [nrProtocollo]
 	 **/
-	public void setNrProtocollo(java.lang.Integer nrProtocollo)  {
+	public void setNrProtocollo(java.lang.String nrProtocollo)  {
 		this.nrProtocollo=nrProtocollo;
 	}
 	/**

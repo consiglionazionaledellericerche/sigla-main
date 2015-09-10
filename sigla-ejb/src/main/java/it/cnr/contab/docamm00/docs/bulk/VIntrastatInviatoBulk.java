@@ -19,7 +19,7 @@ public class VIntrastatInviatoBulk extends VIntrastatInviatoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: V_INTRASTAT_INVIATO
 	 **/
-	public VIntrastatInviatoBulk(java.lang.String uo,java.lang.Integer esercizio,java.lang.Long progressivo,java.lang.Long protocollo_invio,java.lang.Long riga_invio) {
+	public VIntrastatInviatoBulk(java.lang.String uo,java.lang.Integer esercizio,java.lang.Long progressivo,java.lang.String protocollo_invio,java.lang.Long riga_invio) {
 		super(uo,esercizio,progressivo,protocollo_invio,riga_invio);
 	}
 	

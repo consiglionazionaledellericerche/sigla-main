@@ -164,8 +164,8 @@
 		<columnMapping
 			columnName="NR_PROTOCOLLO"
 			propertyName="nrProtocollo"
-			sqlTypeName="DECIMAL"
-			columnSize="22"
+			sqlTypeName="VARCHAR"
+			columnSize="6"
 			nullable="true" />	
 		<columnMapping
 			columnName="NR_PROGRESSIVO"

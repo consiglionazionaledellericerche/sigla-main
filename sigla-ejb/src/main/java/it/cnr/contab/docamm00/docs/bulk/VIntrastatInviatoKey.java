@@ -20,7 +20,7 @@ public class VIntrastatInviatoKey extends OggettoBulk implements KeyedPersistent
 	private java.lang.Long progressivo;
 	
 //  PROTOCOLLO_INVIO DECIMAL(6,0)
-	private java.lang.Long protocollo_invio;
+	private java.lang.String protocollo_invio;
  
 //    RIGA_INVIO DECIMAL(5,0)
 	private java.lang.Long riga_invio;
@@ -43,10 +43,10 @@ public class VIntrastatInviatoKey extends OggettoBulk implements KeyedPersistent
 	public void setProgressivo(java.lang.Long progressivo) {
 		this.progressivo = progressivo;
 	}
-	public java.lang.Long getProtocollo_invio() {
+	public java.lang.String getProtocollo_invio() {
 		return protocollo_invio;
 	}
-	public void setProtocollo_invio(java.lang.Long protocolloInvio) {
+	public void setProtocollo_invio(java.lang.String protocolloInvio) {
 		protocollo_invio = protocolloInvio;
 	}
 	public java.lang.Long getRiga_invio() {
@@ -59,7 +59,7 @@ public class VIntrastatInviatoKey extends OggettoBulk implements KeyedPersistent
 	public VIntrastatInviatoKey() {
 		super();
 	}
-	public VIntrastatInviatoKey(java.lang.String uo,java.lang.Integer esercizio,java.lang.Long progressivo,java.lang.Long protocollo_invio,java.lang.Long riga_invio) {
+	public VIntrastatInviatoKey(java.lang.String uo,java.lang.Integer esercizio,java.lang.Long progressivo,java.lang.String protocollo_invio,java.lang.Long riga_invio) {
 		super();
 		this.uo = uo;
 		this.esercizio = esercizio;
