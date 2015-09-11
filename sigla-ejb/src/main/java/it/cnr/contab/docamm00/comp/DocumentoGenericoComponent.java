@@ -4899,14 +4899,20 @@ public void validaDocumento(UserContext aUC, Documento_genericoBulk documentoGen
     if (documentoGenerico.getDocumento_generico_dettColl().isEmpty())
         throw new it.cnr.jada.comp.ApplicationException(
             "Attenzione non possono esistere documenti senza almeno un dettaglio");
-   
-
-    //controlla le date di competenza COGE
-    try {
-	    documentoGenerico.validaDateCompetenza();
-    } catch (ValidationException e) {
-	    throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
-    }
+	try {
+    Documento_genericoBulk documentoDB = (Documento_genericoBulk)getTempHome(aUC, Documento_genericoBulk.class).findByPrimaryKey(documentoGenerico);
+	if (documentoDB==null || (documentoGenerico.getDt_da_competenza_coge().compareTo(documentoDB.getDt_da_competenza_coge())!=0 ||
+		documentoGenerico.getDt_a_competenza_coge().compareTo(documentoDB.getDt_a_competenza_coge())!=0)){
+		    //controlla le date di competenza COGE
+		    try {
+			    documentoGenerico.validaDateCompetenza();
+		    } catch (ValidationException e) {
+			    throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+		    }
+		}
+	} catch (PersistencyException e) {
+		throw handleException(e);
+	}
     controllaCompetenzaCOGEDettagli(aUC, documentoGenerico);
 
     //controlla il tipo ti documento
