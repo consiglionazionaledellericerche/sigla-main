@@ -410,7 +410,7 @@ public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 			AccertamentoResiduoBulk doc = ((AccertamentoResiduoBulk)getModel());
 			if (doc.getStato() != null && (
 					doc.getStato().equals(AccertamentoResiduoBulk.Stato.DILAZIONATO.value()) || 
-					doc.getStato().equals(AccertamentoResiduoBulk.Stato.INCASSATO.value()) ||
+					doc.getStato().equals(AccertamentoResiduoBulk.Stato.INCERTO.value()) ||
 					doc.getStato().equals(AccertamentoResiduoBulk.Stato.DUBBIO.value()) ||
 					doc.getStato().equals(AccertamentoResiduoBulk.Stato.INESIGIBILE.value()) ||
 					doc.getStato().equals(AccertamentoResiduoBulk.Stato.PARZIALMENTE_INESIGIBILE.value())) &&
