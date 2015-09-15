@@ -2587,7 +2587,7 @@ private void controlloCodiceIpaValorizzato(TerzoBulk terzo)
 	if (terzo.getCodiceUnivocoUfficioIpa() == null){
 		throw new it.cnr.jada.comp.ApplicationException(
 				"Il codice terzo utilizzato si riferisce ad un'anagrafica censita nell'indice delle " +
-				"pubbliche amministrazioni. Richiedere tramite helpdesk l'inserimento del codice IPA " +
+				"pubbliche amministrazioni. Richiedere tramite helpdesk l'inserimento del codice Univoco Ufficio IPA " +
 				"relativo al terzo per il quale si sta tentando di emettere fattura.");
 	}
 }
