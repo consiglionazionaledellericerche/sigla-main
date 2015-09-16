@@ -240,8 +240,8 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 		try {
 			CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
 			DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
-			if (bulk.getImportoDocumento() == null) {
-				fatturaPassivaElettronicaBP.setMessage("Il totale del documento non è valorizzato, il documento deve essere rifiutato!");
+			if (bulk.getImportoDocumento() == null||bulk.getImportoDocumento() .compareTo(BigDecimal.ZERO)==0) {
+				fatturaPassivaElettronicaBP.setMessage("Prima di procedere verificare il totale del documento!");
 				return context.findDefaultForward();
 			} else if (!bulk.getDocEleIVAColl().isEmpty()){
 				for(Iterator i=bulk.getDocEleIVAColl().iterator();i.hasNext();)
