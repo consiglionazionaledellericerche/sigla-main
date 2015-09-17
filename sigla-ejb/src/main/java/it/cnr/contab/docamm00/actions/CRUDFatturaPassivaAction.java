@@ -1641,7 +1641,8 @@ public Forward doBringBackSearchBene_servizio(ActionContext context,
 		if (beneTrovato!=null) {
 			
 			fattura_passiva_riga.setBene_servizio(beneTrovato);
-			fattura_passiva_riga.setDs_riga_fattura(beneTrovato.getDs_bene_servizio());
+			if(fattura_passiva_riga.getDs_riga_fattura()==null)
+				fattura_passiva_riga.setDs_riga_fattura(beneTrovato.getDs_bene_servizio());
 			fattura_passiva_riga.setInventariato(false);
 			Fattura_passivaBulk fatturaPassiva = fattura_passiva_riga.getFattura_passiva();
 			if (fatturaPassiva.ISTITUZIONALE.equalsIgnoreCase(fatturaPassiva.getTi_istituz_commerc())) {
