@@ -2447,11 +2447,16 @@ public void controllaCompetenzaCOGEDettagli(
 					Fattura_passiva_rigaBulk primaRiga = (Fattura_passiva_rigaBulk)righeCollegate.next();
 					java.util.Calendar dtCompetenzaDa = fatturaPassiva.getDateCalendar(primaRiga.getDt_da_competenza_coge());
 					java.util.Calendar dtCompetenzaA = fatturaPassiva.getDateCalendar(primaRiga.getDt_a_competenza_coge());
-					
+					// il controllo se reputato necessario potrebbe essere cambiato con le righe commentate
+					//int annoDa =dtCompetenzaDa.get(java.util.Calendar.YEAR);
+					//int annoA =dtCompetenzaA.get(java.util.Calendar.YEAR);
 					while (righeCollegate.hasNext()) {
 						Fattura_passiva_rigaBulk rigaSuccessiva = (Fattura_passiva_rigaBulk)righeCollegate.next();
 						java.util.Calendar dtCompetenzaDaSuccessiva = fatturaPassiva.getDateCalendar(rigaSuccessiva.getDt_da_competenza_coge());
 						java.util.Calendar dtCompetenzaASuccessiva = fatturaPassiva.getDateCalendar(rigaSuccessiva.getDt_a_competenza_coge());
+//						if(annoDa!=(dtCompetenzaDaSuccessiva.get(java.util.Calendar.YEAR)) ||
+//							annoA!=(dtCompetenzaASuccessiva.get(java.util.Calendar.YEAR)))
+//								throw new ApplicationException("I dettagli del documento collegati alla scadenza \"" + scadenza.getDs_scadenza() + "\"\nnon hanno lo stesso anno di competenza! Impossibile salvare.");					
 						if (!dtCompetenzaDa.equals(dtCompetenzaDaSuccessiva) ||
 							!dtCompetenzaA.equals(dtCompetenzaASuccessiva))
 							throw new ApplicationException("I dettagli del documento collegati alla scadenza \"" + scadenza.getDs_scadenza() + "\"\nnon hanno lo stesso periodo di competenza! Impossibile salvare.");
@@ -6208,7 +6213,9 @@ private void validazioneComune(UserContext aUC,Fattura_passivaBulk fatturaPassiv
 
 		//Controllo date competenza COGE
 		fatturaPassiva.validaDateCompetenza();
-		controllaCompetenzaCOGEDettagli(aUC, fatturaPassiva);
+		// r.p. 17/09/2015 controllo non ritenuto utile
+		// competenze omogenee per dettagli collegate alla stessa scadenza
+		//controllaCompetenzaCOGEDettagli(aUC, fatturaPassiva);
 		
 		validateFornitore(aUC, fatturaPassiva);
 	} catch (it.cnr.jada.bulk.ValidationException e) {
@@ -7078,7 +7085,8 @@ public void validaFatturaPerCompenso(UserContext aUC,Fattura_passivaBulk fattura
 
 		//Controllo date competenza COGE
 		fatturaPassiva.validaDateCompetenza();
-		controllaCompetenzaCOGEDettagli(aUC, fatturaPassiva);
+		
+		//controllaCompetenzaCOGEDettagli(aUC, fatturaPassiva);
 		
 		validateFornitore(aUC, fatturaPassiva);
 	} catch (it.cnr.jada.bulk.ValidationException e) {
