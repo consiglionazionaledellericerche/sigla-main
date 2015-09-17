@@ -386,6 +386,8 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 				DatiAnagraficiCedenteType anagraficiCedenteType = factory.createDatiAnagraficiCedenteType();
 
+				if (terzoCnr.getAnagrafico() == null || terzoCnr.getAnagrafico().getPartita_iva() == null)
+					throw new ApplicationException("Impossibile Procedere! Manca la Partita Iva per il codice Anagrafica: "+terzoCnr.getCd_anag()+" del terzo: "+ terzoCnr.getCd_terzo()); 
 				anagraficiCedenteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, terzoCnr));
 
 				if (terzoCnr.getAnagrafico().getCodice_fiscale() == null)
@@ -417,7 +419,8 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 				datiAnagraficiClienteType.setCodiceFiscale(fattura.getCodice_fiscale());
 
-//				datiAnagraficiClienteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, cliente));
+				if (cliente.getAnagrafico() != null && cliente.getAnagrafico().getPartita_iva() != null)
+					datiAnagraficiClienteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, cliente));
 
 				clienteType.setDatiAnagrafici(datiAnagraficiClienteType);
 
@@ -738,8 +741,6 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 	}
 
 	private String impostaPartitaIva(UserContext userContext, TerzoBulk terzo) throws ComponentException{
-		if (terzo.getAnagrafico() == null || terzo.getAnagrafico().getPartita_iva() == null)
-			throw new ApplicationException("Impossibile Procedere! Manca la Partita Iva per il codice Anagrafica: "+terzo.getCd_anag()+" del terzo: "+ terzo.getCd_terzo()); 
 		return terzo.getAnagrafico().getPartita_iva();
 	}
 
