@@ -184,17 +184,19 @@ public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 	}	
 	public void setStatusAndEditableMap(){
 		if (getModel()!=null && ((AccertamentoBulk)getModel()).isAccertamentoResiduo()) {
-			if (getTab( "tab" )!=null && getTab( "tab" ).equalsIgnoreCase("tabScadenziario") && isScadenzaModificabile() 
-					&& !((AccertamentoBulk)getModel()).isDocRiportato()) 
-				setStatusAndEditableMap(EDIT);
-			else
-				setStatusAndEditableMap(VIEW);
-			
-			if (getTab( "tab" )!=null && getTab( "tab" ).equalsIgnoreCase("tabAllegati") && !isROStato())
-				setStatusAndEditableMap(EDIT);
-			else
-				setStatusAndEditableMap(VIEW);
-
+			if (getTab( "tab" )!=null) {
+				if (getTab( "tab" ).equalsIgnoreCase("tabScadenziario")) {
+					if ( isScadenzaModificabile() && !((AccertamentoBulk)getModel()).isDocRiportato())
+						setStatusAndEditableMap(EDIT);
+					else
+						setStatusAndEditableMap(VIEW);
+				} else if (getTab( "tab" ).equalsIgnoreCase("tabAllegati")) {
+					if (!isROStato())
+						setStatusAndEditableMap(EDIT);
+					else
+						setStatusAndEditableMap(VIEW);
+				}
+			}
 		}
 	} 
 	/* (non-Javadoc)
