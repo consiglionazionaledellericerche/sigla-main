@@ -231,9 +231,10 @@ public Query select(UserContext userContext,CompoundFindClause clauses,OggettoBu
 		sql.addSQLJoin("V_TERZO_CF_PI.CD_ANAG","ANAGRAFICO.CD_ANAG");
 		sql.addSQLClause("AND","ANAGRAFICO.TI_ENTITA",sql.NOT_EQUALS,AnagraficoBulk.STRUT_CNR);
 		sql.addClause(clauses);
-	} else
+	} else{
 		sql.addClause("AND","cd_anag",sql.EQUALS,terzo.getCd_anag());
-		
+		sql.addClause(clauses);
+	}
 	return sql;
 }
 
