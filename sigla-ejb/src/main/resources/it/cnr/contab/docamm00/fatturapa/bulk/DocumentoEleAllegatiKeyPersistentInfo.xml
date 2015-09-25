@@ -35,7 +35,7 @@
 			columnName="NOME_ATTACHMENT"
 			propertyName="nomeAttachment"
 			sqlTypeName="VARCHAR"
-			columnSize="60"
+			columnSize="250"
 			nullable="false"
 			primary="true" />
 	</defaultColumnMap>
