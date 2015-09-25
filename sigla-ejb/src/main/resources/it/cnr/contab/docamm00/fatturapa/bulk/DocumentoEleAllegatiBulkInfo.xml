@@ -51,7 +51,7 @@
 		inputType="TEXTAREA"
 		cols="60"
 		rows="5"
-		maxLength="60"
+		maxLength="250"
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
