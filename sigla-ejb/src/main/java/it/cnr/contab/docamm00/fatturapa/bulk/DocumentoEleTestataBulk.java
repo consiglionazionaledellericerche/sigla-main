@@ -428,7 +428,35 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 				concat("_").concat(prefix).concat("_").
 				concat(Utility.lpad(getPg_ver_rec(), 3, '0')).concat(".xml");
 	}	
-	
+
+	public java.math.BigDecimal calcolaImLordoPercipiente(DocumentoEleTestataBulk eleTestata) {
+
+		java.math.BigDecimal imponiIva = new java.math.BigDecimal(0);
+		java.math.BigDecimal impoCassa = new java.math.BigDecimal(0);
+		
+		if(eleTestata.getDocEleIVAColl()!=null)
+		{	
+			for (Iterator i = eleTestata.getDocEleIVAColl().iterator(); i.hasNext();)
+			{	
+				DocumentoEleIvaBulk iva = ((DocumentoEleIvaBulk)i.next());
+				imponiIva = imponiIva.add(Utility.nvl(iva.getImponibileImporto()));
+			}
+		}
+		
+		if(eleTestata.getDocEleTributiColl()!=null)
+		{	
+			for (Iterator i = eleTestata.getDocEleTributiColl().iterator(); i.hasNext();)
+			{	
+				DocumentoEleTributiBulk tributi = ((DocumentoEleTributiBulk)i.next());
+				if (tributi.getTipoRiga()!=null && tributi.getTipoRiga().equals(DocumentoEleTributiBulk.TIPO_RIGA_C))
+				   impoCassa = impoCassa.add(Utility.nvl(tributi.getImporto()));
+			}
+		}
+		
+		return imponiIva.subtract(impoCassa); 
+	}
+
+/*	old calcolo
 	public java.math.BigDecimal calcolaImLordoPercipiente(DocumentoEleTestataBulk eleTestata) {
 
 		java.math.BigDecimal imponiCassa = new java.math.BigDecimal(0);
@@ -473,7 +501,8 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 		
 		return new java.math.BigDecimal(0);
 	}
-	
+*/	
+/*  non più utilizzate
 	public java.math.BigDecimal calcolaImQuotaEsenteNonImpo(DocumentoEleTestataBulk eleTestata) {
 
 		java.math.BigDecimal quotaEsenteNonImpo = new java.math.BigDecimal(0);
@@ -513,6 +542,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 		}
 		return quotaEsente;
 	}
+*/
 	public Boolean isRicevutaDecorrenzaTermini(){
 		if (getFlDecorrenzaTermini() != null && getFlDecorrenzaTermini().equals("S")){
 			return true;
