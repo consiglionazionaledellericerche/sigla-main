@@ -4902,8 +4902,8 @@ public Forward doCreaCompenso(ActionContext context) {
 		CRUDFatturaPassivaIBP bp = (CRUDFatturaPassivaIBP)context.getBusinessProcess();
 
 		Integer esercizioScrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext());
-		java.math.BigDecimal quotaEsente = new java.math.BigDecimal(0);
-		java.math.BigDecimal quotaEsenteNonImpo = new java.math.BigDecimal(0);
+		//java.math.BigDecimal quotaEsente = new java.math.BigDecimal(0);
+		//java.math.BigDecimal quotaEsenteNonImpo = new java.math.BigDecimal(0);
 		java.math.BigDecimal imBollo = new java.math.BigDecimal(0);
 		
 		Fattura_passiva_IBulk fp = (Fattura_passiva_IBulk)bp.getModel();
@@ -4935,14 +4935,19 @@ public Forward doCreaCompenso(ActionContext context) {
 			
 			if(fp.getDocumentoEleTestata()!=null && fp.isElettronica())
 			{	
-				quotaEsente = fp.getDocumentoEleTestata().calcolaImQuotaEsente(fp.getDocumentoEleTestata());
-				quotaEsenteNonImpo = fp.getDocumentoEleTestata().calcolaImQuotaEsenteNonImpo(fp.getDocumentoEleTestata());
+				//quotaEsente = fp.getDocumentoEleTestata().calcolaImQuotaEsente(fp.getDocumentoEleTestata());
+				//quotaEsenteNonImpo = fp.getDocumentoEleTestata().calcolaImQuotaEsenteNonImpo(fp.getDocumentoEleTestata());
 				if(fp.getDocumentoEleTestata().getImportoBollo()!=null)
 					imBollo = fp.getDocumentoEleTestata().getImportoBollo();
 				
+				compenso.setIm_lordo_percipiente(fp.getDocumentoEleTestata().calcolaImLordoPercipiente(fp.getDocumentoEleTestata()));
+				compenso.setQuota_esente(imBollo);
+				compenso.setQuota_esente_no_iva(imBollo);
+                /*
 				compenso.setIm_lordo_percipiente(fp.getDocumentoEleTestata().calcolaImLordoPercipiente(fp.getDocumentoEleTestata()).add(quotaEsente).add(quotaEsenteNonImpo).add(imBollo));
 				compenso.setQuota_esente(quotaEsenteNonImpo.add(imBollo));
 				compenso.setQuota_esente_no_iva(quotaEsente.add(quotaEsenteNonImpo).add(imBollo));
+				*/
 			}
 			
 			it.cnr.contab.compensi00.ejb.CompensoComponentSession component = (it.cnr.contab.compensi00.ejb.CompensoComponentSession)bp.createComponentSession("CNRCOMPENSI00_EJB_CompensoComponentSession",it.cnr.contab.compensi00.ejb.CompensoComponentSession.class );
