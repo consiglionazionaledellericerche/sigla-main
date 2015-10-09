@@ -44,7 +44,7 @@
 		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Pg_esecuzione" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer("84282")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer("95281")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Controllo" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C"]]></defaultValueExpression>
@@ -230,8 +230,8 @@ ORDER BY PG_ESECUZIONE ASC, PG_RIGA ASC]]>
 					</box>
 					<textElement/>
 					<textFieldExpression class="java.lang.String"><![CDATA[(($F{TI_MESSAGGIO}.equals("E"))?"Errore  ":
-($F{TI_MESSAGGIO}.equals("W"))?"Attenzione  ":
-"Informazione  ")+$F{MESSAGGIO}]]></textFieldExpression>
+$F{TI_MESSAGGIO}.equals("W")?"Attenzione  ":
+"Informazione  ")+$F{MESSAGGIO}+" - "+$F{NOTE_RIGA}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
