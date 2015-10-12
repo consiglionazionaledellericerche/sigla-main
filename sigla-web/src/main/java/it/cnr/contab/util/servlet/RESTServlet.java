@@ -382,7 +382,7 @@ public class RESTServlet extends HttpServlet{
 		return cnrUserInfo;
 	}
 	private CNRUserContext getContextFromRequest(JSONRequest jsonRequest, String user, String sessionId, HttpServletRequest req) throws IOException, ApplicationException {
-		if (jsonRequest.getContext() != null) {
+		if (jsonRequest != null && jsonRequest.getContext() != null) {
 			if (jsonRequest.getContext().getEsercizio() == null)
 				throw new ApplicationException("Esercizio non puo essere vuoto");
 			if (jsonRequest.getContext().getCd_cds() == null)
@@ -448,6 +448,7 @@ public class RESTServlet extends HttpServlet{
                 
 				utente = new UtenteBulk();
 				utente.setCd_utente(username.toUpperCase());
+				utente.setLdap_password(password);
 				utente.setPasswordInChiaro(password.toUpperCase());
 				try {
 					utente = loginComponentSession().validaUtente(AdminUserContext.getInstance(), utente);
