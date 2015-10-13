@@ -2,8 +2,14 @@ package it.cnr.contab.docamm00.tabrif.bulk;
 import it.cnr.jada.persistency.Keyed;
 
 public class Voce_ivaBase extends Voce_ivaKey implements Keyed {
+	private java.lang.Boolean fl_solo_italia;
+
+	private java.lang.String ti_bene_servizio;
+		
 	// CD_GRUPPO_IVA VARCHAR(10) NOT NULL
 	private java.lang.String cd_gruppo_iva;
+	
+	private java.lang.Boolean fl_obb_dichiarazione_intento;
 
 /* 
  * Getter dell'attributo cd_gruppo_iva
@@ -299,6 +305,31 @@ public java.lang.String getRifNormOperNonImpSdi() {
 
 public void setRifNormOperNonImpSdi(java.lang.String rifNormOperNonImpSdi) {
 	this.rifNormOperNonImpSdi = rifNormOperNonImpSdi;
+}
+
+public java.lang.Boolean getFl_solo_italia() {
+	return fl_solo_italia;
+}
+
+public void setFl_solo_italia(java.lang.Boolean fl_solo_italia) {
+	this.fl_solo_italia = fl_solo_italia;
+}
+
+public java.lang.String getTi_bene_servizio() {
+	return ti_bene_servizio;
+}
+
+public void setTi_bene_servizio(java.lang.String ti_bene_servizio) {
+	this.ti_bene_servizio = ti_bene_servizio;
+}
+
+public java.lang.Boolean getFl_obb_dichiarazione_intento() {
+	return fl_obb_dichiarazione_intento;
+}
+
+public void setFl_obb_dichiarazione_intento(
+		java.lang.Boolean fl_obb_dichiarazione_intento) {
+	this.fl_obb_dichiarazione_intento = fl_obb_dichiarazione_intento;
 }
 
 }

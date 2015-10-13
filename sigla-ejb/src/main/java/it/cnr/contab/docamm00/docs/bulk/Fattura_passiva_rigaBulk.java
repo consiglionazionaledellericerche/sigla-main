@@ -602,4 +602,7 @@ public void setCollegatoCapitoloPerTrovato(
 		Boolean collegatoCapitoloPerTrovato) {
 	this.collegatoCapitoloPerTrovato = collegatoCapitoloPerTrovato;
 }
+public boolean isCommerciale() {
+	return COMMERCIALE.equals(getTi_istituz_commerc());
+}
 }

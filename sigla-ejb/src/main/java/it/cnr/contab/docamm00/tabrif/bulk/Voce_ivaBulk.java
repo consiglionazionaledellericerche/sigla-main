@@ -31,11 +31,26 @@ public class Voce_ivaBulk extends Voce_ivaBase {
 		TAPPLICAZIONE.put(ENTRAMBE,"Entrambe");
 	}
 
+
+	public final static String BENE_SERVIZIO = "*";
+	public final static String SERVIZIO = "S";
+	public final static String BENE = "B";
+
+	public final static Dictionary BENI_SERVIZI;
+
+	static {
+		BENI_SERVIZI = new it.cnr.jada.util.OrderedHashtable();
+		BENI_SERVIZI.put(BENE,"Bene");
+		BENI_SERVIZI.put(SERVIZIO,"Servizio");
+		BENI_SERVIZI.put(BENE_SERVIZIO,"Entrambi");
+	}
+	
 	public final static String ESCLUSE_ART_15   = "N1";
 	public final static String NON_SOGGETTE    	= "N2";
 	public final static String NON_IMPONIBILI  	= "N3";
 	public final static String ESENTI		  	= "N4";
 	public final static String REGIME_MARGINE  	= "N5";
+	public final static String REVERSE_CHARGE  	= "N6";
 
 	
 	public final static Dictionary naturaOperazioniNonImponibiliKeys;
@@ -46,6 +61,7 @@ public class Voce_ivaBulk extends Voce_ivaBase {
 		naturaOperazioniNonImponibiliKeys.put(NON_IMPONIBILI,"Non Imponibili");	
 		naturaOperazioniNonImponibiliKeys.put(ESENTI,"Esenti");	
 		naturaOperazioniNonImponibiliKeys.put(REGIME_MARGINE,"Regime del Margine");	
+		naturaOperazioniNonImponibiliKeys.put(REVERSE_CHARGE,"Reverse charge");
     };
 
  public Voce_ivaBulk() {
@@ -109,7 +125,12 @@ protected OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.a
 		setFl_non_soggetto(FALSE);
 	if (getFl_iva_non_recuperabile()==null)
 		setFl_iva_non_recuperabile(FALSE);
-
+	if (getTi_bene_servizio()==null)
+		setTi_bene_servizio(BENE_SERVIZIO);
+	if (getFl_solo_italia()==null)
+		setFl_solo_italia(FALSE);
+	if (getFl_obb_dichiarazione_intento()==null)
+		setFl_obb_dichiarazione_intento(FALSE);
 	return this;
 	
 }
@@ -234,5 +255,9 @@ public void validate() throws ValidationException {
                     == 0)))
         throw new ValidationException("Immettere una percentuale diversa da 0");
 
+}
+public Dictionary getTi_bene_servizioKeys() {
+	
+	return BENI_SERVIZI;
 }
 }

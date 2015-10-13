@@ -1412,6 +1412,9 @@ public Forward doBringBackSearchCliente(
 	            	if (fattura_attiva.getCliente().getAnagrafico() != null &&
 			            (fattura_attiva.getCliente().getAnagrafico().isEntePubblico() && !fattura_attiva.getFl_liquidazione_differita().booleanValue()))
 		        	openMessage(context, "Verificare che l'ente pubblico non sia soggetto a split payment ed eventualmente aggiornare l'anagrafica.");
+	            	if (fattura_attiva.getCliente().getAnagrafico() != null &&
+	            			 (fattura_attiva.getCliente().getAnagrafico().getDichiarazioni_intento().size()!=0 ))
+	            		openMessage(context, "Esiste una dichiarazione di intento per l'anagrafica.");
 	            }
             }
             crudFattura.setModel(context,fattura_attiva);
