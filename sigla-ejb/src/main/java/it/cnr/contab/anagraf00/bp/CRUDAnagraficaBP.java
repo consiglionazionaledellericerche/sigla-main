@@ -17,9 +17,11 @@ import javax.servlet.jsp.PageContext;
 import it.cnr.contab.anagraf00.ejb.*;
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.*;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 import it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession;
 import it.cnr.contab.utente00.ejb.RuoloComponentSession;
@@ -52,8 +54,25 @@ import it.cnr.jada.util.jsp.JSPUtils;
 
 public class CRUDAnagraficaBP extends SimpleCRUDBP {
 	
-	private final SimpleDetailCRUDController crudDichiarazioni_intento = new SimpleDetailCRUDController("Dichiarazioni_intento",Dichiarazione_intentoBulk.class,"dichiarazioni_intento",this);
-
+	private final SimpleDetailCRUDController crudDichiarazioni_intento = new SimpleDetailCRUDController("Dichiarazioni_intento",Dichiarazione_intentoBulk.class,"dichiarazioni_intento",this){
+		protected void validate(ActionContext context,OggettoBulk bulk) throws ValidationException {
+			super.validate(context,bulk);
+			validaDichiarazione(context,(Dichiarazione_intentoBulk)bulk);
+		}
+		public OggettoBulk removeDetail(int i) {
+			if (!getModel().isNew()){	
+				List list = getDetails();
+				Dichiarazione_intentoBulk dic=(Dichiarazione_intentoBulk)list.get(i);
+				if (dic.getAnagrafico().isUtilizzata()){
+						setMessage("Cancellazione non possibile!");
+						return null;
+				}
+				else
+					return super.removeDetail(i);
+			}
+			return super.removeDetail(i);
+		}
+	};
 	private final SimpleDetailCRUDController crudCarichi_familiari_anag = new SimpleDetailCRUDController("Carichi_familiari_anag",Carico_familiare_anagBulk.class,"carichi_familiari_anag",this){
 		protected void validate(ActionContext context,OggettoBulk bulk) throws ValidationException {
 			super.validate(context,bulk);
@@ -1269,6 +1288,11 @@ public OggettoBulk initializeModelForInsert(ActionContext context,OggettoBulk bu
 	AnagraficoBulk anagrafico = (AnagraficoBulk)super.initializeModelForInsert(context,bulk);
 	try {
 		anagrafico.setNotGestoreIstat(!UtenteBulk.isGestoreIstatSiope(context.getUserContext()));
+		if (isUoEnte(context))
+			anagrafico.setUo_ente(true);
+		else
+			anagrafico.setUo_ente(false);
+		
 	} catch (ComponentException e1) {
 		handleException(e1);
 	} catch (RemoteException e1) {
@@ -1283,6 +1307,10 @@ public OggettoBulk initializeModelForEdit(ActionContext actioncontext,OggettoBul
 		AnagraficoBulk anagrafico = (AnagraficoBulk)oggettobulk;
 		try {
 			anagrafico.setNotGestoreIstat(!UtenteBulk.isGestoreIstatSiope(actioncontext.getUserContext()));
+			if (isUoEnte(actioncontext))
+				anagrafico.setUo_ente(true);
+			else
+				anagrafico.setUo_ente(false);
 		} catch (ComponentException e1) {
 			handleException(e1);
 		} catch (RemoteException e1) {
@@ -1328,7 +1356,24 @@ public Timestamp findMaxDataCompValida(UserContext context,AnagraficoBulk anagra
 	}
 }
 public String[][] getTabs() {
-	if (((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).isPersonaFisica())
+	if (((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getTi_italiano_estero() !=null && ((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getTi_italiano_estero().compareTo(NazioneBulk.ITALIA)==0 &&
+			((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getPartita_iva()!=null &&
+					(((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).isPersonaFisica()))
+		return new String[][] {
+			{ "tabAnagrafica","Anagrafica","/anagraf00/tab_anagrafica.jsp" },
+			{ "tabRapporto","Rapporto","/anagraf00/tab_rapporto.jsp" },
+			{ "tabDetrazioniFamiliari","Carichi familiari","/anagraf00/tab_detrazioni_familiari.jsp" },
+			{ "tabDettagli","Dettagli","/anagraf00/tab_dettagli.jsp" },
+			{ "tabPagamentiEsterni","Pagamenti esterni","/anagraf00/tab_pagamenti_esterni.jsp" },
+			{ "tabEsportatore","Esportatore abituale","/anagraf00/tab_esportatore.jsp" }};
+	else if (((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getTi_italiano_estero() !=null && ((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getTi_italiano_estero().compareTo(NazioneBulk.ITALIA)==0 &&
+			((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getPartita_iva()!=null &&
+					(((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).isPersonaGiuridica()))
+		return new String[][] {
+			{ "tabAnagrafica","Anagrafica","/anagraf00/tab_anagrafica.jsp" },
+			{ "tabRapporto","Rapporto","/anagraf00/tab_rapporto.jsp" } ,
+			{ "tabEsportatore","Esportatore abituale","/anagraf00/tab_esportatore.jsp" }};
+	else if (((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).isPersonaFisica())
 		return new String[][] {
 			{ "tabAnagrafica","Anagrafica","/anagraf00/tab_anagrafica.jsp" },
 			{ "tabRapporto","Rapporto","/anagraf00/tab_rapporto.jsp" },
@@ -1344,10 +1389,44 @@ public String[][] getTabs() {
 		return new String[][] {
 			{ "tabAnagrafica","Anagrafica","/anagraf00/tab_anagrafica.jsp" },
 			{ "tabRapporto","Rapporto","/anagraf00/tab_rapporto.jsp" } };
-
-	//{ "tabEsportatore","Esportatore abituale","/anagraf00/tab_esportatore.jsp" }
 }
 public SimpleDetailCRUDController getCrudAssociatiStudio() {
 	return crudAssociatiStudio;
 }
+protected void validaDichiarazione(ActionContext context,Dichiarazione_intentoBulk dic) throws ValidationException {
+	for (java.util.Iterator i = dic.getAnagrafico().getDichiarazioni_intento().iterator();i.hasNext();) {
+		Dichiarazione_intentoBulk dic_int = (Dichiarazione_intentoBulk)i.next();
+		if (!dic.equals(dic_int) &&
+			!((dic.getDt_ini_validita().before(dic_int.getDt_ini_validita()) &&
+					dic.getDt_ini_validita().before(dic_int.getDt_fin_validita()) &&
+					dic.getDt_fin_validita().before(dic_int.getDt_ini_validita()) &&
+					dic.getDt_fin_validita().before(dic_int.getDt_fin_validita())) ||
+					(dic.getDt_ini_validita().after(dic_int.getDt_ini_validita()) &&
+		    		dic.getDt_ini_validita().after(dic_int.getDt_fin_validita()) &&
+		    		dic.getDt_fin_validita().after(dic_int.getDt_ini_validita()) &&
+		    		dic.getDt_fin_validita().after(dic_int.getDt_fin_validita())))){
+ 			throw new ValidationException ("Attenzione: non è possibile indicare una dichiarazione in questo periodo, esiste già una dichiarazione valida nello stesso periodo!");
+ 			
+}
+		if (!dic.equals(dic_int) &&
+				(dic.getDt_inizio_val_dich()!=null && dic.getDt_fine_val_dich()!=null &&
+				 dic_int.getDt_inizio_val_dich()!=null && dic_int.getDt_fine_val_dich()!=null) &&
+				!((dic.getDt_inizio_val_dich().before(dic_int.getDt_inizio_val_dich()) &&
+						dic.getDt_inizio_val_dich().before(dic_int.getDt_fine_val_dich()) &&
+						dic.getDt_fine_val_dich().before(dic_int.getDt_inizio_val_dich()) &&
+						dic.getDt_fine_val_dich().before(dic_int.getDt_fine_val_dich())) ||
+						(dic.getDt_inizio_val_dich().after(dic_int.getDt_inizio_val_dich()) &&
+			    		dic.getDt_inizio_val_dich().after(dic_int.getDt_fine_val_dich()) &&
+			    		dic.getDt_fine_val_dich().after(dic_int.getDt_inizio_val_dich()) &&
+			    		dic.getDt_fine_val_dich().after(dic_int.getDt_fine_val_dich())))){
+	 			throw new ValidationException ("Attenzione: non è possibile indicare una dichiarazione in questo periodo di riferimento, esiste già una dichiarazione valida nello stesso periodo!");
+		}
+	}
+}
+public boolean isUoEnte(ActionContext context){	
+	Unita_organizzativaBulk uo = it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context);
+	if (uo.getCd_tipo_unita().equals(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE))
+		return true;	
+	return false; 
+}	
 }

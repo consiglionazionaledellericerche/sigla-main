@@ -37,19 +37,20 @@ function escludiPrimo(index){
 	bp.openFormWindow(pageContext); %>
 	
 	<div class="Group">
-		<table class="Panel" border="0" cellspacing="0" cellpadding="2">
+		
+			<table>
 			<tr>
-				<% bp.getController().writeFormField(out,"cd_voce_iva"); %>							
+				<% bp.getController().writeFormField(out,"cd_voce_iva"); %>
+				<td colspan="5">
+				<% bp.getController().writeFormField(out,"ds_voce_iva"); %>
+				</td>
+			</tr> 
+			<tr> 
+				<% bp.getController().writeFormField(out,"percentuale"); %>
+				<% bp.getController().writeFormField(out,"dt_inizio_validita"); %>
 			</tr>
-			<tr>
-				<% bp.getController().writeFormField(out,"ds_voce_iva"); %>							
-			</tr>
-			<tr>
-				<% bp.getController().writeFormField(out,"percentuale"); %>							
-			</tr>	   
-			<tr>
-				<% bp.getController().writeFormField(out,"dt_inizio_validita"); %>							
-			</tr>
+			</table>
+			<table class="Panel" border="0" cellspacing="0" cellpadding="2">
 			<tr>
 				<td colspan="2">
 					<div class="Group">
@@ -100,37 +101,43 @@ function escludiPrimo(index){
 							</tr>  	   	   
 						</table>
 					</div>
-				</td>
+				</td> 
 			</tr>
+			<tr> 
+			
+				<% bp.getController().writeFormField(out,"ti_applicazione"); %>
+				<% bp.getController().writeFormField(out,"ti_bene_servizio"); %>
+			</tr>	 
 			<tr>
-				<% bp.getController().writeFormField(out,"ti_applicazione"); %> 
-			</tr>	
-			<tr>
-				<td>
 					<% bp.getController().writeFormLabel(out,"cd_gruppo_iva"); %>
-				</td>
-				<td>
 			 		<% bp.getController().writeFormInput(out,"cd_gruppo_iva"); %>
 					<% bp.getController().writeFormInput(out,"ds_gruppo_iva"); %>
 					<% bp.getController().writeFormInput(out,"gruppo_iva"); %>
-				</td>
 			</tr>	   
 			<tr>
 				<% bp.getController().writeFormField(out,"fl_default_istituzionale"); %>
-					<%	if (voce_iva != null && voce_iva.isOperazioneNonImponibile()) { %>
-				  	  <td>
-					  	<% bp.getController().writeFormField(out,"naturaOperNonImpSdi");%>
-					  </td>
-					<%	}  %>
+				<% bp.getController().writeFormField(out,"fl_solo_italia"); %>
+				<% bp.getController().writeFormField(out,"fl_obb_dichiarazione_intento"); %>
 			</tr>	
 			<tr>
 				<% bp.getController().writeFormField(out,"fl_iva_non_recuperabile"); %>
-					<%	if (voce_iva != null && voce_iva.isOperazioneNonImponibile()) { %>
-				  	  <td>
-					  	<% bp.getController().writeFormField(out,"rifNormOperNonImpSdi");%>
-					  </td>
-					<%	}  %>
 			</tr>
+			<table> 
+			<tr>
+				<%	if (voce_iva != null && voce_iva.isOperazioneNonImponibile()) { %>
+				<td colspan="2">
+					  	<% bp.getController().writeFormField(out,"naturaOperNonImpSdi");%>
+				</td>					  	
+				<%	}  %>
+			</tr>
+			<tr>
+				<%	if (voce_iva != null && voce_iva.isOperazioneNonImponibile()) { %>
+				<td colspan="2">
+					  	<% bp.getController().writeFormField(out,"rifNormOperNonImpSdi");%>
+				</td>
+				<%	}  %>
+			</tr>
+			</table>
 		</table>
 	</div>
 	
