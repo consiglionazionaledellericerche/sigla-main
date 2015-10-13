@@ -419,7 +419,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 				datiAnagraficiClienteType.setCodiceFiscale(fattura.getCodice_fiscale());
 
-				if (cliente.getAnagrafico() != null && cliente.getAnagrafico().getPartita_iva() != null)
+				if (cliente.getAnagrafico() != null && cliente.getAnagrafico().getPartita_iva() != null && cliente.getAnagrafico().getPartita_iva().compareTo(fattura.getCodice_fiscale())!=0)
 					datiAnagraficiClienteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, cliente));
 
 				clienteType.setDatiAnagrafici(datiAnagraficiClienteType);
