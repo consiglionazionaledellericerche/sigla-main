@@ -157,7 +157,38 @@
 		label="Iva recuperabile"
 		enabledOnFreeSearch="false"
 		enabledOnSearch="false"/>	
-
+	<fieldProperty
+		name="fl_autofattura"
+		property="fl_autofattura"
+		inputType="CHECKBOX"
+		label="Autofattura"
+		enabledOnFreeSearch="false"
+		enabledOnSearch="false"/>	
+	<fieldProperty
+		name="ti_bene_servizio"
+		property="ti_bene_servizio"
+		keysProperty="ti_bene_servizioKeys"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+	 	label="Servizio/Bene"/>
+	 <fieldProperty
+		name="fl_solo_italia"
+		property="fl_solo_italia"
+		inputType="CHECKBOX" 
+		label="Solo in Italia"
+		enabledOnFreeSearch="false"
+		enabledOnSearch="false"/>		
+	 <fieldProperty
+		name="fl_obb_dichiarazione_intento"
+		property="fl_obb_dichiarazione_intento"
+		inputType="CHECKBOX" 
+		label="Obb. Dichiarazione Intento"
+		enabledOnFreeSearch="false"
+		enabledOnSearch="false"/>		
 	<form
 		name="searchtool" >
 		<formFieldProperty
@@ -208,7 +239,14 @@
 		name="fl_default_istituzionale" />
 	<formFieldProperty
 		name="fl_iva_non_recuperabile" />	
-
+	<formFieldProperty
+		name="fl_autofattura" />		
+	<formFieldProperty
+		name="fl_solo_italia" />	
+	<formFieldProperty
+		name="ti_bene_servizio" />	
+	<formFieldProperty
+		name="fl_obb_dichiarazione_intento" />		
 	<columnFieldProperty
 		name="cd_voce_iva" />
 	<columnFieldProperty
@@ -238,13 +276,19 @@
 	<columnFieldProperty
 		name="fl_iva_non_recuperabile" />
 	<columnFieldProperty
+		name="fl_autofattura" />	
+	<columnFieldProperty
 		name="naturaOperNonImpSdi" />
 	<columnFieldProperty
 		name="rifNormOperNonImpSdi" />
-		
+	<columnFieldProperty
+		name="fl_solo_italia" />	
+	<columnFieldProperty
+		name="ti_bene_servizio" />	
+	<columnFieldProperty
+		name="fl_obb_dichiarazione_intento" />			
 	<findFieldProperty
 		name="cd_voce_iva" />	
-
 	<findFieldProperty
 		name="ds_voce_iva" />
 	<findFieldProperty
@@ -254,5 +298,5 @@
 	<findFieldProperty
 		name="percentuale" />
 	<findFieldProperty
-		name="dt_inizio_validita" />
+		name="dt_inizio_validita" />			
 </bulkInfo>

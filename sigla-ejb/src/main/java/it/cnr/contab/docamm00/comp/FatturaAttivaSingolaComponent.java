@@ -1,8 +1,11 @@
 package it.cnr.contab.docamm00.comp;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaHome;
+import it.cnr.contab.anagraf00.core.bulk.Dichiarazione_intentoBulk;
+import it.cnr.contab.anagraf00.core.bulk.Dichiarazione_intentoHome;
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoHome;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
@@ -43,6 +46,7 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaHome;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IHome;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaHome;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIHome;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
@@ -2138,6 +2142,9 @@ public Fattura_attivaBulk completaTerzo(UserContext aUC, Fattura_attivaBulk fatt
             fatturaAttiva.setRagione_sociale(terzo.getAnagrafico().getRagione_sociale());
             fatturaAttiva.setCodice_fiscale(terzo.getAnagrafico().getCodice_fiscale());
             fatturaAttiva.setPartita_iva(terzo.getAnagrafico().getPartita_iva());
+            AnagraficoHome anagraficoHome = (AnagraficoHome)getHome(aUC,AnagraficoBulk.class);
+            fatturaAttiva.getCliente().getAnagrafico().setDichiarazioni_intento(new BulkList(anagraficoHome.findDichiarazioni_intentoValide(terzo.getAnagrafico())));
+            
             impostaDatiPerFatturazioneElettronica(aUC, fatturaAttiva, terzo);
             //ricontabilizzazione COGE 
             if (oldTerzo != null && terzo != null && !oldTerzo.equalsByPrimaryKey(terzo) && fatturaAttiva.REGISTRATO_IN_COGE.equalsIgnoreCase(fatturaAttiva.getStato_coge()))
@@ -4957,6 +4964,28 @@ public it.cnr.jada.persistency.sql.SQLBuilder selectVoce_ivaByClause(UserContext
 	sql.addSQLClause("AND","TI_APPLICAZIONE",sql.EQUALS,voce_iva.ENTRAMBE);
 	sql.addSQLClause("OR","TI_APPLICAZIONE",sql.EQUALS,voce_iva.VENDITE);
 	sql.closeParenthesis();
+	// Se il cliente è un soggetto iva ed è Italiano
+	if(riga.getFattura_attiva()!=null && riga.getFattura_attiva().getCliente()!=null && riga.getFattura_attiva().getCliente().getAnagrafico()!=null &&
+			riga.getFattura_attiva().getCliente().getAnagrafico().getTi_italiano_estero()!=null &&
+			riga.getFattura_attiva().getCliente().getAnagrafico().getTi_italiano_estero().compareTo(NazioneBulk.ITALIA)==0 &&
+		     riga.getFattura_attiva().getCliente().getAnagrafico().getPartita_iva()!=null){
+		// tutti
+			sql.openParenthesis("AND");
+			sql.addSQLClause("AND","FL_SOLO_ITALIA",sql.EQUALS,"N");
+			sql.addSQLClause("OR","FL_SOLO_ITALIA",sql.EQUALS,"Y");
+			sql.closeParenthesis();
+			
+	}
+	else
+		sql.addSQLClause("AND","FL_SOLO_ITALIA",sql.EQUALS,"N");
+	
+	if(riga.getBene_servizio()!=null){
+		sql.openParenthesis("AND");
+		sql.addSQLClause("AND","TI_BENE_SERVIZIO",sql.EQUALS,voce_iva.BENE_SERVIZIO);
+		sql.addSQLClause("OR","TI_BENE_SERVIZIO",sql.EQUALS,riga.getBene_servizio().getTi_bene_servizio());
+		sql.closeParenthesis();
+	}
+		
 // da valutare	
 //	if (riga!=null && riga.getFattura_attiva()!=null && ((Fattura_attiva_IBulk)riga.getFattura_attiva()).getFl_intra_ue())
 //		sql.addSQLClause("AND", "FL_INTRA", sql.EQUALS, "Y");
@@ -5536,7 +5565,8 @@ public void validaRiga(UserContext aUC, Fattura_attiva_rigaBulk fatturaRiga)
     if (fatturaRiga instanceof Nota_di_credito_attiva_rigaBulk && fatturaRiga.getFattura_attiva()!=null && !fatturaRiga.getFattura_attiva().isIvaRecuperabile() && fatturaRiga.getVoce_iva()!=null && !fatturaRiga.getVoce_iva().getFl_iva_non_recuperabile())
    	 throw new it.cnr.jada.comp.ApplicationException(
    	            "Attenzione! Il codice iva " + ((fatturaRiga.getDs_riga_fattura()!=null)?"sul dettaglio " + fatturaRiga.getDs_riga_fattura():"su un dettaglio")+" non è valido");
-	
+	if(fatturaRiga.getVoce_iva()!=null && fatturaRiga.getVoce_iva().getFl_obb_dichiarazione_intento())
+		verificaEsistenzaDichiarazioneIntento(aUC,fatturaRiga); 
 }
 
 private boolean isObbligatoriaIndicazioneTrovato(Elemento_voceBulk voce) throws ComponentException {
@@ -7508,8 +7538,6 @@ public Boolean isAttivoSplitPayment(UserContext aUC, Date dataFattura) throws Co
 	}
 	return true;
 }
-
-
 public Fattura_attivaBulk aggiornaFatturaInvioSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva) throws PersistencyException, ComponentException,java.rmi.RemoteException {
 	if (fatturaAttiva.isNotaCreditoDaNonInviareASdi()){
 		fatturaAttiva.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_FIRMATA_NC);
@@ -7607,5 +7635,102 @@ public Fattura_attivaBulk aggiornaFatturaTrasmissioneNonRecapitataSDI(UserContex
 private String impostaNoteSdi(String noteSdi) {
 	return noteSdi==null||noteSdi.length()<=500?noteSdi:noteSdi.substring(0,499);
 }
+private void verificaEsistenzaDichiarazioneIntento(UserContext userContext,
+		Fattura_attiva_rigaBulk fatturaRiga) throws ComponentException,ApplicationException {
+	try {
+		List dichiarazioni =null;
+		Dichiarazione_intentoHome home = (Dichiarazione_intentoHome)getHome(userContext,Dichiarazione_intentoBulk.class);
+		SQLBuilder sql = (SQLBuilder)home.createSQLBuilder();
+		sql.addSQLClause("AND","ANNO_RIF", sql.EQUALS, CNRUserContext.getEsercizio(userContext));
+		sql.addSQLClause("AND","cd_anag", sql.EQUALS, fatturaRiga.getFattura_attiva().getCliente().getCd_anag());
+		sql.addSQLClause("AND","dt_ini_validita", sql.LESS_EQUALS, fatturaRiga.getFattura_attiva().getDt_registrazione());
+		sql.addSQLClause("AND","dt_fin_validita", sql.GREATER_EQUALS, fatturaRiga.getFattura_attiva().getDt_registrazione());
+		//sql.addSQLClause("AND","fl_acquisti", sql.EQUALS,"Y");
+		sql.openParenthesis("AND");
+		sql.openParenthesis("AND");
+		sql.addSQLClause("AND","dt_inizio_val_dich", sql.LESS_EQUALS, fatturaRiga.getFattura_attiva().getDt_registrazione());
+		sql.addSQLClause("AND","dt_fine_val_dich", sql.GREATER_EQUALS, fatturaRiga.getFattura_attiva().getDt_registrazione());
+		sql.closeParenthesis();
+		sql.openParenthesis("OR");
+		sql.addSQLClause("AND","dt_inizio_val_dich", sql.ISNULL, null);
+		sql.addSQLClause("AND","dt_fine_val_dich", sql.ISNULL, null);
+		sql.closeParenthesis();		
+		sql.closeParenthesis();		
+		dichiarazioni = home.fetchAll(sql);
+		if (dichiarazioni.size()==0)
+			throw new ApplicationException("Dichiarazione intento non trovata o non valida!");
+		for(Iterator i=dichiarazioni.iterator();i.hasNext();){
+			Dichiarazione_intentoBulk bulk=(Dichiarazione_intentoBulk)i.next();
+			if(bulk.getIm_limite_op()!=null){
+				BigDecimal tot=BigDecimal.ZERO;
+				Fattura_attiva_rigaHome homeFat = (Fattura_attiva_rigaHome)getHome(userContext,Fattura_attiva_rigaBulk.class);
+				SQLBuilder sql_fatt = (SQLBuilder)homeFat.createSQLBuilder();
+				sql_fatt.addTableToHeader("TERZO");
+				sql_fatt.addTableToHeader("ANAGRAFICO");
+				sql_fatt.addTableToHeader("FATTURA_ATTIVA");
+				sql_fatt.addTableToHeader("VOCE_IVA");
+				sql_fatt.resetColumns();
+				sql_fatt.addColumn("NVL(SUM(DECODE(FATTURA_ATTIVA.TI_FATTURA,'C',-IM_IMPONIBILE,IM_IMPONIBILE)),0)","IM_IMPONIBILE");
+				sql_fatt.addSQLJoin("FATTURA_ATTIVA.CD_TERZO","TERZO.CD_TERZO");
+				sql_fatt.addSQLJoin("FATTURA_ATTIVA_RIGA.CD_VOCE_IVA","VOCE_IVA.CD_VOCE_IVA");
+				sql_fatt.addSQLJoin("ANAGRAFICO.CD_ANAG","TERZO.CD_ANAG");
+				sql_fatt.addSQLJoin("FATTURA_ATTIVA.ESERCIZIO", sql.EQUALS, "FATTURA_ATTIVA_RIGA.ESERCIZIO");
+				sql_fatt.addSQLJoin("FATTURA_ATTIVA.CD_CDS", sql.EQUALS, "FATTURA_ATTIVA_RIGA.CD_CDS");
+				sql_fatt.addSQLJoin("FATTURA_ATTIVA.CD_UNITA_ORGANIZZATIVA", sql.EQUALS, "FATTURA_ATTIVA_RIGA.CD_UNITA_ORGANIZZATIVA");
+				sql_fatt.addSQLJoin("FATTURA_ATTIVA.PG_FATTURA_ATTIVA", sql.EQUALS, "FATTURA_ATTIVA_RIGA.PG_FATTURA_ATTIVA");
+				if(fatturaRiga.getPg_fattura_attiva()!=null){
+					sql_fatt.addSQLClause("AND","FATTURA_ATTIVA.PG_FATTURA_ATTIVA",sql.NOT_EQUALS,fatturaRiga.getPg_fattura_attiva());
+				}
 
+
+
+				sql_fatt.addSQLClause("AND","FATTURA_ATTIVA.ESERCIZIO", sql.EQUALS, CNRUserContext.getEsercizio(userContext));
+				sql_fatt.addSQLClause("AND","ANAGRAFICO.CD_ANAG", sql.EQUALS, fatturaRiga.getFattura_attiva().getCliente().getCd_anag());
+				sql_fatt.addSQLClause("AND","VOCE_IVA.FL_OBB_DICHIARAZIONE_INTENTO", sql.EQUALS, "Y");
+				
+				java.sql.ResultSet rs = null;
+				LoggableStatement ps = null;
+				try {
+					ps = sql_fatt.prepareStatement(getConnection(userContext));
+					try {
+						rs = ps.executeQuery();
+						if (rs.next() && rs.getBigDecimal(1)!= null)
+						  tot = tot.add(rs.getBigDecimal(1));
+					} catch (java.sql.SQLException e) {
+						throw handleSQLException(e);
+					} finally {
+						if (rs != null) try{rs.close();}catch( java.sql.SQLException e ){};
+					}
+				} catch (SQLException e) {
+					throw handleException(e);
+				} finally {
+					if (ps != null) try{ps.close();}catch( java.sql.SQLException e ){};
+				}
+				
+				for (Iterator fatCorrente=fatturaRiga.getFattura_attiva().getFattura_attiva_dettColl().iterator();fatCorrente.hasNext();){
+					if(fatturaRiga.getFattura_attiva().getTi_fattura().compareTo("C")==0){
+						Nota_di_credito_attiva_rigaBulk fatbulk=(Nota_di_credito_attiva_rigaBulk)fatCorrente.next();
+						if(fatbulk.getVoce_iva().getFl_obb_dichiarazione_intento())
+							tot=tot.subtract(fatbulk.getIm_imponibile());
+					}
+					else{
+						Fattura_attiva_rigaIBulk fatbulk=(Fattura_attiva_rigaIBulk)fatCorrente.next();
+						if(fatbulk.getVoce_iva().getFl_obb_dichiarazione_intento())
+							tot=tot.add(fatbulk.getIm_imponibile());	
+					}
+				}
+				if(tot.compareTo(bulk.getIm_limite_op())>0)
+					throw new ApplicationException("L'importo dei dettagli supera il limite indicato nella dichiarazione di intento come totale operazione!");
+			}else
+				if(bulk.getIm_limite_sing_op()!=null){
+					if (fatturaRiga.getIm_imponibile().compareTo(bulk.getIm_limite_sing_op())>0)
+						throw new ApplicationException("L'importo del dettaglio supera il limite indicato nella dichiarazione di intento per singola operazione!");
+				}	
+		}	
+	} catch (PersistencyException e) {
+		throw handleException(e);
+	} catch (ComponentException e1) {
+			throw handleException(e1);
+	}
+ }
 }

@@ -1285,7 +1285,7 @@ public Dictionary getTi_bene_servizioKeys() {
 		OrderedHashtable d = (OrderedHashtable)getTi_istituz_commercKeysForSearch();
 		if (d == null) return null;
         	OrderedHashtable clone = (OrderedHashtable)d.clone();
-        	if (getStato_cofi()!=null && getStato_cofi().compareTo(STATO_INIZIALE) ==0) 
+        	if ((getStato_cofi()!=null && getStato_cofi().compareTo(STATO_INIZIALE) ==0)||!isNotAbledToModifyTipoIstCom()) 
         		clone.remove(PROMISCUA);
 		return clone;
 			
@@ -1488,6 +1488,7 @@ public boolean isAbledToModifyTipoFattura() {
 				fattura_passiva_intrastatColl.isEmpty()) ||
 				isElettronica() && getPg_fattura_passiva()==null);
 }
+
 /**
  * Insert the method's description here.
  * Creation date: (2/15/2002 2:28:51 PM)
@@ -3016,5 +3017,11 @@ public void validateDate() throws ValidationException {
 			BulkList<AllegatoGenericoBulk> archivioAllegati) {
 		this.archivioAllegati = archivioAllegati;
 	}
-	
+	public boolean isNotAbledToModifyTipoIstCom(){
+		return (hasDettagliPagati() ||  
+				existARowInventoried() ||
+				isEstera()|| isSanMarinoSenzaIVA()||isSanMarinoSenzaIVA()
+				||(isGenerataDaCompenso()&& getPg_fattura_passiva()!=null)
+				||isStampataSuRegistroIVA()); 
+	}
 }
