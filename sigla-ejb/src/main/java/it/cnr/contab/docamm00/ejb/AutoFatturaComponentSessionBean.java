@@ -1,9 +1,15 @@
 package it.cnr.contab.docamm00.ejb;
+import java.rmi.RemoteException;
+import java.util.Vector;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.Remove;
 import javax.ejb.Stateless;
 
 import it.cnr.contab.docamm00.comp.AutoFatturaComponent;
+import it.cnr.contab.docamm00.docs.bulk.AutofatturaBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
 @Stateless(name="CNRDOCAMM00_EJB_AutoFatturaComponentSession")
 public class AutoFatturaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements AutoFatturaComponentSession {
 @PostConstruct
@@ -234,6 +240,25 @@ public class AutoFatturaComponentSessionBean extends it.cnr.jada.ejb.CRUDCompone
 		pre_component_invocation(param0,componentObj);
 		try {
 			boolean result = ((AutoFatturaComponent)componentObj).verificaStatoEsercizio(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public Vector estraeSezionali(UserContext param0, AutofatturaBulk param1,
+			boolean param2) throws ComponentException, RemoteException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			java.util.Vector result = ((AutoFatturaComponent)componentObj).estraeSezionali(param0,param1,param2);
 			component_invocation_succes(param0,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {

@@ -687,14 +687,14 @@ public boolean findRapportoDipendenteFor(AnagraficoBulk anagrafico) throws Intro
 		sql.addClause("AND", "ti_legame", SQLBuilder.EQUALS, Anagrafico_terzoBulk.LEGAME_STUDIO_ASSOCIATO);
 		return anagraficoTerzoHome.fetchAll(sql);
 	}
-	
+
 	/**
 	 * Recupera tutte le anagrafiche dato il codice fiscale 
 	 *
 	 * @param codice fiscale.
 	 *
 	 * @return java.util.Collection Collezione di oggetti <code>AnagraficoBulk</code>
-	 */
+	 */	
 
 	@SuppressWarnings("unchecked")
 	public java.util.List<AnagraficoBulk> findByCodiceFiscaleOrPartitaIVA(String codiceFiscale, String partitaIVA) throws IntrospectionException, PersistencyException {
@@ -704,5 +704,15 @@ public boolean findRapportoDipendenteFor(AnagraficoBulk anagrafico) throws Intro
 		if (partitaIVA != null)
 			sql.addClause("OR", "partita_iva", SQLBuilder.EQUALS, partitaIVA);
 		return fetchAll(sql);
+	}
+
+	public java.util.Collection findDichiarazioni_intentoValide(AnagraficoBulk anagrafico) throws IntrospectionException, PersistencyException {
+		PersistentHome home = getHomeCache().getHome(Dichiarazione_intentoBulk.class);
+		java.sql.Timestamp dataOdierna = getServerDate();
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause("AND","cd_anag",sql.EQUALS,anagrafico.getCd_anag());
+		sql.addSQLClause("AND","DT_INI_VALIDITA",sql.LESS_EQUALS,dataOdierna);
+		sql.addSQLClause("AND","DT_FIN_VALIDITA",sql.GREATER_EQUALS,dataOdierna);
+		return home.fetchAll(sql);	
 	}
 }

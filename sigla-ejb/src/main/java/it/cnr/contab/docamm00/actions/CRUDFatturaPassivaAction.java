@@ -832,8 +832,10 @@ private void basicDoOnIstituzionaleCommercialeChange(ActionContext context, Fatt
 			while (dettagli.hasNext()) {
 				Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk)dettagli.next();
 				
-				if (!riga.getTi_istituz_commerc().equals(fattura.getTi_istituz_commerc()))
+				if (!riga.getTi_istituz_commerc().equals(fattura.getTi_istituz_commerc())){
 					riga.setTi_istituz_commerc(fattura.getTi_istituz_commerc());
+					riga.setToBeUpdated();
+				}
 			}
 		}
 		/*commentato perchè da problemi con la fatturazione elettronica che trova già il fornitore caricato
@@ -873,6 +875,7 @@ private Forward basicDoRicercaObbligazione(
 			filtro.setFl_importo(Boolean.FALSE);
 		else {
 			Fattura_passiva_rigaBulk firstRow = (Fattura_passiva_rigaBulk)models.get(0);
+			
 		//	Rospuc 15/01/2015 Controllo SOSPESO  compatibilità dell'obbligazione con il titolo capitolo selezionato 
 	    //SOSPESO PER ESERCIZIO 2015
 //			if (firstRow.getBene_servizio().getFl_gestione_inventario().booleanValue()) {
@@ -942,10 +945,21 @@ protected java.math.BigDecimal calcolaTotaleSelezionati(
 	throws it.cnr.jada.comp.ApplicationException {
 
 	java.math.BigDecimal importo = new java.math.BigDecimal(0);
-		
+	boolean escludiIVAInt=false;
+	boolean escludiIVAOld=escludiIVA;
 	if (selectedModels != null) {
 		for (java.util.Iterator i = selectedModels.iterator(); i.hasNext();) {
+			escludiIVA=escludiIVAOld;
 			Fattura_passiva_rigaBulk rigaSelected = (Fattura_passiva_rigaBulk)i.next();
+			//RP 20/03/2015
+			if (!escludiIVA && rigaSelected.getVoce_iva().getFl_autofattura())
+				escludiIVAInt=true;
+			else if (!escludiIVA && !rigaSelected.getVoce_iva().getFl_autofattura())
+				escludiIVAInt=false;
+			if(escludiIVAInt)
+				escludiIVA=escludiIVAInt;
+				
+			// fine RP 20/03/2015
 			java.math.BigDecimal imTotale = (escludiIVA) ?
 													rigaSelected.getIm_imponibile() :
 													rigaSelected.getIm_imponibile().add(rigaSelected.getIm_iva());
@@ -2165,6 +2179,7 @@ public Forward doContabilizza(ActionContext context) {
 		bp.getDettaglio().getSelection().clearSelection();
 	} catch (Throwable e) {
 	}
+	
 	if (obblig != null) {
 		try {
 			Fattura_passivaBulk fattura = (Fattura_passivaBulk)bp.getModel();

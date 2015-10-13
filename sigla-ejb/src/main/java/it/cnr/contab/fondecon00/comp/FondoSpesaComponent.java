@@ -626,7 +626,7 @@ private void validaSpesa(it.cnr.jada.UserContext userContext, Fondo_spesaBulk sp
 			spesa.getCodice_fiscale().trim().length() <= 0 ||
 			spesa.getCitta() == null || 
 			spesa.getCitta().getCrudStatus() != OggettoBulk.NORMAL) {
-			throw new it.cnr.jada.comp.ApplicationException("Dati fornitore non sufficenti (min: Denominazione, Codice Fiscale, Città).");
+			throw new it.cnr.jada.comp.ApplicationException("Dati fornitore non sufficienti (min: Denominazione, Codice Fiscale, Città).");
 		}
 		try {
 			if(spesa.getPartita_iva() != null && spesa.getPartita_iva().length() != 0) {
