@@ -650,7 +650,7 @@
 		name="ti_istituz_commerc"
 		property="ti_istituz_commerc"
 		inputType="SELECT"
-		readonlyProperty="abledToModifyTipoFattura"
+		readonlyProperty="notAbledToModifyTipoIstCom"
 		label="Tipo"
 		nullable="false"
 		enabledOnSearch="true"

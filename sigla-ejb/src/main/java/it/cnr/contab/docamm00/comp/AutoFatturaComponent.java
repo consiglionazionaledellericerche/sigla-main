@@ -286,12 +286,22 @@ public java.util.Vector estraeSezionali (UserContext aUC, AutofatturaBulk autofa
 	try {
 		if (autofattura == null || autofattura.getTi_istituz_commerc() == null)
 			return null;
-		return new java.util.Vector(findSezionali(aUC, autofattura));
+		return new java.util.Vector(findSezionali(aUC, autofattura, false));
 	} catch (Throwable t) {
 		throw handleException(autofattura, t);
 	}
 }
-public java.util.Collection findSezionali(UserContext aUC, AutofatturaBulk autofattura) 
+public java.util.Vector estraeSezionali (UserContext aUC, AutofatturaBulk autofattura,boolean obbIta) throws ComponentException {
+
+	try {
+		if (autofattura == null || autofattura.getTi_istituz_commerc() == null)
+			return null;
+		return new java.util.Vector(findSezionali(aUC, autofattura, obbIta));
+	} catch (Throwable t) {
+		throw handleException(autofattura, t);
+	}
+}
+public java.util.Collection findSezionali(UserContext aUC, AutofatturaBulk autofattura,boolean obbIta) 
 	throws ComponentException,it.cnr.jada.persistency.PersistencyException,it.cnr.jada.persistency.IntrospectionException {
 	
 	if (autofattura.getTi_istituz_commerc() == null) return null;
@@ -309,7 +319,8 @@ public java.util.Collection findSezionali(UserContext aUC, AutofatturaBulk autof
 	else if (autofattura.getFl_san_marino_senza_iva().booleanValue())
 		options.add(new String[][] { { "TIPO_SEZIONALE.FL_SAN_MARINO_SENZA_IVA","Y", "AND" } });
 	else
-		options.add(new String[][] { { "TIPO_SEZIONALE.FL_ORDINARIO","Y", "AND" } });
+		if(!obbIta)
+			options.add(new String[][] { { "TIPO_SEZIONALE.FL_ORDINARIO","Y", "AND" } });
 
 	options.add(autofatturaClause);
 

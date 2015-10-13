@@ -9,6 +9,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
@@ -1545,10 +1546,21 @@ private java.math.BigDecimal calcolaTotalePer(
 	throws it.cnr.jada.comp.ApplicationException {
 
 	java.math.BigDecimal importo = new java.math.BigDecimal(0);
-		
+	//RP 20/03/2015 
+	boolean escludiIVAInt=false;
+	boolean escludiIVAOld=escludiIVA;	
 	if (selectedModels != null) {
 		for (java.util.Iterator i = selectedModels.iterator(); i.hasNext();) {
+			escludiIVA=escludiIVAOld;	
 			Fattura_passiva_rigaBulk rigaSelected = (Fattura_passiva_rigaBulk)i.next();
+			if (!escludiIVA && rigaSelected.getVoce_iva().getFl_autofattura())
+				escludiIVAInt=true;
+			else if (!escludiIVA && !rigaSelected.getVoce_iva().getFl_autofattura())
+				escludiIVAInt=false;
+			if(escludiIVAInt)
+				escludiIVA=escludiIVAInt;
+			// fine RP 20/03/2015
+			
 			importo = importo.add(
 				(escludiIVA	) ?
 					rigaSelected.getIm_imponibile() :
@@ -1694,7 +1706,7 @@ private void caricaAutofattura(UserContext userContext,Fattura_passivaBulk fattu
 		if (fattura_passiva.getFl_autofattura() == null)
 			fattura_passiva.setFl_autofattura(Boolean.FALSE);
 		if (fattura_passiva.getFl_autofattura().booleanValue()) {
-			AutofatturaHome autofatturaHome = (AutofatturaHome)getHome(userContext, AutofatturaBulk.class);
+				AutofatturaHome autofatturaHome = (AutofatturaHome)getHome(userContext, AutofatturaBulk.class,null,"default");
 			try {
 				AutofatturaBulk autof = autofatturaHome.findFor(fattura_passiva);
 
@@ -2739,8 +2751,12 @@ public void controllaQuadraturaObbligazioni(UserContext aUC,Fattura_passivaBulk 
 	}
 }
 private void creaAutofattura(UserContext userContext,Fattura_passivaBulk fattura_passiva) throws ComponentException {
-
+boolean autoObb=false;
 	if (fattura_passiva != null) {
+		autoObb=verificaGenerazioneAutofattura(userContext, fattura_passiva);
+		if(autoObb)
+			fattura_passiva.setFl_autofattura(Boolean.TRUE);
+
 		if (fattura_passiva.getFl_autofattura() == null)
 			fattura_passiva.setFl_autofattura(Boolean.FALSE);
 		if (fattura_passiva.getFl_autofattura().booleanValue()) {
@@ -2752,7 +2768,7 @@ private void creaAutofattura(UserContext userContext,Fattura_passivaBulk fattura
 			autofattura.completeFrom(fattura_passiva);
 			AutoFatturaComponentSession h = getAutofatturaComponentSession(userContext);
 			try {
-				Vector sez = h.estraeSezionali(userContext, autofattura);
+				Vector sez = h.estraeSezionali(userContext, autofattura,autoObb);
 				if (sez == null || sez.isEmpty())
 					throw new it.cnr.jada.comp.ApplicationException("Non è stato inserito alcun sezionale valido per l'autofattura collegata al documento amministrativo " + fattura_passiva.getPg_fattura_passiva().longValue() + "!");
 				if (sez.size() != 1)
@@ -2760,7 +2776,10 @@ private void creaAutofattura(UserContext userContext,Fattura_passivaBulk fattura
 				autofattura.setTipo_sezionale((Tipo_sezionaleBulk)sez.firstElement());
 				AutofatturaBulk autof = (AutofatturaBulk)h.creaConBulk(userContext, autofattura);
 				fattura_passiva.setAutofattura(autof);
+				updateBulk(userContext,fattura_passiva);
 			} catch (java.rmi.RemoteException e) {
+				throw handleException(autofattura, e);
+			} catch (PersistencyException e) {
 				throw handleException(autofattura, e);
 			}
 		}
@@ -2872,6 +2891,7 @@ public OggettoBulk creaConBulk(
 	// Le operazioni che rendono persistenti le modifiche fatte sull'Inventario,
 	//	potrebbero rimandare un messaggio all'utente.
 	String messaggio = aggiornaAssociazioniInventario(userContext, fattura_passiva);
+	
 	creaAutofattura(userContext, fattura_passiva);
 	
 	// Restore dell'hash map dei saldi
@@ -4405,7 +4425,7 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 					getHome(aUC, DocumentoEleAcquistoBulk.class).find(new DocumentoEleAcquistoBulk(documentoEleTestata))));
 			documentoEleTestata.setDocEleDdtColl(new BulkList<DocumentoEleDdtBulk>(
 					getHome(aUC, DocumentoEleDdtBulk.class).find(new DocumentoEleDdtBulk(documentoEleTestata))));
-			getHomeCache(aUC).fetchAll(aUC);	
+			getHomeCache(aUC).fetchAll(aUC);	 
 		} catch (PersistencyException e) {
 			throw handleException(e);
 		}
@@ -4474,7 +4494,6 @@ public OggettoBulk inizializzaBulkPerRicercaLibera (UserContext userContext, Ogg
 	fp.setFl_merce_intra_ue(null);
 	fp.setFl_fattura_compenso(null);
 	fp.setFl_liquidazione_differita(null);
-
 	try {
 		fp.setSezionali(findSezionali(userContext, fp));
 	} catch (it.cnr.jada.persistency.PersistencyException e) {
@@ -5526,7 +5545,36 @@ public it.cnr.jada.persistency.sql.SQLBuilder selectVoce_ivaByClause(
 			sql.closeParenthesis();
 		}
 	}
+	// Se Commerciale ed il fornitore è un soggetto iva ed è Italiano
+		if (dettaglio.isCommerciale() &&
+				dettaglio.getFattura_passiva()!=null && dettaglio.getFattura_passiva().getFornitore()!=null && 
+				dettaglio.getFattura_passiva().getFornitore().getAnagrafico()!=null &&
+				dettaglio.getFattura_passiva().getFornitore().getAnagrafico().getTi_italiano_estero()!=null &&
+				dettaglio.getFattura_passiva().getFornitore().getAnagrafico().getTi_italiano_estero().compareTo(NazioneBulk.ITALIA)==0 &&
+				dettaglio.getFattura_passiva().getFornitore().getAnagrafico().getPartita_iva()!=null){
+			// tutti
+				sql.openParenthesis("AND");
+				sql.addSQLClause("AND","FL_SOLO_ITALIA",sql.EQUALS,"N");
+				sql.addSQLClause("OR","FL_SOLO_ITALIA",sql.EQUALS,"Y");
+				sql.closeParenthesis();
 
+				sql.openParenthesis("AND");
+				sql.addSQLClause("AND","FL_AUTOFATTURA",sql.EQUALS,"N");
+				sql.addSQLClause("OR","FL_AUTOFATTURA",sql.EQUALS,"Y");
+				sql.closeParenthesis();
+		} 
+		else{
+			sql.addSQLClause("AND","FL_SOLO_ITALIA",sql.EQUALS,"N");
+			sql.addSQLClause("AND","FL_AUTOFATTURA",sql.EQUALS,"N");
+		}
+		
+		if(dettaglio.getBene_servizio()!=null){
+			sql.openParenthesis("AND");
+			sql.addSQLClause("AND","TI_BENE_SERVIZIO",sql.EQUALS,voceIva.BENE_SERVIZIO);
+			sql.addSQLClause("OR","TI_BENE_SERVIZIO",sql.EQUALS,dettaglio.getBene_servizio().getTi_bene_servizio());
+			sql.closeParenthesis();
+		}
+		
 	sql.addClause(clauses);
 	return sql;
 }
@@ -5768,7 +5816,7 @@ private void validaConConsuntivi(
 	if (original == null || fatturaPassiva == null)
 		return;
 
-	if (fatturaPassiva.isStampataSuRegistroIVA() || fatturaPassiva.getProgr_univoco()!=null) {
+	if (fatturaPassiva.isStampataSuRegistroIVA() || fatturaPassiva.isElettronica()|| fatturaPassiva.isGenerataDaCompenso()) {
 		//ATTENZIONE: a seguito dell'errore segnalato 569 (dovuto alla richiesta 423) il controllo viene
 		//ora eseguito anche se la sola autofattura ï¿½ stampata sui registri IVA
 
@@ -6116,7 +6164,21 @@ public void validaRiga (UserContext aUC,Fattura_passiva_rigaBulk riga) throws Co
 	if (riga.isVoceIVAOnlyIntraUE() && 
 		(riga.getVoce_iva().getFl_intra() != null &&
 		!riga.getVoce_iva().getFl_intra().booleanValue()))
-		throw new it.cnr.jada.comp.ApplicationException("Attenzione: specificare una voce IVA per il dettaglio - "+riga.getDs_riga_fattura());	
+		throw new it.cnr.jada.comp.ApplicationException("Attenzione: specificare una voce IVA per il dettaglio - "+riga.getDs_riga_fattura());
+	
+	if (riga.getFattura_passiva()!= null && riga.getFattura_passiva().isCommerciale() &&
+			riga.getFattura_passiva().getFornitore()!= null && riga.getFattura_passiva().getFornitore().getAnagrafico()!=null &&
+			riga.getFattura_passiva().getFornitore().getAnagrafico().getPartita_iva()!=null &&
+			riga.getFattura_passiva().getFornitore().getAnagrafico().getTi_italiano_estero().compareTo(NazioneBulk.ITALIA)==0  && 
+			riga.getVoce_iva()!= null  && riga.getVoce_iva().getNaturaOperNonImpSdi()!=null &&
+			riga.getVoce_iva().getNaturaOperNonImpSdi().compareTo(Voce_ivaBulk.REVERSE_CHARGE)==0)
+		throw new it.cnr.jada.comp.ApplicationException("Attenzione: specificare una voce IVA che genera autofattura per il dettaglio - "+riga.getDs_riga_fattura());
+	if (riga.getFattura_passiva()!= null && riga.getFattura_passiva().isIstituzionale() &&
+			riga.getVoce_iva()!= null  && riga.getVoce_iva().getNaturaOperNonImpSdi()!=null &&
+			riga.getVoce_iva().getNaturaOperNonImpSdi().compareTo(Voce_ivaBulk.REVERSE_CHARGE)==0)
+		throw new it.cnr.jada.comp.ApplicationException("Attenzione: voce IVA non valida per il dettaglio - "+riga.getDs_riga_fattura());
+	
+	
 }
 private void validateFornitore(UserContext aUC,Fattura_passivaBulk fatturaPassiva) throws it.cnr.jada.bulk.ValidationException {
 
@@ -6234,37 +6296,43 @@ private void validazioneComune(UserContext aUC,Fattura_passivaBulk fatturaPassiv
 		//ora eseguito anche se la sola autofattura ï¿½ stampata sui registri IVA
 
 			if (!original.getDt_registrazione().equals(fatturaPassiva.getDt_registrazione()))
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: non è possibile modificare la data registrazione della " + fatturaPassiva.getDescrizioneEntita() + " o della sua autofattura (se esiste) quando lo stato IVA è B o C");
-			if (!original.getCd_tipo_sezionale().equalsIgnoreCase(fatturaPassiva.getCd_tipo_sezionale()) &&
-				 hasFatturaPassivaARowNotStateI(fatturaPassiva))
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: non è possibile modificare il sezionale di " + fatturaPassiva.getDescrizioneEntitaPlurale() + " o della relativa autofattura (se esiste) parzialmente contabilizzate e stato IVA B o C.");
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: non è possibile modificare la data registrazione della " + fatturaPassiva.getDescrizioneEntita() + " o della sua autofattura (se esiste) quando è presente sui registri.");
+			if (fatturaPassiva.isStampataSuRegistroIVA()){
+				if (!original.getCd_tipo_sezionale().equalsIgnoreCase(fatturaPassiva.getCd_tipo_sezionale()) &&
+					 hasFatturaPassivaARowNotStateI(fatturaPassiva))
+					throw new it.cnr.jada.comp.ApplicationException("Attenzione: non è possibile modificare il sezionale di " + fatturaPassiva.getDescrizioneEntitaPlurale() + " o della relativa autofattura (se esiste) parzialmente contabilizzate e stato IVA B o C.");
+			}
 			if (original.getFl_autofattura() != null &&
 				!original.getFl_autofattura().equals(fatturaPassiva.getFl_autofattura()))
 				throw new it.cnr.jada.comp.ApplicationException("Attenzione: non è possibile modificare il tipo di sezionale o la tipologia dei dettagli (bene/servizio) per " + fatturaPassiva.getDescrizioneEntitaPlurale() + " o per la relativa autofattura (se esiste) in stato IVA B o C.");
-				
+			
+			if (fatturaPassiva.isStampataSuRegistroIVA() || fatturaPassiva.isElettronica()||fatturaPassiva.isGenerataDaCompenso()) 
+				if (original.getIm_totale_fattura().compareTo(fatturaPassiva.getIm_totale_fattura()) != 0 )
+					throw new it.cnr.jada.comp.ApplicationException("Attenzione: non si può modificare il totale fattura quando la fattura è elettronica e/o presente sui sezionali iva");
+			
 			if (!original.getNr_fattura_fornitore().equalsIgnoreCase(fatturaPassiva.getNr_fattura_fornitore()) ||
 				!original.getDt_fattura_fornitore().equals(fatturaPassiva.getDt_fattura_fornitore()) ||
-				original.getIm_totale_fattura().compareTo(fatturaPassiva.getIm_totale_fattura()) != 0 ||
+				//original.getIm_totale_fattura().compareTo(fatturaPassiva.getIm_totale_fattura()) != 0 ||
 				!original.getFl_intra_ue().equals(fatturaPassiva.getFl_intra_ue()) ||
 				!original.getFl_extra_ue().equals(fatturaPassiva.getFl_extra_ue()) ||
 				!original.getFl_san_marino_con_iva().equals(fatturaPassiva.getFl_san_marino_con_iva()) ||
-				!original.getFl_san_marino_senza_iva().equals(fatturaPassiva.getFl_san_marino_senza_iva()) ||
-				!original.getCd_tipo_sezionale().equalsIgnoreCase(fatturaPassiva.getCd_tipo_sezionale()))
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: non si possono modificare campi relativi alla " + fatturaPassiva.getDescrizioneEntita() + " del fornitore (sezionali, importi totali o riferimenti) quando la fattura o la relativa autofattura (se esiste) è in stato IVA B o C");
+				!original.getFl_san_marino_senza_iva().equals(fatturaPassiva.getFl_san_marino_senza_iva()))// ||
+				//!original.getCd_tipo_sezionale().equalsIgnoreCase(fatturaPassiva.getCd_tipo_sezionale()))
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: non si possono modificare campi relativi alla " + fatturaPassiva.getDescrizioneEntita() + " del fornitore quando la fattura o la relativa autofattura (se esiste).");
 
 			if (!original.getCd_divisa().equals(fatturaPassiva.getCd_divisa()) ||
 				original.getCambio().compareTo(fatturaPassiva.getCambio()) != 0)
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: non si possono modificare i campi della valuta o del cambio della " + fatturaPassiva.getDescrizioneEntita() + " quando essa o la sua autofattura (se esiste) è in stato IVA B o C");
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: non si possono modificare i campi della valuta o del cambio della " + fatturaPassiva.getDescrizioneEntita());
 				
 			if (!original.getCd_terzo().equals(fatturaPassiva.getCd_terzo()))
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: non si possono modificare campi relativi al fornitore della " + fatturaPassiva.getDescrizioneEntita() + " quando essa o la sua autofattura (se esiste) è in stato IVA B o C");
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: non si possono modificare campi relativi al fornitore della " + fatturaPassiva.getDescrizioneEntita());
 		}
 
 		if (!fatturaPassiva.isStampataSuRegistroIVA() &&
 			fatturaPassiva.getProgr_univoco()==null &&	
 			fatturaPassiva.isPagata() &&
 			!original.getCd_terzo().equals(fatturaPassiva.getCd_terzo()))
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: non si possono modificare campi relativi al fornitore della " + fatturaPassiva.getDescrizioneEntita() + " quando essa o la sua autofattura (se esiste) è in stato IVA B o C");
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: non si possono modificare campi relativi al fornitore della " + fatturaPassiva.getDescrizioneEntita());
 
 		//Controllo se la fattura salvata era una fattura estera collegabile
 		//a fatture spedizioniere o bolle e controllo che siano ancora valide
@@ -7048,6 +7116,8 @@ public void validaFatturaPerCompenso(UserContext aUC,Fattura_passivaBulk fattura
     {
       Fattura_passiva_rigaBulk riga=(Fattura_passiva_rigaBulk)i.next();
       validaRiga(aUC, riga);
+
+
     }
 	searchDuplicateInDB(aUC, fatturaPassiva);
 
@@ -7277,18 +7347,30 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 	if (fatturaPassiva.getIm_totale_fattura()== null)
 		   throw new it.cnr.jada.comp.ApplicationException("Totale Fattura non valorizzato!");
 
+	BigDecimal totaleFat=fatturaPassiva.getIm_totale_fattura();
+	if (fatturaPassiva.isCommerciale() && fatturaPassiva.getFornitore()!=null && fatturaPassiva.getFornitore().getAnagrafico()!=null &&
+			fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()!=null &&
+			fatturaPassiva.getFornitore().getAnagrafico().getTi_italiano_estero().compareTo(NazioneBulk.ITALIA)==0 ){
+		    	for (Iterator i = fatturaPassiva.getFattura_passiva_dettColl().iterator(); i.hasNext();) {
+					Fattura_passiva_rigaBulk dettaglio = (Fattura_passiva_rigaBulk)i.next();
+					if(dettaglio.getVoce_iva()!=null && dettaglio.getVoce_iva().getFl_autofattura().booleanValue()){
+						totaleFat=totaleFat.subtract(dettaglio.getIm_iva());
+					}
+		    	}
+	}
+	
 	if (fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()!= null &&
 			fatturaPassiva.getIm_totale_fattura() != null &&
-			(fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()).compareTo(fatturaPassiva.getIm_totale_fattura())!= 0)
+			(fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()).compareTo(totaleFat)!= 0)
 	{   //se non ï¿½ previsto arrotondamento restituisco l'errore	
 		if (fatturaPassiva.getDocumentoEleTestata().getArrotondamento()== null)
-			throw new it.cnr.jada.comp.ApplicationException("Totale Fattura: "+  fatturaPassiva.getIm_totale_fattura() + " diverso da quello inserito nel documento elettronico: " + fatturaPassiva.getDocumentoEleTestata().getImportoDocumento() + "!");
+			throw new it.cnr.jada.comp.ApplicationException("Totale Fattura: "+  totaleFat + " diverso da quello inserito nel documento elettronico: " + fatturaPassiva.getDocumentoEleTestata().getImportoDocumento() + "!");
 		//controllo se c'ï¿½ quadratura a meno di arrotondamento
 		else
 			if (fatturaPassiva.getDocumentoEleTestata().getImportoDocumento()!= null &&
-			fatturaPassiva.getIm_totale_fattura() != null &&
-			(((fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().subtract(fatturaPassiva.getIm_totale_fattura())).abs()).compareTo((fatturaPassiva.getDocumentoEleTestata().getArrotondamento()).abs())) != 0)
-				throw new it.cnr.jada.comp.ApplicationException("Totale Fattura: "+  fatturaPassiva.getIm_totale_fattura() + " non coerente con quello inserito nel documento elettronico: " + fatturaPassiva.getDocumentoEleTestata().getImportoDocumento() + " anche considerando l'arrotondamento: " + fatturaPassiva.getDocumentoEleTestata().getArrotondamento() + "!");
+					totaleFat != null &&
+			(((fatturaPassiva.getDocumentoEleTestata().getImportoDocumento().subtract(totaleFat)).abs()).compareTo((fatturaPassiva.getDocumentoEleTestata().getArrotondamento()).abs())) != 0)
+				throw new it.cnr.jada.comp.ApplicationException("Totale Fattura: "+  totaleFat + " non coerente con quello inserito nel documento elettronico: " + fatturaPassiva.getDocumentoEleTestata().getImportoDocumento() + " anche considerando l'arrotondamento: " + fatturaPassiva.getDocumentoEleTestata().getArrotondamento() + "!");
 	}
 	
 	Hashtable<String, BigDecimal> mapNatura = new Hashtable<String, BigDecimal>(), mapIva = new Hashtable<String, BigDecimal>();
@@ -7297,7 +7379,7 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 	      Fattura_passiva_rigaBulk riga=(Fattura_passiva_rigaBulk)i.next();
 	      String key = null;
 	      Hashtable<String, BigDecimal> currentMap = null;
-	      if (riga.getVoce_iva()!=null ){
+	      if (riga.getVoce_iva()!=null && !riga.getVoce_iva().getFl_autofattura() ){
 		      if (riga.getVoce_iva().getNaturaOperNonImpSdi()!=null) {
 		    	  key = riga.getVoce_iva().getNaturaOperNonImpSdi();
 		    	  currentMap = mapNatura;
@@ -7388,6 +7470,10 @@ public void validaFatturaElettronica(UserContext aUC,Fattura_passivaBulk fattura
 	for(Iterator i=mapIvaEle.keySet().iterator();i.hasNext();)
 		codiciIvaSqu.append((codiciIvaSqu.length()>0?",":"")+(String)i.next());
 
+	if (verificaGenerazioneAutofattura(aUC,fatturaPassiva) && 
+		(codiciNaturaSqu.toString().compareTo(Voce_ivaBulk.REVERSE_CHARGE)==0))
+			codiciNaturaSqu=new StringBuffer();
+	
 	if (codiciNaturaSqu.length()>0 || codiciIvaSqu.length()>0)
 		throw new it.cnr.jada.comp.ApplicationException("Squadratura dettagli IVA con la fattura elettronica per "+ 
 						(codiciIvaSqu.length()>0?"le aliquote IVA: "+ codiciIvaSqu.toString():"") +
@@ -7450,5 +7536,20 @@ public void aggiornaObblSuCancPerCompenso(
 		}
 
 }
+public boolean verificaGenerazioneAutofattura(UserContext aUC,Fattura_passivaBulk fattura)
+		throws ComponentException {
+ 			Boolean obbligatorio=false;
+			if (fattura.isCommerciale() && fattura.getFornitore()!=null && fattura.getFornitore().getAnagrafico()!=null && 
+					fattura.getFornitore().getAnagrafico().getPartita_iva()!=null &&
+					fattura.getFornitore().getAnagrafico().getTi_italiano_estero().compareTo(NazioneBulk.ITALIA)==0 ){
+			    	for (Iterator i = fattura.getFattura_passiva_dettColl().iterator(); i.hasNext();) {
+						Fattura_passiva_rigaBulk dettaglio = (Fattura_passiva_rigaBulk)i.next();
+						if(dettaglio.getVoce_iva()!=null && dettaglio.getVoce_iva().getFl_autofattura().booleanValue())
+							obbligatorio=true;
+					}
+				
+			}
+			
+			return obbligatorio;
 }
-
+}

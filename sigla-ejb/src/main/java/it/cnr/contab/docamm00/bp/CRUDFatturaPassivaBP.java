@@ -1195,7 +1195,8 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 					.getPrezzo_unitario().subtract(newPrezzoRigaVecchia);
 			BigDecimal oldImportoIvaVecchia = BigDecimal.ZERO;
 			BigDecimal tot_imp = BigDecimal.ZERO;
-			if (documento.quadraturaInDeroga()) {
+		
+		if(dettaglioSelezionato.getVoce_iva().getFl_autofattura()||documento.quadraturaInDeroga()){
 				oldImportoIvaVecchia = dettaglioSelezionato.getIm_iva();
 				tot_imp = newPrezzoRigaVecchia.multiply(documento.getCambio())
 						.multiply(dettaglioSelezionato.getQuantita())
