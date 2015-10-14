@@ -196,7 +196,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 			throw handleException(e);
 		} catch (EJBException e) {
 			throw handleException(e);
-		}
+		}		
 	}
 
 	private void setUoScrivania(Unita_organizzativaBulk uoScrivania) {
@@ -366,10 +366,23 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 		super.basicEdit(actioncontext, oggettobulk, flag);
     	DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) oggettobulk;
     	if (!documentoEleTestata.isEditabile())
-    		setStatus(VIEW);
-		
+    		setStatus(VIEW);		
 	}
 
+	@Override
+	public void setTab(String tabName, String pageName) {
+		super.setTab(tabName, pageName);
+		DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) getModel();
+		if (documentoEleTestata != null) {
+			if (pageName.equalsIgnoreCase("tabAllegati") && !documentoEleTestata.isIrregistrabile()){
+				setStatus(EDIT);
+			} else {
+				if (getStatus() == EDIT && !documentoEleTestata.isEditabile())
+					setStatus(VIEW);				
+			}			
+		}
+	}
+	
 	public OggettoBulk completaFatturaPassiva(ActionContext context, Fattura_passivaBulk fatturaPassivaBulk, CRUDFatturaPassivaBP nbp, Fattura_passivaBulk fatturaPassivaDiRiferimento) throws BusinessProcessException {
     	try {    		
 			CRUDFatturaPassivaAction action = new CRUDFatturaPassivaAction();
@@ -546,11 +559,31 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	@Override
 	protected void completeAllegato(AllegatoFatturaBulk allegato) {
 		for (SecondaryType secondaryType : allegato.getDocument().getSecondaryTypes()) {
-			if (AllegatoFatturaBulk.aspectNamesKeys.get(secondaryType.getId()) != null){
+			if (AllegatoFatturaBulk.aspectNamesDecorrenzaTerminiKeys.get(secondaryType.getId()) != null){
 				allegato.setAspectName(secondaryType.getId());
 				break;
 			}
 		}
 		super.completeAllegato(allegato);
+	}
+	
+	@Override
+	public String getAllegatiFormName() {
+		DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) getModel();
+		if (documentoEleTestata.isRicevutaDecorrenzaTermini())
+			return "decorrenzaTermini";
+		return super.getAllegatiFormName();
+	}
+	
+	@Override
+	public void save(ActionContext actioncontext) throws ValidationException,
+			BusinessProcessException {
+		for (Object obj : getCrudArchivioAllegati().getDetails()) {
+			AllegatoFatturaBulk allegatoFatturaBulk = (AllegatoFatturaBulk)obj;
+			if (allegatoFatturaBulk.getAspectName().equalsIgnoreCase("P:sigla_fatture_attachment:comunicazione_non_registrabilita")) {
+				((DocumentoEleTestataBulk) getModel()).setFlIrregistrabile("S");				
+			}
+		}		
+		super.save(actioncontext);
 	}
 }
