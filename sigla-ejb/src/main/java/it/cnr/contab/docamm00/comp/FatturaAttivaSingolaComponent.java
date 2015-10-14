@@ -7417,6 +7417,7 @@ private void sendMailForNotificationOk(UserContext userContext, Fattura_attivaBu
 		String text = "";
 		String estremoFattura = fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva();
 		subject= "[SIGLA] Notifica esito positivo invio fattura attiva " + estremoFattura;
+		subject += " UO: " + fattura.getCd_unita_organizzativa();
 		text = "La fattura attiva elettronica: <b>" +estremoFattura + "</b>"+
 				" è stata accettata dal cliente.";
 		Utente_indirizzi_mailHome utente_indirizzi_mailHome = (Utente_indirizzi_mailHome)getHome(userContext,Utente_indirizzi_mailBulk.class);
@@ -7433,6 +7434,7 @@ private void sendMailForNotificationKo(UserContext userContext, Fattura_attivaBu
 		String text = "";
 		String estremoFattura = fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva();
 		subject= "[SIGLA] Notifica errore invio fattura attiva " + estremoFattura;
+		subject += " UO: " + fattura.getCd_unita_organizzativa();
 		text = "Errore durante l'invio della fattura attiva elettronica: <b>" +estremoFattura + "</b>"+
 				". Motivo: "+ fattura.getNoteInvioSdi();
 		Utente_indirizzi_mailHome utente_indirizzi_mailHome = (Utente_indirizzi_mailHome)getHome(userContext,Utente_indirizzi_mailBulk.class);

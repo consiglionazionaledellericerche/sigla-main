@@ -377,8 +377,9 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 				getStatoDocumentoEle().equals(StatoDocumentoEleEnum.COMPLETO);
 	}
 	public boolean isEditabile() {
-		return getStatoDocumentoEle().equals(StatoDocumentoEleEnum.AGGIORNATO) || 
-				getStatoDocumentoEle().equals(StatoDocumentoEleEnum.COMPLETO);
+		return (getStatoDocumentoEle().equals(StatoDocumentoEleEnum.AGGIORNATO) || 
+				getStatoDocumentoEle().equals(StatoDocumentoEleEnum.COMPLETO)) && 
+				!isIrregistrabile();
 	}	
 
 	public Fattura_passiva_rigaBulk getInstanceRiga() {

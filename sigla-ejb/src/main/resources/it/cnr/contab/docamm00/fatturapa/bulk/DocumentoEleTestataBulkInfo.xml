@@ -728,7 +728,7 @@
 		property="flIrregistrabile"
 		maxLength="2"
 		inputSize="2"
-		inputType="TEXT"
+		inputType="SELECT"
 		enabledOnSearch="true"
 		enabledOnEdit="false"
 		keysProperty="decorrenzaTerminiKeys"
