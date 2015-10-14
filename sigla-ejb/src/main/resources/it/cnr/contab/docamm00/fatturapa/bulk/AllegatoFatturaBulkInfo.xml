@@ -25,10 +25,28 @@
 			name="file" />
 		<formFieldProperty
 			name="attivaFile" />	    	    
-	</form>		
+	</form>	
+	
+	<form name="decorrenzaTermini">
+		<formFieldProperty
+			name="aspectName"
+			keysProperty="aspectNamesDecorrenzaTerminiKeys" />
+		<formFieldProperty
+			name="nome" />
+		<formFieldProperty
+			name="descrizione" />
+		<formFieldProperty
+			name="titolo" />
+		<formFieldProperty
+			name="file" />
+		<formFieldProperty
+			name="attivaFile" />	    	    
+	</form>	
+			
 	<columnSet name="default">
 		<columnFieldProperty
-			name="aspectName" />
+			name="aspectName"
+			keysProperty="aspectNamesDecorrenzaTerminiKeys" />
 		<columnFieldProperty
 			name="nome" />
 		<columnFieldProperty

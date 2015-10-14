@@ -150,6 +150,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     		 */
         	try {
         		String subject= "[SIGLA] Notifica ricezione fattura passiva con Identificativo SdI:" + documentoEleTrasmissioneBulk.getIdentificativoSdi();
+        		subject += " UO: " + documentoEleTrasmissioneBulk.getUnitaOrganizzativa().getCd_unita_organizzativa();
         		String text = "E' pervenuta la fattura dal trasmittente: <b>" +documentoEleTrasmissioneBulk.getIdCodice() + "</b><br>"+
         				"Prestatore: " + documentoEleTrasmissioneBulk.getDenominzionePrestatore() +"<br>" +
         				"Il documento è presente nell'area temporanea di SIGLA.";
@@ -324,6 +325,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 					trasmissione.getUnitaCompetenza().getCd_unita_organizzativa() != null) {
 				try {
 	        		String subject= "[SIGLA] Notifica assegnazione fattura passiva con Identificativo SdI:" + trasmissione.getIdentificativoSdi();
+	        		subject += " UO: " + testataDB.getUnitaCompetenza().getCd_unita_organizzativa();
 	        		String text = "E' pervenuta la fattura dal trasmittente: <b>" +trasmissione.getIdCodice() + "</b><br>"+
 	        				"Prestatore: " + trasmissione.getDenominzionePrestatore() +"<br>" +
 	        				"Il documento è presente nell'area temporanea di SIGLA.";

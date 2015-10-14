@@ -13,13 +13,18 @@ import it.cnr.jada.util.OrderedHashtable;
 
 public class AllegatoFatturaBulk extends AllegatoGenericoBulk {
 	private static final long serialVersionUID = 1L;
-	@SuppressWarnings("unchecked")
-	public static final java.util.Dictionary<String, String> aspectNamesKeys = new OrderedHashtable();
+
+	public static OrderedHashtable aspectNamesKeys = new OrderedHashtable(), 
+		aspectNamesDecorrenzaTerminiKeys;
+
 	static {
 		aspectNamesKeys.put("P:sigla_fatture_attachment:durc","DURC");
 		aspectNamesKeys.put("P:sigla_fatture_attachment:tacciabilita","Tracciabilità");
 		aspectNamesKeys.put("P:sigla_fatture_attachment:prestazione_resa","Prestazione Resa");
-		aspectNamesKeys.put("P:sigla_fatture_attachment:altro","Altro");		
+		aspectNamesKeys.put("P:sigla_fatture_attachment:altro","Altro");
+		
+		aspectNamesDecorrenzaTerminiKeys = (OrderedHashtable) aspectNamesKeys.clone();
+		aspectNamesDecorrenzaTerminiKeys.put("P:sigla_fatture_attachment:comunicazione_non_registrabilita","Comunicazione di non registrabilità");		
 	}
 	private String aspectName;
 	
@@ -44,8 +49,12 @@ public class AllegatoFatturaBulk extends AllegatoGenericoBulk {
 		 results.add(getAspectName());
 		 return results;
 	}
-	public static java.util.Dictionary<String, String> getAspectnameskeys() {
+	public static OrderedHashtable getAspectnameskeys() {
 		return aspectNamesKeys;
+	}
+
+	public static OrderedHashtable getAspectnamesDecorrenzaTerminikeys() {
+		return aspectNamesDecorrenzaTerminiKeys;
 	}	
 	@Override
 	public void validate() throws ValidationException {
