@@ -88,6 +88,9 @@
 		<aspect name="sigla_fatture_attachment:prestazione_resa">
 			<title>Allegato al documento elettronico e alla fattura generata da esso</title>
 		</aspect>
+		<aspect name="sigla_fatture_attachment:comunicazione_non_registrabilita">
+			<title>Allegato al documento elettronico e alla fattura generata da esso</title>
+		</aspect>		
 		<aspect name="sigla_fatture_attachment:altro">
 			<title>Allegato al documento elettronico e alla fattura generata da esso</title>
 		</aspect>		
