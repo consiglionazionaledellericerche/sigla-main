@@ -396,6 +396,16 @@ public class SiglaCMISService {
 				node = ((Document)node).getObjectOfLatestVersion(false);
 				node = getSiglaSession().getObject(node);
 				node.refresh();
+			} else {
+				/**
+				 * @marco.spasiano
+				 * @date 07/10/2015
+				 * workaround non riesco a capire perchè non aggiorna il cmis:name
+				 * insieme alle altre property solo per le folder.
+				 */
+				if  (metadataProperties.containsKey(PropertyIds.NAME)) {					
+					node.updateProperties(Collections.singletonMap(PropertyIds.NAME, metadataProperties.get("cmis:name")), true);
+				}
 			}
 			node.updateProperties(metadataProperties, true);	
 		} catch (Exception e) {
@@ -412,7 +422,7 @@ public class SiglaCMISService {
 			}
 			for (Property<?> property : cmisBulkInfo.getAspectProperty(getSiglaSession(), oggettoBulk)) {
 				metadataProperties.put(property.getId(), property.getValue());
-			}			
+			}
 			updateProperties(metadataProperties, node);
 		} catch (Exception e) {
 			throw new RuntimeException(e);

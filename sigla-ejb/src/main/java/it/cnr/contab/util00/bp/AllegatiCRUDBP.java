@@ -28,6 +28,7 @@ import javax.servlet.ServletException;
 import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Folder;
+import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExistsException;
 
 public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends AllegatoParentBulk> extends SimpleCRUDBP {
@@ -101,15 +102,17 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 					continue;
 				if (excludeChild(cmisObject))
 					continue;
-				Document document = (Document) cmisObject;
-				T allegato = (T) Introspector.newInstance(getAllegatoClass(), document);
-				allegato.setContentType(document.getContentStreamMimeType());
-				allegato.setNome(cmisObject.getName());
-				allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
-				allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
-				completeAllegato(allegato);
-				allegato.setCrudStatus(OggettoBulk.NORMAL);
-				allegatoParentBulk.addToArchivioAllegati(allegato);
+				if (cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT)) {
+					Document document = (Document) cmisObject;
+					T allegato = (T) Introspector.newInstance(getAllegatoClass(), document);
+					allegato.setContentType(document.getContentStreamMimeType());
+					allegato.setNome(cmisObject.getName());
+					allegato.setDescrizione((String)document.getPropertyValue(SiglaCMISService.PROPERTY_DESCRIPTION));
+					allegato.setTitolo((String)document.getPropertyValue(SiglaCMISService.PROPERTY_TITLE));
+					completeAllegato(allegato);
+					allegato.setCrudStatus(OggettoBulk.NORMAL);
+					allegatoParentBulk.addToArchivioAllegati(allegato);					
+				}
 			}
 		} catch (ApplicationException e) {
 			throw handleException(e);
@@ -171,6 +174,10 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 			throw handleException(e);
 		}
 		super.delete(actioncontext);
+	}
+	
+	public String getAllegatiFormName() {
+		return "default";
 	}
 	
 	@SuppressWarnings("unchecked")
