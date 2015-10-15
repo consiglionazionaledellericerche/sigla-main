@@ -44,7 +44,11 @@ function doScaricaEsito() {
 			  	</td>
 			<% } %> 
 		</tr>
-		<tr><% bp.getController().writeFormField(out,"identificativoSdi");%></tr>
+		<tr>
+			<% bp.getController().writeFormField(out,"identificativoSdi");%>
+			<% bp.getController().writeFormField(out,"progressivo");%>
+		</tr>
+			
 		<tr><% bp.getController().writeFormField(out,"dataDocumento");%></tr>
 		<tr><% bp.getController().writeFormField(out,"codiceDestinatario");%></tr>
 		<% if (userInfo.getUnita_organizzativa().getCd_tipo_unita().equalsIgnoreCase("ENTE")) {%>
