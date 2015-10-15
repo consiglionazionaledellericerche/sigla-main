@@ -1553,9 +1553,9 @@ private java.math.BigDecimal calcolaTotalePer(
 		for (java.util.Iterator i = selectedModels.iterator(); i.hasNext();) {
 			escludiIVA=escludiIVAOld;	
 			Fattura_passiva_rigaBulk rigaSelected = (Fattura_passiva_rigaBulk)i.next();
-			if (!escludiIVA && rigaSelected.getVoce_iva().getFl_autofattura())
+			if (!escludiIVA &&  rigaSelected.getVoce_iva()!=null && rigaSelected.getVoce_iva().getFl_autofattura()!=null && rigaSelected.getVoce_iva().getFl_autofattura())
 				escludiIVAInt=true;
-			else if (!escludiIVA && !rigaSelected.getVoce_iva().getFl_autofattura())
+			else if (!escludiIVA && rigaSelected.getVoce_iva()!=null && rigaSelected.getVoce_iva().getFl_autofattura()!=null && !rigaSelected.getVoce_iva().getFl_autofattura())
 				escludiIVAInt=false;
 			if(escludiIVAInt)
 				escludiIVA=escludiIVAInt;
@@ -1664,7 +1664,7 @@ private java.util.List caricaAddebitiExceptFor(
 	Nota_di_debitoBulk notaDiDebito)
 	throws it.cnr.jada.comp.ComponentException {
 
-	Nota_di_debito_rigaHome home = (Nota_di_debito_rigaHome)getHomeCache(userContext).getHome(Nota_di_debito_rigaBulk.class);
+	Nota_di_debito_rigaHome home = (Nota_di_debito_rigaHome)getHomeCache(userContext).getHome(Nota_di_debito_rigaBulk.class ,"default", "testata");
 	try {
 		return home.findAddebitiForObbligazioneExceptFor(scadenza, notaDiDebito);
 	} catch (it.cnr.jada.persistency.PersistencyException e) {
@@ -1778,7 +1778,7 @@ private java.util.List caricaStorniExceptFor(
 	Nota_di_creditoBulk notaDiCredito)
 	throws it.cnr.jada.comp.ComponentException {
 
-	Nota_di_credito_rigaHome home = (Nota_di_credito_rigaHome)getHomeCache(userContext).getHome(Nota_di_credito_rigaBulk.class);
+	Nota_di_credito_rigaHome home = (Nota_di_credito_rigaHome)getHomeCache(userContext).getHome(Nota_di_credito_rigaBulk.class, "default", "testata");
 	try {
 		return home.findStorniForObbligazioneExceptFor(scadenza, notaDiCredito);
 	} catch (it.cnr.jada.persistency.PersistencyException e) {
