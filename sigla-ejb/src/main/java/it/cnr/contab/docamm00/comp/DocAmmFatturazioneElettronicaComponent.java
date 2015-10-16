@@ -870,7 +870,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 			if (dettagliSenzaContratto.containsKey(fattura)){
 				dettagliSenzaContratto.get(fattura).add(riga.getProgressivo_riga().intValue());
 			} else {
-				List<Integer> lista = Arrays.asList(riga.getProgressivo_riga().intValue());
+				List<Integer> lista = new ArrayList<Integer>(Arrays.asList(riga.getProgressivo_riga().intValue()));
 				dettagliSenzaContratto.put(fattura, lista);
 			}
 		} else {
