@@ -346,9 +346,14 @@ public void validate(OggettoBulk parent) throws ValidationException {
 			setCodice_iban(null);
 	}
 	if (!isROBanca() &&((Rif_modalita_pagamentoBulk.IBAN.equals(getTi_pagamento())||Rif_modalita_pagamentoBulk.BANCARIO.equals(getTi_pagamento())))){
-		if ((this.getNazione_iban()==null)||(this.getNazione_iban()!=null && this.getNazione_iban().getCd_iso().compareTo(new String("IT"))!=0 ))
-			if(this.getCodice_swift()==null) 
-				throw new ValidationException("Il codice swift è obbligatorio.");
+		if(this.getNazione_iban()!=null && this.getNazione_iban().getFl_iban()){
+			if ((this.getNazione_iban()==null)||(this.getNazione_iban()!=null && this.getNazione_iban().getCd_iso().compareTo(new String("IT"))!=0 ))
+				if(this.getCodice_swift()==null) 
+					throw new ValidationException("Il codice swift è obbligatorio.");
+		  
+			if (this.getCodice_swift().length()<8 || this.getCodice_swift().length()>11) 
+				throw new ValidationException("Formato del codice bic non valido.");
+		}
 	}
 			
 }
