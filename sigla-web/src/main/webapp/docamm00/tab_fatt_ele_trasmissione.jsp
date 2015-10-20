@@ -16,6 +16,7 @@
 	<tr>
 		<% bp.writeFormField(out,"dataRicezioneSDI");%>
 		<% bp.writeFormFieldTrasmissione(out,"soggettoEmittente");%>	
+		<% bp.writeFormFieldTrasmissione(out,"regimefiscale");%>
 	</tr>
 </table>	
 <fieldset>
