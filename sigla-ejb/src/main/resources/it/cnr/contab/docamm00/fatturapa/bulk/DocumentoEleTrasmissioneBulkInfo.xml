@@ -189,10 +189,9 @@
 	<fieldProperty
 		name="regimefiscale"
 		property="regimefiscale"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="256"
+		inputType="SELECT"
+		keysProperty="regimefiscaleKeys"
+		maxLength="256" 
 		enabledOnEdit="false"
 		label="Regime Fiscale" />
 	<fieldProperty
