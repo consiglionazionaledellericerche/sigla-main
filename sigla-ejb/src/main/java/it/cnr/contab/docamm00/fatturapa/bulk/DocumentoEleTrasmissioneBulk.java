@@ -3,14 +3,38 @@
  * Date 25/02/2015
  */
 package it.cnr.contab.docamm00.fatturapa.bulk;
+
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.util.OrderedHashtable;
+import it.gov.fatturapa.sdi.fatturapa.v1.RegimeFiscaleType;
 public class DocumentoEleTrasmissioneBulk extends DocumentoEleTrasmissioneBase {
 	private static final long serialVersionUID = 1L;
-
+	public static final java.util.Dictionary<String, String> regimefiscaleKeys = new OrderedHashtable();
+	static {
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_01.name(),RegimeFiscaleType.RF_01.value()+" - Regime ordinario");
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_02.name(),RegimeFiscaleType.RF_02.value()+" - Regime dei contribuenti minimi (art. 1,c.96-117, L. 244/2007)");
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_03.name(),RegimeFiscaleType.RF_03.value()+" - Regime delle nuove iniziative produttive (art. 13, L. 388/2000)");
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_04.name(),RegimeFiscaleType.RF_04.value()+" - Agricoltura e attività connesse e pesca (artt. 34 e 34-bis, D.P.R. 633/1972)");
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_05.name(),RegimeFiscaleType.RF_05.value()+" - Vendita sali e tabacchi (art. 74, c.1, D.P.R. 633/1972)");
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_06.name(),RegimeFiscaleType.RF_06.value()+" - Commercio dei fiammiferi (art. 74, c.1, D.P.R. 633/1972)");
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_07.name(),RegimeFiscaleType.RF_07.value()+" - Editoria (art. 74, c.1, D.P.R. 633/1972)");
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_08.name(),RegimeFiscaleType.RF_08.value()+" - Gestione di servizi di telefonia pubblica (art. 74, c.1, D.P.R. 633/1972)");
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_09.name(),RegimeFiscaleType.RF_09.value()+" - Rivendita di documenti di trasporto pubblico e di sosta (art. 74, c.1, D.P.R. 633/1972)");
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_10.name(),RegimeFiscaleType.RF_10.value()+" - Intrattenimenti, giochi e altre attività di cui alla tariffa allegata al D.P.R. 640/72 (art. 74, c.6, D.P.R. 633/1972)");
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_11.name(),RegimeFiscaleType.RF_11.value()+" - Agenzie di viaggi e turismo (art. 74-ter, D.P.R. 633/1972)");
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_12.name(),RegimeFiscaleType.RF_12.value()+" - Agriturismo (art. 5, c.2, L. 413/1991)");
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_13.name(),RegimeFiscaleType.RF_13.value()+" - Vendite a domicilio (art. 25-bis, c.6, D.P.R. 600/1973)");
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_14.name(),RegimeFiscaleType.RF_14.value()+" - Rivendita di beni usati, di oggetti d'arte, d'antiquariato o da collezione (art.	36, D.L. 41/1995)");
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_15.name(),RegimeFiscaleType.RF_15.value()+" - Agenzie di vendite all'asta di oggetti d'arte, antiquariato o da collezione (art. 40-bis, D.L. 41/1995)");
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_16.name(),RegimeFiscaleType.RF_16.value()+" - IVA per cassa P.A. (art. 6, c.5, D.P.R. 633/1972)");
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_17.name(),RegimeFiscaleType.RF_17.value()+" - IVA per cassa (art. 32-bis, D.L. 83/2012)");
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_18.name(),RegimeFiscaleType.RF_18.value()+" - Altro");
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_19.name(),RegimeFiscaleType.RF_19.value()+" - Regime forfettario (art. 1 c. 54- 89 L. 190/2014)");	
+	}
 	private BulkList<DocumentoEleTestataBulk> docEleTestataColl = new BulkList<DocumentoEleTestataBulk>();
 	
 	/**
@@ -301,6 +325,5 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	public void setUnitaCompetenza(Unita_organizzativaBulk unitaCompetenza) {
 		this.unitaCompetenza = unitaCompetenza;
-	}	
-	
+	}
 }
