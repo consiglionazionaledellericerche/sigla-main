@@ -3859,7 +3859,7 @@ public class DistintaCassiereComponent extends
 					clas.setImporto(doc.getImportoCge().setScale(2, BigDecimal.ROUND_HALF_UP));
 					infover.getClassificazione().add(clas);
 				}
-				if(infover.getCausale()!=null ){
+				if(infover.getCausale()!=null  && doc.getCdCup()!=null){
 					if (!infover.getCausale().contains(doc.getCdCup()))
 						infover.setCausale(infover.getCausale()+"-"+doc.getCdCup());
 				}else
