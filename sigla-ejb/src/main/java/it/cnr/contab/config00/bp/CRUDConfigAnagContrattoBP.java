@@ -102,7 +102,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 			return super.isShrinkable() && isAllegatiEnabled();
 		};
 		public boolean isGrowable() {
-			return super.isGrowable() && isAllegatiEnabled();			
+			return super.isGrowable();// && isAllegatiEnabled();			
 		};
 	};
 	
