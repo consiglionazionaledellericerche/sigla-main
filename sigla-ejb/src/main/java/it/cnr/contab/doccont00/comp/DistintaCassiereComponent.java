@@ -3874,9 +3874,10 @@ public class DistintaCassiereComponent extends
 			infover.setBollo(bollo);
 			versante.setAnagraficaVersante(docContabile.getDenominazioneSede());
 			infover.setVersante(versante);
+			
 			// gestito inserimento cup nella CAUSALE 
 			if (infover.getCausale() !=null && (infover.getCausale()+docContabile.getDsDocumento()).length() >99)
-				infover.setCausale(infover.getCausale()+" "+docContabile.getDsDocumento().substring(0, 98));
+				infover.setCausale((infover.getCausale()+" "+docContabile.getDsDocumento()).substring(0, 98));
 			else if(infover.getCausale()!=null)
 				infover.setCausale(infover.getCausale()+" "+docContabile.getDsDocumento());
 			else
