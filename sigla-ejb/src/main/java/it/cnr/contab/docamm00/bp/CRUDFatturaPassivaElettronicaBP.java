@@ -583,7 +583,8 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 			BusinessProcessException {
 		for (Object obj : getCrudArchivioAllegati().getDetails()) {
 			AllegatoFatturaBulk allegatoFatturaBulk = (AllegatoFatturaBulk)obj;
-			if (allegatoFatturaBulk.getAspectName().equalsIgnoreCase("P:sigla_fatture_attachment:comunicazione_non_registrabilita")) {
+			if (allegatoFatturaBulk != null && allegatoFatturaBulk.getAspectName() != null && 
+					allegatoFatturaBulk.getAspectName().equalsIgnoreCase("P:sigla_fatture_attachment:comunicazione_non_registrabilita")) {
 				((DocumentoEleTestataBulk) getModel()).setFlIrregistrabile("S");				
 			}
 		}		
