@@ -613,7 +613,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 					try {
 						Map<String, Object> fileProperties = new HashMap<String, Object>();
 						fileProperties.put(PropertyIds.OBJECT_TYPE_ID, "D:sigla_fatture_attachment:document");
-						fileProperties.put(PropertyIds.NAME, nomeAllegato);
+						fileProperties.put(PropertyIds.NAME, cmisService.sanitizeFilename(nomeAllegato));
 						fileProperties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, 
 								Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla"));
 						fileProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
@@ -715,7 +715,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				}
 			}
 			/**
-			 * Carico l'ordine di acquisto
+			 * Carico l'ordine di acquistoresponsabile2
 			 */
 			List<DocumentoEleAcquistoBulk> acquisti = new ArrayList<DocumentoEleAcquistoBulk>();
 			if (fatturaElettronicaBody.getDatiGenerali() != null) {
