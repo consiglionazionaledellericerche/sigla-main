@@ -374,7 +374,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 		super.setTab(tabName, pageName);
 		DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) getModel();
 		if (documentoEleTestata != null) {
-			if (pageName.equalsIgnoreCase("tabAllegati") && !documentoEleTestata.isIrregistrabile()){
+			if (pageName.equalsIgnoreCase("tabAllegati")){
 				setStatus(EDIT);
 			} else {
 				if (getStatus() == EDIT && !documentoEleTestata.isEditabile())
