@@ -11,6 +11,13 @@
 			nullable="false"
 			primary="true" />
 		<columnMapping
+			columnName="ESERCIZIO_VOCE"
+			propertyName="esercizio_voce"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
 			columnName="TI_APPARTENENZA"
 			propertyName="ti_appartenenza"
 			sqlTypeName="CHAR"
@@ -41,6 +48,9 @@
 	</defaultColumnMap>
 	<persistentProperty
 		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio_voce"
 		partOfOid="true" />
 	<persistentProperty
 		name="ti_appartenenza"

@@ -7,7 +7,6 @@
 	<fieldProperty 
 		name="find_elemento_padre"
 		property="elemento_padre"
-		optionsProperty="elemento_padre"
 		inputType="SEARCHTOOL"
 		enabledOnSearch="true"
 		/>

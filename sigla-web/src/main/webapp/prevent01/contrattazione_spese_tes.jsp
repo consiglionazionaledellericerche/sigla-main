@@ -12,7 +12,7 @@
 	SimpleDetailCRUDController controller = ((CRUDDettagliContrSpeseBP)bp).getCrudDettagliDipArea();
 %>
 
-<%	controller.writeHTMLTable(pageContext,null,true,false,true,"100%","300px"); %>
+<%	controller.writeHTMLTable(pageContext,bp.isFlNuovoPdg()?"nuovoPdg":null,true,false,true,"100%","300px"); %>
 
 <div class="Group">
 	<table class="Panel" cellspacing="2">
@@ -20,10 +20,12 @@
 	  		<td><% controller.writeFormLabel(out,"dipartimento");%></td>
 			<td><% controller.writeFormInput(out,"dipartimento");%></td>
 		</tr>
+		<% if (!bp.isFlNuovoPdg()) { %>
 		<tr>
 	  		<td><% controller.writeFormLabel(out,"area");%></td>
 			<td><% controller.writeFormInput(out,"area");%></td>
 		</tr>
+		<% } %>
 		<tr>
 	  		<td><% controller.writeFormLabel(out,"importo_approvato");%></td>
 			<td><% controller.writeFormInput(out,"importo_approvato");%></td>

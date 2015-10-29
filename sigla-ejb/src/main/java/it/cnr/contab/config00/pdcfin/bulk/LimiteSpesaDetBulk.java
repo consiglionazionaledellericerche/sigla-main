@@ -25,9 +25,9 @@ public class LimiteSpesaDetBulk extends LimiteSpesaDetBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: LIMITE_SPESA_DET
 	 **/
-	public LimiteSpesaDetBulk(java.lang.Integer esercizio, java.lang.String cdCds, java.lang.String tiAppartenenza, java.lang.String tiGestione, java.lang.String cdElementoVoce, java.lang.String fonte) {
-		super(esercizio, cdCds, tiAppartenenza, tiGestione, cdElementoVoce, fonte);
-		setLimiteSpesa( new LimiteSpesaBulk(esercizio,tiAppartenenza,tiGestione,cdElementoVoce,fonte) );
+	public LimiteSpesaDetBulk(java.lang.Integer esercizio, java.lang.String cdCds, java.lang.Integer esercizio_voce, java.lang.String tiAppartenenza, java.lang.String tiGestione, java.lang.String cdElementoVoce, java.lang.String fonte) {
+		super(esercizio, cdCds, esercizio_voce, tiAppartenenza, tiGestione, cdElementoVoce, fonte);
+		setLimiteSpesa( new LimiteSpesaBulk(esercizio,esercizio_voce,tiAppartenenza,tiGestione,cdElementoVoce,fonte) );
 		setCds( new CdsBulk(cdCds) );
 	}
 	/**
@@ -62,6 +62,19 @@ public class LimiteSpesaDetBulk extends LimiteSpesaDetBase {
 	 **/
 	public void setEsercizio(java.lang.Integer esercizio)  {
 		this.getLimiteSpesa().setEsercizio(esercizio);
+	}
+	
+	@Override
+	public Integer getEsercizio_voce() {
+		LimiteSpesaBulk limiteSpesa = this.getLimiteSpesa();
+		if (limiteSpesa == null)
+			return null;
+		return getLimiteSpesa().getEsercizio_voce();
+	}
+	
+	@Override
+	public void setEsercizio_voce(Integer esercizio_voce) {
+		this.getLimiteSpesa().setEsercizio_voce(esercizio_voce);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]

@@ -54,4 +54,7 @@ public class Geco_commessa_pbBulk extends Geco_commessa_pbBase implements Geco_c
 			}
 		}
 	}
+	public Long getId_prog_padre() {
+		return getId_prog();
+	}
 }

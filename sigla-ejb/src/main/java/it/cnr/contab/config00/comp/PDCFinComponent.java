@@ -2,6 +2,7 @@ package it.cnr.contab.config00.comp;
 
 import it.cnr.contab.compensi00.docs.bulk.VCompensoSIPBulk;
 import it.cnr.contab.compensi00.docs.bulk.VCompensoSIPHome;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.esercizio.bulk.*;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.*;
@@ -17,6 +18,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
@@ -59,17 +61,24 @@ public class PDCFinComponent extends it.cnr.jada.comp.CRUDComponent implements I
  */	
 
 public it.cnr.jada.util.RemoteIterator cerca(UserContext userContext,it.cnr.jada.persistency.sql.CompoundFindClause clausole,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
-	Elemento_voceBulk ev = (Elemento_voceBulk) bulk;
-	Elemento_voceHome evHome = (Elemento_voceHome) getHomeCache(userContext).getHome( ev.getClass());
+		Elemento_voceBulk ev = (Elemento_voceBulk) bulk;
+		Elemento_voceHome evHome = (Elemento_voceHome) getHomeCache(userContext).getHome( ev.getClass());
+		
+		try {
+			if (!((Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(userContext)))).getFl_nuovo_pdg().booleanValue())
+				ev.setCd_proprio_elemento( evHome.formatKey( ev.getCd_proprio_elemento(), ev.getTi_appartenenza(), ev.getTi_gestione(), ev.getTi_elemento_voce() ));
+			else
+				ev.setCd_parte(null);
+		} catch (PersistencyException e) {
+			throw handleException(bulk,e);
+		}
 	
- 	ev.setCd_proprio_elemento( evHome.formatKey( ev.getCd_proprio_elemento(), ev.getTi_appartenenza(), ev.getTi_gestione(), ev.getTi_elemento_voce() ));
-
- 	/* DA FARE se si vuole permettere una ricerca impostando il titolo padre 
-	if ( ev instanceof EV_cnr_spese_capitoloBulk )
-		return leggiCnrSpeseCapitoloBulk ( (EV_cnr_spese_capitoloBulk) ev );
-	*/
-	
-	return super.cerca(userContext,clausole, bulk );
+	 	/* DA FARE se si vuole permettere una ricerca impostando il titolo padre 
+		if ( ev instanceof EV_cnr_spese_capitoloBulk )
+			return leggiCnrSpeseCapitoloBulk ( (EV_cnr_spese_capitoloBulk) ev );
+		*/
+		
+		return super.cerca(userContext,clausole, bulk );
 }
 /**
  * Esegue una operazione di creazione di un capitolo di spesa del CNR. Come elemento padre viene assegnata la categoria
@@ -188,29 +197,42 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 	try
 	{
 	
-	if (evBulk.getFl_prelievo().booleanValue() && findElementoVocePrelievo(userContext) != null)
+		if (evBulk.getFl_prelievo().booleanValue() && findElementoVocePrelievo(userContext) != null)
 			throw new  it.cnr.jada.comp.ApplicationException("Attenzione: esiste già un elemento voce di prelievo per l'esercizio.");
+		
 	
-		if ( evBulk instanceof EV_cnr_spese_capitoloBulk )
+		if (!((Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(userContext)))).getFl_nuovo_pdg().booleanValue()) {
+			if ( evBulk instanceof EV_cnr_spese_capitoloBulk )
 				return creaCnrSpeseCapitoloBulk( userContext,(EV_cnr_spese_capitoloBulk)evBulk );
 
+			if (evBulk instanceof EV_cds_spese_capitoloBulk && evBulk.getElemento_padre() == null || OggettoBulk.isNullOrEmpty( evBulk.getElemento_padre().getCd_elemento_voce() ))
+				throw new it.cnr.jada.comp.ApplicationException( "Inserire il codice titolo.");
 	
-	//lock sul padre
-		lockBulk( userContext,evBulk.getElemento_padre() );
-		
-	//generazione e formattazione del codice
-		if ( evBulk.getCd_proprio_elemento() == null || evBulk.getCd_proprio_elemento().equals(""))
-		{
-			String codice = subEvHome.creaNuovoCodice( evBulk );
-			evBulk.setCd_proprio_elemento( subEvHome.formatKey( codice, evBulk.getTi_appartenenza(), evBulk.getTi_gestione(), evBulk.getTi_elemento_voce() ));	
-		}	
-		else
-		 	evBulk.setCd_proprio_elemento( subEvHome.formatKey( evBulk.getCd_proprio_elemento(), evBulk.getTi_appartenenza(), evBulk.getTi_gestione(), evBulk.getTi_elemento_voce() ));
-		
-		evBulk.setCd_elemento_voce( evBulk.getElemento_padre().getCd_elemento_voce().concat(".").concat( evBulk.getCd_proprio_elemento() ));
+			if (evBulk instanceof EV_cnr_entrate_capitoloBulk && evBulk.getElemento_padre() == null || OggettoBulk.isNullOrEmpty( evBulk.getElemento_padre().getCd_elemento_voce() ))
+				throw new it.cnr.jada.comp.ApplicationException( "Inserire il codice categoria.");
 
-		if ( evBulk instanceof EV_cds_spese_capitoloBulk )
-			inizializzaCdsSpeseCapitoloBulk( (EV_cds_spese_capitoloBulk)evBulk );				
+			//lock sul padre
+			lockBulk( userContext,evBulk.getElemento_padre() );
+	
+			//generazione e formattazione del codice
+			if ( evBulk.getCd_proprio_elemento() == null || evBulk.getCd_proprio_elemento().equals(""))
+			{
+				String codice = subEvHome.creaNuovoCodice( evBulk );
+				evBulk.setCd_proprio_elemento( subEvHome.formatKey( codice, evBulk.getTi_appartenenza(), evBulk.getTi_gestione(), evBulk.getTi_elemento_voce() ));	
+			}	
+			else
+			 	evBulk.setCd_proprio_elemento( subEvHome.formatKey( evBulk.getCd_proprio_elemento(), evBulk.getTi_appartenenza(), evBulk.getTi_gestione(), evBulk.getTi_elemento_voce() ));
+	
+			evBulk.setCd_elemento_voce( evBulk.getElemento_padre().getCd_elemento_voce().concat(".").concat( evBulk.getCd_proprio_elemento() ));
+			
+			if ( evBulk instanceof EV_cds_spese_capitoloBulk )
+				inizializzaCdsSpeseCapitoloBulk( (EV_cds_spese_capitoloBulk)evBulk );				
+		} else {
+			if ( evBulk.getCd_proprio_elemento() == null || evBulk.getCd_proprio_elemento().equals(""))
+				throw new  it.cnr.jada.comp.ApplicationException( "Inserire il campo Codice Proprio." );
+			
+			evBulk.setCd_elemento_voce( evBulk.getCd_proprio_elemento());			
+		}
 
 		makeBulkPersistent( userContext,evBulk );
 	

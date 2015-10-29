@@ -234,109 +234,165 @@
 		<columnFieldProperty name="tot_inc_a1" label="Totale" headerLabel="Previsione di cassa anno corrente"/>
 	</columnSet>
 	
-	<columnSet name="ETRDIPTIP">
+	<!-- Columnset per Aree Progettuali -->
+	<columnSet name="ETRDIP2">
 		<columnFieldProperty name="cd_dipartimento" />
-		<columnFieldProperty name="cd_tipo_modulo" />
-		<columnFieldProperty name="ds_tipo_modulo" />
-		<columnFieldProperty name="tot_ent_ist_a1" label="Istituto" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_ent_aree_a1" label="Aree" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_ent_a1" label="Totale" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_inc_ist_a1" label="Istituto" headerLabel="Previsione di cassa anno corrente"/>
-		<columnFieldProperty name="tot_inc_aree_a1" label="Aree" headerLabel="Previsione di cassa anno corrente"/>
-		<columnFieldProperty name="tot_inc_a1" label="Totale" headerLabel="Previsione di cassa anno corrente"/>
+		<columnFieldProperty name="ds_dipartimento" />
+		<columnFieldProperty name="tot_ent_ist_a1" label="Previsione anno corrente"/>
+		<columnFieldProperty name="tot_inc_ist_a1" label="Previsione di cassa anno corrente"/>
 	</columnSet>
-	<columnSet name="ETRDIPTIPCDR">
+
+	<columnSet name="ETRDIP2PRO">
 		<columnFieldProperty name="cd_dipartimento" />
-		<columnFieldProperty name="cd_tipo_modulo" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="ds_progetto" />
+		<columnFieldProperty name="tot_ent_ist_a1" label="Previsione anno corrente"/>
+		<columnFieldProperty name="tot_inc_ist_a1" label="Previsione di cassa anno corrente"/>
+	</columnSet>
+	
+	<columnSet name="ETRDIP2PROCOM">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="ds_commessa" />
+		<columnFieldProperty name="tot_ent_ist_a1" label="Previsione anno corrente"/>
+		<columnFieldProperty name="tot_inc_ist_a1" label="Previsione di cassa anno corrente"/>
+	</columnSet>
+	<columnSet name="ETRDIP2PROCOMCDR">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
 		<columnFieldProperty name="cd_centro_responsabilita" />
 		<columnFieldProperty name="ds_cdr" />
-		<columnFieldProperty name="tot_ent_ist_a1" label="Istituto" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_ent_aree_a1" label="Aree" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_ent_a1" label="Totale" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_inc_ist_a1" label="Istituto" headerLabel="Previsione di cassa anno corrente"/>
-		<columnFieldProperty name="tot_inc_aree_a1" label="Aree" headerLabel="Previsione di cassa anno corrente"/>
-		<columnFieldProperty name="tot_inc_a1" label="Totale" headerLabel="Previsione di cassa anno corrente"/>
+		<columnFieldProperty name="tot_ent_ist_a1" label="Previsione anno corrente"/>
+		<columnFieldProperty name="tot_inc_ist_a1" label="Previsione di cassa anno corrente"/>
 	</columnSet>
-	<columnSet name="ETRDIPTIPCDRMOD">
+	<columnSet name="ETRDIP2PROCOMCDRLIV1">
 		<columnFieldProperty name="cd_dipartimento" />
-		<columnFieldProperty name="cd_tipo_modulo" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
 		<columnFieldProperty name="cd_centro_responsabilita" />
-		<columnFieldProperty name="cd_modulo" />
-		<columnFieldProperty name="ds_modulo" />
-		<columnFieldProperty name="tot_ent_ist_a1" label="Istituto" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_ent_aree_a1" label="Aree" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_ent_a1" label="Totale" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_inc_ist_a1" label="Istituto" headerLabel="Previsione di cassa anno corrente"/>
-		<columnFieldProperty name="tot_inc_aree_a1" label="Aree" headerLabel="Previsione di cassa anno corrente"/>
-		<columnFieldProperty name="tot_inc_a1" label="Totale" headerLabel="Previsione di cassa anno corrente"/>
-	</columnSet>
-	<columnSet name="ETRDIPTIPCDRMODLIV1">
-		<columnFieldProperty name="cd_dipartimento" />
-		<columnFieldProperty name="cd_tipo_modulo" />
-		<columnFieldProperty name="cd_centro_responsabilita" />
-		<columnFieldProperty name="cd_modulo" />
 		<columnFieldProperty name="cd_livello1" />
 		<columnFieldProperty name="ds_classificazione" />
-		<columnFieldProperty name="tot_ent_ist_a1" label="Istituto" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_ent_aree_a1" label="Aree" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_ent_a1" label="Totale" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_inc_ist_a1" label="Istituto" headerLabel="Previsione di cassa anno corrente"/>
-		<columnFieldProperty name="tot_inc_aree_a1" label="Aree" headerLabel="Previsione di cassa anno corrente"/>
-		<columnFieldProperty name="tot_inc_a1" label="Totale" headerLabel="Previsione di cassa anno corrente"/>
+		<columnFieldProperty name="tot_ent_ist_a1" label="Previsione anno corrente"/>
+		<columnFieldProperty name="tot_inc_ist_a1" label="Previsione di cassa anno corrente"/>
 	</columnSet>	
-	<columnSet name="ETRDIPTIPCDRMODLIV1LIV2">
+	
+	<columnSet name="ETRDIP2PROCOMCDRLIV1LIV2">
 		<columnFieldProperty name="cd_dipartimento" />
-		<columnFieldProperty name="cd_tipo_modulo" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
 		<columnFieldProperty name="cd_centro_responsabilita" />
-		<columnFieldProperty name="cd_modulo" />
 		<columnFieldProperty name="cd_livello1" />
 		<columnFieldProperty name="cd_livello2" />
 		<columnFieldProperty name="ds_classificazione" />
-		<columnFieldProperty name="tot_ent_ist_a1" label="Istituto" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_ent_aree_a1" label="Aree" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_ent_a1" label="Totale" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_inc_ist_a1" label="Istituto" headerLabel="Previsione di cassa anno corrente"/>
-		<columnFieldProperty name="tot_inc_aree_a1" label="Aree" headerLabel="Previsione di cassa anno corrente"/>
-		<columnFieldProperty name="tot_inc_a1" label="Totale" headerLabel="Previsione di cassa anno corrente"/>
+		<columnFieldProperty name="tot_ent_ist_a1" label="Previsione anno corrente"/>
+		<columnFieldProperty name="tot_inc_ist_a1" label="Previsione di cassa anno corrente"/>
 	</columnSet>
-	<columnSet name="ETRDIPTIPCDRMODLIV1LIV2LIV3">
+	<columnSet name="ETRDIP2PROCOMCDRLIV1LIV2LIV3">
 		<columnFieldProperty name="cd_dipartimento" />
-		<columnFieldProperty name="cd_tipo_modulo" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
 		<columnFieldProperty name="cd_centro_responsabilita" />
-		<columnFieldProperty name="cd_modulo" />
 		<columnFieldProperty name="cd_livello1" />
 		<columnFieldProperty name="cd_livello2" />
 		<columnFieldProperty name="cd_livello3" />
 		<columnFieldProperty name="ds_classificazione" />
-		<columnFieldProperty name="tot_ent_ist_a1" label="Istituto" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_ent_aree_a1" label="Aree" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_ent_a1" label="Totale" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_inc_ist_a1" label="Istituto" headerLabel="Previsione di cassa anno corrente"/>
-		<columnFieldProperty name="tot_inc_aree_a1" label="Aree" headerLabel="Previsione di cassa anno corrente"/>
-		<columnFieldProperty name="tot_inc_a1" label="Totale" headerLabel="Previsione di cassa anno corrente"/>
+		<columnFieldProperty name="tot_ent_ist_a1" label="Previsione anno corrente"/>
+		<columnFieldProperty name="tot_inc_ist_a1" label="Previsione di cassa anno corrente"/>
 	</columnSet>
-	<columnSet name="ETRDIPTIPCDRMODLIV1LIV2LIV3VOC">
+	<columnSet name="ETRDIP2PROCOMCDRLIV1LIV2LIV3VOC">
 		<columnFieldProperty name="cd_dipartimento" />
-		<columnFieldProperty name="cd_tipo_modulo" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
 		<columnFieldProperty name="cd_centro_responsabilita" />
-		<columnFieldProperty name="cd_modulo" />
 		<columnFieldProperty name="cd_livello1" />
 		<columnFieldProperty name="cd_livello2" />
 		<columnFieldProperty name="cd_livello3" />
 		<columnFieldProperty name="cd_elemento_voce" />
 		<columnFieldProperty name="ds_elemento_voce" />
-		<columnFieldProperty name="tot_ent_ist_a1" label="Istituto" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_ent_aree_a1" label="Aree" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_ent_a1" label="Totale" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_inc_ist_a1" label="Istituto" headerLabel="Previsione di cassa anno corrente"/>
-		<columnFieldProperty name="tot_inc_aree_a1" label="Aree" headerLabel="Previsione di cassa anno corrente"/>
-		<columnFieldProperty name="tot_inc_a1" label="Totale" headerLabel="Previsione di cassa anno corrente"/>
+		<columnFieldProperty name="tot_ent_ist_a1" label="Previsione anno corrente"/>
+		<columnFieldProperty name="tot_inc_ist_a1" label="Previsione di cassa anno corrente"/>
 	</columnSet>
-	<columnSet name="ETRDIPTIPCDRMODLIV1LIV2LIV3VOCDET">
+	<columnSet name="ETRDIP2PROCOMCDRLIV1LIV2LIV3VOCDET">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="cd_classificazione" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="cd_elemento_voce" />
+		<columnFieldProperty name="ds_dettaglio" />
+		<columnFieldProperty name="tot_ent_ist_a1" label="Previsione anno corrente"/>
+		<columnFieldProperty name="tot_inc_ist_a1" label="Previsione di cassa anno corrente"/>
+	</columnSet>
+
+
+	<!-- ColumnSet per Aree Gestionali -->
+	<columnSet name="ETRDIP2TIP">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_tipo_modulo" />
+		<columnFieldProperty name="ds_tipo_modulo" />
+		<columnFieldProperty name="tot_ent_ist_a1" label="Previsione anno corrente"/>
+		<columnFieldProperty name="tot_inc_ist_a1" label="Previsione di cassa anno corrente"/>
+	</columnSet>
+	<columnSet name="ETRDIP2TIPCDR">
 		<columnFieldProperty name="cd_dipartimento" />
 		<columnFieldProperty name="cd_tipo_modulo" />
 		<columnFieldProperty name="cd_centro_responsabilita" />
-		<columnFieldProperty name="cd_modulo" />
+		<columnFieldProperty name="ds_cdr" />
+		<columnFieldProperty name="tot_ent_ist_a1" label="Previsione anno corrente"/>
+		<columnFieldProperty name="tot_inc_ist_a1" label="Previsione di cassa anno corrente"/>
+	</columnSet>
+	<columnSet name="ETRDIP2TIPCDRLIV1">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_tipo_modulo" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="tot_ent_ist_a1" label="Previsione anno corrente"/>
+		<columnFieldProperty name="tot_inc_ist_a1" label="Previsione di cassa anno corrente"/>
+	</columnSet>	
+	<columnSet name="ETRDIP2TIPCDRLIV1LIV2">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_tipo_modulo" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="tot_ent_ist_a1" label="Previsione anno corrente"/>
+		<columnFieldProperty name="tot_inc_ist_a1" label="Previsione di cassa anno corrente"/>
+	</columnSet>
+	<columnSet name="ETRDIP2TIPCDRLIV1LIV2LIV3">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_tipo_modulo" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="tot_ent_ist_a1" label="Previsione anno corrente"/>
+		<columnFieldProperty name="tot_inc_ist_a1" label="Previsione di cassa anno corrente"/>
+	</columnSet>
+	<columnSet name="ETRDIP2TIPCDRLIV1LIV2LIV3VOC">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_tipo_modulo" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="cd_elemento_voce" />
+		<columnFieldProperty name="ds_elemento_voce" />
+		<columnFieldProperty name="tot_ent_ist_a1" label="Previsione anno corrente"/>
+		<columnFieldProperty name="tot_inc_ist_a1" label="Previsione di cassa anno corrente"/>
+	</columnSet>
+	<columnSet name="ETRDIP2TIPCDRLIV1LIV2LIV3VOCDET">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_tipo_modulo" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
 		<columnFieldProperty name="cd_livello1" />
 		<columnFieldProperty name="cd_livello2" />
 		<columnFieldProperty name="cd_livello3" />
@@ -348,11 +404,7 @@
 		<columnFieldProperty name="ds_commessa" />
 		<columnFieldProperty name="cd_elemento_voce" />
 		<columnFieldProperty name="ds_dettaglio" />
-		<columnFieldProperty name="tot_ent_ist_a1" label="Istituto" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_ent_aree_a1" label="Aree" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_ent_a1" label="Totale" headerLabel="Previsione anno corrente"/>
-		<columnFieldProperty name="tot_inc_ist_a1" label="Istituto" headerLabel="Previsione di cassa anno corrente"/>
-		<columnFieldProperty name="tot_inc_aree_a1" label="Aree" headerLabel="Previsione di cassa anno corrente"/>
-		<columnFieldProperty name="tot_inc_a1" label="Totale" headerLabel="Previsione di cassa anno corrente"/>
-	</columnSet>
+		<columnFieldProperty name="tot_ent_ist_a1" label="Previsione anno corrente"/>
+		<columnFieldProperty name="tot_inc_ist_a1" label="Previsione di cassa anno corrente"/>
+	</columnSet>	
 </bulkInfo>

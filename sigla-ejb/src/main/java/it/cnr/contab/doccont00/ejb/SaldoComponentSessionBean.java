@@ -272,7 +272,7 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	public java.math.BigDecimal getTotaleSaldoResidui(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param3)  throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	public java.math.BigDecimal getTotaleSaldoResidui(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3)  throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
 			java.math.BigDecimal result = componentObj.getTotaleSaldoResidui(param0,param1,param2,param3);

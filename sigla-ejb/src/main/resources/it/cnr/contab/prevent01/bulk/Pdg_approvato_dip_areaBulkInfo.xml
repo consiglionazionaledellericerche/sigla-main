@@ -105,6 +105,7 @@
 		name="importo_approvato" />
 	<formFieldProperty
 		name="importo_ripartito" />
+
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
@@ -115,6 +116,7 @@
 		name="cd_cds_area" />
 	<findFieldProperty
 		name="importo_approvato" />
+
 	<columnFieldProperty
 		name="cd_dipartimento" />
 	<columnFieldProperty
@@ -127,4 +129,26 @@
 		name="importo_approvato" />
 	<columnFieldProperty
 		name="importo_ripartito" />
+		
+	<columnSet name="nuovoPdg">
+		<columnFieldProperty
+			name="cd_dipartimento" />
+		<columnFieldProperty
+			name="ds_dipartimento" />
+		<columnFieldProperty
+			name="importo_approvato" />
+		<columnFieldProperty
+			name="importo_ripartito" />
+	</columnSet>
+	
+	<freeSearchSet name="nuovoPdg">
+		<findFieldProperty
+			name="esercizio" />
+		<findFieldProperty
+			name="cd_dipartimento" />
+		<findFieldProperty
+			name="pg_dettaglio" />
+		<findFieldProperty
+			name="importo_approvato" />
+	</freeSearchSet>
 </bulkInfo>

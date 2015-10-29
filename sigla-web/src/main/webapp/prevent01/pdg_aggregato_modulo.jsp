@@ -36,9 +36,13 @@
 </div>
 
 <div class="Group">
-	<table border="0" cellspacing="0" cellpadding="0">
+	<table border="0" cellspacing="0" cellpadding="0" width="80%">
 		<td>
-		<%	controller.writeHTMLTable(pageContext,null,true,false,true,"100%","180px"); %>
+		<%	if (bp.getParametriCnr().getFl_nuovo_pdg()) 
+				controller.writeHTMLTable(pageContext,"prg_liv2",true,false,true,"100%","180px");
+			else
+				controller.writeHTMLTable(pageContext,null,true,false,true,"100%","180px");
+		%>
 		</td>
 	</table>
 </div>
@@ -46,7 +50,13 @@
 <div class="Group">
 	<table border="0" cellspacing="0" cellpadding="2">
 		<tr>
-			<td><% controller.writeFormField(out,"searchtool_progetto");%></td>
+			<td>
+			<%	if (bp.getParametriCnr().getFl_nuovo_pdg()) 
+					controller.writeFormField(out,"searchtool_progetto_liv2");
+				else
+					controller.writeFormField(out,"searchtool_progetto");
+			%>
+			</td>
 		</tr>
 	</table>
 	<table border="0" cellspacing="0" cellpadding="2">

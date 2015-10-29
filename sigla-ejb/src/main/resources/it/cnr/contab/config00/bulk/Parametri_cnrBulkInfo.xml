@@ -245,6 +245,13 @@
 		property="fl_credito_irpef"
 		inputType="CHECKBOX"
 		label="Gestione Credito Irpef" />		
+	<fieldProperty
+		name="fl_nuovo_pdg"
+		property="fl_nuovo_pdg"
+		inputType="CHECKBOX"
+		label="Nuova Gestione PDG" />		
+
+
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -289,6 +296,8 @@
 	        name="fl_detrazioni_family" />
 	<formFieldProperty
 	        name="fl_siope" />
+	<formFieldProperty
+		name="fl_nuovo_pdg" />						      
 	<formFieldProperty
 		name="ricerca_prof_int_giorni_pubbl"
 	    label="Giorni di pubblicazione per la&lt;BR&gt;Verifica Professionalit? Interne" />

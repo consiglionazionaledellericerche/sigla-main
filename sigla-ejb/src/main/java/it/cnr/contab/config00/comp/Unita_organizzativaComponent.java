@@ -1,6 +1,7 @@
 package it.cnr.contab.config00.comp;
 
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.esercizio.bulk.*;
 
 import java.util.*;
@@ -574,25 +575,32 @@ private void creaEsplSottArtArea(UserContext aUC, Integer aEsercizio, String cdA
 {
 	try
 	{
-		LoggableStatement cs = new LoggableStatement(getConnection( aUC ),"{call "+EJBCommonServices.getDefaultSchema()
-				+"CNRCTB001.creaEsplSottArtArea(?,?,?)}",false,this.getClass());
-		try
-		{
-			cs.setObject( 1, aEsercizio );
-			cs.setString( 2, cdArea);
-			cs.setObject( 3, aUC.getUser());
-			cs.executeQuery();
-		}
-		catch (Throwable e) 
-		{
-			throw handleException(e);
-		}
-		finally
-		{
-			cs.close();
+		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(aUC, aEsercizio);
+		if (!parCnr.getFl_nuovo_pdg()) {
+			LoggableStatement cs = new LoggableStatement(getConnection( aUC ),"{call "+EJBCommonServices.getDefaultSchema()
+					+"CNRCTB001.creaEsplSottArtArea(?,?,?)}",false,this.getClass());
+			try
+			{
+				cs.setObject( 1, aEsercizio );
+				cs.setString( 2, cdArea);
+				cs.setObject( 3, aUC.getUser());
+				cs.executeQuery();
+			}
+			catch (Throwable e) 
+			{
+				throw handleException(e);
+			}
+			finally
+			{
+				cs.close();
+			}
 		}
 	}
 	catch ( SQLException e )
+	{
+		throw handleException(e);
+	}
+	catch ( Exception e )
 	{
 		throw handleException(e);
 	}	
@@ -1021,25 +1029,28 @@ public void insertBulk(UserContext userContext,OggettoBulk o) throws Persistency
 	{
 		try
 		{
-			CdrBulk cdr = (CdrBulk) o;
-			lockBulk( userContext, cdr );
-			/* CNRCTB001.creaEsplVociCDR(?,?,?) */
-			LoggableStatement cs = new LoggableStatement(getConnection( userContext ),"{call " + it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() 
-					+ "CNRCTB001.creaEsplVociCDR(?,?,?)}",false,this.getClass());
-			try
-			{
-				cs.setObject( 1, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio() );
-				cs.setString( 2, cdr.getCd_centro_responsabilita());
-				cs.setString( 3, null); // passando null come user, i dati relativi a dacr/duva/utcr/utuv vengono ereditati dal cdr specificato
-				cs.executeQuery();
-			}
-			catch ( Exception e )
-			{
-				throw handleException( o, e );
-			}
-			finally
-			{
-				cs.close();
+			Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio());
+			if (!parCnr.getFl_nuovo_pdg()) {
+				CdrBulk cdr = (CdrBulk) o;
+				lockBulk( userContext, cdr );
+				/* CNRCTB001.creaEsplVociCDR(?,?,?) */
+				LoggableStatement cs = new LoggableStatement(getConnection( userContext ),"{call " + it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() 
+						+ "CNRCTB001.creaEsplVociCDR(?,?,?)}",false,this.getClass());
+				try
+				{
+					cs.setObject( 1, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio() );
+					cs.setString( 2, cdr.getCd_centro_responsabilita());
+					cs.setString( 3, null); // passando null come user, i dati relativi a dacr/duva/utcr/utuv vengono ereditati dal cdr specificato
+					cs.executeQuery();
+				}
+				catch ( Exception e )
+				{
+					throw handleException( o, e );
+				}
+				finally
+				{
+					cs.close();
+				}
 			}
 		}
 		catch ( Exception e )
@@ -1051,27 +1062,31 @@ public void insertBulk(UserContext userContext,OggettoBulk o) throws Persistency
 	{
 		try
 		{
-			lockBulk( userContext, o );
-			/* CNRCTB001.creaEsplVociUO(?,?) */
-			LoggableStatement cs = new LoggableStatement(getConnection( userContext ), "{call " + it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
-					+ "CNRCTB001.creaEsplVociUO(?,?,?)}",false,this.getClass());
-			try
-			{
-				cs.setObject( 1, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio() );
-				if ( o instanceof CdsBulk )
-					cs.setString( 2, ((CdsBulk)o).getCd_unita_organizzativa());
-				else
-					cs.setString( 2, ((Unita_organizzativaBulk)o).getCd_unita_organizzativa());			
-				cs.setString( 3, null); // settando user a null, duva/dacr/utcr e utuv sono ereditati dall'UO in processo
-				cs.executeQuery();
-			}
-			catch ( Exception e )
-			{
-				throw handleException( o, e );
-			}
-			finally
-			{
-				cs.close();
+			Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio());
+			if (!parCnr.getFl_nuovo_pdg()) {
+
+				lockBulk( userContext, o );
+				/* CNRCTB001.creaEsplVociUO(?,?) */
+				LoggableStatement cs = new LoggableStatement(getConnection( userContext ), "{call " + it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
+						+ "CNRCTB001.creaEsplVociUO(?,?,?)}",false,this.getClass());
+				try
+				{
+					cs.setObject( 1, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio() );
+					if ( o instanceof CdsBulk )
+						cs.setString( 2, ((CdsBulk)o).getCd_unita_organizzativa());
+					else
+						cs.setString( 2, ((Unita_organizzativaBulk)o).getCd_unita_organizzativa());			
+					cs.setString( 3, null); // settando user a null, duva/dacr/utcr e utuv sono ereditati dall'UO in processo
+					cs.executeQuery();
+				}
+				catch ( Exception e )
+				{
+					throw handleException( o, e );
+				}
+				finally
+				{
+					cs.close();
+				}
 			}
 		}
 		catch ( Exception e )
@@ -1491,27 +1506,30 @@ public void updateBulk(UserContext userContext,OggettoBulk o) throws Persistency
 	{
 		try
 		{
-			lockBulk( userContext, o );
-			/* CNRCTB001.creaEsplVociUO(?,?) */
-			LoggableStatement cs = new LoggableStatement(getConnection( userContext ),"{call " + it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
-					+ "CNRCTB001.creaEsplVociUO(?,?,?)}",false,this.getClass());
-			try
-			{
-				cs.setObject( 1, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio() );
-				if ( o instanceof CdsBulk )
-					cs.setString( 2, ((CdsBulk)o).getCd_unita_organizzativa());
-				else
-					cs.setString( 2, ((Unita_organizzativaBulk)o).getCd_unita_organizzativa());			
-				cs.setString( 3, null); // settando user a null, duva/dacr/utcr e utuv sono ereditati dall'UO in processo			
-				cs.executeQuery();
-			}
-			catch ( Exception e )
-			{
-				throw handleException( o, e );
-			}
-			finally
-			{
-				cs.close();
+			Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio());
+			if (!parCnr.getFl_nuovo_pdg()) {
+				lockBulk( userContext, o );
+				/* CNRCTB001.creaEsplVociUO(?,?) */
+				LoggableStatement cs = new LoggableStatement(getConnection( userContext ),"{call " + it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
+						+ "CNRCTB001.creaEsplVociUO(?,?,?)}",false,this.getClass());
+				try
+				{
+					cs.setObject( 1, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio() );
+					if ( o instanceof CdsBulk )
+						cs.setString( 2, ((CdsBulk)o).getCd_unita_organizzativa());
+					else
+						cs.setString( 2, ((Unita_organizzativaBulk)o).getCd_unita_organizzativa());			
+					cs.setString( 3, null); // settando user a null, duva/dacr/utcr e utuv sono ereditati dall'UO in processo			
+					cs.executeQuery();
+				}
+				catch ( Exception e )
+				{
+					throw handleException( o, e );
+				}
+				finally
+				{
+					cs.close();
+				}
 			}
 		}
 		catch ( Exception e )

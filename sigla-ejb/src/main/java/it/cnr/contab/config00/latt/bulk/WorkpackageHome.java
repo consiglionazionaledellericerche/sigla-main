@@ -122,8 +122,15 @@ public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,Og
 public java.util.Collection findDettagliPostIt(WorkpackageBulk testata) throws IntrospectionException, PersistencyException {
 	PersistentHome dettHome = getHomeCache().getHome(PostItBulk.class);
 	SQLBuilder sql = dettHome.createSQLBuilder();
-	sql.addClause("AND","cd_centro_responsabilita",sql.EQUALS,testata.getCd_centro_responsabilita());
-	sql.addClause("AND","cd_linea_attivita",sql.EQUALS,testata.getCd_linea_attivita());
+	sql.addClause("AND","cd_centro_responsabilita",SQLBuilder.EQUALS,testata.getCd_centro_responsabilita());
+	sql.addClause("AND","cd_linea_attivita",SQLBuilder.EQUALS,testata.getCd_linea_attivita());
+	return dettHome.fetchAll(sql);
+}
+public java.util.Collection findDettagliEsercizio(WorkpackageBulk testata) throws IntrospectionException, PersistencyException {
+	PersistentHome dettHome = getHomeCache().getHome(Ass_linea_attivita_esercizioBulk.class);
+	SQLBuilder sql = dettHome.createSQLBuilder();
+	sql.addClause("AND","cd_centro_responsabilita",SQLBuilder.EQUALS,testata.getCd_centro_responsabilita());
+	sql.addClause("AND","cd_linea_attivita",SQLBuilder.EQUALS,testata.getCd_linea_attivita());
 	return dettHome.fetchAll(sql);
 }
 public DipartimentoBulk findDipartimento( UserContext userContext, WorkpackageBulk linea )  throws it.cnr.jada.comp.ComponentException, PersistencyException  

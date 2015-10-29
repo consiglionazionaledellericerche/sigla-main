@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.EJBException;
 import java.util.Collection;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.*;
 import it.cnr.contab.pdg00.cdip.bulk.*;
@@ -620,8 +621,13 @@ try {
 		sql.closeParenthesis();
 	}
 	// Obbligatorio cofog sulle GAE
-	if(((Parametri_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).isCofogObbligatorio(userContext))
+	Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, CNRUserContext.getEsercizio(userContext)); 
+	if (parCnr.isCofogObbligatorio())
 		sql.addSQLClause("AND","CD_COFOG",SQLBuilder.ISNOTNULL,null);
+	if (parCnr.getFl_nuovo_pdg()) {
+		sql.addSQLClause(FindClause.AND,"CD_PROGRAMMA",SQLBuilder.ISNOTNULL,null);
+		sql.addSQLClause(FindClause.AND,"CD_MISSIONE",SQLBuilder.ISNOTNULL,null);
+	}
 //Filtro che estrae solo le linee di attività di spesa: 25/02/2002
 	sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.TI_GESTIONE",SQLBuilder.EQUALS, it.cnr.contab.config00.latt.bulk.WorkpackageBulk.TI_GESTIONE_SPESE);
 	sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
@@ -688,8 +694,13 @@ public java.util.List listaLinea_attivitaPerRipartizioneResidui(UserContext user
 		sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
 		
 		// Obbligatorio cofog sulle GAE
-		if(((Parametri_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession",Parametri_cnrComponentSession.class)).isCofogObbligatorio(userContext))
+		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, CNRUserContext.getEsercizio(userContext)); 
+		if (parCnr.isCofogObbligatorio())
 			sql.addSQLClause("AND","CD_COFOG",SQLBuilder.ISNOTNULL,null);
+		if (parCnr.getFl_nuovo_pdg()) {
+			sql.addSQLClause(FindClause.AND,"CD_PROGRAMMA",SQLBuilder.ISNOTNULL,null);
+			sql.addSQLClause(FindClause.AND,"CD_MISSIONE",SQLBuilder.ISNOTNULL,null);
+		}
 // Tolta perchè voglio vedere tutte le linee di attività anche se sono già
 // state scaricate
 //		sql.addSQLClause("AND","NOT EXISTS ( SELECT 1 FROM ASS_CDP_LA WHERE ASS_CDP_LA.ESERCIZIO = LINEA_ATTIVITA.ESERCIZIO AND ASS_CDP_LA.CD_CENTRO_RESPONSABILITA = LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA AND ASS_CDP_LA.CD_LINEA_ATTIVITA = LINEA_ATTIVITA.CD_LINEA_ATTIVITA )");
@@ -1337,7 +1348,7 @@ private CdrBulk getCdrPdgP (UserContext userContext, CdrBulk cdrUtente)  throws 
 			throw new ApplicationException("L'utente non è configurato correttamente per l'utilizzo del pdg preliminare");
 		
 		// riempiamo i dati di cdrUtente.getUnita_padre() dato che ci servono
-		getHome(userContext,cdrUtente.getUnita_padre()).findByPrimaryKey(cdrUtente.getUnita_padre());
+		cdrUtente.setUnita_padre((Unita_organizzativaBulk)getHome(userContext,cdrUtente.getUnita_padre()).findByPrimaryKey(cdrUtente.getUnita_padre()));
 		
 		if (cdrUtente.getLivello().equals(new Integer(1)) || cdrUtente.getUnita_padre().isUoArea() ||
 			isCdrSAC(userContext, cdrUtente)) {
@@ -1507,17 +1518,19 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, CdrBulk cdr,
  */
 public boolean isModuloUtilizzato (UserContext userContext, CdrBulk cdr, Progetto_sipBulk modulo)  throws ComponentException {
 	try {
+		int esercizio = CNRUserContext.getEsercizio(userContext);
+
 		SQLBuilder sql = getHome(userContext, Ass_cdp_laBulk.class).createSQLBuilder();
-			
 		sql.addToHeader("V_STRUTTURA_ORGANIZZATIVA");
-		sql.addToHeader("LINEA_ATTIVITA");
-		sql.addSQLClause("AND","LINEA_ATTIVITA.PG_PROGETTO",sql.EQUALS,modulo.getPg_progetto());
-		sql.addSQLJoin("ASS_CDP_LA.CD_CENTRO_RESPONSABILITA", "LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA");
-		sql.addSQLJoin("ASS_CDP_LA.CD_LINEA_ATTIVITA", "LINEA_ATTIVITA.CD_LINEA_ATTIVITA");		
-		sql.addSQLClause("AND","ASS_CDP_LA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.addToHeader("V_LINEA_ATTIVITA_VALIDA");
+		sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,esercizio);
+		sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO",SQLBuilder.EQUALS,modulo.getPg_progetto());
+		sql.addSQLJoin("ASS_CDP_LA.ESERCIZIO", "V_LINEA_ATTIVITA_VALIDA.ESERCIZIO");
+		sql.addSQLJoin("ASS_CDP_LA.CD_CENTRO_RESPONSABILITA", "V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA");
+		sql.addSQLJoin("ASS_CDP_LA.CD_LINEA_ATTIVITA", "V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA");		
 		sql.addSQLJoin("ASS_CDP_LA.ESERCIZIO", "V_STRUTTURA_ORGANIZZATIVA.ESERCIZIO");
 		sql.addSQLJoin("ASS_CDP_LA.CD_CENTRO_RESPONSABILITA", "V_STRUTTURA_ORGANIZZATIVA.CD_ROOT");
-		sql.addSQLClause("AND","V_STRUTTURA_ORGANIZZATIVA.CD_CDR_AFFERENZA",sql.EQUALS,cdr.getCd_centro_responsabilita());
+		sql.addSQLClause("AND","V_STRUTTURA_ORGANIZZATIVA.CD_CDR_AFFERENZA",SQLBuilder.EQUALS,cdr.getCd_centro_responsabilita());
 	
 		List result = getHome( userContext, Ass_cdp_laBulk.class ).fetchAll( sql );
 		if ( result.size() > 0 )
