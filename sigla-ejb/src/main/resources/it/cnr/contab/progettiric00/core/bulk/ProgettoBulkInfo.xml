@@ -277,6 +277,16 @@
 		enabledOnFreeSearch="true"
 		layout="HORIZONTAL" />
 	<fieldProperty
+		name="livello2016"
+		property="livello"
+		keysProperty="livello_progetto2016Keys"
+		label="Livello"
+		inputType="ROTEXT"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		layout="HORIZONTAL" />
+	<fieldProperty
 		name="livello_padre"
 		property="progettopadre.livello"
 		keysProperty="livello_progettoKeys"
@@ -598,7 +608,9 @@
 	<formFieldProperty
 		name="ds_progetto_padre" />		
 	<formFieldProperty
-		name="livello" />				
+		name="livello" />
+	<formFieldProperty
+		name="livello2016" />
 	<formFieldProperty
 		name="livello_padre" />
 	<formFieldProperty
@@ -692,6 +704,47 @@
 		name="durata_progetto" />
 	<columnFieldProperty
 		name="note" />
+
+	<columnSet name="nuovoPdg">
+		<columnFieldProperty
+			name="livello2016" />
+		<columnFieldProperty
+			name="cd_progetto" />
+		<columnFieldProperty
+			name="cd_progetto_padre" 
+			label="Area Progettuale"/>
+		<columnFieldProperty
+			name="cd_unita_organizzativa" />
+		<columnFieldProperty
+			name="ds_unita_organizzativa" />
+		<columnFieldProperty
+			name="importo_progetto" />
+		<columnFieldProperty
+			name="importo_divisa" />
+		<columnFieldProperty
+			name="dt_proroga" />
+		<columnFieldProperty
+			name="cd_divisa" />
+		<columnFieldProperty
+			name="ds_progetto" />
+		<columnFieldProperty
+			name="cd_responsabile_terzo" />
+		<columnFieldProperty
+			name="cd_responsabile_denominazione"
+			property="responsabile.denominazione_sede" />
+		<columnFieldProperty
+			name="dt_inizio" />
+		<columnFieldProperty
+			name="dt_fine" />
+		<columnFieldProperty
+			name="cd_tipo_progetto" />
+		<columnFieldProperty
+			name="stato" />
+		<columnFieldProperty
+			name="durata_progetto" />
+		<columnFieldProperty
+			name="note" />
+	</columnSet>
 	
 	<columnSet	name="restService">
 		<columnFieldProperty name="cd_progetto"/>

@@ -36,6 +36,10 @@ public class ProgettoBulk extends ProgettoBase {
 	public static final Integer LIVELLO_PROGETTO_SECONDO  = new Integer(2);
 	public static final Integer LIVELLO_PROGETTO_TERZO 	= new Integer(3);
 	public static final Integer LIVELLO_PROGETTO_ALL 	= new Integer(4);
+	
+	public static final String LABEL_AREA_PROGETTUALE = "Area Progettuale";
+	public static final String LABEL_PROGETTO = "Progetto";
+	public static final String LABEL_COMMESSA = "Commessa";
 
 	private it.cnr.jada.bulk.BulkList	workpackage_collegati = new it.cnr.jada.bulk.BulkList();
 	private it.cnr.jada.bulk.BulkList	workpackage_disponibili  = new it.cnr.jada.bulk.BulkList();
@@ -76,6 +80,15 @@ public class ProgettoBulk extends ProgettoBase {
 		livello_progettoKeys.put(LIVELLO_PROGETTO_ALL,"Sottogruppo");
 		for(int i=4;i<100;i++)
 		  livello_progettoKeys.put(new Integer(i),"Sottogruppo");
+	};
+	public final static Dictionary livello_progetto2016Keys;
+	static {
+		livello_progetto2016Keys = new it.cnr.jada.util.OrderedHashtable();
+		livello_progetto2016Keys.put(LIVELLO_PROGETTO_PRIMO,"Area Progettuale");
+		livello_progetto2016Keys.put(LIVELLO_PROGETTO_SECONDO,"Progetto");
+		livello_progetto2016Keys.put(LIVELLO_PROGETTO_ALL,"Sottogruppo");
+		for(int i=3;i<100;i++)
+			livello_progetto2016Keys.put(new Integer(i),"Sottogruppo");
 	};
 	private Tipo_progettoBulk tipo;
 	private Unita_organizzativaBulk unita_organizzativa;

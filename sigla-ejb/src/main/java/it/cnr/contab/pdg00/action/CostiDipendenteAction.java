@@ -1,6 +1,7 @@
 package it.cnr.contab.pdg00.action;
 
 
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -10,11 +11,15 @@ import it.cnr.contab.pdg00.cdip.bulk.Ass_cdp_uoBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Costi_dipendenteVBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Costo_del_dipendenteBulk;
 import it.cnr.contab.pdg00.cdip.bulk.V_cdp_matricolaBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.action.OptionBP;
 import it.cnr.jada.util.action.SelectionIterator;
 
@@ -354,7 +359,8 @@ private it.cnr.jada.action.Forward doSelezionaCdrPerScarico(it.cnr.jada.action.A
 			bp.setErrorMessage("Nessuna linea di attività disponibile per il cdr selezionato.");
 			return context.findDefaultForward();
 		}
-		return select(context,i,it.cnr.jada.bulk.BulkInfo.getBulkInfo(WorkpackageBulk.class),null,"doSelezionaLinea_attivitaPerScarico");
+		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())); 
+		return select(context,i,it.cnr.jada.bulk.BulkInfo.getBulkInfo(WorkpackageBulk.class),parCnr.getFl_nuovo_pdg()?"prg_liv2":null,"doSelezionaLinea_attivitaPerScarico");
 	} catch(Exception e) {
 		return handleException(context,e);
 	}

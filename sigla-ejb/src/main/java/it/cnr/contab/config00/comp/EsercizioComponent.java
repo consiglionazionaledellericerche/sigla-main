@@ -1,5 +1,6 @@
 package it.cnr.contab.config00.comp;
 
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioHome;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
@@ -8,6 +9,7 @@ import it.cnr.contab.config00.sto.bulk.EnteHome;
 import it.cnr.contab.doccont00.core.bulk.V_disp_cassa_cdsBulk;
 import it.cnr.contab.doccont00.core.bulk.V_disp_cassa_cnrBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
@@ -352,29 +354,36 @@ private void creaEsplVociEsercizio(UserContext aUC, EsercizioBulk aEsBulk)  thro
 {
 	try
 	{
-		LoggableStatement cs = new LoggableStatement(getConnection( aUC ),
-				"{call "+it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
-				+"CNRCTB001.creaEsplVociEsercizio(?,?,?)}",false,this.getClass());
-		try
-		{
-			cs.setObject( 1, aEsBulk.getEsercizio());
-			cs.setString( 2, aEsBulk.getCd_cds());
-			cs.setString( 3, null); // Viene utilizzato l'utcr dell'esercizio appena inserito
-			cs.executeQuery();
-		}
-		catch (Throwable e) 
-		{
-			throw handleException(e);
-		}
-		finally
-		{
-			cs.close();
+		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(aUC, aEsBulk.getEsercizio());
+		if (!parCnr.getFl_nuovo_pdg()) {
+			LoggableStatement cs = new LoggableStatement(getConnection( aUC ),
+					"{call "+it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
+					+"CNRCTB001.creaEsplVociEsercizio(?,?,?)}",false,this.getClass());
+			try
+			{
+				cs.setObject( 1, aEsBulk.getEsercizio());
+				cs.setString( 2, aEsBulk.getCd_cds());
+				cs.setString( 3, null); // Viene utilizzato l'utcr dell'esercizio appena inserito
+				cs.executeQuery();
+			}
+			catch (Throwable e) 
+			{
+				throw handleException(e);
+			}
+			finally
+			{
+				cs.close();
+			}
 		}
 	}
 	catch ( SQLException e )
 	{
 		throw handleException(e);
 	}	
+	catch ( Exception e )
+	{
+		throw handleException( e );
+	}
 }
 /**
  * Impedisce la cancellazione di un EsercizioBulk. 

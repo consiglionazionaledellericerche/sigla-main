@@ -412,6 +412,187 @@
 		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
 		<columnFieldProperty name="im_pagamenti" />		
 	</columnSet>
+
+	<!--  Columnset per Aree  Progettuali-->
+	<columnSet name="SPEDIP2">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="ds_dipartimento" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />		
+	</columnSet>
+	<columnSet name="SPEDIP2PRO">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="ds_progetto" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />		
+	</columnSet>
+	
+	<columnSet name="SPEDIP2PROCOM">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="ds_commessa" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />		
+	</columnSet>
+	<columnSet name="SPEDIP2PROCOMCDR">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="ds_cdr" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />		
+	</columnSet>
+	
+	<columnSet name="SPEDIP2PROCOMCDRLIV1">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />		
+	</columnSet>
+	
+	<columnSet name="SPEDIP2PROCOMCDRLIV1LIV2">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_centro_responsabilita" />	
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />		
+	</columnSet>
+	<columnSet name="SPEDIP2PROCOMCDRLIV1LIV2LIV3">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_centro_responsabilita" />	
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />		
+	</columnSet>
+	<columnSet name="SPEDIP2PROCOMCDRLIV1LIV2LIV3LIN">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_centro_responsabilita" />	
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="cd_linea_attivita" />
+		<columnFieldProperty name="ds_linea" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />		
+	</columnSet>
+	<columnSet name="SPEDIP2PROCOMCDRLIV1LIV2LIV3LINVOC">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_centro_responsabilita" />	
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="cd_linea_attivita" />
+		<columnFieldProperty name="cd_elemento_voce" />
+		<columnFieldProperty name="ds_elemento_voce" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />		
+	</columnSet>
+	<columnSet name="SPEDIP2PROCOMCDRLIV1LIV2LIV3LINVOCDET">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="cd_centro_responsabilita" />	
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="cd_classificazione" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="cd_linea_attivita" />
+		<columnFieldProperty name="cd_elemento_voce" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />		
+	</columnSet>
+
 	<columnSet name="SPEDIPTIP">
 		<columnFieldProperty name="cd_dipartimento" />
 		<columnFieldProperty name="cd_tipo_modulo" />
@@ -619,4 +800,154 @@
 		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
 		<columnFieldProperty name="im_pagamenti" />		
 	</columnSet>
+	
+	<!--  ColumnSet Aree Progettuali -->
+	<columnSet name="SPEDIP2TIP">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_tipo_modulo" />
+		<columnFieldProperty name="ds_tipo_modulo" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />		
+	</columnSet>
+
+	<columnSet name="SPEDIP2TIPCDR">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_tipo_modulo" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="ds_cdr" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />		
+	</columnSet>
+	
+	<columnSet name="SPEDIP2TIPCDRLIV1">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_tipo_modulo" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />		
+	</columnSet>
+	
+	<columnSet name="SPEDIP2TIPCDRLIV1LIV2">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_tipo_modulo" />
+		<columnFieldProperty name="cd_centro_responsabilita" />	
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />		
+	</columnSet>
+	
+	<columnSet name="SPEDIP2TIPCDRLIV1LIV2LIV3">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_tipo_modulo" />
+		<columnFieldProperty name="cd_centro_responsabilita" />	
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />		
+	</columnSet>
+	<columnSet name="SPEDIP2TIPCDRLIV1LIV2LIV3LIN">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_tipo_modulo" />
+		<columnFieldProperty name="cd_centro_responsabilita" />	
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="cd_linea_attivita" />
+		<columnFieldProperty name="ds_linea_attivita" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />		
+	</columnSet>
+	<columnSet name="SPEDIP2TIPCDRLIV1LIV2LIV3LINVOC">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_tipo_modulo" />
+		<columnFieldProperty name="cd_centro_responsabilita" />	
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="cd_linea_attivita" />
+		<columnFieldProperty name="cd_elemento_voce" />
+		<columnFieldProperty name="ds_elemento_voce" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />		
+	</columnSet>
+	<columnSet name="SPEDIP2TIPCDRLIV1LIV2LIV3LINVOCDET">
+		<columnFieldProperty name="cd_dipartimento" />
+		<columnFieldProperty name="cd_tipo_modulo" />
+		<columnFieldProperty name="cd_centro_responsabilita" />	
+		<columnFieldProperty name="cd_livello1" />
+		<columnFieldProperty name="cd_livello2" />
+		<columnFieldProperty name="cd_livello3" />
+		<columnFieldProperty name="cd_classificazione" />
+		<columnFieldProperty name="ds_classificazione" />
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="ds_progetto" />
+		<columnFieldProperty name="cd_commessa" />
+		<columnFieldProperty name="ds_commessa" />
+		<columnFieldProperty name="cd_linea_attivita" />
+		<columnFieldProperty name="cd_elemento_voce" />
+		<columnFieldProperty name="im_dec_ist_int" label="Fonti Interne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="im_dec_ist_est" label="Fonti Esterne"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="imp_tot_decentrato" label="Totale Gestione Decentrata"  headerLabel="Gestione Decentrata anno corrente"/>
+		<columnFieldProperty name="tratt_econ_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>
+		<columnFieldProperty name="tratt_econ_est" label="Fonti Esterne"  headerLabel="Gestione Accentrata anno corrente Trattamento Economico"/>			
+		<columnFieldProperty name="im_acc_altre_sp_int" label="Fonti Interne"  headerLabel="Gestione Accentrata anno corrente altre Spese"/>
+		<columnFieldProperty name="imp_tot_comp_int" label="Totale Fonti Interne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="imp_tot_comp_est" label="Totale Fonti Esterne"  headerLabel="Totale Competenza anno corrente"/>		
+		<columnFieldProperty name="im_pagamenti" />		
+	</columnSet>	
 </bulkInfo>

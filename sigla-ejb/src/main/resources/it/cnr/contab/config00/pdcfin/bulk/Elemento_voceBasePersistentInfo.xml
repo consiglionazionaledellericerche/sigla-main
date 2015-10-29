@@ -59,6 +59,21 @@
 			sqlTypeName="VARCHAR"
 			columnSize="100" />
 		<columnMapping
+			columnName="ESERCIZIO_ELEMENTO_PADRE"
+			propertyName="esercizio_elemento_padre"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="TI_GESTIONE_ELEMENTO_PADRE"
+			propertyName="ti_gestione_elemento_padre"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="TI_APPARTENENZA_ELEMENTO_PADRE"
+			propertyName="ti_appartenenza_elemento_padre"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
 			columnName="CD_ELEMENTO_PADRE"
 			propertyName="cd_elemento_padre"
 			sqlTypeName="VARCHAR"
@@ -234,6 +249,12 @@
 		name="duva" />
 	<persistentProperty
 		name="ds_elemento_voce" />
+	<persistentProperty
+		name="esercizio_elemento_padre" />
+	<persistentProperty
+		name="ti_gestione_elemento_padre" />
+	<persistentProperty
+		name="ti_appartenenza_elemento_padre" />
 	<persistentProperty
 		name="cd_elemento_padre" />
 	<persistentProperty

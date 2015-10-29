@@ -492,7 +492,7 @@ public boolean verificaEsercizioPreventivo( CdrBulk cdr ) throws PersistencyExce
 	}
 }
 
-public java.util.Collection findPdgModuloDettagli(UserContext userContext, CdrBulk testata) throws IntrospectionException, PersistencyException {
+public java.util.Collection findPdgModuloDettagli(UserContext userContext, CdrBulk testata, Integer livelloProgetto) throws IntrospectionException, PersistencyException {
 	PersistentHome dettHome = getHomeCache().getHome(Pdg_moduloBulk.class);
 	SQLBuilder sql = dettHome.createSQLBuilder();
 	sql.addClause("AND","esercizio",sql.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
@@ -501,7 +501,7 @@ public java.util.Collection findPdgModuloDettagli(UserContext userContext, CdrBu
 	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHomeCache().getHome( Unita_organizzativa_enteBulk.class).findAll().get(0);
 	if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
 		Progetto_sipHome progettohome = (Progetto_sipHome)getHomeCache().getHome(Progetto_sipBulk.class);
-		sql.addSQLExistsClause("AND",progettohome.abilitazioni(userContext,"PDG_MODULO.PG_PROGETTO")); 	
+		sql.addSQLExistsClause("AND",progettohome.abilitazioni(userContext,"PDG_MODULO.PG_PROGETTO",livelloProgetto)); 	
 	  //sql.addSQLClause("AND","EXISTS ( SELECT 1 FROM PROGETTO_UO WHERE PDG_MODULO.PG_PROGETTO = PROGETTO_UO.PG_PROGETTO AND PROGETTO_UO.CD_UNITA_ORGANIZZATIVA = ?)");
 	  //sql.addParameter(((CNRUserContext) userContext).getCd_unita_organizzativa() ,java.sql.Types.VARCHAR,0);
 	}

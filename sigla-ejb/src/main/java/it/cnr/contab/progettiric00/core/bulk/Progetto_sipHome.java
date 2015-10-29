@@ -11,6 +11,7 @@ import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
@@ -126,9 +127,12 @@ public class Progetto_sipHome extends BulkHome {
 		sql.addSQLJoin("V_ABIL_PROGETTI.TIPO_FASE_MODULO","V_PROGETTO_PADRE.TIPO_FASE");
 		return sql;    	
 	}
-	public SQLBuilder abilitazioni(it.cnr.jada.UserContext aUC,String campo) throws PersistencyException{
+	public SQLBuilder abilitazioni(it.cnr.jada.UserContext aUC,String campo,Integer livelloProgetto) throws PersistencyException{
 		SQLBuilder sql = abilitazioni(aUC);    	
-		sql.addSQLJoin("V_ABIL_PROGETTI.PG_MODULO",campo);
+		if (ProgettoBulk.LIVELLO_PROGETTO_SECONDO.equals(livelloProgetto))
+			sql.addSQLJoin("V_ABIL_PROGETTI.PG_COMMESSA",campo);
+		else
+			sql.addSQLJoin("V_ABIL_PROGETTI.PG_MODULO",campo);
 		return sql;    	
 	}	    
 	private SQLBuilder abilitazioni(it.cnr.jada.UserContext aUC) throws PersistencyException{

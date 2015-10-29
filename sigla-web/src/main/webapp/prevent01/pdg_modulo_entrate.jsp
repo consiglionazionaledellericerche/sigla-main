@@ -1,9 +1,3 @@
-<head>
-<title>Approvvigionamento delle risorse per Modulo di Commessa</title>
-
-<script language="JavaScript" src="scripts/util.js"></script>
-<script language="javascript" src="scripts/css.js"></script>
-</head>
 <%@ page 
 	import="it.cnr.jada.util.jsp.*,
 		it.cnr.jada.action.*,
@@ -13,9 +7,20 @@
 		it.cnr.contab.prevent01.bp.*,
 		it.cnr.contab.prevent01.bulk.*"
 %>
-<body class="Form">
 <%
 	CRUDPdg_Modulo_EntrateBP bp = (CRUDPdg_Modulo_EntrateBP)BusinessProcess.getBusinessProcess(request);
+%>
+<head>
+<% if (bp.getParametriCnr()!=null && bp.getParametriCnr().getFl_nuovo_pdg()) { %>
+	<title>Approvvigionamento delle risorse per Progetto</title>
+<% } else { %>
+	<title>Approvvigionamento delle risorse per Modulo di Commessa</title>
+<% } %>
+<script language="JavaScript" src="scripts/util.js"></script>
+<script language="javascript" src="scripts/css.js"></script>
+</head>
+<body class="Form">
+<%
 	bp.openFormWindow(pageContext);
 %>
  <table>
@@ -38,53 +43,48 @@
 	</td>	
 	</tr>
 	<tr>
-	<td>
-	<% bp.getController().writeFormLabel(out,"modulo"); %>
-	</td>
-	<td>
-	<% bp.getController().writeFormInput(out,"modulo"); %>	
-	 </td>
-	 <td>
-	<% bp.getController().writeFormLabel(out,"commessa"); %>
-	 </td>
-	 <td>
-	<% bp.getController().writeFormInput(out,"commessa"); %>
-	 </td>
-	 <td>
-	<% bp.getController().writeFormLabel(out,"progetto"); %>
-	 </td>
-	 <td>
-	<% bp.getController().writeFormInput(out,"progetto"); %>
-	 </td>
-	 <td>
-	<% bp.getController().writeFormLabel(out,"dipartimento"); %>
-	 </td>
-	 <td>
-	<% bp.getController().writeFormInput(out,"dipartimento"); %>
-	</td>
+	<% if (bp.getParametriCnr().getFl_nuovo_pdg()) { %>
+		<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_progetto_liv1"); %></td>	
+		<td><% bp.getController().writeFormInput( out, "cd_progetto_liv1"); %></td>
+		<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_progetto_liv2"); %></td>	
+		<td><% bp.getController().writeFormInput( out, "cd_progetto_liv2"); %></td>
+		<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_dipartimento_liv2"); %></td>	
+		<td><% bp.getController().writeFormInput( out, "cd_dipartimento_liv2"); %></td>
+	<% } else { %>
+		<td><% bp.getController().writeFormLabel(out,"modulo"); %></td>
+		<td><% bp.getController().writeFormInput(out,"modulo"); %></td>
+	 	<td><% bp.getController().writeFormLabel(out,"commessa"); %></td>
+	 	<td><% bp.getController().writeFormInput(out,"commessa"); %></td>
+	 	<td><% bp.getController().writeFormLabel(out,"progetto"); %></td>
+	 	<td><% bp.getController().writeFormInput(out,"progetto"); %></td>
+	 	<td><% bp.getController().writeFormLabel(out,"dipartimento"); %></td>
+	    <td><% bp.getController().writeFormInput(out,"dipartimento"); %></td>
+	<% } %>
 	</tr>
-	</table>
-	<table>
-	<tr>
-	<td>	
-  	<% bp.getController().writeFormLabel(out,"importo_totale"); %>
-	</td>	
-	<td>	
-	<% bp.getController().writeFormInput(out,"importo_totale"); %>	
-	</td>
-	</tr>	
+	<% if (bp.getParametriCnr().getFl_nuovo_pdg()) { %>
+		<tr>
+			<td><% bp.getController().writeFormLabel(out,"importo_totale_liv2"); %></td>	
+			<td><% bp.getController().writeFormInput(out,"importo_totale_liv2"); %></td>
+		</tr>
+	<% } else { %>	
+		<tr>
+			<td><% bp.getController().writeFormLabel(out,"importo_totale"); %></td>	
+			<td><% bp.getController().writeFormInput(out,"importo_totale"); %></td>
+		</tr>	
+	<% } %>	
 	</table>
 <table>
 	  <tr>
 	  	<td colspan = "4">
-		  <% bp.getCrudDettagliEntrate().writeHTMLTable(
-				pageContext,
-				"default",	
-				true,
-				false,
-				true,
-				"900px",
-				"150px"); %>
+	<% bp.getCrudDettagliEntrate().writeHTMLTable(
+			pageContext,
+			bp.getParametriCnr().getFl_nuovo_pdg()?"without_area":"default",	
+			true,
+			false,
+			true,
+			"900px",
+			"150px");
+	%>
 		</td>
 	  </tr>
 </table>
@@ -222,6 +222,7 @@
 		</table>
 		</td>	
 	</tr>		
+<% if (!bp.getParametriCnr().getFl_nuovo_pdg()){%>
 	<tr>
 		<td>			
 			<%bp.getCrudDettagliEntrate().writeFormLabel(out,"area"); %>				
@@ -230,6 +231,7 @@
 			<%bp.getCrudDettagliEntrate().writeFormInput(out,null,"area",bp.isUtente_Ente(),null,null); %>
 		</td>	
 	</tr>
+<% } %>
 </table>
 <%	bp.closeFormWindow(pageContext); %>
 </body>

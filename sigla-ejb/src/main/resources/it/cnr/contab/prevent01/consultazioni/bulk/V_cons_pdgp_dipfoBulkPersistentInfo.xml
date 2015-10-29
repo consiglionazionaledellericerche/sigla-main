@@ -413,6 +413,41 @@
 			nullable="true" />
 	</columnMap>
 	
+<!-- Column Map per gestione Aree Progettuali -->
+	<columnMap 
+		name="BASEDIPPROCOMCDRLIV1"
+		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
+		extends="BASEDIPPROCOMCDR" >
+			<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="BASEDIPPROCOMCDRLIV1LIV2"
+		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
+		extends="BASEDIPPROCOMCDRLIV1" >
+			<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="BASEDIPPROCOMCDRLIV1LIV2LIV3"
+		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
+		extends="BASEDIPPROCOMCDRLIV1LIV2" >
+			<columnMapping
+			columnName="CD_LIVELLO3"
+			propertyName="cd_livello3"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+
 <!-- ENTRATE -->
 	<columnMap 
 		name="ETRDIP"
@@ -542,6 +577,78 @@
 			columnSize="22"
 			nullable="true" />	
 	</columnMap>
+
+<!-- Column Map per gestione Aree Progettuali -->
+	<columnMap 
+		name="ETRDIPPROCOMCDRLIV1"
+		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
+		extends="BASEDIPPROCOMCDRLIV1" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />		
+	</columnMap>
+	<columnMap 
+		name="ETRDIPPROCOMCDRLIV1LIV2"
+		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
+		extends="BASEDIPPROCOMCDRLIV1LIV2" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />		
+	</columnMap>
+		<columnMap 
+		name="ETRDIPPROCOMCDRLIV1LIV2LIV3"
+		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
+		extends="BASEDIPPROCOMCDRLIV1LIV2LIV3" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />		
+	</columnMap>
+	
+	<columnMap 
+		name="ETRDIPPROCOMCDRLIV1LIV2LIV3DET"
+		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
+		extends="BASEDIPPROCOMCDRLIV1LIV2LIV3" >
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE"
+			propertyName="cd_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="34"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TERZO_FINANZIATORE"
+			propertyName="cd_terzo_finanziatore"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />		
+		<columnMapping
+			columnName="DS_DETTAGLIO"
+			propertyName="ds_dettaglio"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="TOT_FINANZIAMENTO"
+			propertyName="tot_finanziamento"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+	</columnMap>
+
 	<!-- ENTRATE : SECONDO PERCORSO DI CONSULTAZIONE (DIP\CD_TIPO\CDR\MODULO\TITOLO(liv1)\CATEGORIA(liv2)\CAPITOLO(liv3)\DETTAGLI)-->
 	
 	<columnMap 
@@ -837,6 +944,211 @@
 			columnSize="22"
 			nullable="true" />				
 	</columnMap>
+
+<!-- Column Map per gestione Aree Progettuali -->
+	<columnMap 
+		name="ETRDIPTIPCDRLIV1"
+		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
+		extends="BASEDIP" >
+		<columnMapping
+			columnName="CD_TIPO_MODULO"
+			propertyName="cd_tipo_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />		
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />					
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />				
+	</columnMap>
+	<columnMap 
+		name="ETRDIPTIPCDRLIV1LIV2"
+		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
+		extends="BASEDIP" >
+		<columnMapping
+			columnName="CD_TIPO_MODULO"
+			propertyName="cd_tipo_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />		
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />						
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />				
+	</columnMap>
+	<columnMap 
+		name="ETRDIPTIPCDRLIV1LIV2LIV3"
+		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
+		extends="BASEDIP" >
+		<columnMapping
+			columnName="CD_TIPO_MODULO"
+			propertyName="cd_tipo_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />		
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />						
+		<columnMapping
+			columnName="CD_LIVELLO3"
+			propertyName="cd_livello3"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />							
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />				
+	</columnMap>
+	<columnMap 
+		name="ETRDIPTIPCDRLIV1LIV2LIV3DET"
+		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
+		extends="BASEDIP" >
+		<columnMapping
+			columnName="CD_TIPO_MODULO"
+			propertyName="cd_tipo_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />		
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_LIVELLO3"
+			propertyName="cd_livello3"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />								
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE"
+			propertyName="cd_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="34"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="ds_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />	
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="pg_progetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_COMMESSA"
+			propertyName="cd_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_COMMESSA"
+			propertyName="ds_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />		
+		<columnMapping
+			columnName="CD_TERZO_FINANZIATORE"
+			propertyName="cd_terzo_finanziatore"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />		
+		<columnMapping
+			columnName="DS_DETTAGLIO"
+			propertyName="ds_dettaglio"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="TOT_FINANZIAMENTO"
+			propertyName="tot_finanziamento"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />				
+	</columnMap>
+
+
+
 	<!--SPESE-->
 	
 	<columnMap 
@@ -1024,6 +1336,43 @@
 			columnSize="4"
 			nullable="true" />
 	</columnMap>	
+
+<!-- Column Map per gestione Aree Progettuali -->
+	<columnMap 
+		name="BASESPEDIPPROCOMCDRLIV1"
+		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
+		extends="BASESPEDIPPROCOMCDR" >
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="BASESPEDIPPROCOMCDRLIV1LIV2"
+		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
+		extends="BASESPEDIPPROCOMCDRLIV1" >
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="BASESPEDIPPROCOMCDRLIV1LIV2LIV3"
+		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
+		extends="BASESPEDIPPROCOMCDRLIV1LIV2" >
+		<columnMapping
+			columnName="CD_LIVELLO3"
+			propertyName="cd_livello3"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>	
+
+
 <!-- SPESE -->
 	<columnMap 
 		name="SPEDIP"
@@ -1152,6 +1501,78 @@
 			columnSize="250"
 			nullable="true" />
 	</columnMap>
+
+<!-- Column Map per gestione Aree Progettuali -->
+	<columnMap 
+		name="SPEDIPPROCOMCDRLIV1"
+		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
+		extends="BASESPEDIPPROCOMCDRLIV1" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />		
+		<columnMapping
+			columnName="IM_PRESUNTI_PREC"
+			propertyName="im_presunti_prec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="IM_COSTI_FIGURATIVI"
+			propertyName="im_costi_figurativi"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_COSTI_GENERALI"
+			propertyName="im_costi_generali"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />		
+	</columnMap>
+	<columnMap 
+		name="SPEDIPPROCOMCDRLIV1LIV2"
+		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
+		extends="BASESPEDIPPROCOMCDRLIV1LIV2" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />		
+	</columnMap>
+	<columnMap 
+		name="SPEDIPPROCOMCDRLIV1LIV2LIV3"
+		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
+		extends="BASESPEDIPPROCOMCDRLIV1LIV2LIV3" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />		
+	</columnMap>
+	<columnMap 
+		name="SPEDIPPROCOMCDRLIV1LIV2LIV3DET"
+		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
+		extends="BASESPEDIPPROCOMCDRLIV1LIV2LIV3" >
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE"
+			propertyName="cd_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="34"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+	</columnMap>
+
+
 	<!-- SPESE : SECONDO PERCORSO DI CONSULTAZIONE (DIP\CD_TIPO\CDR\MODULO\TITOLO(liv1)\CATEGORIA(liv2)\CAPITOLO(liv3)\DETTAGLI)-->
 	
 	<columnMap 
@@ -1387,6 +1808,210 @@
 			sqlTypeName="VARCHAR"
 			columnSize="30"
 			nullable="true" />	
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />						
+		<columnMapping
+			columnName="CD_LIVELLO3"
+			propertyName="cd_livello3"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />			
+		<columnMapping
+			columnName="CD_PROGETTO"
+			propertyName="cd_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="ds_progetto"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />	
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="pg_progetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_COMMESSA"
+			propertyName="cd_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_COMMESSA"
+			propertyName="ds_commessa"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />			
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE"
+			propertyName="cd_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="34"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		
+	</columnMap>
+
+<!-- Column Map per gestione Aree Progettuali -->
+	<columnMap 
+		name="SPEDIPTIPCDRLIV1"
+		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
+		extends="BASESPEDIP" >
+		<columnMapping
+			columnName="CD_TIPO_MODULO"
+			propertyName="cd_tipo_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />		
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />					
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />			
+			<columnMapping
+			columnName="IM_PRESUNTI_PREC"
+			propertyName="im_presunti_prec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="IM_COSTI_FIGURATIVI"
+			propertyName="im_costi_figurativi"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_COSTI_GENERALI"
+			propertyName="im_costi_generali"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />		
+		
+	</columnMap>
+	<columnMap 
+		name="SPEDIPTIPCDRLIV1LIV2"
+		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
+		extends="BASESPEDIP" >
+		<columnMapping
+			columnName="CD_TIPO_MODULO"
+			propertyName="cd_tipo_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />		
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />						
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />				
+	</columnMap>
+	<columnMap 
+		name="SPEDIPTIPCDRLIV1LIV2LIV3"
+		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
+		extends="BASESPEDIP" >
+		<columnMapping
+			columnName="CD_TIPO_MODULO"
+			propertyName="cd_tipo_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />		
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />	
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />		
+		<columnMapping
+			columnName="CD_LIVELLO3"
+			propertyName="cd_livello3"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />						
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />				
+	</columnMap>
+	<columnMap 
+		name="SPEDIPTIPCDRLIV1LIV2LIV3DET"
+		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
+		extends="BASESPEDIP" >
+		<columnMapping
+			columnName="CD_TIPO_MODULO"
+			propertyName="cd_tipo_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cd_centro_responsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />		
 		<columnMapping
 			columnName="CD_LIVELLO1"
 			propertyName="cd_livello1"

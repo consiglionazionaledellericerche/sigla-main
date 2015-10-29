@@ -416,6 +416,41 @@
 			nullable="true" />
 	</columnMap>
 	
+<!-- Column Map per gestione Aree Progettuali -->
+	<columnMap 
+		name="BASECDRISTPROCOMLIV1"
+		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
+		extends="BASECDRISTPROCOM" >
+			<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="BASECDRISTPROCOMLIV1LIV2"
+		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
+		extends="BASECDRISTPROCOMLIV1" >
+			<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="BASECDRISTPROCOMLIV1LIV2LIV3"
+		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
+		extends="BASECDRISTPROCOMLIV1LIV2" >
+			<columnMapping
+			columnName="CD_LIVELLO3"
+			propertyName="cd_livello3"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+
 <!-- ENTRATE -->
 	<columnMap 
 		name="ETRCDR"
@@ -544,8 +579,78 @@
 			columnSize="22"
 			nullable="true" />	
 	</columnMap>
-	<!--SPESE-->
 	
+<!-- Column Map per gestione Aree Progettuali -->
+	<columnMap 
+		name="ETRCDRISTPROCOMLIV1"
+		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
+		extends="BASECDRISTPROCOMLIV1" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />		
+	</columnMap>
+	<columnMap 
+		name="ETRCDRISTPROCOMLIV1LIV2"
+		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
+		extends="BASECDRISTPROCOMLIV1LIV2" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />		
+	</columnMap>
+	<columnMap 
+		name="ETRCDRISTPROCOMLIV1LIV2LIV3"
+		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
+		extends="BASECDRISTPROCOMLIV1LIV2LIV3" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />		
+	</columnMap>
+	<columnMap 
+		name="ETRCDRISTPROCOMLIV1LIV2LIV3DET"
+		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
+		extends="BASECDRISTPROCOMLIV1LIV2LIV3" >
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE"
+			propertyName="cd_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="34"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TERZO_FINANZIATORE"
+			propertyName="cd_terzo_finanziatore"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />		
+		<columnMapping
+			columnName="DS_DETTAGLIO"
+			propertyName="ds_dettaglio"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="TOT_FINANZIAMENTO"
+			propertyName="tot_finanziamento"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+	</columnMap>
+
+	<!--SPESE-->
 	<columnMap 
 		name="BASESPECDR"
 		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO" >
@@ -733,6 +838,42 @@
 			columnSize="4"
 			nullable="true" />
 	</columnMap>	
+
+<!-- Column Map per gestione Aree Progettuali -->
+	<columnMap 
+		name="BASESPECDRISTPROCOMLIV1"
+		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
+		extends="BASESPECDRISTPROCOM" >
+		<columnMapping
+			columnName="CD_LIVELLO1"
+			propertyName="cd_livello1"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="BASESPECDRISTPROCOMLIV1LIV2"
+		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
+		extends="BASESPECDRISTPROCOMLIV1" >
+		<columnMapping
+			columnName="CD_LIVELLO2"
+			propertyName="cd_livello2"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>
+	<columnMap 
+		name="BASESPECDRISTPROCOMLIV1LIV2LIV3"
+		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
+		extends="BASESPECDRISTPROCOMLIV1LIV2" >
+		<columnMapping
+			columnName="CD_LIVELLO3"
+			propertyName="cd_livello3"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="true" />
+	</columnMap>	
+
 <!-- SPESE -->
 	<columnMap 
 		name="SPECDR"
@@ -849,6 +990,76 @@
 		name="SPECDRISTPROCOMMODLIV1LIV2LIV3DET"
 		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
 		extends="BASESPECDRISTPROCOMMODLIV1LIV2LIV3" >
+		<columnMapping
+			columnName="CD_CLASSIFICAZIONE"
+			propertyName="cd_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="34"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+	</columnMap>
+
+<!-- Column Map per gestione Aree Progettuali -->
+	<columnMap 
+		name="SPECDRISTPROCOMLIV1"
+		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
+		extends="BASESPECDRISTPROCOMLIV1" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />		
+		<columnMapping
+			columnName="IM_PRESUNTI_PREC"
+			propertyName="im_presunti_prec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />	
+		<columnMapping
+			columnName="IM_COSTI_FIGURATIVI"
+			propertyName="im_costi_figurativi"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_COSTI_GENERALI"
+			propertyName="im_costi_generali"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />		
+	</columnMap>
+	<columnMap 
+		name="SPECDRISTPROCOMLIV1LIV2"
+		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
+		extends="BASESPECDRISTPROCOMLIV1LIV2" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />		
+	</columnMap>
+	<columnMap 
+		name="SPECDRISTPROCOMLIV1LIV2LIV3"
+		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
+		extends="BASESPECDRISTPROCOMLIV1LIV2LIV3" >
+		<columnMapping
+			columnName="DS_CLASSIFICAZIONE"
+			propertyName="ds_classificazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />		
+	</columnMap>
+	<columnMap 
+		name="SPECDRISTPROCOMLIV1LIV2LIV3DET"
+		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
+		extends="BASESPECDRISTPROCOMLIV1LIV2LIV3" >
 		<columnMapping
 			columnName="CD_CLASSIFICAZIONE"
 			propertyName="cd_classificazione"

@@ -6,6 +6,12 @@
 	<defaultColumnMap
 		tableName="V_CLASSIFICAZIONE_VOCI">
 		<columnMapping
+			columnName="CD_LIVELLO_LAST"
+			propertyName="cd_livello_last"
+			sqlTypeName="VARCHAR"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
 			columnName="CD_CLASSIFICAZIONE"
 			propertyName="cd_classificazione"
 			sqlTypeName="VARCHAR"
@@ -18,6 +24,7 @@
 			columnSize="1"
 			nullable="false" />
 	</defaultColumnMap>
+	<persistentProperty name="cd_livello_last"/>
 	<persistentProperty name="cd_classificazione"/>
 	<persistentProperty name="nr_livello"/>
 </SQLPersistentInfo>

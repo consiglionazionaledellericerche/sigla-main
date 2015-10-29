@@ -257,12 +257,12 @@ public java.util.Collection getCapitoliDiSpesaCdsSelezionatiColl() {
  * @param cd_funzione	
  * @return 
  */
-public it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk getCapitolo( String cd_funzione ) 
+public it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk getCapitolo( String cd_funzione ) 
 {
-	it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk voce;
+	it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk voce;
 	for ( Iterator i = getCapitoliDiSpesaCdsSelezionatiColl().iterator(); i.hasNext(); )
 	{
-		voce = (it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk) i.next();
+		voce = (it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk) i.next();
 		if ( voce.getCd_funzione().equals( cd_funzione ) )
 			return voce;
 	}
@@ -848,7 +848,7 @@ public void refreshCapitoliDiSpesaCdsSelezionatiColl()
 		Obbligazione_scad_voceBulk osv = (Obbligazione_scad_voceBulk) s.next();
 		for ( Iterator c = capitoliDiSpesaCdsColl.iterator(); c.hasNext(); )
 		{
-			it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk voce = ( it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk) c.next();
+			it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk voce = ( it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk) c.next();
 			if ( osv.getCd_voce().equals( voce.getCd_voce() ))
 				capitoli.put ( osv.getCd_voce(), voce );
 		}
@@ -875,7 +875,7 @@ public void refreshCapitoliDiSpesaCdsSelezionatiColl(java.util.List vociList)
 		OggettoBulk voceSel = (OggettoBulk)s.next();
 		for ( Iterator c = capitoliDiSpesaCdsColl.iterator(); c.hasNext(); )
 		{
-			it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk voce = ( it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk) c.next();
+			it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk voce = ( it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk) c.next();
 			if (voceSel instanceof V_assestatoBulk)  
 				if ( ((V_assestatoBulk)voceSel).getCd_voce().equals( voce.getCd_voce() ))
 					capitoli.put ( ((V_assestatoBulk)voceSel).getCd_voce(), voce );

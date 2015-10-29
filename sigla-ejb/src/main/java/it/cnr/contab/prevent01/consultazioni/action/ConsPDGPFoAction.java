@@ -63,6 +63,9 @@ public class ConsPDGPFoAction extends ConsultazioniAction {
 		return doConsulta(context, ConsPDGPFoBP.LIVELLO_CDR);
 	}
 	public Forward doConsultaModulo(ActionContext context) {
+		ConsPDGPFoBP bp = (ConsPDGPFoBP)context.getBusinessProcess();
+		if (bp.isFlNuovoPdg())
+			return doConsulta(context, ConsPDGPFoBP.LIVELLO_PRG);
 		return doConsulta(context, ConsPDGPFoBP.LIVELLO_MOD);
 	}
 	public Forward doConsultaLivello1(ActionContext context) {

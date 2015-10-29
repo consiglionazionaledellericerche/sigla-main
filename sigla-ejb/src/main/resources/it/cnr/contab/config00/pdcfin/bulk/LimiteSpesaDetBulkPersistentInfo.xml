@@ -6,10 +6,13 @@
 		tableName="LIMITE_SPESA_DET">
 		<columnMapping
 			columnName="ESERCIZIO"
-			propertyName="limiteSpesa.elementoVoce.esercizio" />
+			propertyName="limiteSpesa.esercizio" />
 		<columnMapping
 			columnName="CD_CDS"
 			propertyName="cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_VOCE"
+			propertyName="limiteSpesa.elementoVoce.esercizio" />
 		<columnMapping
 			columnName="TI_APPARTENENZA"
 			propertyName="limiteSpesa.elementoVoce.ti_appartenenza" />

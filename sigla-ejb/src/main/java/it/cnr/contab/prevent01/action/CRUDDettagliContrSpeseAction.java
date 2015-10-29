@@ -29,7 +29,7 @@ public class CRUDDettagliContrSpeseAction extends CRUDAction {
 			if (pageName.equals("tabDettagli")) {
 				Pdg_approvato_dip_areaBulk pdg_dip_area = (Pdg_approvato_dip_areaBulk) bp.getCrudDettagliDipArea().getModel();
 				if (pdg_dip_area==null) {
-					getBusinessProcess(context).setErrorMessage("Selezionare una riga Dipartimento/Area per visualizzare i dettagli.");
+					getBusinessProcess(context).setErrorMessage("Selezionare una riga per visualizzare i dettagli.");
 					return context.findDefaultForward();
 				}
 				if (!contr_spese.getDettagliContrSpese().isEmpty()) {
@@ -47,11 +47,24 @@ public class CRUDDettagliContrSpeseAction extends CRUDAction {
 		return super.doTab(context, tabName, pageName);
 	}
 
+	public Forward doSearchSearchtool_progetto(ActionContext context) {
+		CRUDDettagliContrSpeseBP bp = (CRUDDettagliContrSpeseBP)context.getBusinessProcess();
+		return search(context, getFormField(context, "main.Dettagli.searchtool_progetto"),bp.isFlNuovoPdg()?"progetto_liv2":null);
+	}
+
+	public Forward doSearchSearchtool_progetto_liv2(ActionContext context) {
+		return doSearchSearchtool_progetto(context);
+	}
+
 	public Forward doBlankSearchSearchtool_progetto(ActionContext actioncontext, String s) {
 		CRUDDettagliContrSpeseBP bp = (CRUDDettagliContrSpeseBP)actioncontext.getBusinessProcess();
 		Pdg_contrattazione_speseBulk pdg_contr_spese = (Pdg_contrattazione_speseBulk)bp.getModel();
 		pdg_contr_spese.setCdr(null);
 		return super.doBlankSearch(actioncontext, s);
+	}
+
+	public Forward doBlankSearchSearchtool_progetto_liv2(ActionContext actioncontext, String s) {
+		return doBlankSearchSearchtool_progetto(actioncontext, s);
 	}
 
 	public it.cnr.jada.action.Forward doBringBackSearchSearchtool_progetto(ActionContext context,Pdg_contrattazione_speseBulk pdg_contr_spese, Progetto_sipBulk progetto) {
@@ -61,7 +74,7 @@ public class CRUDDettagliContrSpeseAction extends CRUDAction {
 			if (progetto != null) {
 				if (progetto.getUnita_organizzativa().getCd_tipo_unita().equalsIgnoreCase( it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC )) 
 				{
-					bp.setErrorMessage("Non è possibile inserire o modificare moduli di attività afferenti a CDS appartenenti alla SAC.");
+					bp.setErrorMessage("Non è possibile inserire o modificare "+(bp.isFlNuovoPdg()?"progetti":"moduli di attività")+" afferenti a CDS appartenenti alla SAC.");
 					return context.findDefaultForward();
 				}
 				
@@ -75,6 +88,10 @@ public class CRUDDettagliContrSpeseAction extends CRUDAction {
 		}
 	}
 	
+	public it.cnr.jada.action.Forward doBringBackSearchSearchtool_progetto_liv2(ActionContext context,Pdg_contrattazione_speseBulk pdg_contr_spese, Progetto_sipBulk progetto) {
+		return doBringBackSearchSearchtool_progetto(context, pdg_contr_spese, progetto);
+	}
+
 	public it.cnr.jada.action.Forward doApprova(ActionContext context) {
 		try {
 			fillModel( context );
