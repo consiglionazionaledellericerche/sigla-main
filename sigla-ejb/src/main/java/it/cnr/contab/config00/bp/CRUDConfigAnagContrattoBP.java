@@ -197,6 +197,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		}else{
 			getCrudAssUODisponibili().setEnabled(false);
 		}
+			getCrudArchivioAllegati().setEnabled(true);
 	}	
 	/**
 	 * @return
