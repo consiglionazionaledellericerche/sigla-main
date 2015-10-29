@@ -4,18 +4,14 @@ import java.rmi.RemoteException;
 import java.util.Dictionary;
 
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.*;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.*;
 
-public class Elemento_voceBulk extends Elemento_voceBase {
+public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilancioBulk {
 	private java.util.Hashtable ti_appartenenzaKeys;
 	private java.util.Hashtable ti_gestioneKeys; 
 	private java.util.Hashtable ti_elemento_voceKeys;
@@ -67,6 +63,27 @@ public Capoconto_finBulk getCapoconto_fin() {
  */
 public String getCd_ds_elemento_voce() {
 	return getCd_elemento_voce() + " - " + getDs_elemento_voce();
+}
+@Override
+public Integer getEsercizio_elemento_padre() {
+	it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_padre = this.getElemento_padre();
+	if (elemento_padre == null)
+		return null;
+	return elemento_padre.getEsercizio();
+}
+@Override
+public String getTi_gestione_elemento_padre() {
+	it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_padre = this.getElemento_padre();
+	if (elemento_padre == null)
+		return null;
+	return elemento_padre.getTi_gestione();
+}
+@Override
+public String getTi_appartenenza_elemento_padre() {
+	it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_padre = this.getElemento_padre();
+	if (elemento_padre == null)
+		return null;
+	return elemento_padre.getTi_appartenenza();
 }
 public java.lang.String getCd_elemento_padre() {
 	it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_padre = this.getElemento_padre();
@@ -157,8 +174,21 @@ public boolean isROElemento_padre() {
 public void setCapoconto_fin(Capoconto_finBulk newCapoconto_fin) {
 	capoconto_fin = newCapoconto_fin;
 }
+public void setEsercizio_elemento_padre(Integer esercizio_elemento_padre) {
+	if (this.getElemento_padre()!=null)
+		this.getElemento_padre().setEsercizio(esercizio_elemento_padre);
+}
+public void setTi_gestione_elemento_padre(String ti_gestione_elemento_padre) {
+	if (this.getElemento_padre()!=null)
+		this.getElemento_padre().setTi_gestione(ti_gestione_elemento_padre);
+}
+public void setTi_appartenenza_elemento_padre(String ti_appartenenza_elemento_padre) {
+	if (this.getElemento_padre()!=null)
+		this.getElemento_padre().setTi_appartenenza(ti_appartenenza_elemento_padre);
+}
 public void setCd_elemento_padre(java.lang.String cd_elemento_padre) {
-	this.getElemento_padre().setCd_elemento_voce(cd_elemento_padre);
+	if (this.getElemento_padre()!=null)
+		this.getElemento_padre().setCd_elemento_voce(cd_elemento_padre);
 }
 /**
  * @param newElemento_padre it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk
@@ -338,4 +368,15 @@ public void setCod_cla_e(java.lang.String v_cod_cla_e) {
 		return isObbligatoriaIndicazioneTrovato() || isFacoltativaIndicazioneTrovato();
 	}
 
+	public String getCd_voce() {
+		return getCd_elemento_voce();
+	}
+	
+	public String getCd_titolo_capitolo() {
+		return getCd_elemento_voce();
+	}
+	
+	public String getCd_funzione() {
+		return String.valueOf("01");
+	}
 }

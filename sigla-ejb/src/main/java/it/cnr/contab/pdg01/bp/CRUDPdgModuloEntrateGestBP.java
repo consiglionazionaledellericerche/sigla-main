@@ -6,27 +6,24 @@
  */
 package it.cnr.contab.pdg01.bp;
 
+import java.rmi.RemoteException;
+import java.util.List;
+
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
-import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
 import it.cnr.contab.pdg01.consultazioni.bulk.V_cons_pdgp_pdgg_etrBulk;
-import it.cnr.contab.prevent01.ejb.PdgModuloEntrateComponentSession;
 import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk;
+import it.cnr.contab.prevent01.ejb.PdgModuloEntrateComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.sql.HomeCache;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
-
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.util.List;
 
 /**
  * @author rpagano
@@ -38,6 +35,7 @@ public class CRUDPdgModuloEntrateGestBP extends SimpleCRUDBP {
 	private V_cons_pdgp_pdgg_etrBulk vConsPdgpPdggEtr;
 	private String uoScrivania;
 	private String labelClassificazione;
+	private boolean flNuovoPdg = false;
 
 	private SimpleDetailCRUDController crudDettagliGestionali = new SimpleDetailCRUDController( "DettagliGestionali", Pdg_modulo_entrate_gestBulk.class, "dettagli_gestionali", this){
 		protected void setModel(ActionContext actioncontext,OggettoBulk oggettobulk) {
@@ -103,6 +101,8 @@ public class CRUDPdgModuloEntrateGestBP extends SimpleCRUDBP {
 																	CNRUserContext.getEsercizio(actioncontext.getUserContext()),
 																	Elemento_voceHome.GESTIONE_ENTRATE,
 																	((Pdg_Modulo_EntrateBulk)getModel()).getClassificazione_voci().getNr_livello()));
+			Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())); 
+			setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
 			setStatus(EDIT);
 		} catch (ComponentException e) {
 			throw new BusinessProcessException(e);
@@ -151,5 +151,11 @@ public class CRUDPdgModuloEntrateGestBP extends SimpleCRUDBP {
 	}
 	public void setLabelClassificazione(String string) {
 		labelClassificazione = string;
+	}
+	public void setFlNuovoPdg(boolean flNuovoPdg) {
+		this.flNuovoPdg = flNuovoPdg;
+	}
+	public boolean isFlNuovoPdg() {
+		return flNuovoPdg;
 	}
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.progettiric00.geco.bulk.Geco_area_progKey">
+	<defaultColumnMap
+		tableName="areaprog">
+		<columnMapping
+			columnName="id_area"
+			propertyName="id_area"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="esercizio"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="fase"
+			propertyName="fase"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="id_area"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="fase"
+		partOfOid="true" />
+</SQLPersistentInfo>

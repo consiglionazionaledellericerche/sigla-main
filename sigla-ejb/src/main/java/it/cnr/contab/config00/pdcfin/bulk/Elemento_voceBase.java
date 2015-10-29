@@ -8,6 +8,15 @@ public class Elemento_voceBase extends Elemento_voceKey implements Keyed {
 	// CD_CAPOCONTO_FIN VARCHAR(10) 
 	private java.lang.String cd_capoconto_fin;
 
+	// ESERCIZIO_ELEMENTO_PADRE DECIMAL(4,0) 
+	private java.lang.Integer esercizio_elemento_padre;
+
+	// TI_GESTIONE_ELEMENTO_PADRE CHAR(1)
+	private java.lang.String ti_gestione_elemento_padre;
+
+	// TI_APPARTENENZA_ELEMENTO_PADRE CHAR(1)
+	private java.lang.String ti_appartenenza_elemento_padre;
+
 	// CD_ELEMENTO_PADRE VARCHAR(20)
 	private java.lang.String cd_elemento_padre;
 
@@ -92,6 +101,24 @@ public java.lang.String getCd_capoconto_fin() {
 	return cd_capoconto_fin;
 }
 /* 
+ * Getter dell'attributo esercizio_elemento_padre
+ */
+public java.lang.Integer getEsercizio_elemento_padre() {
+	return esercizio_elemento_padre;
+}
+/* 
+ * Getter dell'attributo ti_gestione_elemento_padre
+ */
+public java.lang.String getTi_gestione_elemento_padre() {
+	return ti_gestione_elemento_padre;
+}
+/* 
+ * Getter dell'attributo ti_appartenenza_elemento_padre
+ */
+public java.lang.String getTi_appartenenza_elemento_padre() {
+	return ti_appartenenza_elemento_padre;
+}
+/* 
  * Getter dell'attributo cd_elemento_padre
  */
 public java.lang.String getCd_elemento_padre() {
@@ -156,6 +183,24 @@ public java.lang.String getTi_elemento_voce() {
  */
 public void setCd_capoconto_fin(java.lang.String cd_capoconto_fin) {
 	this.cd_capoconto_fin = cd_capoconto_fin;
+}
+/* 
+ * Setter dell'attributo esercizio_elemento_padre
+ */
+public void setEsercizio_elemento_padre(java.lang.Integer esercizio_elemento_padre) {
+	this.esercizio_elemento_padre = esercizio_elemento_padre;
+}
+/* 
+ * Setter dell'attributo ti_gestione_elemento_padre
+ */
+public void setTi_gestione_elemento_padre(java.lang.String ti_gestione_elemento_padre) {
+	this.ti_gestione_elemento_padre = ti_gestione_elemento_padre;
+}
+/* 
+ * Setter dell'attributo ti_appartenenza_elemento_padre
+ */
+public void setTi_appartenenza_elemento_padre(java.lang.String ti_appartenenza_elemento_padre) {
+	this.ti_appartenenza_elemento_padre = ti_appartenenza_elemento_padre;
 }
 /* 
  * Setter dell'attributo cd_elemento_padre

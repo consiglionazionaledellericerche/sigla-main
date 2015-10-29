@@ -1,6 +1,7 @@
 package it.cnr.contab.config00.bulk;
 
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -83,5 +84,15 @@ public class Parametri_cnrBulk extends Parametri_cnrBase {
 
 	public void setCd_tipo_rapporto_prof(String string) {
 		getTipo_rapporto_prof().setCd_tipo_rapporto(string);
-	}	
+	}
+	
+	public boolean isCofogObbligatorio() {	
+		return this.getLivello_pdg_cofog()!=null && this.getLivello_pdg_cofog()!=0;
+	}
+	
+	public Integer getLivelloProgetto() {
+		if (this.getFl_nuovo_pdg()) 
+			return ProgettoBulk.LIVELLO_PROGETTO_SECONDO;
+		return ProgettoBulk.LIVELLO_PROGETTO_TERZO;
+	}
 }

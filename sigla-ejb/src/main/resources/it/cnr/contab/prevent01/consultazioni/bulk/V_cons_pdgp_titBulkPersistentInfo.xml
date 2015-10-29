@@ -418,7 +418,7 @@
 			nullable="true" />		
 	</columnMap>
 	<columnMap 
-		name="ETRLIV1LIV2LIV3CDRDET"
+		name="ETRLIV1LIV2LIV3CDRDETNEW"
 		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
 		extends="BASELIV1LIV2LIV3CDR" >
 		<columnMapping
@@ -433,18 +433,6 @@
 			sqlTypeName="VARCHAR"
 			columnSize="250"
 			nullable="true" />
-		<columnMapping
-			columnName="CD_MODULO"
-			propertyName="cd_modulo"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="true" />					
-		<columnMapping
-			columnName="DS_MODULO"
-			propertyName="ds_modulo"
-			sqlTypeName="VARCHAR"
-			columnSize="433"
-			nullable="true" />	
 		<columnMapping
 			columnName="CD_PROGETTO"
 			propertyName="cd_progetto"
@@ -506,6 +494,23 @@
 			columnSize="22"
 			nullable="true" />	
 	</columnMap>
+	<columnMap 
+		name="ETRLIV1LIV2LIV3CDRDET"
+		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
+		extends="ETRLIV1LIV2LIV3CDRDETNEW" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />					
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />	
+	</columnMap>
 	
 	<!-- ENTRATE : SECONDO PERCORSO DI CONSULTAZIONE (LIV1\CDR\DETTAGLI)-->
 	<columnMap 
@@ -520,7 +525,7 @@
 			nullable="true" />	
 	</columnMap>
 	<columnMap 
-		name="ETRLIV1CDRDET"
+		name="ETRLIV1CDRDETNEW"
 		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
 		extends="BASELIV1CDR" >				
 		<columnMapping
@@ -547,18 +552,6 @@
 			sqlTypeName="VARCHAR"
 			columnSize="4"
 			nullable="true" />	
-		<columnMapping
-			columnName="CD_MODULO"
-			propertyName="cd_modulo"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="true" />	
-		<columnMapping
-			columnName="DS_MODULO"
-			propertyName="ds_modulo"
-			sqlTypeName="VARCHAR"
-			columnSize="433"
-			nullable="true" />			
 		<columnMapping
 			columnName="CD_PROGETTO"
 			propertyName="cd_progetto"
@@ -620,6 +613,24 @@
 			columnSize="22"
 			nullable="true" />				
 	</columnMap>
+	<columnMap 
+		name="ETRLIV1CDRDET"
+		tableName="V_CONS_PDG_ETR_BIL_IST_DIP_FO"
+		extends="ETRLIV1CDRDETNEW" >				
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />	
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />			
+	</columnMap>
+
 	<!--SPESE-->
 	<columnMap 
 		name="BASESPELIV1"
@@ -849,7 +860,7 @@
 			nullable="true" />				
 	</columnMap>
 	<columnMap 
-		name="SPELIV1LIV2LIV3CDRDET"
+		name="SPELIV1LIV2LIV3CDRDETNEW"
 		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
 		extends="BASESPELIV1LIV2LIV3CDR" >
 		<columnMapping
@@ -864,18 +875,6 @@
 			sqlTypeName="VARCHAR"
 			columnSize="250"
 			nullable="true" />
-		<columnMapping
-			columnName="CD_MODULO"
-			propertyName="cd_modulo"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="true" />					
-		<columnMapping
-			columnName="DS_MODULO"
-			propertyName="ds_modulo"
-			sqlTypeName="VARCHAR"
-			columnSize="433"
-			nullable="true" />		
 		<columnMapping
 			columnName="CD_PROGETTO"
 			propertyName="cd_progetto"
@@ -918,8 +917,25 @@
 			sqlTypeName="VARCHAR"
 			columnSize="765"
 			nullable="true" />	
-				
 	</columnMap>
+	<columnMap 
+		name="SPELIV1LIV2LIV3CDRDET"
+		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
+		extends="SPELIV1LIV2LIV3CDRDETNEW" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />					
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />		
+	</columnMap>
+
 	<!-- SPESE : SECONDO PERCORSO DI CONSULTAZIONE (liv1\CDR\CATEGORIA(liv2)\SOTTOCATEGORIA(liv3)\DETTAGLI)-->
 	<columnMap 
 		name="SPELIV1CDR"
@@ -951,7 +967,7 @@
 			nullable="true" />				
 	</columnMap>
 	<columnMap 
-		name="SPELIV1CDRDET"
+		name="SPELIV1CDRDETNEW"
 		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
 		extends="BASESPELIV1CDR" >
 		<columnMapping
@@ -978,18 +994,6 @@
 			sqlTypeName="VARCHAR"
 			columnSize="4"
 			nullable="true" />	
-		<columnMapping
-			columnName="CD_MODULO"
-			propertyName="cd_modulo"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="true" />	
-		<columnMapping
-			columnName="DS_MODULO"
-			propertyName="ds_modulo"
-			sqlTypeName="VARCHAR"
-			columnSize="433"
-			nullable="true" />		
 		<columnMapping
 			columnName="CD_PROGETTO"
 			propertyName="cd_progetto"
@@ -1032,5 +1036,22 @@
 			sqlTypeName="VARCHAR"
 			columnSize="765"
 			nullable="true" />				
+	</columnMap>
+	<columnMap 
+		name="SPELIV1CDRDET"
+		tableName="V_CONS_PDG_SPE_BIL_IST_DIP_FO"
+		extends="SPELIV1CDRDETNEW" >
+		<columnMapping
+			columnName="CD_MODULO"
+			propertyName="cd_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />	
+		<columnMapping
+			columnName="DS_MODULO"
+			propertyName="ds_modulo"
+			sqlTypeName="VARCHAR"
+			columnSize="433"
+			nullable="true" />		
 	</columnMap>
 </SQLPersistentInfo>

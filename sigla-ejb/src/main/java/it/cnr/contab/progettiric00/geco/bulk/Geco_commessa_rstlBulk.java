@@ -55,4 +55,7 @@ public class Geco_commessa_rstlBulk extends Geco_commessa_rstlBase implements Ge
 	public Integer getEsito_negoz() {
 		return null;
 	}	
+	public Long getId_prog_padre() {
+		return getId_prog();
+	}
 }

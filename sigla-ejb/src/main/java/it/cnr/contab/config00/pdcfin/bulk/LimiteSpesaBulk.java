@@ -50,9 +50,9 @@ Capitolo definito dall"utente collegato a Categoria
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: LIMITE_SPESA
 	 **/
-	public LimiteSpesaBulk(java.lang.Integer esercizio, java.lang.String tiAppartenenza, java.lang.String tiGestione, java.lang.String cdElementoVoce, java.lang.String fonte) {
-		super(esercizio, tiAppartenenza, tiGestione, cdElementoVoce, fonte);
-		setElementoVoce( new Elemento_voceBulk(cdElementoVoce,esercizio,tiAppartenenza,tiGestione) );
+	public LimiteSpesaBulk(java.lang.Integer esercizio, java.lang.Integer esercizio_voce, java.lang.String tiAppartenenza, java.lang.String tiGestione, java.lang.String cdElementoVoce, java.lang.String fonte) {
+		super(esercizio, esercizio_voce, tiAppartenenza, tiGestione, cdElementoVoce, fonte);
+		setElementoVoce( new Elemento_voceBulk(cdElementoVoce,esercizio_voce,tiAppartenenza,tiGestione) );
 	}
 	public static final java.util.Dictionary fonteKeys = new it.cnr.jada.util.OrderedHashtable();
 
@@ -125,7 +125,8 @@ Capitolo definito dall"utente collegato a Categoria
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [esercizio]
 	 **/
-	public java.lang.Integer getEsercizio() {
+	@Override
+	public java.lang.Integer getEsercizio_voce() {
 		Elemento_voceBulk elementoVoce = this.getElementoVoce();
 		if (elementoVoce == null)
 			return null;
@@ -135,8 +136,9 @@ Capitolo definito dall"utente collegato a Categoria
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [esercizio]
 	 **/
-	public void setEsercizio(java.lang.Integer esercizio)  {
-		this.getElementoVoce().setEsercizio(esercizio);
+	@Override
+	public void setEsercizio_voce(java.lang.Integer esercizio_voce)  {
+		this.getElementoVoce().setEsercizio(esercizio_voce);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]

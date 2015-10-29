@@ -4,6 +4,16 @@
 		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
 	<fieldProperty
+		name="fl_partita_giro"
+		property="fl_partita_giro"
+		label="Partita di giro"
+		enabledOnEdit="true"
+		enabledOnInsert="true"				
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" 
+		/>
+	<fieldProperty
 		name="fl_voce_sac"
 		property="fl_voce_sac"
 		label="Riservato SAC"
@@ -16,6 +26,9 @@
 	<formFieldProperty
 		name="fl_voce_sac"
 		/>
+   <formFieldProperty
+		name="fl_partita_giro"
+    />
 
 	<columnFieldProperty
 		name="cd_elemento_padre"

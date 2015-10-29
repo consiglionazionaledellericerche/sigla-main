@@ -75,6 +75,15 @@
 		/>
 
 	<fieldProperty
+		name="searchtool_progetto_liv2"
+		property="progetto"
+		inputType="SEARCHTOOL"
+		readonlyProperty="ROrigadet"
+		formName="form_searchtool_progetto"
+		label="Progetto"
+		/>
+
+	<fieldProperty
         name="classificazione"
         property="classificazione"
         inputType="SEARCHTOOL"
@@ -273,6 +282,8 @@
 	<formFieldProperty
 		name="searchtool_progetto" />
 	<formFieldProperty
+		name="searchtool_progetto_liv2" />
+	<formFieldProperty
         name="classificazione"/>		
 	<formFieldProperty
 		name="id_classificazione" />
@@ -379,6 +390,34 @@
 	</columnSet>
 
 	<columnSet
+        name="csContrattazioneSenzaVoceNuovoPdg">
+		<columnFieldProperty
+			name="cd_centro_responsabilita" />
+		<columnFieldProperty
+			name="cd_progetto" 
+			label="Progetto"/>
+		<columnFieldProperty
+			name="ds_progetto" 
+			label="Descrizione Progetto"/>
+		<columnFieldProperty
+			name="tot_spese_decentr_int"
+			label="Totale Proposto"
+			headerLabel="Fonti Interne"/>
+		<columnFieldProperty
+			name="appr_tot_spese_decentr_int"
+			label="Totale Approvato"
+			headerLabel="Fonti Interne" />
+		<columnFieldProperty
+			name="tot_spese_decentr_est"
+			label="Totale Proposto"
+			headerLabel="Fonti Esterne" />
+		<columnFieldProperty
+			name="appr_tot_spese_decentr_est"
+			label="Totale Approvato"
+			headerLabel="Fonti Esterne" />
+	</columnSet>
+
+	<columnSet
         name="csPdgP">
 		<columnFieldProperty
 			name="cd_classificazione"
@@ -408,6 +447,55 @@
         name="csPdgPSenzaVoce">
 		<columnFieldProperty
 			name="cd_cds_area" />
+		<columnFieldProperty
+			name="tot_spese_decentr_int"
+			label="Totale Proposto"
+			headerLabel="Fonti Interne"/>
+		<columnFieldProperty
+			name="appr_tot_spese_decentr_int"
+			label="Totale Approvato"
+			headerLabel="Fonti Interne" />
+		<columnFieldProperty
+			name="tot_spese_decentr_est"
+			label="Totale Proposto"
+			headerLabel="Fonti Esterne" />
+		<columnFieldProperty
+			name="appr_tot_spese_decentr_est"
+			label="Totale Approvato"
+			headerLabel="Fonti Esterne" />
+	</columnSet>
+	<columnSet
+        name="csNewPdgP">
+		<columnFieldProperty
+			name="cd_classificazione"
+			descProperty="classificazione.ds_classificazione"
+			label="Livello contrattazione"
+			inputType="DESCTOOL"/>		
+		<columnFieldProperty
+			name="cd_cds_area" 
+			label="Istituto"/>
+		<columnFieldProperty
+			name="tot_spese_decentr_int"
+			label="Totale Proposto"
+			headerLabel="Fonti Interne"/>
+		<columnFieldProperty
+			name="appr_tot_spese_decentr_int"
+			label="Totale Approvato"
+			headerLabel="Fonti Interne" />
+		<columnFieldProperty
+			name="tot_spese_decentr_est"
+			label="Totale Proposto"
+			headerLabel="Fonti Esterne" />
+		<columnFieldProperty
+			name="appr_tot_spese_decentr_est"
+			label="Totale Approvato"
+			headerLabel="Fonti Esterne" />
+	</columnSet>
+	<columnSet
+        name="csNewPdgPSenzaVoce">
+		<columnFieldProperty
+			name="cd_cds_area" 
+			label="Istituto"/>
 		<columnFieldProperty
 			name="tot_spese_decentr_int"
 			label="Totale Proposto"

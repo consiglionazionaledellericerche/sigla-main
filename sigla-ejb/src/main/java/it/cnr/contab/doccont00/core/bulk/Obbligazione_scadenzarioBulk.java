@@ -308,11 +308,12 @@ public void validate() throws ValidationException {
 	// controllo su campo DATA SCADENZA
 	if ( getDt_scadenza() == null || getDt_scadenza().equals("") )
 		throw new ValidationException( "Il campo DATA SCADENZA è obbligatorio." );
+
 	if ( //  data obbligazione != data scadenza && data_obbligazione >= data_scadenza
 		!(obbligazione.getDt_registrazione().after( getDt_scadenza() ) && obbligazione.getDt_registrazione().before( getDt_scadenza() )) &&
 		  obbligazione.getDt_registrazione().after( getDt_scadenza() ))
 		throw new ValidationException( "Non è possibile inserire una scadenza con data antecedente a quella di registrazione dell'impegno." );
-		
+
 	java.util.GregorianCalendar gc = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
 	gc.setTime(getDt_scadenza());
 	if (gc.get(java.util.GregorianCalendar.YEAR) < obbligazione.getEsercizio_competenza().intValue())
