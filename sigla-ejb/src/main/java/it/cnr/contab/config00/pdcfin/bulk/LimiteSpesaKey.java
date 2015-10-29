@@ -7,6 +7,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.KeyedPersistent;
 public class LimiteSpesaKey extends OggettoBulk implements KeyedPersistent {
 	private java.lang.Integer esercizio;
+	private java.lang.Integer esercizio_voce;
 	private java.lang.String ti_appartenenza;
 	private java.lang.String ti_gestione;
 	private java.lang.String cd_elemento_voce;
@@ -18,9 +19,10 @@ public class LimiteSpesaKey extends OggettoBulk implements KeyedPersistent {
 	public LimiteSpesaKey() {
 		super();
 	}
-	public LimiteSpesaKey(java.lang.Integer esercizio, java.lang.String tiAppartenenza, java.lang.String tiGestione, java.lang.String cdElementoVoce, java.lang.String fonte) {
+	public LimiteSpesaKey(java.lang.Integer esercizio, java.lang.Integer esercizio_voce, java.lang.String tiAppartenenza, java.lang.String tiGestione, java.lang.String cdElementoVoce, java.lang.String fonte) {
 		super();
 		this.esercizio=esercizio;
+		this.esercizio_voce=esercizio_voce;
 		this.ti_appartenenza=tiAppartenenza;
 		this.ti_gestione=tiGestione;
 		this.cd_elemento_voce=cdElementoVoce;
@@ -31,6 +33,7 @@ public class LimiteSpesaKey extends OggettoBulk implements KeyedPersistent {
 		if (!(o instanceof LimiteSpesaKey)) return false;
 		LimiteSpesaKey k = (LimiteSpesaKey) o;
 		if (!compareKey(getEsercizio(), k.getEsercizio())) return false;
+		if (!compareKey(getEsercizio_voce(), k.getEsercizio_voce())) return false;
 		if (!compareKey(getTi_appartenenza(), k.getTi_appartenenza())) return false;
 		if (!compareKey(getTi_gestione(), k.getTi_gestione())) return false;
 		if (!compareKey(getCd_elemento_voce(), k.getCd_elemento_voce())) return false;
@@ -40,6 +43,7 @@ public class LimiteSpesaKey extends OggettoBulk implements KeyedPersistent {
 	public int primaryKeyHashCode() {
 		int i = 0;
 		i = i + calculateKeyHashCode(getEsercizio());
+		i = i + calculateKeyHashCode(getEsercizio_voce());
 		i = i + calculateKeyHashCode(getTi_appartenenza());
 		i = i + calculateKeyHashCode(getTi_gestione());
 		i = i + calculateKeyHashCode(getCd_elemento_voce());
@@ -59,6 +63,14 @@ public class LimiteSpesaKey extends OggettoBulk implements KeyedPersistent {
 	 **/
 	public java.lang.Integer getEsercizio() {
 		return esercizio;
+	}
+	
+	public java.lang.Integer getEsercizio_voce() {
+		return esercizio_voce;
+	}
+	
+	public void setEsercizio_voce(java.lang.Integer esercizio_voce) {
+		this.esercizio_voce = esercizio_voce;
 	}
 	
 	/**

@@ -11,6 +11,13 @@
 			nullable="false"
 			primary="true" />
 		<columnMapping
+			columnName="ESERCIZIO_VOCE"
+			propertyName="esercizio_voce"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
 			columnName="CD_CDS"
 			propertyName="cd_cds"
 			sqlTypeName="VARCHAR"
@@ -48,6 +55,9 @@
 	</defaultColumnMap>
 	<persistentProperty 
 		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty 
+		name="esercizio_voce"
 		partOfOid="true" />
 	<persistentProperty
 		name="cd_cds"

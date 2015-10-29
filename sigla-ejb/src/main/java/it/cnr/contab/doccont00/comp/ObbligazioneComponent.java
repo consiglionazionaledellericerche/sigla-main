@@ -21,6 +21,7 @@ import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.bulk.FunzioneBulk;
+import it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
@@ -1489,7 +1490,7 @@ public ObbligazioneBulk validaImputazioneFinanziaria(UserContext userContext, Ob
 	{
 		V_pdg_obbligazione_speBulk ppsd;
 		Linea_attivitaBulk la;
-		Voce_fBulk voce;
+		IVoceBilancioBulk voce;
 	
 		// recupero le percentuali di imputazione finanziaria per le linee di attivita da pdg
 		// 100 - percentuali specificate x linee att non da PDG
@@ -1558,7 +1559,7 @@ public ObbligazioneBulk validaImputazioneFinanziaria(UserContext userContext, Ob
  * @throws ComponentException
  *
 */
-private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obbligazione, PrimaryKeyHashtable oldRipartizioneCdrVoceLinea, String cdr, String latt, Voce_fBulk voce) throws ComponentException
+private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obbligazione, PrimaryKeyHashtable oldRipartizioneCdrVoceLinea, String cdr, String latt, IVoceBilancioBulk voce) throws ComponentException
 {
 	BigDecimal totaleOldScad = new BigDecimal(0);
 	BigDecimal totaleNewScad = new BigDecimal(0);
@@ -1811,7 +1812,7 @@ protected void creaDettagliScadenzaPerLineeAttivitaDaPdG(UserContext aUC,Obbliga
 			}
 			else
 			{
-				Voce_fBulk capitolo = obbligazione.getCapitolo( ppsd.getCd_funzione() );
+				IVoceBilancioBulk capitolo = obbligazione.getCapitolo( ppsd.getCd_funzione() );
 				osv.setTi_appartenenza( capitolo.getTi_appartenenza());
 				osv.setTi_gestione( capitolo.getTi_gestione());
 				osv.setCd_voce( capitolo.getCd_voce() );
@@ -1906,7 +1907,7 @@ protected void creaDettagliScadenzaPerNuoveLineeAttivita (UserContext aUC,Obblig
 			}
 			else
 			{
-				Voce_fBulk capitolo = obbligazione.getCapitolo( la.getLinea_att().getFunzione().getCd_funzione() );
+				IVoceBilancioBulk capitolo = obbligazione.getCapitolo( la.getLinea_att().getFunzione().getCd_funzione() );
 				osv.setTi_appartenenza( capitolo.getTi_appartenenza());
 				osv.setTi_gestione( capitolo.getTi_gestione());
 				osv.setCd_voce( capitolo.getCd_voce() );
@@ -4666,7 +4667,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 		if ( obbligazione.isToBeCreated() )
 		{
 			Timestamp lastDayOfTheYear = DateServices.getLastDayOfYear( obbligazione.getEsercizio().intValue());
-			
+
 			if ( obbligazione.getDt_registrazione().before(DateServices.getFirstDayOfYear( obbligazione.getEsercizio().intValue())) ||
 				  obbligazione.getDt_registrazione().after(lastDayOfTheYear))
 				throw  new ApplicationException( "La data di registrazione deve appartenere all'esercizio di scrivania" );
@@ -5335,7 +5336,13 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 		}
 		return sql;
 	}
-private void validaCampi(UserContext uc, ObbligazioneBulk obbligazione) throws ComponentException {
+	
+	public List<V_assestatoBulk> listaAssestatoSpese(UserContext userContext, ObbligazioneBulk obbligazione) throws ComponentException, PersistencyException{	
+		SQLBuilder sql = selectAssestatoSpeseByClause(userContext, obbligazione, null, null);
+		return getHome(userContext, V_assestatoBulk.class).fetchAll( sql );
+	}
+
+	private void validaCampi(UserContext uc, ObbligazioneBulk obbligazione) throws ComponentException {
 	try {
 		// controlli di validazione del campo MOTIVAZIONE
 		Parametri_cnrBulk bulkCNR = (Parametri_cnrBulk)getHome(uc, Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(uc)));		

@@ -5,7 +5,7 @@
 	<defaultColumnMap
 		tableName="LIMITE_SPESA">
 		<columnMapping
-			columnName="ESERCIZIO"
+			columnName="ESERCIZIO_VOCE"
 			propertyName="elementoVoce.esercizio" />
 		<columnMapping
 			columnName="TI_APPARTENENZA"

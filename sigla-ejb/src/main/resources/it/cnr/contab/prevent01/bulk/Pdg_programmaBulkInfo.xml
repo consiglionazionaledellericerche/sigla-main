@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+		shortDescription="Programma Piano di Gestione"
+		longDescription="Programma Piano di Gestione" >
+	<fieldProperty
+		name="cd_programma"
+		property="cd_programma"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Codice" />
+	<fieldProperty
+		name="ds_programma"
+		property="ds_programma"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		nullable="false"
+		enabledOnSearch="true"
+		label="Descrizione" />
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_programma"
+			inputType="TEXT"
+			inputSize="15" />
+		<formFieldProperty
+			name="ds_programma"
+			inputType="TEXT"
+			inputSize="30" />
+	</form>
+	
+	<formFieldProperty
+		name="cd_programma" />		
+	<formFieldProperty
+		name="ds_programma" />
+
+	<columnFieldProperty
+		name="cd_programma" />		
+	<columnFieldProperty
+		name="ds_programma" />
+				
+	<findFieldProperty
+		name="cd_programma" />		
+	<findFieldProperty
+		name="ds_programma" />
+</bulkInfo>

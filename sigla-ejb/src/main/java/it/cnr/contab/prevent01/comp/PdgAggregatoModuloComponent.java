@@ -1,15 +1,21 @@
 package it.cnr.contab.prevent01.comp;
 
 import java.math.BigDecimal;
-import java.sql.PreparedStatement;
 import java.util.Iterator;
 import java.util.List;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.esercizio.bulk.*;
-import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
-import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
-import it.cnr.contab.pdg00.bulk.*;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
+import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
+import it.cnr.contab.config00.esercizio.bulk.EsercizioHome;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.config00.sto.bulk.CdrHome;
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.pdg00.ejb.CostiDipendenteComponentSession;
 import it.cnr.contab.pdg01.consultazioni.bulk.V_cons_pdgp_pdgg_etrBulk;
 import it.cnr.contab.pdg01.consultazioni.bulk.V_cons_pdgp_pdgg_etrHome;
@@ -21,31 +27,34 @@ import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateHome;
 import it.cnr.contab.prevent01.bulk.Pdg_contrattazione_speseBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_contrattazione_speseHome;
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
-import it.cnr.contab.prevent01.bulk.Pdg_esercizioHome;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloHome;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiHome;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseHome;
-import it.cnr.contab.prevent01.bulk.V_pdg_piano_ripartoBulk;
-import it.cnr.contab.prevent01.bulk.V_pdg_piano_ripartoHome;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipHome;
-import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
-import it.cnr.contab.config00.sto.bulk.*;
 //import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.utenze00.bulk.*;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BusyResourceException;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.OutdatedResourceException;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.CRUDComponent;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.ObjectNotFoundException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.Query;
+import it.cnr.jada.persistency.sql.SQLBroker;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 
 public class PdgAggregatoModuloComponent extends CRUDComponent {
 /**
@@ -84,7 +93,9 @@ public class PdgAggregatoModuloComponent extends CRUDComponent {
 		try {
 			CdrBulk testata = (CdrBulk)super.inizializzaBulkPerModifica(userContext,bulk);
 			CdrHome testataHome = (CdrHome)getHome(userContext, CdrBulk.class);
-			testata.setDettagli(new it.cnr.jada.bulk.BulkList(testataHome.findPdgModuloDettagli(userContext, testata)));
+			Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
+			Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
+			testata.setDettagli(new it.cnr.jada.bulk.BulkList(testataHome.findPdgModuloDettagli(userContext, testata, parCnrBulk.getLivelloProgetto())));
 			getHomeCache(userContext).fetchAll(userContext);
 			return testata;
 		} catch(Exception e) {
@@ -170,12 +181,21 @@ public class PdgAggregatoModuloComponent extends CRUDComponent {
 			sql.addClause( clause );
 			sql.addClause("AND", "esercizio", sql.EQUALS, CNRUserContext.getEsercizio(userContext));
 			sql.addClause("AND", "pg_progetto", sql.EQUALS, dett.getPg_progetto());
-			sql.addClause("AND", "livello", sql.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
+
+			Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
+			Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
+			if (parCnrBulk.getFl_nuovo_pdg())
+				sql.addClause("AND", "livello", sql.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
+			else
+				sql.addClause("AND", "livello", sql.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
 			sql.addClause("AND", "fl_utilizzabile", sql.EQUALS, Boolean.TRUE);
 			// Se uo 999.000 in scrivania: visualizza tutti i progetti
 			Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 			if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
-				sql.addSQLExistsClause("AND",progettohome.abilitazioniModuli(userContext));
+				if (parCnrBulk.getFl_nuovo_pdg())
+					sql.addSQLExistsClause("AND",progettohome.abilitazioniCommesse(userContext));
+				else
+					sql.addSQLExistsClause("AND",progettohome.abilitazioniModuli(userContext));
 			}
                 
 			if (clause != null) 
@@ -557,10 +577,18 @@ public class PdgAggregatoModuloComponent extends CRUDComponent {
 			throw handleException(e);
 		}
 		try{
-		CdrBulk cdr = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(pdg.getCdr());
-		cdr.setUnita_padre((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdr.getCd_unita_organizzativa())));
-	
-		if (!pdg.getCdr().isCdrSAC()){
+			String labelProgetto = "modulo";
+
+			Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
+			Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
+			if (parCnrBulk.getFl_nuovo_pdg())
+				labelProgetto = "progetto";
+			
+			CdrBulk cdr = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(pdg.getCdr());
+			cdr.setUnita_padre((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdr.getCd_unita_organizzativa())));
+		
+			if (!pdg.getCdr().isCdrSAC()){
+				
 				Pdg_modulo_speseHome home = (Pdg_modulo_speseHome)getHome(userContext,Pdg_modulo_speseBulk.class);
 				SQLBuilder sql = home.createSQLBuilder();
 				sql.addTableToHeader("ELEMENTO_VOCE");
@@ -608,29 +636,29 @@ public class PdgAggregatoModuloComponent extends CRUDComponent {
 								if(ev!=null && ev.getPerc_prelievo_pdgp_entrate().compareTo(Utility.ZERO)!=0)
 									impTotaleEntrateDaPrel = impTotaleEntrateDaPrel.add(pdge.getIm_entrata().multiply(ev.getPerc_prelievo_pdgp_entrate()).divide(new BigDecimal("100"),2,BigDecimal.ROUND_HALF_DOWN));
 							}
-						}
 					}
-					// se non ci sono entrate soggette a prelievo bisogna fare lo stesso il controllo
-						if(impTotaleEntrateDaPrel.compareTo(BigDecimal.ZERO)!=0)
-							if(impTotaleEntrateDaPrel.compareTo(impTotaleSpesePrel)!=0)
-							throw new ApplicationException("Per il modulo "+ pdg.getCd_progetto()+" il contributo per l'attività ordinaria è pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel)+
+				}
+				// se non ci sono entrate soggette a prelievo bisogna fare lo stesso il controllo
+				if(impTotaleEntrateDaPrel.compareTo(BigDecimal.ZERO)!=0)
+					if(impTotaleEntrateDaPrel.compareTo(impTotaleSpesePrel)!=0)
+						throw new ApplicationException("Per il "+labelProgetto+" "+pdg.getCd_progetto()+" il contributo per l'attività ordinaria è pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel)+
 									". Impossibile salvare, poichè è stato imputato sulla voce dedicata l'importo di "+new it.cnr.contab.util.EuroFormat().format(impTotaleSpesePrel)+".");
-					}
-					if (impTotaleSpese.compareTo(impTotaleEntrate)!=0)
-						if ( cds!=null ) {
-							if ( cds.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_AREA) ) 
-								throw new ApplicationException("Per l'area " + cds.getCd_unita_organizzativa() + " e per il modulo "+ pdg.getCd_progetto()+", il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");
-							else
-								throw new ApplicationException("Per il CDS " + cds.getCd_unita_organizzativa() + " e per il modulo "+ pdg.getCd_progetto()+", il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");
-						}
-						else
-							throw new ApplicationException("Per il modulo "+ pdg.getCd_progetto()+" il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");
-			} catch (PersistencyException e) {
-		throw handleException(e);
-	} catch (ComponentException e) {
-		throw handleException(e);
+			}
+			if (impTotaleSpese.compareTo(impTotaleEntrate)!=0)
+				if ( cds!=null ) {
+					if ( cds.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_AREA) ) 
+						throw new ApplicationException("Per l'area " + cds.getCd_unita_organizzativa() + " e per il "+labelProgetto+" "+ pdg.getCd_progetto()+", il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");
+					else
+						throw new ApplicationException("Per il CDS " + cds.getCd_unita_organizzativa() + " e per il "+labelProgetto+" "+ pdg.getCd_progetto()+", il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");
+				}
+				else
+					throw new ApplicationException("Per il "+labelProgetto+" "+ pdg.getCd_progetto()+" il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		} catch (ComponentException e) {
+			throw handleException(e);
+		}
 	}
-}
 
 
 	public Pdg_esercizioBulk getCdrPdGP(UserContext userContext, CdrBulk cdr) throws it.cnr.jada.comp.ComponentException {

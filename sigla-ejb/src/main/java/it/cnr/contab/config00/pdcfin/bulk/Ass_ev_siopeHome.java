@@ -17,6 +17,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
@@ -30,10 +31,18 @@ public class Ass_ev_siopeHome extends BulkHome {
 	
 	public SQLBuilder selectElemento_voceByClause( Ass_ev_siopeBulk bulk, Elemento_voceHome home,it.cnr.jada.bulk.OggettoBulk bulkClause,CompoundFindClause clause) throws java.lang.reflect.InvocationTargetException,IllegalAccessException, it.cnr.jada.persistency.PersistencyException {
 		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );		
 		sql.addClause("AND", "ti_appartenenza", SQLBuilder.EQUALS,bulk.getTi_appartenenza());
 		sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, bulk.getTi_gestione());
-		sql.addClause("AND", "ti_elemento_voce", SQLBuilder.EQUALS, Elemento_voceHome.TIPO_CAPITOLO);
-		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );		
+
+		sql.addTableToHeader("PARAMETRI_CNR");
+		sql.addSQLJoin("PARAMETRI_CNR.ESERCIZIO","ELEMENTO_VOCE.ESERCIZIO");
+
+		sql.openParenthesis(FindClause.AND);
+		sql.addSQLClause(FindClause.OR,"PARAMETRI_CNR.FL_NUOVO_PDG='Y'");
+		sql.addClause(FindClause.OR, "ti_elemento_voce", SQLBuilder.EQUALS, Elemento_voceHome.TIPO_CAPITOLO);
+		sql.closeParenthesis();
+		
 		sql.addClause( clause );
 		return sql;
 	}

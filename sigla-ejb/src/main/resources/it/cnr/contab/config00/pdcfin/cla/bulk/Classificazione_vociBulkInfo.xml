@@ -79,16 +79,16 @@
 		name="cd_livello6"
 		property="cd_livello6"
 		inputType="TEXT"
-		inputSize="4"
-		maxLength="4"
+		inputSize="5"
+		maxLength="5"
 		enabledOnSearch="true"
 		label="Sesto Livello" />
 	<fieldProperty
 		name="cd_livello7"
 		property="cd_livello7"
 		inputType="TEXT"
-		inputSize="4"
-		maxLength="4"
+		inputSize="5"
+		maxLength="5"
 		enabledOnSearch="true"
 		label="Settimo Livello" />
 	<fieldProperty

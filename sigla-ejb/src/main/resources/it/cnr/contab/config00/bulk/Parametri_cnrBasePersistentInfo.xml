@@ -244,6 +244,13 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_NUOVO_PDG"
+			propertyName="fl_nuovo_pdg"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
 	</defaultColumnMap>
 	<persistentProperty
 		name="cd_tipo_rapporto" />
@@ -320,4 +327,6 @@
 		name="livello_pdg_cofog" />	
 	<persistentProperty
 		name="fl_credito_irpef" />		
+	<persistentProperty
+		name="fl_nuovo_pdg" />		
 	</SQLPersistentInfo>

@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="id_prog"
+		property="id_prog"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="id_prog" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="esercizio" />
+	<fieldProperty
+		name="fase"
+		property="fase"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="fase" />
+	<fieldProperty
+		name="cod_prog"
+		property="cod_prog"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="cod_prog" />
+	<fieldProperty
+		name="id_area"
+		property="id_area"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="id_area" />
+	<fieldProperty
+		name="tipo_prog"
+		property="tipo_prog"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="tipo_prog" />
+	<fieldProperty
+		name="denom_prog"
+		property="denom_prog"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="255"
+		label="denom_prog" />
+	<fieldProperty
+		name="cds"
+		property="cds"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="cds" />
+	<fieldProperty
+		name="sede_svol_uo"
+		property="sede_svol_uo"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="sede_svol_uo" />
+	<fieldProperty
+		name="cod_tip"
+		property="cod_tip"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="cod_tip" />
+	<fieldProperty
+		name="cod_3rzo_resp"
+		property="cod_3rzo_resp"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="255"
+		label="cod_3rzo_resp" />
+	<fieldProperty
+		name="matricola_resp"
+		property="matricola_resp"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="matricola_resp" />
+	<fieldProperty
+		name="cognome_resp"
+		property="cognome_resp"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="255"
+		label="cognome_resp" />
+	<fieldProperty
+		name="nome_resp"
+		property="nome_resp"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="255"
+		label="nome_resp" />
+	<fieldProperty
+		name="telefono_resp"
+		property="telefono_resp"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		label="telefono_resp" />
+	<fieldProperty
+		name="email_resp"
+		property="email_resp"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="255"
+		label="email_resp" />
+	<fieldProperty
+		name="parola_chiave_1"
+		property="parola_chiave_1"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="255"
+		label="parola_chiave_1" />
+	<fieldProperty
+		name="parola_chiave_2"
+		property="parola_chiave_2"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="255"
+		label="parola_chiave_2" />
+	<fieldProperty
+		name="parola_chiave_3"
+		property="parola_chiave_3"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="255"
+		label="parola_chiave_3" />
+	<fieldProperty
+		name="descrittori_1"
+		property="descrittori_1"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="descrittori_1" />
+	<fieldProperty
+		name="descrittori_2"
+		property="descrittori_2"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="descrittori_2" />
+	<fieldProperty
+		name="descrittori_3"
+		property="descrittori_3"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="descrittori_3" />
+	<fieldProperty
+		name="esercizio_proposta"
+		property="esercizio_proposta"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="esercizio_proposta" />
+	<fieldProperty
+		name="esercizio_inizio_attivita"
+		property="esercizio_inizio_attivita"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="esercizio_inizio_attivita" />
+	<fieldProperty
+		name="data_inizio_attivita"
+		property="data_inizio_attivita"
+		inputType="TEXT"
+		formatName="date_short"
+		label="data_inizio_attivita" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="stato" />
+	<fieldProperty
+		name="stato_att_scie"
+		property="stato_att_scie"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="stato_att_scie" />
+	<fieldProperty
+		name="stato_att_contab"
+		property="stato_att_contab"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="stato_att_contab" />
+	<fieldProperty
+		name="data_fine_attivita_scie"
+		property="data_fine_attivita_scie"
+		inputType="TEXT"
+		formatName="date_short"
+		label="data_fine_attivita_scie" />
+	<fieldProperty
+		name="esercizio_chiusura"
+		property="esercizio_chiusura"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="esercizio_chiusura" />
+	<fieldProperty
+		name="codicefiscale_resp"
+		property="codicefiscale_resp"
+		inputType="TEXT"
+		inputSize="16"
+		maxLength="16"
+		label="codicefiscale_resp" />
+	<fieldProperty
+		name="esito_negoz"
+		property="esito_negoz"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="esito_negoz" />
+	<fieldProperty
+		name="utente_creatore"
+		property="utente_creatore"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="255"
+		label="utente_creatore" />
+	<fieldProperty
+		name="data_creazione"
+		property="data_creazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="data_creazione" />
+	<fieldProperty
+		name="ip_creazione"
+		property="ip_creazione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="255"
+		label="ip_creazione" />
+	<fieldProperty
+		name="utente_ultima_modifica"
+		property="utente_ultima_modifica"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="255"
+		label="utente_ultima_modifica" />
+	<fieldProperty
+		name="data_ultima_modifica"
+		property="data_ultima_modifica"
+		inputType="TEXT"
+		formatName="date_short"
+		label="data_ultima_modifica" />
+	<fieldProperty
+		name="ip_ultima_modifica"
+		property="ip_ultima_modifica"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="32"
+		label="ip_ultima_modifica" />
+	<fieldProperty
+		name="uid_resp"
+		property="uid_resp"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="255"
+		label="uid_resp" />
+	<fieldProperty
+		name="fin_est"
+		property="fin_est"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="fin_est" />
+	<fieldProperty
+		name="id_finest"
+		property="id_finest"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="id_finest" />
+	<fieldProperty
+		name="residui"
+		property="residui"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="residui" />
+
+	<formFieldProperty
+		name="id_prog" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="fase" />
+	<formFieldProperty
+		name="cod_prog" />
+	<formFieldProperty
+		name="id_area" />
+	<formFieldProperty
+		name="tipo_prog" />
+	<formFieldProperty
+		name="denom_prog" />
+	<formFieldProperty
+		name="cds" />
+	<formFieldProperty
+		name="sede_svol_uo" />
+	<formFieldProperty
+		name="cod_tip" />
+	<formFieldProperty
+		name="cod_3rzo_resp" />
+	<formFieldProperty
+		name="matricola_resp" />
+	<formFieldProperty
+		name="cognome_resp" />
+	<formFieldProperty
+		name="nome_resp" />
+	<formFieldProperty
+		name="telefono_resp" />
+	<formFieldProperty
+		name="email_resp" />
+	<formFieldProperty
+		name="parola_chiave_1" />
+	<formFieldProperty
+		name="parola_chiave_2" />
+	<formFieldProperty
+		name="parola_chiave_3" />
+	<formFieldProperty
+		name="descrittori_1" />
+	<formFieldProperty
+		name="descrittori_2" />
+	<formFieldProperty
+		name="descrittori_3" />
+	<formFieldProperty
+		name="esercizio_proposta" />
+	<formFieldProperty
+		name="esercizio_inizio_attivita" />
+	<formFieldProperty
+		name="data_inizio_attivita" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="stato_att_scie" />
+	<formFieldProperty
+		name="stato_att_contab" />
+	<formFieldProperty
+		name="data_fine_attivita_scie" />
+	<formFieldProperty
+		name="esercizio_chiusura" />
+	<formFieldProperty
+		name="codicefiscale_resp" />
+	<formFieldProperty
+		name="esito_negoz" />
+	<formFieldProperty
+		name="utente_creatore" />
+	<formFieldProperty
+		name="data_creazione" />
+	<formFieldProperty
+		name="ip_creazione" />
+	<formFieldProperty
+		name="utente_ultima_modifica" />
+	<formFieldProperty
+		name="data_ultima_modifica" />
+	<formFieldProperty
+		name="ip_ultima_modifica" />
+	<formFieldProperty
+		name="uid_resp" />
+	<formFieldProperty
+		name="fin_est" />
+	<formFieldProperty
+		name="id_finest" />
+	<formFieldProperty
+		name="residui" />
+
+	<findFieldProperty
+		name="id_prog" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="fase" />
+	<findFieldProperty
+		name="cod_prog" />
+	<findFieldProperty
+		name="id_area" />
+	<findFieldProperty
+		name="tipo_prog" />
+	<findFieldProperty
+		name="denom_prog" />
+	<findFieldProperty
+		name="cds" />
+	<findFieldProperty
+		name="sede_svol_uo" />
+	<findFieldProperty
+		name="cod_tip" />
+	<findFieldProperty
+		name="cod_3rzo_resp" />
+	<findFieldProperty
+		name="matricola_resp" />
+	<findFieldProperty
+		name="cognome_resp" />
+	<findFieldProperty
+		name="nome_resp" />
+	<findFieldProperty
+		name="telefono_resp" />
+	<findFieldProperty
+		name="email_resp" />
+	<findFieldProperty
+		name="parola_chiave_1" />
+	<findFieldProperty
+		name="parola_chiave_2" />
+	<findFieldProperty
+		name="parola_chiave_3" />
+	<findFieldProperty
+		name="descrittori_1" />
+	<findFieldProperty
+		name="descrittori_2" />
+	<findFieldProperty
+		name="descrittori_3" />
+	<findFieldProperty
+		name="esercizio_proposta" />
+	<findFieldProperty
+		name="esercizio_inizio_attivita" />
+	<findFieldProperty
+		name="data_inizio_attivita" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="stato_att_scie" />
+	<findFieldProperty
+		name="stato_att_contab" />
+	<findFieldProperty
+		name="data_fine_attivita_scie" />
+	<findFieldProperty
+		name="esercizio_chiusura" />
+	<findFieldProperty
+		name="codicefiscale_resp" />
+	<findFieldProperty
+		name="esito_negoz" />
+	<findFieldProperty
+		name="utente_creatore" />
+	<findFieldProperty
+		name="data_creazione" />
+	<findFieldProperty
+		name="ip_creazione" />
+	<findFieldProperty
+		name="utente_ultima_modifica" />
+	<findFieldProperty
+		name="data_ultima_modifica" />
+	<findFieldProperty
+		name="ip_ultima_modifica" />
+	<findFieldProperty
+		name="uid_resp" />
+	<findFieldProperty
+		name="fin_est" />
+	<findFieldProperty
+		name="id_finest" />
+	<findFieldProperty
+		name="residui" />
+
+	<columnFieldProperty
+		name="id_prog" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="fase" />
+	<columnFieldProperty
+		name="cod_prog" />
+	<columnFieldProperty
+		name="id_area" />
+	<columnFieldProperty
+		name="tipo_prog" />
+	<columnFieldProperty
+		name="denom_prog" />
+	<columnFieldProperty
+		name="cds" />
+	<columnFieldProperty
+		name="sede_svol_uo" />
+	<columnFieldProperty
+		name="cod_tip" />
+	<columnFieldProperty
+		name="cod_3rzo_resp" />
+	<columnFieldProperty
+		name="matricola_resp" />
+	<columnFieldProperty
+		name="cognome_resp" />
+	<columnFieldProperty
+		name="nome_resp" />
+	<columnFieldProperty
+		name="telefono_resp" />
+	<columnFieldProperty
+		name="email_resp" />
+	<columnFieldProperty
+		name="parola_chiave_1" />
+	<columnFieldProperty
+		name="parola_chiave_2" />
+	<columnFieldProperty
+		name="parola_chiave_3" />
+	<columnFieldProperty
+		name="descrittori_1" />
+	<columnFieldProperty
+		name="descrittori_2" />
+	<columnFieldProperty
+		name="descrittori_3" />
+	<columnFieldProperty
+		name="esercizio_proposta" />
+	<columnFieldProperty
+		name="esercizio_inizio_attivita" />
+	<columnFieldProperty
+		name="data_inizio_attivita" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="stato_att_scie" />
+	<columnFieldProperty
+		name="stato_att_contab" />
+	<columnFieldProperty
+		name="data_fine_attivita_scie" />
+	<columnFieldProperty
+		name="data_fine_attivita_contab" />
+	<columnFieldProperty
+		name="esercizio_chiusura" />
+	<columnFieldProperty
+		name="codicefiscale_resp" />
+	<columnFieldProperty
+		name="esito_negoz" />
+	<columnFieldProperty
+		name="utente_creatore" />
+	<columnFieldProperty
+		name="data_creazione" />
+	<columnFieldProperty
+		name="ip_creazione" />
+	<columnFieldProperty
+		name="utente_ultima_modifica" />
+	<columnFieldProperty
+		name="data_ultima_modifica" />
+	<columnFieldProperty
+		name="ip_ultima_modifica" />
+	<columnFieldProperty
+		name="uid_resp" />
+	<columnFieldProperty
+		name="fin_est" />
+	<columnFieldProperty
+		name="id_finest" />
+	<columnFieldProperty
+		name="residui" />
+</bulkInfo>

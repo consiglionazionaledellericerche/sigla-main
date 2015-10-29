@@ -1,5 +1,6 @@
 package it.cnr.contab.config00.pdcfin.bulk;
 
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.sql.*;
@@ -25,7 +26,10 @@ public SQLBuilder createSQLBuilder()
 	sql.addClause("AND", "ti_appartenenza", SQLBuilder.EQUALS, APPARTENENZA_CDS );
 	sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, GESTIONE_SPESE );
 	sql.addClause("AND", "ti_elemento_voce", SQLBuilder.EQUALS, TIPO_CAPITOLO );
-	sql.addClause("AND", "cd_parte", SQLBuilder.EQUALS, PARTE_1 );			
+	sql.openParenthesis(FindClause.AND);
+	sql.addClause(FindClause.OR, "cd_parte", SQLBuilder.ISNULL,null );			
+	sql.addClause(FindClause.OR, "cd_parte", SQLBuilder.EQUALS, PARTE_1 );
+	sql.closeParenthesis();
 	return sql;
 }
 /**

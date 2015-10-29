@@ -2,9 +2,11 @@ package it.cnr.contab.doccont00.bp;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
+import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.compensi00.docs.bulk.*;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.missioni00.docs.bulk.*;
+import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
 import it.cnr.contab.docamm00.bp.RicercaObbligazioniBP;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
@@ -20,7 +22,9 @@ import it.cnr.contab.doccont00.ejb.ObbligazioneResComponentSession;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.ejb.CDRComponentSession;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
+import it.cnr.contab.config00.ejb.Linea_attivitaComponentSession;
 import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.docamm00.bp.CRUDNotaDiCreditoBP;
@@ -58,6 +62,7 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP
 	private java.util.List vociSelezionate; 
 	private boolean siope_attiva = false;
 	private boolean incarichi_repertorio_attiva = false;
+	private boolean flNuovoPdg = false;
 	
 	private byte[] bringBackClone = null;
 public CRUDObbligazioneBP() {
@@ -249,17 +254,32 @@ public void caricaCentriDiResponsabilita(it.cnr.jada.action.ActionContext contex
 {
 	try 
 	{
-		annullaImputazioneFinanziariaCapitoli( context );		
-		ObbligazioneBulk obbligazione = ((ObbligazioneComponentSession)createComponentSession()).listaCapitoliPerCdsVoce( context.getUserContext(), (ObbligazioneBulk) getModel());
-		annullaImputazioneFinanziariaCdr( context );
-		Vector capitoli =  new Vector(obbligazione.getCapitoliDiSpesaCdsColl());
-		
-		if ( capitoli.size() == 0 )
-			throw new MessageToUser("Nessun capitolo selezionato");			
-		obbligazione = ((ObbligazioneBulk)getModel());
-		obbligazione.setCapitoliDiSpesaCdsSelezionatiColl( capitoli );
-		Vector cdr = ((ObbligazioneComponentSession)createComponentSession()).listaCdrPerCapitoli( context.getUserContext(), obbligazione );
-		obbligazione.setCdrColl( cdr );
+		annullaImputazioneFinanziariaCapitoli( context );
+		ObbligazioneBulk obbligazione = (ObbligazioneBulk) getModel();
+		if (this.isFlNuovoPdg()) {
+			annullaImputazioneFinanziariaCdr( context );
+			obbligazione.setCapitoliDiSpesaCdsSelezionatiColl( Arrays.asList(obbligazione.getElemento_voce()) );
+			CDRComponentSession sessCDR = (CDRComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_CDRComponentSession", CDRComponentSession.class);
+			List<V_assestatoBulk> listaAssestato = ((ObbligazioneComponentSession)createComponentSession()).listaAssestatoSpese(context.getUserContext(), obbligazione );
+			if (!listaAssestato.isEmpty()) {
+				obbligazione.setCdrColl(new ArrayList<CdrBulk>());
+				for (V_assestatoBulk v_assestatoBulk : listaAssestato) {
+					CdrBulk cdrBulk = (CdrBulk)sessCDR.findByPrimaryKey(context.getUserContext(), new CdrBulk(v_assestatoBulk.getCd_centro_responsabilita()));
+					if (!obbligazione.getCdrColl().contains(cdrBulk))
+						obbligazione.getCdrColl().add(cdrBulk);
+				}
+			}
+		} else {
+			obbligazione = ((ObbligazioneComponentSession)createComponentSession()).listaCapitoliPerCdsVoce( context.getUserContext(), obbligazione);
+			annullaImputazioneFinanziariaCdr( context );
+			Vector capitoli =  new Vector(obbligazione.getCapitoliDiSpesaCdsColl());
+			if ( capitoli.size() == 0 )
+				throw new MessageToUser("Nessun capitolo selezionato");			
+			obbligazione = ((ObbligazioneBulk)getModel());
+			obbligazione.setCapitoliDiSpesaCdsSelezionatiColl( capitoli );
+			Vector cdr = ((ObbligazioneComponentSession)createComponentSession()).listaCdrPerCapitoli( context.getUserContext(), obbligazione );
+			obbligazione.setCdrColl( cdr );
+		}
 		obbligazione.setLineeAttivitaColl( Collections.EMPTY_LIST );				
 //		setModel( obbligazione );
 		obbligazione.setInternalStatus( ObbligazioneBulk.INT_STATO_CAPITOLI_CONFERMATI );
@@ -288,7 +308,7 @@ public void caricaLineeAttivita(it.cnr.jada.action.ActionContext context) throws
 		obbligazione.setCdrSelezionatiColl( cdr );
 		Vector lineeAttivita = ((ObbligazioneComponentSession)createComponentSession()).listaLineeAttivitaPerCapitoliCdr( context.getUserContext(), obbligazione );
 		obbligazione.setLineeAttivitaColl( lineeAttivita );
-		obbligazione.setInternalStatus( ObbligazioneBulk.INT_STATO_CDR_CONFERMATI );		
+		obbligazione.setInternalStatus( ObbligazioneBulk.INT_STATO_CDR_CONFERMATI );
 //		setModel( obbligazione );
 		resyncChildren( context );
 	} catch(Exception e) {
@@ -1027,6 +1047,7 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())); 
 		setSiope_attiva(parCnr.getFl_siope().booleanValue());
 		setIncarichi_repertorio_attiva(true);
+		setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
 	}
     catch(Throwable throwable)
     {
@@ -1038,6 +1059,12 @@ private boolean isSiope_attiva() {
 }
 private void setSiope_attiva(boolean siope_attiva) {
 	this.siope_attiva = siope_attiva;
+}
+private boolean isFlNuovoPdg() {
+	return flNuovoPdg;
+}
+public void setFlNuovoPdg(boolean flNuovoPdg) {
+	this.flNuovoPdg = flNuovoPdg;
 }
 public boolean isROElemento_voce() {
 	ObbligazioneBulk obbligazione = (ObbligazioneBulk)getModel();

@@ -16,7 +16,9 @@
 	CRUDDettagliModuloCostiBP bp = (CRUDDettagliModuloCostiBP)BusinessProcess.getBusinessProcess(request);
 %>
  <table class="Panel">
-  <tr valign=top><td>    
+  <tr valign=top>
+<% if (!bp.isFlNuovoPdg()){ %>
+  <td>
      <div class="GroupLabel"><% bp.getController().writeFormLabel(out,"label_fonti_interne");%></div>
      <div class="Group"> 
        <table class="Panel">       
@@ -63,9 +65,33 @@
 		 </tr>           
        </table>
      </div> 
-  </td><td>
+  </td>
+<% } %>
+  <td>
   <table class="Panel">    
-    <tr><td valign=top>
+    <tr>
+<% if (bp.isFlNuovoPdg()){ %>
+    <td valign=top>
+     	<div class="GroupLabel"><% bp.getController().writeFormLabel(out,"label_fonti_interne");%></div>
+     	<div class="Group"> 
+       	<table class="Panel">       
+	   <tr>
+		<td NOWRAP><% bp.getController().writeFormLabel( out, "totale_spese_da_fonti_interne_accentrate"); %></td>
+	  	<td align=right><% bp.getController().writeFormInput( out, "totale_spese_da_fonti_interne_accentrate"); %></td>		  
+	   </tr>           
+	   <tr>
+		<td NOWRAP><% bp.getController().writeFormLabel( out, "totale_spese_da_fonti_interne_decentrate"); %></td>
+		<td align=right><% bp.getController().writeFormInput( out, "totale_spese_da_fonti_interne_decentrate"); %></td>		  
+	   </tr>           
+	   <tr>
+		<td NOWRAP><% bp.getController().writeFormLabel( out, "totale_spese_da_fonti_interne_totale"); %></td>
+		<td align=right><% bp.getController().writeFormInput( out, "totale_spese_da_fonti_interne_totale"); %></td>		  
+	   </tr>
+       </table>		
+     </div>
+    </td>
+<% } %>
+    <td valign=top>
      <div class="GroupLabel"><% bp.getController().writeFormLabel(out,"label_fonti_esterne");%></div>
      <div class="Group">  
       <table class="Panel">
@@ -106,7 +132,12 @@
      </td></tr>
    </table>
      <div class="GroupLabel"><% bp.getController().writeFormLabel(out,"label_contrattazione");%></div>
-   		<%bp.getCrudDettagliContrSpese().writeHTMLTable(pageContext,(bp.getLivelloContrattazione().compareTo(new Integer(0))==0)?"csPdgPSenzaVoce":"csPdgP",false,false,false,"100%","130px"); %>
+		<% 	if (bp.isFlNuovoPdg()){
+   				bp.getCrudDettagliContrSpese().writeHTMLTable(pageContext,(bp.getLivelloContrattazione().compareTo(new Integer(0))==0)?"csNewPdgPSenzaVoce":"csNewPdgP",false,false,false,"100%","130px");
+   			} else {
+   				bp.getCrudDettagliContrSpese().writeHTMLTable(pageContext,(bp.getLivelloContrattazione().compareTo(new Integer(0))==0)?"csPdgPSenzaVoce":"csPdgP",false,false,false,"100%","130px");
+   			}
+   		%>
      <div class="Group">  
       <table class="Panel" cellpadding=2>
 		<tr>

@@ -25,47 +25,64 @@
 <title>Piano dei conti CNR - Gestione entrate</title>
 <body class="Form">
 
-<% CRUDBP bp = (CRUDBP)BusinessProcess.getBusinessProcess(request);
+<% CRUDConfigPdcCNREntrateCapitoloBP bp = (CRUDConfigPdcCNREntrateCapitoloBP)BusinessProcess.getBusinessProcess(request);
 	 bp.openFormWindow(pageContext); 
 	 UserContext uc = HttpActionContext.getUserContext(session);
 	 Elemento_voceBulk voce = (Elemento_voceBulk)bp.getModel();
 	 %>
 
 	<table class="Panel">
-<tr>
-	<td colspan=2><CENTER><h3>Gestione Capitolo</h3></CENTER></td>
-	</tr>
+	<% if (!bp.isFlNuovoPdg()){%>
+		<tr>
+		<td colspan=2><CENTER><h3>Gestione Capitsolo</h3></CENTER></td>
+		</tr>
+	<% } else { %>
+		<tr>
+		<td colspan=2><CENTER><h3>Gestione Voce di Bilancio di Entrata</h3></CENTER></td>
+		</tr>
+	<% } %>
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "esercizio"); %></td>
 	<td><% bp.getController().writeFormInputByStatus( out, "esercizio"); %></td>
 	</tr>
-	<tr>
-	<td><% bp.getController().writeFormLabel( out, "cd_proprio_elemento"); %></td>	
-	<td><% bp.getController().writeFormInputByStatus( out, "cd_proprio_elemento"); %></td>
-	</tr>
-	<tr>
-	<td><span class="FormLabel">Categoria</span></td>	
-	<td>
-			<% bp.getController().writeFormInputByStatus( out, "cd_elemento_padre"); %>
-			<% bp.getController().writeFormInput( out, "ds_elemento_padre"); %>
-			<% bp.getController().writeFormInputByStatus( out, "find_elemento_padre"); %>				
-	</td>
-	</tr>
-	<tr>
-	<td><% bp.getController().writeFormLabel( out, "cd_titolo"); %></td>	
-	<td>
-	    <% bp.getController().writeFormInput( out, "cd_titolo"); %>
-	    <% bp.getController().writeFormInput( out, "ds_titolo"); %>
-	</td>
-	</tr>
-	<tr>
-	<td><% bp.getController().writeFormLabel( out, "cd_elemento_voce"); %></td>	
-	<td><% bp.getController().writeFormInput( out, "cd_elemento_voce"); %>
-		<% bp.getController().writeFormLabel( out, "fl_partita_giro"); %>
-		<% bp.getController().writeFormInput( out, "fl_partita_giro"); %>
-		<% bp.getController().writeFormLabel( out, "fl_voce_sac"); %>
-		<% bp.getController().writeFormInput( out, "fl_voce_sac"); %></td>
-	</tr>	
+	<% if (!bp.isFlNuovoPdg()){%>
+		<tr>
+		<td><% bp.getController().writeFormLabel( out, "cd_proprio_elemento"); %></td>	
+		<td><% bp.getController().writeFormInputByStatus( out, "cd_proprio_elemento"); %></td>
+		</tr>
+		<tr>
+		<td><span class="FormLabel">Categoria</span></td>	
+		<td>
+				<% bp.getController().writeFormInputByStatus( out, "cd_elemento_padre"); %>
+				<% bp.getController().writeFormInput( out, "ds_elemento_padre"); %>
+				<% bp.getController().writeFormInputByStatus( out, "find_elemento_padre"); %>				
+		</td>
+		</tr>
+		<tr>
+		<td><% bp.getController().writeFormLabel( out, "cd_titolo"); %></td>	
+		<td>
+		    <% bp.getController().writeFormInput( out, "cd_titolo"); %>
+		    <% bp.getController().writeFormInput( out, "ds_titolo"); %>
+		</td>
+		</tr>
+		<tr>
+		<td><% bp.getController().writeFormLabel( out, "cd_elemento_voce"); %></td>	
+		<td><% bp.getController().writeFormInput( out, "cd_elemento_voce"); %>
+			<% bp.getController().writeFormLabel( out, "fl_partita_giro"); %>
+			<% bp.getController().writeFormInput( out,null,"fl_partita_giro",true,null,null); %>
+			<% bp.getController().writeFormLabel( out, "fl_voce_sac"); %>
+			<% bp.getController().writeFormInput( out, "fl_voce_sac"); %></td>
+		</tr>	
+	<% } else {%>
+		<tr>
+		<td><% bp.getController().writeFormLabel( out, "cd_proprio_elemento"); %></td>	
+		<td><% bp.getController().writeFormInputByStatus( out, "cd_proprio_elemento"); %>
+			<% bp.getController().writeFormLabel( out, "fl_partita_giro"); %>
+			<% bp.getController().writeFormInput( out, "fl_partita_giro"); %>
+			<% bp.getController().writeFormLabel( out, "fl_voce_sac"); %>
+			<% bp.getController().writeFormInput( out, "fl_voce_sac"); %></td>
+		</tr>
+	<% } %>
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "ds_elemento_voce"); %></td>	
 	<td><% bp.getController().writeFormInput( out, "ds_elemento_voce"); %></td>

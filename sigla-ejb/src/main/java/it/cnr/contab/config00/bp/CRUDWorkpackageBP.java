@@ -1,23 +1,33 @@
 package it.cnr.contab.config00.bp;
 
 
-import it.cnr.contab.config00.blob.bulk.*;
-import it.cnr.contab.config00.latt.bulk.*;
+import java.rmi.RemoteException;
+
+import it.cnr.contab.config00.blob.bulk.PostItBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaPadreComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.SendMail;
-import it.cnr.jada.util.action.*;
+import it.cnr.jada.util.action.SimpleCRUDBP;
+import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
 public class CRUDWorkpackageBP extends SimpleCRUDBP {
 	private final SimpleDetailCRUDController risultati = new SimpleDetailCRUDController("risultati",it.cnr.contab.config00.latt.bulk.RisultatoBulk.class,"risultati",this);
 	private SimpleDetailCRUDController crudDettagliPostIt = new SimpleDetailCRUDController( "DettagliPostIt", PostItBulk.class, "dettagliPostIt", this);
+	private boolean flNuovoPdg = false;
 	
 	private Unita_organizzativaBulk uoScrivania;
-public CRUDWorkpackageBP() {
+	private Integer esercizioScrivania;
+
+	public CRUDWorkpackageBP() {
 	super();
 }
 public CRUDWorkpackageBP(String function) {
@@ -80,9 +90,18 @@ private void aggiornaGECO(UserContext userContext) {
 
 @Override
 protected void initialize(ActionContext actioncontext) throws BusinessProcessException {
-	setUoScrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(actioncontext));
-	aggiornaGECO(actioncontext.getUserContext());
-	super.initialize(actioncontext);
+	try {
+		setUoScrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(actioncontext));
+		setEsercizioScrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(actioncontext));
+		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())); 
+		setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
+		aggiornaGECO(actioncontext.getUserContext());
+		super.initialize(actioncontext);
+	} catch (ComponentException e) {
+		throw new BusinessProcessException(e);
+	} catch (RemoteException e) {
+		throw new BusinessProcessException(e);
+	} 
 }
 /*
  * Utilizzato per la gestione del bottone di attivazione del PostIt
@@ -105,7 +124,7 @@ public boolean isActive(OggettoBulk bulk,int sel) {
 }
 @Override
 public boolean isNewButtonEnabled() {
-    if(isUoArea())
+	if (isUoArea() && !this.isFlNuovoPdg())
     	return false;
     else
     	return super.isNewButtonEnabled();
@@ -119,5 +138,21 @@ public Unita_organizzativaBulk getUoScrivania() {
 public void setUoScrivania(Unita_organizzativaBulk uoScrivania) {
 	this.uoScrivania = uoScrivania;
 }
-
+public Integer getEsercizioScrivania() {
+	return esercizioScrivania;
+}
+public void setEsercizioScrivania(Integer esercizioScrivania) {
+	this.esercizioScrivania = esercizioScrivania;
+}
+public boolean isFlNuovoPdg() {
+	return flNuovoPdg;
+}
+private void setFlNuovoPdg(boolean flNuovoPdg) {
+	this.flNuovoPdg = flNuovoPdg;
+}
+@Override
+public String getSearchResultColumnSet() {
+	if (this.isFlNuovoPdg()) return "prg_liv2";
+	return super.getSearchResultColumnSet();
+}
 }

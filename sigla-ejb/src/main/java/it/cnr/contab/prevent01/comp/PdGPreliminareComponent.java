@@ -272,8 +272,10 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 					ribaltaCDPSuPdg(userContext, pdg_esercizio);
 
 					ribaltaCostiPdGArea(userContext, pdg_esercizio);
-					
-					predisponeBilancioPreventivoCNR(userContext, pdg_esercizio);
+				    
+					Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(pdg_esercizio.getEsercizio()));
+					if (parametriCnr==null || !parametriCnr.getFl_nuovo_pdg())
+						predisponeBilancioPreventivoCNR(userContext, pdg_esercizio);
 
 					creaSaldiCdRLineaVoceDaGest(userContext, pdg_esercizio);
 				}
@@ -1183,6 +1185,11 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 		}
 
 		try{
+			String labelProgetto = String.valueOf("modulo");
+			Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(pdg.getEsercizio()));
+			if (parametriCnr==null || parametriCnr.getFl_nuovo_pdg())
+				labelProgetto = String.valueOf("progetto");
+
 			CdrBulk cdr = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(pdg.getCdr());
 			cdr.setUnita_padre((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdr.getCd_unita_organizzativa())));
 			
@@ -1241,18 +1248,18 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 					// se non ci sono entrate soggette a prelievo bisogna fare lo stesso il controllo
 					if(impTotaleEntrateDaPrel.compareTo(BigDecimal.ZERO)!=0)
 						if(impTotaleEntrateDaPrel.compareTo(impTotaleSpesePrel)!=0)
-							throw new ApplicationException("Per il modulo "+ pdg.getCd_progetto()+" il contributo per l'attività ordinaria è pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel)+
+							throw new ApplicationException("Per il " + labelProgetto + " "+ pdg.getCd_progetto()+" il contributo per l'attività ordinaria è pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel)+
 									". Impossibile salvare, poichè è stato imputato sulla voce dedicata l'importo di "+new it.cnr.contab.util.EuroFormat().format(impTotaleSpesePrel)+".");
 				}	
 				if (impTotaleSpese.compareTo(impTotaleEntrate)!=0){
 					if ( cds!=null ) {
 						if ( cds.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_AREA) ) 
-							throw new ApplicationException("Per l'area " + cds.getCd_unita_organizzativa() + " e per il modulo "+ pdg.getCd_progetto()+", il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");
+							throw new ApplicationException("Per l'area " + cds.getCd_unita_organizzativa() + " e per il " + labelProgetto + " " + pdg.getCd_progetto()+", il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");
 						else
-							throw new ApplicationException("Per il CDS " + cds.getCd_unita_organizzativa() + " e per il modulo "+ pdg.getCd_progetto()+", il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");
+							throw new ApplicationException("Per il CDS " + cds.getCd_unita_organizzativa() + " e per il " + labelProgetto + " " + pdg.getCd_progetto()+", il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");
 					}
 					else
-						throw new ApplicationException("Per il modulo "+ pdg.getCd_progetto()+" il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");
+						throw new ApplicationException("Per il " + labelProgetto + " " + pdg.getCd_progetto()+" il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");
 				}
 			
 		} catch (PersistencyException e) {
