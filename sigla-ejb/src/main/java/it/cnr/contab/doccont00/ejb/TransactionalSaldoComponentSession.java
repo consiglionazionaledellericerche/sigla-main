@@ -300,7 +300,7 @@ public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaVariazion
 		}
 	}
 }
-public java.math.BigDecimal getTotaleSaldoResidui(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param3)  throws RemoteException,it.cnr.jada.comp.ComponentException {
+public java.math.BigDecimal getTotaleSaldoResidui(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3)  throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (java.math.BigDecimal)invoke("getTotaleSaldoResidui",new Object[] {
 			param0,

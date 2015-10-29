@@ -1,49 +1,87 @@
 package it.cnr.contab.docamm00.comp;
 
-import java.sql.CallableStatement;
-import java.sql.Date;
-import java.sql.Timestamp;
-
-import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
-import it.cnr.contab.config00.bulk.*;
-import it.cnr.contab.config00.sto.bulk.EnteBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteHome;
-import it.cnr.contab.docamm00.tabrif.bulk.*;
-import it.cnr.contab.docamm00.docs.bulk.AccertamentiTable;
-import it.cnr.contab.docamm00.docs.bulk.AssociazioniInventarioTable;
-import it.cnr.contab.docamm00.docs.bulk.CarichiInventarioTable;
-import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import java.io.Serializable;
-
-import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
-import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
-import it.cnr.contab.docamm00.docs.bulk.*;
-
+import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import it.cnr.contab.anagraf00.core.bulk.*;
-import it.cnr.contab.docamm00.ejb.*;
-import it.cnr.contab.doccont00.core.bulk.*;
-
-import java.util.*;
-import it.cnr.contab.anagraf00.tabrif.bulk.*;
-import it.cnr.contab.doccont00.ejb.*;
-import java.math.BigDecimal;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
+import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoHome;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
-import it.cnr.contab.cori00.docs.bulk.Liquid_gruppo_coriIBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.sto.bulk.EnteBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteHome;
+import it.cnr.contab.docamm00.docs.bulk.AccertamentiTable;
+import it.cnr.contab.docamm00.docs.bulk.AssociazioniInventarioTable;
+import it.cnr.contab.docamm00.docs.bulk.CarichiInventarioTable;
+import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Documento_genericoHome;
+import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaHome;
+import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_accertamentiVBulk;
+import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
+import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
+import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
+import it.cnr.contab.docamm00.docs.bulk.Stampa_compensi_per_vpVBulk;
+import it.cnr.contab.docamm00.docs.bulk.Stampa_doc_gen_per_vpVBulk;
+import it.cnr.contab.docamm00.docs.bulk.Stampa_docamm_per_voce_del_pianoVBulk;
+import it.cnr.contab.docamm00.docs.bulk.Stampa_elenco_fattureVBulk;
+import it.cnr.contab.docamm00.docs.bulk.Stampa_fat_pas_per_vpVBulk;
+import it.cnr.contab.docamm00.docs.bulk.Stampa_situazioni_pag_esteroVBulk;
+import it.cnr.contab.docamm00.docs.bulk.Stampa_vpg_doc_genericoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Tipo_documento_ammBulk;
+import it.cnr.contab.docamm00.docs.bulk.Voidable;
+import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
+import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
+import it.cnr.contab.docamm00.tabrif.bulk.CambioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.CambioHome;
 import it.cnr.contab.doccont00.comp.DateServices;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoHome;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioHome;
+import it.cnr.contab.doccont00.core.bulk.Ass_obb_acr_pgiroBulk;
+import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileHome;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contHome;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voce_aggregatoBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
+import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
+import it.cnr.contab.doccont00.core.bulk.Reversale_rigaIBulk;
+import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
+import it.cnr.contab.doccont00.core.bulk.SospesoHome;
+import it.cnr.contab.doccont00.core.bulk.V_disp_cassa_cdsBulk;
+import it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession;
+import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaHome;
 import it.cnr.contab.inventario00.docs.bulk.Inventario_beniBulk;
@@ -61,7 +99,12 @@ import it.cnr.contab.inventario01.bulk.Inventario_beni_apgHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.*;
+import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.PrimaryKeyHashMap;
+import it.cnr.jada.bulk.PrimaryKeyHashtable;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.ICRUDMgr;
@@ -74,6 +117,7 @@ import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.persistency.sql.SimpleFindClause;
 import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 
 public class DocumentoGenericoComponent
 	extends it.cnr.jada.comp.CRUDComponent
@@ -2630,8 +2674,7 @@ public TerzoBulk findCessionario(UserContext userContext, Documento_generico_rig
 												riga.getDocumento_generico());
 	    if (terzo==null) return null;
 	    
-	    Modalita_pagamentoBulk mp = (Modalita_pagamentoBulk)mph.find(new Modalita_pagamentoBulk(riga.getModalita_pagamento().getCd_modalita_pag(), riga.getCd_terzo())).get(0);
-		if (mp == null || riga.getBanca()==null || riga.getBanca().getCd_terzo_delegato() == null) return null;
+		if (riga.getBanca()==null || riga.getBanca().getCd_terzo_delegato() == null) return null;
 		TerzoHome th = (TerzoHome)getHome(userContext, TerzoBulk.class);
 		return (TerzoBulk)th.findByPrimaryKey(new TerzoBulk(riga.getBanca().getCd_terzo_delegato() ));
 		
@@ -3199,7 +3242,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext, Oggett
         Documento_genericoHome dHome= (Documento_genericoHome) getHome(userContext, documento);
         if (!verificaStatoEsercizio(userContext, new EsercizioBulk( documento.getCd_cds(), documento.getEsercizio())))
             throw new it.cnr.jada.comp.ApplicationException("Impossibile inserire un documento generico per un esercizio non aperto!");
-		java.sql.Timestamp date = dHome.getServerDate();
+		java.sql.Timestamp date = EJBCommonServices.getServerDate();
 		int annoSolare = documento.getDateCalendar(date).get(java.util.Calendar.YEAR);
 		int esercizioInScrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext).intValue();
 		if (annoSolare != esercizioInScrivania)
@@ -3214,8 +3257,6 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext, Oggett
 			}
 		setDt_termine_creazione_docamm(userContext, documento);
     } catch (java.text.ParseException e) {
-        throw handleException(bulk, e);
-    } catch (it.cnr.jada.persistency.PersistencyException e) {
         throw handleException(bulk, e);
     }
     

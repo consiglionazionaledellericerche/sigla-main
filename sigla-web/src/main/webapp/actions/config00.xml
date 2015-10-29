@@ -10,10 +10,14 @@
       path="/CRUDConfigUOAction" actionClass="it.cnr.contab.config00.action.CRUDUnita_organizzativaAction">
   </action>
 
-	  <action 
+	<action 
       path="/CRUDConfigPdCAction" actionClass="it.cnr.jada.util.action.CRUDAction">
   </action>
 	
+  <action 
+      path="/CRUDConfigPdCCNREntrateCapitoloAction" actionClass="it.cnr.contab.config00.action.CRUDConfigPdCCNREntrateCapitoloAction">
+  </action>
+
   <action 
       path="/CRUDServizioPecAction" actionClass="it.cnr.jada.util.action.CRUDAction">
   </action>
@@ -59,11 +63,11 @@
   </businessProcess>
 	
   <businessProcess
-      name="CRUDConfigPdcCNREntrateCapitoloBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+      name="CRUDConfigPdcCNREntrateCapitoloBP" className="it.cnr.contab.config00.bp.CRUDConfigPdcCNREntrateCapitoloBP">
     <forward name="default" path="/config00/pdc_fin_cnr_entrate_capitolo.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.config00.pdcfin.bulk.EV_cnr_entrate_capitoloBulk" />
 		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_PDCFinComponentSession" />								
-		<init-param name="defaultAction" value="CRUDConfigPdCAction" />
+		<init-param name="defaultAction" value="CRUDConfigPdCCNREntrateCapitoloAction" />
   </businessProcess>
 
   <businessProcess
@@ -83,7 +87,7 @@
   </businessProcess>
 
   <businessProcess
-      name="CRUDConfigPdcCDSSpeseBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+      name="CRUDConfigPdcCDSSpeseBP" className="it.cnr.contab.config00.bp.CRUDConfigPdcCDSSpeseBP">
     <forward name="default" path="/config00/pdc_fin_cds_spese.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.config00.pdcfin.bulk.EV_cds_spese_capitoloBulk" />
 		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_PDCFinComponentSession" />								

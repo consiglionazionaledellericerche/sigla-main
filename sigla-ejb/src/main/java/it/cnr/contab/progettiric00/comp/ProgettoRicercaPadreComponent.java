@@ -1,27 +1,51 @@
 package it.cnr.contab.progettiric00.comp;
 
-import java.sql.CallableStatement;
 import java.sql.SQLException;
 
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.progettiric00.core.bulk.*;
-import it.cnr.contab.progettiric00.geco.bulk.*;
-import it.cnr.contab.progettiric00.tabrif.bulk.*;
-import it.cnr.contab.progettiric00.bp.*;
-import it.cnr.contab.utenze00.bulk.*;
-import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.contab.config00.bulk.*;
-import it.cnr.contab.config00.blob.bulk.*;
-import it.cnr.contab.utenze00.bp.*;
+import it.cnr.contab.config00.blob.bulk.PostItBulk;
+import it.cnr.contab.config00.blob.bulk.PostItHome;
+import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
+import it.cnr.contab.config00.sto.bulk.DipartimentoHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_finanziatoreBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_partner_esternoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_sipHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_uoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Stampa_progettiVBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_area_progBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_attivitaBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_commessaBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_commessa_pbBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_commessa_rstlBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_commessa_sacBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_moduloBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_modulo_pbBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_modulo_rstlBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_modulo_sacBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_progettoBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_progetto_operativoBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_progetto_pbBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_progetto_rstlBulk;
+import it.cnr.contab.progettiric00.geco.bulk.Geco_progetto_sacBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.*;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.Query;
+import it.cnr.jada.persistency.sql.SQLBroker;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.RemoteIterator;
 /**
  * @author Marco Spasiano
  *
@@ -572,8 +596,10 @@ public boolean isLeaf(UserContext userContext, OggettoBulk bulk) throws Componen
 						if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_progetto_sacBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
 							if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_progetto_rstlBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
 								if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_progetto_pbBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
-									progetto_sip.setToBeDeleted();
-									super.eliminaConBulk(userContext, progetto_sip);
+									if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_area_progBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
+										progetto_sip.setToBeDeleted();
+										super.eliminaConBulk(userContext, progetto_sip);
+									}
 								}		
 							}
 								
@@ -585,8 +611,10 @@ public boolean isLeaf(UserContext userContext, OggettoBulk bulk) throws Componen
 						if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_commessa_sacBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
 							if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_commessa_rstlBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
 								if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_commessa_pbBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
-									progetto_sip.setToBeDeleted();
-									super.eliminaConBulk(userContext, progetto_sip);
+									if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_progetto_operativoBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
+										progetto_sip.setToBeDeleted();
+										super.eliminaConBulk(userContext, progetto_sip);
+									}
 								}
 							}
 						}
@@ -597,16 +625,18 @@ public boolean isLeaf(UserContext userContext, OggettoBulk bulk) throws Componen
 						if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_modulo_sacBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
 							if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_modulo_rstlBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
 								if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_modulo_pbBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
-									SQLBuilder sql = moduli_utilizzatiHome.createSQLBuilderAll();
-									sql.addSQLClause("AND", "ESERCIZIO",SQLBuilder.EQUALS,progetto_sip.getEsercizio());
-									sql.addSQLClause("AND", "PG_PROGETTO",SQLBuilder.EQUALS,progetto_sip.getPg_progetto());
-									sql.addSQLClause("AND", "TIPO_FASE",SQLBuilder.EQUALS,progetto_sip.getTipo_fase());								
-									SQLBroker brokerUtilizzati = moduli_utilizzatiHome.createBroker(sql);
-									if (brokerUtilizzati.next()){
-										handleExceptionMail(userContext, new ApplicationException("Si è tentato di cancellare il modulo utilizzato: "+progetto_sip.getEsercizio()+"/"+progetto_sip.getPg_progetto()+"/"+progetto_sip.getTipo_fase()));
-									}else{	
-										progetto_sip.setToBeDeleted();
-										super.eliminaConBulk(userContext, progetto_sip);
+									if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_attivitaBulk(new Long(progetto_sip.getPg_progetto().intValue()),new Long(progetto_sip.getEsercizio().intValue()),progetto_sip.getTipo_fase()))==null){
+										SQLBuilder sql = moduli_utilizzatiHome.createSQLBuilderAll();
+										sql.addSQLClause("AND", "ESERCIZIO",SQLBuilder.EQUALS,progetto_sip.getEsercizio());
+										sql.addSQLClause("AND", "PG_PROGETTO",SQLBuilder.EQUALS,progetto_sip.getPg_progetto());
+										sql.addSQLClause("AND", "TIPO_FASE",SQLBuilder.EQUALS,progetto_sip.getTipo_fase());								
+										SQLBroker brokerUtilizzati = moduli_utilizzatiHome.createBroker(sql);
+										if (brokerUtilizzati.next()){
+											handleExceptionMail(userContext, new ApplicationException("Si è tentato di cancellare il modulo utilizzato: "+progetto_sip.getEsercizio()+"/"+progetto_sip.getPg_progetto()+"/"+progetto_sip.getTipo_fase()));
+										}else{	
+											progetto_sip.setToBeDeleted();
+											super.eliminaConBulk(userContext, progetto_sip);
+										}
 									}
 								}
 							}

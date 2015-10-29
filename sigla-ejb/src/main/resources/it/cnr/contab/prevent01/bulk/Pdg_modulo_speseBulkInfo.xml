@@ -38,9 +38,9 @@
         name="classificazione"
         property="classificazione"
         inputType="SEARCHTOOL"
-        formName="searchtool"
-        columnSet="searchtool"
-        freeSearchSet="searchtool"
+        formName="searchtool_codlast"
+        columnSet="searchtool_codlast"
+        freeSearchSet="searchtool_codlast"
         enabledOnInsert="true"
         enabledOnSearch="true"
         readonlyPropertyOnEdit="classificazioneRO"
@@ -350,6 +350,36 @@
 		maxLength="10"
 		label="Modulo di Commessa" />
 	<fieldProperty
+		name="dipartimento_liv2"
+		property="pdg_modulo_costi.pdg_modulo.progetto.progettopadre.cd_dipartimento"
+		descProperty="pdg_modulo_costi.pdg_modulo.progetto.progettopadre.dipartimento.ds_dipartimento"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="5"
+		maxLength="10"
+		label="Programma" />		
+	<fieldProperty
+		name="cd_progetto_liv1"
+		property="pdg_modulo_costi.pdg_modulo.progetto.progettopadre.cd_progetto"
+		descProperty="pdg_modulo_costi.pdg_modulo.progetto.progettopadre.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="10"
+		maxLength="10"
+		label="Area Progettuale" />
+	<fieldProperty
+		name="cd_progetto_liv2"
+		property="pdg_modulo_costi.pdg_modulo.progetto.cd_progetto"
+		descProperty="pdg_modulo_costi.pdg_modulo.progetto.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="15"
+		maxLength="10"
+		label="Progetto" />
+	<fieldProperty
 		name="desctool_classificazione"
 		property="classificazione.cd_classificazione"
 		descProperty="classificazione.ds_classificazione"
@@ -497,6 +527,13 @@
 	<formFieldProperty
 		name="modulo" />	
 	<formFieldProperty
+		name="dipartimento_liv2" />		
+	<formFieldProperty
+		name="cd_progetto_liv1" />
+	<formFieldProperty
+		name="cd_progetto_liv2" />
+
+	<formFieldProperty
 		name="desctool_classificazione" />	
 	<formFieldProperty
 		name="desctool_area" />	
@@ -634,5 +671,59 @@
 		name="cd_cds_area"
 		columnStyle="valign:center;"/>
 	<columnFieldProperty
-		name="cd_cofog"/>		
+		name="cd_cofog"/>	
+		
+	<columnSet name="without_area">
+		<columnFieldProperty
+			name="cd_classificazione"
+			descProperty="classificazione.ds_classificazione"
+			inputType="DESCTOOL"/>		
+		<columnFieldProperty
+			name="prev_ass_imp_int"
+			label="Fonti Int."
+			style=""
+			headerLabel="Prev Ass. impegni anno precedente"/>
+		<columnFieldProperty
+			name="prev_ass_imp_est"
+			label="Fonti Est."
+			style=""
+			headerLabel="Prev Ass. impegni anno precedente"/>
+		<columnFieldProperty
+			name="im_spese_gest_decentrata_int"
+			headerLabel="GESTIONE DECENTRATA"/>
+		<columnFieldProperty
+			name="im_spese_gest_decentrata_est"
+			headerLabel="GESTIONE DECENTRATA" />
+		<columnFieldProperty
+			name="tot_gest_decentrata"
+			label="Totale A"
+			style=""
+			headerLabel="GESTIONE DECENTRATA"/>					
+		<columnFieldProperty
+			name="im_spese_gest_accentrata_int"
+			headerLabel="GESTIONE ACCENTRATA" />
+		<columnFieldProperty
+			name="im_spese_gest_accentrata_est"
+			headerLabel="GESTIONE ACCENTRATA" />
+		<columnFieldProperty
+			name="tot_gest_accentrata"
+			label="Totale B"
+			style=""
+			headerLabel="GESTIONE ACCENTRATA"/>				
+		<columnFieldProperty
+			name="tot_competenza_anno_in_corso"
+			label="anno corrente (A+B)"
+			style=""
+			headerLabel="Totale Competenza"/>
+		<columnFieldProperty
+			name="im_spese_a2"
+			label="anno successivo"
+			headerLabel="Totale Competenza" />
+		<columnFieldProperty
+			name="im_spese_a3"
+			label="anno corrente +2"
+			headerLabel="Totale Competenza" />
+		<columnFieldProperty
+			name="cd_cofog"/>
+	</columnSet>  			
 </bulkInfo>

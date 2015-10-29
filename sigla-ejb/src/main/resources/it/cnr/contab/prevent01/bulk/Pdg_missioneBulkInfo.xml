@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA"
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+		shortDescription="Missioni Piano di Gestione"
+		longDescription="Missioni Piano di Gestione" >
+	<fieldProperty
+		name="cd_missione"
+		property="cd_missione"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Codice" />
+	<fieldProperty
+		name="ds_missione"
+		property="ds_missione"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		nullable="false"
+		enabledOnSearch="true"
+		label="Descrizione" />
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_missione"
+			inputType="TEXT"
+			inputSize="15" />
+		<formFieldProperty
+			name="ds_missione"
+			inputType="TEXT"
+			inputSize="30" />
+	</form>
+	
+	<formFieldProperty
+		name="cd_missione" />		
+	<formFieldProperty
+		name="ds_missione" />
+
+	<columnFieldProperty
+		name="cd_missione" />		
+	<columnFieldProperty
+		name="ds_missione" />
+				
+	<findFieldProperty
+		name="cd_missione" />		
+	<findFieldProperty
+		name="ds_missione" />
+</bulkInfo>

@@ -182,6 +182,14 @@ public class CRUDPdgModuloSpeseGestComponent extends it.cnr.jada.comp.CRUDCompon
 		
 		if(dett.getPdg_modulo_spese()!=null && dett.getPdg_modulo_spese().getCd_cofog()!=null )
 			sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.CD_COFOG",sql.EQUALS,dett.getPdg_modulo_spese().getCd_cofog());
+
+		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
+		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
+		if (parCnrBulk!=null && parCnrBulk.getFl_nuovo_pdg()) {
+			sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.CD_PROGRAMMA",SQLBuilder.ISNOTNULL,null);
+			sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.CD_MISSIONE",SQLBuilder.ISNOTNULL,null);
+		}
+		
 		sql.addTableToHeader("NATURA");
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_NATURA","NATURA.CD_NATURA");
 		sql.addSQLClause("AND", "NATURA.FL_SPESA",sql.EQUALS,"Y");

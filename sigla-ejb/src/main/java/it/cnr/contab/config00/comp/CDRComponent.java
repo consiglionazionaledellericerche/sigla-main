@@ -2,6 +2,7 @@ package it.cnr.contab.config00.comp;
 
 import it.cnr.contab.config00.esercizio.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.*;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.*;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
@@ -9,7 +10,9 @@ import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import java.io.Serializable;
 import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.config00.util.Constants;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -368,26 +371,29 @@ public void insertBulk(UserContext userContext,OggettoBulk o) throws Persistency
 	{
 		try
 		{
-			CdrBulk cdr = (CdrBulk) o;
-			lockBulk( userContext, cdr );
-			/* CNRCTB001.creaEsplVociCDR(?,?) */
-			LoggableStatement cs = new LoggableStatement(getConnection( userContext ),
-					"{call " + it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() 
-					+ "CNRCTB001.creaEsplVociCDR(?,?,?)}",false,this.getClass());
-			try
-			{
-				cs.setObject( 1, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio() );
-				cs.setString( 2, cdr.getCd_centro_responsabilita());
-				cs.setString( 3, null); // passando null come user, i dati relativi a dacr/duva/utcr/utuv vengono ereditati dal cdr specificato
-				cs.executeQuery();
-			}
-			catch ( Exception e )
-			{
-				throw handleException( o, e );
-			}
-			finally
-			{
-				cs.close();
+			Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, CNRUserContext.getEsercizio(userContext));
+			if (!parCnr.getFl_nuovo_pdg()) {
+				CdrBulk cdr = (CdrBulk) o;
+				lockBulk( userContext, cdr );
+				/* CNRCTB001.creaEsplVociCDR(?,?) */
+				LoggableStatement cs = new LoggableStatement(getConnection( userContext ),
+						"{call " + it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() 
+						+ "CNRCTB001.creaEsplVociCDR(?,?,?)}",false,this.getClass());
+				try
+				{
+					cs.setObject( 1, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio() );
+					cs.setString( 2, cdr.getCd_centro_responsabilita());
+					cs.setString( 3, null); // passando null come user, i dati relativi a dacr/duva/utcr/utuv vengono ereditati dal cdr specificato
+					cs.executeQuery();
+				}
+				catch ( Exception e )
+				{
+					throw handleException( o, e );
+				}
+				finally
+				{
+					cs.close();
+				}
 			}
 		}
 		catch ( Exception e )
@@ -612,27 +618,30 @@ public void updateBulk(UserContext userContext,OggettoBulk o) throws Persistency
 	{
 		try
 		{
-			CdrBulk cdr = (CdrBulk) o;
-			lockBulk( userContext, cdr );
-			/* CNRCTB001.creaEsplVociCDR(?,?) */
-			LoggableStatement cs = new LoggableStatement(getConnection( userContext ),
-					"{call " + it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() 
-					+ "CNRCTB001.creaEsplVociCDR(?,?,?)}",false,this.getClass());
-			try
-			{
-				cs.setObject( 1, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio() );
-				cs.setString( 2, cdr.getCd_centro_responsabilita());
-				cs.setString( 3, null); // passando null come user, i dati relativi a dacr/duva/utcr/utuv vengono ereditati dal cdr specificato
-				cs.executeQuery();
+			Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, CNRUserContext.getEsercizio(userContext));
+			if (!parCnr.getFl_nuovo_pdg()) {
+				CdrBulk cdr = (CdrBulk) o;
+				lockBulk( userContext, cdr );
+				/* CNRCTB001.creaEsplVociCDR(?,?) */
+				LoggableStatement cs = new LoggableStatement(getConnection( userContext ),
+						"{call " + it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() 
+						+ "CNRCTB001.creaEsplVociCDR(?,?,?)}",false,this.getClass());
+				try
+				{
+					cs.setObject( 1, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio() );
+					cs.setString( 2, cdr.getCd_centro_responsabilita());
+					cs.setString( 3, null); // passando null come user, i dati relativi a dacr/duva/utcr/utuv vengono ereditati dal cdr specificato
+					cs.executeQuery();
+				}
+				catch ( Exception e )
+				{
+					throw handleException( o, e );
+				}
+				finally
+				{
+					cs.close();
+				}
 			}
-			catch ( Exception e )
-			{
-				throw handleException( o, e );
-			}
-			finally
-			{
-				cs.close();
-			}	
 		}
 		catch ( Exception e )
 		{

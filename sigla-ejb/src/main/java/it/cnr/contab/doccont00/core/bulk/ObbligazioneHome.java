@@ -5,6 +5,7 @@ import java.math.*;
 
 import it.cnr.contab.config00.bulk.Configurazione_cnrBase;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import java.sql.*;
 import it.cnr.contab.config00.sto.bulk.*;
@@ -12,6 +13,7 @@ import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.pdg00.bulk.*;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
+import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.*;
@@ -252,6 +254,12 @@ public void confirmObbligazioneTemporanea(
  */
 public java.util.List findCapitoliDiSpesaCds( ObbligazioneBulk obbligazione ) throws IntrospectionException,PersistencyException 
 {
+	PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
+	Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(obbligazione.getEsercizio()));
+	
+	if (parCNR.getFl_nuovo_pdg())
+		return Arrays.asList(obbligazione.getElemento_voce());
+	
 	PersistentHome evHome = getHomeCache().getHome(Voce_fBulk.class);
 	SQLBuilder sql = evHome.createSQLBuilder();
 	sql.addClause("AND","ti_appartenenza",sql.EQUALS, Elemento_voceHome.APPARTENENZA_CDS );
@@ -316,7 +324,7 @@ public java.util.List findCdr( List capitoliList, ObbligazioneBulk obbligazione 
 		LoggableStatement ps =new LoggableStatement( getConnection(), statement ,true,this.getClass());
 		try
 		{	
-			Voce_fBulk capitolo = (Voce_fBulk) capitoliList.iterator().next();
+			IVoceBilancioBulk capitolo = (IVoceBilancioBulk) capitoliList.iterator().next();
 
 			ps.setString( 1, Pdg_preventivo_detBulk.CAT_SINGOLO );
 			ps.setString( 2, Pdg_modulo_spese_gestBulk.CAT_DIRETTA );
@@ -325,12 +333,15 @@ public java.util.List findCdr( List capitoliList, ObbligazioneBulk obbligazione 
 			ps.setString( 5, Elemento_voceHome.APPARTENENZA_CDS );
 			ps.setString( 6, Elemento_voceHome.GESTIONE_SPESE );
 			ps.setString( 7, capitolo.getCd_titolo_capitolo() );
-			ps.setString( 8, capitolo.getCd_unita_organizzativa() );
+			if (capitolo instanceof Voce_fBulk)
+				ps.setString( 8, ((Voce_fBulk)capitolo).getCd_unita_organizzativa() );
+			else
+				ps.setString( 8, obbligazione.getCd_unita_organizzativa() );
 
 			Iterator i = capitoliList.iterator();
-			ps.setString( 9, ((Voce_fBulk)i.next()).getCd_funzione() );
+			ps.setString( 9, ((IVoceBilancioBulk)i.next()).getCd_funzione() );
 			for ( int j = 10; i.hasNext(); j++ )
-				ps.setString( j, ((Voce_fBulk)i.next()).getCd_funzione() );
+				ps.setString( j, ((IVoceBilancioBulk)i.next()).getCd_funzione() );
 
 			ResultSet rs = ps.executeQuery();
 			try
@@ -758,21 +769,21 @@ public java.util.List findLineeAttivita( List cdrList, List capitoliList, Obblig
 			for ( int t = 1 ; t < size; t++ )
 				statement = statement.concat("OR A.CD_CENTRO_RESPONSABILITA = ? ");
 			statement = statement.concat( " ) AND ");						
-
+	
 			size = capitoliList.size() ;
 			if ( size == 0 )
 				return Collections.EMPTY_LIST;
-
+	
 			statement = statement.concat( "( A.CD_FUNZIONE = ? ");
 			for ( int t = 1 ; t < size; t++ )
 				statement = statement.concat("OR A.CD_FUNZIONE = ? ");
-
+			
 			statement = statement.concat( " ) ");		
 			
 			LoggableStatement ps = new LoggableStatement(getConnection(), statement,true,this.getClass());
 			try
 			{	
-				Voce_fBulk capitolo = (Voce_fBulk) capitoliList.iterator().next();
+				IVoceBilancioBulk capitolo = (IVoceBilancioBulk) capitoliList.iterator().next();
 
 				ps.setString( 1, Pdg_preventivo_detBulk.CAT_SINGOLO );
 				ps.setString( 2, Pdg_modulo_spese_gestBulk.CAT_DIRETTA );
@@ -789,10 +800,10 @@ public java.util.List findLineeAttivita( List cdrList, List capitoliList, Obblig
 					ps.setString( ++j, ((CdrBulk)i.next()).getCd_centro_responsabilita() );
 						
 				i = capitoliList.iterator();
-				ps.setString( ++j, ((Voce_fBulk)i.next()).getCd_funzione() );
+				ps.setString( ++j, ((IVoceBilancioBulk)i.next()).getCd_funzione() );
 				while (  i.hasNext() )
-					ps.setString( ++j, ((Voce_fBulk)i.next()).getCd_funzione() );
-
+					ps.setString( ++j, ((IVoceBilancioBulk)i.next()).getCd_funzione() );
+				
 				ResultSet rs = ps.executeQuery();
 				try
 				{
@@ -1557,6 +1568,9 @@ public SQLBuilder selectCreditoreByClause( ObbligazioneBulk bulk, TerzoHome home
  */
 public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_voceHome home, Elemento_voceBulk bulkClause,CompoundFindClause clause) throws java.lang.reflect.InvocationTargetException,IllegalAccessException, it.cnr.jada.persistency.PersistencyException 
 {
+	PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
+	Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(bulk.getEsercizio()));
+
 	SQLBuilder sql = home.createSQLBuilder();
 	if ( bulk instanceof ObbligazioneOrdBulk || bulk instanceof ObbligazioneResBulk || 
 	     bulk instanceof ObbligazioneRes_impropriaBulk || bulk instanceof ImpegnoBulk)
@@ -1566,7 +1580,8 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
 		sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, home.GESTIONE_SPESE );
 		sql.addClause("AND", "ti_elemento_voce", SQLBuilder.EQUALS, home.TIPO_CAPITOLO );
 		// selezionando solo la parte 1 e' implicito che non siano partite di giro (fl_pgiro='N')		
-		sql.addClause("AND", "cd_parte", SQLBuilder.EQUALS, home.PARTE_1 );
+		if (!parCNR.getFl_nuovo_pdg())
+			sql.addClause("AND", "cd_parte", SQLBuilder.EQUALS, home.PARTE_1 );
 		if ( bulk.getCds() != null && bulk.getCds().getCd_tipo_unita()!=null && !bulk.getCds().getCd_tipo_unita().equalsIgnoreCase( Tipo_unita_organizzativaHome.TIPO_UO_SAC ) )
 			sql.addClause("AND", "fl_voce_sac", SQLBuilder.EQUALS, new Boolean( false) );		
 		sql.addClause( clause );
@@ -1593,7 +1608,8 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
 			sql.addClause("AND", "ti_appartenenza", SQLBuilder.EQUALS, home.APPARTENENZA_CDS );		
 		sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, home.GESTIONE_SPESE );
 		sql.addClause("AND", "ti_elemento_voce", SQLBuilder.EQUALS, home.TIPO_CAPITOLO );
-		sql.addClause("AND", "cd_parte", SQLBuilder.EQUALS, home.PARTE_2 );
+		if (!parCNR.getFl_nuovo_pdg())
+			sql.addClause("AND", "cd_parte", SQLBuilder.EQUALS, home.PARTE_2 );
 		sql.addClause("AND", "fl_partita_giro", SQLBuilder.EQUALS, new Boolean(true) );
 		if ( bulk.getCds() != null && bulk.getCds().getCd_tipo_unita()!=null && !bulk.getCds().getCd_tipo_unita().equalsIgnoreCase( Tipo_unita_organizzativaHome.TIPO_UO_SAC ) )
 			sql.addClause("AND", "fl_voce_sac", SQLBuilder.EQUALS, new Boolean( false) );				
@@ -1605,6 +1621,36 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
 		sql.addClause("AND", "fl_solo_residuo", SQLBuilder.EQUALS, new Boolean( false) );
 	if (bulk instanceof ObbligazioneRes_impropriaBulk)
 		sql.addClause("AND", "fl_azzera_residui", SQLBuilder.EQUALS, new Boolean( false) );
+	
+	//Select che serve per limitare la visualizzazione alle sole voci di bilancio che hanno avuto almeno uno stanziamento
+	try {
+		SQLBuilder sqlAssestato = new SQLBuilder();
+		sqlAssestato.addTableToHeader("SALDI_STANZIAMENTI");
+		sqlAssestato.setHeader(String.valueOf("SELECT 1"));
+		sqlAssestato.addSQLJoin("SALDI_STANZIAMENTI.ESERCIZIO","ELEMENTO_VOCE.ESERCIZIO");
+		sqlAssestato.addSQLJoin("SALDI_STANZIAMENTI.ESERCIZIO_RES","ELEMENTO_VOCE.ESERCIZIO");
+		sqlAssestato.addSQLJoin("SALDI_STANZIAMENTI.TI_APPARTENENZA","ELEMENTO_VOCE.TI_APPARTENENZA");
+		sqlAssestato.addSQLJoin("SALDI_STANZIAMENTI.TI_GESTIONE","ELEMENTO_VOCE.TI_GESTIONE");
+		sqlAssestato.addSQLJoin("SALDI_STANZIAMENTI.CD_ELEMENTO_VOCE","ELEMENTO_VOCE.CD_ELEMENTO_VOCE");
+
+		sqlAssestato.openParenthesis(FindClause.AND);
+		sqlAssestato.addSQLClause(FindClause.OR, "ELEMENTO_VOCE.FL_LIMITE_ASS_OBBLIG", SQLBuilder.EQUALS, "N" );
+		sqlAssestato.addSQLClause(FindClause.OR, "(nvl(SALDI_STANZIAMENTI.IM_STANZ_INIZIALE_A1,0)+nvl(SALDI_STANZIAMENTI.VARIAZIONI_PIU,0)-nvl(SALDI_STANZIAMENTI.VARIAZIONI_MENO,0))", SQLBuilder.GREATER, 0);
+		sqlAssestato.closeParenthesis();
+		
+		SQLBuilder sqlstrOrg = new SQLBuilder();
+		sqlstrOrg.addTableToHeader("V_STRUTTURA_ORGANIZZATIVA");
+		sqlstrOrg.setHeader(String.valueOf("SELECT 1"));
+		sqlstrOrg.addSQLJoin("V_STRUTTURA_ORGANIZZATIVA.CD_CENTRO_RESPONSABILITA","SALDI_STANZIAMENTI.CD_CENTRO_RESPONSABILITA");
+		sqlstrOrg.addSQLClause(FindClause.AND,"V_STRUTTURA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS, bulk.getUnita_organizzativa().getCd_unita_organizzativa());
+		
+		sqlAssestato.addSQLExistsClause(FindClause.AND, sqlstrOrg);
+		
+		sql.addSQLExistsClause(FindClause.AND, sqlAssestato);
+	} catch (IntrospectionException e) {
+		e.printStackTrace();
+	}
+
 	return sql; 
 		
 }

@@ -7,7 +7,7 @@
 	longDescription="Tabella di associazione tra elemento voce - fonte ed importo limite utilizzata nella gestione degli impegni per controllare il limite da utilizzare">
 	<fieldProperty
 		name="esercizio"
-		property="elementoVoce.esercizio"
+		property="esercizio"
 		inputType="TEXT"
 		inputSize="4"
 		maxLength="4"
@@ -15,6 +15,16 @@
 		enabledOnSearch="false"
 		nullable="false"
 		label="esercizio" />
+	<fieldProperty
+		name="esercizio_voce"
+		property="elementoVoce.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Esercizio voce" />
 	<fieldProperty
 		name="ti_appartenenza"
 		property="elementoVoce.ti_appartenenza"
@@ -107,6 +117,8 @@
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
+		name="esercizio_voce" />
+	<formFieldProperty
 		name="ti_appartenenza" />
 	<formFieldProperty
 		name="ti_gestione" />
@@ -139,6 +151,7 @@
 		name="importo_limite" />
 	<findFieldProperty
 		name="importo_assegnato" />
+
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty

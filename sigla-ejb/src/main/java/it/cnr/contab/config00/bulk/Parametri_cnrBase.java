@@ -44,7 +44,7 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	private Boolean fl_credito_irpef;
 	private String clausolaOrdine;
 	private java.sql.Timestamp data_stipula_contratti;
-	
+	private Boolean fl_nuovo_pdg;
 	
 	public Boolean getFl_incarico() {
 		return fl_incarico;
@@ -302,5 +302,13 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	}
 	public void setFl_siope_cup(Boolean fl_siope_cup) {
 		this.fl_siope_cup = fl_siope_cup;
+	}
+	
+	public Boolean getFl_nuovo_pdg() {
+		return fl_nuovo_pdg;
+	}
+	
+	public void setFl_nuovo_pdg(Boolean fl_nuovo_pdg) {
+		this.fl_nuovo_pdg = fl_nuovo_pdg;
 	}
 }

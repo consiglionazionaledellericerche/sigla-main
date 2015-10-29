@@ -73,7 +73,37 @@
 		inputSize="20"
 		maxLength="10"
 		label="Modulo di Commessa" />
-		
+	<fieldProperty
+		name="cd_progetto_liv1"
+		property="pdg_modulo.progetto.progettopadre.cd_progetto"
+		descProperty="pdg_modulo.progetto.progettopadre.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="10"
+		maxLength="10"
+		label="Area Progettuale" />
+	<fieldProperty
+		name="cd_progetto_liv2"
+		property="pdg_modulo.progetto.cd_progetto"
+		descProperty="pdg_modulo.progetto.ds_progetto"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="15"
+		maxLength="10"
+		label="Progetto" />
+	<fieldProperty
+		name="cd_dipartimento_liv2"
+		property="pdg_modulo.progetto.progettopadre.cd_dipartimento"
+		descProperty="pdg_modulo.progetto.progettopadre.dipartimento.ds_dipartimento"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="5"
+		maxLength="10"
+		label="Programma" />
+				
 	<fieldProperty
 		name="ris_es_prec_tit_i"
 		property="ris_es_prec_tit_i"
@@ -128,7 +158,7 @@
 		nullable="false"
 		labelStyle="font-style:italic"
 		formatName="it.cnr.contab.util.EuroPositivoFormat"
-		label="Quota dell'esercizio per l'accantonamento TFR&lt;BR&gt;a tempo indeterminato" />
+		label="Costi del personale a tempo indeterminato" />
 	<fieldProperty
 		name="im_cf_tfr_det"
 		property="im_cf_tfr_det"
@@ -138,7 +168,7 @@
 		nullable="false"
 		labelStyle="font-style:italic"
 		formatName="it.cnr.contab.util.EuroPositivoFormat"
-		label="Quota dell'esercizio per l'accantonamento TFR&lt;BR&gt;a tempo determinato" />		
+		label="Costi del personale a tempo determinato" />		
 	<fieldProperty
 		name="im_cf_amm_immobili"
 		property="im_cf_amm_immobili"
@@ -343,13 +373,35 @@
 		style="border-style: outset;border-width : 1px;"
 		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		label="Totale" />		
-
+	<fieldProperty
+		name="totale_spese_da_fonti_interne_accentrate"
+		property="totale_spese_da_fonti_interne_accentrate"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Spese Accentrate" />
+	<fieldProperty
+		name="totale_spese_da_fonti_interne_decentrate"
+		property="totale_spese_da_fonti_interne_decentrate"
+		inputType="ROTEXT"
+		maxLength="15"
+		inputSize="15"
+		style="border-style: outset;border-width : 1px;"
+		formatName="it.cnr.contab.util.EuroPositivoFormat"
+		label="Spese Decentrate" />
 
 	<fieldProperty
 		name="label_titolo"
 		labelStyle="color:blue;font : bold 14px;"
 		label="Previsione e destinazione della massa Spendibile&lt;BR&gt;valore totale presunto delle attività per Modulo di Commessa" />
 				
+	<fieldProperty
+		name="label_titolo_nuovo_pdg"
+		labelStyle="color:blue;font : bold 14px;"
+		label="Previsione e destinazione della massa Spendibile&lt;BR&gt;valore totale presunto delle attività per Progetto" />
+
 	<fieldProperty
 		name="label_costi_figurativi"
 		labelStyle="color:blue"
@@ -417,6 +469,12 @@
 	<formFieldProperty
 		name="cd_modulo" />		
 	<formFieldProperty
+		name="cd_progetto_liv1" />
+	<formFieldProperty
+		name="cd_progetto_liv2" />
+	<formFieldProperty
+		name="cd_dipartimento_liv2" />
+	<formFieldProperty
 		name="ris_es_prec_tit_i" 
 		command="doOnRis_es_prec_tit_iChange"/>
 	<formFieldProperty
@@ -465,6 +523,8 @@
 	<formFieldProperty
 		name="label_titolo" />
 	<formFieldProperty
+		name="label_titolo_nuovo_pdg" />
+	<formFieldProperty
 		name="label_risorse_es_prec"/>
 	<formFieldProperty
 		name="label_risorse_presunte_es_prec"/>
@@ -502,6 +562,10 @@
 		name="totale_spese_da_fonti_interne_aree"/>
 	<formFieldProperty
 		name="totale_spese_da_fonti_interne_totale"/>		
+	<formFieldProperty
+		name="totale_spese_da_fonti_interne_accentrate" />
+	<formFieldProperty
+		name="totale_spese_da_fonti_interne_decentrate" />
 	<formFieldProperty
 		name="label_contrattazione"/>
 

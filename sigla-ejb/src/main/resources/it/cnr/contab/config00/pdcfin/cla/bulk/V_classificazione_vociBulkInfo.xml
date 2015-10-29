@@ -6,6 +6,17 @@
           longDescription="Classificazione Ufficiale Voci Finanziarie">
 
 	<fieldProperty
+		name="cd_livello_last"
+		property="cd_livello_last"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="false"
+		enabledOnInsert="false"				
+		enabledOnSearch="true"
+		label="Ultimo Livello" />
+
+	<fieldProperty
 		name="cd_classificazione"
 		property="cd_classificazione"
 		inputType="TEXT"
@@ -39,12 +50,16 @@
 		label="Numero Livello" />
 
 	<formFieldProperty
+		name="cd_livello_last" />
+	<formFieldProperty
 		name="cd_classificazione" />
 	<formFieldProperty
 		name="ds_classificazione" />
 	<formFieldProperty
 		name="nr_livello" />
 
+	<findFieldProperty
+		name="cd_livello_last" />
 	<findFieldProperty
 		name="cd_classificazione" />
 	<findFieldProperty
@@ -70,6 +85,19 @@
 		    inputSize="40" />
 	</form>
 
+	<form
+		name="searchtool_codlast" >
+		<formFieldProperty
+			name="cd_livello_last"
+		    inputSize="5" 
+		    enabledOnSearch="true" />
+		<formFieldProperty
+			name="ds_classificazione" 
+			inputType="ROTEXT"
+		    inputSize="40" 
+			enabledOnSearch="false" />
+	</form>
+	
 	<columnSet
         name="searchtool">
 		<columnFieldProperty
@@ -81,6 +109,21 @@
 		    inputSize="40" />
 	</columnSet>        	
 
+	<columnSet
+        name="searchtool_codlast">
+		<columnFieldProperty
+		    inputSize="5"
+			name="cd_livello_last"
+			label="Voce" />
+		<columnFieldProperty
+		    inputSize="20"
+			name="cd_classificazione" />
+		<columnFieldProperty
+			name="ds_classificazione" 
+			inputType="TEXT"
+		    inputSize="40" />
+	</columnSet> 
+	
 	<freeSearchSet name="searchtool">
 		<findFieldProperty
 		    inputSize="20"
@@ -91,6 +134,19 @@
 		    inputSize="40" />
 	</freeSearchSet>
 	
+	<freeSearchSet name="searchtool_codlast">
+		<findFieldProperty
+			name="cd_livello_last"
+		    inputSize="5" />
+		<findFieldProperty
+		    inputSize="20"
+			name="cd_classificazione" />
+		<findFieldProperty
+			name="ds_classificazione" 
+			inputType="TEXT"
+		    inputSize="40" />
+	</freeSearchSet>
+
 	<form
 		name="searchtool_1" >
 		<formFieldProperty

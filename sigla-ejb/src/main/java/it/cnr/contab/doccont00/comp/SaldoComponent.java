@@ -458,7 +458,7 @@ private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk findAndLock(UserContex
   * @param voce <code>Voce_fBulk</code> la voce del piano per cui effettuare la ricerca del saldo
   *   
 */
-private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk find(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, Integer esercizio_res) throws ComponentException
+private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk find(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res) throws ComponentException
 {
 	try
 	{
@@ -474,7 +474,7 @@ private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk find(UserContext
 	}
 
 }
-private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk find(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce) throws ComponentException
+private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk find(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce) throws ComponentException
 {
 	return find(userContext,cd_cdr,cd_linea_attivita,voce,voce.getEsercizio());
 }	
@@ -993,7 +993,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaPagamentiIncassi(UserContext userConte
  * @param cd_linea il codice del Workpackage per cui effettuare la ricerca del saldo dei residui
  * @param cd_voce il codice della voce del piano per cui ricercare il saldo dei residui 
 */
-public java.math.BigDecimal getTotaleSaldoResidui(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce) throws ComponentException
+public java.math.BigDecimal getTotaleSaldoResidui(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce) throws ComponentException
 {
 	try
 	{

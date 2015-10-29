@@ -6,7 +6,6 @@
  */
 package it.cnr.contab.prevent01.action;
 
-import java.rmi.RemoteException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,21 +13,20 @@ import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.prevent01.bp.CRUDPdGAggregatoModuloBP;
 import it.cnr.contab.prevent01.bp.CRUDStatoCdrPdGPBP;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
 import it.cnr.contab.prevent01.ejb.PdgAggregatoModuloComponentSession;
 import it.cnr.contab.progettiric00.bp.ProgettoAlberoLABP;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.FieldProperty;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.action.BulkBP;
@@ -61,9 +59,10 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 	public it.cnr.jada.action.Forward doSearchSearchtool_progetto(ActionContext context) {
 
 		try{
-			
-			BulkBP bpmod = (BulkBP)context.getBusinessProcess();
-			Pdg_moduloBulk dettaglio = (Pdg_moduloBulk) ((CRUDPdGAggregatoModuloBP)bpmod).getCrudDettagli().getModel();
+			fillModel(context);
+
+			CRUDPdGAggregatoModuloBP bpmod = (CRUDPdGAggregatoModuloBP)context.getBusinessProcess();
+			Pdg_moduloBulk dettaglio = (Pdg_moduloBulk) bpmod.getCrudDettagli().getModel();
 
 			String cd = null;
 
@@ -87,10 +86,14 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 			}else {
 				context.closeBusinessProcess();
 				// Apre un Selezionatore ad Albero per cercare i Progetti selezionando i vari livelli
-				ProgettoAlberoLABP slaBP = (ProgettoAlberoLABP)context.createBusinessProcess("ProgettoAlberoLABP");
+				ProgettoAlberoLABP slaBP = (ProgettoAlberoLABP)context.createBusinessProcess("ProgettoAlberoLABP",  
+						new Object[] { bpmod.getParametriCnr().getLivelloProgetto()});
 				slaBP.setBulkInfo(it.cnr.jada.bulk.BulkInfo.getBulkInfo(Progetto_sipBulk.class));
 				slaBP.setRemoteBulkTree(context,bp.getProgetti_sipTree(context),roots);
-                slaBP.setColumns( slaBP.getBulkInfo().getColumnFieldPropertyDictionary("progetti_sip"));
+				if (bpmod.getParametriCnr().getFl_nuovo_pdg())
+					slaBP.setColumns( slaBP.getBulkInfo().getColumnFieldPropertyDictionary("progetto_liv1"));
+				else
+					slaBP.setColumns( slaBP.getBulkInfo().getColumnFieldPropertyDictionary("progetti_sip"));
 				HookForward hook = (HookForward)context.addHookForward("seleziona",this,"doBringBackSearchResult");
 				hook.addParameter("field",getFormField(context,"main.Dettagli.searchtool_progetto"));
 				context.addBusinessProcess(slaBP);
@@ -101,19 +104,44 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 		}
 	}
 
+	public Forward doFreeSearchSearchtool_progetto_liv2(ActionContext context) {
+		return doFreeSearchSearchtool_progetto(context);
+	}
+	
+	public it.cnr.jada.action.Forward doSearchSearchtool_progetto_liv2(ActionContext context) {
+		return 	doSearchSearchtool_progetto(context);
+	}
+
+	public it.cnr.jada.action.Forward doBringBackSearchSearchtool_progetto_liv2(ActionContext context, Pdg_moduloBulk linea, Progetto_sipBulk progetto) throws java.rmi.RemoteException {
+		return 	doBringBackSearchSearchtool_progetto(context, linea, progetto);
+	}
+	
 	public it.cnr.jada.action.Forward doBringBackSearchSearchtool_progetto(ActionContext context, Pdg_moduloBulk linea, Progetto_sipBulk progetto) throws java.rmi.RemoteException {
+		CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP)context.getBusinessProcess();
 
 		// valore di default nel caso non fose valorizzato
 		String columnDescription="Codice Modulo di Attività";
+
 		// nome del campo nel file xml
 		final String propName="cd_progetto";
 		FieldProperty property = BulkInfo.getBulkInfo(linea.getClass()).getFieldProperty(propName);
 		if (property != null)
 			columnDescription = property.getLabel();
 
+		if (bp.getParametriCnr().getFl_nuovo_pdg())
+			columnDescription="Codice Progetto";
 
 		if (progetto!=null) {
-			if (progetto.getLivello()==null || !progetto.getLivello().equals(new Integer("3"))) {
+			if (((CdrBulk)bp.getModel()).getDettagli()!=null) {
+				for (Iterator iterator = ((CdrBulk)bp.getModel()).getDettagli().iterator(); iterator.hasNext();) {
+					Pdg_moduloBulk modulo = (Pdg_moduloBulk) iterator.next();
+					if (modulo.getPg_progetto()!=null && modulo.getPg_progetto().equals(progetto.getPg_progetto())) {
+						setErrorMessage(context,"Attenzione: il valore immesso in "+columnDescription+" è già presente!");
+						return context.findDefaultForward();
+					}
+				}
+			}
+			if (progetto.getLivello()==null || !progetto.getLivello().equals(bp.getParametriCnr().getLivelloProgetto())) {
 				setErrorMessage(context,"Attenzione: il valore immesso in "+columnDescription+" non è valido!");
 				return context.findDefaultForward();
 			}
@@ -133,8 +161,12 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 		} catch(Throwable e) {
 			return handleException(context,e);
 		}
+		CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP)context.getBusinessProcess();
 		String message = "Lo stato del Piano di Gestione Preliminare per il modulo di attività verrà cambiato.\n"
 						+ "Vuoi continuare?";
+		if (bp.getParametriCnr().getFl_nuovo_pdg())
+			message = "Lo stato del Piano di Gestione Preliminare per il progetto verrà cambiato.\n"
+					+ "Vuoi continuare?";
 		return openConfirm(context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doCambiaStatoConfermato");
 	}
 	
@@ -260,7 +292,10 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 					nbp.setIterator(context,ri);
 					nbp.setMultiSelection(true);
 					nbp.setBulkInfo(progetto.getBulkInfo());
-					nbp.setColumns( nbp.getBulkInfo().getColumnFieldPropertyDictionary("moduli_sip"));
+					if (bp instanceof CRUDPdGAggregatoModuloBP && ((CRUDPdGAggregatoModuloBP)bp).getParametriCnr().getFl_nuovo_pdg())
+						nbp.setColumns( nbp.getBulkInfo().getColumnFieldPropertyDictionary("progetto_liv2"));
+					else
+						nbp.setColumns( nbp.getBulkInfo().getColumnFieldPropertyDictionary("moduli_sip"));
 					context.addHookForward("seleziona",this,"doRiportaSelezioneModuli");
 					return context.addBusinessProcess(nbp);
 				}
@@ -330,8 +365,12 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 
 	public Forward doScaricaCostiPersonale(ActionContext context) {
 		try {
+			CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP)getBusinessProcess(context);
 			fillModel(context);
-			return openConfirm(context, "Attenzione! Confermi che tutto il personale è stato ripartito sui GAE associati ai moduli di carattere scientifico, evitando di utilizzare GAE associati ai moduli di carattere gestionale?", OptionBP.CONFIRM_YES_NO, "doConfirmScaricaCostiPersonale");
+			String labelProgetto = "moduli";
+			if (bp.getParametriCnr()!=null && bp.getParametriCnr().getFl_nuovo_pdg())
+				labelProgetto = "progetti";
+			return openConfirm(context, "Attenzione! Confermi che tutto il personale è stato ripartito sui GAE associati ai "+labelProgetto+" di carattere scientifico, evitando di utilizzare GAE associati ai "+labelProgetto+" di carattere gestionale?", OptionBP.CONFIRM_YES_NO, "doConfirmScaricaCostiPersonale");
 		} catch(Exception e) {
 			return handleException(context,e);
 		}

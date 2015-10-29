@@ -18,8 +18,8 @@ public class LimiteSpesaBase extends LimiteSpesaKey implements Keyed {
 	public LimiteSpesaBase() {
 		super();
 	}
-	public LimiteSpesaBase(java.lang.Integer esercizio, java.lang.String tiAppartenenza, java.lang.String tiGestione, java.lang.String cdElementoVoce, java.lang.String fonte) {
-		super(esercizio, tiAppartenenza, tiGestione, cdElementoVoce, fonte);
+	public LimiteSpesaBase(java.lang.Integer esercizio, java.lang.Integer esercizio_voce, java.lang.String tiAppartenenza, java.lang.String tiGestione, java.lang.String cdElementoVoce, java.lang.String fonte) {
+		super(esercizio, esercizio_voce, tiAppartenenza, tiGestione, cdElementoVoce, fonte);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]

@@ -18,8 +18,8 @@ public class LimiteSpesaDetBase extends LimiteSpesaDetKey implements Keyed {
 	public LimiteSpesaDetBase() {
 		super();
 	}
-	public LimiteSpesaDetBase(java.lang.Integer esercizio, java.lang.String cdCds, java.lang.String tiAppartenenza, java.lang.String tiGestione, java.lang.String cdElementoVoce, java.lang.String fonte) {
-		super(esercizio, cdCds, tiAppartenenza, tiGestione, cdElementoVoce, fonte);
+	public LimiteSpesaDetBase(java.lang.Integer esercizio, java.lang.String cdCds, java.lang.Integer esercizio_voce, java.lang.String tiAppartenenza, java.lang.String tiGestione, java.lang.String cdElementoVoce, java.lang.String fonte) {
+		super(esercizio, cdCds, esercizio_voce, tiAppartenenza, tiGestione, cdElementoVoce, fonte);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]

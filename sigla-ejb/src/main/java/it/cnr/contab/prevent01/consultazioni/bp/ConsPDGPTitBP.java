@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import javax.ejb.EJBException;
 
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Classificazione_vociComponentSession;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
@@ -14,6 +15,7 @@ import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociHome;
 import it.cnr.contab.config00.pdcfin.cla.bulk.Parametri_livelliBulk;
 import it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgp_titBulk;
 import it.cnr.contab.prevent01.consultazioni.ejb.ConsPDGPTitComponentSession;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
@@ -46,6 +48,8 @@ public class ConsPDGPTitBP extends ConsultazioniBP {
 	private String ds_livello2;
 	private String ds_livello3;
 	private String anno_corrente,anno_successivo,anno_successivo_successivo;
+	private boolean flNuovoPdg = false;
+
 	public ConsPDGPTitComponentSession createPdgpTitComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
 		
 		   return (ConsPDGPTitComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPREVENT01_EJB_ConsPDGPTitComponentSession", ConsPDGPTitComponentSession.class);
@@ -56,26 +60,34 @@ public class ConsPDGPTitBP extends ConsultazioniBP {
 	   }
 
 	   protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
-		   Integer esercizio = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext());
+		   try {
+			   Integer esercizio = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext());
+			   Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), esercizio); 
+			   setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
+	
+			   CompoundFindClause clauses = new CompoundFindClause();
+			   clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
+			   setBaseclause(clauses);
 			
-		   CompoundFindClause clauses = new CompoundFindClause();
-		   clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
-		   setBaseclause(clauses);
-		
-		   if (getPathConsultazione()==null) {
-				if (this instanceof ConsPDGPTitEtrBP){
-					setPathConsultazione(this.LIVELLO_ETRLIV1);					
-					setLivelloConsultazione(this.LIVELLO_ETRLIV1);
-				} 
-				else
-				{
-					setPathConsultazione(this.LIVELLO_SPELIV1);					
-					setLivelloConsultazione(this.LIVELLO_SPELIV1);
-				} 
-			
-				super.init(config,context);
-				initVariabili(context, null,getPathConsultazione());   
-		   }	 		
+			   if (getPathConsultazione()==null) {
+					if (this instanceof ConsPDGPTitEtrBP){
+						setPathConsultazione(this.LIVELLO_ETRLIV1);					
+						setLivelloConsultazione(this.LIVELLO_ETRLIV1);
+					} 
+					else
+					{
+						setPathConsultazione(this.LIVELLO_SPELIV1);					
+						setLivelloConsultazione(this.LIVELLO_SPELIV1);
+					} 
+				
+					super.init(config,context);
+					initVariabili(context, null,getPathConsultazione());   
+			   }
+			} catch (ComponentException e) {
+				throw new BusinessProcessException(e);
+			} catch (RemoteException e) {
+				throw new BusinessProcessException(e);
+			}			   
 	   }
 	   public void initVariabili(it.cnr.jada.action.ActionContext context, String pathProvenienza, String livello_destinazione) throws it.cnr.jada.action.BusinessProcessException {
 		   try {
@@ -92,8 +104,13 @@ public class ConsPDGPTitBP extends ConsultazioniBP {
 			   }
 			   else
 			   {
-				   setPathConsultazione(pathProvenienza.concat(livello_destinazione));
-				   setLivelloConsultazione(livello_destinazione);
+				   if (this.isFlNuovoPdg() && "DET".equals(livello_destinazione)) {
+					   setPathConsultazione(pathProvenienza.concat(livello_destinazione).concat("NEW"));
+					   setLivelloConsultazione(livello_destinazione.concat("NEW"));
+				   } else {
+					   setPathConsultazione(pathProvenienza.concat(livello_destinazione));
+					   setLivelloConsultazione(livello_destinazione);
+				   }
 			   }
 		
 			   setSearchResultColumnSet(getPathConsultazione());
@@ -470,4 +487,59 @@ public class ConsPDGPTitBP extends ConsultazioniBP {
 	public String getHeaderLabelIm_costi_figurativi(){
 		return "Costi "+ anno_corrente;
 	}	
-   }
+
+	public void setFlNuovoPdg(boolean flNuovoPdg) {
+		this.flNuovoPdg = flNuovoPdg;
+	}
+	public boolean isFlNuovoPdg() {
+		return flNuovoPdg;
+	}
+	public String getColumnLabelCd_progetto(){
+		if (this.isFlNuovoPdg())
+			return ProgettoBulk.LABEL_AREA_PROGETTUALE;
+		else
+			return ProgettoBulk.LABEL_PROGETTO;
+	}	
+	public String getFindLabelCd_progetto(){
+		if (this.isFlNuovoPdg())
+			return ProgettoBulk.LABEL_AREA_PROGETTUALE;
+		else
+			return ProgettoBulk.LABEL_PROGETTO;
+	}	
+	public String getColumnLabelCd_commessa(){
+		if (this.isFlNuovoPdg())
+			return ProgettoBulk.LABEL_PROGETTO;
+		else
+			return ProgettoBulk.LABEL_COMMESSA;
+	}	
+	public String getFindLabelCd_commessa(){
+		if (this.isFlNuovoPdg())
+			return ProgettoBulk.LABEL_PROGETTO;
+		else
+			return ProgettoBulk.LABEL_COMMESSA;
+	}	
+	public String getColumnLabelDs_progetto(){
+		if (this.isFlNuovoPdg())
+			return "Desc. ".concat(ProgettoBulk.LABEL_AREA_PROGETTUALE);
+		else
+			return "Desc. ".concat(ProgettoBulk.LABEL_PROGETTO);
+	}	
+	public String getFindLabelDs_progetto(){
+		if (this.isFlNuovoPdg())
+			return "Desc. ".concat(ProgettoBulk.LABEL_AREA_PROGETTUALE);
+		else
+			return "Desc. ".concat(ProgettoBulk.LABEL_PROGETTO);
+	}	
+	public String getColumnLabelDs_commessa(){
+		if (this.isFlNuovoPdg())
+			return "Desc. ".concat(ProgettoBulk.LABEL_PROGETTO);
+		else
+			return "Desc. ".concat(ProgettoBulk.LABEL_COMMESSA);
+	}	
+	public String getFindLabelDs_commessa(){
+		if (this.isFlNuovoPdg())
+			return "Desc. ".concat(ProgettoBulk.LABEL_PROGETTO);
+		else
+			return "Desc. ".concat(ProgettoBulk.LABEL_COMMESSA);
+	}	
+}

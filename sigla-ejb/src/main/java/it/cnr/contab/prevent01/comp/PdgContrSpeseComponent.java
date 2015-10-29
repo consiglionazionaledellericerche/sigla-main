@@ -7,8 +7,11 @@
 package it.cnr.contab.prevent01.comp;
 
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.ejb.EJBException;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
@@ -275,37 +278,56 @@ public class PdgContrSpeseComponent extends CRUDComponent {
 	public SQLBuilder selectProgettoByClause (UserContext userContext,
 			  Pdg_contrattazione_speseBulk pdg_contr_spese,
 			  Progetto_sipBulk progetto,
-			  CompoundFindClause clause)
-	throws ComponentException, PersistencyException
+			  CompoundFindClause clause) throws ComponentException, PersistencyException
 	{
-	    Progetto_sipHome progettohome = (Progetto_sipHome)getHome(userContext, Progetto_sipBulk.class);
-        SQLBuilder sql = progettohome.createSQLBuilder();
-        sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, pdg_contr_spese.getEsercizio());
-		sql.addClause("AND", "tipo_fase", SQLBuilder.EQUALS, ProgettoBulk.TIPO_FASE_PREVISIONE);
-	    sql.addClause("AND", "livello", SQLBuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
-		sql.addClause("AND", "fl_utilizzabile", SQLBuilder.EQUALS, Boolean.TRUE);
+		try {
+			Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, CNRUserContext.getEsercizio(userContext));
 
-		//Aggiungo in Join le commesse
-		sql.addTableToHeader("PROGETTO A");
-		sql.addSQLJoin("PROGETTO_SIP.ESERCIZIO_PROGETTO_PADRE","A.ESERCIZIO");
-		sql.addSQLJoin("PROGETTO_SIP.PG_PROGETTO_PADRE","A.PG_PROGETTO");
-	    sql.addSQLJoin("PROGETTO_SIP.TIPO_FASE_PROGETTO_PADRE","A.TIPO_FASE");
+			Progetto_sipHome progettohome = (Progetto_sipHome)getHome(userContext, Progetto_sipBulk.class);
+	        SQLBuilder sql = progettohome.createSQLBuilder();
 
-		//Aggiungo in Join i progetti
-		sql.addTableToHeader("PROGETTO B");
-	    sql.addSQLJoin("A.ESERCIZIO_PROGETTO_PADRE","B.ESERCIZIO");
-	    sql.addSQLJoin("A.PG_PROGETTO_PADRE","B.PG_PROGETTO");
-	    sql.addSQLJoin("A.TIPO_FASE_PROGETTO_PADRE","B.TIPO_FASE");
-		sql.addSQLClause("AND", "B.cd_dipartimento", SQLBuilder.EQUALS, pdg_contr_spese.getPdg_dip_area().getCd_dipartimento());
-
-		// Se uo 999.000 in scrivania: visualizza tutti i progetti
-        Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
-        if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
-			sql.addSQLExistsClause("AND",progettohome.abilitazioniModuli(userContext));
+	        sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, pdg_contr_spese.getEsercizio());
+			sql.addClause("AND", "tipo_fase", SQLBuilder.EQUALS, ProgettoBulk.TIPO_FASE_PREVISIONE);
+		    sql.addClause("AND", "livello", SQLBuilder.EQUALS, parCnr.getLivelloProgetto());
+			sql.addClause("AND", "fl_utilizzabile", SQLBuilder.EQUALS, Boolean.TRUE);
+	
+		    if (!parCnr.getFl_nuovo_pdg()) {
+				//Aggiungo in Join le commesse
+				sql.addTableToHeader("PROGETTO A");
+				sql.addSQLJoin("PROGETTO_SIP.ESERCIZIO_PROGETTO_PADRE","A.ESERCIZIO");
+				sql.addSQLJoin("PROGETTO_SIP.PG_PROGETTO_PADRE","A.PG_PROGETTO");
+			    sql.addSQLJoin("PROGETTO_SIP.TIPO_FASE_PROGETTO_PADRE","A.TIPO_FASE");
+		
+			    //Aggiungo in Join i progetti
+				sql.addTableToHeader("PROGETTO B");
+			    sql.addSQLJoin("A.ESERCIZIO_PROGETTO_PADRE","B.ESERCIZIO");
+			    sql.addSQLJoin("A.PG_PROGETTO_PADRE","B.PG_PROGETTO");
+			    sql.addSQLJoin("A.TIPO_FASE_PROGETTO_PADRE","B.TIPO_FASE");
+				sql.addSQLClause("AND", "B.cd_dipartimento", SQLBuilder.EQUALS, pdg_contr_spese.getPdg_dip_area().getCd_dipartimento());
+			} else {
+			    //Aggiungo in Join le aree progettuali
+				sql.addTableToHeader("PROGETTO A");
+				sql.addSQLJoin("PROGETTO_SIP.ESERCIZIO_PROGETTO_PADRE","A.ESERCIZIO");
+				sql.addSQLJoin("PROGETTO_SIP.PG_PROGETTO_PADRE","A.PG_PROGETTO");
+			    sql.addSQLJoin("PROGETTO_SIP.TIPO_FASE_PROGETTO_PADRE","A.TIPO_FASE");
+				sql.addSQLClause("AND", "A.cd_dipartimento", SQLBuilder.EQUALS, pdg_contr_spese.getPdg_dip_area().getCd_dipartimento());
+			}
+			// Se uo 999.000 in scrivania: visualizza tutti i progetti
+	        Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
+	        if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
+			    if (!parCnr.getFl_nuovo_pdg())
+			    	sql.addSQLExistsClause("AND",progettohome.abilitazioniModuli(userContext));
+			    else
+			    	sql.addSQLExistsClause("AND",progettohome.abilitazioniCommesse(userContext));
+			}
+	        if (clause != null) 
+	          sql.addClause(clause);
+	        return sql;
+		}catch (RemoteException e) {
+			throw new ComponentException(e);
+		} catch (EJBException e) {
+			throw new ComponentException(e);
 		}
-        if (clause != null) 
-          sql.addClause(clause);
-        return sql;
 	}
 	public SQLBuilder selectCdrByClause (UserContext userContext,
 			  Pdg_contrattazione_speseBulk pdg_contr_spese,
