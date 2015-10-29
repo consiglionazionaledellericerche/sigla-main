@@ -351,7 +351,7 @@ public void validate(OggettoBulk parent) throws ValidationException {
 				if(this.getCodice_swift()==null) 
 					throw new ValidationException("Il codice swift è obbligatorio.");
 		  
-			if (this.getCodice_swift()!=null && this.getCodice_swift().length()<8 || this.getCodice_swift().length()>11) 
+			if (this.getCodice_swift()!=null && (this.getCodice_swift().length()<8 || this.getCodice_swift().length()>11)) 
 				throw new ValidationException("Formato del codice bic non valido.");
 		}
 	}
