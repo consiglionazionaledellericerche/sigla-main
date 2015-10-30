@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="179"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -17,22 +17,22 @@
 	<style name="TNR10" fontName="Times New Roman" pdfFontName="Times-Roman"/>
 	<style name="TNR14BOLD" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
 	<parameter name="mese" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(01)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer(0)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="esercizio" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(2011)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="uo" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["079.000"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["001.000"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="cds" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["079"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["001"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="commessa" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["PM.P05.013"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["*"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="modulo" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["PM.P05.013.001"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["*"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="matricola" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["*"]]></defaultValueExpression>
@@ -41,8 +41,9 @@
 		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select * from PRT_STAMPA_PERSONALE
+		<![CDATA[select prt_stampa_personale.*,parametri_cnr.fl_nuovo_pdg from PRT_STAMPA_PERSONALE,parametri_cnr
 where
+parametri_cnr.esercizio = $P{esercizio} and
 PRT_STAMPA_PERSONALE.ESERCIZIO = $P{esercizio} AND
 PRT_STAMPA_PERSONALE.MESE = $P{mese} AND
 PRT_STAMPA_PERSONALE.UO LIKE Decode($P{uo},'*','%',$P{uo}) AND
@@ -50,11 +51,11 @@ PRT_STAMPA_PERSONALE.CDS LIKE $P{cds} AND
 nvl(cd_COMMESSA,'%') LIKE Decode($P{commessa},'*','%',$P{commessa}) AND
 nvl(cd_modulo,'%') LIKE Decode($P{modulo},'*','%',$P{modulo}) AND
 PRT_STAMPA_PERSONALE.ID_MATRICOLA LIKE Decode($P{matricola},'*','%',$P{matricola})
-ORDER BY ESERCIZIO,TIPO,MESE,CDS,UO,CD_COMMESSA,CD_MODULO,ID_MATRICOLA]]>
+ORDER BY PRT_STAMPA_PERSONALE.ESERCIZIO,TIPO,MESE,CDS,UO,CD_COMMESSA,CD_MODULO,ID_MATRICOLA]]>
 	</queryString>
 	<field name="TIPO" class="java.lang.String"/>
 	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
-	<field name="MESE" class="java.lang.String"/>
+	<field name="MESE" class="java.math.BigDecimal"/>
 	<field name="UO" class="java.lang.String"/>
 	<field name="CDR" class="java.lang.String"/>
 	<field name="ALTRA_UO" class="java.lang.String"/>
@@ -82,6 +83,7 @@ ORDER BY ESERCIZIO,TIPO,MESE,CDS,UO,CD_COMMESSA,CD_MODULO,ID_MATRICOLA]]>
 	<field name="CDS" class="java.lang.String"/>
 	<field name="TI_PREV_CONS" class="java.lang.String"/>
 	<field name="COSTO_MENSILE" class="java.math.BigDecimal"/>
+	<field name="FL_NUOVO_PDG" class="java.lang.String"/>
 	<variable name="tot_modulo" class="java.math.BigDecimal" resetType="Group" resetGroup="modulo" calculation="Sum">
 		<variableExpression><![CDATA[$F{STIPENDIO}]]></variableExpression>
 	</variable>
@@ -118,20 +120,9 @@ ORDER BY ESERCIZIO,TIPO,MESE,CDS,UO,CD_COMMESSA,CD_MODULO,ID_MATRICOLA]]>
 	<group name="commessa" isReprintHeaderOnEachPage="true">
 		<groupExpression><![CDATA[$F{CD_COMMESSA}]]></groupExpression>
 		<groupHeader>
-			<band height="14" splitType="Stretch">
-				<staticText>
-					<reportElement key="staticText-3" style="TNR10BOLD" x="3" y="0" width="55" height="14"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement/>
-					<text><![CDATA[Commessa]]></text>
-				</staticText>
+			<band height="20" splitType="Stretch">
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR10" stretchType="RelativeToTallestObject" x="61" y="0" width="715" height="14"/>
+					<reportElement key="textField" style="TNR10" stretchType="RelativeToTallestObject" x="105" y="0" width="671" height="14"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -142,21 +133,21 @@ ORDER BY ESERCIZIO,TIPO,MESE,CDS,UO,CD_COMMESSA,CD_MODULO,ID_MATRICOLA]]>
 					<textFieldExpression class="java.lang.String"><![CDATA[($F{CD_COMMESSA}==null?"":$F{CD_COMMESSA})+" - "+
 ($F{DS_COMMESSA}==null?"":$F{DS_COMMESSA})]]></textFieldExpression>
 				</textField>
-			</band>
-		</groupHeader>
-		<groupFooter>
-			<band height="20" splitType="Prevent">
-				<staticText>
-					<reportElement key="staticText-22" style="TNR12BOLD" x="426" y="4" width="183" height="15"/>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField" style="TNR10BOLD" stretchType="RelativeToTallestObject" x="7" y="0" width="94" height="14"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Right"/>
-					<text><![CDATA[Totale Commessa:]]></text>
-				</staticText>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[($F{FL_NUOVO_PDG}.equals("N")?"Commessa ":"Area Progettuale ")]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20" splitType="Prevent">
 				<textField pattern=" #,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-15" style="TNR10BOLD" x="642" y="5" width="63" height="14"/>
 					<box>
@@ -170,6 +161,19 @@ ORDER BY ESERCIZIO,TIPO,MESE,CDS,UO,CD_COMMESSA,CD_MODULO,ID_MATRICOLA]]>
 					</textElement>
 					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{tot_commessa_A1}]]></textFieldExpression>
 				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement key="textField-16" style="TNR10BOLD" x="476" y="5" width="161" height="14"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font isUnderline="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["Totale "+($F{FL_NUOVO_PDG}.equals("N")?"Commessa: ":"Area Progettuale: ")]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupFooter>
 	</group>
@@ -177,19 +181,8 @@ ORDER BY ESERCIZIO,TIPO,MESE,CDS,UO,CD_COMMESSA,CD_MODULO,ID_MATRICOLA]]>
 		<groupExpression><![CDATA[$F{CD_MODULO}]]></groupExpression>
 		<groupHeader>
 			<band height="50" splitType="Stretch">
-				<staticText>
-					<reportElement key="staticText-4" style="TNR10BOLD" x="3" y="0" width="55" height="14"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement/>
-					<text><![CDATA[Modulo]]></text>
-				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-2" style="TNR10" stretchType="RelativeToTallestObject" x="61" y="0" width="714" height="14"/>
+					<reportElement key="textField-2" style="TNR10" stretchType="RelativeToTallestObject" x="105" y="0" width="670" height="14"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -312,21 +305,21 @@ ORDER BY ESERCIZIO,TIPO,MESE,CDS,UO,CD_COMMESSA,CD_MODULO,ID_MATRICOLA]]>
 					<textElement textAlignment="Center"/>
 					<textFieldExpression class="java.lang.String"><![CDATA[($F{MESE}.equals("0") ? "Percentuale Primo Anno" : "Percentuale per GAE" )]]></textFieldExpression>
 				</textField>
-			</band>
-		</groupHeader>
-		<groupFooter>
-			<band height="20" splitType="Prevent">
-				<staticText>
-					<reportElement key="staticText-21" style="TNR12BOLD" x="426" y="4" width="183" height="15"/>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField" style="TNR10BOLD" stretchType="RelativeToTallestObject" x="7" y="2" width="92" height="14"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Right"/>
-					<text><![CDATA[Totale Modulo di attività:]]></text>
-				</staticText>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[($F{FL_NUOVO_PDG}.equals("N")?"Modulo ":"Progetto ")]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20" splitType="Prevent">
 				<textField pattern=" #,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-16" style="TNR10BOLD" x="642" y="5" width="63" height="14"/>
 					<box>
@@ -339,6 +332,19 @@ ORDER BY ESERCIZIO,TIPO,MESE,CDS,UO,CD_COMMESSA,CD_MODULO,ID_MATRICOLA]]>
 						<font isUnderline="true"/>
 					</textElement>
 					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{tot_modulo_A1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement key="textField-16" style="TNR10BOLD" x="474" y="5" width="161" height="14"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font isUnderline="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["Totale "+($F{FL_NUOVO_PDG}.equals("N")?"Modulo: ":"Progetto: ")]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -361,19 +367,8 @@ ORDER BY ESERCIZIO,TIPO,MESE,CDS,UO,CD_COMMESSA,CD_MODULO,ID_MATRICOLA]]>
 				</box>
 				<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
 			</image>
-			<staticText>
-				<reportElement key="staticText-1" style="TNR14BOLD" x="2" y="69" width="472" height="20"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement/>
-				<text><![CDATA[Ripartizione del Personale su GAE/Moduli di attività/Commesse Mese/Anno:]]></text>
-			</staticText>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
-				<reportElement key="textField-1" style="TNR14BOLD" x="474" y="69" width="304" height="20"/>
+				<reportElement key="textField-1" style="TNR14BOLD" x="2" y="69" width="776" height="20"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -381,7 +376,9 @@ ORDER BY ESERCIZIO,TIPO,MESE,CDS,UO,CD_COMMESSA,CD_MODULO,ID_MATRICOLA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[($F{MESE}.equals("1") ?"Gennaio "+$F{ESERCIZIO}:
+				<textFieldExpression class="java.lang.String"><![CDATA["Ripartizione del Personale su GAE/"+($F{FL_NUOVO_PDG}.equals("N")?"Moduli di attività/Commesse ":"Aree Progettuale/Progetti ")+
+"Mese/Anno :"+
+($F{MESE}.equals("1") ?"Gennaio "+$F{ESERCIZIO}:
 ($F{MESE}.equals("2") ?"Febbraio "+$F{ESERCIZIO}:
 ($F{MESE}.equals("3") ?"Marzo "+$F{ESERCIZIO}:
 ($F{MESE}.equals("4") ?"Aprile "+$F{ESERCIZIO}:
