@@ -122,7 +122,7 @@
 		path="/StampaRipartizioneCostiAction" actionClass="it.cnr.contab.pdg00.action.StampaRipartizioneCostiAction">
 	</action>
 	
-	<businessProcess name="StampaRipartizioneCostiBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+	<businessProcess name="StampaRipartizioneCostiBP" className="it.cnr.contab.pdg00.bp.StampaRipartizioneCostiBP">
 		<forward name="default" path="/pdg00/stampa_ripartizione_costi.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.Stampa_ripartizione_costiVBulk" />
 		<init-param name="printbp" value="OfflineReportPrintBP"/>
