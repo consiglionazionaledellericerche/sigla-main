@@ -436,9 +436,9 @@ private void inizializzaBulkPerStampa(UserContext userContext, Stampa_imponibili
 private void inizializzaBulkPerStampa(UserContext userContext, Stampa_ripartizione_costiVBulk stampa) throws it.cnr.jada.comp.ComponentException {
 
 	stampa.setCd_cds(it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
-	//stampa.setEsercizio(CNRUserContext.getEsercizio(userContext));
-	inizializzaEsercizio(userContext, (Stampa_ripartizione_costiVBulk)stampa);
-  stampa.setCommessaForPrint(new ProgettoBulk());
+	stampa.setEsercizio(CNRUserContext.getEsercizio(userContext));
+	
+	stampa.setCommessaForPrint(new ProgettoBulk());
 	stampa.setModuloForPrint(new ProgettoBulk());
 	stampa.setDipendenteForPrint(new V_dipendenteBulk());
 	try{	    
@@ -1169,7 +1169,7 @@ public SQLBuilder selectDipendenteForPrintByClause(UserContext usercontext, Stam
 {
 	V_dipendenteHome dipendentehome = (V_dipendenteHome)getHome(usercontext, V_dipendenteBulk.class,"V_DIPENDENTE_RID");
 	SQLBuilder sqlbuilder = dipendentehome.createSQLBuilder();
-	sqlbuilder.addSQLClause("AND", "ESERCIZIO", sqlbuilder.EQUALS, stampa_ripartizione_costivbulk.getEsercizio_base().getEsercizio());
+	sqlbuilder.addSQLClause("AND", "ESERCIZIO", sqlbuilder.EQUALS, stampa_ripartizione_costivbulk.getEsercizio());
 	// Se uo 999.000 in scrivania: visualizza tutti i dipendenti
 	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( usercontext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 	if (!((CNRUserContext) usercontext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
@@ -1181,13 +1181,17 @@ public SQLBuilder selectDipendenteForPrintByClause(UserContext usercontext, Stam
 	return sqlbuilder;
 }
 public SQLBuilder selectCommessaForPrintByClause(UserContext usercontext, Stampa_ripartizione_costiVBulk stampa_ripartizione_costivbulk, ProgettoBulk progettoBulk, CompoundFindClause compoundfindclause)
-	throws ComponentException, it.cnr.jada.persistency.PersistencyException
+	throws ComponentException, it.cnr.jada.persistency.PersistencyException, RemoteException, EJBException
 {
+	Parametri_cnrBulk par=Utility.createParametriCnrComponentSession().getParametriCnr(usercontext, CNRUserContext.getEsercizio(usercontext));
 	ProgettoHome progettohome = (ProgettoHome)getHome(usercontext, ProgettoBulk.class,"V_PROGETTO_PADRE");
 	SQLBuilder sqlbuilder = progettohome.createSQLBuilder();
-	sqlbuilder.addSQLClause("AND", "LIVELLO", sqlbuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
+	if (par.getFl_nuovo_pdg())
+		sqlbuilder.addSQLClause("AND", "LIVELLO", sqlbuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_PRIMO);
+	else
+		sqlbuilder.addSQLClause("AND", "LIVELLO", sqlbuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
 	sqlbuilder.addSQLClause("AND", "TIPO_FASE", sqlbuilder.EQUALS, ProgettoBulk.TIPO_FASE_PREVISIONE);
-	sqlbuilder.addSQLClause("AND", "ESERCIZIO", sqlbuilder.EQUALS, stampa_ripartizione_costivbulk.getEsercizio_base().getEsercizio());
+	sqlbuilder.addSQLClause("AND", "ESERCIZIO", sqlbuilder.EQUALS, stampa_ripartizione_costivbulk.getEsercizio());
 	// Se uo 999.000 in scrivania: visualizza tutti i progetti
 	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( usercontext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 	if (!((CNRUserContext) usercontext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
@@ -1197,13 +1201,18 @@ public SQLBuilder selectCommessaForPrintByClause(UserContext usercontext, Stampa
 	return sqlbuilder;
 }
 public SQLBuilder selectModuloForPrintByClause(UserContext usercontext, Stampa_ripartizione_costiVBulk stampa_ripartizione_costivbulk, ProgettoBulk progettoBulk, CompoundFindClause compoundfindclause)
-	throws ComponentException, it.cnr.jada.persistency.PersistencyException
+	throws ComponentException, it.cnr.jada.persistency.PersistencyException, RemoteException, EJBException
 {
+	Parametri_cnrBulk par=Utility.createParametriCnrComponentSession().getParametriCnr(usercontext, CNRUserContext.getEsercizio(usercontext));
 	ProgettoHome progettohome = (ProgettoHome)getHome(usercontext, ProgettoBulk.class,"V_PROGETTO_PADRE");
 	SQLBuilder sqlbuilder = progettohome.createSQLBuilder();
-	sqlbuilder.addClause("AND", "livello", sqlbuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
+	if (par.getFl_nuovo_pdg())
+		sqlbuilder.addSQLClause("AND", "LIVELLO", sqlbuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
+	else
+		sqlbuilder.addSQLClause("AND", "LIVELLO", sqlbuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
+
 	sqlbuilder.addSQLClause("AND", "TIPO_FASE", sqlbuilder.EQUALS, ProgettoBulk.TIPO_FASE_PREVISIONE);
-	sqlbuilder.addSQLClause("AND", "ESERCIZIO", sqlbuilder.EQUALS, stampa_ripartizione_costivbulk.getEsercizio_base().getEsercizio());
+	sqlbuilder.addSQLClause("AND", "ESERCIZIO", sqlbuilder.EQUALS, stampa_ripartizione_costivbulk.getEsercizio());
 	if(stampa_ripartizione_costivbulk.getCommessaForPrint()!= null && stampa_ripartizione_costivbulk.getCommessaForPrint().getPg_progetto()!=null)
 	  sqlbuilder.addClause("AND", "pg_progetto_padre", sqlbuilder.EQUALS, stampa_ripartizione_costivbulk.getCommessaForPrint().getPg_progetto());
 	// Se uo 999.000 in scrivania: visualizza tutti i progetti
@@ -2076,24 +2085,4 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, String cd_un
 		throw handleException( e );
 	}
 }
-public Collection findEsercizi(Stampa_attivita_siglaBulk bulk, Esercizio_baseHome h) throws PersistencyException, IntrospectionException {
-		return h.findEsercizi(bulk);
-	}
-	
-	protected OggettoBulk inizializzaEsercizio(UserContext usercontext, Stampa_ripartizione_costiVBulk stampa) throws ComponentException{
-		try {
-			Esercizio_baseHome esercizioBaseHome = (Esercizio_baseHome)getHome(usercontext, Esercizio_baseBulk.class);
-			java.util.Collection esercizi;
-			esercizi =  esercizioBaseHome.findEsercizi((Stampa_ripartizione_costiVBulk)stampa);
-			((Stampa_ripartizione_costiVBulk)stampa).setAnni(esercizi);
-			Esercizio_baseBulk esercizio = (Esercizio_baseBulk) getHome(usercontext, Esercizio_baseBulk.class).findAll().get(0);
-			Integer esercizio_scrivania = CNRUserContext.getEsercizio(usercontext);
-			stampa.setEsercizio_base(esercizio);
-		} catch (PersistencyException e) {
-			throw new ComponentException(e);
-		} catch (IntrospectionException e) {
-			throw new ComponentException(e);
-		}	
-		return stampa;	
-	}
 }
