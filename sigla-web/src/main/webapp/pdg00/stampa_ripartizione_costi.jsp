@@ -1,3 +1,4 @@
+<%@page import="it.cnr.contab.pdg00.action.StampaRipartizioneCostiAction"%>
 <%@ page 
 	import="it.cnr.jada.util.jsp.*,
 		it.cnr.jada.action.*,
@@ -13,18 +14,18 @@
 <% JSPUtils.printBaseUrl(pageContext);%>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
-<title>Stampa ripartizione costi su GAE/Modulo/Commessa</title>
+<title>Stampa ripartizione costi su GAE</title>
 </head>
 <body class="Form">
 
-<%	BulkBP bp = (BulkBP)BusinessProcess.getBusinessProcess(request);
-	Stampa_ripartizione_costiVBulk bulk = (Stampa_ripartizione_costiVBulk)bp.getModel();
+<%	StampaRipartizioneCostiBP bp = (StampaRipartizioneCostiBP)BusinessProcess.getBusinessProcess(request);
+	Stampa_ripartizione_costiVBulk bulk = (Stampa_ripartizione_costiVBulk)bp.getModel(); 
 	bp.openFormWindow(pageContext); %>
 
 <table>
   <tr>
-	<td><% bp.getController().writeFormLabel(out,"esercizio_base"); %></td>
-	<td><% bp.getController().writeFormInput(out,"esercizio_base"); %></td>
+	<td><% bp.getController().writeFormLabel(out,"esercizio"); %></td>
+	<td><% bp.getController().writeFormInput(out,"esercizio"); %></td>
   </tr>
   <tr>	
 	<td><% bp.getController().writeFormLabel(out,"cd_cds"); %></td>
