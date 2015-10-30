@@ -40,6 +40,7 @@ public class ProgettoBulk extends ProgettoBase {
 	public static final String LABEL_AREA_PROGETTUALE = "Area Progettuale";
 	public static final String LABEL_PROGETTO = "Progetto";
 	public static final String LABEL_COMMESSA = "Commessa";
+	public static final String LABEL_MODULO = "Modulo";
 
 	private it.cnr.jada.bulk.BulkList	workpackage_collegati = new it.cnr.jada.bulk.BulkList();
 	private it.cnr.jada.bulk.BulkList	workpackage_disponibili  = new it.cnr.jada.bulk.BulkList();
