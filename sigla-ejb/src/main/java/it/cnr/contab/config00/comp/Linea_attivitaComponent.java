@@ -892,7 +892,19 @@ public SQLBuilder selectProgetto2016ByClause (UserContext userContext,
 	ProgettoHome progettohome = (ProgettoHome)getHome(userContext, ProgettoBulk.class,"V_PROGETTO_PADRE");
 	SQLBuilder sql = progettohome.createSQLBuilder();
 	sql.addClause( clause );
-	sql.addSQLClause("AND", "V_PROGETTO_PADRE.ESERCIZIO", sql.EQUALS, CNRUserContext.getEsercizio(userContext));
+
+	Parametri_cnrBulk parCnr = null;
+	try {
+		parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, CNRUserContext.getEsercizio(userContext));
+	} catch (RemoteException e) {
+		throw handleException(linea_attivita,e);
+	} 
+	
+	if (parCnr.getFl_nuovo_pdg())
+		sql.addSQLClause("AND", "V_PROGETTO_PADRE.ESERCIZIO", sql.EQUALS, CNRUserContext.getEsercizio(userContext));
+	else
+		sql.addSQLClause("AND", "V_PROGETTO_PADRE.ESERCIZIO", sql.EQUALS, Integer.valueOf(2016));
+	
     if (linea_attivita.getProgetto2016()!=null)
     	sql.addSQLClause("AND", "V_PROGETTO_PADRE.PG_PROGETTO", sql.EQUALS, linea_attivita.getProgetto2016().getPg_progetto());
 	sql.addSQLClause("AND", "V_PROGETTO_PADRE.TIPO_FASE", sql.EQUALS, ProgettoBulk.TIPO_FASE_NON_DEFINITA);
