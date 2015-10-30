@@ -216,7 +216,7 @@ public Forward doSearchFind_nodo_padre_2015(ActionContext context) {
 			setErrorMessage(context,"Attenzione: non risulta valorizzato il programma nonostante la presenza del progetto. Aprire una segnalazione HelpDesk!");
 			return context.findDefaultForward();
 		}
-		return search(context, getFormField(context, "main.find_nodo_padre_2016"),"nuovoPdg");
+		return search(context, getFormField(context, "main.find_nodo_padre_2015"),null);
 	} catch(Throwable e){
 		return handleException(context, e);
 	}		

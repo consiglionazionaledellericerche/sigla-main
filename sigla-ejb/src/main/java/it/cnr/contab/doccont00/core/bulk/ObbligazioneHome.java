@@ -1,27 +1,46 @@
 package it.cnr.contab.doccont00.core.bulk;
 
-import it.cnr.contab.doccont00.ejb.NumTempDocContComponentSession;
-import java.math.*;
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
-import it.cnr.contab.config00.bulk.Configurazione_cnrBase;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
-import java.sql.*;
-import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.contab.config00.pdcfin.bulk.*;
-import it.cnr.contab.anagraf00.core.bulk.*;
-import it.cnr.contab.pdg00.bulk.*;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
+import it.cnr.contab.doccont00.ejb.NumTempDocContComponentSession;
+import it.cnr.contab.pdg00.bulk.Pdg_preventivo_detBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
-import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.PersistentHome;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-
-import java.util.*;
 
 
 public class ObbligazioneHome extends BulkHome {
@@ -1628,7 +1647,6 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
 		sqlAssestato.addTableToHeader("SALDI_STANZIAMENTI");
 		sqlAssestato.setHeader(String.valueOf("SELECT 1"));
 		sqlAssestato.addSQLJoin("SALDI_STANZIAMENTI.ESERCIZIO","ELEMENTO_VOCE.ESERCIZIO");
-		sqlAssestato.addSQLJoin("SALDI_STANZIAMENTI.ESERCIZIO_RES","ELEMENTO_VOCE.ESERCIZIO");
 		sqlAssestato.addSQLJoin("SALDI_STANZIAMENTI.TI_APPARTENENZA","ELEMENTO_VOCE.TI_APPARTENENZA");
 		sqlAssestato.addSQLJoin("SALDI_STANZIAMENTI.TI_GESTIONE","ELEMENTO_VOCE.TI_GESTIONE");
 		sqlAssestato.addSQLJoin("SALDI_STANZIAMENTI.CD_ELEMENTO_VOCE","ELEMENTO_VOCE.CD_ELEMENTO_VOCE");
@@ -1636,6 +1654,7 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
 		sqlAssestato.openParenthesis(FindClause.AND);
 		sqlAssestato.addSQLClause(FindClause.OR, "ELEMENTO_VOCE.FL_LIMITE_ASS_OBBLIG", SQLBuilder.EQUALS, "N" );
 		sqlAssestato.addSQLClause(FindClause.OR, "(nvl(SALDI_STANZIAMENTI.IM_STANZ_INIZIALE_A1,0)+nvl(SALDI_STANZIAMENTI.VARIAZIONI_PIU,0)-nvl(SALDI_STANZIAMENTI.VARIAZIONI_MENO,0))", SQLBuilder.GREATER, 0);
+		sqlAssestato.addSQLClause(FindClause.OR, "(nvl(SALDI_STANZIAMENTI.IM_STANZ_RES_IMPROPRIO,0)+nvl(SALDI_STANZIAMENTI.VAR_PIU_STANZ_RES_IMP,0)-nvl(SALDI_STANZIAMENTI.VAR_MENO_STANZ_RES_IMP,0))", SQLBuilder.GREATER, 0);
 		sqlAssestato.closeParenthesis();
 		
 		SQLBuilder sqlstrOrg = new SQLBuilder();
