@@ -28,6 +28,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TreeMap;
+
+import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 /**
  * Business Process che gestisce le attività di CRUD per l'entita' Accertamento Residuo.
  */
@@ -373,19 +375,29 @@ public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 			return false;
 		return EJBCommonServices.getServerDate().after(dataVisibilitaStato);
 	}
+	
 	@Override
-	protected CMISPath getCMISPath(AccertamentoBulk allegatoParentBulk) throws BusinessProcessException{
+	protected CMISPath getCMISPath(AccertamentoBulk allegatoParentBulk, boolean create) throws BusinessProcessException{
 		try {
 			CMISPath cmisPath = SpringUtil.getBean("cmisPathComunicazioniDalCNR", CMISPath.class);
 			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, allegatoParentBulk.getUnita_organizzativa().getCd_unita_organizzativa(), 
 					allegatoParentBulk.getUnita_organizzativa().getDs_unita_organizzativa(), 
 					allegatoParentBulk.getUnita_organizzativa().getDs_unita_organizzativa());
-			cmisPath = cmisService.createFolderIfNotPresent(cmisPath,"Riaccertamento dei residui","Riaccertamento dei residui","Riaccertamento dei residui");
+			cmisPath = cmisService.createFolderIfNotPresent(cmisPath,"Riaccertamento dei residui","Riaccertamento dei residui","Riaccertamento dei residui");				
 			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, String.valueOf(allegatoParentBulk.getEsercizio()),
 					String.valueOf(allegatoParentBulk.getEsercizio()),String.valueOf(allegatoParentBulk.getEsercizio()));
 			String folderName = allegatoParentBulk.getCd_uo_origine() + "-" + allegatoParentBulk.getEsercizio_originale() + allegatoParentBulk.getPg_accertamento();
-			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, folderName,
-					allegatoParentBulk.getDs_accertamento(), allegatoParentBulk.getDs_accertamento());			
+			if (create) {
+				cmisPath = cmisService.createFolderIfNotPresent(cmisPath, folderName,
+						allegatoParentBulk.getDs_accertamento(), allegatoParentBulk.getDs_accertamento());			
+			} else {
+				try {
+					cmisPath = cmisPath.appendToPath(folderName);
+					cmisService.getNodeByPath(cmisPath);
+				} catch (CmisObjectNotFoundException _ex) {
+					return null;
+				}
+			}
 			return cmisPath;
 		} catch (ApplicationException e) {
 			throw new BusinessProcessException(e);

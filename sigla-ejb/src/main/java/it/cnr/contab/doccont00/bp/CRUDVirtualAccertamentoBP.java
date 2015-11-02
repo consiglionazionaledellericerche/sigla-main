@@ -31,6 +31,8 @@ import it.cnr.jada.util.jsp.Button;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 
+import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
+
 public abstract class CRUDVirtualAccertamentoBP 
 	extends AllegatiCRUDBP<AllegatoGenericoBulk, AccertamentoBulk>
 	implements IDocumentoContabileBP {
@@ -457,7 +459,7 @@ public static AccertamentoAbstractComponentSession setSafePoint (
 		ribaltato = b;
 	}
 	@Override
-	protected CMISPath getCMISPath(AccertamentoBulk allegatoParentBulk) throws BusinessProcessException{
+	protected CMISPath getCMISPath(AccertamentoBulk allegatoParentBulk, boolean create) throws BusinessProcessException{
 		try {
 			CMISPath cmisPath = SpringUtil.getBean("cmisPathComunicazioniDalCNR", CMISPath.class);
 			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, allegatoParentBulk.getUnita_organizzativa().getCd_unita_organizzativa(), 
@@ -466,8 +468,18 @@ public static AccertamentoAbstractComponentSession setSafePoint (
 			cmisPath = cmisService.createFolderIfNotPresent(cmisPath,"Accertamenti","Accertamenti","Accertamenti");
 			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, String.valueOf(allegatoParentBulk.getEsercizio()),
 					String.valueOf(allegatoParentBulk.getEsercizio()),String.valueOf(allegatoParentBulk.getEsercizio()));
-			cmisPath = cmisService.createFolderIfNotPresent(cmisPath, String.valueOf(allegatoParentBulk.getPg_accertamento()),
-					String.valueOf(allegatoParentBulk.getPg_accertamento()),String.valueOf(allegatoParentBulk.getPg_accertamento()));			
+			String folderName = String.valueOf(allegatoParentBulk.getPg_accertamento());
+			if (create) {
+				cmisPath = cmisService.createFolderIfNotPresent(cmisPath, folderName,
+						allegatoParentBulk.getDs_accertamento(), allegatoParentBulk.getDs_accertamento());			
+			} else {
+				try {
+					cmisPath = cmisPath.appendToPath(folderName);
+					cmisService.getNodeByPath(cmisPath);
+				} catch (CmisObjectNotFoundException _ex) {
+					return null;
+				}
+			}			
 			return cmisPath;
 		} catch (ApplicationException e) {
 			throw new BusinessProcessException(e);
