@@ -526,7 +526,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	}
 
 	@Override
-	protected CMISPath getCMISPath(DocumentoEleTestataBulk documentoEleTestata) {
+	protected CMISPath getCMISPath(DocumentoEleTestataBulk documentoEleTestata, boolean create) {
 		if (documentoEleTestata != null && documentoEleTestata.getDocumentoEleTrasmissione() != null && 
 				documentoEleTestata.getDocumentoEleTrasmissione().getCmisNodeRef() != null) {
 			try {
