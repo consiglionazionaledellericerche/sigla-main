@@ -36,7 +36,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 	private SiglaCMISService cmisService;
 	private SimpleDetailCRUDController crudArchivioAllegati = new CRUDArchivioAllegati(getAllegatoClass(), this);
 			
-	protected abstract CMISPath getCMISPath(K allegatoParentBulk) throws BusinessProcessException;
+	protected abstract CMISPath getCMISPath(K allegatoParentBulk, boolean create) throws BusinessProcessException;
 	protected abstract Class<T> getAllegatoClass();
 	
 	public AllegatiCRUDBP() {
@@ -93,10 +93,10 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 	public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
 		AllegatoParentBulk allegatoParentBulk = (AllegatoParentBulk)oggettobulk;
 		try {
-			CMISPath path = getCMISPath((K) oggettobulk);
+			CMISPath path = getCMISPath((K) oggettobulk, false);
 			if (path == null)
 				return oggettobulk;
-			Folder parent = (Folder) cmisService.getNodeByPath(getCMISPath((K) oggettobulk));
+			Folder parent = (Folder) cmisService.getNodeByPath(path);
 			for (CmisObject cmisObject : parent.getChildren()) {
 				if (cmisService.hasAspect(cmisObject, CMISAspect.SYS_ARCHIVED.value()))
 					continue;
@@ -189,7 +189,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 					Document node = cmisService.storeSimpleDocument(allegato, 
 							new FileInputStream(allegato.getFile()),
 							allegato.getContentType(),
-							allegato.getNome(), getCMISPath((K) allegatoParentBulk));
+							allegato.getNome(), getCMISPath((K) allegatoParentBulk, true));
 					allegato.setCrudStatus(OggettoBulk.NORMAL);
 				} catch (FileNotFoundException e) {
 					throw handleException(e);
