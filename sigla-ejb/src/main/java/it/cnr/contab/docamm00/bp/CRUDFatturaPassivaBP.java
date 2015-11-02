@@ -1589,7 +1589,7 @@ public void valorizzaInfoDocEle(ActionContext context, Fattura_passivaBulk fp) t
 	}
 	
 	@Override
-	protected CMISPath getCMISPath(Fattura_passivaBulk fattura_passivaBulk) {
+	protected CMISPath getCMISPath(Fattura_passivaBulk fattura_passivaBulk, boolean create) {
 		if (fattura_passivaBulk != null && fattura_passivaBulk.getDocumentoEleTestata() != null && fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione() != null && 
 				fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione().getCmisNodeRef() != null) {
 			try {
