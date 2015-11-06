@@ -529,16 +529,20 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 		aLA.setRisultati(aBL);
 		
 		WorkpackageHome testataHome = (WorkpackageHome)getHome(userContext, WorkpackageBulk.class);
+		ProgettoHome progettoHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
 		/* Angelo 18/11/2004 Aggiunta gestione PostIt*/
 		aLA.setDettagliPostIt(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPostIt(aLA)));
 
 		it.cnr.jada.bulk.BulkList<Ass_linea_attivita_esercizioBulk> assGaeEsercizioList = new it.cnr.jada.bulk.BulkList(testataHome.findDettagliEsercizio(aLA));
 		for (Iterator i = assGaeEsercizioList.iterator(); i.hasNext();) {
 			Ass_linea_attivita_esercizioBulk assGaeEsercizio = (Ass_linea_attivita_esercizioBulk) i.next();
-			if (assGaeEsercizio.getEsercizio().compareTo(new Integer(2016))==-1) 
-				aLA.setModulo2015(assGaeEsercizio.getProgetto());
-			else 
-				aLA.setProgetto2016(assGaeEsercizio.getProgetto());
+			if (assGaeEsercizio.getEsercizio().compareTo(new Integer(2016))==-1) {
+				int annoProgetto = CNRUserContext.getEsercizio(userContext).compareTo(new Integer(2016))!=-1?new Integer(2015):CNRUserContext.getEsercizio(userContext);
+				aLA.setModulo2015((ProgettoBulk)progettoHome.findByPrimaryKey(new ProgettoBulk(annoProgetto, assGaeEsercizio.getPg_progetto(), ProgettoBulk.TIPO_FASE_NON_DEFINITA)));
+			} else { 
+				int annoProgetto = CNRUserContext.getEsercizio(userContext).compareTo(new Integer(2016))==-1?new Integer(2016):CNRUserContext.getEsercizio(userContext);
+				aLA.setProgetto2016((ProgettoBulk)progettoHome.findByPrimaryKey(new ProgettoBulk(annoProgetto, assGaeEsercizio.getPg_progetto(), ProgettoBulk.TIPO_FASE_NON_DEFINITA)));
+			}
 		}
 		
 		//Verifico se è stata utilizzata nel 2015 e/o nel 2016
