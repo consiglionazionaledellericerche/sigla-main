@@ -402,6 +402,8 @@ public class PdgAggregatoModuloComponent extends CRUDComponent {
 				SQLBroker broker = homeProgetto.createBroker( sql );
 				if (( broker.next() )){
 					Progetto_sipBulk modulo = (Progetto_sipBulk) broker.fetch(Progetto_sipBulk.class );
+					if (ProgettoBulk.LIVELLO_PROGETTO_SECONDO.compareTo(modulo.getLivello())!=0) 
+						throw new ApplicationException("Livello Progetto non corretto! Inserimento non possibile.");
 					pdg_modulo.setEsercizio(CNRUserContext.getEsercizio(userContext));
 					pdg_modulo.setStato(Pdg_moduloBulk.STATO_AC);
 					pdg_modulo.setToBeCreated();
