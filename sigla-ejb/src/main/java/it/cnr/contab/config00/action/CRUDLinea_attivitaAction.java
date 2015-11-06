@@ -7,6 +7,7 @@ import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.MessageToUser;
@@ -464,6 +465,10 @@ public Forward doSalva(ActionContext context) {
 				}
 			}
 			CRUDWorkpackageBP bp = (CRUDWorkpackageBP)context.getBusinessProcess();
+			if (progetto!=null) {
+				progetto.setProgettopadre((ProgettoBulk)bp.createComponentSession().findByPrimaryKey(context.getUserContext(), 
+						new ProgettoBulk(progetto.getEsercizio(), progetto.getPg_progetto_padre(), progetto.getTipo_fase())));
+			}
 			if (linea!=null && linea.getPdgProgramma()!=null && linea.getPdgProgramma().getCd_programma()!=null && 
 				progetto!=null && progetto.getProgettopadre()!=null && 
 				!linea.getPdgProgramma().getCd_programma().equals(progetto.getProgettopadre().getCd_dipartimento())) {
