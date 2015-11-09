@@ -398,7 +398,7 @@ public class PdgAggregatoModuloComponent extends CRUDComponent {
 				SQLBuilder sql = homeProgetto.createSQLBuilder();
 				sql.addSQLClause("AND","PG_PROGETTO",SQLBuilder.EQUALS,pdg_modulo.getProgetto().getPg_progetto());
 				sql.addSQLClause("AND", "FL_UTILIZZABILE", sql.EQUALS, "Y");
-				sql.addSQLExistsClause("AND",homeProgetto.abilitazioniModuli(userContext));
+				sql.addSQLExistsClause("AND",homeProgetto.abilitazioniCommesse(userContext));
 				SQLBroker broker = homeProgetto.createBroker( sql );
 				if (( broker.next() )){
 					Progetto_sipBulk modulo = (Progetto_sipBulk) broker.fetch(Progetto_sipBulk.class );
