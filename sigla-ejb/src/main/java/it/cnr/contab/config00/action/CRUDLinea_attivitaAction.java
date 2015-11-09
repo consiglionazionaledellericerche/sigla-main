@@ -180,6 +180,10 @@ public Forward doFreeSearchFind_nodo_padre_2016(ActionContext context) {
 	try{
 		CRUDWorkpackageBP bpLinea = (CRUDWorkpackageBP)context.getBusinessProcess();
 		WorkpackageBulk gae = (WorkpackageBulk)bpLinea.getModel();
+		if (gae.getEsercizio_fine()!=null && gae.getEsercizio_fine().compareTo(Integer.valueOf(2016))==-1) {
+			setErrorMessage(context,"Attenzione: il GAE termina prima dell''anno 2016. Inserimento non possibile!");
+			return context.findDefaultForward();
+		} 
 		if (gae.getModulo2015()!=null && gae.getModulo2015().getPg_progetto()!=null && 
 				(gae.getPdgProgramma()==null||gae.getPdgProgramma().getCd_programma()==null)) {
 			setErrorMessage(context,"Attenzione: non risulta valorizzato il programma nonostante la presenza del modulo di attività. Aprire una segnalazione HelpDesk!");
@@ -197,6 +201,10 @@ public Forward doSearchFind_nodo_padre_2016(ActionContext context) {
 	try{
 		CRUDWorkpackageBP bpLinea = (CRUDWorkpackageBP)context.getBusinessProcess();
 		WorkpackageBulk gae = (WorkpackageBulk)bpLinea.getModel();
+		if (gae.getEsercizio_fine()!=null && gae.getEsercizio_fine().compareTo(Integer.valueOf(2016))==-1) {
+			setErrorMessage(context,"Attenzione: il GAE termina prima dell''anno 2016. Inserimento non possibile!");
+			return context.findDefaultForward();
+		} 
 		if (gae.getModulo2015()!=null && gae.getModulo2015().getPg_progetto()!=null && 
 				(gae.getPdgProgramma()==null||gae.getPdgProgramma().getCd_programma()==null)) {
 			setErrorMessage(context,"Attenzione: non risulta valorizzato il programma nonostante la presenza del modulo di attività. Aprire una segnalazione HelpDesk!");
