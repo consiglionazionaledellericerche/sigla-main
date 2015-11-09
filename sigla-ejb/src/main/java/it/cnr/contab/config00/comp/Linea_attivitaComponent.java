@@ -723,25 +723,28 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 			Ass_linea_attivita_esercizioBulk assGaeEsercizio = (Ass_linea_attivita_esercizioBulk) i.next();
 			if (assGaeEsercizio.getEsercizio().compareTo(new Integer(2016))==-1) {
 				assGaeEsercizio2015 = assGaeEsercizio;
-				if (linea_attivita.getModulo2015()!=null && !linea_attivita.getModulo2015().getPg_progetto().equals(assGaeEsercizio.getProgetto().getPg_progetto())){
+				if (linea_attivita.getModulo2015()==null || linea_attivita.getModulo2015().getPg_progetto()==null)
+					assGaeEsercizio2015.setToBeDeleted();
+				else if (!linea_attivita.getModulo2015().getPg_progetto().equals(assGaeEsercizio.getProgetto().getPg_progetto())) {
 					if (isGaeUtilizzata(userContext,linea_attivita,true)) 
 						throw new ApplicationException( "Il Modulo di attività non può essere modificato in quanto la GAE risulta già utilizzata." );
 					assGaeEsercizio2015.setProgetto(linea_attivita.getModulo2015());
 					assGaeEsercizio2015.setToBeUpdated();
-				} else if (linea_attivita.getModulo2015()==null || linea_attivita.getModulo2015().getPg_progetto()==null) {
-					assGaeEsercizio2015.setToBeDeleted();
 				}
 			} else {
 				assGaeEsercizio2016 = assGaeEsercizio;
-				if (linea_attivita.getProgetto2016()!=null && (!linea_attivita.getProgetto2016().getPg_progetto().equals(assGaeEsercizio.getProgetto().getPg_progetto()) ||
-						!linea_attivita.getEsercizio_fine().equals(assGaeEsercizio.getEsercizio_fine())) ){
+				if (linea_attivita.getProgetto2016()==null || linea_attivita.getProgetto2016().getPg_progetto()==null ||
+					linea_attivita.getEsercizio_fine().compareTo(assGaeEsercizio2016.getEsercizio())==-1) {
+					if (isGaeUtilizzata(userContext,linea_attivita,false)) 
+						throw new ApplicationException( "Il Progetto non può essere eliminato in quanto la GAE risulta già utilizzata." );
+					assGaeEsercizio2016.setToBeDeleted();
+				} else if (!linea_attivita.getProgetto2016().getPg_progetto().equals(assGaeEsercizio.getProgetto().getPg_progetto()) ||
+						!linea_attivita.getEsercizio_fine().equals(assGaeEsercizio.getEsercizio_fine())) {
 					if (isGaeUtilizzata(userContext,linea_attivita,false)) 
 						throw new ApplicationException( "Il Progetto non può essere modificato in quanto la GAE risulta già utilizzata." );
 					assGaeEsercizio2016.setProgetto(linea_attivita.getProgetto2016());
 					assGaeEsercizio2016.setEsercizio_fine(linea_attivita.getEsercizio_fine());
 					assGaeEsercizio2016.setToBeUpdated();
-				} else if (linea_attivita.getProgetto2016()==null || linea_attivita.getProgetto2016().getPg_progetto()==null) {
-					assGaeEsercizio2016.setToBeDeleted();
 				}
 			}
 		}
