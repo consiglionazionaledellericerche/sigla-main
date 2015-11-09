@@ -229,6 +229,7 @@ public class DocumentoEleTestataHome extends BulkHome {
             	client.getMarshaller().marshal(notificaEsitoCommittente, new StreamResult(outputStreamNotificaEsito));
             	PasswordAuthentication authentication = getAuthenticatorFromCUU(userContext, documentoEleTestataBulk);
             	if (authentication == null) {
+        			logger.error("Errore applicativo durante la Notifica di Esito Committente, contattare il servizio di HelpDesk!");
             		throw new ApplicationException("Errore applicativo durante la Notifica di Esito Committente, contattare il servizio di HelpDesk!");
             	}
             	storeEsitoDocument(documentoEleTestataBulk, new ByteArrayInputStream(outputStreamNotificaEsito.toByteArray()), 
@@ -240,6 +241,7 @@ public class DocumentoEleTestataHome extends BulkHome {
     		} catch(ApplicationException _ex) {
         		throw _ex;
     		} catch(Exception _ex) {
+    			logger.error("Errore applicativo durante la Notifica di Esito Committente, contattare il servizio di HelpDesk!" + _ex.getMessage(), _ex);
     			throw new ApplicationException("Errore applicativo durante la Notifica di Esito Committente, contattare il servizio di HelpDesk!\n" + _ex.getMessage(), _ex);
     		}
     	} else if (!tipoIntegrazioneSDI.equals(TipoIntegrazioneSDI.PEC)) {
