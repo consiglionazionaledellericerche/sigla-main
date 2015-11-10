@@ -66,11 +66,12 @@ public it.cnr.jada.bulk.OggettoBulk modificaStatoPdg_aggregato(it.cnr.jada.UserC
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
-public void findAndInsertBulkForMacro(it.cnr.jada.UserContext param0,it.cnr.contab.prevent01.bulk.Pdg_moduloBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+public it.cnr.contab.prevent01.bulk.Pdg_moduloBulk findAndInsertBulkForMacro(it.cnr.jada.UserContext param0,it.cnr.contab.prevent01.bulk.Pdg_moduloBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 	pre_component_invocation(param0,componentObj);
 	try {
-		((PdgAggregatoModuloComponent)componentObj).findAndInsertBulkForMacro(param0,param1);
+		it.cnr.contab.prevent01.bulk.Pdg_moduloBulk result = ((PdgAggregatoModuloComponent)componentObj).findAndInsertBulkForMacro(param0,param1);
 		component_invocation_succes(param0,componentObj);
+		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
 		component_invocation_succes(param0,componentObj);
 		throw e;

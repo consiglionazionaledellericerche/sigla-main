@@ -41,6 +41,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.OutdatedResourceException;
@@ -390,7 +391,8 @@ public class PdgAggregatoModuloComponent extends CRUDComponent {
 	private boolean isUtenteEnte(UserContext userContext) throws ComponentException {
 		return isCdrEnte(userContext,cdrFromUserContext(userContext));
 	}
-	public void findAndInsertBulkForMacro(it.cnr.jada.UserContext userContext,it.cnr.contab.prevent01.bulk.Pdg_moduloBulk pdg_modulo) throws it.cnr.jada.comp.ComponentException{
+	//Ritorna l'oggetto solo se creato
+	public Pdg_moduloBulk findAndInsertBulkForMacro(it.cnr.jada.UserContext userContext,it.cnr.contab.prevent01.bulk.Pdg_moduloBulk pdg_modulo) throws it.cnr.jada.comp.ComponentException{
 		try {
 			Pdg_moduloHome home = (Pdg_moduloHome)getHome(userContext,Pdg_moduloBulk.class);
 			if (home.findByPrimaryKey(pdg_modulo) == null){	
@@ -407,11 +409,12 @@ public class PdgAggregatoModuloComponent extends CRUDComponent {
 					pdg_modulo.setEsercizio(CNRUserContext.getEsercizio(userContext));
 					pdg_modulo.setStato(Pdg_moduloBulk.STATO_AC);
 					pdg_modulo.setToBeCreated();
-					super.creaConBulk(userContext,pdg_modulo);				
+					return (Pdg_moduloBulk)super.creaConBulk(userContext,pdg_modulo);
 				}else{
-					throw new ApplicationException("Il modulo di attività non è presente!");
+					throw new ApplicationException("Progetto non presente o CDR non abilitato al suo utilizzo!");
 				}
-			}			  
+			}
+			return null;
 		} catch(PersistencyException e) {
 			throw handleException(e);
 		}
