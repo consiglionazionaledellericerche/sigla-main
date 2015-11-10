@@ -3,15 +3,9 @@
  */
 package it.cnr.contab.config00.action;
 
-import java.rmi.RemoteException;
-
-import javax.ejb.EJBException;
-
 import it.cnr.contab.config00.ejb.CDRComponentSession;
 import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
-import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.logs.ejb.BatchControlComponentSession;
 import it.cnr.contab.pdg00.bp.CostiDipendenteBP;
 import it.cnr.contab.prevent01.bp.CRUDPdGAggregatoModuloBP;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
@@ -25,15 +19,12 @@ import it.cnr.contab.utenze00.bp.LoginBP;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteComuneBulk;
-import it.cnr.jada.DetailedRuntimeException;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.Forward;
+import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.action.FormAction;
-import it.cnr.jada.util.action.Selection;
-import it.cnr.jada.util.action.SimpleCRUDBP;
 /**
  * @author mspasiano
  *
@@ -104,6 +95,7 @@ public class MacroAction extends FormAction{
 			UtenteBulk utente = new UtenteBulk();
 			utente.setCd_utente(cd_utente);
 			utente.setPassword(pwd);
+			utente.setLdap_password(pwd);
 			ui.setUtente(utente);
 			
 			Integer[] esercizi = getComponentSession().listaEserciziPerUtente(actioncontext.getUserContext(),utente);
@@ -152,7 +144,12 @@ public class MacroAction extends FormAction{
 				if (pg_modulo != null && mode.equals("M") && newbp.isModuloInseribile()){
 					Pdg_moduloBulk pdg_modulo = new Pdg_moduloBulk(CNRUserContext.getEsercizio(actioncontext.getUserContext()),ui.getCdr().getCd_centro_responsabilita(),pg_modulo);
 					try{
-						getPdgModuloComponentSession().findAndInsertBulkForMacro(actioncontext.getUserContext(),pdg_modulo);
+						pdg_modulo = getPdgModuloComponentSession().findAndInsertBulkForMacro(actioncontext.getUserContext(),pdg_modulo);
+						if (pdg_modulo!=null) {
+							newbp.setModel(actioncontext, newbp.initializeModelForEdit(actioncontext, newbp.getModel()));
+							newbp.setPgModulo(pg_modulo);
+							newbp.evidenziaModulo(actioncontext);
+						}
 					}catch(ApplicationException e){
 						setErrorMessage(actioncontext,e.getMessage());
 						return actioncontext.findDefaultForward();					
@@ -162,8 +159,6 @@ public class MacroAction extends FormAction{
 					newbp.setStatus(CRUDPdGAggregatoModuloBP.EDIT);
 					newbp.setEditable(true);
 				}
-				newbp.setPgModulo(pg_modulo);
-				newbp.evidenziaModulo(actioncontext);
 				actioncontext.addBusinessProcess(newbp);
 			}else  if (costi_personale.equals("Y")){
 				aggiornaGECO(actioncontext);
