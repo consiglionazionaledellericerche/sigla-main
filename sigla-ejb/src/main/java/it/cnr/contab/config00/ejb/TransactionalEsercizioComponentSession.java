@@ -72,4 +72,22 @@ public it.cnr.contab.config00.esercizio.bulk.EsercizioBulk getLastEsercizioOpen(
 		}
 	}
 }
+public boolean isEsercizioAperto(UserContext userContext)
+		throws ComponentException, RemoteException {
+try {
+		
+		return ((Boolean)invoke("isEsercizioAperto",new Object[] {
+				userContext})).booleanValue();
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
 }
