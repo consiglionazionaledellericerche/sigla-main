@@ -61,6 +61,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.action.BulkBP;
+import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.OptionBP;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
@@ -1411,21 +1412,54 @@ public Forward doBringBackSearchCliente(
 	            			fattura_attiva.setFl_liquidazione_differita(Boolean.TRUE);
 	            	if (fattura_attiva.getCliente().getAnagrafico() != null &&
 			            (fattura_attiva.getCliente().getAnagrafico().isEntePubblico() && !fattura_attiva.getFl_liquidazione_differita().booleanValue()))
-		        	openMessage(context, "Verificare che l'ente pubblico non sia soggetto a split payment ed eventualmente aggiornare l'anagrafica.");
-	            	if (fattura_attiva.getCliente().getAnagrafico() != null &&
-	            			 (fattura_attiva.getCliente().getAnagrafico().getDichiarazioni_intento().size()!=0 ))
-	            		openMessage(context, "Esiste una dichiarazione di intento per l'anagrafica.");
-	            }
+	            			doConfermaSplit(context,OptionBP.YES_BUTTON);
+		            	if (fattura_attiva.getCliente().getAnagrafico() != null && 
+		            		 (fattura_attiva.getCliente().getAnagrafico().getDichiarazioni_intento().size()!=0 )){
+		            		doConfermaDichiarazione(context,OptionBP.YES_BUTTON);
+		            	}
+	            } 
             }
             crudFattura.setModel(context,fattura_attiva);
-            crudFattura.resyncChildren(context);
-                        
+            crudFattura.resyncChildren(context);        
         }
         return context.findDefaultForward();
 
     } catch (Exception e) {
         return handleException(context, e);
     }
+}
+public Forward doConfermaDichiarazione(ActionContext context, int choice ) throws java.rmi.RemoteException 
+{
+	try 
+	{
+		fillModel(context);
+		if ( choice == OptionBP.YES_BUTTON )
+		{
+			CRUDBP bp = getBusinessProcess(context);
+			bp.setMessage("Esiste una dichiarazione di intento per l'anagrafica.");
+		}	
+		
+		return context.findDefaultForward();
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}
+public Forward doConfermaSplit(ActionContext context, int choice ) throws java.rmi.RemoteException 
+{
+	try 
+	{
+		fillModel(context);
+		if ( choice == OptionBP.YES_BUTTON )
+		{
+			CRUDBP bp = getBusinessProcess(context);
+			
+			bp.setMessage("Verificare che l'ente pubblico non sia soggetto a split payment ed eventualmente aggiornare l'anagrafica.");
+		}	
+		
+		return context.findDefaultForward();
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
 }
 //private void controlloCodiceIPA(Fattura_attivaBulk fattura_attiva,
 //		TerzoBulk fornitoreTrovato) throws ApplicationException {

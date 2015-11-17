@@ -690,4 +690,13 @@ public EsercizioBulk getLastEsercizioOpen( UserContext userContext ) throws it.c
 		throw handleException(e);
 	}
 }
+public boolean isEsercizioAperto (UserContext userContext) throws ComponentException
+{
+	 try{
+			EsercizioHome home=(EsercizioHome)getHome(userContext,EsercizioBulk.class);
+			return home.isEsercizioAperto(userContext,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext),it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
+	 }catch (PersistencyException ex) {
+					throw handleException(ex);	
+}
+}
 }
