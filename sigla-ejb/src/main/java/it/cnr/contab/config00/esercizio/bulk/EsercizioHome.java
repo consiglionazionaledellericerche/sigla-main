@@ -279,4 +279,29 @@ public boolean verificaEsercizi2AnniPrecedenti( EsercizioBulk esercizioCorrente 
 		throw new PersistencyException( e );
 	}	
 }
+public boolean isEsercizioAperto(it.cnr.jada.UserContext userContext,Integer esercizio,String cd_cds) throws PersistencyException {
+	try {
+
+		if (findByPrimaryKey(new EsercizioKey(cd_cds,esercizio)) == null)
+			return false;
+			
+		LoggableStatement cs = new LoggableStatement(getConnection(),
+				"{ ? = call " + it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() 
+				+	"CNRCTB008.isEsercizioApertoYesNo(?,?)}",false,this.getClass());		
+
+		try {
+			cs.registerOutParameter( 1, java.sql.Types.CHAR);
+			cs.setObject(2,esercizio);		
+			cs.setObject(3,cd_cds);		
+			
+			cs.execute();
+
+			return "Y".equals(cs.getString(1));
+		} finally {
+			cs.close();
+		}
+	} catch (java.sql.SQLException e) {
+		throw SQLExceptionHandler.getInstance().handleSQLException(e);
+	}
+}
 }

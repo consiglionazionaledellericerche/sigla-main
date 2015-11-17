@@ -244,6 +244,10 @@ public boolean isCaricaSospesiButtonEnabled() {
  *  annullato.
  */
 public boolean isDeleteButtonEnabled() {
+	
+	  if(!isEditable()) 
+		  return super.isDeleteButtonEnabled();			  
+	  else
 	return (super.isDeleteButtonEnabled() ||
 			(!isEditing() && 
 			 getModel()!=null && 
