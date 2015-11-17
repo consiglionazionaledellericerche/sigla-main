@@ -38,9 +38,9 @@
 			<% bp.getController().writeFormLabel(out,"cd_progetto2016");%>
 		  </td>
 		   <td colspan="3">	
-			<% bp.getController().writeFormInput(out,null,"cd_progetto2016",isMapNotEditable,null,null); %>
-			<% bp.getController().writeFormInput(out,null,"ds_progetto2016",isMapNotEditable,null,null); %>
-			<% bp.getController().writeFormInput(out,null,"find_nodo_padre_2016",isMapNotEditable,null,null); %>
+			<% bp.getController().writeFormInput(out,null,"cd_progetto2016",false,null,null); %>
+			<% bp.getController().writeFormInput(out,null,"ds_progetto2016",false,null,null); %>
+			<% bp.getController().writeFormInput(out,null,"find_nodo_padre_2016",false,null,null); %>
 		  </td>
 		</tr>
 	<% } %>
