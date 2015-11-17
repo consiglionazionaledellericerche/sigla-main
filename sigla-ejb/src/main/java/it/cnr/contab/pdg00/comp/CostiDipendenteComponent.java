@@ -1195,7 +1195,10 @@ public SQLBuilder selectCommessaForPrintByClause(UserContext usercontext, Stampa
 	// Se uo 999.000 in scrivania: visualizza tutti i progetti
 	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( usercontext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 	if (!((CNRUserContext) usercontext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
-		sqlbuilder.addSQLExistsClause("AND",progettohome.abilitazioniCommesse(usercontext));
+		if (par.getFl_nuovo_pdg())
+			sqlbuilder.addSQLExistsClause("AND",progettohome.abilitazioniProgetti(usercontext));
+		else
+			sqlbuilder.addSQLExistsClause("AND",progettohome.abilitazioniCommesse(usercontext));
 	}	
 	sqlbuilder.addClause(compoundfindclause);
 	return sqlbuilder;
@@ -1218,7 +1221,10 @@ public SQLBuilder selectModuloForPrintByClause(UserContext usercontext, Stampa_r
 	// Se uo 999.000 in scrivania: visualizza tutti i progetti
 	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( usercontext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 	if (!((CNRUserContext) usercontext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
-		sqlbuilder.addSQLExistsClause("AND",progettohome.abilitazioniModuli(usercontext));
+		if (par.getFl_nuovo_pdg())
+			sqlbuilder.addSQLExistsClause("AND",progettohome.abilitazioniCommesse(usercontext));
+		else
+			sqlbuilder.addSQLExistsClause("AND",progettohome.abilitazioniModuli(usercontext));
 	}	  
 	sqlbuilder.addClause(compoundfindclause);
 	return sqlbuilder;
