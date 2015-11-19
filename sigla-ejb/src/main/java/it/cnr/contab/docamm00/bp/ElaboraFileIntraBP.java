@@ -901,7 +901,9 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
 		   bw.append(Formatta(comune.getDs_comune(),"S",40," "));//COMUNE nascita rappresentante     ???????????????
 		   bw.append(Formatta(comune.getCd_provincia(),"S",2," "));//PROV nascita rappresentante     ???????????????
 	   }
-	   bw.append(Formatta(null,"D",3,"0"));//codice stato estero rappresentante     ???????????????
+	   //cambiato il tracciato dal 01/10/2015 diventati tutti filler
+	   bw.append(Formatta(null,"S",3," "));//codice stato estero rappresentante     ???????????????
+	   //bw.append(Formatta(null,"D",3,"0"));//codice stato estero rappresentante     ???????????????
 	   bw.append(Formatta(null,"S",24," "));//stato fed rappresentante     ???????????????
 	   bw.append(Formatta(null,"S",24," "));//residenza rappresentante     ???????????????
 	   bw.append(Formatta(null,"S",35," "));//indirizzo estero rappresentante     ???????????????
@@ -913,10 +915,15 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
 	   bw.append(Formatta(null,"S",16," ")); 
  	   bw.append(Formatta(null,"S",5,"0"));  
  	   bw.append(Formatta("0","D",1,"0"));//
+ 	   // cambiato il tracciato dal 01/10/2015
+ 	   bw.append(Formatta(null,"S",1," "));
+ 	   // fine cambio
  	   bw.append(Formatta(null,"D",8,"0"));
  	   bw.append(Formatta("0","D",1,"0"));// Firma intermediario
  	  
- 	   bw.append(Formatta(null,"S",1228," "));// Filler
+ 	   
+ 	   //bw.append(Formatta(null,"S",1228," "));// Filler -- cambiato il tracciato dal 01/10/2015
+ 	   bw.append(Formatta(null,"S",1227," "));// Filler -- cambiato il tracciato dal 01/10/2015 
  	   bw.append(Formatta(null,"S",20," "));// Filler
  	   bw.append(Formatta(null,"S",34," "));// Filler 
  	   bw.append("A"); //
