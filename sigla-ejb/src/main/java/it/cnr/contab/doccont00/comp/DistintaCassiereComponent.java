@@ -3827,7 +3827,9 @@ public class DistintaCassiereComponent extends
 			//if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_INCASSO)==0 && bulk.getPg_documento_cont_padre().compareTo(bulk.getPg_documento_cont())==0)
 			if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_INCASSO)==0)
 				infover.setTipoRiscossione("CASSA");
-		
+			//19/11/2015 MANDATI a NETTO 0, richiesta modifica tipo pagamento
+//			if(bulk.getIm_documento_cont().compareTo(bulk.getIm_ritenute())==0)
+//				infover.setTipoRiscossione("COMPENSAZIONE");
 			// Classificazioni
 			it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeClass=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class,"CLASSIFICAZIONE");
 			SQLBuilder sqlClass = homeClass.createSQLBuilder();
@@ -4003,7 +4005,9 @@ public class DistintaCassiereComponent extends
 					infoben.setTipoPagamento("ACCREDITO CONTO CORRENTE POSTALE");
 					obb_conto=true;
 				}
-							
+				//19/11/2015 MANDATI a NETTO 0, richiesta modifica tipo pagamento
+				if(bulk.getIm_documento_cont().compareTo(bulk.getIm_ritenute())==0)
+					infoben.setTipoPagamento("COMPENSAZIONE");
 				// Classificazioni
 				it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeClass=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class,"CLASSIFICAZIONE");
 				SQLBuilder sqlClass = homeClass.createSQLBuilder();
