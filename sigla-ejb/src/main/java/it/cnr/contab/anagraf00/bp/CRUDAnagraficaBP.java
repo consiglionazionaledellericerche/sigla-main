@@ -1368,7 +1368,8 @@ public String[][] getTabs() {
 			{ "tabEsportatore","Esportatore abituale","/anagraf00/tab_esportatore.jsp" }};
 	else if (((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getTi_italiano_estero() !=null && ((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getTi_italiano_estero().compareTo(NazioneBulk.ITALIA)==0 &&
 			((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getPartita_iva()!=null &&
-					(((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).isPersonaGiuridica()))
+					(((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).isPersonaGiuridica()) &&
+					(!((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).isStudioAssociato()))
 		return new String[][] {
 			{ "tabAnagrafica","Anagrafica","/anagraf00/tab_anagrafica.jsp" },
 			{ "tabRapporto","Rapporto","/anagraf00/tab_rapporto.jsp" } ,
