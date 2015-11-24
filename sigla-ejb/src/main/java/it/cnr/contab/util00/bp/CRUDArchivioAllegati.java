@@ -10,6 +10,9 @@ import it.cnr.jada.util.upload.UploadedFile;
 
 public class CRUDArchivioAllegati<T extends AllegatoGenericoBulk> extends SimpleDetailCRUDController {
 	private static final long serialVersionUID = 1L;
+	private boolean shrinkable;
+	private boolean growable;
+	private boolean readonlyOnEdit = false;
 	
 	public CRUDArchivioAllegati(Class<T> class1, FormController formcontroller) {
 		super("ArchivioAllegati", class1, "archivioAllegati", formcontroller);
@@ -32,11 +35,32 @@ public class CRUDArchivioAllegati<T extends AllegatoGenericoBulk> extends Simple
 	
 	@Override
 	public boolean isShrinkable() {		
-		return !((it.cnr.jada.util.action.CRUDBP)getParentController()).isSearching() && super.isShrinkable();
+		if (getModel()!= null && getModel().getCrudStatus() == OggettoBulk.TO_BE_CREATED)
+			return true;
+		return !((it.cnr.jada.util.action.CRUDBP)getParentController()).isSearching() && super.isShrinkable() && shrinkable;
 	}
 	
 	@Override
 	public boolean isGrowable() {
-		return !((it.cnr.jada.util.action.CRUDBP)getParentController()).isSearching() && super.isGrowable();
+		return !((it.cnr.jada.util.action.CRUDBP)getParentController()).isSearching() && super.isGrowable() && growable;
 	}
+
+	@Override
+	public boolean isReadonly() {
+		if (getModel()!= null && getModel().getCrudStatus() == OggettoBulk.NORMAL)
+			return readonlyOnEdit;
+		return super.isReadonly();
+	}
+	public void setShrinkable(boolean shrinkable) {
+		this.shrinkable = shrinkable;
+	}
+
+	public void setGrowable(boolean growable) {
+		this.growable = growable;
+	}
+
+	public void setReadonlyOnEdit(boolean readonlyOnEdit) {
+		this.readonlyOnEdit = readonlyOnEdit;
+	}
+	
 }

@@ -34,7 +34,7 @@ import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExists
 public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends AllegatoParentBulk> extends SimpleCRUDBP {
 	private static final long serialVersionUID = 1L;
 	private SiglaCMISService cmisService;
-	private SimpleDetailCRUDController crudArchivioAllegati = new CRUDArchivioAllegati(getAllegatoClass(), this);
+	private CRUDArchivioAllegati<T> crudArchivioAllegati = new CRUDArchivioAllegati<T>(getAllegatoClass(), this);
 			
 	protected abstract CMISPath getCMISPath(K allegatoParentBulk, boolean create) throws BusinessProcessException;
 	protected abstract Class<T> getAllegatoClass();
@@ -66,6 +66,11 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 	public SimpleDetailCRUDController getCrudArchivioAllegati() {
 		return crudArchivioAllegati;
 	}
+
+	public CRUDArchivioAllegati<T> getArchivioAllegati() {
+		return crudArchivioAllegati;
+	}
+	
 	public String getNomeAllegato(){
 		AllegatoGenericoBulk allegato = (AllegatoGenericoBulk)getCrudArchivioAllegati().getModel();
 		if (allegato != null && allegato.getDocument() != null)
