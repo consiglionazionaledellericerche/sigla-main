@@ -195,12 +195,21 @@ public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 				} else if (getTab( "tab" ).equalsIgnoreCase("tabAllegati")) {
 					if (!isROStato())
 						setStatusAndEditableMap(EDIT);
-					else
-						setStatusAndEditableMap(VIEW);
+					else {
+						if (isStatoModificabile) {
+							setStatusAndEditableMap(VIEW);							
+						} else {
+							setStatusAndEditableMap(EDIT);
+							getArchivioAllegati().setShrinkable(false);
+							getArchivioAllegati().setGrowable(true);		
+							getArchivioAllegati().setReadonlyOnEdit(true);
+						}
+					}
 				}
 			}
 		}
 	} 
+	
 	/* (non-Javadoc)
 	 * @see it.cnr.jada.util.action.FormBP#setTab(java.lang.String, java.lang.String)
 	 */
