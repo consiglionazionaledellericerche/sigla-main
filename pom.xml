@@ -23,7 +23,7 @@
 		<java.version>1.5</java.version>
 		<opencmis.version>0.10.0</opencmis.version>
 		<spring.version>3.0.3.RELEASE</spring.version>
-		<jada.version>2.3.1</jada.version>
+		<jada.version>2.3.2</jada.version>
 		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
 		<sigla.build.number>${maven.build.timestamp}</sigla.build.number>		
 		<slf4j.version>1.4.3</slf4j.version>
