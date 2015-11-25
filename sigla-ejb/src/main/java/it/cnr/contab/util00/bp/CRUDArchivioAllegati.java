@@ -10,8 +10,8 @@ import it.cnr.jada.util.upload.UploadedFile;
 
 public class CRUDArchivioAllegati<T extends AllegatoGenericoBulk> extends SimpleDetailCRUDController {
 	private static final long serialVersionUID = 1L;
-	private boolean shrinkable;
-	private boolean growable;
+	private boolean shrinkable = true;
+	private boolean growable = true;
 	private boolean readonlyOnEdit = false;
 	
 	public CRUDArchivioAllegati(Class<T> class1, FormController formcontroller) {
