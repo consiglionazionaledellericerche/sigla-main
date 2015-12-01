@@ -3819,17 +3819,14 @@ public class DistintaCassiereComponent extends
 			infover.setProgressivoVersante(1);// Dovrebbe essere sempre 1 ?
 			infover.setImportoVersante(docContabile.getImDocumento().setScale(2, BigDecimal.ROUND_HALF_UP));
 			// tipologia non gestita da committare
-			//if(bulk.getPg_documento_cont_padre()!=bulk.getPg_documento_cont())
-				//infover.setTipoRiscossione("COMPENSAZIONE");
+			if(bulk.getPg_documento_cont_padre()!=bulk.getPg_documento_cont())
+				infover.setTipoRiscossione("COMPENSAZIONE");
 			if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_REGOLAM_SOSPESO)==0)
 				infover.setTipoRiscossione("REGOLARIZZAZIONE");
 			// da committare
-			//if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_INCASSO)==0 && bulk.getPg_documento_cont_padre().compareTo(bulk.getPg_documento_cont())==0)
-			if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_INCASSO)==0)
-				infover.setTipoRiscossione("CASSA");
-			//19/11/2015 MANDATI a NETTO 0, richiesta modifica tipo pagamento
-			if(bulk.getIm_documento_cont().compareTo(bulk.getIm_ritenute())==0)
-				infover.setTipoRiscossione("COMPENSAZIONE");
+			if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_INCASSO)==0 && bulk.getPg_documento_cont_padre().compareTo(bulk.getPg_documento_cont())==0)
+				if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_INCASSO)==0)
+					infover.setTipoRiscossione("CASSA");
 			// Classificazioni
 			it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeClass=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class,"CLASSIFICAZIONE");
 			SQLBuilder sqlClass = homeClass.createSQLBuilder();
