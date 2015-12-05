@@ -3853,12 +3853,16 @@ public class DistintaCassiereComponent extends
 			VDocumentiFlussoBulk oldDoc=null;
 			for(Iterator c=listClass.iterator();c.hasNext();){
 				VDocumentiFlussoBulk doc=(VDocumentiFlussoBulk)c.next();
-				if(doc.getCdSiope()!=null && oldDoc!=null &&oldDoc.getCdSiope().compareTo(doc.getCdSiope())==0  && (oldDoc.getCdTipoDocumentoAmm().compareTo(doc.getCdTipoDocumentoAmm())!=0|| oldDoc.getPgDocAmm().compareTo(doc.getPgDocAmm())!=0)){
+				if(doc.getCdSiope()!=null && oldDoc!=null && oldDoc.getCdSiope()!=null ){
+					if ((oldDoc.getCdSiope().compareTo(doc.getCdSiope())!=0)
+							||(oldDoc.getCdTipoDocumentoAmm()!=null && oldDoc.getCdTipoDocumentoAmm().compareTo(doc.getCdTipoDocumentoAmm())!=0)
+							||( oldDoc.getPgDocAmm()!=null && oldDoc.getPgDocAmm().compareTo(doc.getPgDocAmm())!=0)){				
 					clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Classificazione();
 					clas.setCodiceCge(doc.getCdSiope());
 					clas.setImporto(doc.getImportoCge().setScale(2, BigDecimal.ROUND_HALF_UP));
 					infover.getClassificazione().add(clas);
 					oldDoc=doc;
+					}
 				}else if(doc.getCdSiope()!=null ){
 					clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Classificazione();
 					clas.setCodiceCge(doc.getCdSiope());
