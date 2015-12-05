@@ -1320,6 +1320,7 @@ public class DistintaCassiereComponent extends
 			sql.addClause(clausole);
 			sql.addSQLClause("AND", "v_mandato_reversale_distinta.esercizio", SQLBuilder.EQUALS,
 					((CNRUserContext) userContext).getEsercizio());
+			// Da condizionare 02/12/2015
 			sql.addSQLClause("AND", "v_mandato_reversale_distinta.cd_cds", SQLBuilder.EQUALS,
 					((CNRUserContext) userContext).getCd_cds());
 			sql.addSQLClause("AND", "v_mandato_reversale_distinta.stato_trasmissione", SQLBuilder.EQUALS,
@@ -1378,7 +1379,7 @@ public class DistintaCassiereComponent extends
 						docPassivo.getEsercizio());
 				sql2.addSQLClause("AND", "v_mandato_reversale_distinta.cd_tipo_documento_cont",
 						SQLBuilder.EQUALS, "MAN");
-
+//			 Da condizionare 02/12/2015
 				sql2.addSQLClause("AND", "v_mandato_reversale_distinta.cd_cds", SQLBuilder.EQUALS,
 						((CNRUserContext) userContext).getCd_cds());
 				sql2.addSQLClause("AND", "v_mandato_reversale_distinta.stato_trasmissione", SQLBuilder.EQUALS,
@@ -3849,14 +3850,21 @@ public class DistintaCassiereComponent extends
 			sqlClass.setOrderBy("cdSiope",it.cnr.jada.util.OrderConstants.ORDER_ASC);
 			//sqlClass.setOrderBy("cdCup",it.cnr.jada.util.OrderConstants.ORDER_ASC);
 			List listClass = homeClass.fetchAll(sqlClass);
-			
+			VDocumentiFlussoBulk oldDoc=null;
 			for(Iterator c=listClass.iterator();c.hasNext();){
 				VDocumentiFlussoBulk doc=(VDocumentiFlussoBulk)c.next();
-				if(doc.getCdSiope()!=null){
+				if(doc.getCdSiope()!=null && oldDoc!=null &&oldDoc.getCdSiope().compareTo(doc.getCdSiope())==0  && (oldDoc.getCdTipoDocumentoAmm().compareTo(doc.getCdTipoDocumentoAmm())!=0|| oldDoc.getPgDocAmm().compareTo(doc.getPgDocAmm())!=0)){
 					clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Classificazione();
 					clas.setCodiceCge(doc.getCdSiope());
 					clas.setImporto(doc.getImportoCge().setScale(2, BigDecimal.ROUND_HALF_UP));
 					infover.getClassificazione().add(clas);
+					oldDoc=doc;
+				}else if(doc.getCdSiope()!=null ){
+					clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Classificazione();
+					clas.setCodiceCge(doc.getCdSiope());
+					clas.setImporto(doc.getImportoCge().setScale(2, BigDecimal.ROUND_HALF_UP));
+					infover.getClassificazione().add(clas);
+					oldDoc=doc;
 				}
 				if(infover.getCausale()!=null  && doc.getCdCup()!=null){
 					if (!infover.getCausale().contains(doc.getCdCup()))
@@ -4003,8 +4011,8 @@ public class DistintaCassiereComponent extends
 					obb_conto=true;
 				}
 				//19/11/2015 MANDATI a NETTO 0, richiesta modifica tipo pagamento
-//				if(bulk.getIm_documento_cont().compareTo(bulk.getIm_ritenute())==0)
-//					infoben.setTipoPagamento("COMPENSAZIONE");
+				if(bulk.getIm_documento_cont().compareTo(bulk.getIm_ritenute())==0)
+					infoben.setTipoPagamento("COMPENSAZIONE");
 				// Classificazioni
 				it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeClass=(it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)getHome(userContext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class,"CLASSIFICAZIONE");
 				SQLBuilder sqlClass = homeClass.createSQLBuilder();
