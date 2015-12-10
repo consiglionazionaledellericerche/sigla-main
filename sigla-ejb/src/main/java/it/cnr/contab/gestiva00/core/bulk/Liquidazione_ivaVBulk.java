@@ -233,7 +233,6 @@ public java.math.BigDecimal getVariazioni_imposta_deb() {
 protected static void initializeHashes() {
 
 	MESI = new OrderedHashtable();
-	MESI.put(DICEMBRE, DICEMBRE);
 	MESI.put(GENNAIO, GENNAIO);
 	MESI.put(FEBBRAIO, FEBBRAIO);
 	MESI.put(MARZO, MARZO);
@@ -245,9 +244,10 @@ protected static void initializeHashes() {
 	MESI.put(SETTEMBRE, SETTEMBRE);
 	MESI.put(OTTOBRE, OTTOBRE);
 	MESI.put(NOVEMBRE, NOVEMBRE);
+	MESI.put(DICEMBRE, DICEMBRE);
 
 	MESI_INT = new OrderedHashtable();
-	MESI_INT.put(DICEMBRE, new Integer(-1));
+	
 	MESI_INT.put(GENNAIO, new Integer(1));
 	MESI_INT.put(FEBBRAIO, new Integer(2));
 	MESI_INT.put(MARZO, new Integer(3));
@@ -259,9 +259,9 @@ protected static void initializeHashes() {
 	MESI_INT.put(SETTEMBRE, new Integer(9));
 	MESI_INT.put(OTTOBRE, new Integer(10));
 	MESI_INT.put(NOVEMBRE, new Integer(11));
-
+	MESI_INT.put(DICEMBRE, new Integer(12));
+	
 	INT_MESI = new OrderedHashtable();
-	INT_MESI.put(new Integer(-1), DICEMBRE);
 	INT_MESI.put(new Integer(1), GENNAIO);
 	INT_MESI.put(new Integer(2), FEBBRAIO);
 	INT_MESI.put(new Integer(3), MARZO);
@@ -273,6 +273,7 @@ protected static void initializeHashes() {
 	INT_MESI.put(new Integer(9), SETTEMBRE);
 	INT_MESI.put(new Integer(10), OTTOBRE);
 	INT_MESI.put(new Integer(11), NOVEMBRE);
+	INT_MESI.put(new Integer(12), DICEMBRE);
 }
 /**
  * Insert the method's description here.
