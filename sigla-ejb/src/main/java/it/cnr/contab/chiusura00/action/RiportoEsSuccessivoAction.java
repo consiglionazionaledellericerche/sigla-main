@@ -1,20 +1,23 @@
 package it.cnr.contab.chiusura00.action;
 
 import java.rmi.RemoteException;
-import java.sql.CallableStatement;
 
-import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
-import it.cnr.contab.config00.pdcfin.bulk.*;
-import it.cnr.contab.chiusura00.bulk.*;
-import it.cnr.contab.chiusura00.bp.*;
-import it.cnr.contab.doccont00.bp.CRUDAccertamentoBP;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
-import it.cnr.contab.utenze00.bp.*;
-import it.cnr.jada.action.*;
+import it.cnr.contab.chiusura00.bp.RiportoEsSuccessivoBP;
+import it.cnr.contab.chiusura00.bp.RiportoSelezionatoreListaBP;
+import it.cnr.contab.chiusura00.bulk.V_obb_acc_xxxBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Forward;
+import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.util.ObjectReplacer;
 import it.cnr.jada.util.RemoteIterator;
-import it.cnr.jada.util.action.*;
+import it.cnr.jada.util.action.BulkBP;
+import it.cnr.jada.util.action.OptionBP;
+import it.cnr.jada.util.action.SelectionListener;
 
 /**
  * Action che gestisce il riporto avanti massivo di documenti contabili all'esercizio successivo;
@@ -191,5 +194,66 @@ public Forward doConfermaRibaltamento(ActionContext context,int option) throws B
 		return handleException(context,e);
 	}
 	
+}
+
+public it.cnr.jada.action.Forward doCercaResiduiForRiaccertamento( it.cnr.jada.action.ActionContext context )
+{
+	try 
+	{
+		fillModel(context);
+		RiportoEsSuccessivoBP bp = (RiportoEsSuccessivoBP) context.getBusinessProcess();
+		V_obb_acc_xxxBulk model = (V_obb_acc_xxxBulk)bp.getModel();
+		it.cnr.jada.util.RemoteIterator ri = bp.cercaResiduiForRiaccertamento(context);
+		if (ri == null || ri.countElements() == 0) {
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			bp.setMessage("La ricerca non ha fornito alcun risultato.");
+			return context.findDefaultForward();
+		}
+		else
+		{
+			bp.setModel(context,model);
+			RiportoSelezionatoreListaBP nbp = selectRiporto(context,
+												ri,
+												it.cnr.jada.bulk.BulkInfo.getBulkInfo(V_obb_acc_xxxBulk.class),
+												null,"doDefault",null,(RiportoEsSuccessivoBP)bp);
+			nbp.setMultiSelection( false );
+			nbp.setSelectAllOnly(false);
+			context.addHookForward("close",this,"doDefault");			
+			return context.findDefaultForward();
+		}
+	} catch(Exception e) {
+		return handleException(context,e);
+	}
+}
+
+public it.cnr.jada.action.Forward doCercaGaeSenzaProgettiForRibaltamento( it.cnr.jada.action.ActionContext context )
+{
+	try 
+	{
+		fillModel(context);
+		RiportoEsSuccessivoBP bp = (RiportoEsSuccessivoBP) context.getBusinessProcess();
+		V_obb_acc_xxxBulk model = (V_obb_acc_xxxBulk)bp.getModel();
+		it.cnr.jada.util.RemoteIterator ri = bp.cercaGaeSenzaProgettiForRibaltamento(context);
+		if (ri == null || ri.countElements() == 0) {
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(ri);
+			bp.setMessage("La ricerca non ha fornito alcun risultato.");
+			return context.findDefaultForward();
+		}
+		else
+		{
+			bp.setModel(context,model);
+			RiportoSelezionatoreListaBP nbp = selectRiporto(context,
+												ri,
+												it.cnr.jada.bulk.BulkInfo.getBulkInfo(V_obb_acc_xxxBulk.class),
+												null,"doDefault",null,(RiportoEsSuccessivoBP)bp);
+
+			nbp.setMultiSelection( false );
+			nbp.setSelectAllOnly(false);
+			context.addHookForward("close",this,"doDefault");			
+			return context.findDefaultForward();
+		}
+	} catch(Exception e) {
+		return handleException(context,e);
+	}
 }
 }

@@ -69,7 +69,7 @@
   </TR>
 </table>
 <% if (var_stanz_res != null && var_stanz_res.getStato() != null && 
-         var_stanz_res.getStato().equalsIgnoreCase(Var_stanz_resBulk.STATO_APPROVATA)){ %>
+	   var_stanz_res.getVar_bilancio() != null && var_stanz_res.getVar_bilancio().getPg_variazione() != null){ %>
 	<div class="GroupLabel">Variazione al bilancio dell'Ente</div>          
 	<div class="Group">
 		<table>      

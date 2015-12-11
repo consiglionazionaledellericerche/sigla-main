@@ -1,30 +1,18 @@
 package it.cnr.contab.doccont00.action;
 
-import it.cnr.contab.compensi00.bp.CRUDCompensoBP;
-import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-import it.cnr.contab.config00.bp.*;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.util.Collection;
+import java.util.Iterator;
+
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.config00.bp.CRUDWorkpackageBP;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.contab.anagraf00.core.bulk.*;
-
-import java.rmi.RemoteException;
-import java.sql.Connection;
-import java.sql.Date;
-
-import java.rmi.RemoteException;
-import java.sql.Date;
-
-import java.rmi.RemoteException;
-import java.util.Collection;
-import java.util.Iterator;
-import java.math.BigDecimal;
-
-import java.rmi.RemoteException;
-import java.util.Collection;
-import java.util.Iterator;
-import java.math.BigDecimal;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.doccont00.bp.CRUDObbligazioneBP;
 import it.cnr.contab.doccont00.bp.CRUDObbligazioneModificaBP;
 import it.cnr.contab.doccont00.bp.CRUDObbligazioneResBP;
@@ -32,35 +20,28 @@ import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
 import it.cnr.contab.doccont00.bp.MandatoAutomaticoWizardBP;
 import it.cnr.contab.doccont00.bp.ProspettoSpeseCdrBP;
 import it.cnr.contab.doccont00.bp.SelezionatoreAssestatoDocContBP;
-import it.cnr.contab.docamm00.bp.CRUDDocumentoGenericoAttivoBP;
-import it.cnr.contab.docamm00.bp.CRUDDocumentoGenericoPassivoBP;
-import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
-import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
-import it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession;
-import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
+import it.cnr.contab.doccont00.comp.ObbligazioneComponent;
 import it.cnr.contab.doccont00.core.bulk.MandatoAutomaticoWizardBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.ProspettoSpeseCdrBulk;
-import it.cnr.contab.incarichi00.bp.CRUDIncarichiProceduraBP;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
-import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
-import it.cnr.contab.pdg01.bp.SelezionatoreAssestatoBP;
-import it.cnr.contab.util.Utility;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
-import it.cnr.contab.pdg00.bp.CRUDRicostruzioneResiduiBP;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
-import it.cnr.contab.utenze00.bulk.CNRUserInfo;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.util.DateUtils;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Forward;
+import it.cnr.jada.action.HookForward;
+import it.cnr.jada.bulk.BulkInfo;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.FillException;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.OptionBP;
-import it.cnr.jada.util.ejb.EJBCommonServices;
 /**
  * (Obbligazione)
  */
@@ -111,6 +92,7 @@ public Forward doBlankSearchFind_elemento_voce(ActionContext context, Obbligazio
 		CRUDObbligazioneBP bp = (CRUDObbligazioneBP)getBusinessProcess(context);
 		bp.annullaImputazioneFinanziariaCapitoli( context );
 		obbligazione.setElemento_voce( new Elemento_voceBulk() );
+		obbligazione.setElemento_voce_next( new Elemento_voceBulk() );
 		/*
 		// reset dei campi della disponibilità di cassa dei due esercizi successivi a quello di scrivania
 		obbligazione.setIm_disp_cassa_cds1( null );
@@ -230,6 +212,10 @@ public Forward doBringBackSearchFind_elemento_voce(ActionContext context, Obblig
 				}
 			}
 			obbligazione.setElemento_voce( capitolo );
+			obbligazione.setElemento_voce_next( new Elemento_voceBulk() );
+			// SETTO IL FLAG CHE SERVE PER CAPIRE SE OCCORRE RICHIEDERE L'INSERIMENTO DELLA VOCE NUOVA DA UTILIZZARE PER IL RIBALTAMENTO
+			// LA VOCE VIENE RICHIESTA SOLO SE NON PRESENTE L'ASSOCIAZIONE NELLA TABELLA ASS_EVOLD_EVNEWBULK
+			obbligazione.setEnableVoceNext(!((ObbligazioneComponent)bp.createComponentSession()).existAssElementoVoceNew(context.getUserContext(),(ObbligazioneBulk)obbligazione));
 		}
 		if ( capitolo != null && bp.isEditable() )
 			bp.caricaCentriDiResponsabilita(context);

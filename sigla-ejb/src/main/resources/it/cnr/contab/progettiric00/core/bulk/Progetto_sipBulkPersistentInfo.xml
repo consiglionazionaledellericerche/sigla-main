@@ -90,6 +90,25 @@
 			sqlTypeName="VARCHAR"
 			columnSize="1"/>					
 	</columnMap>
+	<columnMap
+		name="V_SIP_MODULI_VALIDI"
+		tableName="V_SIP_MODULI_VALIDI">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="pg_progetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="TIPO_FASE"
+			propertyName="tipo_fase"
+			sqlTypeName="VARCHAR"
+			columnSize="1"/>
+	</columnMap>
 	<persistentProperty
 		name="divisa" />
 	<persistentProperty
