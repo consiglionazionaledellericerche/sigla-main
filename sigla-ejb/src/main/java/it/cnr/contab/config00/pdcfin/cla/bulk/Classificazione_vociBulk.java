@@ -5,6 +5,7 @@
 package it.cnr.contab.config00.pdcfin.cla.bulk;
 
 import java.math.BigDecimal;
+import java.util.Dictionary;
 
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.prevent00.bulk.Pdg_piano_ripartoBulk;
@@ -22,7 +23,26 @@ public class Classificazione_vociBulk extends Classificazione_vociBase {
 	protected BulkList pdgPianoRipartoSpese = new BulkList();
 	private BigDecimal tot_imp_piano_riparto_spese;
 	
+	public static final String TIPO_CLASSIFICAZIONE_01 ="T01";
+	public static final String TIPO_CLASSIFICAZIONE_02 ="T02";
+	public static final String TIPO_CLASSIFICAZIONE_03 ="T03";
+	public static final String TIPO_CLASSIFICAZIONE_04 ="T04";
+	public static final String TIPO_CLASSIFICAZIONE_05 ="T05";
+	public static final String TIPO_CLASSIFICAZIONE_06 ="T06";
+	public static final String TIPO_CLASSIFICAZIONE_07 ="T07";
 	
+	public final static Dictionary ti_classificazioneKeys;
+	static {
+		ti_classificazioneKeys = new it.cnr.jada.util.OrderedHashtable();
+		ti_classificazioneKeys.put(TIPO_CLASSIFICAZIONE_01,"Tipologia 01");
+		ti_classificazioneKeys.put(TIPO_CLASSIFICAZIONE_02,"Tipologia 02");
+		ti_classificazioneKeys.put(TIPO_CLASSIFICAZIONE_03,"Tipologia 03");
+		ti_classificazioneKeys.put(TIPO_CLASSIFICAZIONE_04,"Tipologia 04");
+		ti_classificazioneKeys.put(TIPO_CLASSIFICAZIONE_05,"Tipologia 05");
+		ti_classificazioneKeys.put(TIPO_CLASSIFICAZIONE_06,"Tipologia 06");
+		ti_classificazioneKeys.put(TIPO_CLASSIFICAZIONE_07,"Tipologia 07");
+    };
+
 	public Classificazione_vociBulk() {
 		super();
 	}
@@ -287,5 +307,9 @@ public class Classificazione_vociBulk extends Classificazione_vociBase {
 			throw new ValidationException("E' obbligatorio indicare il CDR accentratore.");
 		else if (getFl_accentrato().equals(Boolean.FALSE) &&  getCdr_accentratore()!=null)
 			setCentro_responsabilita(null);
+	}
+	
+	public static Dictionary getTi_classificazioneKeys() {
+		return ti_classificazioneKeys;
 	}
 }

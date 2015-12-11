@@ -91,7 +91,9 @@ import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.DefaultSQLExceptionHandler;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.persistency.sql.SQLExceptionHandler;
@@ -154,6 +156,21 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			throw new ComponentException(e);
 		}		
 	}
+	public ProgettoBulk getProgettoLineaAttivita(UserContext usercontext, Var_stanz_res_rigaBulk varRiga) throws ComponentException{
+		try {
+			PersistentHome laHome = getHome(usercontext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA");
+			SQLBuilder sql = laHome.createSQLBuilder();
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,varRiga.getEsercizio());
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA",SQLBuilder.EQUALS,varRiga.getCd_cdr());
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA",SQLBuilder.EQUALS,varRiga.getCd_linea_attivita());
+			List list = laHome.fetchAll(sql);
+			if (list.size()==1)
+				return ((WorkpackageBulk)list.get(0)).getProgetto();
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+		return null;
+	}
 	public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext,OggettoBulk oggettobulk)throws ComponentException {
 		try {
 			CdrBulk cdr = ((Var_stanz_resBulk)oggettobulk).getCdr();
@@ -166,10 +183,12 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			var_stanz_res.setRigaVariazione(new it.cnr.jada.bulk.BulkList(testataHome.findVariazioniRiga(var_stanz_res)));
             inizializzaSommeCDR(usercontext,var_stanz_res);
 			var_stanz_res.setTotale_righe_variazione(Utility.ZERO);
+			PersistentHome laHome = getHome(usercontext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA");
 			for (Iterator righeVar=var_stanz_res.getRigaVariazione().iterator();righeVar.hasNext();){
 				Var_stanz_res_rigaBulk varRiga = (Var_stanz_res_rigaBulk)righeVar.next();
 				var_stanz_res.setTotale_righe_variazione(Utility.nvl(var_stanz_res.getTotale_righe_variazione()).add(Utility.nvl(varRiga.getIm_variazione())));
 				varRiga.setDisponibilita_stanz_res(calcolaDisponibilita_stanz_res(usercontext,varRiga));
+				varRiga.setProgetto(getProgettoLineaAttivita(usercontext, varRiga));
 			}					
 			if (var_stanz_res.getStato().equalsIgnoreCase(Var_stanz_resBulk.STATO_APPROVATA)){
 				var_stanz_res.setVar_bilancio(((Var_bilancioHome)getHome(usercontext, Var_bilancioBulk.class)).findByVar_stanz_res(var_stanz_res));
@@ -191,7 +210,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			                                                                  varRiga.getCd_linea_attivita(), 
 			                                                                  varRiga.getElemento_voce().getTi_appartenenza(), 
 			                                                                  varRiga.getElemento_voce().getTi_gestione(), 
-			                                                                  varRiga.getCd_voce());
+			                                                                  varRiga.getCd_voce()!=null?varRiga.getCd_voce():varRiga.getCd_elemento_voce());
 			saldi = (Voce_f_saldi_cdr_lineaBulk) getHome(usercontext, Voce_f_saldi_cdr_lineaBulk.class).findByPrimaryKey(saldi);
 			if (saldi != null)
 			  totale = saldi.getDispAdImpResiduoImproprio();
@@ -502,7 +521,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 																				  varRiga.getCd_linea_attivita(), 
 																				  varRiga.getElemento_voce().getTi_appartenenza(), 
 																				  varRiga.getElemento_voce().getTi_gestione(), 
-																				  varRiga.getCd_voce());
+																				  varRiga.getCd_voce()!=null?varRiga.getCd_voce():varRiga.getCd_elemento_voce());
 				Voce_f_saldi_cdr_lineaBulk saldi = (Voce_f_saldi_cdr_lineaBulk) getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class).findByPrimaryKey(saldo);
 				if (saldi == null){
 					saldo.setToBeCreated();
@@ -518,7 +537,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 					throw new ApplicationException("Impossibile effettuare l'operazione !\n"+
 												   "Nell'esercizio residuo "+ varRiga.getEsercizio_res()+
 												   " e per il CdR "+varRiga.getCd_cdr()+", "+
-												   " Voce "+varRiga.getCd_voce()+
+												   " Voce "+(varRiga.getCd_voce()!=null?varRiga.getCd_voce():varRiga.getCd_elemento_voce())+
 												   " e GAE "+varRiga.getCd_linea_attivita()+" lo stanziamento Residuo Improprio "+
 												   " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(saldi.getDispAdImpResiduoImproprio().abs())+")");					
 				}

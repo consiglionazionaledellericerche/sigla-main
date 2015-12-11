@@ -1,36 +1,51 @@
 package it.cnr.contab.chiusura00.comp;
 
-import it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk;
-import it.cnr.contab.config00.esercizio.bulk.*;
-import it.cnr.contab.config00.bulk.*;
-
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.sql.*;
-import java.math.*;
-
-import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
-import it.cnr.contab.doccont00.ejb.*;
-import it.cnr.contab.missioni00.docs.bulk.RimborsoBulk;
-import it.cnr.contab.pdg00.bulk.Pdg_residuoBulk;
-import it.cnr.contab.pdg00.bulk.Pdg_residuoHome;
-import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-import java.util.*;
-import java.io.Serializable;
-import java.util.Vector;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.BitSet;
+import java.util.List;
 
 import javax.ejb.EJBException;
 
-import it.cnr.contab.doccont00.core.bulk.*;
-import it.cnr.contab.chiusura00.bulk.*;
-import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.contab.config00.pdcfin.bulk.*;
+import it.cnr.contab.chiusura00.bulk.V_obb_acc_xxxBulk;
+import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_cdsHome;
+import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.config00.sto.bulk.EnteBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoHome;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scad_voceBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scad_voceHome;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceHome;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
+import it.cnr.contab.pdg00.bulk.Pdg_residuoBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_residuoHome;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.comp.*;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.PersistentHome;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 	   
 
 public class RicercaDocContComponent extends it.cnr.jada.comp.RicercaComponent implements IRicercaDocContComponent
@@ -1693,6 +1708,38 @@ public boolean isRicosResiduiChiusa(it.cnr.jada.UserContext userContext) throws 
 	}
 }
 
+public boolean isRiaccertamentoChiuso(it.cnr.jada.UserContext userContext) throws ComponentException {
+	try {
+		String cd_cds = CNRUserContext.getCd_cds(userContext);
+		if(cd_cds != null) {
+			Parametri_cdsBulk param_cds = (Parametri_cdsBulk)getHome(userContext, Parametri_cdsBulk.class).findByPrimaryKey(new Parametri_cdsBulk(cd_cds,((CNRUserContext)userContext).getEsercizio()));
+			if (param_cds.getFl_riaccertamento()) {
+				SQLBuilder sql = selectResiduiForRiaccertamento(userContext);
+				if (sql.executeCountQuery(getConnection(userContext))>0)
+					return false;
+			}
+		}
+		return true;
+	}
+	catch(Throwable e) {
+		throw handleException(e);
+	}
+}
+
+public boolean isGaeCollegateProgetti(it.cnr.jada.UserContext userContext) throws ComponentException {
+	try {
+		String cd_cds = CNRUserContext.getCd_cds(userContext);
+		if(cd_cds != null) {
+			SQLBuilder sql = selectGaeSenzaProgettiForRibaltamento(userContext);
+			if (sql.executeCountQuery(getConnection(userContext))>0)
+				return false;
+		}
+		return true;
+	}
+	catch(Throwable e) {
+		throw handleException(e);
+	}
+}
 
 public boolean getCdsRibaltato(UserContext context)throws ComponentException
 {
@@ -1777,4 +1824,97 @@ public void verificaAbilitazioneRibaltamento( UserContext userContext ) throws C
 		throw new ApplicationException("Il ribaltamento all'esercizio successivo non è abilitato per questo cds.");	
 }
 
+public SQLBuilder selectResiduiForRiaccertamento(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
+	SQLBuilder sql = getHome( userContext, V_obb_acc_xxxBulk.class, "V_OBB_ACC_RIPORTA" ).createSQLBuilder();
+	sql.addSQLClause(FindClause.AND, "V_OBB_ACC_RIPORTA.ESERCIZIO", SQLBuilder.EQUALS, ((CNRUserContext)userContext).getEsercizio());
+	sql.addSQLClause(FindClause.AND, "V_OBB_ACC_RIPORTA.CD_CDS_ORIGINE", SQLBuilder.EQUALS, ((CNRUserContext)userContext).getCd_cds());
+	sql.addSQLClause(FindClause.AND, "V_OBB_ACC_RIPORTA.TI_GESTIONE", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_ENTRATE);
+	sql.addSQLClause(FindClause.AND, "V_OBB_ACC_RIPORTA.CD_TIPO_DOCUMENTO_CONT", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_ACR_RES);
+
+	sql.addTableToHeader("ACCERTAMENTO");
+	sql.addSQLJoin("ACCERTAMENTO.CD_CDS", "V_OBB_ACC_RIPORTA.CD_CDS");
+	sql.addSQLJoin("ACCERTAMENTO.ESERCIZIO", "V_OBB_ACC_RIPORTA.ESERCIZIO");
+	sql.addSQLJoin("ACCERTAMENTO.ESERCIZIO_ORIGINALE", "V_OBB_ACC_RIPORTA.ESERCIZIO_ORI_ACC_OBB");
+	sql.addSQLJoin("ACCERTAMENTO.PG_ACCERTAMENTO", "V_OBB_ACC_RIPORTA.PG_ACC_OBB");
+	
+	sql.addSQLClause(FindClause.AND, "ACCERTAMENTO.STATO_RESIDUO", SQLBuilder.ISNULL, null);
+	return sql;
+}
+
+public SQLBuilder selectGaeSenzaProgettiForRibaltamento(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
+	SQLBuilder sql = getHome( userContext, V_obb_acc_xxxBulk.class, "V_OBB_ACC_RIPORTA" ).createSQLBuilder();
+	sql.addSQLClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, ((CNRUserContext)userContext).getEsercizio());
+	sql.addSQLClause(FindClause.AND, "cd_cds_origine", SQLBuilder.EQUALS, ((CNRUserContext)userContext).getCd_cds());
+
+	PersistentHome gaeHome = getHome(userContext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA");
+
+	PersistentHome accHome = getHome(userContext, Accertamento_scad_voceBulk.class);
+	SQLBuilder sqlAccExist = accHome.createSQLBuilder();
+	sqlAccExist.addSQLJoin("ACCERTAMENTO_SCAD_VOCE.CD_CDS", "V_OBB_ACC_RIPORTA.CD_CDS");
+	sqlAccExist.addSQLJoin("ACCERTAMENTO_SCAD_VOCE.ESERCIZIO", "V_OBB_ACC_RIPORTA.ESERCIZIO");
+	sqlAccExist.addSQLJoin("ACCERTAMENTO_SCAD_VOCE.ESERCIZIO_ORIGINALE", "V_OBB_ACC_RIPORTA.ESERCIZIO_ORI_ACC_OBB");
+	sqlAccExist.addSQLJoin("ACCERTAMENTO_SCAD_VOCE.PG_ACCERTAMENTO", "V_OBB_ACC_RIPORTA.PG_ACC_OBB");
+
+	SQLBuilder sqlGaeAccExist = gaeHome.createSQLBuilder();
+	sqlGaeAccExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "ACCERTAMENTO_SCAD_VOCE.CD_CENTRO_RESPONSABILITA");
+	sqlGaeAccExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "ACCERTAMENTO_SCAD_VOCE.CD_LINEA_ATTIVITA");
+	sqlGaeAccExist.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", SQLBuilder.EQUALS, ((CNRUserContext)userContext).getEsercizio()+1);
+	sqlGaeAccExist.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.ISNOTNULL, null);
+
+	sqlAccExist.addSQLNotExistsClause(FindClause.AND, sqlGaeAccExist);
+
+	PersistentHome obbHome = getHome(userContext, Obbligazione_scad_voceBulk.class);
+	SQLBuilder sqlObbExist = obbHome.createSQLBuilder();
+	sqlObbExist.addSQLJoin("OBBLIGAZIONE_SCAD_VOCE.CD_CDS", "V_OBB_ACC_RIPORTA.CD_CDS");
+	sqlObbExist.addSQLJoin("OBBLIGAZIONE_SCAD_VOCE.ESERCIZIO", "V_OBB_ACC_RIPORTA.ESERCIZIO");
+	sqlObbExist.addSQLJoin("OBBLIGAZIONE_SCAD_VOCE.ESERCIZIO_ORIGINALE", "V_OBB_ACC_RIPORTA.ESERCIZIO_ORI_ACC_OBB");
+	sqlObbExist.addSQLJoin("OBBLIGAZIONE_SCAD_VOCE.PG_OBBLIGAZIONE", "V_OBB_ACC_RIPORTA.PG_ACC_OBB");
+
+	SQLBuilder sqlGaeObbExist = gaeHome.createSQLBuilder();
+	sqlGaeObbExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "OBBLIGAZIONE_SCAD_VOCE.CD_CENTRO_RESPONSABILITA");
+	sqlGaeObbExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "OBBLIGAZIONE_SCAD_VOCE.CD_LINEA_ATTIVITA");
+	sqlGaeObbExist.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", SQLBuilder.EQUALS, ((CNRUserContext)userContext).getEsercizio()+1);
+	sqlGaeObbExist.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.ISNOTNULL, null);
+
+	sqlObbExist.addSQLNotExistsClause(FindClause.AND, sqlGaeObbExist);
+
+	sql.openParenthesis(FindClause.AND);
+		sql.openParenthesis(FindClause.OR);
+			sql.addSQLClause(FindClause.AND, "ti_gestione", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_ENTRATE);
+			sql.addSQLExistsClause(FindClause.AND, sqlAccExist);
+		sql.closeParenthesis();
+		sql.openParenthesis(FindClause.OR);
+			sql.addSQLClause(FindClause.AND, "ti_gestione", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
+			sql.addSQLExistsClause(FindClause.AND, sqlObbExist);
+		sql.closeParenthesis();
+	sql.closeParenthesis();
+	
+	return sql;
+}
+
+public it.cnr.jada.util.RemoteIterator cercaResiduiForRiaccertamento(UserContext userContext) throws it.cnr.jada.comp.ComponentException 
+{
+	try {
+		return iterator(
+			userContext,
+			selectResiduiForRiaccertamento(userContext),
+			V_obb_acc_xxxBulk.class,
+			getFetchPolicyName("find"));
+	} catch(Throwable e) {
+		throw handleException(e);
+	}
+}
+
+public it.cnr.jada.util.RemoteIterator cercaGaeSenzaProgettiForRibaltamento(UserContext userContext) throws it.cnr.jada.comp.ComponentException 
+{
+	try {
+		return iterator(
+			userContext,
+			selectGaeSenzaProgettiForRibaltamento(userContext),
+			V_obb_acc_xxxBulk.class,
+			getFetchPolicyName("find"));
+	} catch(Throwable e) {
+		throw handleException(e);
+	}
+}
 }

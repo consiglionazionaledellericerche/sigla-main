@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import javax.ejb.EJBException;
 import javax.ejb.Remote;
 
+import it.cnr.contab.chiusura00.bulk.V_obb_acc_xxxBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
@@ -42,4 +43,8 @@ boolean isRicosResiduiChiusa(it.cnr.jada.UserContext userContext) throws it.cnr.
 void callRibaltaDispImproprie(UserContext userContext) throws ComponentException,java.rmi.RemoteException;
 OggettoBulk updateParametriCds (UserContext context) throws EJBException, ComponentException, PersistencyException, RemoteException;
 boolean getCdsRibaltato(UserContext context)throws ComponentException, RemoteException;
+boolean isRiaccertamentoChiuso(it.cnr.jada.UserContext userContext) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+boolean isGaeCollegateProgetti(it.cnr.jada.UserContext userContext) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+it.cnr.jada.util.RemoteIterator cercaResiduiForRiaccertamento(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+it.cnr.jada.util.RemoteIterator cercaGaeSenzaProgettiForRibaltamento(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

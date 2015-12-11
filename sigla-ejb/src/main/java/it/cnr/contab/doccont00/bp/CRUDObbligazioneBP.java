@@ -1,43 +1,54 @@
 package it.cnr.contab.doccont00.bp;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
-import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
-import it.cnr.contab.compensi00.docs.bulk.*;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
-import it.cnr.contab.missioni00.docs.bulk.*;
-import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
-import it.cnr.contab.docamm00.bp.RicercaObbligazioniBP;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
-import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
-
-import java.util.*;
-
-import it.cnr.contab.missioni00.bp.*;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.util.Utility;
-import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
-import it.cnr.contab.doccont00.ejb.ObbligazioneResComponentSession;
-import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.ejb.CDRComponentSession;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
-import it.cnr.contab.config00.ejb.Linea_attivitaComponentSession;
-import it.cnr.contab.config00.pdcfin.bulk.*;
-import it.cnr.contab.config00.sto.bulk.*;
+import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.docamm00.bp.CRUDDocumentoGenericoPassivoBP;
+import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaIBP;
+import it.cnr.contab.docamm00.bp.CRUDNotaDiCreditoAttivaBP;
 import it.cnr.contab.docamm00.bp.CRUDNotaDiCreditoBP;
 import it.cnr.contab.docamm00.bp.CRUDNotaDiDebitoBP;
-import it.cnr.contab.docamm00.bp.CRUDNotaDiCreditoAttivaBP;
-import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaIBP;
-import it.cnr.contab.docamm00.bp.CRUDDocumentoGenericoPassivoBP;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
+import it.cnr.contab.docamm00.bp.RicercaObbligazioniBP;
 import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.comp.ApplicationException;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
+import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
+import it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voce_aggregatoBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.V_pdg_obbligazione_speBulk;
+import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
+import it.cnr.contab.doccont00.ejb.ObbligazioneResComponentSession;
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
+import it.cnr.contab.missioni00.bp.CRUDAnticipoBP;
+import it.cnr.contab.missioni00.bp.CRUDMissioneBP;
+import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.MessageToUser;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.RemoteIterator;
-import it.cnr.jada.util.action.*;
+import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
 
@@ -63,6 +74,7 @@ public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP
 	private boolean siope_attiva = false;
 	private boolean incarichi_repertorio_attiva = false;
 	private boolean flNuovoPdg = false;
+	private boolean enableVoceNext = false;
 	
 	private byte[] bringBackClone = null;
 public CRUDObbligazioneBP() {
@@ -1048,6 +1060,10 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 		setSiope_attiva(parCnr.getFl_siope().booleanValue());
 		setIncarichi_repertorio_attiva(true);
 		setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
+		if (parCnr.isEnableVoceNext()) {
+			Parametri_cnrBulk parCnrNewAnno = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())+1); 
+			setEnableVoceNext(parCnrNewAnno!=null);
+		}
 	}
     catch(Throwable throwable)
     {
@@ -1123,5 +1139,18 @@ public void caricaTerzoDiversi(it.cnr.jada.action.ActionContext context) throws 
 	{
 		throw handleException(e);
 	} 
+}
+
+public boolean isEnableVoceNext() {
+	return enableVoceNext;
+}
+
+private void setEnableVoceNext(boolean enableVoceNext) {
+	this.enableVoceNext = enableVoceNext;
+}
+
+public boolean isElementoVoceNewVisible() {
+	return this.isEnableVoceNext() && getModel()!=null && 
+			((ObbligazioneBulk)getModel()).isEnableVoceNext();
 }
 }

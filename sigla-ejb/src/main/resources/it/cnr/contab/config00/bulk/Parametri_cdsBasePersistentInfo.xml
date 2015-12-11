@@ -192,6 +192,12 @@
 			propertyName="cd_dipartimento"
 			sqlTypeName="VARCHAR"
 			columnSize="30" />			
+		<columnMapping
+			columnName="FL_RIACCERTAMENTO"
+			propertyName="fl_riaccertamento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />						
 	</defaultColumnMap>
 	<persistentProperty
 		name="blocco_impegni_cdr_gae" />	
@@ -252,5 +258,7 @@
 	<persistentProperty
 		name="fl_kit_firma_digitale" />	
 	<persistentProperty
-		name="cd_dipartimento" />	
+		name="cd_dipartimento" />
+	<persistentProperty
+		name="fl_riaccertamento" />
 </SQLPersistentInfo>

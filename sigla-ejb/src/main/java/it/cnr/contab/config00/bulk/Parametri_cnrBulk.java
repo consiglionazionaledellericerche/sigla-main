@@ -1,11 +1,14 @@
 package it.cnr.contab.config00.bulk;
 
+import java.util.Date;
+
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.CRUDBP;
 
 /**
@@ -94,5 +97,10 @@ public class Parametri_cnrBulk extends Parametri_cnrBase {
 		if (this.getFl_nuovo_pdg()) 
 			return ProgettoBulk.LIVELLO_PROGETTO_SECONDO;
 		return ProgettoBulk.LIVELLO_PROGETTO_TERZO;
+	}
+	
+	public boolean isEnableVoceNext() {
+		return this.getData_attivazione_new_voce()!=null && 
+				DateUtils.truncate(this.getData_attivazione_new_voce()).compareTo(DateUtils.truncate(new Date()))!=1;
 	}
 }

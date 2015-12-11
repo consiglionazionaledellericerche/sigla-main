@@ -62,4 +62,35 @@
 			name="iconaVistoDipartimento"
 			label="" />
 	</columnSet>
+	<columnSet name="insertVariazioneGestionaleWithoutArea">
+		<columnFieldProperty
+			name="cd_linea_attivita" 
+			descProperty="linea_attivita.ds_linea_attivita"
+			inputType="DESCTOOL"/>
+		<columnFieldProperty
+			name="cd_elemento_voce"
+			descProperty="elemento_voce.ds_elemento_voce"
+			inputType="DESCTOOL"/>
+		<columnFieldProperty
+			name="descrizione" />
+        <columnFieldProperty
+           	name="im_entrata" />
+	</columnSet>
+	<columnSet name="dipInsertVariazioneGestionaleWithoutArea">
+		<columnFieldProperty
+			name="cd_linea_attivita" 
+			descProperty="linea_attivita.ds_linea_attivita"
+			inputType="DESCTOOL"/>
+		<columnFieldProperty
+			name="cd_elemento_voce"
+			descProperty="elemento_voce.ds_elemento_voce"
+			inputType="DESCTOOL"/>
+		<columnFieldProperty
+			name="descrizione" />
+        <columnFieldProperty
+           	name="im_entrata" />
+		<columnFieldProperty
+			name="iconaVistoDipartimento"
+			label="" />
+	</columnSet>
 </bulkInfo>

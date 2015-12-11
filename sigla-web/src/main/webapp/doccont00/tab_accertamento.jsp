@@ -121,7 +121,7 @@
 	        <% bp.getController().writeFormInput( out, "partita_iva"); %>	        
 	</td>
 	</tr>
-	</table>	
+	</table>
     </div>
 	<table>
 	<tr>
@@ -145,6 +145,27 @@
 			<% bp.getController().writeFormInput( out, "default","ds_voce", bp.isROCapitolo(),"FormInput",null); %>
 			<% bp.getController().writeFormInput( out, "default","find_capitolo", bp.isROFindCapitolo(),"FormInput",null); %></td>				 
 	</tr>
+ 	
+ 	<% if (bp.isElementoVoceNewVisible()){ %>
+	<tr>
+		<td colspan="3">
+			<div class="Group" style="border-color:red">
+			<table>
+			<tr>
+				<td><% bp.getController().writeFormLabel( out, "cd_elemento_voce_next"); %><label> <%=Integer.valueOf(accertamento.getEsercizio()+1).toString()%></label></td>
+				<td colspan=2>
+				    <% bp.getController().writeFormInput(out,"default","cd_elemento_voce_next"); %>
+				    <% bp.getController().writeFormInput(out,"default","ds_elemento_voce_next"); %>
+				    <% bp.getController().writeFormInput(out,"default","find_elemento_voce_next"); %>
+				</td>				 
+			</tr>
+			</table>
+			</div>
+		</td>
+	</tr>
+    <%}%>
+	<tr>
+	
 	
 	<tr>
 	<td>	<% bp.getController().writeFormLabel( out, "cd_riferimento_contratto"); %></td>

@@ -1,7 +1,15 @@
 package it.cnr.contab.doccont00.core.bulk;
 
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
+import java.math.BigDecimal;
+
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.PersistentHome;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 
 public class Obbligazione_scad_voceHome extends BulkHome {
 public Obbligazione_scad_voceHome(Class clazz, java.sql.Connection conn) {

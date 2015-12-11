@@ -43,6 +43,9 @@ public class Parametri_cdsBase extends Parametri_cdsKey implements Keyed {
 	private BigDecimal im_soglia_consumo_residuo;
 
 	private String cd_dipartimento;
+
+	private Boolean fl_riaccertamento;
+
 	public Parametri_cdsBase() {
 		super();
 	}
@@ -275,5 +278,11 @@ public class Parametri_cdsBase extends Parametri_cdsKey implements Keyed {
 	}
 	public void setCd_dipartimento(String cd_dipartimento) {
 		this.cd_dipartimento = cd_dipartimento;
+	}
+	public Boolean getFl_riaccertamento() {
+		return fl_riaccertamento;
+	}
+	public void setFl_riaccertamento(Boolean fl_riaccertamento) {
+		this.fl_riaccertamento = fl_riaccertamento;
 	}
 }
