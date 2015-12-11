@@ -5,7 +5,10 @@
   <action 
       path="/CRUDConfigPdcAssAction" actionClass="it.cnr.jada.util.action.CRUDAction">
   </action>
-	<action 
+  <action 
+      path="/CRUDConfigAssEvoldEvnewAction" actionClass="it.cnr.contab.config00.action.CRUDConfigAssEvoldEvnewAction">
+  </action>
+  <action 
       path="/CRUDEsercizioAction" actionClass="it.cnr.contab.config00.action.CRUDEsercizioAction">
   </action>
 	<action 
@@ -180,6 +183,12 @@
 	<init-param name="defaultAction" value="CRUDAttivitaSiglaAction"/>
   </businessProcess>	
   
-  
+  <businessProcess
+      name="CRUDConfigAssEvoldEvnewBP" className="it.cnr.contab.config00.bp.CRUDConfigAssEvoldEvnewBP">
+    <forward name="default" path="/config00/ass_evold_evnew.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewBulk" />
+		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_CRUDConfigAssEvoldEvnewComponentSession"/>		
+		<init-param name="defaultAction" value="CRUDConfigAssEvoldEvnewAction" />
+  </businessProcess>
   
 </action-mappings>

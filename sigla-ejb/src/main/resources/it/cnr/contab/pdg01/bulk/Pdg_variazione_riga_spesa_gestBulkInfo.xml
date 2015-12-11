@@ -96,4 +96,64 @@
 			name="iconaVistoDipartimento"
 			label="" />
 	</columnSet>
+	
+	<columnSet name="insertVariazioneGestionaleWithoutArea">
+		<columnFieldProperty
+			name="cd_linea_attivita" 
+			descProperty="linea_attivita.ds_linea_attivita"
+			inputType="DESCTOOL"/>
+		<columnFieldProperty
+			name="cd_elemento_voce"
+			descProperty="elemento_voce.ds_elemento_voce"
+			inputType="DESCTOOL"/>
+		<columnFieldProperty
+			name="descrizione" />
+        <columnFieldProperty
+           	name="im_spese_gest_decentrata_int"
+         	label="Fonti Interne"
+        	headerLabel="GESTIONE DECENTRATA" />		
+        <columnFieldProperty
+           	name="im_spese_gest_decentrata_est"
+         	label="Fonti Esterne"
+	       	headerLabel="GESTIONE DECENTRATA" />		
+        <columnFieldProperty
+           	name="im_spese_gest_accentrata_int" 
+           	label="Fonti Interne"
+	       	headerLabel="GESTIONE ACCENTRATA" />		
+        <columnFieldProperty
+          	name="im_spese_gest_accentrata_est" 
+          	label="Fonti Esterne"
+	      	headerLabel="GESTIONE ACCENTRATA" />
+	</columnSet>
+	<columnSet name="dipInsertVariazioneGestionaleWithoutArea">
+		<columnFieldProperty
+			name="cd_linea_attivita" 
+			descProperty="linea_attivita.ds_linea_attivita"
+			inputType="DESCTOOL"/>
+		<columnFieldProperty
+			name="cd_elemento_voce"
+			descProperty="elemento_voce.ds_elemento_voce"
+			inputType="DESCTOOL"/>
+		<columnFieldProperty
+			name="descrizione" />
+        <columnFieldProperty
+           	name="im_spese_gest_decentrata_int"
+         	label="Fonti Interne"
+        	headerLabel="GESTIONE DECENTRATA" />		
+        <columnFieldProperty
+           	name="im_spese_gest_decentrata_est"
+         	label="Fonti Esterne"
+	       	headerLabel="GESTIONE DECENTRATA" />		
+        <columnFieldProperty
+           	name="im_spese_gest_accentrata_int" 
+           	label="Fonti Interne"
+	       	headerLabel="GESTIONE ACCENTRATA" />		
+        <columnFieldProperty
+          	name="im_spese_gest_accentrata_est" 
+          	label="Fonti Esterne"
+	      	headerLabel="GESTIONE ACCENTRATA" />
+		<columnFieldProperty
+			name="iconaVistoDipartimento"
+			label="" />
+	</columnSet>
 </bulkInfo>

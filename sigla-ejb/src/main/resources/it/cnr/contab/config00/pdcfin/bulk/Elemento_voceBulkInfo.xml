@@ -635,6 +635,8 @@
 		name="fl_azzera_residui"/>			
 	<findFieldProperty
 		name="fl_trovato" />
+	<findFieldProperty
+		name="ti_gestione" />
 
 	<form
 		name="searchtool_x_var_stanz_res" >

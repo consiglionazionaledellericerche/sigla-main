@@ -72,6 +72,15 @@
         enabledOnEdit="false"
         enabledOnSearch="false"
         label="Modulo di Attività" />
+    <fieldProperty
+        name="progetto_liv2"
+        property="linea_di_attivita.progetto"
+        inputType="SEARCHTOOL"
+        formName="searchtool"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="false"
+        label="Progetto" />
         
 	<fieldProperty
 		name="esercizio_voce"
@@ -152,6 +161,8 @@
 		name="linea_di_attivita" />
 	<formFieldProperty
 		name="modulo_di_attivita" />		
+	<formFieldProperty
+        name="progetto_liv2" />
 	<formFieldProperty
 		name="im_variazione" />
 	<formFieldProperty

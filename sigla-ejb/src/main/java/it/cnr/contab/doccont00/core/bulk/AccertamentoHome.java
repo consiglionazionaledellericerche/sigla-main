@@ -1,7 +1,9 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.doccont00.ejb.NumTempDocContComponentSession;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.esercizio.bulk.*;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -10,6 +12,7 @@ import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.pdg00.bulk.*;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.*;
@@ -691,6 +694,9 @@ public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,Og
  */
 public SQLBuilder selectCapitoloByClause(AccertamentoBulk bulk, V_voce_f_partita_giroHome home, V_voce_f_partita_giroBulk voce_f, CompoundFindClause clause) throws IntrospectionException, PersistencyException, ApplicationException, SQLException 
 {
+	PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
+	Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(bulk.getEsercizio()));
+
 	/* simona 7.5.2002 : modificato il filtro da UO-Cds a Uo di scrivania 
     java.util.List listUoCds = findUoCds(bulk);
     if(listUoCds.size() == 0)
@@ -721,7 +727,8 @@ public SQLBuilder selectCapitoloByClause(AccertamentoBulk bulk, V_voce_f_partita
 	sql.addSQLClause( "AND", "esercizio", sql.EQUALS, bulk.getEsercizio());
 	sql.addSQLClause( "AND", "ti_appartenenza", sql.EQUALS, Elemento_voceHome.APPARTENENZA_CNR);
 	sql.addSQLClause( "AND", "ti_gestione", sql.EQUALS, Elemento_voceHome.GESTIONE_ENTRATE);
-	sql.addSQLClause( "AND", "ti_voce", sql.EQUALS, Elemento_voceHome.TIPO_ARTICOLO);
+	if (!parCNR.getFl_nuovo_pdg())
+		sql.addSQLClause( "AND", "ti_voce", sql.EQUALS, Elemento_voceHome.TIPO_ARTICOLO);
 	sql.addSQLClause( "AND", "fl_partita_giro", sql.EQUALS, "N");
 	if ( bulk.getCd_cds_origine() != null && bulk.getCd_cds_origine().equals( cd_cdsSAC) )
 		sql.addSQLClause( "AND", "fl_voce_sac", sql.NOT_EQUALS, "X");
@@ -1328,5 +1335,4 @@ public java.util.List findCapitoliDiEntrataCds( AccertamentoBulk accertamento ) 
 	sql.addClause("AND","cd_voce",sql.EQUALS,accertamento.getCd_voce());
 	return evHome.fetchAll(sql);	
 }
-
 }

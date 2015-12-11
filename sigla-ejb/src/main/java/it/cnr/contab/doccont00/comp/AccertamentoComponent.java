@@ -12,11 +12,14 @@ import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import it.cnr.contab.config00.pdcfin.bulk.Ass_ev_evBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.bulk.FunzioneBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.CdsHome;
@@ -814,6 +817,10 @@ public void callRiportaAvanti (UserContext userContext,IDocumentoContabileBulk d
 		{
 			throw handleException( e );
 		}	
+		catch ( Exception e )
+		{
+			throw handleException( e );
+		}	
 		finally
 		{
 			cs.close();
@@ -1158,6 +1165,11 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 	if ( !uc.isTransactional() )
 		aggiornaCapitoloSaldoAccertamento( uc, (AccertamentoBulk) bulk, INSERIMENTO );
 
+	try {
+		accertamento = validaCreaModificaElementoVoceNext(uc, accertamento);
+	} catch ( Exception e ) {
+		throw handleException( e )	;
+	}	
 	
 	return bulk;	
 	
@@ -1820,6 +1832,10 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 		// MITODO serve questa ??? sembra che serva per calcolare la massa spendibile legata all'obbligazione, ha senso per l'accertamento???
 		//accertamento = calcolaDispCassaPerCds( aUC, accertamento );	
 		
+		// SETTO IL FLAG CHE SERVE PER CAPIRE SE OCCORRE RICHIEDERE L'INSERIMENTO DELLA VOCE NUOVA DA UTILIZZARE PER IL RIBALTAMENTO
+		// LA VOCE VIENE RICHIESTA SOLO SE NON PRESENTE L'ASSOCIAZIONE NELLA TABELLA ASS_EVOLD_EVNEWBULK
+		accertamento.setEnableVoceNext(!existAssElementoVoceNew(aUC,(AccertamentoBulk)accertamento));
+
 		return accertamento;
 	}
 	catch( Exception e )
@@ -2359,6 +2375,8 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 		// Verifico che l'esercizio del CDS sia stato aperto
 		if (! ((AccertamentoHome)getHome(aUC, AccertamentoBulk.class)).verificaStatoEsercizio((AccertamentoBulk) bulk))
 			throw handleException( new ApplicationException( "Non e' possibile salvare accertamenti: esercizio del Cds non aperto!") );
+
+		accertamento = validaCreaModificaElementoVoceNext(aUC, accertamento);
 	}
 	catch (Exception e )
 	{
@@ -4440,4 +4458,103 @@ private void approvaVarStanzRes(
 			throw handleException( e );
 		}
 }
+
+
+public SQLBuilder selectElemento_voce_nextByClause(UserContext userContext, AccertamentoBulk accertamento, Elemento_voceBulk elemento_voce, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException { 
+	SQLBuilder sql = getHome(userContext,Elemento_voceBulk.class).createSQLBuilder();
+	if (clauses != null) 
+	  sql.addClause(clauses);
+
+	sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, accertamento.getEsercizio()+1 );		
+	sql.addClause(FindClause.AND, "ti_gestione", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_ENTRATE );
+    sql.addClause(FindClause.AND, "fl_solo_competenza", SQLBuilder.EQUALS, Boolean.FALSE );		 
+	sql.addClause(FindClause.AND, "fl_azzera_residui", SQLBuilder.EQUALS, new Boolean( false) );
+
+	sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL", "CLASSVOCENEW");
+	sql.addTableToHeader("CLASSIFICAZIONE_VOCI", "CLASSLIV1NEW");
+	sql.addSQLJoin("ELEMENTO_VOCE.ID_CLASSIFICAZIONE", "CLASSVOCENEW.ID_CLASSIFICAZIONE");
+	sql.addSQLJoin("CLASSVOCENEW.ID_LIV1", "CLASSLIV1NEW.ID_CLASSIFICAZIONE");
+	sql.addSQLClause(FindClause.AND, "CLASSLIV1NEW.TI_CLASSIFICAZIONE", SQLBuilder.ISNOTNULL, null);
+
+	if (accertamento!=null && accertamento.getCapitolo()!=null) {
+		Elemento_voceBulk evAccertamento = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
+								new Elemento_voceBulk(accertamento.getCapitolo().getCd_elemento_voce(), accertamento.getCapitolo().getEsercizio(), 
+													  accertamento.getCapitolo().getTi_appartenenza(), accertamento.getCapitolo().getTi_gestione()));
+		
+		if (evAccertamento!=null && evAccertamento.getV_classificazione_voci().getId_classificazione()!=null) {
+			SQLBuilder sqlExists = getHome(userContext,Classificazione_vociBulk.class).createSQLBuilder();
+			sqlExists.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL", "CLASSVOCEOLD");
+			sqlExists.addSQLClause(FindClause.AND, "CLASSVOCEOLD.ID_CLASSIFICAZIONE", SQLBuilder.EQUALS, evAccertamento.getV_classificazione_voci().getId_classificazione());
+			sqlExists.addSQLJoin("CLASSVOCEOLD.ID_LIV1", "CLASSIFICAZIONE_VOCI.ID_CLASSIFICAZIONE");
+			sqlExists.addSQLClause(FindClause.AND, "CLASSIFICAZIONE_VOCI.TI_CLASSIFICAZIONE", SQLBuilder.ISNOTNULL, null);
+			sqlExists.addSQLJoin("CLASSIFICAZIONE_VOCI.TI_CLASSIFICAZIONE", "CLASSLIV1NEW.TI_CLASSIFICAZIONE" );
+			sql.addSQLExistsClause(FindClause.AND, sqlExists);
+		} else {
+			sql.addSQLClause(FindClause.AND, "1!=1"); //Condizione inserita per far fallire la query
+		}
+	} else {
+		sql.addSQLClause(FindClause.AND, "1!=1"); //Condizione inserita per far fallire la query
+	}
+
+	return sql; 
+}
+
+public boolean existAssElementoVoceNew(UserContext userContext, AccertamentoBulk accertamento) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		Ass_evold_evnewHome ass_evold_evnewHome = (Ass_evold_evnewHome) getHome( userContext, Ass_evold_evnewBulk.class);
+		Elemento_voceBulk evAccertamento = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
+				new Elemento_voceBulk(accertamento.getCapitolo().getCd_elemento_voce(), accertamento.getCapitolo().getEsercizio(), 
+									  accertamento.getCapitolo().getTi_appartenenza(), accertamento.getCapitolo().getTi_gestione()));
+		if (!ass_evold_evnewHome.findAssElementoVoceNewList(evAccertamento).isEmpty())
+			return Boolean.TRUE;
+	} catch (IntrospectionException e) {
+		handleException(e);
+	} catch (PersistencyException e) {
+		handleException(e);
+	}
+	return Boolean.FALSE;
+}
+
+protected AccertamentoBulk validaCreaModificaElementoVoceNext(UserContext userContext, AccertamentoBulk accertamento) throws RemoteException, ComponentException {
+	try {
+		if (accertamento.getElemento_voce_next()!=null && accertamento.getElemento_voce_next().getCd_elemento_voce()!=null){
+			if (existAssElementoVoceNew(userContext, accertamento)) {
+				accertamento.setElemento_voce_next(null);
+				accertamento.setToBeUpdated();
+			} else {
+				Elemento_voceBulk evAccertamento = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
+						new Elemento_voceBulk(accertamento.getCapitolo().getCd_elemento_voce(), accertamento.getCapitolo().getEsercizio(), 
+											  accertamento.getCapitolo().getTi_appartenenza(), accertamento.getCapitolo().getTi_gestione()));
+
+				Elemento_voceHome home = (Elemento_voceHome)getHome(userContext,Elemento_voceBulk.class);
+				SQLBuilder sql = selectElemento_voce_nextByClause(userContext, accertamento, evAccertamento, new CompoundFindClause());
+				sql.addSQLClause(FindClause.AND, "ELEMENTO_VOCE.ESERCIZIO", SQLBuilder.EQUALS, accertamento.getElemento_voce_next().getEsercizio());
+				sql.addSQLClause(FindClause.AND, "ELEMENTO_VOCE.TI_APPARTENENZA", SQLBuilder.EQUALS, accertamento.getElemento_voce_next().getTi_appartenenza());
+				sql.addSQLClause(FindClause.AND, "ELEMENTO_VOCE.TI_GESTIONE", SQLBuilder.EQUALS, accertamento.getElemento_voce_next().getTi_gestione());
+				sql.addSQLClause(FindClause.AND, "ELEMENTO_VOCE.CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, accertamento.getElemento_voce_next().getCd_elemento_voce());
+				
+				List listEv = home.fetchAll(sql);
+				if (listEv.isEmpty())
+					throw new ApplicationException("Attenzione! Non esiste congruenza tra la voce dell''impegno e quella di ribaltamento. Modificare la voce di ribaltamento!");
+				
+				if (evAccertamento.getFl_recon().equals(Boolean.FALSE) && accertamento.getElemento_voce_next().getFl_recon().equals(Boolean.TRUE))
+					throw new ApplicationException("Attenzione! Non esiste congruenza tra la voce dell''accertamento che non richiede l'indicazione "+
+							" del campo contratto/incarico e quella di ribaltamento che ne richiede l'inserimento. Modificare la voce di ribaltamento!");
+				
+				try {
+					verificaGestioneTrovato(userContext, accertamento, accertamento.getElemento_voce_next());
+				} catch (ApplicationException e) {
+					throw new ApplicationException("Attenzione! Non esiste congruenza tra la voce dell''accertamento e quella di ribaltamento! " + e.getMessage());
+				}
+
+				if (!evAccertamento.getFl_inv_beni_patr().equals(accertamento.getElemento_voce_next().getFl_inv_beni_patr()))
+					throw new ApplicationException("Attenzione! Non esiste congruenza tra la voce dell''accertamento e quella di ribaltamento " +
+								"nella gestione dell''inventario. Modificare la voce di ribaltamento!");
+			}
+		}
+	} catch (PersistencyException e) {
+		handleException(e);
+	}
+	return accertamento;
+}	
 }

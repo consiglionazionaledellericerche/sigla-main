@@ -526,9 +526,50 @@
 		rows="2"
 		readonlyProperty="RODsGaraInCorso"
 		inputType="TEXTAREA"
-		nullable="false"
-		/>
-			
+		nullable="false" />
+
+	<fieldProperty
+		name="esercizio_ev_next"
+		property="elemento_voce_next.esercizio"
+		label="Esercizio Voce Next"
+		inputType="TEXT"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="ti_appartenenza_ev_next"
+		property="elemento_voce_next.ti_appartenenza"
+		label="ti_appartenenza_ev_next"
+		inputType="TEXT" />
+	<fieldProperty
+		name="ti_gestione_ev_next"
+		property="elemento_voce_next.ti_gestione"
+		label="ti_gestione_ev_next"
+		inputType="TEXT" />
+	<fieldProperty
+		name="cd_elemento_voce_next"
+		property="elemento_voce_next.cd_elemento_voce"
+		label="Voce del piano"
+		readonlyProperty="ROElemento_voce_next"
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="20"
+		enabledOnSearch="true"
+		nullable="true" />
+	<fieldProperty
+		name="ds_elemento_voce_next"
+		property="elemento_voce_next.ds_elemento_voce"
+		label=""
+		readonlyProperty="ROElemento_voce_next"
+		inputType="ROTEXT"
+		inputSize="60" />
+	<fieldProperty
+		name="find_elemento_voce_next"
+		property="elemento_voce_next"
+		inputType="SEARCHTOOL"
+		label="Voce del piano"
+		enabledOnSearch="true"
+		completeOnSave="false" />
+
+
 	<columnFieldProperty
 		name="esercizio_competenza"
 		label="Esercizio competenza"
@@ -743,7 +784,20 @@
 		label="Descrizione gara d'appalto"
 		/>		
 
-    <form name="searchtool">
+ 	<formFieldProperty
+		name="esercizio_ev_next" />
+	<formFieldProperty
+		name="ti_appartenenza_ev_next" />
+	<formFieldProperty
+		name="ti_gestione_ev_next" />
+	<formFieldProperty
+		name="cd_elemento_voce_next" />
+	<formFieldProperty
+		name="ds_elemento_voce_next" />
+	<formFieldProperty
+		name="find_elemento_voce_next" />
+	
+	<form name="searchtool">
         <formFieldProperty
               name="cd_cds" 
               inputSize="10"

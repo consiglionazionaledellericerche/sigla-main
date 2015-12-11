@@ -1,13 +1,12 @@
 package it.cnr.contab.varstanz00.ejb;
 
-import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
-import it.cnr.contab.varstanz00.comp.VariazioniStanziamentoResiduoComponent;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.ejb.CRUDComponentSessionBean;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+
+import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
+import it.cnr.contab.varstanz00.comp.VariazioniStanziamentoResiduoComponent;
+import it.cnr.jada.ejb.CRUDComponentSessionBean;
 
 /**
  * Bean implementation class for Enterprise Bean: CNRVARSTANZ00_EJB_VariazioniStanziamentoResiduoComponentSession
@@ -242,4 +241,22 @@ public class VariazioniStanziamentoResiduoComponentSessionBean extends CRUDCompo
 		}
 	}	
 				
+	public it.cnr.contab.progettiric00.core.bulk.ProgettoBulk getProgettoLineaAttivita(it.cnr.jada.UserContext param0,it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			it.cnr.contab.progettiric00.core.bulk.ProgettoBulk result = ((VariazioniStanziamentoResiduoComponent)componentObj).getProgettoLineaAttivita(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
 }

@@ -250,6 +250,16 @@
 		property="fl_nuovo_pdg"
 		inputType="CHECKBOX"
 		label="Nuova Gestione PDG" />		
+	<fieldProperty
+		name="data_attivazione_new_voce"
+		property="data_attivazione_new_voce"
+		label="Data Attivazione Nuova Voce"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		enabledOnSearch="true"
+		nullable="true"	/>
 
 
 	<formFieldProperty
@@ -329,6 +339,10 @@
 		name="livello_pdg_cofog"/>
 	<formFieldProperty
 		name="fl_credito_irpef"/>				       
+	<formFieldProperty
+		name="data_attivazione_new_voce" />
+
+
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
