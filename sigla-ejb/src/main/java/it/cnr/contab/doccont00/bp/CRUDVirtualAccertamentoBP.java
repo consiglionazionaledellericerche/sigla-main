@@ -317,6 +317,7 @@ public void riportaAvanti(it.cnr.jada.action.ActionContext context) throws it.cn
 	try 
 	{
 		((DocumentoContabileComponentSession)createComponentSession()).callRiportaAvanti( context.getUserContext(), (IDocumentoContabileBulk) getModel());
+		this.setDirty(true);
 		edit( context, getModel(), true );
 		
 	} catch(Exception e) {
@@ -328,6 +329,7 @@ public void riportaIndietro(it.cnr.jada.action.ActionContext context) throws it.
 	try 
 	{
 		((DocumentoContabileComponentSession)createComponentSession()).callRiportaIndietro( context.getUserContext(), (IDocumentoContabileBulk) getModel());
+		this.setDirty(true);
 		edit( context, getModel(), true );
 		
 	} catch(Exception e) {

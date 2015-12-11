@@ -55,7 +55,7 @@
 	        	bulk.getPdg_variazione().isApprovata())
 			  	bp.getRigheVariazioneGestionale().writeHTMLTable(
 					pageContext,
-					"dipInsertVariazioneGestionale",	
+					"dipInsertVariazioneGestionale"+(bp.getParametriCnr().getFl_nuovo_pdg()?"WithoutArea":""),	
 					true,
 					true,
 					!isDettaglioGestionaleEnable,
@@ -65,7 +65,7 @@
 			else
 			  	bp.getRigheVariazioneGestionale().writeHTMLTable(
 					pageContext,
-					"insertVariazioneGestionale",	
+					"insertVariazioneGestionale"+(bp.getParametriCnr().getFl_nuovo_pdg()?"WithoutArea":""),	
 					true,
 					true,
 					!isDettaglioGestionaleEnable,
@@ -78,7 +78,11 @@
 </table>
 <table>
 	<tr>
-		<% bp.getRigheVariazioneGestionale().writeFormField(out,null,"searchtool_progetto",1,3);%>
+		<%	if (bp.getParametriCnr().getFl_nuovo_pdg()) 
+				bp.getRigheVariazioneGestionale().writeFormField(out,null,"searchtool_progetto_liv2",1,3);
+			else
+				bp.getRigheVariazioneGestionale().writeFormField(out,null,"searchtool_progetto",1,3);
+		%>
 	</tr>
 	<tr>
 		<td><% bp.getRigheVariazioneGestionale().writeFormLabel(out,"find_linea_attivita");%></td>
@@ -88,7 +92,7 @@
 		<td><% bp.getRigheVariazioneGestionale().writeFormLabel(out,"find_elemento_voce");%></td>
 		<td colspan=3><% bp.getRigheVariazioneGestionale().writeFormInput(out,null,"find_elemento_voce",isDettaglioGestionaleEnable,null,null);%></td>
 	</tr>
-<% 	if (!bp.isUoArea()) { %>
+<% 	if (!bp.isUoArea() && !bp.getParametriCnr().getFl_nuovo_pdg()) { %>
 	<tr>
 		<td><% bp.getRigheVariazioneGestionale().writeFormLabel(out,"searchtool_area");%></td>
 		<td colspan=3><% bp.getRigheVariazioneGestionale().writeFormInput(out,"searchtool_area");%></td>

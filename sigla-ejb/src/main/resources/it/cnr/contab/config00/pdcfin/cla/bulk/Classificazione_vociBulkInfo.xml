@@ -258,6 +258,13 @@
 		inputType="ROTEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Somma Totale Spese Accentrate" />
+	<fieldProperty
+		name="ti_classificazione"
+		property="ti_classificazione"
+		keysProperty="ti_classificazioneKeys"
+		label="Tipologia"
+		inputType="SELECT"
+		/>
 
 	<formFieldProperty
 		name="id_classificazione" />
@@ -319,6 +326,8 @@
 		name="find_centro_responsabilita" />
 	<formFieldProperty
 		name="tot_imp_piano_riparto_spese" />
+	<formFieldProperty
+		name="ti_classificazione" />
 
 	<findFieldProperty
 		name="esercizio" />

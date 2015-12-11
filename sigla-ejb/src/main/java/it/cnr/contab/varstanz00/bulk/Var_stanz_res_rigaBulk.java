@@ -9,6 +9,7 @@ import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -21,6 +22,8 @@ public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
 	private Elemento_voceBulk elemento_voce;
 	private CdrBulk centroTestata;
 	private BigDecimal disponibilita_stanz_res;
+	private ProgettoBulk progetto = new ProgettoBulk();
+	
 	public Var_stanz_res_rigaBulk() {
 		super();
 	}
@@ -173,7 +176,9 @@ public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
 	 * @see it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBase#getCd_voce()
 	 */
 	public String getCd_voce() {
-		return getVoce_f().getCd_voce();
+		if (this.getVoce_f()!=null)
+			return getVoce_f().getCd_voce();
+		return null;
 	}
 	/**
 	 * @return
@@ -257,4 +262,11 @@ public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
 		super.validate();
 	}
 
+	public ProgettoBulk getProgetto() {
+		return progetto;
+	}
+	
+	public void setProgetto(ProgettoBulk progetto) {
+		this.progetto = progetto;
+	}
 }

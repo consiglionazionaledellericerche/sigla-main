@@ -3,8 +3,6 @@
 * Date 21/04/2006
 */
 package it.cnr.contab.pdg01.bulk;
-import java.util.Iterator;
-
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
@@ -13,14 +11,10 @@ import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
-import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.util.action.CRUDBP;
 
 public class Pdg_variazione_riga_gestBulk extends Pdg_variazione_riga_gestBase {
 	private Pdg_variazioneBulk pdg_variazione;
@@ -29,6 +23,7 @@ public class Pdg_variazione_riga_gestBulk extends Pdg_variazione_riga_gestBase {
 	private Elemento_voceBulk elemento_voce;
 	private CdsBulk area;
 	private Boolean fl_riga_vistabile = Boolean.FALSE;
+	private ProgettoBulk progetto = new ProgettoBulk();
 
 	public Pdg_variazione_riga_gestBulk() {
 		super();
@@ -319,5 +314,13 @@ public class Pdg_variazione_riga_gestBulk extends Pdg_variazione_riga_gestBase {
 			return Ass_pdg_variazione_cdrBulk.ICONA_VISTATO;
 		else
 			return Ass_pdg_variazione_cdrBulk.ICONA_DA_VISTARE;
+	}
+	
+	public ProgettoBulk getProgetto() {
+		return progetto;
+	}
+	
+	public void setProgetto(ProgettoBulk progetto) {
+		this.progetto = progetto;
 	}
 }

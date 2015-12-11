@@ -81,8 +81,8 @@ public class CRUDPdgMissioneBP extends SimpleCRUDBP {
 		int[] indexes = this.getCrudTipiUoAssociabili().getSelectedRows(actioncontext);
 	
 		java.util.Arrays.sort( indexes );
-		for (int index = indexes.length - 1 ;index >= 0 ;index--) {	
-			Tipo_unita_organizzativaBulk tipoUo = (Tipo_unita_organizzativaBulk)this.getCrudTipiUoAssociabili().removeDetail(index);
+		for (int index = indexes.length - 1 ;index >= 0 ;index--) {
+			Tipo_unita_organizzativaBulk tipoUo = (Tipo_unita_organizzativaBulk)this.getCrudTipiUoAssociabili().removeDetail(indexes[index]);
 			tipoUo.setCrudStatus(OggettoBulk.NORMAL);
 
 			Ass_pdg_missione_tipo_uoBulk assTipoUo = new Ass_pdg_missione_tipo_uoBulk();
@@ -98,7 +98,7 @@ public class CRUDPdgMissioneBP extends SimpleCRUDBP {
 	
 		java.util.Arrays.sort( indexes );
 		for (int index = indexes.length - 1 ;index >= 0 ;index--) {	
-			Ass_pdg_missione_tipo_uoBulk assTipoUo = (Ass_pdg_missione_tipo_uoBulk)this.getCrudAssPdgMissioneTipiUo().removeDetail(index);
+			Ass_pdg_missione_tipo_uoBulk assTipoUo = (Ass_pdg_missione_tipo_uoBulk)this.getCrudAssPdgMissioneTipiUo().removeDetail(indexes[index]);
 			this.getCrudTipiUoAssociabili().addDetail(assTipoUo.getTipoUnitaOrganizzativa());
 			assTipoUo.getTipoUnitaOrganizzativa().setCrudStatus(OggettoBulk.NORMAL);
 		}
