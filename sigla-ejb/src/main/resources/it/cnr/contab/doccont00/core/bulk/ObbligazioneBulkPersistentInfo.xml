@@ -43,7 +43,18 @@
 		<columnMapping
 			columnName="PG_REPERTORIO"
 			propertyName="incarico_repertorio.pg_repertorio"/>
-			
+		<columnMapping
+			columnName="ESERCIZIO_EV_NEXT"
+			propertyName="elemento_voce_next.esercizio" />
+		<columnMapping
+			columnName="TI_GESTIONE_EV_NEXT"
+			propertyName="elemento_voce_next.ti_gestione"/>		
+		<columnMapping
+			columnName="TI_APPARTENENZA_EV_NEXT"
+			propertyName="elemento_voce_next.ti_appartenenza"/>
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE_NEXT"
+			propertyName="elemento_voce_next.cd_elemento_voce"/>	
 	</defaultColumnMap>
 	<persistentProperty
 		name="cds"
@@ -60,6 +71,8 @@
 		name="contratto" />
 	<persistentProperty
 		name="incarico_repertorio" />
+	<persistentProperty
+		name="elemento_voce_next"/>
 
 	<fetchPolicy
 		name="it.cnr.contab.doccont00.comp.ObbligazioneComponent.edit">

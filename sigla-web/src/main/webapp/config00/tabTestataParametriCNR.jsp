@@ -151,5 +151,15 @@
 			</TD><TD colspan="3">
 			<% bp.getController().writeFormInput(out,"data_stipula_contratti");%>
 		</TD></TR>					
+		<TR><TD>
+			<% bp.getController().writeFormLabel(out,"fl_nuovo_pdg");%>
+			</TD><TD colspan="3">
+			<% bp.getController().writeFormInput(out,"fl_nuovo_pdg");%>
+		</TD></TR>					
+		<TR><TD>
+			<% bp.getController().writeFormLabel(out,"data_attivazione_new_voce");%>
+			</TD><TD colspan="3">
+			<% bp.getController().writeFormInput(out,"data_attivazione_new_voce");%>
+		</TD></TR>					
 
 	</table>

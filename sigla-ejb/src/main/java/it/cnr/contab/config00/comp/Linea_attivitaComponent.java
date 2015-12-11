@@ -539,9 +539,15 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 			if (assGaeEsercizio.getEsercizio().compareTo(new Integer(2016))==-1) {
 				int annoProgetto = CNRUserContext.getEsercizio(userContext).compareTo(new Integer(2016))!=-1?new Integer(2015):CNRUserContext.getEsercizio(userContext);
 				aLA.setModulo2015((ProgettoBulk)progettoHome.findByPrimaryKey(new ProgettoBulk(annoProgetto, assGaeEsercizio.getPg_progetto(), ProgettoBulk.TIPO_FASE_NON_DEFINITA)));
+				//Aggiorno l'anno anche sul progetto padre
+				if (CNRUserContext.getEsercizio(userContext).compareTo(new Integer(2016))!=-1 && aLA.getModulo2015().getEsercizio_progetto_padre()==null )
+					aLA.getModulo2015().setEsercizio_progetto_padre(annoProgetto);
 			} else { 
 				int annoProgetto = CNRUserContext.getEsercizio(userContext).compareTo(new Integer(2016))==-1?new Integer(2016):CNRUserContext.getEsercizio(userContext);
 				aLA.setProgetto2016((ProgettoBulk)progettoHome.findByPrimaryKey(new ProgettoBulk(annoProgetto, assGaeEsercizio.getPg_progetto(), ProgettoBulk.TIPO_FASE_NON_DEFINITA)));
+				//Aggiorno l'anno anche sul progetto padre
+				if (CNRUserContext.getEsercizio(userContext).compareTo(new Integer(2016))==-1 && aLA.getProgetto2016().getEsercizio_progetto_padre()==null )
+					aLA.getProgetto2016().setEsercizio_progetto_padre(annoProgetto);
 			}
 		}
 		

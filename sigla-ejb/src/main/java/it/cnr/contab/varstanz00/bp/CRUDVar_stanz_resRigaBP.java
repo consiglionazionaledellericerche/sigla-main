@@ -6,11 +6,10 @@
  */
 package it.cnr.contab.varstanz00.bp;
 
-import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Iterator;
 
-import it.cnr.contab.anagraf00.core.bulk.Carico_familiare_anagBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -21,7 +20,6 @@ import it.cnr.contab.varstanz00.ejb.VariazioniStanziamentoResiduoComponentSessio
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.action.Config;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
@@ -35,6 +33,7 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class CRUDVar_stanz_resRigaBP extends SimpleCRUDBP {
+	private Parametri_cnrBulk parametriCnr;
 	private Var_stanz_resBulk var_stanz_res;
 	private CdrBulk centro_di_responsabilita;
 	private SimpleDetailCRUDController rigaVariazione = new SimpleDetailCRUDController( "rigaVariazione", Var_stanz_res_rigaBulk.class, "rigaVariazione", this){
@@ -126,6 +125,13 @@ public class CRUDVar_stanz_resRigaBP extends SimpleCRUDBP {
 //		else  
 		if (!isEditable())	
 		  setStatus(VIEW);	
+		try {
+			setParametriCnr(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())));
+		} catch (ComponentException e) {
+			throw handleException(e);
+		} catch (RemoteException e) {
+			throw handleException(e);
+		}
 	}
     public void valorizzaVoceLunga(ActionContext actioncontext, Var_stanz_res_rigaBulk var_stanz_res_riga) throws BusinessProcessException{
     	try {
@@ -173,5 +179,27 @@ public class CRUDVar_stanz_resRigaBP extends SimpleCRUDBP {
 		} catch (RemoteException e) {
 			throw new BusinessProcessException(e);
 		}
+	}
+	public void valorizzaProgettoLineaAttivita(ActionContext actioncontext, Var_stanz_res_rigaBulk var_stanz_res_riga) throws BusinessProcessException{
+		try {
+			if (var_stanz_res_riga.getLinea_di_attivita() != null && var_stanz_res_riga.getLinea_di_attivita().getCd_linea_attivita() != null){
+					var_stanz_res_riga.setProgetto(((VariazioniStanziamentoResiduoComponentSession)createComponentSession()).getProgettoLineaAttivita(actioncontext.getUserContext(),var_stanz_res_riga));
+				}else{
+					var_stanz_res_riga.setProgetto(null);
+				}
+		} catch (DetailedRuntimeException e) {
+			throw new BusinessProcessException(e);
+		} catch (ComponentException e) {
+			throw new BusinessProcessException(e);
+		} catch (RemoteException e) {
+			throw new BusinessProcessException(e);
+		}
+	}
+	private void setParametriCnr(Parametri_cnrBulk parametriCnr) {
+		this.parametriCnr = parametriCnr;
+	}
+	
+	public Parametri_cnrBulk getParametriCnr() {
+		return parametriCnr;
 	}
 }

@@ -117,7 +117,7 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 	 *	Abilito il bottone di salvataggio documento solo se non ho scadenze in fase di modifica/inserimento
 	 */
 	public boolean isSaveButtonEnabled() {
-		return isStatusOriginarioSaveButtonEnabled() && !isEditingScadenza();
+		return super.isSaveButtonEnabled() && isStatusOriginarioSaveButtonEnabled() && !isEditingScadenza();
 	}
 	/**
 	 * @return

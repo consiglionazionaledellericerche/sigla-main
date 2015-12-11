@@ -20,9 +20,11 @@ import it.cnr.jada.persistency.Persister;
 import it.cnr.jada.util.*;
 
 public class ObbligazioneBulk extends ObbligazioneBase implements Cloneable, IDocumentoContabileBulk {
+	private static final long serialVersionUID = 1L;
 
 	private it.cnr.jada.util.OrderedHashtable anniResidui = new it.cnr.jada.util.OrderedHashtable();
 	private it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce = new it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk();
+	private it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce_next = new it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk();
 	private it.cnr.contab.doccont00.tabrif.bulk.Tipo_obbligazioneBulk tipo_obbligazione = new it.cnr.contab.doccont00.tabrif.bulk.Tipo_obbligazioneBulk();
 	private it.cnr.contab.anagraf00.core.bulk.TerzoBulk creditore = new it.cnr.contab.anagraf00.core.bulk.TerzoBulk();
 	private OrderedHashtable esercizio_competenza_Keys;
@@ -40,6 +42,7 @@ public class ObbligazioneBulk extends ObbligazioneBase implements Cloneable, IDo
 	private Collection lineeAttivitaColl = Collections.EMPTY_LIST;	
 	private Collection lineeAttivitaSelezionateColl = Collections.EMPTY_LIST;
 	private BulkList nuoveLineeAttivitaColl = new BulkList();
+	private boolean enableVoceNext = false;
 
 	public final static String STATO_OBB_PROVVISORIO 	= "P";
 	public final static String STATO_OBB_DEFINITIVO 	= "D";
@@ -1839,4 +1842,74 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 		return isROFlGaraInCorso();
 	}
 
+	public it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk getElemento_voce_next() {
+		return elemento_voce_next;
+	}
+	
+	public void setElemento_voce_next(it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce_next) {
+		this.elemento_voce_next = elemento_voce_next;
+	}
+	
+	@Override
+	public Integer getEsercizio_ev_next() {
+		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce_next = this.getElemento_voce_next();
+		if (elemento_voce_next == null)
+			return null;
+		return elemento_voce_next.getEsercizio();
+	}
+
+	@Override
+	public void setEsercizio_ev_next(Integer esercizio_ev_next) {
+		this.getElemento_voce_next().setEsercizio(esercizio_ev_next);
+	}
+
+	@Override
+	public String getTi_appartenenza_ev_next() {
+		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce_next = this.getElemento_voce_next();
+		if (elemento_voce_next == null)
+			return null;
+		return elemento_voce_next.getTi_appartenenza();
+	}
+	
+	@Override
+	public void setTi_appartenenza_ev_next(String ti_appartenenza_ev_next) {
+		this.getElemento_voce_next().setTi_appartenenza(ti_appartenenza_ev_next);
+	}
+	
+	@Override
+	public String getTi_gestione_ev_next() {
+		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce_next = this.getElemento_voce_next();
+		if (elemento_voce_next == null)
+			return null;
+		return elemento_voce_next.getTi_gestione();
+	}
+	
+	@Override
+	public void setTi_gestione_ev_next(String ti_gestione_ev_next) {
+		this.getElemento_voce_next().setTi_gestione(ti_gestione_ev_next);
+	}
+	
+	@Override
+	public String getCd_elemento_voce_next() {
+		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce_next = this.getElemento_voce_next();
+		if (elemento_voce_next == null)
+			return null;
+		return elemento_voce_next.getCd_elemento_voce();
+	}
+	
+	@Override
+	public void setCd_elemento_voce_next(String cd_elemento_voce_next) {
+		this.getElemento_voce_next().setCd_elemento_voce(cd_elemento_voce_next);
+	}
+
+	public boolean isROElemento_voce_next() {
+		return elemento_voce_next == null || elemento_voce_next.getCrudStatus() == NORMAL;
+	}
+	
+	public boolean isEnableVoceNext() {
+		return enableVoceNext;
+	}
+	public void setEnableVoceNext(boolean enableVoceNext) {
+		this.enableVoceNext = enableVoceNext;
+	}
 }

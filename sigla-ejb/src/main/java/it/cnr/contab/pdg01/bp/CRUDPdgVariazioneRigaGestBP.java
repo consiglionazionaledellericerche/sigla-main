@@ -6,6 +6,12 @@
  */
 package it.cnr.contab.pdg01.bp;
 
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.util.Iterator;
+import java.util.List;
+
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
@@ -16,18 +22,14 @@ import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_spesa_gestBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.util.Utility;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
-
-import java.util.Iterator;
-import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * @author rpagano
@@ -36,6 +38,7 @@ import java.util.List;
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class CRUDPdgVariazioneRigaGestBP extends SimpleCRUDBP {
+	private Parametri_cnrBulk parametriCnr;
 	private it.cnr.contab.config00.sto.bulk.CdrBulk centro_responsabilita;
 	private Pdg_variazioneBulk pdg_variazione;
 	private DipartimentoBulk dipartimentoSrivania;	
@@ -270,6 +273,13 @@ public class CRUDPdgVariazioneRigaGestBP extends SimpleCRUDBP {
 		setUoScrivania(CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext()));
 		if (it.cnr.contab.utenze00.bulk.CNRUserInfo.getDipartimento(actioncontext)!=null)
 			setDipartimentoSrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getDipartimento(actioncontext));
+		try {
+			setParametriCnr(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())));
+		} catch (ComponentException e1) {
+			throw handleException(e1);
+		} catch (RemoteException e1) {
+			throw handleException(e1);
+		}
 	}
 
 	public Pdg_variazioneBulk getPdg_variazione() {
@@ -388,5 +398,13 @@ public class CRUDPdgVariazioneRigaGestBP extends SimpleCRUDBP {
 		}catch(java.rmi.RemoteException ex){
 			throw handleException(ex);
 		}
+	}
+
+	private void setParametriCnr(Parametri_cnrBulk parametriCnr) {
+		this.parametriCnr = parametriCnr;
+	}
+	
+	public Parametri_cnrBulk getParametriCnr() {
+		return parametriCnr;
 	}
 }
