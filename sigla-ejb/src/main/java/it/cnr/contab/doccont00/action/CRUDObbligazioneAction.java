@@ -27,6 +27,7 @@ import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.ProspettoSpeseCdrBulk;
+import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
@@ -215,7 +216,7 @@ public Forward doBringBackSearchFind_elemento_voce(ActionContext context, Obblig
 			obbligazione.setElemento_voce_next( new Elemento_voceBulk() );
 			// SETTO IL FLAG CHE SERVE PER CAPIRE SE OCCORRE RICHIEDERE L'INSERIMENTO DELLA VOCE NUOVA DA UTILIZZARE PER IL RIBALTAMENTO
 			// LA VOCE VIENE RICHIESTA SOLO SE NON PRESENTE L'ASSOCIAZIONE NELLA TABELLA ASS_EVOLD_EVNEWBULK
-			obbligazione.setEnableVoceNext(!((ObbligazioneComponent)bp.createComponentSession()).existAssElementoVoceNew(context.getUserContext(),(ObbligazioneBulk)obbligazione));
+			obbligazione.setEnableVoceNext(!((ObbligazioneComponentSession)bp.createComponentSession()).existAssElementoVoceNew(context.getUserContext(),(ObbligazioneBulk)obbligazione));
 		}
 		if ( capitolo != null && bp.isEditable() )
 			bp.caricaCentriDiResponsabilita(context);
