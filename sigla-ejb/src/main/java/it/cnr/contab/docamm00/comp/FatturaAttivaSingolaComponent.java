@@ -7468,7 +7468,7 @@ public Fattura_attivaBulk aggiornaFatturaRifiutataDestinatarioSDI(UserContext us
 	updateBulk(userContext, fattura);
 	if (fattura instanceof Fattura_attiva_IBulk){
 		Fattura_attiva_IBulk fatturaAttiva = (Fattura_attiva_IBulk)fattura;
-		Nota_di_credito_attivaBulk nota = generaNotaCreditoAutomatica(userContext, fatturaAttiva, fatturaAttiva.getEsercizio(), false);
+		Nota_di_credito_attivaBulk nota = generaNotaCreditoAutomatica(userContext, fatturaAttiva, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext), false);
 		fatturaAttiva.setNotaCreditoAutomaticaGenerata(nota);
 		sendMailForNotificationKo(userContext, fatturaAttiva);
 	}
@@ -7498,7 +7498,7 @@ public Fattura_attivaBulk aggiornaFatturaScartoSDI(UserContext userContext, Fatt
 	updateBulk(userContext, fattura);
 	if (fattura instanceof Fattura_attiva_IBulk){
 		Fattura_attiva_IBulk fatturaAttiva = (Fattura_attiva_IBulk)fattura;
-		Nota_di_credito_attivaBulk nota = generaNotaCreditoAutomatica(userContext, fatturaAttiva, fatturaAttiva.getEsercizio(), false);
+		Nota_di_credito_attivaBulk nota = generaNotaCreditoAutomatica(userContext, fatturaAttiva, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext), false);
 		fatturaAttiva.setNotaCreditoAutomaticaGenerata(nota);
 		sendMailForNotificationKo(userContext, fatturaAttiva);
 	}
@@ -7627,7 +7627,7 @@ public Fattura_attivaBulk aggiornaFatturaTrasmissioneNonRecapitataSDI(UserContex
 	updateBulk(userContext, fattura);
 	if (fattura instanceof Fattura_attiva_IBulk){
 		Fattura_attiva_IBulk fatturaAttiva = (Fattura_attiva_IBulk)fattura;
-		Nota_di_credito_attivaBulk nota = generaNotaCreditoAutomatica(userContext, fatturaAttiva, fatturaAttiva.getEsercizio(), false);
+		Nota_di_credito_attivaBulk nota = generaNotaCreditoAutomatica(userContext, fatturaAttiva, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext), false);
 		fatturaAttiva.setNotaCreditoAutomaticaGenerata(nota);
 		sendMailForNotificationKo(userContext, fatturaAttiva);
 	}
