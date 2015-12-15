@@ -247,6 +247,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 		    	    					|| status == HttpStatus.SC_UNAUTHORIZED
 		    	    					|| status == HttpStatus.SC_BAD_REQUEST) {
 			    					logger.info("Firma Errore");
+			    					logger.error(response.getErrorContent());
 		    	    				JSONTokener tokenizer = new JSONTokener(new StringReader(response.getErrorContent()));
 		    	    			    JSONObject jsonObject = new JSONObject(tokenizer);
 		    	    			    String jsonMessage = jsonObject.getString("message");
