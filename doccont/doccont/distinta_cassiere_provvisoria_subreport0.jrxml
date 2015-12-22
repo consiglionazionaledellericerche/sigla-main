@@ -1,0 +1,952 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="distinta_cassiere_subreport0" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="NORMAL" isDefault="true" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="BOLD" style="NORMAL" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TITLE" style="NORMAL" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC8" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC9" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG11" fontName="Times New Roman" fontSize="11" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR12" fontName="Times New Roman" fontSize="12" pdfFontName="Times-Roman"/>
+	<style name="TNRG12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRC12" fontName="Times New Roman" fontSize="12" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRG14" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
+	<style name="TNRC16" fontName="Times New Roman" fontSize="16" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRG16" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRGC16" fontName="Times New Roman" fontSize="16" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<parameter name="DIR_SUBREPORT" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:/svn/svn-sigla-commons/SIGLAReports/reports/img/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="esercizio" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2014"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cd_cds" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["000"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cd_unita_organizzativa" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["000.407"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pg_distinta" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[".\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select distinct vp.* from vp_distinta_prov vp,(
+select dd.* from (
+select a.* from (
+select m.esercizio, m.cd_cds, m.pg_mandato
+from distinta_cassiere_det d, mandato m
+where d.esercizio = m.esercizio
+and d.cd_cds = m.cd_cds
+and d.pg_mandato = m.pg_mandato
+and ti_mandato ='A'
+and d.esercizio = $P{esercizio}
+and d.cd_cds = $P{cd_cds}
+and d.cd_unita_organizzativa = $P{cd_unita_organizzativa}
+and pg_distinta = $P{pg_distinta}) dm, ass_mandato_reversale a
+where dm.esercizio = a.esercizio_mandato
+and dm.cd_cds = a.cd_cds_mandato
+and dm.pg_mandato = a.pg_mandato) dma, distinta_cassiere_det dd
+where dma.esercizio_reversale = dd.esercizio
+and dma.cd_cds_reversale = dd.cd_cds
+and dma.pg_reversale = dd.pg_reversale) ddd
+where ddd.esercizio = vp.esercizio
+and ddd.pg_distinta = vp.pg_distinta
+and ddd.cd_cds = vp.cd_cds
+and ddd.cd_unita_organizzativa = vp.cd_unita_organizzativa]]>
+	</queryString>
+	<field name="TIPO_DOC" class="java.lang.String"/>
+	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
+	<field name="CD_CDS" class="java.lang.String"/>
+	<field name="CD_UNITA_ORGANIZZATIVA" class="java.lang.String"/>
+	<field name="DS_UNITA_ORGANIZZATIVA" class="java.lang.String"/>
+	<field name="PG_DISTINTA" class="java.math.BigDecimal"/>
+	<field name="PG_DISTINTA_DEF" class="java.math.BigDecimal"/>
+	<field name="DT_INVIO" class="java.sql.Timestamp"/>
+	<field name="IM_TOT_DOC" class="java.math.BigDecimal"/>
+	<field name="IM_TOT_RIT" class="java.math.BigDecimal"/>
+	<field name="PG_DOC" class="java.math.BigDecimal"/>
+	<field name="TI_DOC" class="java.lang.String"/>
+	<field name="DS_DOC" class="java.lang.String"/>
+	<field name="DT_EMISSIONE" class="java.sql.Timestamp"/>
+	<field name="DT_ANNULLAMENTO" class="java.sql.Timestamp"/>
+	<field name="DT_RITRASMISSIONE" class="java.sql.Timestamp"/>
+	<field name="STATO" class="java.lang.String"/>
+	<field name="PG_DISTINTA_PREC" class="java.math.BigDecimal"/>
+	<field name="IM_DOC" class="java.math.BigDecimal"/>
+	<field name="IM_RITENUTE" class="java.math.BigDecimal"/>
+	<field name="CODICE_FISCALE" class="java.lang.String"/>
+	<field name="DS_ANAGRAFICA" class="java.lang.String"/>
+	<field name="ABI" class="java.lang.String"/>
+	<field name="CAB" class="java.lang.String"/>
+	<field name="NUMERO_CONTO" class="java.lang.String"/>
+	<field name="IBAN" class="java.lang.String"/>
+	<field name="FL_FLUSSO" class="java.lang.String"/>
+	<variable name="RiportoTotNetto" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$V{RiportoTotDoc}.subtract( $V{RiportoTotRit} )]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="RiportoTotDoc" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$F{IM_TOT_DOC} == null ? new BigDecimal(0) : $F{IM_TOT_DOC}]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="RiportoTotRit" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$F{IM_TOT_RIT} == null ? new BigDecimal(0) : $F{IM_TOT_RIT}]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="tipoDoc" class="java.lang.String" resetType="Group" resetGroup="TipoDocB">
+		<variableExpression><![CDATA[$F{TIPO_DOC}.equals( "M" ) ? "MANDATI" : "REVERSALI"]]></variableExpression>
+	</variable>
+	<variable name="DettLordo" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{IM_DOC} == null ? new BigDecimal(0) : $F{IM_DOC}]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="DettRitenute" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{IM_RITENUTE} == null ? new BigDecimal(0) : $F{IM_RITENUTE}]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="DettNetto" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$V{DettLordo}.subtract( $V{DettRitenute} )]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="AnnullatiLordo" class="java.math.BigDecimal" resetType="Group" resetGroup="Stato" calculation="Sum">
+		<variableExpression><![CDATA[$F{STATO}.trim().equals( "A" ) ? $V{DettLordo} : new BigDecimal(0)]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="AnnullatiRitenute" class="java.math.BigDecimal" resetType="Group" resetGroup="Stato" calculation="Sum">
+		<variableExpression><![CDATA[$F{STATO}.trim().equals( "A" ) ? $V{DettRitenute} : new BigDecimal(0)]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="AnnullatiNetto" class="java.math.BigDecimal" resetType="Group" resetGroup="Stato" calculation="Sum">
+		<variableExpression><![CDATA[$F{STATO}.trim().equals( "A" ) ? $V{DettNetto} : new BigDecimal(0)]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="TotLordo" class="java.math.BigDecimal" resetType="Group" resetGroup="TipoDoc" calculation="Sum">
+		<variableExpression><![CDATA[$V{IM_DOC_STATO}]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="TotNetto" class="java.math.BigDecimal" resetType="Group" resetGroup="TipoDoc" calculation="Sum">
+		<variableExpression><![CDATA[$V{IM_NETTO_STATO}]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="TotRitenute" class="java.math.BigDecimal" resetType="Group" resetGroup="TipoDoc" calculation="Sum">
+		<variableExpression><![CDATA[$V{IM_RITENUTE_STATO}]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="descTotale" class="java.lang.String">
+		<variableExpression><![CDATA[$F{TIPO_DOC}.equals( "M" ) ? "TOTALE PAGATO" : "TOTALE INCASSATO"]]></variableExpression>
+	</variable>
+	<variable name="AnnRitrasmTotLordo" class="java.math.BigDecimal" resetType="Group" resetGroup="TipoDoc" calculation="Sum">
+		<variableExpression><![CDATA[$F{STATO}.equals("A") && $F{DT_RITRASMISSIONE} != null ?
+$V{IM_DOC_STATO}:new BigDecimal(0)]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="AnnRitrasmTotRitenute" class="java.math.BigDecimal" resetType="Group" resetGroup="TipoDoc" calculation="Sum">
+		<variableExpression><![CDATA[$F{STATO}.equals("A") ? $F{DT_RITRASMISSIONE} != null ? $V{DettRitenute} : new BigDecimal(0) : new BigDecimal(0)]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="AnnRitrasmTotNetto" class="java.math.BigDecimal" resetType="Group" resetGroup="TipoDoc" calculation="Sum">
+		<variableExpression><![CDATA[$F{STATO}.equals("A") ? $F{DT_RITRASMISSIONE} != null ? $V{DettNetto} : new BigDecimal(0) : new BigDecimal(0)]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="aRiportareLordo" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$V{RiportoTotDoc}.add(
+$V{TotLordo}).subtract($V{AnnRitrasmTotLordo})]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="aRiportareRitenute" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$V{RiportoTotRit}.add( $V{TotRitenute} ).subtract($V{AnnRitrasmTotRitenute})]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="aRiportareNetto" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$V{RiportoTotNetto}.add( $V{TotNetto} ).subtract($V{AnnRitrasmTotNetto})]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="banca" class="java.lang.String" resetType="Group" resetGroup="UnitaOrganizzativa">
+		<variableExpression><![CDATA[$F{ABI} + "  " + $F{CAB} + "  " + $F{NUMERO_CONTO}+($F{IBAN}!=null?"Iban "+$F{IBAN}:" ")]]></variableExpression>
+	</variable>
+	<variable name="IM_DOC_STATO" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$F{IM_DOC} == null ? new BigDecimal(0) :
+$F{STATO}.trim().equals("A")?$F{IM_DOC}.negate():$F{IM_DOC}]]></variableExpression>
+	</variable>
+	<variable name="IM_DOC_STATO_NON_ANN" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$F{IM_DOC} == null ? new BigDecimal(0) :
+$F{STATO}.trim().equals("A")?new BigDecimal(0):$F{IM_DOC}]]></variableExpression>
+	</variable>
+	<variable name="TotLordo_a_riportare" class="java.math.BigDecimal" resetType="Group" resetGroup="TipoDoc" calculation="Sum">
+		<variableExpression><![CDATA[$V{IM_DOC_STATO_NON_ANN}]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="IM_RITENUTA_STATO_NON_ANN" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$F{IM_DOC} == null ? new BigDecimal(0) :
+$F{STATO}.trim().equals("A")?new BigDecimal(0):$F{IM_RITENUTE}]]></variableExpression>
+	</variable>
+	<variable name="TotRitenute_a_riportare" class="java.math.BigDecimal" resetType="Group" resetGroup="TipoDoc" calculation="Sum">
+		<variableExpression><![CDATA[$V{IM_RITENUTA_STATO_NON_ANN}]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="IM_RITENUTE_STATO" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$F{IM_DOC} == null ? new BigDecimal(0) :
+$F{STATO}.trim().equals("A")?$F{IM_RITENUTE}.negate():$F{IM_RITENUTE}]]></variableExpression>
+	</variable>
+	<variable name="TotNetto_a_riportare" class="java.math.BigDecimal" resetType="Group" resetGroup="TipoDoc" calculation="Sum">
+		<variableExpression><![CDATA[$V{IM_NETTO_STATO_NON_ANN}]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="IM_NETTO_STATO_NON_ANN" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$F{IM_DOC} == null ? new BigDecimal(0) :
+$F{STATO}.trim().equals("A")?new BigDecimal(0):$F{IM_DOC}.subtract($F{IM_RITENUTE})]]></variableExpression>
+	</variable>
+	<variable name="IM_NETTO_STATO" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$F{IM_DOC} == null ? new BigDecimal(0) :
+$F{STATO}.trim().equals("A")?($F{IM_DOC}.subtract($F{IM_RITENUTE})).negate():($F{IM_DOC}.subtract($F{IM_RITENUTE}))]]></variableExpression>
+	</variable>
+	<group name="Testata" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[null]]></groupExpression>
+		<groupHeader>
+			<band height="21" splitType="Stretch">
+				<line>
+					<reportElement key="line-2" positionType="FixRelativeToBottom" x="5" y="20" width="800" height="1"/>
+				</line>
+				<staticText>
+					<reportElement key="staticText-4" style="BOLD" x="270" y="4" width="67" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement markup="styled"/>
+					<text><![CDATA[Tesoreria]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-5" style="BOLD" x="387" y="4" width="47" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement markup="styled"/>
+					<text><![CDATA[CNR]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-6" style="BOLD" x="485" y="4" width="251" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement markup="styled"/>
+					<text><![CDATA[CONSIGLIO NAZIONALE DELLE RICERCHE]]></text>
+				</staticText>
+				<line>
+					<reportElement key="line-1" x="5" y="1" width="800" height="1"/>
+				</line>
+				<staticText>
+					<reportElement style="TNRG11" x="5" y="4" width="247" height="13"/>
+					<textElement/>
+					<text><![CDATA[DISTINTA PROVVISORIA]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="16" splitType="Prevent">
+				<staticText>
+					<reportElement key="staticText-21" style="BOLD" x="315" y="3" width="130" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement/>
+					<text><![CDATA[IL RESPONSABILE]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Esercizio" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{ESERCIZIO}]]></groupExpression>
+		<groupHeader>
+			<band splitType="Stretch"/>
+		</groupHeader>
+		<groupFooter>
+			<band splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<group name="CDS" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{CD_CDS}]]></groupExpression>
+		<groupHeader>
+			<band splitType="Stretch"/>
+		</groupHeader>
+		<groupFooter>
+			<band splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<group name="UnitaOrganizzativa" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{CD_UNITA_ORGANIZZATIVA}]]></groupExpression>
+		<groupHeader>
+			<band height="45" splitType="Stretch">
+				<staticText>
+					<reportElement key="staticText-7" style="BOLD" x="270" y="8" width="115" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement markup="styled"/>
+					<text><![CDATA[Unità organizzativa:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField" style="BOLD" x="369" y="8" width="50" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_UNITA_ORGANIZZATIVA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+					<reportElement key="textField" style="BOLD" x="416" y="8" width="385" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{DS_UNITA_ORGANIZZATIVA}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement key="textField" style="TITLE" x="5" y="5" width="265" height="17"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA["Distinta Mandati-Reversali- Esercizio " + $F{ESERCIZIO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement key="textField-3" style="NORMAL" x="5" y="26" width="95" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA["Distinta   " + $F{PG_DISTINTA}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="staticText-24" style="NORMAL" x="109" y="26" width="44" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement markup="styled"/>
+					<text><![CDATA[c/c n.]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="UnitaOrganizzativa" isBlankWhenNull="false">
+					<reportElement key="textField" style="NORMAL" x="153" y="26" width="609" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{banca}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<group name="PgDistinta" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{PG_DISTINTA}]]></groupExpression>
+		<groupHeader>
+			<band splitType="Stretch"/>
+		</groupHeader>
+		<groupFooter>
+			<band splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<group name="TipoDoc" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{TIPO_DOC}]]></groupExpression>
+		<groupHeader>
+			<band height="16" splitType="Stretch">
+				<staticText>
+					<reportElement key="staticText-8" style="BOLD" x="315" y="3" width="130" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement/>
+					<text><![CDATA[******** RIPORTO]]></text>
+				</staticText>
+				<textField evaluationTime="Group" evaluationGroup="TipoDoc" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField" style="NORMAL" x="589" y="0" width="70" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{RiportoTotDoc}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="TipoDoc" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField" style="NORMAL" x="659" y="0" width="70" height="13">
+						<printWhenExpression><![CDATA[new Boolean($F{TIPO_DOC}.equals( "R" ) == false)]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{RiportoTotRit}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="TipoDoc" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField" style="NORMAL" x="730" y="0" width="70" height="13">
+						<printWhenExpression><![CDATA[new Boolean($F{TIPO_DOC}.equals( "R" ) == false)]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{RiportoTotNetto}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18" splitType="Stretch">
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField-15" style="BOLD" x="315" y="0" width="130" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{descTotale}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="TipoDocB" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-16" style="BOLD" x="590" y="0" width="70" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{RiportoTotDoc}.add(
+$V{TotLordo}).subtract($V{AnnRitrasmTotLordo})]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="TipoDocB" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-17" style="BOLD" x="660" y="0" width="70" height="13">
+						<printWhenExpression><![CDATA[new Boolean($F{TIPO_DOC}.equals( "R" ) == false)]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{RiportoTotRit}.add( $V{TotRitenute} ).subtract($V{AnnRitrasmTotRitenute})]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="TipoDoc" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-18" style="BOLD" x="732" y="0" width="69" height="13">
+						<printWhenExpression><![CDATA[new Boolean($F{TIPO_DOC}.equals( "R" ) == false)]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{RiportoTotNetto}.add( $V{TotNetto} ).subtract($V{AnnRitrasmTotNetto})]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="TipoDocB">
+		<groupExpression><![CDATA[null]]></groupExpression>
+		<groupHeader>
+			<band height="16" splitType="Stretch">
+				<elementGroup>
+					<textField evaluationTime="Group" evaluationGroup="TipoDocB" isBlankWhenNull="false">
+						<reportElement key="textField" style="BOLD" x="55" y="3" width="100" height="13"/>
+						<box>
+							<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="0.0" lineColor="#000000"/>
+							<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textElement/>
+						<textFieldExpression class="java.lang.String"><![CDATA[$V{tipoDoc}]]></textFieldExpression>
+					</textField>
+				</elementGroup>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20" splitType="Stretch">
+				<staticText>
+					<reportElement key="staticText-19" style="BOLD" x="315" y="4" width="130" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement/>
+					<text><![CDATA[******** A RIPORTARE]]></text>
+				</staticText>
+				<textField evaluationTime="Group" evaluationGroup="TipoDocB" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-12" style="NORMAL" x="590" y="0" width="70" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{TotLordo_a_riportare}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="TipoDocB" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-13" style="NORMAL" x="660" y="0" width="70" height="13">
+						<printWhenExpression><![CDATA[new Boolean($F{TIPO_DOC}.equals( "R" ) == false)]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{TotRitenute_a_riportare}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="TipoDocB" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-14" style="NORMAL" x="732" y="0" width="69" height="13">
+						<printWhenExpression><![CDATA[new Boolean($F{TIPO_DOC}.equals( "R" ) == false)]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{TotNetto_a_riportare}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Etichette">
+		<groupExpression><![CDATA[null]]></groupExpression>
+		<groupHeader>
+			<band height="28" splitType="Stretch">
+				<staticText>
+					<reportElement key="staticText-9" style="BOLD" x="5" y="0" width="50" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Numero]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-10" style="BOLD" x="5" y="12" width="205" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement/>
+					<text><![CDATA[Descrizione]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-11" style="BOLD" x="235" y="0" width="240" height="25"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Beneficiario
+Descrizione]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-13" style="BOLD" x="475" y="0" width="65" height="25"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Data
+annullamento
+]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-14" style="BOLD" x="539" y="0" width="50" height="25"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[N. distinta
+precedente
+]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-15" style="BOLD" x="589" y="0" width="70" height="25"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[ Lordo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-16" style="BOLD" x="659" y="0" width="70" height="25"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Ritenute]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-17" style="BOLD" x="730" y="0" width="70" height="25"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Netto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-18" style="BOLD" x="160" y="0" width="50" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Data
+
+]]></text>
+				</staticText>
+				<line>
+					<reportElement key="line-6" positionType="FixRelativeToBottom" x="5" y="26" width="800" height="1"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<group name="Stato">
+		<groupExpression><![CDATA[$F{STATO}]]></groupExpression>
+		<groupHeader>
+			<band height="16" splitType="Stretch">
+				<printWhenExpression><![CDATA[new Boolean($F{STATO}.trim().equals("A"))]]></printWhenExpression>
+				<staticText>
+					<reportElement key="staticText-23" style="BOLD" x="85" y="0" width="50" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Annullati]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="17" splitType="Stretch">
+				<printWhenExpression><![CDATA[new Boolean($F{STATO}.trim().equals( "A" ))]]></printWhenExpression>
+				<textField pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField" style="NORMAL" x="589" y="0" width="70" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{AnnullatiLordo}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField" style="NORMAL" x="659" y="0" width="70" height="13">
+						<printWhenExpression><![CDATA[new Boolean($F{TIPO_DOC}.equals( "R" ) == false)]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{AnnullatiRitenute}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField" style="NORMAL" x="731" y="0" width="69" height="13">
+						<printWhenExpression><![CDATA[new Boolean($F{TIPO_DOC}.equals( "R" ) == false)]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{AnnullatiNetto}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="staticText-20" style="BOLD" x="315" y="0" width="130" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement/>
+					<text><![CDATA[Totale Annullati]]></text>
+				</staticText>
+				<line>
+					<reportElement key="line-7" style="NORMAL" positionType="FixRelativeToBottom" x="315" y="15" width="490" height="1"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band height="400" splitType="Stretch">
+			<image hAlign="Center">
+				<reportElement x="0" y="18" width="842" height="380" printWhenGroupChanges="PgDistinta">
+					<printWhenExpression><![CDATA[$F{FL_FLUSSO}.compareTo( "Y" )==0]]></printWhenExpression>
+				</reportElement>
+				<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE} +"Flusso.gif"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="39" splitType="Stretch">
+			<image scaleImage="RetainShape">
+				<reportElement key="image-1" mode="Transparent" x="5" y="0" width="400" height="36"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="16" splitType="Stretch">
+			<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue() == 1)]]></printWhenExpression>
+			<staticText>
+				<reportElement key="staticText-22" style="NORMAL" x="5" y="1" width="120" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement markup="styled"/>
+				<text><![CDATA[All'Istituto Cassiere]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<textField pattern="###0" isBlankWhenNull="false">
+				<reportElement key="textField" style="NORMAL" x="5" y="0" width="50" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{PG_DOC}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-4" style="NORMAL" x="5" y="13" width="225" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DS_DOC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-5" style="NORMAL" x="235" y="0" width="240" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CODICE_FISCALE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-6" style="NORMAL" x="235" y="13" width="240" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DS_ANAGRAFICA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement key="textField" style="NORMAL" x="160" y="0" width="50" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DT_EMISSIONE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField-7" style="NORMAL" x="485" y="0" width="50" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DT_ANNULLAMENTO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0" isBlankWhenNull="false">
+				<reportElement key="textField-8" style="NORMAL" x="539" y="0" width="50" height="13">
+					<printWhenExpression><![CDATA[new Boolean($F{PG_DISTINTA_PREC}.intValue() != 0)]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{PG_DISTINTA_PREC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-9" style="NORMAL" x="590" y="0" width="70" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{DettLordo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-10" style="NORMAL" x="660" y="0" width="70" height="13">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO_DOC}.equals( "R" ) == false)]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{DettRitenute}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-11" style="NORMAL" x="731" y="0" width="70" height="13">
+					<printWhenExpression><![CDATA[new Boolean($F{TIPO_DOC}.equals( "R" ) == false)]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{DettNetto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="2" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
