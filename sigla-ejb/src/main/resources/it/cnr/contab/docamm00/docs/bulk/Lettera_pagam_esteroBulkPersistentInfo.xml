@@ -22,9 +22,18 @@
 		<columnMapping
 			columnName="TI_SOSPESO_RISCONTRO"
 			propertyName="sospeso.ti_sospeso_riscontro" />
+		<columnMapping
+			columnName="ESERCIZIO_DISTINTA"
+			propertyName="distintaCassiere.esercizio" />
+		<columnMapping
+			columnName="PG_DISTINTA"
+			propertyName="distintaCassiere.pgDistinta" />
+				
 	</defaultColumnMap>		
 
 	<persistentProperty
 		name="sospeso" />
-			
+	<persistentProperty
+		name="distintaCassiere" />
+				
 </SQLPersistentInfo>

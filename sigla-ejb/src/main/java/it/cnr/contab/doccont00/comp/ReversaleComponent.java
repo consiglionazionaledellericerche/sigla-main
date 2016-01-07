@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+
 import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.ejb.*;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
@@ -20,6 +21,7 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.doccont00.tabrif.bulk.*;
 import it.cnr.contab.config00.sto.bulk.*;
+
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.*;
@@ -36,7 +38,6 @@ import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
@@ -3899,8 +3900,9 @@ public java.lang.Boolean isCollegamentoSiopeCompleto (UserContext userContext, R
 {
 	try
 	{
+		ReversaleHome reversaleHome  = (ReversaleHome)getHome(userContext, reversale.getClass());
+		reversale = (ReversaleBulk) reversaleHome.findByPrimaryKey(reversale);
 		if (reversale.isRequiredSiope()) {
-			ReversaleHome reversaleHome  = (ReversaleHome)getHome(userContext, reversale.getClass());
 	
 			for (Iterator i = reversaleHome.findReversale_riga(userContext, reversale).iterator(); i.hasNext();){
 				if (!this.isCollegamentoSiopeCompleto(userContext, (Reversale_rigaBulk)i.next())) return Boolean.FALSE;
