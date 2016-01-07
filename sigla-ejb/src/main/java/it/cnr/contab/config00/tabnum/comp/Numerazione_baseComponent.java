@@ -2,6 +2,8 @@ package it.cnr.contab.config00.tabnum.comp;
 
 import java.io.Serializable;
 
+import it.cnr.contab.config00.tabnum.bulk.Numerazione_baseBulk;
+import it.cnr.contab.config00.tabnum.bulk.Numerazione_baseHome;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OutdatedResourceException;
 import it.cnr.jada.comp.ComponentException;
@@ -64,8 +66,8 @@ public Numerazione_baseComponent() {
  */
 public Long creaNuovoProgressivo(UserContext userContext,Integer esercizio,String tabella,String colonna,String user) throws it.cnr.jada.comp.ComponentException,it.cnr.jada.bulk.BusyResourceException {
 	try {
-		it.cnr.contab.config00.tabnum.bulk.Numerazione_baseHome home = new it.cnr.contab.config00.tabnum.bulk.Numerazione_baseHome(getConnection(userContext));
-		it.cnr.contab.config00.tabnum.bulk.Numerazione_baseBulk numerazione = (it.cnr.contab.config00.tabnum.bulk.Numerazione_baseBulk)home.findByPrimaryKey(new it.cnr.contab.config00.tabnum.bulk.Numerazione_baseKey(colonna,esercizio,tabella));
+		Numerazione_baseHome home = (Numerazione_baseHome) getHome(userContext, Numerazione_baseBulk.class);
+		Numerazione_baseBulk numerazione = (Numerazione_baseBulk)home.findByPrimaryKey(new Numerazione_baseBulk(colonna,esercizio,tabella));
 		if (numerazione == null) {
 			numerazione = new it.cnr.contab.config00.tabnum.bulk.Numerazione_baseBulk();
 			numerazione.setColonna(colonna);

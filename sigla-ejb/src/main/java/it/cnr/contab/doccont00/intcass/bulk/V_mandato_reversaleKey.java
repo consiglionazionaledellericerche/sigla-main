@@ -1,21 +1,25 @@
 package it.cnr.contab.doccont00.intcass.bulk;
 
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.contab.cmis.annotation.CMISPolicy;
+import it.cnr.contab.cmis.annotation.CMISProperty;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.persistency.KeyedPersistent;
 
 public class V_mandato_reversaleKey extends OggettoBulk implements KeyedPersistent {
 	// CD_CDS VARCHAR(30)
+	@CMISPolicy(name="P:strorg:cds", property=@CMISProperty(name="strorgcds:codice"))
 	private java.lang.String cd_cds;
 
 	// CD_TIPO_DOCUMENTO_CONT VARCHAR(10)
+	@CMISProperty(name="doccont:tipo")			
 	private java.lang.String cd_tipo_documento_cont;
 
 	// ESERCIZIO DECIMAL(4,0)
+	@CMISProperty(name="doccont:esercizioDoc")		
 	private java.lang.Integer esercizio;
 
 	// PG_DOCUMENTO_CONT DECIMAL(10,0)
+	@CMISProperty(name="doccont:numDoc")		
 	private java.lang.Long pg_documento_cont;
 
 public V_mandato_reversaleKey() {

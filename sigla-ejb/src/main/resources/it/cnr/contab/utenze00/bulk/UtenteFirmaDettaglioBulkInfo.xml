@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="utente"
+		property="utente"
+		inputType="SEARCHTOOL"
+		formName="searchtool_utente_gest"
+		nullable="false"
+		enabledOnSearch="true"
+		label="Utente" />	
+	<fieldProperty
+		name="cdUtente"
+		property="cdUtente"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Utente" />
+	<fieldProperty
+		name="unitaOrganizzativa"
+		property="unitaOrganizzativa"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		nullable="false"
+		enabledOnSearch="true"		
+		label="Unità organizzativa" />	
+	<fieldProperty
+		name="cdUnitaOrganizzativa"
+		property="cdUnitaOrganizzativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Unità organizzativa" />
+	<fieldProperty
+		name="daData"
+		property="daData"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		label="Da data" />
+	<fieldProperty
+		name="aData"
+		property="a_data"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		label="A Data" />
+	<fieldProperty
+		name="funzioniAbilitate"
+		property="funzioniAbilitate"
+		inputType="SELECT"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		enabledOnSearch="true"
+		keysProperty="abilitatoKeys"				
+		label="Funzioni abilitate" />
+	<fieldProperty
+		name="titoloFirma"
+		property="titoloFirma"
+		inputType="SELECT"
+		keysProperty="titoloKeys"
+		enabledOnSearch="true"		
+		nullable="false"
+		maxLength="250"
+		label="Titolo" />
+	<fieldProperty
+		name="delegatoDa"
+		property="delegatoDa"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnSearch="true"		
+		label="Delegato da" />
+	<fieldProperty
+		name="delegato"
+		property="delegato"
+		inputType="SEARCHTOOL"
+		formName="searchtool_utente_gest"
+		nullable="false"
+		enabledOnSearch="true"
+		label="Delegato da" />	
+		
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdUtente" />
+		<formFieldProperty
+			name="cdUnitaOrganizzativa" />
+	</form>
+	<formFieldProperty
+		name="utente" />	
+	<formFieldProperty
+		name="unitaOrganizzativa" />	
+	<formFieldProperty
+		name="daData" />
+	<formFieldProperty
+		name="aData" />
+	<formFieldProperty
+		name="funzioniAbilitate" 
+		style="width: 35em; height:100"/>
+	<formFieldProperty
+		name="flAbilitatoFirma" />
+	<formFieldProperty
+		name="titoloFirma" />
+	<formFieldProperty
+		name="delegato" />
+	
+	<findFieldProperty
+		name="cdUtente" />
+	<findFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<findFieldProperty
+		name="daData" />
+	<findFieldProperty
+		name="aData" />
+	<findFieldProperty
+		name="funzioniAbilitate" />
+	<findFieldProperty
+		name="titoloFirma" />
+	<findFieldProperty
+		name="delegatoDa" />
+	
+	<columnFieldProperty
+		name="cdUtente" />
+	<columnFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<columnFieldProperty
+		name="daData" />
+	<columnFieldProperty
+		name="aData" />
+	<columnFieldProperty
+		name="displayFunzioniAbilitate"
+		property="displayFunzioniAbilitate"
+		inputType="TEXT"
+		label="Funzioni abilitate" />
+	<columnFieldProperty
+		name="titoloFirma" />
+	<columnFieldProperty
+		name="delegatoDa" />
+</bulkInfo>

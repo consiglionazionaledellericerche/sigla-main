@@ -1,0 +1,11 @@
+<webscript>
+   <shortname>Firma documenti contabili</shortname>
+   <description><![CDATA[
+   ]]>
+   </description>
+   <url>/sigla/firma/doccont</url>
+   <family>SIGLA</family>
+   <format default="json">extension</format>
+   <authentication>user</authentication>
+   <transaction>required</transaction>
+</webscript>
