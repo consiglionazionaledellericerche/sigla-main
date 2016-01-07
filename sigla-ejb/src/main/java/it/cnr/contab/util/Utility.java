@@ -73,10 +73,10 @@ public final class Utility {
 			return object1.equalsByPrimaryKey(object2);
 		return false;
 	}
-	
+
 	public static BigDecimal nvl(BigDecimal imp){
 		if (imp != null)
-		  return imp;
+			return imp;
 		return ZERO;  
 	}
 	/**
@@ -102,25 +102,97 @@ public final class Utility {
 			return sb.toString();
 		}
 		else 
-		  return null;
+			return null;
 	}
-	
-	
+
+
 	public static String lpad(double d, int size, char pad) {
-        return lpad(Double.toString(d), size, pad);
+		return lpad(Double.toString(d), size, pad);
 	}
 
 	public static String lpad(long l, int size, char pad) {
-        return lpad(Long.toString(l), size, pad);
+		return lpad(Long.toString(l), size, pad);
 	}
 
 	public static String lpad(String s, int size, char pad) {
-        StringBuilder builder = new StringBuilder();
-        while (builder.length() + s.length() < size) {
-                builder.append(pad);
-        }
-        builder.append(s);
-        return builder.toString();
+		StringBuilder builder = new StringBuilder();
+		while (builder.length() + s.length() < size) {
+			builder.append(pad);
+		}
+		builder.append(s);
+		return builder.toString();
+	}	
+
+	public static String NumberToText(int n) {
+		// metodo wrapper
+		if (n == 0) {
+			return "zero";
+		} else {
+			return NumberToTextRicorsiva(n);
+		}
+	}
+
+	public static String NumberToText(BigDecimal importo) {
+		int parteIntera = importo.intValue();
+		String parteDecimale = String.valueOf(importo.remainder(BigDecimal.ONE).movePointRight(importo.scale()).abs().toBigInteger());
+		if (parteIntera == 0) {
+			return "zero/" + parteDecimale;
+		} else {
+			return NumberToTextRicorsiva(parteIntera) + "/" + parteDecimale;
+		}
+	}
+
+	private static String NumberToTextRicorsiva(int n) {
+		if (n < 0) {
+			return "meno " + NumberToTextRicorsiva(-n);
+		} else if (n == 0){
+			return "";
+		} else if (n <= 19){
+			return new String[] { "uno", "due", "tre", "quattro", "cinque", 
+					"sei", "sette", "otto", "nove", "dieci", 
+					"undici", "dodici", "tredici", 
+					"quattordici", "quindici", "sedici", 
+					"diciassette", "diciotto", "diciannove" }[n-1];
+		} else if (n <= 99) {
+			String[] vettore = 
+				{ "venti", "trenta", "quaranta", "cinquanta", "sessanta", 
+					"settanta", "ottanta", "novanta" };
+			String letter = vettore[n / 10 - 2];
+			int t = n % 10; // t è la prima cifra di n
+			// se è 1 o 8 va tolta la vocale finale di letter
+			if (t == 1 || t == 8 ) {
+				letter = letter.substring(0, letter.length() - 1);
+			}
+			return letter + NumberToTextRicorsiva(n % 10);
+		} else if (n <= 199){
+			return "cento" + NumberToTextRicorsiva(n % 100);
+		} else if (n <= 999){
+			int m = n % 100;
+			m /= 10; // divisione intera per 10 della variabile
+			String letter = "cent";
+			if (m != 8){
+				letter = letter + "o";
+			}
+			return NumberToTextRicorsiva(n / 100) + letter + 
+					NumberToTextRicorsiva(n % 100);
+		}
+		else if (n <= 1999){
+			return "mille" + NumberToTextRicorsiva(n % 1000);
+		}  else if (n <= 999999){
+			return NumberToTextRicorsiva(n / 1000) + "mila" + 
+					NumberToTextRicorsiva(n % 1000);
+		}
+		else if (n <= 1999999){
+			return "unmilione" + NumberToTextRicorsiva(n % 1000000);
+		} else if (n <= 999999999){
+			return NumberToTextRicorsiva(n / 1000000) + "milioni" + 
+					NumberToTextRicorsiva(n % 1000000);
+		} else if (n <= 1999999999){
+			return "unmiliardo" + NumberToTextRicorsiva(n % 1000000000);
+		} else {
+			return NumberToTextRicorsiva(n / 1000000000) + "miliardi" + 
+					NumberToTextRicorsiva(n % 1000000000);
+		}
 	}	
 	public static Parametri_cnrComponentSession createParametriCnrComponentSession()throws EJBException, RemoteException {
 		return (Parametri_cnrComponentSession)EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession", Parametri_cnrComponentSession.class);		
@@ -154,7 +226,7 @@ public final class Utility {
 	public static PdgAggregatoModuloComponentSession createPdgAggregatoModuloComponentSession() throws javax.ejb.EJBException {
 		return (PdgAggregatoModuloComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPREVENT01_EJB_PdgAggregatoModuloComponentSession", PdgAggregatoModuloComponentSession.class);
 	}	
-	
+
 	/**
 	 * Crea la PdgContrSpeseComponentSession da usare per effettuare operazioni
 	 */

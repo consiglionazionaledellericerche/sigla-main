@@ -1,0 +1,11 @@
+<webscript>
+   <shortname>Firma p7m</shortname>
+   <description><![CDATA[
+   ]]>
+   </description>
+   <url>/sigla/firma/p7m</url>
+   <family>SIGLA</family>
+   <format default="json">extension</format>
+   <authentication>user</authentication>
+   <transaction>required</transaction>
+</webscript>

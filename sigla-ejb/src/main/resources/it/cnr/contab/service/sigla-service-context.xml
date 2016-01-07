@@ -49,11 +49,12 @@
 			<bean class="org.apache.commons.httpclient.MultiThreadedHttpConnectionManager"></bean>
 		</constructor-arg>
 	</bean>
-	<bean id="gson" class="com.google.gson.Gson"/>	
-    <bean id="printService" class="it.cnr.contab.reports.service.PrintService">
+	<bean id="gson" class="com.google.gson.Gson"/>
+
+	<bean id="printService" class="it.cnr.contab.reports.service.PrintService">
     	<property name="offlineReportComponent" ref="offlineReportComponent"/>
-    	<property name="gson" ref="gson"/>
     	<property name="httpClient" ref="httpClient"/>
+    	<property name="gson" ref="gson"/>
     </bean>
 
     <bean id="ldapService" class="it.cnr.contab.utenze00.service.LDAPService">
@@ -141,5 +142,17 @@
 	          <ref bean="AllineaNotificheCronTriggerBean" />
 	      </list>
 	  </property>
-	</bean>	    
+	</bean>
+	<bean name="props-aruba" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+	    <property name="properties">
+	        <value>
+	            arubaRemoteSignService.certId=${arubaRemoteSignService.certId}
+	            arubaRemoteSignService.typeOtpAuth=${arubaRemoteSignService.typeOtpAuth}
+	            arubaRemoteSignService.url=${arubaRemoteSignService.url}
+	        </value>
+	    </property>
+	</bean>	
+	<bean id="arubaSignServiceClient" class="it.cnr.jada.firma.arss.ArubaSignServiceClient">
+	  <property name="props" ref="props-aruba"></property>	  
+	</bean>    
 </beans>

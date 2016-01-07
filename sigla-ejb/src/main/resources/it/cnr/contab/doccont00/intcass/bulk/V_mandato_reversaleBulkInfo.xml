@@ -17,7 +17,7 @@
 		inputSize="30"
 		inputType="TEXT"
 		label="Cds"
-		enabledOnFreeSearch="false"		
+		enabledOnFreeSearch="true"		
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="im_documento_cont"
@@ -47,7 +47,7 @@
 		inputSize="10"
 		inputType="ROTEXT"
 		label="Unit&#224; Organizzativa"
-		enabledOnFreeSearch="false"		
+		enabledOnFreeSearch="true"		
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="ds_unita_organizzativa"
@@ -74,6 +74,7 @@
 		inputType="SELECT"
 		keysProperty="stato_trasmissioneKeys"
 		label="Stato trasmissione"
+		nullable="false"
 		enabledOnFreeSearch="false"
 		caseSensitiveSearch="false"/>
 	<fieldProperty
@@ -303,11 +304,17 @@
 		<columnFieldProperty
 		name="denominazione_sede" />
 	</columnSet> 
-	
+	<columnSet
+        name="cds_uo">
+		<columnFieldProperty
+		name="cd_cds" />
+		<columnFieldProperty
+		name="cd_unita_organizzativa" />
+	</columnSet>	
 	<columnSet
         name="default">
 		<columnFieldProperty
-		name="cd_tipo_documento_cont" />
+		name="cd_tipo_documento_cont" />				
 		<columnFieldProperty
 		name="pg_documento_cont" />
 		<columnFieldProperty
@@ -366,7 +373,88 @@
 		name="cd_anag" />
 		<columnFieldProperty
 		name="denominazione_sede" />
-	</columnSet> 
+	</columnSet>
+	 
+	<columnSet
+        name="firmaBase">
+		<columnFieldProperty
+		name="cd_tipo_documento_cont" />
+		<columnFieldProperty
+		name="pg_documento_cont" />
+		<columnFieldProperty
+		name="ti_documento_cont" />
+		<columnFieldProperty
+		name="im_documento_cont" />
+		<columnFieldProperty
+		name="ds_documento_cont" />
+		<columnFieldProperty
+		name="dt_emissione" />
+		<columnFieldProperty
+		name="cd_terzo" />
+		<columnFieldProperty
+		name="cd_anag" />
+		<columnFieldProperty
+		name="denominazione_sede" />
+	</columnSet>	
+	<columnSet
+        name="firmaPredisposta">
+		<columnFieldProperty
+		name="cd_tipo_documento_cont" />
+		<columnFieldProperty
+		name="pg_documento_cont" />
+		<columnFieldProperty
+		name="ti_documento_cont" />
+		<columnFieldProperty
+		name="im_documento_cont" />
+		<columnFieldProperty
+		name="ds_documento_cont" />
+		<columnFieldProperty
+		name="dt_emissione" />
+		<columnFieldProperty
+		name="cd_terzo" />
+		<columnFieldProperty
+		name="cd_anag" />
+		<columnFieldProperty
+		name="denominazione_sede" />
+		<columnFieldProperty
+		name="documento"
+		property="documento"
+		inputType="TEXT"
+		label="documento" />				
+	</columnSet>	
+	<columnSet
+        name="firmaEseguita">
+		<columnFieldProperty
+		name="cd_tipo_documento_cont" />
+		<columnFieldProperty
+		name="pg_documento_cont" />
+		<columnFieldProperty
+		name="ti_documento_cont" />
+		<columnFieldProperty
+		name="im_documento_cont" />
+		<columnFieldProperty
+		name="ds_documento_cont" />
+		<columnFieldProperty
+		name="dt_emissione" />
+		<columnFieldProperty
+		name="cd_terzo" />
+		<columnFieldProperty
+		name="cd_anag" />
+		<columnFieldProperty
+		name="denominazione_sede" />
+		<columnFieldProperty
+		name="documento"
+		property="documento"
+		inputType="TEXT"
+		label="documento" />				
+		<columnFieldProperty
+		name="dt_firma"
+		property="dt_firma"
+		inputType="TEXT"
+		label="Data di Firma" />				
+		
+	</columnSet>	
+			
 	
 	<findFieldProperty
 		name="dt_trasmissione" />
