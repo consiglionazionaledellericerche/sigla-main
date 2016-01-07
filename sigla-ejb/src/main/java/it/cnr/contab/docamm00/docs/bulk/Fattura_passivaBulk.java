@@ -17,6 +17,7 @@ import it.cnr.contab.docamm00.tabrif.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoOrdBulk;
 import it.cnr.jada.bulk.*;
@@ -228,6 +229,8 @@ public abstract class Fattura_passivaBulk
 	
 	private BulkList<DocumentoEleAllegatiBulk> docEleAllegatiColl = new BulkList<DocumentoEleAllegatiBulk>();
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
+	public final static java.util.Dictionary ti_bonifico_mezzoKeys = Lettera_pagam_esteroBulk.ti_bonifico_mezzoKeys, 
+			ti_ammontare_debitoKeys = Lettera_pagam_esteroBulk.ti_ammontare_debitoKeys, ti_commissione_speseKeys = Lettera_pagam_esteroBulk.ti_commissione_speseKeys;
 	
 public Fattura_passivaBulk() {
 	super();
@@ -3024,4 +3027,11 @@ public void validateDate() throws ValidationException {
 				||(isGenerataDaCompenso()&& getPg_fattura_passiva()!=null)
 				||isStampataSuRegistroIVA()); 
 	}
+	public boolean isROStatoTrasmissioneLettera() {
+		if (lettera_pagamento_estero == null)
+			return true;
+		if (!lettera_pagamento_estero.getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO))
+			return true;
+		return false;
+	}	
 }

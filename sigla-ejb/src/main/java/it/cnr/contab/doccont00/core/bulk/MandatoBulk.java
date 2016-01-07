@@ -52,6 +52,11 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk {
 	public final static String STATO_TRASMISSIONE_NON_INSERITO	= "N";
 	public final static String STATO_TRASMISSIONE_INSERITO		= "I";
 	public final static String STATO_TRASMISSIONE_TRASMESSO		= "T";
+	
+	//public final static String STATO_TRASMISSIONE_DA_FIRMARE	= "D";
+	public final static String STATO_TRASMISSIONE_PREDISPOSTO	= "P";
+	public final static String STATO_TRASMISSIONE_PRIMA_FIRMA	= "F";
+	
 
 	public final static Dictionary stato_trasmissioneKeys;
 
@@ -61,6 +66,7 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk {
 		stato_trasmissioneKeys.put(STATO_TRASMISSIONE_NON_INSERITO,	"Non inserito in distinta");
 		stato_trasmissioneKeys.put(STATO_TRASMISSIONE_INSERITO,		"Inserito in distinta");
 		stato_trasmissioneKeys.put(STATO_TRASMISSIONE_TRASMESSO,	"Trasmesso");
+		
 	};
 
 	public final static String TIPO_COMPETENZA	= "C";
