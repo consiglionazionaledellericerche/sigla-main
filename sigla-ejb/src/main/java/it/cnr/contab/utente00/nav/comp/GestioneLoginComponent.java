@@ -898,7 +898,7 @@ public class GestioneLoginComponent
 				ldapLogin.setBaseDN(ente.getLdap_base_dn());
 				
 				try {
-					ldapLogin.validaUtente(utenteReale.getCd_utente_uid(), utenteReale.getLdap_password(), calNow, abilita);
+					ldapLogin.validaUtente(utenteReale, calNow, abilita);
 					userValidated = true;
 					break;
 				} catch (AttributoNonPresenteException e) {

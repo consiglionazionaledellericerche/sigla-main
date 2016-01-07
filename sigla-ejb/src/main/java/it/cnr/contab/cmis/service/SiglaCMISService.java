@@ -108,6 +108,10 @@ public class SiglaCMISService {
 		this.baseURL = baseURL;
 	}
 
+	public String getBaseURL() {
+		return baseURL;
+	}
+
 	public void setServerParameters(Map<String, String> serverParameters) {
 		this.serverParameters = serverParameters;
 	}

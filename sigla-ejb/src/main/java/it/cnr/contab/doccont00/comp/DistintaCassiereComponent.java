@@ -18,6 +18,7 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IHome;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIHome;
+import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import it.cnr.contab.doccont00.core.bulk.Ass_mandato_reversaleBulk;
 import it.cnr.contab.doccont00.core.bulk.Ass_mandato_reversaleHome;
@@ -31,6 +32,7 @@ import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleIBulk;
 import it.cnr.contab.doccont00.core.bulk.Reversale_rigaIBulk;
 import it.cnr.contab.doccont00.core.bulk.Reversale_rigaIHome;
+import it.cnr.contab.doccont00.intcass.bulk.DistintaCassiere1210Bulk;
 import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereHome;
 import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiere_detBulk;
@@ -60,6 +62,7 @@ import it.cnr.jada.comp.CRUDNotDeletableException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBroker;
@@ -2655,7 +2658,40 @@ public class DistintaCassiereComponent extends
 
 		return sql;
 	}
-
+	/**
+	 * Crea il SQLBuilder per recuperare i documenti 1210 collegabili alla distinta
+	 * @param userContext
+	 * @param distinta
+	 * @param bulkClass
+	 * @param clauses
+	 * @return
+	 * @throws ComponentException
+	 */
+	public SQLBuilder selectDistintaCassiere1210LettereDaCollegareByClause(UserContext userContext, DistintaCassiere1210Bulk distinta, Class bulkClass, CompoundFindClause clauses) throws ComponentException {
+		SQLBuilder sql = getHome(userContext, Lettera_pagam_esteroBulk.class).createSQLBuilder();
+		sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+		sql.addClause(FindClause.AND, "stato_trasmissione", SQLBuilder.EQUALS, MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA);
+		sql.addClause(FindClause.AND, "distintaCassiere", SQLBuilder.ISNULL, null);		
+		return sql;		
+	}
+	
+	/**
+	 * Crea il SQLBuilder per recuperare i documenti 1210 collegati alla distinta
+	 * @param userContext
+	 * @param distinta
+	 * @param bulkClass
+	 * @param clauses
+	 * @return
+	 * @throws ComponentException
+	 */
+	public SQLBuilder selectDistintaCassiere1210LettereCollegateByClause(UserContext userContext, DistintaCassiere1210Bulk distinta, Class bulkClass, CompoundFindClause clauses) throws ComponentException {
+		SQLBuilder sql = getHome(userContext, Lettera_pagam_esteroBulk.class).createSQLBuilder();
+		if (distinta.getEsercizio() == null)
+			sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, 0);			
+		sql.addClause(FindClause.AND, "distintaCassiere", SQLBuilder.EQUALS, distinta);			
+		return sql;		
+	}
+	
 	/**
 	 * Crea il SQLBuilder per recuperare tutti dettagli della distinta
 	 * 

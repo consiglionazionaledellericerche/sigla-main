@@ -6303,10 +6303,10 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			UserContext userContext, MandatoBulk mandato)
 			throws ComponentException {
 		try {
+			MandatoHome mandatoHome = (MandatoHome) getHome(userContext,
+					mandato.getClass());
+			mandato = (MandatoBulk) mandatoHome.findByPrimaryKey(mandato);
 			if (mandato.isRequiredSiope()) {
-				MandatoHome mandatoHome = (MandatoHome) getHome(userContext,
-						mandato.getClass());
-
 				for (Iterator i = mandatoHome.findMandato_riga(userContext,
 						mandato).iterator(); i.hasNext();) {
 					if (!this.isCollegamentoSiopeCompleto(userContext,

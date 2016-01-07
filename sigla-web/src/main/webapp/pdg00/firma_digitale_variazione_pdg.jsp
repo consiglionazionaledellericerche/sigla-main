@@ -7,6 +7,7 @@
 			it.cnr.contab.pdg00.bp.FirmaDigitalePdgVariazioniBP"
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
 <head>
 <% JSPUtils.printBaseUrl(pageContext); %>
 <title>Risultato ricerca</title>

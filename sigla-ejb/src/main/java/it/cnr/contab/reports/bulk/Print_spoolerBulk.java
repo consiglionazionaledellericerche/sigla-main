@@ -1,6 +1,8 @@
 package it.cnr.contab.reports.bulk;
 
 import java.io.Serializable;
+import java.text.Format;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -134,6 +136,14 @@ public class Print_spoolerBulk extends Print_spoolerBase {
 		params.add(param);
 	}
 
+	public void addParam(String paramName, Date valoreParam, Class<Date> paramType, Format format){
+		Print_spooler_paramBulk param = new Print_spooler_paramBulk();
+		param.setNomeParam(paramName);
+		param.setValoreParam(format.format(valoreParam));
+		param.setParamType(paramType.getName());
+		params.add(param);
+	}
+	
 	public <T extends Serializable> void addParam(String paramName, T valoreParam, Class<T> paramType){
 		Print_spooler_paramBulk param = new Print_spooler_paramBulk();
 		param.setNomeParam(paramName);

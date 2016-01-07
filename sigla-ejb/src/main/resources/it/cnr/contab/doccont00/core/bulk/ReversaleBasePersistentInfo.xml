@@ -135,6 +135,11 @@
 			sqlTypeName="VARCHAR"
 			columnSize="300"
 			nullable="false" />
+		<columnMapping
+			columnName="DT_FIRMA"
+			propertyName="dt_firma"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />								
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_annullamento" />
@@ -180,4 +185,6 @@
 		name="dt_incasso" />
 	<persistentProperty
 		name="ds_reversale" />
+	<persistentProperty
+		name="dt_firma" />		
 </SQLPersistentInfo>

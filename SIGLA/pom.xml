@@ -87,8 +87,13 @@
 		<dependency>
 			<groupId>it.cnr.commons</groupId>
 			<artifactId>firmadigitale</artifactId>
-			<version>0.3</version>
-		</dependency>		
+			<version>1.1</version>
+		</dependency>	
+		<dependency>
+			<groupId>org.jvnet.staxex</groupId>
+			<artifactId>stax-ex</artifactId>
+			<version>1.2</version>
+		</dependency>			
 		<dependency>
 			<groupId>it.cnr</groupId>
 			<artifactId>sigla-ws-client</artifactId>

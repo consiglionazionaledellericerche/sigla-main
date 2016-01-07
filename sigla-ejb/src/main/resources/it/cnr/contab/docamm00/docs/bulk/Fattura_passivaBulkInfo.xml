@@ -796,7 +796,8 @@
 	<fieldProperty
 		name="im_pagamento"
 		property="lettera_pagamento_estero.im_pagamento"
-		inputType="ROTEXT"
+		inputType="TEXT"
+		readonlyProperty="ROStatoTrasmissioneLettera"
 		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		nullable="false"
 		label="Importo" />
@@ -866,6 +867,146 @@
 		enabledOnFreeSearch="false"
 		completeOnSave="false"
 		label="Sospeso"/>
+	
+	<fieldProperty
+		name="bonifico_mezzo"
+		property="lettera_pagamento_estero.bonifico_mezzo"
+		maxLength="1"
+		inputSize="1"
+		inputType="RADIOGROUP"
+		keysProperty="ti_bonifico_mezzoKeys"
+		label="Vi preghiamo disporre il seguente bonifico&lt;br&gt;per nostro ordine e conto a mezzo:"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		nullable="false"
+		layout="VERTICAL"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false"/>
+	<fieldProperty
+		name="divisa"
+		property="lettera_pagamento_estero.divisa"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		inputType="TEXT"
+		label="Divisa"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="beneficiario"
+		property="lettera_pagamento_estero.beneficiario"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		maxLength="300"
+		inputSize="300"
+		inputType="TEXTAREA"
+		cols="75"
+		rows="4"
+		label="Beneficiario"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="num_conto_ben"
+		property="lettera_pagamento_estero.num_conto_ben"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		maxLength="250"
+		inputSize="100"		
+		inputType="TEXT"
+		label="Conto n°"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="iban"
+		property="lettera_pagamento_estero.iban"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		maxLength="250"
+		inputSize="100"		
+		inputType="TEXT"
+		label="IBAN"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="indirizzo"
+		property="lettera_pagamento_estero.indirizzo"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		maxLength="250"
+		inputSize="100"		
+		inputType="TEXT"
+		label="Presso/tramite"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="indirizzo_swift"
+		property="lettera_pagamento_estero.indirizzo_swift"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		maxLength="250"
+		inputSize="100"		
+		inputType="TEXT"
+		label="Indirizzo - SWIFT/BIC"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="motivo_pag"
+		property="lettera_pagamento_estero.motivo_pag"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		maxLength="250"
+		inputSize="100"		
+		inputType="TEXT"
+		label="MOTIVO DEL PAGAMENTO"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="ammontare_debito"
+		property="lettera_pagamento_estero.ammontare_debito"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		maxLength="1"
+		inputSize="1"
+		inputType="RADIOGROUP"
+		keysProperty="ti_ammontare_debitoKeys"
+		label="Del relativo ammontare/controvalore&lt;br&gt;ci darete debito nel"
+		nullable="false"
+		layout="VERTICAL"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false"/>
+	<fieldProperty
+		name="conto_debito"
+		property="lettera_pagamento_estero.conto_debito"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		maxLength="250"
+		inputSize="100"		
+		inputType="TEXT"
+		label="Numero Conto"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />		
+	<fieldProperty
+		name="commissioni_spese"
+		property="lettera_pagamento_estero.commissioni_spese"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		maxLength="1"
+		inputSize="1"
+		inputType="RADIOGROUP"
+		keysProperty="ti_commissione_speseKeys"
+		label="Vostre commissioni e spese:"
+		nullable="false"
+		layout="VERTICAL"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false"/>
+	<fieldProperty
+		name="commissioni_spese_estere"
+		property="lettera_pagamento_estero.commissioni_spese_estere"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		maxLength="1"
+		inputSize="1"
+		inputType="RADIOGROUP"
+		keysProperty="ti_commissione_speseKeys"
+		label="Eventuali commissioni e spese&lt;br&gt;della Vostra Corrispondente estera:"
+		nullable="false"
+		layout="VERTICAL"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false"/>
+		
 	<fieldProperty
 		name="fl_liquidazione_differita"
 		property="fl_liquidazione_differita"
@@ -1012,6 +1153,14 @@
 	<findFieldProperty name="progr_univoco" />
 	<findFieldProperty name="identificativoSdi" />	
 	<findFieldProperty name="progressivo" />
+	<findFieldProperty
+		name="esercizio_lettera"
+		inputType="TEXT"
+		label="Esercizio lettera" />
+	<findFieldProperty
+		name="pg_lettera"
+		inputType="TEXT"/>	
+			
 	<formFieldProperty
 		name="ti_bene_servizio" />
 	<formFieldProperty
@@ -1218,6 +1367,31 @@
 		name="ti_entrata_spesa" />
 	<formFieldProperty
 		name="sospeso" />
+	<formFieldProperty
+		name="bonifico_mezzo" />
+	<formFieldProperty
+		name="divisa" />
+	<formFieldProperty
+		name="beneficiario" />
+	<formFieldProperty
+		name="num_conto_ben" />
+	<formFieldProperty
+		name="iban"/>		
+	<formFieldProperty
+		name="indirizzo"/>		
+	<formFieldProperty
+		name="indirizzo_swift"/>		
+	<formFieldProperty
+		name="motivo_pag"/>		
+	<formFieldProperty
+		name="ammontare_debito"/>
+	<formFieldProperty
+		name="conto_debito"/>		
+	<formFieldProperty
+		name="commissioni_spese"/>
+	<formFieldProperty
+		name="commissioni_spese_estere"/>
+		
 	<formFieldProperty
 		name="fl_liquidazione_differita" 
 		command="doOnLiquidazioneDifferitaChange"/>	

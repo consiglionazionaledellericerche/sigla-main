@@ -86,7 +86,19 @@
 		enabledOnFreeSearch="false"
 		completeOnSave="false"
 		label="Sospeso"/>
+	<fieldProperty
+		name="stato_trasmissione"
+		property="stato_trasmissione"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		keysProperty="stato_trasmissioneKeys"
+		label="Stato trasmissione"
+		nullable="false"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false"/>
 
+		
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -106,46 +118,120 @@
 	<formFieldProperty
 		name="ti_entrata_spesa" />
 	<formFieldProperty
+		name="sospeso" />
+	<formFieldProperty
+		name="stato_trasmissione" />
+			
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="im_commissioni" />
+	<columnFieldProperty
+		name="im_pagamento" />
+	<columnFieldProperty
+		name="pg_lettera" />
+	<columnFieldProperty
+		name="dt_registrazione" />
+	<columnFieldProperty
+		name="cd_sospeso" />
+	<columnFieldProperty
+		name="esercizio_sospeso" />
+	<columnFieldProperty
+		name="cd_cds_sospeso" />
+	<columnFieldProperty
+		name="ti_entrata_spesa" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cd_cds"/>
+	<findFieldProperty
+		name="cd_unita_organizzativa"/>					
+	<findFieldProperty
+		name="im_commissioni" />
+	<findFieldProperty
+		name="im_pagamento" />
+	<findFieldProperty
+		name="pg_lettera" />
+	<findFieldProperty
+		name="stato_trasmissione" />	
+	<findFieldProperty
+		name="dt_registrazione" />
+	<findFieldProperty
+		name="cd_sospeso" />
+	<findFieldProperty
+		name="esercizio_sospeso" />
+	<findFieldProperty
+		name="cd_cds_sospeso" />
+	<findFieldProperty
+		name="ti_entrata_spesa" />
+	<findFieldProperty
 		name="sospeso" />
 		
-	<columnFieldProperty
-		name="esercizio" />
-	<columnFieldProperty
-		name="im_commissioni" />
-	<columnFieldProperty
-		name="im_pagamento" />
-	<columnFieldProperty
-		name="pg_lettera" />
-	<columnFieldProperty
-		name="dt_registrazione" />
-	<columnFieldProperty
-		name="cd_sospeso" />
-	<columnFieldProperty
-		name="esercizio_sospeso" />
-	<columnFieldProperty
-		name="cd_cds_sospeso" />
-	<columnFieldProperty
-		name="ti_entrata_spesa" />
-
-	<findFieldProperty
-		name="esercizio" />
-	<findFieldProperty
-		name="im_commissioni" />
-	<findFieldProperty
-		name="im_pagamento" />
-	<findFieldProperty
-		name="pg_lettera" />
-	<findFieldProperty
-		name="dt_registrazione" />
-	<findFieldProperty
-		name="cd_sospeso" />
-	<findFieldProperty
-		name="esercizio_sospeso" />
-	<findFieldProperty
-		name="cd_cds_sospeso" />
-	<findFieldProperty
-		name="ti_entrata_spesa" />
-	<findFieldProperty
-		name="sospeso" />
-
+	<columnSet
+        name="firmaBase">
+		<columnFieldProperty
+			name="esercizio" />
+		<columnFieldProperty
+			name="cd_cds"/>
+		<columnFieldProperty
+			name="cd_unita_organizzativa"/>				
+		<columnFieldProperty
+			name="pg_lettera" />					
+		<columnFieldProperty
+			name="im_commissioni" />
+		<columnFieldProperty
+			name="im_pagamento" />
+		<columnFieldProperty
+			name="dt_registrazione" />
+	</columnSet>	
+	<columnSet
+        name="firmaPredisposta">
+		<columnFieldProperty
+			name="esercizio" />
+		<columnFieldProperty
+			name="cd_cds"/>
+		<columnFieldProperty
+			name="cd_unita_organizzativa"/>				
+		<columnFieldProperty
+			name="pg_lettera" />		
+		<columnFieldProperty
+			name="im_commissioni" />
+		<columnFieldProperty
+			name="im_pagamento" />
+		<columnFieldProperty
+			name="dt_registrazione" />
+		<columnFieldProperty
+			name="documento"
+			property="documento"
+			inputType="TEXT"
+			label="documento" />				
+	</columnSet>	
+	<columnSet
+        name="firmaEseguita">
+		<columnFieldProperty
+			name="esercizio" />
+		<columnFieldProperty
+			name="cd_cds"/>
+		<columnFieldProperty
+			name="cd_unita_organizzativa"/>				
+		<columnFieldProperty
+			name="pg_lettera" />		
+		<columnFieldProperty
+			name="im_commissioni" />
+		<columnFieldProperty
+			name="im_pagamento" />
+		<columnFieldProperty
+			name="dt_registrazione" />
+		<columnFieldProperty
+			name="documento"
+			property="documento"
+			inputType="TEXT"
+			label="Documento" />				
+		<columnFieldProperty
+			name="dt_firma"
+			property="dt_firma"
+			inputType="TEXT"
+			label="Data di Firma" />
+	</columnSet>
 </bulkInfo>

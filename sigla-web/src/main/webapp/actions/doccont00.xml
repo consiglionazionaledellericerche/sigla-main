@@ -36,6 +36,9 @@
       path="/CRUDDistintaCassiereAction" actionClass="it.cnr.contab.doccont00.action.CRUDDistintaCassiereAction">
   </action>
   <action 
+      path="/CRUDDistintaCassiere1210Action" actionClass="it.cnr.contab.doccont00.action.CRUDDistintaCassiere1210Action">
+  </action>  
+  <action 
       path="/RicercaMandatoReversaleAction" actionClass="it.cnr.contab.doccont00.action.RicercaMandatoReversaleAction">
   </action>
     <action 
@@ -293,6 +296,14 @@
 			<init-param name="printbp" value="OfflineReportPrintBP" />
 			<init-param name="flusso" value="false" />
 	</businessProcess>
+  <businessProcess
+		name="CRUDDistintaCassiere1210BP" className="it.cnr.contab.doccont00.bp.CRUDDistintaCassiere1210BP">
+		<forward name="default" path="/doccont00/distinta_cassiere_1210.jsp"/>
+			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.DistintaCassiere1210Bulk" />
+			<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>		
+			<init-param name="defaultAction" value="CRUDDistintaCassiere1210Action" />
+			<init-param name="printbp" value="OfflineReportPrintBP" />
+	</businessProcess>  
   <businessProcess
 		name="RicercaMandatoReversaleBP" className="it.cnr.contab.doccont00.bp.RicercaMandatoReversaleBP">
 		<forward name="default" path="/doccont00/ricerca_v_mandato_reversale.jsp"/>
