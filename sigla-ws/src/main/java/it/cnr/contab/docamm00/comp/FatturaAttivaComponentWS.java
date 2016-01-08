@@ -12,6 +12,7 @@ import it.cnr.contab.client.docamm.FatturaAttivaException_Exception;
 import it.cnr.contab.client.docamm.FatturaAttivaIntra;
 import it.cnr.contab.client.docamm.FatturaAttivaRiga;
 import it.cnr.contab.client.docamm.FatturaAttivaScad;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
@@ -31,6 +32,7 @@ import it.cnr.contab.doccont00.ejb.AccertamentoComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
 import it.cnr.contab.utenze00.bp.Costanti;
 import it.cnr.contab.utenze00.bp.WSUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.comp.ApplicationException;
@@ -46,6 +48,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import javax.ejb.Stateless;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlSeeAlso;
@@ -70,8 +73,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
+
 import org.jboss.ws.annotation.EndpointConfig;
 import org.jboss.wsf.spi.annotation.WebContext;
 @XmlSeeAlso({java.util.ArrayList.class}) 
@@ -1117,6 +1122,14 @@ public class FatturaAttivaComponentWS {
 	                
 			            testata.setPg_banca_uo_cds(fat.getPg_banca_uo_cds());
 			            testata.setBanca_uo(new BancaBulk(testata.getCd_terzo_uo_cds(),testata.getPg_banca_uo_cds()));
+			            
+			            Configurazione_cnrBulk config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, 0, "*", "CONTO_CORRENTE_SPECIALE", "ENTE");
+			           
+			            if (Rif_modalita_pagamentoBulk.BANCARIO.equals(testata.getModalita_pagamento_uo().getTi_pagamento()))
+			            	if (!testata.getBanca_uo().getAbi().equalsIgnoreCase(config.getVal01()) ||
+			        							!testata.getBanca_uo().getCab().equalsIgnoreCase(config.getVal02()) ||
+			        							!testata.getBanca_uo().getNumero_conto().contains(config.getVal03()))
+			        							testata.setBanca_uo(null);		        		
 		                if (testata.getBanca_uo()==null)
 		                   	  fat=ValorizzaErrore(fat,Costanti.ERRORE_FA_134.toString());
 	                   

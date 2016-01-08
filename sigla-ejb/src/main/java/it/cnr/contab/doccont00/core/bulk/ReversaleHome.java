@@ -1,6 +1,8 @@
 package it.cnr.contab.doccont00.core.bulk;
 
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.docs.bulk.Tipo_documento_ammBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.*;
@@ -8,7 +10,10 @@ import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 
 import java.util.*;
+import java.rmi.RemoteException;
 import java.sql.*;
+
+import javax.ejb.EJBException;
 
 public abstract class ReversaleHome extends BulkHome {
 public ReversaleHome(Class clazz, java.sql.Connection conn) {
@@ -146,10 +151,23 @@ public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,Og
 	{
 		ReversaleBulk reversale = (ReversaleBulk) bulk;
 		Numerazione_doc_contHome numHome = (Numerazione_doc_contHome) getHomeCache().getHome( Numerazione_doc_contBulk.class );
-		Long pg = numHome.getNextPg(userContext, reversale.getEsercizio(), reversale.getCd_cds(), reversale.getCd_tipo_documento_cont(), reversale.getUser());		
-		reversale.setPg_reversale( pg );
+		
+		Long pg;
+		if (Utility.createParametriCnrComponentSession().getParametriCnr(userContext,reversale.getEsercizio()).getFl_tesoreria_unica().booleanValue()){
+			Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk)(getHomeCache().getHome(Unita_organizzativa_enteBulk.class).findAll().get(0));
+			pg = numHome.getNextPg(userContext, reversale.getEsercizio(), uoEnte.getCd_cds(), reversale.getCd_tipo_documento_cont(), reversale.getUser());
+		}
+		else{
+			pg = numHome.getNextPg(userContext, reversale.getEsercizio(), reversale.getCd_cds(), reversale.getCd_tipo_documento_cont(), reversale.getUser());
+		}
+				reversale.setPg_reversale( pg );
 	}catch ( IntrospectionException e ){
 		throw new PersistencyException( e );
+	
+	} catch (RemoteException e) {
+		throw new ComponentException( e );
+	} catch (EJBException e) {
+		throw new ComponentException( e );
 	}
 	catch ( ApplicationException e ){
 		throw new ComponentException( e );

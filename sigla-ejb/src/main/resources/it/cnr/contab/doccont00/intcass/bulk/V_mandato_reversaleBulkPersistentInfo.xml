@@ -15,6 +15,11 @@
 		tableName="V_MANDATO_REVERSALE_DISTINTA"
 		extends="default" >
 	</columnMap>
+	<columnMap
+		name="V_MANDATO_REVERSALE_DIST_XML"
+		tableName="V_MANDATO_REVERSALE_DIST_XML"
+		extends="default" >
+	</columnMap>
 	<persistentProperty
 		name="terzo" />
 </SQLPersistentInfo>

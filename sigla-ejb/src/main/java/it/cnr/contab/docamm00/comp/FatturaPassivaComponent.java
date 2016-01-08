@@ -5849,18 +5849,20 @@ private void validaConConsuntivi(
 private void validaDisponibilitaDiCassaCDS(UserContext userContext, Fattura_passivaBulk fattura) throws ComponentException {
 
 	try	{
-		it.cnr.jada.bulk.BulkHome home = getHome( userContext, V_disp_cassa_cdsBulk.class);
-		SQLBuilder sql = home.createSQLBuilder();
-		sql.addClause( "AND", "esercizio", sql.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio());
-		sql.addClause( "AND", "cd_cds", sql.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getCd_cds());
-		List result = null;
-		result = home.fetchAll( sql );
-		if ( result.size() == 0 )
-			throw new ApplicationException("Non esiste il record per la disponibilità di cassa del CDS: " + ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getCd_cds() + " - esercizio: " + ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio());
-		V_disp_cassa_cdsBulk cassa = (V_disp_cassa_cdsBulk) result.get(0);
-		if (cassa.getIm_disponibilita_cassa().compareTo(new java.math.BigDecimal(0)) < 0||
-			((fattura.getLettera_pagamento_estero().getSospeso()==null||fattura.getLettera_pagamento_estero().getSospeso().getCd_sospeso()==null) && cassa.getIm_disponibilita_cassa().compareTo(fattura.getIm_totale_quadratura())<0))
-			throw new it.cnr.jada.comp.ApplicationException("La disponibilità di cassa del CDS: " + ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getCd_cds() + " - esercizio: " + ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio() + " è stata superata! Salvataggio interrotto.");
+		if (!Utility.createParametriCnrComponentSession().getParametriCnr(userContext,fattura.getEsercizio()).getFl_tesoreria_unica().booleanValue()){	
+			it.cnr.jada.bulk.BulkHome home = getHome( userContext, V_disp_cassa_cdsBulk.class);
+			SQLBuilder sql = home.createSQLBuilder();
+			sql.addClause( "AND", "esercizio", sql.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio());
+			sql.addClause( "AND", "cd_cds", sql.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getCd_cds());
+			List result = null;
+			result = home.fetchAll( sql );
+			if ( result.size() == 0 )
+				throw new ApplicationException("Non esiste il record per la disponibilità di cassa del CDS: " + ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getCd_cds() + " - esercizio: " + ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio());
+			V_disp_cassa_cdsBulk cassa = (V_disp_cassa_cdsBulk) result.get(0);
+			if (cassa.getIm_disponibilita_cassa().compareTo(new java.math.BigDecimal(0)) < 0||
+				((fattura.getLettera_pagamento_estero().getSospeso()==null||fattura.getLettera_pagamento_estero().getSospeso().getCd_sospeso()==null) && cassa.getIm_disponibilita_cassa().compareTo(fattura.getIm_totale_quadratura())<0))
+				throw new it.cnr.jada.comp.ApplicationException("La disponibilità di cassa del CDS: " + ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getCd_cds() + " - esercizio: " + ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio() + " è stata superata! Salvataggio interrotto.");
+		}
 	} catch ( Exception e )	{
 		throw handleException(fattura, e);
 	}
