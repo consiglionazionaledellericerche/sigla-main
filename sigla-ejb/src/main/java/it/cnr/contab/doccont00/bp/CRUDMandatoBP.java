@@ -53,6 +53,7 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP {
 	private boolean siope_attiva = false;
 	private boolean cup_attivo =false;
 	private boolean siope_cup_attivo =false;
+	private boolean tesoreria_unica =false;
 public CRUDMandatoBP() {
 	super();
 	setTab("tab","tabMandato");
@@ -316,6 +317,7 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 //		}else{
 			setCup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_cup().booleanValue());
 			setSiope_cup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope_cup().booleanValue());
+			setTesoreria_unica(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_tesoreria_unica().booleanValue());
 //		}
 	}
     catch(Throwable throwable)
@@ -508,4 +510,14 @@ public void setSiope_cup_attivo(boolean siope_cup_attivo) {
 public SimpleDetailCRUDController getSiopeCupCollegati() {
 	return siopeCupCollegati;
 }
+
+public boolean isTesoreria_unica() {
+	return tesoreria_unica;
+}
+
+public void setTesoreria_unica(boolean tesoreria_unica) {
+	this.tesoreria_unica = tesoreria_unica;
+}
+
+
 }

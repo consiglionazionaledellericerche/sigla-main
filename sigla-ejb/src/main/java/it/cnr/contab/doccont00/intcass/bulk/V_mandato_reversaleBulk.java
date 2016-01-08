@@ -257,4 +257,10 @@ public class V_mandato_reversaleBulk extends V_mandato_reversaleBase implements 
 			BulkList<AllegatoGenericoBulk> archivioAllegati) {
 		this.archivioAllegati = archivioAllegati;
 	}
+public String getCssClassTi_cc_bi(){
+	if(getTi_cc_bi().compareTo("B")==0)
+ 		return "TableColumnRedBold";
+	else
+		return null; 
+}
 }

@@ -25,7 +25,7 @@ public Forward doAddToCRUDMain_DistintaCassDet(ActionContext context)
 	{
 		CRUDDistintaCassiereBP bp = (CRUDDistintaCassiereBP)getBusinessProcess(context);
 		RicercaMandatoReversaleBP ricercaBP = (RicercaMandatoReversaleBP) context.createBusinessProcess( "RicercaMandatoReversaleBP",  new Object[]{ "MTh" });
-		if (bp.isUoDistintaTuttaSac(context))
+		if (bp.isElencoConUo())
 			ricercaBP.setSearchResultColumnSet("elencoConUo");
 		else
 			ricercaBP.setSearchResultColumnSet("default");

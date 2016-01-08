@@ -1,7 +1,15 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
+import java.rmi.RemoteException;
+
+import javax.ejb.EJBException;
+
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
@@ -13,9 +21,29 @@ public Numerazione_doc_ammHome(java.sql.Connection conn) {
 public Numerazione_doc_ammHome(java.sql.Connection conn,PersistentCache persistentCache) {
 	super(Numerazione_doc_ammBulk.class,conn,persistentCache);
 }
-public Long getNextPg(UserContext userContext, Integer esercizio, String cd_cds, String uo, String tipo_doc, String user) throws PersistencyException, IntrospectionException, OutdatedResourceException, it.cnr.jada.comp.ApplicationException 
+public Long getNextPg(UserContext userContext, Integer esercizio, String cd_cds, String uo, String tipo_doc, String user) throws PersistencyException, IntrospectionException, OutdatedResourceException, ComponentException 
 {
-	Numerazione_doc_ammBulk progressivo = (Numerazione_doc_ammBulk)findByPrimaryKey( new Numerazione_doc_ammKey(cd_cds, tipo_doc, uo, esercizio ));
+	Numerazione_doc_ammBulk progressivo;
+	if(tipo_doc.compareTo(Numerazione_doc_ammBulk.TIPO_LETTERA_ESTERO)==0){
+		try {
+			if (Utility.createParametriCnrComponentSession().getParametriCnr(userContext,esercizio).getFl_tesoreria_unica().booleanValue()){
+				Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk)(getHomeCache().getHome(Unita_organizzativa_enteBulk.class).findAll().get(0));
+				progressivo = (Numerazione_doc_ammBulk)findByPrimaryKey( new Numerazione_doc_ammKey(uoEnte.getCd_cds(), tipo_doc, uoEnte.getCd_unita_organizzativa(), esercizio ));
+			}
+			else{
+				progressivo = (Numerazione_doc_ammBulk)findByPrimaryKey( new Numerazione_doc_ammKey(cd_cds, tipo_doc, uo, esercizio ));
+			}
+		} catch (ComponentException e) {
+			throw new ComponentException( e );
+		} catch (RemoteException e) {
+			throw new ComponentException( e );
+		} catch (EJBException e) {
+			throw new ComponentException( e );
+		}
+	}
+	else
+	  progressivo = (Numerazione_doc_ammBulk)findByPrimaryKey( new Numerazione_doc_ammKey(cd_cds, tipo_doc, uo, esercizio ));
+
 	//non esiste il record - segnalo errore
 	if (progressivo == null)
 		throw new it.cnr.jada.comp.ApplicationException("Non e' possibile assegnare progressivi");
