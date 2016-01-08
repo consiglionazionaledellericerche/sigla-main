@@ -374,7 +374,7 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 			throw new ApplicationException("Errore nella lettura dei certificati!\nVerificare Nome Utente e Password!");
 		String codiceFiscale = subjectDN.get("SERIALNUMBER").substring(3);
 		UtenteBulk utente = ((CNRUserInfo)context.getUserInfo()).getUtente();
-		if (controlloCodiceFiscale != null && controlloCodiceFiscale.equalsIgnoreCase("Y") && !utente.getCodiceFiscaleLDAP().equalsIgnoreCase(codiceFiscale)) {
+		if (controlloCodiceFiscale != null && controlloCodiceFiscale.equalsIgnoreCase("Y") && utente.getCodiceFiscaleLDAP() != null && !utente.getCodiceFiscaleLDAP().equalsIgnoreCase(codiceFiscale)) {
 			throw new ApplicationException("Il codice fiscale \"" + codiceFiscale + "\" presente sul certicato di Firma, " +
 					"è diverso da quello dell'utente collegato \"" + utente.getCodiceFiscaleLDAP() +"\"!");
 		}

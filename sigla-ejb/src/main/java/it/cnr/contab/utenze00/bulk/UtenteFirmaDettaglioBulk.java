@@ -170,7 +170,7 @@ public class UtenteFirmaDettaglioBulk extends UtenteFirmaDettaglioBase {
 	@Override
 	public void validate() throws ValidationException {
 		super.validate();
-		if (getTitoloFirma().equalsIgnoreCase(TITOLO_FIRMA_DELEGATO) && getDelegatoDa() == null){
+		if (getTitoloFirma() != null && getTitoloFirma().equalsIgnoreCase(TITOLO_FIRMA_DELEGATO) && getDelegatoDa() == null){
 			throw new ValidationException("Valorizzare il delegato!");
 		}
 	}
