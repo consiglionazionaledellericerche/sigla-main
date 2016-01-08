@@ -5,32 +5,34 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<style name="TNR10" isDefault="true" fontName="Times New Roman" pdfFontName="Times-Roman"/>
 	<style name="TNR10BOLD" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
 	<parameter name="DIR_SUBREPORT" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
-	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/mspasiano/svn/SIGLAReports/reports/img/"]]></defaultValueExpression>
+	</parameter>
 	<parameter name="aCd_cds" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["071"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["035"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aEs" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer("2008")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer("2015")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aPg_da" class="java.lang.Long" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Long("286")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Long("1006")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aPg_a" class="java.lang.Long" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Long("286")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Long("1006")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aDt_da" class="java.util.Date" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy/MM/dd").parse("2008/01/01")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy/MM/dd").parse("2015/01/01")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aDt_a" class="java.util.Date" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy/MM/dd").parse("2008/12/31")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new java.text.SimpleDateFormat("yyyy/MM/dd").parse("2015/12/31")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="aCd_terzo" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
@@ -234,7 +236,7 @@ ORDER BY 1,2,3,4,pg_reversale]]>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-5" style="TNR10" x="354" y="4" width="214" height="36">
-					<printWhenExpression><![CDATA[new Boolean(!$F{TI_MANDATO}.equals("R") && $V{PAGE_NUMBER}.equals(new Integer(1)))]]></printWhenExpression>
+					<printWhenExpression><![CDATA[false]]></printWhenExpression>
 				</reportElement>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -249,12 +251,12 @@ ORDER BY 1,2,3,4,pg_reversale]]>
 			</staticText>
 			<rectangle>
 				<reportElement key="rectangle-3" style="TNR10" x="6" y="48" width="562" height="20">
-					<printWhenExpression><![CDATA[new Boolean(!$F{TI_MANDATO}.equals("R") && $V{PAGE_NUMBER}.equals(new Integer(1)))]]></printWhenExpression>
+					<printWhenExpression><![CDATA[false]]></printWhenExpression>
 				</reportElement>
 			</rectangle>
 			<staticText>
 				<reportElement key="staticText-6" style="TNR10" x="8" y="51" width="556" height="14">
-					<printWhenExpression><![CDATA[new Boolean(!$F{TI_MANDATO}.equals("R") && $V{PAGE_NUMBER}.equals(new Integer(1)))]]></printWhenExpression>
+					<printWhenExpression><![CDATA[false]]></printWhenExpression>
 				</reportElement>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>

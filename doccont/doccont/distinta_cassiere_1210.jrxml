@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="distinta_cassiere" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="782" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="2.1435888100000016"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="NORMAL" isDefault="true" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="BOLD" style="NORMAL" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TITLE" style="NORMAL" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<parameter name="DIR_SUBREPORT" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/mspasiano/svn/SIGLAReports/reports/img/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="VERSIONE" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[versione 1.0  [23/10/2006] by Aurelio D'Amico
+versione 1.1 [17/11/2006] by AD (ordinamento su PG_DOC)]]></parameterDescription>
+		<defaultValueExpression><![CDATA["distinta_cassiere v1.1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="esercizio" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2015"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pg_distinta" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["9"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[".\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DT_EMISSIONE" class="java.lang.String"/>
+	<parameter name="DT_INVIO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from LETTERA_PAGAM_ESTERO
+where ESERCIZIO_DISTINTA = $P{esercizio}
+and PG_DISTINTA = $P{pg_distinta}]]>
+	</queryString>
+	<field name="CD_CDS" class="java.lang.String"/>
+	<field name="CD_UNITA_ORGANIZZATIVA" class="java.lang.String"/>
+	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
+	<field name="PG_LETTERA" class="java.math.BigDecimal"/>
+	<field name="DT_REGISTRAZIONE" class="java.sql.Timestamp"/>
+	<field name="IM_PAGAMENTO" class="java.math.BigDecimal"/>
+	<field name="IM_COMMISSIONI" class="java.math.BigDecimal"/>
+	<field name="TI_ENTRATA_SPESA" class="java.lang.String"/>
+	<field name="TI_SOSPESO_RISCONTRO" class="java.lang.String"/>
+	<field name="CD_SOSPESO" class="java.lang.String"/>
+	<field name="DACR" class="java.sql.Timestamp"/>
+	<field name="UTCR" class="java.lang.String"/>
+	<field name="DUVA" class="java.sql.Timestamp"/>
+	<field name="UTUV" class="java.lang.String"/>
+	<field name="PG_VER_REC" class="java.math.BigDecimal"/>
+	<field name="STATO_TRASMISSIONE" class="java.lang.String"/>
+	<field name="DT_FIRMA" class="java.sql.Timestamp"/>
+	<field name="BONIFICO_MEZZO" class="java.lang.String"/>
+	<field name="DIVISA" class="java.lang.String"/>
+	<field name="BENEFICIARIO" class="java.lang.String"/>
+	<field name="NUM_CONTO_BEN" class="java.lang.String"/>
+	<field name="IBAN" class="java.lang.String"/>
+	<field name="INDIRIZZO" class="java.lang.String"/>
+	<field name="INDIRIZZO_SWIFT" class="java.lang.String"/>
+	<field name="MOTIVO_PAG" class="java.lang.String"/>
+	<field name="AMMONTARE_DEBITO" class="java.lang.String"/>
+	<field name="CONTO_DEBITO" class="java.lang.String"/>
+	<field name="COMMISSIONI_SPESE" class="java.lang.String"/>
+	<field name="COMMISSIONI_SPESE_ESTERE" class="java.lang.String"/>
+	<field name="ESERCIZIO_DISTINTA" class="java.math.BigDecimal"/>
+	<field name="PG_DISTINTA" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="36" splitType="Stretch">
+			<image scaleImage="RetainShape">
+				<reportElement key="image-1" mode="Transparent" x="0" y="0" width="400" height="36"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="27" splitType="Stretch">
+			<line>
+				<reportElement key="line-2" positionType="FixRelativeToBottom" x="0" y="22" width="780" height="1"/>
+			</line>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" style="BOLD" x="10" y="6" width="125" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA["DISTINTA: " + $P{esercizio} + "/" + $P{pg_distinta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-3" style="BOLD" x="140" y="6" width="87" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement markup="styled"/>
+				<text><![CDATA[Data di emissione:]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" style="NORMAL" x="227" y="6" width="81" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DT_EMISSIONE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-6" style="BOLD" x="522" y="6" width="251" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement markup="styled"/>
+				<text><![CDATA[CONSIGLIO NAZIONALE DELLE RICERCHE]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-1" x="0" y="3" width="780" height="1"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-3" style="BOLD" x="313" y="6" width="87" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement markup="styled"/>
+				<text><![CDATA[Data di invio:]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" style="NORMAL" x="400" y="6" width="81" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DT_INVIO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-3" style="BOLD" x="0" y="0" width="64" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement markup="styled"/>
+				<text><![CDATA[Esercizio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" style="BOLD" x="64" y="0" width="35" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement markup="styled"/>
+				<text><![CDATA[CdS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" style="BOLD" x="100" y="0" width="87" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" markup="styled"/>
+				<text><![CDATA[Unità Organizzativa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" style="BOLD" x="187" y="0" width="87" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" markup="styled"/>
+				<text><![CDATA[Progressivo Lettera]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" style="BOLD" x="274" y="0" width="100" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" markup="styled"/>
+				<text><![CDATA[Commissioni]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" style="BOLD" x="374" y="0" width="100" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" markup="styled"/>
+				<text><![CDATA[Importo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" style="BOLD" x="481" y="0" width="100" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" markup="styled"/>
+				<text><![CDATA[Data registrazione]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" style="BOLD" x="593" y="0" width="100" height="13"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" markup="styled"/>
+				<text><![CDATA[Data firma]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="64" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{ESERCIZIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="187" y="0" width="87" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{PG_LETTERA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="64" y="0" width="35" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_CDS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="99" y="0" width="88" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_UNITA_ORGANIZZATIVA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="274" y="0" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_COMMISSIONI}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement x="374" y="0" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_PAGAMENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="481" y="0" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DT_REGISTRAZIONE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="593" y="0" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DT_FIRMA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="80" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-1" style="NORMAL" x="459" y="63" width="294" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Pagina " + $V{PAGE_NUMBER} + " di"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-2" style="NORMAL" x="755" y="63" width="27" height="14"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

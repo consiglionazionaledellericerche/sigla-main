@@ -5,8 +5,8 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<style name="TNR10" isDefault="true" fontName="Times New Roman" pdfFontName="Times-Roman"/>
 	<style name="TNR10BOLD" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
@@ -165,7 +165,7 @@ ORDER BY ESERCIZIO,CD_CDS,PG_REVERSALE]]>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-1" style="TNR10" x="354" y="4" width="214" height="36">
-					<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.equals(new Integer(1)))]]></printWhenExpression>
+					<printWhenExpression><![CDATA[false]]></printWhenExpression>
 				</reportElement>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -180,12 +180,12 @@ ORDER BY ESERCIZIO,CD_CDS,PG_REVERSALE]]>
 			</staticText>
 			<rectangle>
 				<reportElement key="rectangle-1" style="TNR10" x="6" y="48" width="562" height="20">
-					<printWhenExpression><![CDATA[new Boolean(!$F{TI_REVERSALE}.equals("R") && $V{PAGE_NUMBER}.equals(new Integer(1)))]]></printWhenExpression>
+					<printWhenExpression><![CDATA[false]]></printWhenExpression>
 				</reportElement>
 			</rectangle>
 			<staticText>
 				<reportElement key="staticText-2" style="TNR10" x="8" y="51" width="556" height="14">
-					<printWhenExpression><![CDATA[new Boolean(!$F{TI_REVERSALE}.equals("R") && $V{PAGE_NUMBER}.equals(new Integer(1)))]]></printWhenExpression>
+					<printWhenExpression><![CDATA[false]]></printWhenExpression>
 				</reportElement>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
