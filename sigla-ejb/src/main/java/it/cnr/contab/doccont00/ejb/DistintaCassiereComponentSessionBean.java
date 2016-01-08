@@ -348,5 +348,25 @@ public List dettagliDistinta(UserContext param0,
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
+public Distinta_cassiereBulk inviaDistinta(UserContext param0,
+		Distinta_cassiereBulk param1) throws ComponentException,
+		RemoteException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		Distinta_cassiereBulk result=((DistintaCassiereComponent)componentObj).inviaDistinta(param0,param1);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
 
 }

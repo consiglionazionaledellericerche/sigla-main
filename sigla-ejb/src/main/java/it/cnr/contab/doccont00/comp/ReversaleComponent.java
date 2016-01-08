@@ -50,6 +50,7 @@ import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.*;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
@@ -932,7 +933,7 @@ public ReversaleBulk annullaReversale(UserContext userContext, ReversaleBulk rev
 		BigDecimal totdettagli = ((Sospeso_det_etrHome)getHome( userContext, Sospeso_det_etrBulk.class )).calcolaTotDettagli( new V_mandato_reversaleBulk( reversale.getEsercizio(), reversale.getCd_tipo_documento_cont(),reversale.getCd_cds(), reversale.getPg_reversale() ));	
 		if ( totdettagli.compareTo( new BigDecimal(0)) > 0 )			
 			throw new ApplicationException( "Annullamento impossibile! La reversale e' già stata associata ad un riscontro");
-
+		
 //		verificaReversale( userContext, reversale, true );
 		Sospeso_det_etrBulk sde;
 		for ( Iterator i = reversale.getSospeso_det_etrColl().iterator(); i.hasNext(); )
@@ -942,7 +943,10 @@ public ReversaleBulk annullaReversale(UserContext userContext, ReversaleBulk rev
 			   throw new ApplicationException( "Annullamento impossibile! Sono state fatte delle modifiche ai sospesi che devono essere ancora salvate");
 		}
 		
-		checkAnnullabilita( userContext, reversale );			
+		checkAnnullabilita( userContext, reversale );	
+		if(!isAnnullabile(userContext,reversale))
+			throw new ApplicationException(
+					"Verificare lo stato di trasmissione della reversale. Annullamento impossibile!");
 
 		lockBulk( userContext, reversale );
 
@@ -4063,5 +4067,25 @@ private String getOutputFileName(String reportName, String cds,Integer esercizio
 		fileName = PDF_DATE_FORMAT.format(new java.util.Date()) + '_' + fileName + '_' + esercizio + '_' + cds + '_' + pgReversale;
 		return fileName;
 	}
+public boolean isAnnullabile(
+		UserContext userContext, ReversaleBulk reversale)
+		throws ComponentException {
+	try {
+		  Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(reversale.getEsercizio()));
+		     if (parametriCnr.getFl_tesoreria_unica()){
+		    	 UtenteBulk utente = (UtenteBulk)(getHome(userContext, UtenteBulk.class).findByPrimaryKey(new UtenteBulk(CNRUserContext.getUser(userContext))));
+				if (utente.isSupervisore()) {
+					return Boolean.TRUE;
+				}else
+					if(reversale.getStato_trasmissione().compareTo(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO)==0)
+						return Boolean.TRUE;
+					else
+						return Boolean.FALSE;
+		     }
+		return Boolean.TRUE;
+	} catch (Exception e) {
+		throw handleException(e);
+	}
+}
 
 }

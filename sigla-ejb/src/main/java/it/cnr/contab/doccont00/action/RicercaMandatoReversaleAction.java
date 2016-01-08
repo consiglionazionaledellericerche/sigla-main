@@ -3,10 +3,12 @@ package it.cnr.contab.doccont00.action;
 
 import java.rmi.RemoteException;
 import java.util.*;
+
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.intcass.bulk.*;
 import it.cnr.contab.doccont00.bp.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.*;
@@ -70,8 +72,12 @@ public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,In
 			CRUDDistintaCassiereBP bpp = (CRUDDistintaCassiereBP) bp.getParent();
 			
 			bp.setModel(context,model);
-			if (bpp != null && bpp.isUoDistintaTuttaSac(context))
-				setCol = "elencoConUo";
+			
+			if (bpp != null && bpp.isUoDistintaTuttaSac(context) &&  (Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(),it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context)).getFl_tesoreria_unica().booleanValue()))
+				setCol = "elencoConUoFirmati";
+			else
+				if (bpp != null && bpp.isUoDistintaTuttaSac(context))
+					setCol = "elencoConUo";
 			
 			SelezionatoreListaBP nbp = selectMandatiInDistinta(context,
 												ri,

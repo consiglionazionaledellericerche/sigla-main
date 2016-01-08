@@ -12,6 +12,7 @@ import it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioHome;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
@@ -99,6 +100,7 @@ import it.cnr.contab.preventvar00.bulk.Var_bilancioBulk;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioHome;
 import it.cnr.contab.preventvar00.ejb.VarBilancioComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.contab.util.Utility;
@@ -1263,7 +1265,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			if (totdettagli.compareTo(new BigDecimal(0)) > 0)
 				throw new ApplicationException(
 						"Annullamento impossibile! Il mandato e' già stato associato ad un riscontro");
-
+			
 			// verificaMandato( userContext, mandato );
 
 			Sospeso_det_uscBulk sdu;
@@ -1291,6 +1293,10 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			verificaMandatoSuAnticipo(userContext, mandato);
 
 			checkAnnullabilita(userContext, mandato);
+			
+			if(!isAnnullabile(userContext,mandato))
+				throw new ApplicationException(
+						"Verificare lo stato di trasmissione del mandato. Annullamento impossibile!");
 
 			lockBulk(userContext, mandato);
 
@@ -6450,4 +6456,25 @@ private void verificaTracciabilitaPagamenti(UserContext userContext,
 		throw handleException(e);
 	}
 }
+public java.lang.Boolean isAnnullabile(
+		UserContext userContext, MandatoBulk mandato)
+		throws ComponentException {
+	try {
+		  Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(mandato.getEsercizio()));
+		     if (parametriCnr.getFl_tesoreria_unica()){
+		    	 UtenteBulk utente = (UtenteBulk)(getHome(userContext, UtenteBulk.class).findByPrimaryKey(new UtenteBulk(CNRUserContext.getUser(userContext))));
+				if (utente.isSupervisore()) {
+					return Boolean.TRUE;
+				}else
+					if(mandato.getStato_trasmissione().compareTo(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)==0)
+						return Boolean.TRUE;
+					else
+						return Boolean.FALSE;
+		     }
+		return Boolean.TRUE;
+	} catch (Exception e) {
+		throw handleException(e);
+	}
+}
+
 }
