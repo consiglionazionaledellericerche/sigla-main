@@ -65,6 +65,8 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk {
 		stato_trasmissioneKeys = new it.cnr.jada.util.OrderedHashtable();
 		stato_trasmissioneKeys.put(STATO_TRASMISSIONE_NON_INSERITO,	"Non inserito in distinta");
 		stato_trasmissioneKeys.put(STATO_TRASMISSIONE_INSERITO,		"Inserito in distinta");
+		stato_trasmissioneKeys.put(STATO_TRASMISSIONE_PREDISPOSTO,	"Predisposto alla Firma");
+		stato_trasmissioneKeys.put(STATO_TRASMISSIONE_PRIMA_FIRMA,	"Prima Firma");		
 		stato_trasmissioneKeys.put(STATO_TRASMISSIONE_TRASMESSO,	"Trasmesso");
 		
 	};
