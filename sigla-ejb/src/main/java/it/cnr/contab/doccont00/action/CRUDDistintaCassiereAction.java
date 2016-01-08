@@ -1,9 +1,12 @@
 package it.cnr.contab.doccont00.action;
 
 import java.util.*;
+
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.intcass.bulk.*;
 import it.cnr.contab.doccont00.bp.*;
+import it.cnr.contab.firma.bulk.FirmaOTPBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.*;
@@ -25,10 +28,13 @@ public Forward doAddToCRUDMain_DistintaCassDet(ActionContext context)
 	{
 		CRUDDistintaCassiereBP bp = (CRUDDistintaCassiereBP)getBusinessProcess(context);
 		RicercaMandatoReversaleBP ricercaBP = (RicercaMandatoReversaleBP) context.createBusinessProcess( "RicercaMandatoReversaleBP",  new Object[]{ "MTh" });
-		if (bp.isElencoConUo())
-			ricercaBP.setSearchResultColumnSet("elencoConUo");
+		if (Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(),it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context)).getFl_tesoreria_unica().booleanValue())
+			ricercaBP.setSearchResultColumnSet("elencoConUoFirmati");
 		else
-			ricercaBP.setSearchResultColumnSet("default");
+			if (bp.isElencoConUo())
+				ricercaBP.setSearchResultColumnSet("elencoConUo");
+			else
+				ricercaBP.setSearchResultColumnSet("default");
 		
         context.addHookForward("bringback", this, "doBringBackDettaglioDistinta");
 		return context.addBusinessProcess(ricercaBP);		
@@ -183,4 +189,47 @@ public Forward doConfermaEstrai(ActionContext context,int option) {
 		return handleException(context,e);
 	}
 }
+public Forward doSign(ActionContext context) {
+	try {
+		CRUDBP bp = getBusinessProcess(context);
+		fillModel(context);
+		if (bp.isDirty())
+			return openContinuePrompt(context,"doConfermaSign");
+		return doConfermaSign(context,OptionBP.YES_BUTTON);
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}
+public Forward doConfermaSign(ActionContext context,int option) {
+	try {
+		if (option == OptionBP.YES_BUTTON) {
+			try {
+				BulkBP firmaOTPBP = (BulkBP) context.createBusinessProcess("FirmaOTPBP");
+				firmaOTPBP.setModel(context, new FirmaOTPBulk());
+				context.addHookForward("firmaOTP",this,"doBackSign");			
+				return context.addBusinessProcess(firmaOTPBP);
+			} catch(Exception e) {
+				return handleException(context,e);
+			}
+		}
+		return context.findDefaultForward();
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}
+
+public Forward doBackSign(ActionContext context) {
+CRUDDistintaCassiereBP bp = (CRUDDistintaCassiereBP)context.getBusinessProcess();
+ 
+HookForward caller = (HookForward)context.getCaller();
+FirmaOTPBulk firmaOTPBulk = (FirmaOTPBulk) caller.getParameter("firmaOTP");
+try {
+	fillModel(context);	
+	bp.invia(context, firmaOTPBulk);	
+	
+} catch(Exception e) {
+	return handleException(context,e);
+}
+return context.findDefaultForward();
+}	
 }

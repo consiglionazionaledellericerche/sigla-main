@@ -4,7 +4,8 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
-
+import it.cnr.contab.cmis.annotation.CMISPolicy;
+import it.cnr.contab.cmis.annotation.CMISProperty;
 public class Distinta_cassiereBase extends Distinta_cassiereKey implements Keyed {
 
 	// DT_EMISSIONE TIMESTAMP
@@ -31,11 +32,12 @@ public class Distinta_cassiereBase extends Distinta_cassiereKey implements Keyed
 	// IM_REV_INI_RIT DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal im_rev_ini_rit;
 
-
+ @CMISProperty(name="doccont:numDoc")
 	// PG_DISTINTA_DEF DECIMAL(10,0)
 	private java.lang.Long pg_distinta_def;
 	
 	private java.lang.Boolean fl_flusso;
+	private java.lang.Boolean fl_sepa;
 
 public Distinta_cassiereBase() {
 	super();
@@ -156,5 +158,11 @@ public java.lang.Boolean getFl_flusso() {
 }
 public void setFl_flusso(java.lang.Boolean fl_flusso) {
 	this.fl_flusso = fl_flusso;
+}
+public java.lang.Boolean getFl_sepa() {
+	return fl_sepa;
+}
+public void setFl_sepa(java.lang.Boolean fl_sepa) {
+	this.fl_sepa = fl_sepa;
 }
 }

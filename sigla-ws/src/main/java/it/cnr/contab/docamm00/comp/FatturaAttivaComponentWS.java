@@ -1121,8 +1121,8 @@ public class FatturaAttivaComponentWS {
 	                	  	fat=ValorizzaErrore(fat,Costanti.ERRORE_FA_132.toString());
 	                
 			            testata.setPg_banca_uo_cds(fat.getPg_banca_uo_cds());
-			            testata.setBanca_uo(new BancaBulk(testata.getCd_terzo_uo_cds(),testata.getPg_banca_uo_cds()));
 			            
+			            testata.setBanca_uo(((BancaBulk)(((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).completaOggetto(userContext,new BancaBulk(testata.getCd_terzo_uo_cds(),testata.getPg_banca_uo_cds())))));
 			            Configurazione_cnrBulk config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, 0, "*", "CONTO_CORRENTE_SPECIALE", "ENTE");
 			           
 			            if (Rif_modalita_pagamentoBulk.BANCARIO.equals(testata.getModalita_pagamento_uo().getTi_pagamento()))
@@ -1353,13 +1353,13 @@ public class FatturaAttivaComponentWS {
 		    	                    acc.setFl_calcolo_automatico(new Boolean(false));
 		    	                    acc.setUtcr(testata.getUtcr());
 		    	                    acc.setUser(testata.getUtcr());
-		    	                    it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk voce=new it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk();
+		    	                    it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk voce=new it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk();
 		    	                    voce.setEsercizio(acc.getEsercizio());
 		    	                    voce.setTi_appartenenza(Elemento_voceHome.APPARTENENZA_CNR);
 		    	                    voce.setTi_gestione(Elemento_voceHome.GESTIONE_ENTRATE);
 		    	                    
-		    	                    voce.setCd_voce(fatr.getCd_voce());
-		    	                    voce=((it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk)(((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).completaOggetto(userContext,voce)));
+		    	                    voce.setCd_elemento_voce(fatr.getCd_voce());
+		    	                    voce=((it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk)(((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).completaOggetto(userContext,voce)));
 		    	                    if (voce==null)
 		    	                               	fat=ValorizzaErrore(fat,Costanti.ERRORE_FA_107.toString());
 		    	                    else{
@@ -1367,7 +1367,7 @@ public class FatturaAttivaComponentWS {
 		    	                    	acc.setTi_appartenenza(voce.getTi_appartenenza());
 		    	                    	acc.setTi_gestione(voce.getTi_gestione());
 		    	                    	acc.setCd_elemento_voce(voce.getCd_elemento_voce());
-		    	                    	acc.setCd_voce(voce.getCd_voce());
+		    	                    	acc.setCd_voce(fatr.getCd_voce());
 		    	                    	Elemento_voceBulk v=new Elemento_voceBulk(voce.getCd_elemento_voce(),voce.getEsercizio(),voce.getTi_appartenenza(),voce.getTi_gestione());
 		    	                    	v=((Elemento_voceBulk)(((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).completaOggetto(userContext,v)));
 		    	                    	if (v.getFl_solo_residuo())
@@ -1556,13 +1556,13 @@ public class FatturaAttivaComponentWS {
 		    	                    obb.setFl_gara_in_corso(new Boolean(false));
 		    	                    obb.setUtcr(testata.getUtcr());
 		    	                    obb.setUser(testata.getUtcr());
-		    	                    it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk voce=new it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk();
+		    	                    it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk voce=new it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk();
 		    	                    voce.setEsercizio(obb.getEsercizio());
 		                    	    voce.setTi_appartenenza(Elemento_voceHome.APPARTENENZA_CDS);
 		                    	    voce.setTi_gestione(Elemento_voceHome.GESTIONE_SPESE);
-		                    	    voce.setCd_voce(fatr.getCd_voce());
-		                    	    voce.setCd_unita_organizzativa(testata.getCd_uo_origine());
-		                    	    voce=((it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk)(((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).completaOggetto(userContext,voce)));
+		                    	    voce.setCd_elemento_voce(fatr.getCd_voce());
+		                    	    //voce.setCd_unita_organizzativa(testata.getCd_uo_origine());
+		                    	    voce=((it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk)(((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).completaOggetto(userContext,voce)));
 		                    	    if (voce==null)
 		                    	    	fat=ValorizzaErrore(fat,Costanti.ERRORE_FA_107.toString());   
 		                    	    else{
