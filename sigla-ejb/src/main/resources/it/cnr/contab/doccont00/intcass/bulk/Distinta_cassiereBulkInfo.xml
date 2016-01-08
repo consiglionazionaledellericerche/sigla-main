@@ -333,7 +333,16 @@
 		enabledOnSearch="false"
 		enabledOnFreeSearch="true"
 		label="Generato flusso" />
-
+	<fieldProperty
+		name="fl_sepa"
+		property="fl_sepa"
+		inputType="CHECKBOX"
+		nullable="false"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		label="Sepa" />
 	<formFieldProperty
 		name="cd_cds" />
 	<formFieldProperty
@@ -426,7 +435,8 @@
 		name="pg_distinta_def" />
 	<formFieldProperty
 		name="fl_flusso" />
-
+	<formFieldProperty
+		name="fl_sepa" />
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty

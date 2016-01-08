@@ -36,4 +36,5 @@ BancaBulk recuperaIbanUo(UserContext userContext,Unita_organizzativaBulk uo) thr
 Mandato recuperaDatiMandatoFlusso(UserContext userContext,V_mandato_reversaleBulk bulk) throws ComponentException, PersistencyException,java.rmi.RemoteException;
 Reversale recuperaDatiReversaleFlusso(UserContext userContext,V_mandato_reversaleBulk bulk) throws ComponentException, PersistencyException,java.rmi.RemoteException;
 List dettagliDistinta(UserContext usercontext, Distinta_cassiereBulk distinta,String tipo) throws PersistencyException, ComponentException,RemoteException;
+Distinta_cassiereBulk inviaDistinta(UserContext userContext,Distinta_cassiereBulk distinta) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

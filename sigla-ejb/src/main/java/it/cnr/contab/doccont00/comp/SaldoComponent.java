@@ -703,7 +703,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaObbligazioniAccertamenti(UserContext u
 		Voce_f_saldi_cdr_lineaBulk saldo;
 		saldo = findAndLock( userContext,voce.getEsercizio(), esercizio_res, cd_cdr,cd_linea_attivita, voce);
 		if (saldo == null){
-			voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
+			  Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(voce.getEsercizio()));
+			     if (parametriCnr==null || !parametriCnr.getFl_nuovo_pdg())
+			    	 voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
 																  new Voce_fBulk(voce.getCd_voce(),voce.getEsercizio(),voce.getTi_appartenenza(),voce.getTi_gestione())
 																  );
 			Elemento_voceBulk elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
@@ -770,7 +772,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaVariazioneStanziamento(UserContext use
 		Voce_f_saldi_cdr_lineaBulk saldo;
 		saldo = findAndLock( userContext,voce.getEsercizio(), esercizio_res, cd_cdr,cd_linea_attivita, voce);
 		if (saldo == null){
-			voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
+			  Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(voce.getEsercizio()));
+			     if (parametriCnr==null || !parametriCnr.getFl_nuovo_pdg())
+			    	 voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
 																  new Voce_fBulk(voce.getCd_voce(),voce.getEsercizio(),voce.getTi_appartenenza(),voce.getTi_gestione())
 																  );
 			Elemento_voceBulk elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
@@ -817,9 +821,9 @@ public String getMessaggioSfondamentoDisponibilita(UserContext userContext, Voce
 		if (saldoNew == null) 
 			return "";
 	
-		Voce_fBulk voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(new Voce_fBulk(saldoNew.getCd_voce(), saldoNew.getEsercizio(), saldoNew.getTi_appartenenza(), saldoNew.getTi_gestione()));                	
+		//Voce_fBulk voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(new Voce_fBulk(saldoNew.getCd_voce(), saldoNew.getEsercizio(), saldoNew.getTi_appartenenza(), saldoNew.getTi_gestione()));                	
 		Elemento_voceBulk elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
-															  new Elemento_voceBulk(voce.getCd_elemento_voce(),saldo.getEsercizio(),saldo.getTi_appartenenza(),saldo.getTi_gestione()));
+															  new Elemento_voceBulk(saldoNew.getCd_elemento_voce(),saldo.getEsercizio(),saldo.getTi_appartenenza(),saldo.getTi_gestione()));
 		WorkpackageBulk workpackage = (WorkpackageBulk)getHome(userContext,WorkpackageBulk.class).findByPrimaryKey(
 										new WorkpackageBulk(saldo.getCd_centro_responsabilita(),saldo.getCd_linea_attivita()));           
 															  
@@ -834,7 +838,7 @@ public String getMessaggioSfondamentoDisponibilita(UserContext userContext, Voce
 				return "Impossibile effettuare l'operazione !\n"+
 	                   "Nell'esercizio "+saldo.getEsercizio()+
 	                   " e per il CdR "+saldo.getCd_centro_responsabilita()+", "+
-	                   " Voce "+voce.getCd_voce()+
+	                   " Voce "+saldoNew.getCd_voce()+
 	                   " e GAE "+saldo.getCd_linea_attivita()+" lo stanziamento Residuo Improprio "+
 	                   " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(saldoNew.getDispAdImpResiduoImproprio().abs())+")";
 			if (saldoNew.getEsercizio().compareTo(saldoNew.getEsercizio_res())==0 &&
@@ -842,7 +846,7 @@ public String getMessaggioSfondamentoDisponibilita(UserContext userContext, Voce
 				return "Impossibile effettuare l'operazione !\n"+
 	                   "Nell'esercizio "+saldo.getEsercizio()+
 	                   " e per il CdR "+saldo.getCd_centro_responsabilita()+", "+
-	                   " Voce "+voce.getCd_voce()+
+	                   " Voce "+saldoNew.getCd_voce()+
 	                   " e GAE "+saldo.getCd_linea_attivita()+" lo stanziamento di Competenza "+
 	                   " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(saldoNew.getDispAdImpCompetenza().abs())+")";
 		}
@@ -865,6 +869,7 @@ public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, 
 			if (((Parametri_cdsHome)getHome(userContext,Parametri_cdsBulk.class)).isRibaltato(userContext,cdr.getCd_cds())){
 				for (Iterator esercizi = ((EsercizioHome)getHome(userContext,EsercizioBulk.class)).findEserciziSuccessivi(new EsercizioBulk(CNRUserContext.getCd_cds(userContext),CNRUserContext.getEsercizio(userContext))).iterator();esercizi.hasNext();){
 					EsercizioBulk esercizio = (EsercizioBulk)esercizi.next();
+					
 					String codiceVoce = voce.getCd_voce();
 					voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
 																		  new Voce_fBulk(voce.getCd_voce(),esercizio.getEsercizio(),saldoOld.getTi_appartenenza(),saldoOld.getTi_gestione())

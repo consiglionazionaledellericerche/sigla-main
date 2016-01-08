@@ -193,4 +193,24 @@ public class DocumentiContabiliService extends SiglaCMISService {
 		email.send();
 		logger.debug("Inviata distinta PEC");
 	}
+	public void inviaDistintaPEC(List<String> nodes, boolean isNoEuroOrSepa) throws EmailException, ApplicationException, IOException {
+		// Create the email message
+		SimplePECMail email = new SimplePECMail(pecMailFromBanca, pecMailFromBancaPassword);
+		email.setHostName(pecHostName);
+		if (isNoEuroOrSepa)
+			email.addTo(pecMailToBancaNoEuroSepa, pecMailToBancaNoEuroSepa);
+		else
+			email.addTo(pecMailToBancaItaliaF23F24, pecMailToBancaItaliaF23F24);			
+		email.setFrom(pecMailFromBanca, pecMailFromBanca);
+		email.setSubject("Invio Distinta e Documenti");
+		email.setMsg("In allegato i documenti");
+		// add the attachment
+		for (String nodeRef : nodes) {
+			CmisObject cmisObject = getNodeByNodeRef(nodeRef);
+			email.attach(new ByteArrayDataSource(IOUtils.toByteArray(getResource(cmisObject))), cmisObject.getName(), "", EmailAttachment.ATTACHMENT);
+		}
+		// send the email
+		email.send();
+		logger.debug("Inviata distinta PEC");
+	}
 }
