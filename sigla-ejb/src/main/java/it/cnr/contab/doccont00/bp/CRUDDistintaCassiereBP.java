@@ -28,10 +28,11 @@ import it.cnr.contab.doccont00.intcass.bulk.*;
 import it.cnr.contab.doccont00.intcass.xmlbnl.FlussoOrdinativi;
 import it.cnr.contab.doccont00.intcass.xmlbnl.Mandato;
 import it.cnr.contab.doccont00.intcass.xmlbnl.Reversale;
-
 import it.cnr.contab.doccont00.intcass.xmlbnl.ObjectFactory;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
@@ -116,7 +117,10 @@ protected void init( it.cnr.jada.action.Config config,ActionContext context) thr
 	context.getBusinessProcess("/GestioneUtenteBP").removeChild("CRUDDistintaCassiereBP");
 	this.setFlusso(new Boolean(config.getInitParameter("flusso")));
 	try {
-		isUoDistintaTuttaSac(context);
+		if (Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(),it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context)).getFl_tesoreria_unica().booleanValue() &&!isUoDistintaTuttaSac(context))
+			throw new ApplicationException("Funzione non abilitata per la uo");
+		else 
+			isUoDistintaTuttaSac(context);
 	} catch (ComponentException e) {
 		throw handleException(e);
 	} catch (RemoteException e) {

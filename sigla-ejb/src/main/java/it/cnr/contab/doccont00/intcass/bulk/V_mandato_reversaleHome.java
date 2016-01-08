@@ -76,14 +76,17 @@ public class V_mandato_reversaleHome extends BulkHome {
 			return (V_mandato_reversaleBulk) result.get(0);
 		return null;	
 	}
-	public Collection findDocContabiliAnnullatiDaRitrasmettere( Distinta_cassiereBulk distinta, boolean annulliTuttaSac ) throws PersistencyException
+public Collection findDocContabiliAnnullatiDaRitrasmettere( Distinta_cassiereBulk distinta, boolean annulliTuttaSac ,boolean tesoreria) throws PersistencyException
 	{
 		SQLBuilder sql = createSQLBuilder();
-		sql.addClause( "AND", "esercizio", sql.EQUALS, distinta.getEsercizio());	
+	sql.addClause( "AND", "esercizio", sql.EQUALS, distinta.getEsercizio());
+	if(!tesoreria){
 		sql.addClause( "AND", "cd_cds", sql.EQUALS, distinta.getCd_cds());
-		//solo per la 000.407, devono essere ritrasmessi i doc. di tutta la SAC 
-		if (!annulliTuttaSac)
-		   sql.addClause( "AND", "cd_unita_organizzativa", sql.EQUALS, distinta.getCd_unita_organizzativa());
+		if (!annulliTuttaSac){	
+	//solo per la 000.407, devono essere ritrasmessi i doc. di tutta la SAC 	
+			sql.addClause( "AND", "cd_unita_organizzativa", sql.EQUALS, distinta.getCd_unita_organizzativa());
+		}
+	}
 		sql.addSQLClause( "AND", "dt_annullamento > dt_trasmissione" );
 		sql.addClause( "AND", "dt_ritrasmissione", sql.ISNULL, null );	
 		return fetchAll( sql );

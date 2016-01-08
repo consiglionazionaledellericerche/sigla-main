@@ -28,7 +28,7 @@
 	<tr>
 		<td><% bp.getController().writeFormLabel( out, "unita_organizzativa"); %></td>
 		<td><% bp.getController().writeFormInput( out,"default", "unita_organizzativa", false, "FormInput","onchange=\"submitForm('doCambiaUnitaOrganizzativa')\"" ); %></td>
-		<% if( mandato.getCd_unita_organizzativa() != null && !mandato.getCd_unita_organizzativa().equals( mandato.getCd_uo_origine()) ) { %>
+		<% if( mandato.getCd_unita_organizzativa() != null && (!mandato.getCd_unita_organizzativa().equals( mandato.getCd_uo_origine())||bp.isTesoreria_unica()) ) { %>
 		   	<td colspan=2></td>
 		<% } else { %>
 			<td><% bp.getController().writeFormLabel( out, "im_disp_cassa"); %></td>

@@ -1,9 +1,12 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.docamm00.docs.bulk.Tipo_documento_ammBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.*;
@@ -12,7 +15,10 @@ import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 
 import java.util.*;
+import java.rmi.RemoteException;
 import java.sql.*;
+
+import javax.ejb.EJBException;
 
 public abstract class MandatoHome extends BulkHome {
 public MandatoHome(Class clazz, java.sql.Connection conn) {
@@ -149,13 +155,24 @@ public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,Og
 	try
 	{
 		MandatoBulk mandato = (MandatoBulk) bulk;
+		Long pg;
 		Numerazione_doc_contHome numHome = (Numerazione_doc_contHome) getHomeCache().getHome( Numerazione_doc_contBulk.class );
-		Long pg = numHome.getNextPg(userContext, mandato.getEsercizio(), mandato.getCd_cds(), Numerazione_doc_contBulk.TIPO_MAN, mandato.getUser());		
+		if (Utility.createParametriCnrComponentSession().getParametriCnr(userContext,mandato.getEsercizio()).getFl_tesoreria_unica().booleanValue()){
+			Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk)(getHomeCache().getHome(Unita_organizzativa_enteBulk.class).findAll().get(0));
+			pg = numHome.getNextPg(userContext, mandato.getEsercizio(), uoEnte.getCd_cds(), Numerazione_doc_contBulk.TIPO_MAN, mandato.getUser());
+		}
+		else{
+			pg = numHome.getNextPg(userContext, mandato.getEsercizio(), mandato.getCd_cds(), Numerazione_doc_contBulk.TIPO_MAN, mandato.getUser());
+		}
 		mandato.setPg_mandato( pg );
 	}catch ( IntrospectionException e ){
 		throw new PersistencyException( e );
 	}
 	catch ( ApplicationException e ){
+		throw new ComponentException( e );
+	} catch (RemoteException e) {
+		throw new ComponentException( e );
+	} catch (EJBException e) {
 		throw new ComponentException( e );
 	}
 }
