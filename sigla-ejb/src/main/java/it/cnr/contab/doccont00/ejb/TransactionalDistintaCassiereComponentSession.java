@@ -469,4 +469,23 @@ public List dettagliDistinta(UserContext param0,
 		}
 	}
 }
+public Distinta_cassiereBulk inviaDistinta(UserContext param0,
+		Distinta_cassiereBulk param1) throws ComponentException,
+		RemoteException {
+	try {
+		return (Distinta_cassiereBulk) invoke("inviaDistinta",new Object[] {
+			param0,
+			param1 });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
 }
