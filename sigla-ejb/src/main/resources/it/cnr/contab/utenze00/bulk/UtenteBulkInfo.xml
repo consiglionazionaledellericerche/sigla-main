@@ -281,5 +281,8 @@
 	
 	<findFieldProperty
 		name="cd_utente" />
-
+	<findFieldProperty
+		name="cd_utente_uid"
+		label="Codice Utente Ufficiale CNR (nome.cognome)" />
+	
 </bulkInfo>
