@@ -1850,18 +1850,28 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 								// aggiornato dalla creazione reversale
 								bulk = (MandatoIBulk) inizializzaBulkPerModifica(
 										userContext, mandato);
-
-								// La reversale è stata emessa sull'ente
-								Var_bilancioBulk varBilancio = creaVariazioneBilancioDiRegolarizzazione(
-										userContext, (MandatoIBulk) bulk);
-								((MandatoIBulk) bulk)
+								if (!Utility.createParametriCnrComponentSession().getParametriCnr(userContext,mandato.getEsercizio()).getFl_tesoreria_unica().booleanValue()){								
+									((MandatoIBulk) bulk)
 										.setStato_coge(MandatoIBulk.STATO_COGE_X);
-								bulk.setToBeUpdated();
-								bulk = (MandatoBulk) super.modificaConBulk(
+									bulk.setToBeUpdated();
+									bulk = (MandatoBulk) super.modificaConBulk(
 										userContext, bulk);
-								((MandatoIBulk) bulk)
+									mandato = (MandatoIBulk) bulk;
+								}else{
+									// La reversale è stata emessa sull'ente
+									Var_bilancioBulk varBilancio = creaVariazioneBilancioDiRegolarizzazione(
+										userContext, (MandatoIBulk) bulk);
+								
+									((MandatoIBulk) bulk)
+										.setStato_coge(MandatoIBulk.STATO_COGE_X);
+									bulk.setToBeUpdated();
+									bulk = (MandatoBulk) super.modificaConBulk(
+										userContext, bulk);
+								
+									((MandatoIBulk) bulk)
 										.setVar_bilancio(varBilancio);
-								mandato = (MandatoIBulk) bulk;
+									mandato = (MandatoIBulk) bulk;
+								}
 							}
 				}
 				if (((MandatoIBulk) mandato).getImReversaleDiIncassoIVA()
@@ -5260,18 +5270,19 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			 * In tutti gli altri tipi di mandato sia per cds che per cnr la
 			 * verifica deve essere im_disp_cassa - im_mandato > 0
 			 */
-			if (MandatoBulk.TIPO_ACCREDITAMENTO.equals(mandato.getTi_mandato())) {
-				if (imDispCassa.compareTo(new BigDecimal(0)) < 0)
-					throw new ApplicationException(
-							"Mandato superiore alla disponibilità di cassa");
-
-			} else {
-				if (imDispCassa.subtract(mandato.getIm_mandato()).compareTo(
-						new BigDecimal(0)) < 0)
-					throw new ApplicationException(
-							"Mandato superiore alla disponibilità di cassa");
+			if (!Utility.createParametriCnrComponentSession().getParametriCnr(userContext,mandato.getEsercizio()).getFl_tesoreria_unica().booleanValue()){				
+				if (MandatoBulk.TIPO_ACCREDITAMENTO.equals(mandato.getTi_mandato())) {
+					if (imDispCassa.compareTo(new BigDecimal(0)) < 0)
+						throw new ApplicationException(
+								"Mandato superiore alla disponibilità di cassa");
+	
+				} else {
+					if (imDispCassa.subtract(mandato.getIm_mandato()).compareTo(
+							new BigDecimal(0)) < 0)
+						throw new ApplicationException(
+								"Mandato superiore alla disponibilità di cassa");
+				}
 			}
-
 		} catch (Exception e) {
 			throw handleException(e);
 		}

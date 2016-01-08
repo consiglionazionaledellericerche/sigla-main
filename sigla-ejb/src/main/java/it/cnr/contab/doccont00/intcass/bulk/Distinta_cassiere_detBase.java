@@ -11,6 +11,8 @@ public class Distinta_cassiere_detBase extends Distinta_cassiere_detKey implemen
 
 	// PG_REVERSALE DECIMAL(10,0)
 	private java.lang.Long pg_reversale;
+	
+	private java.lang.String cd_cds_origine;
 
 public Distinta_cassiere_detBase() {
 	super();
@@ -41,5 +43,11 @@ public void setPg_mandato(java.lang.Long pg_mandato) {
  */
 public void setPg_reversale(java.lang.Long pg_reversale) {
 	this.pg_reversale = pg_reversale;
+}
+public java.lang.String getCd_cds_origine() {
+	return cd_cds_origine;
+}
+public void setCd_cds_origine(java.lang.String cd_cds_origine) {
+	this.cd_cds_origine = cd_cds_origine;
 }
 }

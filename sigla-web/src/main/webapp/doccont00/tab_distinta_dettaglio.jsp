@@ -13,10 +13,20 @@
 	if (bp.isElencoConUo())
 		setCol = "elencoConUo";
 %>
+    
     <table class="Panel">	   
 	<tr>
 		<td>   
    			 <%bp.getDistintaCassDet().writeHTMLTable(pageContext,setCol,bp.isAddDocContabiliButtonEnabled(),false,bp.isRemoveDocContabiliButtonEnabled(),"100%","300px", true); %>
 		</td>
+	</tr>
+	</table>
+	<table>
+	 <tr>
+		<td><big>Totale Mandati</big></td>
+		<td><% bp.getController().writeFormInput( out, "totMandati"); %></td>
+	
+		<td><big>Totale Reversali</big></td>
+		<td><% bp.getController().writeFormInput( out, "totReversali"); %></td>
 	</tr>
 	</table>
