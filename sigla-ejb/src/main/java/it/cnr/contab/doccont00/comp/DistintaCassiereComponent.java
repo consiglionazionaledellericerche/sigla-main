@@ -5,6 +5,7 @@ import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.EsercizioComponentSession;
@@ -707,7 +708,7 @@ public class DistintaCassiereComponent extends
 		Collection docContabili = ((V_mandato_reversaleHome) getHome(
 				userContext, V_mandato_reversaleBulk.class))
 				.findDocContabiliAnnullatiDaRitrasmettere(distinta,
-						annulliTuttaSac(userContext, distinta));
+						annulliTuttaSac(userContext, distinta),tesoreriaUnica(userContext, distinta));
 		V_mandato_reversaleBulk docContabile;
 		for (Iterator i = docContabili.iterator(); i.hasNext();) {
 			docContabile = (V_mandato_reversaleBulk) i.next();
@@ -1084,7 +1085,7 @@ public class DistintaCassiereComponent extends
 			for (Iterator i = ((V_mandato_reversaleHome) getHome(userContext,
 					V_mandato_reversaleBulk.class))
 					.findDocContabiliAnnullatiDaRitrasmettere(distinta,
-							annulliTuttaSac(userContext, distinta)).iterator(); i
+							annulliTuttaSac(userContext, distinta),tesoreriaUnica(userContext, distinta)).iterator(); i
 					.hasNext();) {
 				docContabile = (V_mandato_reversaleBulk) i.next();
 				if (docContabile.isMandato())
@@ -1317,6 +1318,102 @@ public class DistintaCassiereComponent extends
 			V_mandato_reversaleBulk docPassivo, Distinta_cassiereBulk distinta)
 			throws it.cnr.jada.comp.ComponentException {
 		try {
+			if (distinta.getFl_flusso()){
+
+				SQLBuilder sql = getHome(userContext,
+						V_mandato_reversaleBulk.class,
+						"V_MANDATO_REVERSALE_DIST_XML").createSQLBuilder();
+				sql.addClause(clausole);
+				sql.addSQLClause("AND", "v_mandato_reversale_dist_xml.esercizio", SQLBuilder.EQUALS,
+						((CNRUserContext) userContext).getEsercizio());
+				// Da condizionare 02/12/2015
+				if(!tesoreriaUnica(userContext, distinta)){
+					sql.addSQLClause("AND", "v_mandato_reversale_dist_xml.cd_cds", SQLBuilder.EQUALS,((CNRUserContext) userContext).getCd_cds());
+					sql.addSQLClause("AND", "v_mandato_reversale_dist_xml.stato_trasmissione", SQLBuilder.EQUALS,
+							MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+				}
+				else{
+					sql.addSQLClause("AND", "v_mandato_reversale_dist_xml.dt_firma", SQLBuilder.ISNOTNULL,null);
+					sql.addSQLClause("AND", "v_mandato_reversale_dist_xml.stato_trasmissione", SQLBuilder.EQUALS,
+							MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+					//MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA);
+				}
+				sql.addSQLClause("AND", "v_mandato_reversale_dist_xml.ti_documento_cont", SQLBuilder.NOT_EQUALS,
+						MandatoBulk.TIPO_REGOLARIZZAZIONE);
+				sql.addSQLClause("AND", "v_mandato_reversale_dist_xml.stato", SQLBuilder.NOT_EQUALS,
+						MandatoBulk.STATO_MANDATO_ANNULLATO);
+				if (isInserisciMandatiVersamentoCori(userContext)) {
+					sql.addSQLClause("AND", "v_mandato_reversale_dist_xml.versamento_cori = 'N'");
+				}
+				sql.addSQLJoin("V_MANDATO_REVERSALE_DIST_XML.CD_TIPO_DOCUMENTO_CONT_PADRE", "V_MANDATO_REVERSALE_DIST_XML.CD_TIPO_DOCUMENTO_CONT");
+				sql.addSQLJoin("V_MANDATO_REVERSALE_DIST_XML.PG_DOCUMENTO_CONT_PADRE","V_MANDATO_REVERSALE_DIST_XML.PG_DOCUMENTO_CONT");
+								if (Utility.createParametriCnrComponentSession().getParametriCnr(
+						userContext, docPassivo.getEsercizio()).getFl_siope()
+						.booleanValue()) {
+					Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome(
+							userContext, Unita_organizzativa_enteBulk.class)
+							.findAll().get(0);
+					if (!((CNRUserContext) userContext).getCd_cds().equals(
+							ente.getUnita_padre().getCd_unita_organizzativa()))
+						sql.addSQLClause("AND", "v_mandato_reversale_dist_xml.ti_documento_cont",
+								SQLBuilder.NOT_EQUALS,
+								MandatoBulk.TIPO_ACCREDITAMENTO);
+				}
+
+				if (docPassivo != null) // (1) clausole sull'esercizio,
+										// cd_unita_organizzativa + clausole
+										// dell'utente
+					sql.addClause(docPassivo.buildFindClauses(null));
+				// sql.addOrderBy(
+				// "cd_tipo_documento_cont, ti_documento_cont, pg_documento_cont" );
+
+				SQLUnion union;
+
+				// MARIO - condizione che aggiunge in ogni caso, a prescindere dalla
+				// selezione effettuata
+				// i mandati di versamento CORI/IVA, ma solo se i parametri sono
+				// impostati in tal senso
+				if (isInserisciMandatiVersamentoCori(userContext)) {
+					SQLBuilder sql2 = getHome(userContext,
+							V_mandato_reversaleBulk.class,
+							"V_MANDATO_REVERSALE_DIST_XML").createSQLBuilder();
+					sql2.addClause(clausole);
+					sql2.addSQLClause("AND", "v_mandato_reversale_dist_xml.esercizio", SQLBuilder.EQUALS,
+							((CNRUserContext) userContext).getEsercizio());
+					sql2.addSQLClause("AND", "v_mandato_reversale_dist_xml.cd_unita_organizzativa",
+							SQLBuilder.EQUALS, docPassivo
+									.getCd_unita_organizzativa());
+					sql2.addSQLClause("AND", "v_mandato_reversale_dist_xml.cd_tipo_documento_cont",
+							SQLBuilder.EQUALS, "MAN");
+
+					// Da condizionare 02/12/2015
+					if(!tesoreriaUnica(userContext, distinta)){
+						sql2.addSQLClause("AND", "v_mandato_reversale_dist_xml.cd_cds", SQLBuilder.EQUALS,((CNRUserContext) userContext).getCd_cds());
+						sql2.addSQLClause("AND", "v_mandato_reversale_dist_xml.stato_trasmissione", SQLBuilder.EQUALS,
+								MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+					}
+					else{
+						sql2.addSQLClause("AND", "v_mandato_reversale_dist_xml.dt_firma", SQLBuilder.ISNOTNULL,null);
+						sql2.addSQLClause("AND", "v_mandato_reversale_dist_xml.stato_trasmissione", SQLBuilder.EQUALS,
+								MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+						//MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA);
+					}				
+					sql2.addSQLClause("AND", "v_mandato_reversale_dist_xml.ti_documento_cont",
+							SQLBuilder.NOT_EQUALS,
+							MandatoBulk.TIPO_REGOLARIZZAZIONE);
+					sql2.addSQLClause("AND", "v_mandato_reversale_dist_xml.stato", SQLBuilder.NOT_EQUALS,
+							MandatoBulk.STATO_MANDATO_ANNULLATO);
+					sql2.addSQLClause("AND", "v_mandato_reversale_dist_xml.versamento_cori = 'S'");
+					sql2.addSQLJoin("V_MANDATO_REVERSALE_DIST_XML.CD_TIPO_DOCUMENTO_CONT_PADRE", "V_MANDATO_REVERSALE_DIST_XML.CD_TIPO_DOCUMENTO_CONT");
+					sql2.addSQLJoin("V_MANDATO_REVERSALE_DIST_XML.PG_DOCUMENTO_CONT_PADRE","V_MANDATO_REVERSALE_DIST_XML.PG_DOCUMENTO_CONT");
+					
+					union = sql2.union(sql, true);
+					return union;
+				} else {
+					return sql;
+				}
+			}else{
+			
 			SQLBuilder sql = getHome(userContext,
 					V_mandato_reversaleBulk.class,
 					"V_MANDATO_REVERSALE_DISTINTA").createSQLBuilder();
@@ -1324,24 +1421,28 @@ public class DistintaCassiereComponent extends
 			sql.addSQLClause("AND", "v_mandato_reversale_distinta.esercizio", SQLBuilder.EQUALS,
 					((CNRUserContext) userContext).getEsercizio());
 			// Da condizionare 02/12/2015
-			sql.addSQLClause("AND", "v_mandato_reversale_distinta.cd_cds", SQLBuilder.EQUALS,
-					((CNRUserContext) userContext).getCd_cds());
-			sql.addSQLClause("AND", "v_mandato_reversale_distinta.stato_trasmissione", SQLBuilder.EQUALS,
-					MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+			if(!tesoreriaUnica(userContext, distinta)){
+				sql.addSQLClause("AND", "v_mandato_reversale_distinta.cd_cds", SQLBuilder.EQUALS,((CNRUserContext) userContext).getCd_cds());
+				sql.addSQLClause("AND", "v_mandato_reversale_distinta.stato_trasmissione", SQLBuilder.EQUALS,
+						MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+			}
+			else{
+				sql.addSQLJoin("v_mandato_reversale_distinta.cd_cds", "v_mandato_reversale_distinta.cd_cds");
+				sql.addSQLClause("AND", "v_mandato_reversale_distinta.dt_firma", SQLBuilder.ISNOTNULL,null);
+				sql.addSQLClause("AND", "v_mandato_reversale_distinta.stato_trasmissione", SQLBuilder.EQUALS,
+						MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+				//MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA);
+			}
 			sql.addSQLClause("AND", "v_mandato_reversale_distinta.ti_documento_cont", SQLBuilder.NOT_EQUALS,
 					MandatoBulk.TIPO_REGOLARIZZAZIONE);
 			sql.addSQLClause("AND", "v_mandato_reversale_distinta.stato", SQLBuilder.NOT_EQUALS,
 					MandatoBulk.STATO_MANDATO_ANNULLATO);
-			
+			if (isInserisciMandatiVersamentoCori(userContext)) {
+				sql.addSQLClause("AND", "v_mandato_reversale_distinta.versamento_cori = 'N'");
+			}
 			sql.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT_PADRE", "V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT");
 			sql.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT_PADRE","V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT");
-			if (distinta.getFl_flusso()){
-				sql.addTableToHeader("V_MANDATO_REVERSALE_DIST_XML");
-				sql.addSQLJoin("V_MANDATO_REVERSALE_DIST_XML.ESERCIZIO", "V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO");
-				sql.addSQLJoin("V_MANDATO_REVERSALE_DIST_XML.CD_TIPO_DOCUMENTO_CONT", "V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT");
-				sql.addSQLJoin("V_MANDATO_REVERSALE_DIST_XML.CD_CDS", "V_MANDATO_REVERSALE_DISTINTA.CD_CDS");
-				sql.addSQLJoin("V_MANDATO_REVERSALE_DIST_XML.PG_DOCUMENTO_CONT", "V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT");
-			}
+			
 			if (Utility.createParametriCnrComponentSession().getParametriCnr(
 					userContext, docPassivo.getEsercizio()).getFl_siope()
 					.booleanValue()) {
@@ -1378,15 +1479,21 @@ public class DistintaCassiereComponent extends
 				sql2.addSQLClause("AND", "v_mandato_reversale_distinta.cd_unita_organizzativa",
 						SQLBuilder.EQUALS, docPassivo
 								.getCd_unita_organizzativa());
-				sql2.addSQLClause("AND", "v_mandato_reversale_distinta.esercizio", SQLBuilder.EQUALS,
-						docPassivo.getEsercizio());
 				sql2.addSQLClause("AND", "v_mandato_reversale_distinta.cd_tipo_documento_cont",
 						SQLBuilder.EQUALS, "MAN");
-//			 Da condizionare 02/12/2015
-				sql2.addSQLClause("AND", "v_mandato_reversale_distinta.cd_cds", SQLBuilder.EQUALS,
-						((CNRUserContext) userContext).getCd_cds());
-				sql2.addSQLClause("AND", "v_mandato_reversale_distinta.stato_trasmissione", SQLBuilder.EQUALS,
-						MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+
+				// Da condizionare 02/12/2015
+				if(!tesoreriaUnica(userContext, distinta)){
+					sql2.addSQLClause("AND", "v_mandato_reversale_distinta.cd_cds", SQLBuilder.EQUALS,((CNRUserContext) userContext).getCd_cds());
+					sql2.addSQLClause("AND", "v_mandato_reversale_distinta.stato_trasmissione", SQLBuilder.EQUALS,
+							MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+				}
+				else{
+					sql2.addSQLClause("AND", "v_mandato_reversale_distinta.dt_firma", SQLBuilder.ISNOTNULL,null);
+					sql2.addSQLClause("AND", "v_mandato_reversale_distinta.stato_trasmissione", SQLBuilder.EQUALS,
+							MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+					//MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA);
+				}				
 				sql2.addSQLClause("AND", "v_mandato_reversale_distinta.ti_documento_cont",
 						SQLBuilder.NOT_EQUALS,
 						MandatoBulk.TIPO_REGOLARIZZAZIONE);
@@ -1395,17 +1502,11 @@ public class DistintaCassiereComponent extends
 				sql2.addSQLClause("AND", "v_mandato_reversale_distinta.versamento_cori = 'S'");
 				sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT_PADRE", "V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT");
 				sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT_PADRE","V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT");
-				if (distinta.getFl_flusso()){					
-					sql2.addTableToHeader("V_MANDATO_REVERSALE_DIST_XML");
-					sql2.addSQLJoin("V_MANDATO_REVERSALE_DIST_XML.ESERCIZIO", "V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO");
-					sql2.addSQLJoin("V_MANDATO_REVERSALE_DIST_XML.CD_TIPO_DOCUMENTO_CONT", "V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT");
-					sql2.addSQLJoin("V_MANDATO_REVERSALE_DIST_XML.CD_CDS", "V_MANDATO_REVERSALE_DISTINTA.CD_CDS");
-					sql2.addSQLJoin("V_MANDATO_REVERSALE_DIST_XML.PG_DOCUMENTO_CONT", "V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT");
-				}
-				union = sql2.union(sql, false);
+				union = sql2.union(sql, true);
 				return union;
 			} else {
 				return sql;
+			}
 			}
 		} catch (Throwable e) {
 			throw handleException(e);
@@ -1432,9 +1533,13 @@ public class DistintaCassiereComponent extends
 			Distinta_cassiereBulk distinta, V_mandato_reversaleBulk docContabile)
 			throws ComponentException {
 		try {
-			aggiornaStatoDocContabile(userContext, docContabile,
+			if(!tesoreriaUnica(userContext, distinta))
+				aggiornaStatoDocContabile(userContext, docContabile,
 					MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
-
+			else
+				aggiornaStatoDocContabile(userContext, docContabile,
+						MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+					//MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA);
 			String schema = it.cnr.jada.util.ejb.EJBCommonServices
 					.getDefaultSchema();
 			LoggableStatement ps = null;
@@ -1624,9 +1729,13 @@ public class DistintaCassiereComponent extends
 			it.cnr.jada.UserContext userContext, Distinta_cassiereBulk distinta)
 			throws ComponentException {
 		try {
-			aggiornaStatoDocContabili(userContext, distinta,
+			if(!tesoreriaUnica(userContext, distinta))
+				aggiornaStatoDocContabili(userContext, distinta,
 					MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
-
+			else
+				aggiornaStatoDocContabili(userContext, distinta,
+						MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+			//MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA);
 			String schema = it.cnr.jada.util.ejb.EJBCommonServices
 					.getDefaultSchema();
 			LoggableStatement ps = null;
@@ -1975,6 +2084,7 @@ public class DistintaCassiereComponent extends
 				dettaglio.setPg_mandato(docContabile.getPg_documento_cont());
 			else if (docContabile.isReversale())
 				dettaglio.setPg_reversale(docContabile.getPg_documento_cont());
+			dettaglio.setCd_cds_origine(docContabile.getCd_cds());
 			dettaglio.setUser(it.cnr.contab.utenze00.bp.CNRUserContext
 					.getUser(userContext));
 			insertBulk(userContext, dettaglio);
@@ -2714,56 +2824,127 @@ public class DistintaCassiereComponent extends
 	public SQLBuilder selectDistinta_cassiere_detCollByClause(
 			UserContext userContext, Distinta_cassiereBulk distinta,
 			Class bulkClass, CompoundFindClause clauses)
-			throws ComponentException {
+			throws ComponentException {	
+		try{
 		SQLBuilder sql = getHome(userContext, V_mandato_reversaleBulk.class,
 				"V_MANDATO_REVERSALE_DISTINTA").createSQLBuilder();
-
+ 
 		if (distinta.getPg_distinta() == null)
 			return null;
+		long nrDettagli = ((Distinta_cassiere_detHome) getHome(userContext,
+				Distinta_cassiere_detBulk.class)).getNrDettagli(
+				userContext, distinta);
+		if (nrDettagli == 0)
+			return null;
+		
+		if(tesoreriaUnica(userContext,distinta )) {	
+			SQLBuilder sql2 = getHome(userContext, Distinta_cassiere_detBulk.class)
+					.createSQLBuilder();
+			sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO",
+					"DISTINTA_CASSIERE_DET.ESERCIZIO");
+			sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS",
+					"DISTINTA_CASSIERE_DET.CD_CDS_ORIGINE");
+			// da committare
+			sql2.openParenthesis("AND");
+			sql2.openParenthesis("AND");
+			sql2.addSQLClause("AND",
+					"V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
+					sql2.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
+			sql2.addSQLJoin("	V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
+					" DISTINTA_CASSIERE_DET.PG_MANDATO");
+			sql2.closeParenthesis();
+			sql2.closeParenthesis();
+			// da committare
+			sql2.addSQLClause("AND", "DISTINTA_CASSIERE_DET.ESERCIZIO", sql.EQUALS,
+					distinta.getEsercizio());
+			sql2.addSQLClause("AND", "DISTINTA_CASSIERE_DET.CD_CDS", sql.EQUALS,
+					distinta.getCd_cds());
+			sql2.addSQLClause("AND",
+					"DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA", sql.EQUALS,
+					distinta.getCd_unita_organizzativa());
+			sql2.addSQLClause("AND", "DISTINTA_CASSIERE_DET.PG_DISTINTA",
+					sql.EQUALS, distinta.getPg_distinta());
 
-		SQLBuilder sql2 = getHome(userContext, Distinta_cassiere_detBulk.class)
-				.createSQLBuilder();
-		sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO",
-				"DISTINTA_CASSIERE_DET.ESERCIZIO");
-		sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS",
-				"DISTINTA_CASSIERE_DET.CD_CDS");
-		// da committare
-		sql2.openParenthesis("AND");
-		sql2.openParenthesis("AND");
-		sql2.addSQLClause("AND",
-				"V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
-				sql2.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
-		sql2.addSQLJoin("	V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
-				" DISTINTA_CASSIERE_DET.PG_MANDATO");
-		sql2.addSQLClause("OR",
-				"V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
-				sql2.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
-		sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
-				"DISTINTA_CASSIERE_DET.PG_REVERSALE");
-		sql2.closeParenthesis();
-		sql2.closeParenthesis();
-		// da committare
-		sql2.addSQLClause("AND", "DISTINTA_CASSIERE_DET.ESERCIZIO", sql.EQUALS,
-				distinta.getEsercizio());
-		sql2.addSQLClause("AND", "DISTINTA_CASSIERE_DET.CD_CDS", sql.EQUALS,
-				distinta.getCd_cds());
-		sql2.addSQLClause("AND",
-				"DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA", sql.EQUALS,
-				distinta.getCd_unita_organizzativa());
-		sql2.addSQLClause("AND", "DISTINTA_CASSIERE_DET.PG_DISTINTA",
-				sql.EQUALS, distinta.getPg_distinta());
+			SQLBuilder sql3 = getHome(userContext, Distinta_cassiere_detBulk.class)
+					.createSQLBuilder();
+			sql3.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO",
+					"DISTINTA_CASSIERE_DET.ESERCIZIO");
+			sql3.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS",
+					"DISTINTA_CASSIERE_DET.CD_CDS_ORIGINE");
+			// da committare
+			sql3.openParenthesis("AND");
+			sql3.openParenthesis("AND");
+			
+			sql3.addSQLClause("AND",
+					"V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
+					sql3.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
+			sql3.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
+					"DISTINTA_CASSIERE_DET.PG_REVERSALE");
+			sql3.closeParenthesis();
+			sql3.closeParenthesis();
+			// da committare
+			sql3.addSQLClause("AND", "DISTINTA_CASSIERE_DET.ESERCIZIO", sql.EQUALS,
+					distinta.getEsercizio());
+			sql3.addSQLClause("AND", "DISTINTA_CASSIERE_DET.CD_CDS", sql.EQUALS,
+					distinta.getCd_cds());
+			sql3.addSQLClause("AND",
+					"DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA", sql.EQUALS,
+					distinta.getCd_unita_organizzativa());
+			sql3.addSQLClause("AND", "DISTINTA_CASSIERE_DET.PG_DISTINTA",
+					sql.EQUALS, distinta.getPg_distinta());
+			SQLUnion union = sql2.union(sql3, true);
+			
+			sql.addSQLExistsClause("AND", union);
 
-		sql.addSQLExistsClause("AND", sql2);
-		sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, distinta
-				.getEsercizio());
-		sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, distinta.getCd_cds());
-		// sql.addSQLClause( "AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS,
-		// distinta.getCd_unita_organizzativa() );
-
-		sql
-				.addOrderBy(" V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT_PADRE, V_MANDATO_REVERSALE_DISTINTA.TI_DOCUMENTO_CONT_PADRE, V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT_PADRE ");
-
+			sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, distinta
+					.getEsercizio());
+			sql.addOrderBy(" V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT_PADRE, V_MANDATO_REVERSALE_DISTINTA.TI_DOCUMENTO_CONT_PADRE, V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT_PADRE ");
 		return sql;
+		 }
+		else{
+			SQLBuilder sql2 = getHome(userContext, Distinta_cassiere_detBulk.class)
+					.createSQLBuilder();
+			sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO",
+					"DISTINTA_CASSIERE_DET.ESERCIZIO");
+			sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS",
+					"DISTINTA_CASSIERE_DET.CD_CDS");
+			// da committare
+			sql2.openParenthesis("AND");
+			sql2.openParenthesis("AND");
+			sql2.addSQLClause("AND",
+					"V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
+					sql2.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
+			sql2.addSQLJoin("	V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
+					" DISTINTA_CASSIERE_DET.PG_MANDATO");
+			sql2.addSQLClause("OR",
+					"V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
+					sql2.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
+			sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
+					"DISTINTA_CASSIERE_DET.PG_REVERSALE");
+			sql2.closeParenthesis();
+			sql2.closeParenthesis();
+			// da committare
+			sql2.addSQLClause("AND", "DISTINTA_CASSIERE_DET.ESERCIZIO", sql.EQUALS,
+					distinta.getEsercizio());
+			sql2.addSQLClause("AND", "DISTINTA_CASSIERE_DET.CD_CDS", sql.EQUALS,
+					distinta.getCd_cds());
+			sql2.addSQLClause("AND",
+					"DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA", sql.EQUALS,
+					distinta.getCd_unita_organizzativa());
+			sql2.addSQLClause("AND", "DISTINTA_CASSIERE_DET.PG_DISTINTA",
+					sql.EQUALS, distinta.getPg_distinta());
+
+			sql.addSQLExistsClause("AND", sql2);
+			sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, distinta
+					.getEsercizio());
+			sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, distinta.getCd_cds());
+			// sql.addSQLClause( "AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS,
+			// distinta.getCd_unita_organizzativa() );
+
+			sql	.addOrderBy(" V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT_PADRE, V_MANDATO_REVERSALE_DISTINTA.TI_DOCUMENTO_CONT_PADRE, V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT_PADRE ");
+			return sql;
+		}
+		
 		/*
 		 * SQLBuilder sql =
 		 * getHome(userContext,V_mandato_reversaleBulk.class).createSQLBuilder
@@ -2791,6 +2972,9 @@ public class DistintaCassiereComponent extends
 		 * " V_MANDATO_REVERSALE.CD_TIPO_DOCUMENTO_CONT_PADRE, V_MANDATO_REVERSALE.TI_DOCUMENTO_CONT_PADRE, V_MANDATO_REVERSALE.PG_DOCUMENTO_CONT_PADRE "
 		 * ); return sql;
 		 */
+		 } catch (Throwable e) {
+			throw handleException(e);
+		}
 	}
 
 	/**
@@ -3002,6 +3186,7 @@ public class DistintaCassiereComponent extends
 																			.getPg_documento_cont()))))
 						throw new ApplicationException(
 								"Il mandato "
+								+bulk.getCd_cds()+"/"
 										+ bulk.getPg_documento_cont()
 										+ " non risulta associato completamente a codici Siope. Scollegarlo dalla distinta e ripetere l'operazione.");
 					else if (bulk.isReversale()
@@ -3021,7 +3206,7 @@ public class DistintaCassiereComponent extends
 																	bulk
 																			.getPg_documento_cont()))))
 						throw new ApplicationException(
-								"La reversale "
+								"La reversale "+bulk.getCd_cds()+"/"
 										+ bulk.getPg_documento_cont()
 										+ " non risulta associata completamente a codici Siope. Scollegarla dalla distinta e ripetere l'operazione.");
 				}
@@ -3805,7 +3990,27 @@ public class DistintaCassiereComponent extends
 		sql.addSQLClause("AND","TERZO.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,uo.getCd_unita_organizzativa());
 		sql.addSQLJoin("BANCA.CD_TERZO","TERZO.CD_TERZO");
 		sql.addSQLClause("AND","TERZO.DT_FINE_RAPPORTO",sql.ISNULL,null);
-		sql.addSQLClause("AND", "BANCA.FL_CC_CDS",sql.EQUALS, "Y");
+		try {
+			if (!Utility.createParametriCnrComponentSession().getParametriCnr(userContext,CNRUserContext.getEsercizio(userContext)).getFl_tesoreria_unica().booleanValue())	
+				sql.addSQLClause("AND", "BANCA.FL_CC_CDS",sql.EQUALS, "Y");
+			else{
+				Configurazione_cnrBulk config = new Configurazione_cnrBulk(
+						"CONTO_CORRENTE_SPECIALE",
+						"ENTE", 
+						"*", 
+						new Integer(0));
+				it.cnr.contab.config00.bulk.Configurazione_cnrHome home = (it.cnr.contab.config00.bulk.Configurazione_cnrHome)getHome(userContext, config);
+				List configurazioni = home.find(config);
+				if ((configurazioni != null) && (configurazioni.size() == 1)) {
+					Configurazione_cnrBulk configBanca = (Configurazione_cnrBulk)configurazioni.get(0);
+					sql.addSQLClause("AND", "BANCA.ABI",sql.EQUALS,configBanca.getVal01());
+					sql.addSQLClause("AND", "BANCA.CAB",sql.EQUALS,configBanca.getVal02());
+					sql.addSQLClause("AND", "BANCA.NUMERO_CONTO",sql.CONTAINS, configBanca.getVal03());			       
+				}
+			}
+		} catch (Exception e) {
+			throw handleException(e);
+		}	
 		sql.addSQLClause("AND", "BANCA.FL_CANCELLATO",sql.EQUALS, "N");
 		sql.addSQLClause("AND","CODICE_IBAN",sql.ISNOTNULL,null);
 		if (getHome( userContext, BancaBulk.class ).fetchAll( sql ).size()==0)
@@ -4260,7 +4465,18 @@ public class DistintaCassiereComponent extends
 		sql.addSQLClause("AND","DISTINTA_CASSIERE_DET.PG_DISTINTA",SQLBuilder.EQUALS, distinta.getPg_distinta());
 		
 		sql.addSQLJoin("V_MANDATO_REVERSALE.ESERCIZIO","DISTINTA_CASSIERE_DET.ESERCIZIO");
-		sql.addSQLJoin("V_MANDATO_REVERSALE.CD_CDS","DISTINTA_CASSIERE_DET.CD_CDS");
+		try {
+			if (!Utility.createParametriCnrComponentSession().getParametriCnr(usercontext,CNRUserContext.getEsercizio(usercontext)).getFl_tesoreria_unica().booleanValue())	
+				sql.addSQLJoin("V_MANDATO_REVERSALE.CD_CDS","DISTINTA_CASSIERE_DET.CD_CDS");
+			else
+				sql.addSQLJoin("V_MANDATO_REVERSALE.CD_CDS","DISTINTA_CASSIERE_DET.CD_CDS_ORIGINE");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EJBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// da committare
 		//sql.addSQLJoin("V_MANDATO_REVERSALE.CD_UNITA_ORGANIZZATIVA","DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA");
 		
@@ -4273,4 +4489,11 @@ public class DistintaCassiereComponent extends
 		}
 	return getHome(usercontext, V_mandato_reversaleBulk.class).fetchAll(sql);
 	}
+	protected boolean tesoreriaUnica(UserContext userContext,
+			Distinta_cassiereBulk distinta) throws SQLException,
+			ComponentException, PersistencyException, EJBException,
+			RemoteException {
+		return (Utility.createParametriCnrComponentSession().getParametriCnr(userContext,distinta.getEsercizio()).getFl_tesoreria_unica().booleanValue());
+	}
+	
 }

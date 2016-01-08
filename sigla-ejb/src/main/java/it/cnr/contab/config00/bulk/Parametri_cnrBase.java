@@ -48,6 +48,7 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	private Boolean fl_nuovo_pdg;
 	private java.sql.Timestamp data_attivazione_new_voce;
 	
+	private Boolean fl_tesoreria_unica;
 	public Boolean getFl_incarico() {
 		return fl_incarico;
 	}
@@ -313,12 +314,17 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	public void setFl_nuovo_pdg(Boolean fl_nuovo_pdg) {
 		this.fl_nuovo_pdg = fl_nuovo_pdg;
 	}
-	
 	public java.sql.Timestamp getData_attivazione_new_voce() {
 		return data_attivazione_new_voce;
 	}
 	
 	public void setData_attivazione_new_voce(java.sql.Timestamp data_attivazione_new_voce) {
 		this.data_attivazione_new_voce = data_attivazione_new_voce;
+	}	public Boolean getFl_tesoreria_unica() {
+		return fl_tesoreria_unica;
+
 	}
+	public void setFl_tesoreria_unica(Boolean fl_tesoreria_unica) {
+		this.fl_tesoreria_unica = fl_tesoreria_unica;
+	}	
 }

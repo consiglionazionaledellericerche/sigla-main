@@ -44,6 +44,12 @@
 			sqlTypeName="VARCHAR"
 			columnSize="20"
 			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_ORIGINE"
+			propertyName="cd_cds_origine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"/>
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -59,4 +65,6 @@
 		name="pg_reversale" />
 	<persistentProperty
 		name="utuv" />
+	<persistentProperty
+		name="cd_cds_origine" />
 </SQLPersistentInfo>
