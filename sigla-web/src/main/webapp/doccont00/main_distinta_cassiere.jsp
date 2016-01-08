@@ -21,6 +21,8 @@
  <% it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP bp2=(it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP)BusinessProcess.getBusinessProcess(request); %>
 <% if (bp2.isFlusso()) { %>
 	<title>Gestione Distinta cassiere - Flusso Ordinativo </title>
+<% } else if (bp2.isSepa()) {%>
+	<title>Gestione Distinta Sepa</title>
 <% } else {%>
 	<title>Gestione Distinta cassiere</title>
 <% } %>

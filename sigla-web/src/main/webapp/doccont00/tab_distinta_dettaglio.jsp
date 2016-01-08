@@ -8,8 +8,21 @@
 	import="it.cnr.jada.util.jsp.*,it.cnr.jada.action.*,java.util.*,it.cnr.jada.util.action.*"
 %>
 
-<% 	it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP bp = (it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP)BusinessProcess.getBusinessProcess(request);
+<% 
+	JSPUtils.printBaseUrl(pageContext); 
+it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP bp = (it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP)BusinessProcess.getBusinessProcess(request);
+%>
+<script language="JavaScript">
+function doVisualizzaSingoloDocumento(esercizio, cds , numero_documento, tipo) {	
+	doPrint('genericdownload/Documento contabile '+esercizio+'-'+cds+'-'+numero_documento+'.pdf?esercizio='+esercizio+'&cds='+cds+'&numero_documento='+numero_documento+'&tipo='+tipo+'&methodName=scaricaDocumento&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+}
+</script>
+
+<% 	
 	String setCol = null;
+	if(bp.getParametriCnr()!=null &&bp.getParametriCnr().getFl_tesoreria_unica().booleanValue())
+		setCol = "elencoConUoFirmati";
+	else
 	if (bp.isElencoConUo())
 		setCol = "elencoConUo";
 %>
