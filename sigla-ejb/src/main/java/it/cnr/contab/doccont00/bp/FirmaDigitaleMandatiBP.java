@@ -71,6 +71,8 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 			}
 			compoundfindclause.addClause(FindClause.AND, "ti_documento_cont", SQLBuilder.NOT_EQUALS,
 					MandatoBulk.TIPO_REGOLARIZZAZIONE);
+			compoundfindclause.addClause(FindClause.AND, "ti_documento_cont", SQLBuilder.NOT_EQUALS,
+					ReversaleIBulk.TIPO_INCASSO);
 			compoundfindclause.addClause(FindClause.AND, "stato", SQLBuilder.NOT_EQUALS,
 					MandatoBulk.STATO_MANDATO_ANNULLATO);
 
