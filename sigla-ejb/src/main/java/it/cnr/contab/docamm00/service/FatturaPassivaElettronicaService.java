@@ -413,15 +413,15 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 					} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaRicevutaConsegnaTerm)){
 						notificaFatturaAttivaRicevutaConsegna(message, userName);
 					} else if (message.getSubject().contains(pecSDISubjectNotificaEsitoTerm)){
-//REM PER FINE ANNO 2015						notificaFatturaAttivaEsito(message);
+						notificaFatturaAttivaEsito(message);
 					} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaNotificaScartoTerm)){
-//REM PER FINE ANNO 2015						notificaFatturaAttivaScarto(message);
+						notificaFatturaAttivaScarto(message);
 					} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaMancataConsegnaTerm)){
 						notificaFatturaAttivaMancataConsegna(message);
 					} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm)){
 						notificaFatturaAttivaDecorrenzaTermini(message);
 					} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm)){
-//REM PER FINE ANNO 2015						notificaFatturaAttivaAvvenutaTrasmissioneNonRecapitata(message);
+						notificaFatturaAttivaAvvenutaTrasmissioneNonRecapitata(message);
 					} else {
 						logger.warn("Fatture Elettroniche: Attive: Oggetto dell'e-mail non gestito." + message.getSubject());
 						SendMail.sendErrorMail("Fatture Elettroniche: Oggetto dell'e-mail non gestito. Mail:"+userName, message.getDescription());
