@@ -91,7 +91,7 @@ public SQLBuilder selectVoceByClause( ObbligazioneRes_impropriaBulk bulk, Voce_f
 	if ( size == 0 )
 		return Collections.EMPTY_LIST;
 			
-	Voce_fBulk capitolo = (Voce_fBulk) capitoliList.iterator().next();
+	IVoceBilancioBulk capitolo = (IVoceBilancioBulk) capitoliList.iterator().next();
 			
 	V_pdg_obbligazione_speHome home = (V_pdg_obbligazione_speHome)getHomeCache().getHome(V_pdg_obbligazione_speBulk.class);
 
@@ -117,9 +117,9 @@ public SQLBuilder selectVoceByClause( ObbligazioneRes_impropriaBulk bulk, Voce_f
 
 	sql.openParenthesis("AND");
 		Iterator i = capitoliList.iterator();
-		sql.addClause("OR", "cd_funzione", SQLBuilder.EQUALS, ((Voce_fBulk)i.next()).getCd_funzione());
+		sql.addClause("OR", "cd_funzione", SQLBuilder.EQUALS, ((IVoceBilancioBulk)i.next()).getCd_funzione());
 		for ( int j = 0; i.hasNext(); j++ )
-			sql.addClause("OR", "cd_funzione", SQLBuilder.EQUALS, ((Voce_fBulk)i.next()).getCd_funzione());
+			sql.addClause("OR", "cd_funzione", SQLBuilder.EQUALS, ((IVoceBilancioBulk)i.next()).getCd_funzione());
 	sql.closeParenthesis();
 
 	return home.fetchAll(sql);
