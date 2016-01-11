@@ -498,7 +498,7 @@ private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk find(UserContext
   * @param voce <code>Voce_fBulk</code> la voce del piano per cui effettuare la ricerca del saldo
   *   
 */
-private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk findAndLock(UserContext userContext, Integer esercizio, Integer esercizio_res, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce) throws ComponentException{
+private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk findAndLock(UserContext userContext, Integer esercizio, Integer esercizio_res, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce) throws ComponentException{
 	try
 	{
 		return (Voce_f_saldi_cdr_lineaBulk) getHome( userContext,Voce_f_saldi_cdr_lineaBulk.class ).findAndLock( new Voce_f_saldi_cdr_lineaBulk( esercizio, esercizio_res, cd_cdr, cd_linea_attivita, voce.getTi_appartenenza(), voce.getTi_gestione(),voce.getCd_voce()));
@@ -514,7 +514,7 @@ private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk findAndLock(User
 	
 }
 
-private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk findAndLock(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce) throws ComponentException
+private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk findAndLock(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce) throws ComponentException
 {
 	return findAndLock(userContext,voce.getEsercizio(),voce.getEsercizio(), cd_cdr,cd_linea_attivita,voce);
 }
@@ -534,7 +534,7 @@ private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk findAndLock(User
   * @param importo l'importo (positivo o negativo) della modifica da apportare al saldo
   *  
 */
-public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, Integer esercizio_res, BigDecimal importo, String tipo_residuo) throws ComponentException
+public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, BigDecimal importo, String tipo_residuo) throws ComponentException
 {
 	return aggiornaMandatiReversali( userContext, cd_cdr, cd_linea_attivita, voce, esercizio_res, importo, tipo_residuo, false );
 }	
@@ -576,7 +576,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userConte
   *        voce del piano
 */
 
-public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, Integer esercizio_res, BigDecimal importo, String tipo_residuo, boolean checkDisponibilitaCassa  ) throws ComponentException
+public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, BigDecimal importo, String tipo_residuo, boolean checkDisponibilitaCassa  ) throws ComponentException
 {
 	try
 	{
@@ -632,7 +632,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userConte
   * @param importo l'importo (positivo o negativo) per cui effettuare la verifica di disponibilità di cassa
   * @param ti_competenza_residuo identifica il tipo di voce (di competenza o residuo) per cui effettuare la verifica di disponibilità di cassa
 */
-public Voce_f_saldi_cdr_lineaBulk checkDisponabilitaCassaMandati(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, BigDecimal importo ) throws ComponentException
+public Voce_f_saldi_cdr_lineaBulk checkDisponabilitaCassaMandati(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, BigDecimal importo ) throws ComponentException
 {
 	try
 	{
@@ -652,7 +652,7 @@ public Voce_f_saldi_cdr_lineaBulk checkDisponabilitaCassaMandati(UserContext use
 		throw handleException(  e );
 	}	
 }
-public String checkDispObbligazioniAccertamenti(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, Integer esercizio_res, String tipo_imp, String tipo_messaggio) throws ComponentException
+public String checkDispObbligazioniAccertamenti(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, String tipo_imp, String tipo_messaggio) throws ComponentException
 {
 	try
 	{
@@ -696,16 +696,16 @@ public String checkDispObbligazioniAccertamenti(UserContext userContext, String 
   * @param importo l'importo (positivo o negativo) della modifica da apportare al saldo
 */
 
-public Voce_f_saldi_cdr_lineaBulk aggiornaObbligazioniAccertamenti(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, Integer esercizio_res, String tipo_residuo, BigDecimal importo, String tipo_doc_cont) throws ComponentException
+public Voce_f_saldi_cdr_lineaBulk aggiornaObbligazioniAccertamenti(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, String tipo_residuo, BigDecimal importo, String tipo_doc_cont) throws ComponentException
 {
 	try
 	{
 		Voce_f_saldi_cdr_lineaBulk saldo;
 		saldo = findAndLock( userContext,voce.getEsercizio(), esercizio_res, cd_cdr,cd_linea_attivita, voce);
 		if (saldo == null){
-			  Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(voce.getEsercizio()));
-			     if (parametriCnr==null || !parametriCnr.getFl_nuovo_pdg())
-			    	 voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
+   	        Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(voce.getEsercizio()));
+            if (parametriCnr==null || !parametriCnr.getFl_nuovo_pdg())
+               voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
 																  new Voce_fBulk(voce.getCd_voce(),voce.getEsercizio(),voce.getTi_appartenenza(),voce.getTi_gestione())
 																  );
 			Elemento_voceBulk elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
@@ -765,7 +765,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaObbligazioniAccertamenti(UserContext u
 	}	
 
 }
-public Voce_f_saldi_cdr_lineaBulk aggiornaVariazioneStanziamento(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, Integer esercizio_res, String tipo_residuo, BigDecimal importo) throws ComponentException
+public Voce_f_saldi_cdr_lineaBulk aggiornaVariazioneStanziamento(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, String tipo_residuo, BigDecimal importo) throws ComponentException
 {
 	try
 	{
@@ -859,7 +859,7 @@ public String getMessaggioSfondamentoDisponibilita(UserContext userContext, Voce
 		throw handleException( e );
 	}
 }
-public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, Integer esercizio_res, BigDecimal importo, Voce_f_saldi_cdr_lineaBulk saldoOld) throws ComponentException
+public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, BigDecimal importo, Voce_f_saldi_cdr_lineaBulk saldoOld) throws ComponentException
 {
 	Voce_f_saldi_cdr_lineaBulk saldoNew;
 		try {
@@ -964,7 +964,7 @@ public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, 
   * @param importo l'importo (positivo o negativo) della modifica da apportare al saldo
 */
 
-public Voce_f_saldi_cdr_lineaBulk aggiornaPagamentiIncassi(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, Integer esercizio_res, BigDecimal importo ) throws ComponentException
+public Voce_f_saldi_cdr_lineaBulk aggiornaPagamentiIncassi(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, BigDecimal importo ) throws ComponentException
 {
 	try
 	{
@@ -1019,7 +1019,7 @@ public java.math.BigDecimal getTotaleSaldoResidui(UserContext userContext, Strin
 		throw handleException(  e );
 	}	
 }
-public Voce_f_saldi_cdr_lineaBulk aggiornaImpegniResiduiPropri(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, Integer esercizio_res, BigDecimal importo) throws ComponentException
+public Voce_f_saldi_cdr_lineaBulk aggiornaImpegniResiduiPropri(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, BigDecimal importo) throws ComponentException
 {
 	try
 	{
@@ -1061,7 +1061,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaImpegniResiduiPropri(UserContext userC
 	}	
 
 }
-public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext userContext, String cd_cdr, String cd_linea_attivita, Voce_fBulk voce, Integer esercizio_res, BigDecimal importo) throws ComponentException
+public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, BigDecimal importo) throws ComponentException
 {
 	try
 	{

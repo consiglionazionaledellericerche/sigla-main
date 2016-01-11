@@ -4537,9 +4537,11 @@ protected AccertamentoBulk validaCreaModificaElementoVoceNext(UserContext userCo
 				if (listEv.isEmpty())
 					throw new ApplicationException("Attenzione! Non esiste congruenza tra la voce dell''impegno e quella di ribaltamento. Modificare la voce di ribaltamento!");
 				
-				if (evAccertamento.getFl_recon().equals(Boolean.FALSE) && accertamento.getElemento_voce_next().getFl_recon().equals(Boolean.TRUE))
+				if (evAccertamento.getFl_recon().equals(Boolean.FALSE) && accertamento.getElemento_voce_next().getFl_recon().equals(Boolean.TRUE) &&
+						accertamento.getContratto()==null || accertamento.getContratto().getPg_contratto()==null)  
 					throw new ApplicationException("Attenzione! Non esiste congruenza tra la voce dell''accertamento che non richiede l'indicazione "+
-							" del campo contratto/incarico e quella di ribaltamento che ne richiede l'inserimento. Modificare la voce di ribaltamento!");
+							"del contratto e quella di ribaltamento che ne richiede l'inserimento. Modificare la voce di ribaltamento "+
+							"o inserire i dati relativi al contratto!");
 				
 				try {
 					verificaGestioneTrovato(userContext, accertamento, accertamento.getElemento_voce_next());

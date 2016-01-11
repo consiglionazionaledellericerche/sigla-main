@@ -1,6 +1,7 @@
 package it.cnr.contab.config00.bulk;
 
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
@@ -38,5 +39,9 @@ public class Parametri_cnrHome extends BulkHome {
 		else
 		  return parametri.getLivello_pdg_cofog();  
 	
+	}
+	public boolean isNuovoPdg(UserContext userContext) throws PersistencyException{
+        Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(userContext)));
+        return parametriCnr!=null && parametriCnr.getFl_nuovo_pdg();
 	}
 }
