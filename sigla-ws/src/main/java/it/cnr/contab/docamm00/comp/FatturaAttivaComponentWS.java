@@ -1495,7 +1495,8 @@ public class FatturaAttivaComponentWS {
 				                                    	fa_intra.setCodici_cpa(((Codici_cpaBulk)(((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).completaOggetto(userContext,new Codici_cpaBulk(intra.getId_cpa())))));
 				                                    	if(fa_intra.getCodici_cpa()==null)
 				                                    		fat=ValorizzaErrore(fat,Costanti.ERRORE_FA_145.toString());
-				                                    
+				                                    	if(fa_intra.getCodici_cpa().getEsercizio()!=testata.getEsercizio())
+				                                    		fat=ValorizzaErrore(fat,Costanti.ERRORE_FA_145.toString());
 			                                    	}else{
 			                                    		// per il momento non richiesto da Pisa da testare totalmente anche i WS di servizio
 			                                    		fa_intra.setNomenclatura_combinata(((Nomenclatura_combinataBulk)(((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).completaOggetto(userContext,new Nomenclatura_combinataBulk(intra.getId_nomenclatura_combinata())))));
@@ -1682,7 +1683,8 @@ public class FatturaAttivaComponentWS {
 				                                    	fa_intra.setCodici_cpa(((Codici_cpaBulk)(((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).completaOggetto(userContext,new Codici_cpaBulk(intra.getId_cpa())))));
 				                                    	if(fa_intra.getCodici_cpa()==null)
 				                                    		fat=ValorizzaErrore(fat,Costanti.ERRORE_FA_145.toString());
-				                                    
+				                                    	if(fa_intra.getCodici_cpa().getEsercizio()!=testata.getEsercizio())
+				                                    		fat=ValorizzaErrore(fat,Costanti.ERRORE_FA_145.toString());
 			                                    	}else{
 			                                    		// per il momento non richiesto da Pisa da testare totalmente anche i WS di servizio
 			                                    		fa_intra.setNomenclatura_combinata(((Nomenclatura_combinataBulk)(((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).completaOggetto(userContext,new Nomenclatura_combinataBulk(intra.getId_nomenclatura_combinata())))));
