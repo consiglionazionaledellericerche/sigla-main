@@ -12,6 +12,7 @@ import it.cnr.contab.config00.sto.bulk.*;
 
 import java.util.*;
 
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.*;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
@@ -213,13 +214,13 @@ public void completeFrom(
  * @param cd_cdr	
  * @return 
  */
-public it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk getArticolo( String cd_funzione, String cd_cdr ) 
+public it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk getArticolo( String cd_funzione, String cd_cdr ) 
 {
-	it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk voce;
+	it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk voce;
 	for ( Iterator i = getCapitoliDiSpesaCdsSelezionatiColl().iterator(); i.hasNext(); )
 	{
-		voce = (it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk) i.next();
-		if ( voce.getCd_funzione().equals( cd_funzione ) && voce.getCd_centro_responsabilita().equals( cd_cdr ) )
+		voce = (it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk) i.next();
+		if ( voce.getCd_funzione().equals( cd_funzione ) && (!(voce instanceof Voce_fBulk) || ((Voce_fBulk)voce).getCd_centro_responsabilita().equals( cd_cdr ) ))
 			return voce;
 	}
 	return null;	
@@ -571,17 +572,22 @@ public it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk getUnita_organizz
  *
  * @return Il valore della proprietà 'vociMap'
  */
-public PrimaryKeyHashMap getVociMap(  ) 
+public PrimaryKeyHashMap getVociMap(boolean flNuovoPdg ) 
 {
 	PrimaryKeyHashMap map = new PrimaryKeyHashMap();
 	Obbligazione_scad_voceBulk osv;
 	BigDecimal im_voce;
-	Voce_fBulk voce;
+	IVoceBilancioBulk voce;
+
 	for ( Iterator i = obbligazione_scadenzarioColl.iterator(); i.hasNext(); )
 		for ( Iterator j = ((Obbligazione_scadenzarioBulk) i.next()).getObbligazione_scad_voceColl().iterator(); j.hasNext(); )
 		{
 			osv = (Obbligazione_scad_voceBulk) j.next();
-			voce = new Voce_fBulk( osv.getCd_voce(), osv.getEsercizio(), osv.getTi_appartenenza(), osv.getTi_gestione());
+			if (flNuovoPdg)
+				voce = new Elemento_voceBulk( osv.getCd_voce(), osv.getEsercizio(), osv.getTi_appartenenza(), osv.getTi_gestione());
+			else
+				voce = new Voce_fBulk( osv.getCd_voce(), osv.getEsercizio(), osv.getTi_appartenenza(), osv.getTi_gestione());
+			
 			im_voce = (BigDecimal) map.get( voce );
 			if ( im_voce == null )
 				map.put( voce, osv.getIm_voce() );
@@ -589,9 +595,18 @@ public PrimaryKeyHashMap getVociMap(  )
 				map.put( voce, im_voce.add( osv.getIm_voce()) );
 		}
 	return map;		
-		
-	
 }
+
+public PrimaryKeyHashMap getElementoVociMap( ) 
+{
+	return getVociMap(true);
+}
+
+public PrimaryKeyHashMap getVoceFMap( ) 
+{
+	return getVociMap(false);
+}
+
 /**
  * <!-- @TODO: da completare -->
  * Restituisce il valore della proprietà 'Obbligazione_scad_voceMap'
@@ -1438,7 +1453,7 @@ public void validateNuovaLineaAttivita( it.cnr.contab.doccont00.core.bulk.Linea_
 	boolean found = false;
 	for ( Iterator i = getCapitoliDiSpesaCdsSelezionatiColl().iterator(); i.hasNext(); )
 	{
-		if ( ((it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk) i.next()).getCd_funzione().equals( latt.getFunzione().getCd_funzione()))
+		if ( ((it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk) i.next()).getCd_funzione().equals( latt.getFunzione().getCd_funzione()))
 		{
 			found = true;
 			break;
