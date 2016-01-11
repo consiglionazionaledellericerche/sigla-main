@@ -9,6 +9,7 @@ import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome; 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
@@ -373,19 +374,25 @@ public void aggiornaSaldiInDifferita( UserContext userContext, IDocumentoContabi
 private void aggiornaSaldiInInserimento( UserContext userContext, ObbligazioneBulk obbligazione, Boolean forzaDispCassa) throws ComponentException, java.rmi.RemoteException
 {
 	SaldoComponentSession session = createSaldoComponentSession();
-	PrimaryKeyHashMap saldiDaAggiornare = obbligazione.getVociMap();
+	PrimaryKeyHashMap saldiDaAggiornare;
+	try {
+		saldiDaAggiornare = obbligazione.getVociMap(((Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class)).isNuovoPdg(userContext));
+	} catch (PersistencyException e) {
+		throw handleException(e);
+	}
 	for ( Iterator i = saldiDaAggiornare.keySet().iterator(); i.hasNext(); )
 	{
-		Voce_fBulk voce = (Voce_fBulk) i.next();
+		IVoceBilancioBulk voce = (IVoceBilancioBulk) i.next();
 		BigDecimal im_voce = (BigDecimal) saldiDaAggiornare.get(voce);
 					/* il check della disponabilità di cassa deve essere eseguito solo se 
 					    l'utente non ha ancora avuto il warning sulla disp.cassa oppure
 					    l'utente ha avuto il warning sulla disp.cassa e ha risposto no */
 		boolean checkDispCassa = forzaDispCassa == null || 
  								 forzaDispCassa != null && !forzaDispCassa.booleanValue();
-		session.aggiornaObbligazioniAccertamenti( userContext, voce, obbligazione.getCd_cds(), im_voce,
-				Voce_f_saldi_cmpBulk.TIPO_COMPETENZA,
-				checkDispCassa);
+		if (voce instanceof Voce_fBulk)
+			session.aggiornaObbligazioniAccertamenti( userContext, (Voce_fBulk)voce, obbligazione.getCd_cds(), im_voce,
+					Voce_f_saldi_cmpBulk.TIPO_COMPETENZA,
+					checkDispCassa);
 		/*
 		 * Aggiorno i Saldi per CDR/Linea
 		 */
@@ -1400,15 +1407,22 @@ private void controllaDisponibilitaCassaPerVoceInInserimento (UserContext userCo
 	{
 		
 		SaldoComponentSession session = createSaldoComponentSession();
-		Voce_fBulk voce;
+		IVoceBilancioBulk voce;
 		BigDecimal im_voce;
-		PrimaryKeyHashMap saldoVociMap = obbligazione.getVociMap();
+		PrimaryKeyHashMap saldoVociMap;
+		try {
+			saldoVociMap = obbligazione.getVociMap(((Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class)).isNuovoPdg(userContext));
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
 		
 		for ( Iterator i = saldoVociMap.keySet().iterator(); i.hasNext(); )
 		{
-			voce = (Voce_fBulk) i.next();
-			im_voce = (BigDecimal) saldoVociMap.get( voce );
-			session.checkDisponabilitaCassaObbligazioni( userContext, voce, obbligazione.getCd_cds(), im_voce, Voce_f_saldi_cmpBulk.TIPO_COMPETENZA );
+			voce = (IVoceBilancioBulk) i.next();
+			if (voce instanceof Voce_fBulk) {
+				im_voce = (BigDecimal) saldoVociMap.get( voce );
+				session.checkDisponabilitaCassaObbligazioni( userContext, (Voce_fBulk)voce, obbligazione.getCd_cds(), im_voce, Voce_f_saldi_cmpBulk.TIPO_COMPETENZA );
+			}
 		}	
 	}
 	catch ( Exception e )
@@ -1802,7 +1816,7 @@ protected void creaDettagliScadenzaPerLineeAttivitaDaPdG(UserContext aUC,Obbliga
 			osv.setToBeCreated();
 			if ( obbligazione.getCds().getCd_tipo_unita().equalsIgnoreCase( "SAC" ) )
 			{
-				Voce_fBulk articolo;
+				IVoceBilancioBulk articolo;
 				if ( ppsd.getCategoria_dettaglio().equals( it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk.CAT_SINGOLO) ||
 					 ppsd.getCd_centro_responsabilita_clgs()==null)
 					articolo = obbligazione.getArticolo( ppsd.getCd_funzione(), ppsd.getCd_centro_responsabilita());
@@ -1912,7 +1926,7 @@ protected void creaDettagliScadenzaPerNuoveLineeAttivita (UserContext aUC,Obblig
 			osv.setToBeCreated();
 			if ( obbligazione.getCds().getCd_tipo_unita().equalsIgnoreCase( "SAC" ) )
 			{
-				Voce_fBulk articolo = obbligazione.getArticolo( la.getLinea_att().getFunzione().getCd_funzione(), la.getLinea_att().getCentro_responsabilita().getCd_centro_responsabilita());
+				IVoceBilancioBulk articolo = obbligazione.getArticolo( la.getLinea_att().getFunzione().getCd_funzione(), la.getLinea_att().getCentro_responsabilita().getCd_centro_responsabilita());
 				osv.setTi_appartenenza( articolo.getTi_appartenenza());
 				osv.setTi_gestione( articolo.getTi_gestione());
 				osv.setCd_voce( articolo.getCd_voce() );
@@ -3016,10 +3030,13 @@ public Vector listaLineeAttivitaPerCapitoliCdr (UserContext aUC,ObbligazioneBulk
 			//selezionati dall'utente nella lista Cdr
 			for (Iterator i = obbligazione.getCapitoliDiSpesaCdsSelezionatiColl().iterator(); i.hasNext(); )
 			{
-				Voce_fBulk voce = (Voce_fBulk) i.next();
+				IVoceBilancioBulk voce = (IVoceBilancioBulk) i.next();
 				for ( Iterator j = cdrDiScrivaniaColl.iterator(); j.hasNext(); )
-					if (((CdrBulk)j.next()).getCd_centro_responsabilita().equals( voce.getCd_centro_responsabilita()))
-						capitoli.add( voce );
+					if (voce instanceof Voce_fBulk) {
+						if (((CdrBulk)j.next()).getCd_centro_responsabilita().equals( ((Voce_fBulk)voce).getCd_centro_responsabilita()))
+							capitoli.add( voce );
+					} 
+				
 			}
 			lineeAttivita.addAll( obbligazioneHome.findLineeAttivitaSAC( capitoli, obbligazione ));
 			if (obbligazione.isSpesePerCostiAltrui() )
@@ -3399,9 +3416,9 @@ public SQLBuilder selectLinea_attByClause(UserContext userContext, ObbligazioneB
 	if ( i.hasNext() )
 	{
 		sql.openParenthesis( "AND" );
-		sql.addClause("AND", "cd_funzione", SQLBuilder.EQUALS, ((Voce_fBulk)i.next()).getCd_funzione());
+		sql.addClause("AND", "cd_funzione", SQLBuilder.EQUALS, ((IVoceBilancioBulk)i.next()).getCd_funzione());
 		while ( i.hasNext() )	
-			sql.addClause( "OR", "cd_funzione", SQLBuilder.EQUALS, ((Voce_fBulk)i.next()).getCd_funzione());
+			sql.addClause( "OR", "cd_funzione", SQLBuilder.EQUALS, ((IVoceBilancioBulk)i.next()).getCd_funzione());
 		sql.closeParenthesis();
 	}
 
@@ -5675,9 +5692,12 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 					if (listEv.isEmpty())
 						throw new ApplicationException("Attenzione! Non esiste congruenza tra la voce dell''impegno e quella di ribaltamento. Modificare la voce di ribaltamento!");
 					
-					if (obbligazione.getElemento_voce().getFl_recon().equals(Boolean.FALSE) && obbligazione.getElemento_voce_next().getFl_recon().equals(Boolean.TRUE))
+					if (obbligazione.getElemento_voce().getFl_recon().equals(Boolean.FALSE) && obbligazione.getElemento_voce_next().getFl_recon().equals(Boolean.TRUE) &&
+					   (obbligazione.getIncarico_repertorio()==null || obbligazione.getIncarico_repertorio().getPg_repertorio()==null) &&
+					   (obbligazione.getContratto()==null || obbligazione.getContratto().getPg_contratto()==null))
 						throw new ApplicationException("Attenzione! Non esiste congruenza tra la voce dell''impegno che non richiede l'indicazione "+
-								" del campo contratto/incarico e quella di ribaltamento che ne richiede l'inserimento. Modificare la voce di ribaltamento!");
+								"del contratto/incarico e quella di ribaltamento che ne richiede l'inserimento. Modificare la voce di ribaltamento "+
+								"o inserire i dati relativi al contratto/incarico!");
 					
 					try {
 						verificaGestioneTrovato(userContext, obbligazione, obbligazione.getElemento_voce_next());
