@@ -140,8 +140,9 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 				ByteArrayOutputStream output = new ByteArrayOutputStream();				
 				document.save(output);
 				document.close();
-				Document node = cmisService.storeSimpleDocument(lettera, new ByteArrayInputStream(output.toByteArray()),"application/pdf", 
-						lettera.getCMISFolderName() + ".pdf", cmisPath);				
+				Document node = cmisService.restoreSimpleDocument(lettera, new ByteArrayInputStream(output.toByteArray()),"application/pdf", 
+						lettera.getCMISFolderName() + ".pdf", cmisPath);
+				cmisService.makeVersionable(node);
 				aggiornaStato(actioncontext, MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO, lettera);
 			}
 			setMessage("Predisposizione effettuata correttamente.");
