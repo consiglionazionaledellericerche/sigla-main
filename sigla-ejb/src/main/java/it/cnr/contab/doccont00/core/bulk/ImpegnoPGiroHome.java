@@ -1,6 +1,8 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import java.util.*;
+
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.jada.bulk.*;
@@ -80,6 +82,8 @@ public Accertamento_scadenzarioBulk findAccertamentoScadenzarioPGiro( it.cnr.jad
  */
 public SQLBuilder selectElemento_voceByClause( ImpegnoPGiroBulk bulk, Elemento_voceHome home,Elemento_voceBulk bulkClause,CompoundFindClause clause) throws java.lang.reflect.InvocationTargetException,IllegalAccessException, it.cnr.jada.persistency.PersistencyException 
 {
+	PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
+	Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(bulk.getEsercizio()));
 	
 	SQLBuilder sql = home.createSQLBuilder();
 	sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );
@@ -89,7 +93,8 @@ public SQLBuilder selectElemento_voceByClause( ImpegnoPGiroBulk bulk, Elemento_v
 		sql.addClause("AND", "ti_appartenenza", SQLBuilder.EQUALS, home.APPARTENENZA_CDS );		
 	sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, home.GESTIONE_SPESE );
 	sql.addClause("AND", "ti_elemento_voce", SQLBuilder.EQUALS, home.TIPO_CAPITOLO );
-	sql.addClause("AND", "cd_parte", SQLBuilder.EQUALS, home.PARTE_2 );
+	if (parCNR!=null && !parCNR.getFl_nuovo_pdg())
+		sql.addClause("AND", "cd_parte", SQLBuilder.EQUALS, home.PARTE_2 );
 	sql.addClause("AND", "fl_partita_giro", SQLBuilder.EQUALS, new Boolean(true) );	
 	if ( !Tipo_unita_organizzativaHome.TIPO_UO_SAC.equals(bulk.getCds().getCd_tipo_unita())  )
 			sql.addClause("AND", "fl_voce_sac", SQLBuilder.EQUALS, new Boolean( false) );		

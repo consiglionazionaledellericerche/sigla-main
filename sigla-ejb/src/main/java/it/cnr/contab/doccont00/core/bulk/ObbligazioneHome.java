@@ -442,7 +442,7 @@ public java.util.List findCdrPerSAC( List capitoliList, ObbligazioneBulk obbliga
 
 		try
 		{	
-			Voce_fBulk capitolo = (Voce_fBulk) capitoliList.iterator().next();
+			IVoceBilancioBulk capitolo = (IVoceBilancioBulk) capitoliList.iterator().next();
 
 			ps.setString( 1, Pdg_preventivo_detBulk.CAT_SINGOLO );
 			ps.setString( 2, Pdg_modulo_spese_gestBulk.CAT_DIRETTA );
@@ -456,15 +456,21 @@ public java.util.List findCdrPerSAC( List capitoliList, ObbligazioneBulk obbliga
 
 			int j = 10;
 			Iterator i = capitoliList.iterator();
-			capitolo = (Voce_fBulk) i.next();
+			capitolo = (IVoceBilancioBulk) i.next();
 			ps.setString( j++, capitolo.getCd_funzione() );
-			ps.setString( j++, capitolo.getCd_centro_responsabilita() );		
+			if (capitolo instanceof Voce_fBulk)
+				ps.setString( j++, ((Voce_fBulk)capitolo).getCd_centro_responsabilita() );
+			else
+				ps.setString( j++, obbligazione.getCd_unita_organizzativa() );
 
 			for ( ; i.hasNext(); )
 			{
-				capitolo = (Voce_fBulk) i.next();			
+				capitolo = (IVoceBilancioBulk) i.next();			
 				ps.setString( j++, capitolo.getCd_funzione() );
-				ps.setString( j++, capitolo.getCd_centro_responsabilita() );		
+				if (capitolo instanceof Voce_fBulk)
+					ps.setString( j++, ((Voce_fBulk)capitolo).getCd_centro_responsabilita() );
+				else
+					ps.setString( j++, obbligazione.getCd_unita_organizzativa() );
 			}	
 
 			ResultSet rs = ps.executeQuery();
@@ -1599,7 +1605,7 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
 		sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, home.GESTIONE_SPESE );
 		sql.addClause("AND", "ti_elemento_voce", SQLBuilder.EQUALS, home.TIPO_CAPITOLO );
 		// selezionando solo la parte 1 e' implicito che non siano partite di giro (fl_pgiro='N')		
-		if (!parCNR.getFl_nuovo_pdg())
+		if (parCNR==null || !parCNR.getFl_nuovo_pdg())
 			sql.addClause("AND", "cd_parte", SQLBuilder.EQUALS, home.PARTE_1 );
 		if ( bulk.getCds() != null && bulk.getCds().getCd_tipo_unita()!=null && !bulk.getCds().getCd_tipo_unita().equalsIgnoreCase( Tipo_unita_organizzativaHome.TIPO_UO_SAC ) )
 			sql.addClause("AND", "fl_voce_sac", SQLBuilder.EQUALS, new Boolean( false) );		
@@ -1665,7 +1671,10 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
 		
 		sqlAssestato.addSQLExistsClause(FindClause.AND, sqlstrOrg);
 		
-		sql.addSQLExistsClause(FindClause.AND, sqlAssestato);
+		sql.openParenthesis(FindClause.AND);
+		sql.addClause(FindClause.OR, "fl_limite_ass_obblig", SQLBuilder.EQUALS, Boolean.FALSE );
+		sql.addSQLExistsClause(FindClause.OR, sqlAssestato);
+		sql.closeParenthesis();
 	} catch (IntrospectionException e) {
 		e.printStackTrace();
 	}

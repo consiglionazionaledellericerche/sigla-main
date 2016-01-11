@@ -2,6 +2,9 @@ package it.cnr.contab.doccont00.core.bulk;
 
 import java.util.*;
 import it.cnr.contab.config00.sto.bulk.*;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.sql.*;
@@ -88,8 +91,11 @@ public SQLBuilder selectCapitoloByClause(AccertamentoBulk acc, V_voce_f_partita_
 	}	
 	else // == ACCERT_PGIRO
 	{
-		sql.addClause("AND", "ti_appartenenza", SQLBuilder.EQUALS, Elemento_voceHome.APPARTENENZA_CDS );
-//		sql.addClause( "AND", "cd_cds", sql.EQUALS, bulk.getCd_cds() );;
+		PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
+		Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(bulk.getEsercizio()));
+		
+		if (parCNR.getFl_nuovo_pdg()==null || parCNR.getFl_nuovo_pdg().equals("N"))
+			sql.addClause("AND", "ti_appartenenza", SQLBuilder.EQUALS, Elemento_voceHome.APPARTENENZA_CDS );
 	}	
 	sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );
 //	sql.addClause("AND", "ti_voce", SQLBuilder.EQUALS, Elemento_voceHome.TIPO_CAPITOLO  );
