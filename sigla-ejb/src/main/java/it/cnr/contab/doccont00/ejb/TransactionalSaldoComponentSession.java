@@ -1,8 +1,6 @@
 package it.cnr.contab.doccont00.ejb;
 import java.math.BigDecimal;
-import java.rmi.*;
-
-import it.cnr.jada.util.ejb.*;
+import java.rmi.RemoteException;
 
 public class TransactionalSaldoComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements SaldoComponentSession {
 public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk aggiornaMandatiReversali(it.cnr.jada.UserContext param0,it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param1,java.lang.String param2,java.math.BigDecimal param3,java.lang.String param4) throws RemoteException,it.cnr.jada.comp.ComponentException {
@@ -147,7 +145,7 @@ public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk checkDisponabilitaCassa
 		}
 	}
 }
-public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param3, Integer param4, java.math.BigDecimal param5, String param6) throws RemoteException,it.cnr.jada.comp.ComponentException {
+public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3, Integer param4, java.math.BigDecimal param5, String param6) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk)invoke("aggiornaMandatiReversali",new Object[] {
 			param0,
@@ -169,7 +167,7 @@ public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaMandatiRe
 		}
 	}
 }
-public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param3, Integer param4, java.math.BigDecimal param5, String param6, boolean param7) throws RemoteException,it.cnr.jada.comp.ComponentException {
+public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3, Integer param4, java.math.BigDecimal param5, String param6, boolean param7) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk)invoke("aggiornaMandatiReversali",new Object[] {
 			param0,
@@ -192,7 +190,7 @@ public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaMandatiRe
 		}
 	}
 }
-public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk checkDisponabilitaCassaMandati(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param3, java.math.BigDecimal param4) throws RemoteException,it.cnr.jada.comp.ComponentException {
+public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk checkDisponabilitaCassaMandati(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3, java.math.BigDecimal param4) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk)invoke("checkDisponabilitaCassaMandati",new Object[] {
 			param0,
@@ -212,7 +210,7 @@ public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk checkDisponabilit
 		}
 	}
 }
-public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaObbligazioniAccertamenti(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param3, Integer param4, String param5, java.math.BigDecimal param6,String param7) throws RemoteException,it.cnr.jada.comp.ComponentException {
+public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaObbligazioniAccertamenti(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3, Integer param4, String param5, java.math.BigDecimal param6,String param7) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk)invoke("aggiornaObbligazioniAccertamenti",new Object[] {
 			param0,
@@ -235,7 +233,7 @@ public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaObbligazi
 		}
 	}
 }
-public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaPagamentiIncassi(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param3, Integer param4, java.math.BigDecimal param5 ) throws RemoteException,it.cnr.jada.comp.ComponentException {
+public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaPagamentiIncassi(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3, Integer param4, java.math.BigDecimal param5 ) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk)invoke("aggiornaPagamentiIncassi",new Object[] {
 			param0,
@@ -256,7 +254,7 @@ public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaPagamenti
 		}
 	}
 }
-public String checkDispObbligazioniAccertamenti(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param3, Integer param4, String param5, String param6 ) throws RemoteException,it.cnr.jada.comp.ComponentException {
+public String checkDispObbligazioniAccertamenti(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3, Integer param4, String param5, String param6 ) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (String)invoke("checkDispObbligazioniAccertamenti",new Object[] {
 			param0,
@@ -278,7 +276,7 @@ public String checkDispObbligazioniAccertamenti(it.cnr.jada.UserContext param0, 
 		}
 	}
 }
-public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaVariazioneStanziamento(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param3, Integer param4, String param5, java.math.BigDecimal param6) throws RemoteException,it.cnr.jada.comp.ComponentException {
+public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaVariazioneStanziamento(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3, Integer param4, String param5, java.math.BigDecimal param6) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk)invoke("aggiornaVariazioneStanziamento",new Object[] {
 			param0,
@@ -336,7 +334,7 @@ public String getMessaggioSfondamentoDisponibilita(it.cnr.jada.UserContext param
 		}
 	}
 }
-public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaImpegniResiduiPropri(it.cnr.jada.UserContext param0, java.lang.String param1, java.lang.String param2, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param3, Integer param4, BigDecimal param5) throws RemoteException,it.cnr.jada.comp.ComponentException {
+public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaImpegniResiduiPropri(it.cnr.jada.UserContext param0, java.lang.String param1, java.lang.String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3, Integer param4, BigDecimal param5) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk)invoke("aggiornaImpegniResiduiPropri",new Object[] {
 			param0,
@@ -356,7 +354,7 @@ public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaImpegniRe
 		}
 	}
 }
-public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(it.cnr.jada.UserContext param0, java.lang.String param1, java.lang.String param2, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param3, Integer param4, BigDecimal param5) throws RemoteException,it.cnr.jada.comp.ComponentException {
+public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(it.cnr.jada.UserContext param0, java.lang.String param1, java.lang.String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3, Integer param4, BigDecimal param5) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk)invoke("aggiornaAccertamentiResiduiPropri",new Object[] {
 			param0,
@@ -376,7 +374,7 @@ public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaAccertame
 		}
 	}
 }
-public void aggiornaSaldiAnniSuccessivi(it.cnr.jada.UserContext param1, String param2, String param3, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param4, Integer param5, BigDecimal param6, it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk param7) throws RemoteException,it.cnr.jada.comp.ComponentException {
+public void aggiornaSaldiAnniSuccessivi(it.cnr.jada.UserContext param1, String param2, String param3, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param4, Integer param5, BigDecimal param6, it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk param7) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		invoke("aggiornaSaldiAnniSuccessivi",new Object[] {
 			param1,

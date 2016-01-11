@@ -146,7 +146,7 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param3, Integer param4, java.math.BigDecimal param5, String param6) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3, Integer param4, java.math.BigDecimal param5, String param6) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
 			it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk result = componentObj.aggiornaMandatiReversali(param0,param1,param2,param3,param4,param5,param6);
@@ -164,7 +164,7 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param3, Integer param4, java.math.BigDecimal param5, String param6, boolean param7) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3, Integer param4, java.math.BigDecimal param5, String param6, boolean param7) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
 			it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk result = componentObj.aggiornaMandatiReversali(param0,param1,param2,param3,param4,param5,param6,param7);
@@ -182,7 +182,7 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk checkDisponabilitaCassaMandati(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param3, java.math.BigDecimal param4) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk checkDisponabilitaCassaMandati(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3, java.math.BigDecimal param4) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
 			it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk result = componentObj.checkDisponabilitaCassaMandati(param0,param1,param2,param3,param4);
@@ -200,7 +200,7 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaObbligazioniAccertamenti(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param3, Integer param4, String param5, java.math.BigDecimal param6, String param7) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaObbligazioniAccertamenti(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3, Integer param4, String param5, java.math.BigDecimal param6, String param7) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
 			it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk result = componentObj.aggiornaObbligazioniAccertamenti(param0,param1,param2,param3,param4,param5,param6,param7);
@@ -218,7 +218,7 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaPagamentiIncassi(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param3, Integer param4, java.math.BigDecimal param5 ) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaPagamentiIncassi(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3, Integer param4, java.math.BigDecimal param5 ) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
 			it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk result = componentObj.aggiornaPagamentiIncassi(param0,param1,param2,param3,param4,param5);
@@ -236,7 +236,7 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	public String checkDispObbligazioniAccertamenti(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param3, Integer param4, String param5, String param6 ) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	public String checkDispObbligazioniAccertamenti(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3, Integer param4, String param5, String param6 ) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
 			String result = componentObj.checkDispObbligazioniAccertamenti(param0,param1,param2,param3,param4,param5,param6);
@@ -254,7 +254,7 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaVariazioneStanziamento(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param3, Integer param4, String param5, java.math.BigDecimal param6) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaVariazioneStanziamento(it.cnr.jada.UserContext param0, String param1, String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3, Integer param4, String param5, java.math.BigDecimal param6) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
 			it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk result = componentObj.aggiornaVariazioneStanziamento(param0,param1,param2,param3,param4,param5,param6);
@@ -308,7 +308,7 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaImpegniResiduiPropri(it.cnr.jada.UserContext param0, java.lang.String param1, java.lang.String param2, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param3, Integer param4, BigDecimal param5) throws ComponentException,javax.ejb.EJBException {
+	public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaImpegniResiduiPropri(it.cnr.jada.UserContext param0, java.lang.String param1, java.lang.String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3, Integer param4, BigDecimal param5) throws ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
 			it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk result = componentObj.aggiornaImpegniResiduiPropri(param0,param1,param2,param3,param4,param5);
@@ -326,7 +326,7 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(it.cnr.jada.UserContext param0, java.lang.String param1, java.lang.String param2, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param3, Integer param4, BigDecimal param5) throws ComponentException,javax.ejb.EJBException {
+	public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(it.cnr.jada.UserContext param0, java.lang.String param1, java.lang.String param2, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param3, Integer param4, BigDecimal param5) throws ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
 			it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk result = componentObj.aggiornaAccertamentiResiduiPropri(param0,param1,param2,param3,param4,param5);
@@ -344,7 +344,7 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	public void aggiornaSaldiAnniSuccessivi(it.cnr.jada.UserContext param1, String param2, String param3, it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param4, Integer param5, BigDecimal param6, it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk param7) throws ComponentException,javax.ejb.EJBException {
+	public void aggiornaSaldiAnniSuccessivi(it.cnr.jada.UserContext param1, String param2, String param3, it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk param4, Integer param5, BigDecimal param6, it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk param7) throws ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param1,componentObj);
 		try {
 			componentObj.aggiornaSaldiAnniSuccessivi(param1,param2,param3,param4,param5,param6,param7);

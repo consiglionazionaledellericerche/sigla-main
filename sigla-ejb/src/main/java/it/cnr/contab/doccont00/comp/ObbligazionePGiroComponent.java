@@ -1,24 +1,72 @@
 package it.cnr.contab.doccont00.comp;
 
-import it.cnr.contab.chiusura00.bulk.*;
-import it.cnr.contab.config00.esercizio.bulk.*;
-import it.cnr.contab.config00.ejb.*;
-import it.cnr.contab.doccont00.ejb.*;
-import it.cnr.contab.config00.sto.bulk.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Types;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import it.cnr.contab.chiusura00.bulk.V_obb_acc_xxxBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
+import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
+import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Voce_fHome;
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteHome;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoPGiroBulk;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoPGiroHome;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scad_voceBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scad_voceHome;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioHome;
+import it.cnr.contab.doccont00.core.bulk.Ass_obb_acr_pgiroBulk;
+import it.cnr.contab.doccont00.core.bulk.Ass_obb_acr_pgiroHome;
+import it.cnr.contab.doccont00.core.bulk.Ass_partita_giroBulk;
+import it.cnr.contab.doccont00.core.bulk.Ass_partita_giroHome;
+import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.ImpegnoPGiroBulk;
+import it.cnr.contab.doccont00.core.bulk.ImpegnoPGiroHome;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceHome;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
+import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
+import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
+import it.cnr.contab.doccont00.core.bulk.V_doc_attivo_accertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.V_doc_passivo_obbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.V_mod_saldi_obbligBulk;
+import it.cnr.contab.doccont00.core.bulk.V_mod_saldi_obbligHome;
+import it.cnr.contab.doccont00.core.bulk.V_mod_saldi_obblig_scad_voceBulk;
+import it.cnr.contab.doccont00.core.bulk.V_mod_saldi_obblig_scad_voceHome;
+import it.cnr.contab.doccont00.core.bulk.V_obbligazione_im_mandatoBulk;
+import it.cnr.contab.doccont00.ejb.AccertamentoPGiroComponentSession;
+import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.config00.pdcfin.bulk.*;
-import java.math.BigDecimal;
-import java.sql.*;
-import java.util.*;
-import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.PrimaryKeyHashMap;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.comp.ICRUDMgr;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.Query;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-
-import java.io.Serializable;
 
 /**
  * Classe che ridefinisce alcune operazioni di CRUD su ImpegnoPGiroBulk
@@ -214,7 +262,13 @@ private void aggiornaSaldiInInserimento(
 	throws ComponentException, it.cnr.jada.persistency.PersistencyException, java.rmi.RemoteException
 {
 	SaldoComponentSession session = createSaldoComponentSession();
-	PrimaryKeyHashMap saldiDaAggiornare = imp_pgiro.getVociMap();
+    Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(userContext)));
+	PrimaryKeyHashMap saldiDaAggiornare;
+	try {
+		saldiDaAggiornare = imp_pgiro.getVociMap(((Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class)).isNuovoPdg(userContext));
+	} catch (PersistencyException e) {
+		throw handleException(e);
+	}
 	for ( Iterator i = saldiDaAggiornare.keySet().iterator(); i.hasNext(); )
 	{
 		Voce_fBulk voce = (Voce_fBulk) i.next();
@@ -239,8 +293,14 @@ private void aggiornaSaldiInInserimento(
 	{
 		Obbligazione_scad_voceBulk osv = (Obbligazione_scad_voceBulk) i.next();
 		BigDecimal im_voce = (BigDecimal) saldiDaAggiornareCdrLinea.get(osv);
-		Voce_fBulk voce = new Voce_fBulk( osv.getCd_voce(), osv.getEsercizio(), osv.getTi_appartenenza(), osv.getTi_gestione());
-		session.aggiornaObbligazioniAccertamenti( userContext, osv.getCd_centro_responsabilita(), osv.getCd_linea_attivita(), voce, imp_pgiro.getEsercizio_originale(),imp_pgiro.isObbligazioneResiduoImproprio()?Voce_f_saldi_cdr_lineaBulk.TIPO_RESIDUO_IMPROPRIO:Voce_f_saldi_cdr_lineaBulk.TIPO_RESIDUO_PROPRIO,im_voce,imp_pgiro.getCd_tipo_documento_cont());
+
+		if (parametriCnr!=null && !parametriCnr.getFl_nuovo_pdg()) {
+			Voce_fBulk voce = new Voce_fBulk( osv.getCd_voce(), osv.getEsercizio(), osv.getTi_appartenenza(), osv.getTi_gestione());
+			session.aggiornaObbligazioniAccertamenti( userContext, osv.getCd_centro_responsabilita(), osv.getCd_linea_attivita(), voce, imp_pgiro.getEsercizio_originale(),imp_pgiro.isObbligazioneResiduoImproprio()?Voce_f_saldi_cdr_lineaBulk.TIPO_RESIDUO_IMPROPRIO:Voce_f_saldi_cdr_lineaBulk.TIPO_RESIDUO_PROPRIO,im_voce,imp_pgiro.getCd_tipo_documento_cont());
+		} else {
+			Elemento_voceBulk voce = new Elemento_voceBulk( osv.getCd_voce(), osv.getEsercizio(), osv.getTi_appartenenza(), osv.getTi_gestione());
+			session.aggiornaObbligazioniAccertamenti( userContext, osv.getCd_centro_responsabilita(), osv.getCd_linea_attivita(), voce, imp_pgiro.getEsercizio_originale(),imp_pgiro.isObbligazioneResiduoImproprio()?Voce_f_saldi_cdr_lineaBulk.TIPO_RESIDUO_IMPROPRIO:Voce_f_saldi_cdr_lineaBulk.TIPO_RESIDUO_PROPRIO,im_voce,imp_pgiro.getCd_tipo_documento_cont());
+		}
 		
 		if (aggiornaControparte && !imp_pgiro.isFl_isTronco() && !imp_pgiro.isResiduo()) {
 			Ass_partita_giroBulk ass_pgiro = ((Ass_partita_giroHome)getHome(userContext, Ass_partita_giroBulk.class)).getAssociazionePGiroFor(imp_pgiro);
