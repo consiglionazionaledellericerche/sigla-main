@@ -443,8 +443,7 @@
 		inputType="SEARCHTOOL"
 		label="Voce del piano next"
 		enabledOnSearch="true"
-		enabledOnView="true"
-		completeOnSave="false" />
+		enabledOnView="true" />
 		
 	<columnFieldProperty
 		name="cd_cds_origine"
