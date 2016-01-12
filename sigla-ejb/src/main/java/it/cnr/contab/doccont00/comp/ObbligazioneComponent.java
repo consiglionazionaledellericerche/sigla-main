@@ -3031,14 +3031,14 @@ public Vector listaLineeAttivitaPerCapitoliCdr (UserContext aUC,ObbligazioneBulk
 			for (Iterator i = obbligazione.getCapitoliDiSpesaCdsSelezionatiColl().iterator(); i.hasNext(); )
 			{
 				IVoceBilancioBulk voce = (IVoceBilancioBulk) i.next();
-				for ( Iterator j = cdrDiScrivaniaColl.iterator(); j.hasNext(); )
-					if (voce instanceof Voce_fBulk) {
+				if (voce instanceof Voce_fBulk) {
+					for ( Iterator j = cdrDiScrivaniaColl.iterator(); j.hasNext(); )
 						if (((CdrBulk)j.next()).getCd_centro_responsabilita().equals( ((Voce_fBulk)voce).getCd_centro_responsabilita()))
 							capitoli.add( voce );
-					} 
-				
+				} else
+					capitoli.add( voce );
 			}
-			lineeAttivita.addAll( obbligazioneHome.findLineeAttivitaSAC( capitoli, obbligazione ));
+			lineeAttivita.addAll( obbligazioneHome.findLineeAttivitaSAC( cdrDiScrivaniaColl, capitoli, obbligazione ));
 			if (obbligazione.isSpesePerCostiAltrui() )
 				lineeAttivita.addAll( obbligazioneHome.findLineeAttivitaPerSpesePerCostiAltruiSAC( (List)obbligazione.getCapitoliDiSpesaCdsSelezionatiColl(),(List) obbligazione.getCdrSelezionatiColl(), obbligazione));			
 		}	
