@@ -1085,7 +1085,7 @@ public java.util.List findLineeAttivitaPerSpesePerCostiAltruiSAC(  List capitoli
  * @throws IntrospectionException	
  * @throws PersistencyException	
  */
-public java.util.List findLineeAttivitaSAC( List capitoliList, ObbligazioneBulk obbligazione ) throws IntrospectionException,PersistencyException 
+public java.util.List findLineeAttivitaSAC(  List cdrList, List capitoliList, ObbligazioneBulk obbligazione ) throws IntrospectionException,PersistencyException 
 {
 	try
 	{
@@ -1107,15 +1107,25 @@ public java.util.List findLineeAttivitaSAC( List capitoliList, ObbligazioneBulk 
 			if ( sizeCapitoli == 0 )
 				return Collections.EMPTY_LIST;
 				
-			statement = statement.concat( "( (A.CD_FUNZIONE = ? AND A.CD_CENTRO_RESPONSABILITA = ? ) " );
-			for ( int t = 1 ; t < sizeCapitoli; t++ )
-				statement = statement.concat("OR (A.CD_FUNZIONE = ? AND A.CD_CENTRO_RESPONSABILITA = ? ) ");
-			statement = statement.concat( " ) ");					
-
+			if (capitoliList.get(0) instanceof Voce_fBulk) {
+				statement = statement.concat( "( (A.CD_FUNZIONE = ? AND A.CD_CENTRO_RESPONSABILITA = ? ) " );
+				for ( int t = 1 ; t < sizeCapitoli; t++ )
+					statement = statement.concat("OR (A.CD_FUNZIONE = ? AND A.CD_CENTRO_RESPONSABILITA = ? ) ");
+				statement = statement.concat( " ) ");
+			} else {
+				int sizeCdr = cdrList.size() ;
+				if ( sizeCdr == 0 )
+					return Collections.EMPTY_LIST;
+				statement = statement.concat( "( (A.CD_FUNZIONE = ? AND A.CD_CENTRO_RESPONSABILITA = ? ) " );
+				for ( int t = 1 ; t < sizeCdr; t++ )
+					statement = statement.concat("OR (A.CD_FUNZIONE = ? AND A.CD_CENTRO_RESPONSABILITA = ? ) ");
+				statement = statement.concat( " ) ");
+			}
+			
 			LoggableStatement ps = new LoggableStatement(getConnection(),statement,true,this.getClass());
 			try
 			{	
-				Voce_fBulk capitolo = (Voce_fBulk) capitoliList.iterator().next();
+				IVoceBilancioBulk capitolo = (IVoceBilancioBulk) capitoliList.iterator().next();
 
 				ps.setString( 1, Pdg_preventivo_detBulk.CAT_SINGOLO );
 				ps.setString( 2, Pdg_modulo_spese_gestBulk.CAT_DIRETTA );
@@ -1127,16 +1137,26 @@ public java.util.List findLineeAttivitaSAC( List capitoliList, ObbligazioneBulk 
 
 				int j = 8;
 				Iterator i = capitoliList.iterator();
-				capitolo = (Voce_fBulk) i.next();
-				ps.setString( j++, capitolo.getCd_funzione() );
-				ps.setString( j++, capitolo.getCd_centro_responsabilita() );
-				for ( ; i.hasNext(); )
-				{
-					capitolo = (Voce_fBulk) i.next();			
+				capitolo = (IVoceBilancioBulk) i.next();
+				if (capitolo instanceof Voce_fBulk) {
 					ps.setString( j++, capitolo.getCd_funzione() );
-					ps.setString( j++, capitolo.getCd_centro_responsabilita() );		
-				}	
-		
+					ps.setString( j++, ((Voce_fBulk)capitolo).getCd_centro_responsabilita() );
+						
+					for ( ; i.hasNext(); )
+					{
+						capitolo = (Voce_fBulk) i.next();			
+						ps.setString( j++, capitolo.getCd_funzione() );
+						ps.setString( j++, ((Voce_fBulk)capitolo).getCd_centro_responsabilita() );		
+					}
+				} else {
+					//nel caso di capitolo instanceof Elemento_voce nell'iterator capitoliList c'è sempre un solo elemento
+					//per cui non effettuo il loop sull'iterator capitoliList
+					for (Iterator iterator = cdrList.iterator(); iterator.hasNext();) {
+						CdrBulk cdr = (CdrBulk) iterator.next();
+						ps.setString( j++, capitolo.getCd_funzione() );
+						ps.setString( j++, cdr.getCd_centro_responsabilita() );
+					}
+				}
 						
 				ResultSet rs = ps.executeQuery();
 				try
