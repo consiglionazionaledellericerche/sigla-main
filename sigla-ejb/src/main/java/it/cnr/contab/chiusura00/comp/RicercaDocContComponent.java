@@ -1625,10 +1625,29 @@ public boolean isRibaltato(it.cnr.jada.UserContext userContext, CdrBulk cdr) thr
 		throw handleException(e);
 	}
 }	
+public boolean isRibaltato(it.cnr.jada.UserContext userContext, Unita_organizzativaBulk uo, Integer esercizio) throws ComponentException
+{
+	try	{
+		uo = (Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class, null, getFetchPolicyName("find")).findByPrimaryKey(uo);
+		return ((Parametri_cdsHome)getHome(userContext,Parametri_cdsBulk.class)).isRibaltato(userContext, uo.getCd_proprio_unita(), esercizio);
+	} 
+	catch(Throwable e) {
+		throw handleException(e);
+	}
+}	
 public boolean isRibaltato(it.cnr.jada.UserContext userContext, CdsBulk cds) throws ComponentException
 {
 	try	{
 		return ((Parametri_cdsHome)getHome(userContext,Parametri_cdsBulk.class)).isRibaltato(userContext, cds.getCd_unita_organizzativa());
+	} 
+	catch(Throwable e) {
+		throw handleException(e);
+	}
+}	
+public boolean isRibaltato(it.cnr.jada.UserContext userContext, CdsBulk cds, Integer esercizio) throws ComponentException
+{
+	try	{
+		return ((Parametri_cdsHome)getHome(userContext,Parametri_cdsBulk.class)).isRibaltato(userContext, cds.getCd_unita_organizzativa(), esercizio);
 	} 
 	catch(Throwable e) {
 		throw handleException(e);

@@ -1,5 +1,6 @@
 package it.cnr.contab.docamm00.service;
 
+import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
 import it.cnr.contab.docamm00.ejb.DocAmmFatturazioneElettronicaComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
@@ -13,6 +14,7 @@ import it.cnr.contab.util.StringEncrypter;
 import it.cnr.contab.util.StringEncrypter.EncryptionException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.mail.SimplePECMail;
 import it.gov.fatturapa.sdi.messaggi.v1.MetadatiInvioFileType;
@@ -74,6 +76,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	private transient final static Logger logger = LoggerFactory.getLogger(FatturaPassivaElettronicaService.class);
 	
 	private FatturaElettronicaPassivaComponentSession fatturaElettronicaPassivaComponentSession;
+	private RicercaDocContComponentSession ricercaDocContComponentSession;
 	private DocAmmFatturazioneElettronicaComponentSession docAmmFatturazioneElettronicaComponentSession;
 	private RicezioneFatturePA ricezioneFattureService;
 	private TrasmissioneFatturePA trasmissioneFattureService;
@@ -89,6 +92,13 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		pecSDISubjectNotificaEsitoTerm, pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm, pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm, pecHostAddressReturn;
 	private List<String> pecScanFolderName, pecScanReceiptFolderName, pecHostAddress;
 	
+	public RicercaDocContComponentSession getRicercaDocContComponentSession() {
+		return ricercaDocContComponentSession;
+	}
+	public void setRicercaDocContComponentSession(
+			RicercaDocContComponentSession ricercaDocContComponentSession) {
+		this.ricercaDocContComponentSession = ricercaDocContComponentSession;
+	}
 	public void setPecSDISubjectFatturaAttivaRicevutaConsegnaTerm(
 			String pecSDISubjectFatturaAttivaRicevutaConsegnaTerm) {
 		this.pecSDISubjectFatturaAttivaRicevutaConsegnaTerm = pecSDISubjectFatturaAttivaRicevutaConsegnaTerm;
@@ -195,9 +205,12 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			} else {
 				logger.info("PEC SCAN for ricevi Fatture started at: "+new Date());
 				for (UnitaOrganizzativaPecBulk unitaOrganizzativaPecBulk : fatturaElettronicaPassivaComponentSession.scanPECProtocollo(userContext)) {
+					Calendar today = Calendar.getInstance();
+					today.setTime(new Date());
 					pecScan(
 							unitaOrganizzativaPecBulk.getEmailPecProtocollo(), 
-							unitaOrganizzativaPecBulk.getCodPecProtocollo());
+							unitaOrganizzativaPecBulk.getCodPecProtocollo(),
+							ricercaDocContComponentSession.isRibaltato(userContext, unitaOrganizzativaPecBulk.getUnitaOrganizzativa(), today.get(Calendar.YEAR) - 1));
 				}
 				logger.info("PEC SCAN for ricevi Fatture finished at: "+new Date());				
 			}
@@ -325,7 +338,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 
 
 	@SuppressWarnings("unchecked")
-	public void pecScan(String userName, String password) throws ComponentException {
+	public void pecScan(String userName, String password, Boolean isRibaltato) throws ComponentException {
 		logger.info("PEC SCAN for ricevi Fatture email: "+userName + "pwd :" +password);
 		Properties props = System.getProperties();
 		props.putAll(pecMailConf);
@@ -340,7 +353,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			final Store store = session.getStore(urlName);
 			store.connect(userName, password);
 			searchMailFromPec(userName, store);
-			searchMailFromSdi(userName, store);
+			searchMailFromSdi(userName, store, isRibaltato);
 			searchMailFromReturn(userName, store);
 			store.close();
 		} catch (AuthenticationFailedException e) {
@@ -365,7 +378,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		    } 
 		}
 	}
-	private void searchMailFromSdi(String userName, final Store store)
+	private void searchMailFromSdi(String userName, final Store store, boolean isRibaltato)
 			throws MessagingException {
 		List<Folder> folders = new ArrayList<Folder>();
 		for (String folderName : pecScanFolderName) {
@@ -374,7 +387,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		for (Folder folder : folders) {
 		    if (folder.exists()) {
 				folder.open(Folder.READ_WRITE);
-				processingMailFromSdi(folder, userName);
+				processingMailFromSdi(folder, userName, isRibaltato);
 				folder.close(true);				
 		    }
 		}
@@ -397,9 +410,23 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		    }
 		}
 	}
+	
+	private Boolean isDateOfFirstMonth(boolean isRibaltato){
+		Calendar today = Calendar.getInstance();
+		today.setTime(new Date());
+    	Calendar lastDayOfFirstMonth = Calendar.getInstance();
+    	lastDayOfFirstMonth.set(today.get(Calendar.YEAR), Calendar.JANUARY, 31);
 
-	private void processingMailFromSdi(Folder folder, String userName) throws MessagingException{
-    	List<SearchTerm> terms = createTermsForSearchSdi();
+    	if (!isRibaltato || today.after(lastDayOfFirstMonth)){
+    		return true;
+    	}
+    	return false;
+	}
+	
+	private void processingMailFromSdi(Folder folder, String userName, boolean isRibaltato) throws MessagingException{
+	    recoveryNotifier(folder, userName, isRibaltato);
+		
+		List<SearchTerm> terms = createTermsForSearchSdi(false);
     	Message messages[] = folder.search(new AndTerm(terms.toArray(new SearchTerm[terms.size()])));
     	logger.info("Recuperati " + messages.length +" messaggi SDI dalla casella PEC:" + userName + " nella folder:" + folder.getFullName());
 	    for (int i = 0; i < messages.length; i++) {
@@ -412,15 +439,15 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 						notificaFatturaPassivaScartoEsito(message, userName);
 					} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaRicevutaConsegnaTerm)){
 						notificaFatturaAttivaRicevutaConsegna(message, userName);
-					} else if (message.getSubject().contains(pecSDISubjectNotificaEsitoTerm)){
+					} else if (message.getSubject().contains(pecSDISubjectNotificaEsitoTerm) && isRibaltato){
 						notificaFatturaAttivaEsito(message);
-					} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaNotificaScartoTerm)){
+					} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaNotificaScartoTerm) && isRibaltato){
 						notificaFatturaAttivaScarto(message);
 					} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaMancataConsegnaTerm)){
 						notificaFatturaAttivaMancataConsegna(message);
 					} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm)){
 						notificaFatturaAttivaDecorrenzaTermini(message);
-					} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm)){
+					} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm) && isRibaltato){
 						notificaFatturaAttivaAvvenutaTrasmissioneNonRecapitata(message);
 					} else {
 						logger.warn("Fatture Elettroniche: Attive: Oggetto dell'e-mail non gestito." + message.getSubject());
@@ -434,6 +461,43 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 				SendMail.sendErrorMail("Errore. Fatture Elettroniche: Processing mail SDI ", sw.toString());
 			}
 		}
+	}
+	
+	private Boolean isDateForRecoveryNotifier(boolean isRibaltato){
+		Calendar today = Calendar.getInstance();
+	    today.setTime(new Date());
+	    if (isRibaltato && today.get(Calendar.MONTH) == Calendar.JANUARY){
+	    	return true;
+	    }
+	    return false;
+	}
+	    
+	private void recoveryNotifier(Folder folder, String userName,
+			boolean isRibaltato) throws MessagingException {
+	    if (isDateForRecoveryNotifier(isRibaltato)){
+			List<SearchTerm> newTerms = createTermsForSearchSdi(true);
+	    	Message newMessages[] = folder.search(new AndTerm(newTerms.toArray(new SearchTerm[newTerms.size()])));
+	    	logger.info("Recuperati " + newMessages.length +" messaggi SDI dalla casella PEC:" + userName + " nella folder:" + folder.getFullName());
+		    for (int i = 0; i < newMessages.length; i++) {
+		    	try {
+		    		Message message = newMessages[i];
+					if (message.getSubject() != null){
+						if (message.getSubject().contains(pecSDISubjectNotificaEsitoTerm)){
+							notificaFatturaAttivaEsito(message);
+						} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaNotificaScartoTerm)){
+							notificaFatturaAttivaScarto(message);
+						} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm)){
+							notificaFatturaAttivaAvvenutaTrasmissioneNonRecapitata(message);
+						}
+					}
+				} catch (Exception e) {
+					logger.error("PEC scan error while importing file.", e);
+					java.io.StringWriter sw = new java.io.StringWriter();
+					e.printStackTrace(new java.io.PrintWriter(sw));
+					SendMail.sendErrorMail("Errore. Fatture Elettroniche: Processing mail SDI ", sw.toString());
+				}
+			}
+	    }
 	}
 	
 	private void processingMailFromReturn(Folder folder, String userName) throws MessagingException{
@@ -475,9 +539,9 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			}
 		}
 	}
-	public List<SearchTerm> createTermsForSearchSdi() {
+	public List<SearchTerm> createTermsForSearchSdi(Boolean dateForRecoveryNotifier) {
 		List<SearchTerm> terms = new ArrayList<SearchTerm>();
-    	addConditionDate(terms);
+    	addConditionDate(terms,dateForRecoveryNotifier);
     	terms.add(new FromStringTerm(pecSDIFromStringTerm));
 		return terms;
 	}
@@ -559,11 +623,21 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		return subjectTerm;
 	}
 	public void addConditionDate(List<SearchTerm> terms) {
+		addConditionDate(terms, false);
+	}
+	
+	public void addConditionDate(List<SearchTerm> terms, Boolean dateForRecoveryNotifier) {
 		Calendar cal = Calendar.getInstance();
     	cal.setTime(new Date());
-    	cal.add(Calendar.DATE, -1);
-    	Date dateBeforeOneDays = cal.getTime();			    	
-    	terms.add(new ReceivedDateTerm(ComparisonTerm.GE, dateBeforeOneDays));
+    	Date dateFromSearch = null;
+    	if (dateForRecoveryNotifier){
+    		dateFromSearch = DateUtils.dataContabile(cal.getTime(), cal.get(Calendar.YEAR) - 1);
+    	} else {
+        	cal.add(Calendar.DATE, -1);
+        	dateFromSearch = cal.getTime();
+    	}
+    				    	
+    	terms.add(new ReceivedDateTerm(ComparisonTerm.GE, dateFromSearch));
 	}
 	
 	public Date getSystemDate() {

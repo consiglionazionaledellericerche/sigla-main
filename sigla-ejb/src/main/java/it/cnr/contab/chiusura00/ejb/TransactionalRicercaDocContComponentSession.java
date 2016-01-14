@@ -498,6 +498,38 @@ public boolean isRibaltato(it.cnr.jada.UserContext param0, it.cnr.contab.config0
 		}
 	}
 }
+public boolean isRibaltato(it.cnr.jada.UserContext param0, it.cnr.contab.config00.sto.bulk.CdsBulk param1, Integer esercizio) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		return ((Boolean)invoke("isRibaltato",new Object[] {
+			param0, param1, esercizio})).booleanValue();
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public boolean isRibaltato(it.cnr.jada.UserContext param0, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk param1, Integer esercizio) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		return ((Boolean)invoke("isRibaltato",new Object[] {
+			param0, param1, esercizio})).booleanValue();
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
 public boolean isSfondataDispCdS(it.cnr.jada.UserContext param0) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return ((Boolean)invoke("isSfondataDispCdS",new Object[] {
