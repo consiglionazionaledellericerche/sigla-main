@@ -5,15 +5,12 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk;
 
 public class Accertamento_mod_voceBulk extends Accertamento_mod_voceBase {
 
 	private Accertamento_modificaBulk accertamento_modifica = new Accertamento_modificaBulk();
-	private Voce_fBulk voce_f = new Voce_fBulk();
+	private IVoceBilancioBulk voce;
 	private WorkpackageBulk linea_attivita = new WorkpackageBulk();
 
 	public Accertamento_mod_voceBulk() {
@@ -31,12 +28,12 @@ public class Accertamento_mod_voceBulk extends Accertamento_mod_voceBase {
 		this.accertamento_modifica = accertamento_modifica;
 	}
 	
-	public Voce_fBulk getVoce_f() {
-		return voce_f;
+	public IVoceBilancioBulk getVoce() {
+		return voce;
 	}
 
-	public void setVoce_f(Voce_fBulk voce_f) {
-		this.voce_f = voce_f;
+	public void setVoce(IVoceBilancioBulk voce) {
+		this.voce = voce;
 	}
 
 	public WorkpackageBulk getLinea_attivita() {
@@ -81,39 +78,6 @@ public class Accertamento_mod_voceBulk extends Accertamento_mod_voceBase {
 
 	public void setPg_modifica(Long pg_modifica) {
 		getAccertamento_modifica().setPg_modifica(pg_modifica);
-	}
-
-	public String getTi_appartenenza() {
-		Voce_fBulk voce_f = this.getVoce_f();
-		if (voce_f == null)
-			return null;
-		return voce_f.getTi_appartenenza();
-	}
-
-	public void setTi_appartenenza(String ti_appartenenza) {
-		getVoce_f().setTi_appartenenza(ti_appartenenza);
-	}	
-
-	public String getTi_gestione() {
-		Voce_fBulk voce_f = this.getVoce_f();
-		if (voce_f == null)
-			return null;
-		return voce_f.getTi_gestione();
-	}
-
-	public void setTi_gestione(String ti_gestione) {
-		getVoce_f().setTi_gestione(ti_gestione);
-	}
-
-	public String getCd_voce() {
-		Voce_fBulk voce_f = this.getVoce_f();
-		if (voce_f == null)
-			return null;
-		return voce_f.getCd_voce();
-	}
-
-	public void setCd_voce(String cd_voce) {
-		voce_f.setCd_voce(cd_voce);
 	}
 
 	public String getCd_centro_responsabilita() {

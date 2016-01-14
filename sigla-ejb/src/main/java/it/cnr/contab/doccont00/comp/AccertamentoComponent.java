@@ -530,7 +530,7 @@ private void aggiornaSaldiAccertamentiResiduiPropri (UserContext uc,Accertamento
 							uc,
 							obbModVoce.getCd_centro_responsabilita(),
 							obbModVoce.getCd_linea_attivita(),
-							obbModVoce.getVoce_f(),
+							obbModVoce.getVoce(),
 							obbMod.getAccertamento().getEsercizio_originale(),
 							obbModVoce.getIm_modifica());
 					}
@@ -4538,7 +4538,7 @@ protected AccertamentoBulk validaCreaModificaElementoVoceNext(UserContext userCo
 					throw new ApplicationException("Attenzione! Non esiste congruenza tra la voce dell''impegno e quella di ribaltamento. Modificare la voce di ribaltamento!");
 				
 				if (evAccertamento.getFl_recon().equals(Boolean.FALSE) && accertamento.getElemento_voce_next().getFl_recon().equals(Boolean.TRUE) &&
-						accertamento.getContratto()==null || accertamento.getContratto().getPg_contratto()==null)  
+						(accertamento.getContratto()==null || accertamento.getContratto().getPg_contratto()==null))  
 					throw new ApplicationException("Attenzione! Non esiste congruenza tra la voce dell''accertamento che non richiede l'indicazione "+
 							"del contratto e quella di ribaltamento che ne richiede l'inserimento. Modificare la voce di ribaltamento "+
 							"o inserire i dati relativi al contratto!");
