@@ -5,6 +5,7 @@ import it.cnr.contab.utenze00.bp.*;
 import it.cnr.contab.utente00.nav.ejb.*;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
+import it.cnr.jada.util.action.OptionBP;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 
 /**
@@ -216,9 +217,10 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 	public it.cnr.jada.action.Forward doConfermaSelezioneMenu(it.cnr.jada.action.ActionContext context,it.cnr.jada.util.action.OptionBP optionbp) {
 		try {
 			it.cnr.contab.utenze00.bp.GestioneUtenteBP bp = (it.cnr.contab.utenze00.bp.GestioneUtenteBP)context.getBusinessProcess("/GestioneUtenteBP");
-			if (optionbp.getOption() == optionbp.NO_BUTTON)
+			if (optionbp.getOption() == OptionBP.NO_BUTTON)
 				return context.findDefaultForward();
-			it.cnr.contab.utenze00.bulk.Albero_mainBulk nodo = (it.cnr.contab.utenze00.bulk.Albero_mainBulk)optionbp.getAttribute("nodo");
+			it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo = bp.getUserInfo().getUnita_organizzativa();			
+			it.cnr.contab.utenze00.bulk.Albero_mainBulk nodo = getComponentSession().validaNodoPerUtente(context.getUserContext(),bp.getUserInfo().getUtente(),uo == null ? null : uo.getCd_unita_organizzativa(), (String)optionbp.getAttribute("cd_nodo"));
 			return startNodo(context,bp,nodo);
 		} catch(Throwable e) {
 			return handleException(context,e);
@@ -315,14 +317,15 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 	public Forward doSelezionaMenu(ActionContext context,String cd_nodo) {
 		try {
 			it.cnr.contab.utenze00.bp.GestioneUtenteBP bp = (it.cnr.contab.utenze00.bp.GestioneUtenteBP)context.getBusinessProcess("/GestioneUtenteBP");
-			it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo = bp.getUserInfo().getUnita_organizzativa();
-			it.cnr.contab.utenze00.bulk.Albero_mainBulk nodo = getComponentSession().validaNodoPerUtente(context.getUserContext(),bp.getUserInfo().getUtente(),uo == null ? null : uo.getCd_unita_organizzativa(),cd_nodo);
-			if (nodo == null) return context.findDefaultForward();
 			if (isCurrentBPDirty(context)) {
 				it.cnr.jada.util.action.OptionBP optionbp = openContinuePrompt(context,"doConfermaSelezioneMenu");
-				optionbp.addAttribute("nodo",nodo);
+				optionbp.addAttribute("cd_nodo", cd_nodo);
 				return optionbp;
 			}
+			it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo = bp.getUserInfo().getUnita_organizzativa();
+			bp.closeAllChildren();
+			it.cnr.contab.utenze00.bulk.Albero_mainBulk nodo = getComponentSession().validaNodoPerUtente(context.getUserContext(),bp.getUserInfo().getUtente(),uo == null ? null : uo.getCd_unita_organizzativa(),cd_nodo);
+			if (nodo == null) return context.findDefaultForward();
 			return startNodo(context,bp,nodo);
 		} catch(Throwable e) {
 			return handleException(context,e);
@@ -430,7 +433,6 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 			else
 				newbp = context.createBusinessProcess(nodo.getBusiness_process());
 			if (newbp == null) return context.findDefaultForward();
-			bp.closeAllChildren();
 			context.addBusinessProcess(newbp);
 			return context.findDefaultForward();
 		} catch(it.cnr.jada.action.BusinessProcessException e) {
