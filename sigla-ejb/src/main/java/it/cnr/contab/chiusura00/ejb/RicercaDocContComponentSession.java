@@ -38,6 +38,8 @@ void setSelectionPerRiportaIndietro(it.cnr.jada.UserContext param0,it.cnr.contab
 boolean isRibaltato(it.cnr.jada.UserContext userContext) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 boolean isRibaltato(it.cnr.jada.UserContext param0, it.cnr.contab.config00.sto.bulk.CdrBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 boolean isRibaltato(it.cnr.jada.UserContext param0, it.cnr.contab.config00.sto.bulk.CdsBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+boolean isRibaltato(it.cnr.jada.UserContext param0, it.cnr.contab.config00.sto.bulk.CdsBulk param1, Integer esercizio) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+boolean isRibaltato(it.cnr.jada.UserContext param0, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk param1, Integer esercizio) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 boolean isSfondataDispCdS(it.cnr.jada.UserContext userContext) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 boolean isRicosResiduiChiusa(it.cnr.jada.UserContext userContext) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void callRibaltaDispImproprie(UserContext userContext) throws ComponentException,java.rmi.RemoteException;

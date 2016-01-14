@@ -967,6 +967,10 @@ private Nota_di_credito_attivaBulk basicStornaDettaglio(
 			//}
 		} else accertamentoSelezionato = caricaScadenzaAccertamentoPer(context, accertamentoSelezionato);
 		
+		if (accertamentoSelezionato.getEsercizio() != null && accertamentoSelezionato.getEsercizio().compareTo(ndC.getEsercizio()) != 0){
+			throw new it.cnr.jada.comp.ApplicationException("Per la riga di fattura "+ rigaAssociata.getCd_cds()+"/"+rigaAssociata.getEsercizio()+"/"+rigaAssociata.getPg_fattura_attiva()+"/"+rigaAssociata.getProgressivo_riga()+
+					" non è possibile creare la nota di credito in quanto l'esercizio dell'accertamento "+accertamentoSelezionato.getCd_cds()+"/"+accertamentoSelezionato.getEsercizio()+"/"+accertamentoSelezionato.getPg_accertamento()+" non corrisponde all'esercizio della nota di credito");
+		}
 			
 		rigaNdC.setAccertamento_scadenzario(accertamentoSelezionato);
 		rigaNdC.setRiga_fattura_associata(rigaAssociata);
@@ -1003,6 +1007,10 @@ private Nota_di_credito_attivaBulk basicStornaDettaglio(
 			if (key != null) scadenza = key;
 			else scadenza = caricaScadenzaObbligazionePer(context, scadenza);
 		} else scadenza = caricaScadenzaObbligazionePer(context, scadenza);
+
+		if (scadenza.getEsercizio() != null && scadenza.getEsercizio().compareTo(ndC.getEsercizio()) != 0){
+			throw new it.cnr.jada.comp.ApplicationException("Non è possibile creare la nota di credito in quanto l'esercizio dell'obbligazione "+scadenza.getCd_cds()+"/"+scadenza.getEsercizio()+"/"+scadenza.getPg_obbligazione()+" non corrisponde all'esercizio della nota di credito");
+		}
 
 		rigaNdC.setObbligazione_scadenzario(scadenza);
 		rigaNdC.setRiga_fattura_associata(rigaNdC.getRiga_fattura_associata());
