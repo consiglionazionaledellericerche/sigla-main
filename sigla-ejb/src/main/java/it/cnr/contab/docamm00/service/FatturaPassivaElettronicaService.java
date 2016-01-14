@@ -631,7 +631,9 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
     	cal.setTime(new Date());
     	Date dateFromSearch = null;
     	if (dateForRecoveryNotifier){
-    		dateFromSearch = DateUtils.dataContabile(cal.getTime(), cal.get(Calendar.YEAR) - 1);
+//    		dateFromSearch = DateUtils.dataContabile(cal.getTime(), cal.get(Calendar.YEAR) - 1);
+    		cal.set(2015, Calendar.DECEMBER, 14);
+    		dateFromSearch = cal.getTime();
     	} else {
         	cal.add(Calendar.DATE, -1);
         	dateFromSearch = cal.getTime();
