@@ -8,6 +8,8 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoHome;
+import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_cdsHome;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
 import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecHome;
@@ -425,6 +427,16 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		}
 	}
 	
+	private boolean isRibaltato(it.cnr.jada.UserContext userContext, String cd_cds, Integer esercizio) throws ComponentException
+	{
+		try	{
+			return ((Parametri_cdsHome)getHome(userContext,Parametri_cdsBulk.class)).isRibaltato(userContext, cd_cds, esercizio);
+		} 
+		catch(Throwable e) {
+			throw handleException(e);
+		}
+	}	
+
 	public void scanPECProtocollo(UserContext usercontext, UnitaOrganizzativaPecBulk unitaOrganizzativaPecBulk) throws ComponentException {
 		FatturaPassivaElettronicaService fatturaPassivaElettronicaService = SpringUtil.getBean(
 				"fatturaPassivaElettronicaService", FatturaPassivaElettronicaService.class);
@@ -432,7 +444,8 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 			lockBulk(usercontext, unitaOrganizzativaPecBulk);
 				fatturaPassivaElettronicaService.pecScan(
 						unitaOrganizzativaPecBulk.getEmailPecProtocollo(), 
-						unitaOrganizzativaPecBulk.getCodPecProtocollo());
+						unitaOrganizzativaPecBulk.getCodPecProtocollo(),
+						true);
 		} catch (OutdatedResourceException e) {
 		} catch (BusyResourceException e) {
 		} catch (PersistencyException e) {
