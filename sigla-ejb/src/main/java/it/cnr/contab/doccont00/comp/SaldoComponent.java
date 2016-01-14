@@ -3,8 +3,6 @@ package it.cnr.contab.doccont00.comp;
 import it.cnr.contab.prevent00.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
-import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
-import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.*;
@@ -863,24 +861,99 @@ public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, 
 {
 	Voce_f_saldi_cdr_lineaBulk saldoNew;
 		try {
+			Ass_evold_evnewHome ass_evold_evnewHome = (Ass_evold_evnewHome) getHome( userContext, Ass_evold_evnewBulk.class);
 			CdrHome cdrHome = (CdrHome)getHome(userContext,CdrBulk.class);
 			CdrBulk cdr = (CdrBulk)cdrHome.findByPrimaryKey(new CdrBulk(cd_cdr));
 			getHomeCache(userContext).fetchAll(userContext,cdrHome);
 			if (((Parametri_cdsHome)getHome(userContext,Parametri_cdsBulk.class)).isRibaltato(userContext,cdr.getCd_cds())){
+				//RECUPERO L'ELEMENTO DELL'ANNO IN CORSO
 				for (Iterator esercizi = ((EsercizioHome)getHome(userContext,EsercizioBulk.class)).findEserciziSuccessivi(new EsercizioBulk(CNRUserContext.getCd_cds(userContext),CNRUserContext.getEsercizio(userContext))).iterator();esercizi.hasNext();){
 					EsercizioBulk esercizio = (EsercizioBulk)esercizi.next();
 					
 					String codiceVoce = voce.getCd_voce();
-					voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
-																		  new Voce_fBulk(voce.getCd_voce(),esercizio.getEsercizio(),saldoOld.getTi_appartenenza(),saldoOld.getTi_gestione())
-																		  );
+					//recupero la voce di ribaltamento
+					Elemento_voceBulk elemento_voce = null;
+					if (voce instanceof Voce_fBulk) {
+						if (!((Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class)).isNuovoPdg(userContext, esercizio.getEsercizio())) {
+							voce = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
+									  new Voce_fBulk(voce.getCd_voce(),esercizio.getEsercizio(),saldoOld.getTi_appartenenza(),saldoOld.getTi_gestione())
+									  );
+							
+							getHomeCache(userContext).fetchAll(userContext);
+
+							if (voce == null)
+								throw new ApplicationException("La voce: "+ codiceVoce +" non è presente nell'esercizio: "+esercizio.getEsercizio());
+							
+							saldoNew = findAndLock( userContext,esercizio.getEsercizio(), esercizio_res, cd_cdr,cd_linea_attivita, voce);
+							
+							elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
+									  new Elemento_voceBulk(voce.getCd_elemento_voce(),esercizio.getEsercizio(),voce.getTi_appartenenza(),voce.getTi_gestione())
+									  );
+						} else {
+							//recupero la voce di ribaltamento
+							Voce_fBulk voceOld = (Voce_fBulk)getHome(userContext,Voce_fBulk.class).findByPrimaryKey(
+									  new Voce_fBulk(voce.getCd_voce(),CNRUserContext.getEsercizio(userContext),saldoOld.getTi_appartenenza(),saldoOld.getTi_gestione())
+									  );
+
+							getHomeCache(userContext).fetchAll(userContext);
+
+							if (voceOld == null)
+								throw new ApplicationException("La voce: "+ voce.getCd_voce() +" non è presente nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
+							
+							Elemento_voceBulk elementoVoceOld = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
+									  new Elemento_voceBulk(voceOld.getCd_elemento_voce(),voceOld.getEsercizio(),voceOld.getTi_appartenenza(),voceOld.getTi_gestione())
+									  );
+							
+							if (elementoVoceOld == null)
+							  throw new ApplicationException("Elemento voce non trovato per la Voce: "+ voceOld.getCd_voce() +" nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
+
+							//cerco la voce del nuovo anno
+							List listVociNew = ass_evold_evnewHome.findAssElementoVoceNewList(elementoVoceOld);
+							if (!listVociNew.isEmpty()) {
+								if (listVociNew.size()>1)
+									throw new ApplicationException("Trovate nella tabella di associazione Vecchie/Nuove Voci più elementi voce nel nuovo anno per la Voce: "+ elementoVoceOld.getCd_voce() +" nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
+								elemento_voce = (Elemento_voceBulk)listVociNew.get(0);
+							} else {
+								elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
+									  new Elemento_voceBulk(elementoVoceOld.getCd_elemento_voce(),esercizio.getEsercizio(),elementoVoceOld.getTi_appartenenza(),elementoVoceOld.getTi_gestione())
+								  );
+							}
+							
+							if (elemento_voce == null || elemento_voce.getEsercizio().compareTo(esercizio.getEsercizio())!=0)
+								  throw new ApplicationException("Elemento voce non trovato o associato ad una voce di anno differente rispetto a quello di ribaltamento per la Voce: "+ voceOld.getCd_voce() +" nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
+
+							saldoNew = findAndLock( userContext,esercizio.getEsercizio(), esercizio_res, cd_cdr,cd_linea_attivita, elemento_voce);
+						}
+					} else {
+						//recupero la voce di ribaltamento
+						Elemento_voceBulk elementoVoceOld = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
+								  new Elemento_voceBulk(voce.getCd_elemento_voce(),CNRUserContext.getEsercizio(userContext),voce.getTi_appartenenza(),voce.getTi_gestione())
+								  );
+
+						if (elementoVoceOld == null)
+							  throw new ApplicationException("Elemento voce non trovato per la Voce: "+ voce.getCd_voce() +" nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
+
+						getHomeCache(userContext).fetchAll(userContext);
+
+						//cerco la voce del nuovo anno
+						List listVociNew = ass_evold_evnewHome.findAssElementoVoceNewList(elementoVoceOld);
+						if (!listVociNew.isEmpty()) {
+							if (listVociNew.size()>1)
+								throw new ApplicationException("Trovate nella tabella di associazione Vecchie/Nuove Voci più elementi voce nel nuovo anno per la Voce: "+ elementoVoceOld.getCd_voce() +" nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
+							elemento_voce = (Elemento_voceBulk)listVociNew.get(0);
+						} else {
+							elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
+									  new Elemento_voceBulk(elementoVoceOld.getCd_elemento_voce(),esercizio.getEsercizio(),elementoVoceOld.getTi_appartenenza(),elementoVoceOld.getTi_gestione())
+									  );
+						}
+
+						if (elemento_voce == null || elemento_voce.getEsercizio().compareTo(esercizio.getEsercizio())!=0)
+							  throw new ApplicationException("Elemento voce non trovato o associato ad una voce di anno differente rispetto a quello di ribaltamento per la Voce: "+ elementoVoceOld.getCd_voce() +" nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
+
+						saldoNew = findAndLock( userContext,esercizio.getEsercizio(), esercizio_res, cd_cdr,cd_linea_attivita, elemento_voce);
+					}
 					getHomeCache(userContext).fetchAll(userContext);
-					if (voce == null)
-						throw new ApplicationException("La voce: "+ codiceVoce +" non è presente nell'esercizio: "+esercizio.getEsercizio());
-					saldoNew = findAndLock( userContext,esercizio.getEsercizio(), esercizio_res, cd_cdr,cd_linea_attivita, voce);
-					Elemento_voceBulk elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
-																		  new Elemento_voceBulk(voce.getCd_elemento_voce(),esercizio.getEsercizio(),voce.getTi_appartenenza(),voce.getTi_gestione())
-																		  );
+					
 					WorkpackageBulk workpackage = (WorkpackageBulk)getHome(userContext,WorkpackageBulk.class).findByPrimaryKey(
 													new WorkpackageBulk(cd_cdr,cd_linea_attivita)
 													);
