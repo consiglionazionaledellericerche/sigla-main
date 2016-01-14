@@ -94,7 +94,6 @@ public class SelezionatoreUnitaOrganizzativaBP extends it.cnr.jada.util.action.S
 		context.setUserInfo(bp.getUserInfo());
 		context.setUserContext(userContext);
 		bp.setRadiceAlbero_main(getComponentSession().generaAlberoPerUtente(context.getUserContext(),bp.getUserInfo().getUtente(),uo.getCd_unita_organizzativa(),null,(short)0));
-		context.closeBusinessProcess();
 	}
 	
 	private CRUDComponentSession createCRUDComponentSession() throws javax.ejb.EJBException, java.rmi.RemoteException{
