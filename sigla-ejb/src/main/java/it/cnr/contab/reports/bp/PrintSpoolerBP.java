@@ -24,6 +24,7 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.firma.DatiPEC;
 import it.cnr.jada.firma.FirmaInfos;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.*;
 
 /**
@@ -93,6 +94,7 @@ public boolean isSignButtonEnabled() {
 }
 public void refresh(ActionContext context) throws BusinessProcessException {
 	try {
+		EJBCommonServices.closeRemoteIterator(getIterator());
 		setIterator(context,createComponentSession().queryJobs(
 			context.getUserContext(),
 			((Print_spoolerBulk)getModel()).getTiVisibilita()));
