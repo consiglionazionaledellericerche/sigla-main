@@ -26,35 +26,30 @@
 		label="Numero Modifica" />
 	<fieldProperty
 		name="ti_gestione"
-		property="voce_f.ti_gestione"
+		property="ti_gestione"
 		maxLength="1"
 		inputSize="1"
 		inputType="TEXT"
 		label="Tipo Gestione" />
 	<fieldProperty
 		name="ti_appartenenza"
-		property="voce_f.ti_appartenenza"
+		property="ti_appartenenza"
 		maxLength="1"
 		inputSize="1"
 		inputType="TEXT"
 		label="Tipo Appartenenza" />
 	<fieldProperty
 		name="cd_voce"
-		property="voce_f.cd_voce"
+		property="cd_voce"
 		inputType="ROTEXT"
 		label="Capitolo" />
 	<fieldProperty
 		name="ds_voce"
-		property="voce_f.ds_voce"
+		property="ds_voce"
 		maxLength="100"
 		inputSize="70"
 		inputType="ROTEXT"
 		label="Descrizione Voce" />
-	<fieldProperty
-		name="find_voce"
-		property="voce_f"
-		inputType="SEARCHTOOL"
-		label="Voce" />
 	<fieldProperty
 		name="cd_centro_responsabilita"
 		property="linea_attivita.cd_centro_responsabilita"
