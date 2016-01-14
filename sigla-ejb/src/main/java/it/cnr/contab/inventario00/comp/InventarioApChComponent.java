@@ -867,8 +867,10 @@ private void setStatoApertura(UserContext aUC,Inventario_ap_chBulk invApCh) thro
 	if ( (invApCh.getDt_chiusura() != null) && (!invApCh.getDt_chiusura().equals(EsercizioHome.DATA_INFINITO)) ){
 		invApCh.setStato(invApCh.CLOSE);
 		//chiamare procedura che lancia il job
-		if (invApCh.getStato().equals(invApCh.CLOSE))
-			callAmmortamentoBeni(aUC);
+		
+		//r.p. 13/01/2016 disabilitato creava più problemi che benefici
+//		if (invApCh.getStato().equals(invApCh.CLOSE))
+//			callAmmortamentoBeni(aUC);
 	}
 	else
 		invApCh.setStato(invApCh.OPEN);
