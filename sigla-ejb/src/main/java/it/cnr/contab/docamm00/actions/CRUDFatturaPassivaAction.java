@@ -832,7 +832,7 @@ private void basicDoOnIstituzionaleCommercialeChange(ActionContext context, Fatt
 			while (dettagli.hasNext()) {
 				Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk)dettagli.next();
 				
-				if (!riga.getTi_istituz_commerc().equals(fattura.getTi_istituz_commerc())){
+				if (riga.getTi_istituz_commerc()!=null && fattura.getTi_istituz_commerc()!= null && !riga.getTi_istituz_commerc().equals(fattura.getTi_istituz_commerc())){
 					riga.setTi_istituz_commerc(fattura.getTi_istituz_commerc());
 					riga.setToBeUpdated();
 				}
