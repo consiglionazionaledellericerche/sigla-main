@@ -542,7 +542,7 @@ private void aggiornaSaldiImpegniResiduiPropri (UserContext uc,ObbligazioneBulk 
 						uc,
 						obbModVoce.getCd_centro_responsabilita(),
 						obbModVoce.getCd_linea_attivita(),
-						obbModVoce.getVoce_f(),
+						obbModVoce.getVoce(),
 						obbMod.getObbligazione().getEsercizio_originale(),
 						obbModVoce.getIm_modifica());
 				}
