@@ -410,8 +410,9 @@ public java.util.List findCdrPerSAC( List capitoliList, ObbligazioneBulk obbliga
 		if ( sizeCapitoli == 0 )
 			return Collections.EMPTY_LIST;
 			
-		
-		
+		PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
+		Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(obbligazione.getEsercizio()));
+		  
 		String statement = 
 			"SELECT DISTINCT B.* FROM " + 		
 			EJBCommonServices.getDefaultSchema() +
@@ -430,10 +431,21 @@ public java.util.List findCdrPerSAC( List capitoliList, ObbligazioneBulk obbliga
 //			"B.ESERCIZIO = ? AND " +
 			"B.CD_CENTRO_RESPONSABILITA = A.CD_CENTRO_RESPONSABILITA AND " ;
 
-		statement = statement.concat( "( (A.CD_FUNZIONE = ? AND A.CD_CENTRO_RESPONSABILITA = ? ) " );
-		for ( int t = 1 ; t < sizeCapitoli; t++ )
-			statement = statement.concat("OR (A.CD_FUNZIONE = ? AND A.CD_CENTRO_RESPONSABILITA = ? ) ");
-		statement = statement.concat( " ) ");					
+		if (parCNR.getFl_nuovo_pdg()) {
+			statement = statement.concat( "( (A.CD_FUNZIONE = ? AND B.CD_UNITA_ORGANIZZATIVA = ? ) " );
+			for ( int t = 1 ; t < sizeCapitoli; t++ )
+				statement = statement.concat( "OR (A.CD_FUNZIONE = ? AND B.CD_UNITA_ORGANIZZATIVA = ? ) " );
+		} else {
+		    statement = statement.concat( "( (A.CD_FUNZIONE = ? AND A.CD_CENTRO_RESPONSABILITA = ? ) " );
+	    	 for ( int t = 1 ; t < sizeCapitoli; t++ )
+			    statement = statement.concat("OR (A.CD_FUNZIONE = ? AND A.CD_CENTRO_RESPONSABILITA = ? ) ");
+		}
+        statement = statement.concat( " ) ");			  
+			  
+//		statement = statement.concat( "( (A.CD_FUNZIONE = ? AND A.CD_CENTRO_RESPONSABILITA = ? ) " );
+//		for ( int t = 1 ; t < sizeCapitoli; t++ )
+//			statement = statement.concat("OR (A.CD_FUNZIONE = ? AND A.CD_CENTRO_RESPONSABILITA = ? ) ");
+//		statement = statement.concat( " ) ");					
 
 		//java.sql.PreparedStatement ps = getConnection().prepareStatement( statement );
 		LoggableStatement ps = null;
@@ -443,7 +455,7 @@ public java.util.List findCdrPerSAC( List capitoliList, ObbligazioneBulk obbliga
 		try
 		{	
 			IVoceBilancioBulk capitolo = (IVoceBilancioBulk) capitoliList.iterator().next();
-
+			
 			ps.setString( 1, Pdg_preventivo_detBulk.CAT_SINGOLO );
 			ps.setString( 2, Pdg_modulo_spese_gestBulk.CAT_DIRETTA );
 			ps.setString( 3, Pdg_modulo_spese_gestBulk.CAT_STIPENDI );
