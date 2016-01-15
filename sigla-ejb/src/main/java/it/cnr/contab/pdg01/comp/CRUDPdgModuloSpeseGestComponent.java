@@ -267,8 +267,9 @@ public class CRUDPdgModuloSpeseGestComponent extends it.cnr.jada.comp.CRUDCompon
 		sql.addSQLClause( "AND", "V_ELEMENTO_VOCE_PDG_SPE.FL_SOLO_RESIDUO", sql.EQUALS, "N");
 		if (dett.getLinea_attivita() != null)
 			sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_FUNZIONE",sql.EQUALS,dett.getLinea_attivita().getCd_funzione());
-		if (dett.getPdg_modulo_spese().getPdg_modulo_costi().getPdg_modulo().getCdr() != null)
-			sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",sql.EQUALS,dett.getPdg_modulo_spese().getPdg_modulo_costi().getPdg_modulo().getCdr().getUnita_padre().getCd_tipo_unita());
+		if(!parCnrBulk.getFl_nuovo_pdg())
+			if (dett.getPdg_modulo_spese().getPdg_modulo_costi().getPdg_modulo().getCdr() != null)
+				sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",sql.EQUALS,dett.getPdg_modulo_spese().getPdg_modulo_costi().getPdg_modulo().getCdr().getUnita_padre().getCd_tipo_unita());
 
 		if (clause != null) sql.addClause(clause);
 
