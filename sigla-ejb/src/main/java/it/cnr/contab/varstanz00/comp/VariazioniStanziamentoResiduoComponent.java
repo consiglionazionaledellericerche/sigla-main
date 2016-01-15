@@ -343,8 +343,10 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			sql.addSQLClause( "AND", "V_ELEMENTO_VOCE_PDG_SPE.FL_SOLO_COMPETENZA", sql.EQUALS, "N");
 			if (var_stanz_res_riga.getLinea_di_attivita() != null)
 				sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_FUNZIONE",sql.EQUALS,var_stanz_res_riga.getLinea_di_attivita().getCd_funzione());
-			if (var_stanz_res_riga.getCentroTestata()!=null && var_stanz_res_riga.getCentroTestata().getUnita_padre().getCd_tipo_unita() != null)
-				sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",sql.EQUALS,var_stanz_res_riga.getCentroTestata().getUnita_padre().getCd_tipo_unita());
+			
+			if(!parCnrBulk.getFl_nuovo_pdg())
+				if (var_stanz_res_riga.getCentroTestata()!=null && var_stanz_res_riga.getCentroTestata().getUnita_padre().getCd_tipo_unita() != null)
+					sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",sql.EQUALS,var_stanz_res_riga.getCentroTestata().getUnita_padre().getCd_tipo_unita());
 			
 			it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 			try {

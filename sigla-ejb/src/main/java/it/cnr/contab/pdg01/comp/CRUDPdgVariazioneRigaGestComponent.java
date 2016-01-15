@@ -483,8 +483,11 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 		sql.addSQLClause( "AND", "V_ELEMENTO_VOCE_PDG_SPE.FL_SOLO_RESIDUO", sql.EQUALS, "N"); 
 		if (dett.getLinea_attivita() != null)
 			sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_FUNZIONE",sql.EQUALS,dett.getLinea_attivita().getCd_funzione());
-		if (dett.getCdr_assegnatario()!=null && dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita() != null)
-			sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",sql.EQUALS,dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita());
+		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
+		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
+		if(!parCnrBulk.getFl_nuovo_pdg())
+			if (dett.getCdr_assegnatario()!=null && dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita() != null)
+				sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",sql.EQUALS,dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita());
 
 		if (clause != null) sql.addClause(clause);
 
