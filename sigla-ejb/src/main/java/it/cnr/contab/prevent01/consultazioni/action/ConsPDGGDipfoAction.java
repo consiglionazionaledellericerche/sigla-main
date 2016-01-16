@@ -6,24 +6,17 @@
  */
 package it.cnr.contab.prevent01.consultazioni.action;
 
-import java.rmi.RemoteException;
-import java.util.Iterator;
-
-import it.cnr.contab.prevent01.consultazioni.bp.*;
+import it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGDipFoBP;
+import it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGDipFoEtrBP;
+import it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGDipFoSpeBP;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.util.RemoteIterator;
-import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.ConsultazioniAction;
-import it.cnr.jada.util.action.ConsultazioniBP;
-import it.cnr.jada.util.ejb.EJBCommonServices;
 
 
 public class ConsPDGGDipfoAction extends ConsultazioniAction {
+	private static final long serialVersionUID = 1L;
 
 	public Forward doConsulta(ActionContext context, String livelloDestinazione) {
 		try {
@@ -40,6 +33,7 @@ public class ConsPDGGDipfoAction extends ConsultazioniAction {
 			}
 			
 			ConsPDGGDipFoBP consultazioneBP = null;
+			context.closeBusinessProcess(bp);			
 			if (bp instanceof ConsPDGGDipFoSpeBP) 
 				consultazioneBP = (ConsPDGGDipFoSpeBP)context.createBusinessProcess("ConsPDGGDipFoSpeBP");
 			else

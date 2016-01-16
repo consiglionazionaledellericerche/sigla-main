@@ -23,9 +23,9 @@ public SelezionatoreUnitaOrganizzativaAction() {
 public Forward basicDoBringBack(ActionContext context) throws BusinessProcessException {
 	try {
 		SelezionatoreUnitaOrganizzativaBP bp = (SelezionatoreUnitaOrganizzativaBP)context.getBusinessProcess();
+		context.closeBusinessProcess();
 		if (((CNRUserInfo)context.getUserInfo()).getUtente()!=null &&
 			((CNRUserInfo)context.getUserInfo()).getUtente().isSupervisore()) {
-			context.closeBusinessProcess();
 			Unita_organizzativaBulk	uo = (it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk)bp.getFocusedElement();
 			SelezionaCdsBulk scds = new SelezionaCdsBulk();
 			scds.setUo(uo);
