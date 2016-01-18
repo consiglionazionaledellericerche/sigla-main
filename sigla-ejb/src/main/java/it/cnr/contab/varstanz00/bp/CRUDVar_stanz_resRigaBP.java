@@ -142,6 +142,7 @@ public class CRUDVar_stanz_resRigaBP extends SimpleCRUDBP {
 		}
 		if (var_stanz_res_riga.getLinea_di_attivita() != null && var_stanz_res_riga.getLinea_di_attivita().getCd_linea_attivita() != null &&
 		    var_stanz_res_riga.getElemento_voce() != null && var_stanz_res_riga.getElemento_voce().getCd_elemento_voce() != null){
+			if (getParametriCnr()==null || !getParametriCnr().getFl_nuovo_pdg()) {
 		    	try {
 					Voce_fBulk voce_f = ((VariazioniStanziamentoResiduoComponentSession)createComponentSession()).getVoce_FdaEV(
 					  actioncontext.getUserContext(),
@@ -152,7 +153,7 @@ public class CRUDVar_stanz_resRigaBP extends SimpleCRUDBP {
 					  var_stanz_res_riga.getLinea_di_attivita().getCd_centro_responsabilita(), 
 					  var_stanz_res_riga.getLinea_di_attivita().getCd_linea_attivita()
 					);
-					var_stanz_res_riga.setVoce_f(voce_f);
+					var_stanz_res_riga.setVoce(voce_f);
 				} catch (DetailedRuntimeException e) {
 					throw new BusinessProcessException(e);
 				} catch (ComponentException e) {
@@ -160,9 +161,12 @@ public class CRUDVar_stanz_resRigaBP extends SimpleCRUDBP {
 				} catch (RemoteException e) {
 					throw new BusinessProcessException(e);
 				}
-		    }else{
-				var_stanz_res_riga.setVoce_f(null);
-		    }
+			} else {
+				var_stanz_res_riga.setVoce(var_stanz_res_riga.getElemento_voce());
+			}
+	    }else{
+			var_stanz_res_riga.setVoce(null);
+	    }
     }
 	public void valorizzaDisponibilita_stanz_res(ActionContext actioncontext, Var_stanz_res_rigaBulk var_stanz_res_riga) throws BusinessProcessException{
 		try {
