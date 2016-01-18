@@ -84,34 +84,34 @@
         
 	<fieldProperty
 		name="esercizio_voce"
-		property="voce_f.esercizio"
+		property="voce.esercizio"
 		inputType="TEXT"
 		inputSize="4"
 		maxLength="4"
 		label="Esercizio della Voce" />
 	<fieldProperty
 		name="ti_appartenenza"
-		property="voce_f.ti_appartenenza"
+		property="voce.ti_appartenenza"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		label="Tipo Appartenenza CNR/CDS" />
 	<fieldProperty
 		name="ti_gestione"
-		property="voce_f.ti_gestione"
+		property="voce.ti_gestione"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
 		label="Tipo Gestione Entrata/Spesa" />
 	<fieldProperty
 		name="cd_voce"
-		property="voce_f.cd_voce"
+		property="voce.cd_voce"
 		inputType="TEXT"
 		maxLength="50"
 		label="Capitolo" />
     <fieldProperty
         name="voce_f"
-        property="voce_f"
+        property="voce"
         inputType="SEARCHTOOL"
         formName="searchtool"
         enabledOnInsert="false"

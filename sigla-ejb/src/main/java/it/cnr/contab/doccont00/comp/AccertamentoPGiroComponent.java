@@ -616,8 +616,10 @@ public AccertamentoPGiroBulk creaAccertamento(UserContext uc,ImpegnoPGiroBulk im
 			if ( voce_f == null )
 				throw new ApplicationException("Impossibile recuperare la voce per il capitolo: " + ( (Ass_partita_giroBulk)result.get(0) ).getCd_voce());			
 			accert_pgiro.setCd_voce( voce_f.getCd_voce() );
-		} else
+		} else {
 			accert_pgiro.setCd_voce( ass_pgiro.getCd_voce() );
+			accert_pgiro.getCapitolo().setCd_elemento_voce( ass_pgiro.getCd_voce() );
+		}
 		
 		Accertamento_scadenzarioBulk accert_scad = creaAccertamento_scadenzario( uc, accert_pgiro );
 		// creaAccertamento_scad_voce( uc, accert_scad, (Obbligazione_scad_voceBulk)(((Obbligazione_scadenzarioBulk)imp_pgiro.getObbligazione_scadenzarioColl().get(0)).getObbligazione_scad_voceColl().get(0)));

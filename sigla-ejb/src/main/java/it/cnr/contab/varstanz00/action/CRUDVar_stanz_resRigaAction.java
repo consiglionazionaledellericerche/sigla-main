@@ -8,7 +8,6 @@ package it.cnr.contab.varstanz00.action;
 
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bp.CRUDVar_stanz_resRigaBP;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
@@ -25,7 +24,7 @@ public class CRUDVar_stanz_resRigaAction extends CRUDAction {
 		try {
 			fillModel(context);
 			var_stanz_res_riga.setLinea_di_attivita(new WorkpackageBulk());
-			var_stanz_res_riga.setVoce_f(new Voce_fBulk());
+			var_stanz_res_riga.setVoce(null);
 			var_stanz_res_riga.setDisponibilita_stanz_res(Utility.ZERO);
 			var_stanz_res_riga.setProgetto(null);
 			return context.findDefaultForward();
@@ -37,7 +36,7 @@ public class CRUDVar_stanz_resRigaAction extends CRUDAction {
 		try {
 			fillModel(context);
 			var_stanz_res_riga.setElemento_voce(new Elemento_voceBulk());
-			var_stanz_res_riga.setVoce_f(new Voce_fBulk());
+			var_stanz_res_riga.setVoce(null);
 			var_stanz_res_riga.setDisponibilita_stanz_res(Utility.ZERO);
 			return context.findDefaultForward();
 		}catch(Throwable ex){
