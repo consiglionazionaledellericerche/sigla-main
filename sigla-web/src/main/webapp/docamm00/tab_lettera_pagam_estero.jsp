@@ -40,40 +40,40 @@
 				<div class="Group" style="width:90%">
 					<table>
 						<tr>
-							<% bp.getController().writeFormField(out, "bonifico_mezzo");%>
+							<% bp.writeFormFieldDoc1210(out, "bonifico_mezzo");%>
 						</tr>
 						<tr>
-							<% bp.getController().writeFormField(out, "divisa");%>
+							<% bp.writeFormFieldDoc1210(out, "divisa");%>
 						</tr>
 						<tr>
-							<% bp.getController().writeFormField(out, "beneficiario");%>
+							<% bp.writeFormFieldDoc1210(out, "beneficiario");%>
 						</tr>
 						<tr>
-							<% bp.getController().writeFormField(out, "num_conto_ben");%>
+							<% bp.writeFormFieldDoc1210(out, "num_conto_ben");%>
 						</tr>
 						<tr>
-							<% bp.getController().writeFormField(out, "iban");%>
+							<% bp.writeFormFieldDoc1210(out, "iban");%>
 						</tr>
 						<tr>
-							<% bp.getController().writeFormField(out, "indirizzo");%>
+							<% bp.writeFormFieldDoc1210(out, "indirizzo");%>
 						</tr>
 						<tr>
-							<% bp.getController().writeFormField(out, "indirizzo_swift");%>
+							<% bp.writeFormFieldDoc1210(out, "indirizzo_swift");%>
 						</tr>
 						<tr>
-							<% bp.getController().writeFormField(out, "motivo_pag");%>
+							<% bp.writeFormFieldDoc1210(out, "motivo_pag");%>
 						</tr>
 						<tr>
-							<% bp.getController().writeFormField(out, "ammontare_debito");%>
+							<% bp.writeFormFieldDoc1210(out, "ammontare_debito");%>
 						</tr>
 						<tr>
-							<% bp.getController().writeFormField(out, "conto_debito");%>
+							<% bp.writeFormFieldDoc1210(out, "conto_debito");%>
 						</tr>
 						<tr>
-							<% bp.getController().writeFormField(out, "commissioni_spese");%>
+							<% bp.writeFormFieldDoc1210(out, "commissioni_spese");%>
 						</tr>
 						<tr>
-							<% bp.getController().writeFormField(out, "commissioni_spese_estere");%>
+							<% bp.writeFormFieldDoc1210(out, "commissioni_spese_estere");%>
 						</tr>
 					</table>
 				</div>
