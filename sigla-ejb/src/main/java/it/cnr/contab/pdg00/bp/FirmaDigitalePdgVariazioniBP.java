@@ -299,56 +299,57 @@ public class FirmaDigitalePdgVariazioniBP extends
 	}
 
 	public void refresh(ActionContext context) throws BusinessProcessException {
-		if (!isTestSession())
-			try {
-				setIterator(context, EJBCommonServices.openRemoteIterator(context,
-						createComponentSession().cercaVariazioniForDocumentale(
-								context.getUserContext(),
-								null,
-								new Pdg_variazioneBulk(),
-								((ArchiviaStampaPdgVariazioneBulk) getModel())
-										.getTiSigned(), Boolean.TRUE)));
-			} catch (Throwable e) {
-				throw new BusinessProcessException(e);
+		try {
+			EJBCommonServices.closeRemoteIterator(getIterator());
+			if (!isTestSession())
+					setIterator(context, EJBCommonServices.openRemoteIterator(context,
+							createComponentSession().cercaVariazioniForDocumentale(
+									context.getUserContext(),
+									null,
+									new Pdg_variazioneBulk(),
+									((ArchiviaStampaPdgVariazioneBulk) getModel())
+											.getTiSigned(), Boolean.TRUE)));
+			else {
+				Pdg_variazioneBulk bulk = new Pdg_variazioneBulk();
+				CdsBulk cds = null;
+				Unita_organizzativaBulk uo = null;
+				CdrBulk cdr = null;
+				try {
+					cds = Utility.createParametriEnteComponentSession().getCds(
+							context.getUserContext(),
+							CNRUserContext.getCd_cds((CNRUserContext) context
+									.getUserContext()));
+					uo = Utility.createParametriEnteComponentSession().getUo(
+							context.getUserContext(),
+							CNRUserContext
+									.getCd_unita_organizzativa((CNRUserContext) context
+											.getUserContext()));
+					cdr = Utility.createParametriEnteComponentSession().getCdr(
+							context.getUserContext(),
+							CNRUserContext.getCd_cdr((CNRUserContext) context
+									.getUserContext()));
+				} catch (ComponentException e) {
+					throw handleException(e);
+				} catch (EJBException e) {
+					throw handleException(e);
+				} catch (RemoteException e) {
+					throw handleException(e);
+				}
+				bulk.setPg_variazione_pdg(new Long(0));
+				bulk.setCentro_responsabilita(cdr);
+				bulk.setCd_centro_responsabilita(CNRUserContext.getCd_cdr((CNRUserContext) context.getUserContext()));
+				bulk.setDs_variazione("VARIAZIONE PER TEST DI FIRMA DIGITALE");
+				BulkList<OggettoBulk> list = new BulkList<OggettoBulk>();
+				list.add(bulk);
+				ListRemoteIterator lri = new ListRemoteIterator(list);
+				try {
+					setIterator(context, lri);
+				} catch (Throwable e) {
+					throw new BusinessProcessException(e);
+				}
 			}
-		else {
-			Pdg_variazioneBulk bulk = new Pdg_variazioneBulk();
-			CdsBulk cds = null;
-			Unita_organizzativaBulk uo = null;
-			CdrBulk cdr = null;
-			try {
-				cds = Utility.createParametriEnteComponentSession().getCds(
-						context.getUserContext(),
-						CNRUserContext.getCd_cds((CNRUserContext) context
-								.getUserContext()));
-				uo = Utility.createParametriEnteComponentSession().getUo(
-						context.getUserContext(),
-						CNRUserContext
-								.getCd_unita_organizzativa((CNRUserContext) context
-										.getUserContext()));
-				cdr = Utility.createParametriEnteComponentSession().getCdr(
-						context.getUserContext(),
-						CNRUserContext.getCd_cdr((CNRUserContext) context
-								.getUserContext()));
-			} catch (ComponentException e) {
-				throw handleException(e);
-			} catch (EJBException e) {
-				throw handleException(e);
-			} catch (RemoteException e) {
-				throw handleException(e);
-			}
-			bulk.setPg_variazione_pdg(new Long(0));
-			bulk.setCentro_responsabilita(cdr);
-			bulk.setCd_centro_responsabilita(CNRUserContext.getCd_cdr((CNRUserContext) context.getUserContext()));
-			bulk.setDs_variazione("VARIAZIONE PER TEST DI FIRMA DIGITALE");
-			BulkList<OggettoBulk> list = new BulkList<OggettoBulk>();
-			list.add(bulk);
-			ListRemoteIterator lri = new ListRemoteIterator(list);
-			try {
-				setIterator(context, lri);
-			} catch (Throwable e) {
-				throw new BusinessProcessException(e);
-			}
+		} catch (Throwable e) {
+			throw new BusinessProcessException(e);
 		}
 		super.refresh(context);
 	}
