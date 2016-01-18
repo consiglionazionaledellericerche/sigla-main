@@ -11,13 +11,14 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import it.cnr.contab.reports.bp.*;
 import it.cnr.contab.reports.bulk.*;
 import it.cnr.jada.action.*;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 
 /**
  * Insert the type's description here.
  * Creation date: (11/04/2002 17:28:27)
  * @author: CNRADM
  */
-public class PrintSpoolerAction extends it.cnr.jada.util.action.SelezionatoreListaAction {
+public class  PrintSpoolerAction extends it.cnr.jada.util.action.SelezionatoreListaAction {
 /**
  * SpoolerStatusAction constructor comment.
  */
@@ -52,6 +53,7 @@ public Forward doDelete(ActionContext context) {
 			array[0] = (Print_spoolerBulk)bp.getFocusedElement();
 		}
 		if (array != null){
+			EJBCommonServices.closeRemoteIterator(bp.getIterator());			
 			bp.createComponentSession().deleteJobs(context.getUserContext(),array);
 			for (int i = 0;i < array.length;i++) {
 				try {
