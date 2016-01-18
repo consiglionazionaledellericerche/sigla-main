@@ -67,6 +67,7 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 						((CNRUserContext) actioncontext.getUserContext()).getCd_unita_organizzativa());				
 			}
 			setBaseclause(compoundfindclause);
+			EJBCommonServices.closeRemoteIterator(getIterator());			
 			setIterator(actioncontext, find(actioncontext, compoundfindclause, getModel()));
 		} catch (RemoteException e) {
 			throw new BusinessProcessException(e);
