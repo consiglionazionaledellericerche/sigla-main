@@ -273,7 +273,7 @@ public void writeFormFieldDoc1210(javax.servlet.jsp.JspWriter out,String name) t
 
 	boolean isReadonly = isInputReadonly();
 
-	if (!isAnnoDiCompetenza() && fp.COMPLETAMENTE_RIPORTATO.equals(fp.getRiportataInScrivania())){
+	if (fp.COMPLETAMENTE_RIPORTATO.equals(fp.getRiportataInScrivania())){
 			isReadonly = super.isInputReadonlyDoc1210() 
 						|| isDeleting() 
 						|| isModelVoided() 

@@ -81,6 +81,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 			simpleFindClause.setSqlClause("pg_documento_cont = pg_documento_cont_padre");
 			compoundfindclause.addChild(simpleFindClause);
 			setBaseclause(compoundfindclause);
+			EJBCommonServices.closeRemoteIterator(getIterator());
 			setIterator(actioncontext, find(actioncontext, compoundfindclause, getModel()));
 		} catch (RemoteException e) {
 			throw new BusinessProcessException(e);
