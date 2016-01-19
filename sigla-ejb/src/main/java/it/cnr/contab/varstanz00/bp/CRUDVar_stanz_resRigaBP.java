@@ -33,6 +33,8 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class CRUDVar_stanz_resRigaBP extends SimpleCRUDBP {
+	private static final long serialVersionUID = 1L;
+
 	private Parametri_cnrBulk parametriCnr;
 	private Var_stanz_resBulk var_stanz_res;
 	private CdrBulk centro_di_responsabilita;
@@ -107,6 +109,19 @@ public class CRUDVar_stanz_resRigaBP extends SimpleCRUDBP {
 		var_stanz_res = (Var_stanz_resBulk)super.initializeModelForEdit(actioncontext,var_stanz_res);
 		for (Iterator righeVar=var_stanz_res.getRigaVariazione().iterator();righeVar.hasNext();){
 			Var_stanz_res_rigaBulk varRiga = (Var_stanz_res_rigaBulk)righeVar.next();
+			if ((getParametriCnr()==null || !getParametriCnr().getFl_nuovo_pdg()) && varRiga.getCd_voce()!=null) {
+		    	try {
+		    		Voce_fBulk voce_f = (Voce_fBulk)createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), 
+						new Voce_fBulk(varRiga.getCd_voce(), varRiga.getEsercizio_voce(), varRiga.getTi_appartenenza(), varRiga.getTi_gestione()));
+		    		varRiga.setVoce_f(voce_f);
+				} catch (DetailedRuntimeException e) {
+					throw new BusinessProcessException(e);
+				} catch (ComponentException e) {
+					throw new BusinessProcessException(e);
+				} catch (RemoteException e) {
+					throw new BusinessProcessException(e);
+				}
+			}
 			varRiga.setCentroTestata(var_stanz_res.getCdr());
 		}		
 		return var_stanz_res;
@@ -143,7 +158,7 @@ public class CRUDVar_stanz_resRigaBP extends SimpleCRUDBP {
 		if (var_stanz_res_riga.getLinea_di_attivita() != null && var_stanz_res_riga.getLinea_di_attivita().getCd_linea_attivita() != null &&
 		    var_stanz_res_riga.getElemento_voce() != null && var_stanz_res_riga.getElemento_voce().getCd_elemento_voce() != null){
 			if (getParametriCnr()==null || !getParametriCnr().getFl_nuovo_pdg()) {
-		    	try {
+				try {
 					Voce_fBulk voce_f = ((VariazioniStanziamentoResiduoComponentSession)createComponentSession()).getVoce_FdaEV(
 					  actioncontext.getUserContext(),
 					  CNRUserContext.getEsercizio(actioncontext.getUserContext()),
@@ -153,7 +168,7 @@ public class CRUDVar_stanz_resRigaBP extends SimpleCRUDBP {
 					  var_stanz_res_riga.getLinea_di_attivita().getCd_centro_responsabilita(), 
 					  var_stanz_res_riga.getLinea_di_attivita().getCd_linea_attivita()
 					);
-					var_stanz_res_riga.setVoce(voce_f);
+					var_stanz_res_riga.setVoce_f(voce_f);
 				} catch (DetailedRuntimeException e) {
 					throw new BusinessProcessException(e);
 				} catch (ComponentException e) {
@@ -162,11 +177,13 @@ public class CRUDVar_stanz_resRigaBP extends SimpleCRUDBP {
 					throw new BusinessProcessException(e);
 				}
 			} else {
-				var_stanz_res_riga.setVoce(var_stanz_res_riga.getElemento_voce());
+				var_stanz_res_riga.setVoce_f(null);
+				var_stanz_res_riga.setCd_voce(var_stanz_res_riga.getElemento_voce().getCd_elemento_voce());
 			}
-	    }else{
-			var_stanz_res_riga.setVoce(null);
-	    }
+		} else {
+			var_stanz_res_riga.setVoce_f(null);
+			var_stanz_res_riga.setCd_voce(null);
+		}
     }
 	public void valorizzaDisponibilita_stanz_res(ActionContext actioncontext, Var_stanz_res_rigaBulk var_stanz_res_riga) throws BusinessProcessException{
 		try {

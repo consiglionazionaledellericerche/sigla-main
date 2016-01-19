@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
-import it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.util.Utility;
@@ -16,7 +16,9 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.CRUDBP;
 public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
-	private IVoceBilancioBulk voce;
+	private static final long serialVersionUID = 1L;
+
+	private Voce_fBulk voce_f;
 	private WorkpackageBulk linea_di_attivita;
 	private Var_stanz_resBulk var_stanz_res; 
 	private Elemento_voceBulk elemento_voce;
@@ -56,8 +58,8 @@ public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
 	/**
 	 * @return
 	 */
-	public IVoceBilancioBulk getVoce() {
-		return voce;
+	public Voce_fBulk getVoce_f() {
+		return voce_f;
 	}
 
 	/**
@@ -77,8 +79,8 @@ public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
 	/**
 	 * @param bulk
 	 */
-	public void setVoce(IVoceBilancioBulk bulk) {
-		voce = bulk;
+	public void setVoce_f(Voce_fBulk bulk) {
+		voce_f = bulk;
 	}
 	/* (non-Javadoc)
 	 * @see it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBase#setCd_linea_attivita(java.lang.String)
@@ -149,6 +151,15 @@ public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
 		getElemento_voce().setTi_gestione(ti_gestione);
 	}
     /* (non-Javadoc)
+	 * @see it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBase#setCd_voce(java.lang.String)
+	 */
+	public void setCd_voce(String cd_voce) {
+		if (getVoce_f()!=null)
+			getVoce_f().setCd_voce(cd_voce);
+		else
+			super.setCd_voce(cd_voce);
+	}	
+    /* (non-Javadoc)
 	 * @see it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBase#getEsercizio_voce()
 	 */
 	public Integer getEsercizio_voce() {
@@ -170,9 +181,9 @@ public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
 	 * @see it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBase#getCd_voce()
 	 */
 	public String getCd_voce() {
-		if (this.getVoce()!=null)
-			return getVoce().getCd_voce();
-		return null;
+		if (this.getVoce_f()!=null)
+			return getVoce_f().getCd_voce();
+		return super.getCd_voce();
 	}
 	/**
 	 * @return
