@@ -1438,7 +1438,8 @@ public boolean isAbledToDeleteLettera() {
 	
 	return	getLettera_pagamento_estero() == null ||
 			isPagata() ||
-			isPagataParzialmente();
+			isPagataParzialmente()||
+			isROStatoTrasmissioneLettera();
 }
 /**
  * Insert the method's description here.
