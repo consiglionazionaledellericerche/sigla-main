@@ -1065,8 +1065,10 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			
 			if (!((Parametri_cnrHome)getHome(usercontext, Parametri_cnrBulk.class)).isNuovoPdg(usercontext, var_stanz_res.getEsercizio()))
 				var_stanz_res_riga.setVoce_f(new Voce_fBulk(saldo.getCd_voce(),saldo.getEsercizio(),saldo.getTi_appartenenza(),saldo.getTi_gestione()));
-			else
+			else {
 				var_stanz_res_riga.setVoce_f(null);
+				var_stanz_res_riga.setCd_voce(var_stanz_res_riga.getCd_elemento_voce());
+			}
 
 			var_stanz_res_riga.setIm_variazione(saldo.getImp_da_assegnare());
 			Var_stanz_resHome testataHome = (Var_stanz_resHome)getHome(usercontext, Var_stanz_resBulk.class);
