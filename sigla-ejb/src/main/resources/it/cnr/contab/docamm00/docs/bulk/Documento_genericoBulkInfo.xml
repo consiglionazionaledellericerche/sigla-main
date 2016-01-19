@@ -375,7 +375,8 @@
 	<fieldProperty
 		name="im_commissioni_lettera"
 		property="lettera_pagamento_estero.im_commissioni"
-		inputType="ROTEXT"
+		readonlyProperty="ROStatoTrasmissioneLettera"
+		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		nullable="false"
 		label="Commissioni" />
@@ -472,6 +473,7 @@
 		property="lettera_pagamento_estero.divisa"
 		readonlyProperty="ROStatoTrasmissioneLettera"
 		inputType="TEXT"
+		nullable="false"
 		label="Divisa"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="false"
@@ -480,6 +482,7 @@
 		name="beneficiario"
 		property="lettera_pagamento_estero.beneficiario"
 		readonlyProperty="ROStatoTrasmissioneLettera"
+		nullable="false"
 		maxLength="300"
 		inputSize="300"
 		inputType="TEXTAREA"
@@ -502,6 +505,7 @@
 		name="iban"
 		property="lettera_pagamento_estero.iban"
 		readonlyProperty="ROStatoTrasmissioneLettera"
+		nullable="false"
 		maxLength="250"
 		inputSize="100"		
 		inputType="TEXT"
