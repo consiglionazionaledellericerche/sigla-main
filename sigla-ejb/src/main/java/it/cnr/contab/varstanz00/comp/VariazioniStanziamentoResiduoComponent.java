@@ -537,7 +537,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				Utility.createSaldoComponentSession().aggiornaSaldiAnniSuccessivi(userContext,
 						                                                          saldi.getCd_centro_responsabilita(),
 						                                                          saldi.getCd_linea_attivita(),
-						                                                          saldi.getVoce(),
+						                                                          new Voce_fBulk( saldi.getCd_voce(), saldi.getEsercizio(), saldi.getTi_appartenenza(), saldi.getTi_gestione()),
 						                                                          saldi.getEsercizio_res(),
 						                                                          varRiga.getIm_variazione().negate(),
 						                                                          saldi);

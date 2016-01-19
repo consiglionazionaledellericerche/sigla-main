@@ -636,7 +636,7 @@ public boolean isLeaf(UserContext userContext, OggettoBulk bulk) throws Componen
 					if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_commessa_sacBulk(new Long(commesse.getPg_progetto().intValue()),new Long(commesse.getEsercizio().intValue()),commesse.getTipo_fase()))==null){
 						if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_commessa_rstlBulk(new Long(commesse.getPg_progetto().intValue()),new Long(commesse.getEsercizio().intValue()),commesse.getTipo_fase()))==null){
 							if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_commessa_pbBulk(new Long(commesse.getPg_progetto().intValue()),new Long(commesse.getEsercizio().intValue()),commesse.getTipo_fase()))==null){
-								if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_progetto_operativoBulk(new Long(commesse.getPg_progetto().intValue()),new Long(commesse.getEsercizio().intValue()),commesse.getTipo_fase()))!=null){
+								if (Utility.createProgettoGecoComponentSession().findByPrimaryKey(userContext,new Geco_progetto_operativoBulk(new Long(commesse.getPg_progetto().intValue()),new Long(commesse.getEsercizio().intValue()),commesse.getTipo_fase()))==null){
 									SQLBuilder sql = moduli_utilizzatiHome.createSQLBuilderAll();
 									sql.addSQLClause(FindClause.AND, "ESERCIZIO",SQLBuilder.EQUALS,commesse.getEsercizio());
 									sql.addSQLClause(FindClause.AND, "PG_PROGETTO",SQLBuilder.EQUALS,commesse.getPg_progetto());
