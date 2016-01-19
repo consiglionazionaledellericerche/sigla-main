@@ -214,13 +214,22 @@ public class Lettera_pagam_esteroBulk extends Lettera_pagam_esteroBase implement
 		sospeso = newSospeso;
 	}
 	public void validate() throws ValidationException {
-
 		if (getIm_commissioni() == null)
 			throw new ValidationException("Specificare un importo per le commissioni della lettera di pagamento estero!");
+		if (getIm_pagamento() != null && getIm_pagamento().compareTo(new java.math.BigDecimal(0)) == 0) {
+			throw new ValidationException("Valorizzare l'importo di pagamento!");
+		}
 		if (getIm_pagamento() != null && getIm_pagamento().compareTo(new java.math.BigDecimal(0)) != 0) {
 			if (getIm_pagamento().compareTo(getIm_commissioni()) < 0)
 				throw new ValidationException("L'importo delle commissioni della lettera di pagamento estero non puo' superare l'importo di pagamento!");
 		}
+		if (getDivisa() == null)
+			throw new ValidationException("Valorizzare la Divisa!");
+		if (getBeneficiario() == null)
+			throw new ValidationException("Valorizzare il Beneficiario!");
+		if (getIban() == null)
+			throw new ValidationException("Valorizzare il campo IBAN!");
+
 	}
 
 	@Override

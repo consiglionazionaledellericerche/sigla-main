@@ -251,6 +251,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 			List<StatoTrasmissione> selectedElements = getSelectedElements(context);
 			if (selectedElements == null || selectedElements.isEmpty())
 					throw new ApplicationException("Selezionare almeno un elemento!");
+			EJBCommonServices.closeRemoteIterator(getIterator());
 			for (StatoTrasmissione v_mandato_reversaleBulk : selectedElements) {				
 				aggiornaStato(context, MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO, v_mandato_reversaleBulk);
 				Folder folderMandato = (Folder) cmisService.getNodeByPath(v_mandato_reversaleBulk.getCMISPath(cmisService));
