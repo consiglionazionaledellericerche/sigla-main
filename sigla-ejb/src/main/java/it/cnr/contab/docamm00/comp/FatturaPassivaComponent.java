@@ -5849,7 +5849,7 @@ private void validaConConsuntivi(
 private void validaDisponibilitaDiCassaCDS(UserContext userContext, Fattura_passivaBulk fattura) throws ComponentException {
 
 	try	{
-		if (!Utility.createParametriCnrComponentSession().getParametriCnr(userContext,fattura.getEsercizio()).getFl_tesoreria_unica().booleanValue()){	
+		if (fattura.getLettera_pagamento_estero()!=null && fattura.getLettera_pagamento_estero().getEsercizio()!=null && !Utility.createParametriCnrComponentSession().getParametriCnr(userContext,fattura.getEsercizio()).getFl_tesoreria_unica().booleanValue()){	
 			it.cnr.jada.bulk.BulkHome home = getHome( userContext, V_disp_cassa_cdsBulk.class);
 			SQLBuilder sql = home.createSQLBuilder();
 			sql.addClause( "AND", "esercizio", sql.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio());
