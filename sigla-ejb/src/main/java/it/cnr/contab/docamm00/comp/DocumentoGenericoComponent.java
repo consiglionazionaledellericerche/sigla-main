@@ -4887,7 +4887,8 @@ private void validaDisponibilitaDiCassaCDS(UserContext userContext, Documento_ge
 	if (documento.isGenericoAttivo()) return;
 	
 	try	{
-		if (!Utility.createParametriCnrComponentSession().getParametriCnr(userContext,documento.getEsercizio()).getFl_tesoreria_unica().booleanValue()){	
+		if (documento.getLettera_pagamento_estero()!=null && documento.getLettera_pagamento_estero().getEsercizio()!=null &&
+				!Utility.createParametriCnrComponentSession().getParametriCnr(userContext,documento.getLettera_pagamento_estero().getEsercizio()).getFl_tesoreria_unica().booleanValue()){	
 			it.cnr.jada.bulk.BulkHome home = getHome( userContext, V_disp_cassa_cdsBulk.class);
 			SQLBuilder sql = home.createSQLBuilder();
 			sql.addClause( "AND", "esercizio", sql.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio());
