@@ -2022,7 +2022,8 @@ public void controllaQuadraturaObbligazioni(UserContext aUC, Documento_genericoB
             && doc.getLettera_pagamento_estero().getIm_pagamento().compareTo(
                 new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP))
                 != 0
-            && doc.getLettera_pagamento_estero().getIm_pagamento().compareTo(doc.getIm_totale()) != 0) {
+            && doc.getLettera_pagamento_estero().getIm_pagamento().compareTo(doc.getIm_totale()) != 0 &&
+            doc.getLettera_pagamento_estero().getCd_sospeso() != null) {
             throw new it.cnr.jada.comp.ApplicationException(
                 "La somma dei dettagli deve corrispondere all'importo della lettera di pagamento estero!");
         }
@@ -3915,7 +3916,8 @@ public it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserContext aUC,
 			aggiornaLetteraPagamentoEstero(aUC, lettera);
 			if (!documento.isFlagEnte() &&
 				(original1210 == null ||
-				lettera.getIm_pagamento().compareTo(original1210.getIm_pagamento()) != 0))
+				lettera.getIm_pagamento().compareTo(original1210.getIm_pagamento()) != 0) &&
+				lettera.getCd_sospeso() != null)
 				validaDisponibilitaDiCassaCDS(aUC, documento);
 		} catch (it.cnr.jada.persistency.PersistencyException e) {
 			throw handleException(lettera,e);

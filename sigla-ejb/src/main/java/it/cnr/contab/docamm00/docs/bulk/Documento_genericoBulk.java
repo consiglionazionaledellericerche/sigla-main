@@ -955,7 +955,8 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 		return	isGenericoAttivo() ||
 				getLettera_pagamento_estero() == null ||
 				isPagata() ||
-				isPagataParzialmente();
+				isPagataParzialmente()||
+				isROStatoTrasmissioneLettera();
 	}
 	/**
 	 * Insert the method's description here.
