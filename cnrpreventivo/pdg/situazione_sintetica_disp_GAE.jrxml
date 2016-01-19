@@ -5,8 +5,8 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
 	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
@@ -25,16 +25,16 @@
 	<style name="TNR16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman"/>
 	<style name="TNRC9" fontName="Times New Roman" fontSize="9" isItalic="true" pdfFontName="Times-Italic"/>
 	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["/home/mspasiano/svn/SIGLAReports/reports/img/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CDR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["004.000.000"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Esercizio" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(2011)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Idrpt" class="java.lang.Long" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Long(400675)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Long(1088545)]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select * from V_CONS_DISP_COMP_RES_SINTESI v
@@ -43,8 +43,7 @@ where v.esercizio = vp.esercizio
 and v.cdr = vp.cdr
 and v.lda = vp.gae
 and id_report = $P{Idrpt})
-and esercizio = $P{Esercizio}
-order by CDR,DENOMINAZIONE_SEDE,LDA]]>
+and esercizio = $P{Esercizio}]]>
 	</queryString>
 	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
 	<field name="CDR" class="java.lang.String"/>
@@ -57,6 +56,9 @@ order by CDR,DENOMINAZIONE_SEDE,LDA]]>
 	<field name="DS_VOCE" class="java.lang.String"/>
 	<field name="DISP_COMP" class="java.math.BigDecimal"/>
 	<field name="DISP_RES" class="java.math.BigDecimal"/>
+	<sortField name="CDR"/>
+	<sortField name="DENOMINAZIONE_SEDE"/>
+	<sortField name="LDA"/>
 	<variable name="Totale_GAE_disp_comp" class="java.math.BigDecimal" resetType="Group" resetGroup="GAE" calculation="Sum">
 		<variableExpression><![CDATA[$F{DISP_COMP}]]></variableExpression>
 	</variable>
