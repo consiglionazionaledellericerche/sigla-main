@@ -505,7 +505,6 @@
 		name="iban"
 		property="lettera_pagamento_estero.iban"
 		readonlyProperty="ROStatoTrasmissioneLettera"
-		nullable="false"
 		maxLength="250"
 		inputSize="100"		
 		inputType="TEXT"
