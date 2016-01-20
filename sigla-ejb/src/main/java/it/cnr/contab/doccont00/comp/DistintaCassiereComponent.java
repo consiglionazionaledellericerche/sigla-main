@@ -1482,6 +1482,18 @@ public class DistintaCassiereComponent extends
 				sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
 						"V_MANDATO_REVERSALE_DIST_SEPA.PG_DOCUMENTO_CONT");
 				sql.addSQLNotExistsClause("AND", sql2);
+				
+				SQLBuilder sql3 = getHome(userContext,V_mandato_reversaleBulk.class,
+						"V_MANDATO_REVERSALE_DIST_XML").createSQLBuilder();
+				sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO",
+						"V_MANDATO_REVERSALE_DIST_XML.ESERCIZIO");
+				sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS",
+						"V_MANDATO_REVERSALE_DIST_XML.CD_CDS");
+				sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
+						"V_MANDATO_REVERSALE_DIST_XML.CD_TIPO_DOCUMENTO_CONT");
+				sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
+						"V_MANDATO_REVERSALE_DIST_XML.PG_DOCUMENTO_CONT");
+				sql.addSQLNotExistsClause("AND", sql3);
 			}
 			sql.addSQLClause("AND", "v_mandato_reversale_distinta.ti_documento_cont", SQLBuilder.NOT_EQUALS,
 					MandatoBulk.TIPO_REGOLARIZZAZIONE);
@@ -4058,11 +4070,15 @@ public class DistintaCassiereComponent extends
 
 		return file.getName();
 	}
-	public ExtCassiereCdsBulk recuperaCodiciCdsCassiere(UserContext userContext,Distinta_cassiereBulk distinta) throws ComponentException, PersistencyException{
-		
+	public ExtCassiereCdsBulk recuperaCodiciCdsCassiere(UserContext userContext,Distinta_cassiereBulk distinta) throws ComponentException, PersistencyException, EJBException{
+		try{
 		ExtCassiereCdsBulk bulk = new ExtCassiereCdsBulk();
 		bulk.setEsercizio(distinta.getEsercizio());
-		bulk.setCdCds(distinta.getCd_cds());
+		if (!tesoreriaUnica(userContext, distinta)) 
+			bulk.setCdCds(distinta.getCd_cds());
+		else	
+			if (distinta.getCd_cds_ente()!=null)
+			bulk.setCdCds(distinta.getCd_cds_ente());
 		List oggetti =null;
 		oggetti=getHome(userContext, ExtCassiereCdsBulk.class).find(bulk);
 		if (oggetti.size()==0)
@@ -4071,6 +4087,11 @@ public class DistintaCassiereComponent extends
 			throw new ApplicationException("Configurazione errata dati cassiere");
 		else	
 			return (ExtCassiereCdsBulk)oggetti.get(0);
+		
+		}catch (Exception e) {
+			throw handleException(e);
+			
+		}
 	}
 	
 	
