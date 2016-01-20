@@ -4778,12 +4778,12 @@ public OggettoBulk modificaConBulk(
 	prepareCarichiInventario(aUC, fatturaPassiva);
 	
 	Lettera_pagam_esteroBulk lettera = fatturaPassiva.getLettera_pagamento_estero();
-	if (lettera != null && lettera.getCd_sospeso() != null) {
+	if (lettera != null) {
 		try {
 			Lettera_pagam_esteroBulk original1210 = (Lettera_pagam_esteroBulk)getHome(aUC, lettera).findByPrimaryKey(lettera);
 			aggiornaLetteraPagamentoEstero(aUC, lettera);
-			if (original1210 == null ||
-				lettera.getIm_pagamento().compareTo(original1210.getIm_pagamento()) != 0)
+			if ((original1210 == null ||
+				lettera.getIm_pagamento().compareTo(original1210.getIm_pagamento()) != 0) && lettera.getCd_sospeso() != null)
 				validaDisponibilitaDiCassaCDS(aUC, fatturaPassiva);
 		} catch (it.cnr.jada.persistency.PersistencyException e) {
 			throw handleException(lettera,e);
