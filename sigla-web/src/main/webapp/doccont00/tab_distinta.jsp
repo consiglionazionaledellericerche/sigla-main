@@ -18,9 +18,6 @@ function doScarica() {
 function doScaricaFirmato() {	
 	 doPrint('genericdownload/<%=bp.getDocumento()%>?methodName=scaricaDistintaFirmata&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
-function doScaricaFirmatoP7m() {
-	 doPrint('genericdownload/<%=bp.getDocumento()%>?methodName=scaricaDistintaFirmata&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');	
-} 
 </script>
 
   <div class="Group">		

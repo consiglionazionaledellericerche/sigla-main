@@ -125,7 +125,7 @@ protected it.cnr.jada.util.jsp.Button[] createToolbar()
 		newToolbarTesoreria[ i ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.stampaProv");
 		newToolbarTesoreria[ i +1] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.firma");
 		newToolbarTesoreria[ i +2] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.downloadnew");
-		newToolbarTesoreria[ i +3] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.downloadFirmatoP7m");
+		newToolbarTesoreria[ i +3] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.downloadFirmato");
 		return newToolbarTesoreria;
 	}
 	else
@@ -797,11 +797,17 @@ private String getTitolo() {
 }
 public String getDocumento(){
 	Distinta_cassiereBulk distinta = (Distinta_cassiereBulk)getModel();
+	
 	if (distinta != null){
+		if(!isFlusso())		
 		return "Distinta ".
 				concat(String.valueOf(distinta.getEsercizio())).
 				concat("-").concat(distinta.getCd_unita_organizzativa()==null?"":distinta.getCd_unita_organizzativa()).
 				concat("-").concat(String.valueOf(distinta.getPg_distinta_def()));
+		else
+			return 
+					String.valueOf(distinta.getEsercizio()).concat("-").concat(distinta.getCd_unita_organizzativa()==null?"":distinta.getCd_unita_organizzativa()).
+					concat("-").concat(String.valueOf(distinta.getPg_distinta_def())).concat("-I.xslt.p7m");
 	}
 	return null;
 }
@@ -834,24 +840,20 @@ public void scaricaDistinta(ActionContext actioncontext) throws Exception {
 public void scaricaDistintaFirmata(ActionContext actioncontext) throws Exception {
 	Distinta_cassiereBulk distinta = (Distinta_cassiereBulk)getModel();
 	if(this.getParametriCnr()!= null && this.getParametriCnr().getFl_tesoreria_unica()){
-		CmisObject id=null;
-		if(isFlusso()){
-			id = documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat(String.valueOf(distinta.getEsercizio())).concat("-").concat(distinta.getCd_unita_organizzativa()).
+		Document id=null;
+		if(isFlusso()){		
+			id = (Document) documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat(String.valueOf(distinta.getEsercizio())).concat("-").concat(distinta.getCd_unita_organizzativa()).
 				concat("-").concat(String.valueOf(distinta.getPg_distinta_def())).
-				concat("-I.xslt.p7m"));
+				concat("-I.xslt.p7m")); 
 		}else 
-			id = documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat("Distinta n. ").concat(String.valueOf(distinta.getPg_distinta_def())).
+			id = (Document) documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat("Distinta n. ").concat(String.valueOf(distinta.getPg_distinta_def())).
 					concat(".pdf"));
 		InputStream is =null; 
 		if(id!=null){
-			 is = documentiContabiliService.getResource(id);
+			is = documentiContabiliService.getResource(id);
 			if (is != null){
-				if(isFlusso()){
-					((HttpActionContext)actioncontext).getResponse().setCharacterEncoding("UTF-8");
-					((HttpActionContext)actioncontext).getResponse().setContentType("text/html");
-				}
-				else
-					((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
+				((HttpActionContext)actioncontext).getResponse().setCharacterEncoding("UTF-8");
+				((HttpActionContext)actioncontext).getResponse().setContentType(id.getContentStreamMimeType());
 				OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
 				((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
 				byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
@@ -871,42 +873,6 @@ public Boolean isSepa() {
 public void setSepa(Boolean sepa) {
 	this.sepa = sepa;
 }
-public String getDownloadUrl() throws BusinessProcessException
-{
-	try {
-	Distinta_cassiereBulk distinta =(Distinta_cassiereBulk)this.getModel();
-	String path=null;
-	CmisObject id=null;
-	if(distinta !=null && this.getParametriCnr()!= null && this.getParametriCnr().getFl_tesoreria_unica() && distinta.getPg_distinta_def()!=null && distinta.getFl_flusso()){
-		File fileSigned = new File(System.getProperty("tmp.dir.SIGLAWeb")+"/tmp/"+String.valueOf(distinta.getEsercizio())+"-"+distinta.getCd_unita_organizzativa()+
-				"-"+String.valueOf(distinta.getPg_distinta_def())+"-I.xslt.p7m");
-		
-		id = documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat(String.valueOf(distinta.getEsercizio())).concat("-").concat(distinta.getCd_unita_organizzativa()).
-				concat("-").concat(String.valueOf(distinta.getPg_distinta_def())).
-				concat("-I.xslt.p7m"));
-		 InputStream streamSigned = documentiContabiliService.getResource(id);	    					
-		 OutputStream outputStream = new FileOutputStream(fileSigned);
-		 IOUtils.copy(streamSigned, outputStream);
-		 outputStream.close();	
-	
-		 return fileSigned.getAbsolutePath();
-	}	
-	else
-		return null;
-	 } catch (ApplicationException e) {
-		 throw handleException(e);
-	 } catch(java.rmi.RemoteException e) {
-			throw handleException(e);
-	 } catch(ComponentException e) {
-			throw handleException(e);
-	} catch(javax.ejb.EJBException e) {
-			throw handleException(e);
-	} catch (IOException e) {
-			throw handleException(e);
-	}		
-	
-	}	 
-
 }
 
 
