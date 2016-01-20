@@ -922,7 +922,6 @@
 		maxLength="250"
 		inputSize="100"		
 		inputType="TEXT"
-		nullable="false"
 		label="IBAN"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="false"

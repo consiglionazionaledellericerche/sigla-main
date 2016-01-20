@@ -227,9 +227,6 @@ public class Lettera_pagam_esteroBulk extends Lettera_pagam_esteroBase implement
 			throw new ValidationException("Valorizzare la Divisa!");
 		if (getBeneficiario() == null)
 			throw new ValidationException("Valorizzare il Beneficiario!");
-		if (getIban() == null)
-			throw new ValidationException("Valorizzare il campo IBAN!");
-
 	}
 
 	@Override
