@@ -488,4 +488,23 @@ public Distinta_cassiereBulk inviaDistinta(UserContext param0,
 		}
 	}
 }
+public List<V_mandato_reversaleBulk> findMandatiCollegati(UserContext param0,
+		V_mandato_reversaleBulk param1)
+		throws ComponentException, RemoteException {
+	try {
+		return (List)invoke("findMandatiCollegati",new Object[] {
+			param0,
+			param1});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
 }
