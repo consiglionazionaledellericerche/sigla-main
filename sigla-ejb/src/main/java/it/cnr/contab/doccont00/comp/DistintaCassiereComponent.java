@@ -4422,8 +4422,13 @@ public class DistintaCassiereComponent extends
 									salta=true;
 							}
 							else {
+								if(totAssCup.compareTo(BigDecimal.ZERO)!=0){
+									totAssSiope=totAssSiope.add(doc.getImportoCge());
+									salta=false;
+								}else{
 									totAssSiope=doc.getImportoCge();
 									salta=false;
+								}
 							}		
 						if(doc.getCdCup()!=null){
 							clas.setImporto(doc.getImportoCup().setScale(2, BigDecimal.ROUND_HALF_UP));
@@ -4446,7 +4451,7 @@ public class DistintaCassiereComponent extends
 					}
 				} 
 				// differenza ultimo
-			    if(totAssCup.compareTo(BigDecimal.ZERO)!=0 && totAssCup.compareTo(totAssSiope)!=0){
+			    if(totAssCup.compareTo(BigDecimal.ZERO)!=0 && totAssCup.compareTo(totAssSiope)!=0 ){
 					clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
 					clas.setCodiceCgu(oldDoc.getCdSiope());
 					clas.setImporto((totAssSiope.subtract(totAssCup)).setScale(2, BigDecimal.ROUND_HALF_UP));
