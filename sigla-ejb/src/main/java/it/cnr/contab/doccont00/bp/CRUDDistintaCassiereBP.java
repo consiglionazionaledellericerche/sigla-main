@@ -579,6 +579,8 @@ public String Formatta(String s, String allineamento,Integer dimensione,String r
 	return s.toUpperCase();
 }
 public boolean isSignButtonEnabled() {
+	if (firmatarioDistinta == null)
+		return false;
 	if ( super.isDeleteButtonEnabled() &&((Distinta_cassiereBulk)getModel()).getDt_invio() == null )
 		return true;
 	else 
