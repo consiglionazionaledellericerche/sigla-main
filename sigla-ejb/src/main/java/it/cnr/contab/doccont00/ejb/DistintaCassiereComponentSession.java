@@ -37,4 +37,5 @@ Mandato recuperaDatiMandatoFlusso(UserContext userContext,V_mandato_reversaleBul
 Reversale recuperaDatiReversaleFlusso(UserContext userContext,V_mandato_reversaleBulk bulk) throws ComponentException, PersistencyException,java.rmi.RemoteException;
 List dettagliDistinta(UserContext usercontext, Distinta_cassiereBulk distinta,String tipo) throws PersistencyException, ComponentException,RemoteException;
 Distinta_cassiereBulk inviaDistinta(UserContext userContext,Distinta_cassiereBulk distinta) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+List<V_mandato_reversaleBulk> findMandatiCollegati(UserContext usercontext, V_mandato_reversaleBulk v_mandato_reversaleBulk) throws ComponentException,RemoteException;
 }

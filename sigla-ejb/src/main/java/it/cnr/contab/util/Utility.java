@@ -12,10 +12,10 @@ import it.cnr.contab.config00.ejb.Classificazione_vociComponentSession;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_enteComponentSession;
 import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
-
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_cdsComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
+import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
 import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
 import it.cnr.contab.doccont00.ejb.ReversaleComponentSession;
 import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
@@ -299,4 +299,11 @@ public final class Utility {
 	public static FatturaAttivaSingolaComponentSession createFatturaAttivaSingolaComponentSession()throws EJBException, RemoteException {
 		return (FatturaAttivaSingolaComponentSession)EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession", FatturaAttivaSingolaComponentSession.class);		
 	}
+	/**
+	 * Crea la Local ReversaleComponentSession da usare per effettuare operazioni
+	 */
+	public static DistintaCassiereComponentSession createDistintaCassiereComponentSession() throws javax.ejb.EJBException{
+		return (DistintaCassiereComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_DistintaCassiereComponentSession", DistintaCassiereComponentSession.class);
+	}	
+	
 }

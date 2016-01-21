@@ -62,14 +62,8 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 	        } else
 	        {
 	        	fatturaPassivaElettronicaBP.setModel(actioncontext, bulk);
-	            SelezionatoreListaBP selezionatorelistabp = (SelezionatoreListaBP)actioncontext.createBusinessProcess("Selezionatore");
+	            SelezionatoreListaBP selezionatorelistabp = (SelezionatoreListaBP)actioncontext.createBusinessProcess("SelezionatoreFatturaElettronicaBP");
 	            selezionatorelistabp.setModel(actioncontext, bulk);
-	            selezionatorelistabp.setDefaultAction("SelezionaFatturaPassivaElettronicaAction");
-				StaticForward staticForward = new StaticForward();
-				staticForward.setName("default");
-				staticForward.setPath("/docamm00/selezionatore_fatt_ele.jsp");
-				selezionatorelistabp.getMapping().addForward(staticForward);
-
 	            selezionatorelistabp.setIterator(actioncontext, remoteiterator);
 	            selezionatorelistabp.setBulkInfo(fatturaPassivaElettronicaBP.getSearchBulkInfo());
 	            selezionatorelistabp.setColumns(getBusinessProcess(actioncontext).getSearchResultColumns());

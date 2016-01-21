@@ -316,4 +316,10 @@ public class Lettera_pagam_esteroBulk extends Lettera_pagam_esteroBase implement
 	public void setPg_distinta(Long pg_distinta) {
 		distintaCassiere.setPgDistinta(pg_distinta);
 	}
+	
+	public String getDisplayStatoTrasmissione() {
+		if (getStato_trasmissione() == null)
+			return null;
+		return (String) stato_trasmissioneKeys.get(getStato_trasmissione());
+	}
 }
