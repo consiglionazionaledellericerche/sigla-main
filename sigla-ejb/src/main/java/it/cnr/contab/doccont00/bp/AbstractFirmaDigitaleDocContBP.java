@@ -378,10 +378,12 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 		if (selectelElements == null || selectelElements.isEmpty()){
 			throw new ApplicationException("Selezionare almeno un documento contabile!");
 		}
+		addSomethingToSelectedElements(actioncontext, selectelElements);
 		List<String> nodes = new ArrayList<String>();
 		for (StatoTrasmissione bulk : selectelElements) {
 			nodes.addAll(documentiContabiliService.getNodeRefDocumento(bulk, true));
 		}
+		
 		PdfSignApparence pdfSignApparence = new PdfSignApparence();
 		pdfSignApparence.setNodes(nodes);
 		pdfSignApparence.setUsername(firmaOTPBulk.getUserName());
@@ -421,6 +423,9 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 		} 
 	}
 	
+	protected void addSomethingToSelectedElements(ActionContext actioncontext, List<StatoTrasmissione> selectelElements) throws BusinessProcessException{		
+	}
+
 	protected abstract String getTitoloFirma();
 	private String getTitolo() {
 		if (firmatario.getTitoloFirma().equalsIgnoreCase(UtenteFirmaDettaglioBulk.TITOLO_FIRMA_DELEGATO))
