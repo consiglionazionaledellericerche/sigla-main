@@ -454,7 +454,12 @@
 		enabledOnFreeSearch="false"
 		completeOnSave="false"
 		label="Sospeso"/>
-	
+	<fieldProperty
+		name="displayStatoTrasmissione"
+		property="lettera_pagamento_estero.displayStatoTrasmissione"
+		inputType="LABEL"
+		labelStyle="font-style:italic; font-size:x-large"/>
+		
 	<fieldProperty
 		name="bonifico_mezzo"
 		property="lettera_pagamento_estero.bonifico_mezzo"
@@ -648,6 +653,8 @@
 		name="ti_entrata_spesa" />
 	<formFieldProperty
 		name="sospeso" />
+	<formFieldProperty
+		name="displayStatoTrasmissione" />
 	<formFieldProperty
 		name="bonifico_mezzo" />
 	<formFieldProperty

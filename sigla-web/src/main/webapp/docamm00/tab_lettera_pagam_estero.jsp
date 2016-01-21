@@ -20,6 +20,7 @@
 	</table>
 </div>
 <div class="Group" style="width:100%">
+	<div class="GroupLabel"><% bp.writeFormInput(out, "displayStatoTrasmissione");%></div>
 	<table width="100%">
 		<tr>
 			<% bp.writeFormFieldDoc1210(out,"esercizio_lettera");%>
