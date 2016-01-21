@@ -5,8 +5,8 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<style name="TNR10" isDefault="true" markup="none" fontName="Times New Roman" pdfFontName="Times-Roman"/>
 	<style name="TNR10BOLD" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
@@ -43,7 +43,7 @@
 		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="esercizio" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer("2016")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer("2015")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="cds" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["073"]]></defaultValueExpression>
@@ -58,11 +58,12 @@
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT * FROM V_SIT_ANAL_GAE_RESIDUI_SPE
-WHERE ESERCIZIO = $P{esercizio}
-  AND CDS = $P{cds}
-  AND UO LIKE DECODE($P{uo},'*','%',$P{uo})
-  AND CD_CENTRO_RESPONSABILITA LIKE DECODE($P{cdr},'*','%',$P{cdr})]]>
+		<![CDATA[SELECT v.*, p.fl_nuovo_pdg FROM V_SIT_ANAL_GAE_RESIDUI_SPE v, parametri_cnr p
+WHERE v.ESERCIZIO = $P{esercizio}
+  AND v.CDS = $P{cds}
+  AND v.UO LIKE DECODE($P{uo},'*','%',$P{uo})
+  AND v.CD_CENTRO_RESPONSABILITA LIKE DECODE($P{cdr},'*','%',$P{cdr})
+and p.esercizio = v.esercizio]]>
 	</queryString>
 	<field name="ESERCIZIO" class="java.lang.Integer"/>
 	<field name="CDS" class="java.lang.String"/>
@@ -95,6 +96,7 @@ WHERE ESERCIZIO = $P{esercizio}
 	<field name="PAGATI" class="java.math.BigDecimal"/>
 	<field name="DA_PAGARE" class="java.math.BigDecimal"/>
 	<field name="RESIDUI_FINALI" class="java.math.BigDecimal"/>
+	<field name="FL_NUOVO_PDG" class="java.lang.String"/>
 	<sortField name="CDS"/>
 	<sortField name="UO"/>
 	<sortField name="CD_COMMESSA"/>
@@ -630,19 +632,8 @@ WHERE ESERCIZIO = $P{esercizio}
 		<groupExpression><![CDATA[$F{CD_COMMESSA}]]></groupExpression>
 		<groupHeader>
 			<band height="30" splitType="Stretch">
-				<staticText>
-					<reportElement key="staticText-21" style="TNR9BOLD" x="10" y="3" width="50" height="13"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement/>
-					<text><![CDATA[Commessa]]></text>
-				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-11" style="TNR9" x="62" y="3" width="752" height="13"/>
+					<reportElement key="textField-11" style="TNR9" x="89" y="3" width="725" height="13"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -651,6 +642,11 @@ WHERE ESERCIZIO = $P{esercizio}
 					</box>
 					<textElement/>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_COMMESSA}+ " " + $F{DS_COMMESSA}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TNR9BOLD" x="13" y="3" width="76" height="13"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[($F{FL_NUOVO_PDG}.equals( "N" )?"Commessa ":"Area Progettuale ")]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -665,7 +661,7 @@ WHERE ESERCIZIO = $P{esercizio}
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA["Totale Commessa "+$F{CD_COMMESSA}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[($F{FL_NUOVO_PDG}.equals( "N" )?"Totale Commessa ":"Totale Area Progettuale ")+$F{CD_COMMESSA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 					<reportElement key="textField-33" style="TNR9BOLD" x="215" y="3" width="52" height="13"/>
@@ -983,17 +979,6 @@ WHERE ESERCIZIO = $P{esercizio}
 		<groupExpression><![CDATA[$F{CD_MODULO}]]></groupExpression>
 		<groupHeader>
 			<band height="30" splitType="Stretch">
-				<staticText>
-					<reportElement key="staticText-23" style="TNR9BOLD" x="20" y="3" width="39" height="13"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement/>
-					<text><![CDATA[Modulo]]></text>
-				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement key="textField-13" style="TNR9" x="68" y="3" width="745" height="13"/>
 					<box>
@@ -1004,6 +989,11 @@ WHERE ESERCIZIO = $P{esercizio}
 					</box>
 					<textElement/>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_MODULO}+ " " + $F{DS_MODULO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TNR9BOLD" x="21" y="3" width="39" height="13"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[($F{FL_NUOVO_PDG}.equals( "N" )?"Modulo ":"Progetto ")]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -1018,7 +1008,7 @@ WHERE ESERCIZIO = $P{esercizio}
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA["Totale Modulo "+$F{CD_MODULO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[($F{FL_NUOVO_PDG}.equals( "N" )?"Totale Modulo ":"Totale Progetto ")+$F{CD_MODULO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 					<reportElement key="textField-31" style="TNR9BOLD" x="215" y="3" width="52" height="13"/>

@@ -96,10 +96,10 @@ where to_char($P{data},'YYYY') = esercizio]]>
 				<textFieldExpression class="java.lang.String"><![CDATA["UO: "+$P{uo}+" n."+$P{pg_fattura}+" del "+(new SimpleDateFormat("dd/MM/yyyy")).format($P{data})+"."]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="5" y="39" width="520" height="1"/>
+				<reportElement x="2" y="39" width="523" height="1"/>
 			</line>
 			<line>
-				<reportElement x="5" y="40" width="1" height="65"/>
+				<reportElement x="2" y="40" width="1" height="65"/>
 			</line>
 			<line>
 				<reportElement x="524" y="40" width="1" height="65"/>
@@ -123,10 +123,10 @@ where to_char($P{data},'YYYY') = esercizio]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[" [ ]  c/o  Banca Nazionale del Lavoro IBAN IT57S0100503392000000218155 SWIFT/BIC: BNLIITRR, intestato a CNR Incassi giornalieri da altre dipendenze (ad uso esclusivo dei soggetti diversi dalle amministrazioni dello Stato e dalle amministrazioni del settore pubblico titolari di c/c presso la BNL)"]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="5" y="0" width="1" height="27" isRemoveLineWhenBlank="true"/>
+				<reportElement stretchType="RelativeToBandHeight" x="2" y="0" width="1" height="27" isRemoveLineWhenBlank="true"/>
 			</line>
 			<line>
-				<reportElement x="524" y="0" width="1" height="27" isRemoveLineWhenBlank="true"/>
+				<reportElement stretchType="RelativeToBandHeight" x="524" y="0" width="1" height="27" isRemoveLineWhenBlank="true"/>
 			</line>
 		</band>
 		<band height="50">
@@ -144,10 +144,10 @@ where to_char($P{data},'YYYY') = esercizio]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[" [ ] Versamento a valere sulla contabilità speciale infruttifera n°167369 accesa al nome C.N.R.-c/o Banca d'Italia - Sez. di Tesoreria Prov.le dello Stato -ROMA "]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="5" y="27" width="520" height="1"/>
+				<reportElement x="2" y="27" width="523" height="1"/>
 			</line>
 			<line>
-				<reportElement x="5" y="0" width="1" height="27"/>
+				<reportElement x="2" y="0" width="1" height="27"/>
 			</line>
 			<line>
 				<reportElement x="524" y="0" width="1" height="27"/>
