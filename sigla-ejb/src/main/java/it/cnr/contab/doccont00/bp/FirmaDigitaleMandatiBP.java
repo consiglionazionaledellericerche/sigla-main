@@ -6,6 +6,7 @@ import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleIBulk;
+import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
@@ -31,6 +32,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -79,8 +81,14 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 			SimpleFindClause simpleFindClause = new SimpleFindClause();
 			simpleFindClause.setLogicalOperator(FindClause.AND);
 			simpleFindClause.setSqlClause("pg_documento_cont = pg_documento_cont_padre");
-			compoundfindclause.addChild(simpleFindClause);
+
+			SimpleFindClause collegatiFindClause = new SimpleFindClause();
+			collegatiFindClause.setLogicalOperator(FindClause.AND);
+			collegatiFindClause.setSqlClause("pg_documento_cont != pg_documento_cont_padre" + 
+					" and cd_tipo_documento_cont = 'MAN' and cd_tipo_documento_cont_padre = 'MAN'");	
+			compoundfindclause = CompoundFindClause.and(compoundfindclause, CompoundFindClause.or(simpleFindClause, collegatiFindClause));
 			setBaseclause(compoundfindclause);
+			
 			EJBCommonServices.closeRemoteIterator(getIterator());
 			setIterator(actioncontext, find(actioncontext, compoundfindclause, getModel()));
 		} catch (RemoteException e) {
@@ -89,6 +97,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 	}
 	@Override
 	protected void aggiornaStato(ActionContext actioncontext, String stato, StatoTrasmissione...bulks) throws ComponentException, RemoteException {
+		EJBCommonServices.closeRemoteIterator(getIterator());		
 		for (StatoTrasmissione v_mandato_reversaleBulk : bulks) {
 			if (v_mandato_reversaleBulk.getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN)) {				
 				MandatoIBulk mandato = new MandatoIBulk(v_mandato_reversaleBulk.getCd_cds(), v_mandato_reversaleBulk.getEsercizio(), v_mandato_reversaleBulk.getPg_documento_cont());
@@ -123,6 +132,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 					throw new ApplicationException("Selezionare almeno un elemento!");
 			Format dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			String message = "";
+			DistintaCassiereComponentSession distintaCassiereComponentSession = Utility.createDistintaCassiereComponentSession();
 			for (V_mandato_reversaleBulk v_mandato_reversaleBulk : selectedElements) {
 				if (v_mandato_reversaleBulk.isMandato()) {
 					if (!Utility.createMandatoComponentSession().isCollegamentoSiopeCompleto(
@@ -136,37 +146,11 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 						message += "\nLa reversale n."+ v_mandato_reversaleBulk.getPg_documento_cont()+ " non risulta associata completamente a codici Siope, pertanto è stata esclusa dalla selezione.";
 						continue;						
 					}					
+				}				
+				predisponi(actioncontext, v_mandato_reversaleBulk, dateFormat);
+				for (V_mandato_reversaleBulk child : distintaCassiereComponentSession.findMandatiCollegati(actioncontext.getUserContext(), v_mandato_reversaleBulk)) {
+					predisponi(actioncontext, child, dateFormat);
 				}
-		
-				Print_spoolerBulk print = new Print_spoolerBulk();
-				print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
-				print.setFlEmail(false);
-				if (v_mandato_reversaleBulk.getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN)) {
-					print.setReport("/doccont/doccont/vpg_man_rev_ass.jasper");
-					print.setNomeFile("Mandato n. "
-							+ v_mandato_reversaleBulk.getPg_documento_cont() + ".pdf");
-				} else {
-					print.setReport("/doccont/doccont/vpg_reversale.jasper");
-					print.setNomeFile("Reversale n. "
-							+ v_mandato_reversaleBulk.getPg_documento_cont() + ".pdf");					
-				}
-				print.setUtcr(actioncontext.getUserContext().getUser());
-				print.addParam("aCd_cds", v_mandato_reversaleBulk.getCd_cds(), String.class);
-				print.addParam("aCd_terzo", "%", String.class);
-				print.addParam("aEs", v_mandato_reversaleBulk.getEsercizio().intValue(), Integer.class);
-				print.addParam("aPg_a", v_mandato_reversaleBulk.getPg_documento_cont().longValue(), Long.class);
-				print.addParam("aPg_da", v_mandato_reversaleBulk.getPg_documento_cont().longValue(), Long.class);					
-				print.addParam("aDt_da", DateUtils.firstDateOfTheYear(1970), Date.class, dateFormat);
-				print.addParam("aDt_a", DateUtils.firstDateOfTheYear(3000), Date.class, dateFormat);
-				
-				Report report = SpringUtil.getBean("printService",
-						PrintService.class).executeReport(actioncontext.getUserContext(),
-						print);
-				CMISPath cmisPath = v_mandato_reversaleBulk.getCMISPath(cmisService);
-				v_mandato_reversaleBulk.setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO);
-				Document node = cmisService.storePrintDocument(v_mandato_reversaleBulk, report, cmisPath);
-				cmisService.makeVersionable(node);
-				aggiornaStato(actioncontext, MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO, v_mandato_reversaleBulk);
 			}
 			setMessage("Predisposizione effettuata correttamente." + message);
 		} catch (ApplicationException e) {
@@ -177,7 +161,38 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 			throw handleException(e);
 		}
 	}
-
+	private void predisponi(ActionContext actioncontext, V_mandato_reversaleBulk v_mandato_reversaleBulk, Format dateFormat) throws ComponentException, IOException {
+		Print_spoolerBulk print = new Print_spoolerBulk();
+		print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
+		print.setFlEmail(false);
+		if (v_mandato_reversaleBulk.getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN)) {
+			print.setReport("/doccont/doccont/vpg_man_rev_ass.jasper");
+			print.setNomeFile("Mandato n. "
+					+ v_mandato_reversaleBulk.getPg_documento_cont() + ".pdf");
+		} else {
+			print.setReport("/doccont/doccont/vpg_reversale.jasper");
+			print.setNomeFile("Reversale n. "
+					+ v_mandato_reversaleBulk.getPg_documento_cont() + ".pdf");					
+		}
+		print.setUtcr(actioncontext.getUserContext().getUser());
+		print.addParam("aCd_cds", v_mandato_reversaleBulk.getCd_cds(), String.class);
+		print.addParam("aCd_terzo", "%", String.class);
+		print.addParam("aEs", v_mandato_reversaleBulk.getEsercizio().intValue(), Integer.class);
+		print.addParam("aPg_a", v_mandato_reversaleBulk.getPg_documento_cont().longValue(), Long.class);
+		print.addParam("aPg_da", v_mandato_reversaleBulk.getPg_documento_cont().longValue(), Long.class);					
+		print.addParam("aDt_da", DateUtils.firstDateOfTheYear(1970), Date.class, dateFormat);
+		print.addParam("aDt_a", DateUtils.firstDateOfTheYear(3000), Date.class, dateFormat);
+		
+		Report report = SpringUtil.getBean("printService",
+				PrintService.class).executeReport(actioncontext.getUserContext(),
+				print);
+		CMISPath cmisPath = v_mandato_reversaleBulk.getCMISPath(cmisService);
+		v_mandato_reversaleBulk.setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO);
+		Document node = cmisService.storePrintDocument(v_mandato_reversaleBulk, report, cmisPath);
+		cmisService.makeVersionable(node);
+		aggiornaStato(actioncontext, MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO, v_mandato_reversaleBulk);		
+	}
+	
 	@Override
 	protected AbilitatoFirma getAbilitatoFirma() {
 		return AbilitatoFirma.DOCCONT;
@@ -187,5 +202,19 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 	protected String getTitoloFirma() {
 		return "firma per il controllo di ragioneria\ndel mandato e delle reversali collegate";
 	}
-	
+	@Override
+	protected void addSomethingToSelectedElements(ActionContext actioncontext, List<StatoTrasmissione> selectelElements) throws BusinessProcessException {
+		DistintaCassiereComponentSession distintaCassiereComponentSession = Utility.createDistintaCassiereComponentSession();
+		List<V_mandato_reversaleBulk> adds = new ArrayList<V_mandato_reversaleBulk>();
+		for (StatoTrasmissione statoTrasmissione : selectelElements) {
+			try {
+				adds.addAll(distintaCassiereComponentSession.findMandatiCollegati(actioncontext.getUserContext(), (V_mandato_reversaleBulk) statoTrasmissione));
+			} catch (ComponentException e) {
+				throw handleException(e);
+			} catch (RemoteException e) {
+				throw handleException(e);			
+			}
+		}
+		selectelElements.addAll(adds);
+	}
 }

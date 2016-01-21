@@ -868,7 +868,13 @@
 		enabledOnFreeSearch="false"
 		completeOnSave="false"
 		label="Sospeso"/>
-	
+
+	<fieldProperty
+		name="displayStatoTrasmissione"
+		property="lettera_pagamento_estero.displayStatoTrasmissione"
+		inputType="LABEL"
+		labelStyle="font-style:italic; font-size:x-large"/>
+			
 	<fieldProperty
 		name="bonifico_mezzo"
 		property="lettera_pagamento_estero.bonifico_mezzo"
@@ -1394,6 +1400,8 @@
 		name="commissioni_spese"/>
 	<formFieldProperty
 		name="commissioni_spese_estere"/>
+	<formFieldProperty
+		name="displayStatoTrasmissione"/>
 		
 	<formFieldProperty
 		name="fl_liquidazione_differita" 

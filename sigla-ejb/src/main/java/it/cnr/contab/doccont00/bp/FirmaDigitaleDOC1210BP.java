@@ -75,6 +75,7 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 	}
 	@Override
 	protected void aggiornaStato(ActionContext actioncontext, String stato, StatoTrasmissione...bulks) throws ComponentException, RemoteException {
+		EJBCommonServices.closeRemoteIterator(getIterator());		
 		for (StatoTrasmissione statoTrasmissione : bulks) {
 			Lettera_pagam_esteroBulk lettera = new Lettera_pagam_esteroBulk(statoTrasmissione.getCd_cds(),statoTrasmissione.getCd_unita_organizzativa(),
 					statoTrasmissione.getEsercizio(), statoTrasmissione.getPg_documento_cont());

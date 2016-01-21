@@ -54,6 +54,10 @@
    		actionClass="it.cnr.contab.docamm00.actions.CaricaFatturaPassivaElettronicaAction"
       needExistingSession="false">
   </action>
+  <businessProcess name="SelezionatoreFatturaElettronicaBP" className="it.cnr.contab.docamm00.bp.SelezionatoreFatturaElettronicaBP">
+	<forward name="default" path="/docamm00/selezionatore_fatt_ele.jsp" />
+	<init-param name="defaultAction" value="SelezionaFatturaPassivaElettronicaAction" />
+  </businessProcess>
   
   <businessProcess
       name="CRUDBeneServizioBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
