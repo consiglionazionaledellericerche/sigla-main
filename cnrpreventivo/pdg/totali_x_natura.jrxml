@@ -114,7 +114,7 @@ ORDER BY  cd_natura asc]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{FL_NUOVO_PDG}.equals("N")?"Totale Commessa ":"Area Progettuale ")+$P{commessa}+" Natura "+$F{CD_NATURA}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[($F{FL_NUOVO_PDG}.equals("N")?"Totale Commessa ":"Totale Area Progettuale ")+$P{commessa}+" Natura "+$F{CD_NATURA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 					<reportElement key="textField-2" style="TNR8G" x="261" y="4" width="59" height="13"/>
