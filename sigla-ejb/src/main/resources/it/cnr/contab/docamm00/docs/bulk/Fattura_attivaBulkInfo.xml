@@ -1010,6 +1010,10 @@
 	<columnFieldProperty
 		name="ragione_sociale" />
 	<columnFieldProperty
+		name="codice_fiscale" />
+	<columnFieldProperty
+		name="partita_iva" />		
+	<columnFieldProperty
 		name="ti_causale_emissione" />
 	<columnFieldProperty
 		name="sezionale" />
