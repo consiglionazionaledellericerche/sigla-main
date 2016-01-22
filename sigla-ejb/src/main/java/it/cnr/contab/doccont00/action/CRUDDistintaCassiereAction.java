@@ -232,4 +232,27 @@ try {
 }
 return context.findDefaultForward();
 }	
+public Forward doInvia(ActionContext context) {
+	try {
+		CRUDBP bp = getBusinessProcess(context);
+		fillModel(context);
+		if (bp.isDirty())
+			return openContinuePrompt(context,"doConfermaInvio");
+		return doConfermaInvio(context,OptionBP.YES_BUTTON);
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}
+public Forward doConfermaInvio(ActionContext context,int option) {
+	try {
+		if (option == OptionBP.YES_BUTTON) {
+			CRUDDistintaCassiereBP bp = (CRUDDistintaCassiereBP) getBusinessProcess( context );
+			bp.inviaDistinta(context,(Distinta_cassiereBulk) bp.getModel());
+		}
+		return context.findDefaultForward();
+	} catch(Throwable e) {
+		return handleException(context,e);
+	}
+}
+
 }

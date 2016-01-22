@@ -4616,6 +4616,7 @@ public class DistintaCassiereComponent extends
 			if (distinta == null)
 				throw new ApplicationException(
 						"Attenzione! La distinta e' stata cancellata");
+			validaCreaModificaConBulk(userContext, distinta);
 			// aggiungo i mandati da ritrasmettere
 				if(!tesoreriaUnica(userContext,distinta )) {	
 					aggiungiMandatiEReversaliDaRitrasmettere(userContext, distinta);
