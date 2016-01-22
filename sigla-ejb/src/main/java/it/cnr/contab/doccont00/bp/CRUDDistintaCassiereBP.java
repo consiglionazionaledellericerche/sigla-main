@@ -118,17 +118,18 @@ protected it.cnr.jada.util.jsp.Button[] createToolbar()
 		return newToolbarTesoreria;
 	}
 	if (this.getParametriCnr().getFl_tesoreria_unica().booleanValue() &&isFlusso()){
-		Button[] newToolbarTesoreria = new Button[ toolbar.length + 4];
+		Button[] newToolbarTesoreria = new Button[ toolbar.length + 5];
 		int i;
 		for ( i = 0; i < toolbar.length; i++ )
 			newToolbarTesoreria[i] = toolbar[i];
 		newToolbarTesoreria[ i ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.stampaProv");
-		newToolbarTesoreria[ i +1] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.firma");
-		newToolbarTesoreria[ i +2] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.downloadnew");
-		newToolbarTesoreria[ i +3] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.downloadFirmato");
+		newToolbarTesoreria[ i +1] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.salvaDef");
+		newToolbarTesoreria[ i +2] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.firma");
+		newToolbarTesoreria[ i +3] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.downloadnew");
+		newToolbarTesoreria[ i +4] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.downloadFirmato");
 		return newToolbarTesoreria;
 	}
-	else
+	else 
 		if (this.isFlusso()){
 			Button[] newToolbar = new Button[ toolbar.length + 2];
 			int i;
@@ -581,11 +582,24 @@ public String Formatta(String s, String allineamento,Integer dimensione,String r
 public boolean isSignButtonEnabled() {
 	if (firmatarioDistinta == null)
 		return false;
-	if ( super.isDeleteButtonEnabled() &&((Distinta_cassiereBulk)getModel()).getDt_invio() == null )
+	if ( super.isDeleteButtonEnabled() &&(((Distinta_cassiereBulk)getModel()).getDt_invio() == null ||isFlusso())  )
 		return true;
 	else 
 		return false;
 }
+public boolean isSalvaDefButtonHidden() {
+	if(!isFlusso())
+		return true;
+	else 
+		return false;
+}
+public boolean isSalvaDefButtonEnabled() {
+	if( isSaveButtonEnabled())
+		return true;
+	else 
+		return false;
+}
+
 public void scaricaDocumento(ActionContext actioncontext) throws Exception {
 	Integer esercizio = Integer.valueOf(((HttpActionContext)actioncontext).getParameter("esercizio"));
 	String cds = ((HttpActionContext)actioncontext).getParameter("cds");
@@ -603,7 +617,8 @@ public void scaricaDocumento(ActionContext actioncontext) throws Exception {
 		}
 		is.close();
 		os.flush();
-	}
+	} else 
+		this.setMessage("Documento non trovato");
 }
 public void inviaDistinta(ActionContext context, Distinta_cassiereBulk distinta) throws it.cnr.jada.action.BusinessProcessException,ValidationException 
 {	
@@ -663,10 +678,11 @@ public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Excep
 		throw new ApplicationException("Il codice fiscale \"" + codiceFiscale + "\" presente sul certicato di Firma, " +
 				"è diverso da quello dell'utente collegato \"" + utente.getCodiceFiscaleLDAP() +"\"!");
 	}
-	Distinta_cassiereBulk distinta = (Distinta_cassiereBulk)getModel();
-	inviaDistinta(context,distinta);
-	distinta = (Distinta_cassiereBulk)getModel();
 	if(!this.isFlusso()){
+		Distinta_cassiereBulk distinta = (Distinta_cassiereBulk)getModel();
+		inviaDistinta(context,distinta);
+		distinta = (Distinta_cassiereBulk)getModel();
+		
 		List<String> nodes = new ArrayList<String>();
 		
 		nodes.addAll(documentiContabiliService.getNodeRefDocumento(distinta.getEsercizio(),distinta.getCd_cds(),distinta.getPg_distinta_def(), "DISTINTA",true));
@@ -725,6 +741,7 @@ public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Excep
 			throw new BusinessProcessException(e);
 		} 
 	}else{
+		Distinta_cassiereBulk distinta = (Distinta_cassiereBulk)getModel();
 		generaXML(context);
 		File file = new File(System.getProperty("tmp.dir.SIGLAWeb")+getFile());
 		CMISFile cmisFile = new CMISFile(file, file.getName());			
@@ -732,7 +749,7 @@ public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Excep
 				//E' previsto solo l'inserimento ma non l'aggiornamento
 				CMISPath path = distinta.getCMISPath(cmisService);
 				try{
-					Document node = cmisService.storeSimpleDocument(
+					Document node = cmisService.restoreSimpleDocument(
 							cmisFile,
 							cmisFile.getInputStream(),
 							cmisFile.getContentType(),
@@ -745,6 +762,12 @@ public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Excep
 					throw new ApplicationException("CMIS - Errore nella registrazione del file XML sul Documentale (" + e.getMessage() + ")");
 				}
 				if (cmisFile.getDocument().getContentStreamLength() > 0){
+					
+    				CmisObject id = documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat(String.valueOf(distinta.getEsercizio())).concat("-").concat(distinta.getCd_unita_organizzativa()).
+    						concat("-").concat(String.valueOf(distinta.getPg_distinta_def())).
+    						concat("-I.xslt.p7m"));
+    				if (id!=null)
+    					cmisService.deleteNode(id);
     				String nomeFile = file.getName();
     				String nomeFileP7m = nomeFile+".p7m";
     				String webScriptURLp7 = documentiContabiliService.getRepositoyURL().concat("service/sigla/firma/p7m");
@@ -835,7 +858,9 @@ public void scaricaDistinta(ActionContext actioncontext) throws Exception {
 				is.close();
 				os.flush();
 			}
-		}	
+			else 	
+				this.setMessage("Documento non trovato");
+		} 
 	}
 }
 
@@ -865,8 +890,9 @@ public void scaricaDistintaFirmata(ActionContext actioncontext) throws Exception
 				}
 				is.close();
 				os.flush();
-			}
-		}
+			} else
+				this.setMessage("Documento non trovato");
+		} 
 	 }
 }
 public Boolean isSepa() {
