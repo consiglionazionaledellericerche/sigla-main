@@ -3185,7 +3185,7 @@ private void verificaGestioneTrovato(UserContext aUC,
 		try {
 			if(elemento_voce.isObbligatoriaIndicazioneTrovato()){
 				controlliGestioneTrovatoAttiva(aUC, accertamento);
-			} else {
+			} else if (elemento_voce.isInibitaIndicazioneTrovato()){
 				controlliGestioneTrovatoNonAttiva(aUC, accertamento);
 			}
 		} catch(Throwable e) {
@@ -3232,6 +3232,7 @@ private SQLBuilder preparaCondizionePerTrovato(UserContext aUC,
 	sql.addClause(FindClause.AND,"esercizio_originale",SQLBuilder.EQUALS, accertamento.getEsercizio_originale());
 	sql.addClause(FindClause.AND,"pg_accertamento",SQLBuilder.EQUALS, accertamento.getPg_accertamento());
 	sql.addTableToHeader("FATTURA_ATTIVA_RIGA");
+	sql.addSQLClause(FindClause.AND,"FATTURA_ATTIVA_RIGA.ESERCIZIO",SQLBuilder.EQUALS, accertamento.getEsercizio());
 	sql.addSQLJoin( "FATTURA_ATTIVA_RIGA.CD_CDS_ACCERTAMENTO", "ACCERTAMENTO_SCADENZARIO.CD_CDS");
 	sql.addSQLJoin( "FATTURA_ATTIVA_RIGA.ESERCIZIO_ACCERTAMENTO", "ACCERTAMENTO_SCADENZARIO.ESERCIZIO");
 	sql.addSQLJoin( "FATTURA_ATTIVA_RIGA.ESERCIZIO_ORI_ACCERTAMENTO", "ACCERTAMENTO_SCADENZARIO.ESERCIZIO_ORIGINALE");

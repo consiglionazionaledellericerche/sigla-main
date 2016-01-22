@@ -4423,6 +4423,7 @@ private SQLBuilder preparaCondizionePerTrovato(UserContext aUC,
 	sql.addClause(FindClause.AND,"esercizio_originale",sql.EQUALS, obbligazione.getEsercizio_originale());
 	sql.addClause(FindClause.AND,"pg_obbligazione",sql.EQUALS, obbligazione.getPg_obbligazione());
 	sql.addTableToHeader("FATTURA_PASSIVA_RIGA");
+	sql.addSQLClause(FindClause.AND,"FATTURA_PASSIVA_RIGA.ESERCIZIO",SQLBuilder.EQUALS, obbligazione.getEsercizio());
 	sql.addSQLJoin( "FATTURA_PASSIVA_RIGA.CD_CDS_OBBLIGAZIONE", "OBBLIGAZIONE_SCADENZARIO.CD_CDS");
 	sql.addSQLJoin( "FATTURA_PASSIVA_RIGA.ESERCIZIO_OBBLIGAZIONE", "OBBLIGAZIONE_SCADENZARIO.ESERCIZIO");
 	sql.addSQLJoin( "FATTURA_PASSIVA_RIGA.ESERCIZIO_ORI_OBBLIGAZIONE", "OBBLIGAZIONE_SCADENZARIO.ESERCIZIO_ORIGINALE");
