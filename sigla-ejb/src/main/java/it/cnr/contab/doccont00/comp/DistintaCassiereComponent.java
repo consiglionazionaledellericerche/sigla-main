@@ -4465,7 +4465,7 @@ public class DistintaCassiereComponent extends
 				if(obb_dati_beneficiario){
 					benef.setIndirizzoBeneficiario(docContabile.getViaSede());
 					if(docContabile.getCapComuneSede()==null)
-						throw new ApplicationException("Impossibile generare il flusso, Cap benificiario non valorizzato per il terzo "+docContabile.getCdTerzo());
+						throw new ApplicationException("Impossibile generare il flusso, Cap benificiario non valorizzato per il terzo "+docContabile.getCdTerzo()+" cds "+docContabile.getCdCds()+" mandato "+docContabile.getPgDocumento());
 					benef.setCapBeneficiario(docContabile.getCapComuneSede());
 					benef.setLocalitaBeneficiario(docContabile.getDsComune());
 					benef.setProvinciaBeneficiario(docContabile.getCdProvincia());
