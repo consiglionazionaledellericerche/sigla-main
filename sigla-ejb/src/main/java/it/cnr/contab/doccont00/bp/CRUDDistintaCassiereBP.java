@@ -762,12 +762,16 @@ public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Excep
 					throw new ApplicationException("CMIS - Errore nella registrazione del file XML sul Documentale (" + e.getMessage() + ")");
 				}
 				if (cmisFile.getDocument().getContentStreamLength() > 0){
-					
-    				CmisObject id = documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat(String.valueOf(distinta.getEsercizio())).concat("-").concat(distinta.getCd_unita_organizzativa()).
+					CmisObject id=null;
+					try{
+    				id = documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat(String.valueOf(distinta.getEsercizio())).concat("-").concat(distinta.getCd_unita_organizzativa()).
     						concat("-").concat(String.valueOf(distinta.getPg_distinta_def())).
     						concat("-I.xslt.p7m"));
     				if (id!=null)
     					cmisService.deleteNode(id);
+					} catch (Exception CmisObjectNotFoundException) {
+					
+					}
     				String nomeFile = file.getName();
     				String nomeFileP7m = nomeFile+".p7m";
     				String webScriptURLp7 = documentiContabiliService.getRepositoyURL().concat("service/sigla/firma/p7m");
@@ -840,7 +844,7 @@ public String getDocumento(){
 public void scaricaDistinta(ActionContext actioncontext) throws Exception {
 	Distinta_cassiereBulk distinta = (Distinta_cassiereBulk)getModel();
 	if(this.getParametriCnr()!= null && this.getParametriCnr().getFl_tesoreria_unica()){
-			CmisObject id = documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat(String.valueOf(distinta.getEsercizio())).concat("-").concat(distinta.getCd_unita_organizzativa()).
+		CmisObject id =documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat(String.valueOf(distinta.getEsercizio())).concat("-").concat(distinta.getCd_unita_organizzativa()).
 				concat("-").concat(String.valueOf(distinta.getPg_distinta_def())).
 				concat("-I.xslt"));
 		InputStream is =null;
@@ -858,8 +862,6 @@ public void scaricaDistinta(ActionContext actioncontext) throws Exception {
 				is.close();
 				os.flush();
 			}
-			else 	
-				this.setMessage("Documento non trovato");
 		} 
 	}
 }
@@ -868,13 +870,14 @@ public void scaricaDistintaFirmata(ActionContext actioncontext) throws Exception
 	Distinta_cassiereBulk distinta = (Distinta_cassiereBulk)getModel();
 	if(this.getParametriCnr()!= null && this.getParametriCnr().getFl_tesoreria_unica()){
 		Document id=null;
-		if(isFlusso()){		
-			id = (Document) documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat(String.valueOf(distinta.getEsercizio())).concat("-").concat(distinta.getCd_unita_organizzativa()).
-				concat("-").concat(String.valueOf(distinta.getPg_distinta_def())).
-				concat("-I.xslt.p7m")); 
-		}else 
-			id = (Document) documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat("Distinta n. ").concat(String.valueOf(distinta.getPg_distinta_def())).
-					concat(".pdf"));
+			if(isFlusso()){		
+				id = (Document) documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat(String.valueOf(distinta.getEsercizio())).concat("-").concat(distinta.getCd_unita_organizzativa()).
+					concat("-").concat(String.valueOf(distinta.getPg_distinta_def())).
+					concat("-I.xslt.p7m")); 
+			}else 
+				id = (Document) documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat("Distinta n. ").concat(String.valueOf(distinta.getPg_distinta_def())).
+						concat(".pdf"));
+		
 		InputStream is =null; 
 		if(id!=null){
 			is = documentiContabiliService.getResource(id);
@@ -890,8 +893,7 @@ public void scaricaDistintaFirmata(ActionContext actioncontext) throws Exception
 				}
 				is.close();
 				os.flush();
-			} else
-				this.setMessage("Documento non trovato");
+			} 
 		} 
 	 }
 }
@@ -900,6 +902,52 @@ public Boolean isSepa() {
 }
 public void setSepa(Boolean sepa) {
 	this.sepa = sepa;
+}
+public boolean checkPresenteSuDocumentale(Distinta_cassiereBulk distinta,boolean firmata ) {
+	if(this.getParametriCnr()!= null && this.getParametriCnr().getFl_tesoreria_unica()){
+		Document id=null;
+		try{
+			if(firmata){
+				if(isFlusso())
+					id = (Document) documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat(String.valueOf(distinta.getEsercizio())).concat("-").concat(distinta.getCd_unita_organizzativa()).
+						concat("-").concat(String.valueOf(distinta.getPg_distinta_def())).
+						concat("-I.xslt.p7m")); 
+				else 
+					id = (Document) documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat("Distinta n. ").concat(String.valueOf(distinta.getPg_distinta_def())).
+							concat(".pdf"));
+			}
+			else{
+				id= (Document) documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat(String.valueOf(distinta.getEsercizio())).concat("-").concat(distinta.getCd_unita_organizzativa()).
+						concat("-").concat(String.valueOf(distinta.getPg_distinta_def())).
+						concat("-I.xslt"));
+			}
+		}catch(Exception CmisObjectNotFoundException) {
+		    return false;
+		
+		}
+	}
+return true;	
+}
+public boolean isDownloadDocumentaleButtonHidden() {
+	if(((Distinta_cassiereBulk)getModel()).getDt_invio() ==null)
+		return true;
+	if(((Distinta_cassiereBulk)getModel())!=null && ((Distinta_cassiereBulk)getModel()).getDt_invio() !=null &&
+			!checkPresenteSuDocumentale(((Distinta_cassiereBulk)getModel()),false ))
+			return true;
+	else
+		return false;			
+		 
+	
+}
+public boolean isDownloadFirmatoDocumentaleButtonHidden() {
+	if(((Distinta_cassiereBulk)getModel()).getDt_invio() ==null)
+		return true;
+	if(((Distinta_cassiereBulk)getModel())!=null && ((Distinta_cassiereBulk)getModel()).getDt_invio() !=null &&
+			!checkPresenteSuDocumentale(((Distinta_cassiereBulk)getModel()),true ))
+			return true;
+	else
+		return false;			
+		 
 }
 }
 
