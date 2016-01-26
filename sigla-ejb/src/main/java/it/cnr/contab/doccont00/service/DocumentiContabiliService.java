@@ -19,6 +19,8 @@ import java.util.Map;
 
 import org.apache.axiom.attachments.ByteArrayDataSource;
 import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.opencmis.client.api.QueryResult;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
@@ -213,4 +215,13 @@ public class DocumentiContabiliService extends SiglaCMISService {
 		email.send();
 		logger.debug("Inviata distinta PEC");
 	}
+
+	public List<Document> getAllegatoForModPag(Folder folderMandato, String modPag) {
+		List<Document> documents = new ArrayList<Document>();
+		for (CmisObject child : folderMandato.getChildren()) {
+			if (modPag.equals(child.getPropertyValue("doccont:rif_modalita_pagamento")))
+				documents.add((Document) child);			
+		}		
+		return documents;
+	}	
 }
