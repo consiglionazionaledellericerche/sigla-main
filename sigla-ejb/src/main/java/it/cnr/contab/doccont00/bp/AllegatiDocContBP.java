@@ -1,18 +1,26 @@
 package it.cnr.contab.doccont00.bp;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import it.cnr.contab.cmis.service.CMISPath;
+import it.cnr.contab.doccont00.core.bulk.AllegatoDocContBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
-import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.util.OrderedHashtable;
 
 import org.apache.chemistry.opencmis.client.api.CmisObject;
 
-public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoGenericoBulk, StatoTrasmissione> {
+public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, StatoTrasmissione> {
 	private static final long serialVersionUID = 1L;
-
+	private String allegatiFormName;
+	private Map<String, String> rifModalitaPagamento = new HashMap<String, String>();
+	
 	public AllegatiDocContBP() {
 		super();
 	}
@@ -42,6 +50,54 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoGenericoBulk, Stat
 		return super.excludeChild(cmisObject);
 	}
 
+	public void setAllegatiFormName(String allegatiFormName) {
+		this.allegatiFormName = allegatiFormName;
+	}
+
+	@Override
+	public String getAllegatiFormName() {		
+		return allegatiFormName;
+	}
+	public void addToRifModalitaPagamento(String key, String value) {
+		rifModalitaPagamento.put(key, value);
+	}
+	
+	@Override
+	protected boolean isChildGrowable(boolean isGrowable) {
+		return true;
+	}
+	
+	@Override
+	protected void getChildDetail(OggettoBulk oggettobulk) {
+		AllegatoDocContBulk allegatoDocContBulk = (AllegatoDocContBulk)oggettobulk;
+		initializeRifModalitaPagamentoKeys(allegatoDocContBulk);
+		if (allegatoDocContBulk.getRifModalitaPagamento()!= null && !allegatoDocContBulk.getRifModalitaPagamento().equalsIgnoreCase("GEN") &&
+				(((StatoTrasmissione)getModel()).getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_INSERITO) ||
+						((StatoTrasmissione)getModel()).getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO) ||
+						((StatoTrasmissione)getModel()).getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA)))
+			setStatus(VIEW);
+		else
+			setStatus(EDIT);
+		super.getChildDetail(allegatoDocContBulk);
+	}
+	private void initializeRifModalitaPagamentoKeys(AllegatoDocContBulk allegatoDocContBulk) {
+		OrderedHashtable rifModalitaPagamentoKeys = allegatoDocContBulk.getRifModalitaPagamentoKeys();
+		rifModalitaPagamentoKeys.put("GEN", "Generico");
+		if (!allegatoDocContBulk.isToBeCreated() || !(((StatoTrasmissione)getModel()).getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_INSERITO) ||
+						((StatoTrasmissione)getModel()).getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO) ||
+						((StatoTrasmissione)getModel()).getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))) {
+			for (String key : rifModalitaPagamento.keySet()) {
+				rifModalitaPagamentoKeys.put(key, rifModalitaPagamento.get(key));	
+			}							
+		}
+	}
+	
+	@Override
+	protected void completeAllegato(AllegatoDocContBulk allegato) {
+		super.completeAllegato(allegato);
+		allegato.setRifModalitaPagamento(allegato.getDocument().getProperty("doccont:rif_modalita_pagamento").getValueAsString());
+	}
+	
 	@Override
 	public boolean isInputReadonly() {
 		return super.isInputReadonly();
@@ -77,7 +133,7 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoGenericoBulk, Stat
 	}
 
 	@Override
-	protected Class<AllegatoGenericoBulk> getAllegatoClass() {
-		return AllegatoGenericoBulk.class;
+	protected Class<AllegatoDocContBulk> getAllegatoClass() {
+		return AllegatoDocContBulk.class;
 	}
 }
