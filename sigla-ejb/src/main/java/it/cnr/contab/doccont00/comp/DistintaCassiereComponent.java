@@ -1473,6 +1473,8 @@ public class DistintaCassiereComponent extends
 				
 				SQLBuilder sql2 = getHome(userContext,V_mandato_reversaleBulk.class,
 						"V_MANDATO_REVERSALE_DIST_SEPA").createSQLBuilder();
+				sql2.addSQLClause("AND", "V_MANDATO_REVERSALE_DIST_SEPA.esercizio", SQLBuilder.EQUALS,
+						((CNRUserContext) userContext).getEsercizio());
 				sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO",
 						"V_MANDATO_REVERSALE_DIST_SEPA.ESERCIZIO");
 				sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS",
@@ -1485,13 +1487,15 @@ public class DistintaCassiereComponent extends
 				
 				SQLBuilder sql3 = getHome(userContext,V_mandato_reversaleBulk.class,
 						"V_MANDATO_REVERSALE_DIST_XML").createSQLBuilder();
-				sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO",
+				sql3.addSQLClause("AND", "V_MANDATO_REVERSALE_DIST_XML.esercizio", SQLBuilder.EQUALS,
+						((CNRUserContext) userContext).getEsercizio());
+				sql3.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO",
 						"V_MANDATO_REVERSALE_DIST_XML.ESERCIZIO");
-				sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS",
+				sql3.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS",
 						"V_MANDATO_REVERSALE_DIST_XML.CD_CDS");
-				sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
+				sql3.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
 						"V_MANDATO_REVERSALE_DIST_XML.CD_TIPO_DOCUMENTO_CONT");
-				sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
+				sql3.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
 						"V_MANDATO_REVERSALE_DIST_XML.PG_DOCUMENTO_CONT");
 				sql.addSQLNotExistsClause("AND", sql3);
 			}
