@@ -582,7 +582,7 @@ public String Formatta(String s, String allineamento,Integer dimensione,String r
 public boolean isSignButtonEnabled() {
 	if (firmatarioDistinta == null)
 		return false;
-	if ( super.isDeleteButtonEnabled() &&(((Distinta_cassiereBulk)getModel()).getDt_invio() == null ||isFlusso())  )
+	if ( super.isDeleteButtonEnabled())// &&(((Distinta_cassiereBulk)getModel()).getDt_invio() == null ||isFlusso())  )
 		return true;
 	else 
 		return false;
@@ -617,10 +617,9 @@ public void scaricaDocumento(ActionContext actioncontext) throws Exception {
 		}
 		is.close();
 		os.flush();
-	} else 
-		this.setMessage("Documento non trovato");
+	} 
 }
-public void inviaDistinta(ActionContext context, Distinta_cassiereBulk distinta) throws it.cnr.jada.action.BusinessProcessException,ValidationException 
+public Document inviaDistinta(ActionContext context, Distinta_cassiereBulk distinta) throws it.cnr.jada.action.BusinessProcessException,ValidationException 
 {	
 	try {		
 	//Invio al cassiere serve per salvare in definitivo la distinta prima di archiviare la stampa e firmarla		
@@ -657,6 +656,7 @@ public void inviaDistinta(ActionContext context, Distinta_cassiereBulk distinta)
 		CMISPath cmisPath = distinta.getCMISPath(cmisService);
 		
 		Document node = cmisService.storePrintDocument(distinta, report, cmisPath);
+		return node;
 	} catch(java.rmi.RemoteException e) {
 		throw handleException(e);
 	} catch(ComponentException e) {
@@ -680,12 +680,18 @@ public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Excep
 	}
 	if(!this.isFlusso()){
 		Distinta_cassiereBulk distinta = (Distinta_cassiereBulk)getModel();
-		inviaDistinta(context,distinta);
-		distinta = (Distinta_cassiereBulk)getModel();
+		//spostato nel salva definitivo anche in questo caso
+		Document distinta_doc;
+		if(distinta.getDt_invio()==null)
+			 distinta_doc=inviaDistinta(context,distinta);
+		else{
+			distinta_doc = (Document) documentiContabiliService.getNodeByPath(distinta.getCMISPath(cmisService).getPath().concat("/").concat("Distinta n. ").concat(String.valueOf(distinta.getPg_distinta_def())).
+					concat(".pdf"));
+		}
 		
 		List<String> nodes = new ArrayList<String>();
-		
-		nodes.addAll(documentiContabiliService.getNodeRefDocumento(distinta.getEsercizio(),distinta.getCd_cds(),distinta.getPg_distinta_def(), "DISTINTA",true));
+		String nodo = (String) distinta_doc.getPropertyValue("alfcmis:nodeRef");
+		nodes.add(nodo);
 		
 		List dettagliRev=((DistintaCassiereComponentSession)createComponentSession()).dettagliDistinta(context.getUserContext(), distinta, it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_REV);
 		
