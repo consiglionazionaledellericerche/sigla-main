@@ -34,7 +34,20 @@ import org.apache.chemistry.opencmis.commons.exceptions.CmisContentAlreadyExists
 public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends AllegatoParentBulk> extends SimpleCRUDBP {
 	private static final long serialVersionUID = 1L;
 	protected SiglaCMISService cmisService;
-	private CRUDArchivioAllegati<T> crudArchivioAllegati = new CRUDArchivioAllegati<T>(getAllegatoClass(), this);
+	private CRUDArchivioAllegati<T> crudArchivioAllegati = new CRUDArchivioAllegati<T>(getAllegatoClass(), this) {
+		public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
+			addChildDetail(oggettobulk);
+			return super.addDetail(oggettobulk);
+		};
+		protected OggettoBulk getDetail(int i) {
+			OggettoBulk oggettoBulk = super.getDetail(i);
+			getChildDetail(oggettoBulk);
+			return oggettoBulk;
+		};
+		public boolean isGrowable() {
+			return isChildGrowable(super.isGrowable());
+		};
+	};
 			
 	protected abstract CMISPath getCMISPath(K allegatoParentBulk, boolean create) throws BusinessProcessException;
 	protected abstract Class<T> getAllegatoClass();
@@ -54,7 +67,15 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
 	public void openForm(javax.servlet.jsp.PageContext context,String action,String target) throws java.io.IOException,javax.servlet.ServletException {
 		openForm(context,action,target,"multipart/form-data");
 	}
+	protected boolean isChildGrowable(boolean isGrowable) {
+		return isGrowable;
+	}
+	
+	protected void getChildDetail(OggettoBulk oggettobulk) {		
+	}
 
+	protected void addChildDetail(OggettoBulk oggettobulk) {		
+	}
 	@Override
 	protected void initialize(ActionContext actioncontext)
 			throws BusinessProcessException {
