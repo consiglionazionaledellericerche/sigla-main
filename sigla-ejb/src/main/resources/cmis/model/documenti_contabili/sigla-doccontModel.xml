@@ -65,4 +65,16 @@
 			</properties>
 		</type>
 	</types>
+	<aspects>
+		<aspect name="doccont:rif_modalita_pagamentoAspect">
+			<title>Riferimento Modalita di Pagamento</title>
+			<description>Riferimento Modalita di Pagamento</description>
+			<properties>
+			    <property name="doccont:rif_modalita_pagamento">
+					<title>Riferimento Modalita di Pagamento</title>
+					<type>d:text</type>
+				</property>
+			</properties>			
+		</aspect>
+	</aspects>		
 </model>
