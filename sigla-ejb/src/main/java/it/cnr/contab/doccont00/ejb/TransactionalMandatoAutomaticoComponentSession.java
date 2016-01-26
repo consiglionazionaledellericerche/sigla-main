@@ -1,6 +1,9 @@
 package it.cnr.contab.doccont00.ejb;
 import java.rmi.*;
+import java.util.List;
 
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.jada.util.ejb.*;
 
 public class TransactionalMandatoAutomaticoComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements MandatoAutomaticoComponentSession {
@@ -396,6 +399,23 @@ public it.cnr.contab.doccont00.core.bulk.MandatoIBulk listaScadenzeAccertamentoP
 public java.lang.Boolean isDipendenteDaConguaglio(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.MandatoBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (java.lang.Boolean)invoke("isDipendenteDaConguaglio",new Object[] {
+			param0,
+			param1 });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public List<Rif_modalita_pagamentoBulk> findModPagObbligatorieAssociateAlMandato(it.cnr.jada.UserContext param0,V_mandato_reversaleBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		return (List<Rif_modalita_pagamentoBulk>)invoke("findModPagObbligatorieAssociateAlMandato",new Object[] {
 			param0,
 			param1 });
 	} catch(java.rmi.RemoteException e) {

@@ -201,7 +201,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 
 	public boolean isDetailButtonEnabled() {
 		StatoTrasmissione oggettobulk = (StatoTrasmissione) getModel();
-		return (!oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)) && getSelection().size() == 1;
+		return (!oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)) && (getSelection().size() == 1);
 	}
 
 	public boolean isSignButtonEnabled() {
@@ -364,6 +364,16 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 
 	@SuppressWarnings("unchecked")
 	public void sign(ActionContext actioncontext, FirmaOTPBulk firmaOTPBulk) throws Exception {
+		List<StatoTrasmissione> selectelElements = getSelectedElements(actioncontext);
+		if (selectelElements == null || selectelElements.isEmpty()){
+			throw new ApplicationException("Selezionare almeno un documento contabile!");
+		}
+		addSomethingToSelectedElements(actioncontext, selectelElements);
+		executeSign(actioncontext, selectelElements, firmaOTPBulk);
+	}
+	
+	protected void executeSign(ActionContext actioncontext, List<StatoTrasmissione> selectelElements, FirmaOTPBulk firmaOTPBulk) throws Exception{
+		EJBCommonServices.closeRemoteIterator(getIterator());		
 		String webScriptURL = documentiContabiliService.getRepositoyURL().concat("service/sigla/firma/doccont");
 		Map<String, String> subjectDN = documentiContabiliService.getCertSubjectDN(firmaOTPBulk.getUserName(), firmaOTPBulk.getPassword());
 		if (subjectDN == null)
@@ -374,16 +384,10 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 			throw new ApplicationException("Il codice fiscale \"" + codiceFiscale + "\" presente sul certicato di Firma, " +
 					"è diverso da quello dell'utente collegato \"" + utente.getCodiceFiscaleLDAP() +"\"!");
 		}
-		List<StatoTrasmissione> selectelElements = getSelectedElements(actioncontext);
-		if (selectelElements == null || selectelElements.isEmpty()){
-			throw new ApplicationException("Selezionare almeno un documento contabile!");
-		}
-		addSomethingToSelectedElements(actioncontext, selectelElements);
 		List<String> nodes = new ArrayList<String>();
 		for (StatoTrasmissione bulk : selectelElements) {
 			nodes.addAll(documentiContabiliService.getNodeRefDocumento(bulk, true));
-		}
-		
+		}		
 		PdfSignApparence pdfSignApparence = new PdfSignApparence();
 		pdfSignApparence.setNodes(nodes);
 		pdfSignApparence.setUsername(firmaOTPBulk.getUserName());
@@ -420,7 +424,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 			throw new BusinessProcessException(e);
 		} catch (Exception e) {
 			throw new BusinessProcessException(e);
-		} 
+		} 		
 	}
 	
 	protected void addSomethingToSelectedElements(ActionContext actioncontext, List<StatoTrasmissione> selectelElements) throws BusinessProcessException{		

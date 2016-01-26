@@ -1,5 +1,6 @@
 package it.cnr.contab.doccont00.bp;
 
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.cmis.service.CMISPath;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
@@ -9,6 +10,7 @@ import it.cnr.contab.doccont00.core.bulk.ReversaleIBulk;
 import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
+import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
@@ -28,16 +30,21 @@ import it.cnr.jada.persistency.sql.SimpleFindClause;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
 import org.apache.chemistry.opencmis.client.api.Document;
+import org.apache.chemistry.opencmis.client.api.Folder;
+import org.apache.pdfbox.util.PDFMergerUtility;
 /**
  * 
  * @author mspasiano
@@ -97,7 +104,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 	}
 	@Override
 	protected void aggiornaStato(ActionContext actioncontext, String stato, StatoTrasmissione...bulks) throws ComponentException, RemoteException {
-		EJBCommonServices.closeRemoteIterator(getIterator());		
+		EJBCommonServices.closeRemoteIterator(getIterator());
 		for (StatoTrasmissione v_mandato_reversaleBulk : bulks) {
 			if (v_mandato_reversaleBulk.getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN)) {				
 				MandatoIBulk mandato = new MandatoIBulk(v_mandato_reversaleBulk.getCd_cds(), v_mandato_reversaleBulk.getEsercizio(), v_mandato_reversaleBulk.getPg_documento_cont());
@@ -124,7 +131,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 	}
 	
 	@Override
-	@SuppressWarnings({ "unused", "unchecked" })
+	@SuppressWarnings({"unchecked" })
 	public void predisponiPerLaFirma(ActionContext actioncontext) throws BusinessProcessException{
 		try {
 			List<V_mandato_reversaleBulk> selectedElements = getSelectedElements(actioncontext);
@@ -216,5 +223,51 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 			}
 		}
 		selectelElements.addAll(adds);
+	}
+	
+	@Override
+	protected void executeSign(ActionContext actioncontext, List<StatoTrasmissione> selectelElements, FirmaOTPBulk firmaOTPBulk) throws Exception{
+		String message = "";
+		for (Iterator<StatoTrasmissione> iterator = selectelElements.iterator(); iterator.hasNext();) {
+			try {				
+				StatoTrasmissione statoTrasmissione = iterator.next();
+				if (statoTrasmissione.getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN)){
+					CMISPath cmisPath = statoTrasmissione.getCMISPath(cmisService);
+					Folder folderMandato = (Folder) cmisService.getNodeByPath(cmisPath);					
+					List<Rif_modalita_pagamentoBulk> result = Utility.createMandatoComponentSession().findModPagObbligatorieAssociateAlMandato(actioncontext.getUserContext(), 
+							(V_mandato_reversaleBulk) statoTrasmissione);
+					List<Document> childs = new ArrayList<Document>();
+					for (Rif_modalita_pagamentoBulk rif_modalita_pagamentoBulk : result) {
+						List<Document> allegati = documentiContabiliService.getAllegatoForModPag(folderMandato, rif_modalita_pagamentoBulk.getCd_modalita_pag());
+						if (allegati.isEmpty())
+							throw new ApplicationException("\nAl mandato n."+ statoTrasmissione.getPg_documento_cont()+ " non risulta allegato il documento con tipologia [" + 
+											rif_modalita_pagamentoBulk.getDs_modalita_pag() + "]" +
+											", pertanto è stato escluso dalla selezione.");
+						childs.addAll(allegati);
+					}
+					//Eseguo il merge dei documenti
+					PDFMergerUtility ut = new PDFMergerUtility();
+					ByteArrayOutputStream out = new ByteArrayOutputStream();
+					ut.setDestinationStream(out);
+					ut.addSource(documentiContabiliService.getStreamDocumento((V_mandato_reversaleBulk) statoTrasmissione));
+					for (Document document : childs) {
+						ut.addSource(document.getContentStream().getStream());						
+					}
+					try {
+						ut.mergeDocuments();
+					} catch (IOException _ex) {
+						throw new ApplicationException("\nAl mandato n."+ statoTrasmissione.getPg_documento_cont()+ " risulta allegato un documento non in formato PDF" + 
+								", pertanto è stato escluso dalla selezione.");						
+					}
+					cmisService.restoreSimpleDocument((V_mandato_reversaleBulk)statoTrasmissione, new ByteArrayInputStream(out.toByteArray()), "application/pdf", "Mandato n. "
+							+ statoTrasmissione.getPg_documento_cont() + ".pdf", cmisPath);					
+				}
+			} catch(ApplicationException _ex) {
+				iterator.remove();
+				message += _ex.getMessage();
+			}
+		}
+		super.executeSign(actioncontext, selectelElements, firmaOTPBulk);
+		setMessage("Firma effettuata correttamente." + message);
 	}
 }

@@ -1,6 +1,10 @@
 package it.cnr.contab.doccont00.ejb;
 
+import java.util.List;
+
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
+import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
@@ -26,4 +30,5 @@ it.cnr.contab.doccont00.core.bulk.MandatoIBulk esitaVariazioneBilancioDiRegolari
 java.lang.Boolean isCollegamentoSiopeCompleto (it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.MandatoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.contab.doccont00.core.bulk.MandatoIBulk listaScadenzeAccertamentoPerRegolarizzazione(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.MandatoIBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.lang.Boolean isDipendenteDaConguaglio (it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.MandatoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+List<Rif_modalita_pagamentoBulk> findModPagObbligatorieAssociateAlMandato(UserContext userContext, V_mandato_reversaleBulk mandato_reversaleBulk) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

@@ -1,9 +1,15 @@
 package it.cnr.contab.doccont00.action;
 
+import java.util.List;
+
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.doccont00.bp.AbstractFirmaDigitaleDocContBP;
 import it.cnr.contab.doccont00.bp.AllegatiDocContBP;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
+import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
@@ -116,7 +122,18 @@ public class FirmaDigitaleDocContAction extends ConsultazioniAction {
 			statoTrasmissioneBulk.setStato_trasmissione(statoTrasmissione);
 			bp.setModel(context, bulk);
 			AllegatiDocContBP allegatiDocContBP = (AllegatiDocContBP) context.createBusinessProcess("AllegatiDocContBP", new Object[] {"M"});
-			allegatiDocContBP.setModel(context, allegatiDocContBP.initializeModelForEdit(context, (OggettoBulk) bp.getSelectedElements(context).get(0)));
+			StatoTrasmissione  selectedStatoTrasmissione  = (StatoTrasmissione) bp.getSelectedElements(context).get(0);
+			if (selectedStatoTrasmissione.getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN)){
+				allegatiDocContBP.setAllegatiFormName("mandato");				
+				List<Rif_modalita_pagamentoBulk> result = Utility.createMandatoComponentSession().findModPagObbligatorieAssociateAlMandato(context.getUserContext(), 
+						(V_mandato_reversaleBulk) selectedStatoTrasmissione);
+				for (Rif_modalita_pagamentoBulk rif_modalita_pagamentoBulk : result) {
+					allegatiDocContBP.addToRifModalitaPagamento(rif_modalita_pagamentoBulk.getCd_modalita_pag(), rif_modalita_pagamentoBulk.getDs_modalita_pag());
+				}				
+			} else {
+				allegatiDocContBP.setAllegatiFormName("altro");
+			}
+			allegatiDocContBP.setModel(context, allegatiDocContBP.initializeModelForEdit(context, (OggettoBulk) selectedStatoTrasmissione));
 			allegatiDocContBP.setStatus(AllegatiDocContBP.EDIT);
 			context.addHookForward("close",this,"doRefresh");
 			return context.addBusinessProcess(allegatiDocContBP);

@@ -42,7 +42,14 @@
 			sqlTypeName="CHAR"
 			columnSize="1"
 			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+		<columnMapping
+			columnName="FL_ALL_OBBL_MANDATO"
+			propertyName="fl_all_obbl_mandato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />										
 		<columnMapping
 			columnName="DACR"
 			propertyName="dacr"
@@ -104,4 +111,6 @@
 		name="fl_utilizzabile_art35" />	
 	<persistentProperty
 		name="fl_cancellato" />				
+	<persistentProperty
+		name="fl_all_obbl_mandato" />					
 </SQLPersistentInfo>
