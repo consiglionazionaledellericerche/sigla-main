@@ -6,6 +6,7 @@ import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoKey;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk;
@@ -892,6 +893,24 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 							"E' possibile selezionare solo doc passivi dello stesso tipo COMPETENZA/RESIDUO.");
 				// creo mandato_riga
 				riga = creaMandatoRiga(aUC, mandato, docPassivo);
+				//controllo cap
+				if (riga.getBanca()!=null && (Rif_modalita_pagamentoBulk.BANCARIO.equals(riga.getBanca()
+						.getTi_pagamento()))){
+					if (riga.getCd_terzo()!=null){
+						TerzoBulk terzo = (TerzoBulk) getHome(aUC,
+								TerzoBulk.class).findByPrimaryKey(
+								new TerzoBulk(riga.getCd_terzo()));
+						if(terzo.getAnagrafico()!=null){
+							AnagraficoBulk anag = (AnagraficoBulk) getHome(aUC,
+									AnagraficoBulk.class).findByPrimaryKey(
+									new AnagraficoBulk(terzo.getCd_anag()));
+							if (anag.getTi_italiano_estero().equals(NazioneBulk.ITALIA))
+								if(terzo.getCap_comune_sede()==null)
+									throw new ApplicationException(
+											"Attenzione per la modalità di pagamento presente sul documento è necessario indicare il cap sul terzo.");
+						}
+					}
+				}
 				// estrae le eventuali note di credito/debito
 				docPassiviCollegati = ((MandatoIHome) getHome(aUC, mandato
 						.getClass())).findDocPassiviCollegati(docPassivo);
@@ -5758,7 +5777,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			 * if ( riga.getBanca() == null || riga.getBanca().getNumero_conto()
 			 * == null) //mandato di regolarizzazione return;
 			 */
-			if (riga.getBanca() == null
+		if (riga.getBanca() == null
 					|| Rif_modalita_pagamentoBulk.ALTRO.equals(riga.getBanca()
 							.getTi_pagamento())
 					|| Rif_modalita_pagamentoBulk.IBAN.equals(riga.getBanca()
