@@ -907,7 +907,7 @@
 		nullable="false"
 		inputType="TEXTAREA"
 		cols="75"
-		rows="4"
+		rows="2"
 		label="Beneficiario"
 		caseSensitiveSearch="false" />		
 	<fieldProperty
