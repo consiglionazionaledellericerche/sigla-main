@@ -32,6 +32,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.Log;
 import it.cnr.jada.util.action.AbstractPrintBP;
 import it.cnr.jada.util.action.FormController;
 import it.cnr.jada.util.action.RemoteDetailCRUDController;
@@ -70,6 +71,7 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 	protected DocumentiContabiliService documentiContabiliService;
 	protected String controlloCodiceFiscale;
 	private UtenteFirmaDettaglioBulk firmatario;
+	private static final Log log = Log.getInstance(CRUDDistintaCassiere1210BP.class);
 	
 	private final LetteraRemoteDetailCRUDController distintaCassiere1210LettereDaCollegare = new LetteraRemoteDetailCRUDController("DistintaCassiere1210LettereDaCollegare", Lettera_pagam_esteroBulk.class,
 			"distintaCassiere1210LettereDaCollegare","CNRDOCCONT00_EJB_DistintaCassiereComponentSession",this);
@@ -232,18 +234,20 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		Long numero_documento = Long.valueOf(((HttpActionContext)actioncontext).getParameter("numero_documento"));
 		String tipo = ((HttpActionContext)actioncontext).getParameter("tipo");
 		InputStream is = documentiContabiliService.getStreamDocumento(esercizio, cds, numero_documento, tipo);
-		if (is != null){
-			((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
-			OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
-			((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
-			byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
-			int buflength;
-			while ((buflength = is.read(buffer)) > 0) {
-				os.write(buffer,0,buflength);
-			}
-			is.close();
-			os.flush();
+		if (is == null) {
+			log.error("CMIS Object not found: " + esercizio + cds + numero_documento + tipo);
+			is = this.getClass().getResourceAsStream("/cmis/404.pdf");
+		}		
+		((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
+		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
+		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
+		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
+		int buflength;
+		while ((buflength = is.read(buffer)) > 0) {
+			os.write(buffer,0,buflength);
 		}
+		is.close();
+		os.flush();
 	}	
 	
 	public boolean isDistintaInviata() {
