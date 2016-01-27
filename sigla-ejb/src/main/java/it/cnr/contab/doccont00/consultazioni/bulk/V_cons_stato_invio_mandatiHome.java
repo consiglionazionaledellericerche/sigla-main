@@ -4,6 +4,7 @@
 */
 package it.cnr.contab.doccont00.consultazioni.bulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.service.ContabiliService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -52,7 +53,7 @@ public class V_cons_stato_invio_mandatiHome extends BulkHome {
 		V_cons_stato_invio_mandatiBulk cons = (V_cons_stato_invio_mandatiBulk)persistent;
 		List<String> nodeRefs;
 		try {
-			nodeRefs = contabiliService.getNodeRefContabile(cons.getEsercizio().intValue(), cons.getCd_cds(), cons.getPg_mandato());
+			nodeRefs = contabiliService.getNodeRefContabile(cons.getEsercizio().intValue(), cons.getCd_cds(), cons.getPg_mandato(), Numerazione_doc_contBulk.TIPO_MAN);
 			if (nodeRefs != null && !nodeRefs.isEmpty())
 				cons.setContabile("<button class='Button' style='width:60px;' onclick='cancelBubble(event); if (disableDblClick()) "+
 					"doVisualizzaSingolaContabile("+cons.getEsercizio()+",\""+cons.getCd_cds()+"\","+cons.getPg_mandato()+"); return false' "+
