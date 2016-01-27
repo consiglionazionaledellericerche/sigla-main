@@ -777,7 +777,14 @@ public AccertamentoPGiroBulk creaAccertamentoDiIncassoIVA( UserContext userConte
 		if ( config == null  || config.getVal01() == null )
 			throw new ApplicationException("Configurazione CNR: manca la definizione del CAPITOLO FINANZIARIO per l'annotazione di entrata su partita di giro");
 
-		V_voce_f_partita_giroBulk voce_f = new V_voce_f_partita_giroBulk( config.getVal01(), reversale.getEsercizio(), Elemento_voceHome.APPARTENENZA_CDS, Elemento_voceHome.GESTIONE_ENTRATE );
+		String tiVoce = null;
+		Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(reversale.getEsercizio()));
+        if (parametriCnr==null || !parametriCnr.getFl_nuovo_pdg())
+        	tiVoce = Elemento_voceHome.APPARTENENZA_CDS;
+       	else
+        	tiVoce = Elemento_voceHome.APPARTENENZA_CNR;
+
+        V_voce_f_partita_giroBulk voce_f = new V_voce_f_partita_giroBulk( config.getVal01(), reversale.getEsercizio(), tiVoce, Elemento_voceHome.GESTIONE_ENTRATE );
 		voce_f = (V_voce_f_partita_giroBulk) getHome( userContext, V_voce_f_partita_giroBulk.class ).findByPrimaryKey( voce_f );
 		if ( voce_f == null )
 			throw new ApplicationException("Impossibile recuperare CAPITOLO FINANZIARIO per l'annotazione di entrata su partita di giro");
