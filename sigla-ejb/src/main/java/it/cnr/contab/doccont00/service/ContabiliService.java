@@ -24,16 +24,17 @@ public class ContabiliService extends SiglaCMISService {
 	private transient static final Logger logger = LoggerFactory.getLogger(ContabiliService.class);
 	
 	public List<String> getNodeRefContabile(MandatoBulk mandato) throws ApplicationException{
-		return getNodeRefContabile(mandato.getEsercizio(), mandato.getCd_cds(), mandato.getPg_mandato());
+		return getNodeRefContabile(mandato.getEsercizio(), mandato.getCd_cds(), mandato.getPg_mandato(), "MAN");
 	}
 
-	public List<String> getNodeRefContabile(Integer esercizio, String cds, Long pgMandato) throws ApplicationException{
+	public List<String> getNodeRefContabile(Integer esercizio, String cds, Long pgMandato, String tipo) throws ApplicationException{
 		List<String> ids = new ArrayList<String>();
 		StringBuffer query = new StringBuffer("select doc.cmis:objectId from cmis:document doc ");
 		query.append(" join sigla_contabili_aspect:document contabili on doc.cmis:objectId = contabili.cmis:objectId");
 		query.append(" where contabili.sigla_contabili_aspect:esercizio = ").append(esercizio);
 		query.append(" and contabili.sigla_contabili_aspect:cds = '").append(cds).append("'");
 		query.append(" and contabili.sigla_contabili_aspect:num_mandato = ").append(pgMandato);
+		query.append(" and contabili.sigla_contabili_aspect:tipo = '").append(tipo).append("'");
 		query.append(" order by doc.cmis:creationDate DESC");
 		try {
 			ItemIterable<QueryResult> results = search(query);
@@ -50,8 +51,8 @@ public class ContabiliService extends SiglaCMISService {
 			return null;
 		}
 	}
-	public InputStream getStreamContabile(Integer esercizio, String cds, Long pgMandato) throws Exception{
-		List<String> ids = getNodeRefContabile(esercizio, cds, pgMandato);
+	public InputStream getStreamContabile(Integer esercizio, String cds, Long pgMandato, String tipo) throws Exception{
+		List<String> ids = getNodeRefContabile(esercizio, cds, pgMandato, tipo);
 		if (ids != null){
 			if (ids.size() == 1){
 				try{
@@ -79,6 +80,6 @@ public class ContabiliService extends SiglaCMISService {
 	}
 	
 	public InputStream getStreamContabile(MandatoBulk mandato) throws Exception{
-		return getStreamContabile(mandato.getEsercizio(), mandato.getCd_cds(), mandato.getPg_mandato());
+		return getStreamContabile(mandato.getEsercizio(), mandato.getCd_cds(), mandato.getPg_mandato(), "MAN");
 	}
 }
