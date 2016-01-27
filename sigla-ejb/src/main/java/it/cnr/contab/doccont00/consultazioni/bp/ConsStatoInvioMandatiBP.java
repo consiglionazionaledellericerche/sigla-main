@@ -1,6 +1,7 @@
 package it.cnr.contab.doccont00.consultazioni.bp;
 
 import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_mandatiBulk;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.service.ContabiliService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.action.ActionContext;
@@ -66,7 +67,7 @@ public class ConsStatoInvioMandatiBP extends ConsultazioniBP {
 		ut.setDestinationStream(new ByteArrayOutputStream());
 		for (V_cons_stato_invio_mandatiBulk cons : selectelElements) {
 			InputStream isToAdd = contabiliService.getStreamContabile(
-					cons.getEsercizio().intValue(), cons.getCd_cds(), cons.getPg_mandato());
+					cons.getEsercizio().intValue(), cons.getCd_cds(), cons.getPg_mandato(),Numerazione_doc_contBulk.TIPO_MAN);
 			if (isToAdd != null)
 				ut.addSource(isToAdd);
 		}
@@ -95,7 +96,7 @@ public class ConsStatoInvioMandatiBP extends ConsultazioniBP {
 		for (it.cnr.jada.util.action.SelectionIterator i = getSelection().iterator();i.hasNext();){
 			V_cons_stato_invio_mandatiBulk cons = (V_cons_stato_invio_mandatiBulk) getElementAt(actioncontext,i.nextIndex());
 			List<String> nodeRefs = contabiliService.getNodeRefContabile(cons.getEsercizio().intValue(), 
-					cons.getCd_cds(), cons.getPg_mandato());
+					cons.getCd_cds(), cons.getPg_mandato(), Numerazione_doc_contBulk.TIPO_MAN);
 			if (nodeRefs != null && !nodeRefs.isEmpty()){
 				contabiliEnabled =  true;
 				break;
@@ -108,7 +109,7 @@ public class ConsStatoInvioMandatiBP extends ConsultazioniBP {
 		Integer esercizio = Integer.valueOf(((HttpActionContext)actioncontext).getParameter("esercizio"));
 		String cds = ((HttpActionContext)actioncontext).getParameter("cds");
 		Long numero_mandato = Long.valueOf(((HttpActionContext)actioncontext).getParameter("numero_mandato"));
-		InputStream is = contabiliService.getStreamContabile(esercizio, cds, numero_mandato);
+		InputStream is = contabiliService.getStreamContabile(esercizio, cds, numero_mandato,Numerazione_doc_contBulk.TIPO_MAN);
 		if (is != null){
 			((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
 			OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
