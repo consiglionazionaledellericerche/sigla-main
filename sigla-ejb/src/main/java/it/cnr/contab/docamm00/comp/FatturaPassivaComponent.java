@@ -2692,7 +2692,8 @@ public void controllaQuadraturaObbligazioni(UserContext aUC,Fattura_passivaBulk 
 				java.math.BigDecimal delta = null;
 				if (fatturaPassiva.isEstera() &&
 					fatturaPassiva.getLettera_pagamento_estero() != null &&
-					fatturaPassiva.getLettera_pagamento_estero().getIm_pagamento() != null) {
+					fatturaPassiva.getLettera_pagamento_estero().getIm_pagamento() != null &&
+					fatturaPassiva.getLettera_pagamento_estero().getCd_sospeso() != null) {
 					if (fatturaPassiva.getLettera_pagamento_estero().getIm_pagamento().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) == 0) {
 						totale = calcolaTotaleObbligazionePer(aUC, scadenza, fatturaPassiva).abs();
 						delta = scadenza.getIm_scadenza().subtract(totale);
@@ -2708,7 +2709,7 @@ public void controllaQuadraturaObbligazioni(UserContext aUC,Fattura_passivaBulk 
 						if (deroga1210)
 							importoLettera = importoLettera.add(fatturaPassiva.getIm_totale_iva());
 						delta = importoLettera.subtract(totale);
-						if (delta.compareTo(new java.math.BigDecimal(0)) != 0 && fatturaPassiva.getLettera_pagamento_estero().getCd_sospeso() != null) {
+						if (delta.compareTo(new java.math.BigDecimal(0)) != 0) {
 							if (deroga1210)
 								throw new it.cnr.jada.comp.ApplicationException("La somma delle scadenze delle obbligazioni deve corrispondere all'importo della lettera di pagamento estero addizionato del totale IVA!");
 							else
@@ -2728,25 +2729,23 @@ public void controllaQuadraturaObbligazioni(UserContext aUC,Fattura_passivaBulk 
 					totale = calcolaTotaleObbligazionePer(aUC, scadenza, fatturaPassiva);//.abs();
 					delta = scadenza.getIm_scadenza().subtract(totale);
 				}
-				if (fatturaPassiva.getLettera_pagamento_estero() != null && fatturaPassiva.getLettera_pagamento_estero().getCd_sospeso() != null) {
-					if (delta.compareTo(new java.math.BigDecimal(0)) > 0) {
-						StringBuffer sb = new StringBuffer();
-						sb.append("Attenzione: La scadenza ");
-						sb.append(scadenza.getDs_scadenza());
-						sb.append(" di " + scadenza.getIm_scadenza().doubleValue() + " EUR");
-						sb.append(" è stata coperta solo per ");
-						sb.append(totale.doubleValue() + " EUR!");
-						throw new it.cnr.jada.comp.ApplicationException(sb.toString());
-					} else if (delta.compareTo(new java.math.BigDecimal(0)) < 0) {
-						StringBuffer sb = new StringBuffer();
-						sb.append("Attenzione: La scadenza ");
-						sb.append(scadenza.getDs_scadenza());
-						sb.append(" di " + scadenza.getIm_scadenza().doubleValue() + " EUR");
-						sb.append(" è scoperta per ");
-						sb.append(delta.abs().doubleValue() + " EUR!");
-						throw new it.cnr.jada.comp.ApplicationException(sb.toString());
-					}					
-				}
+				if (delta.compareTo(new java.math.BigDecimal(0)) > 0) {
+					StringBuffer sb = new StringBuffer();
+					sb.append("Attenzione: La scadenza ");
+					sb.append(scadenza.getDs_scadenza());
+					sb.append(" di " + scadenza.getIm_scadenza().doubleValue() + " EUR");
+					sb.append(" è stata coperta solo per ");
+					sb.append(totale.doubleValue() + " EUR!");
+					throw new it.cnr.jada.comp.ApplicationException(sb.toString());
+				} else if (delta.compareTo(new java.math.BigDecimal(0)) < 0) {
+					StringBuffer sb = new StringBuffer();
+					sb.append("Attenzione: La scadenza ");
+					sb.append(scadenza.getDs_scadenza());
+					sb.append(" di " + scadenza.getIm_scadenza().doubleValue() + " EUR");
+					sb.append(" è scoperta per ");
+					sb.append(delta.abs().doubleValue() + " EUR!");
+					throw new it.cnr.jada.comp.ApplicationException(sb.toString());
+				}					
 				controllaOmogeneitaTraTerzi(aUC, scadenza, (Vector)obbligazioniHash.get(scadenza));
 			}
 		}
