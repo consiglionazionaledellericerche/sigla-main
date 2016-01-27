@@ -26,6 +26,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.util.Log;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.ConsultazioniBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
@@ -67,7 +68,8 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 	private UtenteFirmaDettaglioBulk firmatario;
 	private static final String ZIP_CONTENT = "service/zipper/zipContent";
 	protected String controlloCodiceFiscale;
-
+	private static final Log log = Log.getInstance(AbstractFirmaDigitaleDocContBP.class);
+	
 	public AbstractFirmaDigitaleDocContBP() {
 		super();
 	}
@@ -348,18 +350,20 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 		Long numero_documento = Long.valueOf(((HttpActionContext)actioncontext).getParameter("numero_documento"));
 		String tipo = ((HttpActionContext)actioncontext).getParameter("tipo");
 		InputStream is = documentiContabiliService.getStreamDocumento(esercizio, cds, numero_documento, tipo);
-		if (is != null){
-			((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
-			OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
-			((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
-			byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
-			int buflength;
-			while ((buflength = is.read(buffer)) > 0) {
-				os.write(buffer,0,buflength);
-			}
-			is.close();
-			os.flush();
+		if (is == null) {
+			log.error("CMIS Object not found: " + esercizio + cds + numero_documento + tipo);
+			is = this.getClass().getResourceAsStream("/cmis/404.pdf");
 		}
+		((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
+		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
+		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
+		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
+		int buflength;
+		while ((buflength = is.read(buffer)) > 0) {
+			os.write(buffer,0,buflength);
+		}
+		is.close();
+		os.flush();
 	}
 
 	@SuppressWarnings("unchecked")

@@ -43,18 +43,12 @@ public class Lettera_pagam_esteroHome extends BulkHome {
 		persistent =  super.completeBulkRowByRow(userContext, persistent);
 		if (persistent instanceof Lettera_pagam_esteroBulk){
 			Lettera_pagam_esteroBulk bulk = (Lettera_pagam_esteroBulk)persistent;
-			List<String> nodeRefs;
-			try {
-				if (!bulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)){
-					nodeRefs = documentiContabiliService.getNodeRefDocumento(bulk);
-					if (nodeRefs != null && !nodeRefs.isEmpty())
-						bulk.setDocumento("<button class='Button' style='width:60px;' onclick='cancelBubble(event); if (disableDblClick()) "+
-							"doVisualizzaSingoloDocumento("+bulk.getEsercizio()+",\""+bulk.getCd_cds()+"\","+bulk.getPg_documento_cont()+",\""+bulk.getCd_tipo_documento_cont()+"\"); return false' "+
-							"onMouseOver='mouseOver(this)' onMouseOut='mouseOut(this)' onMouseDown='mouseDown(this)' onMouseUp='mouseUp(this)' "+
-							"title='Visualizza Documento Contabile'><img align='middle' class='Button' src='img/application-pdf.png'></button>");			
-				}		
-			} catch (ApplicationException _ex) {				
-			}
+			if (!bulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)){
+					bulk.setDocumento("<button class='Button' style='width:60px;' onclick='cancelBubble(event); if (disableDblClick()) "+
+						"doVisualizzaSingoloDocumento("+bulk.getEsercizio()+",\""+bulk.getCd_cds()+"\","+bulk.getPg_documento_cont()+",\""+bulk.getCd_tipo_documento_cont()+"\"); return false' "+
+						"onMouseOver='mouseOver(this)' onMouseOut='mouseOut(this)' onMouseDown='mouseDown(this)' onMouseUp='mouseUp(this)' "+
+						"title='Visualizza Documento Contabile'><img align='middle' class='Button' src='img/application-pdf.png'></button>");			
+			}		
 		}
 		return persistent;
 	}
