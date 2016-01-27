@@ -161,7 +161,7 @@
 		property="pg_documento_cont"
 		inputType="TEXT"
 		enabledOnSearch="true"
-		enabledOnFreeSearch="false"						
+		enabledOnFreeSearch="true"						
 		label="Nr. documento" />
 	<fieldProperty
 		name="pg_documento_cont_padre"
