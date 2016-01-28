@@ -165,7 +165,7 @@ ORDER BY ESERCIZIO,CD_CDS,PG_REVERSALE]]>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-1" style="TNR10" x="354" y="4" width="214" height="36">
-					<printWhenExpression><![CDATA[false]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{ESERCIZIO}.compareTo( new java.math.BigDecimal(2016) ) < 0]]></printWhenExpression>
 				</reportElement>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -180,12 +180,12 @@ ORDER BY ESERCIZIO,CD_CDS,PG_REVERSALE]]>
 			</staticText>
 			<rectangle>
 				<reportElement key="rectangle-1" style="TNR10" x="6" y="48" width="562" height="20">
-					<printWhenExpression><![CDATA[false]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{ESERCIZIO}.compareTo( new java.math.BigDecimal(2016) ) < 0]]></printWhenExpression>
 				</reportElement>
 			</rectangle>
 			<staticText>
 				<reportElement key="staticText-2" style="TNR10" x="8" y="51" width="556" height="14">
-					<printWhenExpression><![CDATA[false]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{ESERCIZIO}.compareTo( new java.math.BigDecimal(2016) ) < 0]]></printWhenExpression>
 				</reportElement>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>

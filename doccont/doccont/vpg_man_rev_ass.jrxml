@@ -236,7 +236,7 @@ ORDER BY 1,2,3,4,pg_reversale]]>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-5" style="TNR10" x="354" y="4" width="214" height="36">
-					<printWhenExpression><![CDATA[false]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{ESERCIZIO}.compareTo( new java.math.BigDecimal(2016) ) < 0]]></printWhenExpression>
 				</reportElement>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -251,12 +251,12 @@ ORDER BY 1,2,3,4,pg_reversale]]>
 			</staticText>
 			<rectangle>
 				<reportElement key="rectangle-3" style="TNR10" x="6" y="48" width="562" height="20">
-					<printWhenExpression><![CDATA[false]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{ESERCIZIO}.compareTo( new java.math.BigDecimal(2016) ) < 0]]></printWhenExpression>
 				</reportElement>
 			</rectangle>
 			<staticText>
 				<reportElement key="staticText-6" style="TNR10" x="8" y="51" width="556" height="14">
-					<printWhenExpression><![CDATA[false]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{ESERCIZIO}.compareTo( new java.math.BigDecimal(2016) ) < 0]]></printWhenExpression>
 				</reportElement>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>

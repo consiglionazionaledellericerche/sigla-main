@@ -34,7 +34,7 @@
 		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Idrpt" class="java.lang.Long" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Long(1088545)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Long(1088805)]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select * from V_CONS_DISP_COMP_RES_SINTESI v
