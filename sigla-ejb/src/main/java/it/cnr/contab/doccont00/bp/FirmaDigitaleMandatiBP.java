@@ -134,13 +134,15 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 	@SuppressWarnings({"unchecked" })
 	public void predisponiPerLaFirma(ActionContext actioncontext) throws BusinessProcessException{
 		try {
-			List<V_mandato_reversaleBulk> selectedElements = getSelectedElements(actioncontext);
+			List<StatoTrasmissione> selectedElements = getSelectedElements(actioncontext);
 			if (selectedElements == null || selectedElements.isEmpty())
 					throw new ApplicationException("Selezionare almeno un elemento!");
 			Format dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			String message = "";
-			DistintaCassiereComponentSession distintaCassiereComponentSession = Utility.createDistintaCassiereComponentSession();
-			for (V_mandato_reversaleBulk v_mandato_reversaleBulk : selectedElements) {
+			EJBCommonServices.closeRemoteIterator(getIterator());			
+			addSomethingToSelectedElements(actioncontext, selectedElements);
+			for (StatoTrasmissione statoTrasmissione : selectedElements) {
+				V_mandato_reversaleBulk v_mandato_reversaleBulk = (V_mandato_reversaleBulk)statoTrasmissione;
 				if (v_mandato_reversaleBulk.isMandato()) {
 					if (!Utility.createMandatoComponentSession().isCollegamentoSiopeCompleto(
 							actioncontext.getUserContext(),new MandatoIBulk(v_mandato_reversaleBulk.getCd_cds(),v_mandato_reversaleBulk.getEsercizio(),v_mandato_reversaleBulk.getPg_documento_cont()))) {
@@ -155,9 +157,6 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 					}					
 				}				
 				predisponi(actioncontext, v_mandato_reversaleBulk, dateFormat);
-				for (V_mandato_reversaleBulk child : distintaCassiereComponentSession.findMandatiCollegati(actioncontext.getUserContext(), v_mandato_reversaleBulk)) {
-					predisponi(actioncontext, child, dateFormat);
-				}
 			}
 			setMessage("Predisposizione effettuata correttamente." + message);
 		} catch (ApplicationException e) {
