@@ -222,7 +222,10 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 				throw handleException(e);			
 			}
 		}
-		selectelElements.addAll(adds);
+		for (V_mandato_reversaleBulk v_mandato_reversaleBulk : adds) {
+			if (!selectelElements.contains(v_mandato_reversaleBulk))
+				selectelElements.add(v_mandato_reversaleBulk);
+		}		
 	}
 	
 	@Override
