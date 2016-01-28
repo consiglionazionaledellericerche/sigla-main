@@ -194,7 +194,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 				print);
 		CMISPath cmisPath = v_mandato_reversaleBulk.getCMISPath(cmisService);
 		v_mandato_reversaleBulk.setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO);
-		Document node = cmisService.storePrintDocument(v_mandato_reversaleBulk, report, cmisPath);
+		Document node = cmisService.restoreSimpleDocument(v_mandato_reversaleBulk, report.getInputStream(), report.getContentType(), report.getName(), cmisPath);
 		cmisService.makeVersionable(node);
 		aggiornaStato(actioncontext, MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO, v_mandato_reversaleBulk);		
 	}
