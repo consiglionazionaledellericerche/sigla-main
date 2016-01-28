@@ -14,8 +14,11 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Codici_rapporti_inpsBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Codici_rapporti_inpsHome;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoHome;
+import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.RegioneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.RegioneHome;
 import it.cnr.contab.compensi00.docs.bulk.BonusBulk;
@@ -1359,12 +1362,29 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 **/
 	public CompensoBulk doContabilizzaCompensoCofi(UserContext userContext,
 			CompensoBulk compenso) throws ComponentException {
-
+	try{
 		Long tmp = compenso.getPgCompensoPerClone();
 		Long current = compenso.getPg_compenso();
 		if(compenso.getStato_liquidazione()!=null && !compenso.getStato_liquidazione().equals(compenso.LIQ))
 			throw new it.cnr.jada.comp.ApplicationException(
-					"Lo stato della liquidazione non ï¿½ compatibile");
+					"Lo stato della liquidazione non è compatibile");
+		if(compenso.getTerzo()!=null &&  compenso.getBanca()!=null && (Rif_modalita_pagamentoBulk.BANCARIO.equals(compenso.getBanca()
+					.getTi_pagamento()))){
+				if (compenso.getCd_terzo()!=null){
+					
+						TerzoBulk terzo = (TerzoBulk) getHome(userContext,
+								TerzoBulk.class).findByPrimaryKey(
+								new TerzoBulk(compenso.getCd_terzo()));
+						if(terzo.getPg_comune_sede()!=null){
+							ComuneBulk comune = (ComuneBulk) getHome(userContext,
+									ComuneBulk.class).findByPrimaryKey(
+									new ComuneBulk(terzo.getPg_comune_sede()));
+							if (comune.getTi_italiano_estero().equals(NazioneBulk.ITALIA) && terzo.getCap_comune_sede()==null)
+									throw new ApplicationException(
+											"Attenzione per la modalità di pagamento presente sul documento è necessario indicare il cap sul terzo.");
+						}
+					}										
+			}
 		validaCompensoPerContabilizzazione(userContext, compenso);
 		contabilizzaCompensoCofi(userContext, compenso);
 
@@ -1373,7 +1393,10 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			compenso.setPg_compenso(current);
 		}
 		return reloadCompenso(userContext, compenso);
+	} catch (Throwable t) {
+		throw handleException(t);
 	}
+}
 
 	// ^^@@
 	/**
@@ -5042,10 +5065,10 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 						.getStato_pagamento_fondo_eco()))
 			if (compenso.isDaMissione())
 				throw new it.cnr.jada.comp.ApplicationException(
-						"Il compenso non puï¿½ essere associato a fondo economale poichï¿½ l'importo dell'anticipo ï¿½ superiore al netto percipiente");
+						"Il compenso non può essere associato a fondo economale poichï¿½ l'importo dell'anticipo ï¿½ superiore al netto percipiente");
 			else
 				throw new it.cnr.jada.comp.ApplicationException(
-						"Il compenso non puï¿½ essere associato a fondo economale poichï¿½ l'importo netto percipiente ï¿½ negativo");
+						"Il compenso non può essere associato a fondo economale poichï¿½ l'importo netto percipiente ï¿½ negativo");
 	}
 
 	/**
