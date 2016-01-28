@@ -115,4 +115,8 @@ public class V_mandato_reversaleKey extends OggettoBulk implements KeyedPersiste
 			calculateKeyHashCode(getCd_tipo_documento_cont())+			
 			calculateKeyHashCode(getPg_documento_cont());
 	}	
+	@Override
+	public boolean equals(Object obj) {
+		return equalsByPrimaryKey(obj);
+	}
 }
