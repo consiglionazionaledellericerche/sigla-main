@@ -253,11 +253,11 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 			List<StatoTrasmissione> selectedElements = getSelectedElements(context);
 			if (selectedElements == null || selectedElements.isEmpty())
 					throw new ApplicationException("Selezionare almeno un elemento!");
-			EJBCommonServices.closeRemoteIterator(getIterator());
 			for (StatoTrasmissione v_mandato_reversaleBulk : selectedElements) {				
 				aggiornaStato(context, MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO, v_mandato_reversaleBulk);
-				Folder folderMandato = (Folder) cmisService.getNodeByPath(v_mandato_reversaleBulk.getCMISPath(cmisService));
-				folderMandato.deleteTree(true, UnfileObject.DELETE, false);				
+				//Remmato per problemi sul documentale
+				//Folder folderMandato = (Folder) cmisService.getNodeByPath(v_mandato_reversaleBulk.getCMISPath(cmisService));
+				//folderMandato.deleteTree(true, UnfileObject.DELETE, false);				
 			}
 			setMessage("Cancellazione effettuata correttamente.");
 		} catch (ApplicationException e) {
@@ -377,7 +377,6 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 	}
 	
 	protected void executeSign(ActionContext actioncontext, List<StatoTrasmissione> selectelElements, FirmaOTPBulk firmaOTPBulk) throws Exception{
-		EJBCommonServices.closeRemoteIterator(getIterator());		
 		String webScriptURL = documentiContabiliService.getRepositoyURL().concat("service/sigla/firma/doccont");
 		Map<String, String> subjectDN = documentiContabiliService.getCertSubjectDN(firmaOTPBulk.getUserName(), firmaOTPBulk.getPassword());
 		if (subjectDN == null)
