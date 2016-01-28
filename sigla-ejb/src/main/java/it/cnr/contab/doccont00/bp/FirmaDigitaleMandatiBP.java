@@ -248,21 +248,23 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 						childs.addAll(allegati);
 					}
 					//Eseguo il merge dei documenti
-					PDFMergerUtility ut = new PDFMergerUtility();
-					ByteArrayOutputStream out = new ByteArrayOutputStream();
-					ut.setDestinationStream(out);
-					ut.addSource(documentiContabiliService.getStreamDocumento((V_mandato_reversaleBulk) statoTrasmissione));
-					for (Document document : childs) {
-						ut.addSource(document.getContentStream().getStream());						
+					if (!childs.isEmpty()) {
+						PDFMergerUtility ut = new PDFMergerUtility();
+						ByteArrayOutputStream out = new ByteArrayOutputStream();
+						ut.setDestinationStream(out);
+						ut.addSource(documentiContabiliService.getStreamDocumento((V_mandato_reversaleBulk) statoTrasmissione));
+						for (Document document : childs) {
+							ut.addSource(document.getContentStream().getStream());						
+						}
+						try {
+							ut.mergeDocuments();
+						} catch (IOException _ex) {
+							throw new ApplicationException("\nAl mandato n."+ statoTrasmissione.getPg_documento_cont()+ " risulta allegato un documento non in formato PDF" + 
+									", pertanto è stato escluso dalla selezione.");						
+						}
+						cmisService.restoreSimpleDocument((V_mandato_reversaleBulk)statoTrasmissione, new ByteArrayInputStream(out.toByteArray()), "application/pdf", "Mandato n. "
+								+ statoTrasmissione.getPg_documento_cont() + ".pdf", cmisPath);						
 					}
-					try {
-						ut.mergeDocuments();
-					} catch (IOException _ex) {
-						throw new ApplicationException("\nAl mandato n."+ statoTrasmissione.getPg_documento_cont()+ " risulta allegato un documento non in formato PDF" + 
-								", pertanto è stato escluso dalla selezione.");						
-					}
-					cmisService.restoreSimpleDocument((V_mandato_reversaleBulk)statoTrasmissione, new ByteArrayInputStream(out.toByteArray()), "application/pdf", "Mandato n. "
-							+ statoTrasmissione.getPg_documento_cont() + ".pdf", cmisPath);					
 				}
 			} catch(ApplicationException _ex) {
 				iterator.remove();
