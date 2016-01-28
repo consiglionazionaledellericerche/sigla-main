@@ -6,6 +6,7 @@ import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoKey;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
@@ -901,12 +902,11 @@ IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
 						TerzoBulk terzo = (TerzoBulk) getHome(aUC,
 								TerzoBulk.class).findByPrimaryKey(
 								new TerzoBulk(riga.getCd_terzo()));
-						if(terzo.getAnagrafico()!=null){
-							AnagraficoBulk anag = (AnagraficoBulk) getHome(aUC,
-									AnagraficoBulk.class).findByPrimaryKey(
-									new AnagraficoBulk(terzo.getCd_anag()));
-							if (anag.getTi_italiano_estero().equals(NazioneBulk.ITALIA))
-								if(terzo.getCap_comune_sede()==null)
+						if(terzo.getPg_comune_sede()!=null){
+							ComuneBulk comune = (ComuneBulk) getHome(aUC,
+									ComuneBulk.class).findByPrimaryKey(
+									new ComuneBulk(terzo.getPg_comune_sede()));
+							if (comune.getTi_italiano_estero().equals(NazioneBulk.ITALIA) && terzo.getCap_comune_sede()==null)
 									throw new ApplicationException(
 											"Attenzione per la modalità di pagamento presente sul documento è necessario indicare il cap sul terzo.");
 						}
