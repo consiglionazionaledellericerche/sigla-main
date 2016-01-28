@@ -2524,14 +2524,34 @@ public Documento_generico_rigaBulk docGenerico_creaDocumentoGenericoRiga (UserCo
 		riga.setCd_modalita_pag_uo_cds( mp.getCd_modalita_pag());
 		riga.setModalita_pagamento_uo_cds( new Rif_modalita_pagamentoBulk( mp.getCd_modalita_pag()) );
 
-		//banca
-		sql = getHome( userContext, BancaBulk.class ).createSQLBuilder();
-		sql.addClause( "AND", "cd_terzo", sql.EQUALS, terzo_uo.getCd_terzo());
-		sql.addClause( "AND", "ti_pagamento", sql.EQUALS, Rif_modalita_pagamentoBulk.BANCARIO);
-		sql.addClause( "AND", "fl_cancellato", sql.EQUALS, Boolean.FALSE);
-		sql.addSQLClause( "AND", "cd_terzo_delegato", sql.ISNULL, null);	
-		sql.addOrderBy( "FL_CC_CDS DESC");
-//		sql.addClause( "AND", "fl_cc_cds", sql.EQUALS, Boolean.TRUE);		
+		 sql = getHome(userContext, BancaBulk.class).createSQLBuilder();
+		 sql.addClause( "AND", "cd_terzo", sql.EQUALS, terzo_uo.getCd_terzo());
+		 sql.addClause( "AND", "ti_pagamento", sql.EQUALS, Rif_modalita_pagamentoBulk.BANCARIO);
+		 sql.addClause( "AND", "fl_cancellato", sql.EQUALS, Boolean.FALSE);
+		 sql.addSQLClause("AND","CODICE_IBAN",sql.ISNOTNULL,null);
+		 sql.addSQLClause( "AND", "cd_terzo_delegato", sql.ISNULL, null);	
+			
+		try {
+			if (!Utility.createParametriCnrComponentSession().getParametriCnr(userContext,CNRUserContext.getEsercizio(userContext)).getFl_tesoreria_unica().booleanValue())	
+				sql.addSQLClause("AND", "BANCA.FL_CC_CDS",sql.EQUALS, "Y");
+			else{
+				Configurazione_cnrBulk config = new Configurazione_cnrBulk(
+						"CONTO_CORRENTE_SPECIALE",
+						"ENTE", 
+						"*", 
+						new Integer(0));
+				it.cnr.contab.config00.bulk.Configurazione_cnrHome home = (it.cnr.contab.config00.bulk.Configurazione_cnrHome)getHome(userContext, config);
+				List configurazioni = home.find(config);
+				if ((configurazioni != null) && (configurazioni.size() == 1)) {
+					Configurazione_cnrBulk configBanca = (Configurazione_cnrBulk)configurazioni.get(0);
+					sql.addSQLClause("AND", "BANCA.ABI",sql.EQUALS,configBanca.getVal01());
+					sql.addSQLClause("AND", "BANCA.CAB",sql.EQUALS,configBanca.getVal02());
+					sql.addSQLClause("AND", "BANCA.NUMERO_CONTO",sql.CONTAINS, configBanca.getVal03());			       
+				}
+			}
+		} catch (Exception e) {
+			throw handleException(e);
+		}	
 		result = getHome( userContext, BancaBulk.class ).fetchAll( sql );
 		if ( result == null || result.size() == 0 )
 				throw handleException( new ApplicationException(" Impossibile emettere la reversale: l'unità organizzativa " + documento.getCd_unita_organizzativa() + " non ha coordinate bancarie associate"));
