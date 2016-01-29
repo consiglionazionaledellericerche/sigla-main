@@ -15,6 +15,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.OrderedHashtable;
 
 import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.Property;
 
 public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, StatoTrasmissione> {
 	private static final long serialVersionUID = 1L;
@@ -95,7 +96,9 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
 	@Override
 	protected void completeAllegato(AllegatoDocContBulk allegato) {
 		super.completeAllegato(allegato);
-		allegato.setRifModalitaPagamento(allegato.getDocument().getProperty("doccont:rif_modalita_pagamento").getValueAsString());
+		Property<?> property = allegato.getDocument().getProperty("doccont:rif_modalita_pagamento");
+		if (property != null && property.getValue() != null)
+			allegato.setRifModalitaPagamento(property.getValueAsString());
 	}
 	
 	@Override
