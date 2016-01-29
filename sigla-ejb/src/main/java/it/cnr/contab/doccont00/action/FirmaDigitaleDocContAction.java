@@ -84,7 +84,11 @@ public class FirmaDigitaleDocContAction extends ConsultazioniAction {
 			statoTrasmissioneBulk = ((StatoTrasmissione)bulk);
 			statoTrasmissioneBulk.setStato_trasmissione(statoTrasmissione);
 			bp.setModel(context, bulk);
-			bp.predisponiPerLaFirma(context);
+			try {
+				bp.predisponiPerLaFirma(context);							
+			} finally {
+				bp.openIterator(context);				
+			}
 			bp.openIterator(context);
 			return context.findDefaultForward();
 		} catch(Exception e) {
@@ -167,43 +171,14 @@ public class FirmaDigitaleDocContAction extends ConsultazioniAction {
 			statoTrasmissioneBulk = ((StatoTrasmissione)bulk);
 			statoTrasmissioneBulk.setStato_trasmissione(statoTrasmissione);
 			bp.setModel(context, bulk);
-			bp.sign(context, firmaOTPBulk);			
-			bp.openIterator(context);
+			try {
+				bp.sign(context, firmaOTPBulk);
+			} finally {
+				bp.openIterator(context);				
+			}
 		} catch(Exception e) {
 			return handleException(context,e);
 		}
 		return context.findDefaultForward();
-	}	
-	
-	public Forward doInvia(ActionContext context) {
-		try {
-			BulkBP firmaOTPBP = (BulkBP) context.createBusinessProcess("FirmaOTPBP");
-			firmaOTPBP.setModel(context, new FirmaOTPBulk());
-			context.addHookForward("firmaOTP",this,"doBackInvia");			
-			return context.addBusinessProcess(firmaOTPBP);
-		} catch(Exception e) {
-			return handleException(context,e);
-		}
 	}
-	
-	public Forward doBackInvia(ActionContext context) {		
-		AbstractFirmaDigitaleDocContBP bp = (AbstractFirmaDigitaleDocContBP)context.getBusinessProcess();
-		OggettoBulk bulk = bp.getModel();
-		StatoTrasmissione statoTrasmissioneBulk = ((StatoTrasmissione)bulk);
-		HookForward caller = (HookForward)context.getCaller();
-		FirmaOTPBulk firmaOTPBulk = (FirmaOTPBulk) caller.getParameter("firmaOTP");
-		try {
-			fillModel(context);
-			String statoTrasmissione = statoTrasmissioneBulk.getStato_trasmissione();
-			bulk = (OggettoBulk)bp.getBulkInfo().getBulkClass().newInstance();
-			statoTrasmissioneBulk = ((StatoTrasmissione)bulk);
-			statoTrasmissioneBulk.setStato_trasmissione(statoTrasmissione);
-			bp.setModel(context, bulk);
-			bp.invia(context, firmaOTPBulk);			
-			bp.openIterator(context);
-		} catch(Exception e) {
-			return handleException(context,e);
-		}
-		return context.findDefaultForward();
-	}		
 }
