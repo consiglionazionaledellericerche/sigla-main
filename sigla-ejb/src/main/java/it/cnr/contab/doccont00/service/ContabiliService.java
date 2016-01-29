@@ -34,7 +34,8 @@ public class ContabiliService extends SiglaCMISService {
 		query.append(" where contabili.sigla_contabili_aspect:esercizio = ").append(esercizio);
 		query.append(" and contabili.sigla_contabili_aspect:cds = '").append(cds).append("'");
 		query.append(" and contabili.sigla_contabili_aspect:num_mandato = ").append(pgMandato);
-		query.append(" and contabili.sigla_contabili_aspect:tipo = '").append(tipo).append("'");
+		if (esercizio.compareTo(2016) >= 0)
+			query.append(" and contabili.sigla_contabili_aspect:tipo = '").append(tipo).append("'");
 		query.append(" order by doc.cmis:creationDate DESC");
 		try {
 			ItemIterable<QueryResult> results = search(query);
