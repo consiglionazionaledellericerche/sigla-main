@@ -139,6 +139,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 					throw new ApplicationException("Selezionare almeno un elemento!");
 			Format dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			String message = "";
+			EJBCommonServices.closeRemoteIterator(getIterator());			
 			addSomethingToSelectedElements(actioncontext, selectedElements);
 			for (StatoTrasmissione statoTrasmissione : selectedElements) {
 				V_mandato_reversaleBulk v_mandato_reversaleBulk = (V_mandato_reversaleBulk)statoTrasmissione;
