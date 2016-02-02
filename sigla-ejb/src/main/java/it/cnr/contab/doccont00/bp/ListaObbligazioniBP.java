@@ -187,6 +187,8 @@ public void delete(ActionContext context) throws it.cnr.jada.action.BusinessProc
 			{
 				ObbligazioneBulk bulk = (ObbligazioneBulk) getElementAt( context, i.nextIndex());
 				bulk = (ObbligazioneBulk) crud.inizializzaBulkPerModifica( context.getUserContext(), bulk );
+				if (bulk.isObbligazioneResiduo() || bulk.isImpegnoResiduo())
+					throw new MessageToUser( "Eliminazione Impegni Residui non possibile!" );
 				bulk.setToBeDeleted();
 				crud.eliminaConBulk(context.getUserContext(),bulk);
 			}
