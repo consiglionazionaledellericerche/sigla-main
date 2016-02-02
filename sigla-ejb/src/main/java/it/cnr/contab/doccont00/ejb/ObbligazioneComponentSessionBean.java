@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 import it.cnr.contab.doccont00.comp.ObbligazioneComponent;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
@@ -569,6 +571,42 @@ public boolean existAssElementoVoceNew(it.cnr.jada.UserContext param0, it.cnr.co
 		Boolean result = ((ObbligazioneComponent)componentObj).existAssElementoVoceNew(param0,param1);
 		component_invocation_succes(param0,componentObj);
 		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+public void callRiportaAvantiRequiresNew(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		((ObbligazioneComponent)componentObj).callRiportaAvanti(param0,param1);
+		component_invocation_succes(param0,componentObj);
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+public void callRiportaIndietroRequiresNew(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		((ObbligazioneComponent)componentObj).callRiportaIndietro(param0,param1);
+		component_invocation_succes(param0,componentObj);
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
 		component_invocation_succes(param0,componentObj);
 		throw e;

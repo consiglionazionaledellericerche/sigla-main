@@ -7,6 +7,7 @@
 package it.cnr.contab.doccont00.bp;
 
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
+import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
@@ -21,6 +22,7 @@ import it.cnr.jada.action.Config;
 import it.cnr.jada.action.MessageToUser;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 
 /**
  * @author rpagano
@@ -216,5 +218,37 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 					!isDirty() &&
 					doc != null &&
 					((ObbligazioneBulk)doc).isDocRiportato();
+	}
+
+	public void riportaAvanti(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException 
+	{
+		try 
+		{
+			if (this.isDirty()) {
+				this.setMessage("Confermare le modifiche apportate prima di effettuare l'operazione di Riporta Avanti.");
+			} else {
+				rollbackUserTransaction();
+				((ObbligazioneComponentSession)EJBCommonServices.createEJB(getComponentSessioneName())).callRiportaAvantiRequiresNew( context.getUserContext(), (IDocumentoContabileBulk) getModel());
+				edit( context, getModel(), true );
+			}			
+		} catch(Exception e) {
+			throw handleException(e);
+		}
+	}
+	
+	public void riportaIndietro(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException 
+	{
+		try 
+		{
+			if (this.isDirty()) {
+				this.setMessage("Confermare le modifiche apportate prima di effettuare l'operazione di Riporta Indietro.");
+			} else {
+				rollbackUserTransaction();
+				((ObbligazioneComponentSession)EJBCommonServices.createEJB(getComponentSessioneName())).callRiportaIndietroRequiresNew( context.getUserContext(), (IDocumentoContabileBulk) getModel());
+				edit( context, getModel(), true );
+			}			
+		} catch(Exception e) {
+			throw handleException(e);
+		}
 	}
 }
