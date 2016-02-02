@@ -84,6 +84,7 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		public LetteraRemoteDetailCRUDController(String s, Class class1,
 				String s1, String s2, FormController formcontroller) {
 			super(s, class1, s1, s2, formcontroller);
+			setPageSize(1000);
 		}
 		public Lettera_pagam_esteroBulk getLettera(int index) {
 			return (Lettera_pagam_esteroBulk) getDetailsPage().get(index);
