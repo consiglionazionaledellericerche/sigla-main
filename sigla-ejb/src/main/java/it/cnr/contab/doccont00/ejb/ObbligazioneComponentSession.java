@@ -5,10 +5,6 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.comp.ComponentException;
-
 @Remote
 public interface ObbligazioneComponentSession extends it.cnr.jada.ejb.CRUDComponentSession, it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession, it.cnr.jada.ejb.PrintComponentSession {
 void aggiornaCogeCoanInDifferita(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk param1,java.util.Map param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
@@ -41,4 +37,6 @@ it.cnr.jada.bulk.PrimaryKeyHashtable getOldRipartizioneCdrVoceLinea(it.cnr.jada.
 void validaIncaricoRepertorio(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk param1, it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk param2, it.cnr.jada.persistency.sql.CompoundFindClause param3) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException,it.cnr.jada.persistency.PersistencyException;
 List<it.cnr.contab.prevent00.bulk.V_assestatoBulk> listaAssestatoSpese (it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException,it.cnr.jada.persistency.PersistencyException;
 boolean existAssElementoVoceNew(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException;
+void callRiportaAvantiRequiresNew(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+void callRiportaIndietroRequiresNew(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }
