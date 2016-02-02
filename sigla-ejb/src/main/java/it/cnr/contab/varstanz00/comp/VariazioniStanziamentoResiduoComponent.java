@@ -940,7 +940,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			} catch (IntrospectionException e) {
 				throw new ComponentException(e);
 		}
-		cercaProgettiResidui(usercontext,var_stanz_res);	
+		//cercaProgettiResidui(usercontext,var_stanz_res);	
 		return super.modificaConBulk(usercontext, var_stanz_res);
 	}
 	public OggettoBulk creaConBulk(UserContext usercontext, OggettoBulk oggettobulk)throws ComponentException {
@@ -964,7 +964,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			} catch (IntrospectionException e) {
 				throw new ComponentException(e);
 		}
-		cercaProgettiResidui(usercontext,var_stanz_res);
+		//cercaProgettiResidui(usercontext,var_stanz_res);
 		return var_stanz_res;
 	}
 	public void cercaProgettiResidui(UserContext usercontext, OggettoBulk oggettobulk){
