@@ -94,7 +94,7 @@ public SQLBuilder selectCapitoloByClause(AccertamentoBulk acc, V_voce_f_partita_
 		PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
 		Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(bulk.getEsercizio()));
 		
-		if (parCNR.getFl_nuovo_pdg()==null || parCNR.getFl_nuovo_pdg().equals("N"))
+		if (parCNR.getFl_nuovo_pdg()==null || !parCNR.getFl_nuovo_pdg())
 			sql.addClause("AND", "ti_appartenenza", SQLBuilder.EQUALS, Elemento_voceHome.APPARTENENZA_CDS );
 	}	
 	sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );
