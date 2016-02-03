@@ -387,4 +387,23 @@ public List<V_mandato_reversaleBulk> findMandatiCollegati(UserContext param0,
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
+public List<V_mandato_reversaleBulk> findReversaliCollegate(UserContext param0,
+		V_mandato_reversaleBulk param1)
+		throws ComponentException, RemoteException {
+	try {
+		List<V_mandato_reversaleBulk> result = ((DistintaCassiereComponent)componentObj).findReversaliCollegate(param0,param1);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
 }
