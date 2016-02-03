@@ -3272,11 +3272,13 @@ public class DistintaCassiereComponent extends
 			for (Iterator i = list.iterator(); i.hasNext();) {
 				V_mandato_reversaleBulk bulk = (V_mandato_reversaleBulk) i
 						.next();
-				for (Iterator iter = lista.iterator(); iter.hasNext();) {
-					V_mandato_reversaleBulk copia = (V_mandato_reversaleBulk) iter.next();
-					if (copia.getPg_documento_cont().compareTo(bulk.getPg_documento_cont())==0 && copia.getCd_tipo_documento_cont().compareTo(bulk.getCd_tipo_documento_cont())!=0)
-						throw new ApplicationException(
-								"Risultano presenti in distinta sia il mandato che la reversale n." + bulk.getPg_documento_cont());
+				if(distinta.getFl_flusso().booleanValue()){
+					for (Iterator iter = lista.iterator(); iter.hasNext();) {
+						V_mandato_reversaleBulk copia = (V_mandato_reversaleBulk) iter.next();
+						if (copia.getPg_documento_cont().compareTo(bulk.getPg_documento_cont())==0 && copia.getCd_tipo_documento_cont().compareTo(bulk.getCd_tipo_documento_cont())!=0)
+							throw new ApplicationException(
+									"Risultano presenti in distinta sia il mandato che la reversale n." + bulk.getPg_documento_cont());
+					}
 				}
 				if (Utility.createParametriCnrComponentSession()
 						.getParametriCnr(userContext, distinta.getEsercizio())
