@@ -3268,10 +3268,16 @@ public class DistintaCassiereComponent extends
 			SQLBuilder sql = selectDistinta_cassiere_detCollByClause(
 					userContext, distinta, V_mandato_reversaleBulk.class, null);
 			List list = home.fetchAll(sql);
-
+			List lista= home.fetchAll(sql);
 			for (Iterator i = list.iterator(); i.hasNext();) {
 				V_mandato_reversaleBulk bulk = (V_mandato_reversaleBulk) i
 						.next();
+				for (Iterator iter = lista.iterator(); iter.hasNext();) {
+					V_mandato_reversaleBulk copia = (V_mandato_reversaleBulk) iter.next();
+					if (copia.getPg_documento_cont().compareTo(bulk.getPg_documento_cont())==0 && copia.getCd_tipo_documento_cont().compareTo(bulk.getCd_tipo_documento_cont())!=0)
+						throw new ApplicationException(
+								"Risultano presenti in distinta sia il mandato che la reversale n." + bulk.getPg_documento_cont());
+				}
 				if (Utility.createParametriCnrComponentSession()
 						.getParametriCnr(userContext, distinta.getEsercizio())
 						.getFl_siope().booleanValue()) {
@@ -4404,12 +4410,13 @@ public class DistintaCassiereComponent extends
 					VDocumentiFlussoBulk doc=(VDocumentiFlussoBulk)c.next();
 					if(doc.getCdSiope()!=null){
 						if(oldDoc!=null && oldDoc.getCdSiope().compareTo(doc.getCdSiope())!=0 && doc.getCdCup()==null && totAssSiope.compareTo(totAssCup)!=0 && totAssCup.compareTo(BigDecimal.ZERO)!=0){
-							clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
-							clas.setCodiceCgu(oldDoc.getCdSiope());
-							clas.setImporto((totAssSiope.subtract(totAssCup)).setScale(2, BigDecimal.ROUND_HALF_UP));
-							totAssCup=BigDecimal.ZERO; 
-							totAssSiope=BigDecimal.ZERO; 
-							infoben.getClassificazione().add(clas);
+								clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
+								clas.setCodiceCgu(oldDoc.getCdSiope());
+								clas.setImporto((totAssSiope.subtract(totAssCup)).setScale(2, BigDecimal.ROUND_HALF_UP));
+								totAssCup=BigDecimal.ZERO; 
+								totAssSiope=BigDecimal.ZERO; 
+								infoben.getClassificazione().add(clas);
+							
 						}
 						clas=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
 						clas.setCodiceCgu(doc.getCdSiope());
@@ -4420,10 +4427,15 @@ public class DistintaCassiereComponent extends
 							salta=false; 
 						}
 						else
-							if(oldDoc!=null &&oldDoc.getCdSiope().compareTo(doc.getCdSiope())==0  && (oldDoc.getCdTipoDocumentoAmm().compareTo(doc.getCdTipoDocumentoAmm())!=0|| oldDoc.getPgDocAmm().compareTo(doc.getPgDocAmm())!=0)){ 
-								totAssSiope=totAssSiope.add(doc.getImportoCge());
-								if( doc.getCdCup()==null)
+							if(oldDoc!=null &&oldDoc.getCdSiope().compareTo(doc.getCdSiope())==0 ){// && (oldDoc.getCdTipoDocumentoAmm().compareTo(doc.getCdTipoDocumentoAmm())!=0|| oldDoc.getPgDocAmm().compareTo(doc.getPgDocAmm())!=0)){ 
+								if( doc.getCdCup()==null){
+									totAssSiope=totAssSiope.add(doc.getImportoCge());
 									salta=true;
+								}
+								if(doc.getImDocumento().compareTo(totAssSiope)!=0){
+									totAssSiope=totAssSiope.add(doc.getImDocumento().subtract(totAssSiope));
+									salta=false;
+								}
 							}
 							else {
 								if(totAssCup.compareTo(BigDecimal.ZERO)!=0){
@@ -4447,8 +4459,9 @@ public class DistintaCassiereComponent extends
 							}else 
 								 infoben.setCausale("CUP "+doc.getCdCup());
 						}
-						else
+						else{
 								clas.setImporto(doc.getImportoCge().setScale(2, BigDecimal.ROUND_HALF_UP));
+						}
 						oldDoc=doc;
 						if (!salta)
 							infoben.getClassificazione().add(clas);
