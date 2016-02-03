@@ -367,6 +367,8 @@
 		<columnFieldProperty
 		name="im_documento_cont" />
 		<columnFieldProperty
+		name="im_ritenute" />
+		<columnFieldProperty
 		name="im_pagato_incassato" />
 		<columnFieldProperty
 		name="stato" />
@@ -482,6 +484,8 @@
 		name="ti_documento_cont" />
 		<columnFieldProperty
 		name="im_documento_cont" />
+		<columnFieldProperty
+		name="im_ritenute" />
 		<columnFieldProperty
 		name="im_pagato_incassato" />
 		<columnFieldProperty
