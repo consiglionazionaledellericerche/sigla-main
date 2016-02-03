@@ -4666,4 +4666,12 @@ public class DistintaCassiereComponent extends
 			throw handleException(e);
 		}
 	}	
+	public List<V_mandato_reversaleBulk> findReversaliCollegate(UserContext usercontext, V_mandato_reversaleBulk v_mandato_reversaleBulk) throws ComponentException{
+		try {
+			return ((V_mandato_reversaleHome)getHome(usercontext, V_mandato_reversaleBulk.class)).findReversaliCollegate(v_mandato_reversaleBulk);
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+	}
+
 }
