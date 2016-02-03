@@ -375,7 +375,6 @@
 	<fieldProperty
 		name="im_commissioni_lettera"
 		property="lettera_pagamento_estero.im_commissioni"
-		readonlyProperty="ROStatoTrasmissioneLettera"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		nullable="false"

@@ -790,7 +790,6 @@
 		name="im_commissioni_lettera"
 		property="lettera_pagamento_estero.im_commissioni"
 		inputType="TEXT"
-		readonlyProperty="ROStatoTrasmissioneLettera"
 		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		nullable="false"
 		label="Commissioni" />
