@@ -248,6 +248,8 @@ public Forward doConfermaInvio(ActionContext context,int option) {
 		if (option == OptionBP.YES_BUTTON) {
 			CRUDDistintaCassiereBP bp = (CRUDDistintaCassiereBP) getBusinessProcess( context );
 			bp.inviaDistinta(context,(Distinta_cassiereBulk) bp.getModel());
+			bp.setMessage("Salvataggio effettuato correttamente.");
+			
 		}
 		return context.findDefaultForward();
 	} catch(Throwable e) {
