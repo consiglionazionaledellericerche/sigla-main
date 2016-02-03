@@ -14,12 +14,13 @@ import java.io.InputStream;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.axiom.attachments.ByteArrayDataSource;
 import org.apache.chemistry.opencmis.client.api.CmisObject;
-import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.opencmis.client.api.QueryResult;
@@ -216,11 +217,11 @@ public class DocumentiContabiliService extends SiglaCMISService {
 		logger.debug("Inviata distinta PEC");
 	}
 
-	public List<Document> getAllegatoForModPag(Folder folderMandato, String modPag) {
-		List<Document> documents = new ArrayList<Document>();
+	public Set<String> getAllegatoForModPag(Folder folderMandato, String modPag) {
+		Set<String> documents = new HashSet<String>();
 		for (CmisObject child : folderMandato.getChildren()) {
 			if (modPag.equals(child.getPropertyValue("doccont:rif_modalita_pagamento")))
-				documents.add((Document) child);			
+				documents.add(child.getId());			
 		}		
 		return documents;
 	}	
