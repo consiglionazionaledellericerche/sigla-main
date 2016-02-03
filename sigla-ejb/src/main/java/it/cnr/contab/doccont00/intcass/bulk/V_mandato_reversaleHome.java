@@ -109,6 +109,23 @@ public Collection findDocContabiliAnnullatiDaRitrasmettere( Distinta_cassiereBul
 		sql.addClause( "AND", "cd_unita_organizzativa", sql.EQUALS, docContabile.getCd_unita_organizzativa());
 		return fetchAll( sql );
 	}
+
+	/* ritorna la collezione dei mandati figli */
+	public List<V_mandato_reversaleBulk> findReversaliCollegate( V_mandato_reversaleBulk docContabile ) throws PersistencyException
+	{	
+		SQLBuilder sql = createSQLBuilder();
+		sql.addClause( "AND", "cd_tipo_documento_cont", sql.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
+		sql.addClause( "AND", "pg_documento_cont_padre", sql.EQUALS, docContabile.getPg_documento_cont());
+		sql.addClause( "AND", "cd_tipo_documento_cont_padre", sql.EQUALS, docContabile.getCd_tipo_documento_cont());
+		sql.openParenthesis( "AND");
+		sql.addClause( "AND", "pg_documento_cont", sql.NOT_EQUALS, docContabile.getPg_documento_cont());
+		sql.addClause( "OR", "cd_tipo_documento_cont", sql.NOT_EQUALS, docContabile.getCd_tipo_documento_cont());
+		sql.closeParenthesis();
+		sql.addClause( "AND", "esercizio", sql.EQUALS, docContabile.getEsercizio());	
+		sql.addClause( "AND", "cd_cds", sql.EQUALS, docContabile.getCd_cds());
+		sql.addClause( "AND", "cd_unita_organizzativa", sql.EQUALS, docContabile.getCd_unita_organizzativa());
+		return fetchAll( sql );
+	}
 	
 	/* ritorna la collezione dei documenti contabili figli */
 	public Collection findDocContabiliCollegati( V_mandato_reversaleBulk docContabile ) throws PersistencyException
