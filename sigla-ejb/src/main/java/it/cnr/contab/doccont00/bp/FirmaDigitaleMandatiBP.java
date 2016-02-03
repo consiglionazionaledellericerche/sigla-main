@@ -38,8 +38,10 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.apache.chemistry.opencmis.client.api.Document;
@@ -231,16 +233,16 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 	protected void executeSign(ActionContext actioncontext, List<StatoTrasmissione> selectelElements, FirmaOTPBulk firmaOTPBulk) throws Exception{
 		String message = "";
 		for (Iterator<StatoTrasmissione> iterator = selectelElements.iterator(); iterator.hasNext();) {
-			try {				
+			try {
 				StatoTrasmissione statoTrasmissione = iterator.next();
 				if (statoTrasmissione.getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN)){
 					CMISPath cmisPath = statoTrasmissione.getCMISPath(cmisService);
 					Folder folderMandato = (Folder) cmisService.getNodeByPath(cmisPath);					
 					List<Rif_modalita_pagamentoBulk> result = Utility.createMandatoComponentSession().findModPagObbligatorieAssociateAlMandato(actioncontext.getUserContext(), 
 							(V_mandato_reversaleBulk) statoTrasmissione);
-					List<Document> childs = new ArrayList<Document>();
+					Set<String> childs = new HashSet<String>();
 					for (Rif_modalita_pagamentoBulk rif_modalita_pagamentoBulk : result) {
-						List<Document> allegati = documentiContabiliService.getAllegatoForModPag(folderMandato, rif_modalita_pagamentoBulk.getCd_modalita_pag());
+						Set<String> allegati = documentiContabiliService.getAllegatoForModPag(folderMandato, rif_modalita_pagamentoBulk.getCd_modalita_pag());
 						if (allegati.isEmpty())
 							throw new ApplicationException("\nAl mandato n."+ statoTrasmissione.getPg_documento_cont()+ " non risulta allegato il documento con tipologia [" + 
 											rif_modalita_pagamentoBulk.getDs_modalita_pag() + "]" +
@@ -253,8 +255,8 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 						ByteArrayOutputStream out = new ByteArrayOutputStream();
 						ut.setDestinationStream(out);
 						ut.addSource(documentiContabiliService.getStreamDocumento((V_mandato_reversaleBulk) statoTrasmissione));
-						for (Document document : childs) {
-							ut.addSource(document.getContentStream().getStream());						
+						for (String documentId : childs) {
+							ut.addSource(((Document)documentiContabiliService.getNodeByNodeRef(documentId)).getContentStream().getStream());						
 						}
 						try {
 							ut.mergeDocuments();
