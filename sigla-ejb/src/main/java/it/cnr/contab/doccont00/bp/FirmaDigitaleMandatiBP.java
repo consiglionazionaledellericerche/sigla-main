@@ -107,6 +107,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 	@Override
 	protected void aggiornaStato(ActionContext actioncontext, String stato, StatoTrasmissione...bulks) throws ComponentException, RemoteException {
 		EJBCommonServices.closeRemoteIterator(getIterator());
+		DistintaCassiereComponentSession distintaCassiereComponentSession = Utility.createDistintaCassiereComponentSession();
 		for (StatoTrasmissione v_mandato_reversaleBulk : bulks) {
 			if (v_mandato_reversaleBulk.getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN)) {				
 				MandatoIBulk mandato = new MandatoIBulk(v_mandato_reversaleBulk.getCd_cds(), v_mandato_reversaleBulk.getEsercizio(), v_mandato_reversaleBulk.getPg_documento_cont());
@@ -118,20 +119,26 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 					mandato.setDt_firma(null);					
 				mandato.setToBeUpdated();
 				getComponentSession().modificaConBulk(actioncontext.getUserContext(), mandato);
+				for (StatoTrasmissione statoTrasmissione : distintaCassiereComponentSession.findReversaliCollegate(actioncontext.getUserContext(), (V_mandato_reversaleBulk) v_mandato_reversaleBulk)) {
+					aggiornaStatoReversale(actioncontext, statoTrasmissione, stato);
+				}			
 			} else {
-				ReversaleIBulk reversale = new ReversaleIBulk(v_mandato_reversaleBulk.getCd_cds(), v_mandato_reversaleBulk.getEsercizio(), v_mandato_reversaleBulk.getPg_documento_cont());
-				reversale = (ReversaleIBulk) getComponentSession().findByPrimaryKey(actioncontext.getUserContext(), reversale);
-				reversale.setStato_trasmissione(stato);
-				if (stato.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
-					reversale.setDt_firma(EJBCommonServices.getServerTimestamp());
-				else
-					reversale.setDt_firma(null);					
-				reversale.setToBeUpdated();
-				getComponentSession().modificaConBulk(actioncontext.getUserContext(), reversale);					
+				aggiornaStatoReversale(actioncontext, v_mandato_reversaleBulk, stato);
 			}			
 		}		
 	}
-	
+
+	private void aggiornaStatoReversale(ActionContext actioncontext, StatoTrasmissione v_mandato_reversaleBulk, String stato) throws ComponentException, RemoteException {
+		ReversaleIBulk reversale = new ReversaleIBulk(v_mandato_reversaleBulk.getCd_cds(), v_mandato_reversaleBulk.getEsercizio(), v_mandato_reversaleBulk.getPg_documento_cont());
+		reversale = (ReversaleIBulk) getComponentSession().findByPrimaryKey(actioncontext.getUserContext(), reversale);
+		reversale.setStato_trasmissione(stato);
+		if (stato.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
+			reversale.setDt_firma(EJBCommonServices.getServerTimestamp());
+		else
+			reversale.setDt_firma(null);					
+		reversale.setToBeUpdated();
+		getComponentSession().modificaConBulk(actioncontext.getUserContext(), reversale);		
+	}
 	@Override
 	@SuppressWarnings({"unchecked" })
 	public void predisponiPerLaFirma(ActionContext actioncontext) throws BusinessProcessException{
