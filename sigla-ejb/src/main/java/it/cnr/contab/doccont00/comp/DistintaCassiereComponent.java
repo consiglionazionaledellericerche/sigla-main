@@ -1598,12 +1598,12 @@ public class DistintaCassiereComponent extends
 			Distinta_cassiereBulk distinta, V_mandato_reversaleBulk docContabile)
 			throws ComponentException {
 		try {
-			if(!tesoreriaUnica(userContext, distinta))
+			if(tesoreriaUnica(userContext, distinta))
 				aggiornaStatoDocContabile(userContext, docContabile,
-					MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+						MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA);
 			else
 				aggiornaStatoDocContabile(userContext, docContabile,
-					MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA);
+					MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
 			String schema = it.cnr.jada.util.ejb.EJBCommonServices
 					.getDefaultSchema();
 			LoggableStatement ps = null;
@@ -1793,12 +1793,12 @@ public class DistintaCassiereComponent extends
 			it.cnr.jada.UserContext userContext, Distinta_cassiereBulk distinta)
 			throws ComponentException {
 		try {
-			if(!tesoreriaUnica(userContext, distinta))
-				aggiornaStatoDocContabili(userContext, distinta,
-					MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
-			else
+			if(tesoreriaUnica(userContext, distinta))
 				aggiornaStatoDocContabili(userContext, distinta,
 						MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA);
+			else
+				aggiornaStatoDocContabili(userContext, distinta,
+						MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
 			String schema = it.cnr.jada.util.ejb.EJBCommonServices
 					.getDefaultSchema();
 			LoggableStatement ps = null;
@@ -2895,6 +2895,7 @@ public class DistintaCassiereComponent extends
 				Class bulkClass, CompoundFindClause clauses)
 				throws ComponentException {	
 			try{
+				Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);	
 			SQLBuilder sql = getHome(userContext, V_mandato_reversaleBulk.class,
 					"V_MANDATO_REVERSALE_DISTINTA").createSQLBuilder();
 	 
@@ -2938,7 +2939,12 @@ public class DistintaCassiereComponent extends
 									sql.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
 							
 							  sql.addSQLClause("AND","(V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT) IN ("+lista_mandati+ ")");
+							  
+							  sql.openParenthesis("AND");
 							  sql.addSQLClause("AND","V_MANDATO_REVERSALE_DISTINTA.CD_CDS_ORIGINE",sql.EQUALS,cds_old);
+							  sql.addSQLClause("OR","V_MANDATO_REVERSALE_DISTINTA.CD_CDS",sql.EQUALS,ente.getUnita_padre().getCd_unita_organizzativa());
+							  sql.closeParenthesis();
+							  
 							  sql.closeParenthesis();
 						}
 					    cds_old=det.getCd_cds_origine();
@@ -2962,7 +2968,13 @@ public class DistintaCassiereComponent extends
 									sql.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
 							
 							  sql.addSQLClause("AND","(V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT) IN ("+lista_reversali+ ")");
+							  
+							  
+							  sql.openParenthesis("AND");
 							  sql.addSQLClause("AND","V_MANDATO_REVERSALE_DISTINTA.CD_CDS_ORIGINE",sql.EQUALS,cds_old_rev);
+							  sql.addSQLClause("OR","V_MANDATO_REVERSALE_DISTINTA.CD_CDS",sql.EQUALS,ente.getUnita_padre().getCd_unita_organizzativa());
+							  sql.closeParenthesis();
+							 
 							  sql.closeParenthesis();
 						}
 					    cds_old_rev=det.getCd_cds_origine();
@@ -2986,7 +2998,11 @@ public class DistintaCassiereComponent extends
 							sql.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
 					
 					  sql.addSQLClause("AND","(V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT) IN ("+lista_mandati+ ")");
+					  
+					  sql.openParenthesis("AND");
 					  sql.addSQLClause("AND","V_MANDATO_REVERSALE_DISTINTA.CD_CDS_ORIGINE",sql.EQUALS,cds_old);
+					  sql.addSQLClause("OR","V_MANDATO_REVERSALE_DISTINTA.CD_CDS",sql.EQUALS,ente.getUnita_padre().getCd_unita_organizzativa());
+					  sql.closeParenthesis();
 					  sql.closeParenthesis();
 				}
 				if(lista_reversali!=null){
@@ -2999,7 +3015,11 @@ public class DistintaCassiereComponent extends
 							sql.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
 					
 					  sql.addSQLClause("AND","(V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT) IN ("+lista_reversali+ ")");
+					  
+					  sql.openParenthesis("AND");
 					  sql.addSQLClause("AND","V_MANDATO_REVERSALE_DISTINTA.CD_CDS_ORIGINE",sql.EQUALS,cds_old_rev);
+					  sql.addSQLClause("OR","V_MANDATO_REVERSALE_DISTINTA.CD_CDS",sql.EQUALS,ente.getUnita_padre().getCd_unita_organizzativa());
+					  sql.closeParenthesis();
 					  sql.closeParenthesis();
 				}
 				
@@ -3272,12 +3292,21 @@ public class DistintaCassiereComponent extends
 			for (Iterator i = list.iterator(); i.hasNext();) {
 				V_mandato_reversaleBulk bulk = (V_mandato_reversaleBulk) i
 						.next();
-				if(distinta.getFl_flusso().booleanValue()){
-					for (Iterator iter = lista.iterator(); iter.hasNext();) {
-						V_mandato_reversaleBulk copia = (V_mandato_reversaleBulk) iter.next();
-						if (copia.getPg_documento_cont().compareTo(bulk.getPg_documento_cont())==0 && copia.getCd_tipo_documento_cont().compareTo(bulk.getCd_tipo_documento_cont())!=0)
-							throw new ApplicationException(
-									"Risultano presenti in distinta sia il mandato che la reversale n." + bulk.getPg_documento_cont());
+				if(tesoreriaUnica(userContext, distinta)){
+					Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
+							.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
+					if (sess.getVal01(userContext, new Integer(0), null, "COSTANTI",
+							"BLOCCO_UNICITA_PG_MANREV") != null &&
+						sess.getVal01(userContext, new Integer(0), null, "COSTANTI",
+									"BLOCCO_UNICITA_PG_MANREV").compareTo("S")==0){
+						if(distinta.getFl_flusso().booleanValue()){
+							for (Iterator iter = lista.iterator(); iter.hasNext();) {
+								V_mandato_reversaleBulk copia = (V_mandato_reversaleBulk) iter.next();
+								if (copia.getPg_documento_cont().compareTo(bulk.getPg_documento_cont())==0 && copia.getCd_tipo_documento_cont().compareTo(bulk.getCd_tipo_documento_cont())!=0)
+									throw new ApplicationException(
+											"Risultano presenti in distinta sia il mandato che la reversale n." + bulk.getPg_documento_cont());
+							}
+						}
 					}
 				}
 				if (Utility.createParametriCnrComponentSession()
