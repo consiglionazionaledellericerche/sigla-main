@@ -1,7 +1,6 @@
 package it.cnr.contab.doccont00.consultazioni.bp;
 
-import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_mandatiBulk;
-import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio;
 import it.cnr.contab.doccont00.service.ContabiliService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.action.ActionContext;
@@ -23,12 +22,12 @@ import java.util.List;
 import org.apache.http.HttpStatus;
 import org.apache.pdfbox.util.PDFMergerUtility;
 
-public class ConsStatoInvioMandatiBP extends ConsultazioniBP {
+public class ConsStatoInvioBP extends ConsultazioniBP {
 	private static final long serialVersionUID = 1L;
 	private ContabiliService contabiliService;
 	private boolean contabiliEnabled;
 	
-	public ConsStatoInvioMandatiBP() {
+	public ConsStatoInvioBP() {
 		super();
 	}
 	
@@ -58,16 +57,16 @@ public class ConsStatoInvioMandatiBP extends ConsultazioniBP {
 	
 	@SuppressWarnings("unchecked")
 	public void scaricaContabili(ActionContext actioncontext) throws Exception {
-		List<V_cons_stato_invio_mandatiBulk> selectelElements = getSelectedElements(actioncontext);
+		List<V_cons_stato_invio> selectelElements = getSelectedElements(actioncontext);
 		if (selectelElements == null || selectelElements.isEmpty()){
 			((HttpActionContext)actioncontext).getResponse().setStatus(HttpStatus.SC_NO_CONTENT);
 			return;
 		}
 		PDFMergerUtility ut = new PDFMergerUtility();
 		ut.setDestinationStream(new ByteArrayOutputStream());
-		for (V_cons_stato_invio_mandatiBulk cons : selectelElements) {
+		for (V_cons_stato_invio cons : selectelElements) {
 			InputStream isToAdd = contabiliService.getStreamContabile(
-					cons.getEsercizio().intValue(), cons.getCd_cds(), cons.getPg_mandato(),Numerazione_doc_contBulk.TIPO_MAN);
+					cons.getEsercizio().intValue(), cons.getCd_cds(), cons.getProgressivo(), cons.getTipo());
 			if (isToAdd != null)
 				ut.addSource(isToAdd);
 		}
@@ -94,9 +93,9 @@ public class ConsStatoInvioMandatiBP extends ConsultazioniBP {
 	public void setContabiliEnabled(ActionContext actioncontext) throws BusinessProcessException, ApplicationException {
 		contabiliEnabled =  false;
 		for (it.cnr.jada.util.action.SelectionIterator i = getSelection().iterator();i.hasNext();){
-			V_cons_stato_invio_mandatiBulk cons = (V_cons_stato_invio_mandatiBulk) getElementAt(actioncontext,i.nextIndex());
+			V_cons_stato_invio cons = (V_cons_stato_invio) getElementAt(actioncontext,i.nextIndex());
 			List<String> nodeRefs = contabiliService.getNodeRefContabile(cons.getEsercizio().intValue(), 
-					cons.getCd_cds(), cons.getPg_mandato(), Numerazione_doc_contBulk.TIPO_MAN);
+					cons.getCd_cds(), cons.getProgressivo(), cons.getTipo());
 			if (nodeRefs != null && !nodeRefs.isEmpty()){
 				contabiliEnabled =  true;
 				break;
@@ -109,7 +108,7 @@ public class ConsStatoInvioMandatiBP extends ConsultazioniBP {
 		Integer esercizio = Integer.valueOf(((HttpActionContext)actioncontext).getParameter("esercizio"));
 		String cds = ((HttpActionContext)actioncontext).getParameter("cds");
 		Long numero_mandato = Long.valueOf(((HttpActionContext)actioncontext).getParameter("numero_mandato"));
-		InputStream is = contabiliService.getStreamContabile(esercizio, cds, numero_mandato,Numerazione_doc_contBulk.TIPO_MAN);
+		InputStream is = contabiliService.getStreamContabile(esercizio, cds, numero_mandato,((V_cons_stato_invio)getBulkClass().newInstance()).getTipo());
 		if (is != null){
 			((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
 			OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();

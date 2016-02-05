@@ -14,4 +14,5 @@ public interface StatoTrasmissione extends AllegatoParentBulk{
 	public String getCd_unita_organizzativa();
 	public Long getPg_documento_cont();
 	public String getCd_tipo_documento_cont();
+	public String getCMISName();
 }
