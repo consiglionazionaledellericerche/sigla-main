@@ -27,7 +27,11 @@
 		CRUDReversaleBP bp = (CRUDReversaleBP)BusinessProcess.getBusinessProcess(request);
 		bp.openFormWindow(pageContext); 
 %>
-
+<script language="JavaScript">
+function doVisualizzaContabile() {	
+  doPrint('genericdownload/<%=bp.getContabileFileName()%>?methodName=scaricaContabile&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+}
+</script>
 <table class="Panel">
 	<tr><td colspan=2>
 	<%

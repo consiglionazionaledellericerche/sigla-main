@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -93,7 +94,8 @@ public class DocumentiContabiliService extends SiglaCMISService {
 	}
 
 	public List<String> getNodeRefDocumento(StatoTrasmissione bulk, boolean fullNodeRef) throws ApplicationException{
-		return getNodeRefDocumento(bulk.getEsercizio(), bulk.getCd_cds(), bulk.getPg_documento_cont(), bulk.getCd_tipo_documento_cont(), fullNodeRef);
+		CmisObject cmisObject = getNodeByPath(bulk.getCMISPath(this).getPath() + "/" + bulk.getCMISName());
+		return Arrays.asList(fullNodeRef ? cmisObject.getProperty(ALFCMIS_NODEREF).getValueAsString(): cmisObject.getId());
 	}
 
 	public List<String> getNodeRefDocumento(Integer esercizio, String cds, Long pgDocumento, String tipo) throws ApplicationException{

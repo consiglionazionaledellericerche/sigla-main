@@ -3,11 +3,12 @@
 * Date 17/03/2006
 */
 package it.cnr.contab.doccont00.consultazioni.bulk;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.util.action.CRUDBP;
-public class V_cons_stato_invio_mandatiBulk extends OggettoBulk implements Persistent {
+public class V_cons_stato_invio_mandatiBulk extends OggettoBulk implements Persistent, V_cons_stato_invio{
 //    CD_CDS VARCHAR(30)
 	private java.lang.String cd_cds;
  
@@ -180,5 +181,11 @@ public class V_cons_stato_invio_mandatiBulk extends OggettoBulk implements Persi
 	}
 	public void setContabile(String contabile) {
 		this.contabile = contabile;
+	}
+	public Long getProgressivo() {
+		return getPg_mandato();
+	}
+	public String getTipo() {
+		return Numerazione_doc_contBulk.TIPO_MAN;
 	}
 }

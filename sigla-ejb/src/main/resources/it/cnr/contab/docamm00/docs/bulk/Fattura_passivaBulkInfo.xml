@@ -975,6 +975,8 @@
 		label="Del relativo ammontare/controvalore&lt;br&gt;ci darete debito nel"
 		nullable="false"
 		layout="VERTICAL"
+		enabledOnEdit="false"		
+		enabledOnInsert="false"
 		enabledOnFreeSearch="false"
 		caseSensitiveSearch="false"/>
 	<fieldProperty
@@ -985,6 +987,8 @@
 		inputSize="100"		
 		inputType="TEXT"
 		label="Numero Conto"
+		enabledOnEdit="false"		
+		enabledOnInsert="false"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="false"
 		caseSensitiveSearch="false" />		
