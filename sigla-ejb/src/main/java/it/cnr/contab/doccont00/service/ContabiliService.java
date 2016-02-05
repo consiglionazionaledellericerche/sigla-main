@@ -2,6 +2,7 @@ package it.cnr.contab.doccont00.service;
 
 import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.jada.comp.ApplicationException;
 
 import java.io.ByteArrayInputStream;
@@ -27,16 +28,20 @@ public class ContabiliService extends SiglaCMISService {
 		return getNodeRefContabile(mandato.getEsercizio(), mandato.getCd_cds(), mandato.getPg_mandato(), "MAN");
 	}
 
+	public List<String> getNodeRefContabile(ReversaleBulk reversale) throws ApplicationException{
+		return getNodeRefContabile(reversale.getEsercizio(), reversale.getCd_cds(), reversale.getPg_reversale(), "REV");
+	}
+
 	public List<String> getNodeRefContabile(Integer esercizio, String cds, Long pgMandato, String tipo) throws ApplicationException{
 		List<String> ids = new ArrayList<String>();
 		StringBuffer query = new StringBuffer("select doc.cmis:objectId from cmis:document doc ");
 		query.append(" join sigla_contabili_aspect:document contabili on doc.cmis:objectId = contabili.cmis:objectId");
-		query.append(" where contabili.sigla_contabili_aspect:esercizio = ").append(esercizio);
-		query.append(" and contabili.sigla_contabili_aspect:cds = '").append(cds).append("'");
+		query.append(" where contabili.sigla_contabili_aspect:esercizio = ").append(esercizio);		
 		query.append(" and contabili.sigla_contabili_aspect:num_mandato = ").append(pgMandato);
 		if (esercizio.compareTo(2016) >= 0)
 			query.append(" and contabili.sigla_contabili_aspect:tipo = '").append(tipo).append("'");
-		query.append(" order by doc.cmis:creationDate DESC");
+		else
+			query.append(" and contabili.sigla_contabili_aspect:cds = '").append(cds).append("'");
 		try {
 			ItemIterable<QueryResult> results = search(query);
 			if (results.getTotalNumItems() == 0)
@@ -82,5 +87,8 @@ public class ContabiliService extends SiglaCMISService {
 	
 	public InputStream getStreamContabile(MandatoBulk mandato) throws Exception{
 		return getStreamContabile(mandato.getEsercizio(), mandato.getCd_cds(), mandato.getPg_mandato(), "MAN");
+	}
+	public InputStream getStreamContabile(ReversaleBulk reversale) throws Exception{
+		return getStreamContabile(reversale.getEsercizio(), reversale.getCd_cds(), reversale.getPg_reversale(), "REV");
 	}
 }

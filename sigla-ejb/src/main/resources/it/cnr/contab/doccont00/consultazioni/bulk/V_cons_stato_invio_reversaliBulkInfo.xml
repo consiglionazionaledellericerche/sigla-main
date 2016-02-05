@@ -108,6 +108,11 @@
 		inputType="TEXT"
 		formatName="date_short"
 		label="Data invio distinta" />
+	<fieldProperty
+		name="contabile"
+		property="contabile"
+		inputType="TEXT"
+		label="Contabile" />	
 	<formFieldProperty
 		name="cd_cds" />
 	<formFieldProperty
@@ -198,4 +203,6 @@
 		name="dt_emis_dis" />
 	<columnFieldProperty
 		name="dt_invio_dis" />
+	<columnFieldProperty
+		name="contabile" />
 </bulkInfo>

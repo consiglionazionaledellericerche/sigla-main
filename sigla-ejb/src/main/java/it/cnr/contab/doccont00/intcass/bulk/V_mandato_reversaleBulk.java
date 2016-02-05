@@ -232,6 +232,14 @@ public class V_mandato_reversaleBulk extends V_mandato_reversaleBase implements 
 		return cmisPath;		
 	}
 	
+	public String getCMISName() {
+		return (getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN) ? "Mandato n. " : "Reversale n. ") + getPg_documento_cont() + ".pdf";
+	}
+
+	public String getReportName() {
+		return getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN) ? "/doccont/doccont/vpg_man_rev_ass.jasper" : "/doccont/doccont/vpg_reversale.jasper";
+	}
+	
 	public String getDocumento() {
 		return documento;
 	}
