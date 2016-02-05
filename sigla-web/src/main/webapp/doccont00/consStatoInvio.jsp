@@ -18,7 +18,7 @@
 <head>
 <% 
   JSPUtils.printBaseUrl(pageContext);
-ConsStatoInvioMandatiBP bp = (ConsStatoInvioMandatiBP)BusinessProcess.getBusinessProcess(request); 
+ConsStatoInvioBP bp = (ConsStatoInvioBP)BusinessProcess.getBusinessProcess(request); 
 %>
 <title>Consultazioni</title>
 <script language="JavaScript" src="scripts/util.js"></script>

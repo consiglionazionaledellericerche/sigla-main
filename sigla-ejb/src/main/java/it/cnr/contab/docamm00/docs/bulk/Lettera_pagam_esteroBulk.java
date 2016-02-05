@@ -1,5 +1,9 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
+import java.rmi.RemoteException;
+
+import javax.ejb.EJBException;
+
 import it.cnr.contab.cmis.annotation.CMISProperty;
 import it.cnr.contab.cmis.annotation.CMISType;
 import it.cnr.contab.cmis.service.CMISPath;
@@ -9,6 +13,7 @@ import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.contab.doccont00.intcass.bulk.DistintaCassiere1210Bulk;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bulk.cmis.AllegatoGenericoBulk;
 import it.cnr.contab.util00.cmis.bulk.AllegatoParentBulk;
 import it.cnr.jada.action.ActionContext;
@@ -18,6 +23,7 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.CRUDBP;
 
 @SuppressWarnings("unchecked")
@@ -117,6 +123,14 @@ public class Lettera_pagam_esteroBulk extends Lettera_pagam_esteroBase implement
 
 		setIm_commissioni(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 		setIm_pagamento(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+		setAmmontare_debito(AMMONTARE_DEBITO_NOSTRO_CONTO);				
+		try {
+			setConto_debito(Utility.createConfigurazioneCnrComponentSession().getVal03(context.getUserContext(), 0, "*", "CONTO_CORRENTE_SPECIALE", "ENTE"));
+		} catch (ComponentException e) {
+			throw new EJBException(e);
+		} catch (RemoteException e) {
+			throw new EJBException(e);
+		}
 		SospesoBulk sospeso = new SospesoBulk();
 		sospeso.setEsercizio(getEsercizio());
 		sospeso.setCd_cds(getCd_cds());
@@ -321,5 +335,8 @@ public class Lettera_pagam_esteroBulk extends Lettera_pagam_esteroBase implement
 		if (getStato_trasmissione() == null)
 			return null;
 		return (String) stato_trasmissioneKeys.get(getStato_trasmissione());
+	}
+	public String getCMISName() {
+		return getCMISFolderName() + ".pdf";
 	}
 }

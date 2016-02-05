@@ -180,15 +180,8 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 		Print_spoolerBulk print = new Print_spoolerBulk();
 		print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
 		print.setFlEmail(false);
-		if (v_mandato_reversaleBulk.getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN)) {
-			print.setReport("/doccont/doccont/vpg_man_rev_ass.jasper");
-			print.setNomeFile("Mandato n. "
-					+ v_mandato_reversaleBulk.getPg_documento_cont() + ".pdf");
-		} else {
-			print.setReport("/doccont/doccont/vpg_reversale.jasper");
-			print.setNomeFile("Reversale n. "
-					+ v_mandato_reversaleBulk.getPg_documento_cont() + ".pdf");					
-		}
+		print.setReport(v_mandato_reversaleBulk.getReportName());
+		print.setNomeFile(v_mandato_reversaleBulk.getCMISName());
 		print.setUtcr(actioncontext.getUserContext().getUser());
 		print.addParam("aCd_cds", v_mandato_reversaleBulk.getCd_cds(), String.class);
 		print.addParam("aCd_terzo", "%", String.class);
