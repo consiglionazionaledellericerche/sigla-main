@@ -2918,16 +2918,17 @@ public class DistintaCassiereComponent extends
 						distinta.getCd_unita_organizzativa());
 				sqlIN.addSQLClause("AND", "DISTINTA_CASSIERE_DET.PG_DISTINTA",
 						sql.EQUALS, distinta.getPg_distinta());
-				sqlIN.addOrderBy("CD_CDS_ORIGINE,PG_DETTAGLIO");
+				//sqlIN.addOrderBy("CD_CDS_ORIGINE,PG_DETTAGLIO");
 				List list = getHome(userContext, Distinta_cassiere_detBulk.class).fetchAll(sqlIN);
 				String lista_mandati=null;
 				String lista_reversali=null;
-				String cds_old=null;
-				String cds_old_rev=null;
+				//String cds_old=null;
+				//String cds_old_rev=null;
 				sql.openParenthesis("AND");
 				for (Iterator i = list.iterator(); i.hasNext();) {
 					Distinta_cassiere_detBulk det=(Distinta_cassiere_detBulk)i.next();
-					if(det.getCd_cds_origine()!=cds_old && det.getPg_mandato()!=null){
+					//if(det.getCd_cds_origine()!=cds_old && det.getPg_mandato()!=null){
+					if(det.getPg_mandato()!=null){
 						if(lista_mandati!=null){
 							sql.openParenthesis("OR");
 						
@@ -2940,14 +2941,14 @@ public class DistintaCassiereComponent extends
 							
 							  sql.addSQLClause("AND","(V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT) IN ("+lista_mandati+ ")");
 							  
-							  sql.openParenthesis("AND");
-							  sql.addSQLClause("AND","V_MANDATO_REVERSALE_DISTINTA.CD_CDS_ORIGINE",sql.EQUALS,cds_old);
-							  sql.addSQLClause("OR","V_MANDATO_REVERSALE_DISTINTA.CD_CDS",sql.EQUALS,ente.getUnita_padre().getCd_unita_organizzativa());
-							  sql.closeParenthesis();
-							  
+//							  sql.openParenthesis("AND");
+//							  sql.addSQLClause("AND","V_MANDATO_REVERSALE_DISTINTA.CD_CDS_ORIGINE",sql.EQUALS,cds_old);
+//							  sql.addSQLClause("OR","V_MANDATO_REVERSALE_DISTINTA.CD_CDS",sql.EQUALS,ente.getUnita_padre().getCd_unita_organizzativa());
+//							  sql.closeParenthesis();
+//							  
 							  sql.closeParenthesis();
 						}
-					    cds_old=det.getCd_cds_origine();
+					    //cds_old=det.getCd_cds_origine();
 					    lista_mandati=null;
 					}
 					if(det.getPg_mandato()!=null){
@@ -2956,7 +2957,8 @@ public class DistintaCassiereComponent extends
 						else
 							lista_mandati=det.getPg_mandato().toString();	
 					}
-					if(det.getCd_cds_origine()!=cds_old_rev && det.getPg_reversale()!=null){
+					//if(det.getCd_cds_origine()!=cds_old_rev && det.getPg_reversale()!=null){
+					if(det.getPg_reversale()!=null){
 						if(lista_reversali!=null ){
 							sql.openParenthesis("OR");
 						
@@ -2970,14 +2972,14 @@ public class DistintaCassiereComponent extends
 							  sql.addSQLClause("AND","(V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT) IN ("+lista_reversali+ ")");
 							  
 							  
-							  sql.openParenthesis("AND");
-							  sql.addSQLClause("AND","V_MANDATO_REVERSALE_DISTINTA.CD_CDS_ORIGINE",sql.EQUALS,cds_old_rev);
-							  sql.addSQLClause("OR","V_MANDATO_REVERSALE_DISTINTA.CD_CDS",sql.EQUALS,ente.getUnita_padre().getCd_unita_organizzativa());
-							  sql.closeParenthesis();
-							 
+//							  sql.openParenthesis("AND");
+//							  sql.addSQLClause("AND","V_MANDATO_REVERSALE_DISTINTA.CD_CDS_ORIGINE",sql.EQUALS,cds_old_rev);
+//							  sql.addSQLClause("OR","V_MANDATO_REVERSALE_DISTINTA.CD_CDS",sql.EQUALS,ente.getUnita_padre().getCd_unita_organizzativa());
+//							  sql.closeParenthesis();
+//							 
 							  sql.closeParenthesis();
 						}
-					    cds_old_rev=det.getCd_cds_origine();
+					    //cds_old_rev=det.getCd_cds_origine();
 					    lista_reversali=null;
 					}
 					if(det.getPg_reversale()!=null){
@@ -2999,10 +3001,10 @@ public class DistintaCassiereComponent extends
 					
 					  sql.addSQLClause("AND","(V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT) IN ("+lista_mandati+ ")");
 					  
-					  sql.openParenthesis("AND");
-					  sql.addSQLClause("AND","V_MANDATO_REVERSALE_DISTINTA.CD_CDS_ORIGINE",sql.EQUALS,cds_old);
-					  sql.addSQLClause("OR","V_MANDATO_REVERSALE_DISTINTA.CD_CDS",sql.EQUALS,ente.getUnita_padre().getCd_unita_organizzativa());
-					  sql.closeParenthesis();
+//					  sql.openParenthesis("AND");
+//					  sql.addSQLClause("AND","V_MANDATO_REVERSALE_DISTINTA.CD_CDS_ORIGINE",sql.EQUALS,cds_old);
+//					  sql.addSQLClause("OR","V_MANDATO_REVERSALE_DISTINTA.CD_CDS",sql.EQUALS,ente.getUnita_padre().getCd_unita_organizzativa());
+//					  sql.closeParenthesis();
 					  sql.closeParenthesis();
 				}
 				if(lista_reversali!=null){
@@ -3016,15 +3018,15 @@ public class DistintaCassiereComponent extends
 					
 					  sql.addSQLClause("AND","(V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT) IN ("+lista_reversali+ ")");
 					  
-					  sql.openParenthesis("AND");
-					  sql.addSQLClause("AND","V_MANDATO_REVERSALE_DISTINTA.CD_CDS_ORIGINE",sql.EQUALS,cds_old_rev);
-					  sql.addSQLClause("OR","V_MANDATO_REVERSALE_DISTINTA.CD_CDS",sql.EQUALS,ente.getUnita_padre().getCd_unita_organizzativa());
-					  sql.closeParenthesis();
+//					  sql.openParenthesis("AND");
+//					  sql.addSQLClause("AND","V_MANDATO_REVERSALE_DISTINTA.CD_CDS_ORIGINE",sql.EQUALS,cds_old_rev);
+//					  sql.addSQLClause("OR","V_MANDATO_REVERSALE_DISTINTA.CD_CDS",sql.EQUALS,ente.getUnita_padre().getCd_unita_organizzativa());
+//					  sql.closeParenthesis();
 					  sql.closeParenthesis();
 				}
 				
 				sql.closeParenthesis();
-			    sql.addOrderBy(" V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT_PADRE, V_MANDATO_REVERSALE_DISTINTA.TI_DOCUMENTO_CONT_PADRE, V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT_PADRE ");
+			  //  sql.addOrderBy(" V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT_PADRE, V_MANDATO_REVERSALE_DISTINTA.TI_DOCUMENTO_CONT_PADRE, V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT_PADRE ");
 			    return sql;	 
 		 }
 		else{
