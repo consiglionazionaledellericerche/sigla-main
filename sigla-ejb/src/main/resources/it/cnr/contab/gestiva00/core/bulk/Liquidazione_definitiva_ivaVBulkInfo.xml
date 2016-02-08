@@ -48,7 +48,7 @@
 		enabledOnSearch="true"
 		enabledOnEdit="true"
 		enabledOnInsert="true"
-		label="Tipo Impegno"/>		
+		label="Tipo Movimentazione"/>		
 	<fieldProperty
 		name="mese"
 		property="mese"
