@@ -2,6 +2,7 @@ package it.cnr.contab.doccont00.service;
 
 import it.cnr.contab.cmis.service.SiglaCMISService;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.jada.comp.ApplicationException;
 
@@ -40,8 +41,11 @@ public class ContabiliService extends SiglaCMISService {
 		query.append(" and contabili.sigla_contabili_aspect:num_mandato = ").append(pgMandato);
 		if (esercizio.compareTo(2016) >= 0)
 			query.append(" and contabili.sigla_contabili_aspect:tipo = '").append(tipo).append("'");
-		else
-			query.append(" and contabili.sigla_contabili_aspect:cds = '").append(cds).append("'");
+		else {
+			if (tipo.equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_REV))
+				query.append(" and contabili.sigla_contabili_aspect:tipo = '").append(tipo).append("'");				
+			query.append(" and contabili.sigla_contabili_aspect:cds = '").append(cds).append("'");			
+		}
 		try {
 			ItemIterable<QueryResult> results = search(query);
 			if (results.getTotalNumItems() == 0)
