@@ -440,7 +440,17 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 		((Distinta_cassiereBulk)this.getModel()).setFl_sepa(sepa);
 	}		
 }
-
+public OggettoBulk initializeModelForInsert(ActionContext actioncontext,
+		OggettoBulk oggettobulk) throws BusinessProcessException {
+	if(this.getModel()!=null){
+		Distinta_cassiereBulk distinta =(Distinta_cassiereBulk)this.getModel();
+		distinta.setFl_flusso(flusso);
+		distinta.setFl_sepa(sepa);
+		setModel(actioncontext,distinta);
+		return this.getModel();
+	}
+	return super.initializeModelForInsert(actioncontext, oggettobulk);
+}
 public OggettoBulk createNewSearchBulk(ActionContext context) throws BusinessProcessException {
 	Distinta_cassiereBulk fs = (Distinta_cassiereBulk)super.createNewSearchBulk(context);
 	this.setFile(null);
