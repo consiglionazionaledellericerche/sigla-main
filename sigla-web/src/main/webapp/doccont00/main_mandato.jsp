@@ -29,6 +29,9 @@
 function doVisualizzaContabile() {	
   doPrint('genericdownload/<%=bp.getContabileFileName()%>?methodName=scaricaContabile&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
+function doVisualizzaMandato() {	
+  doPrint('genericdownload/<%=bp.getMandatoFileName()%>?methodName=scaricaMandato&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+}
 </script>
 
 <body class="Form">
