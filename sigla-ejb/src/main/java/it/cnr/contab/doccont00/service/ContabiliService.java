@@ -42,9 +42,12 @@ public class ContabiliService extends SiglaCMISService {
 		if (esercizio.compareTo(2016) >= 0)
 			query.append(" and contabili.sigla_contabili_aspect:tipo = '").append(tipo).append("'");
 		else {
-			if (tipo.equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_REV))
+			if (tipo.equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_REV)) {
 				query.append(" and contabili.sigla_contabili_aspect:tipo = '").append(tipo).append("'");				
-			query.append(" and contabili.sigla_contabili_aspect:cds = '").append(cds).append("'");			
+				query.append(" and contabili.sigla_contabili_aspect:cds = '").append("Rev").append("'");							
+			} else {
+				query.append(" and contabili.sigla_contabili_aspect:cds = '").append(cds).append("'");				
+			}
 		}
 		try {
 			ItemIterable<QueryResult> results = search(query);
