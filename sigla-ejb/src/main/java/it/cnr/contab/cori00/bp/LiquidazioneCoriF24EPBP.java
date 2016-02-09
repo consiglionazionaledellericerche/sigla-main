@@ -262,10 +262,12 @@ public LiquidazioneCoriF24EPBP(String function) {
 		    		  bw.append(Formatta(null,"S",16," "));
 		    		  //modificato
 		    		  //bw.append("6");
-		    		  bw.append("7");
+		    		  //bw.append("7");
+		    		  bw.append("D"); 
 		    		// SEZIONE VERSAMENTI ???
 		    		  bw.append(Formatta(null,"S",3," ")); //CODICE UFFICIO FINANZIARIO
 		    		  bw.append(Formatta(null,"D",11,"0")); //CODICE ATTO
+		    		  bw.append(Formatta(null,"S",18," ")); //IDENTIFICATIVO OPERAZIONE nUOVO
 	    		  }
 	    		  tot1=tot1.add(f24ep.getImporto_debito());
 	    		  bw.append(Formatta(f24ep.getTipo_riga_f24(),"S",1," "));
@@ -280,6 +282,8 @@ public LiquidazioneCoriF24EPBP(String function) {
 		    		  bw.append(Formatta(Formatta(f24ep.getMese_rif(),"D",4,"0"),"S",6," "));
 		    		  bw.append(Formatta(Formatta(f24ep.getAnno_rif(),"D",4,"0"),"S",6," "));
 		    		  bw.append(Formatta(f24ep.getImporto_debito().movePointRight(2).toString(),"D",15,"0"));
+		    		  bw.append(Formatta(null,"D",15,"0")); // nuovo da gestire
+		    		  //bw.append(Formatta(f24ep.getImporto_credito().movePointRight(2).toString(),"D",15,"0"));
 	    	  	  }
 		    	  else{
 		    		  //nuovi
@@ -291,6 +295,8 @@ public LiquidazioneCoriF24EPBP(String function) {
 			    		  // non valorizzare per i tributi usati nel CNR
 			    		  bw.append(Formatta(null,"S",6," "));
 			    		  bw.append(Formatta(f24ep.getImporto_debito().movePointRight(2).toString(),"D",15,"0"));
+			    		  bw.append(Formatta(null,"D",15,"0")); // nuovo da gestire
+			    		  //bw.append(Formatta(f24ep.getImporto_credito().movePointRight(2).toString(),"D",15,"0"));
 		    		 }
 		    		 if(f24ep.getTipo_riga_f24().compareTo(Gruppo_crBulk.INAIL)==0){
 		    			  Configurazione_cnrBulk conf_inail = ((Liquid_coriComponentSession)createComponentSession()).getSedeInailF24(context.getUserContext());
@@ -301,6 +307,8 @@ public LiquidazioneCoriF24EPBP(String function) {
 			    		  bw.append(Formatta("P","S",6," "));
 			    		  bw.append(Formatta(null,"S",6," "));
 			    		  bw.append(Formatta(f24ep.getImporto_debito().movePointRight(2).toString(),"D",15,"0"));
+			    		  bw.append(Formatta(null,"D",15,"0")); // nuovo da gestire
+			    		  //bw.append(Formatta(f24ep.getImporto_credito().movePointRight(2).toString(),"D",15,"0"));
 		    		 }
 		    		 if(f24ep.getTipo_riga_f24().compareTo(Gruppo_crBulk.INPDAP)==0){
 		    			  String sede_inpdap = ((Liquid_coriComponentSession)createComponentSession()).getSedeInpdapF24(context.getUserContext());
@@ -310,6 +318,8 @@ public LiquidazioneCoriF24EPBP(String function) {
 			    		  bw.append(Formatta(f24ep.getPeriodo_da(),"S",6," "));
 			    		  bw.append(Formatta(f24ep.getPeriodo_a(),"S",6," "));
 			    		  bw.append(Formatta(f24ep.getImporto_debito().movePointRight(2).toString(),"D",15,"0"));
+			    		  bw.append(Formatta(null,"D",15,"0")); // nuovo da gestire
+			    		  //bw.append(Formatta(f24ep.getImporto_credito().movePointRight(2).toString(),"D",15,"0"));
 		    		 }
 		    		 if(f24ep.getTipo_riga_f24().compareTo(Gruppo_crBulk.INPGI)==0){
 		    			  String sede_inpgi= ((Liquid_coriComponentSession)createComponentSession()).getSedeInpgiF24(context.getUserContext());
@@ -319,12 +329,14 @@ public LiquidazioneCoriF24EPBP(String function) {
 			    		  bw.append(Formatta(Formatta(f24ep.getMese_rif(),"D",4,"0"),"S",6," "));
 			    		  bw.append(Formatta(Formatta(f24ep.getAnno_rif(),"D",4,"0"),"S",6," "));
 			    		  bw.append(Formatta(f24ep.getImporto_debito().movePointRight(2).toString(),"D",15,"0"));
+			    		  bw.append(Formatta(null,"D",15,"0")); // nuovo da gestire
+			    		  //bw.append(Formatta(f24ep.getImporto_credito().movePointRight(2).toString(),"D",15,"0"));
 		    		 }
 		    	  }
-	    		  if(riga ==28){
+	    		  if(riga ==22){
 	    			  tot_righe=tot_righe+1;
 	    			  //saldo di sezione
-	    			  bw.append(Formatta(null,"S",70," ")); // Nuovo filler
+	    			  bw.append(Formatta(null,"S",58," ")); // Nuovo filler
 	    			  bw.append(Formatta(tot1.movePointRight(2).toString(),"D",15,"0"));
 	        		  bw.append(Formatta(null,"D",15,"0"));
 	        		  bw.append("P");
@@ -345,7 +357,7 @@ public LiquidazioneCoriF24EPBP(String function) {
 	    	  }
 	    	  // completo ultima riga
 	    	  if(riga!=1){
-	    		  while(riga<=28){
+	    		  while(riga<=22){
 	    			  bw.append(Formatta(null,"S",1," "));//getTipo_riga_f24
 	    			  bw.append(Formatta(null,"S",6," "));//codice tributo
 	    			  bw.append(Formatta(null,"S",5," "));//codice ente
@@ -353,10 +365,11 @@ public LiquidazioneCoriF24EPBP(String function) {
 	    			  bw.append(Formatta(null,"S",6," "));//mese
 	    			  bw.append(Formatta(null,"S",6," "));//anno
 	    			  bw.append(Formatta(null,"D",15,"0"));//importo a debito
+	    			  bw.append(Formatta(null,"D",15,"0"));//importo a credito nuovo
 	    			  riga=riga+1; 
 	    		  }  	
 		    	  //saldo di sezione
-	    		  bw.append(Formatta(null,"S",70," ")); // Nuovo filler
+	    		  bw.append(Formatta(null,"S",58," ")); // Nuovo filler
 		    	  bw.append(Formatta(tot1.movePointRight(2).toString(),"D",15,"0"));
 				  bw.append(Formatta(null,"D",15,"0"));
 				  bw.append("P");
