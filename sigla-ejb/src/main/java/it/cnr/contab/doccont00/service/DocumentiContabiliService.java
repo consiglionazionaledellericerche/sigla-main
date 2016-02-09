@@ -94,7 +94,12 @@ public class DocumentiContabiliService extends SiglaCMISService {
 	}
 
 	public List<String> getNodeRefDocumento(StatoTrasmissione bulk, boolean fullNodeRef) throws ApplicationException{
-		CmisObject cmisObject = getNodeByPath(bulk.getCMISPath(this).getPath() + "/" + bulk.getCMISName());
+		CmisObject cmisObject;
+		try {
+			cmisObject = getNodeByPath(bulk.getCMISPath(this).getPath() + "/" + bulk.getCMISName());
+		} catch (CmisObjectNotFoundException _ex) {
+			return null;
+		}
 		return Arrays.asList(fullNodeRef ? cmisObject.getProperty(ALFCMIS_NODEREF).getValueAsString(): cmisObject.getId());
 	}
 
