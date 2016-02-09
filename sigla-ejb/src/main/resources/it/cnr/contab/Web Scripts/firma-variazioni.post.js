@@ -10,7 +10,7 @@ script:{
 	service = cnrutils.getBean('mimetypeService');
 	estensione = "." + service.getExtension(nodoDoc.mimetype);
 	if (nodoDoc.name.indexOf(estensione) === -1) {
-	  nameDoc = nameDoc + estenzione;
+	  nameDoc = nameDoc + estensione;
 	}
 	nameDocFirmato = nameDoc + ".p7m";
 	//crea il doc firmato
