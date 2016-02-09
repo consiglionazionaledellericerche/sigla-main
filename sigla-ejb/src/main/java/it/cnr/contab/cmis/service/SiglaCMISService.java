@@ -147,7 +147,7 @@ public class SiglaCMISService {
         sessionParameters.put(SessionParameter.LOCALE_ISO3166_COUNTRY, Locale.ITALY.getCountry());
         sessionParameters.put(SessionParameter.LOCALE_ISO639_LANGUAGE, Locale.ITALY.getLanguage());
         sessionParameters.put(SessionParameter.LOCALE_VARIANT, Locale.ITALY.getVariant());
-
+        sessionParameters.put(SessionParameter.CACHE_PATH_OMIT,String.valueOf(Boolean.TRUE));
     	return sessionFactory.createSession(sessionParameters);
     }
 
@@ -166,6 +166,7 @@ public class SiglaCMISService {
         }
         sessionParameters.put(SessionParameter.AUTH_HTTP_BASIC, "true");
         sessionParameters.put(SessionParameter.AUTH_SOAP_USERNAMETOKEN, "false");
+        sessionParameters.put(SessionParameter.CACHE_PATH_OMIT,String.valueOf(Boolean.TRUE));
         for (Map.Entry<String, String> entry : sessionParameters.entrySet()) {
             session.put(entry.getKey(), entry.getValue());
         }
