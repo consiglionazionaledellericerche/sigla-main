@@ -144,6 +144,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 	public void predisponiPerLaFirma(ActionContext actioncontext) throws BusinessProcessException{
 		try {
 			List<StatoTrasmissione> selectedElements = getSelectedElements(actioncontext);
+			DistintaCassiereComponentSession distintaCassiereComponentSession = Utility.createDistintaCassiereComponentSession();
 			if (selectedElements == null || selectedElements.isEmpty())
 					throw new ApplicationException("Selezionare almeno un elemento!");
 			Format dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -153,11 +154,23 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 			for (StatoTrasmissione statoTrasmissione : selectedElements) {
 				V_mandato_reversaleBulk v_mandato_reversaleBulk = (V_mandato_reversaleBulk)statoTrasmissione;
 				if (v_mandato_reversaleBulk.isMandato()) {
+					boolean isReversaleCollegataSiope = true;
 					if (!Utility.createMandatoComponentSession().isCollegamentoSiopeCompleto(
 							actioncontext.getUserContext(),new MandatoIBulk(v_mandato_reversaleBulk.getCd_cds(),v_mandato_reversaleBulk.getEsercizio(),v_mandato_reversaleBulk.getPg_documento_cont()))) {
 						message += "\nIl mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont()+ " non risulta associato completamente a codici Siope, pertanto è stato escluso dalla selezione.";
 						continue;
 					}
+					for (StatoTrasmissione reversaleCollegata : distintaCassiereComponentSession.findReversaliCollegate(actioncontext.getUserContext(), v_mandato_reversaleBulk)) {
+						if (!Utility.createReversaleComponentSession().isCollegamentoSiopeCompleto(
+								actioncontext.getUserContext(),new ReversaleIBulk(reversaleCollegata.getCd_cds(),reversaleCollegata.getEsercizio(),reversaleCollegata.getPg_documento_cont()))) {
+							message += "\nLa reversale n."+ reversaleCollegata.getPg_documento_cont()+ " collegata al mandato  n. "+ v_mandato_reversaleBulk.getPg_documento_cont() +
+										", non risulta associata completamente a codici Siope, pertanto è stata esclusa dalla selezione.";
+							isReversaleCollegataSiope = false;
+							break;
+						}						
+					}
+					if (!isReversaleCollegataSiope)
+						continue;
 				} else if (v_mandato_reversaleBulk.isReversale()) {
 					if (!Utility.createReversaleComponentSession().isCollegamentoSiopeCompleto(
 							actioncontext.getUserContext(),new ReversaleIBulk(v_mandato_reversaleBulk.getCd_cds(),v_mandato_reversaleBulk.getEsercizio(),v_mandato_reversaleBulk.getPg_documento_cont()))) {
